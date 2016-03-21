@@ -112,6 +112,11 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
 
+    function displayResultBlock ()
+    {
+    	return BxDolPayments::getInstance()->getCartJs() . parent::displayResultBlock();
+    }
+
     function getAlterOrder()
     {
         $aSql = array();

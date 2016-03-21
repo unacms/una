@@ -56,6 +56,7 @@
 	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_market_form_entry_input_pictures_title"><![CDATA[Название]]></string>
+	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Изображение предпросмотра]]></string>
 	<string name="_bx_market_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_market_form_entry_input_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Использовать как главный]]></string>

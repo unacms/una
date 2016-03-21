@@ -26,6 +26,9 @@ class BxMarketVote extends BxTemplVote
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
+    	if($this->getObjectAuthorId() == $this->_getAuthorId())
+    		return false;
+
     	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VOTE']);
 		if($oPrivacy && !$oPrivacy->check($this->_iId))
 			return false;

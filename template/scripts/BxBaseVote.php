@@ -194,16 +194,17 @@ class BxBaseVote extends BxDolVote
 
     public function getElement($aParams = array())
     {
+		$bLikeMode =  $this->isLikeMode();
+        $sType = $bLikeMode ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
+
+    	$aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
     	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
 
-        $bLike =  $this->isLikeMode();
-        $sType = $bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
-
         $bShowDoVote = !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
-        $bShowDoVoteAsButtonSmall = $bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
-        $bShowDoVoteAsButton = $bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+        $bShowDoVoteAsButtonSmall = $bLikeMode && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
+        $bShowDoVoteAsButton = $bLikeMode && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
-        $bShowLegend = !$bLike && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
+        $bShowLegend = !$bLikeMode && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
 
         $sMethodDoVote = '_getDoVote' . ucfirst($sType);
         if(!method_exists($this, $sMethodDoVote))
@@ -217,15 +218,15 @@ class BxBaseVote extends BxDolVote
         if(!$isAllowedVote && (int)$aVote['count'] == 0)
             return '';
 
-        $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
         $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         //--- Do Vote
+        $bTmplVarsDoVote = $bShowDoVote && (!$bLikeMode || ($bLikeMode && $isAllowedVote));
         $aTmplVarsDoVote = array();
-        if($bShowDoVote && $isAllowedVote)
+        if($bTmplVarsDoVote)
         	$aTmplVarsDoVote = array(
 				'style_prefix' => $this->_sStylePrefix,
-				'do_vote' => $this->$sMethodDoVote($aParams),
+				'do_vote' => $this->$sMethodDoVote($aParams, $isAllowedVote),
 			);
 
         //--- Counter
@@ -255,7 +256,7 @@ class BxBaseVote extends BxDolVote
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
         	'bx_if:show_do_vote' => array(
-        		'condition' => $bShowDoVote && $isAllowedVote,
+        		'condition' => $bTmplVarsDoVote,
         		'content' => $aTmplVarsDoVote
         	),
         	'bx_if:show_counter' => array(
@@ -270,7 +271,7 @@ class BxBaseVote extends BxDolVote
         ));
     }
 
-    protected function _getDoVoteStars($aParams = array())
+    protected function _getDoVoteStars($aParams = array(), $isAllowedVote = true)
     {
         $sJsObject = $this->getJsObjectName();
         $iMinValue = $this->getMinValue();
@@ -292,11 +293,12 @@ class BxBaseVote extends BxDolVote
                 'style_prefix' => $this->_sStylePrefix
             );
 
-            $aTmplVarsButtons[] = array(
-                'style_prefix' => $this->_sStylePrefix,
-                'js_object' => $sJsObject,
-                'value' => $i
-            );
+            if($isAllowedVote)
+	            $aTmplVarsButtons[] = array(
+	                'style_prefix' => $this->_sStylePrefix,
+	                'js_object' => $sJsObject,
+	                'value' => $i
+	            );
         }
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoVoteStars, array(
@@ -314,7 +316,7 @@ class BxBaseVote extends BxDolVote
         ));
     }
 
-    protected function _getDoVoteLikes($aParams = array())
+    protected function _getDoVoteLikes($aParams = array(), $isAllowedVote = true)
     {
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
