@@ -63,6 +63,11 @@ class BxMarketModule extends BxBaseModTextModule
         return $this->_oTemplate->entryAttachmentsByStorage($CNF['OBJECT_STORAGE_FILES'], $aContentInfo);
     }
 
+    public function serviceEntityCover($iContentId = 0)
+    {
+		return $this->_serviceTemplateFunc ('entryCover', $iContentId);
+    }
+
 	public function serviceEntityInfo ($iContentId = 0)
     {
         return $this->_serviceTemplateFunc ('entryInfo', $iContentId);
