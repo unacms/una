@@ -134,7 +134,8 @@ BxDolVote.prototype._getSliderLegend = function(oElement) {
 };
 BxDolVote.prototype._getSlider = function(oElement, sParent) {
 	var sSlider = (sParent.length > 0 ? sParent + ' ' : '') + '.' + this._sSP + '-slider';
-
+	console.log(oElement);
+	console.log(sSlider);
 	if($(oElement).hasClass(this._sSP))
 		return $(oElement).find(sSlider);
 	else

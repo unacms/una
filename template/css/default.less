@@ -163,6 +163,12 @@
 .bx-def-margin-thd-left {
     .margin-left(@bx-margin-thd);
 }
+.bx-def-margin-thd-left-auto {
+    .margin-left(@bx-margin-thd);
+    &:first-child {
+        .margin-left(0);
+    }
+}
 
 /* paddings */
 .bx-def-padding {
