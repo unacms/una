@@ -45,7 +45,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
     {
         $iSellerId = isset($aData['seller_id']) ? (int)$aData['seller_id'] : $this->_oModule->getProfileId();
         if($iSellerId == $aData['client_id'])
-            return array('msg' => $this->_sLangsPrefix . 'err_purchase_from_yourself');
+            return array('msg' => $this->_sLangsPrefix . 'err_self_purchase');
 
         $sOrder = trim($aData['order']);
         if(empty($sOrder))

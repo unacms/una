@@ -15,18 +15,38 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
     {
         parent::__construct($aModule);
 
+        $sBaseUrl = BX_DOL_URL_ROOT . $this->getBaseUri();
+
         $this->CNF = array_merge($this->CNF, array(
         	'URL_JOIN' => 'page.php?i=payment-join',
+        	'URL_CARTS' => 'page.php?i=payment-carts',
         	'URL_CART' => 'page.php?i=payment-cart',
+        	'URL_CART_CHECKOUT' => $sBaseUrl . 'initialize_checkout/' . BX_PAYMENT_TYPE_SINGLE . '/',
         	'URL_HISTORY' => 'page.php?i=payment-history',
         	'URL_ORDERS' => 'page.php?i=payment-orders',
         	'URL_DETAILS' => 'page.php?i=payment-details',
         	'URL_RETURN' => 'page.php?i=payment-cart',
-        	'URL_RETURN_DATA' => BX_DOL_URL_ROOT . $this->getBaseUri() . 'finalize_checkout/',
-        	'URL_NOTIFY' => BX_DOL_URL_ROOT . $this->getBaseUri() . 'notify/',
+        	'URL_RETURN_DATA' => $sBaseUrl . 'finalize_checkout/',
+        	'URL_NOTIFY' => $sBaseUrl . 'notify/',
 
         	'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
         	'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
+        
+	        // some language keys
+        	'T' => array(
+        		'MSG_ITEM_ADDED' => '_bx_payment_msg_item_added',
+        		'MSG_ITEM_DELETED' => '_bx_payment_msg_item_deleted',
+        		'ERR_WRONG_DATA' => '_bx_payment_err_wrong_data',
+        		'ERR_REQUIRED_LOGIN' => '_bx_payment_err_required_login',
+        		'ERR_NOT_ACCEPT_PAYMENTS' => '_bx_payment_err_not_accept_payments',
+        		'ERR_SELF_PURCHASE' => '_bx_payment_err_self_purchase',
+        		'ERR_INACTIVE_VENDOR' => '_bx_payment_err_inactive_vendor',
+        		'ERR_UNKNOWN_VENDOR' => '_bx_payment_err_unknown_vendor',
+
+				'BLOCK_TITLE_CART' => '_bx_payment_page_block_title_cart',
+        
+        		'TXT_CART_PROVIDER' => '_bx_payment_txt_cart_'
+        	)
         ));
 
         $this->_aHtmlIds = array(

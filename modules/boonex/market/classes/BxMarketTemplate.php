@@ -28,6 +28,25 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
+    public function entryCover($aData)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sCoverUrl = '';
+        if ($aData[$CNF['FIELD_COVER']]) {
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+            if($oImagesTranscoder)
+				$sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
+        }
+
+        if(empty($sCoverUrl))
+        	return '';
+
+    	return $this->parseHtmlByName('entry-cover.html', array(
+    		'cover_url' => $sCoverUrl
+    	));
+    }
+
     public function entryInfo($aData)
     {
     	$aCategory = array();

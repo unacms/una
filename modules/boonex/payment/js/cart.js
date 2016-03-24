@@ -10,8 +10,6 @@ BxPaymentCart.prototype.init = function(oOptions) {
     this._sObjName = oOptions.sObjName == undefined ? 'oPmtCart' : oOptions.sObjName;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
-
-    this._sErrNothingSelected = '_bx_payment_err_nothing_selected';
 };
 
 BxPaymentCart.prototype.addToCart = function(iVendorId, iModuleId, iItemId, iItemCount, iNeedRedirect) {
@@ -46,70 +44,18 @@ BxPaymentCart.prototype.addToCart = function(iVendorId, iModuleId, iItemId, iIte
     );
 };
 
-/**
- * Isn't used yet.
- */
-BxPaymentCart.prototype.deleteFromCart = function(iVendorId, iModuleId, iItemId) {
-    var oDate = new Date();
-    var $this = this;
+BxPaymentCart.prototype.onCartContinue = function(oData) {
+	if (!oData || oData.link == undefined)
+		return;
 
-    $.post(
-        this._sActionsUrl + 'delete_from_cart/' + iVendorId + '/' + iModuleId + '/' + iItemId,
-        {
-            _t:oDate.getTime()
-        },
-        function(oData) {
-            alert(oData.message);
-
-            if(oData.code == 0) {
-            	/*
-            	 * TODO: Hide item if it's needed.
-            	 * 
-                $('#item-' + iVendorId + '-' + iModuleId + '-' + iItemId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                        $(this).remove();
-                });
-                 */
-            }
-        },
-        'json'
-    );
+	location.href = oData.link;
 };
 
-/**
- * Isn't used yet.
- */
-BxPaymentCart.prototype.emptyCart = function(iVendorId) {
-    var oDate = new Date();
-    var $this = this;    
+BxPaymentCart.prototype.onCartCheckout = function(oData) {
+	if (!oData || oData.link == undefined)
+		return;
 
-    $.post(
-        this._sActionsUrl + 'empty_cart/' + iVendorId,
-        {
-            _t:oDate.getTime()
-        },
-        function(oData){
-            if(oData.code == 0) {
-            	/*
-            	 * TODO: Hide vendor from vendors's list if it's needed.
-            	 */
-            }
-            alert(oData.message);
-        },
-        'json'
-    );
-};
-
-BxPaymentCart.prototype.onCartSubmit = function(oForm) {
-    if($(oForm).find(":checkbox[name='items[]']:checked").length > 0)
-    	return true;
-
-    alert(_t(this._sErrNothingSelected));
-	return false;
-};
-
-BxPaymentCart.prototype.toggleCartVendor = function(oElement) {
-	$(oElement).find('.sys-icon').toggleClass('caret-down').toggleClass('caret-right');
-    $(oElement).parents('.bx-payment-box:first').find('.bx-payment-box-cnt').bx_anim('toggle', 'slide', this._iAnimationSpeed);
+	location.href = oData.link;
 };
 
 BxPaymentCart.prototype.subscribe = function(iVendorId, iModuleId, iItemId, iItemCount) {

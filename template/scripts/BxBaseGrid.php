@@ -17,6 +17,7 @@ class BxBaseGrid extends BxDolGrid
     protected $_aPopupOptions = false;
     protected $_aQueryAppend = false;
     protected $_aConfirmMessages = false;
+    protected $_bSelectAll = false;
     protected $_isDisplayPopupOnTextOverflow = true;
 
     public function __construct ($aOptions, $oTemplate)
@@ -275,12 +276,23 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getCellHeaderCheckbox ($sKey, $aField)
     {
-        $sAttr = $this->_convertAttrs(
+    	$aAttr = array(
+    		'type' => 'checkbox',
+    		'id' => $this->_sObject . '_check_all',
+    		'name' => $this->_sObject . '_check_all',
+    		'onclick' => "$('input[name=" . $this->_sObject . "_check]:not([disabled])').attr('checked', this.checked)"
+    	);
+    	if($this->_bSelectAll)
+    		$aAttr['checked'] = 'checked';
+
+    	$aField['attr'] = isset($aField['attr']) && is_array($aField['attr']) ? array_merge($aAttr, $aField['attr']) : $aAttr;
+
+        $sAttrHead = $this->_convertAttrs(
             $aField, 'attr_head',
             'bx-def-padding-sec-bottom bx-def-padding-sec-top bx-grid-header-' . $sKey, // add default classes
             isset($aField['width']) ? 'width:' . $aField['width'] : false // add default styles
         );
-        return $this->_getCellHeaderWrapper ($sKey, $aField, ' <input type="checkbox" id="'. $this->_sObject . '_check_all" name="'. $this->_sObject . '_check_all" onclick="$(\'input[name='. $this->_sObject . '_check]:not([disabled])\').attr(\'checked\', this.checked)" /> ', $sAttr);
+        return $this->_getCellHeaderWrapper ($sKey, $aField, ' <input ' . $this->_convertAttrs($aField, 'attr') . ' /> ', $sAttrHead);
     }
 
     protected function _getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr)
@@ -329,7 +341,7 @@ class BxBaseGrid extends BxDolGrid
      */
     protected function _isCheckboxSelected($mixedValue, $sKey, $aField, $aRow)
     {
-        return false;
+        return $this->_bSelectAll;
     }
 
     /**

@@ -52,7 +52,9 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
 			'grid_history' => $this->_sName . '_grid_orders_history',
 			'grid_processed' => $this->_sName . '_grid_orders_processed',
-			'grid_pending' => $this->_sName . '_grid_orders_pending'
+			'grid_pending' => $this->_sName . '_grid_orders_pending',
+			'grid_carts' => $this->_sName . '_grid_carts',
+			'grid_cart' => $this->_sName . '_grid_cart',
 		));
 
 		$this->_aPerPage = array();

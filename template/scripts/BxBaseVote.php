@@ -210,12 +210,10 @@ class BxBaseVote extends BxDolVote
 
 		$iObjectId = $this->getId();
 		$iAuthorId = $this->_getAuthorId();
-        $aVote = $this->_oQuery->getVote($iObjectId);
+		$aVote = $this->_oQuery->getVote($iObjectId);
+        $bCount = (int)$aVote['count'] != 0;
 
         $isAllowedVote = $this->isAllowedVote();
-        if(!$isAllowedVote && (int)$aVote['count'] == 0)
-            return '';
-
         $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         //--- Do Vote
@@ -228,12 +226,13 @@ class BxBaseVote extends BxDolVote
 			);
 
         //--- Counter
+        $bTmplVarsCounter = $bShowCounter && ($bCount || $isAllowedVote);
         $aTmplVarsCounter = array();
-        if($bShowCounter)
+        if($bTmplVarsCounter)
         	$aTmplVarsCounter = array(
 				'style_prefix' => $this->_sStylePrefix,
 				'bx_if:show_hidden' => array(
-					'condition' => (int)$aVote['count'] == 0,
+					'condition' => !$bCount,
 					'content' => array()
 				),
 				'counter' => $this->getCounter($aParams)
@@ -258,7 +257,7 @@ class BxBaseVote extends BxDolVote
         		'content' => $aTmplVarsDoVote
         	),
         	'bx_if:show_counter' => array(
-				'condition' => $bShowCounter,
+				'condition' => $bTmplVarsCounter,
 				'content' => $aTmplVarsCounter
 			),
             'bx_if:show_legend' => array(

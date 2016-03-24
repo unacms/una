@@ -114,6 +114,7 @@
     <string name="_bx_market_page_block_title_entry_comments"><![CDATA[Reviews]]></string>
     <string name="_bx_market_page_block_title_entry_comments_link"><![CDATA[Reviews to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_market_page_block_title_entry_comments_n"><![CDATA[Reviews ({0})]]></string>
+    <string name="_bx_market_page_block_title_entry_cover"><![CDATA[Cover]]></string>
     <string name="_bx_market_page_block_title_entry_info"><![CDATA[Info]]></string>
     <string name="_bx_market_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_market_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>

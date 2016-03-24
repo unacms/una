@@ -20,6 +20,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 -- PAGES & BLOCKS
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
 ('bx_payment_join', '_bx_payment_page_title_sys_join', '_bx_payment_page_title_join', @sName, 5, 2147483647, 1, 'payment-join', 'page.php?i=payment-join', '', '', '', 0, 1, 0, 'BxPaymentPageJoin', 'modules/boonex/payment/classes/BxPaymentPageJoin.php'),
+('bx_payment_carts', '_bx_payment_page_title_sys_carts', '_bx_payment_page_title_carts', @sName, 5, 2147483647, 1, 'payment-carts', 'page.php?i=payment-carts', '', '', '', 0, 1, 0, 'BxPaymentPageCart', 'modules/boonex/payment/classes/BxPaymentPageCart.php'),
 ('bx_payment_cart', '_bx_payment_page_title_sys_cart', '_bx_payment_page_title_cart', @sName, 5, 2147483647, 1, 'payment-cart', 'page.php?i=payment-cart', '', '', '', 0, 1, 0, 'BxPaymentPageCart', 'modules/boonex/payment/classes/BxPaymentPageCart.php'),
 ('bx_payment_history', '_bx_payment_page_title_sys_history', '_bx_payment_page_title_history', @sName, 5, 2147483647, 1, 'payment-history', 'page.php?i=payment-history', '', '', '', 0, 1, 0, 'BxPaymentPageHistory', 'modules/boonex/payment/classes/BxPaymentPageHistory.php'),
 ('bx_payment_orders', '_bx_payment_page_title_sys_orders', '_bx_payment_page_title_orders', @sName, 5, 2147483647, 1, 'payment-orders', 'page.php?i=payment-orders', '', '', '', 0, 1, 0, 'BxPaymentPageOrders', 'modules/boonex/payment/classes/BxPaymentPageOrders.php'),
@@ -27,6 +28,8 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_payment_join', 1, @sName, '_bx_payment_page_block_title_join', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:14:"get_block_join";s:6:"params";a:0:{}s:5:"class";s:4:"Join";}', 0, 0, 1),
+
+('bx_payment_carts', 1, @sName, '_bx_payment_page_block_title_carts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:15:"get_block_carts";s:6:"params";a:0:{}s:5:"class";s:4:"Cart";}', 0, 0, 1),
 
 ('bx_payment_cart', 1, @sName, '_bx_payment_page_block_title_cart', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:14:"get_block_cart";s:6:"params";a:0:{}s:5:"class";s:4:"Cart";}', 0, 0, 1),
 
@@ -45,7 +48,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_payment_menu_cart_submenu', 'bx_payment', '_bx_payment_menu_set_title_cart_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_payment_menu_cart_submenu', 'bx_payment', 'cart', '_bx_payment_menu_item_title_system_cart', '_bx_payment_menu_item_title_cart', 'page.php?i=payment-cart', '', '_self', '', '', '', 2147483647, 1, 0, 1, 1),
+('bx_payment_menu_cart_submenu', 'bx_payment', 'cart', '_bx_payment_menu_item_title_system_cart', '_bx_payment_menu_item_title_cart', 'page.php?i=payment-carts', '', '_self', '', '', '', 2147483647, 1, 0, 1, 1),
 ('bx_payment_menu_cart_submenu', 'bx_payment', 'cart-history', '_bx_payment_menu_item_title_system_cart_history', '_bx_payment_menu_item_title_cart_history', 'page.php?i=payment-history', '', '_self', '', '', '', 2147483647, 1, 0, 1, 2);
 
 

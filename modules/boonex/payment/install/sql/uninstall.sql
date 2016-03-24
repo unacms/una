@@ -12,9 +12,9 @@ DROP TABLE IF EXISTS `bx_payment_modules`;
 
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_payment_grid_orders_history', 'bx_payment_grid_orders_processed', 'bx_payment_grid_orders_pending');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_payment_grid_orders_history', 'bx_payment_grid_orders_processed', 'bx_payment_grid_orders_pending');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_payment_grid_orders_history', 'bx_payment_grid_orders_processed', 'bx_payment_grid_orders_pending');
+DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_payment_grid%';
+DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_payment_grid%';
+DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_payment_grid%';
 
 
 -- FORMS

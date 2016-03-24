@@ -57,7 +57,7 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
 
         $sKey = 'order_' . $this->_sOrdersType . '_view';
     	$sId = $this->_oModule->_oConfig->getHtmlIds($sKey);
-    	$sTitle = _t($this->_sLangsPrefix . 'grid_orders_popup_' . $sKey);
+    	$sTitle = _t($this->_sLangsPrefix . 'grid_popup_title_ods_' . $sKey);
     	$sContent = $this->_oModule->getObjectOrders()->getOrder($this->_sOrdersType, $iId);
 
     	return echoJson(array('popup' => BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $sContent)));
@@ -84,12 +84,12 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
 
 	protected function _getCellClientId($mixedValue, $sKey, $aField, $aRow)
     {
-    	return parent::_getCellDefault($this->_toProfile($mixedValue), $sKey, $aField, $aRow);
+    	return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
     }
 
 	protected function _getCellSellerId($mixedValue, $sKey, $aField, $aRow)
     {
-    	return parent::_getCellDefault($this->_toProfile($mixedValue), $sKey, $aField, $aRow);
+    	return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
     }
 
 	protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
@@ -101,19 +101,6 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
-
-    protected function _toProfile($mixedValue)
-    {
-    	$aProfile = $this->_oModule->getProfileInfo((int)$mixedValue);
-
-    	return $this->_oModule->_oTemplate->parseHtmlByName('profile_link.html', array(
-            'href' => $aProfile['link'],
-            'title' => bx_html_attribute($aProfile['name']),
-            'content' => $aProfile['name']
-        ));
-    }
-    
-    
 }
 
 /** @} */
