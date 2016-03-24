@@ -48,6 +48,11 @@ class BxPaymentGridCarts extends BxBaseModPaymentGridCarts
         return parent::_getCellDefault($this->_sCurrencySign . $mixedValue, $sKey, $aField, $aRow);
     }
 
+    protected function _getFilterControls ()
+    {
+    	return '';
+    }
+    
 	protected function _getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
 		if(empty($this->_aQueryAppend['client_id']))

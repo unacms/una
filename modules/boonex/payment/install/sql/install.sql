@@ -142,7 +142,7 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_payment_grid_carts', 'Array', '', '', 'vendor_id', '', '', '', 20, NULL, 'start', '', 'vendor', '', 'like', '', '', 'BxPaymentGridCarts', 'modules/boonex/payment/classes/BxPaymentGridCarts.php'),
+('bx_payment_grid_carts', 'Array', '', '', 'vendor_id', '', '', '', 20, NULL, 'start', '', '', '', 'like', '', '', 'BxPaymentGridCarts', 'modules/boonex/payment/classes/BxPaymentGridCarts.php'),
 ('bx_payment_grid_cart', 'Array', '', '', 'descriptor', '', '', '', 20, NULL, 'start', '', 'title,description', '', 'like', '', '', 'BxPaymentGridCart', 'modules/boonex/payment/classes/BxPaymentGridCart.php'),
 
 ('bx_payment_grid_orders_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `ttp`.`order` AS `transaction`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 'BxPaymentGridHistory', 'modules/boonex/payment/classes/BxPaymentGridHistory.php'),
