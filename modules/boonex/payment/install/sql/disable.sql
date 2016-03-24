@@ -31,6 +31,12 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = @sName;
 
 
+-- GRIDS
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_payment_grid_carts', 'bx_payment_grid_cart');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_payment_grid_carts', 'bx_payment_grid_cart');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_payment_grid_carts', 'bx_payment_grid_cart');
+
+
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `Module` = @sName;
 

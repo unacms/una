@@ -10,9 +10,12 @@
 	<string name="_bx_payment_option_site_admin"><![CDATA[Site administrator]]></string>
 
 	<!-- PAGES and BLOCKS -->
+	<string name="_bx_payment_page_title_sys_carts"><![CDATA[Shopping Carts]]></string>
+	<string name="_bx_payment_page_title_carts"><![CDATA[Shopping Carts]]></string>
 	<string name="_bx_payment_page_title_sys_cart"><![CDATA[Shopping Cart]]></string>
 	<string name="_bx_payment_page_title_cart"><![CDATA[Shopping Cart]]></string>
-	<string name="_bx_payment_page_block_title_cart"><![CDATA[Shopping Cart]]></string>
+	<string name="_bx_payment_page_block_title_carts"><![CDATA[Shopping Carts]]></string>
+	<string name="_bx_payment_page_block_title_cart"><![CDATA[{0}'s Shopping Cart]]></string>
 
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[Shopping History]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[Shopping History]]></string>
@@ -72,23 +75,38 @@
 	<string name="_bx_payment_form_details_input_do_submit"><![CDATA[Save]]></string>
 
 	<!-- GRIDS -->
-	<string name="_bx_payment_grid_orders_field_client_id"><![CDATA[Client]]></string>
-	<string name="_bx_payment_grid_orders_field_seller_id"><![CDATA[Seller]]></string>
-	<string name="_bx_payment_grid_orders_field_transaction"><![CDATA[Transaction]]></string>
-	<string name="_bx_payment_grid_orders_field_license"><![CDATA[License]]></string>
-	<string name="_bx_payment_grid_orders_field_amount"><![CDATA[Amount]]></string>
-	<string name="_bx_payment_grid_orders_field_date"><![CDATA[Date]]></string>
+	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Client]]></string>
+	<string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Seller]]></string>
+	<string name="_bx_payment_grid_column_title_ods_transaction"><![CDATA[Transaction]]></string>
+	<string name="_bx_payment_grid_column_title_ods_license"><![CDATA[License]]></string>
+	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Amount]]></string>
+	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Date]]></string>
+	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Vendor]]></string>
+	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Count]]></string>
+	<string name="_bx_payment_grid_column_title_crts_items_price"><![CDATA[Price]]></string>
+	<string name="_bx_payment_grid_column_title_crt_title"><![CDATA[Product]]></string>
+	<string name="_bx_payment_grid_column_title_crt_description"><![CDATA[Description]]></string>
+	<string name="_bx_payment_grid_column_title_crt_quantity"><![CDATA[Quantity]]></string>
+	<string name="_bx_payment_grid_column_title_crt_price"><![CDATA[Price]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
 
-	<string name="_bx_payment_grid_orders_action_add"><![CDATA[Manual Order]]></string>
-	<string name="_bx_payment_grid_orders_action_cancel"><![CDATA[Cancel]]></string>
-	<string name="_bx_payment_grid_orders_action_process"><![CDATA[Process]]></string>
-	<string name="_bx_payment_grid_orders_action_view_order"><![CDATA[View]]></string>
+	<string name="_bx_payment_grid_action_title_ods_add"><![CDATA[Manual Order]]></string>
+	<string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Cancel]]></string>
+	<string name="_bx_payment_grid_action_title_ods_process"><![CDATA[Process]]></string>
+	<string name="_bx_payment_grid_action_title_ods_view_order"><![CDATA[View]]></string>
+	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Delete]]></string>
+	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Continue]]></string>
+	<string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Delete]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
 
-	<string name="_bx_payment_grid_orders_popup_order_history_view"><![CDATA[Order]]></string>
-	<string name="_bx_payment_grid_orders_popup_order_pending_view"><![CDATA[Pending Order]]></string>
-	<string name="_bx_payment_grid_orders_popup_order_pending_process"><![CDATA[Process Pending Order]]></string>
-	<string name="_bx_payment_grid_orders_popup_order_processed_view"><![CDATA[Processed Order]]></string>
-	<string name="_bx_payment_grid_orders_popup_order_processed_add"><![CDATA[Manual Order]]></string>
+	<string name="_bx_payment_grid_popup_title_ods_order_history_view"><![CDATA[Order]]></string>
+	<string name="_bx_payment_grid_popup_title_ods_order_pending_view"><![CDATA[Pending Order]]></string>
+	<string name="_bx_payment_grid_popup_title_ods_order_pending_process"><![CDATA[Process Pending Order]]></string>
+	<string name="_bx_payment_grid_popup_title_ods_order_processed_view"><![CDATA[Processed Order]]></string>
+	<string name="_bx_payment_grid_popup_title_ods_order_processed_add"><![CDATA[Manual Order]]></string>
+	<string name=""><![CDATA[]]></string>
 	<string name=""><![CDATA[]]></string>
 	<string name=""><![CDATA[]]></string>
 
@@ -149,7 +167,8 @@
 	<!-- MESSAGES, WARNINGS and ERRORS -->
 	<string name="_bx_payment_msg_no_results"><![CDATA[Empty]]></string>
 	<string name="_bx_payment_msg_redirecting"><![CDATA[Redirecting... Please wait.]]></string>
-	<string name="_bx_payment_msg_successfully_added"><![CDATA[The item was successfully added to your shopping cart.]]></string>
+	<string name="_bx_payment_msg_item_added"><![CDATA[The item was successfully added to your shopping cart.]]></string>
+	<string name="_bx_payment_msg_item_deleted"><![CDATA[The item was successfully deleted from your shopping cart.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Free item was successfully processed]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Database access error.]]></string>
 	<string name="_bx_payment_err_cannot_validate"><![CDATA[Can't connect to remote host for validation.]]></string>
@@ -159,7 +178,7 @@
 	<string name="_bx_payment_err_incorrect_provider"><![CDATA[Incorrect or unavailable payment provider.]]></string>
 	<string name="_bx_payment_err_not_accept_payments"><![CDATA[The vendor does not accept payments.]]></string>
 	<string name="_bx_payment_err_nothing_selected"><![CDATA[You need to select at least one item.]]></string>
-	<string name="_bx_payment_err_purchase_from_yourself"><![CDATA[You cannot purchase your own item. It's just a bad luck thing, you know.]]></string>
+	<string name="_bx_payment_err_self_purchase"><![CDATA[You cannot purchase your own item. It's just a bad luck thing, you know.]]></string>
 	<string name="_bx_payment_err_required_login"><![CDATA[You need to login.]]></string>
 	<string name="_bx_payment_err_unknown_vendor"><![CDATA[Unknown vendor.]]></string>
 	<string name="_bx_payment_err_wrong_data"><![CDATA[Incorrect input data.]]></string>
@@ -167,13 +186,11 @@
 	<string name="_bx_payment_err_cannot_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
 	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Incorrect quantity specified.]]></string>
 	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
 
 
 	<!-- Other -->
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[Add to Cart]]></string>
 	<string name="_bx_payment_txt_subscribe"><![CDATA[Subscribe]]></string>
-	<string name="_bx_payment_txt_shopping_cart"><![CDATA[{0}'s cart]]></string>
 	<string name="_bx_payment_txt_payment_to"><![CDATA[Payment to {0} for:]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Client]]></string>
 	<string name="_bx_payment_txt_seller"><![CDATA[Seller]]></string>
@@ -182,9 +199,9 @@
 	<string name="_bx_payment_txt_message"><![CDATA[Result]]></string>
 	<string name="_bx_payment_txt_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_txt_products"><![CDATA[Products]]></string>
+	<string name="_bx_payment_txt_checkout_to"><![CDATA[Checkout to {0}]]></string>
 	
 	
-	<string name=""><![CDATA[]]></string>
 	<string name=""><![CDATA[]]></string>
 	<string name=""><![CDATA[]]></string>
 	<string name=""><![CDATA[]]></string>

@@ -147,40 +147,40 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_payment_grid_orders_pending', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`items` AS `items`, `tt`.`amount` AS `amount`, `tt`.`order` AS `transaction`, `tt`.`error_msg` AS `error_msg`, `tt`.`provider` AS `provider`, `tt`.`date` AS `date` FROM `bx_payment_transactions_pending` AS `tt` WHERE 1 AND (ISNULL(`tt`.`order`) OR (NOT ISNULL(`tt`.`order`) AND `tt`.`error_code`<>''0'')) ', 'bx_payment_transactions_pending', 'id', 'date', '', '', 100, NULL, 'start', '', 'tt`.`order,tt`.`amount,tt`.`date', '', 'auto', '', '', 'BxPaymentGridPending', 'modules/boonex/payment/classes/BxPaymentGridPending.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_payment_grid_orders_history', 'seller_id', '_bx_payment_grid_orders_field_seller_id', '24%', 0, '20', '', 1),
-('bx_payment_grid_orders_history', 'transaction', '_bx_payment_grid_orders_field_transaction', '22%', 0, '18', '', 2),
-('bx_payment_grid_orders_history', 'license', '_bx_payment_grid_orders_field_license', '22%', 0, '18', '', 3),
-('bx_payment_grid_orders_history', 'amount', '_bx_payment_grid_orders_field_amount', '10%', 1, '10', '', 4),
-('bx_payment_grid_orders_history', 'date', '_bx_payment_grid_orders_field_date', '10%', 0, '10', '', 5),
+('bx_payment_grid_orders_history', 'seller_id', '_bx_payment_grid_column_title_ods_seller_id', '24%', 0, '20', '', 1),
+('bx_payment_grid_orders_history', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '22%', 0, '18', '', 2),
+('bx_payment_grid_orders_history', 'license', '_bx_payment_grid_column_title_ods_license', '22%', 0, '18', '', 3),
+('bx_payment_grid_orders_history', 'amount', '_bx_payment_grid_column_title_ods_amount', '10%', 1, '10', '', 4),
+('bx_payment_grid_orders_history', 'date', '_bx_payment_grid_column_title_ods_date', '10%', 0, '10', '', 5),
 ('bx_payment_grid_orders_history', 'actions', '', '12%', 0, '', '', 6),
 
 ('bx_payment_grid_orders_processed', 'checkbox', '', '2%', 0, '', '', 1),
-('bx_payment_grid_orders_processed', 'client_id', '_bx_payment_grid_orders_field_client_id', '22%', 0, '18', '', 2),
-('bx_payment_grid_orders_processed', 'transaction', '_bx_payment_grid_orders_field_transaction', '20%', 0, '18', '', 3),
-('bx_payment_grid_orders_processed', 'license', '_bx_payment_grid_orders_field_license', '20%', 0, '18', '', 4),
-('bx_payment_grid_orders_processed', 'amount', '_bx_payment_grid_orders_field_amount', '10%', 1, '10', '', 5),
-('bx_payment_grid_orders_processed', 'date', '_bx_payment_grid_orders_field_date', '10%', 0, '10', '', 6),
+('bx_payment_grid_orders_processed', 'client_id', '_bx_payment_grid_column_title_ods_client_id', '22%', 0, '18', '', 2),
+('bx_payment_grid_orders_processed', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '20%', 0, '18', '', 3),
+('bx_payment_grid_orders_processed', 'license', '_bx_payment_grid_column_title_ods_license', '20%', 0, '18', '', 4),
+('bx_payment_grid_orders_processed', 'amount', '_bx_payment_grid_column_title_ods_amount', '10%', 1, '10', '', 5),
+('bx_payment_grid_orders_processed', 'date', '_bx_payment_grid_column_title_ods_date', '10%', 0, '10', '', 6),
 ('bx_payment_grid_orders_processed', 'actions', '', '16%', 0, '', '', 7),
 
 ('bx_payment_grid_orders_pending', 'checkbox', '', '2%', 0, '', '', 1),
-('bx_payment_grid_orders_pending', 'client_id', '_bx_payment_grid_orders_field_client_id', '25%', 0, '25', '', 2),
-('bx_payment_grid_orders_pending', 'transaction', '_bx_payment_grid_orders_field_transaction', '25%', 0, '25', '', 3),
-('bx_payment_grid_orders_pending', 'amount', '_bx_payment_grid_orders_field_amount', '14%', 1, '14', '', 4),
-('bx_payment_grid_orders_pending', 'date', '_bx_payment_grid_orders_field_date', '14%', 0, '14', '', 5),
+('bx_payment_grid_orders_pending', 'client_id', '_bx_payment_grid_column_title_ods_client_id', '25%', 0, '25', '', 2),
+('bx_payment_grid_orders_pending', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '25%', 0, '25', '', 3),
+('bx_payment_grid_orders_pending', 'amount', '_bx_payment_grid_column_title_ods_amount', '14%', 1, '14', '', 4),
+('bx_payment_grid_orders_pending', 'date', '_bx_payment_grid_column_title_ods_date', '14%', 0, '14', '', 5),
 ('bx_payment_grid_orders_pending', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_payment_grid_orders_history', 'single', 'view_order', '_bx_payment_grid_orders_action_view_order', 'ellipsis-h', 1, 0, 1),
+('bx_payment_grid_orders_history', 'single', 'view_order', '_bx_payment_grid_action_title_ods_view_order', 'ellipsis-h', 1, 0, 1),
 
-('bx_payment_grid_orders_processed', 'independent', 'add', '_bx_payment_grid_orders_action_add', '', 0, 0, 1),
-('bx_payment_grid_orders_processed', 'bulk', 'cancel', '_bx_payment_grid_orders_action_cancel', '', 0, 1, 1),
-('bx_payment_grid_orders_processed', 'single', 'view_order', '_bx_payment_grid_orders_action_view_order', 'ellipsis-h', 1, 0, 1),
-('bx_payment_grid_orders_processed', 'single', 'cancel', '_bx_payment_grid_orders_action_cancel', 'times', 1, 1, 2),
+('bx_payment_grid_orders_processed', 'independent', 'add', '_bx_payment_grid_action_title_ods_add', '', 0, 0, 1),
+('bx_payment_grid_orders_processed', 'bulk', 'cancel', '_bx_payment_grid_action_title_ods_cancel', '', 0, 1, 1),
+('bx_payment_grid_orders_processed', 'single', 'view_order', '_bx_payment_grid_action_title_ods_view_order', 'ellipsis-h', 1, 0, 1),
+('bx_payment_grid_orders_processed', 'single', 'cancel', '_bx_payment_grid_action_title_ods_cancel', 'times', 1, 1, 2),
 
-('bx_payment_grid_orders_pending', 'bulk', 'cancel', '_bx_payment_grid_orders_action_cancel', '', 0, 1, 1),
-('bx_payment_grid_orders_pending', 'single', 'view_order', '_bx_payment_grid_orders_action_view_order', 'ellipsis-h', 1, 0, 1),
-('bx_payment_grid_orders_pending', 'single', 'process', '_bx_payment_grid_orders_action_process', 'refresh', 1, 0, 2),
-('bx_payment_grid_orders_pending', 'single', 'cancel', '_bx_payment_grid_orders_action_cancel', 'times', 1, 1, 3);
+('bx_payment_grid_orders_pending', 'bulk', 'cancel', '_bx_payment_grid_action_title_ods_cancel', '', 0, 1, 1),
+('bx_payment_grid_orders_pending', 'single', 'view_order', '_bx_payment_grid_action_title_ods_view_order', 'ellipsis-h', 1, 0, 1),
+('bx_payment_grid_orders_pending', 'single', 'process', '_bx_payment_grid_action_title_ods_process', 'refresh', 1, 0, 2),
+('bx_payment_grid_orders_pending', 'single', 'cancel', '_bx_payment_grid_action_title_ods_cancel', 'times', 1, 1, 3);
 
 
 -- FORMS

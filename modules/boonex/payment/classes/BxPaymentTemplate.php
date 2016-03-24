@@ -15,6 +15,8 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
     function __construct(&$oConfig, &$oDb)
     {
+    	$this->MODULE = 'bx_payment';
+
         parent::__construct($oConfig, $oDb);
 
         $this->_sLangsPrefix = $this->_oConfig->getPrefix('langs');
@@ -105,6 +107,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         ));
     }
 
+    /*
 	public function displayBlockCart($aCartInfo, $iVendorId = BX_PAYMENT_EMPTY_ID)
     {
     	if(empty($aCartInfo))
@@ -204,6 +207,32 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         	'js_content' => $this->displayJsCode('cart'),
         	'bx_repeat:vendors' => $aVendors
         ));
+    }
+	*/
+
+	public function displayBlockCarts($iClientId)
+    {
+    	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_carts'));
+        if(!$oGrid)
+            return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+
+		$oGrid->addQueryParam('client_id', $iClientId);
+
+		$this->addJsCssCart();
+        return $this->displayJsCode('cart') . $oGrid->getCode();
+    }
+
+	public function displayBlockCart($iClientId, $iSellerId = 0)
+    {
+    	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_cart'));
+        if(!$oGrid || empty($iSellerId))
+            return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+
+		$oGrid->addQueryParam('client_id', $iClientId);
+		$oGrid->addQueryParam('seller_id', $iSellerId);
+
+		$this->addJsCssCart();
+        return $this->displayJsCode('cart') . $oGrid->getCode();
     }
 
     public function displayBlockHistory($iClientId, $iSellerId)

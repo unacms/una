@@ -32,7 +32,7 @@ define('BX_PAYMENT_RESULT_SUCCESS', 0);
  * 1. Get 'Add To Cart' button using serviceGetAddToCartLink service.
  * 2. Add info about your module in the 'bx_pmt_modules' table.
  * 3. Realize the following service methods in your Module class.
- *   a. serviceGetItems($iVendorId) - Is used in Orders Administration to get all products of the requested seller(vendor).
+ *   a. serviceGetItems($iSellerId) - Is used in Orders Administration to get all products of the requested seller(vendor).
  *   b. serviceGetCartItem($iClientId, $iItemId) - Is used in Shopping Cart to get one product by specified id.
  *   c. serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrderId) - Register purchased product.
  *   d. serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrderId) - Unregister the product purchased earlier.
@@ -58,7 +58,7 @@ define('BX_PAYMENT_RESULT_SUCCESS', 0);
  *
  * Is used to get "Add to cart" link for some item(s) in your module.
  * @see BxPmtModule::serviceGetAddToCartLink
- * BxDolService::call('payment', 'get_add_to_cart_link', array($iVendorId, $mixedModuleId, $iItemId, $iItemCount));
+ * BxDolService::call('payment', 'get_add_to_cart_link', array($iSellerId, $mixedModuleId, $iItemId, $iItemCount));
  *
  * Check transaction(s) in database which satisty all conditions.
  * @see BxPmtModule::serviceGetTransactionsInfo
@@ -168,24 +168,17 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /**
      * Cart Processing Methods
      */
-    public function actionCartSubmit()
+    public function actionInitializeCheckout($sType)
     {
     	if(!$this->isLogged())
             return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_required_login');
 
-        if(bx_get('bx-payment-delete') !== false && bx_get('items') !== false){
-        	$aItems = bx_get('items');
-            foreach($aItems as $sItem) {
-                list($iVendorId, $iModuleId, $iItemId, $iItemCount) = $this->_oConfig->descriptorS2A($sItem);
-                $this->getObjectCart()->serviceDeleteFromCart($iVendorId, $iModuleId, $iItemId);
-            }
-        }
-		else if(bx_get('bx-payment-checkout') !== false && bx_get('items') !== false) {
-			$iVendorId = (int)bx_get('vendor_id');
+		if(bx_get('seller_id') !== false && bx_get('provider') !== false && bx_get('items') !== false) {
+			$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
 			$sProvider = bx_process_input(bx_get('provider'));
-			$aItems = bx_get('items');
+			$aItems = bx_process_input(bx_get('items'));
 
-			$mixedResult = $this->serviceInitializeCheckout(BX_PAYMENT_TYPE_SINGLE, $iVendorId, $sProvider, $aItems);
+			$mixedResult = $this->serviceInitializeCheckout(BX_PAYMENT_TYPE_SINGLE, $iSellerId, $sProvider, $aItems);
 			if($mixedResult !== true)
 	    		return $this->_oTemplate->displayPageCodeError($mixedResult);
 		}
@@ -194,33 +187,33 @@ class BxPaymentModule extends BxBaseModPaymentModule
         exit;
     }
 
-    public function actionAddToCart($iVendorId, $iModuleId, $iItemId, $iItemCount)
+    public function actionAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount)
     {
-        $aResult = $this->getObjectCart()->serviceAddToCart($iVendorId, $iModuleId, $iItemId, $iItemCount);
+        $aResult = $this->getObjectCart()->serviceAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount);
 		echoJson($aResult);
     }
 
     /**
      * Isn't used yet.
      */
-    public function actionDeleteFromCart($iVendorId, $iModuleId, $iItemId)
+    public function actionDeleteFromCart($iSellerId, $iModuleId, $iItemId)
     {
-        $aResult = $this->getObjectCart()->serviceDeleteFromCart($iVendorId, $iModuleId, $iItemId);
+        $aResult = $this->getObjectCart()->serviceDeleteFromCart($iSellerId, $iModuleId, $iItemId);
         echoJson($aResult);
     }
 
     /**
      * Isn't used yet.
      */
-    public function actionEmptyCart($iVendorId)
+    public function actionEmptyCart($iSellerId)
     {
-        $aResult = $this->getObjectCart()->serviceDeleteFromCart($this->_iUserId, $iVendorId);
+        $aResult = $this->getObjectCart()->serviceDeleteFromCart($iSellerId);
 		echoJson($aResult);
     }
 
-    public function actionSubscribe($iVendorId, $iModuleId, $iItemId, $iItemCount = 1)
+    public function actionSubscribe($iSellerId, $iModuleId, $iItemId, $iItemCount = 1)
     {
-        $aResult = $this->getObjectCart()->serviceSubscribe($iVendorId, $iModuleId, $iItemId, $iItemCount);
+        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $iModuleId, $iItemId, $iItemCount);
 		echoJson($aResult);
     }
 
@@ -228,20 +221,20 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /**
      * Payment Processing Methods
      */
-	public function serviceInitializeCheckout($sType, $iVendorId, $sProvider, $aItems = array())
+	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array())
 	{
 		if(!is_array($aItems))
 			$aItems = array($aItems);
 
-		$iVendorId = (int)$iVendorId;
-        if($iVendorId == BX_PAYMENT_EMPTY_ID)
+		$iSellerId = (int)$iSellerId;
+        if($iSellerId == BX_PAYMENT_EMPTY_ID)
             return $this->_sLangsPrefix . 'err_unknown_vendor';
 
-		$oProvider = $this->getObjectProvider($sProvider, $iVendorId);
+		$oProvider = $this->getObjectProvider($sProvider, $iSellerId);
         if($oProvider === false || !$oProvider->isActive())
         	return $this->_sLangsPrefix . 'err_incorrect_provider';
 
-        $aInfo = $this->getObjectCart()->getInfo($sType, $this->_iUserId, $iVendorId, $aItems);
+        $aInfo = $this->getObjectCart()->getInfo($sType, $this->_iUserId, $iSellerId, $aItems);
         if(empty($aInfo) || $aInfo['vendor_id'] == BX_PAYMENT_EMPTY_ID || empty($aInfo['items']))
             return $this->_sLangsPrefix . 'err_empty_order';
 
