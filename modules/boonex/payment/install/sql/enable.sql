@@ -108,34 +108,6 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iPremium, @iIdActionSell);
 
 
--- GRIDS: Carts
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_payment_grid_carts', 'Array', '', '', 'vendor_id', '', '', '', 20, NULL, 'start', '', 'vendor', '', 'like', '', '', 'BxPaymentGridCarts', 'modules/boonex/payment/classes/BxPaymentGridCarts.php'),
-('bx_payment_grid_cart', 'Array', '', '', 'descriptor', '', '', '', 20, NULL, 'start', '', 'title,description', '', 'like', '', '', 'BxPaymentGridCart', 'modules/boonex/payment/classes/BxPaymentGridCart.php');
-
-INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_payment_grid_carts', 'checkbox', '', '2%', 0, '', '', 1),
-('bx_payment_grid_carts', 'vendor_id', '_bx_payment_grid_column_title_crts_vendor_id', '40%', 0, '36', '', 2),
-('bx_payment_grid_carts', 'items_count', '_bx_payment_grid_column_title_crts_items_count', '20%', 0, '16', '', 3),
-('bx_payment_grid_carts', 'items_price', '_bx_payment_grid_column_title_crts_items_price', '20%', 0, '16', '', 4),
-('bx_payment_grid_carts', 'actions', '', '18%', 0, '', '', 5),
-
-('bx_payment_grid_cart', 'checkbox', '', '2%', 0, '', '', 1),
-('bx_payment_grid_cart', 'title', '_bx_payment_grid_column_title_crt_title', '25%', 0, '24', '', 2),
-('bx_payment_grid_cart', 'description', '_bx_payment_grid_column_title_crt_description', '35%', 0, '48', '', 3),
-('bx_payment_grid_cart', 'quantity', '_bx_payment_grid_column_title_crt_quantity', '10%', 0, '16', '', 4),
-('bx_payment_grid_cart', 'price_single', '_bx_payment_grid_column_title_crt_price', '10%', 0, '16', '', 5),
-('bx_payment_grid_cart', 'actions', '', '18%', 0, '', '', 6);
-
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_payment_grid_carts', 'bulk', 'delete', '_bx_payment_grid_action_title_crts_delete', '', 0, 1, 1),
-('bx_payment_grid_carts', 'single', 'continue', '_bx_payment_grid_action_title_crts_continue', 'money', 1, 0, 1),
-('bx_payment_grid_carts', 'single', 'delete', '_bx_payment_grid_action_title_crts_delete', 'remove', 1, 1, 2),
-
-('bx_payment_grid_cart', 'bulk', 'delete', '_bx_payment_grid_action_title_crt_delete', '', 0, 1, 1),
-('bx_payment_grid_cart', 'single', 'delete', '_bx_payment_grid_action_title_crt_delete', 'remove', 1, 1, 1);
-
-
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
 (@sName, '_bx_payment_et_txt_name_paid_need_join', 'bx_payment_paid_need_join', '_bx_payment_et_txt_subject_paid_need_join', '_bx_payment_et_txt_body_paid_need_join');
