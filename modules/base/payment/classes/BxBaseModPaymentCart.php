@@ -26,7 +26,7 @@ class BxBaseModPaymentCart extends BxDol
     	if(!$this->_oModule->isLogged())
             return '';
 
-    	return $this->_oModule->_oConfig->getUrl('URL_CART');
+    	return $this->_oModule->_oConfig->getUrl('URL_CARTS');
     }
 
     public function serviceGetCartJs($bWrapped = true)

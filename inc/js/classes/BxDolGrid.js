@@ -334,6 +334,7 @@ BxDolGrid.prototype._bindActionsSingle = function (eElement) {
         var sActionData = $(this).attr('bx_grid_action_data');
         var iActionResetPaginate = parseInt($(this).attr('bx_grid_action_reset_paginate'));
         var oData = iActionResetPaginate ? {} : $this._getActionDataForReload();
+        oData = $this._checkAppend(this, oData);
         $this.actionWithId (sActionData, sAction, oData, '', false, sActionConfirm);
     });
 
@@ -350,6 +351,7 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
         var sActionData = $(this).attr('bx_grid_action_data');
         var iActionResetPaginate = parseInt($(this).attr('bx_grid_action_reset_paginate'));
         var oData = iActionResetPaginate ? {} : $this._getActionDataForReload();
+        oData = $this._checkAppend(this, oData);
         $this.actionWithSelected (sActionData, sAction, oData, '', false, sActionConfirm);
     });
 
@@ -375,6 +377,7 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
             var sActionConfirm = $(this).attr('bx_grid_action_confirm');
             var iActionResetPaginate = parseInt($(this).attr('bx_grid_action_reset_paginate'));
             var oData = iActionResetPaginate ? {} : $this._getActionDataForReload();
+            oData = $this._checkAppend(this, oData);
             $this.action (sAction, oData, '', false, sActionConfirm);
         });    
 
@@ -414,5 +417,13 @@ BxDolGrid.prototype._onDataReloaded = function (isSkipSearchInput) {
 }
 
 BxDolGrid.prototype.onDataReloaded = function (isSkipSearchInput) {}
+
+BxDolGrid.prototype._checkAppend = function (oInput, oData) {
+	var oAppend = $.parseJSON($(oInput).attr('bx_grid_action_append'));
+    if(typeof(oAppend) == 'object')
+        oData = $.extend({}, oData, oAppend);
+
+    return oData;
+};
 
 /** @} */
