@@ -79,12 +79,13 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         ));
     }
 
-	public function displaySubscribeJs($iVendorId, $iModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
+	public function displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
     {
         $sJsCode = $this->displayCartJs($bWrapped);
         $sJsMethod = $this->parseHtmlByName('subscribe_js.html', array(
             'js_object' => $this->_oConfig->getJsObject('cart'),
             'vendor_id' => $iVendorId,
+        	'vendor_provider' => $sVendorProvider,
             'module_id' => $iModuleId,
             'item_id' => $iItemId,
             'item_count' => $iItemCount
@@ -93,7 +94,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return array($sJsCode, $sJsMethod);
     }
 
-    public function displaySubscribeLink($iVendorId, $iModuleId, $iItemId, $iItemCount = 1)
+    public function displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1)
     {
         $this->addJsCssCart();
         return $this->parseHtmlByName('subscribe.html', array(
@@ -101,114 +102,12 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         	'js_content' => $this->displayJsCode('cart'),
         	'txt_add_to_cart' => _t($this->_sLangsPrefix . 'txt_subscribe'),
             'vendor_id' => $iVendorId,
+        	'vendor_provider' => $sVendorProvider,
             'module_id' => $iModuleId,
             'item_id' => $iItemId,
             'item_count' => $iItemCount,
         ));
     }
-
-    /*
-	public function displayBlockCart($aCartInfo, $iVendorId = BX_PAYMENT_EMPTY_ID)
-    {
-    	if(empty($aCartInfo))
-    		return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
-
-        $sJsObject = $this->_oConfig->getJsObject('cart');
-
-        if($iVendorId != BX_PAYMENT_EMPTY_ID)
-            $aCartInfo = array($aCartInfo);
-
-        $aVendors = array();
-        foreach($aCartInfo as $aVendor) {
-            //--- Get Providers ---//
-            $aProviders = array();
-            $aVendorProviders = $this->_oDb->getVendorInfoProvidersCart($aVendor['vendor_id']);
-
-            if(!empty($aVendorProviders) && is_array($aVendorProviders))
-	            foreach($aVendorProviders as $aProvider)
-	                $aProviders[] = array(
-	                    'name' => $aProvider['name'],
-	                    'caption' => _t($this->_sLangsPrefix . 'txt_cart_' . $aProvider['name']),
-	                    'checked' => empty($aProviders) ? 'checked="checked"' : ''
-	                );
-
-            //--- Get Items ---//
-            $aItems = array();
-            foreach($aVendor['items'] as $aItem) {
-            	$fPrice = $this->_oConfig->getPrice(BX_PAYMENT_TYPE_SINGLE, $aItem);
-
-                $aItems[] = array(
-                    'vendor_id' => $aVendor['vendor_id'],
-                    'vendor_currency_code' => $aVendor['vendor_currency_code'],
-                    'module_id' => $aItem['module_id'],
-                    'item_id' => $aItem['id'],
-                    'item_title' => $aItem['title'],
-                    'item_url' => $aItem['url'],
-                    'item_quantity' => $aItem['quantity'],
-                	'bx_if:show_price_paid' => array(
-                		'condition' => $fPrice != 0,
-                		'content' => array(
-                			'item_price' => $aItem['quantity'] * $fPrice,
-                			'vendor_currency_code' => $aVendor['vendor_currency_code'],
-                		)
-                	),
-                	'bx_if:show_price_free' => array(
-                		'condition' => $fPrice == 0,
-                		'content' => array()
-                	),
-                    'js_object' => $sJsObject
-                );
-            }
-
-            //--- Get Control Panel ---//
-            $aButtons = array(
-                'bx-payment-checkout' => _t($this->_sLangsPrefix . 'form_cart_input_do_checkout'),
-                'bx-payment-delete' => _t($this->_sLangsPrefix . 'form_cart_input_do_delete')
-            );
-            $oSearchResult = new BxTemplSearchResult();
-            $sControlPanel = $oSearchResult->showAdminActionsPanel('items_from_' . $aVendor['vendor_id'], $aButtons, 'items', true, true);
-
-            //--- Get General ---//
-            $bVendorLink = !empty($aVendor['vendor_link']);
-            $sTxtShoppingCart = _t($this->_sLangsPrefix . 'txt_shopping_cart', $aVendor['vendor_name']);
-
-            $aVendors[] = array(
-                'vendor_id' => $aVendor['vendor_id'],
-                'bx_if:show_link' => array(
-                    'condition' => $bVendorLink,
-                    'content' => array(
-            			'txt_shopping_cart' => $sTxtShoppingCart,
-                        'vendor_url' => $aVendor['vendor_link'],
-                        'vendor_currency_code' => $aVendor['vendor_currency_code'],
-                        'items_count' => $aVendor['items_count'],
-                        'items_price' => $aVendor['items_price']
-                    )
-                ),
-                'bx_if:show_text' => array(
-                    'condition' => !$bVendorLink,
-                    'content' => array(
-                		'txt_shopping_cart' => $sTxtShoppingCart,
-                        'vendor_currency_code' => $aVendor['vendor_currency_code'],
-                        'items_count' => $aVendor['items_count'],
-                        'items_price' => $aVendor['items_price']
-                    )
-                ),
-                'vendor_icon' => $aVendor['vendor_icon'],
-                'bx_repeat:providers' => $aProviders,
-                'bx_repeat:items' => $aItems,
-                'js_object' => $sJsObject,
-                'process_url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'cart_submit/',
-                'control_panel' => $sControlPanel
-            );
-        }
-
-        $this->addJsCssCart();
-        return $this->parseHtmlByName('cart.html', array(
-        	'js_content' => $this->displayJsCode('cart'),
-        	'bx_repeat:vendors' => $aVendors
-        ));
-    }
-	*/
 
 	public function displayBlockCarts($iClientId)
     {
@@ -364,15 +263,30 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         ));
     }
 
+    public function displayProvidersSelector($aCartItem, $aProviders)
+    {
+		$oCart = $this->_getModule()->getObjectCart();
+		list($iSellerId, $iModuleId, $iItemId, $iItemCount) = $aCartItem;
+
+		$aTmplVarsProviders = array();
+		foreach($aProviders as $sProvider => $aProvider) {
+			list($sJsCode, $sJsOnclick) = $oCart->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount);
+
+			$aTmplVarsProviders[] = array(
+				'onclick' => $sJsOnclick,
+				'title' => _t('_bx_payment_txt_checkout_with', _t($aProvider['caption']))
+			);
+		}
+
+		return $this->parseHtmlByName('providers_select.html', array(
+			'bx_repeat:providers' => $aTmplVarsProviders
+		));
+    }
+
 	protected function _getModule()
     {
         $sName = $this->_oConfig->getName();
         return BxDolModule::getInstance($sName);
-    }
-
-    protected function _isSubscription($aOrder)
-    {
-    	return '';
     }
 }
 

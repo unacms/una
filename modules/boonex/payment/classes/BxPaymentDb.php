@@ -55,10 +55,16 @@ class BxPaymentDb extends BxBaseModPaymentDb
         		break;
 
 			case 'for_cart':
+				$aMethod['name'] = 'getAllWithKey';
+				$aMethod['params'][1] = 'name';
+
 				$sWhereClause = " AND `tp`.`for_subscription`='0'";
         		break;
 
 			case 'for_subscription':
+				$aMethod['name'] = 'getAllWithKey';
+				$aMethod['params'][1] = 'name';
+
 				$sWhereClause = " AND `tp`.`for_subscription`='1'";
         		break;
         }          
@@ -140,12 +146,12 @@ class BxPaymentDb extends BxBaseModPaymentDb
 		$aOptions = $this->getOptions($iVendorId);
 
 		$aResult = array();
-		foreach($aProviders as $aProvider)
+		foreach($aProviders as $sProvider => $aProvider)
 			if(isset($aOptions[$aProvider['option_prefix'] . 'active']) && $aOptions[$aProvider['option_prefix'] . 'active']['value'] == 'on') {
 				foreach($aOptions as $sName => $aOption)
 					if(strpos($sName, $aProvider['option_prefix']) !== false)
 						$aProvider['options'][$sName] = $aOption;
-				$aResult[] = $aProvider;
+				$aResult[$sProvider] = $aProvider;
 			}
 
 		return $aResult;

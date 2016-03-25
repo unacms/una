@@ -66,39 +66,39 @@ class BxPaymentCart extends BxBaseModPaymentCart
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-		$iVendorId = bx_get('vendor') !== false ? (int)bx_get('vendor') : 0;
+		$iSellerId = bx_get('vendor') !== false ? (int)bx_get('vendor') : 0;
 
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
             return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
 
         return array(
-        	'content' => $this->_oModule->_oTemplate->displayBlockHistory($iUserId, $iVendorId),
+        	'content' => $this->_oModule->_oTemplate->displayBlockHistory($iUserId, $iSellerId),
         	'menu' => $this->_oModule->_oConfig->getObject('menu_cart_submenu')
 		);
     }
 
-    public function serviceAddToCart($iVendorId, $iModuleId, $iItemId, $iItemCount)
+    public function serviceAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	$iClientId = $this->_oModule->getProfileId();
 
-    	$mixedResult = $this->_checkData($iClientId, $iVendorId, $iModuleId, $iItemId, $iItemCount);
+    	$mixedResult = $this->_checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
     	if($mixedResult !== true)
     		return $mixedResult;
 
-        $aVendorProviders = $this->_oModule->_oDb->getVendorInfoProvidersCart($iVendorId);
-        if(empty($aVendorProviders))
+        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersCart($iSellerId);
+        if(empty($aSellerProviders))
             return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
 
-        $sCartItem = $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId, $iItemCount));
+        $sCartItem = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $iItemCount));
         $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
 
-        if(strpos($sCartItems, $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId))) !== false)
+        if(strpos($sCartItems, $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId))) !== false)
             $sCartItems = preg_replace_callback(
-            	"/" . $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId, '([0-9])+')) . "/", 
-            	create_function('$aMatches', 'return ' . $this->_oModule->_oConfig->descriptorA2S(array("'" . $iVendorId, $iModuleId, $iItemId, "' . (\$aMatches[1] + " . $iItemCount . ")")) . ';'),
+            	"/" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '([0-9])+')) . "/", 
+            	create_function('$aMatches', 'return ' . $this->_oModule->_oConfig->descriptorA2S(array("'" . $iSellerId, $iModuleId, $iItemId, "' . (\$aMatches[1] + " . $iItemCount . ")")) . ';'),
             	$sCartItems
 			);
         else
@@ -120,11 +120,11 @@ class BxPaymentCart extends BxBaseModPaymentCart
         );
     }
 
-    public function serviceDeleteFromCart($iVendorId, $iModuleId = 0, $iItemId = 0)
+    public function serviceDeleteFromCart($iSellerId, $iModuleId = 0, $iItemId = 0)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-        if($iVendorId == BX_PAYMENT_EMPTY_ID)
+        if($iSellerId == BX_PAYMENT_EMPTY_ID)
             return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
 
 		$iClientId = $this->_oModule->getProfileId();
@@ -132,9 +132,9 @@ class BxPaymentCart extends BxBaseModPaymentCart
             return array('code' => 2, 'message' => _t($CNF['T']['ERR_REQUIRED_LOGIN']));
 
         if(!empty($iModuleId) && !empty($iItemId))
-            $sPattern = "'" . $iVendorId . "_" . $iModuleId . "_" . $iItemId . "_[0-9]+:?'";
+            $sPattern = "'" . $iSellerId . "_" . $iModuleId . "_" . $iItemId . "_[0-9]+:?'";
         else
-            $sPattern = "'" . $iVendorId . "_[0-9]+_[0-9]+_[0-9]+:?'";
+            $sPattern = "'" . $iSellerId . "_[0-9]+_[0-9]+_[0-9]+:?'";
 
         $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
         $sCartItems = trim(preg_replace($sPattern, "", $sCartItems), ":");
@@ -143,70 +143,55 @@ class BxPaymentCart extends BxBaseModPaymentCart
         return array('code' => 0, 'message' => _t($CNF['T']['MSG_ITEM_DELETED']));
     }
 
-	public function serviceSubscribe($iVendorId, $iModuleId, $iItemId, $iItemCount)
+	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	$iClientId = $this->_oModule->getProfileId();
 
-    	$mixedResult = $this->_checkData($iClientId, $iVendorId, $iModuleId, $iItemId, $iItemCount);
+    	$mixedResult = $this->_checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
     	if($mixedResult !== true)
     		return $mixedResult;
 
-        $aVendorProviders = $this->_oModule->_oDb->getVendorInfoProvidersSubscription($iVendorId);
-        if(empty($aVendorProviders))
+        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersSubscription($iSellerId);
+        if(empty($aSellerProviders))
             return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
 
-        $sCartItem = $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId, $iItemCount));
+		$aCartItem = array($iSellerId, $iModuleId, $iItemId, $iItemCount);
+        $sCartItem = $this->_oModule->_oConfig->descriptorA2S($aCartItem);
 
-        if(count($aVendorProviders) > 1) {
-        	//TODO: Show popup with selector and path Descriptior into it.
-        	return array('popup' => '');
+        if(count($aSellerProviders) > 1) {
+        	if(empty($sSellerProvider)) {
+		        $sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
+		    	$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
+	        	return array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders)));
+        	}
+
+        	$aProvider = $aSellerProviders[$sSellerProvider];
         }
+        else 
+        	$aProvider = array_shift($aSellerProviders);
 
-        $aProvider = array_shift($aVendorProviders);
-
-        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iVendorId, $aProvider['name'], array($sCartItem));
+        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem));
         if(is_string($mixedResult))
         	return array('code' => 6, 'message' => _t($mixedResult));
 
 		return $mixedResult;
     }
 
-    protected function _checkData($iClientId, $iVendorId, $iModuleId, $iItemId, $iItemCount)
+    public function getInfo($sType, $iUserId, $iSellerId = BX_PAYMENT_EMPTY_ID, $aItems = array())
     {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-		if($iVendorId == BX_PAYMENT_EMPTY_ID || empty($iModuleId) || empty($iItemId) || empty($iItemCount))
-            return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
-
-		$iClientId = $this->_oModule->getProfileId();
-        if(empty($iClientId))
-            return array('code' => 2, 'message' => _t($CNF['T']['ERR_REQUIRED_LOGIN']));
-
-        if($iClientId == $iVendorId)
-            return array('code' => 3, 'message' => _t($CNF['T']['ERR_SELF_PURCHASE']));
-
-        $aVendor = $this->_oModule->getVendorInfo($iVendorId);
-        if(!$aVendor['active'])
-            return array('code' => 4, 'message' => _t($CNF['T']['ERR_INACTIVE_VENDOR']));
-
-		return true;
-    }
-
-    public function getInfo($sType, $iUserId, $iVendorId = BX_PAYMENT_EMPTY_ID, $aItems = array())
-    {
-        if($iVendorId != BX_PAYMENT_EMPTY_ID && !empty($aItems))
-            return $this->_getInfo($sType, $iUserId, $iVendorId, $this->_oModule->_oConfig->descriptorsM2A($aItems));
+        if($iSellerId != BX_PAYMENT_EMPTY_ID && !empty($aItems))
+            return $this->_getInfo($sType, $iUserId, $iSellerId, $this->_oModule->_oConfig->descriptorsM2A($aItems));
 
         $aContent = $this->_parseByVendor($iUserId);
 
-        if($iVendorId != BX_PAYMENT_EMPTY_ID)
-            return isset($aContent[$iVendorId]) ? $this->_getInfo($sType, $iUserId, $iVendorId, $aContent[$iVendorId]) : array();
+        if($iSellerId != BX_PAYMENT_EMPTY_ID)
+            return isset($aContent[$iSellerId]) ? $this->_getInfo($sType, $iUserId, $iSellerId, $aContent[$iSellerId]) : array();
 
         $aResult = array();
-        foreach($aContent as $iVendorId => $aVendorItems)
-            $aResult[$iVendorId] = $this->_getInfo($sType, $iUserId, $iVendorId, $aVendorItems);
+        foreach($aContent as $iSellerId => $aSellerItems)
+            $aResult[$iSellerId] = $this->_getInfo($sType, $iUserId, $iSellerId, $aSellerItems);
 
         return $aResult;
     }
@@ -215,11 +200,11 @@ class BxPaymentCart extends BxBaseModPaymentCart
      * Enter description here...
      *
      * @param  integer $iClientId client's ID
-     * @param  integer $iVendorId vendor's ID
+     * @param  integer $iSellerId vendor's ID
      * @param  array   $aItems    item descriptors(quaternions) from shopping cart.
      * @return array   with full info about vendor and items.
      */
-    protected function _getInfo($sType, $iClientId, $iVendorId, $aItems)
+    protected function _getInfo($sType, $iClientId, $iSellerId, $aItems)
     {
         $iItemsCount = 0;
         $fItemsPrice = 0;
@@ -234,20 +219,41 @@ class BxPaymentCart extends BxBaseModPaymentCart
             $aItemsInfo[] = $aItemInfo;
         }
 
-        $aVendor = $this->_oModule->getVendorInfo((int)$iVendorId);
+        $aSeller = $this->_oModule->getVendorInfo((int)$iSellerId);
         return array(
         	'client_id' => $iClientId,
-            'vendor_id' => $aVendor['id'],
-            'vendor_name' => $aVendor['name'],
-        	'vendor_link' => $aVendor['link'],
-            'vendor_icon' => $aVendor['icon'],
-        	'vendor_unit' => $aVendor['unit'],
-            'vendor_currency_code' => $aVendor['currency_code'],
-            'vendor_currency_sign' => $aVendor['currency_sign'],
+            'vendor_id' => $aSeller['id'],
+            'vendor_name' => $aSeller['name'],
+        	'vendor_link' => $aSeller['link'],
+            'vendor_icon' => $aSeller['icon'],
+        	'vendor_unit' => $aSeller['unit'],
+            'vendor_currency_code' => $aSeller['currency_code'],
+            'vendor_currency_sign' => $aSeller['currency_sign'],
             'items_count' => $iItemsCount,
             'items_price' => $fItemsPrice,
             'items' => $aItemsInfo
         );
+    }
+
+	protected function _checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+		if($iSellerId == BX_PAYMENT_EMPTY_ID || empty($iModuleId) || empty($iItemId) || empty($iItemCount))
+            return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
+
+		$iClientId = $this->_oModule->getProfileId();
+        if(empty($iClientId))
+            return array('code' => 2, 'message' => _t($CNF['T']['ERR_REQUIRED_LOGIN']));
+
+        if($iClientId == $iSellerId)
+            return array('code' => 3, 'message' => _t($CNF['T']['ERR_SELF_PURCHASE']));
+
+        $aSeller = $this->_oModule->getVendorInfo($iSellerId);
+        if(!$aSeller['active'])
+            return array('code' => 4, 'message' => _t($CNF['T']['ERR_INACTIVE_VENDOR']));
+
+		return true;
     }
 }
 

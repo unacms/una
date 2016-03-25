@@ -117,7 +117,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $aTmplVarsRecurring = array();
         $bTmplVarsRecurring = $this->_oDb->getParam($CNF['OPTION_ENABLE_RECURRING']) == 'on' && (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
         if($bTmplVarsRecurring) {
-        	list($sJsCode, $sRecurringOnclick) = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+        	list($sJsCode, $sRecurringOnclick) = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
 
         	$aTmplVarsRecurring = array(
         		'recurring_onclick' => $sRecurringOnclick,
@@ -201,7 +201,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	$bTmplVarsRecurring = (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
     	$aTmplVarsRecurring = array();
     	if($bTmplVarsRecurring) {
-        	list($sJsCode, $sRecurringOnclick) = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+        	list($sJsCode, $sRecurringOnclick) = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
 
         	$aTmplVarsRecurring = array(
         		'entry_price_recurring_onclick' => $sRecurringOnclick,

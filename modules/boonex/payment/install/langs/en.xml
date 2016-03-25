@@ -101,12 +101,12 @@
 	<string name=""><![CDATA[]]></string>
 	<string name=""><![CDATA[]]></string>
 
-	<string name="_bx_payment_grid_popup_title_ods_order_history_view"><![CDATA[Order]]></string>
-	<string name="_bx_payment_grid_popup_title_ods_order_pending_view"><![CDATA[Pending Order]]></string>
-	<string name="_bx_payment_grid_popup_title_ods_order_pending_process"><![CDATA[Process Pending Order]]></string>
-	<string name="_bx_payment_grid_popup_title_ods_order_processed_view"><![CDATA[Processed Order]]></string>
-	<string name="_bx_payment_grid_popup_title_ods_order_processed_add"><![CDATA[Manual Order]]></string>
-	<string name=""><![CDATA[]]></string>
+	<string name="_bx_payment_popup_title_ods_order_history_view"><![CDATA[Order]]></string>
+	<string name="_bx_payment_popup_title_ods_order_pending_view"><![CDATA[Pending Order]]></string>
+	<string name="_bx_payment_popup_title_ods_order_pending_process"><![CDATA[Process Pending Order]]></string>
+	<string name="_bx_payment_popup_title_ods_order_processed_view"><![CDATA[Processed Order]]></string>
+	<string name="_bx_payment_popup_title_ods_order_processed_add"><![CDATA[Manual Order]]></string>
+	<string name="_bx_payment_popup_title_crd_providers_select"><![CDATA[Select Payment Method]]></string>
 	<string name=""><![CDATA[]]></string>
 	<string name=""><![CDATA[]]></string>
 
@@ -192,6 +192,8 @@
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[Add to Cart]]></string>
 	<string name="_bx_payment_txt_subscribe"><![CDATA[Subscribe]]></string>
 	<string name="_bx_payment_txt_payment_to"><![CDATA[Payment to {0} for:]]></string>
+	<string name="_bx_payment_txt_checkout_to"><![CDATA[Continue checkouting to {0}]]></string>
+	<string name="_bx_payment_txt_checkout_with"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Client]]></string>
 	<string name="_bx_payment_txt_seller"><![CDATA[Seller]]></string>
 	<string name="_bx_payment_txt_order"><![CDATA[Order ID]]></string>
@@ -199,7 +201,6 @@
 	<string name="_bx_payment_txt_message"><![CDATA[Result]]></string>
 	<string name="_bx_payment_txt_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_txt_products"><![CDATA[Products]]></string>
-	<string name="_bx_payment_txt_checkout_to"><![CDATA[Checkout to {0}]]></string>
 	
 	
 	<string name=""><![CDATA[]]></string>

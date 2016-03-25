@@ -63,8 +63,8 @@ class BxPaymentGridPending extends BxBaseModPaymentGridOrders
         }
 
         $sKey = 'order_' . $this->_sOrdersType . '_process';
-        $sId = $this->_oModule->_oConfig->getHtmlIds($sKey);
-    	$sTitle = _t($this->_sLangsPrefix . 'grid_popup_title_ods_' . $sKey);
+        $sId = $this->_oModule->_oConfig->getHtmlIds('pending', $sKey);
+    	$sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);
 
 		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->parseHtmlByName('order_pending_process.html', array(
 			'form_id' => $oForm->aFormAttrs['id'],

@@ -91,7 +91,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 
 		$aResult = array(
 			'code' => BX_PAYMENT_RESULT_SUCCESS,
-        	'message' => $this->_sLangsPrefix . 'cbee_msg_subscribed',
+        	'message' => _t($this->_sLangsPrefix . 'cbee_msg_subscribed'),
 			'pending_id' => $iPendingId,
 			'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $oCustomer->firstName, $oCustomer->lastName),
 			'client_email' => $oCustomer->email,

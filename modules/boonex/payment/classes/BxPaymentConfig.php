@@ -44,12 +44,17 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         		'ERR_UNKNOWN_VENDOR' => '_bx_payment_err_unknown_vendor',
 
 				'BLOCK_TITLE_CART' => '_bx_payment_page_block_title_cart',
-        
+
+        		'POPUP_PROVIDERS_SELECT' => '_bx_payment_popup_title_crd_providers_select', 
+
         		'TXT_CART_PROVIDER' => '_bx_payment_txt_cart_'
         	)
         ));
 
         $this->_aHtmlIds = array(
+        	'cart' => array(
+        		'providers_select' => $this->_sName . '-cart-providers-select-',
+        	),
         	'history' => array(
         		'order_history_view' => $this->_sName . '-order-view-history',
         	),
