@@ -52,22 +52,22 @@ class BxBaseModPaymentCart extends BxDol
 		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
     }
 
-	public function serviceGetSubscribeJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
+	public function serviceGetSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
     {
 		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-        return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bWrapped);
+        return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $bWrapped);
     }
 
-	public function serviceGetSubscribeLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount = 1)
+	public function serviceGetSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
         $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-		return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $iModuleId, $iItemId, $iItemCount);
+		return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount);
     }
 
 	public function serviceGetCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)

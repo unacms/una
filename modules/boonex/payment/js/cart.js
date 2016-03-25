@@ -12,7 +12,7 @@ BxPaymentCart.prototype.init = function(oOptions) {
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 };
 
-BxPaymentCart.prototype.addToCart = function(iVendorId, iModuleId, iItemId, iItemCount, iNeedRedirect) {
+BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iItemCount, iNeedRedirect) {
 	var $this = this;
     var oDate = new Date();
 
@@ -21,7 +21,7 @@ BxPaymentCart.prototype.addToCart = function(iVendorId, iModuleId, iItemId, iIte
     	iNeedRedirect = 0;
 
     $.post(
-        this._sActionsUrl + 'add_to_cart/' + iVendorId + '/' + iModuleId + '/' + iItemId + '/' + iItemCount + '/',
+        this._sActionsUrl + 'add_to_cart/' + iSellerId + '/' + iModuleId + '/' + iItemId + '/' + iItemCount + '/',
         {
             _t:oDate.getTime()
         },
@@ -58,15 +58,25 @@ BxPaymentCart.prototype.onCartCheckout = function(oData) {
 	location.href = oData.link;
 };
 
-BxPaymentCart.prototype.subscribe = function(iVendorId, iModuleId, iItemId, iItemCount) {
+BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount) {
     var $this = this;
     var oDate = new Date();
 
+    var oParams = {
+    	seller_id: iSellerId,
+    	seller_provider: sSellerProvider,
+    	module_id: iModuleId,
+    	item_id: iItemId,
+    	item_count: 1,
+    	_t: oDate.getTime()
+    };
+
+    if(iItemCount != undefined && iItemCount.length > 0)
+    	oParams.item_count = parseInt(iItemCount);
+
     $.post(
-        this._sActionsUrl + 'subscribe/' + iVendorId + '/' + iModuleId + '/' + iItemId + (iItemCount != undefined ? '/' + iItemCount + '/' : ''),
-        {
-            _t:oDate.getTime()
-        },
+        this._sActionsUrl + 'subscribe/',
+        oParams,
         function(oData){
         	$this.processResult(oData);
         },

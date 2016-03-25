@@ -419,5 +419,6 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_market_files', 'file_deleted', @iHandler),
+('bx_market_files', 'file_downloaded', @iHandler),
 ('bx_market_photos', 'file_deleted', @iHandler),
 ('profile', 'delete', @iHandler);

@@ -47,7 +47,7 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 				if(!$bResult) 
 					break;
 
-				list($sJsCode, $sJsMethod) = $oPayment->getSubscribeJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
+				list($sJsCode, $sJsMethod) = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
 				$this->addMarkers(array(
 		        	'subscribe_onclick' => $sJsMethod
 		        )); 

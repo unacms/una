@@ -168,25 +168,6 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /**
      * Cart Processing Methods
      */
-    public function actionInitializeCheckout($sType)
-    {
-    	if(!$this->isLogged())
-            return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_required_login');
-
-		if(bx_get('seller_id') !== false && bx_get('provider') !== false && bx_get('items') !== false) {
-			$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
-			$sProvider = bx_process_input(bx_get('provider'));
-			$aItems = bx_process_input(bx_get('items'));
-
-			$mixedResult = $this->serviceInitializeCheckout(BX_PAYMENT_TYPE_SINGLE, $iSellerId, $sProvider, $aItems);
-			if($mixedResult !== true)
-	    		return $this->_oTemplate->displayPageCodeError($mixedResult);
-		}
-
-        header('Location: ' . $this->_oConfig->getUrl('URL_CART'));
-        exit;
-    }
-
     public function actionAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount)
     {
         $aResult = $this->getObjectCart()->serviceAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount);
@@ -211,9 +192,17 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		echoJson($aResult);
     }
 
-    public function actionSubscribe($iSellerId, $iModuleId, $iItemId, $iItemCount = 1)
+    public function actionSubscribe()
     {
-        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $iModuleId, $iItemId, $iItemCount);
+    	$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
+    	$sSellerProvider = bx_process_input(bx_get('seller_provider'));
+    	$iModuleId = bx_process_input(bx_get('module_id'), BX_DATA_INT);
+    	$iItemId = bx_process_input(bx_get('item_id'), BX_DATA_INT);
+    	$iItemCount = bx_process_input(bx_get('item_count'), BX_DATA_INT);
+    	if(empty($iItemCount))
+    		$iItemCount = 1;
+
+        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount);
 		echoJson($aResult);
     }
 
@@ -221,6 +210,25 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /**
      * Payment Processing Methods
      */
+	public function actionInitializeCheckout($sType)
+    {
+    	if(!$this->isLogged())
+            return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_required_login');
+
+		if(bx_get('seller_id') !== false && bx_get('provider') !== false && bx_get('items') !== false) {
+			$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
+			$sProvider = bx_process_input(bx_get('provider'));
+			$aItems = bx_process_input(bx_get('items'));
+
+			$mixedResult = $this->serviceInitializeCheckout(BX_PAYMENT_TYPE_SINGLE, $iSellerId, $sProvider, $aItems);
+			if($mixedResult !== true)
+	    		return $this->_oTemplate->displayPageCodeError($mixedResult);
+		}
+
+        header('Location: ' . $this->_oConfig->getUrl('URL_CART'));
+        exit;
+    }
+
 	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array())
 	{
 		if(!is_array($aItems))

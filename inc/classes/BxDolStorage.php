@@ -605,6 +605,22 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * Download file.
+     * @param array $aFile downloading file info.
+     */
+    public function download ($aFile)
+    {
+    	$bRet = true;
+        bx_alert($this->_aObject['object'], 'file_downloaded', $aFile['id'], bx_get_logged_profile_id(), array(
+        	'profile_ip' => getVisitorIP(),
+        	'file_info' => $aFile, 
+        	'return_value' => &$bRet
+        ));
+
+        return $bRet;
+    }
+
+    /**
      * Set file private or public.
      */
     public function setFilePrivate($iFileId, $isPrivate = true)

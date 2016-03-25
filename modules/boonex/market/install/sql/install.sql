@@ -75,6 +75,15 @@ CREATE TABLE IF NOT EXISTS `bx_market_files2products` (
   KEY `content_id` (`content_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_market_downloads_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_id` int(11) NOT NULL default '0',
+  `profile_id` int(11) NOT NULL default '0',
+  `profile_nip` int(11) unsigned NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `bx_market_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,

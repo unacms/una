@@ -167,24 +167,24 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
 	/**
      * Returns "Subscribe" JavaScript code to use in onclick attribute.
      */
-    public function getSubscribeJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
+    public function getSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_js', 'Cart'))
 			return array();
 
-		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bWrapped);
+		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $bWrapped);
 		return BxDolService::call($this->_sActive, 'get_subscribe_js', $aSrvParams, 'Cart');
     }
 
     /**
      * Returns the whole "Subscribe" link including HTML tag BUTTON and cart JavaScript code.
      */
-    public function getSubscribeLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount = 1)
+    public function getSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
 		if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_link', 'Cart'))
 			return '';
 
-		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount);
+		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount);
 		return BxDolService::call($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Cart');
     }
 
