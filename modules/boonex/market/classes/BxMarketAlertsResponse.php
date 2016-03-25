@@ -19,20 +19,34 @@ class BxMarketAlertsResponse extends BxBaseModTextAlertsResponse
 
 	public function response($oAlert)
     {
-    	$oModule = BxDolModule::getInstance($this->MODULE);
-
-    	if($oAlert->sAction == 'file_deleted')
-    		switch ($oAlert->sUnit) {
-    			case 'bx_market_files':
-    				$oModule->_oDb->deassociateFileWithContent(0, $oAlert->iObject);
-    				break;
-
-    			case 'bx_market_photos':
-    				$oModule->_oDb->deassociatePhotoWithContent(0, $oAlert->iObject);
-    				break;
-    		}
+    	$sMethod = 'process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
+    	if(method_exists($this, $sMethod))
+    		$this->$sMethod($oAlert);
 
         parent::response($oAlert);
+    }
+
+    protected function processBxMarketFilesFileDeleted(&$oAlert)
+    {
+		BxDolModule::getInstance($this->MODULE)->_oDb->deassociateFileWithContent(0, $oAlert->iObject);
+    }
+
+    protected function processBxMarketFilesFileDownloaded(&$oAlert)
+    {
+    	$oModule = BxDolModule::getInstance($this->MODULE);
+
+    	$iFile = $oAlert->iObject;
+    	$aFile = $oModule->_oDb->getFile(array('type' => 'file_id', 'file_id' => $iFile));
+    	if(empty($aFile) || !is_array($aFile))
+    		return;
+
+    	$oModule->_oDb->updateFile(array('downloads' => $aFile['downloads'] + 1), array('file_id' => $iFile));
+    	$oModule->_oDb->insertDownload($iFile, $oAlert->iSender, ip2long($oAlert->aExtras['profile_ip']));
+    }
+
+    protected function processBxMarketPhotosFileDeleted(&$oAlert)
+    {
+    	BxDolModule::getInstance($this->MODULE)->_oDb->deassociatePhotoWithContent(0, $oAlert->iObject);
     }
 }
 

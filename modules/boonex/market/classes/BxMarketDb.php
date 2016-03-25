@@ -32,48 +32,19 @@ class BxMarketDb extends BxBaseModTextDb
     	return $this->_getAttachment($this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'], $aParams);
     }
 
+	public function updatePhoto($aSet, $aWhere)
+    {
+    	return $this->_updateAttachment($this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'], $aSet, $aWhere);
+    }
+
     public function getFile($aParams = array())
     {
     	return $this->_getAttachment($this->_oConfig->CNF['TABLE_FILES2ENTRIES'], $aParams);
     }
 
-    protected function _getAttachment($sTable, $aParams = array())
+	public function updateFile($aSet, $aWhere)
     {
-    	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
-    	
-    	$sWhereClause = "";
-        switch($aParams['type']) {
-            case 'id':
-                $sWhereClause = $this->prepare(" AND `tfe`.`id`=?", $aParams['id']);
-                break;
-
-			case 'file_id':
-                $sWhereClause = $this->prepare(" AND `tfe`.`file_id`=?", $aParams['file_id']);
-                break;
-
-            case 'content_id':
-            	$aMethod['name'] = 'getAll';
-
-            	$sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
-            	if(!empty($aParams['except']))
-            		$sWhereClause .= " AND `tfe`.`file_id` NOT IN (" . $this->implode_escape($aParams['except']) . ")";
-
-            	break;
-
-			case 'content_id_key_file_id':
-				$aMethod['name'] = 'getAllWithKey';
-				$aMethod['params'][1] = 'file_id';
-
-                $sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
-                break;
-        }
-
-        $aMethod['params'][0] = "SELECT
-        		`tfe`.*
-            FROM `" . $sTable . "` AS `tfe`
-            WHERE 1" . $sWhereClause;
-
-        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    	return $this->_updateAttachment($this->_oConfig->CNF['TABLE_FILES2ENTRIES'], $aSet, $aWhere);
     }
 
 	public function associatePhotoWithContent($iContentId, $iFileId, $sTitle)
@@ -103,18 +74,11 @@ class BxMarketDb extends BxBaseModTextDb
     {
     	return $this->_deassociateAttachmentWithContent($this->_oConfig->CNF['TABLE_FILES2ENTRIES'], $iContentId, $iFileId);
     }
-    
-	protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
+
+    public function insertDownload($iFileId, $iProfileId, $iProfileNip)
     {
-        $sWhere = '';
-        if ($iContentId)
-            $sWhere .= $this->prepare (" AND `content_id` = ? ", $iContentId);
-
-        if ($iFileId)
-            $sWhere .= $this->prepare (" AND `file_id` = ? ", $iFileId);
-
-        $sQuery = "DELETE FROM `" . $sTable . "` WHERE 1 ";
-        return $this->query($sQuery . $sWhere);
+    	$sQuery = $this->prepare("INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_DOWNLOADS'] . "` SET `file_id` = ?, `profile_id` = ?, `profile_nip` = ?, `date` = UNIX_TIMESTAMP()", $iFileId, $iProfileId, $iProfileNip);
+		return (int)$this->query($sQuery) > 0;
     }
 
     /**
@@ -189,6 +153,64 @@ class BxMarketDb extends BxBaseModTextDb
     public function unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType)
     {
     	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iProfileId, $iProductId, $sOrder, $sLicense);
+        return (int)$this->query($sQuery) > 0;
+    }
+
+	protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
+    {
+        $sWhere = '';
+        if ($iContentId)
+            $sWhere .= $this->prepare (" AND `content_id` = ? ", $iContentId);
+
+        if ($iFileId)
+            $sWhere .= $this->prepare (" AND `file_id` = ? ", $iFileId);
+
+        $sQuery = "DELETE FROM `" . $sTable . "` WHERE 1 ";
+        return $this->query($sQuery . $sWhere);
+    }
+
+	protected function _getAttachment($sTable, $aParams = array())
+    {
+    	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
+    	
+    	$sWhereClause = "";
+        switch($aParams['type']) {
+            case 'id':
+                $sWhereClause = $this->prepare(" AND `tfe`.`id`=?", $aParams['id']);
+                break;
+
+			case 'file_id':
+                $sWhereClause = $this->prepare(" AND `tfe`.`file_id`=?", $aParams['file_id']);
+                break;
+
+            case 'content_id':
+            	$aMethod['name'] = 'getAll';
+
+            	$sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
+            	if(!empty($aParams['except']))
+            		$sWhereClause .= " AND `tfe`.`file_id` NOT IN (" . $this->implode_escape($aParams['except']) . ")";
+
+            	break;
+
+			case 'content_id_key_file_id':
+				$aMethod['name'] = 'getAllWithKey';
+				$aMethod['params'][1] = 'file_id';
+
+                $sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT
+        		`tfe`.*
+            FROM `" . $sTable . "` AS `tfe`
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+	protected function _updateAttachment($sTable, $aSet, $aWhere)
+    {
+        $sQuery = "UPDATE `" . $sTable . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1");
         return (int)$this->query($sQuery) > 0;
     }
 }

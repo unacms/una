@@ -71,7 +71,7 @@ class BxDolStorageLocal extends BxDolStorage
             return false;
         }
 
-        return true;
+        return parent::download($aFile);
     }
 
     // ----------------
