@@ -539,7 +539,7 @@
 	<string name="_adm_btn_download_submit"><![CDATA[Download]]></string>
 	<string name="_adm_btn_install_submit"><![CDATA[Install]]></string>
 	<string name="_adm_btn_installed_submit"><![CDATA[Installed]]></string>
-	<string name="_adm_btn_login_submit"><![CDATA[Enter Studio]]></string>
+	<string name="_adm_btn_login_submit"><![CDATA[Enter]]></string>
 	<string name="_adm_btn_purchase_submit"><![CDATA[Purchase]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
