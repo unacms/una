@@ -13,7 +13,7 @@ class BxTemplConfig extends BxBaseConfig
     {
         parent::__construct();
 
-        $this->setPageWidth('bx_lagoon_page_width');
+        $this->setPageWidth('bx_uni_page_width');
     }
 }
 

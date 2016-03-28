@@ -3,17 +3,18 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Uni Uni template
+ * @defgroup    Uni Uni
  * @ingroup     TridentModules
  *
  * @{
  */
 
-class BxLagoonInstaller extends BxDolStudioInstaller
+class BxUniStudioPage extends BxTemplStudioDesign
 {
-    function __construct($aConfig)
+    function __construct($sModule = "", $sPage = "")
     {
-        parent::__construct($aConfig);
+    	$this->MODULE = 'bx_uni';
+        parent::__construct($sModule, $sPage);
     }
 }
 

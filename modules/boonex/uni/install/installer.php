@@ -3,22 +3,17 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Lagoon Lagoon
+ * @defgroup    Uni Uni template
  * @ingroup     TridentModules
  *
  * @{
  */
 
-bx_import('BxBaseModGeneralDb');
-
-/*
- * Module database queries
- */
-class BxLagoonDb extends BxBaseModGeneralDb
+class BxUniInstaller extends BxDolStudioInstaller
 {
-    function __construct(&$oConfig)
+    function __construct($aConfig)
     {
-        parent::__construct($oConfig);
+        parent::__construct($aConfig);
     }
 }
 

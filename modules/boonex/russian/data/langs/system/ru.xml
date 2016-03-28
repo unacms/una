@@ -1914,7 +1914,8 @@
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю Сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Пользователь - Панель Инструментов]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Сайт - Панель Инструментов]]></string>
-	<string name="_sys_menu_title_switch_language"><![CDATA[Переключить Язык]]></string>
+	<string name="_sys_menu_title_switch_language_popup"><![CDATA[Переключатель Языка (попап)]]></string>
+	<string name="_sys_menu_title_switch_language_inline"><![CDATA[Переключатель Языка (встроенный)]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Переключить Тему]]></string>
 	<string name="_sys_mobile_friends"><![CDATA[Друзья]]></string>
 	<string name="_sys_mobile_info"><![CDATA[Инфо]]></string>
