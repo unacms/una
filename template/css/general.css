@@ -120,6 +120,17 @@
 #bx-menu-bottom {
 	float: left;
 }
+.bx-menu-switch-language-inline {
+	float: none;
+	clear: both;
+}
+.bx-menu-switch-language-inline .bx-menu-hor {
+	text-align: center;
+}
+.bx-menu-switch-language-inline .bx-menu-hor li {
+	float: none;
+	display: inline-block;
+}
 #bx-footer-copyright {
     float:right;
 }

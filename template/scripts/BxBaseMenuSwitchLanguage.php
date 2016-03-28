@@ -46,7 +46,7 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
                 'id' => $sName,
                 'name' => $sName,
                 'class' => '',
-                'title' => genFlag($sName) . ' ' . $sLang,
+                'title' => $this->getItemTitle($sName, $sLang),
                 'target' => '_self',
                 'icon' => '',
                 'link' => bx_html_attribute(bx_append_url_params($aPage[0], $aPageParams)),
@@ -55,6 +55,11 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
         }
 
         $this->_aObject['menu_items'] = $aItems;
+    }
+
+    protected function getItemTitle($sName, $sTitle)
+    {
+    	return genFlag($sName);
     }
 }
 
