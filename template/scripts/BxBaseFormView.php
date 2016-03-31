@@ -821,7 +821,7 @@ BLAH;
         $sUploaders = '';
         $oUploader = null;
         foreach ($aInput['uploaders'] as $sUploaderObject) {
-            $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], $sUniqId);
+            $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], $sUniqId, $this->oTemplate);
             if (!$oUploader)
                 continue;
 
@@ -1228,7 +1228,7 @@ BLAH;
                     continue;
 
                 foreach ($aInput['uploaders'] as $sUploaderObject) {
-                    $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], '');
+                    $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], '', $this->oTemplate);
                     if ($oUploader)
                         $oUploader->addCssJs();
                 }

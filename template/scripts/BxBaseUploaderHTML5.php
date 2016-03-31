@@ -16,9 +16,9 @@ class BxBaseUploaderHTML5 extends BxDolUploader
 {
     protected $_sDivId; ///< div id where upload button will be placed
 
-    function __construct ($aObject, $sStorageObject, $sUniqId)
+    function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
-        parent::__construct($aObject, $sStorageObject, $sUniqId);
+        parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['object'];
         $this->_sButtonTemplate = 'uploader_button_html5.html';
