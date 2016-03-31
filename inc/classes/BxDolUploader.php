@@ -24,7 +24,7 @@
  *     'storage_object' => 'sample', // the storage object, where uploaded files are going to be saved
  *     'images_transcoder' => 'sample2', // images transcoder object to use for images preview
  *     'uploaders' => array ('sys_simple', 'sys_html5'), // the set of uploaders to use to upload files
- *     'upload_buttons_titles' => array('sys_simple' => 'Upload one by one', 'sys_html5' => 'Upload several files in bulk'); // change default button titles, array with button names, or string to assign to all bnuttons
+ *     'upload_buttons_titles' => array('Simple' => 'Upload one by one', 'HTML5' => 'Upload several files in bulk'); // change default button titles, array with button names, or string to assign to all bnuttons
  *     'multiple' => true, // allow to upload multiple files per one upload
  *     'content_id' => 4321, // content id to associate ghost files with
  *     'ghost_template' => $mixedGhostTemplate, // template for nested form
@@ -124,10 +124,10 @@ abstract class BxDolUploader extends BxDol
     /**
      * constructor
      */
-    protected function __construct($aObject, $sStorageObject, $sUniqId)
+    protected function __construct($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         parent::__construct();
-        $this->_oTemplate = BxDolTemplate::getInstance();
+        $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
 
         $this->_aObject = $aObject;
         $this->_sStorageObject = $sStorageObject;
@@ -143,7 +143,7 @@ abstract class BxDolUploader extends BxDol
         $this->_sFormContainerId = 'bx-form-input-files-' . $sUniqId . '-form-cont';
     }
 
-    static public function getObjectInstance($sObject, $sStorageObject, $sResultContainerId)
+    static public function getObjectInstance($sObject, $sStorageObject, $sResultContainerId, $oTemplate = false)
     {
         $aObject = BxDolUploaderQuery::getUploaderObject($sObject);
         if (!$aObject || !is_array($aObject) || !$aObject['active'])
@@ -153,7 +153,7 @@ abstract class BxDolUploader extends BxDol
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
 
-        $o = new $sClass($aObject, $sStorageObject, $sResultContainerId);
+        $o = new $sClass($aObject, $sStorageObject, $sResultContainerId, $oTemplate);
 
         if (!$o->isInstalled() || !$o->isAvailable())
             return false;

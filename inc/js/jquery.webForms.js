@@ -92,6 +92,7 @@
 
         
         $("input", this).each(function() {
+        	var oInput = $(this);
 
             var onCreateRange = function (event, ui) {
                 var eInput = $(this).parent().find('input');
@@ -228,6 +229,19 @@
                 if (window.navigator.appVersion.search(/Chrome\/(.*?) /) == -1 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) < 24)
                     if( this.getAttribute("allow_input") == null)
                         $(this).attr('readonly', 'readonly');
+			}
+
+			// RGB/RGBA pickers
+			if(this.getAttribute('type') == 'text' && (oInput.hasClass('bx-form-input-rgb') || oInput.hasClass('bx-form-input-rgba')) && !oInput.hasClass('minicolors-input')) {
+				oInput.minicolors({
+                    control: oInput.attr('data-control') || 'hue',
+                    format: oInput.attr('data-format') || 'rgb',
+                    letterCase: oInput.attr('data-letterCase') || 'lowercase',
+                    opacity: oInput.hasClass('bx-form-input-rgba'),
+                    position: oInput.attr('data-position') || 'bottom left',
+                    theme: 'bootstrap'
+                });
+				
 			}
         });
         return this;

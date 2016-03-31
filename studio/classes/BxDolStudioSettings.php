@@ -26,6 +26,11 @@ class BxDolStudioSettings extends BxTemplStudioPage
     protected $aCategories;
     protected $aCustomCategories;
 
+    protected $sStorage;
+    protected $sTranscoder;
+
+    protected $sErrorMessage;
+
     function __construct($sType = '', $sCategory = '')
     {
         parent::__construct('settings');
@@ -39,6 +44,11 @@ class BxDolStudioSettings extends BxTemplStudioPage
         $this->sCategory = '';
         if(is_string($sCategory) && !empty($sCategory))
             $this->sCategory = $sCategory;
+
+		$this->sStorage = 'sys_images_custom';
+		$this->sTranscoder = 'sys_images_custom';
+
+		$this->sErrorMessage = '';
 
         //--- Check actions ---//
         if(($sAction = bx_get('stg_action')) !== false && ($sValue = bx_get('stg_value')) !== false) {
@@ -70,7 +80,11 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
             $aData = array();
             foreach($aOptions as $aOption) {
-                $aData[$aOption['name']] = $oForm->getCleanValue($aOption['name']);
+                $aData[$aOption['name']] = $this->getSubmittedValue($aOption, $oForm);
+                if($aData[$aOption['name']] === false && !empty($this->sErrorMessage)) {
+                	$this->sCategory = $sCategory;
+					return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($this->sErrorMessage)), false);
+                }
 
                 if(!empty($aOption['check'])) {
                     $sCheckerHelper = '';
@@ -111,6 +125,36 @@ class BxDolStudioSettings extends BxTemplStudioPage
         return $this->getJsResult('_adm_stg_scs_save');
     }
 
+    protected function getSubmittedValue($aOption, &$oForm)
+    {
+    	$mixedValue = '';
+
+    	switch($aOption['type']) {
+    		case 'image':
+    			$mixedValue = (int)getParam($aOption['name']);
+
+    			$aIds = $oForm->getCleanValue($aOption['name']);
+    			if(empty($aIds))
+    				break;
+
+    			$oStorage = BxDolStorage::getObjectInstance($this->sStorage);
+		        if(!$oStorage)
+					break;
+            
+    			$iProfileId = bx_get_logged_profile_id();
+    			foreach($aIds as $iId) {
+    				$mixedValue = $iId;
+
+    				$oStorage->updateGhostsContentId($iId, $iProfileId, $aOption['id']);
+    			}
+    			break;
+
+    		default: 
+    			$mixedValue = $oForm->getCleanValue($aOption['name']);
+    	}
+
+    	return $mixedValue;
+    }
     protected function getProcessedValue($aOption, $mixedValue)
     {
         if(is_array($mixedValue))

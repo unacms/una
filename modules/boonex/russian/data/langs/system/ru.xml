@@ -1191,6 +1191,7 @@
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
+	<string name="_adm_stg_err_remove_old_image"><![CDATA[Невозможно удалить текущее изображение.]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[Файл]]></string>
 	<string name="_adm_str_cpt_files_version"><![CDATA[Версия]]></string>
 	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Невозможно соединиться с FTP-сервером. Проверьте детали доступа к FTP в Настройки -> Общие.]]></string>
@@ -2170,6 +2171,7 @@
 	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Не удалось скачать патч или скачанный файл не может быть сохранён]]></string>
 	<string name="_sys_upgrade_patch_invalid"><![CDATA[Неправильный патч, он не может быть применён для Вашей версии или имеет неправильную структуру файлов.]]></string>
 	<string name="_sys_upgrade_patch_unpack_failed"><![CDATA[Не удалось распаковать патч]]></string>
+	<string name="_sys_uploader_button_name_single"><![CDATA[Загрузить файл]]></string>
 	<string name="_sys_uploader_close"><![CDATA[Закрыть]]></string>
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[О нет! Вы уверены? Это может прервать загрузку файлов.]]></string>
 	<string name="_sys_uploader_confirm_leaving_page"><![CDATA[Загрузка в процессе! Не закрывайте эту страницу, или загрузка будет прервана на полпути.]]></string>

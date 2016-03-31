@@ -1,0 +1,51 @@
+@import '../../../../../../../template/css/default.less';
+
+/* background images */
+.bx-def-image-bg-page,
+.bx-def-image-bg-header,
+.bx-def-image-bg-block,
+.bx-def-image-bg-footer {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bx-def-image-bg-page {
+	background-image: url(@bx-image-bg-page);
+}
+
+.bx-def-image-bg-header {
+	background-image: url(@bx-image-bg-header);
+}
+
+.bx-def-image-bg-block {
+	background-image: url(@bx-image-bg-block);
+}
+
+.bx-def-image-bg-footer {
+	background-image: url(@bx-image-bg-footer);
+}
+
+
+/* background colors */
+.bx-def-color-bg-header {
+    .background-color (@bx-color-header);
+}
+
+.bx-def-color-bg-footer {
+    .background-color (@bx-color-footer);    
+}
+
+
+/* border */
+.bx-def-border-header {
+    border-bottom: @bx-border-width-header @bx-border-type @bx-border-color-header;
+}
+.bx-def-border-footer {
+    border-top: @bx-border-width-footer @bx-border-type @bx-border-color-footer;
+}
+.bx-def-border-block {
+	border: @bx-border-width-block @bx-border-type @bx-border-color-block;
+
+	.radius(@bx-border-radius-block);
+}

@@ -129,7 +129,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             )
         );
 
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = new BxTemplStudioFormView($aForm, $oTemplate);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
@@ -157,6 +157,8 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
     protected function field($aItem)
     {
+    	$oTemplate = BxDolStudioTemplate::getInstance();
+
         $aField = array();
         switch($aItem['type']) {
             case 'digit':
@@ -239,6 +241,38 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'db' => array (
                         'pass' => 'Xss'
                     )
+                );
+                break;
+			case 'image':
+                $aField = array(
+                    'type' => 'files',
+                    'name' => $aItem['name'],
+					'storage_object' => $this->sStorage,
+ 					'images_transcoder' => $this->sTranscoder,
+ 					'uploaders' => array('sys_html5'),
+                	'upload_buttons_titles' => array('HTML5' => _t('_sys_uploader_button_name_single')),
+					'multiple' => false,
+ 					'content_id' => $aItem['id'],
+ 					'ghost_template' => array(
+						'inputs' => array(),
+					),
+                    'caption' => _t($aItem['caption']),
+                    'value' => $aItem['value'],
+                    'db' => array (
+                        'pass' => 'Xss'
+                    )
+                );
+                break;
+			case 'rgb':
+			case 'rgba':
+                $aField = array(
+                    'type' => $aItem['type'],
+                    'name' => $aItem['name'],
+                    'caption' => _t($aItem['caption']),
+                    'value' => $aItem['value'],
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
                 );
                 break;
         }
