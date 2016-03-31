@@ -105,6 +105,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryAttachments ($aData)
     {
+    	$oModule = BxDolModule::getInstance($this->MODULE);
+
     	return $this->parseHtmlByName('attachments.html', array(
             'bx_repeat:attachments' => $this->getAttachments($oModule->_oConfig->CNF['OBJECT_STORAGE'], $aData),
         ));

@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 	<string name="_bx_uni_wgt_cpt"><![CDATA[UNI]]></string>
+
 	<string name="_bx_uni_stg_cpt_type"><![CDATA[UNI]]></string>
 	<string name="_bx_uni_stg_cpt_category_system"><![CDATA[Общие]]></string>
+	<string name="_bx_uni_stg_cpt_category_styles"><![CDATA[Стили]]></string>
 	<string name="_bx_uni_stg_cpt_option_switcher_name"><![CDATA[Название в переключателе тем]]></string>
 	<string name="_bx_uni_stg_cpt_option_page_width"><![CDATA[Ширина страницы]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_color"><![CDATA[Цвет фона заголовка]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_image"><![CDATA[Изображение фона заголовка]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_border_color"><![CDATA[Цвет границы заголовка]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_border_size"><![CDATA[Размер границы заголовка]]></string>
+	<string name="_bx_uni_stg_cpt_option_site_bg_color"><![CDATA[Цвет фона сайта]]></string>
+	<string name="_bx_uni_stg_cpt_option_site_bg_image"><![CDATA[Изображение фона сайта]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_color"><![CDATA[Цвет фона основания]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_image"><![CDATA[Изображение фона основания]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_border_color"><![CDATA[Цвет границы основания]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_border_size"><![CDATA[Размер границы основания]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_color"><![CDATA[Цвет фона блоков]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_image"><![CDATA[Изображение фона блоков]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_color"><![CDATA[Цвет границы блоков]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_size"><![CDATA[Размер границы блоков]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_radius"><![CDATA[Радиус углов блоков]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_family"><![CDATA[Набор шрифтов]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_default"><![CDATA[Стандартный размер шрифта]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_small"><![CDATA[Маленький размер шрифта]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_middle"><![CDATA[Средний размер шрифта]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_large"><![CDATA[Большой размер шрифта]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h1"><![CDATA[Размер шрифта тэга H1]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h2"><![CDATA[Размер шрифта тэга H2]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h3"><![CDATA[Размер шрифта тэга H3]]></string>
+
+	<string name="_bx_uni_lmi_cpt_styles"><![CDATA[Стили]]></string>
 </resources>

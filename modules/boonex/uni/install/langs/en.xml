@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 	<string name="_bx_uni_wgt_cpt"><![CDATA[UNI]]></string>
+
 	<string name="_bx_uni_stg_cpt_type"><![CDATA[UNI]]></string>
 	<string name="_bx_uni_stg_cpt_category_system"><![CDATA[General]]></string>
+	<string name="_bx_uni_stg_cpt_category_styles"><![CDATA[Styles]]></string>
 	<string name="_bx_uni_stg_cpt_option_switcher_name"><![CDATA[Name In Template Switcher]]></string>
 	<string name="_bx_uni_stg_cpt_option_page_width"><![CDATA[Page Width]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_color"><![CDATA[Header background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_image"><![CDATA[Header background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_border_color"><![CDATA[Header border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_border_size"><![CDATA[Header border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_site_bg_color"><![CDATA[Site background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_site_bg_image"><![CDATA[Site background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_color"><![CDATA[Footer background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_image"><![CDATA[Footer background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_border_color"><![CDATA[Footer border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_border_size"><![CDATA[Footer border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_color"><![CDATA[Blocks background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_image"><![CDATA[Blocks background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_color"><![CDATA[Blocks border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_size"><![CDATA[Blocks border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_radius"><![CDATA[Blocks corners radius]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_family"><![CDATA[Font stack]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_default"><![CDATA[Font size default]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_small"><![CDATA[Font size small]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_middle"><![CDATA[Font size middle]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_large"><![CDATA[Font size large]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h1"><![CDATA[Font size H1]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h2"><![CDATA[Font size H2]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h3"><![CDATA[Font size H3]]></string>
+
+	<string name="_bx_uni_lmi_cpt_styles"><![CDATA[Styles]]></string>
 </resources>
