@@ -13,9 +13,9 @@ class BxMarketUploaderSimple extends BxTemplUploaderSimple
 {
     protected $_oModule;
 
-    public function __construct ($aObject, $sStorageObject, $sUniqId)
+    public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
-        parent::__construct($aObject, $sStorageObject, $sUniqId);
+        parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance('bx_market');
     }

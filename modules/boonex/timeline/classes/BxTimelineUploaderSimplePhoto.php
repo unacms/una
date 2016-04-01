@@ -11,9 +11,9 @@
 
 class BxTimelineUploaderSimplePhoto extends BxTemplUploaderSimple
 {
-    public function __construct ($aObject, $sStorageObject, $sUniqId)
+    public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
-        parent::__construct($aObject, $sStorageObject, $sUniqId);
+        parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $oModule = BxDolModule::getInstance('bx_timeline');
 		$oModule->getAttachmentsMenuObject()->addMarkers(array(
