@@ -556,12 +556,14 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
             return false;
         }
 
+        $aGhost = $this->_oDb->getGhost($aFile['id']);
+
         if (!$this->_oDb->deleteFile($aFile['id'])) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_DB);
             return false;
         }
 
-        if (!$this->onFileDeleted ($aFile, $iProfileId)) {
+        if (!$this->onFileDeleted ($aFile, $iProfileId, $aGhost)) {
             return false;
         }
 
@@ -957,7 +959,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
         return $bRet;
     }
 
-    function onFileDeleted ($aFileInfo, $iProfileId)
+    function onFileDeleted ($aFileInfo, $iProfileId, $aGhost = false)
     {
         // TODO: update site quota
 
@@ -974,7 +976,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
         $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
 
         $bRet = true;
-        bx_alert($this->_aObject['object'], 'file_deleted', $aFileInfo['id'], $iProfileId, array('file_info' => $aFileInfo, 'return_value' => &$bRet));
+        bx_alert($this->_aObject['object'], 'file_deleted', $aFileInfo['id'], $iProfileId, array('file_info' => $aFileInfo, 'ghost' => $aGhost, 'return_value' => &$bRet));
         return $bRet;
     }
 
