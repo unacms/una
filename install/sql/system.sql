@@ -1013,6 +1013,12 @@ SET @iIdHandler = LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iIdHandler);
 
+INSERT INTO `sys_alerts_handlers` (`name`, `service_call`) VALUES
+('sys_settings_sys_images_custom_file_deleted', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:45:"alert_response_sys_images_custom_file_deleted";s:6:"params";a:0:{}s:5:"class";s:27:"TemplStudioSettingsServices";}');
+SET @iIdHandler = LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('sys_images_custom', 'file_deleted', @iIdHandler);
 
 -- --------------------------------------------------------
 

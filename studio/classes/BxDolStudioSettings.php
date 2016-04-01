@@ -140,7 +140,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
     			$oStorage = BxDolStorage::getObjectInstance($this->sStorage);
 		        if(!$oStorage)
 					break;
-            
+
     			$iProfileId = bx_get_logged_profile_id();
     			foreach($aIds as $iId) {
     				$mixedValue = $iId;

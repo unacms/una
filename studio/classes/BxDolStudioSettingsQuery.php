@@ -117,6 +117,11 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
            $sOrderClause = "ORDER BY `to`.`order` ASC";
 
         switch($aParams['type']) {
+        	case 'by_id':
+                $aMethod['name'] = 'getRow';
+                $sWhereClause .= $this->prepare("AND `to`.`id`=?", $aParams['value']);
+                $sLimitClause .= "LIMIT 1";
+                break;
             case 'by_name':
                 $aMethod['name'] = 'getRow';
                 $sWhereClause .= $this->prepare("AND `to`.`name`=?", $aParams['value']);
