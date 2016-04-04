@@ -141,11 +141,9 @@ class BxDolStudioSettings extends BxTemplStudioPage
 		        if(!$oStorage)
 					break;
 
-    			$iProfileId = bx_get_logged_profile_id();
     			foreach($aIds as $iId) {
+    				$oStorage->updateGhostsContentId($iId, false, $aOption['id']);
     				$mixedValue = $iId;
-
-    				$oStorage->updateGhostsContentId($iId, $iProfileId, $aOption['id']);
     			}
     			break;
 
@@ -155,6 +153,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
     	return $mixedValue;
     }
+
     protected function getProcessedValue($aOption, $mixedValue)
     {
         if(is_array($mixedValue))
