@@ -35,7 +35,9 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
         $sPageLink = ltrim($_SERVER['REQUEST_URI'], '/');
         $sPageLink = $oPermalink->unpermalink($sPageLink);
 
-        list($sPageLink, $sPageParams) = explode('?', $sPageLink);
+        $sPageParams = '';
+        if(strpos($sPageLink, '?') !== false)
+        	list($sPageLink, $sPageParams) = explode('?', $sPageLink);
 
         $aPageParams = array();
         if(!empty($sPageParams))
