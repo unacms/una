@@ -23,6 +23,9 @@ class BxBaseStudioSettingsServices extends BxDol
 
 	public function serviceAlertResponseSysImagesCustomFileDeleted($oAlert)
     {
+    	if(!isset($oAlert->aExtras['ghost']['content_id']))
+    		return;
+
     	$iOption = (int)$oAlert->aExtras['ghost']['content_id'];
 
     	$aOption = array();
