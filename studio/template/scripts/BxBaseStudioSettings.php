@@ -10,9 +10,9 @@
 
 class BxBaseStudioSettings extends BxDolStudioSettings
 {
-    public function __construct($sType = '', $sCategory = '')
+    public function __construct($sType = '', $mixedCategory = '')
     {
-        parent::__construct($sType, $sCategory);
+        parent::__construct($sType, $mixedCategory);
     }
     public function getPageCss()
     {

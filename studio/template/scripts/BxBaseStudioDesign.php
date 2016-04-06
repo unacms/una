@@ -76,9 +76,9 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         return $this->$sMethod();
     }
 
-    protected function getSettings($sCategory = '')
+    protected function getSettings($mixedCategory = '')
     {
-        $oPage = new BxTemplStudioSettings($this->sTemplate, $sCategory);
+        $oPage = new BxTemplStudioSettings($this->sTemplate, $mixedCategory);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
             'content' => $oPage->getPageCode()
