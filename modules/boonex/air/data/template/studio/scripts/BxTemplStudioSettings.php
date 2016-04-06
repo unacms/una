@@ -11,9 +11,9 @@ defined('BX_DOL') or die('hack attempt');
 
 class BxTemplStudioSettings extends BxBaseStudioSettings
 {
-    function __construct($sType = '', $sCategory = '')
+    function __construct($sType = '', $mixedCategory = '')
     {
-        parent::__construct($sType, $sCategory);
+        parent::__construct($sType, $mixedCategory);
     }
 }
 /** @} */

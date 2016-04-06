@@ -86,8 +86,12 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'name';
                 $sJoinClause = "LEFT JOIN `sys_options_types` AS `tt` ON `tc`.`type_id`=`tt`.`id` ";
-                if(isset($aParams['category_name']) && $aParams['category_name'] != '')
-                    $sWhereClause .= $this->prepare("AND `tt`.`name`=? AND `tc`.`name`=?", $aParams['type_name'], $aParams['category_name']);
+                if(isset($aParams['category_name']) && !empty($aParams['category_name'])) {
+                	if(is_string($aParams['category_name']))
+                		$aParams['category_name'] = array($aParams['category_name']);
+
+                    $sWhereClause .= $this->prepare("AND `tt`.`name`=? AND `tc`.`name` IN (" . $this->implode_escape($aParams['category_name']) . ")", $aParams['type_name']);
+                }
                 else
                     $sWhereClause .= $this->prepare("AND `tt`.`name`=? AND `tc`.`hidden`=?", $aParams['type_name'], $aParams['hidden']);
                 break;
