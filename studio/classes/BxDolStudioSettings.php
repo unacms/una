@@ -31,7 +31,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
     protected $sErrorMessage;
 
-    function __construct($sType = '', $sCategory = '')
+    function __construct($sType = '', $mixedCategory = '')
     {
         parent::__construct('settings');
 
@@ -42,8 +42,8 @@ class BxDolStudioSettings extends BxTemplStudioPage
             $this->sType = $sType;
 
         $this->sCategory = '';
-        if(is_string($sCategory) && !empty($sCategory))
-            $this->sCategory = $sCategory;
+        if(!empty($mixedCategory) && (is_string($mixedCategory) || is_array($mixedCategory)))
+            $this->sCategory = $mixedCategory;
 
 		$this->sStorage = 'sys_images_custom';
 		$this->sTranscoder = 'sys_images_custom';
@@ -140,12 +140,10 @@ class BxDolStudioSettings extends BxTemplStudioPage
     			$oStorage = BxDolStorage::getObjectInstance($this->sStorage);
 		        if(!$oStorage)
 					break;
-            
-    			$iProfileId = bx_get_logged_profile_id();
-    			foreach($aIds as $iId) {
-    				$mixedValue = $iId;
 
-    				$oStorage->updateGhostsContentId($iId, $iProfileId, $aOption['id']);
+    			foreach($aIds as $iId) {
+    				$oStorage->updateGhostsContentId($iId, false, $aOption['id']);
+    				$mixedValue = $iId;
     			}
     			break;
 
@@ -155,6 +153,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
     	return $mixedValue;
     }
+
     protected function getProcessedValue($aOption, $mixedValue)
     {
         if(is_array($mixedValue))

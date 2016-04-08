@@ -72,8 +72,6 @@ class BxBaseUploaderHTML5 extends BxDolUploader
     {
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-        $iProfileId = bx_get_logged_profile_id();
-
         if (!$isMultiple)
             $this->cleanupGhostsForProfile($iProfileId, $iContentId);
 

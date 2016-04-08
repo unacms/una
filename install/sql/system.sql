@@ -1013,6 +1013,12 @@ SET @iIdHandler = LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iIdHandler);
 
+INSERT INTO `sys_alerts_handlers` (`name`, `service_call`) VALUES
+('sys_settings_sys_images_custom_file_deleted', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:45:"alert_response_sys_images_custom_file_deleted";s:6:"params";a:0:{}s:5:"class";s:27:"TemplStudioSettingsServices";}');
+SET @iIdHandler = LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('sys_images_custom', 'file_deleted', @iIdHandler);
 
 -- --------------------------------------------------------
 
@@ -2107,7 +2113,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_uploader` (
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_simple', 1, 'BxTemplUploaderSimple', ''),
 ('sys_html5', 1, 'BxTemplUploaderHTML5', ''),
-('sys_cmts_simple', 1, 'BxTemplCmtsUploaderSimple', '');
+('sys_cmts_simple', 1, 'BxTemplCmtsUploaderSimple', ''),
+('sys_settings_html5', 1, 'BxTemplStudioSettingsUploaderHTML5', '');
 
 
 -- --------------------------------------------------------

@@ -10,9 +10,9 @@
 
 class BxBaseStudioSettings extends BxDolStudioSettings
 {
-    public function __construct($sType = '', $sCategory = '')
+    public function __construct($sType = '', $mixedCategory = '')
     {
-        parent::__construct($sType, $sCategory);
+        parent::__construct($sType, $mixedCategory);
     }
     public function getPageCss()
     {
@@ -249,7 +249,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'name' => $aItem['name'],
 					'storage_object' => $this->sStorage,
  					'images_transcoder' => $this->sTranscoder,
- 					'uploaders' => array('sys_html5'),
+ 					'uploaders' => array('sys_settings_html5'),
                 	'upload_buttons_titles' => array('HTML5' => _t('_sys_uploader_button_name_single')),
 					'multiple' => false,
  					'content_id' => $aItem['id'],

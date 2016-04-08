@@ -9,11 +9,11 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-class BxTemplStudioSettings extends BxBaseStudioSettings
+class BxTemplStudioSettingsServices extends BxBaseStudioSettingsServices
 {
-    function __construct($sType = '', $mixedCategory = '')
+    public function __construct()
     {
-        parent::__construct($sType, $mixedCategory);
+        parent::__construct();
     }
 }
 /** @} */

@@ -27,10 +27,12 @@ class BxBaseMenuFooter extends BxTemplMenu
                     break;
 
                 case 'switch_template':
-                    $aTemplates = get_templates_array(true, true);
-                    $sTemplate = $aTemplates[$this->_oTemplate->getCode()];
+                	$aTemplates = get_templates_array(true, true);
 
-                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplate);
+                	$sTemplateName = $this->_oTemplate->getCode();                    
+                    $sTemplateTitle = isset($aTemplates[$sTemplateName]) ? $aTemplates[$sTemplateName] : '';
+
+                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplateTitle);
                     break;
             }
 
