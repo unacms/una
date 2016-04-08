@@ -249,7 +249,8 @@ class BxDolInstallSiteConfig
                     $sHost = $this->_sServerHttpHost;
                     $sUri = rtrim(dirname($this->_sServerPhpSelf), '/\\');
                     $sPage = 'index.php?action=finish';
-                    header("Location: http://{$sHost}{$sUri}/{$sPage}");
+                    $sProto = $this->proto();
+                    header("Location: {$sProto}{$sHost}{$sUri}/{$sPage}");
                     exit;
                 } else {
                     return true;
@@ -580,7 +581,9 @@ EOF;
     {
         if (isset($aData[$sKey]))
             return bx_process_pass($aData[$sKey]);
-        if (!empty($a['def_exp'])) {
+        elseif (false !== getenv('TRIDENT_' . strtoupper($sKey)))
+            return bx_process_pass(getenv('TRIDENT_' . strtoupper($sKey)));
+        elseif (!empty($a['def_exp'])) {
             $s = $this->{$a['def_exp'][0]}($a['def_exp'][1]);
             if ($s) {
                 $sAutoMessage = _t('_sys_inst_conf_found') . '<br />';
@@ -594,7 +597,7 @@ EOF;
 
     protected function defUrl ($foo)
     {
-        $s = "http://" . $this->_sServerHttpHost . $this->_sServerPhpSelf;
+        $s = $this->proto() . $this->_sServerHttpHost . $this->_sServerPhpSelf;
         return preg_replace("/install\/(index\.php$)/", '', $s);
     }
 
@@ -612,6 +615,11 @@ EOF;
         foreach ($aModules as $sName => $aConfig)
             $a[$aConfig['home_uri']] = $aConfig['title'];
         return $a;
+    }
+
+    protected function proto()
+    {
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) || getenv('TRIDENT_HTTPS') ? 'https://' : 'http://';
     }
 }
 
