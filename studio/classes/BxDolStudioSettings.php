@@ -19,6 +19,9 @@ define('BX_DOL_STUDIO_STG_CATEGORY_SYSTEM', 'system');
 define('BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES', 'languages');
 define('BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES', 'templates');
 
+define('BX_DOL_STUDIO_STG_MIX_SYSTEM', 'system');
+define('BX_DOL_STUDIO_STG_MIX_DEFAULT', BX_DOL_STUDIO_STG_MIX_SYSTEM);
+
 class BxDolStudioSettings extends BxTemplStudioPage
 {
     protected $sType;
@@ -26,28 +29,61 @@ class BxDolStudioSettings extends BxTemplStudioPage
     protected $aCategories;
     protected $aCustomCategories;
 
-    function __construct($sType = '', $sCategory = '')
+    protected $bMixes;
+    protected $sMix;
+    protected $aMix;
+
+    protected $sStorage;
+    protected $sTranscoder;
+
+    protected $sErrorMessage;
+
+    function __construct($sType = '', $mixedCategory = '')
     {
         parent::__construct('settings');
 
         $this->oDb = new BxDolStudioSettingsQuery();
 
         $this->sType = BX_DOL_STUDIO_STG_TYPE_DEFAULT;
-        if(is_string($sType) && !empty($sType))
+        if(!empty($sType) && is_string($sType))
             $this->sType = $sType;
 
         $this->sCategory = '';
-        if(is_string($sCategory) && !empty($sCategory))
-            $this->sCategory = $sCategory;
+        if(!empty($mixedCategory) && (is_string($mixedCategory) || is_array($mixedCategory)))
+            $this->sCategory = $mixedCategory;
+
+		$this->bMixes = false;
+		$this->sMix = '';
+		$this->aMix = array();
+
+		$this->sStorage = 'sys_images_custom';
+		$this->sTranscoder = 'sys_images_custom';
+
+		$this->sErrorMessage = '';
 
         //--- Check actions ---//
-        if(($sAction = bx_get('stg_action')) !== false && ($sValue = bx_get('stg_value')) !== false) {
+        if(($sAction = bx_get('stg_action')) !== false) {
             $sAction = bx_process_input($sAction);
-            $sValue = bx_process_input($sValue);
+
+            $sValue = '';
+            if(bx_get('stg_value') !== false)
+            	$sValue = bx_process_input(bx_get('stg_value'));
 
             $aResult = array('code' => 0, 'message' => '');
-            if(!empty($sAction) && !empty($sValue)) {
+            if(!empty($sAction)) {
                 switch($sAction) {
+                	case 'select-mix':
+                		$aResult = array_merge($aResult, $this->selectMix($sValue));
+                		break;
+
+                	case 'create-mix':
+                		$aResult = array_merge($aResult, $this->getPopupCodeCreateMix());
+						break;
+
+                	case 'delete-mix':
+                		$aResult = array_merge($aResult, $this->deleteMix((int)$sValue));
+						break;
+
                     case 'get-page-by-type':
                         $this->sType = $sValue;
                         $aResult['content'] = $this->getPageCode();
@@ -60,8 +96,42 @@ class BxDolStudioSettings extends BxTemplStudioPage
         }
     }
 
+    public function enableMixes($bMixes = true)
+    {
+    	$this->bMixes = $bMixes;
+    }
+
+    public function selectMix($sName)
+    {
+		$this->oDb->updateMixes(array('active' => 0), array(
+			'type_id' => $this->oDb->getTypeId($this->sType),
+			'category_id' => is_string($this->sCategory) ? $this->oDb->getCategoryId($this->sCategory) : 0,
+			'active' => 1
+		));
+
+		$aResult = array();
+		if($sName == BX_DOL_STUDIO_STG_MIX_SYSTEM || $this->oDb->updateMixes(array('active' => 1), array('name' => $sName)))
+			$aResult = array('eval' => $this->getPageJsObject() . '.onMixSelect(oData);');
+		else 
+    		$aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
+
+    	return $aResult;
+    }
+
+    public function deleteMix($iId)
+    {
+    	$aResult = array();
+    	if($this->oDb->deleteMixesOptions(array('mix_id' => $iId)) && $this->oDb->deleteMixes(array('id' => $iId)))
+    		$aResult = array('eval' => $this->getPageJsObject() . '.onMixDelete(oData);');
+    	else 
+    		$aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
+
+    	return $aResult;
+    }
+
     function saveChanges(&$oForm)
     {
+    	$iMixId = $oForm->getCleanValue('mix_id');
         $aCategories = explode(',', $oForm->getCleanValue('categories'));
 
         foreach ($aCategories as $sCategory) {
@@ -70,7 +140,11 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
             $aData = array();
             foreach($aOptions as $aOption) {
-                $aData[$aOption['name']] = $oForm->getCleanValue($aOption['name']);
+                $aData[$aOption['name']] = $this->getSubmittedValue($aOption, $oForm);
+                if($aData[$aOption['name']] === false && !empty($this->sErrorMessage)) {
+                	$this->sCategory = $sCategory;
+					return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($this->sErrorMessage)), false);
+                }
 
                 if(!empty($aOption['check'])) {
                     $sCheckerHelper = '';
@@ -99,7 +173,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
                 else
                     $aData[$aOption['name']] = $this->getEmptyValue($aOption);
 
-                if($this->oDb->setParam($aOption['name'], $aData[$aOption['name']])) {
+                if($this->oDb->setParam($aOption['name'], $aData[$aOption['name']], $iMixId)) {
                 	$aCategoryInfo = array();
 		            $this->oDb->getCategories(array('type' => 'by_name', 'value' => $sCategory), $aCategoryInfo, false);
 
@@ -109,6 +183,35 @@ class BxDolStudioSettings extends BxTemplStudioPage
         }
 
         return $this->getJsResult('_adm_stg_scs_save');
+    }
+
+    protected function getSubmittedValue($aOption, &$oForm)
+    {
+    	$mixedValue = '';
+
+    	switch($aOption['type']) {
+    		case 'image':
+    			$mixedValue = (int)getParam($aOption['name']);
+
+    			$aIds = $oForm->getCleanValue($aOption['name']);
+    			if(empty($aIds))
+    				break;
+
+    			$oStorage = BxDolStorage::getObjectInstance($this->sStorage);
+		        if(!$oStorage)
+					break;
+
+    			foreach($aIds as $iId) {
+    				$oStorage->updateGhostsContentId($iId, false, $aOption['id']);
+    				$mixedValue = $iId;
+    			}
+    			break;
+
+    		default: 
+    			$mixedValue = $oForm->getCleanValue($aOption['name']);
+    	}
+
+    	return $mixedValue;
     }
 
     protected function getProcessedValue($aOption, $mixedValue)

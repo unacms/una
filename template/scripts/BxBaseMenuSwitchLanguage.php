@@ -30,11 +30,25 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
         $this->setSelected('', $sLanguage);
 
-        $aPage = explode('?', $_SERVER['HTTP_REFERER']);
+        $oPermalink = BxDolPermalinks::getInstance();
+
+        $sPageLink = ltrim($_SERVER['REQUEST_URI'], '/');
+        $sPageLink = $oPermalink->unpermalink($sPageLink);
+
+        $sPageParams = '';
+        if(strpos($sPageLink, '?') !== false)
+        	list($sPageLink, $sPageParams) = explode('?', $sPageLink);
 
         $aPageParams = array();
-        if(!empty($aPage[1]))
-            parse_str($aPage[1], $aPageParams);
+        if(!empty($sPageParams))
+        	parse_str($sPageParams, $aPageParams);
+
+		$aPageParamsAdd = array();
+		if(!empty($_SERVER['QUERY_STRING'])) {
+			parse_str($_SERVER['QUERY_STRING'], $aPageParamsAdd);
+			if(!empty($aPageParamsAdd) && is_array($aPageParamsAdd))
+				$aPageParams = array_merge($aPageParams, $aPageParamsAdd);
+		}
 
         $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
 
@@ -46,15 +60,20 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
                 'id' => $sName,
                 'name' => $sName,
                 'class' => '',
-                'title' => genFlag($sName) . ' ' . $sLang,
+                'title' => $this->getItemTitle($sName, $sLang),
                 'target' => '_self',
                 'icon' => '',
-                'link' => bx_html_attribute(bx_append_url_params($aPage[0], $aPageParams)),
+                'link' => bx_html_attribute(bx_append_url_params($oPermalink->permalink($sPageLink), $aPageParams)),
                 'onclick' => ''
             );
         }
 
         $this->_aObject['menu_items'] = $aItems;
+    }
+
+    protected function getItemTitle($sName, $sTitle)
+    {
+    	return genFlag($sName);
     }
 }
 

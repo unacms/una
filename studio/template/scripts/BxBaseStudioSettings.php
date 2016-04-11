@@ -10,17 +10,17 @@
 
 class BxBaseStudioSettings extends BxDolStudioSettings
 {
-    public function __construct($sType = '', $sCategory = '')
+    public function __construct($sType = '', $mixedCategory = '')
     {
-        parent::__construct($sType, $sCategory);
+        parent::__construct($sType, $mixedCategory);
     }
     public function getPageCss()
     {
-        return array_merge(parent::getPageCss(), array('forms.css'));
+        return array_merge(parent::getPageCss(), array('forms.css', 'settings.css'));
     }
     public function getPageJs()
     {
-        return array_merge(parent::getPageJs(), array('settings.js'));
+        return array_merge(parent::getPageJs(), array('jquery.form.min.js', 'jquery.webForms.js', 'settings.js'));
     }
     public function getPageJsObject()
     {
@@ -50,11 +50,33 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     public function getPageCode($sCategorySelected = '')
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
+        $sJsObject = $this->getPageJsObject();
 
         $aCategories = array();
         $iCategories = $this->oDb->getCategories(array('type' => 'by_type_name_key_name', 'type_name' => $this->sType, 'category_name' => $this->sCategory, 'hidden' => 0), $aCategories);
         if($iCategories > 0)
             $aCategories = array_keys($aCategories);
+
+		$bMix = false;
+		$aOptions2Mixes = array();
+		if($this->bMixes) {
+			if(is_string($this->sCategory))
+        		$aMixesBrowse = array('type' => 'by_type_category', 'type' => $this->sType, 'category' => $this->sCategory, 'active' => 1);
+        	else
+        		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType, 'active' => 1);
+
+        	$aMix = array();
+			$this->oDb->getMixes($aMixesBrowse, $aMix, false);
+
+			$this->sMix = BX_DOL_STUDIO_STG_MIX_DEFAULT; 
+			if(!empty($aMix) && is_array($aMix)) {
+				$this->aMix = $aMix;
+				$this->sMix = $aMix['name'];
+
+				$bMix = true;
+				$this->oDb->getMixesOptions(array('type' => 'by_mix_id_pair_option_value', 'value' => $this->aMix['id']), $aOptions2Mixes, false);
+			}
+		}
 
         $bWrap = count($aCategories) > 1;
         $aForm = array(
@@ -78,6 +100,16 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             'inputs' => array()
         );
 
+        if($bMix)
+        	$aForm['inputs']['mix_id'] = array(
+        		'type' => 'hidden',
+        		'name' => 'mix_id',
+        		'value' => $this->aMix['id'],
+        		'db' => array (
+					'pass' => 'Int',
+				),
+        	);
+
         foreach($aCategories as $sCategory) {
             $aFields = array();
 
@@ -93,7 +125,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             $iOptions = $this->oDb->getOptions(array('type' => 'by_category_id', 'value' => $aCategory['id']), $aOptions);
 
             foreach($aOptions as $aOption)
-                $aFields[$aOption['name']] = $this->field($aOption);
+                $aFields[$aOption['name']] = $this->field($aOption, $aOptions2Mixes);
 
             if($bWrap) {
                 $aCategory['selected'] = $aCategory['name'] == $sCategorySelected;
@@ -103,7 +135,6 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             $aForm['inputs'] = array_merge($aForm['inputs'], $aFields);
         }
         $aForm['inputs'] = array_merge(
-
             $aForm['inputs'],
 
             (!$bWrap ? array() : array(
@@ -129,7 +160,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             )
         );
 
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = new BxTemplStudioFormView($aForm, $oTemplate);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
@@ -137,7 +168,178 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             exit;
         }
 
-        return $oTemplate->parseHtmlByName('settings.html', array('js_object' => $this->getPageJsObject(), 'form' => $oForm->getCode()));
+        $bTmplVarsMixes = false;
+        $aTmplVarsMixes = array();
+        if($this->bMixes) {
+        	if(is_string($this->sCategory))
+        		$aMixesBrowse = array('type' => 'by_type_category', 'type' => $this->sType, 'category' => $this->sCategory);
+        	else
+        		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType);
+
+        	$aMixes = array();
+			$this->oDb->getMixes($aMixesBrowse, $aMixes, false);
+			$aMixes = array_merge(array(array('name' => BX_DOL_STUDIO_STG_MIX_DEFAULT, 'title' => _t('_adm_stg_txt_mix_' . BX_DOL_STUDIO_STG_MIX_DEFAULT))), $aMixes);
+
+			foreach($aMixes as $aMix)
+				$aTmplVarsMixes[] = array(
+					'value' => $aMix['name'],
+					'title' => $aMix['title'],
+					'bx_if:show_checked_mix' => array(
+						'condition' => !empty($this->sMix) && $aMix['name'] == $this->sMix,
+						'content' => array()
+					)
+				);
+
+			$bTmplVarsMixes = !empty($aTmplVarsMixes);
+        }
+
+        $bTmplVarsDeleteMix = !empty($this->sMix) && !empty($this->aMix);
+        $aTmplVarsDeleteMix = array();
+        if($bTmplVarsDeleteMix)
+        	$aTmplVarsDeleteMix = array(
+        		'js_object' => $sJsObject,
+				'id' => $this->aMix['id']
+        	);
+
+        return $oTemplate->parseHtmlByName('settings.html', array(
+        	'js_object' => $sJsObject,
+        	'type' => $this->sType,
+	        'category' => is_array($this->sCategory) ? json_encode($this->sCategory) : $this->sCategory,
+	        'mix' => $this->sMix,
+        	'bx_if:show_mixes' => array(
+        		'condition' => $this->bMixes,
+        		'content' => array(
+        			'js_object' => $sJsObject,
+        			'bx_if:show_select_mix' => array(
+        				'condition' => $bTmplVarsMixes,
+        				'content' => array(
+        					'js_object' => $sJsObject,
+        					'bx_repeat:mixes' => $aTmplVarsMixes,
+        				) 
+        			),
+        			'bx_if:show_delete_mix' => array(
+        				'condition' => !empty($this->sMix) && !empty($this->aMix),
+        				'content' => $aTmplVarsDeleteMix
+        			),
+        		)
+        	), 
+        	'form' => $oForm->getCode()
+        ));
+    }
+
+    public function getPopupCodeCreateMix()
+    {
+    	$oTemplate = BxDolStudioTemplate::getInstance();
+    	$sJsObject = $this->getPageJsObject();
+
+    	$iType = 0;
+    	if(!empty($this->sType)) {
+    		$aType = array();
+    		$this->oDb->getTypes(array('type' => 'by_name', 'value' => $this->sType), $aType, false);
+    		if(!empty($aType) && is_array($aType))
+    			$iType = $aType['id'];
+    	}
+
+    	$iCategory = 0;
+    	if(!empty($this->sCategory) && is_string($this->sCategory)) {
+    		$aCategory = array();
+    		$this->oDb->getCategories(array('type' => 'by_name', 'value' => $this->sCategory), $aCategory, false);
+    		if(!empty($aCategory) && is_array($aCategory))
+    			$iCategory = $aCategory['id'];
+    	}
+
+    	$sForm = 'adm-settings-create-mix-form';
+    	$aForm = array(
+            'form_attrs' => array(
+                'id' => $sForm,
+                'name' => $sForm,
+                'action' => bx_append_url_params(BX_DOL_URL_STUDIO . 'settings.php', array(
+                	'stg_action' => 'create-mix'
+    			)),
+                'method' => 'post',
+                'enctype' => 'multipart/form-data'
+            ),
+            'params' => array(
+                'db' => array(
+                    'table' => 'sys_options_mixes',
+                    'key' => 'id',
+                    'uri' => 'name',
+                    'uri_title' => 'title',
+                    'submit_name' => 'save'
+                ),
+            ),
+            'inputs' => array(
+            	'type_id' => array(
+            		'type' => 'hidden',
+                    'name' => 'type_id',
+                    'value' => $iType,
+                    'db' => array (
+                        'pass' => 'Int',
+            		)
+				),
+				'category_id' => array(
+            		'type' => 'hidden',
+                    'name' => 'category_id',
+                    'value' => $iCategory,
+                    'db' => array (
+                        'pass' => 'Int',
+            		)
+				),
+            	'title' => array(
+            		'type' => 'text',
+                    'name' => 'title',
+                    'caption' => _t('_adm_stg_txt_mix_title'),
+                    'value' => '',
+                    'db' => array (
+                        'pass' => 'Xss',
+            		)
+				),
+				'controls' => array(
+					'type' => 'input_set',
+	            	array(
+	                    'type' => 'submit',
+	                    'name' => 'save',
+	                    'value' => _t('_adm_btn_settings_save'),
+	                ),
+	                array(
+	                    'type' => 'button',
+	                    'name' => 'cancel',
+	                    'value' => _t('_adm_txt_confirm_cancel'),
+	                	'attrs' => array(
+	                		'class' => 'bx-def-margin-sec-left-auto',
+	                		'onclick' => '$(".bx-popup-applied:visible").dolPopupHide()'
+	                	)
+	                )
+				)
+            )
+        );
+
+        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm->initChecker();
+
+        if($oForm->isSubmittedAndValid()) {
+        	$iId = $oForm->insert(array('name' => $oForm->generateUri()));
+        	if($iId !== false) {
+        		$this->oDb->updateMixes(array('active' => 0), array(
+        			'type_id' => $this->oDb->getTypeId($this->sType),
+        			'category_id' => is_string($this->sCategory) ? $this->oDb->getCategoryId($this->sCategory) : 0,
+        			'active' => 1
+        		));
+        		$this->oDb->updateMixes(array('active' => 1), array('id' => $iId));
+
+        		return array(
+        			'eval' => $sJsObject . '.onMixCreate(oData);'
+        		);
+        	}
+        }
+
+		return array(
+			'popup' => BxTemplStudioFunctions::getInstance()->popupBox('adm-stg-create-mix-popup', _t('_adm_stg_txt_create_mix_popup'), $oTemplate->parseHtmlByName('stg_create_mix.html', array(
+				'js_object' => $sJsObject,
+				'form_id' => $sForm,
+				'form' => $oForm->getCode(true),
+			)))
+		);
     }
 
     protected function header($aCategory, $aFields)
@@ -155,8 +357,12 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             $aFields);
     }
 
-    protected function field($aItem)
+    protected function field($aItem, $aItems2Mixes)
     {
+    	$oTemplate = BxDolStudioTemplate::getInstance();
+
+    	$mixedValue = isset($aItems2Mixes[$aItem['id']]) ? $aItems2Mixes[$aItem['id']] : $aItem['value'];
+
         $aField = array();
         switch($aItem['type']) {
             case 'digit':
@@ -164,7 +370,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'type' => 'text',
                     'name' => $aItem['name'],
                     'caption' => _t($aItem['caption']),
-                    'value' => $aItem['value'],
+                    'value' => $mixedValue,
                     'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -175,7 +381,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'type' => 'textarea',
                     'name' => $aItem['name'],
                     'caption' => _t($aItem['caption']),
-                    'value' => $aItem['value'],
+                    'value' => $mixedValue,
                     'db' => array (
                         'pass' => 'XssHtml',
                     ),
@@ -187,7 +393,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'name' => $aItem['name'],
                     'caption' => _t($aItem['caption']),
                     'value' => 'on',
-                    'checked' => $aItem['value'] == 'on',
+                    'checked' => $mixedValue == 'on',
                     'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -199,7 +405,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'type' => 'checkbox_set',
                     'name' => $aItem['name'],
                     'caption' => _t($aItem['caption']),
-                    'value' => !empty($aItem['value']) ? explode(',', $aItem['value']) : array(),
+                    'value' => !empty($mixedValue) ? explode(',', $mixedValue) : array(),
                 	'reverse' => $aItem['type'] == 'rlist',
                     'db' => array (
                         'pass' => 'Xss',
@@ -217,7 +423,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'type' => 'select',
                     'name' => $aItem['name'],
                     'caption' => _t($aItem['caption']),
-                    'value' => $aItem['value'],
+                    'value' => $mixedValue,
                     'values' => array(),
                     'db' => array (
                         'pass' => 'Xss',
@@ -235,10 +441,42 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'type' => 'file',
                     'name' => $aItem['name'],
                     'caption' => _t($aItem['caption']),
-                    'value' => $aItem['value'],
+                    'value' => $mixedValue,
                     'db' => array (
                         'pass' => 'Xss'
                     )
+                );
+                break;
+			case 'image':
+                $aField = array(
+                    'type' => 'files',
+                    'name' => $aItem['name'],
+					'storage_object' => $this->sStorage,
+ 					'images_transcoder' => $this->sTranscoder,
+ 					'uploaders' => array('sys_settings_html5'),
+                	'upload_buttons_titles' => array('HTML5' => _t('_sys_uploader_button_name_single')),
+					'multiple' => false,
+ 					'content_id' => $aItem['id'],
+ 					'ghost_template' => array(
+						'inputs' => array(),
+					),
+                    'caption' => _t($aItem['caption']),
+                    'value' => $mixedValue,
+                    'db' => array (
+                        'pass' => 'Xss'
+                    )
+                );
+                break;
+			case 'rgb':
+			case 'rgba':
+                $aField = array(
+                    'type' => $aItem['type'],
+                    'name' => $aItem['name'],
+                    'caption' => _t($aItem['caption']),
+                    'value' => $mixedValue,
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
                 );
                 break;
         }

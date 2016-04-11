@@ -12,9 +12,9 @@
  */
 class BxTemplUploaderSimple extends BxBaseUploaderSimple
 {
-    function __construct($aObject, $sStorageObject, $sUniqId)
+    function __construct($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
-        parent::__construct($aObject, $sStorageObject, $sUniqId);
+        parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
     }
 }
 

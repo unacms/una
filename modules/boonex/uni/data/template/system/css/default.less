@@ -1,0 +1,194 @@
+@import '../../../../../../../template/css/default.less';
+
+/* viewport */
+@media (min-width:720px) and (max-width:1024px) {
+	html {
+	    font-size: @bx-viewport-font-tablet !important;
+	}
+}
+@media (max-width:720px) {
+	html {
+	    font-size: @bx-viewport-font-mobile !important;
+	}
+}
+
+
+/* content paddings */
+.bx-content-padding-header {
+	padding: @bx-content-padding-header;
+}
+.bx-content-padding-footer {
+	padding: @bx-content-padding-footer;
+}
+.bx-content-padding-block {
+	padding: @bx-content-padding-block;
+}
+
+
+/* shadow */
+.bx-shadow-header {
+	-webkit-box-shadow: @bx-shadow-header;
+	-moz-box-shadow: @bx-shadow-header;
+	box-shadow: @bx-shadow-header;
+}
+.bx-shadow-footer {
+	-webkit-box-shadow: @bx-shadow-footer;
+	-moz-box-shadow: @bx-shadow-footer;
+	box-shadow: @bx-shadow-footer;
+}
+.bx-shadow-block {
+	-webkit-box-shadow: @bx-shadow-block;
+	-moz-box-shadow: @bx-shadow-block;
+	box-shadow: @bx-shadow-block;
+}
+.bx-btn {
+	-webkit-box-shadow: @bx-shadow-button;
+	-moz-box-shadow: @bx-shadow-button;
+	box-shadow: @bx-shadow-button;
+}
+.bx-btn.bx-btn-small {
+	-webkit-box-shadow: @bx-shadow-button-small;
+	-moz-box-shadow: @bx-shadow-button-small;
+	box-shadow: @bx-shadow-button-small;
+}
+
+
+/* background images */
+.bx-def-image-bg-header,
+.bx-def-image-bg-footer,
+.bx-def-image-bg-page,
+.bx-def-image-bg-block,
+.bx-def-box {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.bx-def-image-bg-header {
+	background-image: url(@bx-image-bg-header);
+}
+.bx-def-image-bg-footer {
+	background-image: url(@bx-image-bg-footer);
+}
+.bx-def-image-bg-page {
+	background-image: url(@bx-image-bg-page);
+}
+.bx-def-image-bg-block {
+	background-image: url(@bx-image-bg-block);
+}
+.bx-def-box {
+	background-image: url(@bx-image-bg-box);
+}
+
+
+/* background colors */
+.bx-def-color-bg-header {
+    .background-color (@bx-color-header);
+}
+.bx-def-color-bg-footer {
+    .background-color (@bx-color-footer);    
+}
+
+
+/* font colors */
+.bx-header a {
+	color: @bx-color-link-header; 
+}
+.bx-header .sys-icon,
+.bx-header .sys-icon-a {
+	color: @bx-color-icon-header; 
+}
+.bx-header .sys-icon-a i {
+	.background-color (@bx-color-icon-header) !important;
+	color: @bx-color-icon-header;
+}
+
+.bx-footer a {
+	color: @bx-color-link-footer; 
+}
+.bx-footer .sys-icon,
+.bx-footer .sys-icon-a {
+	color: @bx-color-icon-footer; 
+}
+.bx-footer .sys-icon-a i {
+	.background-color (@bx-color-icon-footer) !important;
+	color: @bx-color-icon-footer;
+}
+
+
+/* border */
+.bx-def-border-header {
+    border-bottom: @bx-border-width-header @bx-border-type @bx-color-border-header;
+}
+.bx-def-border-footer {
+    border-top: @bx-border-width-footer @bx-border-type @bx-color-border-footer;
+}
+.bx-def-border-block {
+	border: @bx-border-width-block @bx-border-type @bx-color-border-block;
+
+	.radius(@bx-border-radius-block);
+}
+
+
+/* block */
+.bx-db-header {
+	padding: @bx-title-padding-block;
+}
+.bx-db-header .bx-db-title {
+	font-family: @bx-font-family-block-title;	
+	color: @bx-color-font-block-title;
+}
+.bx-db-header .bx-db-title.bx-def-font-h2 {
+	font-size: @bx-font-size-block-title;
+}
+
+
+/* box */
+.bx-def-box {
+	padding: @bx-content-padding-card;
+
+	border: @bx-border-width-box @bx-border-type @bx-color-border-box;
+
+	-webkit-box-shadow: @bx-shadow-card;
+	-moz-box-shadow: @bx-shadow-card;
+	box-shadow: @bx-shadow-card;
+}
+.bx-def-box.bx-def-color-bg-box {
+	.background-color (@bx-color-box);
+}
+.bx-def-box.bx-def-round-corners {
+	.radius(@bx-border-radius-box);
+}
+
+
+/* button */
+.bx-btn,
+.bx-btn.bx-btn-primary {
+	height: @bx-height-button;
+	line-height: @bx-height-button;
+
+	.background-color (@bx-color-button);
+
+	.radius(@bx-border-radius-button);
+
+	text-shadow: @bx-shadow-font-button;
+
+	font-family: @bx-font-family-button;
+	font-size: @bx-font-size-button;
+	font-weight: @bx-font-weight-button;
+	color: @bx-color-font-button;
+}
+.bx-btn.bx-btn-small {
+	height: @bx-height-button-small;
+	line-height: @bx-height-button-small;
+
+	.background-color (@bx-color-button-small);
+
+	.radius(@bx-border-radius-button-small);
+
+	text-shadow: @bx-shadow-font-button-small;
+
+	font-family: @bx-font-family-button-small;
+	font-size: @bx-font-size-button-small;
+	font-weight: @bx-font-weight-button-small;
+	color: @bx-color-font-button-small;
+}

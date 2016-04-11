@@ -457,3 +457,17 @@
 	border-radius: 0 0 0.5em 0.5em;
 	border-bottom: 1px solid #000000;
 }
+
+
+/****************************************
+* Overwrite 3d Party MiniColors plug-in
+****************************************/
+.bx-form-input-wrapper.bx-form-input-wrapper-text .minicolors-theme-bootstrap .minicolors-swatch {
+	top: 4px;
+	left: 4px;
+
+	width: 25px;
+	width: 1.5625rem;
+	height: 25px;
+	height: 1.5625rem;
+}

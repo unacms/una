@@ -239,6 +239,12 @@ class BxDolStorageQuery extends BxDolDb
         return $this->getFiles($iProfileId, true, $iContentId);
     }
 
+    public function getGhost($iFileId)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `sys_storage_ghosts` WHERE `object` = ? AND `id` = ?", $this->_aObject['object'], $iFileId);
+        return $this->getRow($sQuery);
+    }
+
     public function getFiles($iProfileId, $isGhostsOnly = false, $iContentId = false)
     {
         $sJoin = '';

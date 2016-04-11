@@ -1251,11 +1251,13 @@ function bx_check_minimal_requirements ($bShowHttpError = false)
 function bx_check_redirect_to_correct_hostname ($bProcessRedirect = false)
 {
     $aUrl = parse_url(BX_DOL_URL_ROOT);
+    $iPortDefault = 'https' == $aUrl['scheme'] ? '443' : '80';
 
-    $bRedirectRequired = isset($_SERVER['HTTP_HOST']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':80');
+    $bRedirectRequired = isset($_SERVER['HTTP_HOST']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':' . (!empty($aUrl['port']) ? $aUrl['port'] : $iPortDefault));
 
     if ($bRedirectRequired && $bProcessRedirect) {
-        header( "Location:{$aUrl['scheme']}://{$aUrl['host']}{$_SERVER['REQUEST_URI']}", true, 301 );
+        $sPort = empty($aUrl['port']) || 80 == $aUrl['port'] || 443 == $aUrl['port'] ? '' : ':' . $aUrl['port'];
+        header("Location:{$aUrl['scheme']}://{$aUrl['host']}{$sPort}{$_SERVER['REQUEST_URI']}", true, 301);
         exit;
     }
     

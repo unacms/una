@@ -543,6 +543,8 @@
 	<string name="_adm_btn_purchase_submit"><![CDATA[Purchase]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
+	<string name="_adm_btn_settings_mix_create"><![CDATA[Create Mix]]></string>
+	<string name="_adm_btn_settings_mix_delete"><![CDATA[Delete Mix]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Trident {0} is available!]]></string>
 	<string name="_adm_dbd_txt_script_on"><![CDATA[Trident on]]></string>
@@ -1191,6 +1193,14 @@
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
+	<string name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>
+
+	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Create Mix]]></string>
+	<string name="_adm_stg_txt_mix_title"><![CDATA[Mix Title]]></string>
+	<string name="_adm_stg_txt_mix_system"><![CDATA[System]]></string>
+	
+	
+	<string name="_adm_stg_err_remove_old_image"><![CDATA[Cannot remove current image.]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[File]]></string>
 	<string name="_adm_str_cpt_files_version"><![CDATA[Version]]></string>
 	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server. Please check FTP access details in Settings -> General.]]></string>
@@ -1914,7 +1924,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_submenu"><![CDATA[Site Submenu]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Member Toolbar]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Site Toolbar]]></string>
-	<string name="_sys_menu_title_switch_language"><![CDATA[Switch Language]]></string>
+	<string name="_sys_menu_title_switch_language_popup"><![CDATA[Language Switcher (popup)]]></string>
+	<string name="_sys_menu_title_switch_language_inline"><![CDATA[Language Switch (inline)]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Switch Template]]></string>
 	<string name="_sys_mobile_friends"><![CDATA[Friends]]></string>
 	<string name="_sys_mobile_info"><![CDATA[Info]]></string>
@@ -2168,6 +2179,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Patch download failed, or downloaded file can't be saved]]></string>
 	<string name="_sys_upgrade_patch_invalid"><![CDATA[Invalid patch, it can't be applied to your version or incorrect files structure in the patch.]]></string>
 	<string name="_sys_upgrade_patch_unpack_failed"><![CDATA[Patch unpack failed]]></string>
+	<string name="_sys_uploader_button_name_single"><![CDATA[Upload File]]></string>
 	<string name="_sys_uploader_close"><![CDATA[Close]]></string>
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[Oh no! Are you sure? This may discard uploading files, seriously.]]></string>
 	<string name="_sys_uploader_confirm_leaving_page"><![CDATA[Upload is in progress! Stay cool and don't close this page, or it will cut off half-way.]]></string>

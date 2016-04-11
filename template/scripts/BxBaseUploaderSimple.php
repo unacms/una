@@ -15,9 +15,9 @@ class BxBaseUploaderSimple extends BxDolUploader
 {
     protected $_sIframeId;
 
-    function __construct ($aObject, $sStorageObject, $sUniqId)
+    function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
-        parent::__construct($aObject, $sStorageObject, $sUniqId);
+        parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
         $this->_sIframeId = 'bx-form-input-files-' . $sUniqId . '-iframe';
         $this->_sButtonTemplate = 'uploader_button_simple.html';
     }

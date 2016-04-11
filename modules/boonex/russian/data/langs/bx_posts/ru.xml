@@ -152,38 +152,10 @@
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
     <string name="_bx_posts_pre_lists_cats"><![CDATA[Категории публикаций]]></string>
-    <string name="_bx_posts_cat_Animals_Pets"><![CDATA[Животные]]></string>
-    <string name="_bx_posts_cat_Architecture"><![CDATA[Архитектура]]></string>
-    <string name="_bx_posts_cat_Art"><![CDATA[Искусство]]></string>
-    <string name="_bx_posts_cat_Cars_Motorcycles"><![CDATA[Авто & мото]]></string>
-    <string name="_bx_posts_cat_Celebrities"><![CDATA[Знаменитости]]></string>
-    <string name="_bx_posts_cat_Design"><![CDATA[Дизайн]]></string>
-    <string name="_bx_posts_cat_DIY_Crafts"><![CDATA[Сделай сам]]></string>
-    <string name="_bx_posts_cat_Education"><![CDATA[Образование]]></string>
-    <string name="_bx_posts_cat_Film_Music_Books"><![CDATA[Фильмы, музыка & книги]]></string>
-    <string name="_bx_posts_cat_Food_Drink"><![CDATA[Еда & напитки]]></string>
-    <string name="_bx_posts_cat_Gardening"><![CDATA[Сад & огород]]></string>
-    <string name="_bx_posts_cat_Geek"><![CDATA[Гик]]></string>
-    <string name="_bx_posts_cat_Hair_Beauty"><![CDATA[Причёски & макияж]]></string>
-    <string name="_bx_posts_cat_Health_Fitness"><![CDATA[Здоровье & фитнесс]]></string>
-    <string name="_bx_posts_cat_History"><![CDATA[История]]></string>
-    <string name="_bx_posts_cat_Holidays_Events"><![CDATA[Праздники & события]]></string>
-    <string name="_bx_posts_cat_Home_Decor"><![CDATA[Интерьер]]></string>
-    <string name="_bx_posts_cat_Humor"><![CDATA[Юмор]]></string>
-    <string name="_bx_posts_cat_Illustrations_Posters"><![CDATA[Иллюстрации & постеры]]></string>
-    <string name="_bx_posts_cat_Kids_Parenting"><![CDATA[Дети & родители]]></string>
-    <string name="_bx_posts_cat_Mens_Fashion"><![CDATA[Мужская мода]]></string>
-    <string name="_bx_posts_cat_Outdoors"><![CDATA[Туризм]]></string>
-    <string name="_bx_posts_cat_Photography"><![CDATA[Фотография]]></string>
-    <string name="_bx_posts_cat_Products"><![CDATA[Продукты]]></string>
-    <string name="_bx_posts_cat_Quotes"><![CDATA[Цитаты]]></string>
-    <string name="_bx_posts_cat_Science_Nature"><![CDATA[Наука & природа]]></string>
-    <string name="_bx_posts_cat_Sports"><![CDATA[Спорт]]></string>
-    <string name="_bx_posts_cat_Tattoos"><![CDATA[Татуеровки]]></string>
-    <string name="_bx_posts_cat_Technology"><![CDATA[Технологии]]></string>
-    <string name="_bx_posts_cat_Travel"><![CDATA[Путешествия]]></string>
-    <string name="_bx_posts_cat_Weddings"><![CDATA[Свадьба]]></string>
-    <string name="_bx_posts_cat_Womens_Fashion"><![CDATA[Женская мода]]></string>
+	<string name="_bx_posts_cat_General"><![CDATA[Общая]]></string>
+    <string name="_bx_posts_cat_Special"><![CDATA[Специальная]]></string>
+    <string name="_bx_posts_cat_Bananas"><![CDATA[Бананы]]></string>
+    <string name="_bx_posts_cat_Uncategorized"><![CDATA[Не категоризированные]]></string>
 
     <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">Все публикации от {1} ({2})</a>]]></string>
     <string name="_bx_posts_txt_category_link"><![CDATA[Категория <a href="{0}">{1}</a>]]></string>
