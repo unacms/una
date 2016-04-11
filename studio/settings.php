@@ -18,7 +18,10 @@ bx_require_authentication(true);
 $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-$oPage = new BxTemplStudioSettings($sPage);
+$mixedCategory = bx_get('category');
+$mixedCategory = $mixedCategory !== false ? bx_process_input($mixedCategory) : '';
+
+$oPage = new BxTemplStudioSettings($sPage, $mixedCategory);
 
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());

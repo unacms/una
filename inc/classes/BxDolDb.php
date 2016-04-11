@@ -17,6 +17,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     protected $_oDbCacheObject = null;
     protected $_aParams = null;
     protected $_sParamsCacheName = 'sys_options';
+    protected $_sParamsCacheNameMixed = 'sys_options_mixed';
     protected $_sStorageEngine = 'MYISAM';
 
     /**
@@ -109,7 +110,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         mysql_query("SET storage_engine=" . $this->_sStorageEngine, $this->_rLink);
 
         $GLOBALS['bx_db__rLink'] = $this->_rLink;
-
+$this->cacheParams(true);
         return '';
     }
 
@@ -401,12 +402,17 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
     protected function cacheParams($bForceCacheInvalidate = false)
     {
-        if ($bForceCacheInvalidate)
+        if($bForceCacheInvalidate)
             $this->cacheParamsClear();
 
         $this->_aParams = $this->fromCache($this->_sParamsCacheName, 'getPairs', "SELECT `name`, `value` FROM `sys_options`", "name", "value");
-        if (empty($this->_aParams)) {
-            $this->_aParams = array ();
+
+        $aMixed = $this->fromCache($this->_sParamsCacheNameMixed, 'getPairs', "SELECT `to`.`name` AS `name`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' INNER JOIN `sys_options` AS `to` ON `tmo`.`option_id`=`to`.`id`", "name", "value");
+        if(!empty($aMixed))
+        	$this->_aParams = array_merge($this->_aParams, $aMixed);
+
+        if(empty($this->_aParams)) {
+            $this->_aParams = array();
             return false;
         }
 
@@ -443,14 +449,26 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         if ($bFromCache && $this->isParamInCache($sKey)) {
             return $this->_aParams[$sKey];
         } else {
+        	$sQuery = $this->prepare("SELECT `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' INNER JOIN `sys_options` AS `to` ON `tmo`.`option_id`=`to`.`id` WHERE `to`.`name`=? LIMIT 1", $sKey);
+			$mixedValue = $this->getOne($sQuery);
+			if($mixedValue !== false)
+				return $mixedValue;
+
             $sQuery = $this->prepare("SELECT `value` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
             return $this->getOne($sQuery);
         }
     }
 
-    function setParam($sKey, $mixedValue)
+    function setParam($sKey, $mixedValue, $iMixId = 0)
     {
-        $sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
+    	if(empty($iMixId))
+        	$sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
+        else {
+        	$sQuery = $this->prepare("SELECT `id` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
+        	$iOptionId = (int)$this->getOne($sQuery);
+
+        	$sQuery = $this->prepare("REPLACE INTO `sys_options_mixes2options` SET `option_id` = ?, `mix_id` = ?, `value` = ?", $iOptionId, $iMixId, $mixedValue);
+        }
         $bResult = (int)$this->query($sQuery) > 0;
 
         // renew params cache
@@ -844,9 +862,9 @@ function getParam($sParamName, $bUseCache = true)
     return BxDolDb::getInstance()->getParam($sParamName, $bUseCache);
 }
 
-function setParam($sParamName, $sParamVal)
+function setParam($sParamName, $sParamVal, $iMixId = 0)
 {
-    return BxDolDb::getInstance()->setParam($sParamName, $sParamVal);
+    return BxDolDb::getInstance()->setParam($sParamName, $sParamVal, $iMixId);
 }
 
 /** @} */

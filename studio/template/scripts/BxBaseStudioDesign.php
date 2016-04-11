@@ -21,11 +21,11 @@ class BxBaseStudioDesign extends BxDolStudioDesign
     }
     function getPageCss()
     {
-        return array_merge(parent::getPageCss(), array());
+        return array_merge(parent::getPageCss(), array('settings.css'));
     }
     function getPageJs()
     {
-        return array_merge(parent::getPageJs(), array('settings.js', 'design.js'));
+        return array_merge(parent::getPageJs(), array('jquery.form.min.js', 'jquery.webForms.js', 'settings.js', 'design.js'));
     }
     function getPageJsObject()
     {
@@ -76,9 +76,9 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         return $this->$sMethod();
     }
 
-    protected function getSettings($mixedCategory = '')
+    protected function getSettings($mixedCategory = '', $sMix = '')
     {
-        $oPage = new BxTemplStudioSettings($this->sTemplate, $mixedCategory);
+        $oPage = new BxTemplStudioSettings($this->sTemplate, $mixedCategory, $sMix);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
             'content' => $oPage->getPageCode()

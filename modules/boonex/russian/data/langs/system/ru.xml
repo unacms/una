@@ -543,6 +543,8 @@
 	<string name="_adm_btn_purchase_submit"><![CDATA[Купить]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[В очереди]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Сохранить]]></string>
+	<string name="_adm_btn_settings_mix_create"><![CDATA[Создать набор]]></string>
+	<string name="_adm_btn_settings_mix_delete"><![CDATA[Удалить набор]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Обновить]]></string>
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Доступен Trident {0}!]]></string>
 	<string name="_adm_dbd_txt_script_on"><![CDATA[Trident на]]></string>
@@ -1191,6 +1193,12 @@
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
+	<string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
+
+	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Создать набор]]></string>
+	<string name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string>
+	<string name="_adm_stg_txt_mix_system"><![CDATA[Системный]]></string>
+
 	<string name="_adm_stg_err_remove_old_image"><![CDATA[Невозможно удалить текущее изображение.]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[Файл]]></string>
 	<string name="_adm_str_cpt_files_version"><![CDATA[Версия]]></string>
