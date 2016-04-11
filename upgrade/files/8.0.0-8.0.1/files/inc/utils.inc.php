@@ -7,8 +7,6 @@
  * @{
  */
 
-define('BX_DOL_LINK_CLASS', 'bx-link'); ///< class to add to every link in user content
-
 define('BX_DATA_TEXT', 1); ///< regular text data type
 define('BX_DATA_TEXT_MULTILINE', 2); ///< regular multiline text data type
 define('BX_DATA_INT', 3); ///< integer data type
@@ -442,20 +440,15 @@ function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
     fclose($rFile);
 }
 
-function echoJson($a)
-{
-	header('Content-type: text/html; charset=utf-8');
-
-	echo json_encode($a);
-}
-
 function clear_xss($val)
 {
+    if ($GLOBALS['logged']['admin'])
+        return $val;
+
     // HTML Purifier plugin
     global $oHtmlPurifier;
-    if (!isset($oHtmlPurifier) && !$GLOBALS['logged']['admin']) {
-
-        require_once( BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php' );
+    require_once( BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php' );
+    if (!isset($oHtmlPurifier)) {
 
         HTMLPurifier_Bootstrap::registerAutoload();
 
@@ -474,7 +467,7 @@ function clear_xss($val)
             $oConfig->set('HTML.Nofollow', 'true');
         }
 
-        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe(), new HTMLPurifier_Filter_AddBxLinksClass()));
+        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe()));
 
         $oDef = $oConfig->getHTMLDefinition(true);
         $oDef->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');
@@ -482,12 +475,7 @@ function clear_xss($val)
         $oHtmlPurifier = new HTMLPurifier($oConfig);
     }
 
-    if (!$GLOBALS['logged']['admin'])
-        $val = $oHtmlPurifier->purify($val);
-
-    bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'return_data' => &$val));
-
-    return $val;
+    return $oHtmlPurifier->purify($val);
 }
 
 //--------------------------------------- friendly permalinks --------------------------------------//
@@ -740,64 +728,41 @@ function bx_php_string_quot ($mixedInput)
  *
  * @param string $sFileUrl - file URL to be read.
  * @param array $aParams - an array of parameters to be pathed with URL.
- * @param string $sMethod - post or get.
- * @param array $aHeaders - custom headers.
  * @return string the file's contents.
  */
-function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array())
+function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = false)
 {
-    $bChangeTimeout = false;
-
-    if ('post' != $sMethod)
-    	$sFileUrl = bx_append_url_params($sFileUrl, $aParams);
+    if ($aParams)
+        $sFileUrl = bx_append_url_params($sFileUrl, $aParams);
 
     $sResult = '';
     if(function_exists('curl_init')) {
         $rConnect = curl_init();
 
-        curl_setopt($rConnect, CURLOPT_TIMEOUT, 10);
         curl_setopt($rConnect, CURLOPT_URL, $sFileUrl);
-        curl_setopt($rConnect, CURLOPT_HEADER, NULL === $sHttpCode ? false : true);
+        curl_setopt($rConnect, CURLOPT_HEADER, 0);
         curl_setopt($rConnect, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($rConnect, CURLOPT_FOLLOWLOCATION, 1);
+
+        if(bx_mb_strpos($sFileUrl, 'https') !== false) {
+	        curl_setopt($rConnect, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($rConnect, CURLOPT_SSL_VERIFYHOST, 0);
+        }
 
         if ($bChangeTimeout) {
             curl_setopt($rConnect, CURLOPT_CONNECTTIMEOUT, 3);
             curl_setopt($rConnect, CURLOPT_TIMEOUT, 3);
         }
 
-        if (!ini_get('open_basedir'))
-            curl_setopt($rConnect, CURLOPT_FOLLOWLOCATION, 1);
-
-        if ($aHeaders)
-            curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
-
-        if ($aBasicAuth)
-            curl_setopt($rConnect, CURLOPT_USERPWD, $aBasicAuth['user'] . ':' . $aBasicAuth['password']);
-
-        if ('post' == $sMethod) {
-            curl_setopt($rConnect, CURLOPT_POST, true);
-            curl_setopt($rConnect, CURLOPT_POSTFIELDS, $aParams);
-        }
-
         $sAllCookies = '';
         foreach($_COOKIE as $sKey=>$sValue){
-            $sAllCookies .= $sKey . '=' . $sValue . ';';
+            $sAllCookies .= $sKey."=".$sValue.";";
         }
         curl_setopt($rConnect, CURLOPT_COOKIE, $sAllCookies);
 
         $sResult = curl_exec($rConnect);
-
-        if (curl_errno($rConnect) == 60) { // CURLE_SSL_CACERT
-            curl_setopt($rConnect, CURLOPT_CAINFO, BX_DIRECTORY_PATH_PLUGINS . 'curl/cacert.pem');
-            $sResult = curl_exec($rConnect);
-        }
-
-        if (NULL !== $sHttpCode)
-            $sHttpCode = curl_getinfo($rConnect, CURLINFO_HTTP_CODE);
-
         curl_close($rConnect);
-    }
-    else {
+    } else {
 
         $iSaveTimeout = false;
         if ($bChangeTimeout) {
@@ -1162,12 +1127,12 @@ function bx_site_hash($sSalt = '', $isSkipVersion = false)
 
 /**
  * Transform string to method name string, for example it changes 'some_method' string to 'SomeMethod' string
- * @param array where words are separated with underscore
+ * @param string where words are separated with underscore
  * @return string where every word begins with capital letter
  */
-function bx_gen_method_name ($s, $aWordsDelimiter = array('_'))
+function bx_gen_method_name ($s, $sWordsDelimiter = '_')
 {
-    return str_replace(' ', '', ucwords(str_replace($aWordsDelimiter, ' ', $s)));
+    return str_replace(' ', '', ucwords(str_replace($sWordsDelimiter, ' ', $s)));
 }
 
 /**

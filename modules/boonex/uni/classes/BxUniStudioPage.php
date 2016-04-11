@@ -22,16 +22,15 @@ class BxUniStudioPage extends BxTemplStudioDesign
         unset($this->aMenuItems[BX_DOL_STUDIO_TEMPL_TYPE_LOGO]);
     }
 
-    protected function getSettings($sCategory = '')
+    protected function getSettings($mixedCategory = '', $sMix = '')
     {
-    	return parent::getSettings('bx_uni_system');
+    	return parent::getSettings('bx_uni_system', $sMix);
     }
 
-	protected function getStyles()
+	protected function getStyles($sMix = '')
     {
     	$sPrefix = $this->MODULE;
-
-		return parent::getSettings(array(
+    	$aCategories = array(
 			$sPrefix . '_styles_header',
 			$sPrefix . '_styles_footer',
 			$sPrefix . '_styles_body',
@@ -42,7 +41,13 @@ class BxUniStudioPage extends BxTemplStudioDesign
 			$sPrefix . '_styles_font',
 			$sPrefix . '_viewport_tablet',
 			$sPrefix . '_viewport_mobile'
-		));
+		);
+    	$oPage = new BxTemplStudioSettings($this->sTemplate, $aCategories, $sMix);
+    	$oPage->enableMixes(true);
+
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
+            'content' => $oPage->getPageCode()
+        ));
     }
 }
 
