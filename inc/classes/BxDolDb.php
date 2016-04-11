@@ -110,7 +110,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         mysql_query("SET storage_engine=" . $this->_sStorageEngine, $this->_rLink);
 
         $GLOBALS['bx_db__rLink'] = $this->_rLink;
-$this->cacheParams(true);
+
         return '';
     }
 

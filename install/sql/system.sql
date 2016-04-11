@@ -410,7 +410,6 @@ CREATE TABLE `sys_options_mixes2options` (
   `option_id` int(11) unsigned NOT NULL default '0',
   `mix_id` int(11) unsigned NOT NULL default '0',
   `value` mediumtext NOT NULL,
-  PRIMARY KEY (`id`),
   UNIQUE KEY `value`(`option_id`, `mix_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
