@@ -20,18 +20,19 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_header_bg_color'), '_bx_uni_stg_cpt_option_header_bg_color', 'rgba(59, 134, 134, 1)', 'rgba', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_header_bg_image'), '_bx_uni_stg_cpt_option_header_bg_image', '', 'image', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_site_logo'), '_bx_uni_stg_cpt_option_site_logo', '', 'image', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_site_logo_alt'), '_bx_uni_stg_cpt_option_site_logo_alt', '', 'text', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_site_logo_width'), '_bx_uni_stg_cpt_option_site_logo_width', '240', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_site_logo_height'), '_bx_uni_stg_cpt_option_site_logo_height', '48', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_header_content_padding'), '_bx_uni_stg_cpt_option_header_content_padding', '0px', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_header_border_color'), '_bx_uni_stg_cpt_option_header_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_header_border_size'), '_bx_uni_stg_cpt_option_header_border_size', '0px', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_header_shadow'), '_bx_uni_stg_cpt_option_header_shadow', 'none', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_header_icon_color'), '_bx_uni_stg_cpt_option_header_icon_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_header_link_color'), '_bx_uni_stg_cpt_option_header_link_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 12);
+(@iCategoryId, CONCAT(@sName, '_header_height'), '_bx_uni_stg_cpt_option_header_height', '3rem', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_header_content_padding'), '_bx_uni_stg_cpt_option_header_content_padding', '0px', 'digit', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_header_bg_color'), '_bx_uni_stg_cpt_option_header_bg_color', 'rgba(59, 134, 134, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_header_bg_image'), '_bx_uni_stg_cpt_option_header_bg_image', '', 'image', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_site_logo'), '_bx_uni_stg_cpt_option_site_logo', '', 'image', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_site_logo_alt'), '_bx_uni_stg_cpt_option_site_logo_alt', '', 'text', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_site_logo_width'), '_bx_uni_stg_cpt_option_site_logo_width', '240', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_site_logo_height'), '_bx_uni_stg_cpt_option_site_logo_height', '48', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_header_border_color'), '_bx_uni_stg_cpt_option_header_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_header_border_size'), '_bx_uni_stg_cpt_option_header_border_size', '0px', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_header_shadow'), '_bx_uni_stg_cpt_option_header_shadow', 'none', 'digit', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_header_icon_color'), '_bx_uni_stg_cpt_option_header_icon_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_header_link_color'), '_bx_uni_stg_cpt_option_header_link_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 13);
 
 -- SETTINGS: UNI Styles Footer
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -45,8 +46,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_footer_border_color'), '_bx_uni_stg_cpt_option_footer_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_footer_border_size'), '_bx_uni_stg_cpt_option_footer_border_size', '1px', 'digit', '', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_footer_shadow'), '_bx_uni_stg_cpt_option_footer_shadow', 'none', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_footer_icon_color'), '_bx_uni_stg_cpt_option_footer_icon_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_footer_link_color'), '_bx_uni_stg_cpt_option_footer_link_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 8);
+(@iCategoryId, CONCAT(@sName, '_footer_font_color'), '_bx_uni_stg_cpt_option_footer_font_color', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_footer_icon_color'), '_bx_uni_stg_cpt_option_footer_icon_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_footer_link_color'), '_bx_uni_stg_cpt_option_footer_link_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 9);
 
 -- SETTINGS: UNI Styles Body
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -73,8 +75,11 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_block_shadow'), '_bx_uni_stg_cpt_option_block_shadow', 'none', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_uni_stg_cpt_option_block_title_padding', '0px', 'digit', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_uni_stg_cpt_option_block_title_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_uni_stg_cpt_option_block_title_font_size', '24px', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_uni_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 11);
+(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_uni_stg_cpt_option_block_title_font_size', '1.5rem', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_uni_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_uni_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_uni_stg_cpt_option_block_title_div_bg_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 13);
+
 
 -- SETTINGS: UNI Styles Card
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -96,15 +101,16 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_button_lg_height'), '_bx_uni_stg_cpt_option_button_lg_height', '36px', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_button_lg_height'), '_bx_uni_stg_cpt_option_button_lg_height', '2.25rem', 'digit', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_button_lg_bg_color'), '_bx_uni_stg_cpt_option_button_lg_bg_color', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_button_lg_border_radius'), '_bx_uni_stg_cpt_option_button_lg_border_radius', '3px', 'digit', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_button_lg_shadow'), '_bx_uni_stg_cpt_option_button_lg_shadow', 'none', 'digit', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_family'), '_bx_uni_stg_cpt_option_button_lg_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_size'), '_bx_uni_stg_cpt_option_button_lg_font_size', '16px', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_color'), '_bx_uni_stg_cpt_option_button_lg_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_shadow'), '_bx_uni_stg_cpt_option_button_lg_font_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_weight'), '_bx_uni_stg_cpt_option_button_lg_font_weight', '400', 'digit', '', '', '', 9);
+(@iCategoryId, CONCAT(@sName, '_button_lg_bg_color_hover'), '_bx_uni_stg_cpt_option_button_lg_bg_color_hover', 'rgba(58, 134, 134, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_button_lg_border_radius'), '_bx_uni_stg_cpt_option_button_lg_border_radius', '3px', 'digit', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_button_lg_shadow'), '_bx_uni_stg_cpt_option_button_lg_shadow', 'none', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_family'), '_bx_uni_stg_cpt_option_button_lg_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_size'), '_bx_uni_stg_cpt_option_button_lg_font_size', '1rem', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_color'), '_bx_uni_stg_cpt_option_button_lg_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_shadow'), '_bx_uni_stg_cpt_option_button_lg_font_shadow', 'none', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_weight'), '_bx_uni_stg_cpt_option_button_lg_font_weight', '400', 'digit', '', '', '', 10);
 
 -- SETTINGS: UNI Styles Small Buttons
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -112,15 +118,16 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_button_sm_height'), '_bx_uni_stg_cpt_option_button_sm_height', '24px', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_button_sm_height'), '_bx_uni_stg_cpt_option_button_sm_height', '1.5rem', 'digit', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_button_sm_bg_color'), '_bx_uni_stg_cpt_option_button_sm_bg_color', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_button_sm_border_radius'), '_bx_uni_stg_cpt_option_button_sm_border_radius', '3px', 'digit', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_button_sm_shadow'), '_bx_uni_stg_cpt_option_button_sm_shadow', 'none', 'digit', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_family'), '_bx_uni_stg_cpt_option_button_sm_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_size'), '_bx_uni_stg_cpt_option_button_sm_font_size', '14px', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_color'), '_bx_uni_stg_cpt_option_button_sm_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_shadow'), '_bx_uni_stg_cpt_option_button_sm_font_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_weight'), '_bx_uni_stg_cpt_option_button_sm_font_weight', '400', 'digit', '', '', '', 9);
+(@iCategoryId, CONCAT(@sName, '_button_sm_bg_color_hover'), '_bx_uni_stg_cpt_option_button_sm_bg_color_hover', 'rgba(58, 134, 134, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_button_sm_border_radius'), '_bx_uni_stg_cpt_option_button_sm_border_radius', '3px', 'digit', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_button_sm_shadow'), '_bx_uni_stg_cpt_option_button_sm_shadow', 'none', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_family'), '_bx_uni_stg_cpt_option_button_sm_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_size'), '_bx_uni_stg_cpt_option_button_sm_font_size', '0.9rem', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_color'), '_bx_uni_stg_cpt_option_button_sm_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_shadow'), '_bx_uni_stg_cpt_option_button_sm_font_shadow', 'none', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_weight'), '_bx_uni_stg_cpt_option_button_sm_font_weight', '400', 'digit', '', '', '', 10);
 
 -- SETTINGS: UNI Styles Font
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -130,12 +137,21 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, CONCAT(@sName, '_font_family'), '_bx_uni_stg_cpt_option_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_font_size_default'), '_bx_uni_stg_cpt_option_size_default', '18px', 'digit', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_font_size_small'), '_bx_uni_stg_cpt_option_size_small', '14px', 'digit', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_font_size_middle'), '_bx_uni_stg_cpt_option_size_middle', '16px', 'digit', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_font_size_large'), '_bx_uni_stg_cpt_option_size_large', '22px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_font_size_h1'), '_bx_uni_stg_cpt_option_size_h1', '38px', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_font_size_h2'), '_bx_uni_stg_cpt_option_size_h2', '24px', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_font_size_h3'), '_bx_uni_stg_cpt_option_size_h3', '18px', 'digit', '', '', '', 8);
+(@iCategoryId, CONCAT(@sName, '_font_color_default'), '_bx_uni_stg_cpt_option_color_default', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_font_size_small'), '_bx_uni_stg_cpt_option_size_small', '14px', 'digit', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_font_color_small'), '_bx_uni_stg_cpt_option_color_small', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_font_size_middle'), '_bx_uni_stg_cpt_option_size_middle', '16px', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_font_color_middle'), '_bx_uni_stg_cpt_option_color_middle', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_font_size_large'), '_bx_uni_stg_cpt_option_size_large', '22px', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_font_color_large'), '_bx_uni_stg_cpt_option_color_large', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_font_size_h1'), '_bx_uni_stg_cpt_option_size_h1', '38px', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_font_color_h1'), '_bx_uni_stg_cpt_option_color_h1', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_font_size_h2'), '_bx_uni_stg_cpt_option_size_h2', '24px', 'digit', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_font_color_h2'), '_bx_uni_stg_cpt_option_color_h2', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_font_size_h3'), '_bx_uni_stg_cpt_option_size_h3', '18px', 'digit', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_font_color_h3'), '_bx_uni_stg_cpt_option_color_h3', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed'), '_bx_uni_stg_cpt_option_color_grayed', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 16),
+(@iCategoryId, CONCAT(@sName, '_font_color_contrasted'), '_bx_uni_stg_cpt_option_color_contrasted', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 17);
 
 -- SETTINGS: UNI Viewport Tablet
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 

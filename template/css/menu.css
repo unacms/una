@@ -276,7 +276,7 @@ ul.bx-menu-toolbar li a span {
     vertical-align:top;
 }
 ul.bx-menu-toolbar li a .sys-icon-a {
-    margin-top:0.5rem;
+    margin-top:0.75rem;
 }
 ul.bx-menu-toolbar li a span {
     margin-right:0;
@@ -295,11 +295,11 @@ ul.bx-menu-toolbar li .sys-icon-a,
 ul.bx-menu-toolbar li .sys-icon {
     display:inline-block;
     vertical-align:middle;
-    font-size:32px;
-    font-size:2rem;
+    font-size:24px;
+    font-size:1.5rem;
     text-align:center;
-    width:2rem;
-    height:2rem;
+    width:1.5rem;
+    height:1.5rem;
 }
 
 

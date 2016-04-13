@@ -405,7 +405,6 @@ body > .bx-popup-wrapper {
     -o-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
 
-    text-transform: uppercase;
     font-size:1rem;
     color:#fff;
 }

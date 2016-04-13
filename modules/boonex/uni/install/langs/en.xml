@@ -7,13 +7,14 @@
 	<string name="_bx_uni_stg_cpt_option_switcher_name"><![CDATA[Name In Template Switcher]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_header"><![CDATA[Header]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_height"><![CDATA[Header height]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_bg_color"><![CDATA[Header background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_bg_image"><![CDATA[Header background image]]></string>
 	<string name="_bx_uni_stg_cpt_option_site_logo"><![CDATA[Logo image]]></string>
 	<string name="_bx_uni_stg_cpt_option_site_logo_alt"><![CDATA[Logo ALT]]></string>
 	<string name="_bx_uni_stg_cpt_option_site_logo_width"><![CDATA[Logo width]]></string>
 	<string name="_bx_uni_stg_cpt_option_site_logo_height"><![CDATA[Logo height]]></string>
-	<string name="_bx_uni_stg_cpt_option_header_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_border_color"><![CDATA[Header border color]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_border_size"><![CDATA[Header border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_shadow"><![CDATA[Shadow]]></string>
@@ -27,6 +28,7 @@
 	<string name="_bx_uni_stg_cpt_option_footer_border_color"><![CDATA[Footer border color]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_border_size"><![CDATA[Footer border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_shadow"><![CDATA[Shadow]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_font_color"><![CDATA[Font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_icon_color"><![CDATA[Icons color]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_link_color"><![CDATA[Links color]]></string>
 
@@ -47,6 +49,8 @@
 	<string name="_bx_uni_stg_cpt_option_block_title_font_family"><![CDATA[Title font stack]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_size"><![CDATA[Title font size]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_color"><![CDATA[Title font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_title_div_height"><![CDATA[Title separator height]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_title_div_bg_color"><![CDATA[Title separator color]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_card"><![CDATA[Cards]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_bg_color"><![CDATA[Cards background color]]></string>
@@ -60,6 +64,7 @@
 	<string name="_bx_uni_stg_cpt_category_styles_large_button"><![CDATA[Large Buttons]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_height"><![CDATA[Height]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_lg_bg_color_hover"><![CDATA[On-hover background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_font_family"><![CDATA[Font stack]]></string>
@@ -71,6 +76,7 @@
 	<string name="_bx_uni_stg_cpt_category_styles_small_button"><![CDATA[Small Buttons]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_height"><![CDATA[Height]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_sm_bg_color_hover"><![CDATA[On-hover background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_font_family"><![CDATA[Font stack]]></string>
@@ -81,13 +87,23 @@
 
 	<string name="_bx_uni_stg_cpt_category_styles_font"><![CDATA[Fonts]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_family"><![CDATA[Font stack]]></string>
-	<string name="_bx_uni_stg_cpt_option_size_default"><![CDATA[Font size default]]></string>
-	<string name="_bx_uni_stg_cpt_option_size_small"><![CDATA[Font size small]]></string>
-	<string name="_bx_uni_stg_cpt_option_size_middle"><![CDATA[Font size middle]]></string>
-	<string name="_bx_uni_stg_cpt_option_size_large"><![CDATA[Font size large]]></string>
-	<string name="_bx_uni_stg_cpt_option_size_h1"><![CDATA[Font size H1]]></string>
-	<string name="_bx_uni_stg_cpt_option_size_h2"><![CDATA[Font size H2]]></string>
-	<string name="_bx_uni_stg_cpt_option_size_h3"><![CDATA[Font size H3]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_default"><![CDATA[Default font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_default"><![CDATA[Default font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_small"><![CDATA[Small font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_small"><![CDATA[Small font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_middle"><![CDATA[Middle font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_middle"><![CDATA[Middle font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_large"><![CDATA[Large font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_large"><![CDATA[Large font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h1"><![CDATA[H1 font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_h1"><![CDATA[H1 font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h2"><![CDATA[H2 font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_h2"><![CDATA[H2 font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_size_h3"><![CDATA[H3 font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_h3"><![CDATA[H3 font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_grayed"><![CDATA[Grayed font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_color_contrasted"><![CDATA[Contrasted font color]]></string>
+	
 
 	<string name="_bx_uni_stg_cpt_category_viewport_tablet"><![CDATA[Tablet Viewport]]></string>
 	<string name="_bx_uni_stg_cpt_option_vpt_font_size_scale"><![CDATA[Fonts size scale]]></string>

@@ -40,8 +40,11 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-shadow-font-button-small'] = $this->_setShadowFont($sName . '_button_sm_font_shadow');
 
         //--- Height
-		$this->_aConfig['aLessConfig']['bx-height-button'] = $this->_setSize($sName . '_button_lg_height', '36px');
-		$this->_aConfig['aLessConfig']['bx-height-button-small'] = $this->_setSize($sName . '_button_sm_height', '24px');
+        $this->_aConfig['aLessConfig']['bx-height-header'] = $this->_setSize($sName . '_header_height', '3rem');
+        $this->_aConfig['aLessConfig']['bx-height-block-title-div'] = $this->_setSize($sName . '_block_title_div_height', '1px');
+		$this->_aConfig['aLessConfig']['bx-height-button'] = $this->_setSize($sName . '_button_lg_height', '2.25rem');
+		$this->_aConfig['aLessConfig']['bx-height-button-small'] = $this->_setSize($sName . '_button_sm_height', '1.5rem');
+		
 
         //--- Title/Content Margins
         $this->_aConfig['aLessConfig']['bx-content-padding-header'] = $this->_setMargin($sName . '_header_content_padding');
@@ -53,29 +56,33 @@ class BxTemplConfig extends BxBaseConfig
 
 
         //--- Colors
-        $this->_aConfig['aLessConfig']['bx-color-header'] = $this->_setColor($sName . '_header_bg_color', 'rgba(59, 134, 134, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-page'] = $this->_setColor($sName . '_body_bg_color', 'rgb(255, 255, 255)');
-        $this->_aConfig['aLessConfig']['bx-color-footer'] = $this->_setColor($sName . '_footer_bg_color', 'rgba(255, 255, 255, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-block'] = $this->_setColor($sName . '_block_bg_color', 'rgba(255, 255, 255, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-box'] = $this->_setColor($sName . '_card_bg_color', 'rgba(242, 242, 242, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-button'] = $this->_setColor($sName . '_button_lg_bg_color', 'rgba(108, 170, 138, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-button-small'] = $this->_setColor($sName . '_button_sm_bg_color', 'rgba(108, 170, 138, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-header'] = $this->_setColorRgba($sName . '_header_bg_color', 'rgba(59, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-footer'] = $this->_setColorRgba($sName . '_footer_bg_color', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-page'] = $this->_setColorRgb($sName . '_body_bg_color', 'rgb(255, 255, 255)');
+        $this->_aConfig['aLessConfig']['bx-color-block'] = $this->_setColorRgba($sName . '_block_bg_color', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-block-title-div'] = $this->_setColorRgba($sName . '_block_title_div_bg_color', 'rgba(208, 208, 208, 1)');        
+        $this->_aConfig['aLessConfig']['bx-color-box'] = $this->_setColorRgba($sName . '_card_bg_color', 'rgba(242, 242, 242, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button'] = $this->_setColorRgba($sName . '_button_lg_bg_color', 'rgba(108, 170, 138, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-hover'] = $this->_setColorRgba($sName . '_button_lg_bg_color_hover', 'rgba(58, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-small'] = $this->_setColorRgba($sName . '_button_sm_bg_color', 'rgba(108, 170, 138, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_bg_color_hover', 'rgba(58, 134, 134, 1)');
 
-        $this->_aConfig['aLessConfig']['bx-color-font-block-title'] = $this->_setColor($sName . '_block_title_font_color', 'rgba(0, 0, 20, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-font-block-title'] = $this->_setColorRgba($sName . '_block_title_font_color', 'rgba(0, 0, 20, 1)');
 
-        $this->_aConfig['aLessConfig']['bx-color-border-header'] = $this->_setColor($sName . '_header_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-footer'] = $this->_setColor($sName . '_footer_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-block'] = $this->_setColor($sName . '_block_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-box'] = $this->_setColor($sName . '_card_border_color', 'rgba(208, 208, 208, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-border-header'] = $this->_setColorRgba($sName . '_header_border_color', 'rgba(208, 208, 208, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-border-footer'] = $this->_setColorRgba($sName . '_footer_border_color', 'rgba(208, 208, 208, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-border-block'] = $this->_setColorRgba($sName . '_block_border_color', 'rgba(208, 208, 208, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-border-box'] = $this->_setColorRgba($sName . '_card_border_color', 'rgba(208, 208, 208, 1)');
 
-		$this->_aConfig['aLessConfig']['bx-color-icon-header'] = $this->_setColor($sName . '_header_icon_color', 'rgba(255, 255, 255, 1)');
-		$this->_aConfig['aLessConfig']['bx-color-icon-footer'] = $this->_setColor($sName . '_footer_icon_color', 'rgba(62, 134, 133, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-icon-header'] = $this->_setColorRgba($sName . '_header_icon_color', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-icon-footer'] = $this->_setColorRgba($sName . '_footer_icon_color', 'rgba(62, 134, 133, 1)');
 
-		$this->_aConfig['aLessConfig']['bx-color-link-header'] = $this->_setColor($sName . '_header_link_color', 'rgba(62, 134, 133, 1)');		
-		$this->_aConfig['aLessConfig']['bx-color-link-footer'] = $this->_setColor($sName . '_footer_link_color', 'rgba(62, 134, 133, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-link-header'] = $this->_setColorRgba($sName . '_header_link_color', 'rgba(255, 255, 255, 1)');		
+		$this->_aConfig['aLessConfig']['bx-color-link-footer'] = $this->_setColorRgba($sName . '_footer_link_color', 'rgba(62, 134, 133, 1)');
 
-		$this->_aConfig['aLessConfig']['bx-color-font-button'] = $this->_setColor($sName . '_button_lg_font_color', 'rgba(255, 255, 255, 1)');
-		$this->_aConfig['aLessConfig']['bx-color-font-button-small'] = $this->_setColor($sName . '_button_sm_font_color', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-font-footer'] = $this->_setColorRgba($sName . '_footer_font_color', 'rgba(51, 51, 51, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-font-button'] = $this->_setColorRgba($sName . '_button_lg_font_color', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-font-button-small'] = $this->_setColorRgba($sName . '_button_sm_font_color', 'rgba(255, 255, 255, 1)');
 		
 		
 
@@ -100,6 +107,10 @@ class BxTemplConfig extends BxBaseConfig
 	        $this->_aConfig['aLessConfig']['bx-font-size-h1'] = getParam($sName . '_font_size_h1');
 	        $this->_aConfig['aLessConfig']['bx-font-size-h2'] = getParam($sName . '_font_size_h2');
 	        $this->_aConfig['aLessConfig']['bx-font-size-h3'] = getParam($sName . '_font_size_h3');
+
+	        $this->_aConfig['aLessConfig']['bx-font-color-default'] = getParam($sName . '_font_color_default');
+	        $this->_aConfig['aLessConfig']['bx-font-color-grayed'] = getParam($sName . '_font_color_grayed');
+	        $this->_aConfig['aLessConfig']['bx-font-color-contrasted'] = getParam($sName . '_font_color_contrasted');
 		}
 
 		//--- Font Family
@@ -108,9 +119,18 @@ class BxTemplConfig extends BxBaseConfig
 		$this->_aConfig['aLessConfig']['bx-font-family-button-small'] = $this->_setValue($sName . '_button_sm_font_family');
 
 		//--- Font Size
-		$this->_aConfig['aLessConfig']['bx-font-size-block-title'] = $this->_setSize($sName . '_block_title_font_size', '24px');
-		$this->_aConfig['aLessConfig']['bx-font-size-button'] = $this->_setSize($sName . '_button_lg_font_size', '16px');
-		$this->_aConfig['aLessConfig']['bx-font-size-button-small'] = $this->_setSize($sName . '_button_sm_font_size', '14px');
+		$this->_aConfig['aLessConfig']['bx-font-size-block-title'] = $this->_setSize($sName . '_block_title_font_size', '1.5rem');
+		$this->_aConfig['aLessConfig']['bx-font-size-button'] = $this->_setSize($sName . '_button_lg_font_size', '1rem');
+		$this->_aConfig['aLessConfig']['bx-font-size-button-small'] = $this->_setSize($sName . '_button_sm_font_size', '0.9rem');
+
+		//--- Font Color
+		$sColorDefault = 'rgba(51, 51, 51, 1.0)';
+		$this->_aConfig['aLessConfig']['bx-font-color-small'] = $this->_setColorRgba($sName . '_font_color_small', $sColorDefault);
+		$this->_aConfig['aLessConfig']['bx-font-color-middle'] = $this->_setColorRgba($sName . '_font_color_middle', $sColorDefault);
+		$this->_aConfig['aLessConfig']['bx-font-color-large'] = $this->_setColorRgba($sName . '_font_color_large', $sColorDefault);
+		$this->_aConfig['aLessConfig']['bx-font-color-h1'] = $this->_setColorRgba($sName . '_font_color_h1', $sColorDefault);
+		$this->_aConfig['aLessConfig']['bx-font-color-h2'] = $this->_setColorRgba($sName . '_font_color_h2', $sColorDefault);
+		$this->_aConfig['aLessConfig']['bx-font-color-h3'] = $this->_setColorRgba($sName . '_font_color_h3', $sColorDefault);
 
 		//--- Font Weight
 		$this->_aConfig['aLessConfig']['bx-font-weight-button'] = $this->_setValue($sName . '_button_lg_font_weight', '400');
@@ -138,7 +158,7 @@ class BxTemplConfig extends BxBaseConfig
     	if(empty($sDefault))
     		$sDefault = '0px';
 
-    	$sPattern = "/([0-9]+\s*px){1}/";
+    	$sPattern = "/([0-9\.]+\s*((px)|(rem))){1}/";
 
     	$sValue = trim(getParam($sKey));
     	if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
@@ -152,7 +172,7 @@ class BxTemplConfig extends BxBaseConfig
     	if(empty($sDefault))
     		$sDefault = '0px';
 
-    	$sPattern = "/([0-9]+\s*px\s*){1,4}/";
+    	$sPattern = "/([0-9\.]+\s*((px)|(rem))\s*){1,4}/";
 
     	$sValue = trim(getParam($sKey));
     	if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
@@ -161,12 +181,26 @@ class BxTemplConfig extends BxBaseConfig
     	return $sValue;
     }
 
-    protected function _setColor($sKey, $sDefault = '')
+	protected function _setColorRgb($sKey, $sDefault = '')
+    {
+    	if(empty($sDefault))
+    		$sDefault = 'rgb(51, 51, 51)';
+
+    	$sPattern = "/rgb\s*\(\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*\)/";
+
+    	$sValue = trim(getParam($sKey));
+    	if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
+    		$sValue = $sDefault;
+
+    	return $sValue;
+    }
+
+    protected function _setColorRgba($sKey, $sDefault = '')
     {
     	if(empty($sDefault))
     		$sDefault = 'rgba(51, 51, 51, 1.0)';
 
-    	$sPattern = "/rgba\s*\(\s*([0-9]{1,3}\s*,\s*){3}\s*[0-9\.]+\s*\)/";
+    	$sPattern = "/rgba?\s*\(\s*([0-9]{1,3}\s*,?\s*){3}\s*([0-9\.]+)?\s*\)/";
 
     	$sValue = trim(getParam($sKey));
     	if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
