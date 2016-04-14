@@ -14,7 +14,7 @@ class BxTemplConfig extends BxBaseConfig
         parent::__construct();
 
         $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
-        	'bx-font-family' => '"Source Sans Pro", "Open Sans", "Helvetica Neue", Helvetica, sans-serif',
+        	'bx-font-family' => 'Helvetica, Arial, sans-serif',
 
         	'bx-color-page' => '#f2fbff',
         	'bx-color-block' => '#fff',

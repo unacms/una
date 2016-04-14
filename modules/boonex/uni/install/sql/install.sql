@@ -74,7 +74,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_block_border_radius'), '_bx_uni_stg_cpt_option_block_border_radius', '0px', 'digit', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_block_shadow'), '_bx_uni_stg_cpt_option_block_shadow', 'none', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_uni_stg_cpt_option_block_title_padding', '0px', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_uni_stg_cpt_option_block_title_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_uni_stg_cpt_option_block_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_uni_stg_cpt_option_block_title_font_size', '1.5rem', 'digit', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_uni_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 11),
 (@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_uni_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 12),

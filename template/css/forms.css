@@ -377,7 +377,7 @@
 	position: relative;
 	overflow: auto;
 	max-width: 480px;
-	font: 0.75em/1em "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font: 0.75em/1em Helvetica, Arial, sans-serif;
 	color: #ffffff;
 }
 .bx-form-input-captcha a {
