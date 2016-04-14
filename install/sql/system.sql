@@ -394,8 +394,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 --
 CREATE TABLE `sys_options_mixes` (
   `id` int(11) unsigned NOT NULL auto_increment,
-  `type_id` int(11) unsigned NOT NULL default '0',
-  `category_id` int(11) unsigned NOT NULL default '0',
+  `type` varchar(64) NOT NULL default '',
+  `category` varchar(64) NOT NULL default '',
   `name` varchar(64) NOT NULL default '',
   `title` varchar(64) NOT NULL default '',
   `active` tinyint(1) NOT NULL default '0',
@@ -407,10 +407,10 @@ CREATE TABLE `sys_options_mixes` (
 -- Table structure for table `sys_options_mixes2options`
 --
 CREATE TABLE `sys_options_mixes2options` (
-  `option_id` int(11) unsigned NOT NULL default '0',
+  `option` varchar(64) NOT NULL default '',
   `mix_id` int(11) unsigned NOT NULL default '0',
   `value` mediumtext NOT NULL,
-  UNIQUE KEY `value`(`option_id`, `mix_id`)
+  UNIQUE KEY `value`(`option`, `mix_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 

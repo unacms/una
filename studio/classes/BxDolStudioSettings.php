@@ -49,8 +49,15 @@ class BxDolStudioSettings extends BxTemplStudioPage
             $this->sType = $sType;
 
         $this->sCategory = '';
-        if(!empty($mixedCategory) && (is_string($mixedCategory) || is_array($mixedCategory)))
-            $this->sCategory = $mixedCategory;
+        if(!empty($mixedCategory)) {
+        	if(is_array($mixedCategory))
+        		$this->sCategory = $mixedCategory;
+        	else if(is_string($mixedCategory)) {
+        		$this->sCategory = json_decode($mixedCategory);
+        		if(empty($this->sCategory))
+        			$this->sCategory = $mixedCategory;
+        	}
+        }
 
 		$this->bMixes = false;
 		$this->sMix = '';
@@ -104,8 +111,8 @@ class BxDolStudioSettings extends BxTemplStudioPage
     public function selectMix($sName)
     {
 		$this->oDb->updateMixes(array('active' => 0), array(
-			'type_id' => $this->oDb->getTypeId($this->sType),
-			'category_id' => is_string($this->sCategory) ? $this->oDb->getCategoryId($this->sCategory) : 0,
+			'type' => $this->sType,
+			'category' => is_string($this->sCategory) ? $this->sCategory : '',
 			'active' => 1
 		));
 
