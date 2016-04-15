@@ -19,7 +19,9 @@
 	<string name="_bx_uni_stg_cpt_option_header_border_size"><![CDATA[Header border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_icon_color"><![CDATA[Icons color]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_icon_color_hover"><![CDATA[On-hover icons color]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_link_color"><![CDATA[Links color]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_link_color_hover"><![CDATA[On-hover links color]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_footer"><![CDATA[Footer]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_bg_color"><![CDATA[Footer background color]]></string>
@@ -30,20 +32,26 @@
 	<string name="_bx_uni_stg_cpt_option_footer_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_font_color"><![CDATA[Font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_icon_color"><![CDATA[Icons color]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_icon_color_hover"><![CDATA[On-hover icons color]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_link_color"><![CDATA[Links color]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_link_color_hover"><![CDATA[On-hover links color]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_body"><![CDATA[Body]]></string>
 	<string name="_bx_uni_stg_cpt_option_body_bg_color"><![CDATA[Site background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_body_bg_image"><![CDATA[Site background image]]></string>
 	<string name="_bx_uni_stg_cpt_option_page_width"><![CDATA[Page Width]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_icon_color"><![CDATA[Icons color]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_icon_color_hover"><![CDATA[On-hover icons color]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_link_color"><![CDATA[Links color]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_link_color_hover"><![CDATA[On-hover links color]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_block"><![CDATA[Blocks]]></string>
-	<string name="_bx_uni_stg_cpt_option_block_bg_color"><![CDATA[Blocks background color]]></string>
-	<string name="_bx_uni_stg_cpt_option_block_bg_image"><![CDATA[Blocks background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_content_padding"><![CDATA[Content margin]]></string>
-	<string name="_bx_uni_stg_cpt_option_block_border_color"><![CDATA[Blocks border color]]></string>
-	<string name="_bx_uni_stg_cpt_option_block_border_size"><![CDATA[Blocks border size]]></string>
-	<string name="_bx_uni_stg_cpt_option_block_border_radius"><![CDATA[Blocks corners radius]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_size"><![CDATA[Border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_padding"><![CDATA[Title margin]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_family"><![CDATA[Title font stack]]></string>
@@ -53,18 +61,47 @@
 	<string name="_bx_uni_stg_cpt_option_block_title_div_bg_color"><![CDATA[Title separator color]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_card"><![CDATA[Cards]]></string>
-	<string name="_bx_uni_stg_cpt_option_card_bg_color"><![CDATA[Cards background color]]></string>
-	<string name="_bx_uni_stg_cpt_option_card_bg_image"><![CDATA[Cards background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_card_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_card_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_content_padding"><![CDATA[Content margin]]></string>
-	<string name="_bx_uni_stg_cpt_option_card_border_color"><![CDATA[Cards border color]]></string>
-	<string name="_bx_uni_stg_cpt_option_card_border_size"><![CDATA[Cards border size]]></string>
-	<string name="_bx_uni_stg_cpt_option_card_border_radius"><![CDATA[Cards corners radius]]></string>
+	<string name="_bx_uni_stg_cpt_option_card_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_card_border_size"><![CDATA[Border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_card_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_shadow"><![CDATA[Shadow]]></string>
+
+	<string name="_bx_uni_stg_cpt_category_styles_popup"><![CDATA[Popups]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_bg_image"><![CDATA[Background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_content_padding"><![CDATA[Content margin]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_border_size"><![CDATA[Border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_border_radius"><![CDATA[Corners radius]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_shadow"><![CDATA[Shadow]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_title_padding"><![CDATA[Title margin]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_title_font_family"><![CDATA[Title font stack]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_title_font_size"><![CDATA[Title font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_title_font_color"><![CDATA[Title font color]]></string>
+
+	<string name="_bx_uni_stg_cpt_category_styles_popup_menu"><![CDATA[Popup Menus]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_menu_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_menu_bg_image"><![CDATA[Background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_menu_content_padding"><![CDATA[Content margin]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_menu_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_menu_border_size"><![CDATA[Border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_menu_shadow"><![CDATA[Shadow]]></string>
+
+	<string name="_bx_uni_stg_cpt_category_styles_form"><![CDATA[Forms]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_large_button"><![CDATA[Large Buttons]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_height"><![CDATA[Height]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_bg_color_hover"><![CDATA[On-hover background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_lg_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_lg_border_color_hover"><![CDATA[On-hover border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_lg_border_size"><![CDATA[Border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_font_family"><![CDATA[Font stack]]></string>
@@ -77,6 +114,9 @@
 	<string name="_bx_uni_stg_cpt_option_button_sm_height"><![CDATA[Height]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_bg_color_hover"><![CDATA[On-hover background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_sm_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_sm_border_color_hover"><![CDATA[On-hover border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_sm_border_size"><![CDATA[Border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_font_family"><![CDATA[Font stack]]></string>
