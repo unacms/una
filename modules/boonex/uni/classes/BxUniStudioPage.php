@@ -37,7 +37,7 @@ class BxUniStudioPage extends BxTemplStudioDesign
 			$sPrefix . '_styles_block',
 			$sPrefix . '_styles_card',
 			$sPrefix . '_styles_popup',
-			$sPrefix . '_styles_popup_menu',
+			$sPrefix . '_styles_menu_slide',
 			$sPrefix . '_styles_form',
 			$sPrefix . '_styles_large_button',
 			$sPrefix . '_styles_small_button',

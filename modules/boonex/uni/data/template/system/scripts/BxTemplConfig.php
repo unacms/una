@@ -28,7 +28,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-image-bg-block'] = $this->_setUrl($sName . '_block_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-box'] = $this->_setUrl($sName . '_card_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-popup'] = $this->_setUrl($sName . '_popup_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-popup-menu'] = $this->_setUrl($sName . '_popup_menu_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide'] = $this->_setUrl($sName . '_menu_slide_bg_image', $oStorage);
 
         //--- Shadow
         $this->_aConfig['aLessConfig']['bx-shadow-header'] = $this->_setShadow($sName . '_header_shadow');
@@ -36,7 +36,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-shadow-block'] = $this->_setShadow($sName . '_block_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-card'] = $this->_setShadow($sName . '_card_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-popup'] = $this->_setShadow($sName . '_popup_shadow');
-        $this->_aConfig['aLessConfig']['bx-shadow-popup-menu'] = $this->_setShadow($sName . '_popup_menu_shadow');
+        $this->_aConfig['aLessConfig']['bx-shadow-menu-slide'] = $this->_setShadow($sName . '_menu_slide_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-button'] = $this->_setShadow($sName . '_button_lg_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-button-small'] = $this->_setShadow($sName . '_button_sm_shadow');
 
@@ -56,7 +56,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-content-padding-block'] = $this->_setMargin($sName . '_block_content_padding');
         $this->_aConfig['aLessConfig']['bx-content-padding-card'] = $this->_setMargin($sName . '_card_content_padding');
         $this->_aConfig['aLessConfig']['bx-content-padding-popup'] = $this->_setMargin($sName . '_popup_content_padding');
-        $this->_aConfig['aLessConfig']['bx-content-padding-popup-menu'] = $this->_setMargin($sName . '_popup_menu_content_padding');
+        $this->_aConfig['aLessConfig']['bx-content-padding-menu-slide'] = $this->_setMargin($sName . '_menu_slide_content_padding');
 
 		$this->_aConfig['aLessConfig']['bx-title-padding-block'] = $this->_setMargin($sName . '_block_title_padding');
 		$this->_aConfig['aLessConfig']['bx-title-padding-popup'] = $this->_setMargin($sName . '_popup_title_padding');
@@ -70,7 +70,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-block-title-div'] = $this->_setColorRgba($sName . '_block_title_div_bg_color', 'rgba(208, 208, 208, 1)');        
         $this->_aConfig['aLessConfig']['bx-color-box'] = $this->_setColorRgba($sName . '_card_bg_color', 'rgba(242, 242, 242, 1)');
         $this->_aConfig['aLessConfig']['bx-color-popup'] = $this->_setColorRgba($sName . '_popup_bg_color', 'rgba(255, 255, 255, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-popup-menu'] = $this->_setColorRgba($sName . '_popup_menu_bg_color', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_bg_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button'] = $this->_setColorRgba($sName . '_button_lg_bg_color', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-hover'] = $this->_setColorRgba($sName . '_button_lg_bg_color_hover', 'rgba(58, 134, 134, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-small'] = $this->_setColorRgba($sName . '_button_sm_bg_color', 'rgba(108, 170, 138, 1)');
@@ -84,7 +84,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-border-block'] = $this->_setColorRgba($sName . '_block_border_color', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-box'] = $this->_setColorRgba($sName . '_card_border_color', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-popup'] = $this->_setColorRgba($sName . '_popup_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-popup-menu'] = $this->_setColorRgba($sName . '_popup_menu_border_color', 'rgba(208, 208, 208, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-border-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_border_color', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-button'] = $this->_setColorRgba($sName . '_button_lg_border_color', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-button-hover'] = $this->_setColorRgba($sName . '_button_lg_border_color_hover', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-button-small'] = $this->_setColorRgba($sName . '_button_sm_border_color', 'rgba(208, 208, 208, 1)');
@@ -116,7 +116,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-border-width-block'] = $this->_setSize($sName . '_block_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-box'] = $this->_setSize($sName . '_card_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-popup'] = $this->_setSize($sName . '_popup_border_size');
-        $this->_aConfig['aLessConfig']['bx-border-width-popup-menu'] = $this->_setSize($sName . '_popup_menu_border_size');
+        $this->_aConfig['aLessConfig']['bx-border-width-menu-slide'] = $this->_setSize($sName . '_menu_slide_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-button'] = $this->_setSize($sName . '_button_lg_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-button-small'] = $this->_setSize($sName . '_button_sm_border_size');
 

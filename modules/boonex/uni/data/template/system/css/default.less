@@ -48,10 +48,20 @@
 	-moz-box-shadow: @bx-shadow-block;
 	box-shadow: @bx-shadow-block;
 }
+.bx-def-box {
+	-webkit-box-shadow: @bx-shadow-card;
+	-moz-box-shadow: @bx-shadow-card;
+	box-shadow: @bx-shadow-card;
+}
 .bx-popup-applied {
 	-webkit-box-shadow: @bx-shadow-popup;
 	-moz-box-shadow: @bx-shadow-popup;
 	box-shadow: @bx-shadow-popup;
+}
+.bx-popup-wrapper.bx-popup-slide-wrapper {
+	-webkit-box-shadow: @bx-shadow-menu-slide;
+	-moz-box-shadow: @bx-shadow-menu-slide;
+	box-shadow: @bx-shadow-menu-slide;
 }
 .bx-btn {
 	-webkit-box-shadow: @bx-shadow-button;
@@ -71,7 +81,8 @@
 .bx-def-image-bg-page,
 .bx-def-image-bg-block,
 .bx-def-box,
-.bx-popup-color-bg {
+.bx-popup-color-bg,
+.bx-popup-wrapper.bx-popup-slide-wrapper {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -92,25 +103,15 @@
 	background-image: url(@bx-image-bg-box);
 }
 
-
-/* background colors */
-.bx-def-color-bg-header {
-    .background-color (@bx-color-header);
-}
-.bx-def-color-bg-footer {
-    .background-color (@bx-color-footer);    
-}
-
-
-/* font colors */
+/* body */
 a {
 	color: @bx-color-link-body; 
 }
 a:hover {
 	color: @bx-color-link-body-hover; 
 }
-a > .sys-icon,
-a > .sys-icon-a {
+.sys-icon,
+.sys-icon-a {
 	color: @bx-color-icon-body; 
 }
 a:hover > .sys-icon,
@@ -126,6 +127,13 @@ a:hover > .sys-icon-a i {
 	color: @bx-color-icon-body-hover;
 }
 
+/* header */
+.bx-header.bx-def-color-bg-header {
+    .background-color (@bx-color-header);
+}
+.bx-header.bx-def-border-header {
+    border-bottom: @bx-border-width-header @bx-border-type @bx-color-border-header;
+}
 .bx-header a {
 	color: @bx-color-link-header; 
 }
@@ -149,8 +157,15 @@ a:hover > .sys-icon-a i {
 	color: @bx-color-icon-header-hover;
 }
 
+/* footer */
 .bx-footer {
 	color: @bx-color-font-footer;
+}
+.bx-footer.bx-def-color-bg-footer {
+    .background-color (@bx-color-footer);    
+}
+.bx-footer.bx-def-border-footer {
+    border-top: @bx-border-width-footer @bx-border-type @bx-color-border-footer;
 }
 .bx-footer a {
 	color: @bx-color-link-footer; 
@@ -175,6 +190,7 @@ a:hover > .sys-icon-a i {
 	color: @bx-color-icon-footer-hover;
 }
 
+/* fonts */
 .bx-def-font-small {
 	color: @bx-font-color-small;
 }
@@ -197,21 +213,13 @@ h3,
 	color: @bx-font-color-h3;
 }
 
-/* border */
-.bx-def-border-header {
-    border-bottom: @bx-border-width-header @bx-border-type @bx-color-border-header;
-}
-.bx-def-border-footer {
-    border-top: @bx-border-width-footer @bx-border-type @bx-color-border-footer;
-}
+
+/* block */
 .bx-def-border-block {
 	border: @bx-border-width-block @bx-border-type @bx-color-border-block;
 
 	.radius(@bx-border-radius-block);
 }
-
-
-/* block */
 .bx-db-header {
 	padding: @bx-title-padding-block;
 }
@@ -229,13 +237,10 @@ h3,
 
 /* box */
 .bx-def-box {
-	padding: @bx-content-padding-card;
-
 	border: @bx-border-width-box @bx-border-type @bx-color-border-box;
-
-	-webkit-box-shadow: @bx-shadow-card;
-	-moz-box-shadow: @bx-shadow-card;
-	box-shadow: @bx-shadow-card;
+}
+.bx-def-box.bx-def-padding {
+	padding: @bx-content-padding-card;
 }
 .bx-def-box.bx-def-color-bg-box {
 	.background-color (@bx-color-box);
@@ -265,6 +270,18 @@ h3,
 	color: @bx-color-font-popup-title;
 }
 
+/* Slide menu */
+.bx-popup-wrapper.bx-popup-slide-wrapper {
+	border: @bx-border-width-menu-slide solid @bx-color-border-menu-slide;
+
+	.background-color (@bx-color-menu-slide);
+	background-image: url(@bx-image-bg-menu-slide);
+}
+.bx-popup-wrapper.bx-popup-slide-wrapper.bx-def-padding {
+	padding: @bx-content-padding-menu-slide;
+}
+
+
 /* button */
 .bx-btn,
 .bx-btn.bx-btn-primary {
@@ -292,6 +309,10 @@ h3,
 	border: @bx-border-width-button solid @bx-color-border-button-hover;
 	.background-color (@bx-color-button-hover);
 }
+.bx-btn .sys-icon {
+	color: @bx-color-font-button;
+}
+
 .bx-btn.bx-btn-small {
 	.box-sizing(content-box);
 
@@ -314,4 +335,7 @@ h3,
 .bx-btn.bx-btn-small:active {
 	border: @bx-border-width-button-small solid @bx-color-border-button-small-hover;
 	.background-color (@bx-color-button-small-hover);
+}
+.bx-btn.bx-btn-small .sys-icon {
+	color: @bx-color-font-button-small;
 }

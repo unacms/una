@@ -123,18 +123,18 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_popup_title_font_color'), '_bx_uni_stg_cpt_option_popup_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 11);
 
 
--- SETTINGS: UNI Styles Popup Menus
+-- SETTINGS: UNI Styles Slide Menus
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_popup_menu'), '_bx_uni_stg_cpt_category_styles_popup_menu', 8);
+(@iTypeId, CONCAT(@sName, '_styles_menu_slide'), '_bx_uni_stg_cpt_category_styles_menu_slide', 8);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_popup_menu_bg_color'), '_bx_uni_stg_cpt_option_popup_menu_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_popup_menu_bg_image'), '_bx_uni_stg_cpt_option_popup_menu_bg_image', '', 'image', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_popup_menu_content_padding'), '_bx_uni_stg_cpt_option_popup_menu_content_padding', 'inherit', 'digit', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_popup_menu_border_color'), '_bx_uni_stg_cpt_option_popup_menu_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_popup_menu_border_size'), '_bx_uni_stg_cpt_option_popup_menu_border_size', '0px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_popup_menu_shadow'), '_bx_uni_stg_cpt_option_popup_menu_shadow', 'none', 'digit', '', '', '', 7);
+(@iCategoryId, CONCAT(@sName, '_menu_slide_bg_color'), '_bx_uni_stg_cpt_option_menu_slide_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_bg_image'), '_bx_uni_stg_cpt_option_menu_slide_bg_image', '', 'image', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_content_padding'), '_bx_uni_stg_cpt_option_menu_slide_content_padding', '1.25rem', 'digit', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_border_color'), '_bx_uni_stg_cpt_option_menu_slide_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_border_size'), '_bx_uni_stg_cpt_option_menu_slide_border_size', '0px', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_shadow'), '_bx_uni_stg_cpt_option_menu_slide_shadow', 'none', 'digit', '', '', '', 6);
 
 
 -- SETTINGS: UNI Styles Forms
