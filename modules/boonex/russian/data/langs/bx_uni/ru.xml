@@ -100,6 +100,7 @@
 	<string name="_bx_uni_stg_cpt_option_menu_page_shadow"><![CDATA[Тень]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_form"><![CDATA[Forms]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_height"><![CDATA[Высота поля]]></string>
 	<string name="_bx_uni_stg_cpt_option_form_input_bg_color"><![CDATA[Цвет фона поля]]></string>
 	<string name="_bx_uni_stg_cpt_option_form_input_bg_color_active"><![CDATA[Цвет фона активного поля]]></string>
 	<string name="_bx_uni_stg_cpt_option_form_input_border_color"><![CDATA[Цвет границы поля]]></string>

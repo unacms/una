@@ -63,6 +63,11 @@
 	-moz-box-shadow: @bx-shadow-menu-slide;
 	box-shadow: @bx-shadow-menu-slide;
 }
+.bx-menu-main-bar {
+	-webkit-box-shadow: @bx-shadow-menu-page;
+	-moz-box-shadow: @bx-shadow-menu-page;
+	box-shadow: @bx-shadow-menu-page;
+}
 .bx-btn {
 	-webkit-box-shadow: @bx-shadow-button;
 	-moz-box-shadow: @bx-shadow-button;
@@ -82,7 +87,8 @@
 .bx-def-image-bg-block,
 .bx-def-box,
 .bx-popup-color-bg,
-.bx-popup-wrapper.bx-popup-slide-wrapper {
+.bx-popup-wrapper.bx-popup-slide-wrapper,
+.bx-menu-main-bar {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -286,6 +292,21 @@ h3,
 	padding: @bx-content-padding-menu-slide;
 }
 
+/* page menu */
+.bx-menu-main-bar {
+	height: @bx-height-menu-page;
+
+	border: @bx-border-width-menu-page solid @bx-color-border-menu-page;
+
+	background-color: @bx-color-menu-page;
+	background-image: url(@bx-image-bg-menu-page);
+}
+.bx-menu-main-bar .bx-menu-main-container {
+	padding: @bx-content-padding-menu-page;
+}
+
+
+
 /* form */
 .bx-form-value .bx-form-input-slider,
 .bx-form-value .bx-form-input-doublerange,
@@ -299,6 +320,8 @@ h3,
 .bx-form-value .bx-form-input-textarea,
 .bx-form-value .bx-form-input-password,
 .bx-form-value .bx-form-input-text {
+	height: @bx-height-form-input;
+
 	border-color: @bx-color-border-form-input;
 	border-width: @bx-border-width-form-input;
 

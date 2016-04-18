@@ -158,15 +158,16 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_form_input_bg_color'), '_bx_uni_stg_cpt_option_form_input_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_form_input_bg_color_active'), '_bx_uni_stg_cpt_option_form_input_bg_color_active', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_form_input_border_color'), '_bx_uni_stg_cpt_option_form_input_border_color', 'rgba(121, 189, 154, 1)', 'rgba', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_form_input_border_color_active'), '_bx_uni_stg_cpt_option_form_input_border_color_active', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_form_input_border_size'), '_bx_uni_stg_cpt_option_form_input_border_size', '2px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_form_input_shadow'), '_bx_uni_stg_cpt_option_form_input_shadow', 'none', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_form_input_font_family'), '_bx_uni_stg_cpt_option_form_input_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_form_input_font_size'), '_bx_uni_stg_cpt_option_form_input_font_size', '1.125rem', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_form_input_font_color'), '_bx_uni_stg_cpt_option_form_input_font_color', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 9);
+(@iCategoryId, CONCAT(@sName, '_form_input_height'), '_bx_uni_stg_cpt_option_form_input_height', '2.2rem', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_form_input_bg_color'), '_bx_uni_stg_cpt_option_form_input_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_form_input_bg_color_active'), '_bx_uni_stg_cpt_option_form_input_bg_color_active', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_color'), '_bx_uni_stg_cpt_option_form_input_border_color', 'rgba(121, 189, 154, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_color_active'), '_bx_uni_stg_cpt_option_form_input_border_color_active', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_size'), '_bx_uni_stg_cpt_option_form_input_border_size', '2px', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_form_input_shadow'), '_bx_uni_stg_cpt_option_form_input_shadow', 'none', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_family'), '_bx_uni_stg_cpt_option_form_input_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_size'), '_bx_uni_stg_cpt_option_form_input_font_size', '1.125rem', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_color'), '_bx_uni_stg_cpt_option_form_input_font_color', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 10);
 
 
 -- SETTINGS: UNI Styles Large Buttons

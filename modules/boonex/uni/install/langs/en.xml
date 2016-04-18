@@ -100,6 +100,7 @@
 	<string name="_bx_uni_stg_cpt_option_menu_page_shadow"><![CDATA[Shadow]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_form"><![CDATA[Forms]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_height"><![CDATA[Input height]]></string>
 	<string name="_bx_uni_stg_cpt_option_form_input_bg_color"><![CDATA[Input background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_form_input_bg_color_active"><![CDATA[Active input background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_form_input_border_color"><![CDATA[Input border color]]></string>

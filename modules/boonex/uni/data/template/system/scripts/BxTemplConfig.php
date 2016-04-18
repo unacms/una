@@ -49,6 +49,8 @@ class BxTemplConfig extends BxBaseConfig
         //--- Height
         $this->_aConfig['aLessConfig']['bx-height-header'] = $this->_setSize($sName . '_header_height', '3rem');
         $this->_aConfig['aLessConfig']['bx-height-block-title-div'] = $this->_setSize($sName . '_block_title_div_height', '1px');
+        $this->_aConfig['aLessConfig']['bx-height-form-input'] = $this->_setSize($sName . '_form_input_height', '2.2rem');
+        $this->_aConfig['aLessConfig']['bx-height-menu-page'] = $this->_setSize($sName . '_menu_page_height', '2.5rem');
 		$this->_aConfig['aLessConfig']['bx-height-button'] = $this->_setSize($sName . '_button_lg_height', '2.25rem');
 		$this->_aConfig['aLessConfig']['bx-height-button-small'] = $this->_setSize($sName . '_button_sm_height', '1.5rem');
 		
@@ -92,7 +94,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-border-box'] = $this->_setColorRgba($sName . '_card_border_color', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-popup'] = $this->_setColorRgba($sName . '_popup_border_color', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-menu-page'] = $this->_setColorRgba($sName . '_menu_slide_border_color', 'rgba(208, 208, 208, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-border-menu-page'] = $this->_setColorRgba($sName . '_menu_page_border_color', 'rgba(208, 208, 208, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-form-input'] = $this->_setColorRgba($sName . '_form_input_border_color', 'rgba(121, 189, 154, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-form-input-active'] = $this->_setColorRgba($sName . '_form_input_border_color_active', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-button'] = $this->_setColorRgba($sName . '_button_lg_border_color', 'rgba(208, 208, 208, 1)');
@@ -128,6 +130,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-border-width-box'] = $this->_setSize($sName . '_card_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-popup'] = $this->_setSize($sName . '_popup_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-menu-slide'] = $this->_setSize($sName . '_menu_slide_border_size');
+        $this->_aConfig['aLessConfig']['bx-border-width-menu-page'] = $this->_setSize($sName . '_menu_page_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-form-input'] = $this->_setSize($sName . '_form_input_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-button'] = $this->_setSize($sName . '_button_lg_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-button-small'] = $this->_setSize($sName . '_button_sm_border_size');
