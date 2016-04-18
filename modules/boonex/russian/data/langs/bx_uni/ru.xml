@@ -7,10 +7,12 @@
 	<string name="_bx_uni_stg_cpt_option_switcher_name"><![CDATA[Название в переключателе тем]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_header"><![CDATA[Заголовок]]></string>
-	<string name="_bx_uni_stg_cpt_option_header_height"><![CDATA[Высота заголовка]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_height"><![CDATA[Высота]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_content_padding"><![CDATA[Контентные отступы]]></string>
-	<string name="_bx_uni_stg_cpt_option_header_bg_color"><![CDATA[Цвет фона заголовка]]></string>
-	<string name="_bx_uni_stg_cpt_option_header_bg_image"><![CDATA[Изображение фона заголовка]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_color"><![CDATA[Цвет фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_header_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_site_logo"><![CDATA[Эмблема]]></string>
 	<string name="_bx_uni_stg_cpt_option_site_logo_alt"><![CDATA[Эмблема ALT]]></string>
 	<string name="_bx_uni_stg_cpt_option_site_logo_width"><![CDATA[Ширина эмблемы]]></string>
@@ -24,11 +26,13 @@
 	<string name="_bx_uni_stg_cpt_option_header_link_color_hover"><![CDATA[Цвет линок при наведении курсора]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_footer"><![CDATA[Основание]]></string>
-	<string name="_bx_uni_stg_cpt_option_footer_bg_color"><![CDATA[Цвет фона основания]]></string>
-	<string name="_bx_uni_stg_cpt_option_footer_bg_image"><![CDATA[Изображение фона основания]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_color"><![CDATA[Цвет фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_content_padding"><![CDATA[Контентные отступы]]></string>
-	<string name="_bx_uni_stg_cpt_option_footer_border_color"><![CDATA[Цвет границы основания]]></string>
-	<string name="_bx_uni_stg_cpt_option_footer_border_size"><![CDATA[Размер границы основания]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_border_color"><![CDATA[Цвет границы]]></string>
+	<string name="_bx_uni_stg_cpt_option_footer_border_size"><![CDATA[Размер границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_shadow"><![CDATA[Тень]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_font_color"><![CDATA[Цвет шрифта]]></string>
 	<string name="_bx_uni_stg_cpt_option_footer_icon_color"><![CDATA[Цвет иконок]]></string>
@@ -37,8 +41,10 @@
 	<string name="_bx_uni_stg_cpt_option_footer_link_color_hover"><![CDATA[Цвет линок при наведении курсора]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_body"><![CDATA[Тело]]></string>
-	<string name="_bx_uni_stg_cpt_option_body_bg_color"><![CDATA[Цвет фона сайта]]></string>
-	<string name="_bx_uni_stg_cpt_option_body_bg_image"><![CDATA[Изображение фона сайта]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_bg_color"><![CDATA[Цвет фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_body_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_page_width"><![CDATA[Ширина страницы]]></string>
 	<string name="_bx_uni_stg_cpt_option_body_icon_color"><![CDATA[Цвет иконок]]></string>
 	<string name="_bx_uni_stg_cpt_option_body_icon_color_hover"><![CDATA[Цвет иконок при наведении курсора]]></string>
@@ -48,6 +54,8 @@
 	<string name="_bx_uni_stg_cpt_category_styles_block"><![CDATA[Блоки]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_border_size"><![CDATA[Размер границы]]></string>
@@ -63,6 +71,8 @@
 	<string name="_bx_uni_stg_cpt_category_styles_card"><![CDATA[Карточки]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_card_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_card_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_card_border_size"><![CDATA[Размер границы]]></string>
@@ -72,6 +82,8 @@
 	<string name="_bx_uni_stg_cpt_category_styles_popup"><![CDATA[Всплывающие окна]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_border_size"><![CDATA[Размер границы]]></string>
@@ -85,6 +97,8 @@
 	<string name="_bx_uni_stg_cpt_category_styles_menu_slide"><![CDATA[Ниспадающее меню]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_slide_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_slide_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_border_size"><![CDATA[Размер границы]]></string>
@@ -94,6 +108,8 @@
 	<string name="_bx_uni_stg_cpt_option_menu_page_height"><![CDATA[Высота]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_page_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_page_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_bg_image_size"><![CDATA[Размер изображение фона]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_page_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_page_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_page_border_size"><![CDATA[Размер границы]]></string>
@@ -123,6 +139,7 @@
 	<string name="_bx_uni_stg_cpt_option_button_lg_font_family"><![CDATA[Набор шрифтов]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_font_size"><![CDATA[Размер шрифта]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_font_color"><![CDATA[Цвет шрифта]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_lg_font_color_hover"><![CDATA[Цвет шрифта при наведении курсора]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_font_shadow"><![CDATA[Тень шрифта]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_font_weight"><![CDATA[Насыщенность шрифта]]></string>
 
@@ -138,6 +155,7 @@
 	<string name="_bx_uni_stg_cpt_option_button_sm_font_family"><![CDATA[Набор шрифтов]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_font_size"><![CDATA[Размер шрифта]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_font_color"><![CDATA[Цвет шрифта]]></string>
+	<string name="_bx_uni_stg_cpt_option_button_sm_font_color_hover"><![CDATA[Цвет шрифта при наведении курсора]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_font_shadow"><![CDATA[Тень шрифта]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_sm_font_weight"><![CDATA[Насыщенность шрифта]]></string>
 

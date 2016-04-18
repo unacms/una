@@ -22,14 +22,30 @@ class BxTemplConfig extends BxBaseConfig
         //--- Images
         $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
 
-        $this->_aConfig['aLessConfig']['bx-image-bg-header'] = $this->_setUrl($sName . '_header_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-footer'] = $this->_setUrl($sName . '_footer_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-page'] = $this->_setUrl($sName . '_body_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-block'] = $this->_setUrl($sName . '_block_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-box'] = $this->_setUrl($sName . '_card_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-popup'] = $this->_setUrl($sName . '_popup_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide'] = $this->_setUrl($sName . '_menu_slide_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-menu-page'] = $this->_setUrl($sName . '_menu_page_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-header'] = $this->_setBgUrl($sName . '_header_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-header-repeat'] = $this->_setBgRepeat($sName . '_header_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-header-size'] = $this->_setBgSize($sName . '_header_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-footer'] = $this->_setBgUrl($sName . '_footer_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-footer-repeat'] = $this->_setBgRepeat($sName . '_footer_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-footer-size'] = $this->_setBgSize($sName . '_footer_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-page'] = $this->_setBgUrl($sName . '_body_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-page-repeat'] = $this->_setBgRepeat($sName . '_page_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-page-size'] = $this->_setBgSize($sName . '_page_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-block'] = $this->_setBgUrl($sName . '_block_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-block-repeat'] = $this->_setBgRepeat($sName . '_block_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-block-size'] = $this->_setBgSize($sName . '_block_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-box'] = $this->_setBgUrl($sName . '_card_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-box-repeat'] = $this->_setBgRepeat($sName . '_card_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-box-size'] = $this->_setBgSize($sName . '_card_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-popup'] = $this->_setBgUrl($sName . '_popup_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-popup-repeat'] = $this->_setBgRepeat($sName . '_popup_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-popup-size'] = $this->_setBgSize($sName . '_popup_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide'] = $this->_setBgUrl($sName . '_menu_slide_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-repeat'] = $this->_setBgRepeat($sName . '_menu_slide_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-size'] = $this->_setBgSize($sName . '_menu_slide_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-page'] = $this->_setBgUrl($sName . '_menu_page_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-page-repeat'] = $this->_setBgRepeat($sName . '_menu_page_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-page-size'] = $this->_setBgSize($sName . '_menu_page_bg_image_size', 'cover');
 
         //--- Shadow
         $this->_aConfig['aLessConfig']['bx-shadow-header'] = $this->_setShadow($sName . '_header_shadow');
@@ -118,10 +134,10 @@ class BxTemplConfig extends BxBaseConfig
 
 		$this->_aConfig['aLessConfig']['bx-color-font-footer'] = $this->_setColorRgba($sName . '_footer_font_color', 'rgba(51, 51, 51, 1)');
 		$this->_aConfig['aLessConfig']['bx-color-font-button'] = $this->_setColorRgba($sName . '_button_lg_font_color', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-font-button-hover'] = $this->_setColorRgba($sName . '_button_lg_font_color_hover', 'rgba(255, 255, 255, 1)');
 		$this->_aConfig['aLessConfig']['bx-color-font-button-small'] = $this->_setColorRgba($sName . '_button_sm_font_color', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-color-font-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_font_color_hover', 'rgba(255, 255, 255, 1)');
 		$this->_aConfig['aLessConfig']['bx-color-font-form-input'] = $this->_setColorRgba($sName . '_form_input_font_color', 'rgba(51, 51, 51, 1)');
-		
-		
 
         //--- Borders
         $this->_aConfig['aLessConfig']['bx-border-width-header'] = $this->_setSize($sName . '_header_border_size');
@@ -257,7 +273,7 @@ class BxTemplConfig extends BxBaseConfig
     	return $sValue;
     }
 
-    protected function _setUrl($sKey, $oStorage = null)
+    protected function _setBgUrl($sKey, $oStorage = null)
     {
     	if(empty($oStorage))
     		$oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
@@ -271,6 +287,30 @@ class BxTemplConfig extends BxBaseConfig
 			return "";
 
 		return "'" . $sImageUrl . "'";
+    }
+
+    protected function _setBgRepeat($sKey, $sDefault = '')
+    {
+		if(empty($sDefault))
+    		$sDefault = 'repeat';
+
+    	$sValue = trim(getParam($sKey));
+    	if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('no-repeat', 'repeat', 'repeat-x', 'repeat-y')))
+    		$sValue = $sDefault;
+
+		return $sValue;
+    }
+
+    protected function _setBgSize($sKey, $sDefault = '')
+    {
+		if(empty($sDefault))
+    		$sDefault = 'auto';
+
+    	$sValue = trim(getParam($sKey));
+    	if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('auto', 'cover', 'contain')))
+    		$sValue = $sDefault;
+
+		return $sValue;
     }
 
     protected function _setShadow($sKey, $sDefault = '')

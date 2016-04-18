@@ -54,6 +54,8 @@
 	box-shadow: @bx-shadow-card;
 }
 .bx-popup-applied {
+	.radius(@bx-border-radius-popup);
+
 	-webkit-box-shadow: @bx-shadow-popup;
 	-moz-box-shadow: @bx-shadow-popup;
 	box-shadow: @bx-shadow-popup;
@@ -90,23 +92,31 @@
 .bx-popup-wrapper.bx-popup-slide-wrapper,
 .bx-menu-main-bar {
     background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 .bx-def-image-bg-header {
 	background-image: url(@bx-image-bg-header);
+	background-repeat: @bx-image-bg-header-repeat;
+    background-size: @bx-image-bg-header-size;
 }
 .bx-def-image-bg-footer {
 	background-image: url(@bx-image-bg-footer);
+	background-repeat: @bx-image-bg-footer-repeat;
+    background-size: @bx-image-bg-footer-size;
 }
 .bx-def-image-bg-page {
 	background-image: url(@bx-image-bg-page);
+	background-repeat: @bx-image-bg-page-repeat;
+    background-size: @bx-image-bg-page-size;
 }
 .bx-def-image-bg-block {
 	background-image: url(@bx-image-bg-block);
+	background-repeat: @bx-image-bg-block-repeat;
+    background-size: @bx-image-bg-block-size;
 }
 .bx-def-box {
 	background-image: url(@bx-image-bg-box);
+	background-repeat: @bx-image-bg-box-repeat;
+    background-size: @bx-image-bg-box-size;
 }
 
 /* body */
@@ -267,7 +277,10 @@ h3,
 }
 .bx-popup-color-bg {
 	background-color: @bx-color-popup;
+
 	background-image: url(@bx-image-bg-popup);
+	background-repeat: @bx-image-bg-popup-repeat;
+    background-size: @bx-image-bg-popup-size;
 }
 .bx-popup-content-indent {
 	padding: @bx-content-padding-popup;
@@ -286,7 +299,10 @@ h3,
 	border: @bx-border-width-menu-slide solid @bx-color-border-menu-slide;
 
 	.background-color (@bx-color-menu-slide);
+
 	background-image: url(@bx-image-bg-menu-slide);
+	background-repeat: @bx-image-bg-menu-slide-repeat;
+    background-size: @bx-image-bg-menu-slide-size;
 }
 .bx-popup-wrapper.bx-popup-slide-wrapper.bx-def-padding {
 	padding: @bx-content-padding-menu-slide;
@@ -299,7 +315,10 @@ h3,
 	border: @bx-border-width-menu-page solid @bx-color-border-menu-page;
 
 	background-color: @bx-color-menu-page;
+
 	background-image: url(@bx-image-bg-menu-page);
+	background-repeat: @bx-image-bg-menu-page-repeat;
+    background-size: @bx-image-bg-menu-page-size;
 }
 .bx-menu-main-bar .bx-menu-main-container {
 	padding: @bx-content-padding-menu-page;
@@ -343,7 +362,7 @@ h3,
 	background-color: @bx-color-form-input-active;
 }
 
-/* button */
+/* button large */
 .bx-btn,
 .bx-btn.bx-btn-primary {
 	.box-sizing(content-box);
@@ -369,11 +388,20 @@ h3,
 .bx-btn.bx-btn-primary:active {
 	border: @bx-border-width-button solid @bx-color-border-button-hover;
 	.background-color (@bx-color-button-hover);
+
+	color: @bx-color-font-button-hover;
 }
 .bx-btn .sys-icon {
 	color: @bx-color-font-button;
 }
+.bx-btn:hover .sys-icon,
+.bx-btn:active .sys-icon,
+.bx-btn.bx-btn-primary:hover .sys-icon,
+.bx-btn.bx-btn-primary:active .sys-icon {
+	color: @bx-color-font-button-hover;
+}
 
+/* button small */
 .bx-btn.bx-btn-small {
 	.box-sizing(content-box);
 
@@ -396,7 +424,13 @@ h3,
 .bx-btn.bx-btn-small:active {
 	border: @bx-border-width-button-small solid @bx-color-border-button-small-hover;
 	.background-color (@bx-color-button-small-hover);
+
+	color: @bx-color-font-button-small-hover;
 }
 .bx-btn.bx-btn-small .sys-icon {
 	color: @bx-color-font-button-small;
+}
+.bx-btn.bx-btn-small:hover .sys-icon,
+.bx-btn.bx-btn-small:active .sys-icon {
+	color: @bx-color-font-button-small-hover;
 }
