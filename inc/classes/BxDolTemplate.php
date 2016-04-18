@@ -1069,6 +1069,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 $oInformer = BxDolInformer::getInstance($this);
                 $sRet = $oInformer ? $oInformer->display() : '';
                 break;
+            case 'cover':
+                $oCover = BxDolCover::getInstance($this);
+                $sRet = $oCover ? $oCover->display() : '';
+                break;
             case 'dol_images':
                 $sRet = $this->_processJsImages();
                 break;

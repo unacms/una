@@ -63,6 +63,10 @@ ul.bx-menu-toolbar li a .sys-icon-a {
     margin-top: 1rem;
 }
 
+.bx-menu-toolbar-padding {
+    padding-top: 64px;
+    padding-top: 4rem;
+}
 
 /* --------------- floating blocks menu */
 .bx-sliding-menu-fullheight {
