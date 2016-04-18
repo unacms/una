@@ -90,7 +90,25 @@
 	<string name="_bx_uni_stg_cpt_option_menu_slide_border_size"><![CDATA[Размер границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_shadow"><![CDATA[Тень]]></string>
 
+	<string name="_bx_uni_stg_cpt_category_styles_menu_page"><![CDATA[Страничное меню]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_height"><![CDATA[Высота]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_bg_color"><![CDATA[Цвет фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_bg_image"><![CDATA[Изображение фона]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_content_padding"><![CDATA[Контентные отступы]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_border_color"><![CDATA[Цвет границы]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_border_size"><![CDATA[Размер границы]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_shadow"><![CDATA[Тень]]></string>
+
 	<string name="_bx_uni_stg_cpt_category_styles_form"><![CDATA[Forms]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_bg_color"><![CDATA[Цвет фона поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_bg_color_active"><![CDATA[Цвет фона активного поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_border_color"><![CDATA[Цвет границы поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_border_color_active"><![CDATA[Цвет границы активного поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_border_size"><![CDATA[Размер границы поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_shadow"><![CDATA[Тень поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_font_family"><![CDATA[Набор шрифтов поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_font_size"><![CDATA[Размер шрифта поля]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_font_color"><![CDATA[Цвет шрифта поля]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_large_button"><![CDATA[Большие Кнопки]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_height"><![CDATA[Высота]]></string>

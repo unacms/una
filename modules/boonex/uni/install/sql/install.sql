@@ -137,18 +137,41 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_menu_slide_shadow'), '_bx_uni_stg_cpt_option_menu_slide_shadow', 'none', 'digit', '', '', '', 6);
 
 
--- SETTINGS: UNI Styles Forms
+-- SETTINGS: UNI Styles Page Menu
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_form'), '_bx_uni_stg_cpt_category_styles_form', 9);
+(@iTypeId, CONCAT(@sName, '_styles_menu_page'), '_bx_uni_stg_cpt_category_styles_menu_page', 9);
 SET @iCategoryId = LAST_INSERT_ID();
 
---INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
---(@iCategoryId, CONCAT(@sName, '_form_bg_color'), '_bx_uni_stg_cpt_option_card_bg_color', 'rgba(242, 242, 242, 1)', 'rgba', '', '', '', 1);
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, CONCAT(@sName, '_menu_page_height'), '_bx_uni_stg_cpt_option_menu_page_height', '2.5rem', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_menu_page_bg_color'), '_bx_uni_stg_cpt_option_menu_page_bg_color', 'rgba(242, 242, 242, 1)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_menu_page_bg_image'), '_bx_uni_stg_cpt_option_menu_page_bg_image', '', 'image', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_menu_page_content_padding'), '_bx_uni_stg_cpt_option_menu_page_content_padding', '0px', 'digit', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_menu_page_border_color'), '_bx_uni_stg_cpt_option_menu_page_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_menu_page_border_size'), '_bx_uni_stg_cpt_option_menu_page_border_size', '0px', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_menu_page_shadow'), '_bx_uni_stg_cpt_option_menu_page_shadow', 'none', 'digit', '', '', '', 7);
+
+
+-- SETTINGS: UNI Styles Forms
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
+(@iTypeId, CONCAT(@sName, '_styles_form'), '_bx_uni_stg_cpt_category_styles_form', 10);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, CONCAT(@sName, '_form_input_bg_color'), '_bx_uni_stg_cpt_option_form_input_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_form_input_bg_color_active'), '_bx_uni_stg_cpt_option_form_input_bg_color_active', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_color'), '_bx_uni_stg_cpt_option_form_input_border_color', 'rgba(121, 189, 154, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_color_active'), '_bx_uni_stg_cpt_option_form_input_border_color_active', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_size'), '_bx_uni_stg_cpt_option_form_input_border_size', '2px', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_form_input_shadow'), '_bx_uni_stg_cpt_option_form_input_shadow', 'none', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_family'), '_bx_uni_stg_cpt_option_form_input_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_size'), '_bx_uni_stg_cpt_option_form_input_font_size', '1.125rem', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_color'), '_bx_uni_stg_cpt_option_form_input_font_color', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 9);
 
 
 -- SETTINGS: UNI Styles Large Buttons
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_large_button'), '_bx_uni_stg_cpt_category_styles_large_button', 10);
+(@iTypeId, CONCAT(@sName, '_styles_large_button'), '_bx_uni_stg_cpt_category_styles_large_button', 11);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -168,7 +191,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: UNI Styles Small Buttons
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_small_button'), '_bx_uni_stg_cpt_category_styles_small_button', 11);
+(@iTypeId, CONCAT(@sName, '_styles_small_button'), '_bx_uni_stg_cpt_category_styles_small_button', 12);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -188,7 +211,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: UNI Styles Font
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_font'), '_bx_uni_stg_cpt_category_styles_font', 12);
+(@iTypeId, CONCAT(@sName, '_styles_font'), '_bx_uni_stg_cpt_category_styles_font', 13);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -212,7 +235,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: UNI Viewport Tablet
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_viewport_tablet'), '_bx_uni_stg_cpt_category_viewport_tablet', 13);
+(@iTypeId, CONCAT(@sName, '_viewport_tablet'), '_bx_uni_stg_cpt_category_viewport_tablet', 14);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -220,7 +243,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: UNI Viewport Mobile
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_viewport_mobile'), '_bx_uni_stg_cpt_category_viewport_mobile', 14);
+(@iTypeId, CONCAT(@sName, '_viewport_mobile'), '_bx_uni_stg_cpt_category_viewport_mobile', 15);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES

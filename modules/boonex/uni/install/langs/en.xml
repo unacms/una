@@ -89,11 +89,26 @@
 	<string name="_bx_uni_stg_cpt_option_menu_slide_border_color"><![CDATA[Border color]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_border_size"><![CDATA[Border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_menu_slide_shadow"><![CDATA[Shadow]]></string>
+	
+	<string name="_bx_uni_stg_cpt_category_styles_menu_page"><![CDATA[Page Menu]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_height"><![CDATA[Height]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_bg_image"><![CDATA[Background image]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_content_padding"><![CDATA[Content margin]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_border_size"><![CDATA[Border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_menu_page_shadow"><![CDATA[Shadow]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_form"><![CDATA[Forms]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_bg_color"><![CDATA[Input background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_bg_color_active"><![CDATA[Active input background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_border_color"><![CDATA[Input border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_border_color_active"><![CDATA[Active input border color]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_border_size"><![CDATA[Input border size]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_shadow"><![CDATA[Input shadow]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_font_family"><![CDATA[Input font stack]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_font_size"><![CDATA[Input font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_form_input_font_color"><![CDATA[Input font color]]></string>
 
 	<string name="_bx_uni_stg_cpt_category_styles_large_button"><![CDATA[Large Buttons]]></string>
 	<string name="_bx_uni_stg_cpt_option_button_lg_height"><![CDATA[Height]]></string>

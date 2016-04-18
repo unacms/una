@@ -191,6 +191,11 @@ a:hover > .sys-icon-a i {
 }
 
 /* fonts */
+.bx-def-font-inputs {
+	font-family: @bx-font-family-form-input;
+	font-size: @bx-font-size-form-input;
+	color: @bx-color-font-form-input;
+}
 .bx-def-font-small {
 	color: @bx-font-color-small;
 }
@@ -270,7 +275,7 @@ h3,
 	color: @bx-color-font-popup-title;
 }
 
-/* Slide menu */
+/* slide menu */
 .bx-popup-wrapper.bx-popup-slide-wrapper {
 	border: @bx-border-width-menu-slide solid @bx-color-border-menu-slide;
 
@@ -281,6 +286,39 @@ h3,
 	padding: @bx-content-padding-menu-slide;
 }
 
+/* form */
+.bx-form-value .bx-form-input-slider,
+.bx-form-value .bx-form-input-doublerange,
+.bx-form-value .bx-form-input-select_multiple,
+.bx-form-value .bx-form-input-select,
+.bx-form-value .bx-form-input-radio_set,
+.bx-form-value .bx-form-input-checkbox_set,
+.bx-form-value .bx-form-input-number,
+.bx-form-value .bx-form-input-datepicker,
+.bx-form-value .bx-form-input-datetime,
+.bx-form-value .bx-form-input-textarea,
+.bx-form-value .bx-form-input-password,
+.bx-form-value .bx-form-input-text {
+	border-color: @bx-color-border-form-input;
+	border-width: @bx-border-width-form-input;
+
+	background-color: @bx-color-form-input;
+
+	-webkit-box-shadow: @bx-shadow-form-input;
+	-moz-box-shadow: @bx-shadow-form-input;
+	box-shadow: @bx-shadow-form-input;
+}
+.bx-form-value .bx-form-input-slider:focus,
+.bx-form-value .bx-form-input-doublerange:focus,
+.bx-form-value .bx-form-input-number:focus,
+.bx-form-value .bx-form-input-datepicker:focus,
+.bx-form-value .bx-form-input-datetime:focus,
+.bx-form-value .bx-form-input-textarea:focus,
+.bx-form-value .bx-form-input-password:focus,
+.bx-form-value .bx-form-input-text:focus {
+	border-color: @bx-color-border-form-input-active;
+	background-color: @bx-color-form-input-active;
+}
 
 /* button */
 .bx-btn,
