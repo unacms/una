@@ -20,6 +20,8 @@ div#bx-timeline-post .bx-form-input-files-uploaders {
 }
 div#bx-timeline-post div#bx-form-element-attachments {
 	position: absolute;
+	z-index: 1;
+
 	right: 0px;
 }
 div.bx-tl-uploader-file {

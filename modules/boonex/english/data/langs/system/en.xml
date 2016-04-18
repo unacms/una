@@ -543,7 +543,7 @@
 	<string name="_adm_btn_purchase_submit"><![CDATA[Purchase]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
-	<string name="_adm_btn_settings_mix_create"><![CDATA[Create Mix]]></string>
+	<string name="_adm_btn_settings_mix_create"><![CDATA[Add New Mix]]></string>
 	<string name="_adm_btn_settings_mix_delete"><![CDATA[Delete Mix]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Trident {0} is available!]]></string>
@@ -1194,7 +1194,7 @@
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>
-	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Create Mix]]></string>
+	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Add New Mix]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Mix Title]]></string>
 	<string name="_adm_stg_txt_mix_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_err_remove_old_image"><![CDATA[Cannot remove current image.]]></string>

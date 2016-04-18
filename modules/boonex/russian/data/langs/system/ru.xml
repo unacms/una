@@ -1194,7 +1194,7 @@
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
-	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Создать набор]]></string>
+	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string>
 	<string name="_adm_stg_txt_mix_system"><![CDATA[Системный]]></string>
 	<string name="_adm_stg_err_remove_old_image"><![CDATA[Невозможно удалить текущее изображение.]]></string>
