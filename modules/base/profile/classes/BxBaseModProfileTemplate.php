@@ -94,7 +94,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $aData[$CNF['FIELD_NAME']],
-            'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(),
+            //'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(), // TODO: check if menu is used somewhere
 
             'picture_avatar_url' => $sUrlAvatar,
             'picture_popup' => $sPicturePopup,
@@ -108,7 +108,9 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'cover_href' => !$aData[$CNF['FIELD_COVER']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData) ? $sUrlCoverChange : 'javascript:void(0);',
         );
 
-        return $this->parseHtmlByName($sTemplateName, $aVars);
+        BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
+
+        return '';//$this->parseHtmlByName($sTemplateName, $aVars); TODO: move somewhere!
     }
 
     /**

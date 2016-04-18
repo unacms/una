@@ -302,6 +302,10 @@ ul.bx-menu-toolbar li .sys-icon {
     height:1.5rem;
 }
 
+.bx-menu-toolbar-padding {
+	padding-top: 48px;
+	padding-top: 3rem;
+}
 
 /* --------------- floating blocks menu */
 
