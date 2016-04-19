@@ -528,4 +528,9 @@ input.bx-btn {
     cursor:pointer;
 }
 
-/* --------------- */
+/* --------------- categories */
+
+.bx-category-list-item {
+	line-height: 24px;
+	line-height: 1.5rem;
+}
