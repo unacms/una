@@ -47,7 +47,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile cover
      */
-    function cover ($aData, $sTemplateName = 'cover.html')
+    function setCover ($aData, $sTemplateName = 'cover.html')
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -89,12 +89,16 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             )), true, true);
         }
 
+        $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
+
         // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $aData[$CNF['FIELD_NAME']],
             //'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(), // TODO: check if menu is used somewhere
+
+            'action_menu' => $oMenu ? $oMenu->getCode() : '',
 
             'picture_avatar_url' => $sUrlAvatar,
             'picture_popup' => $sPicturePopup,
@@ -109,8 +113,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         );
 
         BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
-
-        return '';//$this->parseHtmlByName($sTemplateName, $aVars); TODO: move somewhere!
     }
 
     /**

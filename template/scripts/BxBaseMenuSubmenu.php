@@ -64,7 +64,13 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
         $this->_addJsCss();
 
-        $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
+        if ($oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu))
+            return $oMenuSubmenu->getCode();
+
+        return '';
+        
+/*
+        TODO: remove unused files and code associated with this block
         $aVars = array (
             'object' => $this->_sObject,
             'id' => 'bx-menu-submenu-menu',
@@ -110,6 +116,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $sMenu = $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
 
         return $this->_oTemplate->parseHtmlByName('menu_main_submenu_wrapper.html', array('menu' => $sMenu));
+*/
     }
 
     protected function getSubmenuParams($aMenuItemSelected)

@@ -237,27 +237,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
     }
 
-    public function serviceProfileCover ($iContentId = 0)
-    {
-        if (!$iContentId) {
-            if (bx_get('id')) {
-                $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-            } elseif (bx_get('profile_id')) {
-                $oProfile = BxDolProfile::getInstance(bx_get('profile_id'));
-                if ($oProfile && ($a = $oProfile->getInfo()) && $this->getName() == $a['type'])
-                    $iContentId = $oProfile->getContentId();
-            }
-        }
-        if (!$iContentId)
-            return false;
-
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
-
-        return $this->_oTemplate->cover($aContentInfo);
-    }
-
     public function serviceProfileFriends ($iContentId = 0)
     {
         if (!$iContentId)
