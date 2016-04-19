@@ -74,6 +74,9 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             foreach ($aInformers as $a)
                 $oInformer->add($a['name'], $this->_replaceMarkers($a['msg']), $a['type']);
         }
+
+        // set cover
+        $this->_oModule->_oTemplate->setCover($this->_aContentInfo);
     }
 
 }
