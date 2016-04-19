@@ -6,6 +6,10 @@
 	<string name="_bx_uni_stg_cpt_category_system"><![CDATA[Общие]]></string>
 	<string name="_bx_uni_stg_cpt_option_switcher_name"><![CDATA[Название в переключателе тем]]></string>
 
+	<string name="_bx_uni_stg_cpt_category_styles_general"><![CDATA[Общие]]></string>
+	<string name="_bx_uni_stg_cpt_option_general_item_bg_color_hover"><![CDATA[Цвет фона пункта при наведении курсора]]></string>
+	<string name="_bx_uni_stg_cpt_option_general_item_bg_color_active"><![CDATA[Цвет фона активного пункта]]></string>
+
 	<string name="_bx_uni_stg_cpt_category_styles_header"><![CDATA[Заголовок]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_height"><![CDATA[Высота]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_content_padding"><![CDATA[Контентные отступы]]></string>

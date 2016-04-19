@@ -208,8 +208,10 @@ class BxDolStudioSettings extends BxTemplStudioPage
 		        if(!$oStorage)
 					break;
 
+				//--- Concatenation integer values as strings is required to get unique content id
+				$iContentId = (int)($aOption['id'] . (int)$oForm->getCleanValue('mix_id'));
     			foreach($aIds as $iId) {
-    				$oStorage->updateGhostsContentId($iId, false, $aOption['id']);
+    				$oStorage->updateGhostsContentId($iId, false, $iContentId);
     				$mixedValue = $iId;
     			}
     			break;

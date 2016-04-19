@@ -85,6 +85,11 @@ class BxTemplConfig extends BxBaseConfig
 
 
         //--- Colors
+		if($this->_isModule) {
+	        $this->_aConfig['aLessConfig']['bx-color-hl'] = $this->_setColorRgba($sName . '_general_item_bg_color_hover', 'rgba(196, 248, 156, 0.2)');
+			$this->_aConfig['aLessConfig']['bx-color-active'] = $this->_setColorRgba($sName . '_general_item_bg_color_active', 'rgba(196, 248, 156, 0.4)');
+		}
+
         $this->_aConfig['aLessConfig']['bx-color-header'] = $this->_setColorRgba($sName . '_header_bg_color', 'rgba(59, 134, 134, 1)');
         $this->_aConfig['aLessConfig']['bx-color-footer'] = $this->_setColorRgba($sName . '_footer_bg_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-page'] = $this->_setColorRgb($sName . '_body_bg_color', 'rgb(255, 255, 255)');
@@ -159,18 +164,18 @@ class BxTemplConfig extends BxBaseConfig
 
 		//--- Default Fonts
 		if($this->_isModule) {
-	        $this->_aConfig['aLessConfig']['bx-font-family'] = getParam($sName . '_font_family');
-	        $this->_aConfig['aLessConfig']['bx-font-size-default'] = getParam($sName . '_font_size_default');
-	        $this->_aConfig['aLessConfig']['bx-font-size-small'] = getParam($sName . '_font_size_small');
-	        $this->_aConfig['aLessConfig']['bx-font-size-middle'] = getParam($sName . '_font_size_middle');
-	        $this->_aConfig['aLessConfig']['bx-font-size-large'] = getParam($sName . '_font_size_large');
-	        $this->_aConfig['aLessConfig']['bx-font-size-h1'] = getParam($sName . '_font_size_h1');
-	        $this->_aConfig['aLessConfig']['bx-font-size-h2'] = getParam($sName . '_font_size_h2');
-	        $this->_aConfig['aLessConfig']['bx-font-size-h3'] = getParam($sName . '_font_size_h3');
+	        $this->_aConfig['aLessConfig']['bx-font-family'] = $this->_setValue($sName . '_font_family', 'Helvetica, Arial, sans-serif');
+	        $this->_aConfig['aLessConfig']['bx-font-size-default'] = $this->_setSize($sName . '_font_size_default', '18px');
+	        $this->_aConfig['aLessConfig']['bx-font-size-small'] = $this->_setSize($sName . '_font_size_small', '14px');
+	        $this->_aConfig['aLessConfig']['bx-font-size-middle'] = $this->_setSize($sName . '_font_size_middle', '16px');
+	        $this->_aConfig['aLessConfig']['bx-font-size-large'] = $this->_setSize($sName . '_font_size_large', '22px');
+	        $this->_aConfig['aLessConfig']['bx-font-size-h1'] = $this->_setSize($sName . '_font_size_h1', '38px');
+	        $this->_aConfig['aLessConfig']['bx-font-size-h2'] = $this->_setSize($sName . '_font_size_h2', '24px');
+	        $this->_aConfig['aLessConfig']['bx-font-size-h3'] = $this->_setSize($sName . '_font_size_h3', '18px');
 
-	        $this->_aConfig['aLessConfig']['bx-font-color-default'] = getParam($sName . '_font_color_default');
-	        $this->_aConfig['aLessConfig']['bx-font-color-grayed'] = getParam($sName . '_font_color_grayed');
-	        $this->_aConfig['aLessConfig']['bx-font-color-contrasted'] = getParam($sName . '_font_color_contrasted');
+	        $this->_aConfig['aLessConfig']['bx-font-color-default'] = $this->_setColorRgba($sName . '_font_color_default', 'rgba(51, 51, 51, 1)');
+	        $this->_aConfig['aLessConfig']['bx-font-color-grayed'] = $this->_setColorRgba($sName . '_font_color_grayed', 'rgba(153, 153, 153, 1)');
+	        $this->_aConfig['aLessConfig']['bx-font-color-contrasted'] = $this->_setColorRgba($sName . '_font_color_contrasted', 'rgba(255, 255, 255, 1)');
 		}
 
 		//--- Font Family

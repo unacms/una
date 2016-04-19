@@ -6,6 +6,10 @@
 	<string name="_bx_uni_stg_cpt_category_system"><![CDATA[General]]></string>
 	<string name="_bx_uni_stg_cpt_option_switcher_name"><![CDATA[Name In Template Switcher]]></string>
 
+	<string name="_bx_uni_stg_cpt_category_styles_general"><![CDATA[General]]></string>
+	<string name="_bx_uni_stg_cpt_option_general_item_bg_color_hover"><![CDATA[On-hover item background color]]></string>
+	<string name="_bx_uni_stg_cpt_option_general_item_bg_color_active"><![CDATA[Active item background color]]></string>
+
 	<string name="_bx_uni_stg_cpt_category_styles_header"><![CDATA[Header]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_height"><![CDATA[Height]]></string>
 	<string name="_bx_uni_stg_cpt_option_header_content_padding"><![CDATA[Content margin]]></string>
