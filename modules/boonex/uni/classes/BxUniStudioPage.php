@@ -31,6 +31,7 @@ class BxUniStudioPage extends BxTemplStudioDesign
     {
     	$sPrefix = $this->MODULE;
     	$aCategories = array(
+    		$sPrefix . '_styles_general',
 			$sPrefix . '_styles_header',
 			$sPrefix . '_styles_footer',
 			$sPrefix . '_styles_body',
