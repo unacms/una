@@ -429,6 +429,9 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                 );
                 break;
 			case 'image':
+				//--- Concatenation integer values as strings is required to get unique content id
+				$iContentId = (int)($aItem['id'] . ($this->bMixes && isset($this->aMix['id']) ? $this->aMix['id'] : 0));
+
                 $aField = array(
                     'type' => 'files',
                     'name' => $aItem['name'],
@@ -437,7 +440,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
  					'uploaders' => array('sys_settings_html5'),
                 	'upload_buttons_titles' => array('HTML5' => _t('_sys_uploader_button_name_single')),
 					'multiple' => false,
- 					'content_id' => $aItem['id'],
+ 					'content_id' => $iContentId,
  					'ghost_template' => array(
 						'inputs' => array(),
 					),
