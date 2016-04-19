@@ -36,6 +36,7 @@ class BxDolCover extends BxDol implements iBxDolSingleton
 {
     protected $_aOptions = array();
     protected $_sTemplateName = 'cover_short.html';
+    protected $_sTemplateNameEmpty = 'cover_empty.html';
 
     /**
      * Constructor

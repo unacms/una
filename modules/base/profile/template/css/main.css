@@ -50,6 +50,11 @@ a.bx-base-pofile-cover-image:hover,
     background-size: cover;    
 }
 
+.bx-base-pofile-cover-info-container {
+    position:relative;
+    height:100%;
+}
+
 .bx-base-pofile-cover-info {
     position:absolute;
     bottom:0;

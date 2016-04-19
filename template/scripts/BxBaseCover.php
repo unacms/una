@@ -33,7 +33,7 @@ class BxBaseCover extends BxDolCover
     public function display ()
     {
         if (!$this->_aOptions || !$this->_sTemplateName)
-            return '';
+            return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
 
         $this->_addJsCss();
 
