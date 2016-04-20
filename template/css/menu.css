@@ -321,7 +321,7 @@ ul.bx-menu-toolbar li .sys-icon {
     width:100%;    
     opacity:0.9;
     overflow-x:auto;
-    /* -webkit-overflow-scrolling:touch; */
+    -webkit-overflow-scrolling:touch;
 }
 
 .bx-sliding-menu-fullheight {

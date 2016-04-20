@@ -42,7 +42,7 @@ a.bx-base-pofile-cover-image:hover,
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;    
+    background-size: cover;
 }
 
 .bx-base-pofile-cover-info-container {
@@ -65,6 +65,10 @@ a.bx-base-pofile-cover-image:hover,
 .bx-base-pofile-cover-info .bx-def-ava,
 .bx-base-pofile-cover-info .bx-base-pofile-cover-actions {
     display:inline-block;
+}
+
+.bx-base-pofile-cover-actions ul li:last-child a {
+    margin-right:0;
 }
 
 .bx-base-pofile-cover-info img {
