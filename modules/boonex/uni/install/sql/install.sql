@@ -168,15 +168,14 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_menu_page_height'), '_bx_uni_stg_cpt_option_menu_page_height', '2.5rem', 'digit', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_menu_page_bg_color'), '_bx_uni_stg_cpt_option_menu_page_bg_color', 'rgba(242, 242, 242, 1)', 'rgba', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_menu_page_bg_image'), '_bx_uni_stg_cpt_option_menu_page_bg_image', '', 'image', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_menu_page_bg_color'), '_bx_uni_stg_cpt_option_menu_page_bg_color', 'rgba(242, 242, 242, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_menu_page_bg_image'), '_bx_uni_stg_cpt_option_menu_page_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_menu_page_bg_image_repeat'), '_bx_uni_stg_cpt_option_menu_page_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_menu_page_bg_image_size'), '_bx_uni_stg_cpt_option_menu_page_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_menu_page_content_padding'), '_bx_uni_stg_cpt_option_menu_page_content_padding', '0px', 'digit', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_menu_page_border_color'), '_bx_uni_stg_cpt_option_menu_page_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_menu_page_border_size'), '_bx_uni_stg_cpt_option_menu_page_border_size', '0px', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_menu_page_shadow'), '_bx_uni_stg_cpt_option_menu_page_shadow', 'none', 'digit', '', '', '', 7);
+(@iCategoryId, CONCAT(@sName, '_menu_page_content_padding'), '_bx_uni_stg_cpt_option_menu_page_content_padding', '0px', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_menu_page_border_color'), '_bx_uni_stg_cpt_option_menu_page_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_menu_page_border_size'), '_bx_uni_stg_cpt_option_menu_page_border_size', '0px', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_menu_page_shadow'), '_bx_uni_stg_cpt_option_menu_page_shadow', 'none', 'digit', '', '', '', 8);
 
 
 -- SETTINGS: UNI Styles Forms
