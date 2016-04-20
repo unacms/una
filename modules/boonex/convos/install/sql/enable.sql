@@ -36,7 +36,6 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_convos_view_entry', 4, 'bx_convos', '_bx_cnv_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_convos_view_entry', 3, 'bx_convos', '_bx_cnv_page_block_title_entry_collaborators', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:20:\"entity_collaborators\";}', 0, 0, 1, 0),
-('bx_convos_view_entry', 1, 'bx_convos', '_bx_cnv_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 0),
 ('bx_convos_view_entry', 2, 'bx_convos', '_bx_cnv_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
 ('bx_convos_view_entry', 4, 'bx_convos', '_bx_cnv_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 1),
 ('bx_convos_view_entry', 4, 'bx_convos', '_bx_cnv_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 2);
@@ -54,8 +53,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- MENU: actions menu for view entry 
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_convos_view', '_bx_cnv_menu_title_view_entry', 'bx_convos_view', 'bx_convos', 9, 0, 1, 'BxCnvMenuView', 'modules/boonex/convos/classes/BxCnvMenuView.php'),
-('bx_convos_view_popup', '_bx_cnv_menu_title_view_entry_popup', '', 'bx_convos', 16, 0, 1, 'BxCnvMenuViewActions', 'modules/boonex/convos/classes/BxCnvMenuViewActions.php');
+('bx_convos_view', '_bx_cnv_menu_title_view_entry', 'bx_convos_view', 'bx_convos', 9, 0, 1, 'BxCnvMenuView', 'modules/boonex/convos/classes/BxCnvMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_convos_view', 'bx_convos', '_bx_cnv_menu_set_title_view_entry', 0);

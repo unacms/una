@@ -32,10 +32,18 @@ class BxBaseCover extends BxDolCover
      */
     public function display ()
     {
-        if (!$this->_aOptions || !$this->_sTemplateName)
-            return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
+        if (!$this->_aOptions || !$this->_sTemplateName) {
 
-        $this->_addJsCss();
+            $this->_addJsCss();
+
+            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+            $mixedParams = $oMenuSubmenu->getParamsForCover();
+
+            if (!$mixedParams || !is_array($mixedParams))
+                return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
+            
+            return $this->_oTemplate->parseHtmlByName('cover.html', $mixedParams);
+        }        
 
         return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, $this->_aOptions);
     }

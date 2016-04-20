@@ -105,7 +105,6 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_market_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_market_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_market_view', // actions menu on view entry page
-            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP' => 'bx_market_view_popup', // actions menu popup on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_market_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_market_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_market_view_submenu', // view entry submenu
@@ -122,7 +121,6 @@ class BxMarketConfig extends BxBaseModTextConfig
                     'create-product' => 'checkAllowedAdd',
                 ),
                 'bx_market_view' => $aMenuItems2Methods,
-                'bx_market_view_popup' => $aMenuItems2Methods,
             ),
 
             // global settings

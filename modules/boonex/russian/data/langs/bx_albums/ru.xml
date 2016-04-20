@@ -105,7 +105,6 @@
 
     <string name="_bx_albums_menu_set_title_view_entry"><![CDATA[Действия для альбома]]></string>
     <string name="_bx_albums_menu_title_view_entry"><![CDATA[Действия для альбома]]></string>
-    <string name="_bx_albums_menu_title_view_entry_popup"><![CDATA[Всплывающие действия для альбома]]></string>
     <string name="_bx_albums_menu_title_submenu"><![CDATA[Альбомы - Подменю]]></string>
     <string name="_bx_albums_menu_set_title_submenu"><![CDATA[Альбомы - Подменю]]></string>
     <string name="_bx_albums_menu_item_title_system_create_entry"><![CDATA[Новый альбом]]></string>

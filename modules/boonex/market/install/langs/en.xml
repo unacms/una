@@ -154,7 +154,6 @@
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Product Actions]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Product Actions]]></string>
-    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Product Popup Actions]]></string>
     <string name="_bx_market_menu_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[New Product]]></string>

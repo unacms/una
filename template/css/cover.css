@@ -1,0 +1,21 @@
+.bx-cover-wrapper {
+    background-image: url(../images/cover.jpg);
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.bx-cover {
+    min-height:6rem;
+    height:100%;
+    text-align:center;
+}
+
+.bx-cover-title {
+    font-weight:bold;
+    text-shadow:0px 0px 0.125rem #000;
+}
