@@ -242,8 +242,9 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-slide-wrapper {
-    opacity:0.9;
-    width:100%;
+	width:100%;
+
+	background-color: rgba(255, 255, 255, 0.9);
 }
 
 .bx-popup-slide-wrapper li {
