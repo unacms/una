@@ -91,7 +91,6 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_albums_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_albums_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_albums_view', // actions menu on view entry page
-            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP' => 'bx_albums_view_popup', // actions menu popup on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_albums_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_albums_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_albums_view_submenu', // view entry submenu
@@ -107,7 +106,6 @@ class BxAlbumsConfig extends BxBaseModTextConfig
                     'create-album' => 'checkAllowedAdd',
                 ),
                 'bx_albums_view' => $aMenuItems2Methods,
-                'bx_albums_view_popup' => $aMenuItems2Methods,
             ),
 
             // some language keys

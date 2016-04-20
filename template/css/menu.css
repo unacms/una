@@ -138,30 +138,11 @@ ul.bx-menu-ver {
     text-align:center;
 }
 
-#bx-menu-main-container {
-    height:40px;
-    height:2.5rem;
-    white-space: nowrap;
-    overflow:hidden;    
-}
-
-#bx-menu-main-container-scroller {
-    height:60px;
-    height:4rem;
-    overflow:auto;
-    text-align:left;
-    /* -webkit-overflow-scrolling:touch; */
-}
-
 #bx-menu-main-submenu,
 #bx-menu-main {
     display:inline-block;
     line-height:2.5rem;
     vertical-align:top;
-}
-
-#bx-menu-main-container #bx-menu-main-submenu:first-child .bx-menu-main-submenu-div:first-child {
-    display:none;
 }
 
 .bx-menu-main-submenu-div .sys-icon {
