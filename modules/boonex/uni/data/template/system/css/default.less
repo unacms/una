@@ -65,11 +65,6 @@
 	-moz-box-shadow: @bx-shadow-menu-slide;
 	box-shadow: @bx-shadow-menu-slide;
 }
-.bx-menu-main-bar {
-	-webkit-box-shadow: @bx-shadow-menu-page;
-	-moz-box-shadow: @bx-shadow-menu-page;
-	box-shadow: @bx-shadow-menu-page;
-}
 .bx-btn {
 	-webkit-box-shadow: @bx-shadow-button;
 	-moz-box-shadow: @bx-shadow-button;
@@ -90,7 +85,8 @@
 .bx-def-box,
 .bx-popup-color-bg,
 .bx-popup-wrapper.bx-popup-slide-wrapper,
-.bx-menu-main-bar {
+.bx-sliding-menu-main,
+.bx-menu-main-bar-wrapper {
     background-position: center center;
 }
 .bx-def-image-bg-header {
@@ -175,7 +171,7 @@ a:hover > .sys-icon-a i {
 
 /* footer */
 .bx-footer {
-	color: @bx-color-font-footer;
+	color: @bx-font-color-footer;
 }
 .bx-footer.bx-def-color-bg-footer {
     .background-color (@bx-color-footer);    
@@ -210,7 +206,7 @@ a:hover > .sys-icon-a i {
 .bx-def-font-inputs {
 	font-family: @bx-font-family-form-input;
 	font-size: @bx-font-size-form-input;
-	color: @bx-color-font-form-input;
+	color: @bx-font-color-form-input;
 }
 .bx-def-font-small {
 	color: @bx-font-color-small;
@@ -308,8 +304,44 @@ h3,
 	padding: @bx-content-padding-menu-slide;
 }
 
+/* main menu */
+.bx-sliding-menu-main {
+	-webkit-box-shadow: @bx-shadow-menu-main;
+	-moz-box-shadow: @bx-shadow-menu-main;
+	box-shadow: @bx-shadow-menu-main;
+	
+	border: @bx-border-width-menu-main solid @bx-color-border-menu-main;
+
+	background-color: @bx-color-menu-main;
+
+	background-image: url(@bx-image-bg-menu-main);
+	background-repeat: @bx-image-bg-menu-main-repeat;
+    background-size: @bx-image-bg-menu-main-size;
+}
+.bx-sliding-menu-main-cnt {
+	padding: @bx-content-padding-menu-main;
+}
+.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a {
+	text-shadow: @bx-shadow-font-menu-main;
+
+	font-family: @bx-font-family-menu-main;
+	font-size: @bx-font-size-menu-main;
+	font-weight: @bx-font-weight-menu-main;
+	color: @bx-font-color-menu-main;
+}
+.bx-sliding-menu-main .bx-sliding-menu-main-cnt li.bx-menu-tab-active a {
+	color: @bx-font-color-menu-main-active;
+}
+.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a:hover {
+	color: @bx-font-color-menu-main-hover;
+}
+
 /* page menu */
 .bx-menu-main-bar-wrapper {
+	-webkit-box-shadow: @bx-shadow-menu-page;
+	-moz-box-shadow: @bx-shadow-menu-page;
+	box-shadow: @bx-shadow-menu-page;
+
 	border: @bx-border-width-menu-page solid @bx-color-border-menu-page;
 
 	background-color: @bx-color-menu-page;
@@ -321,8 +353,20 @@ h3,
 .bx-menu-main-bar-wrapper .bx-menu-main-submenu {
 	padding: @bx-content-padding-menu-page;
 }
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu li a {
+	text-shadow: @bx-shadow-font-menu-page;
 
-
+	font-family: @bx-font-family-menu-page;
+	font-size: @bx-font-size-menu-page;
+	font-weight: @bx-font-weight-menu-page;
+	color: @bx-font-color-menu-page;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu li a:hover {
+	color: @bx-font-color-menu-page-hover;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu li.bx-menu-tab-active a {
+	color: @bx-font-color-menu-page-active;
+}
 
 /* form */
 .bx-form-value .bx-form-input-slider,
@@ -378,7 +422,7 @@ h3,
 	font-family: @bx-font-family-button;
 	font-size: @bx-font-size-button;
 	font-weight: @bx-font-weight-button;
-	color: @bx-color-font-button;
+	color: @bx-font-color-button;
 }
 .bx-btn:hover,
 .bx-btn:active,
@@ -387,16 +431,16 @@ h3,
 	border: @bx-border-width-button solid @bx-color-border-button-hover;
 	.background-color (@bx-color-button-hover);
 
-	color: @bx-color-font-button-hover;
+	color: @bx-font-color-button-hover;
 }
 .bx-btn .sys-icon {
-	color: @bx-color-font-button;
+	color: @bx-font-color-button;
 }
 .bx-btn:hover .sys-icon,
 .bx-btn:active .sys-icon,
 .bx-btn.bx-btn-primary:hover .sys-icon,
 .bx-btn.bx-btn-primary:active .sys-icon {
-	color: @bx-color-font-button-hover;
+	color: @bx-font-color-button-hover;
 }
 
 /* button small */
@@ -416,19 +460,19 @@ h3,
 	font-family: @bx-font-family-button-small;
 	font-size: @bx-font-size-button-small;
 	font-weight: @bx-font-weight-button-small;
-	color: @bx-color-font-button-small;
+	color: @bx-font-color-button-small;
 }
 .bx-btn.bx-btn-small:hover,
 .bx-btn.bx-btn-small:active {
 	border: @bx-border-width-button-small solid @bx-color-border-button-small-hover;
 	.background-color (@bx-color-button-small-hover);
 
-	color: @bx-color-font-button-small-hover;
+	color: @bx-font-color-button-small-hover;
 }
 .bx-btn.bx-btn-small .sys-icon {
-	color: @bx-color-font-button-small;
+	color: @bx-font-color-button-small;
 }
 .bx-btn.bx-btn-small:hover .sys-icon,
 .bx-btn.bx-btn-small:active .sys-icon {
-	color: @bx-color-font-button-small-hover;
+	color: @bx-font-color-button-small-hover;
 }

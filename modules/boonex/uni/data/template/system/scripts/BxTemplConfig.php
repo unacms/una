@@ -40,12 +40,16 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-image-bg-popup'] = $this->_setBgUrl($sName . '_popup_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-popup-repeat'] = $this->_setBgRepeat($sName . '_popup_bg_image_repeat', 'no-repeat');
         $this->_aConfig['aLessConfig']['bx-image-bg-popup-size'] = $this->_setBgSize($sName . '_popup_bg_image_size', 'cover');
-        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide'] = $this->_setBgUrl($sName . '_menu_slide_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-repeat'] = $this->_setBgRepeat($sName . '_menu_slide_bg_image_repeat', 'no-repeat');
-        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-size'] = $this->_setBgSize($sName . '_menu_slide_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-main'] = $this->_setBgUrl($sName . '_menu_main_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-main-repeat'] = $this->_setBgRepeat($sName . '_menu_main_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-main-size'] = $this->_setBgSize($sName . '_menu_main_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-page'] = $this->_setBgUrl($sName . '_menu_page_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-page-repeat'] = $this->_setBgRepeat($sName . '_menu_page_bg_image_repeat', 'no-repeat');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-page-size'] = $this->_setBgSize($sName . '_menu_page_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide'] = $this->_setBgUrl($sName . '_menu_slide_bg_image', $oStorage);
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-repeat'] = $this->_setBgRepeat($sName . '_menu_slide_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-size'] = $this->_setBgSize($sName . '_menu_slide_bg_image_size', 'cover');
+        
 
         //--- Shadow
         $this->_aConfig['aLessConfig']['bx-shadow-header'] = $this->_setShadow($sName . '_header_shadow');
@@ -53,12 +57,15 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-shadow-block'] = $this->_setShadow($sName . '_block_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-card'] = $this->_setShadow($sName . '_card_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-popup'] = $this->_setShadow($sName . '_popup_shadow');
-        $this->_aConfig['aLessConfig']['bx-shadow-menu-slide'] = $this->_setShadow($sName . '_menu_slide_shadow');
+        $this->_aConfig['aLessConfig']['bx-shadow-menu-main'] = $this->_setShadow($sName . '_menu_main_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-menu-page'] = $this->_setShadow($sName . '_menu_page_shadow');
+        $this->_aConfig['aLessConfig']['bx-shadow-menu-slide'] = $this->_setShadow($sName . '_menu_slide_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-form-input'] = $this->_setShadow($sName . '_form_input_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-button'] = $this->_setShadow($sName . '_button_lg_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-button-small'] = $this->_setShadow($sName . '_button_sm_shadow');
 
+        $this->_aConfig['aLessConfig']['bx-shadow-font-menu-main'] = $this->_setShadowFont($sName . '_menu_main_font_shadow');
+        $this->_aConfig['aLessConfig']['bx-shadow-font-menu-page'] = $this->_setShadowFont($sName . '_menu_page_font_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-font-button'] = $this->_setShadowFont($sName . '_button_lg_font_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-font-button-small'] = $this->_setShadowFont($sName . '_button_sm_font_shadow');
 
@@ -76,8 +83,9 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-content-padding-block'] = $this->_setMargin($sName . '_block_content_padding');
         $this->_aConfig['aLessConfig']['bx-content-padding-card'] = $this->_setMargin($sName . '_card_content_padding');
         $this->_aConfig['aLessConfig']['bx-content-padding-popup'] = $this->_setMargin($sName . '_popup_content_padding');
-        $this->_aConfig['aLessConfig']['bx-content-padding-menu-slide'] = $this->_setMargin($sName . '_menu_slide_content_padding');
+        $this->_aConfig['aLessConfig']['bx-content-padding-menu-main'] = $this->_setMargin($sName . '_menu_main_content_padding');
         $this->_aConfig['aLessConfig']['bx-content-padding-menu-page'] = $this->_setMargin($sName . '_menu_page_content_padding');
+        $this->_aConfig['aLessConfig']['bx-content-padding-menu-slide'] = $this->_setMargin($sName . '_menu_slide_content_padding');
 
 		$this->_aConfig['aLessConfig']['bx-title-padding-block'] = $this->_setMargin($sName . '_block_title_padding');
 		$this->_aConfig['aLessConfig']['bx-title-padding-popup'] = $this->_setMargin($sName . '_popup_title_padding');
@@ -96,8 +104,9 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-block-title-div'] = $this->_setColorRgba($sName . '_block_title_div_bg_color', 'rgba(208, 208, 208, 1)');        
         $this->_aConfig['aLessConfig']['bx-color-box'] = $this->_setColorRgba($sName . '_card_bg_color', 'rgba(242, 242, 242, 1)');
         $this->_aConfig['aLessConfig']['bx-color-popup'] = $this->_setColorRgba($sName . '_popup_bg_color', 'rgba(255, 255, 255, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_bg_color', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-menu-main'] = $this->_setColorRgba($sName . '_menu_main_bg_color', 'rgba(255, 255, 255, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-menu-page'] = $this->_setColorRgba($sName . '_menu_page_bg_color', 'rgba(242, 242, 242, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_bg_color', 'rgba(255, 255, 255, 1)');
 		$this->_aConfig['aLessConfig']['bx-color-form-input'] = $this->_setColorRgba($sName . '_form_input_bg_color', 'rgba(255, 255, 255, 1)');
 		$this->_aConfig['aLessConfig']['bx-color-form-input-active'] = $this->_setColorRgba($sName . '_form_input_bg_color_active', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button'] = $this->_setColorRgba($sName . '_button_lg_bg_color', 'rgba(108, 170, 138, 1)');
@@ -108,19 +117,21 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-font-block-title'] = $this->_setColorRgba($sName . '_block_title_font_color', 'rgba(0, 0, 20, 1)');
         $this->_aConfig['aLessConfig']['bx-color-font-popup-title'] = $this->_setColorRgba($sName . '_popup_title_font_color', 'rgba(0, 0, 20, 1)');
 
-        $this->_aConfig['aLessConfig']['bx-color-border-header'] = $this->_setColorRgba($sName . '_header_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-footer'] = $this->_setColorRgba($sName . '_footer_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-block'] = $this->_setColorRgba($sName . '_block_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-box'] = $this->_setColorRgba($sName . '_card_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-popup'] = $this->_setColorRgba($sName . '_popup_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-menu-page'] = $this->_setColorRgba($sName . '_menu_page_border_color', 'rgba(208, 208, 208, 1)');
+        $sDefColBorder = 'rgba(208, 208, 208, 1)';
+        $this->_aConfig['aLessConfig']['bx-color-border-header'] = $this->_setColorRgba($sName . '_header_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-footer'] = $this->_setColorRgba($sName . '_footer_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-block'] = $this->_setColorRgba($sName . '_block_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-box'] = $this->_setColorRgba($sName . '_card_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-popup'] = $this->_setColorRgba($sName . '_popup_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-menu-main'] = $this->_setColorRgba($sName . '_menu_main_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-menu-page'] = $this->_setColorRgba($sName . '_menu_page_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_border_color', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-form-input'] = $this->_setColorRgba($sName . '_form_input_border_color', 'rgba(121, 189, 154, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-form-input-active'] = $this->_setColorRgba($sName . '_form_input_border_color_active', 'rgba(108, 170, 138, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-button'] = $this->_setColorRgba($sName . '_button_lg_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-button-hover'] = $this->_setColorRgba($sName . '_button_lg_border_color_hover', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-button-small'] = $this->_setColorRgba($sName . '_button_sm_border_color', 'rgba(208, 208, 208, 1)');
-        $this->_aConfig['aLessConfig']['bx-color-border-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_border_color_hover', 'rgba(208, 208, 208, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-border-button'] = $this->_setColorRgba($sName . '_button_lg_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-hover'] = $this->_setColorRgba($sName . '_button_lg_border_color_hover', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-small'] = $this->_setColorRgba($sName . '_button_sm_border_color', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_border_color_hover', $sDefColBorder);
 
 		$this->_aConfig['aLessConfig']['bx-color-icon-header'] = $this->_setColorRgba($sName . '_header_icon_color', 'rgba(255, 255, 255, 1)');
 		$this->_aConfig['aLessConfig']['bx-color-icon-header-hover'] = $this->_setColorRgba($sName . '_header_icon_color_hover', 'rgba(255, 255, 255, 1)');
@@ -136,21 +147,15 @@ class BxTemplConfig extends BxBaseConfig
 		$this->_aConfig['aLessConfig']['bx-color-link-body'] = $this->_setColorRgba($sName . '_body_link_color', 'rgba(62, 134, 133, 1)');
 		$this->_aConfig['aLessConfig']['bx-color-link-body-hover'] = $this->_setColorRgba($sName . '_body_link_color_hover', 'rgba(62, 134, 133, 1)');
 
-		$this->_aConfig['aLessConfig']['bx-color-font-footer'] = $this->_setColorRgba($sName . '_footer_font_color', 'rgba(51, 51, 51, 1)');
-		$this->_aConfig['aLessConfig']['bx-color-font-button'] = $this->_setColorRgba($sName . '_button_lg_font_color', 'rgba(255, 255, 255, 1)');
-		$this->_aConfig['aLessConfig']['bx-color-font-button-hover'] = $this->_setColorRgba($sName . '_button_lg_font_color_hover', 'rgba(255, 255, 255, 1)');
-		$this->_aConfig['aLessConfig']['bx-color-font-button-small'] = $this->_setColorRgba($sName . '_button_sm_font_color', 'rgba(255, 255, 255, 1)');
-		$this->_aConfig['aLessConfig']['bx-color-font-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_font_color_hover', 'rgba(255, 255, 255, 1)');
-		$this->_aConfig['aLessConfig']['bx-color-font-form-input'] = $this->_setColorRgba($sName . '_form_input_font_color', 'rgba(51, 51, 51, 1)');
-
         //--- Borders
         $this->_aConfig['aLessConfig']['bx-border-width-header'] = $this->_setSize($sName . '_header_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-footer'] = $this->_setSize($sName . '_footer_border_size', '1px');
         $this->_aConfig['aLessConfig']['bx-border-width-block'] = $this->_setSize($sName . '_block_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-box'] = $this->_setSize($sName . '_card_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-popup'] = $this->_setSize($sName . '_popup_border_size');
-        $this->_aConfig['aLessConfig']['bx-border-width-menu-slide'] = $this->_setSize($sName . '_menu_slide_border_size');
+        $this->_aConfig['aLessConfig']['bx-border-width-menu-main'] = $this->_setSize($sName . '_menu_main_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-menu-page'] = $this->_setSize($sName . '_menu_page_border_size');
+        $this->_aConfig['aLessConfig']['bx-border-width-menu-slide'] = $this->_setSize($sName . '_menu_slide_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-form-input'] = $this->_setSize($sName . '_form_input_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-button'] = $this->_setSize($sName . '_button_lg_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-button-small'] = $this->_setSize($sName . '_button_sm_border_size');
@@ -181,6 +186,8 @@ class BxTemplConfig extends BxBaseConfig
 		$this->_aConfig['aLessConfig']['bx-font-family-block-title'] = $this->_setValue($sName . '_block_title_font_family');
 		$this->_aConfig['aLessConfig']['bx-font-family-popup-title'] = $this->_setValue($sName . '_popup_title_font_family');
 		$this->_aConfig['aLessConfig']['bx-font-family-form-input'] = $this->_setValue($sName . '_form_input_font_family');
+		$this->_aConfig['aLessConfig']['bx-font-family-menu-main'] = $this->_setValue($sName . '_menu_main_font_family');
+		$this->_aConfig['aLessConfig']['bx-font-family-menu-page'] = $this->_setValue($sName . '_menu_page_font_family');
 		$this->_aConfig['aLessConfig']['bx-font-family-button'] = $this->_setValue($sName . '_button_lg_font_family');
 		$this->_aConfig['aLessConfig']['bx-font-family-button-small'] = $this->_setValue($sName . '_button_sm_font_family');
 
@@ -188,19 +195,35 @@ class BxTemplConfig extends BxBaseConfig
 		$this->_aConfig['aLessConfig']['bx-font-size-block-title'] = $this->_setSize($sName . '_block_title_font_size', '1.5rem');
 		$this->_aConfig['aLessConfig']['bx-font-size-popup-title'] = $this->_setSize($sName . '_popup_title_font_size', '1.5rem');
 		$this->_aConfig['aLessConfig']['bx-font-size-form-input'] = $this->_setSize($sName . '_form_input_font_size', '1.125rem');
+		$this->_aConfig['aLessConfig']['bx-font-size-menu-main'] = $this->_setSize($sName . '_menu_main_font_size', '1.125rem');
+		$this->_aConfig['aLessConfig']['bx-font-size-menu-page'] = $this->_setSize($sName . '_menu_page_font_size', '1.2rem');
 		$this->_aConfig['aLessConfig']['bx-font-size-button'] = $this->_setSize($sName . '_button_lg_font_size', '1rem');
 		$this->_aConfig['aLessConfig']['bx-font-size-button-small'] = $this->_setSize($sName . '_button_sm_font_size', '0.9rem');
 
 		//--- Font Color
-		$sColorDefault = 'rgba(51, 51, 51, 1.0)';
-		$this->_aConfig['aLessConfig']['bx-font-color-small'] = $this->_setColorRgba($sName . '_font_color_small', $sColorDefault);
-		$this->_aConfig['aLessConfig']['bx-font-color-middle'] = $this->_setColorRgba($sName . '_font_color_middle', $sColorDefault);
-		$this->_aConfig['aLessConfig']['bx-font-color-large'] = $this->_setColorRgba($sName . '_font_color_large', $sColorDefault);
-		$this->_aConfig['aLessConfig']['bx-font-color-h1'] = $this->_setColorRgba($sName . '_font_color_h1', $sColorDefault);
-		$this->_aConfig['aLessConfig']['bx-font-color-h2'] = $this->_setColorRgba($sName . '_font_color_h2', $sColorDefault);
-		$this->_aConfig['aLessConfig']['bx-font-color-h3'] = $this->_setColorRgba($sName . '_font_color_h3', $sColorDefault);
+		$sDefColFont = 'rgba(51, 51, 51, 1.0)';
+		$this->_aConfig['aLessConfig']['bx-font-color-footer'] = $this->_setColorRgba($sName . '_footer_font_color', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-menu-main'] = $this->_setColorRgba($sName . '_menu_main_font_color', 'rgba(62, 134, 133, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-menu-main-hover'] = $this->_setColorRgba($sName . '_menu_main_font_color_hover', 'rgba(62, 134, 133, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-menu-main-active'] = $this->_setColorRgba($sName . '_menu_main_font_color_active', 'rgba(0, 0, 0, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-menu-page'] = $this->_setColorRgba($sName . '_menu_page_font_color', 'rgba(62, 134, 133, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-menu-page-hover'] = $this->_setColorRgba($sName . '_menu_page_font_color_hover', 'rgba(62, 134, 133, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-menu-page-active'] = $this->_setColorRgba($sName . '_menu_page_font_color_active', 'rgba(0, 0, 0, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-button'] = $this->_setColorRgba($sName . '_button_lg_font_color', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-button-hover'] = $this->_setColorRgba($sName . '_button_lg_font_color_hover', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-button-small'] = $this->_setColorRgba($sName . '_button_sm_font_color', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_font_color_hover', 'rgba(255, 255, 255, 1)');
+		$this->_aConfig['aLessConfig']['bx-font-color-form-input'] = $this->_setColorRgba($sName . '_form_input_font_color', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-small'] = $this->_setColorRgba($sName . '_font_color_small', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-middle'] = $this->_setColorRgba($sName . '_font_color_middle', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-large'] = $this->_setColorRgba($sName . '_font_color_large', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-h1'] = $this->_setColorRgba($sName . '_font_color_h1', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-h2'] = $this->_setColorRgba($sName . '_font_color_h2', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-h3'] = $this->_setColorRgba($sName . '_font_color_h3', $sDefColFont);
 
 		//--- Font Weight
+		$this->_aConfig['aLessConfig']['bx-font-weight-menu-main'] = $this->_setValue($sName . '_menu_main_font_weight', '400');
+		$this->_aConfig['aLessConfig']['bx-font-weight-menu-page'] = $this->_setValue($sName . '_menu_page_font_weight', '400');
 		$this->_aConfig['aLessConfig']['bx-font-weight-button'] = $this->_setValue($sName . '_button_lg_font_weight', '400');
 		$this->_aConfig['aLessConfig']['bx-font-weight-button-small'] = $this->_setValue($sName . '_button_sm_font_weight', '400');
 
