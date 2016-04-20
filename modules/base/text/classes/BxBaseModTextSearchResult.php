@@ -28,7 +28,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
 
         if ('unit_gallery.html' == $this->sUnitTemplate)
-            $this->addContainerClass (array('bx-def-margin-sec-neg', 'bx-base-text-unit-gallery-wrapper'));
+            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper'));
     }
 
     protected function processReplaceableMarkers($oProfileAuthor) 

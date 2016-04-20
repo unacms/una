@@ -11,6 +11,7 @@ div.bx-market-unit-title {
 	text-align: center;
 }
 div.bx-market-unit-info {
+	overflow: visible;
 	white-space: nowrap;
 }
 div.bx-market-ui-cell {

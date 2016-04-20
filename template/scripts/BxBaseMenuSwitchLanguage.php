@@ -34,7 +34,7 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
         $aBaseLink = parse_url(BX_DOL_URL_ROOT);
         $sBaseLink = (!empty($aBaseLink['scheme']) ? $aBaseLink['scheme'] : 'http') . '://' . $aBaseLink['host'];
-        $sPageLink = $oPermalink->unpermalink($sBaseLink . $_SERVER['REQUEST_URI']);
+        $sPageLink = $oPermalink->unpermalink($sBaseLink . $_SERVER['REQUEST_URI'], false);
 
         $sPageParams = '';
         if(strpos($sPageLink, '?') !== false)
