@@ -153,7 +153,6 @@
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Действия для продукта]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Действия для продукта]]></string>
-    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Всплывающие действия для продукта]]></string>
     <string name="_bx_market_menu_title_submenu"><![CDATA[Рынок - Подменю]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Рынок - Подменю]]></string>
     <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[Новый продукт]]></string>

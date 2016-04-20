@@ -122,12 +122,14 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if ($this->_aSocialSharingService) {
             $sPopupContent = BxDolService::call($this->_aSocialSharingService['module'], $this->_aSocialSharingService['method'], isset($this->_aSocialSharingService['params']) ? $this->_aSocialSharingService['params'] : array(), isset($this->_aSocialSharingService['class']) ? $this->_aSocialSharingService['class'] : 'Module');
 
-            $aVars['bx_if:sharing']['condition'] = true;
-            $aVars['bx_if:sharing']['content'] = array (
-                'id' => 'bx-menu-social-sharing-menu',
-                'icon' => 'share',
-                'popup' => BxTemplFunctions::getInstance()->transBox('bx-menu-social-sharing-menu', '<div class="bx-def-padding">' . $sPopupContent . '</div>', true),
-            );
+            if ($sPopupContent) {
+                $aVars['bx_if:sharing']['condition'] = $sPopupContent;
+                $aVars['bx_if:sharing']['content'] = array (
+                    'id' => 'bx-menu-social-sharing-menu',
+                    'icon' => 'share',
+                    'popup' => BxTemplFunctions::getInstance()->transBox('bx-menu-social-sharing-menu', '<div class="bx-def-padding">' . $sPopupContent . '</div>', true),
+                );
+            }
         }
 
         if (!$aVars['bx_if:sharing']['condition'] && !$aMenuItemSelected)
