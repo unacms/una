@@ -965,8 +965,15 @@ function bx_append_url_params ($sUrl, $mixedParams)
     $sParams = false == strpos($sUrl, '?') ? '?' : '&';
 
     if (is_array($mixedParams)) {
-        foreach($mixedParams as $sKey => $sValue)
-            $sParams .= $sKey . '=' . $sValue . '&';
+        foreach($mixedParams as $sKey => $sValue) {
+            if (!is_array($sValue)) {
+                $sParams .= $sKey . '=' . $sValue . '&';
+            }
+            else {
+                foreach($sValue as $sSubValue)
+                    $sParams .= $sKey . '[]=' . $sSubValue . '&';
+            }
+        }
         $sParams = substr($sParams, 0, -1);
     } else {
         $sParams .= $mixedParams;
