@@ -198,7 +198,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_menu_slide_bg_color'), '_bx_uni_stg_cpt_option_menu_slide_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_bg_color'), '_bx_uni_stg_cpt_option_menu_slide_bg_color', 'rgba(255, 255, 255, 0.9)', 'rgba', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_bg_image'), '_bx_uni_stg_cpt_option_menu_slide_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_bg_image_repeat'), '_bx_uni_stg_cpt_option_menu_slide_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_bg_image_size'), '_bx_uni_stg_cpt_option_menu_slide_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),

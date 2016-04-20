@@ -305,7 +305,7 @@ h3,
 }
 
 /* main menu */
-.bx-sliding-menu-main {
+.bx-menu-main.bx-sliding-menu-main {
 	-webkit-box-shadow: @bx-shadow-menu-main;
 	-moz-box-shadow: @bx-shadow-menu-main;
 	box-shadow: @bx-shadow-menu-main;
@@ -318,10 +318,10 @@ h3,
 	background-repeat: @bx-image-bg-menu-main-repeat;
     background-size: @bx-image-bg-menu-main-size;
 }
-.bx-sliding-menu-main-cnt {
+.bx-menu-main.bx-sliding-menu-main-cnt {
 	padding: @bx-content-padding-menu-main;
 }
-.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a {
+.bx-menu-main.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a {
 	text-shadow: @bx-shadow-font-menu-main;
 
 	font-family: @bx-font-family-menu-main;
@@ -329,10 +329,10 @@ h3,
 	font-weight: @bx-font-weight-menu-main;
 	color: @bx-font-color-menu-main;
 }
-.bx-sliding-menu-main .bx-sliding-menu-main-cnt li.bx-menu-tab-active a {
+.bx-menu-main.bx-sliding-menu-main .bx-sliding-menu-main-cnt li.bx-menu-tab-active a {
 	color: @bx-font-color-menu-main-active;
 }
-.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a:hover {
+.bx-menu-main.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a:hover {
 	color: @bx-font-color-menu-main-hover;
 }
 
@@ -402,6 +402,17 @@ h3,
 .bx-form-value .bx-form-input-text:focus {
 	border-color: @bx-color-border-form-input-active;
 	background-color: @bx-color-form-input-active;
+}
+
+.bx-form-value .bx-switcher-cont {
+	border-color: @bx-color-border-form-input;
+	border-width: @bx-border-width-form-input;
+
+	background-color: @bx-color-form-input;
+
+	-webkit-box-shadow: @bx-shadow-form-input;
+	-moz-box-shadow: @bx-shadow-form-input;
+	box-shadow: @bx-shadow-form-input;
 }
 
 /* button large */
