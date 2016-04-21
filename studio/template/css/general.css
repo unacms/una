@@ -58,9 +58,8 @@ div.bx-std-content-wrp {
 div.bx-std-page-caption {
 	position: relative;
 	height: 70px;
-	background-image: url("../images/bx-std-bg-caption.png");
-    background-position: 0 0;
-    background-repeat: repeat-x;
+
+	background-color: #334455;
 }
 div.bx-std-pcap-icon {}
 div.bx-std-pcap-text {

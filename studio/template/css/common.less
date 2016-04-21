@@ -1,0 +1,102 @@
+@import (reference) 'default.less';
+@import '../../../template/css/common.css';
+
+/**
+ * Overwrite default styles
+ */
+
+/* button large */
+.bx-btn,
+.bx-btn.bx-btn-primary {
+	.box-sizing(content-box);
+
+	height: 60px;
+	height: 2.5rem;
+	line-height: 60px;
+	line-height: 2.5rem;
+
+	.background-color(rgba(40, 60, 80, 0.8));
+
+	border: 1px solid rgba(20, 40, 60, 0.8);
+	.radius(3px);
+
+	-webkit-box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);
+
+	text-shadow: none;
+
+	font-family: sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.9);
+}
+.bx-btn:hover,
+.bx-btn:active,
+.bx-btn.bx-btn-primary:hover,
+.bx-btn.bx-btn-primary:active {
+	border: 1px solid rgba(20, 40, 60, 0.9);
+	.background-color(rgba(40, 60, 80, 0.9));
+
+	color: rgba(255, 255, 255, 1);
+}
+.bx-btn .sys-icon {
+	color: rgba(255, 255, 255, 0.9);
+}
+.bx-btn:hover .sys-icon,
+.bx-btn:active .sys-icon,
+.bx-btn.bx-btn-primary:hover .sys-icon,
+.bx-btn.bx-btn-primary:active .sys-icon {
+	color: rgba(255, 255, 255, 1);
+}
+
+/* button small */
+.bx-btn.bx-btn-small {
+	.box-sizing(content-box);
+
+	height: 24px;
+	height: 1.5rem;
+	line-height: 24px;
+	line-height: 1.5rem;
+
+	.background-color (rgba(40, 60, 80, 0.8));
+
+	border: 1px solid rgba(20, 40, 60, 0.8);
+	.radius(3px);
+
+	-webkit-box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);;
+	-moz-box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);;
+	box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);;
+
+	text-shadow: none;
+
+	font-family: sans-serif;
+	font-size: 0.75rem;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.9);
+}
+.bx-btn.bx-btn-small:hover,
+.bx-btn.bx-btn-small:active {
+	border: 1px solid rgba(20, 40, 60, 0.9);
+	.background-color (rgba(40, 60, 80, 0.9));
+
+	color: rgba(255, 255, 255, 1);
+}
+.bx-btn.bx-btn-small .sys-icon {
+	color: rgba(255, 255, 255, 0.9);
+}
+.bx-btn.bx-btn-small:hover .sys-icon,
+.bx-btn.bx-btn-small:active .sys-icon {
+	color: rgba(255, 255, 255, 1);
+}
+
+
+/**
+ * General
+ */
+div.bx-db-note {
+	position: relative;
+	float: left;
+	line-height: 40px;
+	font-size: 11px;
+}

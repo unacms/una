@@ -1,8 +1,0 @@
-@import url(../../../template/css/common.css);
-
-div.bx-db-note {
-	position: relative;
-	float: left;
-	line-height: 40px;
-	font-size: 11px;
-}

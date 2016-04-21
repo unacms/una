@@ -61,7 +61,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
 
         //--- Add default CSS in output
         $this->addCssSystem(array(
-            'common.css',
+            'common.less',
             'default.less',
             'general.css',
         	'menu.css',
