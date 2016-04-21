@@ -65,6 +65,7 @@
 	<string name="_bx_uni_stg_cpt_option_block_border_size"><![CDATA[Размер границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_border_radius"><![CDATA[Радиус углов]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_shadow"><![CDATA[Тень]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_title_bg_color"><![CDATA[Цвет фона заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_padding"><![CDATA[Отступы заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_family"><![CDATA[Шрифт заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_size"><![CDATA[Размер шрифта заголовка]]></string>
@@ -93,6 +94,7 @@
 	<string name="_bx_uni_stg_cpt_option_popup_border_size"><![CDATA[Размер границы]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_border_radius"><![CDATA[Радиус углов]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_shadow"><![CDATA[Тень]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_title_bg_color"><![CDATA[Цвет фона заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_title_padding"><![CDATA[Отступы заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_title_font_family"><![CDATA[Шрифт заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_title_font_size"><![CDATA[Размер шрифта заголовка]]></string>

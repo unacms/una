@@ -100,12 +100,13 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_block_border_size'), '_bx_uni_stg_cpt_option_block_border_size', '0px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_block_border_radius'), '_bx_uni_stg_cpt_option_block_border_radius', '0px', 'digit', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_block_shadow'), '_bx_uni_stg_cpt_option_block_shadow', 'none', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_uni_stg_cpt_option_block_title_padding', '0px', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_uni_stg_cpt_option_block_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_uni_stg_cpt_option_block_title_font_size', '1.5rem', 'digit', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_uni_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_uni_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_uni_stg_cpt_option_block_title_div_bg_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 15);
+(@iCategoryId, CONCAT(@sName, '_block_title_bg_color'), '_bx_uni_stg_cpt_option_block_title_bg_color', 'rgba(255, 255, 255, 1.0)', 'rgba', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_uni_stg_cpt_option_block_title_padding', '0px', 'digit', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_uni_stg_cpt_option_block_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_uni_stg_cpt_option_block_title_font_size', '1.5rem', 'digit', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_uni_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_uni_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_uni_stg_cpt_option_block_title_div_bg_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 16);
 
 
 -- SETTINGS: UNI Styles Card
@@ -140,10 +141,11 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_popup_border_size'), '_bx_uni_stg_cpt_option_popup_border_size', '1px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_popup_border_radius'), '_bx_uni_stg_cpt_option_popup_border_radius', '3px', 'digit', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_popup_shadow'), '_bx_uni_stg_cpt_option_popup_shadow', 'none', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_popup_title_padding'), '_bx_uni_stg_cpt_option_popup_title_padding', '1.25rem', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_popup_title_font_family'), '_bx_uni_stg_cpt_option_popup_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_popup_title_font_size'), '_bx_uni_stg_cpt_option_popup_title_font_size', '1.5rem', 'digit', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_popup_title_font_color'), '_bx_uni_stg_cpt_option_popup_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 13);
+(@iCategoryId, CONCAT(@sName, '_popup_title_bg_color'), '_bx_uni_stg_cpt_option_popup_title_bg_color', 'rgba(40, 60, 80, 0.9)', 'rgba', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_popup_title_padding'), '_bx_uni_stg_cpt_option_popup_title_padding', '1.25rem', 'digit', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_popup_title_font_family'), '_bx_uni_stg_cpt_option_popup_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_popup_title_font_size'), '_bx_uni_stg_cpt_option_popup_title_font_size', '1.5rem', 'digit', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_popup_title_font_color'), '_bx_uni_stg_cpt_option_popup_title_font_color', 'rgba(255, 255, 255, 1.0)', 'rgba', '', '', '', 14);
 
 
 -- SETTINGS: UNI Styles Main Menu
