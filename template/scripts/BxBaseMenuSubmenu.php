@@ -91,16 +91,19 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     public function getParamsForCover ()
     {
         $aMenuItemSelected = $this->getSelectedMenuItem ();
-        if (!$aMenuItemSelected || (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name']))
+        if (!$aMenuItemSelected)
             return '';
+
+        // (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name']) - homepage detection
 
         $oMenuActions = BxDolMenu::getObjectInstance($this->_sObjectActionsMenu);
 
         $aVars = array (
+            'class' => '',
             'object' => $this->_sObject,
             'id' => 'bx-menu-submenu-menu',
             'title' => $aMenuItemSelected['title'],
-            'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),
+            'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),            
             'actions' => $oMenuActions ? $oMenuActions->getCode() : '',
             'bx_if:image' => array (
                 'condition' => false !== strpos($aMenuItemSelected['icon'], '.'),

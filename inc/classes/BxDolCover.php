@@ -75,7 +75,7 @@ class BxDolCover extends BxDol implements iBxDolSingleton
 
     /**
      * Set custom cover options
-     * @param $aOptions - cover options, default template supports the following: image_url, menu, text
+     * @param $aOptions - cover options, default template supports the following: title. For more info @see template/cover.html
      * @param $sTemplateName - optional template name
      */
     public function set ($aOptions, $sTemplateName = false)

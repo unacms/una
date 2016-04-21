@@ -32,9 +32,9 @@ class BxBaseCover extends BxDolCover
      */
     public function display ()
     {
-        if (!$this->_aOptions || !$this->_sTemplateName) {
+        $this->_addJsCss();
 
-            $this->_addJsCss();
+        if (!$this->_aOptions || !$this->_sTemplateName) {
 
             $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
             $mixedParams = $oMenuSubmenu->getParamsForCover();
