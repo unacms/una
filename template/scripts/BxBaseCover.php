@@ -42,7 +42,13 @@ class BxBaseCover extends BxDolCover
             if (!$mixedParams || !is_array($mixedParams))
                 return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
             
-            return $this->_oTemplate->parseHtmlByName('cover.html', $mixedParams);
+            if ($this->_sCoverImageUrl)
+                $mixedParams['bx_if:bg'] = array (
+                    'condition' => true,
+                    'content' => array('image_url' => $this->_sCoverImageUrl),
+                );
+
+            return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, $mixedParams);
         }        
 
         return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, $this->_aOptions);

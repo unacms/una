@@ -110,6 +110,10 @@ class BxBaseMenuSubmenu extends BxTemplMenu
                 'condition' => false === strpos($aMenuItemSelected['icon'], '.'),
                 'content' => array('icon' => $aMenuItemSelected['icon']),
             ),
+            'bx_if:bg' => array (
+                'condition' => false,
+                'content' => array('image_url' => ''),
+            ),
         );
 
         // if (!$this->_sObjectSubmenu && !$this->_mixedMainMenuItemSelected && $aMenuItemSelected['submenu_object'])
