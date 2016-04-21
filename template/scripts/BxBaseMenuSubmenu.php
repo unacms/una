@@ -91,7 +91,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     public function getParamsForCover ()
     {
         $aMenuItemSelected = $this->getSelectedMenuItem ();
-        if (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
+        if (!$aMenuItemSelected || (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name']))
             return '';
 
         $oMenuActions = BxDolMenu::getObjectInstance($this->_sObjectActionsMenu);
@@ -110,30 +110,14 @@ class BxBaseMenuSubmenu extends BxTemplMenu
                 'condition' => false === strpos($aMenuItemSelected['icon'], '.'),
                 'content' => array('icon' => $aMenuItemSelected['icon']),
             ),
-            'bx_if:sharing' => array (
+            'bx_if:bg' => array (
                 'condition' => false,
-                'content' => array(),
+                'content' => array('image_url' => ''),
             ),
         );
 
         // if (!$this->_sObjectSubmenu && !$this->_mixedMainMenuItemSelected && $aMenuItemSelected['submenu_object'])
         //    $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];
-
-        if ($this->_aSocialSharingService) {
-            $sPopupContent = BxDolService::call($this->_aSocialSharingService['module'], $this->_aSocialSharingService['method'], isset($this->_aSocialSharingService['params']) ? $this->_aSocialSharingService['params'] : array(), isset($this->_aSocialSharingService['class']) ? $this->_aSocialSharingService['class'] : 'Module');
-
-            if ($sPopupContent) {
-                $aVars['bx_if:sharing']['condition'] = $sPopupContent;
-                $aVars['bx_if:sharing']['content'] = array (
-                    'id' => 'bx-menu-social-sharing-menu',
-                    'icon' => 'share',
-                    'popup' => BxTemplFunctions::getInstance()->transBox('bx-menu-social-sharing-menu', '<div class="bx-def-padding">' . $sPopupContent . '</div>', true),
-                );
-            }
-        }
-
-        if (!$aVars['bx_if:sharing']['condition'] && !$aMenuItemSelected)
-            return '';
 
         return $aVars;
     }

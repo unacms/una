@@ -1,20 +1,14 @@
-<div class="bx-cover-wrapper bx-menu-toolbar-padding">
+<div class="bx-menu-toolbar-padding">
+<div class="bx-cover-wrapper" <bx_if:bg>style="background-image:url(__image_url__)"</bx_if:bg>>
 
     <div class="bx-cover bx-def-centered bx-def-page-width bx-def-padding bx-def-box-sizing">
 
-        <div class="bx-cover-title bx-def-margin-sec-bottom bx-def-font-h1">
+        <div class="bx-cover-title bx-def-margin-sec-topbottom bx-def-font-h1">
 
             <bx_if:icon><i class="sys-icon bx-def-font-contrasted __icon__"></i></bx_if:icon>
             <bx_if:image><img style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
 
             <span class="bx-def-font-contrasted bx-def-margin-sec-left">__title__</span>
-
-            <bx_if:sharing>
-                <a class="bx-def-padding-sec-leftright" href="javascript:void(0);" onclick="$('#__id__').dolPopup({pointer:{el:$(this)}})">
-                    <i class="sys-icon bx-def-font-contrasted __icon__"></i>
-                </a>
-               __popup__
-            </bx_if:sharing>
 
         </div>
 
@@ -24,4 +18,5 @@
 
     </div>
 
+</div>
 </div>

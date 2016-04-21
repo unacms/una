@@ -48,11 +48,17 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']])->doView();
         }
 
+        // set cover image
+        if ($aThumb = $this->_getThumbForMetaObject()) {
+            $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);
+            $oCover->setCoverImageUrl($aThumb);
+        }
+
         // add content metatags
-        if (!empty($CNF['OBJECT_METATAGS'])) {
+        if (!empty($CNF['OBJECT_METATAGS']) && $aThumb) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($o)
-                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $this->_getThumbForMetaObject());
+                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $aThumb);
         }
 
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
