@@ -201,8 +201,12 @@ class BxTemplConfig extends BxBaseConfig
 		$this->_aConfig['aLessConfig']['bx-font-size-button-small'] = $this->_setSize($sName . '_button_sm_font_size', '0.9rem');
 
 		//--- Font Color
-		$sDefColFont = 'rgba(51, 51, 51, 1.0)';
-		$this->_aConfig['aLessConfig']['bx-font-color-footer'] = $this->_setColorRgba($sName . '_footer_font_color', $sDefColFont);
+		$sColFontDef = 'rgba(51, 51, 51, 1.0)';		//--- Default
+		$sColFontGrd = 'rgba(153, 153, 153, 1)';	//--- Grayed
+		$sColFontCnt = 'rgba(255, 255, 255, 1)';	//--- Contrasted
+		$sColFontLnk = 'rgba(62, 134, 133, 1)';		//--- Link
+		$sColFontLnkHov = 'rgba(62, 134, 133, 1)';	//--- Link on-hiver
+		$this->_aConfig['aLessConfig']['bx-font-color-footer'] = $this->_setColorRgba($sName . '_footer_font_color', $sColFontDef);
 		$this->_aConfig['aLessConfig']['bx-font-color-menu-main'] = $this->_setColorRgba($sName . '_menu_main_font_color', 'rgba(62, 134, 133, 1)');
 		$this->_aConfig['aLessConfig']['bx-font-color-menu-main-hover'] = $this->_setColorRgba($sName . '_menu_main_font_color_hover', 'rgba(62, 134, 133, 1)');
 		$this->_aConfig['aLessConfig']['bx-font-color-menu-main-active'] = $this->_setColorRgba($sName . '_menu_main_font_color_active', 'rgba(0, 0, 0, 1)');
@@ -213,13 +217,22 @@ class BxTemplConfig extends BxBaseConfig
 		$this->_aConfig['aLessConfig']['bx-font-color-button-hover'] = $this->_setColorRgba($sName . '_button_lg_font_color_hover', 'rgba(255, 255, 255, 1)');
 		$this->_aConfig['aLessConfig']['bx-font-color-button-small'] = $this->_setColorRgba($sName . '_button_sm_font_color', 'rgba(255, 255, 255, 1)');
 		$this->_aConfig['aLessConfig']['bx-font-color-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_font_color_hover', 'rgba(255, 255, 255, 1)');
-		$this->_aConfig['aLessConfig']['bx-font-color-form-input'] = $this->_setColorRgba($sName . '_form_input_font_color', $sDefColFont);
-		$this->_aConfig['aLessConfig']['bx-font-color-small'] = $this->_setColorRgba($sName . '_font_color_small', $sDefColFont);
-		$this->_aConfig['aLessConfig']['bx-font-color-middle'] = $this->_setColorRgba($sName . '_font_color_middle', $sDefColFont);
-		$this->_aConfig['aLessConfig']['bx-font-color-large'] = $this->_setColorRgba($sName . '_font_color_large', $sDefColFont);
-		$this->_aConfig['aLessConfig']['bx-font-color-h1'] = $this->_setColorRgba($sName . '_font_color_h1', $sDefColFont);
-		$this->_aConfig['aLessConfig']['bx-font-color-h2'] = $this->_setColorRgba($sName . '_font_color_h2', $sDefColFont);
-		$this->_aConfig['aLessConfig']['bx-font-color-h3'] = $this->_setColorRgba($sName . '_font_color_h3', $sDefColFont);
+		$this->_aConfig['aLessConfig']['bx-font-color-form-input'] = $this->_setColorRgba($sName . '_form_input_font_color', $sColFontDef);
+		$this->_aConfig['aLessConfig']['bx-font-color-default-h1'] = $this->_setColorRgba($sName . '_font_color_default_h1', $sColFontDef);
+        $this->_aConfig['aLessConfig']['bx-font-color-grayed-h1'] = $this->_setColorRgba($sName . '_font_color_grayed_h1', $sColFontGrd);
+        $this->_aConfig['aLessConfig']['bx-font-color-contrasted-h1'] = $this->_setColorRgba($sName . '_font_color_contrasted_h1', $sColFontCnt);
+        $this->_aConfig['aLessConfig']['bx-font-color-link-h1'] = $this->_setColorRgba($sName . '_font_color_link_h1', $sColFontLnk);
+        $this->_aConfig['aLessConfig']['bx-font-color-link-h1-hover'] = $this->_setColorRgba($sName . '_font_color_link_h1_hover', $sColFontLnkHov);
+        $this->_aConfig['aLessConfig']['bx-font-color-default-h2'] = $this->_setColorRgba($sName . '_font_color_default_h2', $sColFontDef);
+        $this->_aConfig['aLessConfig']['bx-font-color-grayed-h2'] = $this->_setColorRgba($sName . '_font_color_grayed_h2', $sColFontGrd);
+        $this->_aConfig['aLessConfig']['bx-font-color-contrasted-h2'] = $this->_setColorRgba($sName . '_font_color_contrasted_h2', $sColFontCnt);
+        $this->_aConfig['aLessConfig']['bx-font-color-link-h2'] = $this->_setColorRgba($sName . '_font_color_link_h2', $sColFontLnk);
+        $this->_aConfig['aLessConfig']['bx-font-color-link-h2-hover'] = $this->_setColorRgba($sName . '_font_color_link_h2_hover', $sColFontLnkHov);
+        $this->_aConfig['aLessConfig']['bx-font-color-default-h3'] = $this->_setColorRgba($sName . '_font_color_default_h3', $sColFontDef);
+        $this->_aConfig['aLessConfig']['bx-font-color-grayed-h3'] = $this->_setColorRgba($sName . '_font_color_grayed_h3', $sColFontGrd);
+        $this->_aConfig['aLessConfig']['bx-font-color-contrasted-h3'] = $this->_setColorRgba($sName . '_font_color_contrasted_h3', $sColFontCnt);
+        $this->_aConfig['aLessConfig']['bx-font-color-link-h3'] = $this->_setColorRgba($sName . '_font_color_link_h3', $sColFontLnk);
+        $this->_aConfig['aLessConfig']['bx-font-color-link-h3-hover'] = $this->_setColorRgba($sName . '_font_color_link_h3_hover', $sColFontLnkHov);
 
 		//--- Font Weight
 		$this->_aConfig['aLessConfig']['bx-font-weight-menu-main'] = $this->_setValue($sName . '_menu_main_font_weight', '400');
