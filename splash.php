@@ -16,12 +16,12 @@ function getPageMainCode()
 {
     $oTemplate = BxDolTemplate::getInstance();    
 
-    $bEnabled = getParam('sys_site_cover_enabled');
+    $bEnabled = getParam('sys_site_splash_enabled');
     if(!$bEnabled)
     	$oTemplate->displayPageNotFound();
 
     $oTemplate->addJs(array('skrollr/skrollr.min.js'));
-    return $oTemplate->parseHtmlByContent(getParam('sys_site_cover_code'), array(
+    return $oTemplate->parseHtmlByContent(getParam('sys_site_splash_code'), array(
     	'join_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'),
     	'login_form' => BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin')
     )); 
