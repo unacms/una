@@ -182,8 +182,10 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-header {
-    position:relative;
-    background-color: #3b8686;
+    position: relative;
+}
+.bx-popup-header-color-bg {
+	background-color: #3b8686;
 }
 
 .bx-popup-header .bx-db-menu-tab-btn {
