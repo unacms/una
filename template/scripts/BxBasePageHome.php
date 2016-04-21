@@ -18,6 +18,25 @@ class BxBasePageHome extends BxTemplPage
     {
         parent::__construct($aObject, $oTemplate);
         $this->addMarkers(array('site_title' => getParam('site_title')));
+
+        $oCover = BxDolCover::getInstance();
+        $oCover->set(array(
+            'class' => 'bx-cover-homepage',
+            'title' => _t('_sys_txt_homepage_cover'),
+            'actions' => '',
+            'bx_if:image' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+            'bx_if:icon' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+            'bx_if:bg' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+        ));
     }
 
     public function getCode ()
