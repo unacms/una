@@ -65,6 +65,7 @@
 	<string name="_bx_uni_stg_cpt_option_block_border_size"><![CDATA[Border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_shadow"><![CDATA[Shadow]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_title_bg_color"><![CDATA[Title background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_padding"><![CDATA[Title margin]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_family"><![CDATA[Title font stack]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_size"><![CDATA[Title font size]]></string>
@@ -93,6 +94,7 @@
 	<string name="_bx_uni_stg_cpt_option_popup_border_size"><![CDATA[Border size]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_shadow"><![CDATA[Shadow]]></string>
+	<string name="_bx_uni_stg_cpt_option_popup_title_bg_color"><![CDATA[Title background color]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_title_padding"><![CDATA[Title margin]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_title_font_family"><![CDATA[Title font stack]]></string>
 	<string name="_bx_uni_stg_cpt_option_popup_title_font_size"><![CDATA[Title font size]]></string>

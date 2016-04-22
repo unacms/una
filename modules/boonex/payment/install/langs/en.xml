@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-	<string name="_bx_payment"><![CDATA[Payment]]></string>
+	<string name="_bx_payment"><![CDATA[Payments]]></string>
 
 	<!-- OPTIONS -->
 	<string name="_bx_payment_option_default_currency_code"><![CDATA[Currency code]]></string>
@@ -25,9 +25,9 @@
 	<string name="_bx_payment_page_title_orders"><![CDATA[Orders]]></string>
 	<string name="_bx_payment_page_block_title_orders"><![CDATA[Orders]]></string>
 
-	<string name="_bx_payment_page_title_sys_details"><![CDATA[Payment Details]]></string>
-	<string name="_bx_payment_page_title_details"><![CDATA[Payment Details]]></string>
-	<string name="_bx_payment_page_block_title_details"><![CDATA[Payment Details]]></string>
+	<string name="_bx_payment_page_title_sys_details"><![CDATA[Payments Details]]></string>
+	<string name="_bx_payment_page_title_details"><![CDATA[Payments Details]]></string>
+	<string name="_bx_payment_page_block_title_details"><![CDATA[Payments Details]]></string>
 
 	<string name="_bx_payment_page_block_title_orders_processed"><![CDATA[Processed Orders]]></string>
 	<string name="_bx_payment_page_block_title_orders_pending"><![CDATA[Pending Orders]]></string>
@@ -39,12 +39,6 @@
 	<string name="_bx_payment_page_title_join"><![CDATA[Join]]></string>
 	<string name="_bx_payment_page_block_title_join"><![CDATA[Join]]></string>
 
-	<!--
-	<string name="_bx_payment_page_title_sys_"><![CDATA[]]></string>
-	<string name="_bx_payment_page_title_"><![CDATA[]]></string>
-	<string name="_bx_payment_page_block_title_"><![CDATA[]]></string>
-	-->
-
 	<!-- MENUS -->
 	<string name="_bx_payment_menu_title_orders_submenu"><![CDATA[Orders Submenu]]></string>
     <string name="_bx_payment_menu_set_title_orders_submenu"><![CDATA[Orders Submenu]]></string>
@@ -52,7 +46,7 @@
     <string name="_bx_payment_menu_item_title_orders_processed"><![CDATA[Processed]]></string>
     <string name="_bx_payment_menu_item_title_system_orders_pending"><![CDATA[Pending Orders]]></string>
     <string name="_bx_payment_menu_item_title_orders_pending"><![CDATA[Pending]]></string>
-    <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Payment Details]]></string>
+    <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Payments Details]]></string>
     <string name="_bx_payment_menu_item_title_details"><![CDATA[Settings]]></string>
 
 	<string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
@@ -61,18 +55,6 @@
     <string name="_bx_payment_menu_item_title_cart"><![CDATA[Cart]]></string>
     <string name="_bx_payment_menu_item_title_system_cart_history"><![CDATA[Cart History]]></string>
     <string name="_bx_payment_menu_item_title_cart_history"><![CDATA[Cart History]]></string>
-
-	<!--
-	<string name="_bx_payment_menu_title_"><![CDATA[]]></string>
-    <string name="_bx_payment_menu_set_title_"><![CDATA[]]></string>
-    <string name="_bx_payment_menu_item_title_system_"><![CDATA[]]></string>
-    <string name="_bx_payment_menu_item_title_"><![CDATA[]]></string>
-    -->
-
-	<!-- FORMS -->
-	<string name="_bx_payment_form_cart_input_do_delete"><![CDATA[Delete]]></string>
-	<string name="_bx_payment_form_cart_input_do_checkout"><![CDATA[Checkout]]></string>
-	<string name="_bx_payment_form_details_input_do_submit"><![CDATA[Save]]></string>
 
 	<!-- GRIDS -->
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Client]]></string>
@@ -88,8 +70,6 @@
 	<string name="_bx_payment_grid_column_title_crt_description"><![CDATA[Description]]></string>
 	<string name="_bx_payment_grid_column_title_crt_quantity"><![CDATA[Quantity]]></string>
 	<string name="_bx_payment_grid_column_title_crt_price"><![CDATA[Price]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
 
 	<string name="_bx_payment_grid_action_title_ods_add"><![CDATA[Manual Order]]></string>
 	<string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Cancel]]></string>
@@ -98,8 +78,6 @@
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Continue]]></string>
 	<string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Delete]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
 
 	<string name="_bx_payment_popup_title_ods_order_history_view"><![CDATA[Order]]></string>
 	<string name="_bx_payment_popup_title_ods_order_pending_view"><![CDATA[Pending Order]]></string>
@@ -107,11 +85,12 @@
 	<string name="_bx_payment_popup_title_ods_order_processed_view"><![CDATA[Processed Order]]></string>
 	<string name="_bx_payment_popup_title_ods_order_processed_add"><![CDATA[Manual Order]]></string>
 	<string name="_bx_payment_popup_title_crd_providers_select"><![CDATA[Select Payment Method]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-
 
 	<!-- FORMS -->
+	<string name="_bx_payment_form_cart_input_do_delete"><![CDATA[Delete]]></string>
+	<string name="_bx_payment_form_cart_input_do_checkout"><![CDATA[Checkout]]></string>
+	<string name="_bx_payment_form_details_input_do_submit"><![CDATA[Save]]></string>
+
 	<string name="_bx_payment_form_pendings_form"><![CDATA[Pendings Form]]></string>
 	<string name="_bx_payment_form_processed_form"><![CDATA[Processed Form]]></string>
 	<string name="_bx_payment_form_pendings_display_process"><![CDATA[Process Pending Display]]></string>
@@ -143,13 +122,6 @@
 	<string name="_bx_payment_form_processed_input_add_sys"><![CDATA[Add]]></string>
 	<string name="_bx_payment_form_processed_input_cancel"><![CDATA[Cancel]]></string>
 	<string name="_bx_payment_form_processed_input_cancel_sys"><![CDATA[Cancel]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
 
 	<!-- ACL -->
 	<string name="_bx_payment_acl_action_purchase"><![CDATA[Purchase]]></string>
@@ -185,8 +157,6 @@
 	<string name="_bx_payment_err_not_found_pending"><![CDATA[Pending order was not found.]]></string>
 	<string name="_bx_payment_err_cannot_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
 	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Incorrect quantity specified.]]></string>
-	<string name=""><![CDATA[]]></string>
-
 
 	<!-- Other -->
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[Add to Cart]]></string>
@@ -201,21 +171,6 @@
 	<string name="_bx_payment_txt_message"><![CDATA[Result]]></string>
 	<string name="_bx_payment_txt_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_txt_products"><![CDATA[Products]]></string>
-	
-	
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>
@@ -271,7 +226,7 @@
 	<string name="_bx_payment_2co_err_no_vendor_given"><![CDATA[Unknown vendor]]></string>
 	<string name="_bx_payment_2co_err_no_data_given"><![CDATA[No data given.]]></string>
 	<string name="_bx_payment_2co_err_wrong_key"><![CDATA[Check key is incorrect.]]></string>
-	<string name="_bx_payment_2co_err_wrong_payment"><![CDATA[Wrong payment amount.]]></string>
+	<string name="_bx_payment_2co_err_wrong_payment"><![CDATA[Wrong payment.]]></string>
 	<string name="_bx_payment_2co_err_already_processed"><![CDATA[This payment has already processed]]></string>
 	<string name="_bx_payment_2co_msg_verified"><![CDATA[Successfully verified.]]></string>
 	<string name="_bx_payment_txt_cart_2checkout"><![CDATA[2Checkout]]></string>

@@ -126,8 +126,8 @@
 .bx-form-input-password,
 .bx-form-input-text {
 
-    height:36px;
-    height:2.2rem;
+    height:40px;
+    height:2.5rem;
     width:100%;
     
     -moz-box-sizing: border-box;
@@ -463,8 +463,8 @@
 * Overwrite 3d Party MiniColors plug-in
 ****************************************/
 .bx-form-input-wrapper.bx-form-input-wrapper-text .minicolors-theme-bootstrap .minicolors-swatch {
-	top: 4px;
-	left: 4px;
+	top: 6px;
+	left: 6px;
 
 	width: 25px;
 	width: 1.5625rem;

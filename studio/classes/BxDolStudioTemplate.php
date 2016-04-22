@@ -61,7 +61,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
 
         //--- Add default CSS in output
         $this->addCssSystem(array(
-            'common.css',
+            'common.less',
             'default.less',
             'general.css',
         	'menu.css',
@@ -77,6 +77,11 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         ));
 
         $this->_oConfigTemplate = BxTemplStudioConfig::getInstance();
+    }
+
+    function _getAbsoluteLocation($sType, $sFolder, $sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
+    	return parent::_getAbsoluteLocation($sType, $sFolder, $sName, BX_DOL_TEMPLATE_CHECK_IN_BASE);
     }
 
     function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true)
