@@ -3,7 +3,7 @@
 /* NOTE: copied from "fonts" section from default.css */
 
 body, td, pre {
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-family: Helvetica, Arial, sans-serif; 
     font-weight: 400;
 	font-size: 18px;
 	font-size: 1.125rem;

@@ -10,7 +10,7 @@
 define('BX_DOL_STUDIO_DSG_TYPE_GENERAL', 'general');
 define('BX_DOL_STUDIO_DSG_TYPE_LOGO', 'logo');
 define('BX_DOL_STUDIO_DSG_TYPE_ICON', 'icon');
-define('BX_DOL_STUDIO_DSG_TYPE_COVER', 'cover');
+define('BX_DOL_STUDIO_DSG_TYPE_SPLASH', 'splash');
 define('BX_DOL_STUDIO_DSG_TYPE_SETTINGS', 'settings');
 
 define('BX_DOL_STUDIO_DSG_TYPE_DEFAULT', 'general');
@@ -159,12 +159,12 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_ICON);
     }
 
-    function submitCover(&$oForm)
+    function submitSplash(&$oForm)
     {
-    	$this->oDb->setParam('sys_site_cover_code', $oForm->getCleanValue('code'));
-        $this->oDb->setParam('sys_site_cover_enabled', $oForm->getCleanValue('enabled') == 'on' ? 'on' : '');
+    	$this->oDb->setParam('sys_site_splash_code', $oForm->getCleanValue('code'));
+        $this->oDb->setParam('sys_site_splash_enabled', $oForm->getCleanValue('enabled') == 'on' ? 'on' : '');
 
-        return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_COVER);
+        return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_SPLASH);
     }
 }
 

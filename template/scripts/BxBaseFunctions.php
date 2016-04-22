@@ -242,7 +242,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
 
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
-                $sCode .= $this->slideBox($sId, '<div class="bx-def-padding">' . $sMenu . '</div>', true);
+                $sCode .= $this->slideBox($sId, $sMenu, true);
                 $aButtonMenu = array ('icon-a' => $this->_sDesignBoxIcon, 'onclick' => "bx_menu_slide('#" . $sId . "', this)");
             }
 

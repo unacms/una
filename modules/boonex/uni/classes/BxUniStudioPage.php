@@ -31,11 +31,17 @@ class BxUniStudioPage extends BxTemplStudioDesign
     {
     	$sPrefix = $this->MODULE;
     	$aCategories = array(
+    		$sPrefix . '_styles_general',
 			$sPrefix . '_styles_header',
 			$sPrefix . '_styles_footer',
 			$sPrefix . '_styles_body',
 			$sPrefix . '_styles_block',
 			$sPrefix . '_styles_card',
+			$sPrefix . '_styles_popup',
+			$sPrefix . '_styles_menu_main',
+			$sPrefix . '_styles_menu_page',
+			$sPrefix . '_styles_menu_slide',
+			$sPrefix . '_styles_form',
 			$sPrefix . '_styles_large_button',
 			$sPrefix . '_styles_small_button',
 			$sPrefix . '_styles_font',

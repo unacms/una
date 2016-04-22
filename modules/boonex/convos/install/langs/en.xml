@@ -49,7 +49,6 @@
 
     <string name="_bx_cnv_menu_set_title_view_entry"><![CDATA[Conversation Actions]]></string>
     <string name="_bx_cnv_menu_title_view_entry"><![CDATA[Conversation Actions]]></string>
-    <string name="_bx_cnv_menu_title_view_entry_popup"><![CDATA[Conversation Popup Actions]]></string>
     <string name="_bx_cnv_menu_title_submenu"><![CDATA[Conversations Submenu]]></string>
     <string name="_bx_cnv_menu_set_title_submenu"><![CDATA[Conversations Submenu]]></string>
     <string name="_bx_cnv_menu_title_folders_more"><![CDATA[Conversations folders]]></string>

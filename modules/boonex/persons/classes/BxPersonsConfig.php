@@ -83,7 +83,6 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_person_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_persons_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_persons_view_actions_more', // actions menu on view entry page for "more" popup
-            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP' => 'bx_persons_view_actions_popup', // actions menu popup on view entry page 
             'OBJECT_MENU_SUBMENU' => 'bx_persons_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_persons_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_persons_view_submenu_cover',  // view entry submenu displayed in cover
@@ -99,7 +98,6 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_persons_view_actions' => $aMenuItems2Methods,
                 'bx_persons_view_actions_more' => $aMenuItems2Methods,
-                'bx_persons_view_actions_popup' => $aMenuItems2Methods,
             ),
 
             // informer messages

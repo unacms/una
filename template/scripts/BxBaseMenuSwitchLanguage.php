@@ -32,8 +32,9 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
         $oPermalink = BxDolPermalinks::getInstance();
 
-        $sPageLink = ltrim($_SERVER['REQUEST_URI'], '/');
-        $sPageLink = $oPermalink->unpermalink($sPageLink);
+        $aBaseLink = parse_url(BX_DOL_URL_ROOT);
+        $sBaseLink = (!empty($aBaseLink['scheme']) ? $aBaseLink['scheme'] : 'http') . '://' . $aBaseLink['host'];
+        $sPageLink = $oPermalink->unpermalink($sBaseLink . $_SERVER['REQUEST_URI'], false);
 
         $sPageParams = '';
         if(strpos($sPageLink, '?') !== false)

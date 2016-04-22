@@ -407,7 +407,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
         $this->_aParams = $this->fromCache($this->_sParamsCacheName, 'getPairs', "SELECT `name`, `value` FROM `sys_options`", "name", "value");
 
-        $aMixed = $this->fromCache($this->_sParamsCacheNameMixed, 'getPairs', "SELECT `to`.`name` AS `name`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' INNER JOIN `sys_options` AS `to` ON `tmo`.`option_id`=`to`.`id`", "name", "value");
+        $aMixed = $this->fromCache($this->_sParamsCacheNameMixed, 'getPairs', "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1'", "option", "value");
         if(!empty($aMixed))
         	$this->_aParams = array_merge($this->_aParams, $aMixed);
 
@@ -449,7 +449,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         if ($bFromCache && $this->isParamInCache($sKey)) {
             return $this->_aParams[$sKey];
         } else {
-        	$sQuery = $this->prepare("SELECT `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' INNER JOIN `sys_options` AS `to` ON `tmo`.`option_id`=`to`.`id` WHERE `to`.`name`=? LIMIT 1", $sKey);
+        	$sQuery = $this->prepare("SELECT `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' WHERE `tmo`.`option`=? LIMIT 1", $sKey);
 			$mixedValue = $this->getOne($sQuery);
 			if($mixedValue !== false)
 				return $mixedValue;
@@ -463,12 +463,9 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     {
     	if(empty($iMixId))
         	$sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
-        else {
-        	$sQuery = $this->prepare("SELECT `id` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
-        	$iOptionId = (int)$this->getOne($sQuery);
+        else
+        	$sQuery = $this->prepare("REPLACE INTO `sys_options_mixes2options` SET `option` = ?, `mix_id` = ?, `value` = ?", $sKey, $iMixId, $mixedValue);
 
-        	$sQuery = $this->prepare("REPLACE INTO `sys_options_mixes2options` SET `option_id` = ?, `mix_id` = ?, `value` = ?", $iOptionId, $iMixId, $mixedValue);
-        }
         $bResult = (int)$this->query($sQuery) > 0;
 
         // renew params cache

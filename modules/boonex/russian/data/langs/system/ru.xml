@@ -570,7 +570,7 @@
     <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Удалить тему "{0}"?</h3><p>Удаление темы "{0}" также удалит все связанные с ней данные. Вы хотите продолжить?</p>]]></string>
 	<string name="_adm_dsg_btn_make_default"><![CDATA[Сделать основным]]></string>
 	<string name="_adm_dsg_dsc_alt_text"><![CDATA[Используется для дополнительного текста для лого-картинки. Используется в качестве лого, если картинка не загружена.]]></string>
-	<string name="_adm_dsg_dsc_cover_warning"><![CDATA[Заметьте, что неправильное применение HTML может испортить дизайн сайта.]]></string>
+	<string name="_adm_dsg_dsc_splash_warning"><![CDATA[Заметьте, что неправильное применение HTML может испортить дизайн сайта.]]></string>
 	<string name="_adm_dsg_err_cannot_process_action"><![CDATA[Невозможно выполнить действие. Отсутствует связанный обработчик.]]></string>
 	<string name="_adm_dsg_err_deactivate_default"><![CDATA[Невозможно деактивировать тему, выбранную в качестве основной]]></string>
 	<string name="_adm_dsg_err_last_active"><![CDATA[Нужно иметь как минимум одну активную тему.]]></string>
@@ -580,7 +580,7 @@
 	<string name="_adm_dsg_err_save"><![CDATA[Невозможно сохранить: ]]></string>
 	<string name="_adm_dsg_scs_save"><![CDATA[Изменения удачно сохранены]]></string>
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Текст лого]]></string>
-	<string name="_adm_dsg_txt_cover_enabled"><![CDATA[Включить титульную страницу]]></string>
+	<string name="_adm_dsg_txt_splash_enabled"><![CDATA[Включить титульную страницу]]></string>
 	<string name="_adm_dsg_txt_default"><![CDATA[по умолчанию]]></string>
 	<string name="_adm_dsg_txt_icon_apple"><![CDATA[Устройства Apple Touch (152x152)]]></string>
 	<string name="_adm_dsg_txt_icon_facebook"><![CDATA[Facebook (100x100)]]></string>
@@ -826,7 +826,7 @@
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Удалить "{0}" язык?</h3><p>Удаление "{0}" языка также удалит все его данные. Вы хотите продолжить?</p>]]></string>
 	<string name="_adm_lmi_cpt_actions"><![CDATA[Действия]]></string>
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Оплата {checkout_counter}]]></string>
-	<string name="_adm_lmi_cpt_cover"><![CDATA[Обложка]]></string>
+	<string name="_adm_lmi_cpt_splash"><![CDATA[Обложка]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Дисплеи]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>
 	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Имейл-шаблоны]]></string>
@@ -1194,11 +1194,9 @@
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
-
-	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Создать набор]]></string>
+	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string>
 	<string name="_adm_stg_txt_mix_system"><![CDATA[Системный]]></string>
-
 	<string name="_adm_stg_err_remove_old_image"><![CDATA[Невозможно удалить текущее изображение.]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[Файл]]></string>
 	<string name="_adm_str_cpt_files_version"><![CDATA[Версия]]></string>
@@ -1895,7 +1893,7 @@
 	<string name="_sys_menu_template_title_hor"><![CDATA[Горизонтальные Ссылки]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[В тексте]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные Вертикальные Ссылки]]></string>
-	<string name="_sys_menu_template_title_main"><![CDATA[Навигация по Сайту]]></string>
+	<string name="_sys_menu_template_title_empty"><![CDATA[Пустое Меню]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Навигация по Сайту - Подменю]]></string>
 	<string name="_sys_menu_template_title_toolbar"><![CDATA[Панель Инструментов - Кнопки]]></string>
 	<string name="_sys_menu_template_title_ver"><![CDATA[Вертикальные Ссылки]]></string>
@@ -2147,6 +2145,7 @@
     <string name="_sys_txt_form_entry_input_picture_use_as_thumb"><![CDATA[Использовать в качестве Миниатюры]]></string>
 	<string name="_sys_txt_form_submission_error"><![CDATA[Неправильная информация. Пожалуйста, проверьте ввод и отошлите снова.]]></string>
 
+    <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
 	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь!</a>]]></string>
 	<string name="_sys_txt_login_error"><![CDATA[Введённый имейл или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>

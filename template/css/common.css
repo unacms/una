@@ -14,7 +14,7 @@ a {
 }
 
 a:hover {
-    text-decoration:underline;
+    text-decoration:none;
 }
 
 a > img {
@@ -182,8 +182,10 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-header {
-    position:relative;
-    background-color: #3b8686;
+    position: relative;
+}
+.bx-popup-header-color-bg {
+	background-color: #3b8686;
 }
 
 .bx-popup-header .bx-db-menu-tab-btn {
@@ -242,8 +244,9 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-slide-wrapper {
-    opacity:0.9;
-    width:100%;
+	width:100%;
+
+	background-color: rgba(255, 255, 255, 0.9);
 }
 
 .bx-popup-slide-wrapper li {
@@ -405,7 +408,6 @@ body > .bx-popup-wrapper {
     -o-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
 
-    text-transform: uppercase;
     font-size:1rem;
     color:#fff;
 }
@@ -529,4 +531,9 @@ input.bx-btn {
     cursor:pointer;
 }
 
-/* --------------- */
+/* --------------- categories */
+
+.bx-category-list-item {
+	line-height: 24px;
+	line-height: 1.5rem;
+}

@@ -84,11 +84,11 @@ span.bx-vote-star {
 }
 div.bx-vote-underlay i.bx-vote-star,
 div.bx-vote-underlay span.bx-vote-star {
-	color: #6c9494;
+	color: rgba(255, 204, 102, 1);
 }
 div.bx-vote-slider i.bx-vote-star,
 div.bx-vote-slider span.bx-vote-star {
-	color: #009294;
+	color: rgba(255, 100, 0, 1);
 }
 
 div.bx-vote-buttons {

@@ -1,0 +1,42 @@
+
+.bx-cover-wrapper {
+    background-image: url(../images/cover.jpg);
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.bx-cover {
+    min-height:6rem;
+    text-align:center;
+}
+
+.bx-cover-title {
+    font-weight:bold;
+    vertical-align:middle;
+    text-shadow:0 0 0.125rem rgba(0, 0, 0, .5);
+}
+
+.bx-cover-title .bx-btn {
+    display:inline-block;
+    float:none;
+}
+
+.bx-cover-title img {
+    width:3rem;
+    height:3rem;
+    background-size: cover;
+    vertical-align: middle;
+}
+
+.bx-cover-title span {
+    vertical-align: middle;
+}
+
+.bx-cover-homepage {
+    background-image: url(../images/cover-homepage.png);
+}
