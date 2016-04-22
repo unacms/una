@@ -25,10 +25,9 @@
  * @code
  *  $oCover = BxDolCover::getInstance(); // get object instance
  *  if ($oCover) // check if Cover is available for using
- *      $oCover->set ( // set cover with default template
- *          'text' => 'Hello World!',
- *          'image_url' => 'http://example.com/tile.png',
- *      ); 
+ *      $oCover->set (array( // set cover with default template
+ *          'title' => 'Hello World!',
+ *      )); 
  * @endcode
  *
  */
