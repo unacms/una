@@ -17,7 +17,12 @@
 
 .bx-cover-title {
     font-weight:bold;
-    text-shadow:0px 0px 0.125rem #000;
+    text-shadow:0 0 0.125rem rgba(0, 0, 0, .5);
+}
+
+.bx-cover-title .bx-btn {
+    display:inline-block;
+    float:none;
 }
 
 .bx-cover-homepage {

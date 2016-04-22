@@ -38,6 +38,7 @@ class BxDolCover extends BxDol implements iBxDolSingleton
     protected $_sTemplateName = 'cover.html';
     protected $_sTemplateNameEmpty = 'cover_empty.html';
     protected $_sCoverImageUrl = false;
+    protected $_aOptiondDefault = array();
 
     /**
      * Constructor
@@ -48,6 +49,28 @@ class BxDolCover extends BxDol implements iBxDolSingleton
             trigger_error ('Multiple instances are not allowed for the BxDolCover class.', E_USER_ERROR);
 
         parent::__construct();
+
+        $this->_aOptiondDefault = array(
+            'class' => '',
+            'title' => '',
+            'actions' => '',
+            'bx_if:image' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+            'bx_if:icon' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+            'bx_if:bg' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+            'bx_if:logged_in' => array(
+                'condition' => isLogged(),
+                'content' => array(),
+            ),
+        );
     }
 
     /**

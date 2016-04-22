@@ -22,20 +22,7 @@ class BxBasePageHome extends BxTemplPage
         $oCover = BxDolCover::getInstance();
         $oCover->set(array(
             'class' => 'bx-cover-homepage',
-            'title' => _t('_sys_txt_homepage_cover'),
-            'actions' => '',
-            'bx_if:image' => array (
-                'condition' => false,
-                'content' => array(),
-            ),
-            'bx_if:icon' => array (
-                'condition' => false,
-                'content' => array(),
-            ),
-            'bx_if:bg' => array (
-                'condition' => false,
-                'content' => array(),
-            ),
+            'title' => _t('_sys_txt_homepage_cover', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')),
         ));
     }
 
