@@ -70,58 +70,15 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
-
-    	$sThumbUrl = '';
-        if ($aData[$CNF['FIELD_THUMB']]) {
-            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
-            if ($oImagesTranscoder)
-                $sThumbUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
-        }
-
-        $sJsCode = '';
-        $oPayment = BxDolPayments::getInstance();
-
-        $aTmplVarsSingle = array();
-        $bSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
-        if($bSingle) {
-        	list($sJsCode, $sSingleOnclick) = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
-
-        	$aTmplVarsSingle = array(
-        		'buy_onclick' => $sSingleOnclick,
-    			'buy' => _t('_bx_market_txt_get_for_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']]),
-        	);
-        }
-        
-        
-        $aTmplVarsRecurring = array();
-        $bTmplVarsRecurring = $this->_oDb->getParam($CNF['OPTION_ENABLE_RECURRING']) == 'on' && (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
-        if($bTmplVarsRecurring) {
-        	list($sJsCode, $sRecurringOnclick) = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
-
-        	$aTmplVarsRecurring = array(
-        		'recurring_onclick' => $sRecurringOnclick,
-        		'recurring' => _t('_bx_market_txt_get_for_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']])),
-        	);
-        }
+    	$sScreenshots = $this->getScreenshots($aData);
 
     	return $this->parseHtmlByContent(parent::entryText($aData), array(
-    		'title_attr' => bx_html_attribute(isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : ''),
-    		'thumb_url' => $sThumbUrl,
-    		'bx_if:show_single' => array(
-    			'condition' => $bSingle,
-    			'content' => $aTmplVarsSingle
-    		),
-    		'bx_if:show_recurring' => array(
-    			'condition' => $bTmplVarsRecurring,
-    			'content' => $aTmplVarsRecurring
-    		),
-    		'bx_if:show_free' => array(
-    			'condition' => !$bSingle && !$bTmplVarsRecurring,
-    			'content' => array()
-    		),
-    		'screenshots' => $this->getScreenshots($aData),
-    		'js_code' => $sJsCode
+    		'bx_if:show_screenshots' => array(
+    			'condition' => !empty($sScreenshots),
+    			'content' => array(
+    				'screenshots' => $sScreenshots
+    			)
+    		)
     	));
     }
 
@@ -172,10 +129,12 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     {
     	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
-    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-    	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
     	$aPhotos = $this->_oDb->getPhoto(array('type' => 'content_id', 'content_id' => $aData[$CNF['FIELD_ID']], 'except' => array($aData[$CNF['FIELD_THUMB']], $aData[$CNF['FIELD_COVER']])));
-    	$iPhotos = count($aPhotos);
+    	if(empty($aPhotos) || !is_array($aPhotos))
+    		return '';
+
+		$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+    	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
 
     	$aTmplVarsPhotos = array();
     	foreach($aPhotos as $aPhoto) 
