@@ -232,30 +232,12 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     	$oTemplate = BxDolStudioTemplate::getInstance();
     	$sJsObject = $this->getPageJsObject();
 
-    	$iType = 0;
-    	if(!empty($this->sType)) {
-    		$aType = array();
-    		$this->oDb->getTypes(array('type' => 'by_name', 'value' => $this->sType), $aType, false);
-    		if(!empty($aType) && is_array($aType))
-    			$iType = $aType['id'];
-    	}
-
-    	$iCategory = 0;
-    	if(!empty($this->sCategory) && is_string($this->sCategory)) {
-    		$aCategory = array();
-    		$this->oDb->getCategories(array('type' => 'by_name', 'value' => $this->sCategory), $aCategory, false);
-    		if(!empty($aCategory) && is_array($aCategory))
-    			$iCategory = $aCategory['id'];
-    	}
-
     	$sForm = 'adm-settings-create-mix-form';
     	$aForm = array(
             'form_attrs' => array(
                 'id' => $sForm,
                 'name' => $sForm,
-                'action' => bx_append_url_params(BX_DOL_URL_STUDIO . 'settings.php', array(
-                	'stg_action' => 'create-mix'
-    			)),
+                'action' => bx_append_url_params(BX_DOL_URL_STUDIO . 'settings.php', array('stg_action' => 'create-mix')),
                 'method' => 'post',
                 'enctype' => 'multipart/form-data'
             ),
@@ -269,21 +251,15 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                 ),
             ),
             'inputs' => array(
-            	'type_id' => array(
+            	'page' => array(
             		'type' => 'hidden',
-                    'name' => 'type_id',
-                    'value' => $iType,
-                    'db' => array (
-                        'pass' => 'Int',
-            		)
+                    'name' => 'page',
+                    'value' => $this->sType
 				),
-				'category_id' => array(
+				'category' => array(
             		'type' => 'hidden',
-                    'name' => 'category_id',
-                    'value' => $iCategory,
-                    'db' => array (
-                        'pass' => 'Int',
-            		)
+                    'name' => 'category',
+                    'value' => is_array($this->sCategory) ? json_encode($this->sCategory) : $this->sCategory,
 				),
             	'title' => array(
             		'type' => 'text',
@@ -318,11 +294,16 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-        	$iId = $oForm->insert(array('name' => $oForm->generateUri()));
+        	$iId = $oForm->insert(array(
+        		'type' => $this->sType,
+        		'category' => is_string($this->sCategory) ? $this->sCategory : '',
+        		'name' => $oForm->generateUri()
+        	));
+
         	if($iId !== false) {
         		$this->oDb->updateMixes(array('active' => 0), array(
-        			'type_id' => $this->oDb->getTypeId($this->sType),
-        			'category_id' => is_string($this->sCategory) ? $this->oDb->getCategoryId($this->sCategory) : 0,
+        			'type' => $this->sType,
+        			'category' => is_string($this->sCategory) ? $this->sCategory : '',
         			'active' => 1
         		));
         		$this->oDb->updateMixes(array('active' => 1), array('id' => $iId));
@@ -361,7 +342,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
 
-    	$mixedValue = isset($aItems2Mixes[$aItem['id']]) ? $aItems2Mixes[$aItem['id']] : $aItem['value'];
+    	$mixedValue = isset($aItems2Mixes[$aItem['name']]) ? $aItems2Mixes[$aItem['name']] : $aItem['value'];
 
         $aField = array();
         switch($aItem['type']) {
@@ -448,6 +429,9 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                 );
                 break;
 			case 'image':
+				//--- Concatenation integer values as strings is required to get unique content id
+				$iContentId = (int)($aItem['id'] . ($this->bMixes && isset($this->aMix['id']) ? $this->aMix['id'] : 0));
+
                 $aField = array(
                     'type' => 'files',
                     'name' => $aItem['name'],
@@ -456,7 +440,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
  					'uploaders' => array('sys_settings_html5'),
                 	'upload_buttons_titles' => array('HTML5' => _t('_sys_uploader_button_name_single')),
 					'multiple' => false,
- 					'content_id' => $aItem['id'],
+ 					'content_id' => $iContentId,
  					'ghost_template' => array(
 						'inputs' => array(),
 					),

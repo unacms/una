@@ -14,9 +14,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     protected $sLogoIframeId = 'adm-dsg-logo-iframe';
     protected $sIconFormId = 'adm-dsg-icon-form';
     protected $sIconIframeId = 'adm-dsg-icon-iframe';
-    protected $sCoverFormId = 'adm-dsg-cover-form';
-    protected $sCoverIframeId = 'adm-dsg-cover-iframe';
-    protected $sCoverEditorId = 'adm-dsg-cover-editor';
+    protected $sSplashFormId = 'adm-dsg-splash-form';
+    protected $sSplashIframeId = 'adm-dsg-splash-iframe';
+    protected $sSplashEditorId = 'adm-dsg-splash-editor';
 
     function __construct($sPage = '')
     {
@@ -43,7 +43,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             BX_DOL_STUDIO_DSG_TYPE_GENERAL => array('icon' => 'globe'),
             BX_DOL_STUDIO_DSG_TYPE_LOGO => array('icon' => 'pencil'),
             BX_DOL_STUDIO_DSG_TYPE_ICON => array('icon' => 'picture-o'),
-            BX_DOL_STUDIO_DSG_TYPE_COVER => array('icon' => 'file-image-o'),
+            BX_DOL_STUDIO_DSG_TYPE_SPLASH => array('icon' => 'file-image-o'),
             BX_DOL_STUDIO_DSG_TYPE_SETTINGS => array('icon' => 'cogs'),
         );
         foreach($aMenuItems as $sMenuItem => $aItem)
@@ -325,18 +325,18 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         ));
     }
 
-    protected function getCover()
+    protected function getSplash()
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
 
 		$aForm = array(
 			'form_attrs' => array(
-				'id' => $this->sCoverFormId,
-				'name' => $this->sCoverFormId,
+				'id' => $this->sSplashFormId,
+				'name' => $this->sSplashFormId,
 				'action' => BX_DOL_URL_STUDIO . 'designer.php',
 				'method' => 'post',
 				'enctype' => 'multipart/form-data',
-				'target' => $this->sCoverIframeId
+				'target' => $this->sSplashIframeId
 			),
 			'params' => array(
 				'db' => array(
@@ -356,9 +356,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 				'enabled' => array(
 					'type' => 'checkbox',
 					'name' => 'enabled',
-					'caption' => _t('_adm_dsg_txt_cover_enabled'),
+					'caption' => _t('_adm_dsg_txt_splash_enabled'),
 					'value' => 'on',
-					'checked' => getParam('sys_site_cover_enabled') == 'on',
+					'checked' => getParam('sys_site_splash_enabled') == 'on',
 					'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -367,7 +367,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 					'type' => 'textarea',
 					'name' => 'code',
 					'caption' => '',
-					'value' => getParam('sys_site_cover_code'),
+					'value' => getParam('sys_site_splash_code'),
 					'db' => array (
                         'pass' => 'XssHtml',
                     ),
@@ -384,20 +384,20 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 		$oForm->initChecker();
 
 		if($oForm->isSubmittedAndValid()) {
-			echo $this->submitCover($oForm);
+			echo $this->submitSplash($oForm);
 			exit;
 		}
 
         $oTemplate->addJs(array('codemirror/codemirror.min.js'));
         $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
 
-		return $oTemplate->parseHtmlByName('designer_cover.html', array(
+		return $oTemplate->parseHtmlByName('designer_splash.html', array(
 			'js_object' => $this->getPageJsObject(),
 			'action_url' => $this->sManageUrl,
 			'content' => $this->getBlockCode(array(
-				'items' => $oTemplate->parseHtmlByName('dsr_cover.html', array(
-					'warning' => MsgBox(_t('_adm_dsg_dsc_cover_warning')),
-					'cover_iframe_id' => $this->sCoverIframeId, 
+				'items' => $oTemplate->parseHtmlByName('dsr_splash.html', array(
+					'warning' => MsgBox(_t('_adm_dsg_dsc_splash_warning')),
+					'splash_iframe_id' => $this->sSplashIframeId, 
 					'form' => $oForm->getCode()
 				)),
 			))

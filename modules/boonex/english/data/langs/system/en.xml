@@ -543,7 +543,7 @@
 	<string name="_adm_btn_purchase_submit"><![CDATA[Purchase]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
-	<string name="_adm_btn_settings_mix_create"><![CDATA[Create Mix]]></string>
+	<string name="_adm_btn_settings_mix_create"><![CDATA[Add New Mix]]></string>
 	<string name="_adm_btn_settings_mix_delete"><![CDATA[Delete Mix]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Trident {0} is available!]]></string>
@@ -570,7 +570,7 @@
     <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_dsg_btn_make_default"><![CDATA[Make Default]]></string>
 	<string name="_adm_dsg_dsc_alt_text"><![CDATA[Serves as "ALT" text for logo image. Used as a logo when no logo image is uploaded.]]></string>
-	<string name="_adm_dsg_dsc_cover_warning"><![CDATA[Note, that improper use of HTML may break the site layout.]]></string>
+	<string name="_adm_dsg_dsc_splash_warning"><![CDATA[Note, that improper use of HTML may break the site layout.]]></string>
 	<string name="_adm_dsg_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
 	<string name="_adm_dsg_err_deactivate_default"><![CDATA[You cannot deactivate template which was selected as Default]]></string>
 	<string name="_adm_dsg_err_last_active"><![CDATA[You need to have at least one active template.]]></string>
@@ -580,7 +580,7 @@
 	<string name="_adm_dsg_err_save"><![CDATA[Cannot save: ]]></string>
 	<string name="_adm_dsg_scs_save"><![CDATA[The changes were successfully saved]]></string>
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Logo Text]]></string>
-	<string name="_adm_dsg_txt_cover_enabled"><![CDATA[Enable cover page]]></string>
+	<string name="_adm_dsg_txt_splash_enabled"><![CDATA[Enable splash page]]></string>
 	<string name="_adm_dsg_txt_default"><![CDATA[default]]></string>
 	<string name="_adm_dsg_txt_icon_apple"><![CDATA[Apple Touch Devices (152x152)]]></string>
 	<string name="_adm_dsg_txt_icon_facebook"><![CDATA[Facebook Share (100x100)]]></string>
@@ -826,7 +826,7 @@
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" language?</h3><p>Uninstalling "{0}" language will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_lmi_cpt_actions"><![CDATA[Actions]]></string>
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
-	<string name="_adm_lmi_cpt_cover"><![CDATA[Cover]]></string>
+	<string name="_adm_lmi_cpt_splash"><![CDATA[Splash]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Displays]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Downloaded]]></string>
 	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Email Templates]]></string>
@@ -1194,12 +1194,9 @@
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>
-
-	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Create Mix]]></string>
+	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Add New Mix]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Mix Title]]></string>
 	<string name="_adm_stg_txt_mix_system"><![CDATA[System]]></string>
-	
-	
 	<string name="_adm_stg_err_remove_old_image"><![CDATA[Cannot remove current image.]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[File]]></string>
 	<string name="_adm_str_cpt_files_version"><![CDATA[Version]]></string>
@@ -1896,7 +1893,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_hor"><![CDATA[Horizontal Links]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[Inline]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Interactive Vertical Links]]></string>
-	<string name="_sys_menu_template_title_main"><![CDATA[Site Navigation]]></string>
+	<string name="_sys_menu_template_title_empty"><![CDATA[Empty Menu]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Site Navigation Submenu]]></string>
 	<string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>
 	<string name="_sys_menu_template_title_ver"><![CDATA[Vertical Links]]></string>
@@ -2147,6 +2144,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_form_entry_input_picture_use_as_thumb"><![CDATA[Use as Thumbnail]]></string>
 	<string name="_sys_txt_form_submission_error"><![CDATA[Incorrect info. Please, check your inputs and try to submit again.]]></string>
 
+    <string name="_sys_txt_homepage_cover"><![CDATA[Unity is strength... when there is teamwork and collaboration, wonderful things can be achieved.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Join Now!</button>]]></string>
 	<string name="_sys_txt_login_description"><![CDATA[Not a member yet? <a href="{0}">Join now!</a>]]></string>
 	<string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>

@@ -56,8 +56,8 @@
 	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_market_form_entry_input_pictures_title"><![CDATA[Title]]></string>
-	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Preview picture]]></string>
-	<string name="_bx_market_form_entry_input_pictures_use_as_cover"><![CDATA[Cover picture]]></string>
+	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Product icon]]></string>
+	<string name="_bx_market_form_entry_input_pictures_use_as_cover"><![CDATA[Product cover]]></string>
 	<string name="_bx_market_form_entry_input_sys_files"><![CDATA[Files]]></string>
 	<string name="_bx_market_form_entry_input_files"><![CDATA[Files]]></string>
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Use as Main]]></string>
@@ -114,7 +114,6 @@
     <string name="_bx_market_page_block_title_entry_comments"><![CDATA[Reviews]]></string>
     <string name="_bx_market_page_block_title_entry_comments_link"><![CDATA[Reviews to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_market_page_block_title_entry_comments_n"><![CDATA[Reviews ({0})]]></string>
-    <string name="_bx_market_page_block_title_entry_cover"><![CDATA[Cover]]></string>
     <string name="_bx_market_page_block_title_entry_info"><![CDATA[Info]]></string>
     <string name="_bx_market_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_market_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
@@ -154,7 +153,6 @@
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Product Actions]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Product Actions]]></string>
-    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Product Popup Actions]]></string>
     <string name="_bx_market_menu_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[New Product]]></string>
@@ -164,12 +162,11 @@
     <string name="_bx_market_menu_item_title_system_delete_entry"><![CDATA[Delete Product]]></string>
     <string name="_bx_market_menu_item_title_delete_entry"><![CDATA[Delete Product]]></string>
     <string name="_bx_market_menu_item_title_system_add_to_cart"><![CDATA[Add to Cart]]></string>
-    <string name="_bx_market_menu_item_title_add_to_cart"><![CDATA[Add to Cart]]></string>
-    <string name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string>
-    <string name="_bx_market_menu_item_title_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_market_menu_item_title_add_to_cart"><![CDATA[Buy for {0}{1}]]></string>
+    <string name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Rent]]></string>
+    <string name="_bx_market_menu_item_title_subscribe"><![CDATA[Rent for {0}{1}/{2}]]></string>
     <string name="_bx_market_menu_item_title_system_download"><![CDATA[Download]]></string>
     <string name="_bx_market_menu_item_title_download"><![CDATA[Download]]></string>
-    <string name="_bx_market_menu_item_title_system_view_entry"><![CDATA[View Product]]></string>
     <string name="_bx_market_menu_item_title_system_entries_home"><![CDATA[Market]]></string>
     <string name="_bx_market_menu_item_title_entries_home"><![CDATA[Market]]></string>
     <string name="_bx_market_menu_item_title_system_entries_categories"><![CDATA[Categories]]></string>
@@ -182,9 +179,10 @@
     <string name="_bx_market_menu_item_title_entries_popular"><![CDATA[Popular]]></string>
     <string name="_bx_market_menu_title_view_entry_submenu"><![CDATA[View Product Submenu]]></string>
     <string name="_bx_market_menu_set_title_view_entry_submenu"><![CDATA[View Product Submenu]]></string>
-    <string name="_bx_market_menu_item_title_view_entry_submenu_entry"><![CDATA[Product]]></string>
+    <string name="_bx_market_menu_item_title_system_view_entry_submenu_entry"><![CDATA[Overview]]></string>
+    <string name="_bx_market_menu_item_title_view_entry_submenu_entry"><![CDATA[Overview]]></string>
+    <string name="_bx_market_menu_item_title_system_view_entry_submenu_comments"><![CDATA[Reviews]]></string>
     <string name="_bx_market_menu_item_title_view_entry_submenu_comments"><![CDATA[Reviews]]></string>
-    <string name="_bx_market_menu_item_title_system_view_entry_comments"><![CDATA[Product Reviews]]></string>
     <string name="_bx_market_menu_item_title_system_view_entries_author"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_item_title_view_entries_author"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_title_entries_my"><![CDATA[My Products Action Menu]]></string>
@@ -290,7 +288,6 @@
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">All Products by {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Category:]]></string>
-	<string name="_bx_market_txt_installs"><![CDATA[Active Installs:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[The most current version]]></string>
     <string name="_bx_market_txt_released"><![CDATA[Released:]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[product]]></string>
@@ -299,9 +296,7 @@
     <string name="_bx_market_txt_updated"><![CDATA[Updated:]]></string>
     <string name="_bx_market_txt_joined"><![CDATA[Joined:]]></string>
     <string name="_bx_market_txt_last_active"><![CDATA[Last Active:]]></string>
-    <string name="_bx_market_txt_get_for_single"><![CDATA[Get for {0}{1}]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[{0}{1}]]></string>
-    <string name="_bx_market_txt_get_for_recurring"><![CDATA[Get for {0}{1}/{2}]]></string>
     <string name="_bx_market_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
     <string name="_bx_market_txt_per_week"><![CDATA[week]]></string>
     <string name="_bx_market_txt_per_week_short"><![CDATA[wk]]></string>

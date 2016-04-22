@@ -1,31 +1,8 @@
-/*--- Entry Cover ---*/
-.bx-market-entity-cover-size {
-	width: 100%;
-	max-height: 384px;
-	max-height: 24rem;
-}
-div.bx-market-entity-cover {
-	position: relative;
-	overflow: hidden;
-}
-div.bx-market-entity-cover img {
-	position: relative;
-	display: block;
-
-	object-fit: cover;
-}
-
 /*--- Entry Content ---*/
 div.bx-market-entity-content {}
 
 div.bx-market-ec-head {
 	position: relative;
-}
-div.bx-market-ech-thumbnail {
-	position: absolute;
-
-	top: 0px;
-	left: 0px;
 }
 div.bx-market-ech-info {
 	position: relative;

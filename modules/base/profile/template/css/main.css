@@ -26,12 +26,7 @@
 
 .bx-base-pofile-cover {
     position:relative;
-    height:17rem;
-
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    min-height:10rem;
 }
 
 a.bx-base-pofile-cover-image:hover,
@@ -47,18 +42,33 @@ a.bx-base-pofile-cover-image:hover,
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;    
+    background-size: cover;
+}
+
+.bx-base-pofile-cover-info-container {
+    display:block;
+    position:relative;
+    height:100%;
+    cursor:pointer; 
+    cursor:hand;
 }
 
 .bx-base-pofile-cover-info {
-    position:absolute;
-    bottom:0;
-    left:0;
+    text-align:center;
+}
+.bx-base-pofile-cover-info .bx-def-ava,
+.bx-base-pofile-cover-info h1,
+.bx-base-pofile-cover-info .bx-base-pofile-cover-actions {
+    display:block;
+    text-align:center;
+}
+.bx-base-pofile-cover-info .bx-def-ava,
+.bx-base-pofile-cover-info .bx-base-pofile-cover-actions {
+    display:inline-block;
 }
 
-.bx-base-pofile-cover-info img,
-.bx-base-pofile-cover-info h1 {
-    vertical-align:bottom;
+.bx-base-pofile-cover-actions ul li:last-child a {
+    margin-right:0;
 }
 
 .bx-base-pofile-cover-info img {

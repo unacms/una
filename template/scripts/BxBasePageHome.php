@@ -18,6 +18,12 @@ class BxBasePageHome extends BxTemplPage
     {
         parent::__construct($aObject, $oTemplate);
         $this->addMarkers(array('site_title' => getParam('site_title')));
+
+        $oCover = BxDolCover::getInstance();
+        $oCover->set(array(
+            'class' => 'bx-cover-homepage',
+            'title' => _t('_sys_txt_homepage_cover', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')),
+        ));
     }
 
     public function getCode ()

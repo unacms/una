@@ -22,7 +22,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
             'bx-padding-sec' => '10px',
             'bx-padding-thd' => '5px',
 
-            'bx-font-family' => '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
+            'bx-font-family' => 'Helvetica, Arial, sans-serif',
 
             'bx-size-avatar' => '96px',
             'bx-size-thumb' => '48px',

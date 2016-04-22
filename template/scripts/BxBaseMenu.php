@@ -97,6 +97,12 @@ class BxBaseMenu extends BxDolMenu
         	return false;
 
 		$a['title'] = _t($a['title']);
+		$a['bx_if:title'] = array(
+			'condition' => !empty($a['title']),
+			'content' => array(
+				'title' => $a['title']
+			)
+		);
 
         $this->removeMarker('addon');
 

@@ -149,16 +149,13 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
                 $sLimitClause .= "LIMIT 1";
                 break;
 			case 'by_type':
-				$sJoinClause = "LEFT JOIN `sys_options_types` AS `tt` ON `tm`.`type_id`=`tt`.`id`";
-                $sWhereClause .= $this->prepare("AND `tt`.`name`=?", $aParams['value']);
+                $sWhereClause .= $this->prepare("AND `tm`.`type`=?", $aParams['value']);
                 break;
 			case 'by_category':
-				$sJoinClause = "LEFT JOIN `sys_options_categories` AS `tc` ON `tm`.`category_id`=`tc`.`id`";
-                $sWhereClause .= $this->prepare("AND `tc`.`name`=?", $aParams['value']);
+                $sWhereClause .= $this->prepare("AND `tm`.`category`=?", $aParams['value']);
                 break;
 			case 'by_type_category':
-				$sJoinClause = "LEFT JOIN `sys_options_types` AS `tt` ON `tm`.`type_id`=`tt`.`id` LEFT JOIN `sys_options_categories` AS `tc` ON `tm`.`category_id`=`tc`.`id`";
-				$sWhereClause .= $this->prepare("AND `tt`.`name`=? AND `tc`.`name`=?", $aParams['type'], $aParams['category']);
+				$sWhereClause .= $this->prepare("AND `tm`.`type`=? AND `tm`.`category`=?", $aParams['type'], $aParams['category']);
                 break;
         }
 
@@ -171,7 +168,8 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tm`.`id` AS `id`,
-                `tm`.`category_id` AS `category_id`,
+                `tm`.`type` AS `type`,
+                `tm`.`category` AS `category`,
                 `tm`.`name` AS `name`,
                 `tm`.`title` AS `title`,
                 `tm`.`active` AS `active` " . $sSelectClause . "
@@ -211,14 +209,14 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         switch($aParams['type']) {
 			case 'by_mix_id_pair_option_value':
 				$aMethod['name'] = 'getPairs'; 
-				$aMethod['params'][1] = 'option_id';
+				$aMethod['params'][1] = 'option';
 				$aMethod['params'][2] = 'value';
                 $sWhereClause .= $this->prepare("AND `tmo`.`mix_id`=?", $aParams['value']);
                 break;
         }
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
-                `tmo`.`option_id` AS `option_id`,
+                `tmo`.`option` AS `option`,
                 `tmo`.`mix_id` AS `mix_id`,
                 `tmo`.`value` AS `value` " . $sSelectClause . "
             FROM `sys_options_mixes2options` AS `tmo` " . $sJoinClause . "

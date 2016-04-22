@@ -20,6 +20,11 @@ class BxMarketMenuView extends BxBaseModTextMenuView
         parent::__construct($aObject, $oTemplate);
     }
 
+    public function getCode ()
+    {
+    	return parent::getCode() . BxDolPayments::getInstance()->getCartJs();
+    }
+
     protected function _isVisible ($a)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -36,8 +41,11 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 				if(!$bResult) 
 					break;
 
+				$aCurrency = $this->_oModule->_oConfig->getCurrency();
+
 				list($sJsCode, $sJsMethod) = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
 				$this->addMarkers(array(
+					'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
 		        	'add_to_cart_onclick' => $sJsMethod
 		        ));
 				break;
@@ -47,8 +55,11 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 				if(!$bResult) 
 					break;
 
+				$aCurrency = $this->_oModule->_oConfig->getCurrency();
+
 				list($sJsCode, $sJsMethod) = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
 				$this->addMarkers(array(
+					'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
 		        	'subscribe_onclick' => $sJsMethod
 		        )); 
 				break;

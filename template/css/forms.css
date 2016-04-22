@@ -126,8 +126,8 @@
 .bx-form-input-password,
 .bx-form-input-text {
 
-    height:36px;
-    height:2.2rem;
+    height:40px;
+    height:2.5rem;
     width:100%;
     
     -moz-box-sizing: border-box;
@@ -377,7 +377,7 @@
 	position: relative;
 	overflow: auto;
 	max-width: 480px;
-	font: 0.75em/1em "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font: 0.75em/1em Helvetica, Arial, sans-serif;
 	color: #ffffff;
 }
 .bx-form-input-captcha a {
@@ -463,11 +463,14 @@
 * Overwrite 3d Party MiniColors plug-in
 ****************************************/
 .bx-form-input-wrapper.bx-form-input-wrapper-text .minicolors-theme-bootstrap .minicolors-swatch {
-	top: 4px;
-	left: 4px;
+	top: 6px;
+	left: 6px;
 
 	width: 25px;
 	width: 1.5625rem;
 	height: 25px;
 	height: 1.5625rem;
+
+	border-radius: 20px;
+	border-radius: 1.25rem;
 }

@@ -44,12 +44,30 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     }
 
     /**
+     * Get current actions menu in submenu
+     * @return menu object name
+     */
+    public function getObjectActionsMenu()
+    {        
+        return $this->_sObjectActionsMenu;
+    }
+
+    /**
      * Set social sharing menu in submenu
-     * @param $a menu service call array (module, method, 
+     * @param $a menu service call array (module, method, etc)
      */
     public function setServiceSocialSharing ($a)
     {
         $this->_aSocialSharingService = $a;
+    }
+
+    /**
+     * Get social sharing menu in submenu
+     * @return menu service call array (module, method, etc)
+     */
+    public function getServiceSocialSharing ()
+    {
+        return $this->_aSocialSharingService;
     }
 
     /**
@@ -58,23 +76,33 @@ class BxBaseMenuSubmenu extends BxTemplMenu
      */
     public function getCode ()
     {
-        $aMenuItemSelected = $this->_getSelectedMenuItem ();
+        $aMenuItemSelected = $this->getSelectedMenuItem ();
         if (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
             return '';
 
         $this->_addJsCss();
 
-        $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
+        if ($oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu))
+            return $oMenuSubmenu->getCode();
+
+        return '';
+    }
+
+    public function getParamsForCover ()
+    {
+        $aMenuItemSelected = $this->getSelectedMenuItem ();
+        if (!$aMenuItemSelected)
+            return '';
+
+        // (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name']) - homepage detection
+
+        $oMenuActions = BxDolMenu::getObjectInstance($this->_sObjectActionsMenu);
+
         $aVars = array (
             'object' => $this->_sObject,
-            'id' => 'bx-menu-submenu-menu',
             'title' => $aMenuItemSelected['title'],
             'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),
-            'popup' => $oMenuSubmenu ? BxTemplFunctions::getInstance()->transBox('bx-menu-submenu-menu', '<div class="bx-def-padding">' . $oMenuSubmenu->getCode() . '</div>', true) : '',
-            'bx_if:menu' => array (
-                'condition' => $oMenuSubmenu,
-                'content' => array(),
-            ),
+            'actions' => $oMenuActions ? $oMenuActions->getCode() : '',
             'bx_if:image' => array (
                 'condition' => false !== strpos($aMenuItemSelected['icon'], '.'),
                 'content' => array('icon_url' => $aMenuItemSelected['icon']),
@@ -83,47 +111,15 @@ class BxBaseMenuSubmenu extends BxTemplMenu
                 'condition' => false === strpos($aMenuItemSelected['icon'], '.'),
                 'content' => array('icon' => $aMenuItemSelected['icon']),
             ),
-            'bx_repeat:menus' => array (),
         );
 
-        $aMenus = $this->getSubmenuParams($aMenuItemSelected); 
+        // if (!$this->_sObjectSubmenu && !$this->_mixedMainMenuItemSelected && $aMenuItemSelected['submenu_object'])
+        //    $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];
 
-        foreach ($aMenus as $aMenu) {
-            $sPopupContent = '';
-            if (isset($aMenu['object']) && ($oMenu = BxDolMenu::getObjectInstance($aMenu['object'])))
-                $sPopupContent = $oMenu->getCode();
-            elseif (isset($aMenu['service']) && is_array($aMenu['service']))
-                $sPopupContent = BxDolService::call($aMenu['service']['module'], $aMenu['service']['method'], isset($aMenu['service']['params']) ? $aMenu['service']['params'] : array(), isset($aMenu['service']['class']) ? $aMenu['service']['class'] : 'Module');
-            if (!$sPopupContent)
-                continue;
-
-            $aVars['bx_repeat:menus'][] = array (
-                'id' => $aMenu['id'],
-                'icon' => $aMenu['icon'],
-                'popup' => BxTemplFunctions::getInstance()->transBox($aMenu['id'], '<div class="bx-def-padding">' . $sPopupContent . '</div>', true),
-            );
-        }
-
-        if (!$aVars['bx_repeat:menus'] && (!$oMenuSubmenu || !$aMenuItemSelected))
-            return '';
-
-        $sMenu = $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
-
-        return $this->_oTemplate->parseHtmlByName('menu_main_submenu_wrapper.html', array('menu' => $sMenu));
+        return $aVars;
     }
 
-    protected function getSubmenuParams($aMenuItemSelected)
-    {
-        if (!$this->_sObjectSubmenu && !$this->_mixedMainMenuItemSelected && $aMenuItemSelected['submenu_object'])
-            $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];
-
-        return array (
-            'social_sharing_menu' => array ('id' => 'bx-menu-social-sharing-menu', 'icon' => 'share', 'service' => $this->_aSocialSharingService),
-            'actions_menu' => array ('id' => 'bx-menu-actions-menu', 'icon' => 'cog', 'object' => $this->_sObjectActionsMenu),            
-        );
-    }
-
-    protected function _getSelectedMenuItem ()
+    public function getSelectedMenuItem ()
     {
         if (is_array($this->_mixedMainMenuItemSelected))
             return $this->_mixedMainMenuItemSelected;

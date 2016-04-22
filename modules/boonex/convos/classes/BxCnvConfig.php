@@ -69,7 +69,6 @@ class BxCnvConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => '',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_convos_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_convos_view', // actions menu on view entry page
-            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP' => 'bx_convos_view_popup', // actions menu popup on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_convos_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_convos_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '', // view entry submenu
@@ -79,7 +78,6 @@ class BxCnvConfig extends BxBaseModTextConfig
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_convos_view' => $aMenuItems2Methods,
-                'bx_convos_view_popup' => $aMenuItems2Methods,
             ),
 
             // some language keys

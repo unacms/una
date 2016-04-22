@@ -54,10 +54,9 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_view_entry', '_bx_market_page_title_sys_view_entry', '_bx_market_page_title_view_entry', 'bx_market', 7, 2147483647, 1, 'view-product', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_cover', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 0, 1, 0),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 0, 1),
-('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 2),
+('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 2),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 3),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 4),
 ('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
@@ -175,8 +174,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- MENU: actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_market_view', '_bx_market_menu_title_view_entry', 'bx_market_view', 'bx_market', 9, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php'),
-('bx_market_view_popup', '_bx_market_menu_title_view_entry_popup', '', 'bx_market', 16, 0, 1, 'BxMarketMenuViewActions', 'modules/boonex/market/classes/BxMarketMenuViewActions.php');
+('bx_market_view', '_bx_market_menu_title_view_entry', 'bx_market_view', 'bx_market', 9, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_market_view', 'bx_market', '_bx_market_menu_set_title_view_entry', 0);
@@ -185,8 +183,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_view', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
 ('bx_market_view', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2),
 ('bx_market_view', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '_bx_market_menu_item_title_download', 'page.php?i=download-product&id={content_id}', '', '', 'download', '', 2147483647, 1, 0, 3),
-('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '_bx_market_menu_item_title_add_to_cart', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 2147483647, 1, 0, 4),
-('bx_market_view', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '_bx_market_menu_item_title_subscribe', 'javascript:void(0);', 'javascript:{subscribe_onclick}', '', 'rss', '', 2147483647, 1, 0, 5);
+('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '{add_to_cart_title}', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 2147483647, 1, 0, 4),
+('bx_market_view', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '{subscribe_title}', 'javascript:void(0);', 'javascript:{subscribe_onclick}', '', 'money', '', 2147483647, 1, 0, 5);
 
 
 -- MENU: actions menu for my entries
@@ -202,7 +200,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: module sub-menu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_market_submenu', '_bx_market_menu_title_submenu', 'bx_market_submenu', 'bx_market', 6, 0, 1, '', '');
+('bx_market_submenu', '_bx_market_menu_title_submenu', 'bx_market_submenu', 'bx_market', 8, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_market_submenu', 'bx_market', '_bx_market_menu_set_title_submenu', 0);
@@ -215,14 +213,14 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_market_view_submenu', '_bx_market_menu_title_view_entry_submenu', 'bx_market_view_submenu', 'bx_market', 6, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php');
+('bx_market_view_submenu', '_bx_market_menu_title_view_entry_submenu', 'bx_market_view_submenu', 'bx_market', 8, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_market_view_submenu', 'bx_market', '_bx_market_menu_set_title_view_entry_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_market_view_submenu', 'bx_market', 'view-product', '_bx_market_menu_item_title_system_view_entry', '_bx_market_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-product&id={content_id}', '', '', '', '', 2147483647, 1, 0, 1),
-('bx_market_view_submenu', 'bx_market', 'view-product-comments', '_bx_market_menu_item_title_system_view_entry_comments', '_bx_market_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-product-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2);
+('bx_market_view_submenu', 'bx_market', 'view-product', '_bx_market_menu_item_title_system_view_entry_submenu_entry', '_bx_market_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-product&id={content_id}', '', '', '', '', 2147483647, 1, 0, 1),
+('bx_market_view_submenu', 'bx_market', 'view-product-comments', '_bx_market_menu_item_title_system_view_entry_submenu_comments', '_bx_market_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-product-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);

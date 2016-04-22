@@ -123,7 +123,7 @@ class BxBasePage extends BxDolPage
     	
     	
                 if ($sContentWithBox)
-                    $sCell .= '<div class="bx-page-block-container bx-def-padding-topbottom' . $sHiddenOn . '" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
+                    $sCell .= '<div class="bx-page-block-container bx-def-padding-sec-topbottom' . $sHiddenOn . '" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
             }
             $aVars[$sKey] = $sCell;
         }

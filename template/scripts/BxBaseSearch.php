@@ -97,7 +97,7 @@ class BxBaseSearch extends BxDolSearch
             $o->addCssJs();
         }
 
-        return '<div class="bx-page-block-container bx-def-padding-topbottom bx-clearfix">' . DesignBoxContent($sTitle, $sForm, $iDesignBoxTemplate) . '</div>';
+        return '<div class="bx-page-block-container bx-def-padding-sec-topbottom bx-clearfix">' . DesignBoxContent($sTitle, $sForm, $iDesignBoxTemplate) . '</div>';
     }
 
     public function getResultsContainer($sCode = '')
