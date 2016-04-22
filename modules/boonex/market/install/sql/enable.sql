@@ -54,7 +54,6 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_view_entry', '_bx_market_page_title_sys_view_entry', '_bx_market_page_title_view_entry', 'bx_market', 7, 2147483647, 1, 'view-product', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_cover', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:12:\"entity_cover\";}', 0, 0, 1, 0),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 0, 1),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 2),

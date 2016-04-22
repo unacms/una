@@ -56,8 +56,8 @@
 	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_market_form_entry_input_pictures_title"><![CDATA[Название]]></string>
-	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Изображение предпросмотра]]></string>
-	<string name="_bx_market_form_entry_input_pictures_use_as_cover"><![CDATA[Изображение обложки]]></string>
+	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Иконка продукта]]></string>
+	<string name="_bx_market_form_entry_input_pictures_use_as_cover"><![CDATA[Обложка продукта]]></string>
 	<string name="_bx_market_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_market_form_entry_input_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Использовать как главный]]></string>
@@ -114,7 +114,6 @@
     <string name="_bx_market_page_block_title_entry_comments"><![CDATA[Обзоры]]></string>
     <string name="_bx_market_page_block_title_entry_comments_link"><![CDATA[Обзоры к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_market_page_block_title_entry_comments_n"><![CDATA[Обзоры ({0})]]></string>
-    <string name="_bx_market_page_block_title_entry_cover"><![CDATA[Обложка]]></string>
     <string name="_bx_market_page_block_title_entry_info"><![CDATA[Информация]]></string>
     <string name="_bx_market_page_block_title_entry_location"><![CDATA[Расположение]]></string>
     <string name="_bx_market_page_block_title_entry_attachments"><![CDATA[Прикрепления]]></string>
@@ -281,7 +280,6 @@
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">Все продукты от {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Категория:]]></string>
-    <string name="_bx_market_txt_installs"><![CDATA[Установок:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[Самая новая версия]]></string>
     <string name="_bx_market_txt_released"><![CDATA[Дата выпуска:]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>

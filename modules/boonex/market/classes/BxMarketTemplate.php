@@ -28,25 +28,6 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
-    public function entryCover($aData)
-    {
-    	$CNF = &$this->_oConfig->CNF;
-
-    	$sCoverUrl = '';
-        if ($aData[$CNF['FIELD_COVER']]) {
-            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
-            if($oImagesTranscoder)
-				$sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
-        }
-
-        if(empty($sCoverUrl))
-        	return '';
-
-    	return $this->parseHtmlByName('entry-cover.html', array(
-    		'cover_url' => $sCoverUrl
-    	));
-    }
-
     public function entryInfo($aData)
     {
     	$aCategory = array();
@@ -89,8 +70,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-    	$oModule = BxDolModule::getInstance($this->MODULE);
-    	$CNF = &$oModule->_oConfig->CNF;
+    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
     	$sThumbUrl = '';
         if ($aData[$CNF['FIELD_THUMB']]) {
@@ -145,10 +125,43 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	));
     }
 
+    public function setCover($aData)
+    {
+		$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+        $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+		if(empty($oImagesTranscoder))
+			return;
+
+		$sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
+		if(empty($sCoverUrl))
+			return;
+
+		$oCover = BxDolCover::getInstance($this);
+		$oCover->setCoverImageUrl($sCoverUrl);
+
+		$mixedOptions = BxDolMenu::getObjectInstance('sys_site_submenu')->getParamsForCover();
+        if(empty($mixedOptions) || !is_array($mixedOptions))
+        	return;
+
+		$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+		if(empty($oImagesTranscoder))
+			return;
+
+		$sThumbnailUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+		if(empty($sThumbnailUrl))
+			return;
+
+		$mixedOptions['bx_if:icon']['condition'] = false;
+		$mixedOptions['bx_if:image']['condition'] = true;
+		$mixedOptions['bx_if:image']['content']['icon_url'] = $sThumbnailUrl;
+
+		$oCover->set($mixedOptions);
+    }
+
     public function getScreenshots($aData)
     {
-    	$oModule = BxDolModule::getInstance($this->MODULE);
-    	$CNF = &$oModule->_oConfig->CNF;
+    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
     	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
     	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
