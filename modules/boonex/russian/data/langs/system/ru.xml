@@ -1893,7 +1893,7 @@
 	<string name="_sys_menu_template_title_hor"><![CDATA[Горизонтальные Ссылки]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[В тексте]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные Вертикальные Ссылки]]></string>
-	<string name="_sys_menu_template_title_main"><![CDATA[Навигация по Сайту]]></string>
+	<string name="_sys_menu_template_title_empty"><![CDATA[Пустое Меню]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Навигация по Сайту - Подменю]]></string>
 	<string name="_sys_menu_template_title_toolbar"><![CDATA[Панель Инструментов - Кнопки]]></string>
 	<string name="_sys_menu_template_title_ver"><![CDATA[Вертикальные Ссылки]]></string>
