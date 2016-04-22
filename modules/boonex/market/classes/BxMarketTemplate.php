@@ -152,11 +152,20 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 		if(empty($sThumbnailUrl))
 			return;
 
-		$mixedOptions['bx_if:icon']['condition'] = false;
-		$mixedOptions['bx_if:image']['condition'] = true;
-		$mixedOptions['bx_if:image']['content']['icon_url'] = $sThumbnailUrl;
-
-		$oCover->set($mixedOptions);
+		$oCover->set(array_merge($mixedOptions, array(
+			'bx_if:image' => array (
+                'condition' => true,
+                'content' => array('icon_url' => $sThumbnailUrl),
+            ),
+            'bx_if:icon' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+            'bx_if:bg' => array (
+                'condition' => true,
+                'content' => array('image_url' => $sCoverUrl),
+            ),
+		)));
     }
 
     public function getScreenshots($aData)
