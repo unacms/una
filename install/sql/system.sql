@@ -2724,7 +2724,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_templates` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
-(1, 'menu_main.html', '_sys_menu_template_title_main'),
+(1, 'menu_empty.html', '_sys_menu_template_title_empty'),
 (2, 'menu_footer.html', '_sys_menu_template_title_footer'),
 (3, 'menu_horizontal.html', '_sys_menu_template_title_hor'),
 (4, 'menu_vertical_lite.html', '_sys_menu_template_title_ver_lite'),

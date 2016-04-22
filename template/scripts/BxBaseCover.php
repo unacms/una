@@ -37,21 +37,21 @@ class BxBaseCover extends BxDolCover
         if (!$this->_aOptions || !$this->_sTemplateName) {
 
             $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-            $mixedParams = $oMenuSubmenu->getParamsForCover();
+            $mixedOptions = $oMenuSubmenu->getParamsForCover();
 
-            if (!$mixedParams || !is_array($mixedParams))
+            if (!$mixedOptions || !is_array($mixedOptions))
                 return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
             
             if ($this->_sCoverImageUrl)
-                $mixedParams['bx_if:bg'] = array (
+                $mixedOptions['bx_if:bg'] = array (
                     'condition' => true,
                     'content' => array('image_url' => $this->_sCoverImageUrl),
                 );
 
-            return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, $mixedParams);
+            return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $mixedOptions));
         }        
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, $this->_aOptions);
+        return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $this->_aOptions));
     }
 
     /**

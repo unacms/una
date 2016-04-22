@@ -138,8 +138,7 @@ ul.bx-menu-ver {
     text-align:center;
 }
 
-#bx-menu-main-submenu,
-#bx-menu-main {
+#bx-menu-main-submenu {
     display:inline-block;
     line-height:2.5rem;
     vertical-align:top;
@@ -150,25 +149,19 @@ ul.bx-menu-ver {
     font-size:2rem;
 }
 
-ul.bx-menu-main-submenu,
-ul.bx-menu-main {    
+ul.bx-menu-main-submenu {
     padding:0;
     margin:0;
     list-style:none;
     white-space:nowrap;
 }
 
-.bx-menu-main-submenu li,
-.bx-menu-main li {
+.bx-menu-main-submenu li {
     display:inline-block;
     margin:0;    
     vertical-align:top;
 }
 
-.bx-menu-main li a,
-.bx-menu-main li span,
-.bx-menu-main li .sys-icon,
-.bx-menu-main li .sys-icon-a,
 .bx-menu-main-submenu li a {
     display:inline-block;
     text-decoration:none;
@@ -176,41 +169,9 @@ ul.bx-menu-main {
     line-height:2.5rem;
     vertical-align:top;
 }
-.bx-menu-main li a {
-    font-size:0;
-    height:2rem;
-}
-.bx-menu-main li .sys-icon,
-.bx-menu-main li .sys-icon-a {
-    min-width:1.5rem;
-    font-size:1.5rem;
-    text-align:center;
-}
-.bx-menu-main li .sys-icon:first-child {
-    vertical-align:baseline;
-}
-.bx-menu-main li .sys-icon-a {
-    margin-top:0.5rem;
-}
-.bx-menu-main li img {
-    width:2rem;
-    height:40px;
-    height:2.5rem;
-    vertical-align:middle;
-    background-repeat:no-repeat;
-    background-position:center center;
-}
 
-.bx-menu-main-submenu li.bx-menu-tab-active a,
-.bx-menu-main li span {
+.bx-menu-main-submenu li.bx-menu-tab-active a {
     color:#000;
-}
-
-#bx-menu-main li a span {
-    max-width:16rem;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
 }
 
 /* --------------- toolbar menu */

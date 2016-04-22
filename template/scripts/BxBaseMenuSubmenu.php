@@ -99,11 +99,9 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $oMenuActions = BxDolMenu::getObjectInstance($this->_sObjectActionsMenu);
 
         $aVars = array (
-            'class' => '',
             'object' => $this->_sObject,
-            'id' => 'bx-menu-submenu-menu',
             'title' => $aMenuItemSelected['title'],
-            'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),            
+            'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),
             'actions' => $oMenuActions ? $oMenuActions->getCode() : '',
             'bx_if:image' => array (
                 'condition' => false !== strpos($aMenuItemSelected['icon'], '.'),
@@ -112,10 +110,6 @@ class BxBaseMenuSubmenu extends BxTemplMenu
             'bx_if:icon' => array (
                 'condition' => false === strpos($aMenuItemSelected['icon'], '.'),
                 'content' => array('icon' => $aMenuItemSelected['icon']),
-            ),
-            'bx_if:bg' => array (
-                'condition' => false,
-                'content' => array('image_url' => ''),
             ),
         );
 

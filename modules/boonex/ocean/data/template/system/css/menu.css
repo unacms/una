@@ -1,10 +1,5 @@
 @import url(../../../../../../../template/css/menu.css);
 
-/* --------------- main menu */
-.bx-menu-main li {
-    margin-top:0.0625rem;
-}
-
 /* --------------- toolbar menu */
 ul.bx-menu-toolbar li a {
     min-width: 64px;
