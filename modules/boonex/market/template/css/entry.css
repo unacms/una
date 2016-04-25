@@ -37,6 +37,7 @@ div.bx-market-screenshots-cnt {
 	position: relative;
 	overflow-x: scroll;
 	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
 }
 div.bx-market-ss-cnt {
 	position: relative;
