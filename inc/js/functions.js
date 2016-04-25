@@ -332,8 +332,8 @@ function bx_menu_slide (jSel, e, sPosition) {
         eSlider.css({
             position: 'absolute',
             top: eBlock.find('.bx-db-header').outerHeight(true),
-            left: 0,
-            width: eBlock.width()
+            left: 0
+            //width: eBlock.width() TODO: Commited to test. Remove if everything is OK.
         });
     };
 
