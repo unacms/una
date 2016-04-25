@@ -29,7 +29,14 @@ div.bx-market-ech-info .bx-market-ech-free {}
 /*--- Entry Screenshots ---*/
 div.bx-market-screenshots {
 	position: relative;
+	height: 120px;
+
 	overflow: hidden;
+}
+div.bx-market-screenshots-cnt {
+	position: relative;
+	overflow-x: scroll;
+	overflow-y: hidden;
 }
 div.bx-market-ss-cnt {
 	position: relative;
