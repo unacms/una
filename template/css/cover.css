@@ -32,7 +32,7 @@
 .bx-cover-title {
     font-weight:bold;
     vertical-align:middle;
-    text-shadow:0 0 0.125rem rgba(0, 0, 0, .5);
+    text-shadow:-1px 0px 0px rgba(0, 0, 0, .3), 1px 0px 0px rgba(0, 0, 0, .3), 0px -1px 0px rgba(0, 0, 0, .3), 0px 1px 0px rgba(0, 0, 0, .3);
 }
 
 .bx-cover-title .bx-btn {
