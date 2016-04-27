@@ -140,6 +140,20 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 8),
 (@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 9);
 
+-- Recurly payment provider
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_subscription`, `class_name`) VALUES
+('recurly', '_bx_payment_rcrl_cpt', '_bx_payment_rcrl_dsc', 'rcrl_', 1, 1, 'BxPaymentProviderRecurly');
+SET @iProviderId = LAST_INSERT_ID();
+
+INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
+(@iProviderId, 'rcrl_active', 'checkbox', '_bx_payment_rcrl_active_cpt', '_bx_payment_rcrl_active_dsc', '', 'https', '', '_bx_payment_rcrl_active_err', 1),
+(@iProviderId, 'rcrl_mode', 'select', '_bx_payment_rcrl_mode_cpt', '_bx_payment_rcrl_mode_dsc', '1|_bx_payment_rcrl_mode_live,2|_bx_payment_rcrl_mode_test', '', '', '', 2),
+(@iProviderId, 'rcrl_site', 'text', '_bx_payment_rcrl_site_cpt', '_bx_payment_rcrl_site_dsc', '', '', '', '', 3),
+(@iProviderId, 'rcrl_api_key_private', 'text', '_bx_payment_rcrl_api_key_private_cpt', '_bx_payment_rcrl_api_key_private_dsc', '', '', '', '', 4),
+(@iProviderId, 'rcrl_api_key_public', 'text', '_bx_payment_rcrl_api_key_public_cpt', '_bx_payment_rcrl_api_key_public_dsc', '', '', '', '', 5),
+(@iProviderId, 'rcrl_return_data_url', 'value', '_bx_payment_rcrl_return_data_url_cpt', '', '', '', '', '', 6),
+(@iProviderId, 'rcrl_notify_url', 'value', '_bx_payment_rcrl_notify_url_cpt', '', '', '', '', '', 7);
+
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
 ('bx_payment_grid_carts', 'Array', '', '', 'vendor_id', '', '', '', 20, NULL, 'start', '', '', '', 'like', '', '', 'BxPaymentGridCarts', 'modules/boonex/payment/classes/BxPaymentGridCarts.php'),
@@ -209,11 +223,15 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_payment_form_pendings', @sName, '_bx_payment_form_pendings_form', '', '', 'do_submit', 'bx_payment_transactions_pending', 'id', '', '', '', 0, 1, 'BxPaymentFormView', 'modules/boonex/payment/classes/BxPaymentFormView.php'),
-('bx_payment_form_processed', @sName, '_bx_payment_form_processed_form', '', '', 'do_submit', 'bx_payment_transactions', 'id', '', '', '', 0, 1, 'BxPaymentFormView', 'modules/boonex/payment/classes/BxPaymentFormView.php');
+('bx_payment_form_processed', @sName, '_bx_payment_form_processed_form', '', '', 'do_submit', 'bx_payment_transactions', 'id', '', '', '', 0, 1, 'BxPaymentFormView', 'modules/boonex/payment/classes/BxPaymentFormView.php'),
+-- FORMS: Recurly
+('bx_payment_form_rcrl_card', @sName, '_bx_payment_form_rcrl_card', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', '');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_payment_form_pendings_process', @sName, 'bx_payment_form_pendings', '_bx_payment_form_pendings_display_process', 0),
-('bx_payment_form_processed_add', @sName, 'bx_payment_form_processed', '_bx_payment_form_processed_display_add', 0);
+('bx_payment_form_processed_add', @sName, 'bx_payment_form_processed', '_bx_payment_form_processed_display_add', 0),
+-- FORMS: Recurly
+('bx_payment_form_rcrl_card_add', @sName, 'bx_payment_form_rcrl_card', '_bx_payment_form_rcrl_card_display_add', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_payment_form_pendings', @sName, 'id', '0', '', 0, 'hidden', '_bx_payment_form_pendings_input_id_sys', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
@@ -232,7 +250,21 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_payment_form_processed', @sName, 'items', '0', '', 0, 'custom', '_bx_payment_form_processed_input_items_sys', '_bx_payment_form_processed_input_items', '', 0, 0, 0, '', '', '', '', '', '_bx_payment_form_processed_input_items_err', '', '', 0, 0),
 ('bx_payment_form_processed', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_payment_form_processed', @sName, 'do_submit', '_bx_payment_form_processed_input_add', '', 0, 'submit', '_bx_payment_form_processed_input_add_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_payment_form_processed', @sName, 'do_cancel', '_bx_payment_form_processed_input_cancel', '', 0, 'button', '_bx_payment_form_processed_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
+('bx_payment_form_processed', @sName, 'do_cancel', '_bx_payment_form_processed_input_cancel', '', 0, 'button', '_bx_payment_form_processed_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+
+-- FORMS: Recurly
+('bx_payment_form_rcrl_card', @sName, 'pending_id', '0', '', 0, 'hidden', '_bx_payment_form_rcrl_card_input_pending_id_sys', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'item', '', '', 0, 'hidden', '_bx_payment_form_rcrl_card_input_item_sys', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'token', '', '', 0, 'hidden', '_bx_payment_form_rcrl_card_input_token_sys', '', '', 0, 0, 0, 'a:1:{s:12:"data-recurly";s:5:"token";}', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'first_name', '', '', 0, 'text', '_bx_payment_form_rcrl_card_input_first_name_sys', '_bx_payment_form_rcrl_card_input_first_name', '', 1, 0, 0, 'a:1:{s:12:"data-recurly";s:10:"first_name";}', '', '', 'Avail', '', '_bx_payment_form_rcrl_card_input_first_name_err', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'last_name', '', '', 0, 'text', '_bx_payment_form_rcrl_card_input_last_name_sys', '_bx_payment_form_rcrl_card_input_last_name', '', 1, 0, 0, 'a:1:{s:12:"data-recurly";s:9:"last_name";}', '', '', 'Avail', '', '_bx_payment_form_rcrl_card_input_last_name_err', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'email', '', '', 0, 'text', '_bx_payment_form_rcrl_card_input_email_sys', '_bx_payment_form_rcrl_card_input_email', '', 1, 0, 0, '', '', '', 'Email', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'card_number', '', '', 0, 'custom', '_bx_payment_form_rcrl_card_input_card_number_sys', '_bx_payment_form_rcrl_card_input_card_number', '_bx_payment_form_rcrl_card_input_card_number_inf', 1, 0, 0, 'a:1:{s:12:"data-recurly";s:6:"number";}', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'card_expire', '', '', 0, 'custom', '_bx_payment_form_rcrl_card_input_card_expire_sys', '_bx_payment_form_rcrl_card_input_card_expire', '_bx_payment_form_rcrl_card_input_card_expire_inf', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'card_cvv', '', '', 0, 'custom', '_bx_payment_form_rcrl_card_input_card_cvv_sys', '_bx_payment_form_rcrl_card_input_card_cvv', '_bx_payment_form_rcrl_card_input_card_cvv_inf', 1, 0, 0, 'a:1:{s:12:"data-recurly";s:3:"cvv";}', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'do_submit', '_bx_payment_form_rcrl_card_input_submit', '', 0, 'submit', '_bx_payment_form_rcrl_card_input_submit_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_rcrl_card', @sName, 'do_cancel', '_bx_payment_form_rcrl_card_input_cancel', '', 0, 'button', '_bx_payment_form_rcrl_card_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_payment_form_pendings_process', 'id', 2147483647, 1, 1),
@@ -251,7 +283,21 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_payment_form_processed_add', 'items', 2147483647, 1, 7),
 ('bx_payment_form_processed_add', 'controls', 2147483647, 1, 8),
 ('bx_payment_form_processed_add', 'do_submit', 2147483647, 1, 9),
-('bx_payment_form_processed_add', 'do_cancel', 2147483647, 1, 10);
+('bx_payment_form_processed_add', 'do_cancel', 2147483647, 1, 10),
+
+-- FORMS: Recurly
+('bx_payment_form_rcrl_card_add', 'pending_id', 2147483647, 1, 1),
+('bx_payment_form_rcrl_card_add', 'item', 2147483647, 1, 2),
+('bx_payment_form_rcrl_card_add', 'token', 2147483647, 1, 3),
+('bx_payment_form_rcrl_card_add', 'first_name', 2147483647, 1, 4),
+('bx_payment_form_rcrl_card_add', 'last_name', 2147483647, 1, 5),
+('bx_payment_form_rcrl_card_add', 'email', 2147483647, 1, 6),
+('bx_payment_form_rcrl_card_add', 'card_number', 2147483647, 1, 7),
+('bx_payment_form_rcrl_card_add', 'card_expire', 2147483647, 1, 8),
+('bx_payment_form_rcrl_card_add', 'card_cvv', 2147483647, 1, 9),
+('bx_payment_form_rcrl_card_add', 'controls', 2147483647, 1, 10),
+('bx_payment_form_rcrl_card_add', 'do_submit', 2147483647, 1, 11),
+('bx_payment_form_rcrl_card_add', 'do_cancel', 2147483647, 1, 12);
 
 
 -- STUDIO PAGE & WIDGET
