@@ -28,6 +28,7 @@ class BxBaseModPaymentProvider extends BxDol
     protected $_sCaption;
     protected $_sPrefix;
     protected $_aOptions;
+    protected $_bUseSsl;
     protected $_bRedirectOnResult;
     protected $_sLogFile;
 
@@ -44,6 +45,7 @@ class BxBaseModPaymentProvider extends BxDol
         $this->_sCaption = _t($aConfig['caption']);
         $this->_sPrefix = $aConfig['option_prefix'];
         $this->_aOptions = !empty($aConfig['options']) ? $aConfig['options'] : array();
+        $this->_bUseSsl = false;
         $this->_bRedirectOnResult = false;
     }
 
@@ -60,19 +62,19 @@ class BxBaseModPaymentProvider extends BxDol
         return isset($this->_aOptions[$sName]) ? $this->_aOptions[$sName]['value'] : '';
     }
 
-	public function getReturnUrl()
+	public function getReturnUrl($aParams = array())
     {
-		return $this->_oModule->_oConfig->getUrl('URL_RETURN');
+		return $this->_oModule->_oConfig->getUrl('URL_RETURN', $aParams, $this->_bUseSsl);
     }
 
-    public function getReturnDataUrl($iVendorId)
+    public function getReturnDataUrl($iVendorId, $aParams = array())
     {
-		return $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA') . $this->_sName . '/' . $iVendorId;
+		return $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA', $aParams, $this->_bUseSsl) . $this->_sName . '/' . $iVendorId;
     }
 
-	public function getNotifyUrl($iVendorId)
+	public function getNotifyUrl($iVendorId, $aParams = array())
     {
-		return $this->_oModule->_oConfig->getUrl('URL_NOTIFY') . $this->_sName . '/' . $iVendorId;
+		return $this->_oModule->_oConfig->getUrl('URL_NOTIFY', $aParams, $this->_bUseSsl) . $this->_sName . '/' . $iVendorId;
     }
 
     /**
@@ -84,6 +86,8 @@ class BxBaseModPaymentProvider extends BxDol
         return $this->_bRedirectOnResult;
     }
 
+	public function addJsCss() {}
+
 	public function finalizedCheckout() {}
 
     protected function getOptionsByPending($iPendingId)
@@ -94,7 +98,6 @@ class BxBaseModPaymentProvider extends BxDol
         ));
         return $this->_oModule->_oDb->getOptions((int)$aPending['seller_id'], $this->_iId);
     }
-
 
     /**
 	 *

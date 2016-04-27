@@ -176,10 +176,12 @@
                     }
                 }
 
-                o.onBeforeShow($el);
+                if(typeof(o.onBeforeShow) == 'function')
+                	o.onBeforeShow($el);
+                else if(typeof(o.onBeforeShow) == 'string')
+                	eval(o.onBeforeShow);
 
                 // transition effect
-
                 if (o.moveToDocRoot) { 
                     // we need to disable classes with "max-height:100%", since popup isn't in the root element, so animation will not work when moveToDocRoot option is set 
                     $el.addClass('bx-popup-inactive');
@@ -268,6 +270,14 @@
 
             $el.removeClass('bx-popup-active').addClass('bx-popup-inactive');
 
+            var onHide = null;
+            if(typeof(o.onHide) == 'function')
+            	onHide = o.onHide;
+            else if(typeof(o.onHide) == 'string')
+            	onHide = function(oPopup) {
+            		eval(o.onHide);
+            	};
+
             if (o.speed > 0) {
 
                 if (o.fog)
@@ -275,7 +285,10 @@
 
                 setTimeout(function () {
                     $el.hide();
-                    o.onHide($el);
+
+                    if(typeof(onHide) == 'function')
+                    	onHide($el);
+
                 }, o.speed);
 
             } else {
@@ -284,7 +297,8 @@
                     $('#bx-popup-fog').hide();
 
                 $el.hide(function() {
-                	o.onHide($el);
+                	if(typeof(onHide) == 'function')
+                    	onHide($el);
                 });
             }
             
