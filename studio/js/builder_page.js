@@ -266,21 +266,23 @@ BxDolStudioBuilderPage.prototype.changeDimension = function(oText) {
 		return;
 
 	var oUrl = oText.parents('.bx-uploader-ghost:first').find('.bx-ug-url');
-	var sUrl = oUrl.val();
-	if(sUrl.indexOf(sKey + '=') == -1) {
-		oUrl.val(bx_append_url_params(sUrl, sKey + '=' + iValue));
-		return; 
-	}
-
-	var aUrl = sUrl.split('?');
+	var aUrl = oUrl.val().split('?');
 	var aPairs = aUrl[1].split('&');
 
 	var aParams = {};
+	var bUpdated = false;
 	for(var i in aPairs) {
 		var aPair = aPairs[i].split('=');
 
-		aParams[aPair[0]] = aPair[0] == sKey ? iValue : aPair[1];
+		aParams[aPair[0]] = aPair[1];
+		if(aPair[0] == sKey) {
+			aParams[aPair[0]] = iValue;
+			bUpdated = true;
+		}
 	}
+
+	if(!bUpdated)
+		aParams[sKey] = iValue;
 
 	oUrl.val(bx_append_url_params(aUrl[0], aParams));
 };

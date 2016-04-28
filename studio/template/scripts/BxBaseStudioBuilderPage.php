@@ -55,9 +55,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
         parent::__construct($sType, $sPage);
 
-        $this->sStorage = 'sys_images_custom';
-		$this->sTranscoder = 'sys_custom_images';
-		$this->aUploaders = array('sys_simple', 'sys_html5');
+        $this->sStorage = 'sys_images';
+		$this->sTranscoder = 'sys_builder_page_preview';
+		$this->aUploaders = array('sys_builder_page_simple', 'sys_builder_page_html5');
         
         $this->sBaseUrl = BX_DOL_URL_STUDIO . 'builder_page.php';
         $this->sTypeUrl = $this->sBaseUrl . '?type=%s';
