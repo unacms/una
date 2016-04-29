@@ -19,16 +19,6 @@ class BxGroupsModule extends BxBaseModProfileModule
         parent::__construct($aModule);
     }
 
-    public function serviceGetMenuSetNameForMenuTrigger ($sMenuTriggerName)
-    {
-        if ('trigger_profile_view_submenu' == $sMenuTriggerName)
-            return '';
-        elseif ('trigger_group_view_submenu' == $sMenuTriggerName)
-            return $this->_oConfig->CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
-        else
-            return parent::serviceGetMenuSetNameForMenuTrigger ($sMenuTriggerName);
-    }
-
     public function serviceActAsProfile ()
     {
         return false;

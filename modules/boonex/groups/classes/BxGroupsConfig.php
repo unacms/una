@@ -92,6 +92,8 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_groups_administration',
         	'OBJECT_GRID_COMMON' => 'bx_groups_common',
 
+            'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
+            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => '',
         	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
 
             // menu items which visibility depends on custom visibility checking

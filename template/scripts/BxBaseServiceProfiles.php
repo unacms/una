@@ -102,7 +102,7 @@ class BxBaseServiceProfiles extends BxDol
         // search in each module
         $a = array();
         foreach ($aModules as $aModule) {
-            if ('system' == $aModule['name']) // don't search in account profiles
+            if (!BxDolService::call($aModule['name'], 'act_as_profile'))
                 continue;
             $a = array_merge($a, BxDolService::call($aModule['name'], 'profiles_search', array($sTerm, 10)));
         }

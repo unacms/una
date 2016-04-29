@@ -53,7 +53,7 @@ $aConfig = array(
      */
     'menu_triggers' => array(
     	'trigger_profile_view_submenu', 
-    	'trigger_profile_view_actions'
+    	'trigger_profile_view_actions',
     ),
 
 	/**
