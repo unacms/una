@@ -92,7 +92,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
         	'OBJECT_GRID_COMMON' => 'bx_organizations_common',
 
-        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_organizations_view_entry',
+        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

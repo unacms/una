@@ -59,7 +59,7 @@ $aConfig = array(
      * Page triggers.
      */
     'page_triggers' => array (
-    	'trigger_page_organizations_view_entry', 
+    	'trigger_page_profile_view_entry', 
     ),
 
     /**
