@@ -3,21 +3,22 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Timeline Timeline
+ * @defgroup    Groups Groups
  * @ingroup     TridentModules
  *
  * @{
  */
 
 $aConfig = array(
+
     /**
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_timeline',
-    'title' => 'Timeline',
-    'note' => 'Timeline module.',
-    'version' => '8.0.11.DEV',
+    'name' => 'bx_groups',
+    'title' => 'Groups',
+    'note' => 'Basic group profiles functionality.',
+    'version' => '8.0.0.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
@@ -28,50 +29,56 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/timeline/',
-    'home_uri' => 'timeline',
+    'home_dir' => 'boonex/groups/',
+    'home_uri' => 'groups',
 
-    'db_prefix' => 'bx_timeline_',
-    'class_prefix' => 'BxTimeline',
+    'db_prefix' => 'bx_groups_',
+    'class_prefix' => 'BxGroups',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Timeline',
+    'language_category' => 'Groups',
 
     /**
-     * List of page triggers.
+     * Connections.
      */
-    'page_triggers' => array (
-    	'trigger_page_persons_view_entry', 
-    	'trigger_page_organizations_view_entry'
+    'connections' => array(
+    	'sys_profiles_friends' => array ('type' => 'profiles'),
+		'sys_profiles_subscriptions' => array ('type' => 'profiles'),
     ),
 
     /**
      * Menu triggers.
      */
     'menu_triggers' => array(
-    	'trigger_profile_view_submenu',
     	'trigger_group_view_submenu',
+    ),
+
+    /**
+     * Page triggers.
+     */
+    'page_triggers' => array (
+    	'trigger_page_groups_view_entry', 
     ),
 
     /**
      * Storages.
      */
     'storages' => array(
-    	'bx_timeline_photos',
-    	'bx_timeline_videos'
+    	'bx_groups_pics'
     ),
 
-    /**
+	/**
      * Transcoders.
      */
     'transcoders' => array(
-    	'bx_timeline_photos_preview',
-    	'bx_timeline_photos_view',
-    	'bx_timeline_videos_poster',
-    	'bx_timeline_videos_mp4',
-    	'bx_timeline_videos_webm'
+    	'bx_groups_icon', 
+    	'bx_groups_thumb', 
+    	'bx_groups_avatar', 
+    	'bx_groups_picture', 
+    	'bx_groups_cover', 
+    	'bx_groups_cover_thumb'
     ),
 
     /**
@@ -86,22 +93,22 @@ $aConfig = array(
     	'process_storages' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
+    	'process_connections' => 1,
+    	'process_deleted_profiles' => 1,
         'clear_db_cache' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
-    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable_success' => array(
+    	'process_menu_triggers' => 1,
     	'process_page_triggers' => 1,
-		'process_menu_triggers' => 1,
     	'register_transcoders' => 1,
-    	'clear_db_cache' => 1,
+        'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
-    	'update_relations' => 1,
     	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
@@ -114,13 +121,6 @@ $aConfig = array(
      * Dependencies Section
      */
     'dependencies' => array(),
-
-    /**
-     * Connections Section
-     */
-    'relations' => array(
-    	'bx_notifications'
-    )
 );
 
 /** @} */

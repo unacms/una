@@ -150,7 +150,7 @@ class BxBaseServiceProfiles extends BxDol
             'bx_repeat:row' => array(),
         );
         foreach ($aProfiles as $aProfile) {
-            if ($aProfile['type'] == 'system') // skip system account profile
+            if (!BxDolService::call($aProfile['type'], 'act_as_profile'))
                 continue;
             $aVars['bx_repeat:row'][] = array (
                 'class' => $iActiveProfileId == $aProfile['id'] ? '' : 'bx-def-color-bg-box',

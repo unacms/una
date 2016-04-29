@@ -163,12 +163,12 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
      * @return array
      */
-    public function actionAdd ($iContent = 0)
+    public function actionAdd ($iContent = 0, $iInitiator = false)
     {
         if (!$iContent)
             $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
 
-        return $this->_action (bx_get_logged_profile_id(), $iContent, 'addConnection', '_sys_conn_err_connection_already_exists', true);
+        return $this->_action ($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'addConnection', '_sys_conn_err_connection_already_exists', true);
     }
 
     /**
@@ -176,7 +176,7 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
      * @return array
      */
-    public function actionRemove ($iContent = 0)
+    public function actionRemove ($iContent = 0, $iInitiator = false)
     {
         if (!$iContent)
             $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
@@ -185,7 +185,7 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
         if (false == $a['err'])
             return $a;
 
-        return $this->_action (bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists');
+        return $this->_action ($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists');
     }
 
     /**
@@ -193,12 +193,12 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
      * @return array
      */
-    public function actionReject ($iContent = 0)
+    public function actionReject ($iContent = 0, $iInitiator = false)
     {
         if (!$iContent)
             $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
 
-        return $this->_action ($iContent, bx_get_logged_profile_id(), 'removeConnection', '_sys_conn_err_connection_does_not_exists');
+        return $this->_action ($iContent, $iInitiator ? $iInitiator : bx_get_logged_profile_id(), 'removeConnection', '_sys_conn_err_connection_does_not_exists');
     }
 
     protected function _action ($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual = false)

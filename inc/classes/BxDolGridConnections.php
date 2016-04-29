@@ -49,10 +49,7 @@ class BxDolGridConnections extends BxTemplGrid
      */
     public function performActionAccept()
     {
-        $iId = 0;
-        $aIds = bx_get('ids');
-        if ($aIds && is_array($aIds))
-            $iId = (int)array_pop($aIds);
+        list ($iId, $iViewedId) = $this->_prepareIds();
 
         if (!$iId) {
             echoJson(array('msg' => _t('_sys_txt_error_occured')));
@@ -61,7 +58,7 @@ class BxDolGridConnections extends BxTemplGrid
 
         $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
 
-        $a = $oConn->actionAdd($iId);
+        $a = $oConn->actionAdd($iId, $iViewedId);
         if (isset($a['err']) && $a['err'])
             echoJson(array('msg' => $a['msg']));
         else
@@ -78,12 +75,14 @@ class BxDolGridConnections extends BxTemplGrid
 
     protected function _delete ($mixedId)
     {
+        list ($iId, $iViewedId) = $this->_prepareIds();
+
         $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
 
-        if ($oConn->isConnected(bx_get_logged_profile_id(), (int)$mixedId, true))
-            $a = $oConn->actionRemove($mixedId);
+        if ($oConn->isConnected($iViewedId, $iId, true))
+            $a = $oConn->actionRemove($iId, $iViewedId);
         else
-            $a = $oConn->actionReject($mixedId);
+            $a = $oConn->actionReject($iId, $iViewedId);
 
         return isset($a['err']) && $a['err'] ? false : true;
     }
@@ -150,6 +149,25 @@ class BxDolGridConnections extends BxTemplGrid
             return '';
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _prepareIds ()
+    {
+        $iViewedId = false;
+        $iId = 0;
+        $aIds = bx_get('ids');
+        if ($aIds && is_array($aIds))
+            $mixedId = array_pop($aIds);
+
+        if (false === strpos($mixedId, ':')) {
+            $iId = (int)$mixedId;
+        }
+        else {
+            list ($iId, $iViewedId) = explode (':', $mixedId);
+            $iId = (int)$iId;
+            $iViewedId = (int)$iViewedId;
+        }
+        return array($iId, $iViewedId);
     }
 }
 
