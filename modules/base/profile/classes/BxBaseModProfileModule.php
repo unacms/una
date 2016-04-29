@@ -83,6 +83,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $o->getNum();
 	}
 
+    public function serviceGetSubmenuObject ()
+    {
+        return $this->_oConfig->CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
+    }
+
     public function serviceGetMenuSetNameForMenuTrigger ($sMenuTriggerName)
     {
         if ('trigger_profile_view_submenu' == $sMenuTriggerName)
