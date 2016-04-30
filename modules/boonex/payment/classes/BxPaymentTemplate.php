@@ -36,22 +36,29 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     	$this->addCss(array('orders.css'));
     }
 
-    public function addJsCssCart()
+    public function addJsCssCart($iVendorId = 0)
     {
     	$this->addJsTranslation(array('_bx_payment_err_nothing_selected'));
     	$this->addJs(array('jquery.anim.js', 'cart.js'));
     	$this->addCss(array('orders.css', 'cart.css'));
+
+    	$oModule = $this->_getModule();
+    	if(!empty($iVendorId)) {
+    		$aProviders = $this->_oDb->getVendorInfoProvidersSubscription($iVendorId);
+    		foreach($aProviders as $sProvider => $aProvider)
+				$oModule->getObjectProvider($sProvider, $iVendorId)->addJsCss();
+    	}
     }
 
-	public function displayCartJs($bWrapped = true)
+	public function displayCartJs($iVendorId = 0)
     {
-        $this->addJsCssCart();
+        $this->addJsCssCart($iVendorId);
         return $this->displayJsCode('cart');
     }
 
     public function displayAddToCartJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $bWrapped = true)
     {
-        $sJsCode = $this->displayCartJs($bWrapped);
+        $sJsCode = $this->displayCartJs($iVendorId);
         $sJsMethod = $this->parseHtmlByName('add_to_cart_js.html', array(
             'js_object' => $this->_oConfig->getJsObject('cart'),
             'vendor_id' => $iVendorId,
@@ -81,7 +88,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
 	public function displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
     {
-        $sJsCode = $this->displayCartJs($bWrapped);
+        $sJsCode = $this->displayCartJs($iVendorId);
         $sJsMethod = $this->parseHtmlByName('subscribe_js.html', array(
             'js_object' => $this->_oConfig->getJsObject('cart'),
             'vendor_id' => $iVendorId,

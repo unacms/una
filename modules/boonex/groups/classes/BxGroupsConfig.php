@@ -1,0 +1,154 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    Groups Groups
+ * @ingroup     TridentModules
+ *
+ * @{
+ */
+
+class BxGroupsConfig extends BxBaseModProfileConfig
+{
+    function __construct($aModule)
+    {
+        parent::__construct($aModule);
+
+        $aMenuItems2Methods = array (
+            'view-group-profile' => 'checkAllowedView',
+            'edit-group-profile' => 'checkAllowedEdit',
+            'delete-group-profile' => 'checkAllowedDelete',
+            'profile-fan-add' => 'checkAllowedFanAdd',
+            'profile-fan-remove' => 'checkAllowedFanRemove',
+            'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
+            'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
+            'profile-actions-more' => 'checkAllowedViewMoreMenu',
+            'profile-set-acl-level' => 'checkAllowedSetMembership',
+        );
+
+        $this->CNF = array (
+
+            // module icon
+            'ICON' => 'group col-red2',
+
+            // database tables
+            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
+
+            // database fields
+            'FIELD_ID' => 'id',
+            'FIELD_AUTHOR' => 'author',
+            'FIELD_ADDED' => 'added',
+            'FIELD_CHANGED' => 'changed',
+            'FIELD_NAME' => 'group_name',
+            'FIELD_PICTURE' => 'picture',
+            'FIELD_PICTURE_PREVIEW' => 'picture_preview',
+            'FIELD_COVER' => 'cover',
+            'FIELD_COVER_PREVIEW' => 'cover_preview',
+            'FIELDS_QUICK_SEARCH' => array('group_name'),
+            'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
+
+            // page URIs
+            'URI_VIEW_ENTRY' => 'view-group-profile',
+            'URI_EDIT_ENTRY' => 'edit-group-profile',
+            'URI_EDIT_COVER' => 'edit-group-cover',
+        	'URI_MANAGE_COMMON' => 'groups-manage',
+
+            'URL_HOME' => 'page.php?i=groups-home',
+        	'URL_MANAGE_COMMON' => 'page.php?i=groups-manage',
+        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=groups-administration',
+
+            // some params
+            'PARAM_AUTOAPPROVAL' => 'bx_groups_autoapproval',
+            'PARAM_DEFAULT_ACL_LEVEL' => 'bx_groups_default_acl_level',
+            'PARAM_NUM_RSS' => 'bx_groups_num_rss',
+            'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_groups_num_connections_quick',
+
+            // objects
+            'OBJECT_STORAGE' => 'bx_groups_pics',
+            'OBJECT_STORAGE_COVER' => 'bx_groups_pics',
+            'OBJECT_IMAGES_TRANSCODER_THUMB' => 'bx_groups_thumb',
+            'OBJECT_IMAGES_TRANSCODER_ICON' => 'bx_groups_icon',
+            'OBJECT_IMAGES_TRANSCODER_AVATAR' => 'bx_groups_avatar',
+            'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_groups_picture',
+            'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_groups_cover',
+            'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_groups_cover_thumb',
+            'OBJECT_VIEWS' => 'bx_groups',
+            'OBJECT_METATAGS' => 'bx_groups',
+            'OBJECT_FORM_ENTRY' => 'bx_group',
+            'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_group_view',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_group_add',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_group_edit',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_group_edit_cover',
+            'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_group_delete',
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_groups_view_actions', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_groups_view_actions_more', // actions menu on view entry page for "more" popup
+            'OBJECT_MENU_SUBMENU' => 'bx_groups_submenu', // main module submenu
+            'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_groups_view_submenu',  // view entry submenu
+            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_groups_view_submenu_cover',  // view entry submenu displayed in cover
+            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'groups-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_MANAGE_TOOLS' => 'bx_groups_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_PAGE_VIEW_ENTRY' => 'bx_groups_view_profile',
+            'OBJECT_GRID_ADMINISTRATION' => 'bx_groups_administration',
+        	'OBJECT_GRID_COMMON' => 'bx_groups_common',
+
+            'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
+            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => '',
+        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
+
+            // menu items which visibility depends on custom visibility checking
+            'MENU_ITEM_TO_METHOD' => array (
+                'bx_groups_view_actions' => $aMenuItems2Methods,
+                'bx_groups_view_actions_more' => $aMenuItems2Methods,
+            ),
+
+            // informer messages
+            'INFORMERS' => array (
+                'status' => array (
+                    'name' => 'bx-groups-status-not-active',
+                    'map' => array (
+                        BX_PROFILE_STATUS_PENDING => '_bx_groups_txt_account_pending',
+                        BX_PROFILE_STATUS_SUSPENDED => '_bx_groups_txt_account_suspended',
+                    ),
+                ),
+            ),
+
+            // some language keys
+            'T' => array (
+                'txt_sample_single' => '_bx_groups_txt_sample_single',
+                'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
+                'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',
+                'menu_item_title_befriend_confirm' => '_bx_groups_menu_item_title_befriend_confirm',
+                'menu_item_title_unfriend_reject_request' => '_bx_groups_menu_item_title_unfriend_reject_request',
+                'menu_item_title_befriend' => '_bx_groups_menu_item_title_befriend',
+                'menu_item_title_unfriend' => '_bx_groups_menu_item_title_unfriend',
+            	'grid_action_err_delete' => '_bx_groups_grid_action_err_delete',
+            	'grid_txt_account_manager' => '_bx_groups_grid_txt_account_manager',
+				'filter_item_active' => '_bx_groups_grid_filter_item_title_adm_active',
+            	'filter_item_pending' => '_bx_groups_grid_filter_item_title_adm_pending',
+            	'filter_item_suspended' => '_bx_groups_grid_filter_item_title_adm_suspended',
+            	'filter_item_select_one_filter1' => '_bx_groups_grid_filter_item_title_adm_select_one_filter1',
+            	'menu_item_manage_my' => '_bx_groups_menu_item_title_manage_my',
+            	'menu_item_manage_all' => '_bx_groups_menu_item_title_manage_all',
+            ),
+
+        );
+
+        $this->_aJsClasses = array(
+        	'manage_tools' => 'BxGroupsManageTools'
+        );
+
+        $this->_aJsObjects = array(
+        	'manage_tools' => 'oBxGroupsManageTools'
+        );
+
+        $this->_aGridObjects = array(
+        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
+        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+        	
+        );
+    }
+
+}
+
+/** @} */

@@ -26,28 +26,11 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = false;
+        $this->_bUseSsl = $this->getOption('ssl') == 'on';
         $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';        
 
         $this->_iMode = (int)$this->getOption('mode');
         $this->_bCheckAmount = false; // Disabled for easier processing of discounted subscriptions.
-    }
-
-    public function getReturnDataUrl($iVendorId)
-    {
-    	$sResult = parent::getReturnDataUrl($iVendorId);
-    	if($this->getOption('ssl') == 'on')
-    		$sResult = $this->_oModule->_oConfig->http2https($sResult);
-
-		return $sResult;
-    }
-
-	public function getNotifyUrl($iVendorId)
-    {
-    	$sResult = parent::getNotifyUrl($iVendorId);
-    	if($this->getOption('ssl') == 'on')
-    		$sResult = $this->_oModule->_oConfig->http2https($sResult);
-
-		return $sResult;
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo)
@@ -115,12 +98,12 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
     }
 
 	public function createHostedPage($iPendingId, $aItem, $aClient, $aVendor) {
-		$oPage = null;
+		$oPage = false;
 
 		try {
 			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
 			$oResult = ChargeBee_HostedPage::checkoutNew(array(
-				'redirectUrl' => bx_append_url_params(parent::getReturnDataUrl($aVendor['id']), array(
+				'redirectUrl' => bx_append_url_params($this->getReturnDataUrl($aVendor['id']), array(
 					'pending_id' => $iPendingId
 				)),
 				'subscription' => array(

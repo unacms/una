@@ -486,6 +486,7 @@
 	<string name="_adm_bp_mi_page_visibility"><![CDATA[Visibility]]></string>
 	<string name="_adm_bp_scs_save"><![CDATA[The changes were successfully saved]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Active]]></string>
+	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Attachments]]></string>
 	<string name="_adm_bp_txt_block_content_image_align"><![CDATA[Alignment]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_center"><![CDATA[center]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_empty"><![CDATA[Select alignment...]]></string>

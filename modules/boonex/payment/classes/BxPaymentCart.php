@@ -243,8 +243,10 @@ class BxPaymentCart extends BxBaseModPaymentCart
             return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
 
 		$iClientId = $this->_oModule->getProfileId();
-        if(empty($iClientId))
-            return array('code' => 2, 'message' => _t($CNF['T']['ERR_REQUIRED_LOGIN']));
+        if(empty($iClientId)) {
+        	$sLoginUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=login');
+            return array('code' => 2, 'eval' => 'window.open("' . $sLoginUrl . '", "_self");');
+        }
 
         if($iClientId == $iSellerId)
             return array('code' => 3, 'message' => _t($CNF['T']['ERR_SELF_PURCHASE']));

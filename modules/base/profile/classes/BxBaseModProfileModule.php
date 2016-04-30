@@ -50,6 +50,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 
     // ====== SERVICE METHODS
+
+	public function serviceGetContentInfoById($iContentId)
+    {
+        return $this->_oDb->getContentInfoById((int)$iContentId);
+    }
+
 	public function serviceGetMenuAddonManageTools()
 	{
 		bx_import('SearchResult', $this->_aModule);
@@ -77,18 +83,24 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $o->getNum();
 	}
 
+    public function serviceGetSubmenuObject ()
+    {
+        return $this->_oConfig->CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
+    }
+
     public function serviceGetMenuSetNameForMenuTrigger ($sMenuTriggerName)
     {
-        if ('trigger_profile_view_submenu' == $sMenuTriggerName)
-            return $this->_oConfig->CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
-        elseif ('trigger_profile_view_actions' == $sMenuTriggerName)
-            return $this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
+        $CNF = &$this->_oConfig->CNF;
+        if ($CNF['TRIGGER_MENU_PROFILE_VIEW_SUBMENU'] == $sMenuTriggerName)
+            return $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
+        elseif ($CNF['TRIGGER_MENU_PROFILE_VIEW_ACTIONS'] == $sMenuTriggerName)
+            return $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
         return '';
     }
 
 	public function serviceGetPageObjectForPageTrigger ($sPageTriggerName)
     {
-        if(isset($this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY']) && $this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY'] == $sPageTriggerName)
+        if (isset($this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY']) && $this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY'] == $sPageTriggerName)
         	return $this->_oConfig->CNF['OBJECT_PAGE_VIEW_ENTRY'];
 
         return '';
@@ -162,6 +174,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     public function serviceFormsHelper ()
     {
         return parent::serviceFormsHelper ();
+    }
+
+    public function serviceActAsProfile ()
+    {
+        return true;
     }
 
     public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false)
@@ -403,6 +420,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             $isConnected = $oConn->isConnected($oProfile->id(), $this->_iProfileId, $isMutual);
         else
             $isConnected = $oConn->isConnected($this->_iProfileId, $oProfile->id(), $isMutual);
+
+        if ($isInvertResult)
+            $isConnected = !$isConnected;
+
+        return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    protected function _checkAllowedConnectContent (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
+    {
+        if (!$this->_iProfileId)
+            return _t('_sys_txt_access_denied');
+
+        $CNF = &$this->_oConfig->CNF;
+
+        $oConn = BxDolConnection::getObjectInstance($sObjConnection);
+        if ($isSwap)
+            $isConnected = $oConn->isConnected($aDataEntry[$CNF['FIELD_ID']], $this->_iProfileId, $isMutual);
+        else
+            $isConnected = $oConn->isConnected($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']], $isMutual);
 
         if ($isInvertResult)
             $isConnected = !$isConnected;

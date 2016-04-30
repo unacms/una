@@ -19,6 +19,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     protected $sActionBlockCreate = 'block_create';
     protected $sActionBlockEdit = 'block_edit';
 
+    protected $sStorage;
+    protected $sTranscoder;
+    protected $aUploaders; 
+
     protected $sBaseUrl;
     protected $sTypeUrl;
     protected $sPageUrl;
@@ -32,6 +36,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         'settings_groups_id' => 'adm-bp-settings-groups',
         'create_block_popup_id' => 'adm-bp-create-block-popup',
         'edit_block_popup_id' => 'adm-bp-edit-block-popup',
+    	'edit_block_editor_id' => 'adm-bp-edit-block-editor',
         'block_id' => 'adm-bpb-',
         'block_list_id' => 'adm-bpl-',
         'block_lists_id' => 'adm-bp-block-lists',
@@ -50,6 +55,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
         parent::__construct($sType, $sPage);
 
+        $this->sStorage = 'sys_images';
+		$this->sTranscoder = 'sys_builder_page_preview';
+		$this->aUploaders = array('sys_builder_page_simple', 'sys_builder_page_html5');
+        
         $this->sBaseUrl = BX_DOL_URL_STUDIO . 'builder_page.php';
         $this->sTypeUrl = $this->sBaseUrl . '?type=%s';
         $this->sPageUrl = $this->sTypeUrl . '&page=%s';
@@ -57,6 +66,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     function getPageCss()
     {
+    	$oTemplate = BxDolStudioTemplate::getInstance();
+		foreach($this->aUploaders as $sUploader) {
+			$oUploader = BxDolUploader::getObjectInstance($sUploader, $this->sStorage, '', $oTemplate);
+			if($oUploader)
+				$oUploader->addCssJs();
+		}
+
         return array_merge(parent::getPageCss(), array('page_layouts.css', 'builder_page.css'));
     }
 
@@ -1245,6 +1261,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_HTML:
+            	
                 $aFields = array(
                     'content' => array(
                         'type' => 'textarea',
@@ -1254,10 +1271,26 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'value' => $aBlock['content'],
                         'required' => '0',
                         'html' => 1,
+                		'attrs' => array('id' => $this->aHtmlIds['edit_block_editor_id']),
                         'db' => array (
                             'pass' => 'XssHtml',
                         ),
                     ),
+                    'attachments' => array(
+                    	'type' => 'files',
+	                    'name' => 'attachments',
+						'storage_object' => $this->sStorage,
+	 					'images_transcoder' => $this->sTranscoder,
+	 					'uploaders' => $this->aUploaders,
+						'multiple' => true,
+	 					'content_id' => $aBlock['id'],
+	 					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_form_ghost_template.html', array(
+                    		'js_object' => $this->getPageJsObject(),
+                    		'name' => 'attachments',
+							'editor_id' => $this->aHtmlIds['edit_block_editor_id'],
+                    	)),
+	                    'caption' => _t('_adm_bp_txt_block_content_attachments_html')
+                    )
                 );
                 break;
 
