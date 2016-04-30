@@ -257,4 +257,46 @@ BxDolStudioBuilderPage.prototype.parsePageUrl = function(aParams) {
 
 	return this.sPageUrl.replace('{0}', sType).replace('{1}', sPage);
 };
+
+BxDolStudioBuilderPage.prototype.changeDimension = function(oText) {
+	var oText = $(oText);
+	var sKey = oText.attr('name');
+	var iValue = parseInt(oText.val());
+	if(!iValue || iValue <= 0)
+		return;
+
+	var oUrl = oText.parents('.bx-uploader-ghost:first').find('.bx-ug-url');
+	var aUrl = oUrl.val().split('?');
+	var aPairs = aUrl[1].split('&');
+
+	var aParams = {};
+	var bUpdated = false;
+	for(var i in aPairs) {
+		var aPair = aPairs[i].split('=');
+
+		aParams[aPair[0]] = aPair[1];
+		if(aPair[0] == sKey) {
+			aParams[aPair[0]] = iValue;
+			bUpdated = true;
+		}
+	}
+
+	if(!bUpdated)
+		aParams[sKey] = iValue;
+
+	oUrl.val(bx_append_url_params(aUrl[0], aParams));
+};
+
+BxDolStudioBuilderPage.prototype.deleteGhost = function(iFileId, sFileUrl, sFileIcon, aEditors, oUploaderInstance) {
+    bx_editor_remove_img(aEditors, ['img[src="' + sFileIcon + '"]', 'img[src="' + sFileUrl + '"]', '#bx-base-text-img-' + iFileId, '#bx-base-text-icon-' + iFileId]);
+
+    oUploaderInstance.deleteGhost(iFileId);
+};
+
+BxDolStudioBuilderPage.prototype.insertIntoPost = function(oButton, iFileId, sEditorId) {
+	var sFileUrl = $(oButton).parents('.bx-uploader-ghost:first').find('.bx-ug-url').val();
+
+    bx_editor_insert_img (sEditorId, 'bx-base-text-img-' + iFileId, sFileUrl, 'bx-base-text-img');
+};
+
 /** @} */

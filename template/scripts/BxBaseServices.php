@@ -62,6 +62,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return new BxTemplAccountForms();
     }
 
+    public function serviceActAsProfile ()
+    {
+        return false;
+    }
+
     public function servicePrepareFields ($aFieldsProfile)
     {
         return $aFieldsProfile;

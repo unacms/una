@@ -167,6 +167,15 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     }
 
     /**
+     * Get profile module name
+     */
+    public function getModule($iProfileId = false)
+    {
+        $aInfo = $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+        return $aInfo['type'];
+    }
+
+    /**
      * Get profile info
      */
     public function getInfo($iProfileId = 0)

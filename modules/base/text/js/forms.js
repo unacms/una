@@ -17,7 +17,7 @@ function bx_base_text_select_ghost(eCheckbox, sName) {
 function bx_base_text_delete_ghost (iFileId, sFileUrl, sFileIcon, aEditors, oUploaderInstance) {
     bx_editor_remove_img (
         aEditors,
-        ['img[src="' + sFileIcon + '"]', 'img[src="' + sFileUrl + '"]', '.bx-base-text-img-' + iFileId, '.bx-base-text-icon-' + iFileId]
+        ['img[src="' + sFileIcon + '"]', 'img[src="' + sFileUrl + '"]', '#bx-base-text-img-' + iFileId, '.bx-base-text-icon-' + iFileId]
     );
     oUploaderInstance.deleteGhost(iFileId);
 }

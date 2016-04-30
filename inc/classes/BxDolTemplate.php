@@ -780,8 +780,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
         if (!empty($this->aPage['image']))
             $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
-        else
-            $sRet .= BxTemplFunctions::getInstance()->getMetaIcons();
+
+        $sRet .= BxTemplFunctions::getInstance()->getMetaIcons();
 
         if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
             $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';

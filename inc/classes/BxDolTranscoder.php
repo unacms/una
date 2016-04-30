@@ -25,6 +25,7 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
     protected $_sRetinaSuffix = '@2x'; ///< handler suffix for retina image file
     protected $_sQueueTable = ''; ///< table with queued files for transcoding
     protected $_sQueueStorage = ''; ///< storage object to storage temporary files
+    protected $_iDevicePixelRatio = false; ///< force device pixel ratio, 1 or 2
 
     /**
      * constructor
@@ -468,8 +469,21 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         return $iCount;
     }
 
+    public function forceDevicePixelRatio ($i)
+    {
+        if (!$i)
+            $this->_iDevicePixelRatio = false;
+        elseif ($i >= 2) 
+            $this->_iDevicePixelRatio = 2;
+        else
+            $this->_iDevicePixelRatio = 1;
+    }
+
     public function getDevicePixelRatio ()
     {
+        if ($this->_iDevicePixelRatio)
+            return $this->_iDevicePixelRatio;
+
         if (isset($_COOKIE['devicePixelRatio']) && (!isset($this->_aObject['source_params']['disable_retina']) || !$this->_aObject['source_params']['disable_retina'])) {
             $iDevicePixelRatio = intval($_COOKIE['devicePixelRatio']);
             if ($iDevicePixelRatio >= 2)

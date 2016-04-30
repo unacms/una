@@ -34,11 +34,13 @@ class BxBaseModTextPageAuthor extends BxTemplPage
         // select view profile submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if ($oMenuSubmenu) {
-            $oMenuSubmenu->setObjectSubmenu('bx_persons_view_submenu', array (
-                'title' => $this->_oProfile->getDisplayName(),
-                'link' => $this->_oProfile->getUrl(),
-                'icon' => $this->_oProfile->getIconModule(),
-            ));
+            $sProfileObject = BxDolService::call($this->_oProfile->getModule(), 'get_submenu_object');
+            if ($sProfileObject)
+                $oMenuSubmenu->setObjectSubmenu($sProfileObject, array (
+                    'title' => $this->_oProfile->getDisplayName(),
+                    'link' => $this->_oProfile->getUrl(),
+                    'icon' => $this->_oProfile->getIconModule(),
+                ));
         }
 
         // add replaceable markers

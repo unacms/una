@@ -55,16 +55,19 @@ class BxBasePageAccount extends BxTemplPage
         if ($iSwitchToProfileId = (int)bx_get('switch_to_profile')) {
             $oInformer = BxDolInformer::getInstance($this->_oTemplate);
             $oProfile = BxDolProfile::getInstance($iSwitchToProfileId);
-            $sInformerMsg = '';
+            $aProfile = $oProfile->getInfo();
+            $sInformerMsg = '';            
 
-            if ($oProfile && $oProfile->getAccountId() == getLoggedId()) {
-                $oAccount = BxDolAccount::getInstance();
-                if ($oAccount->updateProfileContext($iSwitchToProfileId))
-                    $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
+            if (BxDolService::call($aProfile['type'], 'act_as_profile')) {
+                if ($oProfile && $oProfile->getAccountId() == getLoggedId()) {
+                    $oAccount = BxDolAccount::getInstance();
+                    if ($oAccount->updateProfileContext($iSwitchToProfileId))
+                        $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
+                }
+
+                if ($oInformer)
+                    $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), $sInformerMsg ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
             }
-
-            if ($oInformer)
-                $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), $sInformerMsg ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
         }
 
     }

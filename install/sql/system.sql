@@ -2137,7 +2137,9 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('sys_simple', 1, 'BxTemplUploaderSimple', ''),
 ('sys_html5', 1, 'BxTemplUploaderHTML5', ''),
 ('sys_cmts_simple', 1, 'BxTemplCmtsUploaderSimple', ''),
-('sys_settings_html5', 1, 'BxTemplStudioSettingsUploaderHTML5', '');
+('sys_settings_html5', 1, 'BxTemplStudioSettingsUploaderHTML5', ''),
+('sys_builder_page_simple', 1, 'BxTemplStudioBuilderPageUploaderSimple', ''),
+('sys_builder_page_html5', 1, 'BxTemplStudioBuilderPageUploaderHTML5', '');
 
 
 -- --------------------------------------------------------
@@ -3150,6 +3152,8 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('sys_icon_apple', 'sys_images', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
 ('sys_icon_facebook', 'sys_images', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
 ('sys_icon_favicon', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0', '', ''),
+('sys_builder_page_preview', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '1', '2592000', '0', '', ''),
+('sys_builder_page_embed', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '1', '2592000', '0', '', ''),
 ('sys_cmts_images_preview', 'sys_cmts_images_preview', 'Storage', 'a:1:{s:6:"object";s:15:"sys_cmts_images";}', 'no', '1', '2592000', '0', '', ''),
 ('sys_custom_images', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:17:"sys_images_custom";}', 'no', '1', '2592000', '0', '', '');
 
@@ -3189,8 +3193,11 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('sys_icon_apple', 'Resize', 'a:4:{s:1:"w";s:3:"152";s:1:"h";s:3:"152";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
 ('sys_icon_facebook', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
 ('sys_icon_favicon', 'Resize', 'a:4:{s:1:"w";s:2:"16";s:1:"h";s:2:"16";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
+('sys_builder_page_preview', 'Resize', 'a:4:{s:1:"w";s:3:"128";s:1:"h";s:3:"128";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('sys_builder_page_embed', 'ResizeVar', '', '0'),
 ('sys_cmts_images_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('sys_custom_images', 'ResizeVar', '', '0');
+
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_queue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

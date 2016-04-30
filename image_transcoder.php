@@ -7,16 +7,6 @@
  * @{
  */
 
-if (isset($_GET['devicePixelRatio'])) {
-    $sDpr = $_GET['devicePixelRatio'];
-
-    if ('' . ceil(intval($sDpr)) !== $sDpr)
-        $sDpr = '1';
-
-    setcookie('devicePixelRatio', $sDpr, time()+60*60*24*365);
-    exit();
-}
-
 ob_start();
 
 require_once('./inc/header.inc.php');
@@ -33,6 +23,9 @@ if (!$oTranscoder) {
 }
 
 ob_end_clean();
+
+if (isset($_GET['dpx']))
+    $oTranscoder->forceDevicePixelRatio((int)$_GET['dpx']);
 
 if (!$oTranscoder->isFileReady($sHandler) && !$oTranscoder->transcode ($sHandler)) {
     bx_transcoder_error_occured();
