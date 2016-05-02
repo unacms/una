@@ -24,7 +24,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'profile-set-acl-level' => 'checkAllowedSetMembership',
         );
 
         $this->CNF = array (
@@ -58,9 +57,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         	'URL_MANAGE_COMMON' => 'page.php?i=groups-manage',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=groups-administration',
 
-            // some params
-            'PARAM_AUTOAPPROVAL' => 'bx_groups_autoapproval',
-            'PARAM_DEFAULT_ACL_LEVEL' => 'bx_groups_default_acl_level',
             'PARAM_NUM_RSS' => 'bx_groups_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_groups_num_connections_quick',
 

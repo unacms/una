@@ -19,7 +19,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     public function __construct($oModule)
     {
         parent::__construct($oModule);
-        $this->setAutoApproval((bool)getParam($oModule->_oConfig->CNF['PARAM_AUTOAPPROVAL']));
+        $this->setAutoApproval(isset($oModule->_oConfig->CNF['PARAM_AUTOAPPROVAL']) ? (bool)getParam($oModule->_oConfig->CNF['PARAM_AUTOAPPROVAL']) : true);
     }
 
     public function isAutoApproval()
@@ -111,15 +111,18 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oProfile->approve(BX_PROFILE_ACTION_AUTO);
 
         // set created profile some default membership
-        $iAclLevel = isAdmin() ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']);
+        $iAclLevel = !isset($CNF['PARAM_DEFAULT_ACL_LEVEL']) ? MEMBERSHIP_ID_STANDARD : 
+            (isAdmin() ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']));
         BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
 
         // alert
         bx_alert($this->_oModule->getName(), 'added', $iContentId);
 
         // switch context to the created profile
-        $oAccount = BxDolAccount::getInstance($iAccountId);
-        $oAccount->updateProfileContext($iProfileId);
+        if ($this->_oModule->serviceActAsProfile()) {
+            $oAccount = BxDolAccount::getInstance($iAccountId);
+            $oAccount->updateProfileContext($iProfileId);
+        }
 
         return '';
     }
