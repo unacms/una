@@ -11,8 +11,6 @@ VALUES (@iTypeId, 'bx_groups', '_bx_groups', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_groups_autoapproval', 'on', @iCategId, '_bx_groups_option_autoapproval', 'checkbox', '', '', '', 1),
-('bx_groups_default_acl_level', '3', @iCategId, '_bx_groups_option_default_acl_level', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:2:{i:0;b:0;i:1;b:1;}s:5:"class";s:16:"TemplAclServices";}', '', '', 2),
 ('bx_groups_num_connections_quick', '4', @iCategId, '_bx_groups_option_num_connections_quick', 'digit', '', '', '', 10),
 ('bx_groups_num_rss', '10', @iCategId, '_bx_groups_option_num_rss', 'digit', '', '', '', 12);
 
@@ -157,7 +155,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_groups_view_actions', 'bx_groups', 'profile-fan-add', '_bx_groups_menu_item_title_system_become_fan', '{title_add_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_groups_fans\', \'add\', \'{content_id}\')', '', 'user-plus', '', 0, 2147483647, 1, 0, 5),
 -- ('bx_groups_view_actions', 'bx_groups', 'profile-friend-add', '_bx_groups_menu_item_title_system_befriend', '{title_add_friend}', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_friends\', \'add\', \'{profile_id}\')', '', 'user-plus', '', 0, 2147483647, 1, 0, 10),
 ('bx_groups_view_actions', 'bx_groups', 'profile-subscribe-add', '_bx_groups_menu_item_title_system_subscribe', '_bx_groups_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, 1, 0, 20),
-('bx_groups_view_actions', 'bx_groups', 'profile-set-acl-level', '_sys_menu_item_title_system_set_acl_level', '_sys_menu_item_title_set_acl_level', 'javascript:void(0)', 'bx_menu_popup(''sys_set_acl_level'', window, {}, {profile_id: {profile_id}});', '', 'certificate', '', 0, 192, 1, 0, 30),
 ('bx_groups_view_actions', 'bx_groups', 'profile-actions-more', '_bx_groups_menu_item_title_system_more_actions', '_bx_groups_menu_item_title_more_actions', 'javascript:void(0)', 'bx_menu_popup(''bx_groups_view_actions_more'', this, {}, {profile_id:{profile_id}});', '', 'cog', 'bx_groups_view_actions_more', 1, 2147483647, 1, 0, 9999);
 
 -- MENU: view actions more
@@ -348,10 +345,8 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_groups_common', 'actions', '', '20%', 0, '', '', 4);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_groups_administration', 'bulk', 'set_acl_level', '_bx_groups_grid_action_title_adm_set_acl_level', '', 0, 0, 1),
 ('bx_groups_administration', 'bulk', 'delete', '_bx_groups_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_groups_administration', 'bulk', 'delete_with_content', '_bx_groups_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
-('bx_groups_administration', 'single', 'set_acl_level', '_bx_groups_grid_action_title_adm_set_acl_level', 'certificate', 1, 0, 1),
 ('bx_groups_administration', 'single', 'settings', '_bx_groups_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
 ('bx_groups_common', 'bulk', 'delete', '_bx_groups_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_groups_common', 'bulk', 'delete_with_content', '_bx_groups_grid_action_title_adm_delete_with_content', '', 0, 1, 2),

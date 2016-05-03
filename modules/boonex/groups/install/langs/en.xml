@@ -3,8 +3,6 @@
 
 	<string name="_bx_groups"><![CDATA[Groups]]></string>
 
-	<string name="_bx_groups_option_autoapproval"><![CDATA[Activate all groups after creation automatically]]></string>
-	<string name="_bx_groups_option_default_acl_level"><![CDATA[Default level to assign after group creation]]></string>
 	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
 	<string name="_bx_groups_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
 
@@ -18,8 +16,8 @@
     <string name="_bx_groups_form_profile_input_sys_group_name"><![CDATA[Group Name]]></string>
     <string name="_bx_groups_form_profile_input_group_name"><![CDATA[Group Name]]></string>
     <string name="_bx_groups_form_profile_input_group_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
-    <string name="_bx_groups_form_profile_input_sys_group_name"><![CDATA[Description]]></string>
-    <string name="_bx_groups_form_profile_input_group_name"><![CDATA[Description]]></string>
+    <string name="_bx_groups_form_profile_input_sys_group_desc"><![CDATA[Description]]></string>
+    <string name="_bx_groups_form_profile_input_group_desc"><![CDATA[Description]]></string>
     <string name="_bx_groups_form_profile_input_sys_group_cat"><![CDATA[Category]]></string>
 	<string name="_bx_groups_form_profile_input_group_cat"><![CDATA[Category]]></string>
     <string name="_bx_groups_form_profile_input_group_cat_err"><![CDATA[Category field is mandatory]]></string>
@@ -180,7 +178,6 @@
     <string name="_bx_groups_grid_column_title_adm_account"><![CDATA[Account]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
-    <string name="_bx_groups_grid_action_title_adm_set_acl_level"><![CDATA[Set Membership]]></string>
     <string name="_bx_groups_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
 	<string name="_bx_groups_grid_action_err_delete"><![CDATA[Cannot delete the selected group(s).]]></string>
 	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
@@ -189,41 +186,12 @@
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
 
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Group categories]]></string>
-    <string name="_bx_groups_cat_Agriculture"><![CDATA[Agriculture]]></string>
-    <string name="_bx_groups_cat_Financial"><![CDATA[Financial]]></string>
-    <string name="_bx_groups_cat_Biotech"><![CDATA[Biotech]]></string>
-    <string name="_bx_groups_cat_Cause"><![CDATA[Cause]]></string>
-    <string name="_bx_groups_cat_Chemical"><![CDATA[Chemical]]></string>
-    <string name="_bx_groups_cat_Religious"><![CDATA[Religious]]></string>
-    <string name="_bx_groups_cat_Community"><![CDATA[Community]]></string>
-    <string name="_bx_groups_cat_Company"><![CDATA[Company]]></string>
-    <string name="_bx_groups_cat_Entertainment"><![CDATA[Entertainment]]></string>
-    <string name="_bx_groups_cat_Technology"><![CDATA[Technology]]></string>
-    <string name="_bx_groups_cat_Consulting"><![CDATA[Consulting]]></string>
-    <string name="_bx_groups_cat_Education"><![CDATA[Education]]></string>
-    <string name="_bx_groups_cat_Energy"><![CDATA[Energy]]></string>
-    <string name="_bx_groups_cat_Engineering"><![CDATA[Engineering]]></string>
-    <string name="_bx_groups_cat_Food"><![CDATA[Food]]></string>
-    <string name="_bx_groups_cat_Government"><![CDATA[Government]]></string>
-    <string name="_bx_groups_cat_Health"><![CDATA[Health]]></string>
-    <string name="_bx_groups_cat_Medical"><![CDATA[Medical]]></string>
-    <string name="_bx_groups_cat_Industrial"><![CDATA[Industrial]]></string>
-    <string name="_bx_groups_cat_Insurance"><![CDATA[Insurance]]></string>
-    <string name="_bx_groups_cat_Internet"><![CDATA[Internet]]></string>
-    <string name="_bx_groups_cat_Software"><![CDATA[Software]]></string>
-    <string name="_bx_groups_cat_Legal"><![CDATA[Legal]]></string>
-    <string name="_bx_groups_cat_Media"><![CDATA[Media]]></string>
-    <string name="_bx_groups_cat_School"><![CDATA[School]]></string>
-    <string name="_bx_groups_cat_NGO"><![CDATA[NGO]]></string>
-    <string name="_bx_groups_cat_NPO"><![CDATA[NPO]]></string>
-    <string name="_bx_groups_cat_Political"><![CDATA[Political]]></string>
-    <string name="_bx_groups_cat_Retail"><![CDATA[Retail]]></string>
-    <string name="_bx_groups_cat_Small_Business"><![CDATA[Small Business]]></string>
-    <string name="_bx_groups_cat_Telecommunication"><![CDATA[Telecommunication]]></string>
-    <string name="_bx_groups_cat_Transport"><![CDATA[Transport]]></string>
-    <string name="_bx_groups_cat_Travel"><![CDATA[Travel]]></string>
-    <string name="_bx_groups_cat_University"><![CDATA[University]]></string>
-    <string name="_bx_groups_cat_Other"><![CDATA[Other]]></string>
+    <string name="_bx_groups_cat_General"><![CDATA[General]]></string>
+    <string name="_bx_groups_cat_Business"><![CDATA[Business]]></string>
+    <string name="_bx_groups_cat_Interests"><![CDATA[Interests]]></string>
+    <string name="_bx_groups_cat_Causes"><![CDATA[Causes]]></string>
+    <string name="_bx_groups_cat_Fun"><![CDATA[Fun]]></string>
+    <string name="_bx_groups_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
 
     <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
 </resources>
