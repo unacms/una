@@ -134,14 +134,14 @@
     <string name="_bx_groups_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
     <string name="_bx_groups_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
 
-    <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Become fan]]></string>
-    <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Become fan]]></string>
-    <string name="_bx_groups_menu_item_title_become_fan_sent"><![CDATA[Become fan (requested)]]></string>
-    <string name="_bx_groups_menu_item_title_become_fan_confirm"><![CDATA[Accept fan request]]></string>
-    <string name="_bx_groups_menu_item_title_system_leave_group"><![CDATA[Leave]]></string>
-    <string name="_bx_groups_menu_item_title_leave_group"><![CDATA[Leave]]></string>
-    <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel fan request]]></string>
-    <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Reject fan request]]></string>
+    <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Join Group]]></string>
+    <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Join Group]]></string>
+    <string name="_bx_groups_menu_item_title_become_fan_sent"><![CDATA[Join Group (requested)]]></string>
+    <string name="_bx_groups_menu_item_title_become_fan_confirm"><![CDATA[Accept Request]]></string>
+    <string name="_bx_groups_menu_item_title_system_leave_group"><![CDATA[Leave Group]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group"><![CDATA[Leave Group]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel Request]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Reject Request]]></string>
 
     <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string>
     <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Subscribe]]></string>
@@ -184,6 +184,8 @@
 
     <string name="_bx_groups_txt_account_pending"><![CDATA[This group is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
+    <string name="_bx_groups_txt_N_fans"><![CDATA[{0} fans]]></string>
+    <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
 
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Group categories]]></string>
     <string name="_bx_groups_cat_General"><![CDATA[General]]></string>
@@ -192,6 +194,4 @@
     <string name="_bx_groups_cat_Causes"><![CDATA[Causes]]></string>
     <string name="_bx_groups_cat_Fun"><![CDATA[Fun]]></string>
     <string name="_bx_groups_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
-
-    <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
 </resources>
