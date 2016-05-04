@@ -156,10 +156,11 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_groups_view_actions_more', 'bx_groups', '_bx_groups_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_groups_view_actions_more', 'bx_groups', 'profile-fan-remove', '_bx_groups_menu_item_title_system_leave_group', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_groups_fans\', \'remove\', \'{content_id}\')', '', 'user-times', '', 2147483647, 1, 0, 5),
+('bx_groups_view_actions_more', 'bx_groups', 'profile-fan-remove', '_bx_groups_menu_item_title_system_leave_group', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_groups_fans\', \'remove\', \'{content_id}\')', '', 'user-times', '', 2147483647, 1, 0, 10),
 ('bx_groups_view_actions_more', 'bx_groups', 'profile-subscribe-remove', '_bx_groups_menu_item_title_system_unsubscribe', '_bx_groups_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
-('bx_groups_view_actions_more', 'bx_groups', 'edit-group-profile', '_bx_groups_menu_item_title_system_edit_profile', '_bx_groups_menu_item_title_edit_profile', 'page.php?i=edit-group-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 30),
-('bx_groups_view_actions_more', 'bx_groups', 'delete-group-profile', '_bx_groups_menu_item_title_system_delete_profile', '_bx_groups_menu_item_title_delete_profile', 'page.php?i=delete-group-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 40);
+('bx_groups_view_actions_more', 'bx_groups', 'edit-group-cover', '_bx_groups_menu_item_title_system_edit_cover', '_bx_groups_menu_item_title_edit_cover', 'page.php?i=edit-group-cover&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 30),
+('bx_groups_view_actions_more', 'bx_groups', 'edit-group-profile', '_bx_groups_menu_item_title_system_edit_profile', '_bx_groups_menu_item_title_edit_profile', 'page.php?i=edit-group-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 40),
+('bx_groups_view_actions_more', 'bx_groups', 'delete-group-profile', '_bx_groups_menu_item_title_system_delete_profile', '_bx_groups_menu_item_title_delete_profile', 'page.php?i=delete-group-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
 -- MENU: module sub-menu
 

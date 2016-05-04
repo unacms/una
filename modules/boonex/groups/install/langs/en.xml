@@ -106,6 +106,8 @@
     <string name="_bx_groups_menu_item_title_delete"><![CDATA[Delete]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_groups_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_groups_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_groups_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_groups_menu_item_title_system_edit_profile"><![CDATA[Edit Group]]></string>
     <string name="_bx_groups_menu_item_title_edit_profile"><![CDATA[Edit Group]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_profile"><![CDATA[Delete Group]]></string>

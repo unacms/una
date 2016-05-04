@@ -105,6 +105,8 @@
     <string name="_bx_groups_menu_item_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_groups_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_groups_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_groups_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_groups_menu_item_title_system_edit_profile"><![CDATA[Редактировать группу]]></string>
     <string name="_bx_groups_menu_item_title_edit_profile"><![CDATA[Редактировать группу]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_profile"><![CDATA[Удалить группу]]></string>
