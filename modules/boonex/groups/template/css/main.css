@@ -13,13 +13,13 @@
 
 .bx-groups-unit {
     display:inline-block;
+    overflow:hidden;
 }
 
 .bx-groups-cover {
     display:block;
 
     height:7.5rem;
-    margin:0.0625rem;
 
     line-height:7.5rem;
     text-align:center;
@@ -43,7 +43,6 @@
 }
 
 .bx-groups-unit-title {
-    line-height:1.8rem;
     text-align:center;
     white-space:nowrap;
     text-overflow:ellipsis;
