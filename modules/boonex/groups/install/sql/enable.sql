@@ -300,12 +300,14 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_groups_fans', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxGroupsGridConnections', 'modules/boonex/groups/classes/BxGroupsGridConnections.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_groups_fans', 'name', '_sys_name', '70%', '', 10),
-('bx_groups_fans', 'actions', '', '30%', '', 20);
+('bx_groups_fans', 'name', '_sys_name', '50%', '', 10),
+('bx_groups_fans', 'actions', '', '50%', '', 20);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_groups_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
-('bx_groups_fans', 'single', 'delete', '', 'remove', 1, 20);
+('bx_groups_fans', 'single', 'to_admins', '_bx_groups_txt_to_admins', '', 0, 20),
+('bx_groups_fans', 'single', 'from_admins', '_bx_groups_txt_from_admins', '', 0, 30),
+('bx_groups_fans', 'single', 'delete', '', 'remove', 1, 40);
 
 -- GRIDS: administration
 

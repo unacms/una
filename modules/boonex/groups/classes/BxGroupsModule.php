@@ -77,6 +77,34 @@ class BxGroupsModule extends BxBaseModProfileModule
             return CHECK_ACTION_RESULT_ALLOWED;
         return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, 'bx_groups_fans', false, true, false);
     }
+
+    public function checkAllowedManageAdmins ($mixedDataEntry, $isPerformAction = false)
+    {
+        $aDataEntry = is_array($mixedDataEntry) ? $mixedDataEntry : $this->_oDb->getContentInfoById((int)$mixedDataEntry);
+
+        return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
+    {
+        if ($this->_oDb->isAdmin($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], bx_get_logged_profile_id()))
+            return CHECK_ACTION_RESULT_ALLOWED;
+        return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedChangeCover ($aDataEntry, $isPerformAction = false)
+    {
+        if ($this->_oDb->isAdmin($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], bx_get_logged_profile_id()))
+            return CHECK_ACTION_RESULT_ALLOWED;
+        return parent::checkAllowedChangeCover ($aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    {
+        if ($this->_oDb->isAdmin($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], bx_get_logged_profile_id()))
+            return CHECK_ACTION_RESULT_ALLOWED;
+        return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
+    }
 }
 
 /** @} */

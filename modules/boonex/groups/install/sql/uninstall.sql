@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_groups_data`, `bx_groups_pics`, `bx_groups_pics_resized`, `bx_groups_views_track`, `bx_groups_meta_keywords`, `bx_groups_fans`;
+DROP TABLE IF EXISTS `bx_groups_data`, `bx_groups_pics`, `bx_groups_pics_resized`, `bx_groups_views_track`, `bx_groups_meta_keywords`, `bx_groups_fans`, `bx_groups_admins`;
 
 -- PROFILES
 

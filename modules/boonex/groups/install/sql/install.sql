@@ -77,6 +77,15 @@ CREATE TABLE IF NOT EXISTS `bx_groups_fans` (
   KEY `content` (`content`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: admins
+CREATE TABLE IF NOT EXISTS `bx_groups_admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_id` int(10) unsigned NOT NULL,
+  `fan_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin` (`content_id`,`fan_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- STORAGES & TRANSCODERS
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES

@@ -187,6 +187,8 @@
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} участников]]></string>
     <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
+    <string name="_bx_groups_txt_to_admins"><![CDATA[В админы]]></string>
+    <string name="_bx_groups_txt_from_admins"><![CDATA[Из админов]]></string>
 
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Категории групп]]></string>
     <string name="_bx_groups_cat_General"><![CDATA[Обобщение]]></string>
