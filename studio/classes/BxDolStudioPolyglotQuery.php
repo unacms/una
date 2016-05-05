@@ -51,8 +51,13 @@ class BxDolStudioPolyglotQuery extends BxDolStudioLanguagesUtilsQuery
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tet`.`ID`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tet`.`ID`=:id ";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';

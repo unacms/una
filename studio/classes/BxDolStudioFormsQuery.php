@@ -328,6 +328,7 @@ class BxDolStudioFormsQuery extends BxDolDb
 
     function deleteInputs($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
@@ -337,14 +338,16 @@ class BxDolStudioFormsQuery extends BxDolDb
                     $this->query($sSql);
                 }
 
-                $sWhereClause = $this->prepare(" AND `ti`.`id`=? ", $aParams['value']);
+                $aBindings['id'] = $aParams['value'];
+
+                $sWhereClause = " AND `ti`.`id`=:id ";
                 break;
             case 'all':
                 break;
         }
 
         $sSql = "DELETE FROM `ti` USING `sys_form_inputs` AS `ti` WHERE 1 " . $sWhereClause . " " . $sLimitClause;
-        return (int)$this->query($sSql) > 0;
+        return (int)$this->query($sSql, $aBindings) > 0;
     }
 
     function checkInputsInDisplays($sObject, $sDisplayName)

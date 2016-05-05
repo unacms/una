@@ -197,7 +197,7 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
         switch($aParams['browse']) {
             case 'id':
                 $sMethod = 'getRow';
-                $sWhereClause = $this->prepare("AND `{$this->_sTable}`.`id`=? ", $aParams['value']);
+                $sWhereClause = $this->prepareAsString("AND `{$this->_sTable}`.`id`=? ", $aParams['value']);
                 $sLimitClause = "LIMIT 1";
                 break;
 

@@ -146,7 +146,7 @@ class BxDolStorageQuery extends BxDolDb
             $sAdd = ", `modified` = :modified";
         }
 
-        $sQuery = $this->prepare("UPDATE " . $this->_sTableFiles . " SET `{$sField}` = :{$sField} {$sAdd} WHERE `id` = :id");
+        $sQuery = "UPDATE " . $this->_sTableFiles . " SET `{$sField}` = :{$sField} {$sAdd} WHERE `id` = :id";
         return $this->query($sQuery, $aBindings);
     }
 

@@ -79,7 +79,6 @@ class BxDolConnectionQuery extends BxDolDb
         $sWhere = " AND `c`.`initiator` = :initiator1";
         $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
 
-        $sQuery = $this->prepare($sQuery);
         return $this->getColumn($sQuery, array(
     		'mutual' => $isMutual,
     		'initiator1' => $iInitiator1,
@@ -92,7 +91,6 @@ class BxDolConnectionQuery extends BxDolDb
         $sWhere = " AND `c`.`initiator` = :initiator";
         $sQuery = $this->_getConnectionsQuery($sWhere, '', '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
 
-        $sQuery = $this->prepare($sQuery);
         return $this->getColumn($sQuery, array(
         	'initiator' => $iInitiator
         ));
@@ -103,7 +101,6 @@ class BxDolConnectionQuery extends BxDolDb
         $sWhere = " AND `c`.`content` = :content";
         $sQuery = $this->_getConnectionsQuery($sWhere, '', '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
 
-        $sQuery = $this->prepare($sQuery);
         return $this->getColumn($sQuery, array(
         	'content' => $iContent
         ));
@@ -120,21 +117,21 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getConnectedContentCount ($iInitiator, $isMutual = false)
     {
-        $sWhere = $this->prepare(" AND `c`.`initiator` = ?", $iInitiator);
+        $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ?", $iInitiator);
         $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
         return $this->getOne($sQuery);
     }
 
     public function getConnectedInitiatorsCount ($iContent, $isMutual = false)
     {
-        $sWhere = $this->prepare(" AND `c`.`content` = ?", $iContent);
+        $sWhere = $this->prepareAsString(" AND `c`.`content` = ?", $iContent);
         $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
         return $this->getOne($sQuery);
     }
 
     protected function _getConnectionsQueryCount ($sWhere, $sJoin = '', $isMutual = false)
     {
-        $sWhere .= (false !== $isMutual) ? $this->prepare(" AND `c`.`mutual` = ?", $isMutual) : '';
+        $sWhere .= (false !== $isMutual) ? $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual) : '';
         return "SELECT COUNT(`id`) FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere";
     }
 
@@ -224,7 +221,7 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function onModuleProfileDelete ($sModuleName, $sField = 'initiator')
     {
-        return $this->onModuleDeleteCustom ('sys_profiles', 'id', $sField, $this->prepare(" AND `sys_profiles`.`type` = ? ", $sModuleName));
+        return $this->onModuleDeleteCustom ('sys_profiles', 'id', $sField, $this->prepareAsString(" AND `sys_profiles`.`type` = ? ", $sModuleName));
     }
 
     protected function onModuleDeleteCustom ($sTable, $sFieldId, $sField = 'initiator', $sWhere = '')

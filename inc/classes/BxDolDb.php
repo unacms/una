@@ -220,7 +220,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 		if($this->res($oStatement, $aBindings))
             $aResult = $oStatement->fetch(PDO::FETCH_NUM);
 
-        return count($aResult) ? $aResult[$iIndex] : false;
+        return is_array($aResult) && count($aResult) ? $aResult[$iIndex] : false;
     }
 
     /**
@@ -424,7 +424,6 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         	$GLOBALS['bx_profiler']->beginQuery($oStatement->queryString);
 
 		$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
-        //$bResult = !empty($aBindings) && is_array($aBindings) ? $oStatement->execute($aBindings) : $oStatement->execute();
 
         // we need to remeber last error message since mysql_ping will reset it on the next line !
         $this->_sErrorMessage = $bResult == false ? $oStatement->errorInfo() : '';
@@ -556,6 +555,8 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
     public function getParam($sKey, $bFromCache = true)
     {
+    	
+    	
         if (!$sKey)
             return false;
         if ($bFromCache && $this->isParamInCache($sKey)) {
@@ -984,8 +985,8 @@ EOJ;
                 $sQuery = str_replace($aReplace['from'], $aReplace['to'], $sQuery);
             if($sDelimiter != ';')
                 $sQuery = str_replace($sDelimiter, "", $sQuery);
-            $rResult = $this->res(trim($sQuery), false);
-            if(!$rResult) {
+
+            if($this->query(trim($sQuery)) === false) {
                 $aResult[] = array('query' => $sQuery, 'error' => $this->getErrorMessage());
                 if ($isBreakOnError)
                     break;

@@ -37,7 +37,7 @@ class BxDolViewQuery extends BxDolObjectQuery
         else {
         	$aBindings['viewer_nip'] = $iAuthorNip;
 
-            $sWhere = $this->prepare(" AND `viewer_id` = '0' AND `viewer_nip` = ? ", $iAuthorNip);
+            $sWhere = " AND `viewer_id` = '0' AND `viewer_nip` = :viewer_nip ";
         }
 
         $iDate = (int)$this->getOne("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = :object_id " . $sWhere, $aBindings);

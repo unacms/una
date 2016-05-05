@@ -276,12 +276,21 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
 
     function updateActionTrack($iActionId, $iProfileId, $iActionsLeft, $iValidSince = 0)
     {
-        $sUpdateAddon = "";
-        if($iValidSince != 0)
-            $sUpdateAddon = $this->prepare(", ValidSince=FROM_UNIXTIME(?)", $iValidSince);
+    	$aBindings = array(
+    		'actions_left' => $iActionsLeft,
+    		'action_id' => $iActionId,
+    		'member_id' => $iProfileId
+    	);
 
-        $sQuery = $this->prepare("UPDATE `sys_acl_actions_track` SET `ActionsLeft`=?" . $sUpdateAddon . " WHERE `IDAction`=? AND `IDMember`=?", $iActionsLeft, $iActionId, $iProfileId);
-        return (int)$this->query($sQuery) > 0;
+        $sUpdateAddon = "";
+        if($iValidSince != 0) {
+        	$aBindings['valid_since'] = $iValidSince;
+
+            $sUpdateAddon = ", ValidSince=FROM_UNIXTIME(:valid_since)";
+        }
+
+        $sQuery = "UPDATE `sys_acl_actions_track` SET `ActionsLeft`=:actions_left" . $sUpdateAddon . " WHERE `IDAction`=:action_id AND `IDMember`=:member_id";
+        return (int)$this->query($sQuery, $aBindings) > 0;
     }
 
     function insertLevelByProfileId($iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId)

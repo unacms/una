@@ -182,7 +182,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
     function getDependent($sUri)
     {
-        $sSql = "SELECT `id`, `title` FROM `sys_modules` WHERE `dependencies` LIKE '%" . $this->escape($sUri) . "%'";
+        $sSql = "SELECT `id`, `title` FROM `sys_modules` WHERE `dependencies` LIKE " . $this->escape('%' . $sUri . '%');
         return $this->getAll($sSql);
     }
 
