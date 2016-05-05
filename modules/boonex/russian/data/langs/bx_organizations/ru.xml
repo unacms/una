@@ -103,6 +103,8 @@
     <string name="_bx_orgs_menu_item_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_orgs_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_orgs_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_profile"><![CDATA[Редактировать организацию]]></string>
     <string name="_bx_orgs_menu_item_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_profile"><![CDATA[Удалить организацию]]></string>
