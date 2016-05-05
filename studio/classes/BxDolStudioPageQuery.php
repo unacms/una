@@ -25,37 +25,64 @@ class BxDolStudioPageQuery extends BxDolDb
         switch($aParams['type']) {
             case 'all':
                 break;
+
             case 'by_page_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tp`.`id`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tp`.`id`=:id";
                 $sOrderClause = "";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'by_page_id_full':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
                 $sSelectClause .= ", `tw`.`id` AS `wid_id`, `tw`.`module` AS `wid_module`, `tw`.`url` AS `wid_url`, `tw`.`click` AS `wid_click`, `tw`.`icon` AS `wid_icon`, `tw`.`caption` AS `wid_caption`, `tw`.`cnt_notices` AS `wid_cnt_notices`, `tw`.`cnt_actions` AS `wid_cnt_actions` ";
                 $sJoinClause .= "LEFT JOIN `sys_std_widgets` AS `tw` ON `tp`.`id`=`tw`.`page_id` ";
-                $sWhereClause .= $this->prepare("AND `tp`.`id`=?", $aParams['value']);
+                $sWhereClause .= "AND `tp`.`id`=:id";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'by_page_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tp`.`name`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tp`.`name`=?";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'by_page_name_full':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
                 $sSelectClause .= ", `tw`.`id` AS `wid_id`, `tw`.`module` AS `wid_module`, `tw`.`url` AS `wid_url`, `tw`.`click` AS `wid_click`, `tw`.`icon` AS `wid_icon`, `tw`.`caption` AS `wid_caption`, `tw`.`cnt_notices` AS `wid_cnt_notices`, `tw`.`cnt_actions` AS `wid_cnt_actions` ";
                 $sJoinClause .= "LEFT JOIN `sys_std_widgets` AS `tw` ON `tp`.`id`=`tw`.`page_id` ";
-                $sWhereClause .= $this->prepare("AND `tp`.`name`=?", $aParams['value']);
+                $sWhereClause .= "AND `tp`.`name`=:name";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'by_page_names_full':
                 $aMethod['name'] = 'getAll';
+                $aMethod['params'][1] = array();
+
                 $sSelectClause .= ", `tw`.`id` AS `wid_id`, `tw`.`module` AS `wid_module`, `tw`.`url` AS `wid_url`, `tw`.`click` AS `wid_click`, `tw`.`icon` AS `wid_icon`, `tw`.`caption` AS `wid_caption`, `tw`.`cnt_notices` AS `wid_cnt_notices`, `tw`.`cnt_actions` AS `wid_cnt_actions` ";
                 $sJoinClause .= "LEFT JOIN `sys_std_widgets` AS `tw` ON `tp`.`id`=`tw`.`page_id` ";
-                foreach($aParams['value'] as $sValue)
-                    $sWhereClause .= $this->prepare(" OR `tp`.`name`=?", $sValue);
+                foreach($aParams['value'] as $iKey => $sValue) {
+                	$sKey = 'name' . $iKey;
+                	$aMethod['params'][1][$sKey] = $sValue;
+
+                    $sWhereClause .= " OR `tp`.`name`=:" . $sKey;
+                }
                 $sWhereClause = "AND (0" . $sWhereClause . ")";
                 break;
         }

@@ -26,13 +26,21 @@ class BxDolViewQuery extends BxDolObjectQuery
     {
         $iAuthorNip = ip2long($sAuthorIp);
 
-        if($iAuthorId)
-            $sWhere = $this->prepare(" AND `viewer_id` = ? ", $iAuthorId);
-        else
-            $sWhere = $this->prepare(" AND `viewer_id` = '0' AND `viewer_nip` = ? ", $iAuthorNip);
+        $aBindings = array(
+        	'object_id' => $iObjectId
+        );
+        if($iAuthorId) {
+        	$aBindings['viewer_id'] = $iAuthorId;
 
-        $sQuery = $this->prepare("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? $sWhere", $iObjectId);
-        $iDate = (int)$this->getOne($sQuery);
+            $sWhere = " AND `viewer_id` = :viewer_id ";
+        }
+        else {
+        	$aBindings['viewer_nip'] = $iAuthorNip;
+
+            $sWhere = $this->prepare(" AND `viewer_id` = '0' AND `viewer_nip` = ? ", $iAuthorNip);
+        }
+
+        $iDate = (int)$this->getOne("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = :object_id " . $sWhere, $aBindings);
         $iDateNow = time();
 
         if(!$iDate) {

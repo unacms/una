@@ -84,7 +84,7 @@ class BxMarketGridLicenses extends BxTemplGrid
 		if(empty($this->_aQueryAppend['profile_id']))
 			return array();
 
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `tl`.`profile_id`=?", $this->_aQueryAppend['profile_id']);
+		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tl`.`profile_id`=?", $this->_aQueryAppend['profile_id']);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

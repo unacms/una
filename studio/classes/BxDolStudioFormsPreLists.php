@@ -23,7 +23,7 @@ class BxDolStudioFormsPreLists extends BxTemplStudioGrid
             list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sModule != '')
-            $this->_aOptions['source'] .= $this->oDb->prepare(" AND `module`=?", $sModule);
+            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `module`=?", $sModule);
 
         $aResults = parent::_getDataSql($sFilter, !empty($sOrderField) ? $sOrderField : 'title', $sOrderDir, $iStart, $iPerPage);
 

@@ -25,12 +25,21 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tt`.`id`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tt`.`id`=:id";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tt`.`name`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tt`.`name`=:name";
                 $sLimitClause .= "LIMIT 1";
                 break;
         }
@@ -71,37 +80,61 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tc`.`id`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tc`.`id`=:id";
                 $sLimitClause .= "LIMIT 1";
                 break;
             case 'by_name':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
                 $sSelectClause .= ", `tt`.`name` AS `type_name`, `tt`.`group` AS `type_group`";
                 $sJoinClause .= "LEFT JOIN `sys_options_types` AS `tt` ON `tc`.`type_id`=`tt`.`id` ";
-                $sWhereClause .= $this->prepare("AND `tc`.`name`=?", $aParams['value']);
+                $sWhereClause .= "AND `tc`.`name`=:name";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
             case 'all_key_name':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'name';
                 break;
+
             case 'by_type_id_key_name':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'name';
-                $sWhereClause .= $this->prepare("AND `tc`.`type_id`=?", $aParams['value']);
+                $aMethod['params'][2] = array(
+                	'type_id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tc`.`type_id`=:type_id";
                 break;
+
             case 'by_type_name_key_name':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'name';
+
                 $sJoinClause = "LEFT JOIN `sys_options_types` AS `tt` ON `tc`.`type_id`=`tt`.`id` ";
                 if(isset($aParams['category_name']) && !empty($aParams['category_name'])) {
                 	if(is_string($aParams['category_name']))
                 		$aParams['category_name'] = array($aParams['category_name']);
 
-                    $sWhereClause .= $this->prepare("AND `tt`.`name`=? AND `tc`.`name` IN (" . $this->implode_escape($aParams['category_name']) . ")", $aParams['type_name']);
+                    $sWhereClause .= "AND `tt`.`name`=:name AND `tc`.`name` IN (" . $this->implode_escape($aParams['category_name']) . ")";
+                    $aMethod['params'][2] = array(
+                    	'name' => $aParams['type_name']
+                    );
                 }
-                else
-                    $sWhereClause .= $this->prepare("AND `tt`.`name`=? AND `tc`.`hidden`=?", $aParams['type_name'], $aParams['hidden']);
+                else {
+                    $sWhereClause .= "AND `tt`.`name`=:name AND `tc`.`hidden`=:hidden";
+					$aMethod['params'][2] = array(
+	                	'name' => $aParams['type_name'],
+						'hidden' => $aParams['hidden']
+	                );
+                }
                 break;
         }
 
@@ -140,30 +173,56 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tm`.`id`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+                
+                $sWhereClause .= "AND `tm`.`id`=:id";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tm`.`name`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tm`.`name`=:name";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
 			case 'by_type':
-                $sWhereClause .= $this->prepare("AND `tm`.`type`=?", $aParams['value']);
+				$aMethod['params'][1] = array(
+                	'type' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tm`.`type`=:type";
                 break;
+
 			case 'by_category':
-                $sWhereClause .= $this->prepare("AND `tm`.`category`=?", $aParams['value']);
+				$aMethod['params'][1] = array(
+                	'category' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tm`.`category`=:category";
                 break;
+
 			case 'by_type_category':
-				$sWhereClause .= $this->prepare("AND `tm`.`type`=? AND `tm`.`category`=?", $aParams['type'], $aParams['category']);
+				$aMethod['params'][1] = array(
+                	'type' => $aParams['type'],
+					'category' => $aParams['category']
+                );
+
+				$sWhereClause .= "AND `tm`.`type`=:type AND `tm`.`category`=:category";
                 break;
         }
 
 		if(!empty($aParams['active'])) {
 			if((int)$aParams['active'] == 1)
 				$aMethod['name'] = 'getRow';
+			$aMethod['params'][1]['active'] = $aParams['active'];
 
-			$sWhereClause .= $this->prepare(" AND `tm`.`active`=?", $aParams['active']);
+			$sWhereClause .= " AND `tm`.`active`=:active";
 		}
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
@@ -211,7 +270,11 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
 				$aMethod['name'] = 'getPairs'; 
 				$aMethod['params'][1] = 'option';
 				$aMethod['params'][2] = 'value';
-                $sWhereClause .= $this->prepare("AND `tmo`.`mix_id`=?", $aParams['value']);
+				$aMethod['params'][3] = array(
+                	'mix_id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tmo`.`mix_id`=:mix_id";
                 break;
         }
 
@@ -249,25 +312,49 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         switch($aParams['type']) {
         	case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `to`.`id`=?", $aParams['value']);
+				$aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+                
+                $sWhereClause .= "AND `to`.`id`=:id";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `to`.`name`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `to`.`name`=:name";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
             case 'by_category_id':
-                $sWhereClause .= $this->prepare("AND `to`.`category_id`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'category_id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `to`.`category_id`=:category_id";
                 break;
+
             case 'by_category_name':
+            	$aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
                 $sJoinClause .= "LEFT JOIN `sys_options_categories` AS `tc` ON `to`.`category_id`=`tc`.`id` ";
-                $sWhereClause .= $this->prepare("AND `tc`.`name`=?", $aParams['value']);
+                $sWhereClause .= "AND `tc`.`name`=:name";
                 break;
+
             case 'by_category_name_full':
+            	$aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
                 $sSelectClause .= ", `tc`.`name` AS `category_name`, `tt`.`name` AS `type_name`";
                 $sJoinClause .= "LEFT JOIN `sys_options_categories` AS `tc` ON `to`.`category_id`=`tc`.`id` LEFT JOIN `sys_options_types` AS `tt` ON `tc`.`type_id`=`tt`.`id` ";
-                $sWhereClause .= $this->prepare("AND `tc`.`name`=?", $aParams['value']);
+                $sWhereClause .= "AND `tc`.`name`=:name";
                 break;
         }
 

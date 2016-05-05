@@ -199,15 +199,20 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     //--- Link attach related methods ---//
     public function getUnusedLinks($iUserId, $iLinkId = 0)
     {
-        $sMethod = 'getAll';
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $aMethod['params'][1] = array(
+			'profile_id' => $iUserId
+		);
 
         $sWhereAddon = '';
         if(!empty($iLinkId)) {
-            $sMethod = 'getRow';
-            $sWhereAddon = $this->prepare(" AND `tl`.`id`=?", $iLinkId);
+            $aMethod['name'] = 'getRow';
+            $aMethod['params'][1]['id'] = $iLinkId;
+
+            $sWhereAddon = " AND `tl`.`id`=:id";
         }
 
-        $sQuery = $this->prepare("SELECT
+        $aMethod['params'][0] = "SELECT
                 `tl`.`id` AS `id`,
                 `tl`.`profile_id` AS `profile_id`,
                 `tl`.`media_id` AS `media_id`,
@@ -217,20 +222,26 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 `tl`.`added` AS `added`
             FROM `" . $this->_sPrefix . "links` AS `tl`
             LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`
-            WHERE `tl`.`profile_id`=? AND ISNULL(`tle`.`event_id`)" . $sWhereAddon . "
-            ORDER BY `tl`.`added` DESC", $iUserId);
+            WHERE `tl`.`profile_id`=:profile_id AND ISNULL(`tle`.`event_id`)" . $sWhereAddon . "
+            ORDER BY `tl`.`added` DESC";
 
-        return $this->$sMethod($sQuery);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);;
     }
 
     public function deleteUnusedLinks($iUserId, $iLinkId = 0)
     {
-        $sWhereAddon = '';
-        if(!empty($iLinkId))
-            $sWhereAddon = $this->prepare(" AND `id`=?", $iLinkId);
+    	$aBindings = array(
+    		'profile_id' => $iUserId
+    	);
 
-        $sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "links` WHERE `profile_id`=?" . $sWhereAddon, $iUserId);
-        return $this->query($sQuery);
+        $sWhereAddon = '';
+        if(!empty($iLinkId)) {
+        	$aBindings['id'] = $iLinkId;
+
+            $sWhereAddon = " AND `id`=:id";
+        }
+
+        return $this->query("DELETE FROM `" . $this->_sPrefix . "links` WHERE `profile_id`=:profile_id" . $sWhereAddon);
     }
 
     public function saveLink($iEventId, $iLinkId)
@@ -266,10 +277,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     {
         switch($sFilter) {
             case BX_TIMELINE_FILTER_OWNER:
-                $sFilterAddon = " AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`='" . $iOwnerId . "' ";
+                $sFilterAddon = $this->prepareAsString(" AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`=? ", $iOwnerId);
                 break;
             case BX_TIMELINE_FILTER_OTHER:
-                $sFilterAddon = " AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`<>'" . $iOwnerId . "' ";
+                $sFilterAddon = $this->prepareAsString(" AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`<>? ", $iOwnerId);
                 break;
             case BX_TIMELINE_FILTER_ALL:
             default:
@@ -285,12 +296,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         switch($aParams['browse']) {
         	case 'owner_id':
-        		$sWhereClause = $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['value']);
+        		$sWhereClause = $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['value']);
         		break;
 
         	case 'common_by_object':
         		$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
-        		$sWhereClause = $this->prepare("AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ")='" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id`=? ", $aParams['value']);
+        		$sWhereClause = $this->prepareAsString("AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ")='" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id`=? ", $aParams['value']);
         		break;
 
             case 'descriptor':
@@ -298,11 +309,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $sWhereClause = "";
 
                 if(isset($aParams['type']))
-                	$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`type`=? ", $aParams['type']);
+                	$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`type`=? ", $aParams['type']);
 				if(isset($aParams['action']))
-					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`action`=? ", $aParams['action']);
+					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`action`=? ", $aParams['action']);
 				if(isset($aParams['object_id']))
-					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
+					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
 
 				$sLimitClause = "LIMIT 1";
                 break;
@@ -311,10 +322,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             	$sWhereClause = "";
 
             	if(isset($aParams['type']))
-                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE '%" . $this->escape($aParams['type']) . "%'";
+                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE " . $this->escape('%' . $aParams['type'] . '%');
 
                 if(isset($aParams['action']))
-                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE '%" . $this->escape($aParams['action']) . "%'";
+                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE " . $this->escape('%' . $aParams['action'] . '%');
                 break;
 
             default:
@@ -332,7 +343,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     	$sWhereClause = "AND `{$this->_sTable}`.`hidden`='0' ";
 
 		if(isset($aParams['active']))
-        	$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
+        	$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
 
 		//--- Apply filter
         if(isset($aParams['filter']))
@@ -341,7 +352,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 		//--- Apply timeline
         if(isset($aParams['timeline']) && !empty($aParams['timeline'])) {
         	$iYear = (int)$aParams['timeline'];
-            $sWhereClause .= $this->prepare("AND `date`<=? ", mktime(23, 59, 59, 12, 31, $iYear));
+            $sWhereClause .= $this->prepareAsString("AND `date`<=? ", mktime(23, 59, 59, 12, 31, $iYear));
 		}
 
 		//--- Apply modules or handlers filter
@@ -368,7 +379,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				if(empty($aParams['owner_id']))
 					break;
 
-				$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+				$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
 				break;
 
 			case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
@@ -383,7 +394,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$iUserId = bx_get_logged_profile_id();
 				$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
 
-				$sWhereClause .= "AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> " . $iUserId . ", 1) ";
+				$sWhereClause .= $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1) ", $iUserId);
 				break;
 
 			case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
@@ -409,30 +420,42 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if(isset($aHandler['group_by']) && !empty($aHandler['group_by']) && (!isset($oAlert->aExtras[$aHandler['group_by']]) || empty($oAlert->aExtras[$aHandler['group_by']])))
             return false;
 
+		$aBindings = array(
+			'object_id' => $oAlert->iObject,
+			'id' => $iId,
+			'owner_id' => $oAlert->iSender,
+			'type' => $sType,
+			'action' => $sAction
+		);
+
         $sWhereClause = "";
         switch($sDuration) {
             case 'day':
-                $iDayStart  = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-                $iDayEnd  = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
-                $sWhereClause .= "AND `date`>" . $iDayStart . " AND `date`<" . $iDayEnd . " ";
+                $aBindings['day_start'] = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+                $aBindings['day_end'] = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
+
+                $sWhereClause .= "AND `date`>:day_start AND `date`<:day_end ";
                 break;
         }
 
-        if(isset($aHandler['group_by']))
-            $sWhereClause .= "AND `content` LIKE '%" . $oAlert->aExtras[$aHandler['group_by']] . "%' ";
+        if(isset($aHandler['group_by'])) {
+        	$aBindings['content'] = '%' . $oAlert->aExtras[$aHandler['group_by']] . '%';
+
+            $sWhereClause .= "AND `content` LIKE :content ";
+        }
 
         $sSql = "UPDATE `{$this->_sTable}`
             SET
-                `object_id`=CONCAT(`object_id`, '," . $oAlert->iObject . "'),
+                `object_id`=CONCAT(`object_id`, ',:object_id'),
                 `title`='',
                 `description`='',
                 `date`=UNIX_TIMESTAMP()
             WHERE
-                `id`<>'" . $iId . "' AND
-                `owner_id`='" . $oAlert->iSender . "' AND
-                `type`='" . $sType . "' AND
-                `action`='" . $sAction . "' " . $sWhereClause;
-        $mixedResult = $this->query($sSql);
+                `id`<>:id AND
+                `owner_id`=:owner_id AND
+                `type`=:type AND
+                `action`=:action " . $sWhereClause;
+        $mixedResult = $this->query($sSql, $aBindings);
 
         if((int)$mixedResult > 0)
             $this->deleteEvent(array('id' => $iId));

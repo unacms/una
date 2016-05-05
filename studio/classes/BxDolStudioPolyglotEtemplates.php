@@ -23,7 +23,7 @@ class BxDolStudioPolyglotEtemplates extends BxTemplStudioGrid
             list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sModule != '')
-            $this->_aOptions['source'] .= $this->oDb->prepare(" AND `Module`=?", $sModule);
+            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `Module`=?", $sModule);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

@@ -134,13 +134,20 @@ class BxDolStorageQuery extends BxDolDb
 
     public function modifyCustomField($iFileId, $sField, $sValue, $isUpdateModifiedField = true)
     {
+    	$aBindings = array(
+    		$sField => $sValue,
+    		'id' => $iFileId
+    	);
+    	
         $sAdd = '';
         if ($isUpdateModifiedField) {
-            $iTime = time();
-            $sAdd = $this->prepare(", `modified` = ?", $iTime);
+        	$aBindings['modified'] = time();
+
+            $sAdd = ", `modified` = :modified";
         }
-        $sQuery = $this->prepare("UPDATE " . $this->_sTableFiles . " SET `{$sField}` = ? {$sAdd} WHERE `id` = ?", $sValue, $iFileId);
-        return $this->query($sQuery);
+
+        $sQuery = $this->prepare("UPDATE " . $this->_sTableFiles . " SET `{$sField}` = :{$sField} {$sAdd} WHERE `id` = :id");
+        return $this->query($sQuery, $aBindings);
     }
 
     public function deleteFile($iFileId)
@@ -218,17 +225,23 @@ class BxDolStorageQuery extends BxDolDb
 
     public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId)
     {
-        $sQuery = $this->prepare("UPDATE `sys_storage_ghosts` SET `content_id` = ? WHERE `profile_id` = ? AND `object` = ?", $iContentId, $iProfileId, $this->_aObject['object']);
-        $sQuery .= " AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")";
+        $sQuery = $this->prepare("UPDATE `sys_storage_ghosts` SET `content_id` = ? WHERE `profile_id` = ? AND `object` = ? AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")", $iContentId, $iProfileId, $this->_aObject['object']);
         return $this->res($sQuery);
     }
 
     public function deleteGhosts($mixedFileIds, $iProfileId, $iContentId = false)
     {
-        $sQuery = $this->prepare("DELETE FROM `sys_storage_ghosts` WHERE `profile_id` = ? AND `object` = ? AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")", $iProfileId, $this->_aObject['object']);
-        if (false !== $iContentId)
-            $sQuery .= $this->prepare(" AND `content_id` = ?", $iContentId);
-        $iCount = $this->query($sQuery);
+    	$aBindings = array(
+    		'profile_id' => $iProfileId,
+    		'object' => $this->_aObject['object']
+    	);
+        $sQuery = "DELETE FROM `sys_storage_ghosts` WHERE `profile_id` = :profile_id AND `object` = :object AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")";
+        if (false !== $iContentId) {
+        	$aBindings['content_id'] = $iContentId;
+
+            $sQuery .= " AND `content_id` = :content_id";
+        }
+        $iCount = $this->query($sQuery, $aBindings);
         if ($iCount)
             $this->query("OPTIMIZE TABLE `sys_storage_ghosts`");
         return $iCount;
@@ -247,15 +260,31 @@ class BxDolStorageQuery extends BxDolDb
 
     public function getFiles($iProfileId, $isGhostsOnly = false, $iContentId = false)
     {
+        $aBindings = array();
+
         $sJoin = '';
         if ($isGhostsOnly) {
-            $sJoin .= $this->prepare(" INNER JOIN `sys_storage_ghosts` AS `g` ON (`f`.`id` = `g`.`id` AND `g`.`profile_id` = ? AND `g`.`object` = ? ", $iProfileId, $this->_aObject['object']);
-            if (false !== $iContentId)
-                $sJoin .= $this->prepare(" AND `g`.`content_id` = ?", $iContentId);
+        	$aBindings['profile_id'] = $iProfileId;
+        	$aBindings['object'] = $this->_aObject['object'];
+
+            $sJoin .= " INNER JOIN `sys_storage_ghosts` AS `g` ON (`f`.`id` = `g`.`id` AND `g`.`profile_id` = :profile_id AND `g`.`object` = :object ";
+            if (false !== $iContentId) {
+            	$aBindings['content_id'] = $iContentId;
+
+                $sJoin .= " AND `g`.`content_id` = :content_id";
+            }
             $sJoin .= ')';
         }
-        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . (false === $iProfileId ? '' : $this->prepare("WHERE `f`.`profile_id` = ?", $iProfileId));
-        return $this->getAll($sQuery);
+
+        $sWhere = '';
+        if(false !== $iProfileId) {
+        	$aBindings['profile_id'] = $iProfileId;
+
+        	$sWhere = "WHERE `f`.`profile_id` = :profile_id";
+        }
+
+        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . $sWhere;
+        return $this->getAll($sQuery, $aBindings);
     }
 
     public function getFilesAll($iStart, $iPerPage)

@@ -464,7 +464,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
 
 
-        $sQuery = $sQuery . $oDb->prepare(' LIMIT ?, ?', $iStart, $iPerPage);
+        $sQuery = $sQuery . $oDb->prepareAsString(' LIMIT ?, ?', $iStart, $iPerPage);
         return $oDb->getAll($sQuery);
     }
 
@@ -481,7 +481,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                 // translatable fields
                 $iLang = BxDolLanguages::getInstance()->getCurrentLangId();
                 $oDb = BxDolDb::getInstance();
-                $sOrderClause = $oDb->prepare("ORDER BY (SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
+                $sOrderClause = $oDb->prepareAsString("ORDER BY (SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
 
             } else {
 

@@ -31,12 +31,12 @@ class BxDolStudioNavigationImport extends BxTemplStudioGridNavigation
             list($sSet, $sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sSet != '')
-            $this->_aOptions['source'] .= $this->oDb->prepare(" AND `set_name`=?", $sSet);
+            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `set_name`=?", $sSet);
 
         if($sModule != '')
-            $this->_aOptions['source'] .= $this->oDb->prepare(" AND `module`=?", $sModule);
+            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `module`=?", $sModule);
 
-        $this->_aOptions['source'] .= $this->oDb->prepare(" AND `set_name`<>?", $this->sSet);
+        $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `set_name`<>?", $this->sSet);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }
