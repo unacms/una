@@ -105,6 +105,8 @@
     <string name="_bx_groups_menu_item_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_groups_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_groups_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_groups_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_groups_menu_item_title_system_edit_profile"><![CDATA[Редактировать группу]]></string>
     <string name="_bx_groups_menu_item_title_edit_profile"><![CDATA[Редактировать группу]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_profile"><![CDATA[Удалить группу]]></string>
@@ -139,8 +141,8 @@
     <string name="_bx_groups_menu_item_title_become_fan_confirm"><![CDATA[Одобрить присоединение]]></string>
     <string name="_bx_groups_menu_item_title_system_leave_group"><![CDATA[Покинуть группу]]></string>
     <string name="_bx_groups_menu_item_title_leave_group"><![CDATA[Покинуть группу]]></string>
-    <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить присоединение к группе]]></string>
-    <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Отвергнуть присоединение к группе]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить присоединение]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
 
     <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string>
     <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Подписаться]]></string>
@@ -183,6 +185,8 @@
 
     <string name="_bx_groups_txt_account_pending"><![CDATA[Эта группа ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>
+    <string name="_bx_groups_txt_N_fans"><![CDATA[{0} участников]]></string>
+    <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
 
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Категории групп]]></string>
     <string name="_bx_groups_cat_General"><![CDATA[Обобщение]]></string>
@@ -191,6 +195,4 @@
     <string name="_bx_groups_cat_Causes"><![CDATA[Движение]]></string>
     <string name="_bx_groups_cat_Fun"><![CDATA[Юмор]]></string>
     <string name="_bx_groups_cat_Uncategorised"><![CDATA[Без категории]]></string>
-
-    <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
 </resources>

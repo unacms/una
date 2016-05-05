@@ -118,6 +118,26 @@ class BxDolConnectionQuery extends BxDolDb
         return $this->prepareAsString("SELECT $sFields FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere $sOrder LIMIT ?, ?", $iStart, $iLimit);
     }
 
+    public function getConnectedContentCount ($iInitiator, $isMutual = false)
+    {
+        $sWhere = $this->prepare(" AND `c`.`initiator` = ?", $iInitiator);
+        $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
+        return $this->getOne($sQuery);
+    }
+
+    public function getConnectedInitiatorsCount ($iContent, $isMutual = false)
+    {
+        $sWhere = $this->prepare(" AND `c`.`content` = ?", $iContent);
+        $sQuery = $this->_getConnectionsQueryCount($sWhere, '', $isMutual);
+        return $this->getOne($sQuery);
+    }
+
+    protected function _getConnectionsQueryCount ($sWhere, $sJoin = '', $isMutual = false)
+    {
+        $sWhere .= (false !== $isMutual) ? $this->prepare(" AND `c`.`mutual` = ?", $isMutual) : '';
+        return "SELECT COUNT(`id`) FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere";
+    }
+
     protected function _getOrderClause ($iOrder = BX_CONNECTIONS_ORDER_NONE, $sTable = '')
     {
         if ($sTable)
