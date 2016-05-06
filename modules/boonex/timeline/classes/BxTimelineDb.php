@@ -185,7 +185,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $sLimitAddon = '';
         if($iOffset != 0)
-            $sLimitAddon = $this->prepare(" OFFSET ?", $iOffset);
+            $sLimitAddon = $this->prepareAsString(" OFFSET ?", $iOffset);
 
         $sQuery = $this->prepare("SELECT
                  `tme`.`media_id` AS `id`

@@ -27,13 +27,21 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function updateContentPictureById($iContentId, $iProfileId, $iPictureId, $sFieldPicture)
     {
+    	$aBindings = array(
+    		$sFieldPicture => $iPictureId,
+    		'id' => $iContentId
+    	);
+
         $sWhere = '';
-        if ($iProfileId)
-            $sWhere = $this->prepare (" AND `author` = ? ", $iProfileId);
+        if ($iProfileId) {
+        	$aBindings['author'] = $iProfileId;
 
-        $sQuery = $this->prepare ("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = ? WHERE `id` = ?", $iPictureId, $iContentId);
+            $sWhere = " AND `author` = :author ";
+        }
 
-        return $this->res($sQuery . $sWhere);
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = :" . $sFieldPicture . " WHERE `id` = :id" . $sWhere;
+
+        return $this->query($sQuery, $aBindings);
     }
 
     public function searchByTerm($sTerm, $iLimit)
@@ -41,14 +49,22 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
         if (!$this->_oConfig->CNF['FIELDS_QUICK_SEARCH'])
             return array();
 
+		$aBindings = array(
+			'type' => $this->_oConfig->getName(),
+			'status' => BX_PROFILE_STATUS_ACTIVE
+		);
+
         $sWhere = '';
-        foreach ($this->_oConfig->CNF['FIELDS_QUICK_SEARCH'] as $sField)
-            $sWhere .= $this->prepare(" OR `c`.`$sField` LIKE ? ", '%' . $sTerm . '%');
+        foreach ($this->_oConfig->CNF['FIELDS_QUICK_SEARCH'] as $sField) {
+        	$aBindings[$sField] = '%' . $sTerm . '%';
 
-        $sOrderBy = $this->prepare(" ORDER BY `added` DESC LIMIT ?", (int)$iLimit);
+            $sWhere .= " OR `c`.`$sField` LIKE :" . $sField;
+        }
 
-        $sQuery = $this->prepare("SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) WHERE `p`.`status` = ?", $this->_oConfig->getName(), BX_PROFILE_STATUS_ACTIVE);
-        return $this->getAll($sQuery . " AND (0 $sWhere) " . $sOrderBy);
+        $sOrderBy = $this->prepareAsString(" ORDER BY `added` DESC LIMIT ?", (int)$iLimit);
+
+        $sQuery = "SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) WHERE `p`.`status` = :status AND (0 $sWhere)" . $sOrderBy;
+        return $this->getAll($sQuery, $aBindings);
     }
 }
 

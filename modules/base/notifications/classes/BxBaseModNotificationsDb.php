@@ -130,8 +130,11 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
  				case 'by_group_key_type':
  					$aMethod['name'] = 'getAllWithKey';
  					$aMethod['params'][1] = 'type';
+ 					$aMethod['params'][2] = array(
+	                	'group' => $aParams['group']
+	                );
 
- 					$sWhereClause = $this->prepare("AND `group`=?", $aParams['group']);
+ 					$sWhereClause = "AND `group`=:group";
  					break;
             }
 
@@ -146,12 +149,12 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
 
         $aSet = array();
         foreach($aParamsSet as $sKey => $sValue)
-           $aSet[] = $this->prepare("`" . $sKey . "`=?", $sValue);
+           $aSet[] = "`" . $sKey . "`=:" . $sKey;
 
 		if(!isset($aParamsSet['date']))
 			$aSet[] = "`date`=UNIX_TIMESTAMP()";
 
-        if((int)$this->query("INSERT INTO `{$this->_sTable}` SET " . implode(", ", $aSet)) <= 0)
+        if((int)$this->query("INSERT INTO `{$this->_sTable}` SET " . implode(", ", $aSet), $aParamsSet) <= 0)
             return 0;
 
         return (int)$this->lastId();
