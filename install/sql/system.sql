@@ -3019,9 +3019,10 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_forms_pre_lists', 'module', '_adm_form_txt_pre_lists_gl_module', '13%', 0, '11', '', 3),
 ('sys_studio_forms_pre_lists', 'use_for_sets', '_adm_form_txt_pre_lists_gl_use_for_sets', '10%', 0, '8', '', 4),
 ('sys_studio_forms_pre_lists', 'actions', '', '20%', 0, '', '', 5),
-('sys_studio_forms_pre_values', 'order', '', '1%', 0, '', '', 1),
-('sys_studio_forms_pre_values', 'LKey', '_adm_form_txt_pre_values_gl_lkey', '79%', 1, '75', '', 2),
-('sys_studio_forms_pre_values', 'actions', '', '20%', 0, '', '', 3);
+('sys_studio_forms_pre_values', 'checkbox', '', '1%', 0, '', '', 1),
+('sys_studio_forms_pre_values', 'order', '', '1%', 0, '', '', 2),
+('sys_studio_forms_pre_values', 'LKey', '_adm_form_txt_pre_values_gl_lkey', '79%', 1, '75', '', 3),
+('sys_studio_forms_pre_values', 'actions', '', '20%', 0, '', '', 4);
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
@@ -3071,7 +3072,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_forms_pre_lists', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_forms_pre_values', 'independent', 'add', '_adm_form_btn_pre_values_create', '', 0, 1),
 ('sys_studio_forms_pre_values', 'single', 'edit', '', 'pencil', 0, 1),
-('sys_studio_forms_pre_values', 'single', 'delete', '', 'remove', 1, 2);
+('sys_studio_forms_pre_values', 'single', 'delete', '', 'remove', 1, 2),
+('sys_studio_forms_pre_values', 'bulk', 'delete', '_adm_form_btn_pre_values_delete', '', 1, 1);
 
 -- GRID: connections
 

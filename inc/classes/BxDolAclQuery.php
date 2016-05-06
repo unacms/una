@@ -52,32 +52,42 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tal`.`ID`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tal`.`ID`=:id";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
             case 'all_active':
                 $sWhereClause .= "AND `tal`.`Active`='yes'";
                 break;
+
             case 'all_active_purchasble_pair':
                 $aMethod['name'] = "getPairs";
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'name';
                 $sWhereClause .= "AND `tal`.`Active`='yes' AND `tal`.`Purchasable`='yes'";
                 break;
+
             case 'all_active_pair':
                 $aMethod['name'] = "getPairs";
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'name';
                 $sWhereClause .= "AND `tal`.`Active`='yes'";
                 break;
+
             case 'all_pair':
                 $aMethod['name'] = "getPairs";
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'name';
                 break;
+
             case 'all_order_id':
                 $sOrderClause = "ORDER BY `tal`.`ID` ASC";
                 break;
+
             case 'all':
                 break;
         }
@@ -112,25 +122,43 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
         if(!isset($aParams['order']) || empty($aParams['order']))
            $sOrderClause = "ORDER BY `taa`.`Title` ASC";
 
+           
         switch($aParams['type']) {
             case 'by_names_and_module':
-                $sWhereClause .= " AND `taa`.`Name` IN(" . $this->implode_escape($aParams['value']) . ") " . $this->prepare(" AND `taa`.`Module` = ? ", $aParams['module']);
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['module']
+                );
+
+                $sWhereClause .= " AND `taa`.`Name` IN(" . $this->implode_escape($aParams['value']) . ") AND `taa`.`Module` = :module ";
                 break;
+
             case 'by_names':
                 $sWhereClause .= " AND `taa`.`Name` IN(" . $this->implode_escape($aParams['value']) . ")";
                 break;
+
             case 'by_level_id':
+            	$aMethod['params'][1] = array(
+                	'level_id' => $aParams['value'],
+                	'level_code' => pow(2, ($aParams['value'] - 1))
+                );
+
                 $sSelectClause .= ", `tam`.`AllowedCount` AS `allowed_count`, `tam`.`AllowedPeriodLen` AS `allowed_period_len` ";
                 $sJoinClause .= "LEFT JOIN `sys_acl_matrix` AS `tam` ON `taa`.`ID`=`tam`.`IDAction` ";
-                $sWhereClause .= $this->prepare("AND `tam`.`IDLevel`=? AND (`taa`.`DisabledForLevels`='0' OR `taa`.`DisabledForLevels`&?=0)", $aParams['value'], pow(2, ($aParams['value'] - 1)));
+                $sWhereClause .= "AND `tam`.`IDLevel`=:level_id AND (`taa`.`DisabledForLevels`='0' OR `taa`.`DisabledForLevels`&:level_code=0)";
                 break;
+
             case 'by_level_id_key_id':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = array(
+                	'level_id' => $aParams['value']
+                );
+
                 $sSelectClause .= ", `tam`.`AllowedCount` AS `allowed_count`, `tam`.`AllowedPeriodLen` AS `allowed_period_len` ";
                 $sJoinClause .= "LEFT JOIN `sys_acl_matrix` AS `tam` ON `taa`.`ID`=`tam`.`IDAction` ";
-                $sWhereClause .= $this->prepare("AND `tam`.`IDLevel`=?", $aParams['value']);
+                $sWhereClause .= "AND `tam`.`IDLevel`=:level_id";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -138,6 +166,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `taa`.`Module`";
                 break;
+
             case 'counter_by_levels':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'level_id';
@@ -247,12 +276,21 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
 
     function updateActionTrack($iActionId, $iProfileId, $iActionsLeft, $iValidSince = 0)
     {
-        $sUpdateAddon = "";
-        if($iValidSince != 0)
-            $sUpdateAddon = $this->prepare(", ValidSince=FROM_UNIXTIME(?)", $iValidSince);
+    	$aBindings = array(
+    		'actions_left' => $iActionsLeft,
+    		'action_id' => $iActionId,
+    		'member_id' => $iProfileId
+    	);
 
-        $sQuery = $this->prepare("UPDATE `sys_acl_actions_track` SET `ActionsLeft`=?" . $sUpdateAddon . " WHERE `IDAction`=? AND `IDMember`=?", $iActionsLeft, $iActionId, $iProfileId);
-        return (int)$this->query($sQuery) > 0;
+        $sUpdateAddon = "";
+        if($iValidSince != 0) {
+        	$aBindings['valid_since'] = $iValidSince;
+
+            $sUpdateAddon = ", ValidSince=FROM_UNIXTIME(:valid_since)";
+        }
+
+        $sQuery = "UPDATE `sys_acl_actions_track` SET `ActionsLeft`=:actions_left" . $sUpdateAddon . " WHERE `IDAction`=:action_id AND `IDMember`=:member_id";
+        return (int)$this->query($sQuery, $aBindings) > 0;
     }
 
     function insertLevelByProfileId($iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId)

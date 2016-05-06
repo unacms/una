@@ -81,7 +81,7 @@ class BxDolStudioPolyglotKeys extends BxTemplStudioGrid
 
         $this->_aOptions['source'] = sprintf($this->_aOptions['source'], $aLanguage['id']);
         if((int)$iModule != 0)
-            $this->_aOptions['source'] .= $this->oDb->prepare(" AND `tlk`.`IDCategory`=?", $iModule);
+            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `tlk`.`IDCategory`=?", $iModule);
 
         $aResults = parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
 

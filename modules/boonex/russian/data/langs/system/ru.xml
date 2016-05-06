@@ -643,9 +643,10 @@
 	<string name="_adm_form_btn_pre_lists_save"><![CDATA[Сохранить]]></string>
 	<string name="_adm_form_btn_pre_values_add"><![CDATA[Добавить]]></string>
 	<string name="_adm_form_btn_pre_values_cancel"><![CDATA[Отменить]]></string>
+	<string name="_adm_form_btn_pre_values_delete"><![CDATA[Удалить]]></string>
 	<string name="_adm_form_btn_pre_values_create"><![CDATA[Добавить новый Элемент]]></string>
-	<string name="_adm_form_btn_pre_values_delete"><![CDATA[Удалить Элемент]]></string>
-	<string name="_adm_form_btn_pre_values_edit"><![CDATA[Редактировать Элемент]]></string>
+	<string name="_adm_form_btn_pre_values_delete_item"><![CDATA[Удалить Элемент]]></string>
+	<string name="_adm_form_btn_pre_values_edit_item"><![CDATA[Редактировать Элемент]]></string>
 	<string name="_adm_form_dsc_displays_title"><![CDATA[Название режима отображения Формы. Видимо только в Студии.]]></string>
 	<string name="_adm_form_dsc_field_attrs_max"><![CDATA[Введите числовое значение]]></string>
 	<string name="_adm_form_dsc_field_attrs_min"><![CDATA[Введите числовое значение]]></string>

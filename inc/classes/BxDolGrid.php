@@ -406,7 +406,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                 // condition for regular fields
                 if (!empty($this->_aOptions['filter_fields']))
                     foreach ($this->_aOptions['filter_fields'] as $sField)
-                        $sCond .= $oDb->prepare("`{$sField}` LIKE ? OR ", '%' . $sFilter . '%');
+                        $sCond .= $oDb->prepareAsString("`{$sField}` LIKE ? OR ", '%' . $sFilter . '%');
 
                 // condition for translatable fields
                 if (!empty($this->_aOptions['filter_fields_translatable'])) {
@@ -434,7 +434,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                     $sCondFields = rtrim($sCondFields, ',');
 
                     if ($sCondFields) {
-                        $sCond = $oDb->prepare(" MATCH ($sCondFields) AGAINST (?) ", $sFilter);
+                        $sCond = $oDb->prepareAsString(" MATCH ($sCondFields) AGAINST (?) ", $sFilter);
                         $sOrderByFilter = $sCond;
                         $sCond .= ' > 1 OR ';
                     }
@@ -450,7 +450,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                     $sCondFields = rtrim($sCondFields, ' OR ');
 
                     if ($sCondFields)
-                        $sCond .= $oDb->prepare("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE MATCH (`s`.`string`) AGAINST (?) AND ($sCondFields) LIMIT 1) OR ", $sFilter);
+                        $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE MATCH (`s`.`string`) AGAINST (?) AND ($sCondFields) LIMIT 1) OR ", $sFilter);
                 }
 
                 $sCond = rtrim($sCond, ' OR ');
@@ -464,7 +464,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
 
 
-        $sQuery = $sQuery . $oDb->prepare(' LIMIT ?, ?', $iStart, $iPerPage);
+        $sQuery = $sQuery . $oDb->prepareAsString(' LIMIT ?, ?', $iStart, $iPerPage);
         return $oDb->getAll($sQuery);
     }
 
@@ -481,7 +481,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                 // translatable fields
                 $iLang = BxDolLanguages::getInstance()->getCurrentLangId();
                 $oDb = BxDolDb::getInstance();
-                $sOrderClause = $oDb->prepare("ORDER BY (SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
+                $sOrderClause = $oDb->prepareAsString("ORDER BY (SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
 
             } else {
 

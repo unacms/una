@@ -16,7 +16,7 @@ class BxDolStudioDashboardQuery extends BxDolStudioPageQuery
 
     function getModuleStorageSize($sModule)
     {
-    	$sSql = "SELECT SUM(`current_size`) AS `size` FROM `sys_objects_storage` WHERE `object` LIKE '" . $this->escape($sModule) . "%' LIMIT 1";
+    	$sSql = "SELECT SUM(`current_size`) AS `size` FROM `sys_objects_storage` WHERE `object` LIKE " . $this->escape($sModule . '%') . " LIMIT 1";
     	return $this->getOne($sSql);
     }
 }

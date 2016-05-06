@@ -25,22 +25,39 @@ class BxDolStudioFormsQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tf`.`id`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tf`.`id`=:id ";
                 break;
+
             case 'by_object_display':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'object' => $aParams['object'],
+                	'display_name' => $aParams['display']
+                );
+
                 $sJoinClause = "LEFT JOIN `sys_form_displays` AS `td` ON `tf`.`object`=`td`.`object` ";
-                $sWhereClause = $this->prepare("AND `td`.`object`=? AND `td`.`display_name`=? ", $aParams['object'], $aParams['display']);
+                $sWhereClause = "AND `td`.`object`=:object AND `td`.`display_name`=:display_name ";
                 break;
+
             case 'by_module':
-                $sWhereClause = $this->prepare("AND `tf`.`module`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `tf`.`module`=:module";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
                 $aMethod['params'][2] = 'counter';
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tf`.`module`";
+
             case 'all':
                 break;
         }
@@ -83,30 +100,61 @@ class BxDolStudioFormsQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `td`.`id`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `td`.`id`=:id ";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'by_object_display':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `td`.`object`=? AND `td`.`display_name`=? ", $aParams['object'], $aParams['display']);
+                $aMethod['params'][1] = array(
+                	'object' => $aParams['object'],
+                	'display_name' => $aParams['display']
+                );
+
+                $sWhereClause = " AND `td`.`object`=:object AND `td`.`display_name`=:display_name ";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'by_name':
-                $sWhereClause = $this->prepare(" AND `td`.`display_name`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'display_name' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `td`.`display_name`=:display_name ";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'by_module':
-                $sWhereClause = $this->prepare(" AND `td`.`module`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `td`.`module`=:module ";
                 break;
+
             case 'by_module_with_forms':
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['value']
+                );
+
                 $sSelectClause = ", `tf`.`title` AS `form_title`";
                 $sJoinClause = "LEFT JOIN `sys_objects_form` AS `tf` ON `td`.`object`=`tf`.`object` ";
-                $sWhereClause = $this->prepare(" AND `td`.`module`=? ", $aParams['value']);
+                $sWhereClause = " AND `td`.`module`=:module ";
                 $sOrderClause = "ORDER BY `td`.`object` ASC, `td`.`title` ASC";
                 break;
+
             case 'by_object':
-                $sWhereClause = $this->prepare(" AND `td`.`object`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'object' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `td`.`object`=:object ";
                 break;
+
             case 'counter_by_forms':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'object';
@@ -114,6 +162,7 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `td`.`object`";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -121,8 +170,10 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `td`.`module`";
                 break;
+
             case 'all':
                 break;
+
             case 'all_with_forms':
                 $sSelectClause = ", `tf`.`title` AS `form_title`";
                 $sJoinClause = "LEFT JOIN `sys_objects_form` AS `tf` ON `td`.`object`=`tf`.`object` ";
@@ -178,35 +229,68 @@ class BxDolStudioFormsQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tdi`.`id`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tdi`.`id`=:id ";
                 break;
+
             case 'by_object_id':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'object' => $aParams['object'],
+                	'id' => $aParams['id']
+                );
+
                 $sSelectClause = "`ti`.*, `tdi`.`id` AS `di_id`, `tdi`.`display_name` AS `display_name`, `tdi`.`visible_for_levels` AS `visible_for_levels`";
-                $sWhereClause = $this->prepare(" AND `ti`.`object`=? AND `tdi`.`id`=? ", $aParams['object'], $aParams['id']);
+                $sWhereClause = " AND `ti`.`object`=:object AND `tdi`.`id`=:id ";
                 break;
+
             case 'by_object_display':
-                $sWhereClause = $this->prepare(" AND `ti`.`object`=? AND `tdi`.`display_name`=? ", $aParams['object'], $aParams['display']);
+            	$aMethod['params'][1] = array(
+                	'object' => $aParams['object'],
+                	'display_name' => $aParams['display']
+                );
+
+                $sWhereClause = " AND `ti`.`object`=:object AND `tdi`.`display_name`=:display_name ";
                 break;
+
             case 'by_object_name_filter':
                 $aMethod['name'] = 'getColumn';
+                $aMethod['params'][1] = array(
+                	'object' => $aParams['object'],
+                	'name_filter' => $aParams['name_filter']
+                );
+
                 $sSelectClause = "DISTINCT `ti`.`name` AS `name`";
-                $sWhereClause = $this->prepare(" AND `ti`.`object`=? AND `ti`.`name` LIKE (?) ", $aParams['object'], $aParams['name_filter']);
+                $sWhereClause = " AND `ti`.`object`=:object AND `ti`.`name` LIKE (:name_filter) ";
                 $sOrderClause = "ORDER BY LENGTH(`ti`.`name`) ASC, `ti`.`name` ASC";
                 break;
+
             case 'dump_inputs':
+            	$aMethod['params'][1] = array(
+                	'object' => $aParams['value']
+                );
+
                 $sSelectClause = "`ti`.*";
                 $sFromClause = "`sys_form_inputs` AS `ti`";
                 $sJoinClause = "";
-                $sWhereClause = $this->prepare(" AND `ti`.`object`=? ", $aParams['value']);
+                $sWhereClause = " AND `ti`.`object`=:object ";
                 $sOrderClause = "";
                 break;
+
             case 'dump_connections':
+            	$aMethod['params'][1] = array(
+                	'object' => $aParams['value']
+                );
+
                 $sSelectClause = "`tdi`.*";
                 $sJoinClause .= "LEFT JOIN `sys_form_displays` AS `td` ON `tdi`.`display_name`=`td`.`display_name` ";
-                $sWhereClause = $this->prepare(" AND `td`.`object`=? AND `ti`.`object`=? ", $aParams['value'], $aParams['value']);
+                $sWhereClause = " AND `td`.`object`=:object AND `ti`.`object`=:object ";
                 $sOrderClause = "ORDER BY `tdi`.`display_name` ASC, `tdi`.`order` ASC";
                 break;
+
             case 'counter_by_displays':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'display_name';
@@ -215,6 +299,7 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sJoinClause = "";
                 $sGroupClause = "GROUP BY `tdi`.`display_name`";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -225,6 +310,7 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sGroupClause = "GROUP BY `ti`.`module`";
                 $sOrderClause = "";
                 break;
+
             case 'all':
                 break;
         }
@@ -242,6 +328,7 @@ class BxDolStudioFormsQuery extends BxDolDb
 
     function deleteInputs($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
@@ -251,14 +338,16 @@ class BxDolStudioFormsQuery extends BxDolDb
                     $this->query($sSql);
                 }
 
-                $sWhereClause = $this->prepare(" AND `ti`.`id`=? ", $aParams['value']);
+                $aBindings['id'] = $aParams['value'];
+
+                $sWhereClause = " AND `ti`.`id`=:id ";
                 break;
             case 'all':
                 break;
         }
 
         $sSql = "DELETE FROM `ti` USING `sys_form_inputs` AS `ti` WHERE 1 " . $sWhereClause . " " . $sLimitClause;
-        return (int)$this->query($sSql) > 0;
+        return (int)$this->query($sSql, $aBindings) > 0;
     }
 
     function checkInputsInDisplays($sObject, $sDisplayName)
@@ -292,15 +381,30 @@ class BxDolStudioFormsQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tl`.`id`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tl`.`id`=:id ";
                 break;
+
             case 'by_key':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tl`.`key`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'key' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tl`.`key`=:key ";
                 break;
+
             case 'by_module':
-                $sWhereClause = $this->prepare(" AND `tl`.`module`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tl`.`module`=:module ";
                 break;
+
             case 'pairs_list_values':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'key';
@@ -309,6 +413,7 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sJoinClause = "LEFT JOIN `sys_form_pre_values` AS `tv` ON `tl`.`key`=`tv`.`Key`";
                 $sGroupClause = "GROUP BY `tl`.`id`";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -316,9 +421,11 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tl`.`module`";
                 break;
+
             case 'all_for_sets':
                 $sWhereClause = "AND `tl`.`use_for_sets`='1'";
                 break;
+
             case 'all':
                 break;
         }
@@ -369,16 +476,31 @@ class BxDolStudioFormsQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tv`.`id`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tv`.`id`=:id ";
                 break;
+
             case 'by_key':
-                $sWhereClause = $this->prepare(" AND `tv`.`Key`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'key' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tv`.`Key`=:key ";
                 break;
+
             case 'by_key_key_value':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'value';
-                $sWhereClause = $this->prepare(" AND `tv`.`Key`=? ", $aParams['value']);
+                $aMethod['params'][2] = array(
+                	'key' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tv`.`Key`=:key ";
                 break;
+
             case 'counter_by_lists':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'key';
@@ -386,6 +508,7 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tv`.`Key`";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -394,6 +517,7 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $sJoinClause = "LEFT JOIN `sys_form_pre_lists` AS `tl` ON `tv`.`Key`=`tl`.`key`";
                 $sGroupClause = "GROUP BY `tl`.`module`";
                 break;
+
             case 'all':
                 break;
         }
@@ -426,8 +550,13 @@ class BxDolStudioFormsQuery extends BxDolDb
 
         switch($aParams['type']) {
             case 'by_key':
-                $sWhereClause = $this->prepare(" AND `tv`.`Key`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'key' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tv`.`Key`=:key ";
                 break;
+
             case 'all':
                 break;
         }

@@ -105,25 +105,47 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
         switch($aParams['type']) {
             case 'modules':
                 $sPostfix .= '_modules';
-                $sWhereClause .= $this->prepare(" AND `type`=?", BX_DOL_MODULE_TYPE_MODULE);
+                $aMethod['params'][1] = array(
+                	'type' => BX_DOL_MODULE_TYPE_MODULE
+                );
+
+                $sWhereClause .= " AND `type`=:type";
                 break;
+
             case 'languages':
                 $sPostfix .= '_languages';
-                $sWhereClause .= $this->prepare(" AND `type`=?", BX_DOL_MODULE_TYPE_LANGUAGE);
+                $aMethod['params'][1] = array(
+                	'type' => BX_DOL_MODULE_TYPE_LANGUAGE
+                );
+
+                $sWhereClause .= " AND `type`=:type";
                 break;
+
             case 'templates':
                 $sPostfix .= '_templates';
-                $sWhereClause .= $this->prepare(" AND `type`=?", BX_DOL_MODULE_TYPE_TEMPLATE);
+                $aMethod['params'][1] = array(
+                	'type' => BX_DOL_MODULE_TYPE_TEMPLATE
+                );
+
+                $sWhereClause .= " AND `type`=?";
                 break;
+
             case 'path_and_uri':
             	$aMethod['name'] = 'getRow';
-            	$sWhereClause .= $this->prepare(" AND `path`=? AND `uri`=?", $aParams['path'], $aParams['uri']);
+            	$aMethod['params'][1] = array(
+                	'path' => $aParams['path'],
+            		'uri' => $aParams['uri']
+                );
+
+            	$sWhereClause .= " AND `path`=:path AND `uri`=:uri";
             	break;
         }
 
         if(isset($aParams['active'])) {
             $sPostfix .= "_active";
-            $sWhereClause .= $this->prepare(" AND `enabled`=?", (int)$aParams['active']);
+            $aMethod['params'][1]['enabled'] = (int)$aParams['active'];
+
+            $sWhereClause .= " AND `enabled`=:enabled";
         }
 
         $sOrderByClause = " ORDER BY " . (isset($aParams['order_by']) ? $aParams['order_by'] : '`title`');
@@ -160,7 +182,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
     function getDependent($sUri)
     {
-        $sSql = "SELECT `id`, `title` FROM `sys_modules` WHERE `dependencies` LIKE '%" . $this->escape($sUri) . "%'";
+        $sSql = "SELECT `id`, `title` FROM `sys_modules` WHERE `dependencies` LIKE " . $this->escape('%' . $sUri . '%');
         return $this->getAll($sSql);
     }
 

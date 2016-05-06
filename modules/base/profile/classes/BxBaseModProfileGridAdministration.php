@@ -119,7 +119,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
             list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
     	if(!empty($this->_sFilter1Value))
-        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `tp`.`status`=?", $this->_sFilter1Value);
+        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

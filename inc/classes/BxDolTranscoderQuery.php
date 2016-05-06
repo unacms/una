@@ -55,14 +55,20 @@ class BxDolTranscoderQuery extends BxDolDb
 
     public function updateHandler ($iFileId, $mixedHandler)
     {
+    	$aBindings = array(
+    		'transcoder' => $this->_aObject['object'],
+    		'file_id' => $iFileId,
+    		'handler' => $mixedHandler
+    	);
+
         $sUpdateATime = '';
         if ($this->_aObject['atime_tracking']) {
-            $iTime = time();
-            $sUpdateATime = $this->prepare(", `atime` = ?", $iTime);
+        	$aBindings['atime'] = time();
+
+            $sUpdateATime = ", `atime` = :atime";
         }
-        $sQuery = $this->prepare("INSERT INTO {$this->_sTableFiles} SET `transcoder_object` = ?, `file_id` = ?, `handler` = ? $sUpdateATime
-            ON DUPLICATE KEY UPDATE `file_id` = ? $sUpdateATime", $this->_aObject['object'], $iFileId, $mixedHandler, $iFileId);
-        return $this->res($sQuery);
+
+        return $this->query("INSERT INTO {$this->_sTableFiles} SET `transcoder_object` = :transcoder, `file_id` = :file_id, `handler` = :handler $sUpdateATime ON DUPLICATE KEY UPDATE `file_id` = :file_id $sUpdateATime", $aBindings);
     }
 
     public function getFileIdByHandler ($mixedHandler)
@@ -192,12 +198,24 @@ class BxDolTranscoderQuery extends BxDolDb
         if (!$this->_sTableQueue)
             return false;
 
-        $sQueryVals = $this->prepare("`status` = ?, changed = ? WHERE `transcoder_object` = ? AND `file_id_source` = ?", $sStatus, time(), $this->_aObject['object'], $mixedId);
-        $sQueryServer = $sServer ? $this->prepare(" `server` = ?, ", $sServer) : '';
-        $sQueryLog = $sLog ? $this->prepare(" `log` = ?, ", $sLog) : '';
-        $sQueryResultFile = $mixedIdResult && $sFileUrlResult ? $this->prepare(" `file_id_result` = ?, `file_url_result` = ?, `file_ext_result` = ?, ", $mixedIdResult, $sFileUrlResult, $sFileExtResult) : '';
-        $sQueryAll = "UPDATE `" . $this->_sTableQueue . "` SET " . $sQueryServer . $sQueryLog . $sQueryResultFile . $sQueryVals;
-        return $this->query($sQueryAll);
+		$aSet = array(
+			'status' => $sStatus,
+			'changed' => time()
+		);
+
+		if($sLog)
+			$aSet['log'] = $sLog;
+        if($sServer)
+        	$aSet['server'] = $sServer;
+		if($mixedIdResult && $sFileUrlResult)
+			$aSet = array_merge($aSet, array(
+				'file_id_result' => $mixedIdResult,
+				'file_url_result' => $sFileUrlResult,
+				'file_ext_result' => $sFileExtResult
+			));
+
+        $sQuery = $this->prepare("UPDATE `" . $this->_sTableQueue . "` SET " . $this->arrayToSQL($aSet) . " WHERE `transcoder_object` = ? AND `file_id_source` = ?", $this->_aObject['object'], $mixedId);
+        return $this->query($sQuery);
     }
 
     protected function registerHandler ($sHandlerNameFunc, $sServiceFunc, $sObject, $sUnit)

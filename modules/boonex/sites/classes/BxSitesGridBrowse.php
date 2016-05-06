@@ -145,7 +145,7 @@ class BxSitesGridBrowse extends BxTemplGrid
         if(empty($this->_iProfileId))
             return array();
 
-        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `owner_id`=?", $this->_iProfileId);
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `owner_id`=?", $this->_iProfileId);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }

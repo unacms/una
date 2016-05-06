@@ -38,7 +38,7 @@ class BxDolStudioFormsPreValues extends BxTemplStudioGrid
         if(empty($this->sList))
             return array();
 
-        $this->_aOptions['source'] .= $this->oDb->prepare(" AND `Key`=? ", $this->sList);
+        $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `Key`=? ", $this->sList);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }

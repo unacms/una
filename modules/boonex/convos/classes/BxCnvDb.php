@@ -73,12 +73,19 @@ class BxCnvDb extends BxBaseModTextDb
             return true;
 
         // delete convo
-        $sWhere = '';
-        if ($iProfileId)
-            $sWhere = $this->prepare(" AND `collaborator` = ?", $iProfileId);
+        $aBindings = array(
+        	'conv_id' => $iConversationId
+        );
 
-        $sQuery = $this->prepare("DELETE FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ?", $iConversationId);
-        if (!$this->query($sQuery . $sWhere))
+        $sWhere = '';
+        if ($iProfileId) {
+        	$aBindings['collaborator'] = $iProfileId;
+
+            $sWhere = " AND `collaborator` = :collaborator";
+        }
+
+        $sQuery = "DELETE FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = :conv_id" . $sWhere;
+        if (!$this->query($sQuery, $aBindings))
             return false;
 
         // delete whole conversation if there is no refencences to the conversation in conv2folder table

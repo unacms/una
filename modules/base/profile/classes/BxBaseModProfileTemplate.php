@@ -24,15 +24,22 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
      */
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
     {
-        $CNF = &$this->_oConfig->CNF;
-
         // TODO: add privacy checking here
+
+        $aVars = $this->unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
+
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
+    function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    {
+        $CNF = &$this->_oConfig->CNF;
 
         // get profile's url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         // generate html
-        $aVars = array (
+        return array (
             'id' => $aData[$CNF['FIELD_ID']],
             'thumb_url' => $this->thumb ($aData),
             'content_url' => $sUrl,
@@ -40,8 +47,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
         );
-
-        return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     /**

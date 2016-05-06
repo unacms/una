@@ -65,7 +65,7 @@ class BxDolStudioNavigationItems extends BxTemplStudioGrid
         if(empty($this->sSet))
             return array();
 
-        $this->_aOptions['source'] .= $this->oDb->prepare(" AND `set_name`=?", $this->sSet);
+        $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `set_name`=?", $this->sSet);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }

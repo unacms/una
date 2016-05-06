@@ -63,11 +63,19 @@ class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery implements iBxDolSing
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare("AND `tw`.`id`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+                $sWhereClause .= "AND `tw`.`id`=:id";
                 break;
+
             case 'by_page_id':
-                $sWhereClause .= $this->prepare("AND `tw2p`.`page_id`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'page_id' => $aParams['value']
+                );
+                $sWhereClause .= "AND `tw2p`.`page_id`=:page_id";
                 break;
+
             case 'all_with_notices':
 				$sWhereClause .= "AND `tw`.`cnt_notices`<>''";
             	break;

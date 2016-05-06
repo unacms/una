@@ -36,7 +36,7 @@ class BxDolStudioFormsDisplays extends BxTemplStudioGrid
         if(empty($this->sObject))
             return array();
 
-        $this->_aOptions['source'] .= $this->oDb->prepare(" AND `td`.`object`=?", $this->sObject);
+        $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `td`.`object`=?", $this->sObject);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }

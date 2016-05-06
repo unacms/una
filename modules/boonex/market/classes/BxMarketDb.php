@@ -92,11 +92,19 @@ class BxMarketDb extends BxBaseModTextDb
         switch($aParams['type']) {
             case 'id':
             	$aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tl`.`id`=?", $aParams['id']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tl`.`id`=:id";
                 break;
 
 			case 'unused':
-                $sWhereClause = $this->prepare(" AND `tl`.`profile_id`=? AND `tl`.`domain`=''", $aParams['profile_id']);
+				$aMethod['params'][1] = array(
+                	'profile_id' => $aParams['profile_id']
+                );
+
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`domain`=''";
                 break;
         }
 
@@ -159,14 +167,19 @@ class BxMarketDb extends BxBaseModTextDb
 	protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
     {
         $sWhere = '';
-        if ($iContentId)
-            $sWhere .= $this->prepare (" AND `content_id` = ? ", $iContentId);
+        $aBindings = array();
+        if ($iContentId) {
+            $sWhere .= " AND `content_id` = :content_id ";
+            $aBindings['content_id'] = $iContentId;
+        }
 
-        if ($iFileId)
-            $sWhere .= $this->prepare (" AND `file_id` = ? ", $iFileId);
+        if ($iFileId) {
+            $sWhere .= " AND `file_id` = :file_id ";
+            $aBindings['file_id'] = $iFileId;
+        }
 
-        $sQuery = "DELETE FROM `" . $sTable . "` WHERE 1 ";
-        return $this->query($sQuery . $sWhere);
+        $sQuery = "DELETE FROM `" . $sTable . "` WHERE 1 " . $sWhere;
+        return $this->query($sQuery, $aBindings);
     }
 
 	protected function _getAttachment($sTable, $aParams = array())
@@ -176,17 +189,28 @@ class BxMarketDb extends BxBaseModTextDb
     	$sWhereClause = "";
         switch($aParams['type']) {
             case 'id':
-                $sWhereClause = $this->prepare(" AND `tfe`.`id`=?", $aParams['id']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tfe`.`id`=:id";
                 break;
 
 			case 'file_id':
-                $sWhereClause = $this->prepare(" AND `tfe`.`file_id`=?", $aParams['file_id']);
+				$aMethod['params'][1] = array(
+                	'file_id' => $aParams['file_id']
+                );
+
+                $sWhereClause = " AND `tfe`.`file_id`=:file_id";
                 break;
 
             case 'content_id':
             	$aMethod['name'] = 'getAll';
+            	$aMethod['params'][1] = array(
+                	'content_id' => $aParams['content_id']
+                );
 
-            	$sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
+            	$sWhereClause = " AND `tfe`.`content_id`=:content_id";
             	if(!empty($aParams['except']))
             		$sWhereClause .= " AND `tfe`.`file_id` NOT IN (" . $this->implode_escape($aParams['except']) . ")";
 
@@ -195,8 +219,11 @@ class BxMarketDb extends BxBaseModTextDb
 			case 'content_id_key_file_id':
 				$aMethod['name'] = 'getAllWithKey';
 				$aMethod['params'][1] = 'file_id';
+				$aMethod['params'][2] = array(
+                	'content_id' => $aParams['content_id']
+                );
 
-                $sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
+                $sWhereClause = " AND `tfe`.`content_id`=?";
                 break;
         }
 
