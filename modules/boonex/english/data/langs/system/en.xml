@@ -643,9 +643,10 @@
 	<string name="_adm_form_btn_pre_lists_save"><![CDATA[Save]]></string>
 	<string name="_adm_form_btn_pre_values_add"><![CDATA[Add]]></string>
 	<string name="_adm_form_btn_pre_values_cancel"><![CDATA[Cancel]]></string>
+	<string name="_adm_form_btn_pre_values_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_form_btn_pre_values_create"><![CDATA[Add New Item]]></string>
-	<string name="_adm_form_btn_pre_values_delete"><![CDATA[Delete Item]]></string>
-	<string name="_adm_form_btn_pre_values_edit"><![CDATA[Edit Item]]></string>
+	<string name="_adm_form_btn_pre_values_delete_item"><![CDATA[Delete Item]]></string>
+	<string name="_adm_form_btn_pre_values_edit_item"><![CDATA[Edit Item]]></string>
 	<string name="_adm_form_dsc_displays_title"><![CDATA[Name of the form display mode. Displayed in Studio only.]]></string>
 	<string name="_adm_form_dsc_field_attrs_max"><![CDATA[Enter numeric value]]></string>
 	<string name="_adm_form_dsc_field_attrs_min"><![CDATA[Enter numeric value]]></string>

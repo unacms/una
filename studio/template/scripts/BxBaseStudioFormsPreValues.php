@@ -16,8 +16,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
     {
         parent::__construct($aOptions, $oTemplate);
 
-        $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_pre_values_edit');
-        $this->_aOptions['actions_single']['delete']['attr']['title'] = _t('_adm_form_btn_pre_values_delete');
+        $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_pre_values_edit_item');
+        $this->_aOptions['actions_single']['delete']['attr']['title'] = _t('_adm_form_btn_pre_values_delete_item');
 
         $this->sUrlPage = BX_DOL_URL_STUDIO . 'builder_forms.php?page=pre_values';
     }
