@@ -18,6 +18,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         $aMenuItems2Methods = array (
             'view-persons-profile' => 'checkAllowedView',
             'edit-persons-profile' => 'checkAllowedEdit',
+            'edit-persons-cover' => 'checkAllowedChangeCover',
             'delete-persons-profile' => 'checkAllowedDelete',
             'profile-friend-add' => 'checkAllowedFriendAdd',
             'profile-friend-remove' => 'checkAllowedFriendRemove',
