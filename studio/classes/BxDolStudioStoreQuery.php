@@ -27,7 +27,7 @@ class BxDolStudioStoreQuery extends BxDolStudioModulesQuery
     			break;
     	}
 
-    	$sSql = $this->prepare("SELECT `id` FROM `sys_cron_jobs` WHERE name=? LIMIT 1", $sJobName);
+    	$sSql = $this->prepare("SELECT `id` FROM `sys_cron_jobs` WHERE `name`=? LIMIT 1", $sJobName);
     	return (int)$this->getOne($sSql) > 0;
     }
 }

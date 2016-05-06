@@ -51,32 +51,56 @@ class BxSitesDb extends BxDolModuleDb
 
     function getAccount($aParams)
     {
-        $sMethod = 'getRow';
+        $aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = '';
+
         switch($aParams['type']) {
             case 'id':
-                $sWhereClause = $this->prepare("AND `ta`.`id`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `ta`.`id`=:id";
                 $sLimitClause = "LIMIT 1";
                 break;
             case 'owner_id':
-                $sWhereClause = $this->prepare("AND `ta`.`owner_id`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'owner_id' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `ta`.`owner_id`=:owner_id";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'token':
-                $sWhereClause = $this->prepare("AND `tpd`.`token`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'token' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `tpd`.`token`=:token";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'profile_id':
-                $sWhereClause = $this->prepare("AND `tpd`.`profile_id`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'profile_id' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `tpd`.`profile_id`=:profile_id";
                 $sLimitClause = "LIMIT 1";
                 break;
+
             case 'profile_sid':
-                $sWhereClause = $this->prepare("AND `tpd`.`profile_sid`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'profile_sid' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `tpd`.`profile_sid`=:profile_sid";
                 $sLimitClause = "LIMIT 1";
                 break;
         }
 
-        $sSql = "SELECT
+        $aMethod['params'][0] = "SELECT
                 `ta`.`id`,
                 `ta`.`owner_id`,
                 `to`.`trials` AS `owner_trials`,
@@ -96,27 +120,37 @@ class BxSitesDb extends BxDolModuleDb
             LEFT JOIN `" . $this->_sPrefix . "payment_details` AS `tpd` ON `ta`.`id`=`tpd`.`account_id` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
-        return $this->$sMethod($sSql);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     function getPaymentHistory($aParams)
     {
-        $sMethod = 'getAll';
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = '';
+
         switch($aParams['type']) {
             case 'account_id':
-                $sWhereClause = $this->prepare("AND `tph`.`account_id`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'account_id' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `tph`.`account_id`=:account_id";
                 $sOrderClause = "ORDER BY `tph`.`when` DESC";
                 break;
+
             case 'account_id_last':
-                $sMethod = "getRow";
-                $sWhereClause = $this->prepare("AND `tph`.`account_id`=?", $aParams['value']);
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'account_id' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `tph`.`account_id`=:account_id";
                 $sOrderClause = "ORDER BY `tph`.`when` DESC";
                 $sLimitClause = "LIMIT 1";
                 break;
         }
 
-        $sSql = "SELECT
+        $aMethod['params'][0] = "SELECT
                 `tph`.`id` AS `id`,
                 `tph`.`account_id` AS `account_id`,
                 `tph`.`type` AS `type`,
@@ -127,7 +161,7 @@ class BxSitesDb extends BxDolModuleDb
             FROM `" . $this->_sPrefix . "payment_history` AS `tph` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
-        return $this->$sMethod($sSql);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     function insertPaymentDetails($aValues)
@@ -164,19 +198,14 @@ class BxSitesDb extends BxDolModuleDb
     {
         $sWhere = '';
         foreach($aWhere as $sKey => $sValue)
-            $sWhere .= $this->prepare(" AND `" . $sKey . "`=?", $sValue);
+            $sWhere .= " AND `" . $sKey . "`=:" . $sKey;
 
-        return (int)$this->query("SELECT `id` FROM `" . $this->_sPrefix . $sTable. "` WHERE 1" . $sWhere) > 0;
+        return (int)$this->query("SELECT `id` FROM `" . $this->_sPrefix . $sTable. "` WHERE 1" . $sWhere, $aWhere) > 0;
     }
 
     protected function insert($sTable, $aValues)
     {
-        $sSql = "";
-        foreach($aValues as $sKey => $sValue)
-           $sSql .= $this->prepare("`" . $sKey . "`=?, ", $sValue);
-        $sSql = "INSERT INTO `" . $this->_sPrefix . $sTable. "` SET " . substr($sSql, 0, -2);
-
-        if((int)$this->query($sSql) > 0)
+        if((int)$this->query("INSERT INTO `" . $this->_sPrefix . $sTable. "` SET " . $this->arrayToSQL($aValues)) > 0)
             return (int)$this->lastId();
 
         return 0;
@@ -184,25 +213,14 @@ class BxSitesDb extends BxDolModuleDb
 
     protected function update($sTable, $aUpdate, $aWhere)
     {
-        $sUpdate = $sWhere = "";
-
-        foreach($aUpdate as $sKey => $sValue)
-            $sUpdate .= $this->prepare("`" . $sKey . "`=?, ", $sValue);
-        $sUpdate = substr($sUpdate, 0, -2);
-
-        foreach($aWhere as $sKey => $sValue)
-            $sWhere .= $this->prepare(" AND `" . $sKey . "`=?", $sValue);
-
-        return (int)$this->query("UPDATE `" . $this->_sPrefix . $sTable . "` SET " . $sUpdate . " WHERE 1" . $sWhere) > 0;
+        $sWhere = $this->arrayToSQL($aWhere, ' AND ');
+        return (int)$this->query("UPDATE `" . $this->_sPrefix . $sTable . "` SET " . $this->arrayToSQL($aUpdate) . " WHERE 1" . (!empty($sWhere) ? " AND " . $sWhere : "")) > 0;
     }
 
     protected function delete($sTable, $aWhere)
     {
-        $sWhere = "";
-        foreach($aWhere as $sKey => $sValue)
-            $sWhere .= $this->prepare(" AND `" . $sKey . "`=?", $sValue);
-
-        return (int)$this->query("DELETE FROM `" . $this->_sPrefix . $sTable . "` WHERE 1" . $sWhere) > 0;
+     	$sWhere = $this->arrayToSQL($aWhere, ' AND ');
+        return (int)$this->query("DELETE FROM `" . $this->_sPrefix . $sTable . "` WHERE 1" . (!empty($sWhere) ? " AND " . $sWhere : "")) > 0;
     }
 }
 

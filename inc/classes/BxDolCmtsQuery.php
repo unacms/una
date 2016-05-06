@@ -59,9 +59,16 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getCommentsCount ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
     {
+    	$aBindings = array(
+    		'cmt_object_id' => $iId
+    	);
+
         $sWhereClause = '';
-        if((int)$iCmtVParentId >= 0)
-            $sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
+        if((int)$iCmtVParentId >= 0) {
+        	$aBindings['cmt_vparent_id'] = $iCmtVParentId;
+
+            $sWhereClause .= " AND `{$this->_sTable}`.`cmt_vparent_id` = :cmt_vparent_id";
+        }
 
         $sJoinClause = '';
         switch($sFilter) {
@@ -74,21 +81,21 @@ class BxDolCmtsQuery extends BxDolDb
 	            break;
 
         	case BX_CMT_FILTER_OTHERS:
-        		$sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_author_id` <> ?", $iAuthorId);
+        		$aBindings['cmt_author_id'] = $iAuthorId;
+
+        		$sWhereClause .= " AND `{$this->_sTable}`.`cmt_author_id` <> :cmt_author_id";
         		break;
         }
 
-        $sQuery = $this->prepare("SELECT
-                COUNT(*)
-            FROM `{$this->_sTable}`
-            $sJoinClause
-            WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereClause, $iId);
-
-        return (int)$this->getOne($sQuery);
+        $sQuery = "SELECT COUNT(*) FROM `{$this->_sTable}` $sJoinClause WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereClause;
+        return (int)$this->getOne($sQuery, $aBindings);
     }
 
     function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '', $aOrder = array(), $iStart = 0, $iCount = -1)
     {
+    	$aBindings = array(
+    		'cmt_object_id' => $iId
+    	);
         $sFields = $sJoin = "";
 
         $oVote = $this->_oMain->getVoteObject(0);
@@ -100,8 +107,11 @@ class BxDolCmtsQuery extends BxDolDb
         }
 
         $sWhereParent = '';
-        if((int)$iCmtVParentId >= 0)
-            $sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
+        if((int)$iCmtVParentId >= 0) {
+        	$aBindings['cmt_vparent_id'] = $iCmtVParentId;
+
+            $sWhereParent = " AND `{$this->_sTable}`.`cmt_vparent_id` = :cmt_vparent_id";
+        }
 
         if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
             $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
@@ -125,9 +135,9 @@ class BxDolCmtsQuery extends BxDolDb
             }
         }
 
-        $sLimit = $iCount != -1 ? $this->prepare(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
+       	$sLimit = $iCount != -1 ? $this->prepareAsString(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
-        $sQuery = $this->prepare("SELECT
+        $sQuery = "SELECT
                 `{$this->_sTable}`.`cmt_id`,
                 `{$this->_sTable}`.`cmt_parent_id`,
                 `{$this->_sTable}`.`cmt_vparent_id`,
@@ -140,14 +150,14 @@ class BxDolCmtsQuery extends BxDolDb
                 $sFields
             FROM `{$this->_sTable}`
             $sJoin
-            WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iId);
+            WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereParent . $sOder . $sLimit;
 
-        return $this->getAll($sQuery);
+        return $this->getAll($sQuery, $aBindings);
     }
 
 	function getCommentsBy($aParams = array())
     {
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "
@@ -161,23 +171,32 @@ class BxDolCmtsQuery extends BxDolDb
             `{$this->_sTable}`.`cmt_replies`,
             `{$this->_sTable}`.`cmt_time`";
 
-        if(isset($aParams['object_id']))
-        	$sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_object_id` = ?" , (int)$aParams['object_id']);
+        if(isset($aParams['object_id'])) {
+        	$aMethod['params'][1]['cmt_object_id'] = (int)$aParams['object_id'];
+
+        	$sWhereClause .= " AND `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id";
+        }
 
         switch($aParams['type']) {
             case 'latest':
-            	if(!empty($aParams['author']))
-            		$sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_author_id` " . (isset($aParams['others']) && (int)$aParams['others'] == 1 ? "<>" : "=") . " ?", (int)$aParams['author']);
+            	if(!empty($aParams['author'])) {
+            		$aMethod['params'][1]['cmt_author_id'] = (int)$aParams['author'];
+
+            		$sWhereClause .= " AND `{$this->_sTable}`.`cmt_author_id` " . (isset($aParams['others']) && (int)$aParams['others'] == 1 ? "<>" : "=") . " :cmt_author_id";
+            	}
 
                 $sOrderClause = "ORDER BY `{$this->_sTable}`.`cmt_time` DESC";
-                $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+                $sLimitClause = "";
+                if(isset($aParams['per_page'])) {
+                	$aMethod['params'][1]['start'] = $aParams['start'];
+                	$aMethod['params'][1]['length'] = $aParams['per_page'];
+
+                	$sLimitClause = "LIMIT :start, :length";
+                }
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
-            FROM `{$this->_sTable}` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
-
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `{$this->_sTable}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
@@ -239,31 +258,43 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getImages($iSystemId, $iCmtId, $iId = false)
     {
-        $sJoin = '';
-        $sWhere = $this->prepare(" AND `i`.`system_id` = ? ", $iSystemId);
+    	$aBindings = array(
+    		'system_id' => $iSystemId
+    	);
+
+        $sJoin = "";
+        $sWhere = " AND `i`.`system_id` = :system_id ";
 
         if (false !== $iCmtId) {
-            $sWhere .= $this->prepare(" AND `i`.`cmt_id` = ? ", $iCmtId);
+        	$aBindings['cmt_id'] = $iCmtId;
+
+            $sWhere .= " AND `i`.`cmt_id` = :cmt_id ";
         }
 
         if (false !== $iId) {
-            $sWhere .= $this->prepare(" AND `c`.`cmt_object_id` = ?", $iId);
+        	$aBindings['cmt_object_id'] = $iId;
+
+            $sWhere .= " AND `c`.`cmt_object_id` = :cmt_object_id";
             $sJoin .= " INNER JOIN `{$this->_sTable}` AS `c` ON (`i`.`cmt_id` = `c`.`cmt_id`) ";
         }
 
-        return $this->getAll("SELECT * FROM `{$this->_sTableImages2Entries}` AS `i` " . $sJoin . " WHERE 1 " . $sWhere);
+        return $this->getAll("SELECT * FROM `{$this->_sTableImages2Entries}` AS `i` " . $sJoin . " WHERE 1 " . $sWhere, $aBindings);
     }
 
     function deleteImages($iSystemId, $iCmtId)
     {
-        $sWhereAddon = '';
-        if (false !== $iCmtId)
-            $sWhereAddon = $this->prepare(" AND `cmt_id` = ? ", $iCmtId);
+    	$aBindings = array(
+    		'system_id' => $iSystemId
+    	);
 
-        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableImages2Entries}` WHERE `system_id` = ?", $iSystemId);
-        $sQuery .= $sWhereAddon;
+        $sWhereAddon = "";
+        if ($iCmtId !== false) {
+        	$aBindings['cmt_id'] = $iCmtId;
 
-        return $this->query($sQuery);
+            $sWhereAddon = " AND `cmt_id` = :cmt_id ";
+        }
+
+        return $this->query("DELETE FROM `{$this->_sTableImages2Entries}` WHERE `system_id` = :system_id" . $sWhereAddon, $aBindings);
     }
 
     function updateRepliesCount($iCmtId, $iCount)
@@ -308,9 +339,8 @@ class BxDolCmtsQuery extends BxDolDb
         $aFiles = $this->convertImagesArray($this->getImages($aSystem['system_id'], false, $iObjectId));
 
         if ($aFiles) {
-            $sQuery = $this->prepare("DELETE FROM {$this->_sTableImages2Entries} WHERE `system_id` = ? ", $aSystem['system_id']);
-            $sQuery .= " AND `image_id` IN(" . $this->implode_escape($aFiles) . ") ";
-            $this->query ($sQuery);
+            $sQuery = $this->prepare("DELETE FROM {$this->_sTableImages2Entries} WHERE `system_id` = ? AND `image_id` IN(" . $this->implode_escape($aFiles) . ")", $aSystem['system_id']);
+            $this->query($sQuery);
         }
 
         if (null !== $aCmtIds) {

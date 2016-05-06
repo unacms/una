@@ -33,7 +33,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 		$sJoinClause = $sWhereClause = "";
 
 		if(isset($aParams['active']))
-			$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
+			$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
 
 		//--- Apply modules or handlers filter
 		$sWhereModuleFilter = '';
@@ -53,7 +53,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 			$sSql = $this->prepare("SELECT `event_id` FROM `" . $this->_sTableEvt2Usr . "` WHERE `user_id`=? LIMIT 1", (int)$aParams['owner_id']);
 			$iId = (int)$this->getOne($sSql);
 
-			$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`id`>? ", $iId);
+			$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`>? ", $iId);
 		}
 
 		//--- Apply privacy filter
@@ -65,11 +65,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 		if(!empty($aParams['owner_id']))
 			switch($aParams['type']) {
 				case BX_BASE_MOD_NTFS_TYPE_OWNER:
-					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
 					break;
 
 				case BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER:
-					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
+					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
 					break;
 
 				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:

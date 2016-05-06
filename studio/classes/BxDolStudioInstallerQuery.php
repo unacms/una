@@ -16,17 +16,21 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
 
     function getRelationsBy($aParams = array())
     {
-    	$sMethod = 'getAll';
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
     	$sWhereClause = "";
 
         switch($aParams['type']) {
             case 'module':
-            	$sMethod = 'getRow';
-                $sWhereClause .= $this->prepare(" AND `module`=?", $aParams['value']);
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `module`=:module";
                 break;
         }
 
-        $sSql = "SELECT
+        $aMethod['params'][0] = "SELECT
                 `id`,
                 `module`,
                 `on_install`,
@@ -36,7 +40,7 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
             FROM `sys_modules_relations`
             WHERE 1" . $sWhereClause;
 
-        return $this->$sMethod($sSql);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     function insertModule(&$aConfig)

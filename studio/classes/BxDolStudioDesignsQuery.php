@@ -25,12 +25,22 @@ class BxDolStudioDesignsQuery extends BxDolStudioPageQuery
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare(" AND `tm`.`id`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `tm`.`id`=:id";
                 break;
+
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare(" AND `tm`.`name`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `tm`.`name`=:name";
                 break;
+
             case 'active':
                 $sWhereClause = " AND `tm`.`enabled`='1'";
                 break;
@@ -38,15 +48,25 @@ class BxDolStudioDesignsQuery extends BxDolStudioPageQuery
                 $sOrderClause = " `tm`.`uri` ASC ";
                 break;
             case 'all_by_id':
-                $sWhereClause .= $this->prepare(" AND `tm`.`id`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `tm`.`id`=:id";
                 $sOrderClause = " `tm`.`uri` ASC ";
                 break;
+
             case 'all_key_id':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'id';
 
-                if(isset($aParams['template']) && (int)$aParams['template'] != 0)
-                    $sWhereClause .= $this->prepare(" AND `tm`.`id`=?", $aParams['template']);
+                if(isset($aParams['template']) && (int)$aParams['template'] != 0) {
+                	$aMethod['params'][2] = array(
+	                	'id' => $aParams['template']
+	                );
+
+                    $sWhereClause .= " AND `tm`.`id`=:id";
+                }
                 break;
         }
 

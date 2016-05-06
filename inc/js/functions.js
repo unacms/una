@@ -513,7 +513,7 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
  * @param iContentId - content id, initiator is always current logged in user
  * @param bConfirm - show confirmation dialog
  */
-function bx_conn_action(e, sObj, sAction, iContentId, bConfirm) {
+function bx_conn_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
     if ('undefined' != typeof(bConfirm) && bConfirm && !confirm(_t('_are you sure?')))
         return;
                 
@@ -529,7 +529,9 @@ function bx_conn_action(e, sObj, sAction, iContentId, bConfirm) {
         if (data.err) {
             alert(data.msg);
         } else {
-            if (!loadDynamicBlockAuto(e))
+            if ('function' == typeof(fOnComplete))
+                fOnComplete(data, e);
+            else if (!loadDynamicBlockAuto(e))
                 location.reload();
             else
                 $('#bx-popup-ajax-wrapper-bx_persons_view_actions_more').remove();

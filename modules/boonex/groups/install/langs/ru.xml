@@ -3,8 +3,6 @@
 
 	<string name="_bx_groups"><![CDATA[Группы]]></string>
 
-	<string name="_bx_groups_option_autoapproval"><![CDATA[Автоматически активировать все группы после создания]]></string>
-	<string name="_bx_groups_option_default_acl_level"><![CDATA[Уровень, назначаемый созданной группе по умолчанию]]></string>
 	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
 	<string name="_bx_groups_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
 
@@ -15,11 +13,13 @@
 	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Удалить группу]]></string>
 	<string name="_bx_groups_form_profile_display_view"><![CDATA[Просмотреть группу]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
+    <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_groups_form_profile_input_sys_group_name"><![CDATA[Название группы]]></string>
     <string name="_bx_groups_form_profile_input_group_name"><![CDATA[Название группы]]></string>
     <string name="_bx_groups_form_profile_input_group_name_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
-    <string name="_bx_groups_form_profile_input_sys_group_name"><![CDATA[Описание]]></string>
-    <string name="_bx_groups_form_profile_input_group_name"><![CDATA[Описание]]></string>
+    <string name="_bx_groups_form_profile_input_sys_group_desc"><![CDATA[Описание]]></string>
+    <string name="_bx_groups_form_profile_input_group_desc"><![CDATA[Описание]]></string>
     <string name="_bx_groups_form_profile_input_sys_group_cat"><![CDATA[Категория]]></string>
 	<string name="_bx_groups_form_profile_input_group_cat"><![CDATA[Категория]]></string>
     <string name="_bx_groups_form_profile_input_group_cat_err"><![CDATA[Поле категории необходимо]]></string>
@@ -107,6 +107,8 @@
     <string name="_bx_groups_menu_item_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_groups_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_groups_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_groups_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_groups_menu_item_title_system_edit_profile"><![CDATA[Редактировать группу]]></string>
     <string name="_bx_groups_menu_item_title_edit_profile"><![CDATA[Редактировать группу]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_profile"><![CDATA[Удалить группу]]></string>
@@ -141,8 +143,8 @@
     <string name="_bx_groups_menu_item_title_become_fan_confirm"><![CDATA[Одобрить присоединение]]></string>
     <string name="_bx_groups_menu_item_title_system_leave_group"><![CDATA[Покинуть группу]]></string>
     <string name="_bx_groups_menu_item_title_leave_group"><![CDATA[Покинуть группу]]></string>
-    <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить присоединение к группе]]></string>
-    <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Отвергнуть присоединение к группе]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить присоединение]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
 
     <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string>
     <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Подписаться]]></string>
@@ -179,50 +181,22 @@
     <string name="_bx_groups_grid_column_title_adm_account"><![CDATA[Аккаунт]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
-    <string name="_bx_groups_grid_action_title_adm_set_acl_level"><![CDATA[Назначить членство]]></string>
     <string name="_bx_groups_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
 	<string name="_bx_groups_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) группу(ы).]]></string>
 	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
     <string name="_bx_groups_txt_account_pending"><![CDATA[Эта группа ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>
+    <string name="_bx_groups_txt_N_fans"><![CDATA[{0} участников]]></string>
+    <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
+    <string name="_bx_groups_txt_to_admins"><![CDATA[В админы]]></string>
+    <string name="_bx_groups_txt_from_admins"><![CDATA[Из админов]]></string>
 
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Категории групп]]></string>
-    <string name="_bx_groups_cat_Agriculture"><![CDATA[Сельское хозяйство]]></string>
-    <string name="_bx_groups_cat_Financial"><![CDATA[Финансы]]></string>
-    <string name="_bx_groups_cat_Biotech"><![CDATA[Биотехнологии]]></string>
-    <string name="_bx_groups_cat_Cause"><![CDATA[Дело]]></string>
-    <string name="_bx_groups_cat_Chemical"><![CDATA[Химия]]></string>
-    <string name="_bx_groups_cat_Religious"><![CDATA[Религия]]></string>
-    <string name="_bx_groups_cat_Community"><![CDATA[Общество]]></string>
-    <string name="_bx_groups_cat_Company"><![CDATA[Компания]]></string>
-    <string name="_bx_groups_cat_Entertainment"><![CDATA[Развлечения]]></string>
-    <string name="_bx_groups_cat_Technology"><![CDATA[Технологии]]></string>
-    <string name="_bx_groups_cat_Consulting"><![CDATA[Консультации]]></string>
-    <string name="_bx_groups_cat_Education"><![CDATA[Образование]]></string>
-    <string name="_bx_groups_cat_Energy"><![CDATA[Энергетика]]></string>
-    <string name="_bx_groups_cat_Engineering"><![CDATA[Инженерия]]></string>
-    <string name="_bx_groups_cat_Food"><![CDATA[Питание]]></string>
-    <string name="_bx_groups_cat_Government"><![CDATA[Правительство]]></string>
-    <string name="_bx_groups_cat_Health"><![CDATA[Здоровье]]></string>
-    <string name="_bx_groups_cat_Medical"><![CDATA[Медицина]]></string>
-    <string name="_bx_groups_cat_Industrial"><![CDATA[Промышленность]]></string>
-    <string name="_bx_groups_cat_Insurance"><![CDATA[Страхование]]></string>
-    <string name="_bx_groups_cat_Internet"><![CDATA[Интернет]]></string>
-    <string name="_bx_groups_cat_Software"><![CDATA[Программное обеспечение]]></string>
-    <string name="_bx_groups_cat_Legal"><![CDATA[Право]]></string>
-    <string name="_bx_groups_cat_Media"><![CDATA[СМИ]]></string>
-    <string name="_bx_groups_cat_School"><![CDATA[Школа]]></string>
-    <string name="_bx_groups_cat_NGO"><![CDATA[НПО]]></string>
-    <string name="_bx_groups_cat_NPO"><![CDATA[NPO]]></string>
-    <string name="_bx_groups_cat_Political"><![CDATA[Политика]]></string>
-    <string name="_bx_groups_cat_Retail"><![CDATA[Торговля]]></string>
-    <string name="_bx_groups_cat_Small_Business"><![CDATA[Малый бизнес]]></string>
-    <string name="_bx_groups_cat_Telecommunication"><![CDATA[Телекоммуникации]]></string>
-    <string name="_bx_groups_cat_Transport"><![CDATA[Транспорт]]></string>
-    <string name="_bx_groups_cat_Travel"><![CDATA[Путешествия]]></string>
-    <string name="_bx_groups_cat_University"><![CDATA[Преподавание]]></string>
-    <string name="_bx_groups_cat_Other"><![CDATA[Другое]]></string>
-
-    <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
+    <string name="_bx_groups_cat_General"><![CDATA[Обобщение]]></string>
+    <string name="_bx_groups_cat_Business"><![CDATA[Бизнес]]></string>
+    <string name="_bx_groups_cat_Interests"><![CDATA[Увлечение]]></string>
+    <string name="_bx_groups_cat_Causes"><![CDATA[Движение]]></string>
+    <string name="_bx_groups_cat_Fun"><![CDATA[Юмор]]></string>
+    <string name="_bx_groups_cat_Uncategorised"><![CDATA[Без категории]]></string>
 </resources>

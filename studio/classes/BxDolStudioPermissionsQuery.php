@@ -34,11 +34,16 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery
 
     function deleteLevel($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
             case 'by_id':
-                $sWhereClause .= $this->prepare("AND `tal`.`ID`=?", $aParams['value']);
+            	$aBindings = array(
+                	'level_id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tal`.`ID`=:level_id";
                 break;
         }
 
@@ -46,7 +51,7 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery
             USING `sys_acl_levels` AS `tal`
             LEFT JOIN `sys_acl_matrix` AS `tam` ON `tal`.`ID`=`tam`.`IDLevel`
             WHERE 1 " . $sWhereClause . " " . $sLimitClause;
-        return (int)$this->query($sSql) > 0;
+        return (int)$this->query($sSql, $aBindings) > 0;
     }
 
     function switchAction($iLevelId, $iActionId, $bEnable)
@@ -69,9 +74,14 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery
         switch($aParams['type']) {
             case 'by_level_action_ids':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'level_id' => $aParams['level_id'],
+                	'action_id' => $aParams['action_id']
+                );
+
                 $sSelectClause = ", `taa`.`Title` AS `action_title`, `taa`.`Countable` AS `action_countable`";
                 $sJoinClause = "LEFT JOIN `sys_acl_actions` AS `taa` ON `tam`.`IDAction`=`taa`.`ID` ";
-                $sWhereClause = $this->prepare(" AND `tam`.`IDLevel`=? AND `tam`.`IDAction`=? ", $aParams['level_id'], $aParams['action_id']);
+                $sWhereClause = " AND `tam`.`IDLevel`=:level_id AND `tam`.`IDAction`=:action_id ";
                 break;
         }
 
@@ -102,15 +112,20 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery
 
     function deleteActions($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = "";
 
         switch($aParams['type']) {
             case 'by_level_id':
-                $sWhereClause .= $this->prepare("AND `IDLevel`=?", $aParams['value']);
+            	$aBindings = array(
+            		'level_id' => $aParams['value']
+            	);
+
+                $sWhereClause .= "AND `IDLevel`=:level_id";
                 break;
         }
 
-        return (int)$this->query("DELETE FROM `sys_acl_matrix` WHERE 1 " . $sWhereClause) > 0;
+        return (int)$this->query("DELETE FROM `sys_acl_matrix` WHERE 1 " . $sWhereClause, $aBindings) > 0;
     }
 }
 

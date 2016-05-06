@@ -51,7 +51,11 @@ class BxPaymentDb extends BxBaseModPaymentDb
         switch($aParams['type']) {
         	case 'by_name':
         		$aMethod['name'] = 'getRow';
-        		$sWhereClause = $this->prepare(" AND `tp`.`name`=?", $aParams['name']);
+        		$aMethod['params'][1] = array(
+                	'name' => $aParams['name']
+                );
+
+        		$sWhereClause = " AND `tp`.`name`=:name";
         		break;
 
 			case 'for_cart':
@@ -87,21 +91,28 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
     public function getOptions($iUserId = BX_PAYMENT_EMPTY_ID, $iProviderId = 0)
     {
+    	$aBinding = array(
+    		'user_id' => $iUserId
+    	);
+
         if($iUserId == BX_PAYMENT_EMPTY_ID && empty($iProviderId))
            return $this->getAll("SELECT `id`, `name`, `type` FROM `" . $this->_sPrefix . "providers_options`");
 
         $sWhereAddon = "";
-        if(!empty($iProviderId))
-            $sWhereAddon = $this->prepare(" AND `tpo`.`provider_id`=?", $iProviderId);
+        if(!empty($iProviderId)) {
+        	$aBinding['provider_id'] = $iProviderId;
 
-        $sQuery = $this->prepare("SELECT
+            $sWhereAddon = " AND `tpo`.`provider_id`=:provider_id";
+        }
+
+        $sQuery = "SELECT
                `tpo`.`name` AS `name`,
                `tuv`.`value` AS `value`
             FROM `" . $this->_sPrefix . "providers_options` AS `tpo`
             LEFT JOIN `" . $this->_sPrefix . "user_values` AS `tuv` ON `tpo`.`id`=`tuv`.`option_id`
-            WHERE 1" . $sWhereAddon . " AND `tuv`.`user_id`=?", $iUserId);
+            WHERE 1" . $sWhereAddon . " AND `tuv`.`user_id`=:user_id";
 
-        return $this->getAllWithKey($sQuery, 'name');
+        return $this->getAllWithKey($sQuery, 'name', $aBinding);
     }
 
     public function updateOption($iUserId, $iOptionId, $sValue)
@@ -180,12 +191,20 @@ class BxPaymentDb extends BxBaseModPaymentDb
     	$sWhereClause = $sLimitClause = '';
         switch($aParams['type']) {
             case 'id':
-                $sWhereClause = $this->prepare(" AND `id`=?", $aParams['id']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `id`=:id";
                 $sLimitClause = " LIMIT 1";
                 break;
 
             case 'order':
-            	$sWhereClause = $this->prepare(" AND `order`=?", $aParams['order']);
+            	$aMethod['params'][1] = array(
+                	'order' => $aParams['order']
+                );
+
+            	$sWhereClause = " AND `order`=:order";
                 $sLimitClause = " LIMIT 1";
                 break;
         }
@@ -225,7 +244,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
         return (int)$this->query("DELETE FROM `" . $this->_sPrefix . "transactions_pending` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }
-    
+
     /*
      * Processed Orders
      */
@@ -236,27 +255,46 @@ class BxPaymentDb extends BxBaseModPaymentDb
         $sWhereClause = "";
         switch($aParams['type']) {
             case 'id':
-                $sWhereClause = $this->prepare(" AND `tt`.`id`=?", $aParams['id']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tt`.`id`=:id";
                 break;
 
 			case 'pending_id':
-                $aMethod['name'] = 'getAll';
-                if(!empty($aParams['with_key'])) {
-					$aMethod['name'] = 'getAllWithKey';
-					$aMethod['params'][1] = $aParams['with_key'];
+                if(empty($aParams['with_key'])) {
+                	$aMethod['name'] = 'getAll';
+                	$aMethod['params'][1] = array(
+						'pending_id' => $aParams['pending_id']
+					);
                 }
-                $sWhereClause = $this->prepare(" AND `tt`.`pending_id`=?", $aParams['pending_id']);
+                else {
+                	$aMethod['name'] = 'getAllWithKey';
+					$aMethod['params'][1] = $aParams['with_key'];
+					$aMethod['params'][2] = array(
+						'pending_id' => $aParams['pending_id']
+					);
+                }
+
+                $sWhereClause = " AND `tt`.`pending_id`=:pending_id";
                 break;
 
             case 'license':
                 $aMethod['name'] = 'getAll';
-                $sWhereClause = $this->prepare(" AND `tt`.`license`=?", $aParams['license']);
+                $aMethod['params'][1] = array(
+                	'license' => $aParams['license']
+                );
+
+                $sWhereClause = " AND `tt`.`license`=:license";
                 break;
 
             case 'mixed':
                 $aMethod['name'] = 'getAll';
+                $aMethod['params'][1] = $aParams['conditions'];
+
                 foreach($aParams['conditions'] as $sKey => $sValue)
-                    $sWhereClause .= $this->prepare(" AND `tt`.`" . $sKey . "`=?", $sValue);
+                    $sWhereClause .= " AND `tt`.`" . $sKey . "`=:" . $sKey;
                 break;
 
         }

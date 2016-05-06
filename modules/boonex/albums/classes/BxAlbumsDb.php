@@ -30,15 +30,23 @@ class BxAlbumsDb extends BxBaseModTextDb
 
     public function deassociateFileWithContent($iContentId, $iFileId)
     {
+    	$aBindings = array();
+
         $sWhere = '';
-        if ($iContentId)
-            $sWhere .= $this->prepare (" AND `content_id` = ? ", $iContentId);
+        if ($iContentId) {
+        	$aBindings['content_id'] = $iContentId;
 
-        if ($iFileId)
-            $sWhere .= $this->prepare (" AND `file_id` = ? ", $iFileId);
+            $sWhere .= " AND `content_id` = :content_id";
+        }
 
-        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE 1 ";
-        return $this->query($sQuery . $sWhere);
+        if ($iFileId) {
+        	$aBindings['file_id'] = $iFileId;
+
+            $sWhere .= " AND `file_id` = :file_id";
+        }
+
+        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE 1 " . $sWhere;
+        return $this->query($sQuery, $aBindings);
     }
 
     public function getFileTitle($iFileId)

@@ -18,13 +18,13 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         $aMenuItems2Methods = array (
             'view-group-profile' => 'checkAllowedView',
             'edit-group-profile' => 'checkAllowedEdit',
+            'edit-group-cover' => 'checkAllowedChangeCover',
             'delete-group-profile' => 'checkAllowedDelete',
             'profile-fan-add' => 'checkAllowedFanAdd',
             'profile-fan-remove' => 'checkAllowedFanRemove',
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'profile-set-acl-level' => 'checkAllowedSetMembership',
         );
 
         $this->CNF = array (
@@ -34,6 +34,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
+            'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -58,9 +59,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         	'URL_MANAGE_COMMON' => 'page.php?i=groups-manage',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=groups-administration',
 
-            // some params
-            'PARAM_AUTOAPPROVAL' => 'bx_groups_autoapproval',
-            'PARAM_DEFAULT_ACL_LEVEL' => 'bx_groups_default_acl_level',
             'PARAM_NUM_RSS' => 'bx_groups_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_groups_num_connections_quick',
 

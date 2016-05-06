@@ -683,7 +683,7 @@ class BxDolSearchResult implements iBxDolReplaceable
                             $sqlCondition .= strtoupper($aValue['operator']) . '('.$sValuesString.')';
                             break;
                        default:
-                               $sqlCondition .= $aValue['operator'] . (isset($aValue['no_quote_value']) && $aValue['no_quote_value'] ?  $aValue['value'] : "'" . $oDb->escape($aValue['value']) . "'");
+                               $sqlCondition .= $aValue['operator'] . (isset($aValue['no_quote_value']) && $aValue['no_quote_value'] ?  $aValue['value'] : $oDb->escape($aValue['value']));
                        break;
                     }
                 }

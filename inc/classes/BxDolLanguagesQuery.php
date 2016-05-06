@@ -79,36 +79,68 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare(" AND `tl`.`ID`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `tl`.`ID`=:id";
                 break;
+
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare(" AND `tl`.`Name`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `tl`.`Name`=:name";
                 break;
+
             case 'default':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause .= $this->prepare(" AND `tl`.`Name`=?", getParam('lang_default'));
+                $aMethod['params'][1] = array(
+                	'name' => getParam('lang_default')
+                );
+
+                $sWhereClause .= " AND `tl`.`Name`=:name";
                 break;
+
             case 'active':
                 $sWhereClause = " AND `tl`.`Enabled`='1'";
                 break;
+
             case 'all':
                 $sOrderClause = " `tl`.`Name` ASC ";
                 break;
+
             case 'all_by_id':
-                $sWhereClause .= $this->prepare(" AND `tl`.`ID`=?", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `tl`.`ID`=:id";
                 $sOrderClause = " `tl`.`Name` ASC ";
                 break;
+
 			case 'all_by_name':
-                $sWhereClause .= $this->prepare(" AND `tl`.`Name`=?", $aParams['value']);
+				$aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause .= " AND `tl`.`Name`=:name";
                 $sOrderClause = " `tl`.`Name` ASC ";
                 break;
+
             case 'all_key_id':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'id';
 
-                if(isset($aParams['language']) && (int)$aParams['language'] != 0)
-                    $sWhereClause .= $this->prepare(" AND `tl`.`ID`=?", $aParams['language']);
+                if(isset($aParams['language']) && (int)$aParams['language'] != 0) {
+                	$aMethod['params'][2] = array(
+	                	'id' => $aParams['language']
+	                );
+
+                    $sWhereClause .= " AND `tl`.`ID`=:id";
+                }
                 break;
         }
 
@@ -151,47 +183,73 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
                 $sJoinClause = " LEFT JOIN `sys_localization_categories` AS `tc` ON `tk`.`IDCategory`=`tc`.`ID` LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` LEFT JOIN `sys_localization_languages` AS `tl` ON `ts`.`IDLanguage`=`tl`.`ID` ";
                 $sWhereClause .= " AND `tk`.`ID` IN ('" . implode("','", $aParams['value']) . "')";
 
-                if(isset($aParams['language']) && (int)$aParams['language'] != 0)
-                    $sWhereClause .= $this->prepare(" AND `tl`.`ID`=?", $aParams['language']);
+                if(isset($aParams['language']) && (int)$aParams['language'] != 0) {
+                	$aMethod['params'][1] = array(
+	                	'id' => $aParams['language']
+	                );
+
+                    $sWhereClause .= " AND `tl`.`ID`=:id";
+                }
                 break;
 
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tk`.`Key`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'key' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tk`.`Key`=:key ";
                 break;
 
 			case 'by_language_name_key_key':
             	$aMethod['name'] = 'getAllWithKey';
             	$aMethod['params'][1] = 'key';
+            	$aMethod['params'][2] = array(
+                	'name' => $aParams['value']
+                );
 
                 $sSelectClause .= ", `ts`.`String` AS `string` ";
                 $sJoinClause = " LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` LEFT JOIN `sys_localization_languages` AS `tl` ON `ts`.`IDLanguage`=`tl`.`ID` ";
-                $sWhereClause = $this->prepare(" AND `tl`.`Name`=? ", $aParams['value']);
+                $sWhereClause = " AND `tl`.`Name`=:name ";
                 break;
 
             case 'by_language_id_key_key':
             	$aMethod['name'] = 'getAllWithKey';
             	$aMethod['params'][1] = 'key';
+            	$aMethod['params'][2] = array(
+                	'language_id' => (int)$aParams['value']
+                );
 
                 $sSelectClause .= ", `ts`.`String` AS `string` ";
                 $sJoinClause = " LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` ";
-                $sWhereClause = $this->prepare(" AND `ts`.`IDLanguage`=? ", (int)$aParams['value']);
+                $sWhereClause = " AND `ts`.`IDLanguage`=:language_id ";
                 break;
 
             case 'search':
                 $aMethod['name'] = 'getColumn';
+                $aMethod['params'][1] = array();
 
                 $sSelectClause = "DISTINCT `tk`.`ID` AS `id`";
                 $sJoinClause = " LEFT JOIN `sys_localization_categories` AS `tc` ON `tk`.`IDCategory`=`tc`.`ID` LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` LEFT JOIN `sys_localization_languages` AS `tl` ON `ts`.`IDLanguage`=`tl`.`ID` ";
 
-                if(isset($aParams['category']) && (int)$aParams['category'] != 0)
-                    $sWhereClause .= $this->prepare(" AND `tc`.`ID`=?", $aParams['category']);
+                if(isset($aParams['category']) && (int)$aParams['category'] != 0) {
+                	$aMethod['params'][1]['category_id'] = $aParams['category'];
 
-                if(isset($aParams['language']) && (int)$aParams['language'] != 0)
-                    $sWhereClause .= $this->prepare(" AND `tl`.`ID`=?", $aParams['language']);
+                    $sWhereClause .= " AND `tc`.`ID`=:category_id";
+                }
 
-                if(isset($aParams['keyword']) && $aParams['keyword'] != '' && $aParams['keyword'] != _t('_adm_pgt_txt_keyword'))
-                    $sWhereClause .= $this->prepare(" AND (`tk`.`Key` LIKE ? OR `ts`.`String` LIKE ?)", '%' . $aParams['keyword'] . '%', '%' . $aParams['keyword'] . '%');
+                if(isset($aParams['language']) && (int)$aParams['language'] != 0) {
+                	$aMethod['params'][1]['language_id'] = $aParams['language'];
+
+                    $sWhereClause .= " AND `tl`.`ID`=:language_id";
+                }
+
+                if(isset($aParams['keyword']) && $aParams['keyword'] != '' && $aParams['keyword'] != _t('_adm_pgt_txt_keyword')) {
+                	$aMethod['params'][1]['key'] = '%' . $aParams['keyword'] . '%';
+                	$aMethod['params'][1]['string'] = '%' . $aParams['keyword'] . '%';
+
+                    $sWhereClause .= " AND (`tk`.`Key` LIKE :key OR `ts`.`String` LIKE :string)";
+                }
 
                 $iStart = 0;
                 if(isset($aParams['start']) && (int)$aParams['start'] != 0)
@@ -201,7 +259,9 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
                 if(isset($aParams['length']) && (int)$aParams['length'] != 0)
                     $iLength = $aParams['length'];
 
-                $sLimitClause .= $this->prepare(" LIMIT ?, ?", $iStart, $iLength);
+				$aMethod['params'][1]['start'] = $iStart;
+				$aMethod['params'][1]['length'] = $iLength;
+                $sLimitClause .= " LIMIT :start, :length";
                 break;
 
             case 'counter_by_category':
@@ -241,13 +301,22 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
         switch($aParams['type']) {
             case 'id_by_name':
                 $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
                 $sSelectClause = "`tc`.`ID` AS `id`";
-                $sWhereClause = $this->prepare(" AND `tc`.`Name`=?", $aParams['value']);
+                $sWhereClause = " AND `tc`.`Name`=:name";
                 break;
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tc`.`Name`=?", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'name' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tc`.`Name`=:name";
                 break;
+
             case 'all':
                 $sOrderClause = " `tc`.`Name` ASC ";
                 break;
@@ -277,16 +346,24 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
         switch($aParams['type']) {
             case 'by_key_language_id':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'key' => $aParams['key'],
+                	'language_id' => $aParams['language_id']
+                );
+
                 $sJoinClause = "LEFT JOIN `sys_localization_keys` AS `tk` ON `ts`.`IDKey`=`tk`.`ID`";
-                $sWhereClause .= $this->prepare("AND `tk`.`Key`=? AND `ts`.`IDLanguage`=?", $aParams['key'], $aParams['language_id']);
+                $sWhereClause .= "AND `tk`.`Key`=:key AND `ts`.`IDLanguage`=:language_id";
                 break;
 
             case 'all_by_key_key_language_id':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'language_id';
+                $aMethod['params'][2] = array(
+                	'key' => $aParams['value']
+                );
 
                 $sJoinClause = "LEFT JOIN `sys_localization_keys` AS `tk` ON `ts`.`IDKey`=`tk`.`ID`";
-                $sWhereClause .= $this->prepare("AND `tk`.`Key`=?", $aParams['value']);
+                $sWhereClause .= "AND `tk`.`Key`=:key";
                 break;
         }
 

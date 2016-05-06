@@ -76,7 +76,7 @@ class BxDolPrivacyQuery extends BxDolDb
                 $sCacheFunction = 'fromCache';
                 $sCacheName = $this->_sCacheGroup . $aParams['id'];
                 $sMethod = 'getRow';
-                $sWhereClause = $this->prepare("`id`=?", (int)$aParams['id']);
+                $sWhereClause = $this->prepareAsString("`id`=?", (int)$aParams['id']);
                 break;
 
             case 'active':
@@ -159,7 +159,7 @@ class BxDolPrivacyQuery extends BxDolDb
         if(is_array($mixedGroupId))
             $sWhere = " AND `" . $this->_sTable . "`.`" . $sField . "` IN (" . $this->implode_escape($mixedGroupId) . ")";
         else
-            $sWhere = $this->prepare(" AND `" . $this->_sTable . "`.`" . $sField . "` = ?", $mixedGroupId);
+            $sWhere = $this->prepareAsString(" AND `" . $this->_sTable . "`.`" . $sField . "` = ?", $mixedGroupId);
 
         return array(
             'where' => $sWhere

@@ -39,9 +39,9 @@ class BxDolStudioPermissionsActions extends BxTemplStudioGrid
             list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sModule != '')
-            $this->_aOptions['source'] .= $this->oDb->prepare(" AND `Module`=?", $sModule);
+            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `Module`=?", $sModule);
 
-        $this->_aOptions['source'] .= $this->oDb->prepare(" AND (`DisabledForLevels`='0' OR `DisabledForLevels`&?=0)", pow(2, ($this->iLevel - 1)));
+        $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND (`DisabledForLevels`='0' OR `DisabledForLevels`&?=0)", pow(2, ($this->iLevel - 1)));
         $aActions = parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
 
         $aActionsActive = array();

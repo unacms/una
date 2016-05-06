@@ -13,7 +13,7 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
 {
     function __construct($sMode = '', $aParams = false)
     {
-        parent::__construct($sMode, $aParams);
+        parent::__construct($sMode, $aParams); 
 
         $this->aCurrent =  array(
             'name' => 'bx_groups',
@@ -36,7 +36,7 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
                     'table' => 'bx_groups_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'group_name', 'picture', 'added'),
+                    'joinFields' => array('id', 'group_name', 'picture', 'cover', 'added'),
                 ),
                 'account' => array(
                     'type' => 'INNER',
@@ -109,7 +109,7 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
                 $this->isError = true;
         }
 
-        parent::__construct();
+        $this->sCenterContentUnitSelector = false;
     }
 
     function getAlterOrder()

@@ -102,14 +102,20 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
 
     function deleteKeysBy($aParams = array())
     {
+    	$aBindings = array();
         $sWhereClause = "";
 
         switch($aParams['type']) {
             case 'by_key_id':
-                $sWhereClause = $this->prepare(" AND `tk`.`ID`=?", $aParams['value']);
+            	$aBindings['id'] = $aParams['value'];
+
+                $sWhereClause = " AND `tk`.`ID`=:id";
                 break;
+
             case 'by_cat_id':
-                $sWhereClause .= $this->prepare(" AND `tc`.`ID`=?", $aParams['value']);
+            	$aBindings['id'] = $aParams['value'];
+
+                $sWhereClause .= " AND `tc`.`ID`=:id";
                 break;
         }
 
@@ -119,7 +125,7 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
                     `sys_localization_keys` AS `tk`,
                     `sys_localization_strings` AS `ts`
                 WHERE `tk`.`ID`=`ts`.`IDKey` AND `tk`.`IDCategory`=`tc`.`ID`" . $sWhereClause;
-        return (int)$this->query($sSql);
+        return (int)$this->query($sSql, $aBindings);
     }
 
     function updateKeys($aParamsSet, $aParamsWhere)
@@ -157,17 +163,34 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
 
     function deleteStringsBy($aParams = array())
     {
+    	$aBindings = array();
         $sWhereClause = "";
 
         switch($aParams['type']) {
             case 'by_lang':
-                $sWhereClause .= $this->prepare(" AND `tl`.`ID`=?", $aParams['language_id']);
+            	$aBindings = array(
+            		'language_id' => $aParams['language_id']
+        		);
+
+                $sWhereClause .= " AND `tl`.`ID`=:language_id";
                 break;
+
             case 'by_cat_and_lang':
-                $sWhereClause .= $this->prepare(" AND `tc`.`ID`=? AND `tl`.`ID`=?", $aParams['category_id'], $aParams['language_id']);
+            	$aBindings = array(
+            		'category_id' => $aParams['category_id'],
+            		'language_id' => $aParams['language_id']
+            	);
+
+                $sWhereClause .= " AND `tc`.`ID`=:category_id AND `tl`.`ID`=:language_id";
                 break;
+
             case 'by_key_and_lang':
-            	$sWhereClause .= $this->prepare(" AND `tk`.`Key`=? AND `tl`.`ID`=?", $aParams['key'], $aParams['language_id']);
+            	$aBindings = array(
+            		'key' => $aParams['key'],
+            		'language_id' => $aParams['language_id']
+        		);
+
+            	$sWhereClause .= " AND `tk`.`Key`=:key AND `tl`.`ID`=:language_id";
                 break;
         }
 
@@ -177,7 +200,7 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
 				LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` 
 				LEFT JOIN `sys_localization_languages` AS `tl` ON `ts`.`IDLanguage`=`tl`.`ID`
                 WHERE 1" . $sWhereClause;
-        return (int)$this->query($sSql);
+        return (int)$this->query($sSql, $aBindings);
     }
 
     function addCategory($sName)

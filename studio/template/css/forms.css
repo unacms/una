@@ -52,6 +52,11 @@
 	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
 }
 
+.bx-form-value .bx-form-input-select_multiple,
+.bx-form-value .bx-form-input-radio_set,
+.bx-form-value .bx-form-input-checkbox_set {
+    height:auto;
+}
 
 /**
  * General

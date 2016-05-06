@@ -20,7 +20,7 @@ class BxBaseModProfileGridCommon extends BxBaseModProfileGridAdministration
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `tp`.`account_id`=?", getLoggedId());
+		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`account_id`=?", getLoggedId());
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

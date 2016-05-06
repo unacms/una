@@ -25,15 +25,30 @@ class BxDolStudioNavigationQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tm`.`id`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tm`.`id`=:id ";
                 break;
+
             case 'by_object':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tm`.`object`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'object' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tm`.`object`=:object ";
                 break;
+
             case 'by_set_name':
-                $sWhereClause = $this->prepare(" AND `tm`.`set_name`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'set_name' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tm`.`set_name`=:set_name ";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -41,6 +56,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tm`.`module`";
                 break;
+
             case 'all':
                 break;
         }
@@ -83,14 +99,24 @@ class BxDolStudioNavigationQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_name':
                 $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'set_name' => $aParams['value']
+                );
+
                 $sSelectClause = ", COUNT(`tmi`.`id`) AS `items_count`";
                 $sJoinClause = "LEFT JOIN `sys_menu_items` AS `tmi` ON `tms`.`set_name`=`tmi`.`set_name` AND `tmi`.`active`='1'";
-                $sWhereClause = $this->prepare(" AND `tms`.`set_name`=? ", $aParams['value']);
+                $sWhereClause = " AND `tms`.`set_name`=:set_name ";
                 $sGroupClause = "GROUP BY `tms`.`set_name`";
                 break;
+
             case 'by_module':
-                $sWhereClause = $this->prepare(" AND `tms`.`module`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tms`.`module`=:module ";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -98,13 +124,24 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tms`.`module`";
                 break;
+
             case 'dump_by_name':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tms`.`set_name`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'set_name' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tms`.`set_name`=:set_name ";
                 break;
+
             case 'all':
-                if(isset($aParams['except']))
-                    $sWhereClause = $this->prepare(" AND `tms`.`set_name`<>? ", $aParams['except']);
+                if(isset($aParams['except'])) {
+                	$aMethod['params'][1] = array(
+	                	'set_name' => $aParams['except']
+	                );
+
+                    $sWhereClause = " AND `tms`.`set_name`<>:set_name ";
+                }
                 break;
         }
 
@@ -169,11 +206,21 @@ class BxDolStudioNavigationQuery extends BxDolDb
         switch($aParams['type']) {
             case 'by_id':
                 $aMethod['name'] = 'getRow';
-                $sWhereClause = $this->prepare(" AND `tmi`.`id`=? ", $aParams['value']);
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tmi`.`id`=:id ";
                 break;
+
             case 'by_set_name':
-                $sWhereClause = $this->prepare(" AND `tmi`.`set_name`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'set_name' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tmi`.`set_name`=:set_name ";
                 break;
+
             case 'counter_by_sets':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'set_name';
@@ -181,6 +228,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tmi`.`set_name`";
                 break;
+
             case 'counter_by_modules':
                 $aMethod['name'] = 'getPairs';
                 $aMethod['params'][1] = 'module';
@@ -188,6 +236,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tmi`.`module`";
                 break;
+
             case 'all':
                 break;
         }
@@ -225,11 +274,21 @@ class BxDolStudioNavigationQuery extends BxDolDb
 
         switch($aParams['type']) {
             case 'by_id':
-                $sWhereClause = $this->prepare(" AND `tmi`.`id`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tmi`.`id`=:id ";
                 break;
+
             case 'by_set_name':
-                $sWhereClause = $this->prepare(" AND `tmi`.`set_name`=? ", $aParams['value']);
+            	$aMethod['params'][1] = array(
+                	'set_name' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tmi`.`set_name`=:set_name ";
                 break;
+
             case 'all':
                 break;
         }

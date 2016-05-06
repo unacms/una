@@ -31,25 +31,29 @@ class BxInvDb extends BxDolModuleDb
 
 	public function getInvites($aParams, $bReturnCount = false)
     {
-    	$sMethod = 'getAll';
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "`{$this->_sTableInvites}`.*";
 
         switch($aParams['type']) {
             case 'count_by_account':
-                $sMethod = 'getOne';
+            	$aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                	'account_id' => $aParams['value']
+                );
+
                 $sSelectClause = "COUNT(`{$this->_sTableInvites}`.`id`) AS `count`";
-                $sWhereClause = $this->prepare("AND `{$this->_sTableInvites}`.`account_id`=? ", $aParams['value']);
+                $sWhereClause = "AND `{$this->_sTableInvites}`.`account_id`=:account_id ";
                 $sLimitClause = "LIMIT 1";
                 break;
         }
 
-        $sSql = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " " . $sSelectClause . "
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " " . $sSelectClause . "
             FROM `{$this->_sTableInvites}` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
-        $aEntries = $this->$sMethod($sSql);
+        $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);;
         if(!$bReturnCount)
         	return $aEntries;
 
@@ -64,30 +68,35 @@ class BxInvDb extends BxDolModuleDb
 
 	public function getRequests($aParams, $bReturnCount = false)
     {
-    	$sMethod = 'getAll';
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "`{$this->_sTableRequests}`.*";
 
         switch($aParams['type']) {
         	case 'by_id':
-        		$sMethod = 'getRow';
-        		$sWhereClause = $this->prepare("AND `{$this->_sTableRequests}`.`id`=? ", $aParams['value']);
+        		$aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+        		$sWhereClause = "AND `{$this->_sTableRequests}`.`id`=:id ";
         		$sLimitClause = "LIMIT 1";
         		break;
 
             case 'count_all':
-                $sMethod = 'getOne';
+            	$aMethod['name'] = 'getOne';
+
                 $sSelectClause = "COUNT(`{$this->_sTableRequests}`.`id`) AS `count`";
                 $sLimitClause = "LIMIT 1";
                 break;
         }
 
-        $sSql = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " " . $sSelectClause . "
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " " . $sSelectClause . "
             FROM `{$this->_sTableRequests}` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
-        $aEntries = $this->$sMethod($sSql);
+        $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
         if(!$bReturnCount)
         	return $aEntries;
 
