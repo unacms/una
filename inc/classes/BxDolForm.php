@@ -840,7 +840,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         if (!$sSql)
             return false;
         $oDb = BxDolDb::getInstance();
-        if ($oDb->res($sSql))
+        if ($oDb->query($sSql))
             return $oDb->lastId();
         return false;
     }
@@ -852,7 +852,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $sSql = $oChecker->dbUpdate($val, $this->aParams['db'], $this->aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
         if (!$sSql)
             return false;
-        return BxDolDb::getInstance()->res($sSql);
+        return BxDolDb::getInstance()->query($sSql);
     }
 
     function delete ($val)
@@ -862,7 +862,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $sSql = $oChecker->dbDelete($val, $this->aParams['db'], $this->aInputs);
         if (!$sSql)
             return false;
-        return BxDolDb::getInstance()->res($sSql);
+        return BxDolDb::getInstance()->query($sSql);
     }
 
     function generateUri ()
@@ -1222,9 +1222,7 @@ class BxDolFormChecker
     // db functions
     function serializeDbValues (&$aInputs, &$aValsToAdd, &$aTrackTextFieldsChanges = null)
     {
-        $oDb = BxDolDb::getInstance();
         $aValsToUpdate = array();
-        $s = '';
 
         if (null !== $aTrackTextFieldsChanges && isset($aTrackTextFieldsChanges['data']))
             $aTrackTextFieldsChanges['changed_fields'] = array();
@@ -1246,9 +1244,7 @@ class BxDolFormChecker
         }
 
         // build SQL query part
-        foreach ($aValsToUpdate as $k => $val)
-            $s .= $oDb->prepare("`{$k}` = ?,", $val);
-        return $s ? substr ($s, 0, -1) : '';
+        return BxDolDb::getInstance()->arrayToSQL($aValsToUpdate);
     }
 
     function dbInsert (&$aDb, &$aInputs, $aValsToAdd = array(), $isIgnore = false)
@@ -1280,7 +1276,7 @@ class BxDolFormChecker
         if (!$sFields)
             return '';
 
-        return "UPDATE `{$aDb['table']}` SET $sFields WHERE " . $oDb->prepare("`{$aDb['key']}` = ?", $val);
+        return $oDb->prepare("UPDATE `{$aDb['table']}` SET $sFields WHERE `{$aDb['key']}` = ?", $val);
     }
 
     function dbDelete ($val, &$aDb, &$aInputs)
@@ -1290,7 +1286,7 @@ class BxDolFormChecker
 
         $oDb = BxDolDb::getInstance();
 
-        return "DELETE FROM `{$aDb['table']}` WHERE " . $oDb->prepare("`{$aDb['key']}` = ?", $val);
+        return $oDb->prepare("DELETE FROM `{$aDb['table']}` WHERE `{$aDb['key']}` = ?", $val);
     }
 
     function fillWithValues (&$aInputs, &$aValues)
