@@ -14,11 +14,16 @@ class BxDolGridConnections extends BxTemplGrid
     protected $_bOwner = false;
     protected $_sContentModule = 'bx_persons';
     protected $_sObjectConnections = 'sys_profiles_friends';
+    protected $_oConnection;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
+
+        $this->_oConnection = BxDolConnection::getObjectInstance($this->_sObjectConnections);
+        if (!$this->_oConnection)
+            return;
 
         $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if (!$iProfileId)
@@ -28,14 +33,10 @@ class BxDolGridConnections extends BxTemplGrid
         if (!$oProfile)
             return;
 
-        $oConnection = BxDolConnection::getObjectInstance($this->_sObjectConnections);
-        if (!$oConnection)
-            return;
-
         if ($oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
-        $aSQLParts = $oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $oProfile->id(), $this->_bOwner ? false : true);
+        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $oProfile->id(), $this->_bOwner ? false : true);
 
         $this->addMarkers(array(
             'profile_id' => $oProfile->id(),
@@ -56,9 +57,7 @@ class BxDolGridConnections extends BxTemplGrid
             exit;
         }
 
-        $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
-
-        $a = $oConn->actionAdd($iId, $iViewedId);
+        $a = $this->_oConnection->actionAdd($iId, $iViewedId);
         if (isset($a['err']) && $a['err'])
             echoJson(array('msg' => $a['msg']));
         else
@@ -77,12 +76,10 @@ class BxDolGridConnections extends BxTemplGrid
     {
         list ($iId, $iViewedId) = $this->_prepareIds();
 
-        $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
-
-        if ($oConn->isConnected($iViewedId, $iId, true))
-            $a = $oConn->actionRemove($iId, $iViewedId);
+        if ($this->_oConnection->isConnected($iViewedId, $iId, true))
+            $a = $this->_oConnection->actionRemove($iId, $iViewedId);
         else
-            $a = $oConn->actionReject($iId, $iViewedId);
+            $a = $this->_oConnection->actionReject($iId, $iViewedId);
 
         return isset($a['err']) && $a['err'] ? false : true;
     }
@@ -99,11 +96,10 @@ class BxDolGridConnections extends BxTemplGrid
     protected function _getCellInfo ($mixedValue, $sKey, $aField, $aRow)
     {
         $s = '';
-        $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
 
         // for friend requests display mutual friends
         if ($this->_bOwner && !$aRow['mutual']) {
-            $a = $oConn->getCommonContent($aRow['id'], bx_get_logged_profile_id(), true);
+            $a = $this->_oConnection->getCommonContent($aRow['id'], bx_get_logged_profile_id(), true);
             $i = count($a);
             if (1 == $i) {
                 $iProfileId = array_pop($a);
@@ -116,7 +112,7 @@ class BxDolGridConnections extends BxTemplGrid
 
         // display friends number if no other info is available
         if (!$s) {
-            $a = $oConn->getConnectedContent($aRow['id'], true);
+            $a = $this->_oConnection->getConnectedContent($aRow['id'], true);
             $i = count($a);
             $s = _t('_sys_txt_n_friends', $i);
         }
@@ -144,8 +140,7 @@ class BxDolGridConnections extends BxTemplGrid
         if ($this->_bOwner || $aRow['id'] == bx_get_logged_profile_id())
             return '';
 
-        $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
-        if ($oConn->isConnected($aRow['id'], bx_get_logged_profile_id()) || $oConn->isConnected(bx_get_logged_profile_id(), $aRow['id']))
+        if ($this->_oConnection->isConnected($aRow['id'], bx_get_logged_profile_id()) || $this->_oConnection->isConnected(bx_get_logged_profile_id(), $aRow['id']))
             return '';
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);

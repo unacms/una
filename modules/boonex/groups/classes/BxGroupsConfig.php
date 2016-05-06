@@ -18,6 +18,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         $aMenuItems2Methods = array (
             'view-group-profile' => 'checkAllowedView',
             'edit-group-profile' => 'checkAllowedEdit',
+            'edit-group-cover' => 'checkAllowedChangeCover',
             'delete-group-profile' => 'checkAllowedDelete',
             'profile-fan-add' => 'checkAllowedFanAdd',
             'profile-fan-remove' => 'checkAllowedFanRemove',
@@ -33,6 +34,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
+            'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
 
             // database fields
             'FIELD_ID' => 'id',

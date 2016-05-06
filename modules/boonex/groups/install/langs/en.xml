@@ -13,6 +13,8 @@
 	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Delete Group]]></string>
 	<string name="_bx_groups_form_profile_display_view"><![CDATA[View Group]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
+    <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_groups_form_profile_input_sys_group_name"><![CDATA[Group Name]]></string>
     <string name="_bx_groups_form_profile_input_group_name"><![CDATA[Group Name]]></string>
     <string name="_bx_groups_form_profile_input_group_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
@@ -188,6 +190,8 @@
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>
     <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
+    <string name="_bx_groups_txt_to_admins"><![CDATA[To Admins]]></string>
+    <string name="_bx_groups_txt_from_admins"><![CDATA[From Admins]]></string>
 
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Group categories]]></string>
     <string name="_bx_groups_cat_General"><![CDATA[General]]></string>

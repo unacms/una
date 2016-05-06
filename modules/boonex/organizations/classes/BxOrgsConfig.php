@@ -18,6 +18,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         $aMenuItems2Methods = array (
             'view-organization-profile' => 'checkAllowedView',
             'edit-organization-profile' => 'checkAllowedEdit',
+            'edit-organization-cover' => 'checkAllowedChangeCover',
             'delete-organization-profile' => 'checkAllowedDelete',
             'profile-friend-add' => 'checkAllowedFriendAdd',
             'profile-friend-remove' => 'checkAllowedFriendRemove',

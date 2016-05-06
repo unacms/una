@@ -41,3 +41,10 @@ DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_groups_fans';
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans');
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans');
+
+-- ALERTS
+
+SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_groups' LIMIT 1);
+DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
+DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
+

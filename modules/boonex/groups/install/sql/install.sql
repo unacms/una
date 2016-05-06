@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `bx_groups_data` (
   `group_cat` int(11) NOT NULL,
   `group_desc` text NOT NULL,
   `views` int(11) NOT NULL default '0',
+  `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `group_name` (`group_name`)
 );
@@ -77,6 +78,15 @@ CREATE TABLE IF NOT EXISTS `bx_groups_fans` (
   KEY `content` (`content`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: admins
+CREATE TABLE IF NOT EXISTS `bx_groups_admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_id` int(10) unsigned NOT NULL,
+  `fan_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin` (`content_id`,`fan_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- STORAGES & TRANSCODERS
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
@@ -119,6 +129,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_group', 'bx_groups', 'group_desc', '', '', 0, 'textarea', '_bx_groups_form_profile_input_sys_group_desc', '_bx_groups_form_profile_input_group_desc', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 1),
 ('bx_group', 'bx_groups', 'group_cat', '', '#!bx_groups_cats', 0, 'select', '_bx_groups_form_profile_input_sys_group_cat', '_bx_groups_form_profile_input_group_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_group_cat_err', 'Xss', '', 1, 1),
 ('bx_group', 'bx_groups', 'group_name', '', '', 0, 'text', '_bx_groups_form_profile_input_sys_group_name', '_bx_groups_form_profile_input_group_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_group_name_err', 'Xss', '', 1, 0),
+('bx_group', 'bx_groups', 'join_confirmation', 1, '', 1, 'switcher', '_bx_groups_form_profile_input_sys_join_confirm', '_bx_groups_form_profile_input_join_confirm', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_group', 'bx_groups', 'picture', '', '', 0, 'file', '_bx_groups_form_profile_input_sys_picture', '_bx_groups_form_profile_input_picture', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_picture_err', 'Int', '', 1, 0),
 ('bx_group', 'bx_groups', 'picture_preview', '', '', 0, 'custom', '_bx_groups_form_profile_input_sys_picture_preview', '_bx_groups_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
@@ -131,12 +142,13 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_add', 'group_name', 2147483647, 1, 6),
 ('bx_group_add', 'group_cat', 2147483647, 1, 7),
 ('bx_group_add', 'group_desc', 2147483647, 1, 8),
-('bx_group_add', 'do_submit', 2147483647, 1, 9),
+('bx_group_add', 'join_confirmation', 2147483647, 1, 9),
+('bx_group_add', 'do_submit', 2147483647, 1, 10),
+('bx_group_delete', 'cover', 2147483647, 0, 0),
 ('bx_group_delete', 'cover_preview', 2147483647, 0, 0),
 ('bx_group_delete', 'picture', 2147483647, 0, 0),
 ('bx_group_delete', 'delete_confirm', 2147483647, 1, 0),
 ('bx_group_delete', 'picture_preview', 2147483647, 0, 0),
-('bx_group_delete', 'cover', 2147483647, 0, 0),
 ('bx_group_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_group_delete', 'group_name', 2147483647, 0, 2),
 ('bx_group_delete', 'group_cat', 2147483647, 0, 3),
@@ -148,7 +160,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_edit', 'group_name', 2147483647, 1, 6),
 ('bx_group_edit', 'group_cat', 2147483647, 1, 7),
 ('bx_group_edit', 'group_desc', 2147483647, 1, 8),
-('bx_group_edit', 'do_submit', 2147483647, 1, 9),
+('bx_group_edit', 'join_confirmation', 2147483647, 1, 9),
+('bx_group_edit', 'do_submit', 2147483647, 1, 10),
+('bx_group_edit_cover', 'join_confirmation', 2147483647, 0, 0),
+('bx_group_edit_cover', 'group_desc', 2147483647, 0, 0),
 ('bx_group_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_group_edit_cover', 'group_name', 2147483647, 0, 2),
 ('bx_group_edit_cover', 'picture', 2147483647, 0, 3),
