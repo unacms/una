@@ -334,3 +334,14 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_groups_common', 'bulk', 'delete', '_bx_groups_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_groups_common', 'bulk', 'delete_with_content', '_bx_groups_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
 ('bx_groups_common', 'single', 'settings', '_bx_groups_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);
+
+
+-- ALERTS
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
+('bx_groups', 'BxGroupsAlertsResponse', 'modules/boonex/groups/classes/BxGroupsAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('bx_groups_fans', 'connection_added', @iHandler);
+

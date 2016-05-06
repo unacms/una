@@ -33,6 +33,16 @@ class BxGroupsModule extends BxBaseModProfileModule
         return $aFieldsProfile;
     }
 
+    public function serviceAddMutualConnection ($iContentId, $iInitiatorId)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
+        if (!$aContentInfo || $aContentInfo['join_confirmation'])
+            return false;
+
+        $oConnection = BxDolConnection::getObjectInstance('bx_groups_fans');
+        return $oConnection->addConnection((int)$iContentId, (int)$iInitiatorId);
+    }
+
     public function serviceFansTable ()
     {
         $oGrid = BxDolGrid::getObjectInstance('bx_groups_fans');
