@@ -38,7 +38,7 @@ BxPaymentOrders.prototype.paOnSelectModule = function(oSelect) {
     oPopup.bx_loading(true);
 
     $.get(
-        this._sActionsUrl + 'get_items/' + parseInt($(oSelect).val()) + '/',
+        this._sActionsUrl + 'get_items/single/' + parseInt($(oSelect).val()) + '/',
         {
             _t:oDate.getTime()
         },
