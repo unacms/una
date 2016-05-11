@@ -34,16 +34,20 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 
 		$oPayment = BxDolPayments::getInstance();
 
-		$bResult = true;
+		$bResult = false;
 		switch ($a['name']) {
 			case 'add-to-cart':
-				$bResult = (float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] != 0;
-				if(!$bResult) 
+				if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] == 0) 
 					break;
 
+				$aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
+				if(empty($aJs) || !is_array($aJs))
+					break;
+
+				list($sJsCode, $sJsMethod) = $aJs;
 				$aCurrency = $this->_oModule->_oConfig->getCurrency();
 
-				list($sJsCode, $sJsMethod) = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
+				$bResult = true;
 				$this->addMarkers(array(
 					'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
 		        	'add_to_cart_onclick' => $sJsMethod
@@ -51,18 +55,25 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 				break;
 
 			case 'subscribe':
-				$bResult = (float)$this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']] != 0;
-				if(!$bResult) 
+				if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']] == 0) 
 					break;
 
+				$aJs = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
+				if(empty($aJs) || !is_array($aJs))
+					break;
+
+				list($sJsCode, $sJsMethod) = $aJs;
 				$aCurrency = $this->_oModule->_oConfig->getCurrency();
 
-				list($sJsCode, $sJsMethod) = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
+				$bResult = true;
 				$this->addMarkers(array(
 					'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
 		        	'subscribe_onclick' => $sJsMethod
 		        )); 
 				break;
+
+			default:
+				$bResult = true;
 		}
 
 		return $bResult;

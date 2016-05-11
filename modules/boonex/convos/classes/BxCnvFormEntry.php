@@ -147,24 +147,23 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
     });
 </script>
 <style>
-    .bx-form-input-autotoken {
+    .bx-form-value .bx-form-input-autotoken {
         float:left;
         padding:0px;
         height:auto;
     }
-    .bx-form-input-autotoken b {
+    .bx-form-value .bx-form-input-autotoken b {
         cursor:pointer;
         display:block;
         float:left;
-        padding:0.5em;
-        padding-right:1.5em;
+        padding:0.3em 1.5em 0.3em 0.5em;
         margin:0.1em;
         font-weight:normal;
     }
-    .bx-form-input-autotoken b:hover {
+    .bx-form-value .bx-form-input-autotoken b:hover {
         opacity:0.7;
     }
-    .bx-form-input-autotoken b:after {
+    .bx-form-value .bx-form-input-autotoken b:after {
         position:absolute;
         content:"x";
         padding:0 0.5em;
@@ -172,7 +171,7 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         font-size:0.7em;
         font-weight:bold;
     }
-    .bx-form-input-autotoken input {
+    .bx-form-value .bx-form-input-autotoken input {
         border:0;
         margin:0;
         padding:0 0 0 5px;

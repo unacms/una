@@ -23,6 +23,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
 
     public function performActionAdd()
     {
+    	$sType = BX_PAYMENT_TYPE_SINGLE;
     	$sAction = 'add';
     	$sJsObject = $this->_oModule->_oConfig->getJsObject('processed');
 
@@ -52,7 +53,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         foreach($aModules as $aModule)
            $oForm->aInputs['module_id']['values'][] = array('key' => $aModule['id'], 'value' => $aModule['title']);
 
-		$oForm->aInputs['items']['content'] = $this->_oModule->_oTemplate->displayItems();
+		$oForm->aInputs['items']['content'] = $this->_oModule->_oTemplate->displayItems($sType);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -63,6 +64,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
             	return echoJson(array('msg' => $this->_sLangsPrefix . 'err_empty_items'));
 
 			$aItems = array();
+			$sPriceKey = $this->_oModule->_oConfig->getKey('KEY_ARRAY_PRICE_SINGLE');
 			foreach($aItemIds as $iItemId) {
 	            $iItemId = (int)$iItemId;
 	            $fItemPrice = (float)$oForm->getSubmittedValue('item-price-' . $iItemId, $sFormMethod);
@@ -71,14 +73,18 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
 	            if($iItemQuantity <= 0)
 	                return echoJson(array('msg' => $this->_sLangsPrefix . 'err_wrong_quantity'));
 
-				$aItems[] = array('id' => $iItemId, 'price' => $fItemPrice, 'quantity' => $iItemQuantity);
+				$aItems[] = array(
+					'id' => $iItemId, 
+					 $sPriceKey => $fItemPrice, 
+					'quantity' => $iItemQuantity
+				);
 			}
 
         	$mixedResult = $this->_oModule->getObjectOrders()->addOrder(array(
         		'client_id' => $oForm->getCleanValue('client_id'),
         		'seller_id' => $oForm->getCleanValue('seller_id'),
         		'provider' => 'manual',
-        		'type' => BX_PAYMENT_TYPE_SINGLE,
+        		'type' => $sType,
         		'order' => $oForm->getCleanValue('order'),
         		'error_code' => 0,
         		'error_msg' => 'Manually processed',        		
@@ -116,7 +122,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
     	if(empty($this->_aQueryAppend['seller_id']))
     		return array();
 
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `tt`.`seller_id`=?", $this->_aQueryAppend['seller_id']);
+		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`seller_id`=?", $this->_aQueryAppend['seller_id']);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

@@ -95,7 +95,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_block_bg_image'), '_bx_uni_stg_cpt_option_block_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_block_bg_image_repeat'), '_bx_uni_stg_cpt_option_block_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_block_bg_image_size'), '_bx_uni_stg_cpt_option_block_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_block_content_padding'), '_bx_uni_stg_cpt_option_block_content_padding', '1rem', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_block_content_padding'), '_bx_uni_stg_cpt_option_block_content_padding', '20px 0px 0px 0px', 'digit', '', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_block_border_color'), '_bx_uni_stg_cpt_option_block_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_block_border_size'), '_bx_uni_stg_cpt_option_block_border_size', '0px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_block_border_radius'), '_bx_uni_stg_cpt_option_block_border_radius', '0px', 'digit', '', '', '', 8),

@@ -460,7 +460,13 @@ input.bx-btn {
 
 .bx-btn.bx-btn-disabled:active,
 .bx-btn.bx-btn-disabled:hover,
-.bx-btn.bx-btn-disabled {
+.bx-btn.bx-btn-disabled,
+.bx-btn.bx-btn-small.bx-btn-disabled:active,
+.bx-btn.bx-btn-small.bx-btn-disabled:hover,
+.bx-btn.bx-btn-small.bx-btn-disabled,
+.bx-btn.bx-btn-primary.bx-btn-disabled:active,
+.bx-btn.bx-btn-primary.bx-btn-disabled:hover,
+.bx-btn.bx-btn-primary.bx-btn-disabled {
     background-color: #ddd;
 }
 
