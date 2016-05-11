@@ -18,7 +18,8 @@ class BxGroupsGridConnections extends BxDolGridConnections
     public function __construct ($aOptions, $oTemplate = false)
     {
         $this->_sContentModule = 'bx_groups';
-        $this->_sObjectConnections = 'bx_groups_fans';
+        $this->_oModule = BxDolModule::getInstance($this->_sContentModule);
+        $this->_sObjectConnections = $this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'];
 
         parent::__construct ($aOptions, $oTemplate);
 
@@ -33,7 +34,6 @@ class BxGroupsGridConnections extends BxDolGridConnections
         $aProfileInfo = $oProfile->getInfo();
         $this->_iContentId = $aProfileInfo['content_id'];
 
-        $this->_oModule = BxDolModule::getInstance($aProfileInfo['type']);
         $aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($this->_iContentId));
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedEdit($aContentInfo) || $oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
