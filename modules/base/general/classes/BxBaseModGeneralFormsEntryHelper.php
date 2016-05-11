@@ -221,7 +221,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
+        if ($sMsg = $this->_processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile))
             return MsgBox($sMsg);
 
         // get form
@@ -241,6 +241,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // display profile
         $oForm->initChecker($aContentInfo);
         return $oForm->getCode();
+    }
+
+    protected function _processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile)
+    {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
+            return $sMsg;
+
+        return '';
     }
 
     public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)

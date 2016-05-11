@@ -26,7 +26,7 @@ class BxGroupsTemplate extends BxBaseModProfileTemplate
 
         $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
-        $oConn = BxDolConnection::getObjectInstance('bx_groups_fans');
+        $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
 
         $aVars['cover_url'] = $this->urlCover ($aData, true);
         $aVars['members'] = _t('_bx_groups_txt_N_fans', $oConn ? $oConn->getConnectedInitiatorsCount($aData[$CNF['FIELD_ID']], true) : 0);
@@ -35,11 +35,24 @@ class BxGroupsTemplate extends BxBaseModProfileTemplate
             'content' => array (
                 'id' => $aData[$CNF['FIELD_ID']],
                 'title' => $oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $aData[$CNF['FIELD_ID']]) ? _t('_bx_groups_menu_item_title_become_fan_sent') : _t('_bx_groups_menu_item_title_become_fan'),
-                'object' => 'bx_groups_fans'
+                'object' => $CNF['OBJECT_CONNECTIONS'],
             ),
         );
 
         return $aVars;
+    }
+
+    function setCover ($aData, $sTemplateName = 'cover.html')
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+    
+        if ('c' != $aData['allow_view_to'] && CHECK_ACTION_RESULT_ALLOWED !== $oModule->checkAllowedView($aData)) {
+            $CNF = &$this->_oConfig->CNF;
+            $aData[$CNF['FIELD_COVER']] = 0;
+            $aData[$CNF['FIELD_PICTURE']] = 0;
+        }
+
+        parent::setCover ($aData, $sTemplateName);
     }
 }
 

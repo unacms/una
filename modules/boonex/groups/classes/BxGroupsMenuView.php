@@ -22,18 +22,13 @@ class BxGroupsMenuView extends BxBaseModProfileMenuView
 
         if ($this->_oProfile && isLogged()) {
 
-            $oConn = BxDolConnection::getObjectInstance('bx_groups_fans');
+            $oConn = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS']);
             if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_aProfileInfo['content_id'])) {
                 $this->addMarkers(array(
                     'title_add_fan' => _t('_bx_groups_menu_item_title_become_fan_sent'),
                     'title_remove_fan' => _t('_bx_groups_menu_item_title_leave_group_cancel_request'),
                 ));
-            } /* elseif ($oConn->isConnectedNotMutual($this->_aProfileInfo['content_id'], bx_get_logged_profile_id())) {
-                $this->addMarkers(array(
-                    'title_add_fan' => _t('_bx_groups_menu_item_title_become_fan_confirm'),
-                    'title_remove_fan' => _t('_bx_groups_menu_item_title_leave_group_reject_request'),
-                ));
-            } */ else {
+            } else {
                 $this->addMarkers(array(
                     'title_add_fan' => _t('_bx_groups_menu_item_title_become_fan'),
                     'title_remove_fan' => _t('_bx_groups_menu_item_title_leave_group'),

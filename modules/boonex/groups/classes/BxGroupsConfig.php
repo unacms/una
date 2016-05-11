@@ -46,6 +46,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',
             'FIELD_COVER_PREVIEW' => 'cover_preview',
+            'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELDS_QUICK_SEARCH' => array('group_name'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
@@ -87,8 +88,11 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'groups-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_groups_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_groups_view_profile',
+            'OBJECT_PRIVACY_VIEW' => 'bx_groups_allow_view_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_groups_administration',
         	'OBJECT_GRID_COMMON' => 'bx_groups_common',
+            'OBJECT_GRID_CONNECTIONS' => 'bx_groups_fans',
+            'OBJECT_CONNECTIONS' => 'bx_groups_fans',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => '',

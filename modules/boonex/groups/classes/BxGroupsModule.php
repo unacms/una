@@ -39,13 +39,15 @@ class BxGroupsModule extends BxBaseModProfileModule
         if (!$aContentInfo || $aContentInfo['join_confirmation'])
             return false;
 
-        $oConnection = BxDolConnection::getObjectInstance('bx_groups_fans');
+        if (!($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])))
+            return false;
+
         return $oConnection->addConnection((int)$iContentId, (int)$iInitiatorId);
     }
 
     public function serviceFansTable ()
     {
-        $oGrid = BxDolGrid::getObjectInstance('bx_groups_fans');
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID_CONNECTIONS']);
         if (!$oGrid)
             return false;
 
@@ -64,7 +66,7 @@ class BxGroupsModule extends BxBaseModProfileModule
             return false;
 
         bx_import('BxDolConnection');
-        $s = $this->serviceBrowseConnectionsQuick ($iContentId, 'bx_groups_fans', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
+        $s = $this->serviceBrowseConnectionsQuick ($iContentId, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
         return $s;
@@ -75,7 +77,7 @@ class BxGroupsModule extends BxBaseModProfileModule
      */
     public function checkAllowedFanAdd (&$aDataEntry, $isPerformAction = false)
     {
-        return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, 'bx_groups_fans', true, false);
+        return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], true, false);
     }
 
     /**
@@ -85,7 +87,7 @@ class BxGroupsModule extends BxBaseModProfileModule
     {
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, true, true))
             return CHECK_ACTION_RESULT_ALLOWED;
-        return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, 'bx_groups_fans', false, true, false);
+        return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], false, true, false);
     }
 
     public function checkAllowedManageAdmins ($mixedDataEntry, $isPerformAction = false)
@@ -114,6 +116,15 @@ class BxGroupsModule extends BxBaseModProfileModule
         if ($this->_oDb->isAdmin($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], bx_get_logged_profile_id()))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
+    }
+
+    protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
+    {
+        $sResult = $this->checkAllowedView($aDataEntry);
+        if (CHECK_ACTION_RESULT_ALLOWED !== $sResult)
+            return $sResult;
+
+        return parent::_checkAllowedConnect ($aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap);
     }
 }
 

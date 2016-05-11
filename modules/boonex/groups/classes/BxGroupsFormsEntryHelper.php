@@ -18,6 +18,15 @@ class BxGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+
+    protected function _processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile)
+    {
+        $sMsg = parent::_processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile);
+        if ($sMsg && 'c' == $aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']])
+            return '';
+
+        return $sMsg;
+    }
 }
 
 /** @} */

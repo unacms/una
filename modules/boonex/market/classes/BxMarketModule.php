@@ -169,7 +169,8 @@ class BxMarketModule extends BxBaseModTextModule
 				'title' => $aItem[$CNF['FIELD_TITLE']],
 				'description' => $aItem[$CNF['FIELD_TEXT']],
 				'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
-				'price' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
+				'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
+            	'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
            );
 
         return $aResult;

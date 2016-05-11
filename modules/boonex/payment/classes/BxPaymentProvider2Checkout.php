@@ -47,10 +47,11 @@ class BxPaymentProvider2Checkout extends BxBaseModPaymentProvider implements iBx
         );
 
         $iIndex = 0;
+        $sPriceKey = $this->_oModule->_oConfig->getKey('KEY_ARRAY_PRICE_SINGLE');
         foreach($aCartInfo['items'] as $aItem) {
         	$aFormData['li_' . $iIndex . '_type'] = 'product';
             $aFormData['li_' . $iIndex . '_name'] = $aItem['title'];
-            $aFormData['li_' . $iIndex . '_price'] = $aItem['price'];
+            $aFormData['li_' . $iIndex . '_price'] = $aItem[$sPriceKey];
             $aFormData['li_' . $iIndex . '_quantity'] = $aItem['quantity'];
             $aFormData['li_' . $iIndex . '_tangible'] = 'N';
 

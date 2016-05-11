@@ -81,7 +81,7 @@ class BxPaymentGridPending extends BxBaseModPaymentGridOrders
     	if(empty($this->_aQueryAppend['seller_id']))
     		return array();
 
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `tt`.`seller_id`=?", $this->_aQueryAppend['seller_id']);
+		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`seller_id`=?", $this->_aQueryAppend['seller_id']);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
