@@ -109,7 +109,7 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha
             return '';
         if ($this->_bJsCssAdded)
             return '';
-        $this->_oTemplate->addJs('http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+        $this->_oTemplate->addJs('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
         $this->_bJsCssAdded = true;
         return '';
     }
