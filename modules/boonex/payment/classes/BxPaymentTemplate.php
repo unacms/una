@@ -237,14 +237,14 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return $this->parseHtmlByName('order_' . $sType . '.html', $aResult);
     }
 
-    public function displayItems($aItems = array())
+    public function displayItems($sType, $aItems = array())
     {
         $aTmplVarsItems = array();
 
         foreach($aItems as $aItem) {
             $aTmplVarsItems[] = array(
                 'id' => $aItem['id'],
-                'price' => $aItem['price'],
+                'price' => $this->_oConfig->getPrice($sType, $aItem),
                 'bx_if:link' => array(
                     'condition' => !empty($aItem['url']),
                     'content' => array(

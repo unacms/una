@@ -26,7 +26,7 @@ class BxPaymentGridHistory extends BxBaseModPaymentGridOrders
 		if(empty($this->_aQueryAppend['client_id']))
 			return array();
 
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `tt`.`client_id`=?", $this->_aQueryAppend['client_id']);
+		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`client_id`=?", $this->_aQueryAppend['client_id']);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

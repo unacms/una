@@ -171,23 +171,33 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	$bTmplVarsSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
     	$aTmplVarsSingle = array();
     	if($bTmplVarsSingle) {
-    		list($sJsCode, $sSingleOnclick) = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
-
-    		$aTmplVarsSingle = array(
-    			'entry_price_single_onclick' => $sSingleOnclick,
-				'entry_price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
-			);
+    		$aJsSingle = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+    		if(!empty($aJsSingle) && is_array($aJsSingle)) {
+    			list($sJsCode, $sSingleOnclick) = $aJsSingle;
+    			
+	    		$aTmplVarsSingle = array(
+	    			'entry_price_single_onclick' => $sSingleOnclick,
+					'entry_price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
+				);
+    		}
+    		else 
+    			$bTmplVarsSingle = false;
     	}
 
     	$bTmplVarsRecurring = (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
     	$aTmplVarsRecurring = array();
     	if($bTmplVarsRecurring) {
-        	list($sJsCode, $sRecurringOnclick) = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+        	$aJsRecurring = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+        	if(!empty($aJsRecurring) && is_array($aJsRecurring)) {
+				list($sJsCode, $sRecurringOnclick) = $aJsRecurring;
 
-        	$aTmplVarsRecurring = array(
-        		'entry_price_recurring_onclick' => $sRecurringOnclick,
-				'entry_price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short'))
-			);
+	        	$aTmplVarsRecurring = array(
+	        		'entry_price_recurring_onclick' => $sRecurringOnclick,
+					'entry_price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short'))
+				);
+        	}
+        	else 
+        		$bTmplVarsRecurring = false;
     	}
 
     	$oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);

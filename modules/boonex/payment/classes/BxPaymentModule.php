@@ -111,14 +111,14 @@ class BxPaymentModule extends BxBaseModPaymentModule
         echoJson($aResult);
     }
 
-    public function actionGetItems($iModuleId)
+    public function actionGetItems($sType, $iModuleId)
     {
     	$iSellerId = $this->getProfileId();
         $aItems = $this->callGetCartItems((int)$iModuleId, array($iSellerId));
 
         $aResult = array('code' => 0);
         if(is_array($aItems) && !empty($aItems))
-            $aResult['data'] = $this->_oTemplate->displayItems($aItems);
+            $aResult['data'] = $this->_oTemplate->displayItems($sType, $aItems);
 
 		echoJson($aResult);
     }

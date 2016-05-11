@@ -38,7 +38,7 @@ class BxDevDb extends BxDolModuleDb
             }
 
             $sSql = "(" . implode(", ", array_fill(0, $iValues, "?")) . "),\n";
-            $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), $aValues));
+            $sSql = call_user_func_array(array($this, 'prepareAsString'), array_merge(array($sSql), $aValues));
 
             $sContent .= $sSql;
         }
@@ -56,7 +56,7 @@ class BxDevDb extends BxDolModuleDb
         foreach($aItems as $aItem)
             if(isset($aItem[$sKey])) {
                 $sSql = "DELETE FROM `" . $sTable . "` WHERE `" . $sKey . "`=?;\n";
-                $sContent .= call_user_func_array(array($this, 'prepare'), array($sSql, $aItem[$sKey]));
+                $sContent .= call_user_func_array(array($this, 'prepareAsString'), array($sSql, $aItem[$sKey]));
             }
         $sContent .= "\n";
 

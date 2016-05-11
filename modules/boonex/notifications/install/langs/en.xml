@@ -23,6 +23,8 @@
 
 	<string name="_bx_ntfs_alert_action_added"><![CDATA[add]]></string>
 	<string name="_bx_ntfs_alert_action_commentPost"><![CDATA[add comment]]></string>
+	<string name="_bx_ntfs_alert_action_doVote"><![CDATA[add vote]]></string>
+	<string name="_bx_ntfs_alert_action_connection_added"><![CDATA[add connection]]></string>
 
 	<string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Empty]]></string>
 	<string name="_bx_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>

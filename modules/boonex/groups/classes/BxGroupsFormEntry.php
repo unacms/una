@@ -18,6 +18,14 @@ class BxGroupsFormEntry extends BxBaseModProfileFormEntry
     {
         $this->MODULE = 'bx_groups';
         parent::__construct($aInfo, $oTemplate);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+		if(isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']])) {
+            bx_import('Privacy', $this->MODULE);
+			$this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = BxGroupsPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
+			$this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['db']['pass'] = 'Xss';
+		}
     }
 }
 
