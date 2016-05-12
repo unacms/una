@@ -47,6 +47,8 @@
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[View Group]]></string>
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Edit Any Group]]></string>
 
+	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Joined Groups]]></string>
 	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Create Group]]></string>
 	<string name="_bx_groups_page_title_create_profile"><![CDATA[Create Group]]></string>
 	<string name="_bx_groups_page_title_sys_edit_profile"><![CDATA[Edit Group]]></string>
@@ -77,6 +79,8 @@
 	<string name="_bx_groups_page_title_sys_active"><![CDATA[Recently Active People]]></string>
 	<string name="_bx_groups_page_title_active"><![CDATA[Recently Active People]]></string>
 
+	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Joined Groups]]></string>
 	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Create Group]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile"><![CDATA[Edit Group]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
@@ -128,6 +132,8 @@
     <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[Create Group]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Members]]></string>
     <string name="_bx_groups_menu_item_title_view_fans"><![CDATA[Members]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>

@@ -54,6 +54,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'URI_VIEW_ENTRY' => 'view-group-profile',
             'URI_EDIT_ENTRY' => 'edit-group-profile',
             'URI_EDIT_COVER' => 'edit-group-cover',
+            'URI_JOINED_ENTRIES' => 'joined-groups',
         	'URI_MANAGE_COMMON' => 'groups-manage',
 
             'URL_HOME' => 'page.php?i=groups-home',

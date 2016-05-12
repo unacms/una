@@ -68,10 +68,41 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
         $this->sFilterName = 'bx_groups_data_filter';
         $this->oModule = $this->getMain();
 
+        $oJoinedProfile = null;
+        $bProcessConditionsForPrivateContent = true;
+
+        $CNF = &$this->oModule->_oConfig->CNF;
+
         switch ($sMode) {
+
+            case 'joined_entries':
+                $oJoinedProfile = BxDolProfile::getInstance((int)$aParams['joined_profile']);
+                if (!$oJoinedProfile) {
+                    $this->isError = true;
+                    break;
+                }
+
+                $bProcessConditionsForPrivateContent = false;
+
+                $this->aCurrent['join']['fans'] = array(
+                    'type' => 'INNER',
+                    'table' => 'bx_groups_fans',
+                    'mainField' => 'id',
+                    'mainTable' => 'bx_groups_data',
+                    'onField' => 'content',
+                    'joinFields' => array('initiator'),
+                );
+
+                $this->aCurrent['restriction']['fans'] = array('value' => $oJoinedProfile->id(), 'field' => 'initiator', 'operator' => '=', 'table' => 'bx_groups_fans');
+
+                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_JOINED_ENTRIES'] . '&profile_id={profile_id}';
+                $this->aCurrent['title'] = _t('_bx_groups_page_title_joined_entries');
+                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode . '/' . $oJoinedProfile->id();
+                break;
 
             case 'connections':
                 if ($this->_setConnectionsConditions($aParams)) {
+                    $bProcessConditionsForPrivateContent = false;
                     $oProfile = BxDolProfile::getInstance($aParams['profile']);
                     $oProfile2 = isset($aParams['profile2']) ? BxDolProfile::getInstance($aParams['profile2']) : null;
 
@@ -109,7 +140,23 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
                 $this->isError = true;
         }
 
+        if ($bProcessConditionsForPrivateContent)
+            $this->addConditionsForPrivateContent($CNF, $oJoinedProfile);
+
         $this->sCenterContentUnitSelector = false;
+    }
+
+    protected function addConditionsForPrivateContent($CNF, $oJoinedProfile) 
+    {
+        // add conditions for private content
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oJoinedProfile ? $oJoinedProfile->id() : 0, array('c')) : array();
+        if (isset($a['restriction']))
+            $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
+        if (isset($a['join']))
+            $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
+
+        $this->setProcessPrivateContent(false);
     }
 
     function getAlterOrder()

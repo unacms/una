@@ -72,6 +72,16 @@ class BxGroupsModule extends BxBaseModProfileModule
         return $s;
     }
 
+    public function serviceBrowseJoinedEntries ($iProfileId = 0, $bDisplayEmptyMsg = false)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId)
+            return '';
+
+        return $this->_serviceBrowse ('joined_entries', array('joined_profile' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */

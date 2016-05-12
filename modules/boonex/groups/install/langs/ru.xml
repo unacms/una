@@ -47,6 +47,8 @@
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[Просмотреть группу]]></string>
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Редактировать любую группу]]></string>
 
+	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Участие в группах]]></string>
+	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Участие в группах]]></string>
 	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_title_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_title_sys_edit_profile"><![CDATA[Редактировать группу]]></string>
@@ -78,6 +80,8 @@
 	<string name="_bx_groups_page_title_active"><![CDATA[Последние Активные Группы]]></string>
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
 
+	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Участие в группах]]></string>
+	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Участие в группах]]></string>
 	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile"><![CDATA[Редактировать группу]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
@@ -127,6 +131,8 @@
     <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[Создать группу]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Группы]]></string>
+    <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Участники]]></string>
     <string name="_bx_groups_menu_item_title_view_fans"><![CDATA[Участники]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
