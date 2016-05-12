@@ -75,6 +75,17 @@ class BxGroupsModule extends BxBaseModProfileModule
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
+    public function checkAllowedView ($aDataEntry, $isPerformAction = false)
+    {
+        if (($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected(bx_get_logged_profile_id(), $aDataEntry[$this->_oConfig->CNF['FIELD_ID']], true))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return parent::checkAllowedView ($aDataEntry, $isPerformAction);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
     public function checkAllowedFanAdd (&$aDataEntry, $isPerformAction = false)
     {
         return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], true, false);
