@@ -23,8 +23,8 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
 
     public function __construct($aObject, $oTemplate = false)
     {
-        parent::__construct($aObject, $oTemplate);
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+        parent::__construct($aObject, $oTemplate ? $oTemplate : $this->_oModule->_oTemplate);
     }
 
     public function getCode ()
@@ -36,11 +36,7 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         }
 
         // permissions check 
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($this->_aContentInfo))) {
-            $this->_oTemplate->displayAccessDenied($sMsg);
-            exit;
-        }
-        $this->_oModule->checkAllowedView($this->_aContentInfo, true);
+        $this->_processPermissionsCheck ();
 
         // count views
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -74,6 +70,15 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         ));
 
         return parent::getCode ();
+    }
+
+    protected function _processPermissionsCheck ()
+    {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($this->_aContentInfo))) {
+            $this->_oTemplate->displayAccessDenied($sMsg);
+            exit;
+        }
+        $this->_oModule->checkAllowedView($this->_aContentInfo, true);
     }
 
     protected function _getThumbForMetaObject ()
