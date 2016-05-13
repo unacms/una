@@ -207,9 +207,9 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param $iProfileIdOwner owner profile ID
      * @return array of conditions, for now with 'restriction' part only is returned
      */
-    public function getContentPublicAsCondition($iProfileIdOwner = 0)
+    public function getContentPublicAsCondition($iProfileIdOwner = 0, $aCustomGroups = array())
     {
-        $mixedPrivacyGroups = BX_DOL_PG_ALL;
+        $mixedPrivacyGroups = array(BX_DOL_PG_ALL);
         if(isLogged()) {
             $iProfileIdLogged = bx_get_logged_profile_id();
             if($iProfileIdLogged == $iProfileIdOwner)
@@ -220,6 +220,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
             else
                 $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS);
         }
+        $mixedPrivacyGroups = array_merge($mixedPrivacyGroups, $aCustomGroups);
         return $this->getContentByGroupAsCondition($mixedPrivacyGroups);
     }
 

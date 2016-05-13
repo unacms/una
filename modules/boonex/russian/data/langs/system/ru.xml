@@ -1693,6 +1693,7 @@
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Вход]]></string>
+	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string>
 	<string name="_sys_form_report"><![CDATA[Пожаловаться]]></string>
 	<string name="_sys_form_report_input_caption_submit"><![CDATA[Пожаловаться]]></string>
 	<string name="_sys_form_report_input_caption_text"><![CDATA[Текст жалобы]]></string>

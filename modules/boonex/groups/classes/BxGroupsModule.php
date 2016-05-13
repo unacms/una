@@ -19,6 +19,19 @@ class BxGroupsModule extends BxBaseModProfileModule
         parent::__construct($aModule);
     }
 
+    /**
+     * Get possible recipients for start conversation form
+     */
+    public function actionAjaxGetInitialMembers ()
+    {
+        $sTerm = bx_get('term');
+
+        $a = BxDolService::call('system', 'profiles_search', array($sTerm), 'TemplServiceProfiles');
+
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo(json_encode($a));
+    }
+
     public function serviceActAsProfile ()
     {
         return false;
@@ -33,10 +46,10 @@ class BxGroupsModule extends BxBaseModProfileModule
         return $aFieldsProfile;
     }
 
-    public function serviceAddMutualConnection ($iContentId, $iInitiatorId)
+    public function serviceAddMutualConnection ($iContentId, $iInitiatorId, $iIgnoreJoinConfirmation = false)
     {
         $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
-        if (!$aContentInfo || $aContentInfo['join_confirmation'])
+        if (!$aContentInfo || (!$iIgnoreJoinConfirmation && $aContentInfo['join_confirmation']))
             return false;
 
         if (!($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])))
@@ -70,6 +83,16 @@ class BxGroupsModule extends BxBaseModProfileModule
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
         return $s;
+    }
+
+    public function serviceBrowseJoinedEntries ($iProfileId = 0, $bDisplayEmptyMsg = false)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId)
+            return '';
+
+        return $this->_serviceBrowse ('joined_entries', array('joined_profile' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
 
     /**

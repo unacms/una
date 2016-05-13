@@ -27,6 +27,12 @@ class BxGroupsFormEntry extends BxBaseModProfileFormEntry
 			$this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['db']['pass'] = 'Xss';
 		}
     }
+
+    protected function genCustomInputInitialMembers ($aInput)
+    {
+        $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . "modules/?r=groups/ajax_get_initial_members";
+        return $this->genCustomInputUsernamesSuggestions($aInput);
+    }
 }
 
 /** @} */
