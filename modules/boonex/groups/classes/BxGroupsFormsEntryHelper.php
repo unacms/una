@@ -27,6 +27,22 @@ class BxGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
         return $sMsg;
     }
+
+    public function onDataAddAfter ($iAccountId, $iContentId)
+    {
+        if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
+            return $s;
+
+        // insert invited members, so they will join without confirmation
+        $aInitialProfiles = bx_get('initial_members');
+        foreach ($aInitialProfiles as $iProfileId) {
+            if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
+                continue;
+            $this->_oModule->serviceAddMutualConnection ($iContentId, $oProfile->id(), true);
+        }
+        
+        return '';
+    }
 }
 
 /** @} */

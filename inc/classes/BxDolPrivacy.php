@@ -209,7 +209,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      */
     public function getContentPublicAsCondition($iProfileIdOwner = 0, $aCustomGroups = array())
     {
-        $mixedPrivacyGroups = BX_DOL_PG_ALL;
+        $mixedPrivacyGroups = array(BX_DOL_PG_ALL);
         if(isLogged()) {
             $iProfileIdLogged = bx_get_logged_profile_id();
             if($iProfileIdLogged == $iProfileIdOwner)

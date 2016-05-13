@@ -23,7 +23,6 @@
     <string name="_bx_cnv_form_entry_input_recipients"><![CDATA[Получатели]]></string>
     <string name="_bx_cnv_form_entry_input_sys_recipients"><![CDATA[Получатели]]></string>
     <string name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Необходимо указать хотя бы одного получателя]]></string>
-    <string name="_bx_cnv_form_entry_input_recipients_placeholder"><![CDATA[Введите имя здесь...]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_text"><![CDATA[Статус черновика]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_block"><![CDATA[Блок отправки сообщения]]></string>
 
