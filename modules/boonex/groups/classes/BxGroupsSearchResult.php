@@ -36,7 +36,7 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
                     'table' => 'bx_groups_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'group_name', 'picture', 'cover', 'added'),
+                    'joinFields' => array('id', 'group_name', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
                 ),
                 'account' => array(
                     'type' => 'INNER',

@@ -24,12 +24,19 @@ class BxGroupsTemplate extends BxBaseModProfileTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || 'c' == $aData[$CNF['FIELD_ALLOW_VIEW_TO']];
+
         $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
         $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
 
-        $aVars['cover_url'] = $this->urlCover ($aData, true);
-        $aVars['members'] = _t('_bx_groups_txt_N_fans', $oConn ? $oConn->getConnectedInitiatorsCount($aData[$CNF['FIELD_ID']], true) : 0);
+        if (!$isPublic) {
+            $aVars['thumb_url'] = $this->getImageUrl('no-picture-thumb.png');
+            $aVars['content_url'] = 'javascript:void(0);';
+            $aVars['title'] = _t('_bx_groups_txt_private_group');
+        }
+        $aVars['cover_url'] = $isPublic ? $this->urlCover ($aData, true) : $this->getImageUrl('cover.jpg');
+        $aVars['members'] = $isPublic ? _t('_bx_groups_txt_N_fans', $oConn ? $oConn->getConnectedInitiatorsCount($aData[$CNF['FIELD_ID']], true) : 0) : '&nbsp;';
         $aVars['bx_if:btn'] = array (
             'condition' => isLogged() && !$oConn->isConnected(bx_get_logged_profile_id(), $aData[$CNF['FIELD_ID']], true),
             'content' => array (

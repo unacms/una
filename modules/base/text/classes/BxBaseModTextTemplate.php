@@ -21,9 +21,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-    	$oModule = BxDolModule::getInstance($this->MODULE);
-
-    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $oModule);
+    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule());
     	if($sResult)
             return $sResult;
 
@@ -32,8 +30,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &$this->getModule()->_oConfig->CNF;
 
         $aVars = $aData;
         $aVars['entry_title'] = isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : '';
@@ -58,8 +55,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &$this->getModule()->_oConfig->CNF;
 
         if (!$iProfileId)
             $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
@@ -90,25 +86,21 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function getAuthorDesc ($aData)
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        return _t('_sys_txt_n_by', bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE));
+        return _t('_sys_txt_n_by', bx_time_js($aData[$this->getModule()->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE));
     }
 
     function getAuthorAddon ($aData, $oProfile)
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &$this->getModule()->_oConfig->CNF;
         $sUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id();
         $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
-        return _t($CNF['T']['txt_all_entries_by'], $sUrl, $oProfile->getDisplayName(), $oModule->_oDb->getEntriesNumByAuthor($oProfile->id()));
+        return _t($CNF['T']['txt_all_entries_by'], $sUrl, $oProfile->getDisplayName(), $this->getModule()->_oDb->getEntriesNumByAuthor($oProfile->id()));
     }
 
     function entryAttachments ($aData)
     {
-    	$oModule = BxDolModule::getInstance($this->MODULE);
-
     	return $this->parseHtmlByName('attachments.html', array(
-            'bx_repeat:attachments' => $this->getAttachments($oModule->_oConfig->CNF['OBJECT_STORAGE'], $aData),
+            'bx_repeat:attachments' => $this->getAttachments($this->getModule()->_oConfig->CNF['OBJECT_STORAGE'], $aData),
         ));
     }
 
@@ -217,8 +209,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
 	protected function getAttachments ($sStorage, $aData)
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &$this->getModule()->_oConfig->CNF;
 
         $oStorage = BxDolStorage::getObjectInstance($sStorage);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);

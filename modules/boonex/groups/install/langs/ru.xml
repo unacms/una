@@ -203,6 +203,7 @@
     <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[Из админов]]></string>
+    <string name="_bx_groups_txt_private_group"><![CDATA[Приватная группа]]></string>
 
     <string name="_bx_groups_privacy_group_closed"><![CDATA[Закрытая группа]]></string>
     <string name="_bx_groups_privacy_group_secret"><![CDATA[Секретная группа]]></string>
