@@ -363,7 +363,8 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALU
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('bx_groups_fans', 'connection_added', @iHandler);
+('bx_groups_fans', 'connection_added', @iHandler),
+('profile', 'delete', @iHandler);
 
 -- PRIVACY 
 

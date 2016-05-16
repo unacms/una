@@ -53,7 +53,7 @@ class BxGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName());
 
         if ($oGroupProfile)
-            $this->_oModule->_oDb->deleteAdmins($oGroupProfile->id());
+            $this->_oModule->_oDb->deleteAdminsByGroupId($oGroupProfile->id());
 
         if (isset($CNF['OBJECT_CONNECTIONS']) && $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             $oConnection->onDeleteInitiatorAndContent($oGroupProfile->id());

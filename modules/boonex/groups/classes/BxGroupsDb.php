@@ -19,6 +19,17 @@ class BxGroupsDb extends BxBaseModProfileDb
         parent::__construct($oConfig);
     }
 
+    public function updateAuthorById ($iContentId, $iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $CNF['FIELD_AUTHOR'] . "` = :" . $CNF['FIELD_AUTHOR'] . " WHERE `id` = :id";
+        return $this->query($sQuery, array(
+    		'id' => $iContentId,
+    		$CNF['FIELD_AUTHOR'] => $iProfileId,
+    	));
+    }
+
     public function toAdmins ($iGroupProfileId, $mixedFansIds)
     {
         if (is_array($mixedFansIds))
@@ -41,9 +52,15 @@ class BxGroupsDb extends BxBaseModProfileDb
         return $this->res($sQuery);
     }
 
-    public function deleteAdmins ($iGroupProfileId)
+    public function deleteAdminsByGroupId ($iGroupProfileId)
     {
         $sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+        return $this->res($sQuery);
+    }
+
+    public function deleteAdminsByProfileId ($iProfileId)
+    {
+        $sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `fan_id` = ?", $iProfileId);
         return $this->res($sQuery);
     }
 
@@ -51,6 +68,12 @@ class BxGroupsDb extends BxBaseModProfileDb
     {
         $sQuery = $this->prepare("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? AND `fan_id` = ?", $iGroupProfileId, $iFanId);
         return $this->getOne($sQuery) ? true : false;
+    }
+
+    public function getAdmins ($iGroupProfileId)
+    {
+        $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+        return $this->getColumn($sQuery);
     }
 }
 
