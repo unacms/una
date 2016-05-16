@@ -33,14 +33,31 @@ class BxGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
             return $s;
 
+        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName())))
+            return '';
+
         // insert invited members, so they will join without confirmation
         $aInitialProfiles = bx_get('initial_members');
         foreach ($aInitialProfiles as $iProfileId) {
             if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
                 continue;
-            $this->_oModule->serviceAddMutualConnection ($iContentId, $oProfile->id(), true);
+            $this->_oModule->serviceAddMutualConnection ($oGroupProfile->id(), $oProfile->id(), true);
         }
         
+        return '';
+    }
+
+    public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName());
+
+        if ($oGroupProfile)
+            $this->_oModule->_oDb->deleteAdmins($oGroupProfile->id());
+
+        if (isset($CNF['OBJECT_CONNECTIONS']) && $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
+            $oConnection->onDeleteInitiatorAndContent($oGroupProfile->id());
+
         return '';
     }
 }
