@@ -88,7 +88,6 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
                     'type' => 'INNER',
                     'table' => 'bx_groups_fans',
                     'mainField' => 'id',
-                    'mainTable' => 'bx_groups_data',
                     'onField' => 'content',
                     'joinFields' => array('initiator'),
                 );

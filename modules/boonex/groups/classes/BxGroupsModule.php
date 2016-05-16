@@ -46,16 +46,19 @@ class BxGroupsModule extends BxBaseModProfileModule
         return $aFieldsProfile;
     }
 
-    public function serviceAddMutualConnection ($iContentId, $iInitiatorId, $iIgnoreJoinConfirmation = false)
-    {
-        $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
+    public function serviceAddMutualConnection ($iGroupProfileId, $iInitiatorId, $iIgnoreJoinConfirmation = false)
+    {        
+        if (!($oGroupProfile = BxDolProfile::getInstance($iGroupProfileId)))
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById((int)$oGroupProfile->getContentId());
         if (!$aContentInfo || (!$iIgnoreJoinConfirmation && $aContentInfo['join_confirmation']))
             return false;
 
         if (!($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])))
             return false;
 
-        return $oConnection->addConnection((int)$iContentId, (int)$iInitiatorId);
+        return $oConnection->addConnection($oGroupProfile->id(), (int)$iInitiatorId);
     }
 
     public function serviceFansTable ()
@@ -78,8 +81,11 @@ class BxGroupsModule extends BxBaseModProfileModule
         if (!$aContentInfo)
             return false;
 
+        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
+            return false;
+
         bx_import('BxDolConnection');
-        $s = $this->serviceBrowseConnectionsQuick ($iContentId, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
+        $s = $this->serviceBrowseConnectionsQuick ($oGroupProfile->id(), $this->_oConfig->CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
         return $s;
@@ -100,7 +106,8 @@ class BxGroupsModule extends BxBaseModProfileModule
      */
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
-        if (($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected(bx_get_logged_profile_id(), $aDataEntry[$this->_oConfig->CNF['FIELD_ID']], true))
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+        if ($oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected(bx_get_logged_profile_id(), $oGroupProfile->id(), true))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return parent::checkAllowedView ($aDataEntry, $isPerformAction);
@@ -111,7 +118,7 @@ class BxGroupsModule extends BxBaseModProfileModule
      */
     public function checkAllowedFanAdd (&$aDataEntry, $isPerformAction = false)
     {
-        return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], true, false);
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], true, false);
     }
 
     /**
@@ -119,9 +126,9 @@ class BxGroupsModule extends BxBaseModProfileModule
      */
     public function checkAllowedFanRemove (&$aDataEntry, $isPerformAction = false)
     {
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, true, true))
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], false, true, true))
             return CHECK_ACTION_RESULT_ALLOWED;
-        return $this->_checkAllowedConnectContent ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], false, true, false);
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], false, true, false);
     }
 
     public function checkAllowedManageAdmins ($mixedDataEntry, $isPerformAction = false)
@@ -133,21 +140,24 @@ class BxGroupsModule extends BxBaseModProfileModule
 
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
-        if ($this->_oDb->isAdmin($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], bx_get_logged_profile_id()))
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
     }
 
     public function checkAllowedChangeCover ($aDataEntry, $isPerformAction = false)
     {
-        if ($this->_oDb->isAdmin($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], bx_get_logged_profile_id()))
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedChangeCover ($aDataEntry, $isPerformAction);
     }
 
     public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
     {
-        if ($this->_oDb->isAdmin($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], bx_get_logged_profile_id()))
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
     }

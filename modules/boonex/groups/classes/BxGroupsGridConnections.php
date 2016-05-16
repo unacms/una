@@ -11,7 +11,7 @@
 
 class BxGroupsGridConnections extends BxDolGridConnections
 {
-    protected $_iContentId;
+    protected $_iGroupProfileId;
     protected $_oModule;
     protected $_oConnection;
 
@@ -32,13 +32,13 @@ class BxGroupsGridConnections extends BxDolGridConnections
             return;
 
         $aProfileInfo = $oProfile->getInfo();
-        $this->_iContentId = $aProfileInfo['content_id'];
+        $this->_iGroupProfileId = $oProfile->id();
 
-        $aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($this->_iContentId));
+        $aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($aProfileInfo['content_id']));
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedEdit($aContentInfo) || $oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
-        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_iContentId, $this->_bOwner ? false : true);
+        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_iGroupProfileId, $this->_bOwner ? false : true);
         $this->addMarkers(array(
             'profile_id' => $oProfile->id(),
             'join_connections' => $aSQLParts['join'],
@@ -49,7 +49,7 @@ class BxGroupsGridConnections extends BxDolGridConnections
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (isset($aRow[$this->_aOptions['field_id']]))
-            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iContentId;
+            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
         return parent::_getActionAccept ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
@@ -57,14 +57,14 @@ class BxGroupsGridConnections extends BxDolGridConnections
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (isset($aRow[$this->_aOptions['field_id']]))
-            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iContentId;
+            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
         return parent::_getActionDelete ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionToAdmins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if ($this->_oModule->_oDb->isAdmin($this->_iContentId, $aRow[$this->_aOptions['field_id']]))
+        if ($this->_oModule->_oDb->isAdmin($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]))
             return '';
 
         return $this->_getAction_Admins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -72,7 +72,7 @@ class BxGroupsGridConnections extends BxDolGridConnections
 
     protected function _getActionFromAdmins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if (!$this->_oModule->_oDb->isAdmin($this->_iContentId, $aRow[$this->_aOptions['field_id']]))
+        if (!$this->_oModule->_oDb->isAdmin($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]))
             return '';
 
         return $this->_getAction_Admins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -80,14 +80,14 @@ class BxGroupsGridConnections extends BxDolGridConnections
 
     protected function _getAction_Admins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if (!$this->_oConnection->isConnected($aRow[$this->_aOptions['field_id']], $this->_iContentId, true))
+        if (!$this->_oConnection->isConnected($aRow[$this->_aOptions['field_id']], $this->_iGroupProfileId, true))
             return '';
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($this->_iContentId))
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId))
             return '';
 
         if (isset($aRow[$this->_aOptions['field_id']]))
-            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iContentId;
+            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }

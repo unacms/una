@@ -27,7 +27,7 @@ class BxGroupsFormEntry extends BxBaseModProfileFormEntry
 			$this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['db']['pass'] = 'Xss';
 		}
 
-        if(!isset($this->aInputs['initial_members']['value'])) {
+        if (isset($this->aInputs['initial_members']) && !isset($this->aInputs['initial_members']['value'])) {
             $this->aInputs['initial_members']['value'] = array(bx_get_logged_profile_id());
         }
     }

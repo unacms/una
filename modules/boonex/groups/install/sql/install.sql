@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `bx_groups_fans` (
 -- TABLE: admins
 CREATE TABLE IF NOT EXISTS `bx_groups_admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `content_id` int(10) unsigned NOT NULL,
+  `group_profile_id` int(10) unsigned NOT NULL,
   `fan_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin` (`content_id`,`fan_id`)
