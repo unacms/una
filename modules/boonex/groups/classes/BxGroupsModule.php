@@ -157,7 +157,7 @@ class BxGroupsModule extends BxBaseModProfileModule
     public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
     {
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
+        if ($oGroupProfile && $this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
     }
