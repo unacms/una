@@ -23,6 +23,10 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     protected $_sAnimationEffect;
     protected $_iAnimationSpeed;
 
+    protected static $_aCurrencies = array(
+    	'AUD' => 'A&#36;', 'CAD' => 'C&#36;', 'EUR' => '&#128;', 'GBP' => '&#163;', 'USD' => '&#36;', 'YEN' => '&#165;'
+    );
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -70,8 +74,9 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     	
     	$sPrefix = $this->getPrefix('options');
         $this->_iSiteId = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
-        $this->_sCurrencySign = $this->_oDb->getParam($sPrefix . 'default_currency_sign');
+
         $this->_sCurrencyCode = $this->_oDb->getParam($sPrefix . 'default_currency_code');
+        $this->_sCurrencySign = self::$_aCurrencies[$this->_sCurrencyCode];
     }
 
     public function getSiteId()
@@ -82,12 +87,12 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         return $this->_iSiteId;
     }
 
-    public function getCurrencySign()
+    public function getDefaultCurrencySign()
     {
         return $this->_sCurrencySign;
     }
 
-    public function getCurrencyCode()
+    public function getDefaultCurrencyCode()
     {
         return $this->_sCurrencyCode;
     }

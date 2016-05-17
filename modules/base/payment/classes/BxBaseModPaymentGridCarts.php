@@ -25,7 +25,7 @@ class BxBaseModPaymentGridCarts extends BxTemplGrid
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
         $this->_oCart = $this->_oModule->getObjectCart();
 
-        $this->_sCurrencySign = $this->_oModule->_oConfig->getCurrencySign();
+        $this->_sCurrencySign = $this->_oModule->_oConfig->getDefaultCurrencySign();
 
         $this->_sDefaultSortingOrder = 'DESC';
 

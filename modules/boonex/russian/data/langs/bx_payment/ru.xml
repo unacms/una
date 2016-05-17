@@ -5,8 +5,6 @@
 	<!-- OPTIONS -->
 	<string name="_bx_payment_option_default_currency_code"><![CDATA[Код валюты]]></string>
 	<string name="_bx_payment_option_err_default_currency_code"><![CDATA[Код валюты не может быть пуст.]]></string>
-	<string name="_bx_payment_option_default_currency_sign"><![CDATA[Знак валюты]]></string>
-	<string name="_bx_payment_option_err_default_currency_sign"><![CDATA[Знак валюты не может быть пуст.]]></string>	
 	<string name="_bx_payment_option_site_admin"><![CDATA[Администратор сайта]]></string>
 
 	<!-- PAGES and BLOCKS -->
