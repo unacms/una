@@ -37,6 +37,57 @@ class BxGroupsModule extends BxBaseModProfileModule
         return false;
     }
 
+    /**
+     * Delete profile from fans and admins tables
+     * @param $iProfileId profile id 
+     */
+    public function serviceDeleteProfileFromFansAndAdmins ($iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $this->_oDb->deleteAdminsByProfileId($iProfileId);
+
+        if (isset($CNF['OBJECT_CONNECTIONS']) && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
+            $oConnection->onDeleteInitiatorAndContent($iProfileId);
+    }
+
+    /**
+     * Reset group's author for particular group
+     * @param $iContentId group id 
+     * @return false of error, or number of updated records on success
+     */
+    public function serviceReassignEntityAuthor ($iContentId)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
+        if (!$aContentInfo)
+            return false;
+
+        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
+            return false;
+
+        $aAdmins = $this->_oDb->getAdmins($oGroupProfile->id());
+
+        return $this->_oDb->updateAuthorById($iContentId, $aAdmins ? array_pop($aAdmins) : 0);
+    }
+
+    /**
+     * Reset group's author when author profile is deleted
+     * @param $iProfileId profile id 
+     * @return number of changed items
+     */
+    public function serviceReassignEntitiesByAuthor ($iProfileId)
+    {
+        $a = $this->_oDb->getEntriesByAuthor((int)$iProfileId);
+        if (!$a)
+            return 0;
+
+        $iCount = 0;
+        foreach ($a as $aContentInfo)
+            $iCount += ('' == $this->serviceReassignEntityAuthor($aContentInfo[$this->_oConfig->CNF['FIELD_ID']]) ? 1 : 0);
+
+        return $iCount;
+    }
+
     public function servicePrepareFields ($aFieldsProfile)
     {
         $aFieldsProfile['group_name'] = $aFieldsProfile['name'];

@@ -21,6 +21,18 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         parent::__construct($oConfig);
         $this->_oConfig = $oConfig;
     }
+
+    public function getEntriesByAuthor ($iProfileId)
+    {
+        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_AUTHOR'] . "` = ?", $iProfileId);
+        return $this->getAll($sQuery);
+    }
+
+    public function getEntriesNumByAuthor ($iProfileId)
+    {
+        $sQuery = $this->prepare ("SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_AUTHOR'] . "` = ?", $iProfileId);
+        return $this->getOne($sQuery);
+    }
 }
 
 /** @} */
