@@ -105,27 +105,70 @@ class BxGroupsGridConnections extends BxDolGridConnections
      */
     public function performActionFromAdmins()
     {
-        $this->_performActionAdmins('fromAdmins');
+        $this->_performActionAdmins('fromAdmins');        
     }
 
     public function _performActionAdmins($sFunc)
     {
-        list ($iId, $iContentId) = $this->_prepareIds();
+        list ($iId, $iGroupProfileId) = $this->_prepareIds();
 
         if (!$iId) {
             echoJson(array('msg' => _t('_sys_txt_error_occured')));
             exit;
         }
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($iContentId)) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($iGroupProfileId)) {
             echoJson(array('msg' => _t('_sys_txt_access_denied')));
             exit;
         }
     
-        if (!$this->_oModule->_oDb->$sFunc($iContentId, $iId))
+        if (!$this->_oModule->_oDb->$sFunc($iGroupProfileId, $iId)) {
             echoJson(array('msg' => _t('_sys_txt_error_occured')));
-        else
+        } 
+        else {
+
+            $sEmailTemplate = 'toAdmins' == $sFunc ? 'bx_groups_fan_become_admin' : 'bx_groups_admin_become_fan';
+            list($iGroupProfileId, $iProfileId) = $this->_prepareGroupProfileAndMemberProfile($iGroupProfileId, $iId);
+            if (bx_get_logged_profile_id() != $iProfileId) {
+                sendMailTemplate($sEmailTemplate, 0, $iProfileId, array(
+                    'EntryUrl' => BxDolProfile::getInstance($iGroupProfileId)->getUrl(),
+                    'EntryTitle' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName(),
+                ), BX_EMAIL_NOTIFY);
+            }
+
             echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
+        }
+    }
+
+    protected function _delete ($mixedId)
+    {
+        list ($iId, $iViewedId) = $this->_prepareIds();
+
+        // send email notification
+        $sEmailTemplate = $this->_oConnection->isConnected($iViewedId, $iId, true) ? 'bx_groups_fan_remove' : 'bx_groups_join_reject';
+        list($iGroupProfileId, $iProfileId) = $this->_prepareGroupProfileAndMemberProfile($iId, $iViewedId);
+        if (bx_get_logged_profile_id() != $iProfileId) {
+            sendMailTemplate($sEmailTemplate, 0, $iProfileId, array(
+                'EntryUrl' => BxDolProfile::getInstance($iGroupProfileId)->getUrl(),
+                'EntryTitle' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName(),
+            ), BX_EMAIL_NOTIFY);
+        }
+
+        // delete admin associated with profile
+        $this->_oModule->_oDb->deleteAdminsByProfileId($iProfileId);
+
+        return parent::_delete ($mixedId);
+    }
+
+    /**
+     * @return array where first element is group profile id and second element is some other persons profile id
+     */
+    protected function _prepareGroupProfileAndMemberProfile($iId1, $iId2)
+    {
+        if (BxDolProfile::getInstance($iId1)->getModule() == $this->_sContentModule)
+            return array($iId1, $iId2);
+        else
+            return array($iId2, $iId1);
     }
 }
 

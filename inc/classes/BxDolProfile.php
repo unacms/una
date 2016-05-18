@@ -363,37 +363,37 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     /**
      * Change profile status to 'Active'
      */
-    public function activate($iAction, $iProfileId = 0)
+    public function activate($iAction, $iProfileId = 0, $bSendEmailNotification = true)
     {
         $sStatus = $this->getStatus($iProfileId);
-        return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, BX_PROFILE_STATUS_PENDING == $sStatus ? 'approve' : 'activate', $iAction, $iProfileId);
+        return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, BX_PROFILE_STATUS_PENDING == $sStatus ? 'approve' : 'activate', $iAction, $iProfileId, $bSendEmailNotification);
     }
 
     /**
      * Change profile status from 'Pending' to the next level - 'Active'
      */
-    public function approve($iAction, $iProfileId = 0)
+    public function approve($iAction, $iProfileId = 0, $bSendEmailNotification = true)
     {
-        return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, 'approve', $iAction, $iProfileId);
+        return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, 'approve', $iAction, $iProfileId, $bSendEmailNotification);
     }
 
     /**
      * Change profile status to 'Pending'
      */
-    public function disapprove($iAction, $iProfileId = 0)
+    public function disapprove($iAction, $iProfileId = 0, $bSendEmailNotification = true)
     {
-        return $this->changeStatus(BX_PROFILE_STATUS_PENDING, 'disapprove', $iAction, $iProfileId);
+        return $this->changeStatus(BX_PROFILE_STATUS_PENDING, 'disapprove', $iAction, $iProfileId, $bSendEmailNotification);
     }
 
     /**
      * Change profile status to 'Suspended'
      */
-    public function suspend($iAction, $iProfileId = 0)
+    public function suspend($iAction, $iProfileId = 0, $bSendEmailNotification = true)
     {
-        return $this->changeStatus(BX_PROFILE_STATUS_SUSPENDED, 'suspend', $iAction, $iProfileId);
+        return $this->changeStatus(BX_PROFILE_STATUS_SUSPENDED, 'suspend', $iAction, $iProfileId, $bSendEmailNotification);
     }
 
-    protected function changeStatus($sStatus, $sAlertActionName, $iAction, $iProfileId = 0)
+    protected function changeStatus($sStatus, $sAlertActionName, $iAction, $iProfileId = 0, $bSendEmailNotification = true)
     {
         if (!$iProfileId)
             $iProfileId = $this->_iProfileID;
@@ -412,7 +412,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile
         bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction));
 
         // send email to member about status change
-        sendMailTemplate('t_ChangeStatus' . ucfirst($sStatus), $oAccount->id(), $iProfileId, array('status' => $sStatus), BX_EMAIL_SYSTEM);
+        if ($bSendEmailNotification)
+            sendMailTemplate('t_ChangeStatus' . ucfirst($sStatus), $oAccount->id(), $iProfileId, array('status' => $sStatus), BX_EMAIL_SYSTEM);
 
         return true;
     }

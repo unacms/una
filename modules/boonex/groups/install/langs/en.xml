@@ -216,4 +216,54 @@
     <string name="_bx_groups_cat_Causes"><![CDATA[Causes]]></string>
     <string name="_bx_groups_cat_Fun"><![CDATA[Fun]]></string>
     <string name="_bx_groups_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
+
+    <string name="_bx_groups_email_join_request"><![CDATA[Group join request]]></string>
+    <string name="_bx_groups_email_join_request_subject"><![CDATA[Request to join your group]]></string>
+    <string name="_bx_groups_email_join_request_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> group from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_join_reject"><![CDATA[Group join request was rejected]]></string>
+    <string name="_bx_groups_email_join_reject_subject"><![CDATA[Request to join a group was rejected]]></string>
+    <string name="_bx_groups_email_join_reject_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> group was rejected by group admin.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_join_confirm"><![CDATA[Group join request was confirmed]]></string>
+    <string name="_bx_groups_email_join_confirm_subject"><![CDATA[Your request to join a group was confirmed]]></string>
+    <string name="_bx_groups_email_join_confirm_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> group was confirmed by the group admin.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_fan_remove"><![CDATA[Profile was removed from group fans]]></string>
+    <string name="_bx_groups_email_fan_remove_subject"><![CDATA[Your profile was removed from the group]]></string>
+    <string name="_bx_groups_email_fan_remove_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> group by the group admin.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_fan_become_admin"><![CDATA[Group admin status was granted]]></string>
+    <string name="_bx_groups_email_fan_become_admin_subject"><![CDATA[You are a group admin now]]></string>
+    <string name="_bx_groups_email_fan_become_admin_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> group now.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_admin_become_fan"><![CDATA[Group admin status was revoked]]></string>
+    <string name="_bx_groups_email_admin_become_fan_subject"><![CDATA[Your group admin status was revoked]]></string>
+    <string name="_bx_groups_email_admin_become_fan_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> group.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_invitation"><![CDATA[Invitation to group]]></string>
+    <string name="_bx_groups_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" group]]></string>
+    <string name="_bx_groups_email_invitation_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} group</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
 </resources>

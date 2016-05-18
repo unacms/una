@@ -99,17 +99,73 @@ class BxGroupsModule extends BxBaseModProfileModule
 
     public function serviceAddMutualConnection ($iGroupProfileId, $iInitiatorId, $iIgnoreJoinConfirmation = false)
     {        
+        $CNF = &$this->_oConfig->CNF;
+
         if (!($oGroupProfile = BxDolProfile::getInstance($iGroupProfileId)))
             return false;
 
-        $aContentInfo = $this->_oDb->getContentInfoById((int)$oGroupProfile->getContentId());
-        if (!$aContentInfo || (!$iIgnoreJoinConfirmation && $aContentInfo['join_confirmation']))
+        if ($oGroupProfile->getModule() == $this->getName()) {
+            $iProfileId = $iInitiatorId;
+            $iGroupProfileId = $oGroupProfile->id();
+        } else {
+            $iProfileId = $oGroupProfile->id();
+            $iGroupProfileId = $iInitiatorId;
+        }
+
+        if (!($aContentInfo = $this->_oDb->getContentInfoById((int)BxDolProfile::getInstance($iGroupProfileId)->getContentId())))
             return false;
 
-        if (!($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])))
+        if (!($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             return false;
 
-        return $oConnection->addConnection($oGroupProfile->id(), (int)$iInitiatorId);
+
+
+        $sEntryTitle = $aContentInfo[$CNF['FIELD_NAME']];
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+
+        // send invitation to the group
+        if ($iIgnoreJoinConfirmation && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
+            sendMailTemplate('bx_groups_invitation', 0, $iProfileId, array(
+                'InviterUrl' => BxDolProfile::getInstance()->getUrl(),
+                'InviterDisplayName' => BxDolProfile::getInstance()->getDisplayName(),
+                'EntryUrl' => $sEntryUrl,
+                'EntryTitle' => $sEntryTitle,
+            ), BX_EMAIL_NOTIFY);
+        }
+        // send notification to group's admins that new connection is pending confirmation
+        elseif (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
+            $aAdmins = $this->_oDb->getAdmins($iGroupProfileId);
+            foreach ($aAdmins as $iAdminProfileId) {
+                sendMailTemplate('bx_groups_join_request', 0, $iAdminProfileId, array(
+                    'NewMemberUrl' => BxDolProfile::getInstance($iProfileId)->getUrl(),
+                    'NewMemberDisplayName' => BxDolProfile::getInstance($iProfileId)->getDisplayName(),
+                    'EntryUrl' => $sEntryUrl,
+                    'EntryTitle' => $sEntryTitle,
+                ), BX_EMAIL_NOTIFY);
+            }
+        }
+        // send notification that join request was accepted
+        else if (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
+            sendMailTemplate('bx_groups_join_confirm', 0, $iProfileId, array(
+                'EntryUrl' => $sEntryUrl,
+                'EntryTitle' => $sEntryTitle,
+            ), BX_EMAIL_NOTIFY);
+        }
+
+
+
+        // don't automatically add back connection (mutual) if group requires manual join confirmation
+        if (!$iIgnoreJoinConfirmation && $aContentInfo['join_confirmation'])
+            return false;
+
+        // check if connection already exists
+        if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true) || $oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId))
+            return false;
+
+        if (!$oConnection->addConnection($oGroupProfile->id(), (int)$iInitiatorId))
+            return false;
+
+        return true;
     }
 
     public function serviceFansTable ()

@@ -16,7 +16,7 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
 {
     public function response($oAlert)
     {
-        if ('bx_groups_fans' == $oAlert->sUnit && 'connection_added' == $oAlert->sAction && !$oAlert->aExtras['mutual']) {
+        if ('bx_groups_fans' == $oAlert->sUnit && 'connection_added' == $oAlert->sAction) {
             BxDolService::call('bx_groups', 'add_mutual_connection', array($oAlert->aExtras['content'], $oAlert->aExtras['initiator']));
         }
 

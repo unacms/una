@@ -41,7 +41,7 @@ class BxGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         foreach ($aInitialProfiles as $iProfileId) {
             if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
                 continue;
-            $this->_oModule->serviceAddMutualConnection ($oGroupProfile->id(), $oProfile->id(), true);
+            $this->_oModule->serviceAddMutualConnection ($oGroupProfile->id(), $oProfile->id(), true);            
         }
         
         return '';

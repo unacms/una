@@ -196,10 +196,10 @@ class BxDolConnectionQuery extends BxDolDb
     public function removeConnection ($iInitiator, $iContent)
     {
         if (!($aConnection = $this->getConnection($iInitiator, $iContent))) // connection doesn't exist
-            return false;
+            return true;
 
         $sQuery = $this->prepare("DELETE FROM `" . $this->_sTable . "` WHERE `initiator` = ? AND `content` = ?", $iInitiator, $iContent);
-        if (!$this->query($sQuery))
+        if (!$this->res($sQuery))
             return false;
 
         if (BX_CONNECTIONS_TYPE_MUTUAL == $this->_sType && $aConnection['mutual'])
