@@ -240,7 +240,13 @@ class BxGroupsModule extends BxBaseModProfileModule
 
     public function checkAllowedManageAdmins ($mixedDataEntry, $isPerformAction = false)
     {
-        $aDataEntry = is_array($mixedDataEntry) ? $mixedDataEntry : $this->_oDb->getContentInfoById((int)$mixedDataEntry);
+        if (is_array($mixedDataEntry)) {
+            $aDataEntry = $mixedDataEntry;
+        }
+        else {
+            $oGroupProfile = BxDolProfile::getInstance((int)$mixedDataEntry);
+            $aDataEntry = $oGroupProfile && $this->getName() == $oGroupProfile->getModule() ? $this->_oDb->getContentInfoById($oGroupProfile->getContentId()) : array();
+        }
 
         return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
     }
@@ -248,7 +254,7 @@ class BxGroupsModule extends BxBaseModProfileModule
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
+        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id(), $aDataEntry))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
     }
@@ -256,7 +262,7 @@ class BxGroupsModule extends BxBaseModProfileModule
     public function checkAllowedChangeCover ($aDataEntry, $isPerformAction = false)
     {
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
+        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id(), $aDataEntry))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedChangeCover ($aDataEntry, $isPerformAction);
     }
@@ -264,7 +270,7 @@ class BxGroupsModule extends BxBaseModProfileModule
     public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
     {
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($oGroupProfile && $this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id()))
+        if ($oGroupProfile && $this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id(), $aDataEntry))
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
     }

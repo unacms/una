@@ -14,6 +14,7 @@ class BxGroupsGridConnections extends BxDolGridConnections
     protected $_iGroupProfileId;
     protected $_oModule;
     protected $_oConnection;
+    protected $_aContentInfo = array();
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -34,8 +35,8 @@ class BxGroupsGridConnections extends BxDolGridConnections
         $aProfileInfo = $oProfile->getInfo();
         $this->_iGroupProfileId = $oProfile->id();
 
-        $aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($aProfileInfo['content_id']));
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedEdit($aContentInfo) || $oProfile->id() == bx_get_logged_profile_id())
+        $this->_aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($aProfileInfo['content_id']));
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedEdit($this->_aContentInfo) || $oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
         $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_iGroupProfileId, $this->_bOwner ? false : true);

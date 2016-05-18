@@ -64,8 +64,11 @@ class BxGroupsDb extends BxBaseModProfileDb
         return $this->res($sQuery);
     }
 
-    public function isAdmin ($iGroupProfileId, $iFanId)
+    public function isAdmin ($iGroupProfileId, $iFanId, $aDataEntry = array())
     {
+        if (isset($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']]) && $iFanId == $aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']])
+            return true;
+
         $sQuery = $this->prepare("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? AND `fan_id` = ?", $iGroupProfileId, $iFanId);
         return $this->getOne($sQuery) ? true : false;
     }
