@@ -20,10 +20,6 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
 
         $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->addJs(array (
-            'jquery-ui/jquery-ui.custom.min.js',
-            'jquery.form.min.js',
-        ));
         $oTemplate->addJsTranslation(array(
             '_bx_cnv_draft_saving_error',
             '_bx_cnv_draft_saved_success',
@@ -88,101 +84,8 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomInputRecipients ($aInput)
     {
-        $sVals = '';
-        if (!empty($aInput['value']) && is_array($aInput['value'])) {
-            foreach ($aInput['value'] as $sVal) {
-                if (!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
-                    continue;
-               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
-            }
-            $sVals = trim($sVals, ',');
-        }
-        $sId = $aInput['name'] . time();
-        $sPlaceholderText = bx_html_attribute(_t('_bx_cnv_form_entry_input_recipients_placeholder'), BX_ESCAPE_STR_QUOTE);
-        $sUrlGetRecipients = BX_DOL_URL_ROOT . "modules/?r=convos/ajax_get_recipients";
-        return <<<EOS
-<script>
-    $(function() {
-
-        $('#{$sId} input[type=text]').autocomplete({
-            source: "{$sUrlGetRecipients}",
-            select: function(e, ui) {
-                $(this).val(ui.item.label);
-                $(this).trigger('superselect', ui.item);
-                e.preventDefault();
-            }
-        });
-
-        $('#{$sId} input[type=text]').on('superselect', function(e, item) {
-            $(this).hide();
-            if ('undefined' != typeof(item))
-                $(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">'+ item.label +'<input type="hidden" name="{$aInput['name']}[]" value="'+ item.value +'" /></b>');
-            fAutoShrinkInput();
-            $(this).show();
-            this.value = '';
-
-        }).on('keydown', function(e) {
-
-            // if: comma,enter (delimit more keyCodes with | pipe)
-            if (/(13)/.test(e.which))
-                e.preventDefault();
-
-        });
-
-        $('#{$sId}').on('click', 'b', function() {
-            $(this).remove();
-            fAutoShrinkInput();
-        });
-
-        fAutoShrinkInput = function () {
-            var iWidthCont = $('#{$sId}.bx-form-input-autotoken').innerWidth();
-            var iWidthExisting = 0;
-            $('#{$sId}.bx-form-input-autotoken b').each(function () {
-                iWidthExisting += $(this).outerWidth(true);
-            });
-            $('#{$sId}.bx-form-input-autotoken input').width(parseInt(iWidthCont - iWidthExisting > 180 ? iWidthCont - iWidthExisting : 180) - 5);
-        };
-
-        fAutoShrinkInput();
-    });
-</script>
-<style>
-    .bx-form-value .bx-form-input-autotoken {
-        float:left;
-        padding:0px;
-        height:auto;
-    }
-    .bx-form-value .bx-form-input-autotoken b {
-        cursor:pointer;
-        display:block;
-        float:left;
-        padding:0.3em 1.5em 0.3em 0.5em;
-        margin:0.1em;
-        font-weight:normal;
-    }
-    .bx-form-value .bx-form-input-autotoken b:hover {
-        opacity:0.7;
-    }
-    .bx-form-value .bx-form-input-autotoken b:after {
-        position:absolute;
-        content:"x";
-        padding:0 0.5em;
-        margin:0.2em 0 0.7em 0.5em;
-        font-size:0.7em;
-        font-weight:bold;
-    }
-    .bx-form-value .bx-form-input-autotoken input {
-        border:0;
-        margin:0;
-        padding:0 0 0 5px;
-        width:auto;
-    }
-</style>
-<div id="{$sId}" class="bx-form-input-autotoken bx-def-font-inputs bx-form-input-text">
-    {$sVals}
-    <input type="text" value="" placeholder="{$sPlaceholderText}" class="bx-def-font-inputs bx-form-input-text" />
-</div>
-EOS;
+        $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . "modules/?r=convos/ajax_get_recipients";
+        return $this->genCustomInputUsernamesSuggestions($aInput);
     }
 
     protected function genCustomInputSubmitText ($aInput)

@@ -3,10 +3,8 @@
 	<string name="_bx_payment"><![CDATA[Payments]]></string>
 
 	<!-- OPTIONS -->
-	<string name="_bx_payment_option_default_currency_code"><![CDATA[Currency code]]></string>
+	<string name="_bx_payment_option_default_currency_code"><![CDATA[Currency]]></string>
 	<string name="_bx_payment_option_err_default_currency_code"><![CDATA[Currency code cannot be empty.]]></string>
-	<string name="_bx_payment_option_default_currency_sign"><![CDATA[Currency sign]]></string>
-	<string name="_bx_payment_option_err_default_currency_sign"><![CDATA[Currency sign cannot be empty.]]></string>	
 	<string name="_bx_payment_option_site_admin"><![CDATA[Site administrator]]></string>
 
 	<!-- PAGES and BLOCKS -->

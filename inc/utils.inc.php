@@ -243,9 +243,9 @@ function htmlspecialchars_adv( $string )
  */
 function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY)
 {
-    $oAccount = BxDolAccount::getInstance($iAccountId);
-
     $oProfile = BxDolProfile::getInstance($iProfileId);
+
+    $oAccount = $iAccountId ? BxDolAccount::getInstance($iAccountId) : ($oProfile ? $oProfile->getAccountObject() : null);
 
     $oEmailTemplates = BxDolEmailTemplates::getInstance();
 

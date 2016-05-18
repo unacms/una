@@ -48,12 +48,6 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
         $this->getCssJs();
         return parent::getJsCode($sType, $aParams, $bWrap);
     }
-
-	protected function getModule()
-    {
-        $sName = $this->_oConfig->getName();
-        return BxDolModule::getInstance($sName);
-    }
     
     public function getPost(&$aEvent, $aBrowseParams = array())
     {

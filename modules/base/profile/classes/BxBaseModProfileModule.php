@@ -427,25 +427,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    protected function _checkAllowedConnectContent (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
-    {
-        if (!$this->_iProfileId)
-            return _t('_sys_txt_access_denied');
-
-        $CNF = &$this->_oConfig->CNF;
-
-        $oConn = BxDolConnection::getObjectInstance($sObjConnection);
-        if ($isSwap)
-            $isConnected = $oConn->isConnected($aDataEntry[$CNF['FIELD_ID']], $this->_iProfileId, $isMutual);
-        else
-            $isConnected = $oConn->isConnected($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']], $isMutual);
-
-        if ($isInvertResult)
-            $isConnected = !$isConnected;
-
-        return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
-    }
-
     protected function _buildRssParams($sMode, $aArgs)
     {
         $aParams = array ();

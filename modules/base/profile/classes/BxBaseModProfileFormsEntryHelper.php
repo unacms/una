@@ -88,7 +88,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         // change profile to 'pending' only if profile is 'active'
         if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
-            $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
+            $oProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // create an alert
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
@@ -108,7 +108,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
         if ($sStatus == BX_PROFILE_STATUS_PENDING && $this->isAutoApproval())
-            $oProfile->approve(BX_PROFILE_ACTION_AUTO);
+            $oProfile->approve(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // set created profile some default membership
         $iAclLevel = !isset($CNF['PARAM_DEFAULT_ACL_LEVEL']) ? MEMBERSHIP_ID_STANDARD : 

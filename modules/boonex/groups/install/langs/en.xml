@@ -47,6 +47,8 @@
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[View Group]]></string>
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Edit Any Group]]></string>
 
+	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Joined Groups]]></string>
 	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Create Group]]></string>
 	<string name="_bx_groups_page_title_create_profile"><![CDATA[Create Group]]></string>
 	<string name="_bx_groups_page_title_sys_edit_profile"><![CDATA[Edit Group]]></string>
@@ -77,6 +79,8 @@
 	<string name="_bx_groups_page_title_sys_active"><![CDATA[Recently Active People]]></string>
 	<string name="_bx_groups_page_title_active"><![CDATA[Recently Active People]]></string>
 
+	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Joined Groups]]></string>
 	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Create Group]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile"><![CDATA[Edit Group]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
@@ -128,6 +132,8 @@
     <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[Create Group]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Members]]></string>
     <string name="_bx_groups_menu_item_title_view_fans"><![CDATA[Members]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
@@ -198,6 +204,7 @@
     <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[From Admins]]></string>
+    <string name="_bx_groups_txt_private_group"><![CDATA[Private group]]></string>
 
     <string name="_bx_groups_privacy_group_closed"><![CDATA[Closed]]></string>
     <string name="_bx_groups_privacy_group_secret"><![CDATA[Secret]]></string>
@@ -209,4 +216,54 @@
     <string name="_bx_groups_cat_Causes"><![CDATA[Causes]]></string>
     <string name="_bx_groups_cat_Fun"><![CDATA[Fun]]></string>
     <string name="_bx_groups_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
+
+    <string name="_bx_groups_email_join_request"><![CDATA[Group join request]]></string>
+    <string name="_bx_groups_email_join_request_subject"><![CDATA[Request to join your group]]></string>
+    <string name="_bx_groups_email_join_request_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> group from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_join_reject"><![CDATA[Group join request was rejected]]></string>
+    <string name="_bx_groups_email_join_reject_subject"><![CDATA[Request to join a group was rejected]]></string>
+    <string name="_bx_groups_email_join_reject_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> group was rejected by group admin.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_join_confirm"><![CDATA[Group join request was confirmed]]></string>
+    <string name="_bx_groups_email_join_confirm_subject"><![CDATA[Your request to join a group was confirmed]]></string>
+    <string name="_bx_groups_email_join_confirm_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> group was confirmed by the group admin.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_fan_remove"><![CDATA[Profile was removed from group fans]]></string>
+    <string name="_bx_groups_email_fan_remove_subject"><![CDATA[Your profile was removed from the group]]></string>
+    <string name="_bx_groups_email_fan_remove_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> group by the group admin.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_fan_become_admin"><![CDATA[Group admin status was granted]]></string>
+    <string name="_bx_groups_email_fan_become_admin_subject"><![CDATA[You are a group admin now]]></string>
+    <string name="_bx_groups_email_fan_become_admin_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> group now.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_admin_become_fan"><![CDATA[Group admin status was revoked]]></string>
+    <string name="_bx_groups_email_admin_become_fan_subject"><![CDATA[Your group admin status was revoked]]></string>
+    <string name="_bx_groups_email_admin_become_fan_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> group.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_invitation"><![CDATA[Invitation to group]]></string>
+    <string name="_bx_groups_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" group]]></string>
+    <string name="_bx_groups_email_invitation_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} group</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
 </resources>

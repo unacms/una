@@ -3021,7 +3021,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_forms_pre_lists', 'actions', '', '20%', 0, '', '', 5),
 ('sys_studio_forms_pre_values', 'checkbox', '', '1%', 0, '', '', 1),
 ('sys_studio_forms_pre_values', 'order', '', '1%', 0, '', '', 2),
-('sys_studio_forms_pre_values', 'LKey', '_adm_form_txt_pre_values_gl_lkey', '79%', 1, '75', '', 3),
+('sys_studio_forms_pre_values', 'LKey', '_adm_form_txt_pre_values_gl_lkey', '78%', 1, '75', '', 3),
 ('sys_studio_forms_pre_values', 'actions', '', '20%', 0, '', '', 4);
 
 

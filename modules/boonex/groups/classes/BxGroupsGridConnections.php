@@ -11,9 +11,10 @@
 
 class BxGroupsGridConnections extends BxDolGridConnections
 {
-    protected $_iContentId;
+    protected $_iGroupProfileId;
     protected $_oModule;
     protected $_oConnection;
+    protected $_aContentInfo = array();
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -32,13 +33,13 @@ class BxGroupsGridConnections extends BxDolGridConnections
             return;
 
         $aProfileInfo = $oProfile->getInfo();
-        $this->_iContentId = $aProfileInfo['content_id'];
+        $this->_iGroupProfileId = $oProfile->id();
 
-        $aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($this->_iContentId));
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedEdit($aContentInfo) || $oProfile->id() == bx_get_logged_profile_id())
+        $this->_aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($aProfileInfo['content_id']));
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedEdit($this->_aContentInfo) || $oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
-        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_iContentId, $this->_bOwner ? false : true);
+        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_iGroupProfileId, $this->_bOwner ? false : true);
         $this->addMarkers(array(
             'profile_id' => $oProfile->id(),
             'join_connections' => $aSQLParts['join'],
@@ -49,7 +50,7 @@ class BxGroupsGridConnections extends BxDolGridConnections
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (isset($aRow[$this->_aOptions['field_id']]))
-            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iContentId;
+            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
         return parent::_getActionAccept ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
@@ -57,14 +58,14 @@ class BxGroupsGridConnections extends BxDolGridConnections
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (isset($aRow[$this->_aOptions['field_id']]))
-            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iContentId;
+            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
         return parent::_getActionDelete ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionToAdmins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if ($this->_oModule->_oDb->isAdmin($this->_iContentId, $aRow[$this->_aOptions['field_id']]))
+        if ($this->_oModule->_oDb->isAdmin($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]))
             return '';
 
         return $this->_getAction_Admins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -72,7 +73,7 @@ class BxGroupsGridConnections extends BxDolGridConnections
 
     protected function _getActionFromAdmins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if (!$this->_oModule->_oDb->isAdmin($this->_iContentId, $aRow[$this->_aOptions['field_id']]))
+        if (!$this->_oModule->_oDb->isAdmin($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]))
             return '';
 
         return $this->_getAction_Admins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -80,14 +81,14 @@ class BxGroupsGridConnections extends BxDolGridConnections
 
     protected function _getAction_Admins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if (!$this->_oConnection->isConnected($aRow[$this->_aOptions['field_id']], $this->_iContentId, true))
+        if (!$this->_oConnection->isConnected($aRow[$this->_aOptions['field_id']], $this->_iGroupProfileId, true))
             return '';
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($this->_iContentId))
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId))
             return '';
 
         if (isset($aRow[$this->_aOptions['field_id']]))
-            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iContentId;
+            $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
@@ -105,27 +106,70 @@ class BxGroupsGridConnections extends BxDolGridConnections
      */
     public function performActionFromAdmins()
     {
-        $this->_performActionAdmins('fromAdmins');
+        $this->_performActionAdmins('fromAdmins');        
     }
 
     public function _performActionAdmins($sFunc)
     {
-        list ($iId, $iContentId) = $this->_prepareIds();
+        list ($iId, $iGroupProfileId) = $this->_prepareIds();
 
         if (!$iId) {
             echoJson(array('msg' => _t('_sys_txt_error_occured')));
             exit;
         }
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($iContentId)) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($iGroupProfileId)) {
             echoJson(array('msg' => _t('_sys_txt_access_denied')));
             exit;
         }
     
-        if (!$this->_oModule->_oDb->$sFunc($iContentId, $iId))
+        if (!$this->_oModule->_oDb->$sFunc($iGroupProfileId, $iId)) {
             echoJson(array('msg' => _t('_sys_txt_error_occured')));
-        else
+        } 
+        else {
+
+            $sEmailTemplate = 'toAdmins' == $sFunc ? 'bx_groups_fan_become_admin' : 'bx_groups_admin_become_fan';
+            list($iGroupProfileId, $iProfileId) = $this->_prepareGroupProfileAndMemberProfile($iGroupProfileId, $iId);
+            if (bx_get_logged_profile_id() != $iProfileId) {
+                sendMailTemplate($sEmailTemplate, 0, $iProfileId, array(
+                    'EntryUrl' => BxDolProfile::getInstance($iGroupProfileId)->getUrl(),
+                    'EntryTitle' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName(),
+                ), BX_EMAIL_NOTIFY);
+            }
+
             echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
+        }
+    }
+
+    protected function _delete ($mixedId)
+    {
+        list ($iId, $iViewedId) = $this->_prepareIds();
+
+        // send email notification
+        $sEmailTemplate = $this->_oConnection->isConnected($iViewedId, $iId, true) ? 'bx_groups_fan_remove' : 'bx_groups_join_reject';
+        list($iGroupProfileId, $iProfileId) = $this->_prepareGroupProfileAndMemberProfile($iId, $iViewedId);
+        if (bx_get_logged_profile_id() != $iProfileId) {
+            sendMailTemplate($sEmailTemplate, 0, $iProfileId, array(
+                'EntryUrl' => BxDolProfile::getInstance($iGroupProfileId)->getUrl(),
+                'EntryTitle' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName(),
+            ), BX_EMAIL_NOTIFY);
+        }
+
+        // delete admin associated with profile
+        $this->_oModule->_oDb->deleteAdminsByProfileId($iProfileId);
+
+        return parent::_delete ($mixedId);
+    }
+
+    /**
+     * @return array where first element is group profile id and second element is some other persons profile id
+     */
+    protected function _prepareGroupProfileAndMemberProfile($iId1, $iId2)
+    {
+        if (BxDolProfile::getInstance($iId1)->getModule() == $this->_sContentModule)
+            return array($iId1, $iId2);
+        else
+            return array($iId2, $iId1);
     }
 }
 

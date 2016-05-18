@@ -23,7 +23,6 @@
     <string name="_bx_cnv_form_entry_input_recipients"><![CDATA[Recipients]]></string>
     <string name="_bx_cnv_form_entry_input_sys_recipients"><![CDATA[Recipients]]></string>
     <string name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Recipients is mandatory]]></string>
-    <string name="_bx_cnv_form_entry_input_recipients_placeholder"><![CDATA[Type name here...]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_text"><![CDATA[Draft status]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_block"><![CDATA[Submit block]]></string>
 
