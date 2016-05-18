@@ -15,11 +15,21 @@
 class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 {
     protected $MODULE;
+    protected $_oModule;
 
     function __construct(&$oConfig, &$oDb)
     {
-        parent::__construct($oConfig, $oDb);
+        parent::__construct($oConfig, $oDb);        
         $this->addCss ('main.css');
+    }
+    
+    public function getModule()
+    {
+        if (!$this->_oModule) {
+            $sName = $this->_oConfig->getName();
+            $this->_oModule = BxDolModule::getInstance($sName);
+        }
+        return $this->_oModule;
     }
 
 	public function getJsCode($sType, $aParams = array(), $bWrap = true)
@@ -42,8 +52,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
     function entryLocation ($iContentId)
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &$this->getModule()->_oConfig->CNF;
 
         if (empty($CNF['OBJECT_METATAGS']))
             return '';

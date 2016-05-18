@@ -23,7 +23,7 @@ class BxGroupsMenuView extends BxBaseModProfileMenuView
         if ($this->_oProfile && isLogged()) {
 
             $oConn = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS']);
-            if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_aProfileInfo['content_id'])) {
+            if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id())) {
                 $this->addMarkers(array(
                     'title_add_fan' => _t('_bx_groups_menu_item_title_become_fan_sent'),
                     'title_remove_fan' => _t('_bx_groups_menu_item_title_leave_group_cancel_request'),

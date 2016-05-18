@@ -26,7 +26,7 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         $this->_sLangsPrefix = $this->_oModule->_oConfig->getPrefix('langs');
-        $this->_sCurrencySign = $this->_oModule->_oConfig->getCurrencySign();
+        $this->_sCurrencySign = $this->_oModule->_oConfig->getDefaultCurrencySign();
 
         $this->_sDefaultSortingOrder = 'DESC';
 

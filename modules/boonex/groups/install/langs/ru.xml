@@ -47,6 +47,8 @@
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[Просмотреть группу]]></string>
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Редактировать любую группу]]></string>
 
+	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Участие в группах]]></string>
+	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Участие в группах]]></string>
 	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_title_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_title_sys_edit_profile"><![CDATA[Редактировать группу]]></string>
@@ -78,6 +80,8 @@
 	<string name="_bx_groups_page_title_active"><![CDATA[Последние Активные Группы]]></string>
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
 
+	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Участие в группах]]></string>
+	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Участие в группах]]></string>
 	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Создать группу]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile"><![CDATA[Редактировать группу]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
@@ -127,6 +131,8 @@
     <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[Создать группу]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Группы]]></string>
+    <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Участники]]></string>
     <string name="_bx_groups_menu_item_title_view_fans"><![CDATA[Участники]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
@@ -143,8 +149,8 @@
     <string name="_bx_groups_menu_item_title_unfriend_cancel_request"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_bx_groups_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
 
-    <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Присоедениться]]></string>
-    <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Присоедениться]]></string>
+    <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Присоединиться]]></string>
+    <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_groups_menu_item_title_become_fan_sent"><![CDATA[Присоединение запрошено]]></string>
     <string name="_bx_groups_menu_item_title_become_fan_confirm"><![CDATA[Одобрить присоединение]]></string>
     <string name="_bx_groups_menu_item_title_system_leave_group"><![CDATA[Покинуть группу]]></string>
@@ -197,6 +203,7 @@
     <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[Из админов]]></string>
+    <string name="_bx_groups_txt_private_group"><![CDATA[Приватная группа]]></string>
 
     <string name="_bx_groups_privacy_group_closed"><![CDATA[Закрытая группа]]></string>
     <string name="_bx_groups_privacy_group_secret"><![CDATA[Секретная группа]]></string>
@@ -208,4 +215,54 @@
     <string name="_bx_groups_cat_Causes"><![CDATA[Движение]]></string>
     <string name="_bx_groups_cat_Fun"><![CDATA[Юмор]]></string>
     <string name="_bx_groups_cat_Uncategorised"><![CDATA[Без категории]]></string>
+
+    <string name="_bx_groups_email_join_request"><![CDATA[Запрос на присоединение к группе]]></string>
+    <string name="_bx_groups_email_join_request_subject"><![CDATA[Запрос на присоединение к группе]]></string>
+    <string name="_bx_groups_email_join_request_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Получен запрос на присоединение к группе <a href="{EntryUrl}">{EntryTitle}</a> от <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_join_reject"><![CDATA[Отклонение запроса на присоединение к группе]]></string>
+    <string name="_bx_groups_email_join_reject_subject"><![CDATA[Ваш запрос на присоединение к группе был отклонен]]></string>
+    <string name="_bx_groups_email_join_reject_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Ваш запрос на присоединение к группе <a href="{EntryUrl}">{EntryTitle}</a> был отклонен администратором группы.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_join_confirm"><![CDATA[Одобрение запроса на присоединение к группе]]></string>
+    <string name="_bx_groups_email_join_confirm_subject"><![CDATA[Ваш запрос на присоединение к группе был одобрен]]></string>
+    <string name="_bx_groups_email_join_confirm_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Ваш запрос на присоединение к группе <a href="{EntryUrl}">{EntryTitle}</a> был одобрен.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_fan_remove"><![CDATA[Удаление из группы]]></string>
+    <string name="_bx_groups_email_fan_remove_subject"><![CDATA[Вы были удалены из группы]]></string>
+    <string name="_bx_groups_email_fan_remove_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Ваш профиль был удален из группы <a href="{EntryUrl}">{EntryTitle}</a> администратором группы.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_fan_become_admin"><![CDATA[Получение статуса администратора группы]]></string>
+    <string name="_bx_groups_email_fan_become_admin_subject"><![CDATA[Вы стали администратором группы]]></string>
+    <string name="_bx_groups_email_fan_become_admin_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Вы получили статус администратора группы <a href="{EntryUrl}">{EntryTitle}</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_admin_become_fan"><![CDATA[Лишение статуса администратора группы]]></string>
+    <string name="_bx_groups_email_admin_become_fan_subject"><![CDATA[Вы были лишены статуса администратора группы]]></string>
+    <string name="_bx_groups_email_admin_become_fan_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Вы были лишены статуса администратора группы <a href="{EntryUrl}">{EntryTitle}</a></p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+    <string name="_bx_groups_email_invitation"><![CDATA[Приглашение в группу]]></string>
+    <string name="_bx_groups_email_invitation_subject"><![CDATA[Приглашение в группу "{EntryTitle}"]]></string>
+    <string name="_bx_groups_email_invitation_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас в группу <a href="{EntryUrl}">{EntryTitle}</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
 </resources>

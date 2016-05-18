@@ -180,10 +180,12 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
     {
         if (!$iContent)
             $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
-
-        $a = $this->actionReject($iContent);
-        if (false == $a['err'])
-            return $a;
+        
+        if ($iContent != bx_get_logged_profile_id()) {
+            $a = $this->actionReject($iContent);
+            if (false == $a['err'])
+                return $a;
+        }
 
         return $this->_action ($iInitiator ? $iInitiator : bx_get_logged_profile_id(), $iContent, 'removeConnection', '_sys_conn_err_connection_does_not_exists');
     }

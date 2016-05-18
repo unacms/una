@@ -49,7 +49,8 @@ class BxGroupsPrivacy extends BxTemplPrivacy
         if (!($oConnection = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'])))
             return false;
 
-        return $oConnection->isConnected($iViewerId, $iObjectId, true);
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iObjectId, $this->MODULE);
+        return $oConnection->isConnected($iViewerId, $oGroupProfile->id(), true);
     }
 
     function isSecretGroupAccess ($iObjectOwnerId, $iViewerId, $iObjectId)

@@ -39,13 +39,17 @@ class BxBaseModPaymentModule extends BxDolModule
     public function serviceGetCurrencyInfo()
     {
         return array(
-            'sign' => $this->_oConfig->getCurrencySign(),
-            'code' => $this->_oConfig->getCurrencyCode()
+            'sign' => $this->_oConfig->getDefaultCurrencySign(),
+            'code' => $this->_oConfig->getDefaultCurrencyCode()
         );
     }
 
 	public function serviceGetOption($sOption)
     {
+    	$sMethod = 'get' . bx_gen_method_name($sOption);
+    	if(method_exists($this->_oConfig, $sMethod))
+    		return $this->_oConfig->$sMethod();
+
     	return $this->_oDb->getParam($this->_oConfig->getPrefix('options') . $sOption);
     }
 
@@ -66,8 +70,8 @@ class BxBaseModPaymentModule extends BxDolModule
 	public function getVendorInfo($iUserId)
     {
         return array_merge($this->getProfileInfo($iUserId), array(
-        	'currency_code' => $this->_oConfig->getCurrencyCode(),
-			'currency_sign' => $this->_oConfig->getCurrencySign()
+        	'currency_code' => $this->_oConfig->getDefaultCurrencyCode(),
+			'currency_sign' => $this->_oConfig->getDefaultCurrencySign()
         ));
     }
 

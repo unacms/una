@@ -872,6 +872,32 @@ BLAH;
         ));
     }
 
+    protected function genCustomInputUsernamesSuggestions ($aInput)
+    {
+        $this->oTemplate->addJs(array(
+            'jquery-ui/jquery-ui.custom.min.js',
+            'jquery.form.min.js',
+        ));
+
+        $sVals = '';
+        if (!empty($aInput['value']) && is_array($aInput['value'])) {
+            foreach ($aInput['value'] as $sVal) {
+                if (!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
+                    continue;
+               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
+            }
+            $sVals = trim($sVals, ',');
+        }
+
+        return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
+            'id' => $aInput['name'] . time(),
+            'url_get_recipients' => $aInput['ajax_get_suggestions'],
+            'name' => $aInput['name'],
+            'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
+            'vals' => $sVals,
+        ));
+    }
+
     /**
      * Generate Select Element
      *
