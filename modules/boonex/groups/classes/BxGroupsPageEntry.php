@@ -22,11 +22,12 @@ class BxGroupsPageEntry extends BxBaseModProfilePageEntry
 
     protected function _processPermissionsCheck ()
     {
-        if ('c' != $this->_aContentInfo['allow_view_to'] && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($this->_aContentInfo))) {
+        $mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo);
+        if ('c' != $this->_aContentInfo['allow_view_to'] && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $mixedAllowView)) {
             $this->_oTemplate->displayAccessDenied($sMsg);
             exit;
         }
-        elseif ('c' == $this->_aContentInfo['allow_view_to'] && 'bx_groups_view_profile' == $this->_sObject) {
+        elseif ('c' == $this->_aContentInfo['allow_view_to'] && 'bx_groups_view_profile' == $this->_sObject && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
             // replace current page with different set of blocks
             $aObject = BxDolPageQuery::getPageObject('bx_groups_view_profile_closed');
             $this->_sObject = $aObject['object'];

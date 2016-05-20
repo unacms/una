@@ -364,7 +364,14 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_groups_fans', 'connection_added', @iHandler),
-('profile', 'delete', @iHandler);
+('profile', 'delete', @iHandler),
+('bx_groups', 'timeline_view', @iHandler),
+('bx_groups', 'timeline_post', @iHandler),
+('bx_groups', 'timeline_delete', @iHandler),
+('bx_groups', 'timeline_comment', @iHandler),
+('bx_groups', 'timeline_vote', @iHandler),
+('bx_groups', 'timeline_report', @iHandler),
+('bx_groups', 'timeline_share', @iHandler);
 
 -- PRIVACY 
 
