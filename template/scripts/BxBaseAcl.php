@@ -18,6 +18,29 @@ class BxBaseAcl extends BxDolAcl
         parent::__construct ();
     }
 
+	public function getProfileMembership ($iProfileId)
+    {
+    	$aLevel = $this->getMemberMembershipInfo($iProfileId);
+    	if(empty($aLevel) || !is_array($aLevel))
+    		return '';
+
+		$aLevelInfo = $this->getMembershipInfo($aLevel['id']);
+
+   		$oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addCss(array('acl.css'));
+    	return $oTemplate->parseHtmlByName('acl_membership.html', array(
+    		'level' => _t($aLevel['name']),
+    		'thumbnail' => $oTemplate->getImage($aLevelInfo['icon'], array('class' => 'bx-acl-m-thumbnail bx-def-border')),
+    		'bx_if:show_private_info' => array(
+    			'condition' => $iProfileId == bx_get_logged_profile_id(),
+    			'content' => array(
+    				'date_start' => bx_time_js($aLevel['date_starts']),
+    				'date_expire' => (int)$aLevel['date_expires'] > 0 ? bx_time_js($aLevel['date_expires']) : _t('_sys_acl_expire_never')
+    			)
+    		)
+    	));
+    }
+
     /**
      * Print code for membership status
      * $iProfileId - ID of profile

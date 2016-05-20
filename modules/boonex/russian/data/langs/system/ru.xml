@@ -1391,6 +1391,9 @@
 	<string name="_sys_acl_action_vote"><![CDATA[Голосовать]]></string>
 	<string name="_sys_acl_action_report"><![CDATA[Жаловаться]]></string>
 	<string name="_sys_acl_action_report_view"><![CDATA[Просматривать жалобы]]></string>
+	<string name="_sys_acl_start"><![CDATA[Начало: ]]></string>
+	<string name="_sys_acl_expire"><![CDATA[Окончание: ]]></string>
+	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>
 	<string name="_sys_add_friend"><![CDATA[Добавить друга]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Установленные]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Применить]]></string>
@@ -1956,6 +1959,7 @@
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_manage_tools"><![CDATA[Управление]]></string>
 	<string name="_sys_page_block_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
+	<string name="_sys_page_block_title_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_sys_page_block_title_unsubscribe_news"><![CDATA[Отписаться от Новостей Сайта]]></string>
 	<string name="_sys_page_block_title_unsubscribe_notifications"><![CDATA[Отписаться от Уведомлений Сайта]]></string>
 	<string name="_sys_page_block_title_std_dash_version"><![CDATA[Версия]]></string>

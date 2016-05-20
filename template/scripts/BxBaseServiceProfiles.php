@@ -40,6 +40,14 @@ class BxBaseServiceProfiles extends BxDol
         return $oTemplate->parseHtmlByName('profile_stats.html', $aVars);
     }
 
+    public function serviceProfileMembership ($iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+		return BxDolAcl::getInstance()->getProfileMembership($iProfileId);
+    }
+
     public function serviceProfileNotifications ($iProfileId = 0)
     {
         if (!$iProfileId)

@@ -362,19 +362,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
     }
 
     /**
-     * Get pricing options for the given membership
-     *
-     * @param  int    $iLevelId membership to get prices for
-     * @return array( days1 => price1, days2 => price2, ...) if no prices set, then just array()
-     */
-    function getMembershipPrices($iLevelId)
-    {
-        $aPrice = array();
-        $this->oDb->getPrices(array('type' => 'by_level_id_pair', 'value' => $iLevelId), $aPrice, false);
-        return $aPrice;
-    }
-
-    /**
      * Retrieves information about membership for a given profile at a given moment.
      *
      * If there are no memberships purchased/assigned to the
@@ -424,37 +411,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         $aMembershipCurrent['date_expires'] = $iDateExpires;
 
         return $aMembershipCurrent;
-    }
-
-    /**
-     * Buy a membership for a profile
-     *
-     * @param  int     $iProfileId     profile that is going to get the membership
-     * @param  int     $iMembershipId  bought membership
-     * @param  int     $sTransactionId internal key of the transaction (ID from Transactions table)
-     * @param  boolean $bStartsNow     if true, the membership will start immediately; if false, the membership will start after the current membership expires
-     * @return boolean true in case of success, false in case of failure
-     */
-    function buyMembership($iProfileId, $iPriceId, $sTransactionId, $bStartsNow = false)
-    {
-        $aPrice = array();
-        $this->oDb->getPrices(array('type' => 'by_id', 'value' => (int)$iPriceId), $aPrice, false);
-        if(!is_array($aPrice) || empty($aPrice))
-            return false;
-
-        $aLevel = array();
-        $this->oDb->getLevels(array('type' => 'by_id', 'value' => $aPrice['level_id']), $aLevel, false);
-        if(!is_array($aLevel) || empty($aLevel))
-            return false;
-
-        $iLevelId = (int)$aLevel['id'];
-        if (isset($this->_aStandardMemberships[$iLevelId])) // check for predefined non-purchasable memberships
-            return false;
-
-        if($aLevel['active'] != 'yes' || $aLevel['purchasable'] != 'yes') // check if membership is active and purchasable
-            return false;
-
-        return $this->setMembership((int)$iProfileId, $iLevelId, $aPrice['days'], $bStartsNow, $sTransactionId);
     }
 
     /**
@@ -513,12 +469,13 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
 
         $iDateStarts = time();
         if (!$bStartsNow) {
-            // make the membership starts after the latest membership expires or return false if latest membership isn't Standard and is lifetime membership.
-            if(!is_null($aMembershipLatest['date_expires']))
+            // Make the membership starts after the latest membership expires or return false if latest membership isn't Standard and is lifetime membership.
+            if(!empty($aMembershipLatest['date_expires']))
                 $iDateStarts = $aMembershipLatest['date_expires'];
-            else if(is_null($aMembershipLatest['date_expires']) && $aMembershipLatest['id'] != MEMBERSHIP_ID_STANDARD)
+            else if(empty($aMembershipLatest['date_expires']) && $aMembershipLatest['id'] != MEMBERSHIP_ID_STANDARD)
                 return false;
-        } else {
+        }
+        else {
             // Delete any profile's membership level and actions traces
             $this->oDb->deleteLevelByProfileId($iProfileId, true); 
             $this->oDb->clearActionsTracksForMember($iProfileId);
@@ -539,6 +496,15 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
             sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
 
         return true;
+    }
+
+    function unsetMembership($iProfileId, $iLevelId, $sTransactionId)
+    {
+    	return $this->oDb->deleteLevelBy(array(
+    		'IDMember' => $iProfileId,
+    		'IDLevel' => $iLevelId,
+    		'TransactionID' => $sTransactionId
+    	));
     }
 
     /**

@@ -77,6 +77,8 @@
 	<string name="_bx_orgs_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_profile_info"><![CDATA[Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
+	<string name="_bx_orgs_page_block_title_profile_membership"><![CDATA[Членство]]></string>
+	<string name="_bx_orgs_page_block_title_system_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
