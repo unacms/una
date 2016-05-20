@@ -187,12 +187,9 @@ class BxDolCmtsQuery extends BxDolDb
 
                 $sOrderClause = "ORDER BY `{$this->_sTable}`.`cmt_time` DESC";
                 $sLimitClause = "";
-                if(isset($aParams['per_page'])) {
-                	$aMethod['params'][1]['start'] = $aParams['start'];
-                	$aMethod['params'][1]['length'] = $aParams['per_page'];
+                if(isset($aParams['per_page']))
+                	$sLimitClause = $this->prepareAsString("LIMIT ?, ?", $aParams['start'], $aParams['per_page']);
 
-                	$sLimitClause = "LIMIT :start, :length";
-                }
                 break;
         }
 
