@@ -68,6 +68,14 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
         return $aPayments;
     }
 
+    public function updateDependentModules($sModule = 'all', $bInstall = true)
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'update_dependent_modules'))
+    		return;
+
+		BxDolService::call($this->_sActive, 'update_dependent_modules', array($sModule, $bInstall));
+    }
+
     public function getProvidersCart($iVendorId)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_providers_cart'))

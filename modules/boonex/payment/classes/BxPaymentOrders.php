@@ -87,7 +87,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
 		if(empty($aOrder) || !is_array($aOrder))
 	    	return true;
 
-		if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED && !$this->_oModule->callUnregisterCartItem((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aOrder['license'])))
+		if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED && !$this->_oModule->callUnregisterCartItem((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aOrder['order'], $aOrder['license'])))
 			return false;
 
 		$sMethodName = 'deleteOrder' . bx_gen_method_name($sType);
