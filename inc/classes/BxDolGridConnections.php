@@ -81,7 +81,10 @@ class BxDolGridConnections extends BxTemplGrid
         else
             $a = $this->_oConnection->actionReject($iId, $iViewedId);
 
-        return isset($a['err']) && $a['err'] ? false : true;
+        if (isset($a['err']) && $a['err'])
+            return false;
+
+        return true;
     }
 
     protected function _getCellName ($mixedValue, $sKey, $aField, $aRow)

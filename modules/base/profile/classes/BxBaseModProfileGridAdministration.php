@@ -110,7 +110,8 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     		return false;
 
 		$iAction = BX_PROFILE_ACTION_MANUAL;
-    	return $isChecked ? $oProfile->activate($iAction) : $oProfile->suspend($iAction);
+        $bSendEmailNotification = $this->_oModule->serviceActAsProfile();
+    	return $isChecked ? $oProfile->activate($iAction, 0, $bSendEmailNotification) : $oProfile->suspend($iAction, 0, $bSendEmailNotification);
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

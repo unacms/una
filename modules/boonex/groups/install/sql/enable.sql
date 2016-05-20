@@ -364,10 +364,28 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_groups_fans', 'connection_added', @iHandler),
-('profile', 'delete', @iHandler);
+('profile', 'delete', @iHandler),
+('bx_groups', 'timeline_view', @iHandler),
+('bx_groups', 'timeline_post', @iHandler),
+('bx_groups', 'timeline_delete', @iHandler),
+('bx_groups', 'timeline_comment', @iHandler),
+('bx_groups', 'timeline_vote', @iHandler),
+('bx_groups', 'timeline_report', @iHandler),
+('bx_groups', 'timeline_share', @iHandler);
 
 -- PRIVACY 
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_groups_allow_view_to', 'bx_groups', 'view', '_bx_groups_form_profile_input_allow_view_to', '3', 'bx_groups_data', 'id', 'author', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php');
+
+-- EMAIL TEMPLATES
+
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
+('bx_groups', '_bx_groups_email_join_request', 'bx_groups_join_request', '_bx_groups_email_join_request_subject', '_bx_groups_email_join_request_body'),
+('bx_groups', '_bx_groups_email_join_reject', 'bx_groups_join_reject', '_bx_groups_email_join_reject_subject', '_bx_groups_email_join_reject_body'),
+('bx_groups', '_bx_groups_email_join_confirm', 'bx_groups_join_confirm', '_bx_groups_email_join_confirm_subject', '_bx_groups_email_join_confirm_body'),
+('bx_groups', '_bx_groups_email_fan_remove', 'bx_groups_fan_remove', '_bx_groups_email_fan_remove_subject', '_bx_groups_email_fan_remove_body'),
+('bx_groups', '_bx_groups_email_fan_become_admin', 'bx_groups_fan_become_admin', '_bx_groups_email_fan_become_admin_subject', '_bx_groups_email_fan_become_admin_body'),
+('bx_groups', '_bx_groups_email_admin_become_fan', 'bx_groups_admin_become_fan', '_bx_groups_email_admin_become_fan_subject', '_bx_groups_email_admin_become_fan_body'),
+('bx_groups', '_bx_groups_email_invitation', 'bx_groups_invitation', '_bx_groups_email_invitation_subject', '_bx_groups_email_invitation_body');
 
