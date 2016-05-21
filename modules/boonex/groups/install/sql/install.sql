@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `bx_groups_admins` (
   `group_profile_id` int(10) unsigned NOT NULL,
   `fan_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `admin` (`content_id`,`fan_id`)
+  UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- STORAGES & TRANSCODERS
