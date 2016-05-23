@@ -100,6 +100,7 @@
 	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Manage All Groups]]></string>
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Manage Groups]]></string>
     <string name="_bx_groups_page_block_title_active_profiles"><![CDATA[Recently Active Groups]]></string>
+    <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Group categories]]></string>
 

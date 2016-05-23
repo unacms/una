@@ -150,51 +150,6 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         return $this->parseHtmlByName('breadcrumb.html', array('bx_repeat:items' => $aItems));
     }
 
-    function getIcon($mixedId, $aParams = array())
-    {
-        return $this->_getImage('icon', $mixedId, $aParams);
-    }
-
-    function getImage($mixedId, $aParams = array())
-    {
-        return $this->_getImage('image', $mixedId, $aParams);
-    }
-
-    protected function _getImage($sType, $mixedId, $aParams = array())
-    {
-        $sUrl = "";
-        $aType2Method = array('image' => 'getImageUrl', 'icon' => 'getIconUrl');
-
-        //--- Check in System Storage.
-        if(is_numeric($mixedId) && (int)$mixedId > 0)
-            if(($sResult = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->getFileUrlById((int)$mixedId)) !== false)
-                $sUrl = $sResult;
-
-        //--- Check in template folders.
-        if($sUrl == "" && is_string($mixedId) && strpos($mixedId, '.') !== false)
-            $sUrl = $this->$aType2Method[$sType]($mixedId);
-
-        if($sUrl != "") {
-            $bClass = isset($aParams['class']) && !empty($aParams['class']);
-
-            return $this->parseHtmlByName('bx_img.html', array(
-                'bx_if:class' => array(
-                    'condition' => $bClass,
-                    'content' => array(
-                        'content' => $bClass ? $aParams['class'] : ''
-                    )
-                ),
-                'src' => $sUrl,
-                'alt' => isset($aParams['alt']) ? $aParams['alt'] : ''
-            ));
-        }
-
-        //--- Use iconic font.
-        return $this->parseHtmlByName('bx_icon.html', array(
-            'name' => $mixedId
-        ));
-    }
-
     function displayMsg ($s, $bTranslate = false)
     {
         $sTitle = $bTranslate ? _t($s) : $s;

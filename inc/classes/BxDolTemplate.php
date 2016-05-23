@@ -795,10 +795,81 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      * @param  string $sName - template name.
      * @return string template's content.
      */
-    function getTemplate($sName)
+    public function getTemplate($sName)
     {
         return $this->_aTemplates[$sName];
     }
+
+    /**
+     * Get icon template in dependence of a value, provided in $mixedId.
+     * 
+     * @param  mixed $mixedId numeric id from Storage, string with template's file name or string with font icon.
+     */
+	public function getIcon($mixedId, $aParams = array())
+    {
+        return $this->_getImage('icon', $mixedId, $aParams);
+    }
+
+    /**
+     * Get image template in dependence of a value, provided in $mixedId.
+     * 
+     * @param  mixed $mixedId numeric id from Storage, string with template's file name or string with font icon.
+     */
+    public function getImage($mixedId, $aParams = array())
+    {
+        return $this->_getImage('image', $mixedId, $aParams);
+    }
+
+	protected function _getImage($sType, $mixedId, $aParams = array())
+    {
+        $sUrl = "";
+        $aType2Method = array('image' => 'getImageUrl', 'icon' => 'getIconUrl');
+
+        //--- Check in System Storage.
+        if(is_numeric($mixedId) && (int)$mixedId > 0) {
+        	$sStorage = BX_DOL_STORAGE_OBJ_IMAGES;
+        	if(!empty($aParams['storage'])) {
+        		$sStorage = $aParams['storage'];
+        		unset($aParams['storage']);
+        	}
+
+            if(($sResult = BxDolStorage::getObjectInstance($sStorage)->getFileUrlById((int)$mixedId)) !== false)
+                $sUrl = $sResult;
+        }
+
+        //--- Check in template folders.
+        if($sUrl == "" && is_string($mixedId) && strpos($mixedId, '.') !== false)
+            $sUrl = $this->$aType2Method[$sType]($mixedId);
+
+        if($sUrl != "") {
+        	$bAlt = isset($aParams['alt']) && !empty($aParams['alt']);
+            $bClass = isset($aParams['class']) && !empty($aParams['class']);
+
+            $aAttrs = array();
+            if($bClass)
+            	$aAttrs[] = array('key' => 'class', 'value' => $aParams['class']);
+			if($bAlt)
+				$aAttrs[] = array('key' => 'alt', 'value' => $aParams['alt']);
+
+            return $this->parseHtmlByName('bx_img.html', array(
+                'bx_if:class' => array(
+                    'condition' => $bClass,
+                    'content' => array(
+                        'content' => $bClass ? $aParams['class'] : ''
+                    )
+                ),
+                'bx_repeat:attrs' => $aAttrs,
+                'src' => $sUrl,
+                'alt' => $bAlt ? $aParams['alt'] : ''
+            ));
+        }
+
+        //--- Use iconic font.
+        return $this->parseHtmlByName('bx_icon.html', array(
+            'name' => $mixedId
+        ));
+    }
+
     /**
      * Get full URL for the icon.
      *

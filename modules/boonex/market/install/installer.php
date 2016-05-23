@@ -20,16 +20,15 @@ class BxMarketInstaller extends BxBaseModTextInstaller
     {
         $aResult = parent::enable($aParams);
 
-		if($aResult['result'] && BxDolRequest::serviceExists('bx_payment', 'update_dependent_modules'))
-            BxDolService::call('bx_payment', 'update_dependent_modules', array($this->_aConfig['name'], true));
+		if($aResult['result'])
+			BxDolPayments::getInstance()->updateDependentModules($this->_aConfig['name'], true);
 
         return $aResult;
     }
 
     function disable($aParams)
     {
-		if(BxDolRequest::serviceExists('bx_payment', 'update_dependent_modules'))
-            BxDolService::call('bx_payment', 'update_dependent_modules', array($this->_aConfig['name'], false));
+    	BxDolPayments::getInstance()->updateDependentModules($this->_aConfig['name'], false);
 
         return parent::disable($aParams);
     }

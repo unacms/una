@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_acl"><![CDATA[ACL]]></string>
+
+	<!-- Pages -->
+	<string name="_bx_acl_page_title_sys_administration"><![CDATA[Manage Prices]]></string>
+	<string name="_bx_acl_page_title_administration"><![CDATA[Manage Prices]]></string>
+	<string name="_bx_acl_page_block_title_system_administration"><![CDATA[Manage Prices]]></string>
+	<string name="_bx_acl_page_block_title_administration"><![CDATA[Manage Prices]]></string>
+
+	<string name="_bx_acl_page_title_sys_view"><![CDATA[Membership]]></string>
+	<string name="_bx_acl_page_title_view"><![CDATA[Membership]]></string>
+	<string name="_bx_acl_page_block_title_system_view"><![CDATA[Membership]]></string>
+	<string name="_bx_acl_page_block_title_view"><![CDATA[Membership]]></string>
+	
+
+	<!-- Forms -->
+	<string name="_bx_acl_form_price"><![CDATA[Price]]></string>
+	<string name="_bx_acl_form_price_display_add"><![CDATA[Add]]></string>
+	<string name="_bx_acl_form_price_display_edit"><![CDATA[Edit]]></string>
+	<string name="_bx_acl_form_price_input_sys_level_id"><![CDATA[Level ID]]></string>
+	<string name="_bx_acl_form_price_input_sys_days"><![CDATA[Days]]></string>
+	<string name="_bx_acl_form_price_input_days"><![CDATA[Days]]></string>
+	<string name="_bx_acl_form_price_input_inf_days"><![CDATA[Use 0 for lifetime]]></string>
+	<string name="_bx_acl_form_price_input_err_days"><![CDATA[You need to enter a number of days here.]]></string>
+	<string name="_bx_acl_form_price_input_sys_price"><![CDATA[Price]]></string>
+	<string name="_bx_acl_form_price_input_price"><![CDATA[Price]]></string>
+	<string name="_bx_acl_form_price_input_err_price"><![CDATA[You need to enter a price here.]]></string>
+	<string name="_bx_acl_form_price_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_acl_form_price_input_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_acl_form_price_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+	<string name="_bx_acl_form_price_input_do_cancel"><![CDATA[Cancel]]></string>
+
+	<!-- Grids -->
+	<string name="_bx_acl_grid_column_level_name"><![CDATA[Level]]></string>
+	<string name="_bx_acl_grid_column_days"><![CDATA[Days]]></string>
+	<string name="_bx_acl_grid_column_price"><![CDATA[Price]]></string>
+
+	<string name="_bx_acl_grid_action_add"><![CDATA[Add]]></string>
+	<string name="_bx_acl_grid_action_edit"><![CDATA[Edit]]></string>
+	<string name="_bx_acl_grid_action_delete"><![CDATA[Delete]]></string>
+	<string name="_bx_acl_grid_action_buy"><![CDATA[One-time payment]]></string>
+	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Subscribe on recurring payments]]></string>
+
+	<string name="_bx_acl_popup_title_price_add"><![CDATA[Add Pricing Plan]]></string>
+	<string name="_bx_acl_popup_title_price_edit"><![CDATA[Edit Pricing Plan]]></string>
+
+	<!-- Menus -->
+	<string name="_bx_acl_menu_item_title_administration"><![CDATA[Manage]]></string>
+	<string name="_bx_acl_menu_item_title_system_acl_view"><![CDATA[Membership]]></string>
+	<string name="_bx_acl_menu_item_title_acl_view"><![CDATA[Membership]]></string>
+
+	<!-- Options -->
+	<string name="_bx_acl_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members (-1 = after expiration)]]></string>
+	<string name="_bx_acl_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
+	<string name="_bx_acl_option_remove_expired_for"><![CDATA[Remove membership levels expired for (days)]]></string>
+
+	<!-- Common Texts -->
+	<string name="_bx_acl_msg_empty_owner"><![CDATA['Site administrator' is empty. You need to mark some profile as 'Site administrator' in Settings of currently active Payment module.]]></string>
+	<string name="_bx_acl_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>
+	<string name="_bx_acl_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
+
+	<string name="_bx_acl_txt_select_level"><![CDATA[Select level...]]></string>
+	<string name="_bx_acl_txt_cart_item_title"><![CDATA[{0} ({1} days)]]></string>
+	<string name="_bx_acl_txt_upgrade"><![CDATA[Upgrade]]></string>
+	<string name="_bx_acl_txt_manage"><![CDATA[Manage]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
+	
+</resources>

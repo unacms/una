@@ -167,20 +167,21 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
                return $aResponse;
 
             array_walk($aResponse['content'], create_function('&$arg', "\$arg = trim(\$arg);"));
-            if(strcmp($aResponse['content'][0], "INVALID") == 0)
+            if(strcmp($aResponse['content'][1], "INVALID") == 0)
                 return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
-            else if(strcmp($aResponse['content'][0], "VERIFIED") != 0)
+            else if(strcmp($aResponse['content'][1], "VERIFIED") != 0)
                 return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
-        } else if($iPrcType == PP_PRC_TYPE_PDT) {
+        }
+         else if($iPrcType == PP_PRC_TYPE_PDT) {
             $sRequest = "cmd=_notify-synch&tx=" . $aData['tx'] . "&at=" . $this->getOption('token');
             $aResponse = $this->_readValidationData($sConnectionUrl, $sRequest);
 
             if((int)$aResponse['code'] !== 0)
                return $aResponse;
 
-            if(strcmp($aResponse['content'][0], "FAIL") == 0)
+            if(strcmp($aResponse['content'][1], "FAIL") == 0)
                 return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
-            else if(strcmp($aResponse['content'][0], "SUCCESS") != 0)
+            else if(strcmp($aResponse['content'][1], "SUCCESS") != 0)
                 return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
 
             $aKeys = array();
@@ -212,7 +213,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
     protected function _readValidationData($sConnectionUrl, $sRequest)
     {
-        $sHeader = "POST /cgi-bin/webscr HTTP/1.0\r\n";
+        $sHeader = "POST /cgi-bin/webscr HTTP/1.1\r\n";
         $sHeader .= "Host: " . $sConnectionUrl . "\r\n";
         $sHeader .= "Content-Type: application/x-www-form-urlencoded\r\n";
         $sHeader .= "Content-Length: " . strlen($sRequest) . "\r\n";

@@ -1391,6 +1391,9 @@
 	<string name="_sys_acl_action_vote"><![CDATA[Vote]]></string>
 	<string name="_sys_acl_action_report"><![CDATA[Report]]></string>
 	<string name="_sys_acl_action_report_view"><![CDATA[View reports]]></string>
+	<string name="_sys_acl_start"><![CDATA[Start: ]]></string>
+	<string name="_sys_acl_expire"><![CDATA[Expire: ]]></string>
+	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
 	<string name="_sys_add_friend"><![CDATA[Add friend]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Installed]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
@@ -1956,6 +1959,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_login"><![CDATA[Sign in]]></string>
 	<string name="_sys_page_block_title_manage_tools"><![CDATA[Manage]]></string>
 	<string name="_sys_page_block_title_profile_stats"><![CDATA[Profile stats]]></string>
+	<string name="_sys_page_block_title_profile_membership"><![CDATA[Membership]]></string>
 	<string name="_sys_page_block_title_unsubscribe_news"><![CDATA[Unsubscribe From Site Newsletters]]></string>
 	<string name="_sys_page_block_title_unsubscribe_notifications"><![CDATA[Unsubscribe From Site Notifications]]></string>
 	<string name="_sys_page_block_title_std_dash_version"><![CDATA[Version]]></string>

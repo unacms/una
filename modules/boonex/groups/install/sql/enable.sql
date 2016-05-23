@@ -30,6 +30,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_groups_view_profile', 'view-group-profile', '_bx_groups_page_title_sys_view_profile', '_bx_groups_page_title_view_profile', 'bx_groups', 10, 2147483647, 1, 'page.php?i=view-group-profile', '', '', '', 0, 1, 0, 'BxGroupsPageEntry', 'modules/boonex/groups/classes/BxGroupsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_groups_view_profile', 1, 'bx_groups', '', '_bx_groups_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 2, 'bx_groups', '', '_bx_groups_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 0);
 
@@ -297,6 +298,14 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_groups', 'bx_groups_views_track', '86400', '1', 'bx_groups_data', 'id', 'views', '', '');
 
+-- VOTES
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_groups', 'bx_groups_votes', 'bx_groups_votes_track', '604800', '1', '1', '0', '1', 'bx_groups_data', 'id', 'author', 'rate', 'votes', '', '');
+
+-- REPORTS
+INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_groups', 'bx_groups_reports', 'bx_groups_reports_track', '1', 'page.php?i=view-group-profile&id={object_id}', 'bx_groups_data', 'id', 'author', 'reports', '', '');
+
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_groups', 'bx_groups_meta_keywords', '', '', '', '');
@@ -364,7 +373,14 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_groups_fans', 'connection_added', @iHandler),
-('profile', 'delete', @iHandler);
+('profile', 'delete', @iHandler),
+('bx_groups', 'timeline_view', @iHandler),
+('bx_groups', 'timeline_post', @iHandler),
+('bx_groups', 'timeline_delete', @iHandler),
+('bx_groups', 'timeline_comment', @iHandler),
+('bx_groups', 'timeline_vote', @iHandler),
+('bx_groups', 'timeline_report', @iHandler),
+('bx_groups', 'timeline_share', @iHandler);
 
 -- PRIVACY 
 

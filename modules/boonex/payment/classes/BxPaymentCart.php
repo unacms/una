@@ -78,10 +78,11 @@ class BxPaymentCart extends BxBaseModPaymentCart
 		);
     }
 
-    public function serviceAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount)
+    public function serviceAddToCart($iSellerId, $mixedModuleId, $iItemId, $iItemCount)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
+    	$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
     	$iClientId = $this->_oModule->getProfileId();
 
     	$mixedResult = $this->_checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
