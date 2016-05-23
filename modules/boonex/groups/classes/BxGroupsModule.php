@@ -209,6 +209,42 @@ class BxGroupsModule extends BxBaseModProfileModule
     }
 
     /**
+     * Entry social sharing block
+     */
+    public function serviceEntitySocialSharing ($iContentId = 0)
+    {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
+        if (!$oGroupProfile)
+            return false;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->_entitySocialSharing ($iContentId, $iContentId, 0, $oGroupProfile->getDisplayName(), false, false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
+    }
+    
+    /**
+     * Entry post for Timeline module
+     */
+    public function serviceGetTimelinePost($aEvent)
+    {
+        $a = parent::serviceGetTimelinePost($aEvent);
+
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
+
+        $a['content']['url'] = $oGroupProfile->getUrl();
+        $a['content']['title'] = $oGroupProfile->getDisplayName();
+        
+        return $a;
+    }
+    
+    /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
     public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
@@ -311,6 +347,15 @@ class BxGroupsModule extends BxBaseModProfileModule
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
 
         return $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
+    }
+
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    {
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
+                
+        return array(
+		    array('url' => $sUrl, 'src' => $oGroupProfile->getPicture()),
+		);
     }
 }
 
