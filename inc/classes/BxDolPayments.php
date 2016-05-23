@@ -149,6 +149,18 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
     }
 
     /**
+     * Adds an item to cart in background mode.
+     */
+	public function addToCart($iVendorId, $mixedModuleId, $iItemId, $iItemCount)
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'add_to_cart', 'Cart'))
+			return array();
+
+		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount);
+		return BxDolService::call($this->_sActive, 'add_to_cart', $aSrvParams, 'Cart');
+    }
+
+    /**
      * Returns "Add To Cart" JavaScript code to use in onclick attribute.
      */
     public function getAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $bWrapped = true)
