@@ -297,94 +297,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 		);
     }
 
-    /**
-     * Data for Timeline module
-     */
-    public function serviceGetTimelineData()
-    {
-    	$sModule = $this->_aModule['name'];
-
-        return array(
-            'handlers' => array(
-                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_timeline_post', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
-                array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
-                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted')
-            ),
-            'alerts' => array(
-                array('unit' => $sModule, 'action' => 'added'),
-                array('unit' => $sModule, 'action' => 'edited'),
-                array('unit' => $sModule, 'action' => 'deleted'),
-            )
-        );
-    }
-
-    /**
-     * Entry post for Timeline module
-     */
-    public function serviceGetTimelinePost($aEvent)
-    {
-        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
-        if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
-
-        $CNF = &$this->_oConfig->CNF;
-
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
-
-        //--- Image(s)
-        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl);
-
-        //--- Votes
-        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aEvent['object_id']);
-
-        $aVotes = array();
-        if ($oVotes && $oVotes->isEnabled())
-            $aVotes = array(
-                'system' => $CNF['OBJECT_VOTES'],
-                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
-                'count' => $aContentInfo['votes']
-            );
-
-		//--- Reports
-        $oReports = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aEvent['object_id']);
-
-        $aReports = array();
-        if ($oReports && $oReports->isEnabled())
-            $aReports = array(
-                'system' => $CNF['OBJECT_REPORTS'],
-                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
-                'count' => $aContentInfo['reports']
-            );
-
-        //--- Comments
-        $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aEvent['object_id']);
-
-        $aComments = array();
-        if($oCmts && $oCmts->isEnabled())
-            $aComments = array(
-                'system' => $CNF['OBJECT_COMMENTS'],
-                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
-                'count' => $aContentInfo['comments']
-            );
-
-        return array(
-            'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
-            'content' => array(
-                'sample' => _t($CNF['T']['txt_sample_single']),
-                'url' => $sUrl,
-                'title' => isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
-                'text' => $aContentInfo[$CNF['FIELD_TEXT']],
-                'images' => $aImages,
-            ), //a string to display or array to parse default template before displaying.
-            'date' => $aContentInfo[$CNF['FIELD_ADDED']],
-            'votes' => $aVotes,
-            'reports' => $aReports,
-            'comments' => $aComments,
-            'title' => '', //may be empty.
-            'description' => '' //may be empty.
-        );
-    }
-
     // ====== PERMISSION METHODS
 
     /**
@@ -400,26 +312,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
     // ====== PROTECTED METHODS
-
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $sImage = '';
-        if (isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
-        	
-        	$oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
-        	if($oTranscoder)
-                $sImage = $oTranscoder->getFileUrl($aContentInfo[$CNF['FIELD_THUMB']]);
-        }
-
-        if (empty($sImage))
-            return array();
-
-        return array(
-		    array('url' => $sUrl, 'src' => $sImage),
-		);
-    }
 
     protected function _buildRssParams($sMode, $aArgs)
     {
@@ -446,66 +338,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
             return false;
 
         return $oCmts->getCommentsBlock(0, 0, false);
-    }
-
-    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sObjectReport, $sUriViewEntry, $sCommentsObject = '', $bEnableSocialSharing = true)
-    {
-        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUriViewEntry . '&id=' . $iId);
-
-        $sComments = '';
-        if ($sCommentsObject && ($oComments = BxTemplCmts::getObjectInstance($sCommentsObject, $iId))) {
-            $iNum = $oComments->getCommentsCountAll();
-            $sComments = $this->_oTemplate->parseHtmlByName('comments-item.html', array (
-                'url' => $sUrl . '#' . $oComments->getListAnchor(),
-                'bx_if:comments' => array (
-                    'condition' => $iNum,
-                    'content' => array (
-                        'num' => $iNum,
-                    ),
-                ),
-            ));
-        }
-
-        $aCustomParams = false;
-        if ($iIdThumb && $bEnableSocialSharing) {
-            if ($sObjectTranscoder)
-                $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
-            else
-                $o = BxDolStorage::getObjectInstance($sObjectStorage);
-
-            if ($sImgUrl = $o->getFileUrlById($iIdThumb)) {
-                $aCustomParams = array (
-                    'img_url' => $sImgUrl,
-                    'img_url_encoded' => rawurlencode($sImgUrl),
-                );
-            }
-        }
-
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
-        $sVotes = '';
-        $oVotes = BxDolVote::getObjectInstance($sObjectVote, $iId);
-        if ($oVotes)
-            $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true));
-
-        $sShare = '';
-        if ($iIdForTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-            $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdForTimeline, array('show_do_share_as_button' => true)));
-
-		$sReport = '';
-        $oReport = BxDolReport::getObjectInstance($sObjectReport, $iId);
-        if ($oReport)
-            $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => true));
-
-        $sSocial = $bEnableSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
-
-        return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
-            'comments' => $sComments,
-            'vote' => $sVotes,
-            'share' => $sShare,
-        	'report' => $sReport,
-            'social' => $sSocial,
-        ));
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
     }
 }
 
