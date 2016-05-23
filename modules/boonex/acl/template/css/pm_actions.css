@@ -1,0 +1,5 @@
+/*-- Membership block --*/
+.acl-dbd-membership-actions .bx-btn {
+	float: none;
+	display: inline-block;
+}
