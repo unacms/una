@@ -18,6 +18,42 @@ class BxBaseAcl extends BxDolAcl
         parent::__construct ();
     }
 
+	public function getProfileMembership ($iProfileId)
+    {
+    	$aLevel = $this->getMemberMembershipInfo($iProfileId);
+    	if(empty($aLevel) || !is_array($aLevel))
+    		return '';
+
+		$iUserId = bx_get_logged_profile_id();
+		$aLevelInfo = $this->getMembershipInfo($aLevel['id']);
+
+		$aTmplVarsPrivateInfo = array();
+		$bTmplVarsPrivateInfo = $iProfileId == $iUserId && !empty($aLevel['date_starts']);
+		if($bTmplVarsPrivateInfo)
+			$aTmplVarsPrivateInfo = array(
+				'date_start' => bx_time_js($aLevel['date_starts']),
+				'date_expire' => (int)$aLevel['date_expires'] > 0 ? bx_time_js($aLevel['date_expires']) : _t('_sys_acl_expire_never')
+			);
+
+   		$oTemplate = BxDolTemplate::getInstance();
+        $sContent = $oTemplate->parseHtmlByName('acl_membership.html', array(
+    		'level' => _t($aLevel['name']),
+    		'thumbnail' => $oTemplate->getImage($aLevelInfo['icon'], array('class' => 'bx-acl-m-thumbnail bx-def-border')),
+    		'bx_if:show_private_info' => array(
+    			'condition' => $bTmplVarsPrivateInfo,
+    			'content' => $aTmplVarsPrivateInfo
+    		)
+    	));
+
+        bx_alert('system', 'page_output_block_acl_level', 0, false, array(
+        	'block_owner' => $iProfileId,
+			'block_code' => &$sContent
+		));
+
+        $oTemplate->addCss(array('acl.css'));
+    	return $sContent;
+    }
+
     /**
      * Print code for membership status
      * $iProfileId - ID of profile

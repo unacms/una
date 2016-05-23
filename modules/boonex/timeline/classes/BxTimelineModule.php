@@ -557,10 +557,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
         );
 
+        $sContent = '';
+        $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
+        bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $this->_iOwnerId, $this->getUserId(), array('override_content' => &$sContent, 'params' => &$aParams, 'menu' => &$aMenu));
+
         $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
         $oMenu->setSelected('', 'timeline-view-all');
 
-        $sContent = $this->_oTemplate->getViewBlock($aParams);
+        if (!$sContent)
+            $sContent = $this->_oTemplate->getViewBlock($aParams);
+
         return array('content' => $sContent, 'menu' => $oMenu);
     }
     public function deleteEvent($aEvent)
@@ -742,6 +748,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     }
 
     //--- Check permissions methods ---//
+
     public function isAllowedPost($bPerform = false)
     {
         if(isAdmin())
@@ -752,7 +759,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return true;
 
         $aCheckResult = checkActionModule($iUserId, 'post', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+
+        if ($oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_post', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
     public function isAllowedDelete($aEvent, $bPerform = false)
@@ -765,7 +776,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+
+        if ($oProfileOwner = BxDolProfile::getInstance((int)$aEvent['owner_id']))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
     public function isAllowedComment($aEvent, $bPerform = false)
@@ -778,10 +793,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oCmts = $this->getCmtsObject($sSystem, $iObjectId);
         $oCmts->addCssJs();
 
-        if(isAdmin())
-            return true;
+        $bResult = isAdmin() ? true : false;
 
-        return true;
+        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_comment', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
     }
 
     public function isAllowedVote($aEvent, $bPerform = false)
@@ -794,10 +811,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
         $oVote->addCssJs();
 
-        if(isAdmin())
-            return true;
+        $bResult = isAdmin() ? true : false;
 
-        return true;
+        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
     }
 
     public function isAllowedReport($aEvent, $bPerform = false)
@@ -810,10 +829,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oReport = $this->getReportObject($sSystem, $iObjectId);
         $oReport->addCssJs();
 
-        if(isAdmin())
-            return true;
+        $bResult = isAdmin() ? true : false;
 
-        return true;
+        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_report', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
     }
 
     public function isAllowedShare($aEvent, $bPerform = false)
@@ -826,7 +847,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $aCheckResult = checkActionModule($iUserId, 'share', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+
+        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_share', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
     public function isAllowedMore($aEvent, $bPerform = false)

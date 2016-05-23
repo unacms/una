@@ -68,6 +68,14 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
         return $aPayments;
     }
 
+    public function updateDependentModules($sModule = 'all', $bInstall = true)
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'update_dependent_modules'))
+    		return;
+
+		BxDolService::call($this->_sActive, 'update_dependent_modules', array($sModule, $bInstall));
+    }
+
     public function getProvidersCart($iVendorId)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_providers_cart'))
@@ -138,6 +146,18 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
 
 		$aSrvParams = array($bWrapped);
 		return BxDolService::call($this->_sActive, 'get_cart_js', $aSrvParams, 'Cart');
+    }
+
+    /**
+     * Adds an item to cart in background mode.
+     */
+	public function addToCart($iVendorId, $mixedModuleId, $iItemId, $iItemCount)
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'add_to_cart', 'Cart'))
+			return array();
+
+		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount);
+		return BxDolService::call($this->_sActive, 'add_to_cart', $aSrvParams, 'Cart');
     }
 
     /**

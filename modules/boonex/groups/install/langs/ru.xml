@@ -101,6 +101,7 @@
 	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Управление всеми группами]]></string>
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Управление группами]]></string>
     <string name="_bx_groups_page_block_title_active_profiles"><![CDATA[Последние Активные Группы]]></string>
+    <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>

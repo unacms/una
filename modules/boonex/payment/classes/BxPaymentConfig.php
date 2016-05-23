@@ -133,7 +133,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
     public function getModuleId($mixedId)
     {
-    	if(is_int($mixedId))
+    	if(is_numeric($mixedId))
     		return (int)$mixedId;
 
 		if(is_string($mixedId)) {

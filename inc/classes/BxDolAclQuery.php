@@ -198,8 +198,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
      * Fetch the last purchased/assigned membership that is still active for the given profile.
      *
      * NOTE. Don't use cache here, because it's causing an error, if a number of memberrship levels are purchased at the same time.
-     *
-     * fromMemory returns the same DateExpires because buyMembership function is called in cycle in the same session.
+     * fromMemory returns the same DateExpires because setMembership (old buyMembership) function is called in cycle in the same session.
      */
     function getLevelCurrent($iProfileId, $iTime = 0)
     {
@@ -302,6 +301,15 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
     function deleteLevelByProfileId($iProfileId, $bAll = false)
     {
         $sQuery = $this->prepare("DELETE FROM `sys_acl_levels_members` WHERE `IDMember` = ? " . ($bAll ? "" : " AND (`DateExpires` IS NULL OR `DateExpires` > NOW())"), $iProfileId);
+        return (int)$this->query($sQuery) > 0;
+    }
+
+	function deleteLevelBy($aWhere)
+    {
+    	if(empty($aWhere))
+    		return false;
+
+        $sQuery = "DELETE FROM `sys_acl_levels_members` WHERE " . $this->arrayToSQL($aWhere, ' AND ');
         return (int)$this->query($sQuery) > 0;
     }
 

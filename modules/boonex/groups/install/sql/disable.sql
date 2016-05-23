@@ -23,7 +23,13 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_groups';
 
 -- VIEWS
-DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_groups';
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_groups';
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_groups';
+
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_groups';
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_groups';

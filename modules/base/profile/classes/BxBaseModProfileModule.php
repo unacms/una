@@ -254,6 +254,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
     }
 
+    public function serviceProfileMembership ($iContentId = 0)
+    {
+    	if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+
+		return BxDolAcl::getInstance()->getProfileMembership($aContentInfo['profile_id']);
+    }
     public function serviceProfileFriends ($iContentId = 0)
     {
         if (!$iContentId)
