@@ -114,34 +114,15 @@ class BxAclDb extends BxDolModuleDb
                 $sWhereClause .= "AND `tap`.`level_id`=:level_id";
                 break;
 
-            case 'by_level_id_pair':
-                $aMethod['name'] = "getPairs";
-                $aMethod['params'][1] = 'days';
-                $aMethod['params'][2] = 'price';
-                $aMethod['params'][3] = array(
-                	'level_id' => $aParams['value']
-                );
-
-                $sWhereClause .= "AND `tap`.`level_id`=:level_id";
-                break;
-
             case 'by_level_id_duration':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
                 	'level_id' => $aParams['level_id'],
-                	'days' => $aParams['days']
+                	'period' => $aParams['period'],
+                	'period_unit' => $aParams['period_unit'],
                 );
 
-                $sWhereClause .= "AND `tap`.`level_id`=:level_id AND `tap`.`days`=:days";
-                break;
-
-            case 'counter_by_levels':
-                $aMethod['name'] = 'getPairs';
-                $aMethod['params'][1] = 'level_id';
-                $aMethod['params'][2] = 'counter';
-
-                $sSelectClause = ", COUNT(*) AS `counter`";
-                $sGroupClause = "GROUP BY `tap`.`IDLevel`";
+                $sWhereClause .= "AND `tap`.`level_id`=:level_id AND `tap`.`period`=:period AND `tap`.`period_unit`=:period_unit";
                 break;
 
             case 'all_full':
@@ -153,7 +134,8 @@ class BxAclDb extends BxDolModuleDb
                 `tap`.`id` AS `id`,
                 `tap`.`level_id` AS `level_id`,
                 `tap`.`name` AS `name`,
-                `tap`.`days` AS `days`,
+                `tap`.`period` AS `period`,
+                `tap`.`period_unit` AS `period_unit`,
                 `tap`.`price` AS `price`,
                 `tap`.`order` AS `order`" . $sSelectClause . "
             FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` AS `tap` " . $sJoinClause . "

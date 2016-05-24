@@ -52,16 +52,17 @@ class BxAclGridAdministration extends BxTemplGrid
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
         	$iLevel = $oForm->getCleanValue('level_id');
-        	$iDays = $oForm->getCleanValue('days');
+        	$iPeriod = $oForm->getCleanValue('period');
+        	$sPeriodUnit = $oForm->getCleanValue('period_unit');
 
-            $aPrice = $this->_oModule->_oDb->getPrices(array('type' => 'by_level_id_duration', 'level_id' => $iLevel, 'days' => $iDays));
+            $aPrice = $this->_oModule->_oDb->getPrices(array('type' => 'by_level_id_duration', 'level_id' => $iLevel, 'period' => $iPeriod, 'period_unit' => $sPeriodUnit));
             if(!empty($aPrice) && is_array($aPrice)) {
                 echoJson(array('msg' => _t('_bx_acl_err_price_duplicate')));
                 return;
             }
 
             $aLevel = $this->_oModule->_oDb->getLevels(array('type' => 'by_id', 'value' => $iLevel));
-            $sName = uriGenerate(strtolower(_t($aLevel['name'])) . ' ' . $iDays, $CNF['TABLE_PRICES'], 'name');
+            $sName = uriGenerate(strtolower(_t($aLevel['name'])) . ' ' . $iPeriod . ' ' . $sPeriodUnit, $CNF['TABLE_PRICES'], 'name');
 
             $iId = (int)$oForm->insert(array('name' => $sName, 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iLevelId) + 1));
             if($iId != 0) {
@@ -168,6 +169,12 @@ class BxAclGridAdministration extends BxTemplGrid
 
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
+    }
+
+    protected function _getCellPeriodUnit($mixedValue, $sKey, $aField, $aRow)
+    {
+    	$mixedValue = _t('_bx_acl_pre_values_' . $mixedValue);
+    	return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
 	protected function _getCellPrice($mixedValue, $sKey, $aField, $aRow)

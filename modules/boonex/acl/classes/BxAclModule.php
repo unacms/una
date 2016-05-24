@@ -96,7 +96,7 @@ class BxAclModule extends BxDolModule
 			'id' => $aItem['id'],
 			'author_id' => $this->_oConfig->getOwner(),
 			'name' => $aItem['name'],
-			'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['days']),
+			'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
 			'description' => _t($aItem['level_description']),
 			'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']),
 			'price_single' => $aItem['price'],
@@ -118,7 +118,7 @@ class BxAclModule extends BxDolModule
 				'id' => $aItem['id'],
 				'author_id' => $iSellerId,
             	'name' => $aItem['name'],
-				'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['days']),
+				'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
 				'description' => _t($aItem['level_description']),
 				'url' => $sUrl,
 				'price_single' => $aItem['price'],
@@ -154,8 +154,8 @@ class BxAclModule extends BxDolModule
         if(empty($aItem) || !is_array($aItem))
 			return array();
 
-		$aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));		
-        if(!BxDolAcl::getInstance()->setMembership($iClientId, $aItemInfo['level_id'], $aItemInfo['days'], false, $sLicense))
+		$aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));
+        if(!BxDolAcl::getInstance()->setMembership($iClientId, $aItemInfo['level_id'], array('period' => $aItemInfo['period'], 'period_unit' => $aItemInfo['period_unit']), false, $sLicense))
             return array();
 
         return $aItem;
