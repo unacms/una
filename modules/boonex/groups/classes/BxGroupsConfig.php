@@ -25,6 +25,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
+            'convos-compose' => 'checkAllowedSubscribeAdd',
         );
 
         $this->CNF = array (
@@ -99,7 +100,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
-            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => '',
+            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
         	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
 
             // menu items which visibility depends on custom visibility checking
