@@ -179,16 +179,16 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
     {
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
 
-        $sSql = "SELECT %s
+        $sSql = "SELECT {select}
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " %s %s";
+            WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aEntries = $this->$sMethod(sprintf($sSql, $sSelectClause . "`{$this->_sTable}`.*", $sOrderClause, $sLimitClause));
+        $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause . "`{$this->_sTable}`.*", $sOrderClause, $sLimitClause), $sSql));
         if(!$bReturnCount)
         	return $aEntries;
 
-		return array($aEntries, (int)$this->getOne(sprintf($sSql, "COUNT(*)", "", "")));
+		return array($aEntries, (int)$this->getOne(str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql)));
     }
 
 	protected function _getSqlPartsEvents($aParams)
