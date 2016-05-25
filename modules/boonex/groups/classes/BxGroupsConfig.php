@@ -43,6 +43,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
             'FIELD_NAME' => 'group_name',
+            'FIELD_TITLE' => 'group_name',
             'FIELD_TEXT' => 'group_desc',
             'FIELD_PICTURE' => 'picture',
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
@@ -123,6 +124,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_groups_txt_sample_single',
+                'txt_sample_vote_single' => '_bx_groups_txt_sample_vote_single',
                 'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_groups_menu_item_title_befriend_confirm',

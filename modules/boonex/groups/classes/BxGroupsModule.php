@@ -228,6 +228,25 @@ class BxGroupsModule extends BxBaseModProfileModule
 
         return $this->_entitySocialSharing ($iContentId, $iContentId, 0, $oGroupProfile->getDisplayName(), false, false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
     }
+
+	/**
+     * Data for Notifications module
+     */
+    public function serviceGetNotificationsData()
+    {
+    	$sModule = $this->_aModule['name'];
+
+        return array(
+            'handlers' => array(
+                array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
+				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+            ),
+            'alerts' => array(
+                array('unit' => $sModule, 'action' => 'doVote'),
+                array('unit' => $sModule, 'action' => 'undoVote'),
+            )
+        );
+    }
     
     /**
      * Entry post for Timeline module

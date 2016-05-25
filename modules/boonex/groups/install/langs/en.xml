@@ -203,6 +203,7 @@
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>
     <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
+    <string name="_bx_groups_txt_sample_vote_single"><![CDATA[group's vote]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[From Admins]]></string>
     <string name="_bx_groups_txt_private_group"><![CDATA[Private group]]></string>
