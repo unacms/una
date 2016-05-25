@@ -1121,6 +1121,7 @@
 	<string name="_adm_prm_txt_visibility_items_nobody"><![CDATA[Никого]]></string>
 	<string name="_adm_scs_operation_done"><![CDATA[]]></string>
 	<string name="_adm_stg_cpt_category_account"><![CDATA[Аккаунт]]></string>
+	<string name="_adm_stg_cpt_category_acl"><![CDATA[Уровни доступа]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Кэш]]></string>
 	<string name="_adm_stg_cpt_category_general"><![CDATA[Общие]]></string>
 	<string name="_adm_stg_cpt_category_languages"><![CDATA[Языки]]></string>
@@ -1145,6 +1146,8 @@
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Имейл, с которого будут посылаться сообщения от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Название сайта]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Автоматическая активация аккаунта после создания]]></string>
+	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[За сколько дней до окончания членства оповестить пользователя об окончании (-1 = после окончания)]]></string>
+	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Оповещать пользователей об окончании членства только одинажды (каждый день в противном случае)]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Добавить атрибут "nofollow" для внешних ссылок]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Инициировать автообновление для сайта и модулей, даже если какие-то файлы были модифицированы]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Автообновление Расширений]]></string>
