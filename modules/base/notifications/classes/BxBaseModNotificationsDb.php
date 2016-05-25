@@ -179,17 +179,16 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
     {
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
 
-        $sSql = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . $sSelectClause . "
-                `{$this->_sTable}`.*
+        $sSql = "SELECT %s
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+            WHERE 1 " . $sWhereClause . " %s %s";
 
-        $aEntries = $this->$sMethod($sSql);
+        $aEntries = $this->$sMethod(sprintf($sSql, $sSelectClause . "`{$this->_sTable}`.*", $sOrderClause, $sLimitClause));
         if(!$bReturnCount)
         	return $aEntries;
 
-		return array($aEntries, (int)$this->getOne("SELECT FOUND_ROWS()"));
+		return array($aEntries, (int)$this->getOne(sprintf($sSql, "COUNT(*)", "", "")));
     }
 
 	protected function _getSqlPartsEvents($aParams)
