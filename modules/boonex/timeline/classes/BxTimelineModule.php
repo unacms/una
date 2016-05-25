@@ -401,7 +401,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
 
 		return array(
-			'entry_sample' => _t($CNF['T']['txt_sample_single_ext']),
+			'entry_sample' => $CNF['T']['txt_sample_single_ext'],
 			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
 			'entry_caption' => $sEntryCaption,
 			'entry_author' => $aContent['owner_id'],
@@ -425,11 +425,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
 
 		return array(
-			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_sample' => $CNF['T']['txt_sample_single'],
 			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
 			'entry_caption' => $sEntryCaption,
 			'entry_author' => $aContent['owner_id'],
-			'subentry_sample' => _t($CNF['T']['txt_sample_comment_single']),
+			'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
 			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);
@@ -451,11 +451,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
 
 		return array(
-			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_sample' => $CNF['T']['txt_sample_single'],
 			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
 			'entry_caption' => $sEntryCaption,
 			'entry_author' => $aContent['owner_id'],
-			'subentry_sample' => _t($CNF['T']['txt_sample_vote_single']),
+			'subentry_sample' => $CNF['T']['txt_sample_vote_single'],
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);
     }

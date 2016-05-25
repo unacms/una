@@ -100,6 +100,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aEvent['content'] = unserialize($aEvent['content']);
         $aEvent['content']['owner_name'] = $sOwnerName;
         $aEvent['content']['owner_link'] = $sOwnerUrl;
+        foreach($aEvent['content'] as $sKey => $sValue)
+        	if(substr($sValue, 0, 1) == '_')
+        		$aEvent['content'][$sKey] = _t($sValue);
 
     	$sContent = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getLangKey($aEvent));
     	$sContent = $this->parseHtmlByContent($sContent, $aEvent['content'], array('{', '}'));
