@@ -49,16 +49,16 @@ class BxInvDb extends BxDolModuleDb
                 break;
         }
 
-        $sSql = "SELECT %s FROM `{$this->_sTableInvites}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " %s %s";
+        $sSql = "SELECT {select} FROM `{$this->_sTableInvites}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aMethod['params'][0] = sprintf($sSql, $sSelectClause, $sOrderClause, $sLimitClause);
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
         	return $aEntries;
 
         $aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = sprintf($sSql, "COUNT(*)", "", "");
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
 		return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
     }
@@ -95,16 +95,16 @@ class BxInvDb extends BxDolModuleDb
                 break;
         }
 
-        $sSql = "SELECT %s FROM `{$this->_sTableRequests}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " %s %s";
+        $sSql = "SELECT {select} FROM `{$this->_sTableRequests}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aMethod['params'][0] = sprintf($sSql, $sSelectClause, $sOrderClause, $sLimitClause);
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
         	return $aEntries;
 
 		$aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = sprintf($sSql, "COUNT(*)", "", "");
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
 		return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
     }
