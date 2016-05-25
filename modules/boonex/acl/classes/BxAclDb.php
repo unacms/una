@@ -62,16 +62,16 @@ class BxAclDb extends BxDolModuleDb
                 break;
         }
 
-        $sSql = "SELECT %s FROM `sys_acl_levels` AS `tal` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " %s %s";
+        $sSql = "SELECT {select} FROM `sys_acl_levels` AS `tal` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aMethod['params'][0] = sprintf($sSql, $sSelectClause, $sOrderClause, $sLimitClause);
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
             return $aItems;
 
 		$aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = sprintf($sSql, "COUNT(*)", "", "");
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
 		return array(
 			'items' => $aItems, 
@@ -148,16 +148,16 @@ class BxAclDb extends BxDolModuleDb
                 break;
         }
 
-        $sSql = "SELECT %s FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` AS `tap` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " %s %s";
+        $sSql = "SELECT {select} FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` AS `tap` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aMethod['params'][0] = sprintf($sSql, $sSelectClause, $sOrderClause, $sLimitClause);
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
             return $aItems;
 
 		$aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = sprintf($sSql, "COUNT(*)", "", "");
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
         return array(
         	'items' => $aItems, 
