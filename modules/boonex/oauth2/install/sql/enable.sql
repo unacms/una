@@ -1,8 +1,4 @@
 
-INSERT INTO `bx_oauth_scopes` (`scope`, `is_default`) VALUES
-('basic', 1),
-('service', 0);
-
 -- GRID
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `override_class_name`, `override_class_file`) VALUES
