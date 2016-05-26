@@ -620,7 +620,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         $aMembership = $aMembershipCurrent;
         while ($aMembership['id'] != MEMBERSHIP_ID_STANDARD) {
             $aMembershipLast = $aMembership;
-            if(!isset($aMembership['DateExpires']) || (int)$aMembership['DateExpires'] == 0)
+            if(!isset($aMembership['date_expires']) || (int)$aMembership['date_expires'] == 0)
                 break;
 
             $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $aMembership['date_expires']);
