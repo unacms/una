@@ -282,7 +282,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         return isMember();
     }
 
-    public function checkConnections($iOwnerId, $iViewerId)
+    public function checkFriends($iOwnerId, $iViewerId)
     {
         return BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iOwnerId, $iViewerId, true);
     }
