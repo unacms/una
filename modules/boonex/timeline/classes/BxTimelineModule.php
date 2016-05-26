@@ -124,7 +124,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             'type' => $this->_oConfig->getPrefix('common_post') . 'share',
             'action' => '',
             'object_id' => $iAuthorId,
-            'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
+            'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
             'content' => serialize($aContent),
             'title' => '',
             'description' => ''
@@ -664,7 +664,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
             $iId = $oForm->insert(array(
                 'object_id' => $iUserId,
-                'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
+                'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
                 'content' => serialize($aContent),
                 'title' => $sTitle,
                 'description' => $sDescription,

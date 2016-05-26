@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
   `alert_unit` varchar(64) NOT NULL default '',
   `alert_action` varchar(64) NOT NULL default '',
   `content` text collate utf8_unicode_ci NOT NULL,
+  `privacy` varchar(64) NOT NULL default '',
   PRIMARY KEY  (`id`),
   UNIQUE `handler` (`group`, `type`),
   UNIQUE `alert` (`alert_unit`, `alert_action`)

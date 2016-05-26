@@ -26,7 +26,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     protected $_sAnimationEffect;
     protected $_iAnimationSpeed;
 
-    protected $_iPrivacyViewDefault;
+    protected $_aPrivacyViewDefault;
 
     function __construct($aModule)
     {
@@ -55,7 +55,10 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 		$this->_sAnimationEffect = 'fade';
         $this->_iAnimationSpeed = 'slow';
 
-        $this->_iPrivacyViewDefault = BX_DOL_PG_ALL;
+        $this->_aPrivacyViewDefault = array(
+        	'object' => BX_DOL_PG_ALL,
+        	'event' => BX_DOL_PG_ALL
+        );
     }
 
 	public function init(&$oDb)
@@ -106,6 +109,18 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
         return $this->_aHandlersHidden;
     }
 
+    public function getPrivacyObject($sKey = '')
+    {
+    	if(!$this->isHandler($sKey))
+    		return false;
+
+    	$aHandler = $this->getHandlers($sKey);
+    	if(empty($aHandler) || !is_array($aHandler) || empty($aHandler['privacy']))
+    		return false;
+
+		return BxDolPrivacy::getObjectInstance($aHandler['privacy']);
+    }
+
 	public function getPerPage($sType = 'default')
     {
     	if(empty($sType))
@@ -132,9 +147,9 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
         return $this->_iAnimationSpeed;
     }
 
-    public function getPrivacyViewDefault()
+    public function getPrivacyViewDefault($sType)
     {
-        return $this->_iPrivacyViewDefault;
+        return isset($this->_aPrivacyViewDefault[$sType]) ? $this->_aPrivacyViewDefault[$sType] : BX_DOL_PG_ALL;
     }
 }
 

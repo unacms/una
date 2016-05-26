@@ -40,11 +40,22 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     	$sJsObject = $this->_oConfig->getJsObject('view');
 
     	$aParamsDb = $aParams;
-    	$aParamsDb['per_page'] = $aParamsDb['per_page'] + 1;
+    	$aParamsDb['per_page'] = 3 * $aParamsDb['per_page'];
 
         $aEvents = $this->_oDb->getEvents($aParamsDb);
         if(empty($aEvents))
         	return $this->getEmpty();
+
+        $aTmplVarsEvents = array();
+        foreach($aEvents as $aEvent) {
+            $sEvent = $this->getPost($aEvent, $aParams);
+            if(empty($sEvent))
+                continue;
+
+            $aTmplVarsEvents[] = array('event' => $sEvent);
+            if(count($aTmplVarsEvents) >= ($aParams['per_page'] + 1))
+            	break;
+        }
 
         $oPaginate = new BxTemplPaginate(array(
         	'start' => $aParams['start'],
@@ -52,20 +63,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         	'page_url' => $this->_oConfig->getViewUrl(),
         	'on_change_page' => $sJsObject . ".changePage(this, {start}, {per_page})"
         ));
-        $oPaginate->setNumFromDataArray($aEvents);
-
-        $sEvents = '';
-        foreach($aEvents as $aEvent) {
-            $sEvent = $this->getPost($aEvent, $aParams);
-            if(empty($sEvent))
-                continue;
-
-            $sEvents .= $sEvent;
-        }
+        $oPaginate->setNumFromDataArray($aTmplVarsEvents);
 
         return $this->parseHtmlByName('events.html', array(
         	'style_prefix' => $this->_oConfig->getPrefix('style'),
-        	'events' => $sEvents,
+        	'bx_repeat:events' => $aTmplVarsEvents,
         	'paginate' => $oPaginate->getSimplePaginate()
         ));
     }
@@ -74,25 +76,12 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     {
     	$oModule = $this->getModule();
 
-    	if((int)$aEvent['processed'] == 0) {
-    		$aContent = $this->_getContent($aEvent);
-    		if(!empty($aContent) && is_array($aContent)) {
-    			$aSet = array();
+    	if((int)$aEvent['processed'] == 0)
+    		$this->_processContent($aEvent);
 
-    			if(!empty($aContent['entry_author'])) {
-    				$aSet['object_owner_id'] = (int)$aContent['entry_author'];
-    				unset($aContent['entry_author']);
-    			}
-
-    			$aEvent['content'] = serialize($aContent);
-    			$aSet = array_merge($aSet, array(
-    				'content' => $aEvent['content'], 
-    				'processed' => 1
-    			));
-
-    			$this->_oDb->updateEvent($aSet, array('id' => $aEvent['id']));
-    		}
-    	}
+    	$oPrivacy = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
+    	if($oPrivacy !== false && !$oPrivacy->check($aEvent['id'])) 
+    		return '';
 
         list($sOwnerName, $sOwnerUrl, $sOwnerIcon) = $oModule->getUserInfo($aEvent['owner_id']);
         $bAuthorIcon = !empty($sOwnerIcon);
@@ -136,6 +125,34 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    protected function _processContent(&$aEvent)
+    {
+    	$aContent = $this->_getContent($aEvent);
+		if(empty($aContent) || !is_array($aContent)) 
+			return;
+
+		$aSet = array();
+		if(!empty($aContent['entry_author'])) {
+			$aSet['object_owner_id'] = (int)$aContent['entry_author'];
+			unset($aContent['entry_author']);
+		}
+
+		if(!empty($aContent['entry_privacy'])) {
+			$aSet['allow_view_event_to'] = $aContent['entry_privacy'];
+			$aEvent['allow_view_event_to'] = $aContent['entry_privacy'];
+			unset($aContent['entry_privacy']);
+		}
+
+		$aEvent['content'] = serialize($aContent);
+		$aSet = array_merge($aSet, array(
+			'content' => $aEvent['content'], 
+			'processed' => 1
+		));
+
+		$this->_oDb->updateEvent($aSet, array('id' => $aEvent['id']));
+		return;
+    }
+
     protected function _getContent(&$aEvent)
     {
         $sHandler = $aEvent['type'] . '_' . $aEvent['action'];
@@ -145,7 +162,6 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aHandler = $this->_oConfig->getHandlers($sHandler);
         if(!empty($aHandler['module_name']) && !empty($aHandler['module_class']) && !empty($aHandler['module_method']))
         	return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
-        
 
         $sMethod = 'display' . bx_gen_method_name($aHandler['alert_unit'] . '_' . $aHandler['alert_action']);
 		if(!method_exists($this, $sMethod))

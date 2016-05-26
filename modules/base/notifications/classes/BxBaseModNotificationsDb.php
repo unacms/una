@@ -41,12 +41,13 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
 
     	//--- Update Timeline Handlers ---//
         foreach($aData['handlers'] as $aHandler) {
-            $sContent = '';
+            $sContent = $sPrivacy = '';
             if($aHandler['type'] == BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT) {
             	if(empty($aHandler['module_class']))
             		$aHandler['module_class'] = 'Module';
 
             	$sContent = serialize(array_intersect_key($aHandler, $aHandlerDescriptor));
+            	$sPrivacy = !empty($aHandler['module_event_privacy']) ? $aHandler['module_event_privacy'] : '';
             }
 
             $sQuery = $this->prepare("INSERT INTO
@@ -56,7 +57,8 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
                     `type`=?,
                     `alert_unit`=?,
                     `alert_action`=?,
-                    `content`=?", $aHandler['group'], $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent);
+                    `content`=?,
+                    `privacy`=?", $aHandler['group'], $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent, $sPrivacy);
 
             $this->query($sQuery);
         }
