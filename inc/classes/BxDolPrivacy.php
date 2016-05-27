@@ -215,7 +215,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
             if($iProfileIdLogged == $iProfileIdOwner)
                 return array();
 
-            if ($iProfileIdOwner && $this->checkConnections($iProfileIdOwner, bx_get_logged_profile_id()))
+            if ($iProfileIdOwner && $this->checkFriends($iProfileIdOwner, bx_get_logged_profile_id()))
                 $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS, BX_DOL_PG_FRIENDS);
             else
                 $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS);
