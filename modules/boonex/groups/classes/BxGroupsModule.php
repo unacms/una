@@ -144,7 +144,7 @@ class BxGroupsModule extends BxBaseModProfileModule
 
         // new fan was added
         if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
-            bx_alert($this->getName(), 'fan_added', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
             return false;
         }
 
@@ -233,15 +233,49 @@ class BxGroupsModule extends BxBaseModProfileModule
         return array(
             'handlers' => array(
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
-				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+                array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+
+                array('group' => $sModule . '_fan_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'fan_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_fan_added', 'module_class' => 'Module'),
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
+                array('unit' => $sModule, 'action' => 'fan_added'),
             )
         );
     }
-    
+
+	/**
+     * Entry post comment for Notifications module
+     */
+    public function serviceGetNotificationsFanAdded($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $iContentId = (int)$aEvent['object_id'];
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
+        if (!$oGroupProfile)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+        
+        $oProfile = BxDolProfile::getInstance((int)$aEvent['subobject_id']);
+        if (!$oProfile)
+            return false;
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_sample_single'],
+			'entry_url' => $oGroupProfile->getUrl(),
+			'entry_caption' => $oGroupProfile->getDisplayName(),
+			'entry_author' => $oGroupProfile->id(), // $aContentInfo[$CNF['FIELD_AUTHOR']],
+			'subentry_sample' => $oProfile->getDisplayName(),
+			'subentry_url' => $oProfile->getUrl(),
+			'lang_key' => '_bx_groups_txt_ntfs_fan_added',
+		);
+    }
+
     /**
      * Entry post for Timeline module
      */
