@@ -49,6 +49,7 @@
 	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>
 	<string name="_bx_timeline_acl_action_share"><![CDATA[Repost]]></string>
+	<string name="_bx_timeline_acl_action_pin"><![CDATA[Pin]]></string>
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Timeline]]></string>
@@ -74,6 +75,10 @@
 
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
+	<string name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Pin]]></string>
+    <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Pin]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Unpin]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Unpin]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Delete]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Delete]]></string>
 
@@ -115,6 +120,7 @@
 	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... or jump to:]]></string>
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
+	<string name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string>
 
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>

@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `date` int(11) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   `hidden` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `pinned` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `owner_id` (`owner_id`)
 );
 
