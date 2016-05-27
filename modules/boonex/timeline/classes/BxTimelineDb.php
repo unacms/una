@@ -130,7 +130,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				'type' => $sType,
 				'action' => $sAction,
 				'object_id' => $iObjectId,
-				'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
+				'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
 				'content' => '',
 				'title' => '',
 				'description' => '',

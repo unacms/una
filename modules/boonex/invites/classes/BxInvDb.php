@@ -49,15 +49,18 @@ class BxInvDb extends BxDolModuleDb
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " " . $sSelectClause . "
-            FROM `{$this->_sTableInvites}` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $sSql = "SELECT {select} FROM `{$this->_sTableInvites}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);;
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
+        $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
         if(!$bReturnCount)
         	return $aEntries;
 
-		return array($aEntries, (int)$this->getOne("SELECT FOUND_ROWS()"));
+        $aMethod['name'] = 'getOne';
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+
+		return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
     }
 
 	public function deleteInvites($aParams)
@@ -92,15 +95,18 @@ class BxInvDb extends BxDolModuleDb
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " " . $sSelectClause . "
-            FROM `{$this->_sTableRequests}` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $sSql = "SELECT {select} FROM `{$this->_sTableRequests}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
 
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
         if(!$bReturnCount)
         	return $aEntries;
 
-		return array($aEntries, (int)$this->getOne("SELECT FOUND_ROWS()"));
+		$aMethod['name'] = 'getOne';
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+
+		return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
     }
 }
 
