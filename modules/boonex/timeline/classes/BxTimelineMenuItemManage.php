@@ -74,6 +74,16 @@ class BxTimelineMenuItemManage extends BxTemplMenu
         $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {
+        	case 'item-pin':
+                $sCheckFuncName = 'isAllowedPin';
+				$aCheckFuncParams = array($aEvent);
+                break;
+
+			case 'item-unpin':
+                $sCheckFuncName = 'isAllowedUnpin';
+				$aCheckFuncParams = array($aEvent);
+                break;
+
             case 'item-delete':
                 $sCheckFuncName = 'isAllowedDelete';
 				$aCheckFuncParams = array($aEvent);

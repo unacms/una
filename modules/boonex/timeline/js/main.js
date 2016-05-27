@@ -57,6 +57,17 @@ BxTimelineMain.prototype.prependMasonry = function(oItems) {
 		oHolder.masonry('prepended', oItems);
 };
 
+BxTimelineMain.prototype.removeMasonry = function(oItems, onRemove) {
+	var $this = this;
+	var oItems = $(oItems);
+
+	var oHolder = $(this.sIdView + ' .' + this.sClassItems);
+	if(typeof onRemove === 'function')
+		oHolder.masonry('once', 'removeComplete', onRemove);
+
+	oHolder.masonry('remove', oItems).masonry('layout');
+};
+
 BxTimelineMain.prototype.reloadMasonry = function() {
 	$(this.sIdView + ' .' + this.sClassItems).masonry('reloadItems').masonry('layout');
 };

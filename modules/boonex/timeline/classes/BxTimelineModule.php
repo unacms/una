@@ -71,6 +71,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         echoJson($aResult);
     }
 
+	function actionPin()
+    {
+        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+
+        $mixedAllowed = $this->{'isAllowed' . ((int)$aEvent['pinned'] == 0 ? 'Pin' : 'Unpin')}($aEvent, true);
+        if($mixedAllowed !== true)
+            return echoJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
+
+		$aEvent['pinned'] = (int)$aEvent['pinned'] == 0 ? time() : 0;
+        if(!$this->_oDb->updateEvent(array('pinned' => $aEvent['pinned']), array('id' => $iId)))
+        	return echoJson(array('code' => 2));
+
+        $aResult = array('code' => 0, 'id' => $iId);
+		if($aEvent['pinned'] != 0)
+			$aResult['content'] = $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId, 'dynamic_mode' => true));
+
+		echoJson($aResult);
+    }
+
     function actionDelete()
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
@@ -854,6 +876,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
+	public function isAllowedPin($aEvent, $bPerform = false)
+    {
+    	if((int)$aEvent['pinned'] != 0)
+    		return false;
+
+        return $this->_isAllowedPin($aEvent, $bPerform);
+    }
+
+	public function isAllowedUnpin($aEvent, $bPerform = false)
+    {
+    	if((int)$aEvent['pinned'] == 0)
+    		return false;
+
+        return $this->_isAllowedPin($aEvent, $bPerform);
+    }
+
     public function isAllowedMore($aEvent, $bPerform = false)
     {
     	$oMoreMenu = $this->getManageMenuObject();
@@ -984,6 +1022,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         return array($sSystem, $iObjectId, $iCount);
+    }
+
+	protected function _isAllowedPin($aEvent, $bPerform = false)
+    {
+        if(isAdmin())
+            return true;
+
+        $iUserId = (int)$this->getUserId();
+        if($iUserId == 0)
+            return false;
+
+		if((int)$aEvent['owner_id'] == $iUserId)
+           return true;
+
+        $aCheckResult = checkActionModule($iUserId, 'pin', $this->getName(), $bPerform);
+        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_pin', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
 	protected function _deleteLinks($iId)

@@ -333,6 +333,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
 		$sSelectClause .= "YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`, ";
+		if($aParams['browse'] == 'list')
+			$sOrderClause = "ORDER BY `{$this->_sTable}`.`pinned` DESC, `{$this->_sTable}`.`date` DESC";
 
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }
