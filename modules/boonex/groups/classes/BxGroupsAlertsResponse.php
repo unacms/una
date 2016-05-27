@@ -19,11 +19,13 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
     public function response($oAlert)
     {
         $this->_oModule = BxDolModule::getInstance('bx_groups');
- 
+
+        // connection events
         if ('bx_groups_fans' == $oAlert->sUnit && 'connection_added' == $oAlert->sAction) {
             $this->_oModule->serviceAddMutualConnection($oAlert->aExtras['content'], $oAlert->aExtras['initiator']);
         }
 
+        // profile delete event
         if ('profile' == $oAlert->sUnit && 'delete' == $oAlert->sAction) {
             $this->_oModule->serviceDeleteProfileFromFansAndAdmins($oAlert->iObject);
             $this->_oModule->serviceReassignEntitiesByAuthor($oAlert->iObject);
@@ -32,33 +34,77 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
         if ('bx_groups' != $oAlert->sUnit)
             return;
 
+        // join group events
         switch ($oAlert->sAction) {
+        case 'join_invitation':
+            $this->sendMailInvitation($oAlert, $oAlert->iObject, $oAlert->iSender);
+            break;
+        case 'join_request':
+            $this->sendMailJoinRequest($oAlert, $oAlert->iObject, $oAlert->iSender);
+            break;
+        case 'join_request_accepted':
+            $this->sendMailJoinRequestAccepted($oAlert, $oAlert->iObject, $oAlert->iSender);
+            break;
+        }
 
-            case 'timeline_view':
-                $this->processTimelineView($oAlert, $oAlert->iObject);
-                break;
+        // timeline events to override permissions
+        switch ($oAlert->sAction) {
+        case 'timeline_view':
+            $this->processTimelineView($oAlert, $oAlert->iObject);
+            break;
 
-            case 'timeline_comment':
-            case 'timeline_report':
-            case 'timeline_vote':
-                $this->processTimelineEventsBoolResult($oAlert, $oAlert->iObject);
-                break;
+        case 'timeline_comment':
+        case 'timeline_report':
+        case 'timeline_vote':
+            $this->processTimelineEventsBoolResult($oAlert, $oAlert->iObject);
+            break;
 
-            case 'timeline_post':
-                $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject);
-                break;
+        case 'timeline_post':
+            $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject);
+            break;
 
-            case 'timeline_delete':
-                $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject, 'checkAllowedEdit');
-                break;
+        case 'timeline_delete':
+            $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject, 'checkAllowedEdit');
+            break;
 
-            case 'timeline_share':
-                $this->processTimelineShare($oAlert, $oAlert->iObject);
-                break;
+        case 'timeline_share':
+            $this->processTimelineShare($oAlert, $oAlert->iObject);
+            break;
         }
 
     }
 
+    protected function sendMailInvitation ($oAlert, $iProfileId, $iSender = 0)
+    {
+        sendMailTemplate('bx_groups_invitation', 0, $iProfileId, array(
+            'InviterUrl' => BxDolProfile::getInstance($iSender)->getUrl(),
+            'InviterDisplayName' => BxDolProfile::getInstance($iSender)->getDisplayName(),
+            'EntryUrl' => $oAlert->aExtras['entry_url'],
+            'EntryTitle' => $oAlert->aExtras['entry_title'],
+        ), BX_EMAIL_NOTIFY);
+    }
+
+    protected function sendMailJoinRequest ($oAlert, $iProfileId, $iSender = 0)
+    {
+        $aAdmins = $this->_oModule->_oDb->getAdmins($oAlert->aExtras['group_profile']);
+        foreach ($aAdmins as $iAdminProfileId) {
+            sendMailTemplate('bx_groups_join_request', 0, $iAdminProfileId, array(
+                'NewMemberUrl' => BxDolProfile::getInstance($iProfileId)->getUrl(),
+                'NewMemberDisplayName' => BxDolProfile::getInstance($iProfileId)->getDisplayName(),
+                'EntryUrl' => $oAlert->aExtras['entry_url'],
+                'EntryTitle' => $oAlert->aExtras['entry_title'],
+            ), BX_EMAIL_NOTIFY);
+        }
+    }
+
+    protected function sendMailJoinRequestAccepted ($oAlert, $iProfileId, $iSender = 0)
+    {
+        sendMailTemplate('bx_groups_join_confirm', 0, $iProfileId, array(
+            'EntryUrl' => $oAlert->aExtras['entry_url'],
+            'EntryTitle' => $oAlert->aExtras['entry_title'],
+        ), BX_EMAIL_NOTIFY);
+    }
+    
     protected function processTimelineView ($oAlert, $iGroupProfileId)
     {
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
@@ -111,11 +157,11 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
     protected function processTimelineShare ($oAlert, $iGroupProfileId)
     {
         if ($oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            break;
+            return;
 
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
         if (!$oGroupProfile) 
-            break;
+            return;
 
         $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
         if (BX_DOL_PG_ALL == $aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] || 'c' == $aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]) {

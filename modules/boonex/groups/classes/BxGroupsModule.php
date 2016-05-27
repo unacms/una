@@ -123,36 +123,30 @@ class BxGroupsModule extends BxBaseModProfileModule
         $sEntryTitle = $aContentInfo[$CNF['FIELD_NAME']];
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
-        // send invitation to the group
+        // send invitation to the group (@see BxGroupsAlertsResponse)
         if ($iIgnoreJoinConfirmation && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
-            sendMailTemplate('bx_groups_invitation', 0, $iProfileId, array(
-                'InviterUrl' => BxDolProfile::getInstance()->getUrl(),
-                'InviterDisplayName' => BxDolProfile::getInstance()->getDisplayName(),
-                'EntryUrl' => $sEntryUrl,
-                'EntryTitle' => $sEntryTitle,
-            ), BX_EMAIL_NOTIFY);
+
+            bx_alert($this->getName(), 'join_invitation', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+
         }
-        // send notification to group's admins that new connection is pending confirmation
+        // send notification to group's admins that new connection is pending confirmation (@see BxGroupsAlertsResponse)
         elseif (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
-            $aAdmins = $this->_oDb->getAdmins($iGroupProfileId);
-            foreach ($aAdmins as $iAdminProfileId) {
-                sendMailTemplate('bx_groups_join_request', 0, $iAdminProfileId, array(
-                    'NewMemberUrl' => BxDolProfile::getInstance($iProfileId)->getUrl(),
-                    'NewMemberDisplayName' => BxDolProfile::getInstance($iProfileId)->getDisplayName(),
-                    'EntryUrl' => $sEntryUrl,
-                    'EntryTitle' => $sEntryTitle,
-                ), BX_EMAIL_NOTIFY);
-            }
+
+            bx_alert($this->getName(), 'join_request', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+
         }
-        // send notification that join request was accepted
+        // send notification that join request was accepted (@see BxGroupsAlertsResponse)
         else if (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
-            sendMailTemplate('bx_groups_join_confirm', 0, $iProfileId, array(
-                'EntryUrl' => $sEntryUrl,
-                'EntryTitle' => $sEntryTitle,
-            ), BX_EMAIL_NOTIFY);
+            
+            bx_alert($this->getName(), 'join_request_accepted', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+
         }
 
-
+        // new fan was added
+        if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
+            bx_alert($this->getName(), 'fan_added', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+            return false;
+        }
 
         // don't automatically add back connection (mutual) if group requires manual join confirmation
         if (!$iIgnoreJoinConfirmation && $aContentInfo['join_confirmation'])
