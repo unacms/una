@@ -90,6 +90,15 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return array('content' => $sContent, 'menu' => $oMenu); 
     }
 
+    public function serviceGetEventById($iId)
+    {
+        $aParams = [
+            'browse' => 'id',
+            'value' => $iId,
+        ];
+    	return $this->_oDb->getEvents($aParams);
+    }
+
     public function serviceGetUnreadNotificationsNum($iOwnerId = 0)
     {
     	if(!$iOwnerId)
