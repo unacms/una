@@ -389,7 +389,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 -- PRIVACY 
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_groups_allow_view_to', 'bx_groups', 'view', '_bx_groups_form_profile_input_allow_view_to', '3', 'bx_groups_data', 'id', 'author', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php');
+('bx_groups_allow_view_to', 'bx_groups', 'view', '_bx_groups_form_profile_input_allow_view_to', '3', 'bx_groups_data', 'id', 'author', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php'),
+('bx_groups_allow_view_notification_to', 'bx_groups', 'view_event', '_bx_groups_form_profile_input_allow_view_notification_to', '3', 'bx_notifications_events', 'id', 'object_owner_id', 'BxGroupsPrivacyNotifications', 'modules/boonex/groups/classes/BxGroupsPrivacyNotifications.php');
 
 -- EMAIL TEMPLATES
 

@@ -37,13 +37,13 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
         // join group events
         switch ($oAlert->sAction) {
         case 'join_invitation':
-            $this->sendMailInvitation($oAlert, $oAlert->iObject, $oAlert->iSender);
+            $this->sendMailInvitation($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
             break;
         case 'join_request':
-            $this->sendMailJoinRequest($oAlert, $oAlert->iObject, $oAlert->iSender);
+            $this->sendMailJoinRequest($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
             break;
         case 'join_request_accepted':
-            $this->sendMailJoinRequestAccepted($oAlert, $oAlert->iObject, $oAlert->iSender);
+            $this->sendMailJoinRequestAccepted($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
             break;
         }
 

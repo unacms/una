@@ -126,19 +126,19 @@ class BxGroupsModule extends BxBaseModProfileModule
         // send invitation to the group (@see BxGroupsAlertsResponse)
         if ($iIgnoreJoinConfirmation && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
 
-            bx_alert($this->getName(), 'join_invitation', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+            bx_alert($this->getName(), 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
 
         }
         // send notification to group's admins that new connection is pending confirmation (@see BxGroupsAlertsResponse)
         elseif (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
 
-            bx_alert($this->getName(), 'join_request', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+            bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
 
         }
         // send notification that join request was accepted (@see BxGroupsAlertsResponse)
         else if (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
             
-            bx_alert($this->getName(), 'join_request_accepted', $iProfileId, bx_get_logged_profile_id(), array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId));
+            bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
 
         }
 
@@ -236,19 +236,34 @@ class BxGroupsModule extends BxBaseModProfileModule
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
 
                 array('group' => $sModule . '_fan_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'fan_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_fan_added', 'module_class' => 'Module'),
+                array('group' => $sModule . '_join_request', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_request', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_request', 'module_class' => 'Module', 'module_event_privacy' => 'bx_groups_allow_view_notification_to'),
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
                 array('unit' => $sModule, 'action' => 'fan_added'),
+                array('unit' => $sModule, 'action' => 'join_request'),
             )
         );
     }
 
+    /**
+     * Notification about new member requst in the group
+     */
+    public function serviceGetNotificationsJoinRequest($aEvent)
+    {
+        return $this->_serviceGetNotification($aEvent, '_bx_groups_txt_ntfs_join_request');
+    }
+    
 	/**
-     * Entry post comment for Notifications module
+     * Notification about new member in the group
      */
     public function serviceGetNotificationsFanAdded($aEvent)
+    {
+        return $this->_serviceGetNotification($aEvent, '_bx_groups_txt_ntfs_fan_added');
+    }
+
+    public function _serviceGetNotification($aEvent, $sLangKey)
     {
     	$CNF = &$this->_oConfig->CNF;
 
@@ -272,7 +287,7 @@ class BxGroupsModule extends BxBaseModProfileModule
 			'entry_author' => $oGroupProfile->id(), // $aContentInfo[$CNF['FIELD_AUTHOR']],
 			'subentry_sample' => $oProfile->getDisplayName(),
 			'subentry_url' => $oProfile->getUrl(),
-			'lang_key' => '_bx_groups_txt_ntfs_fan_added',
+			'lang_key' => $sLangKey,
 		);
     }
 
