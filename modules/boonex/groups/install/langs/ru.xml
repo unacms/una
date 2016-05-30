@@ -201,10 +201,14 @@
     <string name="_bx_groups_txt_account_pending"><![CDATA[Эта группа ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} участников]]></string>
-    <string name="_bx_groups_txt_sample_single"><![CDATA[Группа]]></string>
+    <string name="_bx_groups_txt_sample_single"><![CDATA[группа]]></string>
+    <string name="_bx_groups_txt_sample_vote_single"><![CDATA[голос за группу]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[Из админов]]></string>
     <string name="_bx_groups_txt_private_group"><![CDATA[Приватная группа]]></string>
+
+    <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[В группу "<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a>" добавился новый член - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[В группу "<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a>" хочет присоединиться новый член - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
 
     <string name="_bx_groups_privacy_group_closed"><![CDATA[Закрытая группа]]></string>
     <string name="_bx_groups_privacy_group_secret"><![CDATA[Секретная группа]]></string>

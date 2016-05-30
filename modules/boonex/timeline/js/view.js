@@ -45,6 +45,14 @@ BxTimelineView.prototype.changeTimeline = function(oLink, iYear) {
 	this._getPosts(oLink, 'timeline');
 };
 
+BxTimelineView.prototype.pinPost = function(oLink, iId) {
+	this._pinPost(oLink, iId, 1);
+};
+
+BxTimelineView.prototype.unpinPost = function(oLink, iId) {
+	this._pinPost(oLink, iId, 0);
+};
+
 BxTimelineView.prototype.deletePost = function(oLink, iId) {
     var $this = this;
     var oView = $(this.sIdView);
@@ -62,7 +70,7 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
         	if(oData && oData.msg != undefined)
                 alert(oData.msg);
 
-            if(oData && oData.code == 0)
+            if(oData && oData.code == 0) {
             	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
                 $($this.sIdItem + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
@@ -76,7 +84,8 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
                     $this.destroyMasonry();
                     oView.find('.bx-tl-load-more').hide();
                     oView.find('.bx-tl-empty').show();
-                });                        
+                });
+            }
         },
         'json'
     );
@@ -118,6 +127,44 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
         		return;
 
         	oComments.html($(oData.content).hide()).children(':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        },
+        'json'
+    );
+};
+
+BxTimelineView.prototype._pinPost = function(oLink, iId, iWay) {
+    var $this = this;
+    var oView = $(this.sIdView);
+    var oData = this._getDefaultData();
+    oData['id'] = iId;
+
+    this.loadingInBlock(oView, true);
+
+    $.post(
+        this._sActionsUrl + 'pin/',
+        oData,
+        function(oData) {
+        	$this.loadingInBlock(oView, false);
+
+        	if(oData && oData.msg != undefined)
+                alert(oData.msg);
+
+            if(oData && oData.code == 0) {
+            	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({
+            		onHide: function(oPopup) {
+            			$(oPopup).remove();
+            		}
+            	});
+
+            	$this.removeMasonry(($this.sIdItem + oData.id), function() {
+            		if(iWay == 0) {
+                		$this._oRequestParams.start = 0;
+    	                $this._getPosts(oView, 'pin');
+                	}
+            		else
+            			$this.prependMasonry($(oData.content).bxTime());
+            	});
+            }
         },
         'json'
     );

@@ -130,7 +130,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				'type' => $sType,
 				'action' => $sAction,
 				'object_id' => $iObjectId,
-				'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
+				'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
 				'content' => '',
 				'title' => '',
 				'description' => '',
@@ -333,6 +333,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
 		$sSelectClause .= "YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`, ";
+		if($aParams['browse'] == 'list')
+			$sOrderClause = "ORDER BY `{$this->_sTable}`.`pinned` DESC, `{$this->_sTable}`.`date` DESC";
 
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }

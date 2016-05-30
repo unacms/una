@@ -35,7 +35,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_timeline_menu_item_manage', 'bx_timeline', '_bx_timeline_menu_set_title_item_manage', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '_bx_timeline_menu_item_title_item_delete', 'javascript:void(0)', 'javascript:{js_object_view}.deletePost(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 0);
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-pin', '_bx_timeline_menu_item_title_system_item_pin', '_bx_timeline_menu_item_title_item_pin', 'javascript:void(0)', 'javascript:{js_object_view}.pinPost(this, {content_id})', '_self', 'thumb-tack', '', 2147483647, 1, 0, 0),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-unpin', '_bx_timeline_menu_item_title_system_item_unpin', '_bx_timeline_menu_item_title_item_unpin', 'javascript:void(0)', 'javascript:{js_object_view}.unpinPost(this, {content_id})', '_self', 'thumb-tack', '', 2147483647, 1, 0, 1),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '_bx_timeline_menu_item_title_item_delete', 'javascript:void(0)', 'javascript:{js_object_view}.deletePost(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 2);
 
 -- MENU: Item Actions (Comment, Plus)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -117,6 +119,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_timeline', 'share', NULL, '_bx_timeline_acl_action_share', '', 1, 3);
 SET @iIdActionShare = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_timeline', 'pin', NULL, '_bx_timeline_acl_action_pin', '', 1, 3);
+SET @iIdActionPin = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -149,7 +155,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iStandard, @iIdActionShare),
 (@iModerator, @iIdActionShare),
 (@iAdministrator, @iIdActionShare),
-(@iPremium, @iIdActionShare);
+(@iPremium, @iIdActionShare),
+
+-- pin
+(@iModerator, @iIdActionPin),
+(@iAdministrator, @iIdActionPin);
 
 
 -- ALERTS

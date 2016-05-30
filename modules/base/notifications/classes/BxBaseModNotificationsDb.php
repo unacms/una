@@ -41,12 +41,13 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
 
     	//--- Update Timeline Handlers ---//
         foreach($aData['handlers'] as $aHandler) {
-            $sContent = '';
+            $sContent = $sPrivacy = '';
             if($aHandler['type'] == BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT) {
             	if(empty($aHandler['module_class']))
             		$aHandler['module_class'] = 'Module';
 
             	$sContent = serialize(array_intersect_key($aHandler, $aHandlerDescriptor));
+            	$sPrivacy = !empty($aHandler['module_event_privacy']) ? $aHandler['module_event_privacy'] : '';
             }
 
             $sQuery = $this->prepare("INSERT INTO
@@ -56,7 +57,8 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
                     `type`=?,
                     `alert_unit`=?,
                     `alert_action`=?,
-                    `content`=?", $aHandler['group'], $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent);
+                    `content`=?,
+                    `privacy`=?", $aHandler['group'], $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent, $sPrivacy);
 
             $this->query($sQuery);
         }
@@ -179,17 +181,16 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
     {
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
 
-        $sSql = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . $sSelectClause . "
-                `{$this->_sTable}`.*
+        $sSql = "SELECT {select}
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+            WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aEntries = $this->$sMethod($sSql);
+        $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause . "`{$this->_sTable}`.*", $sOrderClause, $sLimitClause), $sSql));
         if(!$bReturnCount)
         	return $aEntries;
 
-		return array($aEntries, (int)$this->getOne("SELECT FOUND_ROWS()"));
+		return array($aEntries, (int)$this->getOne(str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql)));
     }
 
 	protected function _getSqlPartsEvents($aParams)

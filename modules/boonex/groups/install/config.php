@@ -54,6 +54,7 @@ $aConfig = array(
     'menu_triggers' => array(
     	'trigger_profile_view_submenu',
     	'trigger_group_view_submenu',
+        'trigger_group_view_actions',
     ),
 
     /**
@@ -130,7 +131,8 @@ $aConfig = array(
      * Connections Section
      */
     'relations' => array(
-    	'bx_timeline',
+        'bx_timeline',
+        'bx_notifications',
     ),
 );
 

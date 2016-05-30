@@ -518,6 +518,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ),
             'item_view_url' => $this->_oConfig->getItemViewUrl($aEvent),
             'item_date' => bx_time_js($aEvent['date']),
+            'bx_if:show_pinned' => array(
+            	'condition' => (int)$aEvent['pinned'] != 0,
+            	'content' => array(
+            		'style_prefix' => $sStylePrefix,
+            	)
+            ),
             'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent, $aBrowseParams),
             'bx_if:show_location' => array(
             	'condition' => !empty($sLocation),

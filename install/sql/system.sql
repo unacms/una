@@ -389,6 +389,17 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_account_autoapproval', '_adm_stg_cpt_option_sys_account_autoapproval', 'on', 'checkbox', '', '', '', 10);
 
+
+--
+-- CATEGORY: ACL
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'acl', '_adm_stg_cpt_category_acl', 0, 15);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_acl_expire_notification_days', '_adm_stg_cpt_option_sys_acl_expire_notification_days', '1', 'digit', '', '', '', 1),
+(@iCategoryId, 'sys_acl_expire_notify_once', '_adm_stg_cpt_option_sys_acl_expire_notify_once', 'on', 'checkbox', '', '', '', 2);
+
 --
 -- Table structure for table `sys_options_mixes`
 --
@@ -626,15 +637,15 @@ CREATE TABLE `sys_acl_levels` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_acl_levels` (`ID`, `Name`, `Icon`, `Description`, `Active`, `Purchasable`, `Removable`, `QuotaSize`, `QuotaNumber`, `QuotaMaxFileSize`, `Order`) VALUES
-(1, '_adm_prm_txt_level_unauthenticated', 'acl-non-member.png', '', 'yes', 'no', 'no', 0, 0, 0, 1),
-(2, '_adm_prm_txt_level_account', 'acl-account.png', '', 'yes', 'no', 'no', 0, 0, 0, 2),
-(3, '_adm_prm_txt_level_standard', 'acl-standard.png', '', 'yes', 'no', 'no', 0, 0, 0, 3),
-(4, '_adm_prm_txt_level_unconfirmed', 'acl-unconfirmed.png', '', 'yes', 'no', 'no', 0, 0, 0, 4),
-(5, '_adm_prm_txt_level_pending', 'acl-pending.png', '', 'yes', 'no', 'no', 0, 0, 0, 5),
-(6, '_adm_prm_txt_level_suspended', 'acl-suspended.png', '', 'yes', 'no', 'no', 0, 0, 0, 6),
-(7, '_adm_prm_txt_level_moderator', 'acl-moderator.png', '', 'yes', 'no', 'no', 0, 0, 0, 7),
-(8, '_adm_prm_txt_level_administrator', 'acl-administrator.png', '', 'yes', 'no', 'no', 0, 0, 0, 8),
-(9, '_adm_prm_txt_level_premium', 'acl-premium.png', '', 'yes', 'yes', 'no', 0, 0, 0, 9);
+(1, '_adm_prm_txt_level_unauthenticated', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 1),
+(2, '_adm_prm_txt_level_account', 'user col-green1', '', 'yes', 'no', 'no', 0, 0, 0, 2),
+(3, '_adm_prm_txt_level_standard', 'user col-red1', '', 'yes', 'no', 'no', 0, 0, 0, 3),
+(4, '_adm_prm_txt_level_unconfirmed', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 4),
+(5, '_adm_prm_txt_level_pending', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 5),
+(6, '_adm_prm_txt_level_suspended', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 6),
+(7, '_adm_prm_txt_level_moderator', 'user-secret bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 7),
+(8, '_adm_prm_txt_level_administrator', 'user-secret bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 8),
+(9, '_adm_prm_txt_level_premium', 'user col-red3', '', 'yes', 'yes', 'no', 0, 0, 0, 9);
 
 
 -- --------------------------------------------------------
@@ -1138,6 +1149,7 @@ CREATE TABLE `sys_cron_jobs` (
 
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('pruning', '0 0 * * *', 'BxDolCronPruning', 'inc/classes/BxDolCronPruning.php', ''),
+('sys_acl', '0 0 * * *', 'BxDolCronAcl', 'inc/classes/BxDolCronAcl.php', ''),
 ('sys_upgrade', '0 3 * * *', 'BxDolCronUpgradeCheck', 'inc/classes/BxDolCronUpgradeCheck.php', ''),
 ('sys_upgrade_modules', '30 2 * * *', 'BxDolCronUpgradeModulesCheck', 'inc/classes/BxDolCronUpgradeModulesCheck.php', ''),
 ('sys_storage', '* * * * *', 'BxDolCronStorage', 'inc/classes/BxDolCronStorage.php', ''),

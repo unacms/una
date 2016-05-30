@@ -56,7 +56,7 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 -- PRIVACY 
 
-DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_groups_allow_view_to';
+DELETE FROM `sys_objects_privacy` WHERE `object` IN('bx_groups_allow_view_to', 'bx_groups_allow_view_notification_to');
 
 -- EMAIL TEMPLATES
 

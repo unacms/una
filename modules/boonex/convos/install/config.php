@@ -44,7 +44,8 @@ $aConfig = array(
      * Menu triggers.
      */
     'menu_triggers' => array(
-    	'trigger_profile_view_actions'
+        'trigger_profile_view_actions',
+        'trigger_group_view_actions',
     ),
 
     /**

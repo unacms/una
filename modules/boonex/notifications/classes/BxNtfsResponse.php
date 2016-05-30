@@ -75,6 +75,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 			'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
 			'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
 			'content' => '',
+    		'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
 			'processed' => 0
 		);
     }
@@ -93,6 +94,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 			'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
 			'subobject_id' => 0,
 			'content' => '',
+    		'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
 			'processed' => 0
 		);
     }

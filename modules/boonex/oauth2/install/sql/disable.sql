@@ -1,6 +1,4 @@
 
-TRUNCATE TABLE `bx_oauth_scopes`;
-
 -- GRID
 
 DELETE FROM `sys_objects_grid` WHERE `object` = 'bx_oauth';

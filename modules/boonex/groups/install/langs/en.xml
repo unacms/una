@@ -61,8 +61,8 @@
 	<string name="_bx_groups_page_title_sys_view_profile"><![CDATA[View Group]]></string>
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_groups_page_title_browse"><![CDATA[Groups]]></string>
-	<string name="_bx_groups_page_title_browse_active"><![CDATA[Recently Active Groups]]></string>
-	<string name="_bx_groups_page_title_browse_recent"><![CDATA[Recently Added Groups]]></string>
+	<string name="_bx_groups_page_title_browse_active"><![CDATA[Active Groups]]></string>
+	<string name="_bx_groups_page_title_browse_recent"><![CDATA[New Groups]]></string>
 	<string name="_bx_groups_page_title_browse_connections"><![CDATA[{0} connections]]></string>
 	<string name="_bx_groups_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
 	<string name="_bx_groups_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
@@ -71,13 +71,13 @@
 	<string name="_bx_groups_page_title_group_fans"><![CDATA[Members]]></string>
 	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Group Info]]></string>
 	<string name="_bx_groups_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
-	<string name="_bx_groups_page_title_sys_recent"><![CDATA[Recently Added Groups]]></string>
-	<string name="_bx_groups_page_title_recent"><![CDATA[Recently Added Groups]]></string>
+	<string name="_bx_groups_page_title_sys_recent"><![CDATA[New Groups]]></string>
+	<string name="_bx_groups_page_title_recent"><![CDATA[New Groups]]></string>
 	<string name="_bx_groups_page_title_sys_manage"><![CDATA[Manage Own Groups]]></string>
 	<string name="_bx_groups_page_title_sys_manage_administration"><![CDATA[Manage All Groups]]></string>
 	<string name="_bx_groups_page_title_manage"><![CDATA[Manage Groups]]></string>
-	<string name="_bx_groups_page_title_sys_active"><![CDATA[Recently Active People]]></string>
-	<string name="_bx_groups_page_title_active"><![CDATA[Recently Active People]]></string>
+	<string name="_bx_groups_page_title_sys_active"><![CDATA[Active Groups]]></string>
+	<string name="_bx_groups_page_title_active"><![CDATA[Active Groups]]></string>
 
 	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
 	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Joined Groups]]></string>
@@ -95,11 +95,11 @@
     <string name="_bx_groups_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_groups_page_block_title_system_fans"><![CDATA[Members]]></string>
 	<string name="_bx_groups_page_block_title_profile_actions"><![CDATA[Actions]]></string>
-	<string name="_bx_groups_page_block_title_latest_profiles"><![CDATA[Recently Added Groups]]></string>
+	<string name="_bx_groups_page_block_title_latest_profiles"><![CDATA[New Groups]]></string>
 	<string name="_bx_groups_page_block_title_system_manage"><![CDATA[Manage Own Groups]]></string>
 	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Manage All Groups]]></string>
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Manage Groups]]></string>
-    <string name="_bx_groups_page_block_title_active_profiles"><![CDATA[Recently Active Groups]]></string>
+    <string name="_bx_groups_page_block_title_active_profiles"><![CDATA[Active Groups]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Group categories]]></string>
@@ -129,8 +129,8 @@
     <string name="_bx_groups_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_groups_menu_item_title_system_profile_type"><![CDATA[Group]]></string>
     <string name="_bx_groups_menu_item_title_profile_type"><![CDATA[Group]]></string>
-    <string name="_bx_groups_menu_item_title_system_create_profile"><![CDATA[Create Group]]></string>
-    <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[Create Group]]></string>
+    <string name="_bx_groups_menu_item_title_system_create_profile"><![CDATA[New Group]]></string>
+    <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[New Group]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Groups]]></string>
@@ -172,18 +172,18 @@
     <string name="_bx_groups_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
     <string name="_bx_groups_menu_item_title_system_manage_my_groups"><![CDATA[My groups]]></string>
     <string name="_bx_groups_menu_item_title_manage_my_groups"><![CDATA[{addon} groups]]></string>
-    <string name="_bx_groups_menu_item_title_system_entries_recent"><![CDATA[Recent Groups]]></string>
-    <string name="_bx_groups_menu_item_title_entries_recent"><![CDATA[Recent Groups]]></string>
-    <string name="_bx_groups_menu_item_title_system_entries_manage"><![CDATA[Manage Groups]]></string>
-    <string name="_bx_groups_menu_item_title_entries_manage"><![CDATA[Manage Groups]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
+    <string name="_bx_groups_menu_item_title_entries_recent"><![CDATA[New]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_groups_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_home"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_entries_home"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_system_admt_groups"><![CDATA[Groups]]></string>
 	<string name="_bx_groups_menu_item_title_admt_groups"><![CDATA[Groups - {addon} unapproved]]></string>
 	<string name="_bx_groups_menu_item_title_manage_my"><![CDATA[My Groups]]></string>
 	<string name="_bx_groups_menu_item_title_manage_all"><![CDATA[All Groups]]></string>
-	<string name="_bx_groups_menu_item_title_system_entries_active"><![CDATA[Active Groups]]></string>
-	<string name="_bx_groups_menu_item_title_entries_active"><![CDATA[Active Groups]]></string>
+	<string name="_bx_groups_menu_item_title_system_entries_active"><![CDATA[Active]]></string>
+	<string name="_bx_groups_menu_item_title_entries_active"><![CDATA[Active]]></string>
 
 	<string name="_bx_groups_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_groups_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -203,9 +203,13 @@
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>
     <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
+    <string name="_bx_groups_txt_sample_vote_single"><![CDATA[group's vote]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[From Admins]]></string>
     <string name="_bx_groups_txt_private_group"><![CDATA[Private group]]></string>
+
+    <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group has got new member - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group has new request from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
 
     <string name="_bx_groups_privacy_group_closed"><![CDATA[Closed]]></string>
     <string name="_bx_groups_privacy_group_secret"><![CDATA[Secret]]></string>

@@ -57,8 +57,12 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 		}
 
 		//--- Apply privacy filter
+		$aPrivacy = array(BX_DOL_PG_ALL);
+		if(isLogged())
+			$aPrivacy[] = BX_DOL_PG_MEMBERS;
+
 		$oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
-		$aQueryParts = $oPrivacy->getContentByGroupAsSQLPart(BX_DOL_PG_ALL);
+		$aQueryParts = $oPrivacy->getContentByGroupAsSQLPart($aPrivacy);
 		$sWhereClause .= $aQueryParts['where'] . " ";
 
 		//--- Check type

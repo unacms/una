@@ -47,6 +47,10 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_scopes` (
   `is_default` tinyint(1) DEFAULT NULL
 );
 
+INSERT INTO `bx_oauth_scopes` (`scope`, `is_default`) VALUES
+('basic', 1),
+('service', 0);
+
 -- Studio page and widget
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

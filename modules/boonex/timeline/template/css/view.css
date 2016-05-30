@@ -59,6 +59,9 @@ div.bx-tl-item-info {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+div.bx-tl-item-info .bx-tl-pinned .sys-icon {
+	cursor: default;
+}
 
 /*+++ Item Text +++*/
 div.bx-tl-item-text {}
@@ -87,7 +90,6 @@ div.bx-tl-il-thumbnail img {
 	max-height: 100px;
 }
 
-
 /*+++ Item Shared +++*/
 div.bx-tl-shared div.bx-tl-item-text {
 	padding-left: 5px;
@@ -106,6 +108,7 @@ div.bx-tl-shared div.bx-tl-content {
 	font-size: 0.875rem;
 	color: #999999;
 }
+
 
 /*--- Empty Style ---*/
 div.bx-tl-empty div.bx-msg-box-container {

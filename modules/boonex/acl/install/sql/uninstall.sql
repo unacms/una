@@ -12,6 +12,11 @@ DELETE FROM `sys_form_displays` WHERE `module` = @sName;
 DELETE FROM `sys_objects_form` WHERE `module` = @sName;
 
 
+-- PRE-VALUES
+DELETE FROM `sys_form_pre_lists` WHERE `module` = @sName;
+DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_acl_period_units');
+
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_acl_administration', 'bx_acl_view');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_acl_administration', 'bx_acl_view');
