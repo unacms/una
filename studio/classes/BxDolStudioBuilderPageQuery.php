@@ -326,25 +326,24 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
     {
         $aFields['order'] = $this->getBlockOrderMax($aFields['object']) + 1;
 
-        $sSql = "INSERT INTO `sys_pages_blocks` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?";
-        $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields)));
+        $sSql = "INSERT INTO `sys_pages_blocks` SET " . $this->arrayToSQL($aFields);
         return (int)$this->query($sSql) > 0;
     }
 
     function updateBlock($iId, $aFields)
     {
-        $sSql = "UPDATE `sys_pages_blocks` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
-        $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
-        return $this->query($sSql);
+        $sSql = "UPDATE `sys_pages_blocks` SET " . $this->arrayToSQL($aFields) . " WHERE `id`=:id";
+        return $this->query($sSql, array('id' => $iId));
     }
 
     function deleteBlocks($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = "";
 
         switch($aParams['type']) {
             case 'by_id':
-            	$aMethod['params'][1] = array(
+            	$aBindings = array(
                 	'id' => $aParams['value']
                 );
 
@@ -352,7 +351,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 break;
 
             case 'by_object':
-            	$aMethod['params'][1] = array(
+            	$aBindings = array(
                 	'object' => $aParams['value']
                 );
 
@@ -364,7 +363,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         }
 
         $sSql = "DELETE FROM `tpb` USING `sys_pages_blocks` AS `tpb` WHERE 1 " . $sWhereClause;
-        return (int)$this->query($sSql) > 0;
+        return (int)$this->query($sSql, $aBindings) > 0;
     }
 
     function resetBlocksByPage($sObject, $iCellId)
