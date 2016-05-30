@@ -637,15 +637,15 @@ CREATE TABLE `sys_acl_levels` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_acl_levels` (`ID`, `Name`, `Icon`, `Description`, `Active`, `Purchasable`, `Removable`, `QuotaSize`, `QuotaNumber`, `QuotaMaxFileSize`, `Order`) VALUES
-(1, '_adm_prm_txt_level_unauthenticated', 'acl-non-member.png', '', 'yes', 'no', 'no', 0, 0, 0, 1),
-(2, '_adm_prm_txt_level_account', 'acl-account.png', '', 'yes', 'no', 'no', 0, 0, 0, 2),
-(3, '_adm_prm_txt_level_standard', 'acl-standard.png', '', 'yes', 'no', 'no', 0, 0, 0, 3),
-(4, '_adm_prm_txt_level_unconfirmed', 'acl-unconfirmed.png', '', 'yes', 'no', 'no', 0, 0, 0, 4),
-(5, '_adm_prm_txt_level_pending', 'acl-pending.png', '', 'yes', 'no', 'no', 0, 0, 0, 5),
-(6, '_adm_prm_txt_level_suspended', 'acl-suspended.png', '', 'yes', 'no', 'no', 0, 0, 0, 6),
-(7, '_adm_prm_txt_level_moderator', 'acl-moderator.png', '', 'yes', 'no', 'no', 0, 0, 0, 7),
-(8, '_adm_prm_txt_level_administrator', 'acl-administrator.png', '', 'yes', 'no', 'no', 0, 0, 0, 8),
-(9, '_adm_prm_txt_level_premium', 'acl-premium.png', '', 'yes', 'yes', 'no', 0, 0, 0, 9);
+(1, '_adm_prm_txt_level_unauthenticated', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 1),
+(2, '_adm_prm_txt_level_account', 'user col-green1', '', 'yes', 'no', 'no', 0, 0, 0, 2),
+(3, '_adm_prm_txt_level_standard', 'user col-red1', '', 'yes', 'no', 'no', 0, 0, 0, 3),
+(4, '_adm_prm_txt_level_unconfirmed', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 4),
+(5, '_adm_prm_txt_level_pending', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 5),
+(6, '_adm_prm_txt_level_suspended', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 6),
+(7, '_adm_prm_txt_level_moderator', 'user-secret bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 7),
+(8, '_adm_prm_txt_level_administrator', 'user-secret bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 8),
+(9, '_adm_prm_txt_level_premium', 'user col-red3', '', 'yes', 'yes', 'no', 0, 0, 0, 9);
 
 
 -- --------------------------------------------------------
