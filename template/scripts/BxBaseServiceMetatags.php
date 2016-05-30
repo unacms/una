@@ -29,12 +29,15 @@ class BxBaseServiceMetatags extends BxDol
      * @param $iMaxCount number of tags in keywords cloud, by default @see BX_METATAGS_KEYWORDS_IN_CLOUD
      * @return tags cloud HTML string
      */
-    public function serviceKeywordsCloud ($sObject, $mixedSection, $iMaxCount = BX_METATAGS_KEYWORDS_IN_CLOUD)
+    public function serviceKeywordsCloud ($sObject, $mixedSection, $aParams = array())
     {
+    	$iMaxCount = isset($aParams['max_count']) ? (int)$aParams['max_count'] : BX_METATAGS_KEYWORDS_IN_CLOUD;
+    	$bShowEmpty = isset($aParams['show_empty']) ? (bool)$aParams['show_empty'] : false;
+
         $o = BxDolMetatags::getObjectInstance($sObject);
         $aKeywords = $o->keywordsPopularList($iMaxCount);
         if (!$aKeywords)
-            return '';
+            return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
 
         ksort($aKeywords, SORT_LOCALE_STRING);
 
