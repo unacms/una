@@ -32,15 +32,8 @@ INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, @sName, '_bx_acl', 1);
 SET @iCategId = LAST_INSERT_ID();
 
-INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_acl_expire_notification_days', '1', @iCategId, '_bx_acl_option_expire_notification_days', 'digit', '', '', '', 1),
-('bx_acl_expire_notify_once', 'on', @iCategId, '_bx_acl_option_expire_notify_once', 'checkbox', '', '', '', 2),
-('bx_acl_remove_expired_for', '30', @iCategId, '_bx_acl_option_remove_expired_for', 'digit', '', '', '', 3);
--- db_clean_mem_levels -> remove_expired_for
-
--- EMAIL TEMPLATES
--- INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
--- (@sName, '_bx_acl_et_invite_form_message', 'bx_invites_invite_form_message', '_bx_acl_et_invite_form_message_subject', '_bx_acl_et_invite_form_message_body');
+--INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
+--('bx_acl_remove_expired_for', '30', @iCategId, '_bx_acl_option_remove_expired_for', 'digit', '', '', '', 3);
 
 
 -- ALERTS

@@ -128,7 +128,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('', 0, 'bx_groups', '', '_bx_groups_page_block_title_categories', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:21:"bx_groups_cats";i:1;b:1;}s:5:"class";s:20:"TemplServiceCategory";}', 1, 1, 1, IFNULL(@iBlockOrder, 0) + 1);
+('', 0, 'bx_groups', '', '_bx_groups_page_block_title_categories', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:14:"bx_groups_cats";i:1;a:2:{s:10:\"show_empty\";b:1;s:21:\"show_empty_categories\";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 1, 1, 1, IFNULL(@iBlockOrder, 0) + 1);
 
 
 -- MENU
@@ -373,7 +373,12 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_groups_fans', 'connection_added', @iHandler),
+('bx_groups_fans', 'connection_removed', @iHandler),
 ('profile', 'delete', @iHandler),
+('bx_groups', 'fan_added', @iHandler),
+('bx_groups', 'join_invitation', @iHandler),
+('bx_groups', 'join_request', @iHandler),
+('bx_groups', 'join_request_accepted', @iHandler),
 ('bx_groups', 'timeline_view', @iHandler),
 ('bx_groups', 'timeline_post', @iHandler),
 ('bx_groups', 'timeline_delete', @iHandler),
@@ -385,7 +390,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 -- PRIVACY 
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_groups_allow_view_to', 'bx_groups', 'view', '_bx_groups_form_profile_input_allow_view_to', '3', 'bx_groups_data', 'id', 'author', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php');
+('bx_groups_allow_view_to', 'bx_groups', 'view', '_bx_groups_form_profile_input_allow_view_to', '3', 'bx_groups_data', 'id', 'author', 'BxGroupsPrivacy', 'modules/boonex/groups/classes/BxGroupsPrivacy.php'),
+('bx_groups_allow_view_notification_to', 'bx_groups', 'view_event', '_bx_groups_form_profile_input_allow_view_notification_to', '3', 'bx_notifications_events', 'id', 'object_owner_id', 'BxGroupsPrivacyNotifications', 'modules/boonex/groups/classes/BxGroupsPrivacyNotifications.php');
 
 -- EMAIL TEMPLATES
 

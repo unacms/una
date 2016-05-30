@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `date` int(11) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   `hidden` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `pinned` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `owner_id` (`owner_id`)
 );
 
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
   `alert_unit` varchar(64) NOT NULL default '',
   `alert_action` varchar(64) NOT NULL default '',
   `content` text collate utf8_unicode_ci NOT NULL,
+  `privacy` varchar(64) NOT NULL default '',
   PRIMARY KEY  (`id`),
   UNIQUE `handler` (`group`, `type`),
   UNIQUE `alert` (`alert_unit`, `alert_action`)

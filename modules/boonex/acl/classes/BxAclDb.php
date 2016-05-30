@@ -28,6 +28,19 @@ class BxAclDb extends BxDolModuleDb
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
+        $sSelectClause = "
+			`tal`.`ID` AS `id`,
+			`tal`.`Name` AS `name`,
+			`tal`.`Icon` AS `icon`,
+			`tal`.`Description` AS `description`,
+			`tal`.`Active` AS `active`,
+			`tal`.`Purchasable` AS `purchasable`,
+			`tal`.`Removable` AS `removable`,
+			`tal`.`QuotaSize` AS `quota_size`,
+			`tal`.`QuotaNumber` AS `quota_number`,
+			`tal`.`QuotaMaxFileSize` AS `quota_max_file_size`,
+			`tal`.`Order` AS `order`";
+
         if(!isset($aParams['order']) || empty($aParams['order']))
            $sOrderClause = "ORDER BY `tal`.`Order` ASC";
 
@@ -49,26 +62,21 @@ class BxAclDb extends BxDolModuleDb
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
-                `tal`.`ID` AS `id`,
-                `tal`.`Name` AS `name`,
-                `tal`.`Icon` AS `icon`,
-                `tal`.`Description` AS `description`,
-                `tal`.`Active` AS `active`,
-                `tal`.`Purchasable` AS `purchasable`,
-                `tal`.`Removable` AS `removable`,
-                `tal`.`QuotaSize` AS `quota_size`,
-                `tal`.`QuotaNumber` AS `quota_number`,
-                `tal`.`QuotaMaxFileSize` AS `quota_max_file_size`,
-                `tal`.`Order` AS `order`" . $sSelectClause . "
-            FROM `sys_acl_levels` AS `tal` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $sSql = "SELECT {select} FROM `sys_acl_levels` AS `tal` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
+
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
             return $aItems;
 
-		return array('items' => $aItems, 'count' => (int)$this->getOne("SELECT FOUND_ROWS()"));
+		$aMethod['name'] = 'getOne';
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+
+		return array(
+			'items' => $aItems, 
+			'count' => (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params'])
+		);
     }
 
 	public function updateLevels($aSet, $aWhere)
@@ -81,6 +89,15 @@ class BxAclDb extends BxDolModuleDb
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "
+			`tap`.`id` AS `id`,
+			`tap`.`level_id` AS `level_id`,
+			`tap`.`name` AS `name`,
+			`tap`.`period` AS `period`,
+			`tap`.`period_unit` AS `period_unit`,
+			`tap`.`price` AS `price`,
+			`tap`.`order` AS `order`";
 
         if(!isset($aParams['order']) || empty($aParams['order']))
            $sOrderClause = "ORDER BY `tap`.`Order` ASC";
@@ -114,56 +131,38 @@ class BxAclDb extends BxDolModuleDb
                 $sWhereClause .= "AND `tap`.`level_id`=:level_id";
                 break;
 
-            case 'by_level_id_pair':
-                $aMethod['name'] = "getPairs";
-                $aMethod['params'][1] = 'days';
-                $aMethod['params'][2] = 'price';
-                $aMethod['params'][3] = array(
-                	'level_id' => $aParams['value']
-                );
-
-                $sWhereClause .= "AND `tap`.`level_id`=:level_id";
-                break;
-
             case 'by_level_id_duration':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
                 	'level_id' => $aParams['level_id'],
-                	'days' => $aParams['days']
+                	'period' => $aParams['period'],
+                	'period_unit' => $aParams['period_unit'],
                 );
 
-                $sWhereClause .= "AND `tap`.`level_id`=:level_id AND `tap`.`days`=:days";
-                break;
-
-            case 'counter_by_levels':
-                $aMethod['name'] = 'getPairs';
-                $aMethod['params'][1] = 'level_id';
-                $aMethod['params'][2] = 'counter';
-
-                $sSelectClause = ", COUNT(*) AS `counter`";
-                $sGroupClause = "GROUP BY `tap`.`IDLevel`";
+                $sWhereClause .= "AND `tap`.`level_id`=:level_id AND `tap`.`period`=:period AND `tap`.`period_unit`=:period_unit";
                 break;
 
             case 'all_full':
                 $sSelectClause .= ", `tal`.`Name` AS `level_name`, `tal`.`Description` AS `level_description`";
                 $sJoinClause .= "LEFT JOIN `sys_acl_levels` AS `tal` ON `tap`.`level_id`=`tal`.`ID`";
+                break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
-                `tap`.`id` AS `id`,
-                `tap`.`level_id` AS `level_id`,
-                `tap`.`name` AS `name`,
-                `tap`.`days` AS `days`,
-                `tap`.`price` AS `price`,
-                `tap`.`order` AS `order`" . $sSelectClause . "
-            FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` AS `tap` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $sSql = "SELECT {select} FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` AS `tap` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
+
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
             return $aItems;
 
-        return array('items' => $aItems, 'count' => (int)$this->getOne("SELECT FOUND_ROWS()"));
+		$aMethod['name'] = 'getOne';
+		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+
+        return array(
+        	'items' => $aItems, 
+        	'count' => (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params'])
+        );
     }
 
     public function getPriceOrderMax($iLevelId)

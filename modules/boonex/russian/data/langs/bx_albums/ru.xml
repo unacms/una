@@ -76,8 +76,6 @@
     <string name="_bx_albums_page_block_title_entry_location"><![CDATA[Расположение]]></string>
     <string name="_bx_albums_page_title_sys_entries_popular"><![CDATA[Популярные альбомы]]></string>
     <string name="_bx_albums_page_title_entries_popular"><![CDATA[Популярные альбомы]]></string>
-    <string name="_bx_albums_page_title_sys_entries_updated"><![CDATA[Обновлённые альбомы]]></string>
-    <string name="_bx_albums_page_title_entries_updated"><![CDATA[Обновлённые альбомы]]></string>
     <string name="_bx_albums_page_title_sys_entries_popular_media"><![CDATA[Популярные изображения]]></string>
     <string name="_bx_albums_page_title_entries_popular_media"><![CDATA[Популярные изображения]]></string>
     <string name="_bx_albums_page_block_title_popular_entries"><![CDATA[Популярные альбомы]]></string>
@@ -122,8 +120,6 @@
     <string name="_bx_albums_menu_item_title_entries_manage"><![CDATA[Управление альбомами]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_popular"><![CDATA[Популярные альбомы]]></string>
     <string name="_bx_albums_menu_item_title_entries_popular"><![CDATA[Популярные альбомы]]></string>
-    <string name="_bx_albums_menu_item_title_system_entries_updated"><![CDATA[Обновлённые альбомы]]></string>
-    <string name="_bx_albums_menu_item_title_entries_updated"><![CDATA[Обновлённые альбомы]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_popular_media"><![CDATA[Популярные изображения]]></string>
     <string name="_bx_albums_menu_item_title_entries_popular_media"><![CDATA[Популярные изображения]]></string>
     <string name="_bx_albums_menu_title_view_entry_submenu"><![CDATA[Просмотреть подменю альбомов]]></string>

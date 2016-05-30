@@ -136,7 +136,7 @@ abstract class BxDolPaginate extends BxDol
         else
             $this->_iNum = 0;
 
-        if ($this->_iNum > $this->_iPerPage)
+        if ($this->_iNum > $this->_iPerPage && $isAutoPopLastElement)
             array_pop($a);
     }
 

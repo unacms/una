@@ -417,7 +417,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                     $sCondFields = rtrim($sCondFields, ' OR ');
 
                     if ($sCondFields)
-                        $sCond .= $oDb->prepare("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `s`.`string` LIKE ? AND ($sCondFields) LIMIT 1) OR ", '%' . $sFilter . '%');
+                        $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `s`.`string` LIKE ? AND ($sCondFields) LIMIT 1) OR ", '%' . $sFilter . '%');
                 }
 
                 $sCond = rtrim($sCond, ' OR ');

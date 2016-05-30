@@ -63,6 +63,15 @@ define('CHECK_ACTION_RESULT_LIMIT_REACHED', 3);
 define('CHECK_ACTION_RESULT_NOT_ALLOWED_BEFORE', 4);
 define('CHECK_ACTION_RESULT_NOT_ALLOWED_AFTER', 5);
 
+/**
+ * Standard period units
+ */
+define('MEMBERSHIP_PERIOD_UNIT_DAY', 'day');
+define('MEMBERSHIP_PERIOD_UNIT_WEEK', 'week');
+define('MEMBERSHIP_PERIOD_UNIT_MONTH', 'month');
+define('MEMBERSHIP_PERIOD_UNIT_YEAR', 'year');
+
+
 class BxDolAcl extends BxDol implements iBxDolSingleton
 {
     protected $oDb;
@@ -420,18 +429,15 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
      * @param  int     $iLevelId   membership that is going to be assigned to the profile
      *                             if $iLevelId == MEMBERSHIP_ID_STANDARD then $days and $bStartsNow parameters are not used,
      *                             so Standard membership is always set immediately and `forever`
-     * @param  int     $iDays      number of days to set membership for if 0, then the membership is set forever
+     * @param  mixed   $mixedPeriod  number of Days to set membership for or an array with 'period'-'period unit' pair. If number or 'period' in pair equal 0, then the membership is set forever
      * @param  boolean $bStartsNow if true, the membership will start immediately if false, the membership will start after the current membership expires
      * @return boolean true in case of success, false in case of failure
      */
-    function setMembership($iProfileId, $iLevelId, $iDays = 0, $bStartsNow = false, $sTransactionId = '')
+    function setMembership($iProfileId, $iLevelId, $mixedPeriod = 0, $bStartsNow = false, $sTransactionId = '')
     {
         $iProfileId = (int)$iProfileId;
         $iLevelId = (int)$iLevelId;
-        $iDays = (int)$iDays;
         $bStartsNow = $bStartsNow ? true : false;
-
-        $iSecInDay = 86400;
 
         if (!$iProfileId)
             $iProfileId = -1;
@@ -464,7 +470,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
             return $this->oDb->deleteLevelByProfileId($iProfileId);
         }
 
-        if ($iDays < 0)
+        if ((is_numeric($mixedPeriod) && (int)$mixedPeriod < 0) || (is_array($mixedPeriod) && (!isset($mixedPeriod['period']) || $mixedPeriod['period'] < 0)))
             return false;
 
         $iDateStarts = time();
@@ -482,12 +488,14 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         }
 
         // set lifetime membership if 0 days is used.
-        $iDateExpires = $iDays != 0 ? (int)$iDateStarts + $iDays * $iSecInDay : null;
-        if(!$this->oDb->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $iDateExpires, $sTransactionId))
+        if(is_numeric($mixedPeriod))
+        	$mixedPeriod = array('period' => (int)$mixedPeriod, 'period_unit' => MEMBERSHIP_PERIOD_UNIT_DAY);
+
+        if(!$this->oDb->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $mixedPeriod, $sTransactionId))
            return false;
 
         // raise membership alert
-        $oZ = new BxDolAlerts('profile', 'set_membership', '', $iProfileId, array('mlevel'=> $iLevelId, 'days' => $iDays, 'starts_now' => $bStartsNow, 'txn_id' => $sTransactionId));
+        $oZ = new BxDolAlerts('profile', 'set_membership', '', $iProfileId, array('mlevel'=> $iLevelId, 'period' => $mixedPeriod['period'], 'period_unit' => $mixedPeriod['period_unit'], 'starts_now' => $bStartsNow, 'txn_id' => $sTransactionId));
         $oZ->alert();
 
         // Send notification
@@ -612,7 +620,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         $aMembership = $aMembershipCurrent;
         while ($aMembership['id'] != MEMBERSHIP_ID_STANDARD) {
             $aMembershipLast = $aMembership;
-            if(!isset($aMembership['DateExpires']) || (int)$aMembership['DateExpires'] == 0)
+            if(!isset($aMembership['date_expires']) || (int)$aMembership['date_expires'] == 0)
                 break;
 
             $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $aMembership['date_expires']);

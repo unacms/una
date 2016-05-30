@@ -34,6 +34,12 @@ class BxAclGridView extends BxTemplGrid
     	return $this->_oPayment->getCartJs() . parent::getCode($isDisplayHeader);
     }
 
+	protected function _getCellPeriodUnit($mixedValue, $sKey, $aField, $aRow)
+    {
+    	$mixedValue = _t('_bx_acl_pre_values_' . $mixedValue);
+    	return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
 	protected function _getCellPrice($mixedValue, $sKey, $aField, $aRow)
     {
     	$aCurrency = $this->_oModule->_oConfig->getCurrency();

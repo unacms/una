@@ -169,6 +169,122 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
     }
 
+	/**
+     * Data for Notifications module
+     */
+    public function serviceGetNotificationsData()
+    {
+    	$sModule = $this->_aModule['name'];
+
+    	$sEventPrivacy = $sModule . '_allow_view_event_to';
+		if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+			$sEventPrivacy = '';
+
+        return array(
+            'handlers' => array(
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+                array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
+                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted'),
+                array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+                array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
+                array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+            ),
+            'alerts' => array(
+                array('unit' => $sModule, 'action' => 'added'),
+                array('unit' => $sModule, 'action' => 'edited'),
+                array('unit' => $sModule, 'action' => 'deleted'),
+                array('unit' => $sModule, 'action' => 'commentPost'),
+                array('unit' => $sModule, 'action' => 'commentRemoved'),
+                array('unit' => $sModule, 'action' => 'doVote'),
+                array('unit' => $sModule, 'action' => 'undoVote'),
+            )
+        );
+    }
+
+    /**
+     * Entry post for Notifications module
+     */
+    public function serviceGetNotificationsPost($aEvent)
+    {
+		$CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_sample_single'],
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+			'entry_privacy' => '', //may be empty or not specified. In this case Public privacy will be used.
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+	/**
+     * Entry post comment for Notifications module
+     */
+    public function serviceGetNotificationsComment($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
+        if(!$oComment || !$oComment->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_sample_single'],
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+			'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
+			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+	/**
+     * Entry post vote for Notifications module
+     */
+    public function serviceGetNotificationsVote($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+		$oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId);
+        if(!$oVote || !$oVote->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_sample_single'],
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+			'subentry_sample' => $CNF['T']['txt_sample_vote_single'],
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
     /**
      * Data for Timeline module
      */

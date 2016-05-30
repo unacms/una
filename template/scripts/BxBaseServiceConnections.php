@@ -64,7 +64,7 @@ class BxBaseServiceConnections extends BxDol
 			return array();
 
 		return array(
-			'entry_sample' => _t('_sys_profile_sample_single'),
+			'entry_sample' => '_sys_profile_sample_single',
 			'entry_url' => $oProfile->getUrl(),
 			'entry_caption' => $oProfile->getDisplayName(),
 			'entry_author' => $oProfile->id(),

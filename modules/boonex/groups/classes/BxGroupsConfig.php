@@ -25,6 +25,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
+            'convos-compose' => 'checkAllowedSubscribeAdd',
         );
 
         $this->CNF = array (
@@ -42,6 +43,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
             'FIELD_NAME' => 'group_name',
+            'FIELD_TITLE' => 'group_name',
             'FIELD_TEXT' => 'group_desc',
             'FIELD_PICTURE' => 'picture',
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
@@ -99,7 +101,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
-            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => '',
+            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
         	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
 
             // menu items which visibility depends on custom visibility checking
@@ -122,6 +124,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_groups_txt_sample_single',
+                'txt_sample_vote_single' => '_bx_groups_txt_sample_vote_single',
                 'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_groups_menu_item_title_befriend_confirm',
