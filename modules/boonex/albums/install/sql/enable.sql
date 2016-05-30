@@ -17,7 +17,6 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_albums_rss_num', '10', @iCategId, '_bx_albums_option_rss_num', 'digit', '', '', '', 20);
 
 -- PAGE: create entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_create_entry', '_bx_albums_page_title_sys_create_entry', '_bx_albums_page_title_create_entry', 'bx_albums', 5, 2147483647, 1, 'create-album', 'page.php?i=create-album', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
 
@@ -26,7 +25,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- PAGE: edit entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_edit_entry', '_bx_albums_page_title_sys_edit_entry', '_bx_albums_page_title_edit_entry', 'bx_albums', 5, 2147483647, 1, 'edit-album', '', '', '', '', 0, 1, 0, 'BxAlbumsPageEntry', 'modules/boonex/albums/classes/BxAlbumsPageEntry.php');
 
@@ -35,7 +33,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- PAGE: delete entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_delete_entry', '_bx_albums_page_title_sys_delete_entry', '_bx_albums_page_title_delete_entry', 'bx_albums', 5, 2147483647, 1, 'delete-album', '', '', '', '', 0, 1, 0, 'BxAlbumsPageEntry', 'modules/boonex/albums/classes/BxAlbumsPageEntry.php');
 
@@ -44,7 +41,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- PAGE: view entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_entry', '_bx_albums_page_title_sys_view_entry', '_bx_albums_page_title_view_entry', 'bx_albums', 10, 2147483647, 1, 'view-album', '', '', '', '', 0, 1, 0, 'BxAlbumsPageEntry', 'modules/boonex/albums/classes/BxAlbumsPageEntry.php');
 
@@ -59,7 +55,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 
 -- PAGE: view media
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_media', 'view-album-media', '_bx_albums_page_title_sys_view_media', '_bx_albums_page_title_view_media', 'bx_albums', 10, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxAlbumsPageMedia', 'modules/boonex/albums/classes/BxAlbumsPageMedia.php');
 
@@ -72,7 +67,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 
 -- PAGE: view entry comments
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_entry_comments', '_bx_albums_page_title_sys_view_entry_comments', '_bx_albums_page_title_view_entry_comments', 'bx_albums', 5, 2147483647, 1, 'view-album-comments', '', '', '', '', 0, 1, 0, 'BxAlbumsPageEntry', 'modules/boonex/albums/classes/BxAlbumsPageEntry.php');
 
@@ -81,23 +75,13 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 
 -- PAGE: popular albums
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_popular', '_bx_albums_page_title_sys_entries_popular', '_bx_albums_page_title_entries_popular', 'bx_albums', 5, 2147483647, 1, 'albums-popular', 'page.php?i=albums-popular', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_albums_popular', 1, 'bx_albums', '_bx_albums_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:8:"extended";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
--- PAGE: updated albums
-
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_albums_updated', '_bx_albums_page_title_sys_entries_updated', '_bx_albums_page_title_entries_updated', 'bx_albums', 5, 2147483647, 1, 'albums-updated', 'page.php?i=albums-updated', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_albums_updated', 1, 'bx_albums', '_bx_albums_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{s:9:"unit_view";s:8:"extended";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
-
 -- PAGE: popular media
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_popular_media', '_bx_albums_page_title_sys_entries_popular_media', '_bx_albums_page_title_entries_popular_media', 'bx_albums', 5, 2147483647, 1, 'albums-popular-media', 'page.php?i=albums-popular-media', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowseMedia', 'modules/boonex/albums/classes/BxAlbumsPageBrowseMedia.php');
 
@@ -105,7 +89,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_albums_popular_media', 1, 'bx_albums', '_bx_albums_page_block_title_popular_media', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:20:"browse_popular_media";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
 -- PAGE: entries of author
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_author', 'albums-author', '_bx_albums_page_title_sys_entries_of_author', '_bx_albums_page_title_entries_of_author', 'bx_albums', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxAlbumsPageAuthor', 'modules/boonex/albums/classes/BxAlbumsPageAuthor.php');
 
@@ -114,12 +97,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_sys_entries_of_author', '_bx_albums_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 1);
 
 -- PAGE: module home
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_home', 'albums-home', '_bx_albums_page_title_sys_home', '_bx_albums_page_title_home', 'bx_albums', 2, 2147483647, 1, 'page.php?i=albums-home', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_albums_home', 1, 'bx_albums', '', '_bx_albums_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"extended\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, 0),
+('bx_albums_home', 0, 'bx_albums', '', '_bx_albums_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"extended\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, 0),
+('bx_albums_home', 1, 'bx_albums', '', '_bx_albums_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"browse_updated\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"extended\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, 1),
 ('bx_albums_home', 2, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_albums', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:3:{i:0;s:9:\"bx_albums\";i:1;s:9:\"bx_albums\";i:2;a:1:{s:10:\"show_empty\";b:1;}}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 1, 0, 1, 0),
 ('bx_albums_home', 2, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_media', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:15:\"bx_albums_media\";i:1;s:15:\"bx_albums_media\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 1, 0, 1, 1),
 ('bx_albums_home', 2, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_media_camera', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:22:\"bx_albums_media_camera\";i:1;s:22:\"bx_albums_media_camera\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 1, 0, 1, 2);
@@ -139,13 +122,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_albums_administration', 1, 'bx_albums', '_bx_albums_page_block_title_system_manage_administration', '_bx_albums_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
 
 -- PAGE: add block to homepage
-
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('sys_home', 1, 'bx_albums', '_bx_albums_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"browse_public\";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
+('sys_home', 1, 'bx_albums', '_bx_albums_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"browse_public\";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1),
+('sys_home', 1, 'bx_albums', '_bx_albums_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"browse_updated\";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 2);
 
 -- PAGE: service blocks
-
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('', 0, 'bx_albums', '', '_bx_albums_page_block_title_recent_media', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:20:"browse_popular_media";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:1;}}', 0, 1, 1, @iBlockOrder + 1),
@@ -209,9 +191,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_albums_submenu', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_recent', '_bx_albums_menu_item_title_entries_recent', 'page.php?i=albums-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_albums_submenu', 'bx_albums', 'albums-popular', '_bx_albums_menu_item_title_system_entries_popular', '_bx_albums_menu_item_title_entries_popular', 'page.php?i=albums-popular', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_albums_submenu', 'bx_albums', 'albums-updated', '_bx_albums_menu_item_title_system_entries_updated', '_bx_albums_menu_item_title_entries_updated', 'page.php?i=albums-updated', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_albums_submenu', 'bx_albums', 'albums-popular-media', '_bx_albums_menu_item_title_system_entries_popular_media', '_bx_albums_menu_item_title_entries_popular_media', 'page.php?i=albums-popular-media', '', '', '', '', 2147483647, 1, 1, 4),
-('bx_albums_submenu', 'bx_albums', 'albums-manage', '_bx_albums_menu_item_title_system_entries_manage', '_bx_albums_menu_item_title_entries_manage', 'page.php?i=albums-manage', '', '', '', '', 2147483646, 1, 1, 5);
+('bx_albums_submenu', 'bx_albums', 'albums-popular-media', '_bx_albums_menu_item_title_system_entries_popular_media', '_bx_albums_menu_item_title_entries_popular_media', 'page.php?i=albums-popular-media', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_albums_submenu', 'bx_albums', 'albums-manage', '_bx_albums_menu_item_title_system_entries_manage', '_bx_albums_menu_item_title_entries_manage', 'page.php?i=albums-manage', '', '', '', '', 2147483646, 1, 1, 4);
 
 -- MENU: sub-menu for view entry
 
