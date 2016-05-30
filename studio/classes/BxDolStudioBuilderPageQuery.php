@@ -253,8 +253,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 break;
 
             case 'by_ids':
-                $sWhereClause = "AND `tpb`.`id` IN ('" . implode("','", array_fill(0, count($aParams['value']), '?')) . "')";
-                $sWhereClause = call_user_func_array(array($this, 'prepare'), array_merge(array($sWhereClause), $aParams['value']));
+                $sWhereClause = "AND `tpb`.`id` IN (" . $this->implode_escape($aParams['value']) . ")";
                 break;
 
             case 'by_object':
@@ -262,7 +261,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 	'object' => $aParams['value']
                 );
 
-                $sWhereClause = "AND `tpb`.`object`=?";
+                $sWhereClause = "AND `tpb`.`object`=:object";
                 break;
 
             case 'by_object_cell':

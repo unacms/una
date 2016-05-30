@@ -230,8 +230,12 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         if(!in_array($iFetchType, array(PDO::FETCH_NUM, PDO::FETCH_ASSOC, PDO::FETCH_BOTH)))
             $iFetchType = $this->_iPdoFetchType;
 
-        if($this->res($oStatement, $aBindings))
-            $aResult = $oStatement->fetch($iFetchType);
+        if(!$this->res($oStatement, $aBindings))
+        	return array();
+
+		$aResult = $oStatement->fetch($iFetchType);
+		if($aResult === false)
+        	return array();
 
         return $aResult;
     }
@@ -247,8 +251,12 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 		else if(!($oStatement instanceof PDOStatement) && is_string($oStatement))
 			$oStatement = $this->prepare($oStatement);
 
-        if($this->res($oStatement, $aBindings))
-			$aResult = $oStatement->fetchAll(PDO::FETCH_COLUMN, $iFetchColumnNumber);
+        if(!$this->res($oStatement, $aBindings))
+        	return array();
+
+		$aResult = $oStatement->fetchAll(PDO::FETCH_COLUMN, $iFetchColumnNumber);
+		if($aResult === false)
+        	return array();
 
         return $aResult;
     }
@@ -311,8 +319,12 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         if(!in_array($iFetchType, array(PDO::FETCH_NUM, PDO::FETCH_ASSOC, PDO::FETCH_BOTH)))
             $iFetchType = $this->_iPdoFetchType;
 
-        if($this->res($oStatement, $aBindings))
-        	$aResult = $oStatement->fetchAll($iFetchType);
+        if(!$this->res($oStatement, $aBindings))
+        	return array();
+
+		$aResult = $oStatement->fetchAll($iFetchType);
+		if($aResult === false)
+        	return array();
 
         return $aResult;
     }
