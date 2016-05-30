@@ -97,20 +97,27 @@ class BxGroupsModule extends BxBaseModProfileModule
         return $aFieldsProfile;
     }
 
+    public function serviceOnRemoveConnection ($iGroupProfileId, $iInitiatorId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        list ($iProfileId, $iGroupProfileId, $oGroupProfile) = $this->_prepareProfileAndGroupProfile($iGroupProfileId, $iInitiatorId);
+        if (!$oGroupProfile)
+            return false;
+
+        $this->_oDb->fromAdmins($iGroupProfileId, $iProfileId);
+
+        if ($oConn = BxDolConnection::getObjectInstance('sys_profiles_subscriptions'))
+            $oConn->removeConnection($iProfileId, $iGroupProfileId);
+    }
+
     public function serviceAddMutualConnection ($iGroupProfileId, $iInitiatorId, $iIgnoreJoinConfirmation = false)
     {        
         $CNF = &$this->_oConfig->CNF;
 
-        if (!($oGroupProfile = BxDolProfile::getInstance($iGroupProfileId)))
+        list ($iProfileId, $iGroupProfileId, $oGroupProfile) = $this->_prepareProfileAndGroupProfile($iGroupProfileId, $iInitiatorId);
+        if (!$oGroupProfile)
             return false;
-
-        if ($oGroupProfile->getModule() == $this->getName()) {
-            $iProfileId = $iInitiatorId;
-            $iGroupProfileId = $oGroupProfile->id();
-        } else {
-            $iProfileId = $oGroupProfile->id();
-            $iGroupProfileId = $iInitiatorId;
-        }
 
         if (!($aContentInfo = $this->_oDb->getContentInfoById((int)BxDolProfile::getInstance($iGroupProfileId)->getContentId())))
             return false;
@@ -418,6 +425,22 @@ class BxGroupsModule extends BxBaseModProfileModule
         return array(
 		    array('url' => $sUrl, 'src' => $oGroupProfile->getPicture()),
 		);
+    }
+
+    protected function _prepareProfileAndGroupProfile($iGroupProfileId, $iInitiatorId)
+    {
+        if (!($oGroupProfile = BxDolProfile::getInstance($iGroupProfileId)))
+            return array(0, 0, null);
+
+        if ($oGroupProfile->getModule() == $this->getName()) {
+            $iProfileId = $iInitiatorId;
+            $iGroupProfileId = $oGroupProfile->id();
+        } else {
+            $iProfileId = $oGroupProfile->id();
+            $iGroupProfileId = $iInitiatorId;
+        }
+
+        return array($iProfileId, $iGroupProfileId, $oGroupProfile);
     }
 }
 

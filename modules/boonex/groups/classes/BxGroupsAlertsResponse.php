@@ -24,6 +24,9 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
         if ('bx_groups_fans' == $oAlert->sUnit && 'connection_added' == $oAlert->sAction) {
             $this->_oModule->serviceAddMutualConnection($oAlert->aExtras['content'], $oAlert->aExtras['initiator']);
         }
+        elseif ('bx_groups_fans' == $oAlert->sUnit && 'connection_removed' == $oAlert->sAction) {
+            $this->_oModule->serviceOnRemoveConnection($oAlert->aExtras['content'], $oAlert->aExtras['initiator']);
+        }
 
         // profile delete event
         if ('profile' == $oAlert->sUnit && 'delete' == $oAlert->sAction) {
