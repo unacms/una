@@ -108,6 +108,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_posts_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_posts_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_posts_txt_all_entries_by',
+            	'txt_pict_use_as_thumb' => '_bx_posts_form_entry_input_picture_use_as_thumb'
             ),
         );
 
