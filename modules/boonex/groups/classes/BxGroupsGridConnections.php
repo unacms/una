@@ -131,11 +131,16 @@ class BxGroupsGridConnections extends BxDolGridConnections
             $sEmailTemplate = 'toAdmins' == $sFunc ? 'bx_groups_fan_become_admin' : 'bx_groups_admin_become_fan';
             list($iGroupProfileId, $iProfileId) = $this->_prepareGroupProfileAndMemberProfile($iGroupProfileId, $iId);
             if (bx_get_logged_profile_id() != $iProfileId) {
+                // notify about admin status
                 sendMailTemplate($sEmailTemplate, 0, $iProfileId, array(
                     'EntryUrl' => BxDolProfile::getInstance($iGroupProfileId)->getUrl(),
                     'EntryTitle' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName(),
                 ), BX_EMAIL_NOTIFY);
             }
+
+            // subscribe admins automatically
+            if ('toAdmins' == $sFunc && ($oConn = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')))
+                $oConn->addConnection($iProfileId, $iGroupProfileId);
 
             echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
         }

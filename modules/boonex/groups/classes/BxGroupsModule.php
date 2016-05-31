@@ -243,15 +243,27 @@ class BxGroupsModule extends BxBaseModProfileModule
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
 
                 array('group' => $sModule . '_fan_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'fan_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_fan_added', 'module_class' => 'Module'),
+
                 array('group' => $sModule . '_join_request', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_request', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_request', 'module_class' => 'Module', 'module_event_privacy' => 'bx_groups_allow_view_notification_to'),
+                
+                array('group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module'),
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
                 array('unit' => $sModule, 'action' => 'fan_added'),
                 array('unit' => $sModule, 'action' => 'join_request'),
+                array('unit' => $sModule, 'action' => 'timeline_post_common'),
             )
         );
+    }
+
+    /**
+     * Notification about new member requst in the group
+     */
+    public function serviceGetNotificationsTimelinePostCommon($aEvent)
+    {
+        return $this->_serviceGetNotification($aEvent, '_bx_groups_txt_ntfs_timeline_post_common');
     }
 
     /**

@@ -210,6 +210,7 @@
 
     <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group has got new member - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group has new request from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_groups_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group timeline  from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
 
     <string name="_bx_groups_privacy_group_closed"><![CDATA[Closed]]></string>
     <string name="_bx_groups_privacy_group_secret"><![CDATA[Secret]]></string>
