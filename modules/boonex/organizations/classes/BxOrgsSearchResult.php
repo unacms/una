@@ -98,6 +98,13 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 $this->sBrowseUrl = 'page.php?i=organizations-active';
                 break;
 
+			case 'online':
+                $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_online');
+                $this->aCurrent['sorting'] = 'active';
+                $this->sBrowseUrl = 'page.php?i=organizations-online';
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_orgs');

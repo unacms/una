@@ -54,6 +54,7 @@
 	<string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_orgs_page_title_browse"><![CDATA[Organizations]]></string>
 	<string name="_bx_orgs_page_title_browse_active"><![CDATA[Active Organizations]]></string>
+	<string name="_bx_orgs_page_title_browse_online"><![CDATA[Online Organizations]]></string>
 	<string name="_bx_orgs_page_title_browse_recent"><![CDATA[New Organizations]]></string>
 	<string name="_bx_orgs_page_title_browse_connections"><![CDATA[{0} connections]]></string>
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
@@ -68,6 +69,8 @@
 	<string name="_bx_orgs_page_title_manage"><![CDATA[Manage Organizations]]></string>
 	<string name="_bx_orgs_page_title_sys_active"><![CDATA[Active Organizations]]></string>
 	<string name="_bx_orgs_page_title_active"><![CDATA[Active Organizations]]></string>
+	<string name="_bx_orgs_page_title_sys_online"><![CDATA[Online Organizations]]></string>
+	<string name="_bx_orgs_page_title_online"><![CDATA[Online Organizations]]></string>
 
 	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Create Organization's Profile]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
@@ -88,6 +91,7 @@
 	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage All Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Active Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Online Organizations]]></string>
 
     <string name="_bx_orgs_page_block_title_categories"><![CDATA[Organization categories]]></string>
 
@@ -156,6 +160,8 @@
 	<string name="_bx_orgs_menu_item_title_manage_all"><![CDATA[All Organizations]]></string>
 	<string name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Active]]></string>
 	<string name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Active]]></string>
+	<string name="_bx_orgs_menu_item_title_system_entries_online"><![CDATA[Online]]></string>
+	<string name="_bx_orgs_menu_item_title_entries_online"><![CDATA[Online]]></string>
 
 	<string name="_bx_orgs_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_orgs_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>

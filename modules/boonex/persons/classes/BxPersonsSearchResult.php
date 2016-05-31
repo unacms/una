@@ -98,6 +98,13 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 $this->sBrowseUrl = 'page.php?i=persons-active';
                 break;
 
+			case 'online':
+                $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_online');
+                $this->aCurrent['sorting'] = 'active';
+                $this->sBrowseUrl = 'page.php?i=persons-online';
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_persons');

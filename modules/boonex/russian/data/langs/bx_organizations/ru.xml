@@ -54,6 +54,7 @@
 	<string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_orgs_page_title_browse"><![CDATA[Организации]]></string>
     <string name="_bx_orgs_page_title_browse_active"><![CDATA[Последние Активные Организации]]></string>
+    <string name="_bx_orgs_page_title_browse_online"><![CDATA[Онлайн Организации]]></string>
 	<string name="_bx_orgs_page_title_browse_recent"><![CDATA[Последние Добавленные Организации]]></string>
 	<string name="_bx_orgs_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
@@ -68,7 +69,8 @@
 	<string name="_bx_orgs_page_title_manage"><![CDATA[Управление организациями]]></string>
 	<string name="_bx_orgs_page_title_sys_active"><![CDATA[Последние Активные Организации]]></string>
 	<string name="_bx_orgs_page_title_active"><![CDATA[Последние Активные Организации]]></string>
-    <string name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string>
+	<string name="_bx_orgs_page_title_sys_online"><![CDATA[Онлайн Организации]]></string>
+	<string name="_bx_orgs_page_title_online"><![CDATA[Онлайн Организации]]></string>
 
 	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Создать профиль организации]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
@@ -89,6 +91,9 @@
 	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Управление всеми организациями]]></string>
 	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Управление организациями]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Последние Активные Организации]]></string>
+    <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Онлайн Организации]]></string>
+
+	<string name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Организации - Подменю]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Организации - Подменю]]></string>
@@ -155,6 +160,8 @@
 	<string name="_bx_orgs_menu_item_title_manage_all"><![CDATA[Все организации]]></string>
 	<string name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Активные Организации]]></string>
 	<string name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Активные Организации]]></string>
+	<string name="_bx_orgs_menu_item_title_system_entries_online"><![CDATA[Онлайн]]></string>
+	<string name="_bx_orgs_menu_item_title_entries_online"><![CDATA[Онлайн]]></string>
 
 	<string name="_bx_orgs_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_orgs_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
