@@ -20,7 +20,7 @@ class BxCnvAlertsResponse extends BxBaseModTextAlertsResponse
     public function response($oAlert)
     {
         if ($this->MODULE == $oAlert->sUnit && 'commentPost' == $oAlert->sAction)
-            BxDolService::call($this->MODULE, 'trigger_comment_post', array($oAlert->iObject, $oAlert->aExtras['comment_author_id'], $oAlert->aExtras['comment_id']));
+            BxDolService::call($this->MODULE, 'trigger_comment_post', array($oAlert->iObject, $oAlert->aExtras['comment_author_id'], $oAlert->aExtras['comment_id'], 0, $oAlert->aExtras['comment_text']));
 
         parent::response($oAlert);
     }
