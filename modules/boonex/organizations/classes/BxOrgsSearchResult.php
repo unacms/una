@@ -29,6 +29,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_organizations', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_organizations_data'),
+        		'online' => array('value' => '', 'field' => 'date', 'operator' => '>', 'table' => 'sys_sessions'),
             ),
             'join' => array (
                 'profile' => array(
@@ -44,6 +45,13 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                     'mainField' => 'account_id',
                     'onField' => 'id',
                     'joinFields' => array(),
+                ),
+                'session' => array(
+                    'type' => 'INNER',
+                    'table' => 'sys_sessions',
+                    'mainField' => 'account_id',
+                    'onField' => 'user_id',
+                    'joinFields' => array('date'),
                 ),
             ),
             'paginate' => array('perPage' => 20, 'start' => 0),
@@ -101,7 +109,8 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
 			case 'online':
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_online');
-                $this->aCurrent['sorting'] = 'active';
+                $this->aCurrent['restriction']['online']['value'] = time() - 60 * (int)getParam('sys_account_online_time');
+                $this->aCurrent['sorting'] = 'online';
                 $this->sBrowseUrl = 'page.php?i=organizations-online';
                 break;
 
@@ -122,11 +131,15 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
     function getAlterOrder()
     {
         switch ($this->aCurrent['sorting']) {
-        case 'none':
-            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
-        case 'last':
-        default:                        
-            return array('order' => ' ORDER BY `bx_organizations_data`.`added` DESC ');
+	        case 'none':
+	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
+			case 'active':
+	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
+			case 'online':
+	            return array('order' => ' ORDER BY `sys_sessions`.`date` DESC ');
+	        case 'last':
+	        default:                        
+	            return array('order' => ' ORDER BY `bx_organizations_data`.`added` DESC ');
         }
     }
 
