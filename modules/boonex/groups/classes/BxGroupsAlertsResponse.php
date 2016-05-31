@@ -24,7 +24,6 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
         // re-translate timeline alert
         if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id']))) {
             $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
-            echoDbgLog($aContentInfo);
             bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $oGroupProfile->id(), array('content' => $aContentInfo, 'group_profile' => $oGroupProfile->id(), 'profile' => $oAlert->iSender, 'notification_subobject_id' => $oAlert->iSender, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
         }
 
