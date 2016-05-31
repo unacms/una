@@ -35,6 +35,7 @@
 	<string name="_bx_posts_form_entry_input_pictures"><![CDATA[Картинки]]></string>
     <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_posts_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_posts_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
 
 	<string name="_bx_posts_acl_action_create_entry"><![CDATA[Создать публикацию]]></string>
 	<string name="_bx_posts_acl_action_delete_entry"><![CDATA[Удалить публикацию]]></string>

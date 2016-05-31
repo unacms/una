@@ -175,6 +175,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 				'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),
 				'content' => array (
 					'name_thumb' => $CNF['FIELD_THUMB'],
+    				'txt_pict_use_as_thumb' => _t(!empty($CNF['T']['txt_pict_use_as_thumb']) ? $CNF['T']['txt_pict_use_as_thumb'] : '_sys_txt_form_entry_input_picture_use_as_thumb')
 				),
 			),
 		);
