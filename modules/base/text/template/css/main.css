@@ -2,12 +2,6 @@
 @import url(../../../general/template/css/main.css);
 
 /* unit */
-
-.bx-base-text-unit:first-child h2,
-.bx-base-text-unit:first-child h1 {
-    padding-top:0;
-}
-
 .bx-base-text-unit h2,
 .bx-base-text-unit h1 {
     margin:0;
@@ -29,6 +23,19 @@
 
 .bx-base-text-unit-summary p {
     margin:0;
+}
+
+.bx-base-text-unit-cover {
+	position: relative;
+}
+
+.bx-base-text-unit-cover img {
+	position: relative;
+	display: block;
+
+	width: 100%;
+	height: 300px;
+    object-fit: cover;
 }
 
 .bx-base-text-unit-info {

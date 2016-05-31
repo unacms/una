@@ -19,6 +19,13 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
     public function response($oAlert)
     {
         $this->_oModule = BxDolModule::getInstance('bx_groups');
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        // re-translate timeline alert
+        if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id']))) {
+            $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
+            bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $oGroupProfile->id(), array('content' => $aContentInfo, 'group_profile' => $oGroupProfile->id(), 'profile' => $oAlert->iSender, 'notification_subobject_id' => $oAlert->iSender, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
+        }
 
         // connection events
         if ('bx_groups_fans' == $oAlert->sUnit && 'connection_added' == $oAlert->sAction) {

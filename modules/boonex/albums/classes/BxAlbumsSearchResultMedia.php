@@ -15,7 +15,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
     function __construct($sMode = '', $aParams = array())
     {
-        $this->sCenterContentUnitSelector = '.bx-albums-unit-size';
+        $this->sCenterContentUnitSelector = '.bx-albums-media-wrapper';
 
         $this->aUnitViews = array('gallery' => 'unit_media.html');
 

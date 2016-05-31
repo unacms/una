@@ -34,3 +34,7 @@ DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_convos';
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_convos' LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
+
+-- EMAIL TEMPLATES
+DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_convos';
+
