@@ -32,13 +32,15 @@ class BxDolSessionQuery extends BxDolDb
     }
     function save($sId, $aSet)
     {
-        $sSetClause = "`id`=:id";
-        foreach($aSet as $sKey => $sValue)
-            $sSetClause .= ", `" . $sKey . "`=:" . $sKey;
-        $sSetClause .= ", `date`=UNIX_TIMESTAMP()";
+    	$aSet['id'] = $sId;
+        return (int)$this->query("REPLACE INTO `" . $this->sTable . "` SET " . $this->arrayToSQL($aSet) . ", `date`=UNIX_TIMESTAMP()") > 0;
+    }
+	function update($sId, $aSet = array())
+    {
+    	$sSet = !empty($aSet) ? $this->arrayToSQL($aSet) . ", " : "";
+    	$sSet .= "`date`=UNIX_TIMESTAMP()";
 
-        $sSql = $this->prepare("REPLACE INTO `" . $this->sTable . "` SET " . $sSetClause);
-        return (int)$this->query($sSql, array_merge(array('id' => $sId), $aSet)) > 0;
+        return (int)$this->query("UPDATE `" . $this->sTable . "` SET " . $sSet . " WHERE `id`=:id", array('id' => $sId)) > 0;
     }
     function delete($sId)
     {

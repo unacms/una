@@ -4,8 +4,7 @@
         <img src="{file_icon}" class="bx-def-round-corners bx-base-text-icon bx-base-text-icon-{file_id}" />
     </div>
     <span class="bx-base-text-uploader-ghost">
-        <b><bx_text:_sys_txt_form_entry_input_picture_pic_url /></b>
-        <br />
+        <b><bx_text:_sys_txt_form_entry_input_picture_pic_url /></b><br />
         <input class="bx-def-font-inputs bx-form-input-text bx-def-margin-sec-bottom" type="text" value="{file_url}" readonly="1" /> <br />
 
         <span id="bx-base-text-intert-to-post-link-{file_id}" style="display:none;">
@@ -16,10 +15,9 @@
         <bx_if:set_thumb>
             <span class="bx-base-text-use-as-thumb">
                 <input type="checkbox" name="__name_thumb__[]" value="{file_id}" onclick="bx_base_text_select_thumb(this)" id="__name_thumb__-{file_id}" /> 
-                <label for="__name_thumb__-{file_id}"><bx_text:_sys_txt_form_entry_input_picture_use_as_thumb /></label>
+                <label for="__name_thumb__-{file_id}">__txt_pict_use_as_thumb__</label>
             </span>
         </bx_if:set_thumb>
-
     </span>
 </div>
 <script>

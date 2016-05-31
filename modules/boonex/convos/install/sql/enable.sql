@@ -190,3 +190,9 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_convos', 'commentRemoved', @iHandler),
 ('profile', 'delete', @iHandler);
 
+-- EMAIL TEMPLATES
+
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
+('bx_convos', '_bx_cnv_email_new_message', 'bx_cnv_new_message', '_bx_cnv_email_new_message_subject', '_bx_cnv_email_new_message_body'),
+('bx_convos', '_bx_cnv_email_new_reply', 'bx_cnv_new_reply', '_bx_cnv_email_new_reply_subject', '_bx_cnv_email_new_reply_body');
+

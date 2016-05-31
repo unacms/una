@@ -90,14 +90,16 @@ class BxDolSession extends BxDol implements iBxDolSingleton
         if(empty($sId) && isset($_COOKIE[BX_DOL_SESSION_COOKIE]))
             $sId = bx_process_input($_COOKIE[BX_DOL_SESSION_COOKIE]);
 
-        $mixedSession = array();
-        if(($mixedSession = $this->oDb->exists($sId)) !== false) {
-            $this->sId = $mixedSession['id'];
-            $this->iUserId = (int)$mixedSession['user_id'];
-            $this->aData = unserialize($mixedSession['data']);
-            return true;
-        } else
-            return false;
+        $mixedSession = $this->oDb->exists($sId);
+        if($mixedSession === false) 
+        	return false;
+
+		$this->sId = $mixedSession['id'];
+		$this->iUserId = (int)$mixedSession['user_id'];
+		$this->aData = unserialize($mixedSession['data']);
+
+		$this->oDb->update($this->sId);
+		return true;
     }
 
     function getId()

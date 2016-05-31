@@ -51,6 +51,7 @@
 	<string name="_bx_persons_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_persons_page_title_browse"><![CDATA[Люди]]></string>
 	<string name="_bx_persons_page_title_browse_active"><![CDATA[Последние Активные Пользователи]]></string>
+	<string name="_bx_persons_page_title_browse_online"><![CDATA[Онлайн Пользователи]]></string>
 	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Последние Присоединившиеся Пользователи]]></string>
 	<string name="_bx_persons_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_persons_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
@@ -65,6 +66,8 @@
 	<string name="_bx_persons_page_title_manage"><![CDATA[Управление профилями]]></string>
 	<string name="_bx_persons_page_title_sys_active"><![CDATA[Последние Активные Пользователи]]></string>
 	<string name="_bx_persons_page_title_active"><![CDATA[Последние Активные Пользователи]]></string>
+	<string name="_bx_persons_page_title_sys_online"><![CDATA[Онлайн Пользователи]]></string>
+	<string name="_bx_persons_page_title_online"><![CDATA[Онлайн Пользователи]]></string>
 
 	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Создать персональный профиль]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
@@ -85,6 +88,7 @@
 	<string name="_bx_persons_page_block_title_system_manage_administration"><![CDATA[Управление всеми профилями]]></string>
 	<string name="_bx_persons_page_block_title_manage"><![CDATA[Управление профилями]]></string>
     <string name="_bx_persons_page_block_title_active_profiles"><![CDATA[Последние Активные Пользователи]]></string>
+    <string name="_bx_persons_page_block_title_online_profiles"><![CDATA[Онлайн Пользователи]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Персоны - Подменю]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Персоны - Подменю]]></string>
@@ -152,6 +156,8 @@
 	<string name="_bx_persons_menu_item_title_manage_all"><![CDATA[Все профили]]></string>   
 	<string name="_bx_persons_menu_item_title_system_entries_active"><![CDATA[Активные профили]]></string>
 	<string name="_bx_persons_menu_item_title_entries_active"><![CDATA[Активные профили]]></string>
+	<string name="_bx_persons_menu_item_title_system_entries_online"><![CDATA[Онлайн]]></string>
+	<string name="_bx_persons_menu_item_title_entries_online"><![CDATA[Онлайн]]></string>
 
 	<string name="_bx_persons_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_persons_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>

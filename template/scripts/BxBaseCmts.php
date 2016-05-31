@@ -577,10 +577,10 @@ class BxBaseCmts extends BxDolCmts
                     $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
-                $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $iCmtObjectId, $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $iCmtAuthorId, 'object_author_id' => $iCmtObjectAuthorId));
+                $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $iCmtObjectId, $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_text' => $sCmtText, 'comment_author_id' => $iCmtAuthorId, 'object_author_id' => $iCmtObjectAuthorId));
                 $oZ->alert();
 
-                $oZ = new BxDolAlerts('comment', 'added', $iCmtId, $iCmtAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iCmtObjectId, 'object_author_id' => $iCmtObjectAuthorId));
+                $oZ = new BxDolAlerts('comment', 'added', $iCmtId, $iCmtAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iCmtObjectId, 'object_author_id' => $iCmtObjectAuthorId, 'comment_text' => $sCmtText));
         		$oZ->alert();
 
                 return array('id' => $iCmtId, 'parent_id' => $iCmtParentId);

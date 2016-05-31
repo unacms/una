@@ -706,8 +706,8 @@ EOJ;
             echo "<b>Debug backtrace:</b><br />";
 
             $sBackTrace = print_r($aBackTrace, true);
-            $sBackTrace = str_replace('[password] => ' . BX_DATABASE_PASS, '[password] => *****', $sBackTrace);
-            $sBackTrace = str_replace('[user] => ' . BX_DATABASE_USER, '[user] => *****', $sBackTrace);
+            $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
+            $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
 
             echo '<pre>' . htmlspecialchars_adv($sBackTrace) . '</pre>';
 
