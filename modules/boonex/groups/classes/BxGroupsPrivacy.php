@@ -9,19 +9,11 @@
  * @{
  */
 
-class BxGroupsPrivacy extends BxTemplPrivacy
+class BxGroupsPrivacy extends BxBaseModProfilePrivacy
 {
-	protected $MODULE;
-	protected $_oModule;
-
     function __construct($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_groups';
-
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
-    	if(!$oTemplate)
-			$oTemplate = $this->_oModule->_oTemplate;
-
         parent::__construct($aOptions, $oTemplate);
     }
 

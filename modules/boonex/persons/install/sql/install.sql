@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `fullname` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `views` int(11) NOT NULL default '0',
+  `allow_view_to` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `fullname` (`fullname`)
 );
@@ -100,6 +101,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_person', 'bx_person_view', 'bx_persons', 1, '_bx_persons_form_profile_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_person', 'bx_persons', 'allow_view_to', 3, '', 0, 'custom', '_bx_persons_form_profile_input_sys_allow_view_to', '_bx_persons_form_profile_input_allow_view_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_person', 'bx_persons', 'cover', '', '', 0, 'file', '_bx_persons_form_profile_input_sys_cover', '_bx_persons_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_person', 'bx_persons', 'cover_preview', '', '', 0, 'custom', '_bx_persons_form_profile_input_sys_cover_preview', '_bx_persons_form_profile_input_cover_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_person', 'bx_persons', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_persons_form_profile_input_sys_delete_confirm', '_bx_persons_form_profile_input_delete_confirm', '_bx_persons_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_delete_confirm_error', '', '', 1, 0),
@@ -117,7 +119,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_add', 'picture', 2147483647, 1, 5),
 ('bx_person_add', 'fullname', 2147483647, 1, 6),
 ('bx_person_add', 'description', 2147483647, 1, 8),
-('bx_person_add', 'do_submit', 2147483647, 1, 9),
+('bx_person_add', 'allow_view_to', 2147483647, 1, 9),
+('bx_person_add', 'do_submit', 2147483647, 1, 10),
 ('bx_person_delete', 'cover', 2147483647, 0, 0),
 ('bx_person_delete', 'cover_preview', 2147483647, 0, 0),
 ('bx_person_delete', 'picture', 2147483647, 0, 0),
@@ -132,7 +135,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_edit', 'picture', 2147483647, 1, 5),
 ('bx_person_edit', 'fullname', 2147483647, 1, 6),
 ('bx_person_edit', 'description', 2147483647, 1, 7),
-('bx_person_edit', 'do_submit', 2147483647, 1, 8),
+('bx_person_edit', 'allow_view_to', 2147483647, 1, 8),
+('bx_person_edit', 'do_submit', 2147483647, 1, 9),
 ('bx_person_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_edit_cover', 'fullname', 2147483647, 0, 2),
 ('bx_person_edit_cover', 'picture', 2147483647, 0, 3),
