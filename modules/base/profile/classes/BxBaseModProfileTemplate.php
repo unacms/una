@@ -56,6 +56,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedView($aData)) {
+            $CNF = &$this->_oConfig->CNF;
+            $aData[$CNF['FIELD_COVER']] = 0;
+            $aData[$CNF['FIELD_PICTURE']] = 0;
+        }
+        
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         $sUrlPicture = $this->urlPicture ($aData);

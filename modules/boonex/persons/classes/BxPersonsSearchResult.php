@@ -37,7 +37,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                     'table' => 'bx_persons_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'fullname', 'picture', 'added'),
+                    'joinFields' => array('id', 'fullname', 'picture', 'added', 'author', 'allow_view_to'),
                 ),
                 'account' => array(
                     'type' => 'INNER',
@@ -110,6 +110,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_online');
                 $this->aCurrent['restriction']['online']['value'] = time() - 60 * (int)getParam('sys_account_online_time');
+                $this->aCurrent['restriction_sql'] = ' AND `sys_accounts`.`profile_id`=`sys_profiles`.`id`';
                 $this->aCurrent['sorting'] = 'online';
                 $this->sBrowseUrl = 'page.php?i=persons-online';
                 break;

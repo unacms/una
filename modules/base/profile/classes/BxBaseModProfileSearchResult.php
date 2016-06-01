@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    BaseText Base classes for text modules
+ * @defgroup    BaseProfile Base classes for profile modules
  * @ingroup     TridentModules
  *
  * @{

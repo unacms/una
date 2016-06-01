@@ -94,6 +94,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'groups-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_groups_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_groups_view_profile',
+            'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_groups_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_groups_allow_view_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_groups_administration',
         	'OBJECT_GRID_COMMON' => 'bx_groups_common',
