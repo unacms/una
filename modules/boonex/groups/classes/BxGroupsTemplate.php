@@ -52,10 +52,8 @@ class BxGroupsTemplate extends BxBaseModProfileTemplate
     }
 
     function setCover ($aData, $sTemplateName = 'cover.html')
-    {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-    
-        if ('c' != $aData['allow_view_to'] && CHECK_ACTION_RESULT_ALLOWED !== $oModule->checkAllowedView($aData)) {
+    {    
+        if ('c' != $aData['allow_view_to'] && CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedView($aData)) {
             $CNF = &$this->_oConfig->CNF;
             $aData[$CNF['FIELD_COVER']] = 0;
             $aData[$CNF['FIELD_PICTURE']] = 0;

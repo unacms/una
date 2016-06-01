@@ -14,21 +14,29 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     protected $sLogoIframeId = 'adm-dsg-logo-iframe';
     protected $sIconFormId = 'adm-dsg-icon-form';
     protected $sIconIframeId = 'adm-dsg-icon-iframe';
+    protected $sCoverFormId = 'adm-dsg-cover-form';
+    protected $sCoverIframeId = 'adm-dsg-cover-iframe';
     protected $sSplashFormId = 'adm-dsg-splash-form';
     protected $sSplashIframeId = 'adm-dsg-splash-iframe';
     protected $sSplashEditorId = 'adm-dsg-splash-editor';
 
+    protected $aPageCss;
+    protected $aPageJs;
+
     function __construct($sPage = '')
     {
         parent::__construct($sPage);
+
+        $this->aPageCss = array('forms.css', 'designer.css');
+        $this->aPageJs = array('settings.js', 'designer.js');
     }
     function getPageCss()
     {
-        return array_merge(parent::getPageCss(), array('forms.css', 'designer.css'));
+        return array_merge(parent::getPageCss(), $this->aPageCss);
     }
     function getPageJs()
     {
-        return array_merge(parent::getPageJs(), array('settings.js', 'designer.js'));
+        return array_merge(parent::getPageJs(), $this->aPageJs);
     }
     function getPageJsObject()
     {
@@ -43,6 +51,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             BX_DOL_STUDIO_DSG_TYPE_GENERAL => array('icon' => 'globe'),
             BX_DOL_STUDIO_DSG_TYPE_LOGO => array('icon' => 'pencil'),
             BX_DOL_STUDIO_DSG_TYPE_ICON => array('icon' => 'picture-o'),
+            BX_DOL_STUDIO_DSG_TYPE_COVER => array('icon' => 'file-image-o'),
             BX_DOL_STUDIO_DSG_TYPE_SPLASH => array('icon' => 'file-image-o'),
             BX_DOL_STUDIO_DSG_TYPE_SETTINGS => array('icon' => 'cogs'),
         );
@@ -321,6 +330,103 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         	'action_url' => $this->sManageUrl,
             'content' => $this->getBlockCode(array(
 				'items' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
+			))
+        ));
+    }
+
+	protected function getCover()
+    {
+    	$sJsObject = $this->getPageJsObject();
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $aFormInputs = array();
+        $aTmplVarsCovers = array();
+        foreach($this->aCovers as $sCover => $aCover) {
+        	$aFormInputs[$sCover] = array(
+				'type' => 'file',
+				'name' => $sCover,
+				'caption' => _t('_adm_dsg_txt_upload_' . $sCover)
+			);
+
+        	if(($iImageId = (int)getParam($aCover['setting'])) == 0)
+        		continue;
+
+			$sImageUrl = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER)->getFileUrl($iImageId);
+            if($sImageUrl === false) {
+            	setParam($aCover['setting'], 0);
+                continue;
+			}
+
+			$aTmplVarsCovers[] = array(
+				'js_object' => $sJsObject,
+				'type' => $sCover,
+				'caption' => _t($aCover['title']),
+				'image_id' => $iImageId,
+                'bx_if:show_bg' => array(
+					'condition' => !empty($sImageUrl),
+					'content' => array(
+						'image_url' => $sImageUrl
+					)
+				),
+			);
+        }
+
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => $this->sCoverFormId,
+                'name' => $this->sCoverFormId,
+                'action' => BX_DOL_URL_STUDIO . 'designer.php',
+                'method' => 'post',
+                'enctype' => 'multipart/form-data',
+                'target' => $this->sCoverIframeId
+            ),
+            'params' => array(
+                'db' => array(
+                    'table' => '',
+                    'key' => '',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'save'
+                ),
+            ),
+            'inputs' => array(
+                'page' => array(
+                    'type' => 'hidden',
+                    'name' => 'page',
+                    'value' => $this->sPage
+                ),
+                'preview' => array(
+                    'type' => 'custom',
+                    'name' => 'preview',
+                    'content' => $oTemplate->parseHtmlByName('dsr_cover_preview.html', array(
+                		'bx_repeat:covers' => $aTmplVarsCovers
+                	))
+                ),
+
+                'save' => array(
+                    'type' => 'submit',
+                    'name' => 'save',
+                    'value' => _t('_adm_btn_designer_submit'),
+                )
+            )
+        );
+
+        $aForm['inputs'] = bx_array_insert_after($aFormInputs, $aForm['inputs'], 'preview');
+
+        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm->initChecker();
+
+        if($oForm->isSubmittedAndValid()) {
+            echo $this->submitCover($oForm);
+            exit;
+        }
+
+        $this->aPageCss[] = 'cover.css';
+        return $oTemplate->parseHtmlByName('designer.html', array(
+            'js_object' => $this->getPageJsObject(),
+        	'action_url' => $this->sManageUrl,
+            'content' => $this->getBlockCode(array(
+				'items' => $oTemplate->parseHtmlByName('dsr_cover.html', array('iframe_id' => $this->sCoverIframeId, 'form' => $oForm->getCode())),
 			))
         ));
     }
