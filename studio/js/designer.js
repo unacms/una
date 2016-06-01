@@ -56,4 +56,29 @@ BxDolStudioDesigner.prototype.deleteLogo = function() {
 		'json'
 	);
 };
+
+BxDolStudioDesigner.prototype.deleteCover = function(sType, iId) {
+	var $this = this;
+	var oDate = new Date();
+
+	$.post(
+		this.sActionsUrl,
+		{
+			dsg_action: 'delete_cover',
+			dsg_value: sType, 
+			_t: oDate.getTime()
+		},
+		function(oData) {
+			if(oData.code != 0 && oData.message.length > 0) {
+				alert(oData.message);
+				return;
+			}
+
+			$('#bx-dsg-cover-' + iId).bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
+				$(this).remove();
+			});
+		},
+		'json'
+	);
+};
 /** @} */

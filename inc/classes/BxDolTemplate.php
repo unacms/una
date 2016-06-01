@@ -1142,6 +1142,14 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 break;
             case 'cover':
                 $oCover = BxDolCover::getInstance($this);
+
+                $iId = (int)getParam('sys_site_cover_' . (bx_get('i') == 'home' ? 'home' : 'common'));
+                if($iId != 0 && $oCover)
+                	$oCover->setCoverImageUrl(array(
+                		'id' => $iId,
+                		'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER
+                	));
+
                 $sRet = $oCover ? $oCover->display() : '';
                 break;
             case 'dol_images':
