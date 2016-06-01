@@ -14,7 +14,9 @@
 	<string name="_bx_persons_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_persons_form_profile_display_delete"><![CDATA[Delete Person]]></string>
 	<string name="_bx_persons_form_profile_display_view"><![CDATA[View Person]]></string>
-	<string name="_bx_persons_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_persons_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Privacy]]></string>
+    <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Privacy]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
@@ -69,6 +71,7 @@
 	<string name="_bx_persons_page_title_sys_online"><![CDATA[Online People]]></string>
 	<string name="_bx_persons_page_title_online"><![CDATA[Online People]]></string>
 
+	<string name="_bx_persons_page_block_title_profile_private"><![CDATA[Private Profile]]></string>
 	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>

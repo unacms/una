@@ -81,6 +81,27 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         $this->_oModule->_oTemplate->setCover($this->_aContentInfo);
     }
 
+    protected function _processPermissionsCheck ()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        bx_import('BxDolPrivacy');
+
+        $mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo);
+        if ((BX_DOL_PG_HIDDEN == $this->_aContentInfo['allow_view_to'] || BX_DOL_PG_MEONLY == $this->_aContentInfo['allow_view_to']) && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
+            $this->_oTemplate->displayAccessDenied($mixedAllowView);
+            exit;
+        }
+        elseif ($CNF['OBJECT_PAGE_VIEW_ENTRY'] == $this->_sObject && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
+            // replace current page with different set of blocks
+            $aObject = BxDolPageQuery::getPageObject($CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED']);
+            $this->_sObject = $aObject['object'];
+            $this->_aObject = $aObject;
+            $this->_oQuery = new BxDolPageQuery($this->_aObject);
+        }
+
+        $this->_oModule->checkAllowedView($this->_aContentInfo, true);
+    }    
 }
 
 /** @} */

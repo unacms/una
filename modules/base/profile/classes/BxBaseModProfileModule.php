@@ -51,6 +51,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
     // ====== SERVICE METHODS
 
+	public function servicePrivateProfileMsg()
+    {
+        return MsgBox(_t('_sys_access_denied_to_private_content'));
+    }
+    
 	public function serviceGetContentInfoById($iContentId)
     {
         return $this->_oDb->getContentInfoById((int)$iContentId);
