@@ -110,6 +110,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_online');
                 $this->aCurrent['restriction']['online']['value'] = time() - 60 * (int)getParam('sys_account_online_time');
+                $this->aCurrent['restriction_sql'] = ' AND `sys_accounts`.`profile_id`=`sys_profiles`.`id`';
                 $this->aCurrent['sorting'] = 'online';
                 $this->sBrowseUrl = 'page.php?i=organizations-online';
                 break;

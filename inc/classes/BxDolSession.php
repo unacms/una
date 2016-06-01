@@ -98,7 +98,7 @@ class BxDolSession extends BxDol implements iBxDolSingleton
 		$this->iUserId = (int)$mixedSession['user_id'];
 		$this->aData = unserialize($mixedSession['data']);
 
-		$this->oDb->update($this->sId);
+		$this->oDb->update($this->sId);		//--- update session's time
 		return true;
     }
 

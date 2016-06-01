@@ -387,7 +387,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_account_online_time', '_adm_stg_cpt_option_sys_account_online_time', '1', 'digit', '', 'Avail', '_adm_stg_err_option_sys_account_online_time', 1),
+(@iCategoryId, 'sys_account_online_time', '_adm_stg_cpt_option_sys_account_online_time', '5', 'digit', '', 'Avail', '_adm_stg_err_option_sys_account_online_time', 1),
 (@iCategoryId, 'sys_account_autoapproval', '_adm_stg_cpt_option_sys_account_autoapproval', 'on', 'checkbox', '', '', '', 10);
 
 
@@ -661,7 +661,6 @@ CREATE TABLE IF NOT EXISTS `sys_sessions` (
   `data` text collate utf8_unicode_ci,
   `date` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `session` (`id`, `user_id`),
   KEY `user_id` (`user_id`),
   KEY `date` (`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
