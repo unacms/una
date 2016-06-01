@@ -271,4 +271,7 @@
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас в группу <a href="{EntryUrl}">{EntryTitle}</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
 
+    <string name="_bx_ntfs_alert_action_fan_added"><![CDATA[присоединение нового члена]]></string>
+    <string name="_bx_ntfs_alert_action_join_request"><![CDATA[запрос на членство]]></string>
+    <string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[сообщение на линейке]]></string>
 </resources>
