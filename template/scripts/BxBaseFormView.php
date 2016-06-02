@@ -365,7 +365,7 @@ EOS;
      */
     function genRowStandard(&$aInput, $isOneLine = false)
     {
-        $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '';
+        $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption'], BX_DATA_HTML) : '';
 
         $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span> ' : '';
 
@@ -615,7 +615,7 @@ BLAH;
             break;
 
             case 'value':
-                $sInput = $aInput['value'];
+                $sInput = isset($aInput['value']) ? $aInput['value'] : '';
             break;
 
             default:

@@ -152,9 +152,11 @@
 }
 
 /* --------------- login form */
+#sys_account .bx-form-input-wrapper-submit,
 #sys-form-login .bx-form-input-wrapper-submit {
 	text-align: center;
 }
+#sys_account .bx-form-input-wrapper-submit .bx-btn,
 #sys-form-login .bx-form-input-wrapper-submit .bx-btn {
 	display: inline-block;
     float: none;

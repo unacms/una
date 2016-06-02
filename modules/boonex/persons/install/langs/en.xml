@@ -15,6 +15,7 @@
 	<string name="_bx_persons_form_profile_display_delete"><![CDATA[Delete Person]]></string>
 	<string name="_bx_persons_form_profile_display_view"><![CDATA[View Person]]></string>
     <string name="_bx_persons_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_persons_form_profile_input_submit"><![CDATA[Submit]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Privacy]]></string>
     <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Privacy]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Full Name]]></string>
