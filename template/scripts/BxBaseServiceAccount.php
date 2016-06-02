@@ -27,7 +27,7 @@ class BxBaseServiceAccount extends BxDol
     {
 	    $sLoginText = '';
         if (!isset($aParams['no_login_text']) || (int)$aParams['no_login_text'] == 1)
-            $sLoginText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div class="bx-def-font-align-center">' . _t('_sys_txt_join_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login')) . '</div>';
+            $sLoginText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_join_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login')) . '</div>';
 
         return $this->_oAccountForms->createAccountForm($aParams) . $sLoginText;
     }

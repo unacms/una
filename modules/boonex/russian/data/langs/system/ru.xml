@@ -1619,7 +1619,7 @@
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Отписаться]]></string>
 	<string name="_sys_form_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
-	<string name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-align-center bx-def-font-small bx-def-font-grayed">Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.</div>]]></string>
+	<string name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-small bx-def-font-grayed">Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.</div>]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_account_input_captcha_error"><![CDATA[Проверка капчи не удалась. Попытайтесь ещё раз.]]></string>
 	<string name="_sys_form_account_input_captcha_label_text_image"><![CDATA[Введите текст:]]></string>
@@ -2180,7 +2180,7 @@
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
     <string name="_sys_txt_join_description"><![CDATA[Уже зарегистрировались? <a href="{0}">Заходите.</a>]]></string>
-	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь!</a>]]></string>
+	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь.</a>]]></string>
 	<string name="_sys_txt_login_error"><![CDATA[Введённый имейл или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[<b>@</b> мои профили...</a>]]></string>

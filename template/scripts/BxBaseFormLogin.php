@@ -51,9 +51,7 @@ class BxBaseFormLogin extends BxTemplFormView
 
     protected function genCustomInputSubmitText ($aInput)
     {
-        return '<div class="bx-def-font-align-center">
-                    <a href="' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password') . '">' . _t("_sys_txt_forgot_pasword") . '</a>
-                </div>';
+        return '<div><a href="' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password') . '">' . _t("_sys_txt_forgot_pasword") . '</a></div>';
     }
 
     public function getRole()
