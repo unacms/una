@@ -25,7 +25,11 @@ class BxBaseServiceAccount extends BxDol
 
     public function serviceCreateAccountForm ($aParams = array())
     {
-        return $this->_oAccountForms->createAccountForm($aParams);
+	    $sLoginText = '';
+        if (!isset($aParams['no_login_text']) || (int)$aParams['no_login_text'] == 1)
+            $sLoginText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_join_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login')) . '</div>';
+
+        return $this->_oAccountForms->createAccountForm($aParams) . $sLoginText;
     }
 
     public function serviceAccountSettingsEmail ($iAccountId = false)

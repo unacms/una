@@ -145,6 +145,9 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '')
     {
+    	$oTemplate = BxDolTemplate::getInstance();
+    	BxDolInformer::getInstance($oTemplate)->setEnabled(false);
+
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 
         $aProfiles = $oProfilesQuery->getProfilesByAccount($iAccountId ? $iAccountId : getLoggedId());
@@ -182,9 +185,7 @@ class BxBaseServiceProfiles extends BxDol
             );
         }
 
-        $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addCss('account.css');
-
         return array(
             'content' => $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars),
             'menu' => 'sys_add_profile',

@@ -41,7 +41,16 @@ class BxBaseCover extends BxDolCover
 
             if (!$mixedOptions || !is_array($mixedOptions))
                 return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
-            
+
+            if (!$this->_sCoverImageUrl) {
+                $iId = (int)getParam('sys_site_cover_common');
+                if ($iId != 0)
+                	$this->setCoverImageUrl(array(
+                		'id' => $iId,
+                		'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER
+                    ));
+            }
+                
             if ($this->_sCoverImageUrl)
                 $mixedOptions['bx_if:bg'] = array (
                     'condition' => true,

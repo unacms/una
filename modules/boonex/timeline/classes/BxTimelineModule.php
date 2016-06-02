@@ -815,7 +815,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oCmts = $this->getCmtsObject($sSystem, $iObjectId);
         $oCmts->addCssJs();
 
-        $bResult = isAdmin() ? true : false;
+        $bResult = true;
 
         if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_comment', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
@@ -833,7 +833,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
         $oVote->addCssJs();
 
-        $bResult = isAdmin() ? true : false;
+        $bResult = true;
 
         if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
@@ -851,7 +851,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oReport = $this->getReportObject($sSystem, $iObjectId);
         $oReport->addCssJs();
 
-        $bResult = isAdmin() ? true : false;
+        $bResult = true;
 
         if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_report', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));

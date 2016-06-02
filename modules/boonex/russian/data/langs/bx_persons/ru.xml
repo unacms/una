@@ -15,8 +15,9 @@
 	<string name="_bx_persons_form_profile_display_delete"><![CDATA[Удалить персону]]></string>
 	<string name="_bx_persons_form_profile_display_view"><![CDATA[Просмотреть персону]]></string>
     <string name="_bx_persons_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-    <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Конфиденциальность]]></string>
-    <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Конфиденциальность]]></string>
+    <string name="_bx_persons_form_profile_input_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>
+    <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
@@ -41,8 +42,8 @@
 	<string name="_bx_persons_acl_action_view_profile"><![CDATA[Просмотреть персональный профиль]]></string>
 	<string name="_bx_persons_acl_action_edit_any_profile"><![CDATA[Редактировать любой персональный профиль]]></string>
 
-	<string name="_bx_persons_page_title_sys_create_profile"><![CDATA[Создать персональный профиль]]></string>
-	<string name="_bx_persons_page_title_create_profile"><![CDATA[Создать персональный профиль]]></string>
+	<string name="_bx_persons_page_title_sys_create_profile"><![CDATA[Создать профиль - человек]]></string>
+	<string name="_bx_persons_page_title_create_profile"><![CDATA[Создать профиль - человек]]></string>
 	<string name="_bx_persons_page_title_sys_edit_profile"><![CDATA[Редактировать персональный профиль]]></string>
 	<string name="_bx_persons_page_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_persons_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку профиля]]></string>
@@ -72,7 +73,7 @@
 	<string name="_bx_persons_page_title_online"><![CDATA[Онлайн Пользователи]]></string>
 
     <string name="_bx_persons_page_block_title_profile_private"><![CDATA[Приватный профиль]]></string>
-	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Создать персональный профиль]]></string>
+	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Создать профиль - человек]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
 	<string name="_bx_persons_page_block_title_delete_profile"><![CDATA[Удалить профиль]]></string>

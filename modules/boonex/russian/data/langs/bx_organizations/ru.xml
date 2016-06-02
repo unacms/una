@@ -15,8 +15,8 @@
 	<string name="_bx_orgs_form_profile_display_delete"><![CDATA[Удалить организацию]]></string>
 	<string name="_bx_orgs_form_profile_display_view"><![CDATA[Просмотреть организацию]]></string>
     <string name="_bx_orgs_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-    <string name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Конфиденциальность]]></string>
-    <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Конфиденциальность]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>
+    <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Название организации]]></string>
     <string name="_bx_orgs_form_profile_input_org_name"><![CDATA[Название организации]]></string>
     <string name="_bx_orgs_form_profile_input_org_name_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
@@ -44,8 +44,8 @@
 	<string name="_bx_orgs_acl_action_view_profile"><![CDATA[Просмотреть профиль организации]]></string>
 	<string name="_bx_orgs_acl_action_edit_any_profile"><![CDATA[Редактировать профиль любой организации]]></string>
 
-	<string name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Создать профиль организации]]></string>
-	<string name="_bx_orgs_page_title_create_profile"><![CDATA[Создать профиль организации]]></string>
+	<string name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Создать профиль - организация]]></string>
+	<string name="_bx_orgs_page_title_create_profile"><![CDATA[Создать профиль - организация]]></string>
 	<string name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Редактировать профиль организации]]></string>
 	<string name="_bx_orgs_page_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_orgs_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку профиля]]></string>
@@ -75,7 +75,7 @@
 	<string name="_bx_orgs_page_title_online"><![CDATA[Онлайн Организации]]></string>
 
     <string name="_bx_orgs_page_block_title_profile_private"><![CDATA[Приватный профиль]]></string>
-	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Создать профиль организации]]></string>
+	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Создать профиль - организация]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
 	<string name="_bx_orgs_page_block_title_delete_profile"><![CDATA[Удалить профиль]]></string>

@@ -11,7 +11,7 @@
 
 class BxGroupsPrivacy extends BxBaseModProfilePrivacy
 {
-    function __construct($aOptions, $oTemplate = false)
+    public function __construct($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_groups';
         parent::__construct($aOptions, $oTemplate);

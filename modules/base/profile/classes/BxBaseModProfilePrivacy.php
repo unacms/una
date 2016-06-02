@@ -14,7 +14,7 @@ class BxBaseModProfilePrivacy extends BxTemplPrivacy
 	protected $MODULE;
 	protected $_oModule;
 
-    function __construct($aOptions, $oTemplate = false)
+    public function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
 

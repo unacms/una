@@ -350,6 +350,22 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_organizations_common', 'bulk', 'delete_with_content', '_bx_orgs_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
 ('bx_organizations_common', 'single', 'settings', '_bx_orgs_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);
 
+-- ALERTS
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
+('bx_organizations', 'BxOrgsAlertsResponse', 'modules/boonex/organizations/classes/BxOrgsAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+-- ('bx_timeline', 'post_common', @iHandler),
+('bx_organizations', 'timeline_view', @iHandler),
+('bx_organizations', 'timeline_post', @iHandler),
+('bx_organizations', 'timeline_delete', @iHandler),
+('bx_organizations', 'timeline_comment', @iHandler),
+('bx_organizations', 'timeline_vote', @iHandler),
+('bx_organizations', 'timeline_report', @iHandler),
+('bx_organizations', 'timeline_share', @iHandler);
+
 -- PRIVACY 
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES

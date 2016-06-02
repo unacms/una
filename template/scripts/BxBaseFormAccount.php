@@ -131,6 +131,12 @@ class BxBaseFormAccount extends BxTemplFormView
         return parent::update ($val, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
+	protected function genCustomInputAgreement ($aInput)
+    {
+    	$oPermalink = BxDolPermalinks::getInstance();
+        return '<div>' . _t('_sys_form_account_input_agreement_value', BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=terms'), BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=privacy')) . '</div>';
+    }
+    
     protected function _setCustomError ($s)
     {
         $this->aInputs['do_submit']['error'] = $s;
