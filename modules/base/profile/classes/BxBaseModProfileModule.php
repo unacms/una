@@ -181,6 +181,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return parent::serviceFormsHelper ();
     }
 
+    public function serviceEntityCreate ()
+    {
+	    BxDolInformer::getInstance($this->_oTemplate)->setEnabled(false);
+
+	    return parent::serviceEntityCreate ();
+    }
+
     public function serviceActAsProfile ()
     {
         return true;
