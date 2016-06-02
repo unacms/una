@@ -20,9 +20,14 @@ class BxBasePageHome extends BxTemplPage
         $this->addMarkers(array('site_title' => getParam('site_title')));
 
         $oCover = BxDolCover::getInstance();
+        $iFileIdCover = (int)getParam('sys_site_cover_home');
         $oCover->set(array(
             'class' => 'bx-cover-homepage',
             'title' => _t('_sys_txt_homepage_cover', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')),
+            'bx_if:bg' => array (
+                'condition' => $iFileIdCover,
+                'content' => array('image_url' => ($iFileIdCover ? BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER)->getFileUrlById($iFileIdCover) : '')),
+            ),            
         ));
     }
 

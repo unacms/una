@@ -150,16 +150,3 @@
     vertical-align:middle;
     margin:0 0.2rem;
 }
-
-/* --------------- login form */
-#sys-form-login .bx-form-input-wrapper-submit {
-	text-align: center;
-}
-#sys-form-login .bx-form-input-wrapper-submit .bx-btn {
-	display: inline-block;
-    float: none;
-
-    width: 100%;
-    max-width: 450px;
-    max-width: 28rem;
-}

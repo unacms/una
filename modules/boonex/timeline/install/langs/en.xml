@@ -103,8 +103,8 @@
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>
     
-    <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Timeline]]></string>
-    <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Timeline]]></string>
+    <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Update Status]]></string>
+    <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Update Status]]></string>
 
 	<string name="_bx_timeline_menu_item_title_system_view_timeline_author"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_menu_item_title_view_timeline_author"><![CDATA[Timeline]]></string>

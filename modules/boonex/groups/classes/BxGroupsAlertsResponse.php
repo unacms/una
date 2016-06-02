@@ -9,16 +9,18 @@
  * @{
  */
 
-/**
- * alerts handler
- */
-class BxGroupsAlertsResponse extends BxDolAlertsResponse
+class BxGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
 {
-    protected $_oModule;
-
+    public function __construct()
+    {
+    	$this->MODULE = 'bx_groups';
+        parent::__construct();
+    }
+    
     public function response($oAlert)
     {
-        $this->_oModule = BxDolModule::getInstance('bx_groups');
+        parent::response($oAlert);
+
         $CNF = $this->_oModule->_oConfig->CNF;
 
         // re-translate timeline alert
@@ -56,32 +58,6 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
             $this->sendMailJoinRequestAccepted($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
             break;
         }
-
-        // timeline events to override permissions
-        switch ($oAlert->sAction) {
-        case 'timeline_view':
-            $this->processTimelineView($oAlert, $oAlert->iObject);
-            break;
-
-        case 'timeline_comment':
-        case 'timeline_report':
-        case 'timeline_vote':
-            $this->processTimelineEventsBoolResult($oAlert, $oAlert->iObject);
-            break;
-
-        case 'timeline_post':
-            $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject);
-            break;
-
-        case 'timeline_delete':
-            $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject, 'checkAllowedEdit');
-            break;
-
-        case 'timeline_share':
-            $this->processTimelineShare($oAlert, $oAlert->iObject);
-            break;
-        }
-
     }
 
     protected function sendMailInvitation ($oAlert, $iProfileId, $iSender = 0)
@@ -114,55 +90,6 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
             'EntryTitle' => $oAlert->aExtras['entry_title'],
         ), BX_EMAIL_NOTIFY);
     }
-    
-    protected function processTimelineView ($oAlert, $iGroupProfileId)
-    {
-        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
-        if (!$oGroupProfile) 
-            return;
-
-        $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedView($aContentInfo)) {
-            $oAlert->aExtras['override_content'] = MsgBox(_t('_sys_access_denied_to_private_content'));
-        }
-
-        foreach ($oAlert->aExtras['menu'] as $i => $r) {
-            if ('timeline-view-owner' == $r['id'] || 'timeline-view-other'  == $r['id'])
-                unset($oAlert->aExtras['menu'][$i]);
-        }
-    }
-
-    protected function processTimelineEventsCheckResult ($oAlert, $iGroupProfileId, $sFunc = 'checkAllowedPost')
-    {
-        if ($oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return;
-
-        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
-        if (!$oGroupProfile) 
-            return;
-
-        $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
-        if (CHECK_ACTION_RESULT_ALLOWED === ($s = $this->_oModule->$sFunc($aContentInfo))) {
-            $oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
-        } 
-        else {
-            $oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] = CHECK_ACTION_MESSAGE_NOT_ALLOWED;
-            $oAlert->aExtras['check_result'][CHECK_ACTION_MESSAGE] = $s;
-        }
-    }
-
-    protected function processTimelineEventsBoolResult ($oAlert, $iGroupProfileId, $sFunc = 'checkAllowedPost')
-    {
-        if (!$oAlert->aExtras['result'])
-            return;
-
-        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
-        if (!$oGroupProfile) 
-            return;
-
-        $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
-        $oAlert->aExtras['result'] = (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFunc($aContentInfo)) ? true : false;
-    }
 
     protected function processTimelineShare ($oAlert, $iGroupProfileId)
     {
@@ -170,7 +97,7 @@ class BxGroupsAlertsResponse extends BxDolAlertsResponse
             return;
 
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
-        if (!$oGroupProfile) 
+        if (!$oGroupProfile)
             return;
 
         $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());

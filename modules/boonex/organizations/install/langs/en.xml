@@ -15,8 +15,8 @@
 	<string name="_bx_orgs_form_profile_display_delete"><![CDATA[Delete Organization]]></string>
 	<string name="_bx_orgs_form_profile_display_view"><![CDATA[View Organization]]></string>
     <string name="_bx_orgs_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
-    <string name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Privacy]]></string>
-    <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Privacy]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
+    <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Organization Name]]></string>
     <string name="_bx_orgs_form_profile_input_org_name"><![CDATA[Organization Name]]></string>
     <string name="_bx_orgs_form_profile_input_org_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
@@ -26,7 +26,7 @@
 	<string name="_bx_orgs_form_profile_input_org_cat"><![CDATA[Category]]></string>
     <string name="_bx_orgs_form_profile_input_org_cat_err"><![CDATA[Category field is mandatory]]></string>
 	<string name="_bx_orgs_form_profile_input_sys_picture"><![CDATA[Profile Picture]]></string>
-	<string name="_bx_orgs_form_profile_input_picture"><![CDATA[Upload New Profile Picture]]></string>
+	<string name="_bx_orgs_form_profile_input_picture"><![CDATA[Upload a profile picture]]></string>
 	<string name="_bx_orgs_form_profile_input_sys_picture_preview"><![CDATA[Profile Picture Preview]]></string>
 	<string name="_bx_orgs_form_profile_input_picture_preview"><![CDATA[Current Profile Picture]]></string>
 	<string name="_bx_orgs_form_profile_input_picture_err"><![CDATA[Profile picture is mandatory.]]></string>
@@ -44,8 +44,8 @@
 	<string name="_bx_orgs_acl_action_view_profile"><![CDATA[View Organization's Profile]]></string>
 	<string name="_bx_orgs_acl_action_edit_any_profile"><![CDATA[Edit Any Organization's Profile]]></string>
 
-	<string name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Create Organization's Profile]]></string>
-	<string name="_bx_orgs_page_title_create_profile"><![CDATA[Create Organization's Profile]]></string>
+	<string name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Create a Profile - Organization]]></string>
+	<string name="_bx_orgs_page_title_create_profile"><![CDATA[Create a Profile - Organization]]></string>
 	<string name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Edit Organization's Profile]]></string>
 	<string name="_bx_orgs_page_title_edit_profile"><![CDATA[Edit Profile]]></string>
 	<string name="_bx_orgs_page_title_sys_edit_profile_cover"><![CDATA[Edit Profile Cover]]></string>
@@ -75,7 +75,7 @@
 	<string name="_bx_orgs_page_title_online"><![CDATA[Online Organizations]]></string>
 
     <string name="_bx_orgs_page_block_title_profile_private"><![CDATA[Private Profile]]></string>
-	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Create Organization's Profile]]></string>
+	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Create a Profile - Organization]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_orgs_page_block_title_delete_profile"><![CDATA[Delete Profile]]></string>

@@ -1618,6 +1618,8 @@
 	<string name="_sys_et_txt_subject_bg_operation_failed"><![CDATA[Фоновая операция не удалась]]></string>
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Отписаться]]></string>
 	<string name="_sys_form_account"><![CDATA[Аккаунт]]></string>
+	<string name="_sys_form_account_input_agreement"><![CDATA[]]></string>
+	<string name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-small bx-def-font-grayed">Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.</div>]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_account_input_captcha_error"><![CDATA[Проверка капчи не удалась. Попытайтесь ещё раз.]]></string>
 	<string name="_sys_form_account_input_captcha_label_text_image"><![CDATA[Введите текст:]]></string>
@@ -1639,15 +1641,15 @@
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[Этот эл. адрес уже кем-то используется.]]></string>
 	<string name="_sys_form_account_input_name"><![CDATA[Имя Аккаунта]]></string>
 	<string name="_sys_form_account_input_name_error"><![CDATA[Это обязательное поле.]]></string>
-	<string name="_sys_form_account_input_password"><![CDATA[Новый Пароль]]></string>
-	<string name="_sys_form_account_input_password_confirm"><![CDATA[Подтвердить новый пароль]]></string>
+	<string name="_sys_form_account_input_password"><![CDATA[Создать пароль]]></string>
+	<string name="_sys_form_account_input_password_confirm"><![CDATA[Подтвердить пароль]]></string>
 	<string name="_sys_form_account_input_password_confirm_error"><![CDATA[Не удалось подтвердить пароль]]></string>
 	<string name="_sys_form_account_input_password_current"><![CDATA[Текущий пароль]]></string>
 	<string name="_sys_form_account_input_password_current_error"><![CDATA[Неправильный текущий пароль. Введите пароль, который Вы используете для доступа к этому сайту.]]></string>
 	<string name="_sys_form_account_input_password_error"><![CDATA[Пароль должен иметь как минимум 6 символов.]]></string>
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Получать Новости]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Получать обновления сайта]]></string>
-	<string name="_sys_form_account_input_submit"><![CDATA[Выполнить]]></string>
+	<string name="_sys_form_account_input_submit"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[Нет]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Да]]></string>
 	<string name="_sys_form_comment"><![CDATA[Комментарий]]></string>
@@ -1688,9 +1690,10 @@
 	<string name="_sys_form_input_sys_location"><![CDATA[Расположение]]></string>
 	<string name="_sys_form_input_location"><![CDATA[Расположение]]></string>
 	<string name="_sys_form_login"><![CDATA[Вход]]></string>
+	<string name="_sys_form_login_input_caption_system_agreement"><![CDATA[Соглашение]]></string>
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Подтвердить Удаление]]></string>
-	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
+	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>
 	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Имя Аккаунта]]></string>
@@ -1828,11 +1831,13 @@
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
 	<string name="_sys_menu_item_title_about"><![CDATA[О нас]]></string>
+	<string name="_sys_menu_item_title_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_menu_item_title_switch_language"><![CDATA[Язык]]></string>
 	<string name="_sys_menu_item_title_switch_language_mask"><![CDATA[{1} {0}]]></string>
 	<string name="_sys_menu_item_title_switch_template"><![CDATA[Дизайн]]></string>
 	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0}]]></string>
+	<string name="_sys_menu_item_title_terms"><![CDATA[Правила]]></string>
 	<string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
 	<string name="_sys_menu_item_title_account_profile_context"><![CDATA[Профили]]></string>
 	<string name="_sys_menu_item_title_account_dashboard"><![CDATA[Панель]]></string>
@@ -1857,8 +1862,10 @@
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
+	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Язык]]></string>
 	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Тема]]></string>
+	<string name="_sys_menu_item_title_system_terms"><![CDATA[Правила]]></string>
 	<string name="_sys_menu_item_title_system_account_menu"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Профили]]></string>
 	<string name="_sys_menu_item_title_system_account_dashboard_administration"><![CDATA[Администрация]]></string>
@@ -1962,7 +1969,7 @@
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Изменить Пароль]]></string>
 	<string name="_sys_page_block_title_add_content"><![CDATA[Добавить Содержимое]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
-	<string name="_sys_page_block_title_create_account"><![CDATA[Создать Аккаунт]]></string>
+	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли Пароль]]></string>
@@ -1970,6 +1977,7 @@
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_manage_tools"><![CDATA[Управление]]></string>
+	<string name="_sys_page_block_title_privacy"><![CDATA[Политика конфиденциальности]]></string>
 	<string name="_sys_page_block_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_page_block_title_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_sys_page_block_title_unsubscribe_news"><![CDATA[Отписаться от Новостей Сайта]]></string>
@@ -1978,7 +1986,10 @@
 	<string name="_sys_page_block_title_std_dash_space"><![CDATA[Использование дискового пространства]]></string>
 	<string name="_sys_page_block_title_std_dash_host_tools"><![CDATA[Хост - Инструменты]]></string>
 	<string name="_sys_page_block_title_std_dash_cache"><![CDATA[Кэш]]></string>
+	<string name="_sys_page_block_title_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_lang_block_about"><![CDATA[Этот сайт регулируется BoonEx Trident. Остальное - тайна, покрытая мраком.]]></string>
+	<string name="_sys_page_lang_block_terms"><![CDATA[Правила пользования нашим сайтом.]]></string>
+	<string name="_sys_page_lang_block_privacy"><![CDATA[Политика конфиденциальности нашего сайта.]]></string>
 	<string name="_sys_page_title_about"><![CDATA[Об...]]></string>
 	<string name="_sys_page_title_account_profile_switcher"><![CDATA[Переключить Профиль]]></string>
 	<string name="_sys_page_title_account_settings_delete"><![CDATA[Удалить Аккаунт]]></string>
@@ -1987,11 +1998,13 @@
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Изменить Пароль]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Добавить Содержимое]]></string>
 	<string name="_sys_page_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
-	<string name="_sys_page_title_create_account"><![CDATA[Создать Аккаунт]]></string>
+	<string name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_page_title_forgot_password"><![CDATA[Забыли Пароль]]></string>
 	<string name="_sys_page_title_home"><![CDATA[{site_title} :: Домашняя страница]]></string>
 	<string name="_sys_page_title_login"><![CDATA[Вход]]></string>
+	<string name="_sys_page_title_privacy"><![CDATA[Политика конфиденциальности]]></string>
+	<string name="_sys_page_title_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_title_system_about"><![CDATA[Об...]]></string>
 	<string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Переключить Профиль]]></string>
 	<string name="_sys_page_title_system_account_settings_delete"><![CDATA[Удалить Аккаунт]]></string>
@@ -2000,11 +2013,13 @@
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Изменить Пароль]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
 	<string name="_sys_page_title_system_confirm_email"><![CDATA[Имейл Подтверждение]]></string>
-	<string name="_sys_page_title_system_create_account"><![CDATA[Создать Аккаунт]]></string>
+	<string name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_page_title_system_forgot_password"><![CDATA[Забыли Пароль]]></string>
 	<string name="_sys_page_title_system_home"><![CDATA[Домашняя Страница]]></string>
 	<string name="_sys_page_title_system_login"><![CDATA[Вход]]></string>
+	<string name="_sys_page_title_system_privacy"><![CDATA[Политика конфиденциальности]]></string>
+	<string name="_sys_page_title_system_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_title_system_unsubscribe_news"><![CDATA[Отписаться от Новостей]]></string>
 	<string name="_sys_page_title_system_unsubscribe_notifications"><![CDATA[Отписаться от Уведомлений]]></string>
 	<string name="_sys_page_title_system_studio_dashboard"><![CDATA[Студия - Панель]]></string>
@@ -2164,7 +2179,8 @@
 	<string name="_sys_txt_form_submission_error"><![CDATA[Неправильная информация. Пожалуйста, проверьте ввод и отошлите снова.]]></string>
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
-	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь!</a>]]></string>
+    <string name="_sys_txt_join_description"><![CDATA[Уже зарегистрировались? <a href="{0}">Заходите.</a>]]></string>
+	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь.</a>]]></string>
 	<string name="_sys_txt_login_error"><![CDATA[Введённый имейл или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[<b>@</b> мои профили...</a>]]></string>

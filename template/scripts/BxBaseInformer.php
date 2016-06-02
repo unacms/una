@@ -38,6 +38,9 @@ class BxBaseInformer extends BxDolInformer
      */
     public function display ()
     {
+    	if(!$this->_bEnabled)
+    		return '';
+
         $this->_addPermanentMessages();
 
         if (!$this->_aMessages)
