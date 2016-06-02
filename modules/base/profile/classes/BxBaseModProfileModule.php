@@ -308,6 +308,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
+    public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowedView ($aDataEntry, $isPerformAction);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
         // moderator always has access
@@ -401,6 +409,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
      */
     public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
     {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aDataEntry)))
+            return $sMsg;
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, false);
     }
 
