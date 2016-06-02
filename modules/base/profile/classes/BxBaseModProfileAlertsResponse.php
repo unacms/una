@@ -101,7 +101,7 @@ class BxBaseModProfileAlertsResponse extends BxDolAlertsResponse
 
     protected function processTimelineEventsBoolResult ($oAlert, $iGroupProfileId, $sFunc = 'checkAllowedPost')
     {
-        if (!$oAlert->aExtras['result'])
+        if (isAdmin() || !$oAlert->aExtras['result'])
             return;
 
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
