@@ -69,6 +69,11 @@ class BxBaseFormAccount extends BxTemplFormView
 
     public function __construct($aInfo, $oTemplate)
     {
+    	if(isset($aInfo['inputs']['agreement'])) {
+    		$oPermalink = BxDolPermalinks::getInstance();
+    		$aInfo['inputs']['agreement']['content'] = _t('_sys_form_account_input_agreement_value', $oPermalink->permalink('page.php?i=terms'), $oPermalink->permalink('page.php?i=privacy'));
+    	} 
+
         parent::__construct($aInfo, $oTemplate);
         $this->_bSetPendingApproval = !(bool)getParam('sys_account_autoapproval');
     }

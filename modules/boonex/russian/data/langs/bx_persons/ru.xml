@@ -15,6 +15,7 @@
 	<string name="_bx_persons_form_profile_display_delete"><![CDATA[Удалить персону]]></string>
 	<string name="_bx_persons_form_profile_display_view"><![CDATA[Просмотреть персону]]></string>
     <string name="_bx_persons_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_persons_form_profile_input_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Конфиденциальность]]></string>
     <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Конфиденциальность]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Полное имя]]></string>
