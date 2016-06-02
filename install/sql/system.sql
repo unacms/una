@@ -247,7 +247,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_email_confirmation', '', 'on', 'checkbox', '', '', '', 40),
 
-(@iCategoryId, 'sys_redirect_after_account_added', '', 'page.php?i=create-persons-profile', 'digit', '', '', '', 50),
+(@iCategoryId, 'sys_redirect_after_account_added', '', 'page.php?i=account-profile-switcher', 'digit', '', '', '', 50),
 
 (@iCategoryId, 'sys_editor_default', '', 'sys_tinymce', 'digit', '', '', '', 60),
 (@iCategoryId, 'sys_captcha_default', '', 'sys_recaptcha', 'digit', '', '', '', 61),

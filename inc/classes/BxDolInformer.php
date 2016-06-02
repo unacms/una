@@ -35,6 +35,7 @@ define('BX_INFORMER_ERROR', 3);
  */
 class BxDolInformer extends BxDol
 {
+	protected $_bEnabled = true;
     protected $_aMessages = array();
 
     /**
@@ -69,6 +70,11 @@ class BxDolInformer extends BxDol
         $o = new BxTemplInformer($oTemplate);
 
         return ($GLOBALS['bxDolClasses']['BxDolInformer'] = $o);
+    }
+
+    public function setEnabled($bEnabled)
+    {
+    	$this->_bEnabled = $bEnabled;
     }
 
     /**
