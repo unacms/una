@@ -87,7 +87,6 @@
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_orgs_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[New Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Manage Own Organizations]]></string>
@@ -123,8 +122,8 @@
     <string name="_bx_orgs_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_orgs_menu_item_title_system_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Organization]]></string>
-    <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Create Organization]]></string>
-    <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Create Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
@@ -221,5 +220,7 @@
     <string name="_bx_orgs_cat_University"><![CDATA[University]]></string>
     <string name="_bx_orgs_cat_Other"><![CDATA[Other]]></string>
 
+    <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> organization timeline from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    
     <string name="_bx_orgs_txt_sample_single"><![CDATA[organization]]></string>
 </resources>

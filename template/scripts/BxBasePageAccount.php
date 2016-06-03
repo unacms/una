@@ -72,6 +72,13 @@ class BxBasePageAccount extends BxTemplPage
 
     }
 
+	protected function _addJsCss()
+    {
+    	parent::_addJsCss();
+
+        $this->_oTemplate->addCss('account.css');
+    }
+
     protected function _getPageCacheParams ()
     {
         return getLoggedId(); // cache is different for every account

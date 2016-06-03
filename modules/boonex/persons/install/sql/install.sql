@@ -108,7 +108,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'do_submit', '_bx_persons_form_profile_input_submit', '', 0, 'submit', '_bx_persons_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_person', 'bx_persons', 'description', '', '', 0, 'textarea', '_bx_persons_form_profile_input_sys_desc', '_bx_persons_form_profile_input_desc', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 1),
 ('bx_person', 'bx_persons', 'fullname', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_fullname', '_bx_persons_form_profile_input_fullname', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_fullname_err', 'Xss', '', 1, 0),
-('bx_person', 'bx_persons', 'picture', '', '', 0, 'file', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_picture_err', 'Int', '', 1, 0),
+('bx_person', 'bx_persons', 'picture', '', '', 0, 'file', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_persons_form_profile_input_picture_err', 'Int', '', 1, 0),
 ('bx_person', 'bx_persons', 'picture_preview', '', '', 0, 'custom', '_bx_persons_form_profile_input_sys_picture_preview', '_bx_persons_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 

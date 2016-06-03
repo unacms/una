@@ -82,8 +82,20 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         $this->_iProfileId = bx_get_logged_profile_id();
 
-        // redirect
-        $this->_redirectAndExit(getParam('sys_redirect_after_account_added'), true, array(
+        // check and redirect
+        $aModulesProfile = array(); 
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+        foreach($aModules as $aModule) {
+        	$oModule = BxDolModule::getInstance($aModule['name']);
+        	if($oModule instanceof iBxDolProfileService && BxDolService::call($aModule['name'], 'act_as_profile') === true)
+        		$aModulesProfile[] = $aModule;
+        }
+
+        $sRedirectUrl = '';
+        if(count($aModulesProfile) == 1)
+        	$sRedirectUrl = BxDolService::call($aModulesProfile[0]['name'], 'profile_create_url', array(false));
+
+        $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
             'account_id' => $iAccountId,
             'profile_id' => $iProfileId,
         ));
