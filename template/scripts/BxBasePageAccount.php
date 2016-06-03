@@ -72,6 +72,13 @@ class BxBasePageAccount extends BxTemplPage
 
     }
 
+    public function getCode()
+    {
+		BxDolTemplate::getInstance()->addCss('account.css');
+
+    	return parent::getCode();
+    }
+
     protected function _getPageCacheParams ()
     {
         return getLoggedId(); // cache is different for every account
