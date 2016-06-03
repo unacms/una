@@ -58,6 +58,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         	'URI_MANAGE_COMMON' => 'organizations-manage',
 
             'URL_HOME' => 'page.php?i=organizations-home',
+        	'URL_CREATE' => 'page.php?i=create-organization-profile',
         	'URL_MANAGE_COMMON' => 'page.php?i=organizations-manage',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=organizations-administration',
 

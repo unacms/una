@@ -185,8 +185,10 @@ class BxBaseModGeneralModule extends BxDolModule
                 array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
                 array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
                 array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted'),
+                
                 array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
                 array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
+                
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
 				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
             ),
@@ -194,8 +196,10 @@ class BxBaseModGeneralModule extends BxDolModule
                 array('unit' => $sModule, 'action' => 'added'),
                 array('unit' => $sModule, 'action' => 'edited'),
                 array('unit' => $sModule, 'action' => 'deleted'),
+
                 array('unit' => $sModule, 'action' => 'commentPost'),
                 array('unit' => $sModule, 'action' => 'commentRemoved'),
+                
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
             )
@@ -285,6 +289,34 @@ class BxBaseModGeneralModule extends BxDolModule
 		);
     }
 
+    public function _serviceGetNotification($aEvent, $sLangKey)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $iContentId = (int)$aEvent['object_id'];
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
+        if (!$oGroupProfile)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+        
+        $oProfile = BxDolProfile::getInstance((int)$aEvent['subobject_id']);
+        if (!$oProfile)
+            return false;
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_sample_single'],
+			'entry_url' => $oGroupProfile->getUrl(),
+			'entry_caption' => $oGroupProfile->getDisplayName(),
+			'entry_author' => $oGroupProfile->id(),
+			'subentry_sample' => $oProfile->getDisplayName(),
+			'subentry_url' => $oProfile->getUrl(),
+			'lang_key' => $sLangKey,
+		);
+    }
+    
     /**
      * Data for Timeline module
      */

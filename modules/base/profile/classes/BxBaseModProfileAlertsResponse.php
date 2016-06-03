@@ -22,15 +22,14 @@ class BxBaseModProfileAlertsResponse extends BxDolAlertsResponse
 
     public function response($oAlert)
     {
-/*
         $CNF = $this->_oModule->_oConfig->CNF;
 
-        // re-translate timeline alert
-        if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id']))) {
+        // re-translate timeline alert for timeline in this module for posts made by other profiles
+        if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id'])) && $oGroupProfile->getModule() == $this->_oModule->getName() && $oGroupProfile->id() != $oAlert->iSender) {            
             $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
             bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $oGroupProfile->id(), array('content' => $aContentInfo, 'group_profile' => $oGroupProfile->id(), 'profile' => $oAlert->iSender, 'notification_subobject_id' => $oAlert->iSender, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
         }
- */
+ 
         if ($this->MODULE != $oAlert->sUnit)
             return;
 

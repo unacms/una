@@ -1961,6 +1961,7 @@
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[Об...]]></string>
+	<string name="_sys_page_block_title_account_profile_create"><![CDATA[Создать профиль...]]></string>
 	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт как ...]]></string>
 	<string name="_sys_page_block_title_account_settings_delete"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_page_block_title_account_settings_email"><![CDATA[Имейл - Настройки]]></string>
@@ -1991,7 +1992,7 @@
 	<string name="_sys_page_lang_block_terms"><![CDATA[Правила пользования нашим сайтом.]]></string>
 	<string name="_sys_page_lang_block_privacy"><![CDATA[Политика конфиденциальности нашего сайта.]]></string>
 	<string name="_sys_page_title_about"><![CDATA[Об...]]></string>
-	<string name="_sys_page_title_account_profile_switcher"><![CDATA[Переключить Профиль]]></string>
+	<string name="_sys_page_title_account_profile_switcher"><![CDATA[Мои Профили]]></string>
 	<string name="_sys_page_title_account_settings_delete"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_page_title_account_settings_email"><![CDATA[Имейл - Настройки]]></string>
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Редактировать Аккаунт]]></string>
@@ -2006,7 +2007,7 @@
 	<string name="_sys_page_title_privacy"><![CDATA[Политика конфиденциальности]]></string>
 	<string name="_sys_page_title_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_title_system_about"><![CDATA[Об...]]></string>
-	<string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Переключить Профиль]]></string>
+	<string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Мои Профили]]></string>
 	<string name="_sys_page_title_system_account_settings_delete"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_page_title_system_account_settings_email"><![CDATA[Имейл Настройки]]></string>
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Редактировать Аккаунт]]></string>

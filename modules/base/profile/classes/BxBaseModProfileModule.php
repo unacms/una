@@ -157,7 +157,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;
-        return $aContentInfo[$this->_oConfig->CNF['FIELD_NAME']];
+        return bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']]);
+    }
+
+    public function serviceProfileCreateUrl ($bAbsolute = true)
+    {
+    	$CNF = $this->_oConfig->CNF;
+    	if(empty($CNF['URL_CREATE']))
+    		return false;
+
+    	return $bAbsolute ? BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CREATE']) : $CNF['URL_CREATE'];
     }
 
     public function serviceProfileUrl ($iContentId)
@@ -310,6 +319,30 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return parent::serviceDeleteEntity ($iContentId, 'deleteDataService');
     }
 
+	/**
+     * Data for Notifications module
+     */
+    public function serviceGetNotificationsData()
+    {
+        $a = parent::serviceGetNotificationsData();
+
+        $sModule = $this->_aModule['name'];
+        
+        $a['handlers'][] = array('group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module');
+
+        $a['alerts'][] = array('unit' => $sModule, 'action' => 'timeline_post_common');
+
+        return $a;
+    }
+
+    /**
+     * Notification about new member requst in the group
+     */
+    public function serviceGetNotificationsTimelinePostCommon($aEvent)
+    {
+        return $this->_serviceGetNotification($aEvent, '_bx_' . $this->_oConfig->getUri() . '_txt_ntfs_timeline_post_common');
+    }
+    
     // ====== PERMISSION METHODS
 
     /**

@@ -1961,6 +1961,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_on"><![CDATA[on]]></string>
     <string name="_sys_off"><![CDATA[off]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[About]]></string>
+	<string name="_sys_page_block_title_account_profile_create"><![CDATA[Create a profile...]]></string>
 	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Use site as ...]]></string>
 	<string name="_sys_page_block_title_account_settings_delete"><![CDATA[Delete Account]]></string>
 	<string name="_sys_page_block_title_account_settings_email"><![CDATA[Email Settings]]></string>
@@ -1991,7 +1992,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_lang_block_terms"><![CDATA[Our terms of use.]]></string>
 	<string name="_sys_page_lang_block_privacy"><![CDATA[Our privacy policy.]]></string>
 	<string name="_sys_page_title_about"><![CDATA[About]]></string>
-	<string name="_sys_page_title_account_profile_switcher"><![CDATA[Switch Profile]]></string>
+	<string name="_sys_page_title_account_profile_switcher"><![CDATA[My Profiles]]></string>
 	<string name="_sys_page_title_account_settings_delete"><![CDATA[Delete Account]]></string>
 	<string name="_sys_page_title_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Edit Account]]></string>
@@ -2006,7 +2007,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_privacy"><![CDATA[Privacy Policy]]></string>
 	<string name="_sys_page_title_terms"><![CDATA[Terms of Service]]></string>
 	<string name="_sys_page_title_system_about"><![CDATA[About]]></string>
-	<string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Switch Profile]]></string>
+	<string name="_sys_page_title_system_account_profile_switcher"><![CDATA[My Profiles]]></string>
 	<string name="_sys_page_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
 	<string name="_sys_page_title_system_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Edit Account]]></string>

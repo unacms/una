@@ -85,7 +85,6 @@
 	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
-	<string name="_bx_persons_page_block_title_profile_cover"><![CDATA[Обложка профиля]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[Последние Присоединившиеся Пользователи]]></string>
 	<string name="_bx_persons_page_block_title_system_manage"><![CDATA[Управление собственными профилями]]></string>
@@ -119,8 +118,8 @@
     <string name="_bx_persons_menu_item_title_delete_account"><![CDATA[Удалить аккаунт]]></string>
     <string name="_bx_persons_menu_item_title_system_profile_type"><![CDATA[Персона]]></string>
     <string name="_bx_persons_menu_item_title_profile_type"><![CDATA[Персона]]></string>
-    <string name="_bx_persons_menu_item_title_system_create_profile"><![CDATA[Создать персону]]></string>
-    <string name="_bx_persons_menu_item_title_create_profile"><![CDATA[Создать персону]]></string>
+    <string name="_bx_persons_menu_item_title_system_create_profile"><![CDATA[Персона]]></string>
+    <string name="_bx_persons_menu_item_title_create_profile"><![CDATA[Персона]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_persons_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
@@ -181,5 +180,7 @@
     <string name="_bx_persons_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>
 
+    <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[В профайле <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    
     <string name="_bx_persons_txt_sample_single"><![CDATA[Персона]]></string>
 </resources>
