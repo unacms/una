@@ -220,5 +220,7 @@
     <string name="_bx_orgs_cat_University"><![CDATA[University]]></string>
     <string name="_bx_orgs_cat_Other"><![CDATA[Other]]></string>
 
+    <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> organization timeline from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    
     <string name="_bx_orgs_txt_sample_single"><![CDATA[organization]]></string>
 </resources>

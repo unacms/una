@@ -180,5 +180,7 @@
     <string name="_bx_persons_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>
 
+    <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[В профайле <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    
     <string name="_bx_persons_txt_sample_single"><![CDATA[Персона]]></string>
 </resources>
