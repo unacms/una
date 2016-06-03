@@ -46,13 +46,6 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                     'onField' => 'id',
                     'joinFields' => array(),
                 ),
-                'session' => array(
-                    'type' => 'INNER',
-                    'table' => 'sys_sessions',
-                    'mainField' => 'account_id',
-                    'onField' => 'user_id',
-                    'joinFields' => array('date'),
-                ),
             ),
             'paginate' => array('perPage' => 20, 'start' => 0),
             'sorting' => 'none',
@@ -111,6 +104,13 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_online');
                 $this->aCurrent['restriction']['online']['value'] = time() - 60 * (int)getParam('sys_account_online_time');
                 $this->aCurrent['restriction_sql'] = ' AND `sys_accounts`.`profile_id`=`sys_profiles`.`id`';
+                $this->aCurrent['join']['session'] = array(
+                    'type' => 'INNER',
+                    'table' => 'sys_sessions',
+                    'mainField' => 'account_id',
+                    'onField' => 'user_id',
+                    'joinFields' => array('date'),
+                );
                 $this->aCurrent['sorting'] = 'online';
                 $this->sBrowseUrl = 'page.php?i=organizations-online';
                 break;
