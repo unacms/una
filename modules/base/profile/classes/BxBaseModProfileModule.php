@@ -160,6 +160,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $aContentInfo[$this->_oConfig->CNF['FIELD_NAME']];
     }
 
+    public function serviceProfileCreateUrl ($bAbsolute = true)
+    {
+    	$CNF = $this->_oConfig->CNF;
+    	if(empty($CNF['URL_CREATE']))
+    		return false;
+
+    	return $bAbsolute ? BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CREATE']) : $CNF['URL_CREATE'];
+    }
+
     public function serviceProfileUrl ($iContentId)
     {
         if (!$iContentId)

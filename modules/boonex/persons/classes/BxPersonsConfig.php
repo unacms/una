@@ -58,6 +58,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         	'URI_MANAGE_COMMON' => 'persons-manage',
 
             'URL_HOME' => 'page.php?i=persons-home',
+        	'URL_CREATE' => 'page.php?i=create-persons-profile',
         	'URL_MANAGE_COMMON' => 'page.php?i=persons-manage',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=persons-administration',
 
