@@ -87,7 +87,6 @@
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_orgs_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[New Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Manage Own Organizations]]></string>
