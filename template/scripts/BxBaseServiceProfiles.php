@@ -177,18 +177,9 @@ class BxBaseServiceProfiles extends BxDol
             );
         }
 
-        if (!$aVars['bx_repeat:row']) {
-            $oMenu = BxDolMenu::getObjectInstance('sys_add_profile');
-            return array(
-                'content' => $oMenu ? $oMenu->getCode() : MsgBox(_t('_sys_txt_empty')),
-                'menu' => 'sys_add_profile',
-            );
-        }
-
         $oTemplate->addCss('account.css');
         return array(
             'content' => $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars),
-            'menu' => 'sys_add_profile',
         );
     }
 

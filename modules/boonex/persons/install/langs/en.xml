@@ -119,8 +119,8 @@
     <string name="_bx_persons_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_persons_menu_item_title_system_profile_type"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_profile_type"><![CDATA[Person]]></string>
-    <string name="_bx_persons_menu_item_title_system_create_profile"><![CDATA[Create Person]]></string>
-    <string name="_bx_persons_menu_item_title_create_profile"><![CDATA[Create Person]]></string>
+    <string name="_bx_persons_menu_item_title_system_create_profile"><![CDATA[Person]]></string>
+    <string name="_bx_persons_menu_item_title_create_profile"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_persons_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>

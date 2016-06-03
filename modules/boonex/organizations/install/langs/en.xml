@@ -123,8 +123,8 @@
     <string name="_bx_orgs_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_orgs_menu_item_title_system_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Organization]]></string>
-    <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Create Organization]]></string>
-    <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Create Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
