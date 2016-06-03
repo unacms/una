@@ -43,7 +43,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'id' => $aData[$CNF['FIELD_ID']],
             'thumb_url' => $this->thumb ($aData),
             'content_url' => $sUrl,
-            'title' => $aData[$CNF['FIELD_NAME']],
+            'title' => bx_process_output($aData[$CNF['FIELD_NAME']]),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
         );
@@ -105,7 +105,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
-            'title' => $aData[$CNF['FIELD_NAME']],
+            'title' => bx_process_output($aData[$CNF['FIELD_NAME']]),
             //'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(), // TODO: check if menu is used somewhere
 
             'action_menu' => $oMenu ? $oMenu->getCode() : '',
