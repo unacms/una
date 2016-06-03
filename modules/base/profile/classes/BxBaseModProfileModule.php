@@ -319,6 +319,30 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return parent::serviceDeleteEntity ($iContentId, 'deleteDataService');
     }
 
+	/**
+     * Data for Notifications module
+     */
+    public function serviceGetNotificationsData()
+    {
+        $a = parent::serviceGetNotificationsData();
+
+        $sModule = $this->_aModule['name'];
+        
+        $a['handlers'][] = array('group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module');
+
+        $a['alerts'][] = array('unit' => $sModule, 'action' => 'timeline_post_common');
+
+        return $a;
+    }
+
+    /**
+     * Notification about new member requst in the group
+     */
+    public function serviceGetNotificationsTimelinePostCommon($aEvent)
+    {
+        return $this->_serviceGetNotification($aEvent, '_bx_' . $this->_oConfig->getUri() . '_txt_ntfs_timeline_post_common');
+    }
+    
     // ====== PERMISSION METHODS
 
     /**

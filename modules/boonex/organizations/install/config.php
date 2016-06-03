@@ -122,6 +122,14 @@ $aConfig = array(
      * Dependencies Section
      */
     'dependencies' => array(),
+
+    /**
+     * Connections Section
+     */
+    'relations' => array(
+        'bx_timeline',
+        'bx_notifications',
+    ),
 );
 
 /** @} */
