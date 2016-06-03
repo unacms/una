@@ -157,7 +157,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;
-        return $aContentInfo[$this->_oConfig->CNF['FIELD_NAME']];
+        return bx_process_output($aContentInfo[$this->_oConfig->CNF['FIELD_NAME']]);
     }
 
     public function serviceProfileUrl ($iContentId)
