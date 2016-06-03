@@ -72,11 +72,11 @@ class BxBasePageAccount extends BxTemplPage
 
     }
 
-    public function getCode()
+	protected function _addJsCss()
     {
-		BxDolTemplate::getInstance()->addCss('account.css');
+    	parent::_addJsCss();
 
-    	return parent::getCode();
+        $this->_oTemplate->addCss('account.css');
     }
 
     protected function _getPageCacheParams ()
