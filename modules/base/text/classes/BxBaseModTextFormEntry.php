@@ -29,7 +29,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         if (isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE'];
-            $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = $CNF['OBJECT_UPLOADERS'];
+            $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_PHOTO']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_PHOTO']]['value']) : $CNF['OBJECT_UPLOADERS'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_private'] = 0;
             $this->aInputs[$CNF['FIELD_PHOTO']]['multiple'] = true;
