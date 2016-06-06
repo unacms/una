@@ -183,6 +183,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                     case 'value':
                         $aForm['inputs'][$sKey]['value'] = $this->aField[$sKey];
 
+                        //--- Select, Multi Select, Radio Set and Checkbox Set
                         if(in_array($aForm['inputs']['type']['value'], array('select', 'select_multiple', 'radio_set', 'checkbox_set'))) {
                             $sList = trim($this->getFieldValues($this->aField), BX_DATA_LISTS_KEY_PREFIX . ' ');
 
@@ -198,7 +199,22 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                             foreach($aPreValues as $mixedValue => $sTitle)
                                  $aForm['inputs'][$sKey]['values'][] = array('key' => $mixedValue, 'value' => $sTitle);
                         }
+
+                        //--- Files
+                        if(in_array($aForm['inputs']['type']['value'], array('files'))) {
+                        	if(!empty($aForm['inputs'][$sKey]['value']))
+                        		$aForm['inputs'][$sKey]['value'] = unserialize($aForm['inputs'][$sKey]['value']);
+
+                        	$aValues = unserialize($this->getFieldValues($this->aField));
+                        	if(!empty($aValues) && is_array($aValues)) {
+                        		$aForm['inputs'][$sKey]['values'] = array();
+
+	                        	foreach($aValues as $mixedValue => $sTitle)
+									$aForm['inputs'][$sKey]['values'][$mixedValue] = _t($sTitle);
+                        	}
+                        }
                         break;
+
                     case 'values':
                         if(!empty($this->aField[$sKey]))
                             $aForm['inputs'][$sKey]['value'] = $this->getFieldValues($this->aField);
@@ -218,17 +234,21 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                             unset($aForm['inputs'][$sKey]['values'], $aForm['inputs'][$sKey]['db']);
                         }
                         break;
+
                     case 'checked':
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
+
                     case 'collapsed':
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
+
                     case 'required':
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         if($aForm['inputs'][$sKey]['checked'] == 1 && isset($aForm['inputs']['checker_func']))
                             unset($aForm['inputs']['checker_func']['tr_attrs']['style'], $aForm['inputs']['checker_error']['tr_attrs']['style']);
                         break;
+
                     case 'checker_func':
                         $aForm['inputs'][$sKey]['value'] = strtolower($this->aField[$sKey]);
                         switch($aForm['inputs'][$sKey]['value']) {
@@ -240,40 +260,50 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                                 break;
                         }
                         break;
+
                     case 'checker_params_length_min':
                         $aParams = unserialize($this->aField['checker_params']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['min']) ? (int)$aParams['min'] : 0;
                         break;
+
                     case 'checker_params_length_max':
                         $aParams = unserialize($this->aField['checker_params']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['max']) ? (int)$aParams['max'] : 0;
                         break;
+
                     case 'checker_params_preg':
                         $aParams = unserialize($this->aField['checker_params']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['preg']) ? $aParams['preg'] : '';
                         break;
+
                     case 'attrs_min':
                         $aParams = unserialize($this->aField['attrs']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['min']) ? (int)$aParams['min'] : 0;
                         break;
+
                     case 'attrs_max':
                         $aParams = unserialize($this->aField['attrs']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['max']) ? (int)$aParams['max'] : 100;
                         break;
+
                     case 'attrs_step':
                         $aParams = unserialize($this->aField['attrs']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['step']) ? (int)$aParams['step'] : 1;
                         break;
+
                     case 'attrs_src':
                         $aParams = unserialize($this->aField['attrs']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['src']) ? $aParams['src'] : '';
                         break;
+
                     case 'editable':
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
+
 					case 'deletable':
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
+
                     default:
                         $aForm['inputs'][$sKey]['value'] = $this->aField[$sKey];
                 }
@@ -368,7 +398,12 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             case 'radio_set':
                 $mixedResult = $this->aField['values'];
                 break;
+
             case 'input_set':
+                $mixedResult = $this->aField['values'];
+                break;
+
+			case 'files':
                 $mixedResult = $this->aField['values'];
                 break;
         }
@@ -563,11 +598,8 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     protected function onSubmitField(&$oForm)
     {
         //--- Process field values.
-        if(isset($oForm->aInputs['values']['db'])) {
-            $sValues = $oForm->getCleanValue('values');
-            if(is_string($sValues) && strpos($sValues, BX_DATA_LISTS_KEY_PREFIX) === false)
-                BxDolForm::setSubmittedValue('values', serialize(explode("\n", $sValues)), $oForm->aFormAttrs['method']);
-        }
+        if(isset($oForm->aInputs['values']['db'])) 
+        	$this->onSubmitFieldValues($oForm);
 
         //--- Process field 'html' flag.
         if(isset($oForm->aInputs['html'])) {
@@ -598,6 +630,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
         unset($oForm->aInputs['attrs_min'], $oForm->aInputs['attrs_max'], $oForm->aInputs['attrs_step'], $oForm->aInputs['attrs_src']);
         BxDolForm::setSubmittedValue('attrs', serialize($aAttrs), $oForm->aFormAttrs['method']);
+    }
+
+    protected function onSubmitFieldValues(&$oForm)
+    {
+    	$sValues = $oForm->getCleanValue('values');
+		if(is_string($sValues) && strpos($sValues, BX_DATA_LISTS_KEY_PREFIX) === false)
+        	BxDolForm::setSubmittedValue('values', serialize(explode("\n", $sValues)), $oForm->aFormAttrs['method']);
     }
 }
 
@@ -965,6 +1004,71 @@ class BxBaseStudioFormsFieldFiles extends BxBaseStudioFormsFieldFile
     function __construct($aParams = array(), $aField = array())
     {
         parent::__construct($aParams, $aField);
+
+        $aFields = array(
+        	'values' => array(
+                'type' => 'hidden',
+                'name' => 'values',
+                'value' => '',
+                'db' => array (
+                    'pass' => 'Xss',
+                )
+            ),
+        	'value' => array(
+                'type' => 'checkbox_set',
+                'name' => 'value',
+                'caption' => _t('_adm_form_txt_field_value_files'),
+                'info' => '',
+                'value' => array(),
+            	'values' => array(),
+                'required' => '0',
+                'db' => array (
+                    'pass' => 'Xss',
+                )
+            )
+        );
+
+        $aUploaders = array(
+        	'sys_simple' => '_sys_uploader_simple_title', 
+        	'sys_html5' => '_sys_uploader_html5_title'
+        );
+        foreach($aUploaders as $sObject => $sTitle) {
+        	$aUploader = BxDolUploaderQuery::getUploaderObject($sObject);
+        	if(empty($aUploader) || !is_array($aUploader) || (int)$aUploader['active'] == 0)
+        		continue;
+
+			$aFields['values']['value'][$sObject] = $sTitle;
+        	$aFields['value']['values'][$sObject] = _t($sTitle);
+        }
+
+        if(!empty($aFields['values']['value']) && is_array($aFields['values']['value']))
+        	$aFields['values']['value'] = serialize($aFields['values']['value']);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', $aFields);
+    }
+
+    protected function onSubmitField(&$oForm)
+    {
+    	//--- Process field value.
+        if(isset($oForm->aInputs['value']['db'])) 
+        	$this->onSubmitFieldValue($oForm);
+
+		parent::onSubmitField($oForm);
+    }
+
+	protected function onSubmitFieldValue(&$oForm)
+    {
+    	$mixedValue = $oForm->getCleanValue('value');
+		if(is_array($mixedValue))
+			BxDolForm::setSubmittedValue('value', serialize($mixedValue), $oForm->aFormAttrs['method']);
+    }
+
+    /*
+     * Note. Value of Values should be saved as is in case of 'Files' field.
+     */
+	protected function onSubmitFieldValues(&$oForm)
+    {
+		return;
     }
 }
 

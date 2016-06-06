@@ -779,6 +779,7 @@
 	<string name="_adm_form_txt_field_value_checkbox"><![CDATA[Значение]]></string>
 	<string name="_adm_form_txt_field_value_custom_text"><![CDATA[Индивидуальный текст]]></string>
 	<string name="_adm_form_txt_field_value_default"><![CDATA[Значение по умолчанию]]></string>
+	<string name="_adm_form_txt_field_value_files"><![CDATA[Активные загрузчики]]></string>
 	<string name="_adm_form_txt_field_value_select_value"><![CDATA[Выбрать значение...]]></string>
 	<string name="_adm_form_txt_field_values"><![CDATA[Значения]]></string>
 	<string name="_adm_form_txt_field_values_manage"><![CDATA[Управление значениями]]></string>

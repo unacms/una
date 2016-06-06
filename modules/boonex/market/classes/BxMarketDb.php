@@ -223,7 +223,7 @@ class BxMarketDb extends BxBaseModTextDb
                 	'content_id' => $aParams['content_id']
                 );
 
-                $sWhereClause = " AND `tfe`.`content_id`=?";
+                $sWhereClause = " AND `tfe`.`content_id`=:content_id";
                 break;
         }
 
