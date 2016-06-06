@@ -710,6 +710,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  */
 class BxDolForm extends BxDol implements iBxDolReplaceable
 {
+    static $TYPES_SKIP = array('files' => 1);
     static $TYPES_CHECKBOX = array('checkbox' => 1, 'switcher' => 1);
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);
@@ -805,7 +806,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         $aValuesDef = array ();
         foreach ($this->aInputs as $k => $a) {
-            if (!isset($a['value']) || !isset($a['db']['pass']) || isset(self::$TYPES_CHECKBOX[$a['type']]))
+            if (!isset($a['value']) || !isset($a['db']['pass']) || isset(self::$TYPES_CHECKBOX[$a['type']]) || isset(self::$TYPES_SKIP[$a['type']]))
                 continue;
             $aValuesDef[$k] = $a['value'];
         }
@@ -1151,7 +1152,7 @@ class BxDolFormChecker
             if (!isset ($a['checker']))  {
                 if (isset(BxDolForm::$TYPES_CHECKBOX[$a['type']]))
                     $aInputs[$k]['checked'] = (isset($aInputs[$k]['value']) && $aInputs[$k]['value'] == $val);
-                elseif (!isset(BxDolForm::$TYPES_FILE[$a['type']]))
+                elseif (!isset(BxDolForm::$TYPES_FILE[$a['type']]) && !isset(BxDolForm::$TYPES_SKIP[$a['type']]))
                     $aInputs[$k]['value'] = bx_process_input($val);
                 continue;
             }
@@ -1173,7 +1174,7 @@ class BxDolFormChecker
 
             if (isset(BxDolForm::$TYPES_CHECKBOX[$a['type']]))
                 $aInputs[$k]['checked'] = ($aInputs[$k]['value'] == $val);
-            elseif (!isset(BxDolForm::$TYPES_FILE[$a['type']]))
+            elseif (!isset(BxDolForm::$TYPES_FILE[$a['type']]) && !isset(BxDolForm::$TYPES_SKIP[$a['type']]))
                 $aInputs[$k]['value'] = bx_process_input($val);
         }
 
@@ -1292,7 +1293,8 @@ class BxDolFormChecker
     function fillWithValues (&$aInputs, &$aValues)
     {
         foreach ($aInputs as $k => $a) {
-            if (!isset($aValues[$k])) continue;
+            if (!isset($aValues[$k]) || isset(BxDolForm::$TYPES_SKIP[$aInputs[$k]['type']])) 
+                continue;
 
             if (isset(BxDolForm::$TYPES_CHECKBOX[$aInputs[$k]['type']])) {
                 $aInputs[$k]['checked'] = isset($aInputs[$k]['value']) ? ($aInputs[$k]['value'] == $aValues[$k]) : false;
