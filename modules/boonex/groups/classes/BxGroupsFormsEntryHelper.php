@@ -22,7 +22,9 @@ class BxGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
     protected function _processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile)
     {
         $sMsg = parent::_processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile);
-        if ($sMsg && 'c' == $aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']])
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
+        if ($sMsg && $oPrivacy->isPartiallyVisible($aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]))
             return '';
 
         return $sMsg;

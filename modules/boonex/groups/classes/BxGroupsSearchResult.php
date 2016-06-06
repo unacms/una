@@ -149,7 +149,7 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
     {
         // add conditions for private content
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oJoinedProfile ? $oJoinedProfile->id() : 0, array('c')) : array();
+        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oJoinedProfile ? $oJoinedProfile->id() : 0, $oPrivacy->getPartiallyVisiblePrivacyGroups()) : array();
         if (isset($a['restriction']))
             $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
         if (isset($a['join']))
