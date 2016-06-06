@@ -23,13 +23,15 @@ class BxGroupsPageEntry extends BxBaseModProfilePageEntry
     protected function _processPermissionsCheck ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
         
         $mixedAllowView = $this->_oModule->checkAllowedView($this->_aContentInfo);
-        if ('c' != $this->_aContentInfo['allow_view_to'] && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $mixedAllowView)) {
+        if (!$oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $mixedAllowView)) {
             $this->_oTemplate->displayAccessDenied($sMsg);
             exit;
         }
-        elseif ('c' == $this->_aContentInfo['allow_view_to'] && $CNF['OBJECT_PAGE_VIEW_ENTRY'] == $this->_sObject && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
+        elseif ($oPrivacy->isPartiallyVisible($this->_aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && $CNF['OBJECT_PAGE_VIEW_ENTRY'] == $this->_sObject && CHECK_ACTION_RESULT_ALLOWED !== $mixedAllowView) {
             // replace current page with different set of blocks
             $aObject = BxDolPageQuery::getPageObject($CNF['OBJECT_PAGE_VIEW_ENTRY_CLOSED']);
             $this->_sObject = $aObject['object'];

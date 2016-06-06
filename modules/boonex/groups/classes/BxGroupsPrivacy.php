@@ -11,6 +11,8 @@
 
 class BxGroupsPrivacy extends BxBaseModProfilePrivacy
 {
+    protected $_aPrivacyParticallyVisible = array ('c', 5);
+
     public function __construct($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_groups';
@@ -25,7 +27,7 @@ class BxGroupsPrivacy extends BxBaseModProfilePrivacy
      * @param  integer $iViewerId      viewer ID.
      * @return boolean result of operation.
      */
-    function isDynamicGroupMember($mixedGroupId, $iObjectOwnerId, $iViewerId, $iObjectId)
+    public function isDynamicGroupMember($mixedGroupId, $iObjectOwnerId, $iViewerId, $iObjectId)
     {
         if ('c' == $mixedGroupId)
             return $this->isClosedGroupAccess($iObjectOwnerId, $iViewerId, $iObjectId);
@@ -36,7 +38,7 @@ class BxGroupsPrivacy extends BxBaseModProfilePrivacy
         return false;
     }
 
-    function isClosedGroupAccess ($iObjectOwnerId, $iViewerId, $iObjectId)
+    public function isClosedGroupAccess ($iObjectOwnerId, $iViewerId, $iObjectId)
     {
         if (!($oConnection = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'])))
             return false;
@@ -45,9 +47,19 @@ class BxGroupsPrivacy extends BxBaseModProfilePrivacy
         return $oConnection->isConnected($iViewerId, $oGroupProfile->id(), true);
     }
 
-    function isSecretGroupAccess ($iObjectOwnerId, $iViewerId, $iObjectId)
+    public function isSecretGroupAccess ($iObjectOwnerId, $iViewerId, $iObjectId)
     {
         return $this->isClosedGroupAccess($iObjectOwnerId, $iViewerId, $iObjectId);
+    }
+
+    public function isPartiallyVisible ($mixedPrivacy)
+    {
+        return in_array($mixedPrivacy, $this->_aPrivacyParticallyVisible);
+    }
+
+    public function getPartiallyVisiblePrivacyGroups ()
+    {
+        return $this->_aPrivacyParticallyVisible;
     }
 
     static function getGroupChooser ($sObject, $iOwnerId = 0, $aParams = array())
