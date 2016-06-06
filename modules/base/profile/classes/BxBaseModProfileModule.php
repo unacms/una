@@ -348,6 +348,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
+    public function checkAllowedViewProfileImage ($aDataEntry, $isPerformAction = false)
+    {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aDataEntry)) && BX_DOL_PG_FRIENDS == $aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']])
+            return CHECK_ACTION_RESULT_ALLOWED;
+        
+        return $sMsg;
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
+    public function checkAllowedViewCoverImage ($aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowedView($aDataEntry);
+    }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
     public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
     {
         return $this->checkAllowedView ($aDataEntry, $isPerformAction);
