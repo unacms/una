@@ -34,7 +34,7 @@ class BxBaseCmtsForm extends BxTemplFormView
 
             $this->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
             $this->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
-            $this->aInputs['cmt_image']['uploaders'] = $this->_aImageUploaders;
+            $this->aInputs['cmt_image']['uploaders'] = !empty($this->aInputs['cmt_image']['value']) ? unserialize($this->aInputs['cmt_image']['value']) : $this->_aImageUploaders;
             $this->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
             $this->aInputs['cmt_image']['multiple'] = true;
             $this->aInputs['cmt_image']['ghost_template'] = $oFormNested;

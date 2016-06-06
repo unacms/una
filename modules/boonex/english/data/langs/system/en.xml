@@ -779,6 +779,7 @@
 	<string name="_adm_form_txt_field_value_checkbox"><![CDATA[Value]]></string>
 	<string name="_adm_form_txt_field_value_custom_text"><![CDATA[Custom text]]></string>
 	<string name="_adm_form_txt_field_value_default"><![CDATA[Default value]]></string>
+	<string name="_adm_form_txt_field_value_files"><![CDATA[Enabled uploaders]]></string>
 	<string name="_adm_form_txt_field_value_select_value"><![CDATA[Select value...]]></string>
 	<string name="_adm_form_txt_field_values"><![CDATA[Values]]></string>
 	<string name="_adm_form_txt_field_values_manage"><![CDATA[Manage values]]></string>

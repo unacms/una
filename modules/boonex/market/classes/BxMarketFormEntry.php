@@ -30,7 +30,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
 	    if(isset($this->aInputs[$CNF['FIELD_FILE']])) {
             $this->aInputs[$CNF['FIELD_FILE']]['storage_object'] = $CNF['OBJECT_STORAGE_FILES'];
-            $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] = $CNF['OBJECT_UPLOADERS'];
+            $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] =  !empty($this->aInputs[$CNF['FIELD_FILE']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_FILE']]['value']) : $CNF['OBJECT_UPLOADERS'];
             $this->aInputs[$CNF['FIELD_FILE']]['images_transcoder'] = '';
             $this->aInputs[$CNF['FIELD_FILE']]['storage_private'] = 1;
             $this->aInputs[$CNF['FIELD_FILE']]['multiple'] = true;

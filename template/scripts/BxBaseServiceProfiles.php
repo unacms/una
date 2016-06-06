@@ -177,6 +177,7 @@ class BxBaseServiceProfiles extends BxDol
             );
         }
 
+        $oTemplate->addCss('account.css');
         return array(
             'content' => $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars),
         );

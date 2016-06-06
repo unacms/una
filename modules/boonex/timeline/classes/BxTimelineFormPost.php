@@ -41,7 +41,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
             $this->aInputs['photo']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_photos');
             $this->aInputs['photo']['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_photos_preview');
-            $this->aInputs['photo']['uploaders'] = $this->_oModule->_oConfig->getUploaders('photo');
+            $this->aInputs['photo']['uploaders'] = !empty($this->aInputs['photo']['value']) ? unserialize($this->aInputs['photo']['value']) : $this->_oModule->_oConfig->getUploaders('photo');
             $this->aInputs['photo']['upload_buttons_titles'] = array('Simple' => 'camera');
             $this->aInputs['photo']['multiple'] = true;
             $this->aInputs['photo']['ghost_template'] = $oFormNested;
@@ -59,7 +59,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
             $this->aInputs['video']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_videos');
             $this->aInputs['video']['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_poster');
-            $this->aInputs['video']['uploaders'] = $this->_oModule->_oConfig->getUploaders('video');
+            $this->aInputs['video']['uploaders'] = !empty($this->aInputs['video']['value']) ? unserialize($this->aInputs['video']['value']) : $this->_oModule->_oConfig->getUploaders('video');
             $this->aInputs['video']['upload_buttons_titles'] = array('Simple' => 'video-camera');
             $this->aInputs['video']['multiple'] = true;
             $this->aInputs['video']['ghost_template'] = $oFormNested;
