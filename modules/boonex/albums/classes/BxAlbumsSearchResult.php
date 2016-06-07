@@ -13,7 +13,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
 {
     function __construct($sMode = '', $aParams = array())
     {
-        $this->aUnitViews = array('extended' => 'unit.html');
+        $this->aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html',);
     
         if (empty($aParams['unit_view']))
             $aParams['unit_view'] = 'extended';
@@ -113,8 +113,8 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
     function displayResultBlock ()
     {
         $s = parent::displayResultBlock ();
-        $s = '<div class="bx-albums-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
-        return $s;
+        $s = '<div class="bx-albums-wrapper">' . $s . '</div>';
+        return $this->oModule->_oTemplate->getJsCode('main') . $s;
     }
 
     function getAlterOrder()

@@ -127,10 +127,12 @@ class BxAlbumsConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+        	'main' => 'BxAlbumsMain',
         	'manage_tools' => 'BxAlbumsManageTools'
         );
 
         $this->_aJsObjects = array(
+        	'main' => 'oBxAlbumsMain',
         	'manage_tools' => 'oBxAlbumsManageTools'
         );
 
