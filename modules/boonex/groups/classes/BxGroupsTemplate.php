@@ -22,30 +22,25 @@ class BxGroupsTemplate extends BxBaseModProfileTemplate
 
     function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
     {
+        $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
+        
         $CNF = &$this->_oConfig->CNF;
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
 
-        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
-        $aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
-
+        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);        
         $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
 
-        if (!$isPublic) {
-            $aVars['thumb_url'] = $this->getImageUrl('no-picture-thumb.png');
-            $aVars['content_url'] = 'javascript:void(0);';
-            $aVars['title'] = _t('_bx_groups_txt_private_group');
-        }
-        $aVars['cover_url'] = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedViewCoverImage($aData) ? $this->urlCover ($aData, true) : $this->getImageUrl('cover.jpg');
-        $aVars['members'] = $isPublic ? _t('_bx_groups_txt_N_fans', $oConn ? $oConn->getConnectedInitiatorsCount($oGroupProfile->id(), true) : 0) : '&nbsp;';
-        $aVars['bx_if:btn'] = array (
+        $aVars['title'] = $isPublic ? bx_process_output($aData[$CNF['FIELD_NAME']]) : _t($CNF['T']['txt_private_group']);
+        $aVars['bx_if:info']['condition'] = true;
+        $aVars['bx_if:info']['content']['members'] = $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($oGroupProfile->id(), true) : 0) : '&nbsp;';
+        $aVars['bx_if:info']['content']['bx_if:btn'] = array (
             'condition' => isLogged() && $isPublic && !$oConn->isConnected(bx_get_logged_profile_id(), $oGroupProfile->id(), true),
             'content' => array (
                 'id' => $oGroupProfile->id(),
-                'title' => $oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $oGroupProfile->id()) ? _t('_bx_groups_menu_item_title_become_fan_sent') : _t('_bx_groups_menu_item_title_become_fan'),
+                'title' => $oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $oGroupProfile->id()) ? _t($CNF['T']['menu_item_title_become_fan_sent']) : _t($CNF['T']['menu_item_title_become_fan']),
                 'object' => $CNF['OBJECT_CONNECTIONS'],
             ),
         );

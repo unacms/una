@@ -23,10 +23,10 @@ class BxGroupsDb extends BxBaseModProfileDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $CNF['FIELD_AUTHOR'] . "` = :" . $CNF['FIELD_AUTHOR'] . " WHERE `id` = :id";
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $CNF['FIELD_AUTHOR'] . "` = :author WHERE `" . $CNF['FIELD_ID'] . "` = :id";
         return $this->query($sQuery, array(
     		'id' => $iContentId,
-    		$CNF['FIELD_AUTHOR'] => $iProfileId,
+    		'author' => $iProfileId,
     	));
     }
 

@@ -11,11 +11,10 @@
 
 class BxGroupsPrivacy extends BxBaseModProfilePrivacy
 {
-    protected $_aPrivacyParticallyVisible = array ('c', 5);
-
     public function __construct($aOptions, $oTemplate = false)
     {
-    	$this->MODULE = 'bx_groups';
+        $this->MODULE = 'bx_groups';
+        $this->_aPrivacyParticallyVisible = array ('c', 5);
         parent::__construct($aOptions, $oTemplate);
     }
 
@@ -50,16 +49,6 @@ class BxGroupsPrivacy extends BxBaseModProfilePrivacy
     public function isSecretGroupAccess ($iObjectOwnerId, $iViewerId, $iObjectId)
     {
         return $this->isClosedGroupAccess($iObjectOwnerId, $iViewerId, $iObjectId);
-    }
-
-    public function isPartiallyVisible ($mixedPrivacy)
-    {
-        return in_array($mixedPrivacy, $this->_aPrivacyParticallyVisible);
-    }
-
-    public function getPartiallyVisiblePrivacyGroups ()
-    {
-        return $this->_aPrivacyParticallyVisible;
     }
 
     static function getGroupChooser ($sObject, $iOwnerId = 0, $aParams = array())

@@ -7,54 +7,13 @@
     -webkit-border-radius:0.1875rem;
 }
 
+.bx-groups-unit-cover .bx-base-pofile-unit-cover .bx-def-thumb {
+    border-width:0.0625rem;
+    border-radius:0.1875rem;
+    -moz-border-radius:0.1875rem;
+    -webkit-border-radius:0.1875rem;
+}
+
 .bx-search-result-block {
     text-align:center;
-}
-
-.bx-groups-unit {
-    display:inline-block;
-    overflow:hidden;
-}
-
-.bx-groups-cover {
-    display:block;
-
-    height:7.5rem;
-
-    line-height:7.5rem;
-    text-align:center;
-
-    background-repeat:no-repeat;
-    background-position:center center;
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-size:cover;
-}
-
-.bx-groups-cover,
-.bx-groups-unit-info {
-    width:17.5rem;
-}
-
-.bx-groups-cover img {
-    background-color:#fff;
-    vertical-align:middle;
-}
-
-.bx-groups-unit-title {
-    text-align:center;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    overflow:hidden;    
-}
-
-.bx-groups-unit-info-members {
-    float:left;
-    line-height:1.5rem;
-    vertical-align:middle;
-}
-
-.bx-groups-unit-info-btn {
-    float:right;
 }

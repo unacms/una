@@ -9,11 +9,11 @@
  * @{
  */
 
-class BxBaseModProfilePrivacy extends BxTemplPrivacy
+class BxOrgsPrivacy extends BxBaseModProfilePrivacy
 {
     function __construct($aOptions, $oTemplate = false)
     {
-    	$this->MODULE = 'bx_orgs';
+    	$this->MODULE = 'bx_organizations';
         parent::__construct($aOptions, $oTemplate);
     }
 }

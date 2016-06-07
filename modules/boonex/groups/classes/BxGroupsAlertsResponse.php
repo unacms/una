@@ -24,10 +24,10 @@ class BxGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
         $CNF = $this->_oModule->_oConfig->CNF;
 
         // connection events
-        if ('bx_groups_fans' == $oAlert->sUnit && 'connection_added' == $oAlert->sAction) {
+        if ($CNF['OBJECT_CONNECTIONS'] == $oAlert->sUnit && 'connection_added' == $oAlert->sAction) {
             $this->_oModule->serviceAddMutualConnection($oAlert->aExtras['content'], $oAlert->aExtras['initiator']);
         }
-        elseif ('bx_groups_fans' == $oAlert->sUnit && 'connection_removed' == $oAlert->sAction) {
+        elseif ($CNF['OBJECT_CONNECTIONS'] == $oAlert->sUnit && 'connection_removed' == $oAlert->sAction) {
             $this->_oModule->serviceOnRemoveConnection($oAlert->aExtras['content'], $oAlert->aExtras['initiator']);
         }
 
@@ -37,7 +37,7 @@ class BxGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
             $this->_oModule->serviceReassignEntitiesByAuthor($oAlert->iObject);
         }
 
-        if ('bx_groups' != $oAlert->sUnit)
+        if ($this->MODULE != $oAlert->sUnit)
             return;
 
         // join group events
@@ -56,7 +56,7 @@ class BxGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
 
     protected function sendMailInvitation ($oAlert, $iProfileId, $iSender = 0)
     {
-        sendMailTemplate('bx_groups_invitation', 0, $iProfileId, array(
+        sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_INVITATION'], 0, $iProfileId, array(
             'InviterUrl' => BxDolProfile::getInstance($iSender)->getUrl(),
             'InviterDisplayName' => BxDolProfile::getInstance($iSender)->getDisplayName(),
             'EntryUrl' => $oAlert->aExtras['entry_url'],
@@ -68,7 +68,7 @@ class BxGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
     {
         $aAdmins = $this->_oModule->_oDb->getAdmins($oAlert->aExtras['group_profile']);
         foreach ($aAdmins as $iAdminProfileId) {
-            sendMailTemplate('bx_groups_join_request', 0, $iAdminProfileId, array(
+            sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_JOIN_REQUEST'], 0, $iAdminProfileId, array(
                 'NewMemberUrl' => BxDolProfile::getInstance($iProfileId)->getUrl(),
                 'NewMemberDisplayName' => BxDolProfile::getInstance($iProfileId)->getDisplayName(),
                 'EntryUrl' => $oAlert->aExtras['entry_url'],
@@ -79,7 +79,7 @@ class BxGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
 
     protected function sendMailJoinRequestAccepted ($oAlert, $iProfileId, $iSender = 0)
     {
-        sendMailTemplate('bx_groups_join_confirm', 0, $iProfileId, array(
+        sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_JOIN_CONFIRM'], 0, $iProfileId, array(
             'EntryUrl' => $oAlert->aExtras['entry_url'],
             'EntryTitle' => $oAlert->aExtras['entry_title'],
         ), BX_EMAIL_NOTIFY);

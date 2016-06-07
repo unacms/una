@@ -21,21 +21,21 @@ class BxGroupsMenuView extends BxBaseModProfileMenuView
         parent::__construct($aObject, $oTemplate);
 
         if ($this->_oProfile && isLogged()) {
-
-            $oConn = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS']);
+            $CNF = &$this->_oModule->_oConfig->CNF;
+            
+            $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
             if ($oConn && $oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id())) {
                 $this->addMarkers(array(
-                    'title_add_fan' => _t('_bx_groups_menu_item_title_become_fan_sent'),
-                    'title_remove_fan' => _t('_bx_groups_menu_item_title_leave_group_cancel_request'),
+                    'title_add_fan' => _t($CNF['T']['menu_item_title_become_fan_sent']),
+                    'title_remove_fan' => _t($CNF['T']['menu_item_title_leave_group_cancel_request']),
                 ));
             } else {
                 $this->addMarkers(array(
-                    'title_add_fan' => _t('_bx_groups_menu_item_title_become_fan'),
-                    'title_remove_fan' => _t('_bx_groups_menu_item_title_leave_group'),
+                    'title_add_fan' => _t($CNF['T']['menu_item_title_become_fan']),
+                    'title_remove_fan' => _t($CNF['T']['menu_item_title_leave_group']),
                 ));
             }
 
-            $CNF = $this->_oModule->_oConfig->CNF;
             if ($oConn && $this->_oModule->isFan($this->_aContentInfo[$CNF['FIELD_ID']])) {
                 $a = $oConn->getConnectedInitiators($this->_oProfile->id());
                 $this->addMarkers(array('recipients' => implode(',', $a)));

@@ -128,7 +128,7 @@ class BxGroupsGridConnections extends BxDolGridConnections
         } 
         else {
 
-            $sEmailTemplate = 'toAdmins' == $sFunc ? 'bx_groups_fan_become_admin' : 'bx_groups_admin_become_fan';
+            $sEmailTemplate = 'toAdmins' == $sFunc ? $this->_oModule->_oConfig->CNF['EMAIL_FAN_BECOME_ADMIN'] : $this->_oModule->_oConfig->CNF['EMAIL_ADMIN_BECOME_FAN'];
             list($iGroupProfileId, $iProfileId) = $this->_prepareGroupProfileAndMemberProfile($iGroupProfileId, $iId);
             if (bx_get_logged_profile_id() != $iProfileId) {
                 // notify about admin status
@@ -151,7 +151,7 @@ class BxGroupsGridConnections extends BxDolGridConnections
         list ($iId, $iViewedId) = $this->_prepareIds();
 
         // send email notification
-        $sEmailTemplate = $this->_oConnection->isConnected($iViewedId, $iId, true) ? 'bx_groups_fan_remove' : 'bx_groups_join_reject';
+        $sEmailTemplate = $this->_oConnection->isConnected($iViewedId, $iId, true) ? $this->_oModule->_oConfig->CNF['EMAIL_FAN_REMOVE'] : $this->_oModule->_oConfig->CNF['EMAIL_JOIN_REJECT'];
         list($iGroupProfileId, $iProfileId) = $this->_prepareGroupProfileAndMemberProfile($iId, $iViewedId);
         if (bx_get_logged_profile_id() != $iProfileId) {
             sendMailTemplate($sEmailTemplate, 0, $iProfileId, array(
