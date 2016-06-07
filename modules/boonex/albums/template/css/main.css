@@ -20,24 +20,30 @@
     }
 }
 
+.bx-search-result-block .bx-base-text-unit-gallery-wrapper {
+	display: block;
+}
+.bx-search-result-block.bx-base-text-unit-gallery-wrapper .bx-base-text-unit.bx-base-text-unit-gallery {
+	display: inline-block;
+}
+
+
 .bx-albums-media-caption,
 .bx-albums-media-actions {
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
-
-.bx-albums-unit-images-cont {
-    height:11.25rem;
-    overflow:hidden;
+.bx-base-text-unit-ext .bx-albums-unit-text-cont {
+	text-align: left;
 }
 
 .bx-albums-unit-images {
     white-space:nowrap;
     width:100%;
-    height:11.25rem;
-    overflow:hidden;
+    overflow: hidden;
 }
+
 .bx-albums-unit-image {
 	display:inline-block;
     margin-right:0.125rem;
