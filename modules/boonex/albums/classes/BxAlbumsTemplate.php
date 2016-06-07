@@ -21,6 +21,9 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
     {
         $this->MODULE = 'bx_albums';
         parent::__construct($oConfig, $oDb);
+
+        $this->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
+        $this->addJs(array('flickity/flickity.pkgd.min.js', 'main.js'));
     }
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())

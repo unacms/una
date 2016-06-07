@@ -35,15 +35,16 @@
 .bx-albums-unit-images {
     white-space:nowrap;
     width:100%;
-    height:16rem;
-    overflow-y:hidden;
-    overflow-x:scroll;
-    -webkit-overflow-scrolling:touch;
+    height:11.25rem;
+    overflow:hidden;
 }
-
-.bx-albums-unit-images img {
-    display:inline-block;
+.bx-albums-unit-image {
+	display:inline-block;
     margin-right:0.125rem;
+}
+.bx-albums-unit-image,
+.bx-albums-unit-image img {
+    
     height:11.25rem;
 }
 

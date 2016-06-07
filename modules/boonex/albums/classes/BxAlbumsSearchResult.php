@@ -114,7 +114,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
     {
         $s = parent::displayResultBlock ();
         $s = '<div class="bx-albums-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
-        return $s;
+        return $this->oModule->_oTemplate->getJsCode('main') . $s;
     }
 
     function getAlterOrder()
