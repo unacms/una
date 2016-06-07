@@ -41,16 +41,7 @@
 .bx-albums-unit-images {
     white-space:nowrap;
     width:100%;
-}
-
-.bx-albums-unit-images .flickity-page-dots {
-	bottom: -1rem;
-}
-.bx-albums-unit-images .flickity-page-dots .dot {
-  height: 0.25rem;
-  width: 2.5rem;
-  margin: 0;
-  border-radius: 0;
+    overflow: hidden;
 }
 
 .bx-albums-unit-image {
