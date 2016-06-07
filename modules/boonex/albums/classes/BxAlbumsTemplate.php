@@ -21,6 +21,9 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
     {
         $this->MODULE = 'bx_albums';
         parent::__construct($oConfig, $oDb);
+
+        $this->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
+        $this->addJs(array('flickity/flickity.pkgd.min.js', 'main.js'));
     }
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
@@ -53,11 +56,17 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             );
         }
 
+        // get summary
+        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
+        $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
+        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
+
         // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
+        	'summary' => $sSummary,
             'author' => $oProfile->getDisplayName(),
             'author_url' => $oProfile->getUrl(),
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
