@@ -9,24 +9,11 @@
  * @{
  */
 
-bx_import('Privacy', 'bx_groups');
-
-class BxGroupsPrivacyNotifications extends BxGroupsPrivacy
+class BxGroupsPrivacyNotifications extends BxBaseModGroupsPrivacyNotifications
 {
     function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
-    }
-
-    function check($iObjectId, $iViewerId = 0)
-    {
-        if (!parent::check($iObjectId, $iViewerId))
-            return false;
-
-        if (!($aEvent = BxDolService::call('bx_notifications', 'get_event_by_id', array($iObjectId))))
-            return false;
-
-        return $this->_oModule->_oDb->isAdmin($aEvent['object_owner_id'], $iViewerId ? $iViewerId : bx_get_logged_profile_id());
     }
 }
 

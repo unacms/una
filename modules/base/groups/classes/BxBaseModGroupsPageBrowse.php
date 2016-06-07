@@ -3,21 +3,19 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Groups Groups
+ * @defgroup    BaseGroups Base classes for groups modules
  * @ingroup     TridentModules
  *
  * @{
  */
 
 /**
- * 'View group' menu.
+ * Browse entries pages.
  */
-class BxGroupsMenuView extends BxBaseModGroupsMenuView
+class BxBaseModGroupsPageBrowse extends BxBaseModProfilePageBrowse
 {
-
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_groups';
         parent::__construct($aObject, $oTemplate);
     }
 }

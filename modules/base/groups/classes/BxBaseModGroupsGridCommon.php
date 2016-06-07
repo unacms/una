@@ -3,17 +3,16 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Groups Groups
+ * @defgroup    BaseGroups Base classes for groups modules
  * @ingroup     TridentModules
  * 
  * @{
  */
 
-class BxGroupsGridConnections extends BxBaseModGroupsGridConnections
+class BxBaseModGroupsGridCommon extends BxBaseModProfileGridCommon
 {
     public function __construct ($aOptions, $oTemplate = false)
     {
-        $this->_sContentModule = 'bx_groups';
         parent::__construct ($aOptions, $oTemplate);
     }
 }

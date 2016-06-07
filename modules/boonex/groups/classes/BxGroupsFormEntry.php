@@ -12,24 +12,12 @@
 /**
  * Create/Edit Group Form.
  */
-class BxGroupsFormEntry extends BxBaseModProfileFormEntry
+class BxGroupsFormEntry extends BxBaseModGroupsFormEntry
 {
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_groups';
         parent::__construct($aInfo, $oTemplate);
-
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if (isset($this->aInputs['initial_members']) && !isset($this->aInputs['initial_members']['value'])) {
-            $this->aInputs['initial_members']['value'] = array(bx_get_logged_profile_id());
-        }
-    }
-
-    protected function genCustomInputInitialMembers ($aInput)
-    {
-        $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . "modules/?r=" . $this->_oModule->_oConfig->getUri() . "/ajax_get_initial_members";
-        return $this->genCustomInputUsernamesSuggestions($aInput);
     }
 }
 
