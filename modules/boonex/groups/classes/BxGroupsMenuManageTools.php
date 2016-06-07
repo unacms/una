@@ -12,7 +12,7 @@
 /**
  * 'Groups manage tools' menu.
  */
-class BxGroupsMenuManageTools extends BxBaseModProfileMenuManageTools
+class BxGroupsMenuManageTools extends BxBaseModGroupsMenuManageTools
 {
 
     public function __construct($aObject, $oTemplate = false)

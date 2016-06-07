@@ -9,101 +9,12 @@
  * @{
  */
 
-class BxGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
+class BxGroupsAlertsResponse extends BxBaseModGroupsAlertsResponse
 {
     public function __construct()
     {
     	$this->MODULE = 'bx_groups';
         parent::__construct();
-    }
-    
-    public function response($oAlert)
-    {
-        parent::response($oAlert);
-
-        $CNF = $this->_oModule->_oConfig->CNF;
-
-        // connection events
-        if ('bx_groups_fans' == $oAlert->sUnit && 'connection_added' == $oAlert->sAction) {
-            $this->_oModule->serviceAddMutualConnection($oAlert->aExtras['content'], $oAlert->aExtras['initiator']);
-        }
-        elseif ('bx_groups_fans' == $oAlert->sUnit && 'connection_removed' == $oAlert->sAction) {
-            $this->_oModule->serviceOnRemoveConnection($oAlert->aExtras['content'], $oAlert->aExtras['initiator']);
-        }
-
-        // profile delete event
-        if ('profile' == $oAlert->sUnit && 'delete' == $oAlert->sAction) {
-            $this->_oModule->serviceDeleteProfileFromFansAndAdmins($oAlert->iObject);
-            $this->_oModule->serviceReassignEntitiesByAuthor($oAlert->iObject);
-        }
-
-        if ('bx_groups' != $oAlert->sUnit)
-            return;
-
-        // join group events
-        switch ($oAlert->sAction) {
-        case 'join_invitation':
-            $this->sendMailInvitation($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-            break;
-        case 'join_request':
-            $this->sendMailJoinRequest($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-            break;
-        case 'join_request_accepted':
-            $this->sendMailJoinRequestAccepted($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-            break;
-        }
-    }
-
-    protected function sendMailInvitation ($oAlert, $iProfileId, $iSender = 0)
-    {
-        sendMailTemplate('bx_groups_invitation', 0, $iProfileId, array(
-            'InviterUrl' => BxDolProfile::getInstance($iSender)->getUrl(),
-            'InviterDisplayName' => BxDolProfile::getInstance($iSender)->getDisplayName(),
-            'EntryUrl' => $oAlert->aExtras['entry_url'],
-            'EntryTitle' => $oAlert->aExtras['entry_title'],
-        ), BX_EMAIL_NOTIFY);
-    }
-
-    protected function sendMailJoinRequest ($oAlert, $iProfileId, $iSender = 0)
-    {
-        $aAdmins = $this->_oModule->_oDb->getAdmins($oAlert->aExtras['group_profile']);
-        foreach ($aAdmins as $iAdminProfileId) {
-            sendMailTemplate('bx_groups_join_request', 0, $iAdminProfileId, array(
-                'NewMemberUrl' => BxDolProfile::getInstance($iProfileId)->getUrl(),
-                'NewMemberDisplayName' => BxDolProfile::getInstance($iProfileId)->getDisplayName(),
-                'EntryUrl' => $oAlert->aExtras['entry_url'],
-                'EntryTitle' => $oAlert->aExtras['entry_title'],
-            ), BX_EMAIL_NOTIFY);
-        }
-    }
-
-    protected function sendMailJoinRequestAccepted ($oAlert, $iProfileId, $iSender = 0)
-    {
-        sendMailTemplate('bx_groups_join_confirm', 0, $iProfileId, array(
-            'EntryUrl' => $oAlert->aExtras['entry_url'],
-            'EntryTitle' => $oAlert->aExtras['entry_title'],
-        ), BX_EMAIL_NOTIFY);
-    }
-
-    protected function processTimelineShare ($oAlert, $iGroupProfileId)
-    {
-        if ($oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return;
-
-        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
-        if (!$oGroupProfile)
-            return;
-
-        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
-
-        $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
-        if (BX_DOL_PG_ALL == $aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] || (BX_DOL_PG_MEMBERS == $aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] && isLogged()) || $oPrivacy->isPartiallyVisible($aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']])) {
-            $oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
-        }
-        else {
-            $oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] = CHECK_ACTION_MESSAGE_NOT_ALLOWED;
-            $oAlert->aExtras['check_result'][CHECK_ACTION_MESSAGE] = _t('_sys_access_denied_to_private_content');
-        }
     }
 }
 

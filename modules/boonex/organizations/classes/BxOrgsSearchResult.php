@@ -15,6 +15,8 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
     {
         parent::__construct($sMode, $aParams);
 
+        $this->sUnitTemplate = 'unit_with_cover.html';
+
         $this->aCurrent =  array(
             'name' => 'bx_organizations',
             'module_name' => 'bx_organizations',
@@ -37,7 +39,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                     'table' => 'bx_organizations_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'org_name', 'picture', 'added', 'author', 'allow_view_to'),
+                    'joinFields' => array('id', 'org_name', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
                 ),
                 'account' => array(
                     'type' => 'INNER',
@@ -126,7 +128,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 $this->isError = true;
         }
 
-        parent::__construct();
+        $this->sCenterContentUnitSelector = false;
     }
 
     function getAlterOrder()
