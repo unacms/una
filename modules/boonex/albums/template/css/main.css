@@ -55,10 +55,11 @@
 
 .bx-base-text-unit-gallery .bx-albums-unit-image { 
 	width: 100%;
+	text-align: center;
 }
 
 .bx-albums-media-file {
-    text-align:center;    
+    text-align: center;    
 }
 
 .bx-albums-media-file img,
