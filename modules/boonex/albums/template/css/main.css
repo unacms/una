@@ -37,7 +37,6 @@
 .bx-base-text-unit-ext .bx-albums-unit-text-cont {
 	text-align: left;
 }
-
 .bx-albums-unit-images {
     white-space:nowrap;
     width:100%;
@@ -45,13 +44,17 @@
 }
 
 .bx-albums-unit-image {
-	display:inline-block;
-    margin-right:0.125rem;
+	display: inline-block;
+    margin-right: 0.125rem;
 }
+
 .bx-albums-unit-image,
 .bx-albums-unit-image img {
-    
-    height:11.25rem;
+    height: 11.25rem;
+}
+
+.bx-base-text-unit-gallery .bx-albums-unit-image { 
+	width: 100%;
 }
 
 .bx-albums-media-file {
