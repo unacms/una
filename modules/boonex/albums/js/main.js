@@ -27,7 +27,8 @@ function BxAlbumsMain(oOptions) {
 BxAlbumsMain.prototype.init = function() {
 	$('.bx-albums-unit-images').flickity({
 		cellSelector: '.bx-albums-unit-image',
-		cellAlign: 'left'
+		cellAlign: 'left',
+		pageDots: true
 	});
 };
 
