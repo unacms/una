@@ -70,6 +70,7 @@
 	<string name="_bx_uni_stg_cpt_option_block_title_font_family"><![CDATA[Title font stack]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_size"><![CDATA[Title font size]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_color"><![CDATA[Title font color]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_title_font_weight"><![CDATA[Title font weight]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_div_height"><![CDATA[Title separator height]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_div_bg_color"><![CDATA[Title separator color]]></string>
 
@@ -198,18 +199,21 @@
 	<string name="_bx_uni_stg_cpt_option_font_size_middle"><![CDATA[Middle font size]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_large"><![CDATA[Large font size]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_h1"><![CDATA[H1 font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_weight_h1"><![CDATA[H1 font weight]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_default_h1"><![CDATA[H1 default font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_grayed_h1"><![CDATA[H1 grayed font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_contrasted_h1"><![CDATA[H1 contrasted font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h1"><![CDATA[H1 link font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h1_hover"><![CDATA[H1 on-hover link font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_h2"><![CDATA[H2 font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_weight_h2"><![CDATA[H2 font weight]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_default_h2"><![CDATA[H2 default font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_grayed_h2"><![CDATA[H2 grayed font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_contrasted_h2"><![CDATA[H2 contrasted font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h2"><![CDATA[H2 link font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h2_hover"><![CDATA[H2 on-hover link font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_h3"><![CDATA[H3 font size]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_weight_h3"><![CDATA[H3 font weight]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_default_h3"><![CDATA[H3 default font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_grayed_h3"><![CDATA[H3 grayed font color]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_contrasted_h3"><![CDATA[H3 contrasted font color]]></string>

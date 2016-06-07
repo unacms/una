@@ -105,8 +105,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_uni_stg_cpt_option_block_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_uni_stg_cpt_option_block_title_font_size', '1.5rem', 'digit', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_uni_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_uni_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 15),
-(@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_uni_stg_cpt_option_block_title_div_bg_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 16);
+(@iCategoryId, CONCAT(@sName, '_block_title_font_weight'), '_bx_uni_stg_cpt_option_block_title_font_weight', '500', 'digit', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_uni_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 16),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_uni_stg_cpt_option_block_title_div_bg_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 17);
 
 
 -- SETTINGS: UNI Styles Card
@@ -285,23 +286,26 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_font_size_middle'), '_bx_uni_stg_cpt_option_font_size_middle', '16px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_font_size_large'), '_bx_uni_stg_cpt_option_font_size_large', '22px', 'digit', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_font_size_h1'), '_bx_uni_stg_cpt_option_font_size_h1', '38px', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_font_color_default_h1'), '_bx_uni_stg_cpt_option_font_color_default_h1', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h1'), '_bx_uni_stg_cpt_option_font_color_grayed_h1', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h1'), '_bx_uni_stg_cpt_option_font_color_contrasted_h1', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h1'), '_bx_uni_stg_cpt_option_font_color_link_h1', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h1_hover'), '_bx_uni_stg_cpt_option_font_color_link_h1_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_font_size_h2'), '_bx_uni_stg_cpt_option_font_size_h2', '24px', 'digit', '', '', '', 15),
-(@iCategoryId, CONCAT(@sName, '_font_color_default_h2'), '_bx_uni_stg_cpt_option_font_color_default_h2', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 16),
-(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h2'), '_bx_uni_stg_cpt_option_font_color_grayed_h2', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 17),
-(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h2'), '_bx_uni_stg_cpt_option_font_color_contrasted_h2', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 18),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h2'), '_bx_uni_stg_cpt_option_font_color_link_h2', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 19),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h2_hover'), '_bx_uni_stg_cpt_option_font_color_link_h2_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 20),
-(@iCategoryId, CONCAT(@sName, '_font_size_h3'), '_bx_uni_stg_cpt_option_font_size_h3', '18px', 'digit', '', '', '', 21),
-(@iCategoryId, CONCAT(@sName, '_font_color_default_h3'), '_bx_uni_stg_cpt_option_font_color_default_h3', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 22),
-(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h3'), '_bx_uni_stg_cpt_option_font_color_grayed_h3', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 23),
-(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h3'), '_bx_uni_stg_cpt_option_font_color_contrasted_h3', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 24),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h3'), '_bx_uni_stg_cpt_option_font_color_link_h3', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 25),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h3_hover'), '_bx_uni_stg_cpt_option_font_color_link_h3_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 26);
+(@iCategoryId, CONCAT(@sName, '_font_weight_h1'), '_bx_uni_stg_cpt_option_font_weight_h1', '700', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_font_color_default_h1'), '_bx_uni_stg_cpt_option_font_color_default_h1', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h1'), '_bx_uni_stg_cpt_option_font_color_grayed_h1', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h1'), '_bx_uni_stg_cpt_option_font_color_contrasted_h1', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h1'), '_bx_uni_stg_cpt_option_font_color_link_h1', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h1_hover'), '_bx_uni_stg_cpt_option_font_color_link_h1_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_font_size_h2'), '_bx_uni_stg_cpt_option_font_size_h2', '24px', 'digit', '', '', '', 16),
+(@iCategoryId, CONCAT(@sName, '_font_weight_h2'), '_bx_uni_stg_cpt_option_font_weight_h2', '700', 'digit', '', '', '', 17),
+(@iCategoryId, CONCAT(@sName, '_font_color_default_h2'), '_bx_uni_stg_cpt_option_font_color_default_h2', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 18),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h2'), '_bx_uni_stg_cpt_option_font_color_grayed_h2', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 19),
+(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h2'), '_bx_uni_stg_cpt_option_font_color_contrasted_h2', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 20),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h2'), '_bx_uni_stg_cpt_option_font_color_link_h2', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 21),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h2_hover'), '_bx_uni_stg_cpt_option_font_color_link_h2_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 22),
+(@iCategoryId, CONCAT(@sName, '_font_size_h3'), '_bx_uni_stg_cpt_option_font_size_h3', '18px', 'digit', '', '', '', 23),
+(@iCategoryId, CONCAT(@sName, '_font_weight_h3'), '_bx_uni_stg_cpt_option_font_weight_h3', '500', 'digit', '', '', '', 24),
+(@iCategoryId, CONCAT(@sName, '_font_color_default_h3'), '_bx_uni_stg_cpt_option_font_color_default_h3', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 25),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h3'), '_bx_uni_stg_cpt_option_font_color_grayed_h3', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 26),
+(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h3'), '_bx_uni_stg_cpt_option_font_color_contrasted_h3', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 27),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h3'), '_bx_uni_stg_cpt_option_font_color_link_h3', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 28),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h3_hover'), '_bx_uni_stg_cpt_option_font_color_link_h3_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 29);
 
 -- SETTINGS: UNI Viewport Tablet
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
