@@ -163,7 +163,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $oProfile = BxDolProfileUndefined::getInstance();
 
         $aVars = array(
-            'title' => $sText,
+            'title' => bx_process_output($sText),
             'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']]), $oProfile->getUrl(), $oProfile->getDisplayName()),
         );
 
