@@ -11,6 +11,10 @@
     vertical-align:middle;
 }
 
+.bx-base-text-unit-cnt {
+	width: 100%;
+}
+
 .bx-base-text-unit-no-thumb,
 .bx-base-text-unit-thumb {
     display:block;
@@ -27,6 +31,12 @@
 
 .bx-base-text-unit-cover {
 	position: relative;
+}
+.bx-base-text-unit-text {
+	width: 100%;
+}
+.bx-base-text-unit-ext .bx-base-text-unit-text {
+	text-align: left;
 }
 
 .bx-base-text-unit-cover img {
@@ -56,10 +66,12 @@
 }
 
 .bx-base-text-unit-gallery h2 {
-    line-height:1.25em;
-    max-height:3.75em;
-    overflow:hidden; 
-    margin-bottom:0;
+	margin-bottom: 0;
+	max-height: 3.75em;
+    line-height: 1.25em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .bx-base-text-wrapper {
