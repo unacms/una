@@ -166,7 +166,7 @@ class BxDolAccount extends BxDol
     public function getDisplayName($iAccountId = false)
     {
         $aInfo = $this->getInfo($iAccountId);
-        return $aInfo['name'];
+        return bx_process_output($aInfo['name']);
     }
 
     /**
