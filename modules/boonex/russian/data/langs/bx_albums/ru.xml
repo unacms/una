@@ -70,6 +70,7 @@
     <string name="_bx_albums_page_block_title_recent_entries"><![CDATA[Новые альбомы]]></string>
     <string name="_bx_albums_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_albums_page_block_title_entry_author"><![CDATA[Автор]]></string>
+	<string name="_bx_albums_page_block_title_entry_info"><![CDATA[Информация]]></string>
     <string name="_bx_albums_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_albums_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_albums_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
@@ -157,6 +158,10 @@
     <string name="_bx_albums_txt_sample_single"><![CDATA[альбом]]></string>
     <string name="_bx_albums_txt_sample_comment_single"><![CDATA[комментарий к альбому]]></string>
     <string name="_bx_albums_txt_sample_vote_single"><![CDATA[голос за альбом]]></string>
+    <string name="_bx_albums_txt_cameras"><![CDATA[Камера:]]></string>
+    <string name="_bx_albums_txt_location"><![CDATA[Место:]]></string>
+    <string name="_bx_albums_txt_released"><![CDATA[Дата выпуска:]]></string>
+    <string name="_bx_albums_txt_updated"><![CDATA[Дата обновления:]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[изображение]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[комментарий к изображению]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[медиа-файлы автора {0}]]></string>

@@ -70,6 +70,7 @@
     <string name="_bx_albums_page_block_title_recent_entries"><![CDATA[Latest Albums]]></string>
     <string name="_bx_albums_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_albums_page_block_title_entry_author"><![CDATA[Author]]></string>
+    <string name="_bx_albums_page_block_title_entry_info"><![CDATA[Info]]></string>
     <string name="_bx_albums_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_albums_page_block_title_entry_comments"><![CDATA[Comments]]></string>
     <string name="_bx_albums_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
@@ -157,6 +158,10 @@
     <string name="_bx_albums_txt_sample_single"><![CDATA[album]]></string>
     <string name="_bx_albums_txt_sample_comment_single"><![CDATA[album's comment]]></string>
     <string name="_bx_albums_txt_sample_vote_single"><![CDATA[album's vote]]></string>
+    <string name="_bx_albums_txt_cameras"><![CDATA[Cameras:]]></string>
+    <string name="_bx_albums_txt_location"><![CDATA[Location:]]></string>
+    <string name="_bx_albums_txt_released"><![CDATA[Released:]]></string>
+    <string name="_bx_albums_txt_updated"><![CDATA[Updated:]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[image]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[image's comment]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[{0}'s media]]></string>
