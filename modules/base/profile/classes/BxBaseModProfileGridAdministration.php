@@ -151,6 +151,11 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
 
+    protected function _getCellAddedTs($mixedValue, $sKey, $aField, $aRow)
+    {
+        return $this->_getCellLastOnline($mixedValue, $sKey, $aField, $aRow);
+    }
+
 	protected function _getCellAccount($mixedValue, $sKey, $aField, $aRow)
     {
     	$sManageAccountUrl = $this->_getManageAccountUrl($aRow[$sKey]);

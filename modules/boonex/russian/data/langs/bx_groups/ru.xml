@@ -61,7 +61,7 @@
 	<string name="_bx_groups_page_title_sys_view_profile"><![CDATA[Просмотреть группу]]></string>
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_groups_page_title_browse"><![CDATA[Группы]]></string>
-    <string name="_bx_groups_page_title_browse_active"><![CDATA[Последние Активные Группы]]></string>
+    <string name="_bx_groups_page_title_browse_top"><![CDATA[Популярные Группы]]></string>
 	<string name="_bx_groups_page_title_browse_recent"><![CDATA[Последние Добавленные Группы]]></string>
 	<string name="_bx_groups_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_groups_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
@@ -76,8 +76,8 @@
 	<string name="_bx_groups_page_title_sys_manage"><![CDATA[Управление собственными группами]]></string>
 	<string name="_bx_groups_page_title_sys_manage_administration"><![CDATA[Управление всеми группами]]></string>
 	<string name="_bx_groups_page_title_manage"><![CDATA[Управление группами]]></string>
-	<string name="_bx_groups_page_title_sys_active"><![CDATA[Последние Активные Группы]]></string>
-	<string name="_bx_groups_page_title_active"><![CDATA[Последние Активные Группы]]></string>
+	<string name="_bx_groups_page_title_sys_top"><![CDATA[Популярные Группы]]></string>
+	<string name="_bx_groups_page_title_top"><![CDATA[Популярные Группы]]></string>
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
 
 	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Участие в группах]]></string>
@@ -100,7 +100,7 @@
 	<string name="_bx_groups_page_block_title_system_manage"><![CDATA[Управление собственными группами]]></string>
 	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Управление всеми группами]]></string>
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Управление группами]]></string>
-    <string name="_bx_groups_page_block_title_active_profiles"><![CDATA[Последние Активные Группы]]></string>
+    <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Популярные Группы]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
@@ -171,18 +171,18 @@
     <string name="_bx_groups_menu_item_title_friend_requests"><![CDATA[{addon} запросов дружбы]]></string>
     <string name="_bx_groups_menu_item_title_system_manage_my_groups"><![CDATA[Мои группы]]></string>
     <string name="_bx_groups_menu_item_title_manage_my_groups"><![CDATA[{addon} групп]]></string>
-    <string name="_bx_groups_menu_item_title_system_entries_recent"><![CDATA[Новые Группы]]></string>
-    <string name="_bx_groups_menu_item_title_entries_recent"><![CDATA[Новые Группы]]></string>
-    <string name="_bx_groups_menu_item_title_system_entries_manage"><![CDATA[Управление Группами]]></string>
-    <string name="_bx_groups_menu_item_title_entries_manage"><![CDATA[Управление Группами]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
+    <string name="_bx_groups_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_groups_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_home"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_entries_home"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_system_admt_groups"><![CDATA[Группы]]></string>
 	<string name="_bx_groups_menu_item_title_admt_groups"><![CDATA[Группы - {addon} неодобрено]]></string>
 	<string name="_bx_groups_menu_item_title_manage_my"><![CDATA[Мои группы]]></string>
 	<string name="_bx_groups_menu_item_title_manage_all"><![CDATA[Все группы]]></string>
-	<string name="_bx_groups_menu_item_title_system_entries_active"><![CDATA[Активные Группы]]></string>
-	<string name="_bx_groups_menu_item_title_entries_active"><![CDATA[Активные Группы]]></string>
+	<string name="_bx_groups_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>
+	<string name="_bx_groups_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
 
 	<string name="_bx_groups_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_groups_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
@@ -190,7 +190,7 @@
 	<string name="_bx_groups_grid_filter_item_title_adm_suspended"><![CDATA[Заблокированные]]></string>
 	<string name="_bx_groups_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_groups_grid_column_title_adm_group_name"><![CDATA[Название]]></string>
-    <string name="_bx_groups_grid_column_title_adm_last_online"><![CDATA[Последнее посещение]]></string>
+    <string name="_bx_groups_grid_column_title_adm_added"><![CDATA[Создание]]></string>
     <string name="_bx_groups_grid_column_title_adm_account"><![CDATA[Аккаунт]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>

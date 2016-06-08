@@ -212,6 +212,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_serviceBrowse ('active', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
 
+    public function serviceBrowseTopProfiles ($bDisplayEmptyMsg = false)
+    {
+        return $this->_serviceBrowse ('top', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+    }
+    
 	public function serviceBrowseOnlineProfiles ($bDisplayEmptyMsg = false)
     {
         return $this->_serviceBrowse ('online', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
