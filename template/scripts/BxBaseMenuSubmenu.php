@@ -100,7 +100,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
         $aVars = array (
             'object' => $this->_sObject,
-            'title' => $aMenuItemSelected['title'],
+            'title' => bx_process_output($aMenuItemSelected['title']),
             'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),
             'actions' => $oMenuActions ? $oMenuActions->getCode() : '',
             'bx_if:image' => array (
