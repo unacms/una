@@ -68,6 +68,11 @@ class BxMarketModule extends BxBaseModTextModule
         return $this->_serviceTemplateFunc ('entryInfo', $iContentId);
     }
 
+	public function serviceEntityInfoFull ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryInfoFull', $iContentId);
+    }
+
     public function serviceEntityRating($iContentId = 0)
     {
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);

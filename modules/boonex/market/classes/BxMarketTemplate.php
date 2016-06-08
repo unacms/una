@@ -28,7 +28,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
-    public function entryInfo($aData)
+    public function entryInfo($aData, $bFull = false)
     {
     	$aCategory = array();
     	$oCategory = BxTemplCategory::getObjectInstance('bx_market_cats');
@@ -47,8 +47,18 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     		'category' => '',
     		'released' => bx_time_js($aData['added']),
 	    	'updated' => bx_time_js($aData['changed']),
-	    	'installs' => '?',
+	    	'bx_if:show_full' => array(
+    			'condition' => $bFull,
+    			'content' => array(
+    				'notes' => bx_process_output(nl2br($aData['notes']), BX_DATA_TEXT_MULTILINE)
+    			)
+    		),
     	));
+    }
+
+    public function entryInfoFull($aData)
+    {
+    	return $this->entryInfo($aData, true);
     }
 
     public function entryRating($aData)
