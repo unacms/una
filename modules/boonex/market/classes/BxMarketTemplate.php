@@ -82,6 +82,8 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     {
     	$sScreenshots = $this->getScreenshots($aData);
 
+    	$this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css');
+    	$this->addJs('flickity/flickity.pkgd.min.js');
     	return $this->parseHtmlByContent(parent::entryText($aData), array(
     		'bx_if:show_screenshots' => array(
     			'condition' => !empty($sScreenshots),
