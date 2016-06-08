@@ -83,12 +83,13 @@ div.bx-tl-item-images {
 }
 div.bx-tl-item-image {
 	display: inline-block;
+	width: 100%;
 	text-align: center;
 	overflow: hidden;
 }
 div.bx-tl-item-image img {
-	max-width: 100%;
-	max-height: 100%;
+	max-width: 18.4375rem;
+	max-height: 18.4375rem;
 }
 
 /*+++ Item Link +++*/
