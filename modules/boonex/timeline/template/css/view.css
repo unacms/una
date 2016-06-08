@@ -59,18 +59,30 @@ div.bx-tl-item-info {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+div.bx-tl-item-info .bx-tl-date,
+div.bx-tl-item-info .bx-tl-pinned .sys-icon {
+	color: rgba(40, 60, 80, 0.5);
+}
 div.bx-tl-item-info .bx-tl-pinned .sys-icon {
 	cursor: default;
 }
 
 /*+++ Item Text +++*/
-div.bx-tl-item-text {}
+div.bx-tl-item-text div.bx-tl-title {
+	font-weight: bold;
+}
 span.bx-tl-content-see-more a {
 	font-weight: bold;
 }
 
 /*+++ Item Image +++*/
+div.bx-tl-item-images {
+	position: relative;
+	white-space: nowrap;
+	overflow: hidden;
+}
 div.bx-tl-item-image {
+	display: inline-block;
 	text-align: center;
 	overflow: hidden;
 }
