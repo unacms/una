@@ -23,9 +23,11 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-		if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
+        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
+            $sInfo = $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['info'];
 			$this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
-			$this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['db']['pass'] = 'Xss';
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['db']['pass'] = 'Xss';
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['info'] = $sInfo;
 		}
 
         if (!empty($CNF['FIELD_PICTURE'])) {
