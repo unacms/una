@@ -191,19 +191,19 @@ class BxBasePage extends BxDolPage
     {
         $sPageTitle = $this->_getPageTitle();
         if ($sPageTitle)
-            $this->_oTemplate->setPageHeader ($sPageTitle);
+            BxDolTemplate::getInstance()->setPageHeader ($sPageTitle);
 
         $sMetaDesc = $this->_getPageMetaDesc();
         if ($sMetaDesc)
-            $this->_oTemplate->setPageDescription ($sMetaDesc);
+            BxDolTemplate::getInstance()->setPageDescription ($sMetaDesc);
 
         $sMetaKeywords = $this->_getPageMetaKeywords();
         if ($sMetaKeywords)
-            $this->_oTemplate->addPageKeywords ($sMetaKeywords);
+            BxDolTemplate::getInstance()->addPageKeywords ($sMetaKeywords);
 
         $sMetaRobots = $this->_getPageMetaRobots();
         if ($sMetaRobots)
-            $this->_oTemplate->setPageMetaRobots ($sMetaRobots);
+            BxDolTemplate::getInstance()->setPageMetaRobots ($sMetaRobots);
     }
 
     /**

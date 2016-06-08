@@ -24,8 +24,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
      */
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
     {
-        // TODO: add privacy checking here
-
         $aVars = $this->unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
@@ -35,18 +33,41 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+
+        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
+
+        //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
+
+        $oConn = isset($CNF['OBJECT_CONNECTIONS']) ? BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']) : null;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
+        
         // get profile's url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         // generate html
-        return array (
+        $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
-            'thumb_url' => $this->thumb ($aData),
-            'content_url' => $sUrl,
+            'thumb_url' => $isPublic ? $this->thumb ($aData) : $this->getImageUrl('no-picture-thumb.png'),
+            'cover_url' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedViewCoverImage($aData) ? $this->urlCover ($aData, true) : $this->getImageUrl('cover.jpg'),
+            'content_url' => $isPublic ? $sUrl : 'javascript:void(0);',
             'title' => bx_process_output($aData[$CNF['FIELD_NAME']]),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
+            'bx_if:info' => array(
+                'condition' => false,
+                'content' => array (
+                    'members' => '',
+                    'bx_if:btn' => array (
+                        'condition' => false,
+                        'content' => array (),
+                    ),
+                ),
+            ),
         );
+
+        return $aVars;
     }
 
     /**

@@ -70,6 +70,7 @@
 	<string name="_bx_uni_stg_cpt_option_block_title_font_family"><![CDATA[Шрифт заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_size"><![CDATA[Размер шрифта заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_font_color"><![CDATA[Цвет шрифта заголовка]]></string>
+	<string name="_bx_uni_stg_cpt_option_block_title_font_weight"><![CDATA[Плотность шрифта заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_div_height"><![CDATA[Высота разделителя заголовка]]></string>
 	<string name="_bx_uni_stg_cpt_option_block_title_div_bg_color"><![CDATA[Цвет разделителя заголовка]]></string>
 
@@ -198,18 +199,21 @@
 	<string name="_bx_uni_stg_cpt_option_font_size_middle"><![CDATA[Размер среднего шрифта]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_large"><![CDATA[Размер большого шрифта]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_h1"><![CDATA[Размер шрифта тэга H1]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_weight_h1"><![CDATA[Плотность шрифта тэга H1]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_default_h1"><![CDATA[Стандартный цвет шрифта тэга H1]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_grayed_h1"><![CDATA[Серый цвет шрифта тэга H1]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_contrasted_h1"><![CDATA[Контрастный цвет шрифта тэга H1]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h1"><![CDATA[Цвет линок в тэге H1]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h1_hover"><![CDATA[Цвет линок в тэге H1 при наведении курсора]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_h2"><![CDATA[Размер шрифта тэга H2]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_weight_h2"><![CDATA[Плотность шрифта тэга H2]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_default_h2"><![CDATA[Стандартный цвет шрифта тэга H2]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_grayed_h2"><![CDATA[Серый цвет шрифта тэга H2]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_contrasted_h2"><![CDATA[Контрастный цвет шрифта тэга H2]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h2"><![CDATA[Цвет линок в тэге H2]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_link_h2_hover"><![CDATA[Цвет линок в тэге H2 при наведении курсора]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_size_h3"><![CDATA[Размер шрифта тэга H3]]></string>
+	<string name="_bx_uni_stg_cpt_option_font_weight_h3"><![CDATA[Плотность шрифта тэга H3]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_default_h3"><![CDATA[Стандартный цвет шрифта тэга H3]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_grayed_h3"><![CDATA[Серый цвет шрифта тэга H3]]></string>
 	<string name="_bx_uni_stg_cpt_option_font_color_contrasted_h3"><![CDATA[Контрастный цвет шрифта тэга H3]]></string>

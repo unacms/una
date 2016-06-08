@@ -349,11 +349,6 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $CNF = &$this->_oConfig->CNF;
 
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
-
-        //--- Image(s)
-        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl);
-
         //--- Votes
         $oVotes = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aEvent['object_id']) : null;
 
@@ -389,14 +384,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return array(
             'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
-            'content' => array(
-                'sample' => _t($CNF['T']['txt_sample_single']),
-                'url' => $sUrl,
-                'title' => isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : 
-                    (isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : ''),
-                'text' => isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '',
-                'images' => $aImages,
-            ), //a string to display or array to parse default template before displaying.
+            'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'votes' => $aVotes,
             'reports' => $aReports,
@@ -589,6 +577,25 @@ class BxBaseModGeneralModule extends BxDolModule
             $o->outputRSS();
 
         exit;
+    }
+
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+
+    	//--- Image(s)
+        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl);
+
+    	return array(
+			'sample' => _t($CNF['T']['txt_sample_single']),
+			'url' => $sUrl,
+			'title' => isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : 
+			(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : ''),
+			'text' => isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '',
+			'images' => $aImages,
+		);
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)

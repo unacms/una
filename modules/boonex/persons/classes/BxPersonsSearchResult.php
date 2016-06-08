@@ -15,6 +15,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
     {
         parent::__construct($sMode, $aParams);
 
+        $this->sUnitTemplate = 'unit_with_cover.html';
+
         $this->aCurrent =  array(
             'name' => 'bx_persons',
             'module_name' => 'bx_persons',
@@ -37,7 +39,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                     'table' => 'bx_persons_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'fullname', 'picture', 'added', 'author', 'allow_view_to'),
+                    'joinFields' => array('id', 'fullname', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
                 ),
                 'account' => array(
                     'type' => 'INNER',
@@ -126,7 +128,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 $this->isError = true;
         }
 
-        parent::__construct();
+        $this->sCenterContentUnitSelector = false;
     }
 
     function getAlterOrder()
