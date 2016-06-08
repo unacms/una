@@ -91,13 +91,13 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_groups_home', 1, 'bx_groups', '_bx_groups_page_block_title_latest_profiles', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:22:\"browse_recent_profiles\";s:6:"params";a:1:{i:0;b:1;}}', 0, 1, 0);
 
--- PAGE: active profiles
+-- PAGE: top profiles
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_groups_active', '_bx_groups_page_title_sys_active', '_bx_groups_page_title_active', 'bx_groups', 5, 2147483647, 1, 'groups-active', 'page.php?i=groups-active', '', '', '', 0, 1, 0, 'BxGroupsPageBrowse', 'modules/boonex/groups/classes/BxGroupsPageBrowse.php');
+('bx_groups_top', '_bx_groups_page_title_sys_top', '_bx_groups_page_title_top', 'bx_groups', 5, 2147483647, 1, 'groups-top', 'page.php?i=groups-top', '', '', '', 0, 1, 0, 'BxGroupsPageBrowse', 'modules/boonex/groups/classes/BxGroupsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_groups_active', 1, 'bx_groups', '_bx_groups_page_block_title_active_profiles', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:22:\"browse_active_profiles\";s:6:"params";a:1:{i:0;b:1;}}', 0, 1, 0);
+('bx_groups_top', 1, 'bx_groups', '_bx_groups_page_block_title_top_profiles', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:19:\"browse_top_profiles\";s:6:"params";a:1:{i:0;b:1;}}', 0, 1, 0);
 
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -189,7 +189,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_groups_submenu', 'bx_groups', 'groups-home', '_bx_groups_menu_item_title_system_entries_recent', '_bx_groups_menu_item_title_entries_recent', 'page.php?i=groups-home', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_groups_submenu', 'bx_groups', 'groups-active', '_bx_groups_menu_item_title_system_entries_active', '_bx_groups_menu_item_title_entries_active', 'page.php?i=groups-active', '', '', '', '', 2147483647, 1, 1, 2),
+('bx_groups_submenu', 'bx_groups', 'groups-top', '_bx_groups_menu_item_title_system_entries_top', '_bx_groups_menu_item_title_entries_top', 'page.php?i=groups-top', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_groups_submenu', 'bx_groups', 'groups-manage', '_bx_groups_menu_item_title_system_entries_manage', '_bx_groups_menu_item_title_entries_manage', 'page.php?i=groups-manage', '', '', '', '', 2147483646, 1, 1, 3);
 
 -- MENU: view submenu
@@ -341,19 +341,19 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 -- GRIDS: administration
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_groups_administration', 'Sql', 'SELECT `td`.*, `ta`.`email` AS `account`, `ta`.`logged` AS `last_online`, `tp`.`status` AS `status` FROM `bx_groups_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_groups'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_groups_data', 'id', 'last_online', 'status', '', 20, NULL, 'start', '', 'group_name', '', 'like', '', '', 'BxGroupsGridAdministration', 'modules/boonex/groups/classes/BxGroupsGridAdministration.php'),
-('bx_groups_common', 'Sql', 'SELECT `td`.*, `ta`.`email` AS `account`, `ta`.`logged` AS `last_online`, `tp`.`status` AS `status` FROM `bx_groups_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_groups'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_groups_data', 'id', 'last_online', 'status', '', 20, NULL, 'start', '', 'group_name', '', 'like', '', '', 'BxGroupsGridCommon', 'modules/boonex/groups/classes/BxGroupsGridCommon.php');
+('bx_groups_administration', 'Sql', 'SELECT `td`.*, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_groups_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_groups'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_groups_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'group_name', '', 'like', '', '', 'BxGroupsGridAdministration', 'modules/boonex/groups/classes/BxGroupsGridAdministration.php'),
+('bx_groups_common', 'Sql', 'SELECT `td`.*, `ta`.`email` AS `account`, `ta`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_groups_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_groups'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_groups_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'group_name', '', 'like', '', '', 'BxGroupsGridCommon', 'modules/boonex/groups/classes/BxGroupsGridCommon.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_groups_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_groups_administration', 'switcher', '_bx_groups_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_groups_administration', 'group_name', '_bx_groups_grid_column_title_adm_group_name', '25%', 0, '', '', 3),
-('bx_groups_administration', 'last_online', '_bx_groups_grid_column_title_adm_last_online', '20%', 1, '25', '', 4),
+('bx_groups_administration', 'added_ts', '_bx_groups_grid_column_title_adm_added', '20%', 1, '25', '', 4),
 ('bx_groups_administration', 'account', '_bx_groups_grid_column_title_adm_account', '25%', 0, '25', '', 5),
 ('bx_groups_administration', 'actions', '', '20%', 0, '', '', 6),
 ('bx_groups_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_groups_common', 'group_name', '_bx_groups_grid_column_title_adm_group_name', '48%', 0, '', '', 2),
-('bx_groups_common', 'last_online', '_bx_groups_grid_column_title_adm_last_online', '30%', 1, '25', '', 3),
+('bx_groups_common', 'added_ts', '_bx_groups_grid_column_title_adm_added', '30%', 1, '25', '', 3),
 ('bx_groups_common', 'actions', '', '20%', 0, '', '', 4);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES

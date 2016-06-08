@@ -37,7 +37,6 @@
     vertical-align:middle;
 }
 
-.bx-base-pofile-cover,
 .bx-base-pofile-unit-info,
 .bx-base-pofile-unit-title {
     width:17.5rem;
@@ -46,6 +45,11 @@
 .bx-base-pofile-unit-with-cover {
     display:inline-block;
     overflow:hidden;
+}
+
+.bx-layout-column-thin .bx-base-pofile-unit-with-cover {
+    margin-left:0;
+    margin-right:0;
 }
 
 .bx-base-pofile-unit-title {
