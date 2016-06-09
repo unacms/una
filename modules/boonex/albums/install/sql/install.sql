@@ -269,7 +269,6 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_albums', 'bx_albums', 'pictures', 'a:1:{i:0;s:15:"bx_albums_html5";}', 'a:2:{s:16:"bx_albums_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_albums_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_albums_form_entry_input_sys_pictures', '_bx_albums_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_albums', 'bx_albums', 'allow_view_to', '', '', 0, 'custom', '_bx_albums_form_entry_input_sys_allow_view_to', '_bx_albums_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_albums', 'bx_albums', 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-
 ('bx_albums', 'bx_albums', 'added', '', '', 0, 'datetime', '_bx_albums_form_entry_input_sys_date_added', '_bx_albums_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_albums', 'bx_albums', 'changed', '', '', 0, 'datetime', '_bx_albums_form_entry_input_sys_date_changed', '_bx_albums_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
