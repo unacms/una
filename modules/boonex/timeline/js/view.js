@@ -17,6 +17,8 @@ function BxTimelineView(oOptions) {
     	$('img.bx-tl-item-image').load(function() {
     		$this.reloadMasonry();
     	});
+
+    	$this.initFlickity();
     });
 }
 

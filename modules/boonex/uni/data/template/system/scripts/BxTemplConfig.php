@@ -237,10 +237,15 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-font-color-link-h3-hover'] = $this->_setColorRgba($sName . '_font_color_link_h3_hover', $sColFontLnkHov);
 
 		//--- Font Weight
+		
+		$this->_aConfig['aLessConfig']['bx-font-weight-block-title'] = $this->_setValue($sName . '_block_title_font_weight', '500');
 		$this->_aConfig['aLessConfig']['bx-font-weight-menu-main'] = $this->_setValue($sName . '_menu_main_font_weight', '400');
 		$this->_aConfig['aLessConfig']['bx-font-weight-menu-page'] = $this->_setValue($sName . '_menu_page_font_weight', '400');
 		$this->_aConfig['aLessConfig']['bx-font-weight-button'] = $this->_setValue($sName . '_button_lg_font_weight', '400');
 		$this->_aConfig['aLessConfig']['bx-font-weight-button-small'] = $this->_setValue($sName . '_button_sm_font_weight', '400');
+		$this->_aConfig['aLessConfig']['bx-font-weight-h1'] = $this->_setValue($sName . '_font_weight_h1', '700');
+		$this->_aConfig['aLessConfig']['bx-font-weight-h2'] = $this->_setValue($sName . '_font_weight_h2', '700');
+		$this->_aConfig['aLessConfig']['bx-font-weight-h3'] = $this->_setValue($sName . '_font_weight_h3', '500');
 
 		//--- Viewport 
 		$this->_aConfig['aLessConfig']['bx-viewport-font-tablet'] = $this->_setValue($sName . '_vpt_font_size_scale', '100%');

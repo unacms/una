@@ -49,6 +49,8 @@
 	<string name="_bx_market_form_entry_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+	<string name="_bx_market_form_entry_input_sys_notes"><![CDATA[Notes]]></string>
+	<string name="_bx_market_form_entry_input_notes"><![CDATA[Notes]]></string>
 	<string name="_bx_market_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_market_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this product]]></string>
 	<string name="_bx_market_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
@@ -115,6 +117,7 @@
     <string name="_bx_market_page_block_title_entry_comments_link"><![CDATA[Reviews to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_market_page_block_title_entry_comments_n"><![CDATA[Reviews ({0})]]></string>
     <string name="_bx_market_page_block_title_entry_info"><![CDATA[Info]]></string>
+    <string name="_bx_market_page_block_title_entry_info_link"><![CDATA[<a href="{entry_link}">{title}</a> Info]]></string>
     <string name="_bx_market_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_market_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_market_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
@@ -129,6 +132,8 @@
     <string name="_bx_market_page_block_title_updated_entries"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_page_title_sys_view_entry_comments"><![CDATA[Product Reviews]]></string>
     <string name="_bx_market_page_title_view_entry_comments"><![CDATA[Reviews to {title}]]></string>
+    <string name="_bx_market_page_title_sys_view_entry_info"><![CDATA[Product Info]]></string>
+    <string name="_bx_market_page_title_view_entry_info"><![CDATA[{title} Info]]></string>
     <string name="_bx_market_page_title_sys_entries_of_author"><![CDATA[Products of author]]></string>
     <string name="_bx_market_page_title_entries_of_author"><![CDATA[Products by {display_name}]]></string>
     <string name="_bx_market_page_block_title_entries_of_author"><![CDATA[Products by <a href="{profile_link}">{display_name}</a>]]></string>
@@ -183,6 +188,8 @@
     <string name="_bx_market_menu_item_title_view_entry_submenu_entry"><![CDATA[Overview]]></string>
     <string name="_bx_market_menu_item_title_system_view_entry_submenu_comments"><![CDATA[Reviews]]></string>
     <string name="_bx_market_menu_item_title_view_entry_submenu_comments"><![CDATA[Reviews]]></string>
+    <string name="_bx_market_menu_item_title_system_view_entry_submenu_info"><![CDATA[Info]]></string>
+    <string name="_bx_market_menu_item_title_view_entry_submenu_info"><![CDATA[Info]]></string>
     <string name="_bx_market_menu_item_title_system_view_entries_author"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_item_title_view_entries_author"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_title_entries_my"><![CDATA[My Products Action Menu]]></string>
@@ -288,6 +295,7 @@
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">All Products by {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Category:]]></string>
+    <string name="_bx_market_txt_notes"><![CDATA[Notes:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[The most current version]]></string>
     <string name="_bx_market_txt_released"><![CDATA[Released:]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[product]]></string>

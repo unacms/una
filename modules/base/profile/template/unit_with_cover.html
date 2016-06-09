@@ -1,0 +1,16 @@
+<div class="bx-base-pofile-unit-with-cover bx-def-border bx-def-margin-sec bx-def-round-corners bx-def-box bx-def-color-bg-box">
+    <a class="bx-base-pofile-unit-cover" style="background-image:url(__cover_url__);" href="__content_url__">
+        <img class="bx-def-thumb bx-def-thumb-size bx-def-border" src="__thumb_url__" />
+    </a>
+    <div class="bx-base-pofile-unit-title bx-def-margin-sec-topbottom"><a href="__content_url__">__title__</a></div>
+    <bx_if:info>
+    <div class="bx-base-pofile-unit-info bx-def-box-sizing bx-def-padding-sec-rightbottomleft bx-clearfix">
+        <div class="bx-base-pofile-unit-info-members bx-def-font-grayed bx-def-font-small">__members__</div>
+        <div class="bx-base-pofile-unit-info-btn">
+            <bx_if:btn>
+                <button class="bx-btn bx-btn-small" onclick="bx_conn_action(this, '__object__', 'add', '__id__')">__title__</button>
+            </bx_if:btn>
+        </div>
+    </div>
+    </bx_if:info>
+</div>

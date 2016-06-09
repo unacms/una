@@ -33,7 +33,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $aVars = $aData;
-        $aVars['entry_title'] = isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : '';
+        $aVars['entry_title'] = isset($aData[$CNF['FIELD_TITLE']]) ? bx_process_output($aData[$CNF['FIELD_TITLE']]) : '';
         $aVars['entry_text'] = $aData[$CNF['FIELD_TEXT']];
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
@@ -86,7 +86,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function getAuthorDesc ($aData)
     {
-        return _t('_sys_txt_n_by', bx_time_js($aData[$this->getModule()->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE));
+        return bx_time_js($aData[$this->getModule()->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE);
     }
 
     function getAuthorAddon ($aData, $oProfile)

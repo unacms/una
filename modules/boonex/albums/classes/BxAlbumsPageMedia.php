@@ -45,8 +45,14 @@ class BxAlbumsPageMedia extends BxTemplPage
             $sTitle = isset($this->_aAlbumInfo[$CNF['FIELD_TITLE']]) ? $this->_aAlbumInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aAlbumInfo[$CNF['FIELD_TEXT']], 20, '...');
             $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aAlbumInfo[$CNF['FIELD_ID']]);
 
-            // select view entry submenu
+
             $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+
+            // add actions menu to submenu
+            if (isset($CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']))
+                $oMenuSubmenu->setObjectActionsMenu($CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']);
+        
+            // select view entry submenu
             $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
                 'title' => $sTitle,
                 'link' => $sUrl,
@@ -75,13 +81,16 @@ class BxAlbumsPageMedia extends BxTemplPage
         if (!empty($CNF['OBJECT_VIEWS_MEDIA']))
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $this->_aMediaInfo['id'])->doView();
 
+        // set cover image
+        if ($aThumb = $this->_getThumbForMetaObject()) {
+            $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);
+            $oCover->setCoverImageUrl($aThumb);
+        }
+
         // add content metatags
         if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
             if ($o) {
-                $aThumb = false;
-                if (!empty($this->_aMediaInfo['file_id']) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_BIG']))
-                    $aThumb = array('id' => $this->_aMediaInfo['file_id'], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
                 $o->metaAdd($this->_aMediaInfo['id'], $aThumb);
             }
         }
@@ -92,6 +101,21 @@ class BxAlbumsPageMedia extends BxTemplPage
         return parent::getCode ();
     }
 
+    protected function _getThumbForMetaObject ()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;        
+
+        if (!($aMediaList = $this->_oModule->_oDb->getMediaListByContentId($this->_aAlbumInfo[$CNF['FIELD_ID']])))
+            return false;
+
+        $aMedia = array_shift($aMediaList);
+        
+        if (!$aMedia['file_id'] || empty($CNF['OBJECT_IMAGES_TRANSCODER_BIG']))
+            return false;
+
+        return array('id' => $aMedia['file_id'], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
+    }
+    
     protected function _addJsCss()
     {
         parent::_addJsCss();

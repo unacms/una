@@ -96,10 +96,19 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_groups_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_groups_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_groups_allow_view_to',
+            'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_groups_allow_view_notification_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_groups_administration',
         	'OBJECT_GRID_COMMON' => 'bx_groups_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
+
+            'EMAIL_INVITATION' => 'bx_groups_invitation',
+            'EMAIL_JOIN_REQUEST' => 'bx_groups_join_request',
+            'EMAIL_JOIN_CONFIRM' => 'bx_groups_join_confirm',
+            'EMAIL_FAN_BECOME_ADMIN' => 'bx_groups_fan_become_admin',
+            'EMAIL_ADMIN_BECOME_FAN' => 'bx_groups_admin_become_fan',
+            'EMAIL_FAN_REMOVE' => 'bx_groups_fan_remove',
+            'EMAIL_JOIN_REJECT' => 'bx_groups_join_reject',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
@@ -126,6 +135,10 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'T' => array (
                 'txt_sample_single' => '_bx_groups_txt_sample_single',
                 'txt_sample_vote_single' => '_bx_groups_txt_sample_vote_single',
+                'txt_private_group' => '_bx_groups_txt_private_group',
+                'txt_N_fans' => '_bx_groups_txt_N_fans',
+                'txt_ntfs_join_request' => '_bx_groups_txt_ntfs_join_request',
+                'txt_ntfs_fan_added' => '_bx_groups_txt_ntfs_fan_added',
                 'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_groups_menu_item_title_befriend_confirm',
@@ -139,7 +152,14 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             	'filter_item_suspended' => '_bx_groups_grid_filter_item_title_adm_suspended',
             	'filter_item_select_one_filter1' => '_bx_groups_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_groups_menu_item_title_manage_my',
-            	'menu_item_manage_all' => '_bx_groups_menu_item_title_manage_all',
+                'menu_item_manage_all' => '_bx_groups_menu_item_title_manage_all',
+                'menu_item_title_become_fan_sent' => '_bx_groups_menu_item_title_become_fan_sent',
+                'menu_item_title_leave_group_cancel_request' => '_bx_groups_menu_item_title_leave_group_cancel_request',
+                'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
+                'menu_item_title_leave_group' => '_bx_groups_menu_item_title_leave_group',
+                
+                'menu_item_title_become_fan_sent' => '_bx_groups_menu_item_title_become_fan_sent',
+                'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
             ),
 
         );

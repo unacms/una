@@ -3,13 +3,13 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Posts Posts
+ * @defgroup    Groups Groups
  * @ingroup     TridentModules
  * 
  * @{
  */
 
-class BxGroupsGridCommon extends BxBaseModProfileGridCommon
+class BxGroupsGridCommon extends BxBaseModGroupsGridCommon
 {
     public function __construct ($aOptions, $oTemplate = false)
     {

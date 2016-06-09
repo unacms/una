@@ -284,7 +284,7 @@ BLAH;
 
         return <<<EOS
             <div class="bx-form-row-view-wrapper bx-form-row-view-wrapper-{$aInput['type']} bx-def-padding-sec-top">
-                <div class="bx-form-row-view-caption bx-def-margin-sec-right">{$sCaption}:</div>
+                <div class="bx-form-row-view-caption">{$sCaption}:</div>
                 <div class="bx-form-row-view-value">{$sValue}</div>
             </div>
 EOS;

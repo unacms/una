@@ -12,7 +12,7 @@
 /**
  * Entries user joined to.
  */
-class BxGroupsPageJoinedEntries extends BxBaseModTextPageAuthor
+class BxGroupsPageJoinedEntries extends BxBaseModGroupsPageJoinedEntries
 {
     public function __construct($aObject, $oTemplate = false)
     {

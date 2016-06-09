@@ -1650,7 +1650,7 @@
 	<string name="_sys_form_account_input_password_error"><![CDATA[Пароль должен иметь как минимум 6 символов.]]></string>
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Получать Новости]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Получать обновления сайта]]></string>
-	<string name="_sys_form_account_input_submit"><![CDATA[Присоединиться]]></string>
+	<string name="_sys_form_account_input_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_checkbox_value_off"><![CDATA[Нет]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Да]]></string>
 	<string name="_sys_form_comment"><![CDATA[Комментарий]]></string>

@@ -23,6 +23,16 @@ class BxAlbumsModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
+	public function serviceEntityInfoExtended ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryInfo', $iContentId);
+    }
+
+    public function serviceEntityAddFiles ($iContentId = 0)
+    {
+        return $this->_serviceEntityForm ('editDataForm', $iContentId, 'bx_albums_entry_add_images');
+    }
+    
     public function serviceDeleteFileAssociations($iFileId)
     {        
         $CNF = &$this->_oConfig->CNF;

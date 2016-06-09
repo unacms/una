@@ -257,6 +257,7 @@ INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attr
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_albums', 'bx_albums_entry_add', 'bx_albums', 0, '_bx_albums_form_entry_display_add'),
 ('bx_albums', 'bx_albums_entry_edit', 'bx_albums', 0, '_bx_albums_form_entry_display_edit'),
+('bx_albums', 'bx_albums_entry_add_images', 'bx_albums', 0, '_bx_albums_form_entry_display_add_images'),
 ('bx_albums', 'bx_albums_entry_delete', 'bx_albums', 0, '_bx_albums_form_entry_display_delete'),
 ('bx_albums', 'bx_albums_entry_view', 'bx_albums', 1, '_bx_albums_form_entry_display_view');
 
@@ -281,10 +282,18 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_albums_entry_edit', 'delete_confirm', 2147483647, 0, 1),
 ('bx_albums_entry_edit', 'title', 2147483647, 1, 2),
 ('bx_albums_entry_edit', 'text', 2147483647, 1, 3),
-('bx_albums_entry_edit', 'pictures', 2147483647, 1, 4),
+('bx_albums_entry_edit', 'pictures', 2147483647, 0, 4),
 ('bx_albums_entry_edit', 'allow_view_to', 2147483647, 1, 5),
 ('bx_albums_entry_edit', 'location', 2147483647, 1, 6),
 ('bx_albums_entry_edit', 'do_submit', 2147483647, 1, 7),
+
+('bx_albums_entry_add_images', 'delete_confirm', 2147483647, 0, 1),
+('bx_albums_entry_add_images', 'title', 2147483647, 0, 2),
+('bx_albums_entry_add_images', 'text', 2147483647, 0, 3),
+('bx_albums_entry_add_images', 'allow_view_to', 2147483647, 0, 4),
+('bx_albums_entry_add_images', 'location', 2147483647, 0, 5),
+('bx_albums_entry_add_images', 'pictures', 2147483647, 1, 6),
+('bx_albums_entry_add_images', 'do_submit', 2147483647, 1, 7),
 
 ('bx_albums_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_albums_entry_view', 'allow_view_to', 2147483647, 0, 0),

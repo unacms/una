@@ -30,57 +30,21 @@ div.bx-market-ech-info .bx-market-ech-free {}
 div.bx-market-screenshots {
 	position: relative;
 	height: 120px;
+	height: 7.5rem;
 
 	overflow: hidden;
 }
 div.bx-market-screenshots-cnt {
 	position: relative;
-	overflow-x: scroll;
-	overflow-y: hidden;
-	-webkit-overflow-scrolling: touch;
-}
-div.bx-market-ss-cnt {
-	position: relative;
-	display: inline-block;
-
 	white-space: nowrap;
-}
-div.bx-market-ss-left,
-div.bx-market-ss-right {
-	position: absolute;
-	z-index: 3;
-	display: none;
-	width: 50px;
-	height: 50px;
-	top: 36px;
-	background-color: rgba(255, 255, 255, 0.7);
-	border-radius:15px;
-	-moz-border-radius:15px;
-	-webkit-border-radius:15px;
-	line-height: 0.78em;
-	font-size: 70px;
-	cursor: pointer; 
-}
-div.bx-market-ss-left {
-	left: 15px;
-	text-align: left;
-}
-div.bx-market-ss-left i.sys-icon {
-	margin-left: 10px;
-	opacity: 0.5;
-}
-div.bx-market-ss-right {
-	right: 15px;
-	text-align: right;
-}
-div.bx-market-ss-right i.sys-icon {
-	margin-right: 10px;
-	opacity: 0.5;
 }
 div.bx-market-ss-item {
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
+
+	margin-right: 2px;
+	margin-right: 0.125rem;
 }
 div.bx-market-ss-item .bx-market-ssi-img {
 	position: relative;

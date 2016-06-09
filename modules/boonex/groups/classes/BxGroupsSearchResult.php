@@ -121,11 +121,11 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
                 $this->sBrowseUrl = 'page.php?i=groups-home';
                 break;
 
-            case 'active':
+            case 'top':
                 $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
-                $this->aCurrent['title'] = _t('_bx_groups_page_title_browse_active');
-                $this->aCurrent['sorting'] = 'active';
-                $this->sBrowseUrl = 'page.php?i=groups-active';
+                $this->aCurrent['title'] = _t('_bx_groups_page_title_browse_top');
+                $this->aCurrent['sorting'] = 'top';
+                $this->sBrowseUrl = 'page.php?i=groups-top';
                 break;
 
             case '': // search results
@@ -163,6 +163,8 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
         switch ($this->aCurrent['sorting']) {
         case 'none':
             return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
+        case 'top':
+            return array('order' => ' ORDER BY `bx_groups_data`.`views` DESC ');
         case 'last':
         default:                        
             return array('order' => ' ORDER BY `bx_groups_data`.`added` DESC ');

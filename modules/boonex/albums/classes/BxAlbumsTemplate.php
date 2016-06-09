@@ -293,6 +293,20 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         return $a;
     }
 
+	public function entryInfo($aData)
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	$sLocation = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsString($aData[$CNF['FIELD_ID']]);
+
+    	return $this->parseHtmlByName('entry-info.html', array(
+    		'cameras' => '?',
+    		'location' => $sLocation,
+    		'released' => bx_time_js($aData['added']),
+	    	'updated' => bx_time_js($aData['changed']),
+    	));
+    }
+
     function entryAttachments ($aData)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
