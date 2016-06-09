@@ -64,30 +64,10 @@ BxMarketEntry.prototype.initScreenshots = function() {
 	if(oItems.length <= 2)
 		return;
 
-	jQuery(".bx-market-ss-left").bind('click', function() {
-		if(bBusy || parseInt(jQuery(".bx-market-ss-cnt").css('left')) >= 0)
-			return;
-
-		bBusy = true;
-		jQuery(".bx-market-ss-cnt").animate({left: '+=' + iWidthOuter}, 500, function() {
-			bBusy = false;
-		});
-	});
-	jQuery(".bx-market-ss-right").bind('click', function() {
-		var iWidthParent = jQuery(".bx-market-ss-cnt").parent().width();
-
-		if(bBusy || parseInt(jQuery(".bx-market-ss-cnt").css('left')) <= iWidthParent - jQuery(".bx-market-ss-cnt").width())
-			return;
-
-		bBusy = true;
-		jQuery(".bx-market-ss-cnt").animate({left: '-=' + iWidthOuter}, 500, function() {
-			bBusy = false;
-		});
-	});
-
-	jQuery(".bx-market-screenshots").hover(function() {
-		jQuery(".bx-market-ss-left, .bx-market-ss-right").bx_anim('show', 'fade', 'fast');
-	}, function() {
-		jQuery(".bx-market-ss-left, .bx-market-ss-right").bx_anim('hide', 'fade', 'fast');;
+	$('.bx-market-screenshots').flickity({
+		cellSelector: '.bx-market-ss-item',
+		cellAlign: 'left',
+		pageDots: false,
+		imagesLoaded: true
 	});
 };

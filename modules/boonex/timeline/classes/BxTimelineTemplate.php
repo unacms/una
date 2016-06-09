@@ -21,6 +21,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     	parent::getCssJs();
 
         $this->addCss(array(
+        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
             'jquery-ui/jquery-ui.css',
             'post.css',
             'share.css',
@@ -31,6 +32,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'jquery.autosize.min.js',
             'jquery.ba-resize.min.js',
             'masonry.pkgd.min.js',
+        	'flickity/flickity.pkgd.min.js',
             'post.js',
             'share.js',
         ));
@@ -699,7 +701,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     $sImage = $this->parseHtmlByName('bx_img.html', array(
                         'src' => $bBrowseItem && !empty($aImage['src_orig']) ? $aImage['src_orig'] : $aImage['src'],
                         'bx_repeat:attrs' => array(
-                            array('key' => 'class', 'value' => $sStylePrefix . '-item-image')
+                            array('key' => 'class', 'value' => $sStylePrefix . '-item-img')
                         )
                     ));
 

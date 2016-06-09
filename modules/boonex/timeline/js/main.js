@@ -9,6 +9,8 @@ function BxTimelineMain() {
 	this.sClassItems = this.sSP + '-items';
 	this.sClassItem = this.sSP + '-item';
 	this.sClassItemComments = this.sSP + '-item-comments-holder';
+	this.sClassItemImages = this.sSP + '-item-images';
+	this.sClassItemImage = this.sSP + '-item-image';
 }
 
 BxTimelineMain.prototype.isMasonry = function() {
@@ -70,6 +72,22 @@ BxTimelineMain.prototype.removeMasonry = function(oItems, onRemove) {
 
 BxTimelineMain.prototype.reloadMasonry = function() {
 	$(this.sIdView + ' .' + this.sClassItems).masonry('reloadItems').masonry('layout');
+};
+
+BxTimelineMain.prototype.initFlickity = function() {
+	var $this = this;
+
+	$(this.sIdView + ' .' + this.sClassItemImages).each(function() {
+		if($(this).find('.' + $this.sClassItemImage).length <= 1)
+			return;
+
+		$(this).flickity({
+			cellSelector: 'div.' + $this.sClassItemImage,
+			cellAlign: 'left',
+			pageDots: false,
+			imagesLoaded: true
+		});
+	});
 };
 
 BxTimelineMain.prototype.loadingInButton = function(e, bShow) {

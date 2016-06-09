@@ -207,7 +207,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_menu_slide_bg_image_size'), '_bx_uni_stg_cpt_option_menu_slide_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_content_padding'), '_bx_uni_stg_cpt_option_menu_slide_content_padding', '1.25rem', 'digit', '', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_border_color'), '_bx_uni_stg_cpt_option_menu_slide_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_menu_slide_border_size'), '_bx_uni_stg_cpt_option_menu_slide_border_size', '0px', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_border_size'), '_bx_uni_stg_cpt_option_menu_slide_border_size', '1px 0px 1px 0px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_shadow'), '_bx_uni_stg_cpt_option_menu_slide_shadow', 'none', 'digit', '', '', '', 8);
 
 
