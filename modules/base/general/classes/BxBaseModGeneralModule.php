@@ -124,6 +124,11 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceEntityForm ('viewDataForm', $iContentId);
     }
 
+	public function serviceEntityInfoExtended ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryInfo', $iContentId);
+    }
+    
     /**
      * Delete content entry
      * @param $iContentId content id 

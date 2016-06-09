@@ -163,7 +163,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $oProfile = BxDolProfileUndefined::getInstance();
 
         $aVars = array(
-            'title' => bx_process_output($sText),
+            'title' => $sText,
             'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']]), $oProfile->getUrl(), $oProfile->getDisplayName()),
         );
 
@@ -291,20 +291,6 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         }
 
         return $a;
-    }
-
-	public function entryInfo($aData)
-    {
-    	$CNF = $this->_oConfig->CNF;
-
-    	$sLocation = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsString($aData[$CNF['FIELD_ID']]);
-
-    	return $this->parseHtmlByName('entry-info.html', array(
-    		'cameras' => '?',
-    		'location' => $sLocation,
-    		'released' => bx_time_js($aData['added']),
-	    	'updated' => bx_time_js($aData['changed']),
-    	));
     }
 
     function entryAttachments ($aData)

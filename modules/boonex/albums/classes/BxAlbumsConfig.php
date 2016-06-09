@@ -91,6 +91,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_albums_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_albums_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_albums_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_MEDIA' => 'bx_albums_view_media', // actions menu on view media page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_albums_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_albums_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_albums_view_submenu', // view entry submenu
