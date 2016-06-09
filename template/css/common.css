@@ -341,38 +341,119 @@ body > .bx-popup-wrapper {
 
 .bx-loading-ajax {
     position:absolute;
-    width:50px;
-    height:50px;
+    width:100px;
+    height:100px;
     margin-left:auto;
     margin-right:auto;
 
-    background-color:#b9ddcc;
-    background-color:rgba(121, 189, 154, 0.5);
+    background-color:rgba(255, 255, 255, 0.95);
 
-	border-radius:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
 
     text-align:center;
     color:#CCCCCC;
 }
+.bx-loading-ajax.static {
+	position: static;
+}
+.bx-loading-ajax svg {
+	width: 50px;
+	height: 50px;
+	padding: 25px;  
+}
 
 .bx-loading-ajax-btn {
-    display:inline-block;
-    width:20px;
-    height:20px;
-    margin-left:5px;
-    vertical-align:middle;
-}
-.bx-btn .bx-loading-ajax-btn {
-    margin-top:8px;
-    vertical-align:top;
-}
-.bx-btn.bx-btn-small .bx-loading-ajax-btn {
-    margin-top:2px;
-    vertical-align:top;
+    display: inline-block;
+    vertical-align: top;
+
+    margin-left: 5px;
 }
 
+.bx-btn .bx-loading-ajax-btn,
+.bx-btn .bx-loading-ajax-btn svg {
+	width: 30px;
+    height: 30px;
+}
+.bx-btn .bx-loading-ajax-btn {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.bx-btn.bx-btn-small .bx-loading-ajax-btn,
+.bx-btn.bx-btn-small .bx-loading-ajax-btn svg {
+	width: 20px;
+    height: 20px;
+}
+.bx-btn.bx-btn-small .bx-loading-ajax-btn {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/* --------------- SVG loading indicator */
+svg .outer, 
+svg .inner{
+	-webkit-transform-origin: 50% 50%;
+   	-moz-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+svg .outer{
+	-webkit-animation: clockwise 5s infinite linear;
+	-moz-animation: clockwise 5s infinite linear;
+    animation: clockwise 5s infinite linear;
+    
+
+}
+svg .inner{
+	-webkit-animation: counter-clockwise 2s infinite linear;
+	-moz-animation: counter-clockwise 2s infinite linear;
+    animation: counter-clockwise 2s infinite linear;
+    
+}
+svg .colored .inner .p1 {
+	fill:#2AB191;
+}
+svg .colored .inner .p2,
+svg .colored .outer .p1 {
+	fill:#4990E2;
+}
+svg .colored .outer .p2 {
+	fill:#EE6666;
+}
+svg .gray .inner .p1,
+svg .gray .inner .p2,
+svg .gray .outer .p1,
+svg .gray .outer .p2 {
+	fill:#4A4A4A;
+}
+
+@-webkit-keyframes counter-clockwise {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes clockwise {
+    0% { -webkit-transform: rotate(360deg); }
+    100% { -webkit-transform: rotate(0deg); }
+}	
+@-moz-keyframes counter-clockwise {
+    0% { -moz-transform: rotate(0deg); }
+    100% { -moz-transform: rotate(360deg); }
+}
+@-moz-keyframes clockwise {
+    0% { -moz-transform: rotate(360deg); }
+    100% { -moz-transform: rotate(0deg); }
+}
+
+@keyframes counter-clockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes clockwise {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+	
 /* --------------- button */
 
 .bx-btn {
