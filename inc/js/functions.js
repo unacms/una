@@ -157,40 +157,65 @@ function showPopupAnyHtml(sUrl, sId) {
     );
 }
 
-
-function bx_loading_btn (e, b) {
-    e = $(e);
-
-    if (e.children('div').size())
-        e = e.children('div').first();
-
-    if (!b) {
-        e.find('.bx-loading-ajax-btn').remove();
-    } else if (!e.find('.bx-loading-ajax-btn').length) {
-        e.append('<b class="bx-loading-ajax-btn"></b>');
-        new Spinner(aSpinnerSmallOpts).spin(e.find('.bx-loading-ajax-btn').get(0));
-    }
+function bx_loading_svg(sType) {
+	var s = '';
+	s += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 520 520" style="enable-background:new 0 0 520 520;" xml:space="preserve">';
+	s += '<g class="' + sType + '">';
+	s += '<g class="inner">';
+	s += '<path class="p1" d="M152,260C152,260,152,260,152,260c0-59.8,48.4-108.4,108.1-108.4c43.3,0,80.9,25.6,97.9,62.4V107.3c-28-18.3-61.9-28.9-98.1-28.9C159.8,78.4,78.6,159.9,78.6,260c0,59.5,28.4,112.4,73.4,145.6V260z"/>';
+	s += '<path class="p2" d="M368,114.4V260c0,59.8-48.4,108.4-108.1,108.4c-43.3,0-80.9-25.6-97.9-62.4v106.7c28,18.3,61.9,28.9,98.1,28.9c100.1,0,181.3-81.4,181.3-181.6C441.4,200.5,413,147.6,368,114.4z"/>';
+	s += '</g>';
+	s += '<g class="outer">';
+	s += '<path class="p1" d="M146.9,106.7c-8.1-15-36.9-29.9-68.9-27.3v124.2C90,164.3,114.6,130.5,146.9,106.7z"/>';
+	s += '<path class="p2" d="M373.1,413.3c8.1,15,36.7,29.9,68.9,27.3V316.4C429.8,355.7,405.4,389.5,373.1,413.3z"/>';
+	s += '</g>';
+	s += '</g>';
+	s += '</svg>';
+	return s;
 }
 
-function bx_loading_animate (e) {
+function bx_loading_animate (e, aOptions) {
     e = $(e);
     if (!e.length)
         return false;
     if (e.find('.bx-sys-spinner').length)
         return false;
-    return new Spinner(aSpinnerOpts).spin(e.get(0));
+    return new Spinner(aOptions).spin(e.get(0));
 }
 
-function bx_loading_content (elem, b, isReplace) {
-    var block = $(elem);
-    if (!b) {
-        block.find(".bx-loading-ajax").remove();
-    } else if (!block.find('.bx-loading-ajax').length) {
-        if ('undefined' != typeof(isReplace) && isReplace)
-            block.html('<div class="bx-loading-ajax bx-def-z-index-front" style="position:static;"></div>');
+function bx_loading_btn (oElement, bEnable) {
+	var bUseSvg = true;
+
+    var oButton = $(oElement);
+
+    if (oButton.children('div').size())
+        oButton = oButton.children('div').first();
+
+    if(!bEnable)
+    	oButton.find('.bx-loading-ajax-btn').remove();
+    else if (!oButton.find('.bx-loading-ajax-btn').length)
+    	oButton.append('<b class="bx-loading-ajax-btn">' + (bUseSvg ? bx_loading_svg('colored') : '') + '</b>');
+
+    if(!bUseSvg)
+    	bx_loading_animate(oButton.find('.bx-loading-ajax-btn'), aSpinnerSmallOpts);    
+}
+
+function bx_loading_content (oElement, bEnable, isReplace) {
+	var bUseSvg = true;
+
+    var oBlock = $(oElement);
+    var oLoading = $('<div class="bx-loading-ajax bx-def-z-index-front">' + (bUseSvg ? bx_loading_svg('colored') : '') + '</div>');
+    
+    if(!bEnable)
+    	oBlock.find(".bx-loading-ajax").remove();
+    else if(!oBlock.find('.bx-loading-ajax').length) {
+        if('undefined' != typeof(isReplace) && isReplace)
+            oBlock.html(oLoading.addClass('static'));
         else
-            block.append('<div class="bx-loading-ajax bx-def-z-index-front"></div>');
-        bx_loading_animate(block.find('.bx-loading-ajax'));
+            oBlock.append(oLoading);
+
+        if(!bUseSvg)
+        	bx_loading_animate(oBlock.find('.bx-loading-ajax'), aSpinnerOpts);
     } 
 }
 
