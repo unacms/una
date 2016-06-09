@@ -13,7 +13,8 @@
 
 	<string name="_bx_albums_form_entry"><![CDATA[Альбомы]]></string>
 	<string name="_bx_albums_form_entry_display_add"><![CDATA[Добавить альбом]]></string>
-	<string name="_bx_albums_form_entry_display_edit"><![CDATA[Редактировать альбом]]></string>
+    <string name="_bx_albums_form_entry_display_edit"><![CDATA[Редактировать альбом]]></string>
+	<string name="_bx_albums_form_entry_display_add_images"><![CDATA[Добавить фотки в альбом]]></string>
 	<string name="_bx_albums_form_entry_display_delete"><![CDATA[Удалить альбом]]></string>
 	<string name="_bx_albums_form_entry_display_view"><![CDATA[Просмотреть альбом]]></string>
 	<string name="_bx_albums_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
@@ -43,8 +44,11 @@
 	<string name="_bx_albums_page_title_create_entry"><![CDATA[Новый альбом]]></string>
 	<string name="_bx_albums_page_block_title_create_entry"><![CDATA[Новый альбом]]></string>
 	<string name="_bx_albums_page_title_sys_edit_entry"><![CDATA[Редактировать альбом]]></string>
-	<string name="_bx_albums_page_title_edit_entry"><![CDATA[Редактировать альбом]]></string>
-	<string name="_bx_albums_page_block_title_edit_entry"><![CDATA[Редактировать альбом]]></string>
+    <string name="_bx_albums_page_title_edit_entry"><![CDATA[Редактировать альбом]]></string>
+	<string name="_bx_albums_page_title_sys_add_images"><![CDATA[Добавить фотки]]></string>
+    <string name="_bx_albums_page_title_add_images"><![CDATA[Добавить фотки]]></string>
+    <string name="_bx_albums_page_block_title_add_images"><![CDATA[Добавить фотки]]></string>
+    <string name="_bx_albums_page_block_title_edit_entry"><![CDATA[Редактировать альбом]]></string>
     <string name="_bx_albums_page_title_sys_delete_entry"><![CDATA[Удалить альбом]]></string>
     <string name="_bx_albums_page_title_delete_entry"><![CDATA[Удалить альбом]]></string>
     <string name="_bx_albums_page_block_title_delete_entry"><![CDATA[Удалить альбом]]></string>
@@ -110,6 +114,8 @@
     <string name="_bx_albums_menu_item_title_create_entry"><![CDATA[Новый альбом]]></string>
     <string name="_bx_albums_menu_item_title_system_edit_entry"><![CDATA[Редактировать альбом]]></string>
     <string name="_bx_albums_menu_item_title_edit_entry"><![CDATA[Редактировать альбом]]></string>
+    <string name="_bx_albums_menu_item_title_system_add_images"><![CDATA[Добавить фотки]]></string>
+    <string name="_bx_albums_menu_item_title_add_images"><![CDATA[Добавить фотки]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Удалить альбом]]></string>
     <string name="_bx_albums_menu_item_title_delete_entry"><![CDATA[Удалить альбом]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry"><![CDATA[Просмотреть альбом]]></string>
