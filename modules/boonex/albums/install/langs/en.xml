@@ -32,8 +32,12 @@
 	<string name="_bx_albums_form_entry_input_pictures"><![CDATA[Pictures]]></string>
     <string name="_bx_albums_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_albums_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
-	<string name="_bx_albums_form_entry_file_title"><![CDATA[Caption]]></string>
-
+    <string name="_bx_albums_form_entry_file_title"><![CDATA[Caption]]></string>
+	<string name="_bx_albums_form_entry_input_sys_date_added"><![CDATA[Created]]></string>
+	<string name="_bx_albums_form_entry_input_date_added"><![CDATA[Created]]></string>
+	<string name="_bx_albums_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
+    <string name="_bx_albums_form_entry_input_date_changed"><![CDATA[Updated]]></string>
+    
 	<string name="_bx_albums_acl_action_create_entry"><![CDATA[Create Album]]></string>
 	<string name="_bx_albums_acl_action_delete_entry"><![CDATA[Delete Album]]></string>
 	<string name="_bx_albums_acl_action_view_entry"><![CDATA[View Album]]></string>
@@ -168,10 +172,6 @@
     <string name="_bx_albums_txt_sample_single"><![CDATA[album]]></string>
     <string name="_bx_albums_txt_sample_comment_single"><![CDATA[album's comment]]></string>
     <string name="_bx_albums_txt_sample_vote_single"><![CDATA[album's vote]]></string>
-    <string name="_bx_albums_txt_cameras"><![CDATA[Cameras:]]></string>
-    <string name="_bx_albums_txt_location"><![CDATA[Location:]]></string>
-    <string name="_bx_albums_txt_released"><![CDATA[Released:]]></string>
-    <string name="_bx_albums_txt_updated"><![CDATA[Updated:]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[image]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[image's comment]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[{0}'s media]]></string>

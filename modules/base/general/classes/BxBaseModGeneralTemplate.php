@@ -67,6 +67,30 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         );
         return $this->parseHtmlByName('entry-location.html', $aVars);
     }
+
+	public function entryInfo($aData, $aValues = array())
+    {
+    	$CNF = $this->_oConfig->CNF;
+        $aValuesDefault = array();
+
+        if (isset($aData[$CNF['FIELD_ADDED']]))
+            $aValuesDefault[] = array(
+                'title' => _t('_sys_txt_field_created'),
+                'value' => bx_time_js($aData[$CNF['FIELD_ADDED']]),
+            );
+
+        if (isset($aData[$CNF['FIELD_CHANGED']]))
+            $aValuesDefault[] = array(
+                'title' => _t('_sys_txt_field_updated'),
+                'value' => bx_time_js($aData[$CNF['FIELD_CHANGED']]),
+            );
+
+        $aValues = array_merge($aValuesDefault, $aValues);
+
+    	return $this->parseHtmlByName('entry-info.html', array(
+    		'bx_repeat:info' => $aValues,
+    	));
+    }
 }
 
 /** @} */

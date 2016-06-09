@@ -27,6 +27,18 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         parent::__construct($aInfo, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        if (isset($CNF['FIELD_ADDED']) && isset($this->aInputs[$CNF['FIELD_ADDED']])) {
+            $this->aInputs[$CNF['FIELD_ADDED']]['date_filter'] = BX_DATA_INT;
+            $this->aInputs[$CNF['FIELD_ADDED']]['date_format'] = BX_FORMAT_DATE;
+        }
+
+        if (isset($CNF['FIELD_CHANGED']) && isset($this->aInputs[$CNF['FIELD_CHANGED']])) {
+            $this->aInputs[$CNF['FIELD_CHANGED']]['date_filter'] = BX_DATA_INT;
+            $this->aInputs[$CNF['FIELD_CHANGED']]['date_format'] = BX_FORMAT_DATE;
+        }        
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)

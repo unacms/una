@@ -310,13 +310,13 @@ EOS;
             break;
 
             case 'datepicker':
-                $iTime = bx_process_input ($aInput['value'], BX_DATA_DATE_TS, false, false);
-                $sValue = bx_time_js ($iTime, BX_FORMAT_DATE);
+                $iTime = bx_process_input ($aInput['value'], isset($aInput['date_filter']) ? $aInput['date_filter'] : BX_DATA_DATE_TS, false, false);
+                $sValue = bx_time_js ($iTime, isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE);
             break;
             case 'date_time':
             case 'datetime':
-                $iTime = bx_process_input ($aInput['value'], BX_DATA_DATETIME_TS, false, false);
-                $sValue = bx_time_js ($iTime, BX_FORMAT_DATE_TIME);
+                $iTime = bx_process_input ($aInput['value'], isset($aInput['date_filter']) ? $aInput['date_filter'] : BX_DATA_DATETIME_TS, false, false);
+                $sValue = bx_time_js ($iTime, isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME);
             break;
 
             case 'checkbox_set':

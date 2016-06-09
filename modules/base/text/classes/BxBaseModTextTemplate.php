@@ -86,7 +86,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function getAuthorDesc ($aData)
     {
-        return bx_time_js($aData[$this->getModule()->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE);
+        return '';
     }
 
     function getAuthorAddon ($aData, $oProfile)
