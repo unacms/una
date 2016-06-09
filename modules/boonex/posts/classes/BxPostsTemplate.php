@@ -22,23 +22,6 @@ class BxPostsTemplate extends BxBaseModTextTemplate
         $this->MODULE = 'bx_posts';
         parent::__construct($oConfig, $oDb);
     }
-
-    function getAuthorAddon ($aData, $oProfile)
-    {
-        $s = parent::getAuthorAddon ($aData, $oProfile);
-        if (!$aData['cat'])
-            return $s;
-
-        if (!($oCat = BxTemplCategory::getObjectInstance('bx_posts_cats')))
-            return $s;
-
-        if (!($aCats = BxDolForm::getDataItems('bx_posts_cats')) || !isset($aCats[$aData['cat']]))
-            return $s;
-
-        $s = _t('_bx_posts_txt_category_link', $oCat->getCategoryUrl($aData['cat']), $aCats[$aData['cat']]) . '<br />' . $s;
-
-        return $s;
-    }
 }
 
 /** @} */

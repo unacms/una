@@ -179,7 +179,10 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_posts', 'bx_posts', 'pictures', 'a:1:{i:0;s:9:"sys_html5";}', 'a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_posts_form_entry_input_sys_pictures', '_bx_posts_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'text', '', '', 0, 'textarea', '_bx_posts_form_entry_input_sys_text', '_bx_posts_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_posts', 'bx_posts', 'title', '', '', 0, 'text', '_bx_posts_form_entry_input_sys_title', '_bx_posts_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_title_err', 'Xss', '', 1, 0),
-('bx_posts', 'bx_posts', 'cat', '', '#!bx_posts_cats', 0, 'select', '_bx_posts_form_entry_input_sys_cat', '_bx_posts_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_posts_form_entry_input_cat_err', 'Xss', '', 1, 0);
+('bx_posts', 'bx_posts', 'cat', '', '#!bx_posts_cats', 0, 'select', '_bx_posts_form_entry_input_sys_cat', '_bx_posts_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_posts_form_entry_input_cat_err', 'Xss', '', 1, 0),
+('bx_posts', 'bx_posts', 'added', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_added', '_bx_posts_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_posts', 'bx_posts', 'changed', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_changed', '_bx_posts_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_posts_entry_add', 'delete_confirm', 2147483647, 0, 1),
@@ -210,14 +213,16 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_posts_entry_edit', 'location', 2147483647, 1, 8),
 ('bx_posts_entry_edit', 'do_submit', 2147483647, 1, 9),
 ('bx_posts_entry_view', 'location', 2147483647, 0, 0),
-('bx_posts_entry_view', 'cat', 2147483647, 0, 0),
 ('bx_posts_entry_view', 'pictures', 2147483647, 0, 0),
 ('bx_posts_entry_view', 'delete_confirm', 2147483647, 0, 0),
-('bx_posts_entry_view', 'text', 2147483647, 1, 0),
+('bx_posts_entry_view', 'text', 2147483647, 0, 0),
 ('bx_posts_entry_view', 'do_publish', 2147483647, 0, 0),
 ('bx_posts_entry_view', 'title', 2147483647, 0, 0),
 ('bx_posts_entry_view', 'do_submit', 2147483647, 0, 0),
-('bx_posts_entry_view', 'allow_view_to', 2147483647, 0, 0);
+('bx_posts_entry_view', 'allow_view_to', 2147483647, 0, 0),
+('bx_posts_entry_view', 'cat', 2147483647, 1, 1),
+('bx_posts_entry_view', 'added', 2147483647, 1, 2),
+('bx_posts_entry_view', 'changed', 2147483647, 1, 3);
 
 -- PRE-VALUES
 
