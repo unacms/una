@@ -32,7 +32,11 @@
 	<string name="_bx_albums_form_entry_input_pictures"><![CDATA[Картинки]]></string>
     <string name="_bx_albums_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_albums_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
-	<string name="_bx_albums_form_entry_file_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_albums_form_entry_file_title"><![CDATA[Заголовок]]></string>
+	<string name="_bx_albums_form_entry_input_sys_date_added"><![CDATA[Создано]]></string>
+	<string name="_bx_albums_form_entry_input_date_added"><![CDATA[Создано]]></string>
+	<string name="_bx_albums_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string>
+	<string name="_bx_albums_form_entry_input_date_changed"><![CDATA[Обновлено]]></string>
 
 	<string name="_bx_albums_acl_action_create_entry"><![CDATA[Создать альбом]]></string>
 	<string name="_bx_albums_acl_action_delete_entry"><![CDATA[Удалить альбом]]></string>
@@ -168,10 +172,6 @@
     <string name="_bx_albums_txt_sample_single"><![CDATA[альбом]]></string>
     <string name="_bx_albums_txt_sample_comment_single"><![CDATA[комментарий к альбому]]></string>
     <string name="_bx_albums_txt_sample_vote_single"><![CDATA[голос за альбом]]></string>
-    <string name="_bx_albums_txt_cameras"><![CDATA[Камера:]]></string>
-    <string name="_bx_albums_txt_location"><![CDATA[Место:]]></string>
-    <string name="_bx_albums_txt_released"><![CDATA[Дата выпуска:]]></string>
-    <string name="_bx_albums_txt_updated"><![CDATA[Дата обновления:]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[изображение]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[комментарий к изображению]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[медиа-файлы автора {0}]]></string>

@@ -268,7 +268,10 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_albums', 'bx_albums', 'text', '', '', 0, 'textarea', '_bx_albums_form_entry_input_sys_text', '_bx_albums_form_entry_input_text', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_albums', 'bx_albums', 'pictures', 'a:1:{i:0;s:15:"bx_albums_html5";}', 'a:2:{s:16:"bx_albums_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_albums_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_albums_form_entry_input_sys_pictures', '_bx_albums_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_albums', 'bx_albums', 'allow_view_to', '', '', 0, 'custom', '_bx_albums_form_entry_input_sys_allow_view_to', '_bx_albums_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_albums', 'bx_albums', 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('bx_albums', 'bx_albums', 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_albums', 'bx_albums', 'added', '', '', 0, 'datetime', '_bx_albums_form_entry_input_sys_date_added', '_bx_albums_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_albums', 'bx_albums', 'changed', '', '', 0, 'datetime', '_bx_albums_form_entry_input_sys_date_changed', '_bx_albums_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_albums_entry_add', 'delete_confirm', 2147483647, 0, 1),
@@ -298,9 +301,11 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_albums_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_albums_entry_view', 'allow_view_to', 2147483647, 0, 0),
 ('bx_albums_entry_view', 'do_submit', 2147483647, 0, 0),
-('bx_albums_entry_view', 'text', 2147483647, 1, 0),
-('bx_albums_entry_view', 'title', 2147483647, 1, 0),
+('bx_albums_entry_view', 'text', 2147483647, 0, 0),
+('bx_albums_entry_view', 'title', 2147483647, 0, 0),
 ('bx_albums_entry_view', 'pictures', 2147483647, 0, 0),
+('bx_albums_entry_view', 'added', 2147483647, 1, 1),
+('bx_albums_entry_view', 'changed', 2147483647, 1, 2),
 
 ('bx_albums_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_albums_entry_delete', 'do_submit', 2147483647, 1, 2),

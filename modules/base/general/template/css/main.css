@@ -1,4 +1,10 @@
 
+/* view entry */
+
+.bx-base-general-entity-info > p:first-child {
+    margin-top:0;
+}
+
 /* unit */
 
 .bx-def-unit-live-search {

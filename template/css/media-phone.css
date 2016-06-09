@@ -102,4 +102,14 @@ ul.bx-menu-toolbar li a span {
     display:none;
 }
 
+/* loading indicator */
+.bx-btn .bx-loading-ajax-btn {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+.bx-btn.bx-btn-small .bx-loading-ajax-btn {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 } /* @media end */

@@ -36,6 +36,10 @@
     <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_posts_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_posts_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
+    <string name="_bx_posts_form_entry_input_sys_date_added"><![CDATA[Создано]]></string>
+    <string name="_bx_posts_form_entry_input_date_added"><![CDATA[Создано]]></string>
+    <string name="_bx_posts_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string>
+    <string name="_bx_posts_form_entry_input_date_changed"><![CDATA[Обновлено]]></string>
 
 	<string name="_bx_posts_acl_action_create_entry"><![CDATA[Создать публикацию]]></string>
 	<string name="_bx_posts_acl_action_delete_entry"><![CDATA[Удалить публикацию]]></string>
@@ -97,7 +101,8 @@
 	<string name="_bx_posts_page_block_title_system_manage_administration"><![CDATA[Управление всеми Публикациями]]></string>
 	<string name="_bx_posts_page_block_title_manage"><![CDATA[Управление Публикациями]]></string>    
 	<string name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Популярные Хэштеги]]></string>
-	<string name="_bx_posts_page_block_title_cats"><![CDATA[Категории Публикаций]]></string>
+    <string name="_bx_posts_page_block_title_cats"><![CDATA[Категории Публикаций]]></string>
+    <string name="_bx_posts_page_block_title_entry_info"><![CDATA[Инфо]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Действия для публикации]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Действия для публикации]]></string>
@@ -186,7 +191,6 @@
     <string name="_bx_posts_cat_Womens_Fashion"><![CDATA[Женская мода]]></string>
 
     <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">Все публикации от {1} ({2})</a>]]></string>
-    <string name="_bx_posts_txt_category_link"><![CDATA[Категория <a href="{0}">{1}</a>]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[публикация]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарии к публикации]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[голос за публикацию]]></string>

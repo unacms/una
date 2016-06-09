@@ -60,7 +60,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 ('bx_albums_view_entry', 2, 'bx_albums', '_bx_albums_page_block_title_entry_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
 
-('bx_albums_view_entry', 3, 'bx_albums', '_bx_albums_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:20:\"entity_info_extended\";}', 0, 0, 1, 0);
+('bx_albums_view_entry', 3, 'bx_albums', '_bx_albums_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0);
 
 
 -- PAGE: view media
