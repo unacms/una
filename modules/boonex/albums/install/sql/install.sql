@@ -282,7 +282,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_albums_entry_edit', 'delete_confirm', 2147483647, 0, 1),
 ('bx_albums_entry_edit', 'title', 2147483647, 1, 2),
 ('bx_albums_entry_edit', 'text', 2147483647, 1, 3),
-('bx_albums_entry_edit', 'pictures', 2147483647, 1, 4),
+('bx_albums_entry_edit', 'pictures', 2147483647, 0, 4),
 ('bx_albums_entry_edit', 'allow_view_to', 2147483647, 1, 5),
 ('bx_albums_entry_edit', 'location', 2147483647, 1, 6),
 ('bx_albums_entry_edit', 'do_submit', 2147483647, 1, 7),

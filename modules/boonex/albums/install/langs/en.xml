@@ -108,12 +108,16 @@
 
     <string name="_bx_albums_menu_set_title_view_entry"><![CDATA[Album Actions]]></string>
     <string name="_bx_albums_menu_title_view_entry"><![CDATA[Album Actions]]></string>
+    <string name="_bx_albums_menu_set_title_view_media"><![CDATA[Media Actions]]></string>
+    <string name="_bx_albums_menu_title_view_media"><![CDATA[Media Actions]]></string>
     <string name="_bx_albums_menu_title_submenu"><![CDATA[Albums Submenu]]></string>
     <string name="_bx_albums_menu_set_title_submenu"><![CDATA[Albums Submenu]]></string>
     <string name="_bx_albums_menu_item_title_system_create_entry"><![CDATA[New Album]]></string>
     <string name="_bx_albums_menu_item_title_create_entry"><![CDATA[New Album]]></string>
     <string name="_bx_albums_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_albums_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
+    <string name="_bx_albums_menu_item_title_system_edit_album"><![CDATA[Edit Album]]></string>
+    <string name="_bx_albums_menu_item_title_edit_album"><![CDATA[Edit Album]]></string>
     <string name="_bx_albums_menu_item_title_system_add_images"><![CDATA[Add Images]]></string>
     <string name="_bx_albums_menu_item_title_add_images"><![CDATA[Add Images]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>

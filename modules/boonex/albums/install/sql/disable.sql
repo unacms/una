@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_albums' OR `object` IN('bx_a
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_albums';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_albums';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_albums' OR `set_name` IN('bx_albums_view', 'bx_albums_submenu', 'bx_albums_view_submenu', 'bx_albums_my');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_albums' OR `set_name` IN('bx_albums_view', 'bx_albums_view_media', 'bx_albums_submenu', 'bx_albums_view_submenu', 'bx_albums_my');
 
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_albums_allow_view_to';
