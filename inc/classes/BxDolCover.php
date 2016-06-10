@@ -143,6 +143,13 @@ class BxDolCover extends BxDol implements iBxDolSingleton
         return true;
     }
 
+    /**
+     * Set cover area class
+     */
+    public function setCoverClass ($sClass)
+    {
+        $this->_aOptiondDefault['class'] = $sClass;
+    }
 }
 
 /** @} */

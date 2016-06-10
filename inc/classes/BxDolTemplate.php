@@ -1069,16 +1069,25 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             $sContent = $this->parseHtmlByName('default.html', $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
 
         //--- Add CSS and JS at the very last ---//
+
+        if(strpos($sContent , '<bx_include_css_system />') !== false) {
+            $sContent = str_replace('<bx_include_css_system />', $this->includeFiles('css', true), $sContent);
+        }
+
         if(strpos($sContent , '<bx_include_css />') !== false) {
             if (!empty($this->aPage['css_name']))
                 $this->addCss($this->aPage['css_name']);
-            $sContent = str_replace('<bx_include_css />', $this->includeFiles('css', true) . $this->includeFiles('css'), $sContent);
+            $sContent = str_replace('<bx_include_css />', $this->includeFiles('css'), $sContent);
+        }
+        
+        if(strpos($sContent , '<bx_include_js_system />') !== false) {
+            $sContent = str_replace('<bx_include_js_system />', $this->includeFiles('js', true), $sContent);
         }
 
         if(strpos($sContent , '<bx_include_js />') !== false) {
             if (!empty($this->aPage['js_name']))
                 $this->addJs($this->aPage['js_name']);
-            $sContent = str_replace('<bx_include_js />', $this->includeFiles('js', true) . $this->includeFiles('js'), $sContent);
+            $sContent = str_replace('<bx_include_js />', $this->includeFiles('js'), $sContent);
         }
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endPage($sContent);

@@ -44,9 +44,11 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']])->doView();
         }
 
+        $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);
+        $oCover->setCoverClass($this->_oModule->getName() . '_cover');
+
         // set cover image
-        if ($aThumb = $this->_getThumbForMetaObject()) {
-            $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);
+        if ($aThumb = $this->_getThumbForMetaObject()) {            
             $oCover->setCoverImageUrl($aThumb);
         }
 

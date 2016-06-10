@@ -39,12 +39,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
-        $oConn = isset($CNF['OBJECT_CONNECTIONS']) ? BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']) : null;
-
         $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
         
         // get profile's url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+
+        // connections object 
+        $sConnectionsObject = isset($CNF['OBJECT_CONNECTIONS']) ? $CNF['OBJECT_CONNECTIONS'] : 'sys_profiles_friends';
+        $oConn = BxDolConnection::getObjectInstance($sConnectionsObject);
+        $aConnectionTitles = $this->getModule()->serviceGetConnectionButtonsTitles($oProfile->id(), $sConnectionsObject);
 
         // generate html
         $aVars = array (
@@ -56,12 +59,16 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
             'bx_if:info' => array(
-                'condition' => false,
+                'condition' => true,
                 'content' => array (
-                    'members' => '',
+                    'members' => $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($oProfile->id(), true) : 0) : '&nbsp;',
                     'bx_if:btn' => array (
-                        'condition' => false,
-                        'content' => array (),
+                        'condition' => isLogged() && !empty($aConnectionTitles['add']) && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedFriendAdd($aData),
+                        'content' => array (
+                            'id' => $oProfile->id(),
+                            'title' => $aConnectionTitles['add'],
+                            'object' => $sConnectionsObject,
+                        ),
                     ),
                 ),
             ),

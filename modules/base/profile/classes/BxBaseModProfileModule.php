@@ -347,6 +347,39 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     {
         return $this->_serviceGetNotification($aEvent, '_bx_' . $this->_oConfig->getUri() . '_txt_ntfs_timeline_post_common');
     }
+
+    public function serviceGetConnectionButtonsTitles($iProfileId, $sConnectionsObject = 'sys_profiles_friends')
+    {
+        if (!isLogged())
+            return array();
+
+        if (!($oConn = BxDolConnection::getObjectInstance($sConnectionsObject)))
+            return array();
+
+        $CNF = $this->_oConfig->CNF;
+
+        if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $iProfileId)) {
+            return array(
+                'add' => _t($CNF['T']['menu_item_title_befriend_sent']),
+                'remove' => _t($CNF['T']['menu_item_title_unfriend_cancel_request']),
+            );
+        } elseif ($oConn->isConnectedNotMutual($iProfileId, bx_get_logged_profile_id())) {
+            return array(
+                'add' => _t($CNF['T']['menu_item_title_befriend_confirm']),
+                'remove' => _t($CNF['T']['menu_item_title_unfriend_reject_request']),
+            );
+        } elseif ($oConn->isConnected($iProfileId, bx_get_logged_profile_id(), true)) {
+            return array(
+                'add' => '',
+                'remove' => _t($CNF['T']['menu_item_title_unfriend']),
+            );
+        } else {
+            return array(
+                'add' => _t($CNF['T']['menu_item_title_befriend']),
+                'remove' => '',
+            );
+        }
+    }
     
     // ====== PERMISSION METHODS
 
