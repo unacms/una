@@ -39,24 +39,12 @@ class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView
             $this->addMarkers($this->_aProfileInfo);
             $this->addMarkers(array('profile_id' => $this->_oProfile->id()));
 
-            if (isLogged()) {
-                $oConn = BxDolConnection::getObjectInstance('sys_profiles_friends');
-                if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id())) {
-                    $this->addMarkers(array(
-                        'title_add_friend' => _t($CNF['T']['menu_item_title_befriend_sent']),
-                        'title_remove_friend' => _t($CNF['T']['menu_item_title_unfriend_cancel_request']),
-                    ));
-                } elseif ($oConn->isConnectedNotMutual($this->_oProfile->id(), bx_get_logged_profile_id())) {
-                    $this->addMarkers(array(
-                        'title_add_friend' => _t($CNF['T']['menu_item_title_befriend_confirm']),
-                        'title_remove_friend' => _t($CNF['T']['menu_item_title_unfriend_reject_request']),
-                    ));
-                } else {
-                    $this->addMarkers(array(
-                        'title_add_friend' => _t($CNF['T']['menu_item_title_befriend']),
-                        'title_remove_friend' => _t($CNF['T']['menu_item_title_unfriend']),
-                    ));
-                }
+            $aTitles = $this->_oModule->serviceGetConnectionButtonsTitles($this->_oProfile->id());
+            if ($aTitles) {
+                $this->addMarkers(array(
+                    'title_add_friend' => $aTitles['add'],
+                    'title_remove_friend' => $aTitles['remove'],
+                ));
             }
         }
     }
