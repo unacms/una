@@ -122,6 +122,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_orgs_txt_sample_single',
+                'txt_N_fans' => '_bx_orgs_txt_N_friends',
                 'menu_item_title_befriend_sent' => '_bx_orgs_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_orgs_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_orgs_menu_item_title_befriend_confirm',

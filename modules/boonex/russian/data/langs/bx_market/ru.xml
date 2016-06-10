@@ -293,11 +293,9 @@
     <string name="_bx_market_txt_category"><![CDATA[Категория:]]></string>
     <string name="_bx_market_txt_notes"><![CDATA[Примечания:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[Самая новая версия]]></string>
-    <string name="_bx_market_txt_released"><![CDATA[Дата выпуска:]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[Обзоры к продукту]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[голос за продукт]]></string>
-    <string name="_bx_market_txt_updated"><![CDATA[Дата обновления:]]></string>
     <string name="_bx_market_txt_joined"><![CDATA[Зарегистрирован:]]></string>
     <string name="_bx_market_txt_last_active"><![CDATA[Последняя активность:]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[{0}{1}]]></string>
