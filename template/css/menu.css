@@ -440,6 +440,10 @@ ul.bx-menu-btns-ver li .bx-btn {
     display:inline-block;
 }
 
+ul.bx-menu-btns-hor li:last-child .bx-btn {
+    margin-right:0;
+}
+
 /* --------------- account popup menu */
 
 .bx-popup-content .bx-menu-account-popup {
