@@ -1,0 +1,55 @@
+<div id="__form_container_id__" class="bx-uploader-form-cont bx-popup-width">
+
+    <input name="f" type="file" />
+
+    <div class="bx-def-padding-sec-bottom bx-croppie-msg"></div>
+    <div class="bx-def-padding-sec-bottom" id="__errors_container_id__"></div>
+
+    <div class="bx-croppie-container bx-def-margin-topbottom"></div>
+
+    <div class="bx-def-padding-top bx-clearfix">
+        <button class="bx-crop-upload bx-btn bx-btn-primary bx-btn-disabled bx-def-margin-sec-right">Upload</button>
+        <div class="bx-btn" onclick="__uploader_instance_name__.onClickCancel()"><bx_text:_sys_uploader_close /></div>
+    </div>
+    
+
+<!--
+    <form enctype="multipart/form-data" method="POST" target="__iframe_id__" action="<bx_url_root />storage_uploader.php" onsubmit="__uploader_instance_name__.onBeforeUpload(this);">
+
+        <div class="bx-uploader-loading">
+        </div>
+
+        <div class="bx-uploader-files-list">
+
+        </div>
+
+    </form>
+
+    <iframe name="__iframe_id__" id="__iframe_id__" style="width:0px; height:0px; border:0px; float:left;"></iframe>
+-->
+</div>
+
+<script>
+setTimeout(function () {    
+    __uploader_instance_name__.initUploader({
+        bx_form: {
+            uo: "__engine__",
+            so: "__storage_object__",
+            uid: "__uniq_id__",
+            m: "__multiple__",
+            c: "__content_id__",
+            p: "__storage_private__",
+            a: "upload"
+        },
+        viewport: {
+            width: 300,
+            height: 300,
+            // type: 'circle'
+        },
+        boundary: {
+            width: 340,
+            height: 340
+        }
+    });
+}, 10);
+</script>
