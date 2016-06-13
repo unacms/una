@@ -17,7 +17,7 @@ function BxDolUploaderSimple (sUploaderObject, sStorageObject, sUniqId, options)
     this._eForm = null;
 }
 
-BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, sUniqId, options) {    
+BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, sUniqId, options) {
     this._isUploadsInProgress = false;
 
     this._sUploaderObject = sUploaderObject;
@@ -176,6 +176,11 @@ BxDolUploaderSimple.prototype.deleteGhost = function (iFileId) {
     });
 };
 
+BxDolUploaderSimple.prototype._clearErrors = function () {
+    $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).html('');
+    this._isErrorShown = false;
+}
+
 BxDolUploaderSimple.prototype._showError = function (s, bAppend) {
     if (s == undefined || !s.length)
         return;
@@ -216,7 +221,8 @@ BxDolUploaderSimple.prototype._loading = function (bShowProgress, bShowForm) {
     if (bShowForm) {
         if (null != this._eForm) {
             eForm.find('.bx-uploader-simple-file').filter(':not(:first)').remove();
-            this._eForm.reset();
+            if ('undefined' !== typeof(this._eForm.reset)) 
+                this._eForm.reset();
         }
         eForm.show();
         eBtn.show();
@@ -323,5 +329,102 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
 }
 
 BxDolUploaderHTML5.prototype = BxDolUploaderSimple.prototype;
+
+/**
+ * Crop Image Uploader js class
+ */
+function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
+
+    this.init(sUploaderObject, sStorageObject, sUniqId, options);
+
+    this._eForm = null;
+
+    this.initUploader = function (oOptions) {
+
+        var $this = this;
+
+        var aExt = ['jpg', 'jpeg', 'png', 'gif'];
+
+        var eCroppie = $("#" + this._sFormContainerId + " .bx-croppie-container").croppie(oOptions);
+      
+        $("#" + this._sFormContainerId + " input[name=f]").on("change", function() {
+            var input = this;            
+
+            if (input.files && input.files[0]) {
+
+                var m = input.files[0].name.match(/\.([A-Za-z0-9]+)$/);
+
+                if (2 != m.length || -1 == aExt.indexOf(m[1].toLowerCase())) {                    
+                    $(input).replaceWith($(input).val('').clone(true));
+                    $this._showError(_t('_sys_uploader_crop_wrong_ext'));
+                    return;
+                }
+
+                $this._clearErrors();
+
+                var reader = new FileReader()
+
+                reader.onload = function(e) {
+                    eCroppie.croppie('bind', {
+                        url: e.target.result
+                    });
+                    $("#" + $this._sFormContainerId + " .bx-croppie-container").addClass('ready');
+                    $("#" + $this._sFormContainerId + " .bx-crop-upload").removeClass('bx-btn-disabled');
+                    $("#" + $this._sFormContainerId + " .bx-croppie-container").data('bx-filename', input.files[0].name.replace(/(\.[A-Za-z0-9]+)$/, '.png'));
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+        $("#" + this._sFormContainerId + " .bx-crop-upload").on('click', function(ev) {
+            eCroppie.croppie('result', {
+                type: 'canvas',
+                size: 'original'
+            }).then(function(resp) {
+                var fd = new FormData();
+
+                fd.append("f", dataURItoBlob(resp), $("#" + $this._sFormContainerId + " .bx-croppie-container").data('bx-filename'));
+                $.each(oOptions.bx_form, function (sName) {
+                    fd.append(sName, this);
+                });
+                
+                $this.onBeforeUpload(fd);
+
+                $.ajax({
+                    url: sUrlRoot + 'storage_uploader.php',
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: fd,
+                    success: function(data) {
+                        eval(data);
+                    },
+                    error: function() {
+                        $this._showError(_t('_sys_uploader_crop_err_upload'));
+                    }
+                })
+
+            });
+        });
+
+        function dataURItoBlob(dataURI) {
+            var split = dataURI.split(','),
+                dataTYPE = split[0].match(/:(.*?);/)[1],
+                binary = atob(split[1]),
+                array = [];
+                
+            for (var i = 0; i < binary.length; i++) 
+                array.push(binary.charCodeAt(i));
+
+            return new Blob([new Uint8Array(array)], {
+                type: dataTYPE
+            });
+        }
+
+        
+    };
+}
+
+BxDolUploaderCrop.prototype = BxDolUploaderSimple.prototype;
 
 /** @} */

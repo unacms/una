@@ -67,3 +67,10 @@
 .bx-uploader-html5-button input {
     height:38px;
 }
+
+/* crop uploader */
+
+.bx-popup-content-wrapped .bx-croppie-container {
+    padding:0;
+    min-height:340px;
+}
