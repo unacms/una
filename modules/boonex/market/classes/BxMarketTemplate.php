@@ -28,37 +28,35 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
-    public function entryInfo($aData, $bFull = false)
+    public function entryInfo($aData, $aValues = array())
     {
     	$aCategory = array();
     	$oCategory = BxTemplCategory::getObjectInstance('bx_market_cats');
     	$aCategories = BxDolForm::getDataItems('bx_market_cats');
     	if($oCategory && $aCategories && isset($aCategories[$aData['cat']]))
-    		$aCategory = array(
-    			'category_url' => $oCategory->getCategoryUrl($aData['cat']),
-    			'category_title' => $aCategories[$aData['cat']]
-    		);
+    		$aValues = array_merge(array(
+    			array(
+	    			'title' => _t('_bx_market_txt_category'),
+	    			'value' => $this->parseHtmlByName('bx_a.html', array(
+	    				'href' => $oCategory->getCategoryUrl($aData['cat']),
+	    				'title' => bx_html_attribute($aCategories[$aData['cat']]),
+	    				'bx_repeat:attrs' => array(),
+	    				'content' => $aCategories[$aData['cat']]
+	    			))
+	    		)), $aValues
+	    	);
 
-    	return $this->parseHtmlByName('entry-info.html', array(
-    		'bx_if:show_category' => array(
-    			'condition' => !empty($aCategory),
-    			'content' => $aCategory
-    		),
-    		'category' => '',
-    		'released' => bx_time_js($aData['added']),
-	    	'updated' => bx_time_js($aData['changed']),
-	    	'bx_if:show_full' => array(
-    			'condition' => $bFull,
-    			'content' => array(
-    				'notes' => bx_process_output(nl2br($aData['notes']), BX_DATA_TEXT_MULTILINE)
-    			)
-    		),
-    	));
+    	return parent::entryInfo($aData, $aValues);
     }
 
     public function entryInfoFull($aData)
     {
-    	return $this->entryInfo($aData, true);
+    	return $this->entryInfo($aData, array(
+    		array(
+    			'title' => _t('_bx_market_txt_notes'), 
+    			'value' => bx_process_output(nl2br($aData['notes']), BX_DATA_TEXT_MULTILINE)
+    		)
+    	));
     }
 
     public function entryRating($aData)
