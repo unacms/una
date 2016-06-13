@@ -66,7 +66,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                         'condition' => isLogged() && !empty($aConnectionTitles['add']) && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedFriendAdd($aData),
                         'content' => array (
                             'id' => $oProfile->id(),
-                            'title' => $aConnectionTitles['add'],
+                            'title' => isset($aConnectionTitles['add']) ? $aConnectionTitles['add'] : '',
                             'object' => $sConnectionsObject,
                         ),
                     ),
