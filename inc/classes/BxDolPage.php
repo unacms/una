@@ -197,12 +197,18 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                 if (!BxDolRequest::serviceExists($aModule['name'], 'get_page_object_for_page_trigger'))
                     continue;
 
-				$sPageObject = BxDolService::call($aModule['name'], 'get_page_object_for_page_trigger', array($sPageTriggerName));
-                if (!$sPageObject)
+				$mixedPageObject = BxDolService::call($aModule['name'], 'get_page_object_for_page_trigger', array($sPageTriggerName));
+                if (!$mixedPageObject)
                     continue;
 
-                $aPageBlock['object'] = $sPageObject;
-                BxDolPageQuery::addPageBlockToPage($aPageBlock);
+                $aPageBlockRow = $aPageBlock;
+
+                if (is_array($mixedPageObject))
+                    $aPageBlockRow = array_merge($aPageBlockRow, $mixedPageObject);
+                else
+                    $aPageBlockRow['object'] = $mixedPageObject;
+                
+                BxDolPageQuery::addPageBlockToPage($aPageBlockRow);
             }
         }
 

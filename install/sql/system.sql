@@ -2151,6 +2151,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_uploader` (
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_simple', 1, 'BxTemplUploaderSimple', ''),
 ('sys_html5', 1, 'BxTemplUploaderHTML5', ''),
+('sys_crop', 1, 'BxTemplUploaderCrop', ''),
 ('sys_cmts_simple', 1, 'BxTemplCmtsUploaderSimple', ''),
 ('sys_settings_html5', 1, 'BxTemplStudioSettingsUploaderHTML5', ''),
 ('sys_builder_page_simple', 1, 'BxTemplStudioBuilderPageUploaderSimple', ''),
