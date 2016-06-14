@@ -2218,6 +2218,8 @@
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[О нет! Вы уверены? Это может прервать загрузку файлов.]]></string>
     <string name="_sys_uploader_confirm_leaving_page"><![CDATA[Загрузка в процессе! Не закрывайте эту страницу, или загрузка будет прервана на полпути.]]></string>
     <string name="_sys_uploader_crop_button_name"><![CDATA[Обрезка картинки]]></string>
+    <string name="_sys_uploader_crop_rotate_left"><![CDATA[Повернуть налево]]></string>
+	<string name="_sys_uploader_crop_rotate_right"><![CDATA[Повернуть направо]]></string>
 	<string name="_sys_uploader_crop_submit_button"><![CDATA[Загрузить]]></string>    
     <string name="_sys_uploader_crop_title"><![CDATA[Обрезка Картинки]]></string>
     <string name="_sys_uploader_crop_err_upload"><![CDATA[Ошибка загрузки.]]></string>

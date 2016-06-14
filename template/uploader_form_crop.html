@@ -2,31 +2,19 @@
 
     <input name="f" type="file" />
 
+    <div class="bx-uploader-loading"></div>
     <div class="bx-def-padding-sec-bottom bx-croppie-msg"></div>
     <div class="bx-def-padding-sec-bottom" id="__errors_container_id__"></div>
 
     <div class="bx-croppie-container bx-def-margin-topbottom"></div>
 
     <div class="bx-def-padding-top bx-clearfix">
-        <button class="bx-crop-upload bx-btn bx-btn-primary bx-btn-disabled bx-def-margin-sec-right">Upload</button>
-        <div class="bx-btn" onclick="__uploader_instance_name__.onClickCancel()"><bx_text:_sys_uploader_close /></div>
+        <button class="bx-crop-action bx-btn bx-btn-disabled bx-def-margin-sec-right bx-def-margin-sec-top bx-crop-upload bx-btn-primary"><bx_text:_sys_uploader_crop_submit_button /></button>
+        <button class="bx-crop-action bx-btn bx-btn-disabled bx-def-margin-sec-right bx-def-margin-sec-top bx-crop-rotate" data-deg="-90"><bx_text:_sys_uploader_crop_rotate_left /></button>
+        <button class="bx-crop-action bx-btn bx-btn-disabled bx-def-margin-sec-right bx-def-margin-sec-top bx-crop-rotate" data-deg="90"><bx_text:_sys_uploader_crop_rotate_right /></button>
+        <div class="bx-btn bx-def-margin-sec-top" onclick="__uploader_instance_name__.onClickCancel()"><bx_text:_sys_uploader_close /></div>
     </div>
-    
 
-<!--
-    <form enctype="multipart/form-data" method="POST" target="__iframe_id__" action="<bx_url_root />storage_uploader.php" onsubmit="__uploader_instance_name__.onBeforeUpload(this);">
-
-        <div class="bx-uploader-loading">
-        </div>
-
-        <div class="bx-uploader-files-list">
-
-        </div>
-
-    </form>
-
-    <iframe name="__iframe_id__" id="__iframe_id__" style="width:0px; height:0px; border:0px; float:left;"></iframe>
--->
 </div>
 
 <script>
@@ -42,14 +30,15 @@ setTimeout(function () {
             a: "upload"
         },
         viewport: {
-            width: 300,
-            height: 300,
+            width: 240,
+            height: 240,
             // type: 'circle'
         },
         boundary: {
-            width: 340,
-            height: 340
-        }
+            width: 280,
+            height: 280
+        },
+        enableOrientation: true
     });
-}, 10);
+}, 100);
 </script>

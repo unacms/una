@@ -2218,6 +2218,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[Oh no! Are you sure? This may discard uploading files, seriously.]]></string>
     <string name="_sys_uploader_confirm_leaving_page"><![CDATA[Upload is in progress! Stay cool and don't close this page, or it will cut off half-way.]]></string>
     <string name="_sys_uploader_crop_button_name"><![CDATA[Crop Image]]></string>
+    <string name="_sys_uploader_crop_rotate_left"><![CDATA[Rotate Left]]></string>
+	<string name="_sys_uploader_crop_rotate_right"><![CDATA[Rotate Right]]></string>
 	<string name="_sys_uploader_crop_submit_button"><![CDATA[Upload]]></string>    
     <string name="_sys_uploader_crop_title"><![CDATA[Crop Image]]></string>
     <string name="_sys_uploader_crop_err_upload"><![CDATA[Error Uploading.]]></string>

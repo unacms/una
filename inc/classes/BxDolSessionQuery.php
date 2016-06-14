@@ -57,7 +57,8 @@ class BxDolSessionQuery extends BxDolDb
     {
         $sSql = $this->prepare("DELETE FROM `" . $this->sTable . "` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_SESSION_LIFETIME);
         $iRet = (int)$this->query($sSql);
-        $this->query("OPTIMIZE TABLE `" . $this->sTable . "`");
+        if ($iRet)
+            $this->query("OPTIMIZE TABLE `" . $this->sTable . "`");
         return $iRet;
     }
 }
