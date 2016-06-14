@@ -65,7 +65,7 @@ class BxMarketModule extends BxBaseModTextModule
 
 	public function serviceEntityInfoFull ($iContentId = 0)
     {
-        return $this->_serviceTemplateFunc ('entryInfoFull', $iContentId);
+        return $this->_serviceEntityForm ('viewDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL']);
     }
 
     public function serviceEntityRating($iContentId = 0)
