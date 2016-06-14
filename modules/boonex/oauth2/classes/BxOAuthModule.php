@@ -56,12 +56,19 @@ class BxOAuthModule extends BxDolModule
     protected function _buildDSN () 
     {
         $sDSN = 'mysql:';
-        if (!empty(BX_DATABASE_HOST))
-            $sDSN .= 'host=' . BX_DATABASE_HOST . ';';
-        if (!empty(BX_DATABASE_PORT))
-            $sDSN .= 'port=' . BX_DATABASE_PORT . ';';
-        if (!empty(BX_DATABASE_SOCK))
-            $sDSN .= 'unix_socket=' . BX_DATABASE_SOCK . ';';
+
+        $sHost = BX_DATABASE_HOST;
+        if (!empty($sHost))
+            $sDSN .= 'host=' . $sHost . ';';
+
+		$sPort = BX_DATABASE_PORT;
+        if (!empty($sPort))
+            $sDSN .= 'port=' . $sPort . ';';
+
+		$sSocket = BX_DATABASE_SOCK;
+        if (!empty($sSocket))
+            $sDSN .= 'unix_socket=' . $sSocket . ';';
+
         $sDSN .= 'dbname=' . BX_DATABASE_NAME . ';charset=UTF8';
         return $sDSN;
     }
