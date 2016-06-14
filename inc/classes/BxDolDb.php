@@ -43,7 +43,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
 		$this->_bPdoPersistent = true;
         $this->_iPdoFetchType = PDO::FETCH_ASSOC;
-        $this->_iPdoErrorMode = PDO::ERRMODE_EXCEPTION; //PDO::ERRMODE_SILENT
+        $this->_iPdoErrorMode = PDO::ERRMODE_SILENT; //PDO::ERRMODE_EXCEPTION;
 
         $this->_bErrorChecking = true;
         $this->_sErrorMessage = '';
@@ -185,7 +185,10 @@ class BxDolDb extends BxDol implements iBxDolSingleton
      */
     public function pdoQueryExceptionHandler($oException)
     {
-		$this->_sErrorMessage = $oException->getMessage();
+    	if(!($oException instanceof PDOException))
+    		return;
+
+		$this->_sErrorMessage = !empty($oException->errorInfo[2]) ? $oException->errorInfo[2] : $oException->getMessage();		
     	$this->error('Database query error');
     	return;
     }
@@ -443,8 +446,13 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
 		$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
 
-        // we need to remeber last error message since mysql_ping will reset it on the next line !
-        $this->_sErrorMessage = $bResult == false ? $oStatement->errorInfo() : '';
+        //--- We need to remeber last error message since it will be reset during 'ping' execution.
+        $this->_sErrorMessage = '';
+        if($bResult == false) {
+			$aError = $oStatement->errorInfo();
+			if(!empty($aError[2]))
+				$this->_sErrorMessage = $aError[2];
+        }
 
 		//if mysql connection is lost - reconnect and try again
         if(!$bResult && !$this->ping()) {
@@ -621,44 +629,26 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
     public function genMySQLErr($sOutput, $sQuery = '')
     {
+    	$aFoundError = array();
         $sParamsOutput = false;
-        $sFoundError = '';
 
         $aBackTrace = debug_backtrace();
         unset( $aBackTrace[0] );
 
-        if( $sQuery ) {
-            //try help to find error
+        //--- Trying to help finding an error
+        if($sQuery) {
+        	if($sParamsOutput === false)
+        		$sParamsOutput = var_export(self::$_aParams, true);
 
-            $aFoundError = array();
-
-            foreach( $aBackTrace as $aCall ) {
-
-                // truncating global settings since it repeated many times and output it separately
-                if (isset($aCall['object']) && is_a($aCall['object'], 'BxDolDb')) {
-                    if (false === $sParamsOutput)
-                        $sParamsOutput = var_export($aCall['object']->_aParams, true);
-                    $aCall['object']->_aParams = '[truncated]';
-                }
-
-                if (isset($aCall['args']) && is_array($aCall['args'])) {
-                    foreach( $aCall['args'] as $argNum => $argVal ) {
-                        if( is_string($argVal) and strcmp( $argVal, $sQuery ) == 0 ) {
-                            $aFoundError['file']     = isset($aCall['file']) ? $aCall['file'] : (isset($aCall['class']) ? 'class: ' . $aCall['class'] : 'undefined');
-                            $aFoundError['line']     = isset($aCall['line']) ? $aCall['line'] : 'undefined';
+            foreach($aBackTrace as $aCall )
+                if(isset($aCall['args']) && is_array($aCall['args']))
+                    foreach($aCall['args'] as $argNum => $argVal)
+                        if(is_string($argVal) and strcmp( $argVal, $sQuery ) == 0 ) {
+                            $aFoundError['file'] = isset($aCall['file']) ? $aCall['file'] : (isset($aCall['class']) ? 'class: ' . $aCall['class'] : 'undefined');
+                            $aFoundError['line'] = isset($aCall['line']) ? $aCall['line'] : 'undefined';
                             $aFoundError['function'] = $aCall['function'];
-                            $aFoundError['arg']      = $argNum;
+                            $aFoundError['arg'] = $argNum;
                         }
-                    }
-                }
-            }
-
-            if( $aFoundError ) {
-                $sFoundError = <<<EOJ
-Found error in the file '<b>{$aFoundError['file']}</b>' at line <b>{$aFoundError['line']}</b>.<br />
-Called '<b>{$aFoundError['function']}</b>' function.<br /><br />
-EOJ;
-            }
         }
 
         if (defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) {
@@ -670,7 +660,7 @@ EOJ;
                     <div style="text-align:center;"><?php echo $sOutput; ?></div>
             <?php
             if (defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE)
-                echo $this->verboseErrorOutput ($sQuery, $sFoundError, $aBackTrace, $sParamsOutput);
+                echo $this->verboseErrorOutput ($sQuery, $aFoundError, $aBackTrace, $sParamsOutput);
             ?>
                 </div>
             <?php
@@ -682,7 +672,7 @@ EOJ;
             $sSiteTitle = $this->getParam('site_title');
             $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
 
-            $sMailBody .= $this->verboseErrorOutput ($sQuery, $sFoundError, $aBackTrace, $sParamsOutput);
+            $sMailBody .= $this->verboseErrorOutput ($sQuery, $aFoundError, $aBackTrace, $sParamsOutput);
             $sMailBody .= "<hr />Auto-report system";
 
             sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
@@ -691,20 +681,21 @@ EOJ;
         bx_show_service_unavailable_error_and_exit($sOutput);
     }
 
-    protected function verboseErrorOutput ($sQuery, $sFoundError, &$aBackTrace, $sParamsOutput)
+    protected function verboseErrorOutput ($sQuery, $aFoundError, &$aBackTrace, $sParamsOutput)
     {
         ob_start();
 
         if (!empty($sQuery))
-            echo "<div><b>Query:</b><br />{$sQuery}</div>";
+            echo "<p><b>Query:</b><br />{$sQuery}</p>";
 
         if (self::$_rLink)
-            echo '<div><b>Mysql error:</b><br />' . $this->getErrorMessage() . '</div>';
+            echo '<p><b>Mysql error:</b><br />' . $this->getErrorMessage() . '</p>';
 
+		if(!empty($aFoundError))
+			echo '<p><b>Location:</b><br />The error was found in <b>' . $aFoundError['function'] . '</b> function in the file <b>' . $aFoundError['file'] . '</b> at line <b>' . $aFoundError['line'] . '</b>.</p>';
+
+		echo '<div><b>Debug backtrace:</b></div>';
         echo '<div style="overflow:scroll;height:300px;border:1px solid gray;">';
-            echo $sFoundError;
-            echo "<b>Debug backtrace:</b><br />";
-
             $sBackTrace = print_r($aBackTrace, true);
             $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
             $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
