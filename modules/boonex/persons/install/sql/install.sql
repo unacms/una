@@ -108,12 +108,11 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'do_submit', '_bx_persons_form_profile_input_submit', '', 0, 'submit', '_bx_persons_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_person', 'bx_persons', 'description', '', '', 0, 'textarea', '_bx_persons_form_profile_input_sys_desc', '_bx_persons_form_profile_input_desc', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 1),
 ('bx_person', 'bx_persons', 'fullname', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_fullname', '_bx_persons_form_profile_input_fullname', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_fullname_err', 'Xss', '', 1, 0),
-('bx_person', 'bx_persons', 'picture', '', '', 0, 'file', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_persons_form_profile_input_picture_err', 'Int', '', 1, 0),
-('bx_person', 'bx_persons', 'picture_preview', '', '', 0, 'custom', '_bx_persons_form_profile_input_sys_picture_preview', '_bx_persons_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_person', 'bx_persons', 'picture', 'a:1:{i:0;s:8:"sys_crop";}', 'a:3:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";s:8:"sys_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_persons_form_profile_input_picture_err', 'Int', '', 1, 0);
+
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_add', 'cover_preview', 2147483647, 0, 1),
-('bx_person_add', 'picture_preview', 2147483647, 0, 2),
 ('bx_person_add', 'delete_confirm', 2147483647, 0, 3),
 ('bx_person_add', 'cover', 2147483647, 0, 4),
 ('bx_person_add', 'picture', 2147483647, 1, 5),
@@ -125,13 +124,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_delete', 'cover_preview', 2147483647, 0, 0),
 ('bx_person_delete', 'picture', 2147483647, 0, 0),
 ('bx_person_delete', 'delete_confirm', 2147483647, 1, 0),
-('bx_person_delete', 'picture_preview', 2147483647, 0, 0),
 ('bx_person_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_person_delete', 'fullname', 2147483647, 0, 2),
 ('bx_person_edit', 'cover_preview', 2147483647, 0, 1),
 ('bx_person_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_person_edit', 'cover', 2147483647, 0, 3),
-('bx_person_edit', 'picture_preview', 2147483647, 1, 4),
 ('bx_person_edit', 'picture', 2147483647, 1, 5),
 ('bx_person_edit', 'fullname', 2147483647, 1, 6),
 ('bx_person_edit', 'description', 2147483647, 1, 7),
@@ -140,12 +137,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_edit_cover', 'fullname', 2147483647, 0, 2),
 ('bx_person_edit_cover', 'picture', 2147483647, 0, 3),
-('bx_person_edit_cover', 'picture_preview', 2147483647, 0, 4),
 ('bx_person_edit_cover', 'cover_preview', 2147483647, 1, 6),
 ('bx_person_edit_cover', 'cover', 2147483647, 1, 7),
 ('bx_person_edit_cover', 'do_submit', 2147483647, 1, 8),
 ('bx_person_view', 'cover_preview', 2147483647, 0, 1),
-('bx_person_view', 'picture_preview', 2147483647, 0, 2),
 ('bx_person_view', 'delete_confirm', 2147483647, 0, 3),
 ('bx_person_view', 'picture', 2147483647, 0, 4),
 ('bx_person_view', 'cover', 2147483647, 0, 5),

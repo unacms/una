@@ -99,7 +99,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_albums_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_albums_administration',
         	'OBJECT_GRID_COMMON' => 'bx_albums_common',
-        	'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5'),
+        	'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5', 'bx_albums_crop'),
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

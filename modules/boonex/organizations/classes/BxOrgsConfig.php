@@ -96,7 +96,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_organizations_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_organizations_allow_view_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
-        	'OBJECT_GRID_COMMON' => 'bx_organizations_common',
+            'OBJECT_GRID_COMMON' => 'bx_organizations_common',
+            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5', 'sys_crop'),
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',

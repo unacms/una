@@ -246,6 +246,16 @@ class BxDolAccount extends BxDol
     }
 
     /**
+     * Get all profile ids associated with the account
+     */
+    public function getProfilesIds ()
+    {
+        $oProfileQuery = BxDolProfileQuery::getInstance();
+        $a = $oProfileQuery->getProfilesByAccount($this->_iAccountID);
+        return $a ? array_keys($a) : array();
+    }
+
+    /**
      * Get all profiles associated with the account
      */
     public function getProfiles ()
