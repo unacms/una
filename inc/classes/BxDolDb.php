@@ -38,7 +38,6 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 	protected $_iPdoErrorMode;
 
 	protected $_bErrorChecking;
-    protected $_sErrorMessage;
     protected $_aError;
 
 	protected $_sHost, $_sPort, $_sSocket, $_sDbname, $_sUser, $_sPassword, $_sCharset, $_sStorageEngine;
@@ -61,7 +60,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         $this->_iPdoErrorMode = BX_DB_MODE_EXCEPTION;
 
         $this->_bErrorChecking = true;
-        $this->_sErrorMessage = '';
+        $this->_aError = array();
 
         $this->_sStorageEngine = 'MYISAM';
 
@@ -518,18 +517,6 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     {
         $aFields = $this->getFields($sTable);
         return in_array(strtoupper($sFieldName), $aFields['uppercase']);
-    }
-
-    public function getErrorMessage ()
-    {
-		if(!empty($this->_sErrorMessage))
-			return $this->_sErrorMessage;
-
-		$aError = self::$_rLink->errorInfo();
-        if(!empty($aError[2]))
-            return $aError[2];
-
-        return 'Database error';
     }
 
     public function error($aError)
