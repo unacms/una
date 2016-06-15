@@ -109,12 +109,11 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_organization', 'bx_organizations', 'org_desc', '', '', 0, 'textarea', '_bx_orgs_form_profile_input_sys_org_desc', '_bx_orgs_form_profile_input_org_desc', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_cat', '', '#!bx_organizations_cats', 0, 'select', '_bx_orgs_form_profile_input_sys_org_cat', '_bx_orgs_form_profile_input_org_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_cat_err', 'Xss', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_name', '', '', 0, 'text', '_bx_orgs_form_profile_input_sys_org_name', '_bx_orgs_form_profile_input_org_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_name_err', 'Xss', '', 1, 0),
-('bx_organization', 'bx_organizations', 'picture', '', '', 0, 'file', '_bx_orgs_form_profile_input_sys_picture', '_bx_orgs_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_orgs_form_profile_input_picture_err', 'Int', '', 1, 0),
-('bx_organization', 'bx_organizations', 'picture_preview', '', '', 0, 'custom', '_bx_orgs_form_profile_input_sys_picture_preview', '_bx_orgs_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_organization', 'bx_organizations', 'picture', 'a:1:{i:0;s:8:"sys_crop";}', 'a:3:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";s:8:"sys_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_orgs_form_profile_input_sys_picture', '_bx_orgs_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_orgs_form_profile_input_picture_err', 'Int', '', 1, 0);
+
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_organization_add', 'cover_preview', 2147483647, 0, 1),
-('bx_organization_add', 'picture_preview', 2147483647, 0, 2),
 ('bx_organization_add', 'delete_confirm', 2147483647, 0, 3),
 ('bx_organization_add', 'cover', 2147483647, 0, 4),
 ('bx_organization_add', 'picture', 2147483647, 1, 5),
@@ -126,7 +125,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_delete', 'cover_preview', 2147483647, 0, 0),
 ('bx_organization_delete', 'picture', 2147483647, 0, 0),
 ('bx_organization_delete', 'delete_confirm', 2147483647, 1, 0),
-('bx_organization_delete', 'picture_preview', 2147483647, 0, 0),
 ('bx_organization_delete', 'cover', 2147483647, 0, 0),
 ('bx_organization_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_organization_delete', 'org_name', 2147483647, 0, 2),
@@ -134,7 +132,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_edit', 'cover_preview', 2147483647, 0, 1),
 ('bx_organization_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_organization_edit', 'cover', 2147483647, 0, 3),
-('bx_organization_edit', 'picture_preview', 2147483647, 1, 4),
 ('bx_organization_edit', 'picture', 2147483647, 1, 5),
 ('bx_organization_edit', 'org_name', 2147483647, 1, 6),
 ('bx_organization_edit', 'org_cat', 2147483647, 1, 7),
@@ -144,13 +141,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_organization_edit_cover', 'org_name', 2147483647, 0, 2),
 ('bx_organization_edit_cover', 'picture', 2147483647, 0, 3),
-('bx_organization_edit_cover', 'picture_preview', 2147483647, 0, 4),
 ('bx_organization_edit_cover', 'org_cat', 2147483647, 0, 5),
 ('bx_organization_edit_cover', 'cover_preview', 2147483647, 1, 6),
 ('bx_organization_edit_cover', 'cover', 2147483647, 1, 7),
 ('bx_organization_edit_cover', 'do_submit', 2147483647, 1, 8),
 ('bx_organization_view', 'cover_preview', 2147483647, 0, 1),
-('bx_organization_view', 'picture_preview', 2147483647, 0, 2),
 ('bx_organization_view', 'delete_confirm', 2147483647, 0, 3),
 ('bx_organization_view', 'picture', 2147483647, 0, 4),
 ('bx_organization_view', 'cover', 2147483647, 0, 5),

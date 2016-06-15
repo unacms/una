@@ -680,10 +680,17 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
      * Get ghost/orphaned files for particular user.
      * @param $iProfileId profile id
      * @param $iContentId content id, or false to not consider content id at all
+     * @param $isCheckAllAccountProfiles get all files associated with all account profiles
      * @return array of arrays
      */
-    public function getGhosts($iProfileId, $iContentId = false)
+    public function getGhosts($iProfileId, $iContentId = false, $isCheckAllAccountProfiles = false)
     {
+        if ($isCheckAllAccountProfiles && ($oProfile = BxDolProfile::getInstance($iProfileId))) {
+            $oAccount = $oProfile->getAccountObject();
+            $aProfiles = $oAccount->getProfilesIds();
+            return $this->_oDb->getGhosts($aProfiles, $iContentId);
+        }
+        
         return $this->_oDb->getGhosts($iProfileId, $iContentId);
     }
 
@@ -696,7 +703,12 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
      */
     public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId)
     {
-        return $this->_oDb->updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId);
+        $aProfiles = array();
+        if ($oProfile = BxDolProfile::getInstance($iProfileId)) {
+            $oAccount = $oProfile->getAccountObject();
+            $aProfiles = $oAccount->getProfilesIds();
+        }
+        return $this->_oDb->updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $aProfiles);
     }
 
     /**

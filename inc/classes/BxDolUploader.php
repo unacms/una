@@ -321,7 +321,7 @@ abstract class BxDolUploader extends BxDol
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sImagesTranscoder);
 
         $a = '';
-        $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
+        $aGhosts = $oStorage->getGhosts(isAdmin() && $iContentId ? false : $iProfileId, $iContentId);
         foreach ($aGhosts as $aFile) {
             $sFileIcon = '';
 
@@ -361,10 +361,13 @@ abstract class BxDolUploader extends BxDol
 
         $aFile = $oStorage->getFile ($iFileId);
         if (!$aFile)
-            return _t('_Error Occured');
+            return _t('_error occured');
 
-        if ($aFile['profile_id'] != $iProfileId)
-            return _t('_Error Occured');
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
+        $aProfiles = $oAccount ? $oAccount->getProfiles() : array();
+        if (!isset($aProfiles[$aFile['profile_id']]) && !isAdmin())
+            return _t('_sys_txt_access_denied');
 
         if (!$oStorage->deleteFile($iFileId))
             return $oStorage->getErrorString();

@@ -117,7 +117,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
-            $this->_processFiles($CNF['FIELD_FILE'], $iContentId, true, $CNF['OBJECT_STORAGE_FILES']);
+            $this->processFiles($CNF['FIELD_FILE'], $iContentId, true, $CNF['OBJECT_STORAGE_FILES']);
 
         return $iContentId;
     }
@@ -141,7 +141,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
         $iResult = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
 
-        $this->_processFiles($CNF['FIELD_FILE'], $iContentId, false, $CNF['OBJECT_STORAGE_FILES']);
+        $this->processFiles($CNF['FIELD_FILE'], $iContentId, false, $CNF['OBJECT_STORAGE_FILES']);
 
         return $iResult;
     }
