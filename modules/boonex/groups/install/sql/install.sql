@@ -174,12 +174,12 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_group', 'bx_groups', 'group_name', '', '', 0, 'text', '_bx_groups_form_profile_input_sys_group_name', '_bx_groups_form_profile_input_group_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_group_name_err', 'Xss', '', 1, 0),
 ('bx_group', 'bx_groups', 'initial_members', '', '', 0, 'custom', '_bx_groups_form_profile_input_sys_initial_members', '_bx_groups_form_profile_input_initial_members', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
 ('bx_group', 'bx_groups', 'join_confirmation', 1, '', 1, 'switcher', '_bx_groups_form_profile_input_sys_join_confirm', '_bx_groups_form_profile_input_join_confirm', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
-('bx_group', 'bx_groups', 'picture', '', '', 0, 'file', '_bx_groups_form_profile_input_sys_picture', '_bx_groups_form_profile_input_picture', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_picture_err', 'Int', '', 1, 0),
-('bx_group', 'bx_groups', 'picture_preview', '', '', 0, 'custom', '_bx_groups_form_profile_input_sys_picture_preview', '_bx_groups_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_group', 'bx_groups', 'picture', 'a:1:{i:0;s:8:"sys_crop";}', 'a:3:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";s:8:"sys_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_groups_form_profile_input_sys_picture', '_bx_groups_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_groups_form_profile_input_picture_err', 'Int', '', 1, 0);
+
+
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_group_add', 'cover_preview', 2147483647, 0, 1),
-('bx_group_add', 'picture_preview', 2147483647, 0, 2),
 ('bx_group_add', 'delete_confirm', 2147483647, 0, 3),
 ('bx_group_add', 'cover', 2147483647, 0, 4),
 ('bx_group_add', 'initial_members', 2147483647, 1, 5),
@@ -191,7 +191,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_add', 'allow_view_to', 2147483647, 1, 11),
 ('bx_group_add', 'do_submit', 2147483647, 1, 12),
 ('bx_group_delete', 'delete_confirm', 2147483647, 1, 0),
-('bx_group_delete', 'picture_preview', 2147483647, 0, 0),
 ('bx_group_delete', 'cover', 2147483647, 0, 0),
 ('bx_group_delete', 'cover_preview', 2147483647, 0, 0),
 ('bx_group_delete', 'picture', 2147483647, 0, 0),
@@ -201,7 +200,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_edit', 'cover_preview', 2147483647, 0, 1),
 ('bx_group_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_group_edit', 'cover', 2147483647, 0, 3),
-('bx_group_edit', 'picture_preview', 2147483647, 1, 4),
 ('bx_group_edit', 'picture', 2147483647, 1, 5),
 ('bx_group_edit', 'group_name', 2147483647, 1, 6),
 ('bx_group_edit', 'group_cat', 2147483647, 1, 7),
@@ -214,13 +212,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_group_edit_cover', 'group_name', 2147483647, 0, 2),
 ('bx_group_edit_cover', 'picture', 2147483647, 0, 3),
-('bx_group_edit_cover', 'picture_preview', 2147483647, 0, 4),
 ('bx_group_edit_cover', 'group_cat', 2147483647, 0, 5),
 ('bx_group_edit_cover', 'cover_preview', 2147483647, 1, 6),
 ('bx_group_edit_cover', 'cover', 2147483647, 1, 7),
 ('bx_group_edit_cover', 'do_submit', 2147483647, 1, 8),
 ('bx_group_view', 'cover_preview', 2147483647, 0, 1),
-('bx_group_view', 'picture_preview', 2147483647, 0, 2),
 ('bx_group_view', 'delete_confirm', 2147483647, 0, 3),
 ('bx_group_view', 'picture', 2147483647, 0, 4),
 ('bx_group_view', 'cover', 2147483647, 0, 5),
