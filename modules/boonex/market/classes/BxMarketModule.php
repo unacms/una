@@ -36,6 +36,21 @@ class BxMarketModule extends BxBaseModTextModule
     	));
     }
 
+    public function serviceBrowseAuthorProfile ($sProfileModule = 'bx_persons', $iProfileContentId = 0, $sUnitView = false)
+    {
+        if(empty($sProfileModule))
+    		return array();
+
+    	if(empty($iProfileContentId) && bx_get('id') !== false)
+    		$iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+		$oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
+		if(empty($oProfile))
+			return array();
+
+        return $this->_serviceBrowse ('author', array('author' => $oProfile->id(), 'unit_view' => $sUnitView ? $sUnitView : '', 'per_page' => getParam('bx_market_per_page_profile')), BX_DB_PADDING_DEF, true);
+    }
+
     public function serviceEntityCreate ()
     {
     	$this->_oTemplate->addJs(array('entry.js'));

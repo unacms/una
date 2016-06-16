@@ -15,7 +15,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_market_summary_chars', '700', @iCategId, '_bx_market_option_summary_chars', 'digit', '', '', '', 10),
 ('bx_market_plain_summary_chars', '240', @iCategId, '_bx_market_option_plain_summary_chars', 'digit', '', '', '', 11),
 ('bx_market_per_page_browse', '12', @iCategId, '_bx_market_option_per_page_browse', 'digit', '', '', '', 20),
-('bx_market_rss_num', '10', @iCategId, '_bx_market_option_rss_num', 'digit', '', '', '', 21);
+('bx_market_per_page_profile', '3', @iCategId, '_bx_market_option_per_page_profile', 'digit', '', '', '', 21),
+('bx_market_rss_num', '10', @iCategId, '_bx_market_option_rss_num', 'digit', '', '', '', 25);
 
 -- PAGE: create entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -153,6 +154,11 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('sys_home', 1, 'bx_market', '_bx_market_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_public\";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
+
+-- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
+SET @iPBCellProfile = 3;
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_market', '_bx_market_page_block_title_view_profile', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:21:\"browse_author_profile\";}', 0, 0, 0);
 
 -- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
