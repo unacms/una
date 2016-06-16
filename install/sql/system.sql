@@ -218,18 +218,38 @@ INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VAL
 SET @iTypeId = LAST_INSERT_ID();
 
 --
+-- CATEGORY (HIDDEN): Hidden
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'hidden', '_adm_stg_cpt_category_hidden', 1, 0);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_install_time', '_adm_stg_cpt_option_sys_install_time', '0', 'digit', '', '', '', 3),
+
+(@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', 10),
+(@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', 11),
+(@iCategoryId, 'sys_ftp_dir', '_adm_stg_cpt_option_sys_ftp_dir', '', 'digit', '', '', '', 12),
+
+(@iCategoryId, 'sys_template_cache_image_enable', '_adm_stg_cpt_option_sys_template_cache_image_enable', '', 'checkbox', '', '', '', 20),
+(@iCategoryId, 'sys_template_cache_image_max_size', '_adm_stg_cpt_option_sys_template_cache_image_max_size', '5', 'digit', '', '', '', 21),
+
+(@iCategoryId, 'sys_email_confirmation', '_adm_stg_cpt_option_sys_email_confirmation', 'on', 'checkbox', '', '', '', 30),
+
+(@iCategoryId, 'sys_redirect_after_account_added', '_adm_stg_cpt_option_sys_redirect_after_account_added', 'page.php?i=account-profile-switcher', 'digit', '', '', '', 40),
+
+(@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_tinymce', 'digit', '', '', '', 50),
+(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha', 'digit', '', '', '', 51),
+
+(@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', 60);
+
+
+--
 -- CATEGORY (HIDDEN): System
 --
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'system', '_adm_stg_cpt_category_system', 1, 1);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_install_time', '', '0', 'digit', '', '', '', 3),
-
-(@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', 10),
-(@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', 11),
-(@iCategoryId, 'sys_ftp_dir', '_adm_stg_cpt_option_sys_ftp_dir', '', 'digit', '', '', '', 12),
-
 (@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 21),
 (@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 22),
@@ -240,19 +260,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_site_splash_enabled', '', '', 'checkbox', '', '', '', 26),
 
 (@iCategoryId, 'sys_site_cover_common', '', '0', 'digit', '', '', '', 27),
-(@iCategoryId, 'sys_site_cover_home', '', '0', 'digit', '', '', '', 28),
-
-(@iCategoryId, 'sys_template_cache_image_enable', '', '', 'checkbox', '', '', '', 30),
-(@iCategoryId, 'sys_template_cache_image_max_size', '', '5', 'digit', '', '', '', 31),
-
-(@iCategoryId, 'sys_email_confirmation', '', 'on', 'checkbox', '', '', '', 40),
-
-(@iCategoryId, 'sys_redirect_after_account_added', '', 'page.php?i=account-profile-switcher', 'digit', '', '', '', 50),
-
-(@iCategoryId, 'sys_editor_default', '', 'sys_tinymce', 'digit', '', '', '', 60),
-(@iCategoryId, 'sys_captcha_default', '', 'sys_recaptcha', 'digit', '', '', '', 61),
-
-(@iCategoryId, 'sys_live_updates_interval', '', '10000', 'digit', '', '', '', 70);
+(@iCategoryId, 'sys_site_cover_home', '', '0', 'digit', '', '', '', 28);
 
 
 --

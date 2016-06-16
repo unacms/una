@@ -41,7 +41,7 @@ class BxDevStudioPage extends BxTemplStudioModule
 
     protected function getSettings()
     {
-        $oContent = new BxTemplStudioSettings($this->sModule);
+        $oContent = new BxTemplStudioSettings('system', 'hidden');
 
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
