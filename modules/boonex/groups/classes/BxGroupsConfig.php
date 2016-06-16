@@ -101,6 +101,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         	'OBJECT_GRID_COMMON' => 'bx_groups_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
+            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5', 'sys_crop'),
 
             'EMAIL_INVITATION' => 'bx_groups_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_groups_join_request',
