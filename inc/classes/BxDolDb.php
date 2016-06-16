@@ -122,6 +122,11 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
+    public static function getLink()
+    {
+    	return self::$_rLink;
+    }
+
     /**
      * connect to database with appointed parameters
      */
