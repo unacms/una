@@ -7,6 +7,13 @@
  * @{
  */
 
+define('BX_DB_MODE_SILENT', PDO::ERRMODE_SILENT);
+define('BX_DB_MODE_EXCEPTION', PDO::ERRMODE_EXCEPTION);
+
+define('BX_DB_ERR_CONNECT_FAILD', 1);
+define('BX_DB_ERR_QUERY_ERROR', 2);
+define('BX_DB_ERR_ESCAPE', 3);
+
 define('BX_PDO_STATE_NOT_EXECUTED', NULL);
 define('BX_PDO_STATE_SUCCESS', '00000');
 
@@ -19,12 +26,19 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     protected static $_sParamsCacheName = 'sys_options';
     protected static $_sParamsCacheNameMixed = 'sys_options_mixed';
 
+    protected static $_sErrorKey = 'bx_db_error';
+    protected static $_aErrors = array(
+    	BX_DB_ERR_CONNECT_FAILD => 'Database connect failed',
+    	BX_DB_ERR_QUERY_ERROR => 'Database query error',
+    	BX_DB_ERR_ESCAPE => 'Escape string error'
+    );
+
 	protected $_bPdoPersistent;
 	protected $_iPdoFetchType;
 	protected $_iPdoErrorMode;
 
 	protected $_bErrorChecking;
-    protected $_sErrorMessage;
+    protected $_aError;
 
 	protected $_sHost, $_sPort, $_sSocket, $_sDbname, $_sUser, $_sPassword, $_sCharset, $_sStorageEngine;
 
@@ -43,10 +57,10 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
 		$this->_bPdoPersistent = true;
         $this->_iPdoFetchType = PDO::FETCH_ASSOC;
-        $this->_iPdoErrorMode = PDO::ERRMODE_EXCEPTION; //PDO::ERRMODE_SILENT
+        $this->_iPdoErrorMode = BX_DB_MODE_EXCEPTION;
 
         $this->_bErrorChecking = true;
-        $this->_sErrorMessage = '';
+        $this->_aError = array();
 
         $this->_sStorageEngine = 'MYISAM';
 
@@ -72,7 +86,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
             	$this->_bErrorChecking = $aDbConf['error_checking'];
         }
 
-        @set_exception_handler(array($this, 'pdoQueryExceptionHandler'));
+        @set_exception_handler(array($this, 'pdoExceptionHandler'));
     }
 
     /**
@@ -108,6 +122,11 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
+    public static function getLink()
+    {
+    	return self::$_rLink;
+    }
+
     /**
      * connect to database with appointed parameters
      */
@@ -134,10 +153,14 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
 			self::$_aDbCacheData = array();
     	}
-    	catch (PDOException $e) {
-    		$this->_sErrorMessage = $e->getMessage();
-    		$this->error('Database connect failed');
-    		return;
+    	catch (PDOException $oException) {
+    		$oException->errorInfo[self::$_sErrorKey] = array(
+    			'code' => BX_DB_ERR_CONNECT_FAILD,
+    			'message' => $oException->getMessage(),
+    			'trace' => $oException->getTrace()
+    		);
+
+    		throw $oException;
     	}
     }
 
@@ -183,10 +206,12 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     /**
      * database query exception handler for exceptions appeared out of the try/catch block
      */
-    public function pdoQueryExceptionHandler($oException)
+    public function pdoExceptionHandler($oException)
     {
-		$this->_sErrorMessage = $oException->getMessage();
-    	$this->error('Database query error');
+    	if(!($oException instanceof PDOException))
+    		return;
+
+    	$this->error($oException->errorInfo[self::$_sErrorKey]);
     	return;
     }
 
@@ -414,14 +439,14 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     /**
      * execute any query return number of rows affected/false
      */
-    public function query($oStatement, $aBindings = array())
+    public function query($oStatement, $aBindings = array(), $bVerbose = null)
     {
     	if(!$oStatement)
             return false;
 		else if(!($oStatement instanceof PDOStatement) && is_string($oStatement))
 			$oStatement = $this->prepare($oStatement);
 
-        if($this->res($oStatement, $aBindings))
+        if($this->res($oStatement, $aBindings, $bVerbose))
             return $oStatement->rowCount();
 
         return false;
@@ -430,7 +455,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     /**
      * execute any query
      */
-    public function res($oStatement, $aBindings = array(), $bErrorChecking = true)
+    public function res($oStatement, $aBindings = array(), $bVerbose = null)
     {
 		if(!$oStatement || !($oStatement instanceof PDOStatement))
             return false;
@@ -441,27 +466,22 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         if(isset($GLOBALS['bx_profiler']))
         	$GLOBALS['bx_profiler']->beginQuery($oStatement->queryString);
 
-		$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
-
-        // we need to remeber last error message since mysql_ping will reset it on the next line !
-        $this->_sErrorMessage = $bResult == false ? $oStatement->errorInfo() : '';
+		$bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose);
 
 		//if mysql connection is lost - reconnect and try again
         if(!$bResult && !$this->ping()) {
             $this->disconnect();
+            $this->connect();
 
-            $sErrorMessage = $this->connect();
-            if($sErrorMessage)
-                $this->error($sErrorMessage, true);
-
-            $bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
+            $bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose);
         }
 
         if(isset($GLOBALS['bx_profiler']))
         	$GLOBALS['bx_profiler']->endQuery($bResult);
 
-        if(!$bResult && $bErrorChecking)
-            $this->error('Database query error', false, $oStatement->queryString);
+		//is needed for SILENT mode
+		if(!$bResult && !empty($this->_aError))
+			$this->error($this->_aError);
 
         return $bResult;
     }
@@ -504,24 +524,36 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         return in_array(strtoupper($sFieldName), $aFields['uppercase']);
     }
 
-    public function getErrorMessage ()
+    public function error($aError)
     {
-		if(!empty($this->_sErrorMessage))
-			return $this->_sErrorMessage;
+    	$sErrorType = self::$_aErrors[$aError['code']];
 
-		$aError = self::$_rLink->errorInfo();
-        if(!empty($aError[2]))
-            return $aError[2];
+    	$bVerbose = isset($aError['verbose']) ? (bool)$aError['verbose'] : $this->_bErrorChecking;
+        if(!$bVerbose) {
+			$this->log($sErrorType . ': ' . $aError['message']);
+			return;
+        }
 
-        return 'Database error';
-    }
+        if(defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) {
+            $sOutput = '<div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">';
+            $sOutput .= '<div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>';
+            $sOutput .= '<div style="text-align:center;">' . $sErrorType . '</div>';
+            if(defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE)
+				$sOutput .= $this->errorOutput($aError);
+            $sOutput .= '</div>';
+        } 
 
-    public function error($sText, $isForceErrorChecking = false, $sSqlQuery = '')
-    {
-        if ($this->_bErrorChecking || $isForceErrorChecking)
-            $this->genMySQLErr($sText, $sSqlQuery);
-        else
-            $this->log($sText . ': ' . $this->getErrorMessage());
+        if(defined('BX_DB_DO_EMAIL_ERROR_REPORT') && BX_DB_DO_EMAIL_ERROR_REPORT) {
+            $sSiteTitle = $this->getParam('site_title');
+
+            $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
+            $sMailBody .= $this->errorOutput($aError);
+            $sMailBody .= "<hr />Auto-report system";
+
+            sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
+        }
+
+        bx_show_service_unavailable_error_and_exit($sOutput);
     }
 
     protected function isParamInCache($sKey)
@@ -613,116 +645,10 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     public function getEncoding()
     {
     	$oStatement = $this->pdoQuery('SELECT @@character_set_database');
-    	if($oStatement === false)
-    		return $this->error('Database get encoding error');
+    	if($oStatement !== false)
+    		return $this->getOne($oStatement);
 
-    	return $this->getOne($oStatement);
-    }
-
-    public function genMySQLErr($sOutput, $sQuery = '')
-    {
-        $sParamsOutput = false;
-        $sFoundError = '';
-
-        $aBackTrace = debug_backtrace();
-        unset( $aBackTrace[0] );
-
-        if( $sQuery ) {
-            //try help to find error
-
-            $aFoundError = array();
-
-            foreach( $aBackTrace as $aCall ) {
-
-                // truncating global settings since it repeated many times and output it separately
-                if (isset($aCall['object']) && is_a($aCall['object'], 'BxDolDb')) {
-                    if (false === $sParamsOutput)
-                        $sParamsOutput = var_export($aCall['object']->_aParams, true);
-                    $aCall['object']->_aParams = '[truncated]';
-                }
-
-                if (isset($aCall['args']) && is_array($aCall['args'])) {
-                    foreach( $aCall['args'] as $argNum => $argVal ) {
-                        if( is_string($argVal) and strcmp( $argVal, $sQuery ) == 0 ) {
-                            $aFoundError['file']     = isset($aCall['file']) ? $aCall['file'] : (isset($aCall['class']) ? 'class: ' . $aCall['class'] : 'undefined');
-                            $aFoundError['line']     = isset($aCall['line']) ? $aCall['line'] : 'undefined';
-                            $aFoundError['function'] = $aCall['function'];
-                            $aFoundError['arg']      = $argNum;
-                        }
-                    }
-                }
-            }
-
-            if( $aFoundError ) {
-                $sFoundError = <<<EOJ
-Found error in the file '<b>{$aFoundError['file']}</b>' at line <b>{$aFoundError['line']}</b>.<br />
-Called '<b>{$aFoundError['function']}</b>' function.<br /><br />
-EOJ;
-            }
-        }
-
-        if (defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) {
-            ob_start();
-
-            ?>
-                <div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">
-                    <div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>
-                    <div style="text-align:center;"><?php echo $sOutput; ?></div>
-            <?php
-            if (defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE)
-                echo $this->verboseErrorOutput ($sQuery, $sFoundError, $aBackTrace, $sParamsOutput);
-            ?>
-                </div>
-            <?php
-
-            $sOutput = ob_get_clean();
-        } 
-
-        if (defined('BX_DB_DO_EMAIL_ERROR_REPORT') && BX_DB_DO_EMAIL_ERROR_REPORT) {
-            $sSiteTitle = $this->getParam('site_title');
-            $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
-
-            $sMailBody .= $this->verboseErrorOutput ($sQuery, $sFoundError, $aBackTrace, $sParamsOutput);
-            $sMailBody .= "<hr />Auto-report system";
-
-            sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
-        }
-
-        bx_show_service_unavailable_error_and_exit($sOutput);
-    }
-
-    protected function verboseErrorOutput ($sQuery, $sFoundError, &$aBackTrace, $sParamsOutput)
-    {
-        ob_start();
-
-        if (!empty($sQuery))
-            echo "<div><b>Query:</b><br />{$sQuery}</div>";
-
-        if (self::$_rLink)
-            echo '<div><b>Mysql error:</b><br />' . $this->getErrorMessage() . '</div>';
-
-        echo '<div style="overflow:scroll;height:300px;border:1px solid gray;">';
-            echo $sFoundError;
-            echo "<b>Debug backtrace:</b><br />";
-
-            $sBackTrace = print_r($aBackTrace, true);
-            $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
-            $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
-
-            echo '<pre>' . htmlspecialchars_adv($sBackTrace) . '</pre>';
-
-            if ($sParamsOutput) {
-                echo '<hr />';
-                echo "<b>Settings:</b><br />";
-                echo '<pre>' . htmlspecialchars_adv($sParamsOutput) . '</pre>';
-            }
-
-            echo "<b>Called script:</b> " . $_SERVER['PHP_SELF'] . "<br />";
-            echo "<b>Request parameters:</b><br />";
-            echoDbg( $_REQUEST );
-        echo '</div>';
-
-        return ob_get_clean();
+    	return false;
     }
 
     public function setErrorChecking ($b)
@@ -824,9 +750,14 @@ EOJ;
     	try {
     		$s = self::$_rLink->quote($s);
     	}
-    	catch (PDOException $e) {
-    		$this->error('Escape string error');
-    		return false;
+    	catch (PDOException $oException) {
+    		$oException->errorInfo[self::$_sErrorKey] = array(
+    			'code' => BX_DB_ERR_ESCAPE,
+    			'message' => $oException->getMessage(),
+    			'trace' => $oException->getTrace()
+    		);
+
+    		throw $oException;
     	}
 
         return $s;
@@ -977,6 +908,8 @@ EOJ;
         if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
             return array(array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied'));
 
+		self::$_rLink->setAttribute(PDO::ATTR_ERRMODE, BX_DB_MODE_SILENT);
+
         $sQuery = "";
         $sDelimiter = ';';
         $aResult = array();
@@ -1004,8 +937,8 @@ EOJ;
             if($sDelimiter != ';')
                 $sQuery = str_replace($sDelimiter, "", $sQuery);
 
-            if($this->query(trim($sQuery)) === false) {
-                $aResult[] = array('query' => $sQuery, 'error' => $this->getErrorMessage());
+            if($this->query(trim($sQuery), array(), false) === false) {
+                $aResult[] = array('query' => $sQuery, 'error' => $this->_aError['message']);
                 if ($isBreakOnError)
                     break;
             }
@@ -1014,7 +947,122 @@ EOJ;
         }
         fclose($rHandler);
 
+        self::$_rLink->setAttribute(PDO::ATTR_ERRMODE, $this->_iPdoErrorMode);
+
         return empty($aResult) ? true : $aResult;
+    }
+
+    protected function executeStatement($oStatement, $aBindings = array(), $bVerbose = null)
+    {
+    	$bResult = false;
+
+    	switch (self::$_rLink->getAttribute(PDO::ATTR_ERRMODE)) {
+    		case PDO::ERRMODE_SILENT:
+    			$bResult = $this->executeStatementSilent($oStatement, $aBindings, $bVerbose);
+    			break;
+
+    		case PDO::ERRMODE_EXCEPTION:
+    			$bResult = $this->executeStatementException($oStatement, $aBindings, $bVerbose);
+    			break;
+    	}
+
+    	return $bResult;
+    }
+
+    protected function executeStatementException($oStatement, $aBindings = array(), $bVerbose = null)
+    {
+    	$bResult = false;
+
+    	try {
+			$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
+		}
+		catch (PDOException $oException) {
+			$aError = $oStatement->errorInfo();
+
+			$oException->errorInfo[self::$_sErrorKey] = array(
+				'code' => BX_DB_ERR_QUERY_ERROR,
+				'message' => !empty($aError[2]) ? $aError[2] : $oException->getMessage(),
+				'query' => $oStatement->queryString,
+				'trace' => $oException->getTrace(),
+				'verbose' => $bVerbose
+			);
+
+			throw $oException;
+		}
+
+		return $bResult;
+    }
+
+    protected function executeStatementSilent($oStatement, $aBindings = array(), $bVerbose = null)
+    {
+    	$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
+    	if($bResult)
+    		return true;
+
+		$aError = $oStatement->errorInfo();
+
+        $aTrace = debug_backtrace();
+        unset($aTrace[0]);
+
+		$this->_aError = array(
+			'code' => BX_DB_ERR_QUERY_ERROR,
+			'message' => !empty($aError[2]) ? $aError[2] : '',
+			'query' => $oStatement->queryString,
+			'trace' => $aTrace,
+			'verbose' => $bVerbose
+		);
+
+		return false;
+    }
+
+	protected function errorOutput($aError)
+    {
+		$aErrorLocation = array();
+
+        if(!empty($aError['query']) && !empty($aError['trace']))
+            foreach($aError['trace'] as $aCall )
+                if(isset($aCall['args']) && is_array($aCall['args']))
+                    foreach($aCall['args'] as $argNum => $argVal)
+                        if((is_string($argVal) && strcmp($argVal, $aError['query']) == 0) || ($argVal instanceof PDOStatement && strcmp($argVal->queryString, $aError['query']) == 0)) {
+                            $aErrorLocation['file'] = isset($aCall['file']) ? $aCall['file'] : (isset($aCall['class']) ? 'class: ' . $aCall['class'] : 'undefined');
+                            $aErrorLocation['line'] = isset($aCall['line']) ? $aCall['line'] : 'undefined';
+                            $aErrorLocation['function'] = $aCall['function'];
+                            $aErrorLocation['arg'] = $argNum;
+                        }
+
+        $sOutput = '';
+        if(!empty($aError['query']))
+            $sOutput .= '<p><b>Query:</b><br />' . $aError['query'] . '</p>';
+
+        if(!empty($aError['message']))
+            $sOutput .= '<p><b>Mysql error:</b><br />' . $aError['message'] . '</p>';
+
+		if(!empty($aErrorLocation))
+			$sOutput .= '<p><b>Location:</b><br />The error was found in <b>' . $aErrorLocation['function'] . '</b> function in the file <b>' . $aErrorLocation['file'] . '</b> at line <b>' . $aErrorLocation['line'] . '</b>.</p>';
+
+		if(!empty($aError['trace'])) {
+			$sBackTrace = print_r($aError['trace'], true);
+            $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
+            $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
+
+			$sOutput .= '<div><b>Debug backtrace:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sBackTrace) . '</pre></div>';
+		}
+
+		if(!empty(self::$_aParams)) {
+			$sSettings = var_export(self::$_aParams, true);
+
+			$sOutput .= '<div><b>Settings:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sSettings) . '</pre></div>';
+		}
+
+		$sOutput .= '<p><b>Called script:</b><br />' . $_SERVER['PHP_SELF'] . '</p>';
+
+		if(!empty($_REQUEST)) {
+			$sRequest = var_export($_REQUEST, true);
+
+			$sOutput .= '<p><b>Request parameters:</b><br /><pre>' . htmlspecialchars_adv($sRequest) . '</pre></p>';
+		}
+
+        return $sOutput;
     }
 }
 

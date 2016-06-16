@@ -360,3 +360,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_persons_allow_view_to', 'bx_persons', 'view', '_bx_persons_form_profile_input_allow_view_to', '3', 'bx_persons_data', 'id', 'author', 'BxPersonsPrivacy', 'modules/boonex/persons/classes/BxPersonsPrivacy.php');
 
+-- UPLOADERS
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_persons_cover_crop', 1, 'BxPersonsUploaderCoverCrop', 'modules/boonex/persons/classes/BxPersonsUploaderCoverCrop.php'),
+('bx_persons_picture_crop', 1, 'BxPersonsUploaderPictureCrop', 'modules/boonex/persons/classes/BxPersonsUploaderPictureCrop.php');

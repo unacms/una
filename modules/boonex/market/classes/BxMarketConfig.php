@@ -101,6 +101,7 @@ class BxMarketConfig extends BxBaseModTextConfig
 			'OBJECT_PRIVACY_VOTE' => 'bx_market_allow_vote_to',
             'OBJECT_FORM_ENTRY' => 'bx_market',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_market_entry_view',
+        	'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_market_entry_view_full',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_market_entry_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_market_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_market_entry_delete',

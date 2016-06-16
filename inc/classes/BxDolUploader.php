@@ -217,7 +217,7 @@ abstract class BxDolUploader extends BxDol
             $aMultipleFiles = array($mixedFiles);
 
         if (!$isMultiple)
-            $this->cleanupGhostsForProfile($iProfileId, $iContentId);
+            $this->deleteGhostsForProfile($iProfileId, $iContentId);
 
         foreach ($aMultipleFiles as $aFile) {
 
@@ -321,7 +321,7 @@ abstract class BxDolUploader extends BxDol
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sImagesTranscoder);
 
         $a = '';
-        $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
+        $aGhosts = $oStorage->getGhosts(isAdmin() && $iContentId ? false : $iProfileId, $iContentId);
         foreach ($aGhosts as $aFile) {
             $sFileIcon = '';
 
@@ -361,10 +361,13 @@ abstract class BxDolUploader extends BxDol
 
         $aFile = $oStorage->getFile ($iFileId);
         if (!$aFile)
-            return _t('_Error Occured');
+            return _t('_error occured');
 
-        if ($aFile['profile_id'] != $iProfileId)
-            return _t('_Error Occured');
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
+        $aProfiles = $oAccount ? $oAccount->getProfiles() : array();
+        if (!isset($aProfiles[$aFile['profile_id']]) && !isAdmin())
+            return _t('_sys_txt_access_denied');
 
         if (!$oStorage->deleteFile($iFileId))
             return $oStorage->getErrorString();
@@ -376,15 +379,15 @@ abstract class BxDolUploader extends BxDol
      * Delete all ghosts files for the specified profile
      * @return number of delete ghost files
      */
-    public function cleanupGhostsForProfile($iProfileId, $iContentId = false)
+    public function deleteGhostsForProfile($iProfileId, $iContentId = false)
     {
         $iCount = 0;
 
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-        $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
+        $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId, $iContentId ? true : false);
         foreach ($aGhosts as $aFile)
-            $iCount += $oStorage->afterUploadCleanup($aFile['id'], $iProfileId);
+            $iCount += $oStorage->deleteFile($aFile['id']);
 
         return $iCount;
     }

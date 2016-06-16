@@ -30,8 +30,6 @@
     <string name="_bx_groups_form_profile_input_group_cat_err"><![CDATA[Поле категории необходимо]]></string>
 	<string name="_bx_groups_form_profile_input_sys_picture"><![CDATA[Картинка группы]]></string>
 	<string name="_bx_groups_form_profile_input_picture"><![CDATA[Загрузить новую картинку группы]]></string>
-	<string name="_bx_groups_form_profile_input_sys_picture_preview"><![CDATA[Предпросмотр картинки группы]]></string>
-	<string name="_bx_groups_form_profile_input_picture_preview"><![CDATA[Текущая картинка группы]]></string>
 	<string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Необходима картинка группы.]]></string>
 	<string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
 	<string name="_bx_groups_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>

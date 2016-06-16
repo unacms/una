@@ -30,8 +30,6 @@
     <string name="_bx_groups_form_profile_input_group_cat_err"><![CDATA[Category field is mandatory]]></string>
 	<string name="_bx_groups_form_profile_input_sys_picture"><![CDATA[Group Picture]]></string>
 	<string name="_bx_groups_form_profile_input_picture"><![CDATA[Upload New Group Picture]]></string>
-	<string name="_bx_groups_form_profile_input_sys_picture_preview"><![CDATA[Group Picture Preview]]></string>
-	<string name="_bx_groups_form_profile_input_picture_preview"><![CDATA[Current Group Picture]]></string>
 	<string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Group picture is mandatory.]]></string>
 	<string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
 	<string name="_bx_groups_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>

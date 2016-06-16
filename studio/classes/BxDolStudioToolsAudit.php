@@ -572,6 +572,7 @@ class BxDolStudioToolsAudit extends BxDol
             'eAccelerator' => array('op' => 'module', 'val' => 'eaccelerator'),
             'APC' => array('op' => 'module', 'val' => 'apc'),
             'XCache' => array('op' => 'module', 'val' => 'xcache'),
+        	'ZendOPcache' => array('op' => 'module', 'val' => 'Zend OPcache'),
         );
         foreach ($aAccelerators as $sName => $r) {
             $a = $this->checkPhpSetting($sName, $r);

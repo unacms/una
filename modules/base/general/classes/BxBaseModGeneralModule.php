@@ -608,7 +608,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         $sImage = '';
-        if (isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
+        if (isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
         	
         	$oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
         	if($oTranscoder)

@@ -62,3 +62,7 @@ DELETE FROM `sys_objects_privacy` WHERE `object` IN('bx_groups_allow_view_to', '
 
 DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_groups';
 
+-- UPLOADERS
+
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_groups_cover_crop', 'bx_groups_picture_crop');
+

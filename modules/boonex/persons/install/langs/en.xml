@@ -25,8 +25,6 @@
 	<string name="_bx_persons_form_profile_input_desc"><![CDATA[Description]]></string>
 	<string name="_bx_persons_form_profile_input_sys_picture"><![CDATA[Profile Picture]]></string>
 	<string name="_bx_persons_form_profile_input_picture"><![CDATA[Upload a profile picture]]></string>
-	<string name="_bx_persons_form_profile_input_sys_picture_preview"><![CDATA[Profile Picture Preview]]></string>
-	<string name="_bx_persons_form_profile_input_picture_preview"><![CDATA[Current Profile Picture]]></string>
 	<string name="_bx_persons_form_profile_input_picture_err"><![CDATA[Profile picture is mandatory.]]></string>
 	<string name="_bx_persons_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
 	<string name="_bx_persons_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>

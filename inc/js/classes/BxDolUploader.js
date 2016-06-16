@@ -346,7 +346,11 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
         var aExt = ['jpg', 'jpeg', 'png', 'gif'];
 
         var eCroppie = $("#" + this._sFormContainerId + " .bx-croppie-container").croppie(oOptions);
-      
+
+		$("#" + this._sFormContainerId + ' .bx-crop-rotate').on('click', function(ev) {
+			eCroppie.croppie('rotate', parseInt($(this).data('deg')));
+		});
+        
         $("#" + this._sFormContainerId + " input[name=f]").on("change", function() {
             var input = this;            
 
@@ -369,7 +373,7 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
                         url: e.target.result
                     });
                     $("#" + $this._sFormContainerId + " .bx-croppie-container").addClass('ready');
-                    $("#" + $this._sFormContainerId + " .bx-crop-upload").removeClass('bx-btn-disabled');
+                    $("#" + $this._sFormContainerId + " .bx-crop-action").removeClass('bx-btn-disabled');
                     $("#" + $this._sFormContainerId + " .bx-croppie-container").data('bx-filename', input.files[0].name.replace(/(\.[A-Za-z0-9]+)$/, '.png'));
                 }
                 reader.readAsDataURL(input.files[0]);

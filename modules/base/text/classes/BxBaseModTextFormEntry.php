@@ -75,7 +75,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
-            $this->_processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
+            $this->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
 
         return $iContentId;
     }
@@ -93,38 +93,9 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         $iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
 
-        $this->_processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
+        $this->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
 
         return $iRet;
-    }
-
-    function _processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $mixedFileIds = $this->getCleanValue($sFieldFile);
-        if(!$mixedFileIds)
-            return true;
-
-        $oStorage = BxDolStorage::getObjectInstance($this->aInputs[$sFieldFile]['storage_object']);
-        if (!$oStorage)
-            return false;
-
-        $iProfileId = bx_get_logged_profile_id();
-
-        $aGhostFiles = $oStorage->getGhosts ($iProfileId, $isAssociateWithContent ? 0 : $iContentId);
-
-        if (!$aGhostFiles)
-            return true;
-
-        foreach ($aGhostFiles as $aFile) {
-            if ($aFile['private'])
-                $oStorage->setFilePrivate ($aFile['id'], 0);
-            if ($iContentId)
-                $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId);
-        }
-
-        return true;
     }
 
     function _deleteFile ($iFileId, $sStorage = '')
@@ -146,18 +117,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         return $oStorage->deleteFile($iFileId, $iProfileId);
     }
 
-    function addCssJs ()
-    {
-        if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
-            if (self::$_isCssJsAdded)
-                return;
-            $this->_oModule->_oTemplate->addJs('modules/base/text/js/|forms.js');
-        }
-
-        return parent::addCssJs ();
-    }
-
-    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
         $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId);
     }

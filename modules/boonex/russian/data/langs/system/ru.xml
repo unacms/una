@@ -1132,6 +1132,7 @@
 	<string name="_adm_stg_cpt_category_acl"><![CDATA[Уровни доступа]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Кэш]]></string>
 	<string name="_adm_stg_cpt_category_general"><![CDATA[Общие]]></string>
+	<string name="_adm_stg_cpt_category_hidden"><![CDATA[Скрытые]]></string>
 	<string name="_adm_stg_cpt_category_languages"><![CDATA[Языки]]></string>
 	<string name="_adm_stg_cpt_category_permalinks"><![CDATA[Пермалинки]]></string>
 	<string name="_adm_stg_cpt_category_security"><![CDATA[Безопасность]]></string>
@@ -1164,9 +1165,12 @@
 	<string name="_adm_stg_cpt_option_sys_autoupdate_system"><![CDATA[Автообновление системных файлов]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached - адрес сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
+	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Объект CAPTCHA]]></string>
+	<string name="_adm_stg_cpt_option_sys_email_confirmation"><![CDATA[Задействовать подтверждение эл. адреса]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[Кэш-движок для БД (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string>
+	<string name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[Объект HTML редактора]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Формат Даты]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Формат Даты и Времени]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Формат Времени]]></string>
@@ -1174,6 +1178,8 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Путь к скрипту на FTP-сервере]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP-сервер - Логин]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP-сервер - Пароль]]></string>
+	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Дата установки]]></string>
+	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx-аккаунт - Key (ключ)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[BoonEx-аккаунт - Secret (секретное слово)]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Задействовать кэш для Страниц]]></string>
@@ -1182,6 +1188,7 @@
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Кэш-движок для блоков страниц (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
+	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Задействовать CSRF токен в формах]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF token - срок жизни в секундах (0 - не вести отчёт времени)]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Общий порог угрозы бесопасности перед тем, как послать отчёт и заблокировать агрессора]]></string>
@@ -1193,6 +1200,8 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS - сегмент (bucket)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS - дополнительный домен (требует дополнительной настройки DNS)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS - секретный ключ]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Задействовать кэш для изображений]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Максимальный размер кэшируемого изображения]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_compress_enable"><![CDATA[Задействовать сжатие для файлов JS/CSS (кэш должен быть задействован)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Задействовать кэш для файлов CSS]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_enable"><![CDATA[Задействовать кэш для файлов HTML]]></string>
@@ -2218,6 +2227,8 @@
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[О нет! Вы уверены? Это может прервать загрузку файлов.]]></string>
     <string name="_sys_uploader_confirm_leaving_page"><![CDATA[Загрузка в процессе! Не закрывайте эту страницу, или загрузка будет прервана на полпути.]]></string>
     <string name="_sys_uploader_crop_button_name"><![CDATA[Обрезка картинки]]></string>
+    <string name="_sys_uploader_crop_rotate_left"><![CDATA[Повернуть налево]]></string>
+	<string name="_sys_uploader_crop_rotate_right"><![CDATA[Повернуть направо]]></string>
 	<string name="_sys_uploader_crop_submit_button"><![CDATA[Загрузить]]></string>    
     <string name="_sys_uploader_crop_title"><![CDATA[Обрезка Картинки]]></string>
     <string name="_sys_uploader_crop_err_upload"><![CDATA[Ошибка загрузки.]]></string>

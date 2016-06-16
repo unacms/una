@@ -28,37 +28,6 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
-    public function entryInfo($aData, $aValues = array())
-    {
-    	$aCategory = array();
-    	$oCategory = BxTemplCategory::getObjectInstance('bx_market_cats');
-    	$aCategories = BxDolForm::getDataItems('bx_market_cats');
-    	if($oCategory && $aCategories && isset($aCategories[$aData['cat']]))
-    		$aValues = array_merge(array(
-    			array(
-	    			'title' => _t('_bx_market_txt_category'),
-	    			'value' => $this->parseHtmlByName('bx_a.html', array(
-	    				'href' => $oCategory->getCategoryUrl($aData['cat']),
-	    				'title' => bx_html_attribute($aCategories[$aData['cat']]),
-	    				'bx_repeat:attrs' => array(),
-	    				'content' => $aCategories[$aData['cat']]
-	    			))
-	    		)), $aValues
-	    	);
-
-    	return parent::entryInfo($aData, $aValues);
-    }
-
-    public function entryInfoFull($aData)
-    {
-    	return $this->entryInfo($aData, array(
-    		array(
-    			'title' => _t('_bx_market_txt_notes'), 
-    			'value' => bx_process_output(nl2br($aData['notes']), BX_DATA_TEXT_MULTILINE)
-    		)
-    	));
-    }
-
     public function entryRating($aData)
     {
         $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
@@ -75,7 +44,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     	return $sVotes; 
     }
-    
+
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
     	$sScreenshots = $this->getScreenshots($aData);
