@@ -15,6 +15,7 @@
 class BxBaseUploaderHTML5 extends BxDolUploader
 {
     protected $_sDivId; ///< div id where upload button will be placed
+    protected $_sUploaderFormTemplate = 'uploader_form_html5.html';
 
     function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
@@ -52,7 +53,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
      */
     public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
-        return $this->_oTemplate->parseHtmlByName('uploader_form_html5.html', array(
+        return $this->_oTemplate->parseHtmlByName($this->_sUploaderFormTemplate, array(
             'form_container_id' => $this->_sFormContainerId,
             'errors_container_id' => $this->_sErrorsContainerId,
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
@@ -73,7 +74,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
         if (!$isMultiple)
-            $this->cleanupGhostsForProfile($iProfileId, $iContentId);
+            $this->deleteGhostsForProfile($iProfileId, $iContentId);
 
         if (bx_get('qqfile'))
             $iId = $oStorage->storeFileFromXhr(bx_get('qqfile'), $bPrivate, $iProfileId, $iContentId);

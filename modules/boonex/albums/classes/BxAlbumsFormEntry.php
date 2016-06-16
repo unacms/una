@@ -20,9 +20,9 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
     }
 
-    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
-        parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId);
+        parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 

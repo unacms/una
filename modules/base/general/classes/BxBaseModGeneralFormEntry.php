@@ -163,7 +163,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             if ($aFile['private'])
                 $oStorage->setFilePrivate ($aFile['id'], 0);
             if ($iContentId)
-                $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId);
+                $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
         }
 
         return true;

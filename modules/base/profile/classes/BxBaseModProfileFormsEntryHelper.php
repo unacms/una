@@ -93,6 +93,8 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         // process uploaded files
         $oForm = $this->getObjectFormEdit();
         $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, false);
+        $oForm = $this->getObjectFormEdit($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
+        $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, false);
 
         // create an alert
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
@@ -124,6 +126,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         // process uploaded files
         $oForm = $this->getObjectFormAdd();
         $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, true);
+        $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, true);
 
         // alert
         bx_alert($this->_oModule->getName(), 'added', $iContentId);

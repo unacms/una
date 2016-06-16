@@ -117,7 +117,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         return $oStorage->deleteFile($iFileId, $iProfileId);
     }
 
-    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
         $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId);
     }

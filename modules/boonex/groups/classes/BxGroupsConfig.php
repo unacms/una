@@ -48,7 +48,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE' => 'picture',
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',
-            'FIELD_COVER_PREVIEW' => 'cover_preview',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELDS_QUICK_SEARCH' => array('group_name'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -101,7 +100,8 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         	'OBJECT_GRID_COMMON' => 'bx_groups_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
-            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5', 'sys_crop'),
+            'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
+            'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
 
             'EMAIL_INVITATION' => 'bx_groups_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_groups_join_request',
