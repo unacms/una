@@ -9,5 +9,6 @@ div.bx-mod-action-result-step {
 	max-width: 480px;
 	max-width: 30rem;
 }
-div.bx-mod-ars-title,
-div.bx-mod-ars-content {}
+div.bx-mod-ars-content {
+	overflow-x: auto;
+}
