@@ -286,9 +286,10 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
             if (!($oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sFormDisplay)))
                 return array();
 
-            foreach ($oForm->aInputs as $k => $a)
+            foreach ($oForm->aInputs as $k => $a) {
                 if ('textarea' == $a['type'])
                     $aFields[] = $a['name'];
+            }
         } 
         elseif (is_array($CNF['FIELDS_WITH_KEYWORDS'])) {
             $aFields = $CNF['FIELDS_WITH_KEYWORDS'];

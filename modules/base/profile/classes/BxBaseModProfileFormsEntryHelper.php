@@ -90,8 +90,16 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
+        // process uploaded files
+        $oForm = $this->getObjectFormEdit();
+        $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, false);
+        $oForm = $this->getObjectFormEdit($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
+        $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, false);
+
         // create an alert
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
+
+        return '';
     }
 
     public function onDataAddAfter ($iAccountId, $iContentId)
@@ -114,6 +122,11 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         $iAclLevel = !isset($CNF['PARAM_DEFAULT_ACL_LEVEL']) ? MEMBERSHIP_ID_STANDARD : 
             (isAdmin() ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']));
         BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
+
+        // process uploaded files
+        $oForm = $this->getObjectFormAdd();
+        $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, true);
+        $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, true);
 
         // alert
         bx_alert($this->_oModule->getName(), 'added', $iContentId);

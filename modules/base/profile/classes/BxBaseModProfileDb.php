@@ -28,7 +28,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
     public function updateContentPictureById($iContentId, $iProfileId, $iPictureId, $sFieldPicture)
     {
     	$aBindings = array(
-    		$sFieldPicture => $iPictureId,
+    		'pic' => $iPictureId,
     		'id' => $iContentId
     	);
 
@@ -39,8 +39,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
             $sWhere = " AND `author` = :author ";
         }
 
-        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = :" . $sFieldPicture . " WHERE `id` = :id" . $sWhere;
-
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = :pic WHERE `id` = :id" . $sWhere;
         return $this->query($sQuery, $aBindings);
     }
 

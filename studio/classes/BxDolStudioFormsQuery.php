@@ -254,6 +254,11 @@ class BxDolStudioFormsQuery extends BxDolDb
                 );
 
                 $sWhereClause = " AND `ti`.`object`=:object AND `tdi`.`display_name`=:display_name ";
+
+                if(isset($aParams['active'])) {
+                	$aMethod['params'][1]['active'] = (int)$aParams['active'];
+                	$sWhereClause .= " AND `tdi`.`active`=:active ";
+                }
                 break;
 
             case 'by_object_name_filter':

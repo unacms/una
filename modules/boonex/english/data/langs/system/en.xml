@@ -1132,6 +1132,7 @@
 	<string name="_adm_stg_cpt_category_acl"><![CDATA[ACL]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
 	<string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+	<string name="_adm_stg_cpt_category_hidden"><![CDATA[Hidden]]></string>
 	<string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
 	<string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
 	<string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
@@ -1164,9 +1165,12 @@
 	<string name="_adm_stg_cpt_option_sys_autoupdate_system"><![CDATA[System files auto-update]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
+	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Сaptcha object]]></string>
+	<string name="_adm_stg_cpt_option_sys_email_confirmation"><![CDATA[Enable email confirmation]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[DB cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Payment module]]></string>
+	<string name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[HTML editor object]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
@@ -1174,6 +1178,8 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to the script on FTP server]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP server login]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
+	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
+	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx account key]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[BoonEx account secret]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Enable Page cache]]></string>
@@ -1182,6 +1188,7 @@
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Page blocks cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
+	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Enable CSRF token in forms]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF token lifetime in seconds(0 - do not track time)]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Total security impact threshold to send report and block aggressor]]></string>
@@ -1193,6 +1200,8 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS bucket]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS custom domain (require custom DNS setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS secret key]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Enable cache for images]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Cached image max size]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_compress_enable"><![CDATA[Enable compression for JS/CSS files(cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Enable cache for CSS files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_enable"><![CDATA[Enable cache for HTML files]]></string>
@@ -2218,6 +2227,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[Oh no! Are you sure? This may discard uploading files, seriously.]]></string>
     <string name="_sys_uploader_confirm_leaving_page"><![CDATA[Upload is in progress! Stay cool and don't close this page, or it will cut off half-way.]]></string>
     <string name="_sys_uploader_crop_button_name"><![CDATA[Crop Image]]></string>
+    <string name="_sys_uploader_crop_rotate_left"><![CDATA[Rotate Left]]></string>
+	<string name="_sys_uploader_crop_rotate_right"><![CDATA[Rotate Right]]></string>
 	<string name="_sys_uploader_crop_submit_button"><![CDATA[Upload]]></string>    
     <string name="_sys_uploader_crop_title"><![CDATA[Crop Image]]></string>
     <string name="_sys_uploader_crop_err_upload"><![CDATA[Error Uploading.]]></string>

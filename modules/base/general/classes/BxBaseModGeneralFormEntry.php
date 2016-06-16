@@ -63,7 +63,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         if (isset($CNF['FIELD_CHANGED']))
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
-
+            
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
@@ -140,17 +140,47 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         return $this->getCleanValue($s);
     }
 
+    public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $mixedFileIds = $this->getCleanValue($sFieldFile);
+        if(!$mixedFileIds)
+            return true;
+
+        $oStorage = BxDolStorage::getObjectInstance($this->aInputs[$sFieldFile]['storage_object']);
+        if (!$oStorage)
+            return false;
+
+        $iProfileId = $this->getContentOwnerProfileId($iContentId);
+
+        $aGhostFiles = $oStorage->getGhosts ($iProfileId, $isAssociateWithContent ? 0 : $iContentId, true);
+
+        if (!$aGhostFiles)
+            return true;
+
+        foreach ($aGhostFiles as $aFile) {
+            if ($aFile['private'])
+                $oStorage->setFilePrivate ($aFile['id'], 0);
+            if ($iContentId)
+                $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
+        }
+
+        return true;
+    }
+
     function addCssJs ()
     {
         if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
             if (self::$_isCssJsAdded)
                 return;
             $this->_oModule->_oTemplate->addCss('forms.css');
+            $this->_oModule->_oTemplate->addJs('modules/base/general/js/|forms.js');
         }
 
         return parent::addCssJs ();
     }
-
+    
     function genViewRowValue(&$aInput)
     {
         $s = parent::genViewRowValue($aInput);
@@ -166,6 +196,28 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $this->_oMetatagsContentId = $iId;
         $this->_aMetatagsFieldsWithKeywords = $a;
         $this->_oMetatagsObject = $o;
+    }
+
+    function getContentOwnerProfileId ($iContentId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        // file owner must be author of the content or profile itself in case of profile based module
+        if ($iContentId) {
+            if ($this->_oModule instanceof iBxDolProfileService) {
+                $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
+            }
+            else {
+                $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+                $oProfile = $aContentInfo ? BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]) : null;
+            }
+            $iProfileId = $oProfile ? $oProfile->id() : bx_get_logged_profile_id();
+        }
+        else {
+            $iProfileId = bx_get_logged_profile_id();
+        }
+
+        return $iProfileId;
     }
 
 }

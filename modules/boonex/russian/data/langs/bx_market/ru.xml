@@ -9,13 +9,15 @@
 	<string name="_bx_market_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к продуктам]]></string>
 	<string name="_bx_market_option_plain_summary_chars"><![CDATA[Количество символов в описании продукта при отсутствующей картинке продукта]]></string>
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
+	<string name="_bx_market_option_per_page_profile"><![CDATA[Количество элементов на странице при просмотре Профиля]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 
 	<string name="_bx_market_form_entry"><![CDATA[Рынок]]></string>
-	<string name="_bx_market_form_entry_display_add"><![CDATA[Добавить продукт]]></string>
-	<string name="_bx_market_form_entry_display_edit"><![CDATA[Редактировать продукт]]></string>
-	<string name="_bx_market_form_entry_display_delete"><![CDATA[Удалить продукт]]></string>
-	<string name="_bx_market_form_entry_display_view"><![CDATA[Просмотреть продукт]]></string>
+	<string name="_bx_market_form_entry_display_add"><![CDATA[Добавление продукта]]></string>
+	<string name="_bx_market_form_entry_display_edit"><![CDATA[Редактирование продукта]]></string>
+	<string name="_bx_market_form_entry_display_delete"><![CDATA[Удаление продукта]]></string>
+	<string name="_bx_market_form_entry_display_view"><![CDATA[Просмотр продукта]]></string>
+	<string name="_bx_market_form_entry_display_view_full"><![CDATA[Полный просмотр продукта]]></string>
 	<string name="_bx_market_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_market_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_market_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
@@ -73,6 +75,10 @@
     <string name="_bx_market_form_entry_input_allow_comment_to"><![CDATA[Кто может рецензировать]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_vote_to"><![CDATA[Кто может голосовать]]></string>
     <string name="_bx_market_form_entry_input_allow_vote_to"><![CDATA[Кто может голосовать]]></string>
+	<string name="_bx_market_form_entry_input_sys_added"><![CDATA[Создано]]></string>
+    <string name="_bx_market_form_entry_input_added"><![CDATA[Создано]]></string>
+    <string name="_bx_market_form_entry_input_sys_changed"><![CDATA[Обновлено]]></string>
+    <string name="_bx_market_form_entry_input_changed"><![CDATA[Обновлено]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Создать продукт]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Удалить продукт]]></string>
@@ -154,6 +160,7 @@
     <string name="_bx_market_page_title_sys_licenses"><![CDATA[Лицензии]]></string>
     <string name="_bx_market_page_title_licenses"><![CDATA[Лицензии]]></string>
     <string name="_bx_market_page_block_title_licenses"><![CDATA[Лицензии]]></string>
+    <string name="_bx_market_page_block_title_view_profile"><![CDATA[Мои Продукты]]></string>
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Действия для продукта]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Действия для продукта]]></string>
@@ -291,7 +298,6 @@
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">Все продукты от {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Категория:]]></string>
-    <string name="_bx_market_txt_notes"><![CDATA[Примечания:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[Самая новая версия]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[Обзоры к продукту]]></string>

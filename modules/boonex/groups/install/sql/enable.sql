@@ -405,3 +405,9 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('bx_groups', '_bx_groups_email_admin_become_fan', 'bx_groups_admin_become_fan', '_bx_groups_email_admin_become_fan_subject', '_bx_groups_email_admin_become_fan_body'),
 ('bx_groups', '_bx_groups_email_invitation', 'bx_groups_invitation', '_bx_groups_email_invitation_subject', '_bx_groups_email_invitation_body');
 
+-- UPLOADERS
+
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_groups_cover_crop', 1, 'BxGroupsUploaderCoverCrop', 'modules/boonex/groups/classes/BxGroupsUploaderCoverCrop.php'),
+('bx_groups_picture_crop', 1, 'BxGroupsUploaderPictureCrop', 'modules/boonex/groups/classes/BxGroupsUploaderPictureCrop.php');
+

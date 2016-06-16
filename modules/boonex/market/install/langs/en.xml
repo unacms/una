@@ -9,6 +9,7 @@
 	<string name="_bx_market_option_summary_chars"><![CDATA[Number of characters in auto-cropped product summary]]></string>
 	<string name="_bx_market_option_plain_summary_chars"><![CDATA[Number of characters in plain product description when product hasn't thumb]]></string>
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+	<string name="_bx_market_option_per_page_profile"><![CDATA[Number of items per page on Profile View page]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 
 	<string name="_bx_market_form_entry"><![CDATA[Market]]></string>
@@ -16,6 +17,7 @@
 	<string name="_bx_market_form_entry_display_edit"><![CDATA[Edit Product]]></string>
 	<string name="_bx_market_form_entry_display_delete"><![CDATA[Delete Product]]></string>
 	<string name="_bx_market_form_entry_display_view"><![CDATA[View Product]]></string>
+	<string name="_bx_market_form_entry_display_view_full"><![CDATA[Full View Product]]></string>
 	<string name="_bx_market_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_market_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_market_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
@@ -73,6 +75,10 @@
     <string name="_bx_market_form_entry_input_allow_comment_to"><![CDATA[Who can review]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_vote_to"><![CDATA[Who can vote]]></string>
     <string name="_bx_market_form_entry_input_allow_vote_to"><![CDATA[Who can vote]]></string>
+    <string name="_bx_market_form_entry_input_sys_added"><![CDATA[Created]]></string>
+    <string name="_bx_market_form_entry_input_added"><![CDATA[Created]]></string>
+    <string name="_bx_market_form_entry_input_sys_changed"><![CDATA[Updated]]></string>
+    <string name="_bx_market_form_entry_input_changed"><![CDATA[Updated]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Create Product]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Delete Product]]></string>
@@ -154,6 +160,7 @@
     <string name="_bx_market_page_title_sys_licenses"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_title_licenses"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_block_title_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_market_page_block_title_view_profile"><![CDATA[My Products]]></string>
     
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Product Actions]]></string>
@@ -295,7 +302,6 @@
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">All Products by {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Category:]]></string>
-    <string name="_bx_market_txt_notes"><![CDATA[Notes:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[The most current version]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[product]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[product's comment]]></string>

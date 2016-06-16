@@ -201,7 +201,7 @@ class BxBaseStudioFormsDisplays extends BxDolStudioFormsDisplays
     protected function _getCellFields ($mixedValue, $sKey, $aField, $aRow)
     {
         $aFields = array();
-        $this->oDb->getInputs(array('type' => 'by_object_display', 'object' => $aRow['object'], 'display' => $aRow['display_name']), $aFields, false);
+        $this->oDb->getInputs(array('type' => 'by_object_display', 'object' => $aRow['object'], 'display' => $aRow['display_name'], 'active' => 1), $aFields, false);
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
             'href' => sprintf($this->sUrlViewFields, $aRow['module'], $aRow['object'], $aRow['display_name']),

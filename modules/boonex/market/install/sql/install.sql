@@ -240,7 +240,8 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_market', 'bx_market_entry_add', 'bx_market', 0, '_bx_market_form_entry_display_add'),
 ('bx_market', 'bx_market_entry_delete', 'bx_market', 0, '_bx_market_form_entry_display_delete'),
 ('bx_market', 'bx_market_entry_edit', 'bx_market', 0, '_bx_market_form_entry_display_edit'),
-('bx_market', 'bx_market_entry_view', 'bx_market', 1, '_bx_market_form_entry_display_view');
+('bx_market', 'bx_market_entry_view', 'bx_market', 1, '_bx_market_form_entry_display_view'),
+('bx_market', 'bx_market_entry_view_full', 'bx_market', 1, '_bx_market_form_entry_display_view_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_market', 'bx_market', 'allow_view_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_view_to', '_bx_market_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -261,6 +262,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_market', 'bx_market', 'price_single', '', '', 0, 'text', '_bx_market_form_entry_input_sys_price_single', '_bx_market_form_entry_input_price_single', '_bx_market_form_entry_input_price_single_inf', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
 ('bx_market', 'bx_market', 'price_recurring', '', '#!bx_market_prices', 0, 'select', '_bx_market_form_entry_input_sys_price_recurring', '_bx_market_form_entry_input_price_recurring', '_bx_market_form_entry_input_price_recurring_inf', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
 ('bx_market', 'bx_market', 'duration_recurring', 'month', '#!bx_market_durations', 0, 'select', '_bx_market_form_entry_input_sys_duration_recurring', '_bx_market_form_entry_input_duration_recurring', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_market', 'bx_market', 'added', '', '', 0, 'datetime', '_bx_market_form_entry_input_sys_added', '_bx_market_form_entry_input_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_market', 'bx_market', 'changed', '', '', 0, 'datetime', '_bx_market_form_entry_input_sys_changed', '_bx_market_form_entry_input_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'header_beg_single', '', '', 0, 'block_header', '_bx_market_form_entry_input_sys_header_beg_single', '_bx_market_form_entry_input_header_beg_single', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'header_beg_recurring', '', '', 0, 'block_header', '_bx_market_form_entry_input_sys_header_beg_recurring', '_bx_market_form_entry_input_header_beg_recurring', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'header_beg_privacy', '', '', 0, 'block_header', '_bx_market_form_entry_input_sys_header_beg_privacy', '_bx_market_form_entry_input_header_beg_privacy', '', 0, 1, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -294,6 +297,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_add', 'location', 2147483647, 1, 22),
 ('bx_market_entry_add', 'do_submit', 2147483647, 0, 23),
 ('bx_market_entry_add', 'do_publish', 2147483647, 1, 24),
+
 ('bx_market_entry_delete', 'notes', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'location', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'cat', 2147483647, 0, 0),
@@ -318,6 +322,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_delete', 'header_end_privacy', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_market_entry_delete', 'do_submit', 2147483647, 1, 2),
+
 ('bx_market_entry_edit', 'do_publish', 2147483647, 0, 1),
 ('bx_market_entry_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_market_entry_edit', 'title', 2147483647, 1, 3),
@@ -342,9 +347,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_edit', 'notes', 2147483647, 1, 22),
 ('bx_market_entry_edit', 'location', 2147483647, 1, 23),
 ('bx_market_entry_edit', 'do_submit', 2147483647, 1, 24),
+
 ('bx_market_entry_view', 'notes', 2147483647, 0, 0),
 ('bx_market_entry_view', 'location', 2147483647, 0, 0),
-('bx_market_entry_view', 'cat', 2147483647, 0, 0),
+('bx_market_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_market_entry_view', 'header_beg_single', 2147483647, 0, 0),
 ('bx_market_entry_view', 'price_single', 2147483647, 0, 0),
 ('bx_market_entry_view', 'header_end_single', 2147483647, 0, 0),
@@ -355,7 +361,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_view', 'pictures', 2147483647, 0, 0),
 ('bx_market_entry_view', 'files', 2147483647, 0, 0),
 ('bx_market_entry_view', 'delete_confirm', 2147483647, 0, 0),
-('bx_market_entry_view', 'text', 2147483647, 1, 0),
+('bx_market_entry_view', 'text', 2147483647, 0, 0),
 ('bx_market_entry_view', 'do_publish', 2147483647, 0, 0),
 ('bx_market_entry_view', 'title', 2147483647, 0, 0),
 ('bx_market_entry_view', 'name', 2147483647, 0, 0),
@@ -365,7 +371,14 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_view', 'allow_purchase_to', 2147483647, 0, 0),
 ('bx_market_entry_view', 'allow_comment_to', 2147483647, 0, 0),
 ('bx_market_entry_view', 'allow_vote_to', 2147483647, 0, 0),
-('bx_market_entry_view', 'header_end_privacy', 2147483647, 0, 0);
+('bx_market_entry_view', 'header_end_privacy', 2147483647, 0, 0),
+('bx_market_entry_view', 'added', 2147483647, 1, 2),
+('bx_market_entry_view', 'changed', 2147483647, 1, 3),
+
+('bx_market_entry_view_full', 'cat', 2147483647, 1, 1),
+('bx_market_entry_view_full', 'added', 2147483647, 1, 2),
+('bx_market_entry_view_full', 'changed', 2147483647, 1, 3),
+('bx_market_entry_view_full', 'notes', 2147483647, 1, 4);
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES

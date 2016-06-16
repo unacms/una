@@ -223,10 +223,23 @@ class BxDolStorageQuery extends BxDolDb
         return $iCount;
     }
 
-    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId)
+    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $aProfiles = array())
     {
-        $sQuery = $this->prepare("UPDATE `sys_storage_ghosts` SET `content_id` = ? WHERE `profile_id` = ? AND `object` = ? AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")", $iContentId, $iProfileId, $this->_aObject['object']);
-        return $this->res($sQuery);
+        $aBindings = array(
+            'content' => $iContentId,
+    		'profile' => $iProfileId,
+    		'object' => $this->_aObject['object']
+        );
+
+        $sSetAddon = '';
+        $sWhere = " AND `profile_id` = :profile ";
+        if ($aProfiles || isAdmin()) {
+            $sSetAddon = ', `profile_id` = :profile ';
+            $sWhere = isAdmin() ? "" : " AND `profile_id` IN(" . $this->implode_escape($aProfiles) . ")";
+        }
+        
+        $sQuery = $this->prepare("UPDATE `sys_storage_ghosts` SET `content_id` = :content $sSetAddon WHERE `object` = :object $sWhere AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")");
+        return $this->res($sQuery, $aBindings);
     }
 
     public function deleteGhosts($mixedFileIds, $iProfileId, $iContentId = false)
@@ -247,9 +260,9 @@ class BxDolStorageQuery extends BxDolDb
         return $iCount;
     }
 
-    public function getGhosts($iProfileId, $iContentId = false)
+    public function getGhosts($mixedProfileId, $iContentId = false)
     {
-        return $this->getFiles($iProfileId, true, $iContentId);
+        return $this->getFiles($mixedProfileId, true, $iContentId);
     }
 
     public function getGhost($iFileId)
@@ -258,29 +271,43 @@ class BxDolStorageQuery extends BxDolDb
         return $this->getRow($sQuery);
     }
 
-    public function getFiles($iProfileId, $isGhostsOnly = false, $iContentId = false)
+    public function getFiles($mixedProfileId, $isGhostsOnly = false, $iContentId = false)
     {
-        $aBindings = array();
+        $aBindings = array();        
 
+        $sWhere = '';
         $sJoin = '';
         if ($isGhostsOnly) {
-        	$aBindings['profile_id'] = $iProfileId;
-        	$aBindings['object'] = $this->_aObject['object'];
+            $aBindings['object'] = $this->_aObject['object'];
 
-            $sJoin .= " INNER JOIN `sys_storage_ghosts` AS `g` ON (`f`.`id` = `g`.`id` AND `g`.`profile_id` = :profile_id AND `g`.`object` = :object ";
+            $sOnProfile = '';
+            if (is_array($mixedProfileId) && $mixedProfileId) {
+                $sOnProfile = " AND `g`.`profile_id` IN(" . $this->implode_escape($mixedProfileId) . ") ";
+            } 
+            elseif (!is_array($mixedProfileId) && false !== $mixedProfileId) {
+                $aBindings['profile_id'] = $mixedProfileId;
+                
+                $sOnProfile = " AND `g`.`profile_id` = :profile_id ";                
+            }
+            
+            $sJoin .= " INNER JOIN `sys_storage_ghosts` AS `g` ON (`f`.`id` = `g`.`id` AND `g`.`object` = :object " . $sOnProfile;
             if (false !== $iContentId) {
-            	$aBindings['content_id'] = $iContentId;
+                $aBindings['content_id'] = $iContentId;
 
                 $sJoin .= " AND `g`.`content_id` = :content_id";
             }
+
             $sJoin .= ')';
-        }
+        } 
+        else {
+            if (is_array($mixedProfileId) && $mixedProfileId) {
+                $sWhere = " WHERE `f`.`profile_id` IN(" . $this->implode_escape($mixedProfileId) . ") ";
+            }
+            elseif (!is_array($mixedProfileId) && false !== $mixedProfileId) {
+                $aBindings['profile_id'] = $mixedProfileId;
 
-        $sWhere = '';
-        if(false !== $iProfileId) {
-        	$aBindings['profile_id'] = $iProfileId;
-
-        	$sWhere = "WHERE `f`.`profile_id` = :profile_id";
+                $sWhere = " WHERE `f`.`profile_id` = :profile_id ";
+            }
         }
 
         $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . $sWhere;
