@@ -14,6 +14,7 @@
 class BxBaseUploaderSimple extends BxDolUploader
 {
     protected $_sIframeId;
+    protected $_sUploaderFormTemplate = 'uploader_form_simple.html';
 
     function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
@@ -41,7 +42,7 @@ class BxBaseUploaderSimple extends BxDolUploader
      */
     public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
-        return $this->_oTemplate->parseHtmlByName('uploader_form_simple.html', array(
+        return $this->_oTemplate->parseHtmlByName($this->_sUploaderFormTemplate, array(
             'form_container_id' => $this->_sFormContainerId,
             'errors_container_id' => $this->_sErrorsContainerId,
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),

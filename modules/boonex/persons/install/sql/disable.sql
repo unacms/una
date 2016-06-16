@@ -44,3 +44,6 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` IN('bx_persons_allow_view_to');
 
+-- UPLOADERS
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_persons_cover_crop', 'bx_persons_picture_crop');
+

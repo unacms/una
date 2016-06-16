@@ -46,7 +46,6 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE' => 'picture',
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',
-            'FIELD_COVER_PREVIEW' => 'cover_preview',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -97,7 +96,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_PRIVACY_VIEW' => 'bx_persons_allow_view_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_persons_administration',
             'OBJECT_GRID_COMMON' => 'bx_persons_common',
-            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5', 'sys_crop'),
+            'OBJECT_UPLOADERS_COVER' => array('bx_persons_cover_crop'),
+            'OBJECT_UPLOADERS_PICTURE' => array('bx_persons_picture_crop'),
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',

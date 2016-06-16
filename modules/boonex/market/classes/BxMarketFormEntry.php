@@ -158,9 +158,9 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 		return $bResult;
     }
 
-    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
-        parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId);
+        parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField);
 
         $sStorage = $oStorage->getObject();
         switch($sStorage) {

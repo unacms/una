@@ -217,7 +217,7 @@ abstract class BxDolUploader extends BxDol
             $aMultipleFiles = array($mixedFiles);
 
         if (!$isMultiple)
-            $this->cleanupGhostsForProfile($iProfileId, $iContentId);
+            $this->deleteGhostsForProfile($iProfileId, $iContentId);
 
         foreach ($aMultipleFiles as $aFile) {
 
@@ -379,15 +379,15 @@ abstract class BxDolUploader extends BxDol
      * Delete all ghosts files for the specified profile
      * @return number of delete ghost files
      */
-    public function cleanupGhostsForProfile($iProfileId, $iContentId = false)
+    public function deleteGhostsForProfile($iProfileId, $iContentId = false)
     {
         $iCount = 0;
 
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-        $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
+        $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId, $iContentId ? true : false);
         foreach ($aGhosts as $aFile)
-            $iCount += $oStorage->afterUploadCleanup($aFile['id'], $iProfileId);
+            $iCount += $oStorage->deleteFile($aFile['id']);
 
         return $iCount;
     }

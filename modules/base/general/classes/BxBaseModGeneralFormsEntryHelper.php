@@ -32,9 +32,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oModule->_oTemplate);
     }
 
-    public function getObjectFormEdit ()
+    public function getObjectFormEdit ($sDisplay = false)
     {
-        return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'], $this->_oModule->_oTemplate);
+        if (false === $sDisplay)
+            $sDisplay = $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];        
+        return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
     }
 
     public function getObjectFormDelete ()
