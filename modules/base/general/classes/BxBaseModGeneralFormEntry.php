@@ -200,6 +200,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     function getContentOwnerProfileId ($iContentId)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         // file owner must be author of the content or profile itself in case of profile based module
         if ($iContentId) {
             if ($this->_oModule instanceof iBxDolProfileService) {

@@ -235,7 +235,7 @@ class BxDolStorageQuery extends BxDolDb
         $sWhere = " AND `profile_id` = :profile ";
         if ($aProfiles || isAdmin()) {
             $sSetAddon = ', `profile_id` = :profile ';
-            $sWhere = isAdmin() ? "" : " AND `profile_id` =  IN(" . $this->implode_escape($aProfiles) . ")";
+            $sWhere = isAdmin() ? "" : " AND `profile_id` IN(" . $this->implode_escape($aProfiles) . ")";
         }
         
         $sQuery = $this->prepare("UPDATE `sys_storage_ghosts` SET `content_id` = :content $sSetAddon WHERE `object` = :object $sWhere AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")");
