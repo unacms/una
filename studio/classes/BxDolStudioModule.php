@@ -99,6 +99,11 @@ class BxDolStudioModule extends BxTemplStudioPage
 				break;
 		}
 
+		if(!empty($aResult['message']))
+			$aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result.html', array(
+            	'content' => $aResult['message'])
+        	));
+
 		echo json_encode($aResult);
 		exit;
     }

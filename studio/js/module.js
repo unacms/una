@@ -15,17 +15,20 @@ function BxDolStudioModule(oOptions) {
 BxDolStudioModule.prototype.activate = function(sName, oChecbox) {
 	var $this = this;
 	var oDate = new Date();
+	var sAction = 'activate'; 
+
+	$('.bx-popup-applied:visible').dolPopupHide();
 
 	$.get(
 		this.sActionsUrl,
 		{
-			mod_action: 'activate',
+			mod_action: sAction,
 			mod_value: sName,
 			_t:oDate.getTime()
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				$this.popup(sAction, oData.message);
 
 				$(oChecbox).attr('checked', 'checked').trigger('enable');
 				return;
@@ -46,5 +49,13 @@ BxDolStudioModule.prototype.activate = function(sName, oChecbox) {
 		'json'
 	);
 	return true;
+};
+
+BxDolStudioModule.prototype.popup = function(sType, sValue) {
+	var sId = 'bx-std-mod-popup-' + sType;
+
+    $('#' + sId).remove();
+    $('<div id="' + sId + '" style="display: none;"></div>').prependTo('body').html(sValue);
+    $('#' + sId).dolPopup({});
 };
 /** @} */
