@@ -110,14 +110,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
     /**
-     * Entry text with some additional controls
-     */
-    public function serviceEntityTextBlock ($iContentId = 0)
-    {
-        return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
-    }
-
-    /**
      * Entry location info
      */
     public function serviceEntityLocation ($iContentId = 0)
