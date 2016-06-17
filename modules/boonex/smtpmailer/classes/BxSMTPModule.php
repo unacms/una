@@ -38,8 +38,20 @@ class BxSMTPModule extends BxDolModule
 
             // from settings, smtp server secure ssl/tls
             $sParamSecure = getParam('bx_smtp_secure');
-            if ('SSL' == $sParamSecure || 'TLS' == $sParamSecure)
+            if ('SSL' == $sParamSecure || 'TLS' == $sParamSecure) {
+
                 $mail->SMTPSecure = strtolower($sParamSecure);
+
+                if ('on' == getParam('bx_smtp_allow_selfsigned')) {
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+                }
+            }
 
             // from settings, smtp server
             $sParamHost = getParam('bx_smtp_host');
@@ -75,17 +87,6 @@ class BxSMTPModule extends BxDolModule
             $mail->WordWrap = 50; // set word wrap
 
             $mail->AddAddress($sRecipientEmail);
-
-            // get attachments from attach directory
-            if ('on' == getParam ('bx_smtp_send_attachments')) {
-                if ($h = opendir(BX_DIRECTORY_PATH_MODULES . "boonex/smtpmailer/data/attach/")) {
-                    while (false !== ($sFile = readdir($h))) {
-                        if ($sFile == "." || $sFile == ".." || $sFile[0] == ".") continue;
-                        $mail->AddAttachment(BX_DIRECTORY_PATH_MODULES . "boonex/smtpmailer/data/attach/" . $sFile, $sFile);
-                    }
-                    closedir($h);
-                }
-            }
 
             $mail->IsHTML($isHtml ? true : false);
 
