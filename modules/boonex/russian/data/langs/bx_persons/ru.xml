@@ -9,11 +9,11 @@
 	<string name="_bx_persons_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
 
 	<string name="_bx_persons_form_profile"><![CDATA[Персоны]]></string>
-	<string name="_bx_persons_form_profile_display_add"><![CDATA[Добавить персону]]></string>
-	<string name="_bx_persons_form_profile_display_edit"><![CDATA[Редактировать персону]]></string>
-	<string name="_bx_persons_form_profile_display_edit_cover"><![CDATA[Редактировать обложку]]></string>
-	<string name="_bx_persons_form_profile_display_delete"><![CDATA[Удалить персону]]></string>
-	<string name="_bx_persons_form_profile_display_view"><![CDATA[Просмотреть персону]]></string>
+	<string name="_bx_persons_form_profile_display_add"><![CDATA[Добавление персоны]]></string>
+	<string name="_bx_persons_form_profile_display_edit"><![CDATA[Редактирование персоны]]></string>
+	<string name="_bx_persons_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
+	<string name="_bx_persons_form_profile_display_delete"><![CDATA[Удаление персоны]]></string>
+	<string name="_bx_persons_form_profile_display_view"><![CDATA[Просмотр персоны]]></string>
     <string name="_bx_persons_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>
@@ -80,6 +80,7 @@
 	<string name="_bx_persons_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
 	<string name="_bx_persons_page_block_title_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_membership"><![CDATA[Членство]]></string>
+	<string name="_bx_persons_page_block_title_profile_description"><![CDATA[Описание]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
