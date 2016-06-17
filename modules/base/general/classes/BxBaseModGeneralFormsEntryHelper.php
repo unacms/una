@@ -44,6 +44,20 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'], $this->_oModule->_oTemplate);
     }
 
+    public function viewDataEntry ($iContentId)
+    {
+        // get content data and profile info
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        if (!$aContentInfo)
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
+
+        // check access
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
+            return MsgBox($sMsg);
+
+        return $this->_oModule->_oTemplate->entryText($aContentInfo);
+    }
+
     public function addDataForm ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

@@ -68,7 +68,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                 	$this->aCurrent['restriction']['except']['value'] = is_array($aParams['except']) ? $aParams['except'] : array($aParams['except']); 
 
                 if(!empty($aParams['per_page']))
-                	$this->aCurrent['paginate']['perPage'] = (int)$aParams['per_page']; 
+                	$this->aCurrent['paginate']['perPage'] = is_numeric($aParams['per_page']) ? (int)$aParams['per_page'] : (int)getParam($aParams['per_page']);
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_by_author');

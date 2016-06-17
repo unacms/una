@@ -119,6 +119,11 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceEntityForm ('deleteDataForm', $iContentId);
     }
 
+    public function serviceEntityTextBlock ($iContentId = 0)
+    {
+        return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
+    }
+
     public function serviceEntityInfo ($iContentId = 0)
     {
         return $this->_serviceEntityForm ('viewDataForm', $iContentId);

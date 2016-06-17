@@ -50,6 +50,31 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
     }
 
+	function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aVars = $aData;
+        $aVars['entry_title'] = !empty($CNF['FIELD_TITLE']) && isset($aData[$CNF['FIELD_TITLE']]) ? bx_process_output($aData[$CNF['FIELD_TITLE']]) : '';
+        $aVars['entry_text'] = !empty($CNF['FIELD_TEXT']) && isset($aData[$CNF['FIELD_TEXT']]) ? $aData[$CNF['FIELD_TEXT']] : '';
+
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+    
+            // keywords
+            if ($oMetatags->keywordsIsEnabled()) {
+                $aFields = $oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
+                foreach ($aFields as $sField)
+                    $aVars[$sField] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
+            }
+
+            // location
+            $aVars['location'] = $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aData[$CNF['FIELD_ID']]) : '';
+        }
+
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
     function entryLocation ($iContentId)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

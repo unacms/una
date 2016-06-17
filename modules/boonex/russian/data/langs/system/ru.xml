@@ -1201,7 +1201,7 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS - дополнительный домен (требует дополнительной настройки DNS)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS - секретный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Задействовать кэш для изображений]]></string>
-	<string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Максимальный размер кэшируемого изображения]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Максимальный размер кэшируемого изображения (в Кб)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_compress_enable"><![CDATA[Задействовать сжатие для файлов JS/CSS (кэш должен быть задействован)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Задействовать кэш для файлов CSS]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_enable"><![CDATA[Задействовать кэш для файлов HTML]]></string>

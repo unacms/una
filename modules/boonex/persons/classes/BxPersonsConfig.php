@@ -43,6 +43,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
             'FIELD_NAME' => 'fullname',
+        	'FIELD_TITLE' => 'fullname',
+        	'FIELD_TEXT' => 'description',
             'FIELD_PICTURE' => 'picture',
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',
