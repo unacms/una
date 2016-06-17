@@ -5,7 +5,7 @@
 	<string name="_bx_smtp_recipient"><![CDATA[Получатель]]></string>
 	<string name="_bx_smtp_subject"><![CDATA[Тема]]></string>
 	<string name="_bx_smtp_body"><![CDATA[Тело]]></string>
-	<string name="_bx_smtp_is_html"><![CDATA[Является ли HTML?]]></string>
+	<string name="_bx_smtp_is_html"><![CDATA[HTML форматирование]]></string>
 	<string name="_bx_smtp_send_ok"><![CDATA[Письмо удачно отправлено]]></string>
 	<string name="_bx_smtp_send_fail"><![CDATA[Отправка письма не удалась]]></string>
 	<string name="_bx_smtp_help"><![CDATA[Помощь]]></string>
