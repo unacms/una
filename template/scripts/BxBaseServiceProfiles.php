@@ -157,10 +157,15 @@ class BxBaseServiceProfiles extends BxDol
         if (null === $iActiveProfileId)
             $iActiveProfileId = bx_get_logged_profile_id();
 
+		$oModuleDb = BxDolModuleQuery::getInstance();
+
         $aVars = array (
             'bx_repeat:row' => array(),
         );
         foreach ($aProfiles as $aProfile) {
+        	if(!$oModuleDb->isEnabledByName($aProfile['type']))
+        		continue;
+
             if (!BxDolService::call($aProfile['type'], 'act_as_profile'))
                 continue;
             $aVars['bx_repeat:row'][] = array (
