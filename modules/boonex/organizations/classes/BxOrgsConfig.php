@@ -43,6 +43,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
             'FIELD_NAME' => 'org_name',
+        	'FIELD_TITLE' => 'org_name',
+        	'FIELD_TEXT' => 'org_desc',
             'FIELD_PICTURE' => 'picture',
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',

@@ -28,31 +28,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
     }
 
-    function entryText ($aData, $sTemplateName = 'entry-text.html')
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-
-        $aVars = $aData;
-        $aVars['entry_title'] = isset($aData[$CNF['FIELD_TITLE']]) ? bx_process_output($aData[$CNF['FIELD_TITLE']]) : '';
-        $aVars['entry_text'] = $aData[$CNF['FIELD_TEXT']];
-
-        if (!empty($CNF['OBJECT_METATAGS'])) {
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-    
-            // keywords
-            if ($oMetatags->keywordsIsEnabled()) {
-                $aFields = $oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
-                foreach ($aFields as $sField)
-                    $aVars[$sField] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
-            }
-
-            // location
-            $aVars['location'] = $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aData[$CNF['FIELD_ID']]) : '';
-        }
-
-        return $this->parseHtmlByName($sTemplateName, $aVars);
-    }
-
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -99,15 +74,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryAttachments ($aData)
     {
+        if (!($a = $this->getAttachments($this->getModule()->_oConfig->CNF['OBJECT_STORAGE'], $aData)))
+            return '';
     	return $this->parseHtmlByName('attachments.html', array(
-            'bx_repeat:attachments' => $this->getAttachments($this->getModule()->_oConfig->CNF['OBJECT_STORAGE'], $aData),
+            'bx_repeat:attachments' => $a,
         ));
     }
 
 	function entryAttachmentsByStorage ($sStorage, $aData)
     {
+        if (!($a = $this->getAttachments($sStorage, $aData)))
+            return '';
     	return $this->parseHtmlByName('attachments.html', array(
-            'bx_repeat:attachments' => $this->getAttachments($sStorage, $aData),
+            'bx_repeat:attachments' => $a,
         ));
     }
 
@@ -223,6 +202,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             );
 
         $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
+        if (!$aGhostFiles)
+            return false;
+
+        foreach ($aGhostFiles as $k => $a) {
+            // don't show thumbnail in attachments
+            if ($a['id'] == $aData[$CNF['FIELD_THUMB']])
+                unset($aGhostFiles[$k]);
+        }
         if (!$aGhostFiles)
             return false;
 

@@ -34,7 +34,7 @@ DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_albums_administration', 'bx
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_albums_administration', 'bx_albums_common');
 
 -- UPLOADERS
-DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_albums_simple', 'bx_albums_html5');
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_albums_simple', 'bx_albums_html5', 'bx_albums_crop');
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_albums' LIMIT 1);

@@ -604,7 +604,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         //--- Process field 'html' flag.
         if(isset($oForm->aInputs['html'])) {
             $iHtml = (int)$oForm->getCleanValue('html');
-            BxDolForm::setSubmittedValue('db_pass', $iHtml == 0 ? 'Xss' : 'XssHtml', $oForm->aFormAttrs['method']);
+            BxDolForm::setSubmittedValue('db_pass', $iHtml == 0 ? 'XssMultiline' : 'XssHtml', $oForm->aFormAttrs['method']);
         }
 
         //--- Process field checker.

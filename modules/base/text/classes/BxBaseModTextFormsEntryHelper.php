@@ -39,23 +39,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     }
 
     /**
-     * @return main content text
-     */
-    public function viewDataEntry ($iContentId)
-    {
-        // get content data and profile info
-        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
-        if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
-
-        // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
-            return MsgBox($sMsg);
-
-        return $this->_oModule->_oTemplate->entryText($aContentInfo);
-    }
-
-    /**
      * @return array of profile object and content info
      */
     protected function _getProfileAndContentData ($iContentId)

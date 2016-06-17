@@ -32,14 +32,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         echo(json_encode($a));
     }
 
-	public function serviceGetPageObjectForPageTrigger ($sPageTriggerName)
-    {
-        if (!($sObject = parent::serviceGetPageObjectForPageTrigger ($sPageTriggerName)))
-            return '';
-
-        return array('object' => $sObject, 'cell_id' => 4);
-    }
-
     /**
      * Check if this module entry can be used as profile
      */

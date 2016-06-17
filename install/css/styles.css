@@ -58,3 +58,8 @@ html, body {
     width:70%;
     height:60px;
 }
+
+
+.bx-header.bx-def-color-bg-header {
+    background-color: #3b8686;
+}
