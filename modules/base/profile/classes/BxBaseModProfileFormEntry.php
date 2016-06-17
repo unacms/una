@@ -65,8 +65,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aContentInfo = false;
-        $aContentInfo = $this->_oModule->_oDb->getContentInfoById ($aValues[$CNF['FIELD_ID']]);
+        $aContentInfo = isset($CNF['FIELD_ID']) && isset($aValues[$CNF['FIELD_ID']]) ? $this->_oModule->_oDb->getContentInfoById ($aValues[$CNF['FIELD_ID']]) : array();
         
         foreach ($this->_aImageFields as $sField => $aParams) {
 
