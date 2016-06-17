@@ -41,6 +41,13 @@ $aConfig = array(
     'language_category' => 'Albums',
 
     /**
+     * List of page triggers.
+     */
+    'page_triggers' => array (
+    	'trigger_page_profile_view_entry',
+    ),
+
+    /**
      * Menu triggers.
      */
     'menu_triggers' => array(
@@ -89,7 +96,8 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'enable_success' => array(
-    	'process_menu_triggers' => 1,
+        'process_menu_triggers' => 1,
+        'process_page_triggers' => 1,
     	'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),

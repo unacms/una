@@ -113,7 +113,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
-        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
+        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_group_view_entry',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

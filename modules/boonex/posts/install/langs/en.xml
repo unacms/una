@@ -103,6 +103,7 @@
 	<string name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
 	<string name="_bx_posts_page_block_title_cats"><![CDATA[Posts Categories]]></string>
 	<string name="_bx_posts_page_block_title_entry_info"><![CDATA[Info]]></string>
+	<string name="_bx_posts_page_block_title_my_entries"><![CDATA[My Posts]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Post Actions]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string>

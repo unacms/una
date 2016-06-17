@@ -104,7 +104,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_organization', 'bx_organization', 'allow_view_to', 3, '', 0, 'custom', '_bx_orgs_form_profile_input_sys_allow_view_to', '_bx_orgs_form_profile_input_allow_view_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_organization', 'bx_organizations', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_orgs_form_profile_input_sys_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_orgs_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_organization', 'bx_organizations', 'org_desc', '', '', 0, 'textarea', '_bx_orgs_form_profile_input_sys_org_desc', '_bx_orgs_form_profile_input_org_desc', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 1),
+('bx_organization', 'bx_organizations', 'org_desc', '', '', 0, 'textarea', '_bx_orgs_form_profile_input_sys_org_desc', '_bx_orgs_form_profile_input_org_desc', '', 0, 0, 0, '', '', '', '', '', '', 'XssMultiline', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_cat', '', '#!bx_organizations_cats', 0, 'select', '_bx_orgs_form_profile_input_sys_org_cat', '_bx_orgs_form_profile_input_org_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_cat_err', 'Xss', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_name', '', '', 0, 'text', '_bx_orgs_form_profile_input_sys_org_name', '_bx_orgs_form_profile_input_org_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_name_err', 'Xss', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'cover', 'a:1:{i:0;s:27:"bx_organizations_cover_crop";}', 'a:1:{s:27:"bx_organizations_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_orgs_form_profile_input_sys_cover', '_bx_orgs_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
@@ -146,7 +146,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_view', 'do_submit', 2147483647, 0, 6),
 ('bx_organization_view', 'org_name', 2147483647, 1, 7),
 ('bx_organization_view', 'org_cat', 2147483647, 1, 8),
-('bx_organization_view', 'org_desc', 2147483647, 1, 9);
+('bx_organization_view', 'org_desc', 2147483647, 0, 9);
 
 -- PRE-VALUES
 

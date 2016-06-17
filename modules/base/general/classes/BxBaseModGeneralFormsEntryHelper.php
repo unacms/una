@@ -44,6 +44,20 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'], $this->_oModule->_oTemplate);
     }
 
+    public function viewDataEntry ($iContentId)
+    {
+        // get content data and profile info
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        if (!$aContentInfo)
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
+
+        // check access
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
+            return MsgBox($sMsg);
+
+        return $this->_oModule->_oTemplate->entryText($aContentInfo);
+    }
+
     public function addDataForm ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -270,7 +284,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->keywordsIsEnabled())
-                $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
+                $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
             if ($oMetatags->locationsIsEnabled())
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }

@@ -1201,7 +1201,7 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS custom domain (require custom DNS setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS secret key]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Enable cache for images]]></string>
-	<string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Cached image max size]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Cached image max size (in Kb)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_compress_enable"><![CDATA[Enable compression for JS/CSS files(cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Enable cache for CSS files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_enable"><![CDATA[Enable cache for HTML files]]></string>

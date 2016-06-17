@@ -1443,6 +1443,19 @@ class BxDolFormCheckerHelper
         }
         return bx_process_input ($s, BX_DATA_TEXT); // "strip tags" option was here in 7.0
     }
+
+	static public function passXssMultiline ($s)
+    {
+        if (is_array($s)) {
+            $a = array ();
+            foreach ($s as $k => $v) {
+                $a[$k] = bx_process_input ($v, BX_DATA_TEXT_MULTILINE);
+            }
+            return $a;
+        }
+        return bx_process_input ($s, BX_DATA_TEXT_MULTILINE);
+    }
+
     static public function passXssHtml ($s)
     {
         if (is_array($s)) {

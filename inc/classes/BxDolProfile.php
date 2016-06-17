@@ -304,8 +304,25 @@ class BxDolProfile extends BxDol implements iBxDolProfile
         $oAccount = BxDolAccount::getInstance ($aProfileInfo['account_id']);
         $aAccountInfo = $oAccount->getInfo();
         if (!$bForceDelete && $ID == $aAccountInfo['profile_id']) {
+
+            $aProfiles = $oAccount->getProfiles();            
             $oProfileAccount = BxDolProfile::getInstanceAccountProfile($aProfileInfo['account_id']);
-            $oAccount->updateProfileContext($oProfileAccount->id());
+
+            // unset deleted profile and account profile
+            unset($aProfiles[$ID]);
+            unset($aProfiles[$oProfileAccount->id()]);
+
+            if ($aProfiles) {
+                // try to use another profile
+                reset($aProfiles);
+                $iProfileId = key($aProfiles);
+            } 
+            else {
+                // if no profiles exist, use account profile
+                $iProfileId = $oProfileAccount->id();
+            }
+
+            $oAccount->updateProfileContext($iProfileId);
         }
 
         // create system event before deletion

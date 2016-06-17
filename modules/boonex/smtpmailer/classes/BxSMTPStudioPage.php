@@ -20,7 +20,7 @@ class BxSMTPStudioPage extends BxTemplStudioModule
         $this->oModule = BxDolModule::getInstance('bx_smtp');
 
         $this->aMenuItems = array(
-            array('name' => 'general', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
             array('name' => 'tester', 'icon' => 'envelope', 'title' => '_bx_smtp_tester'),
         );
     }
