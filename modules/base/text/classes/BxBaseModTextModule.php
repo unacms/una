@@ -77,13 +77,13 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
      * Display entries of the author
      * @return HTML string
      */
-    public function serviceBrowseAuthor ($iProfileId = 0, $sUnitView = false)
+    public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
     {
         if (!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if (!$iProfileId)
             return '';
-        return $this->_serviceBrowse ('author', array('author' => $iProfileId, 'unit_view' => $sUnitView ? $sUnitView : ''), BX_DB_PADDING_DEF, true);
+        return $this->_serviceBrowse ('author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, true);
     }
 
     /**
