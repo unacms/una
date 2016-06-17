@@ -74,15 +74,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryAttachments ($aData)
     {
+        if (!($a = $this->getAttachments($this->getModule()->_oConfig->CNF['OBJECT_STORAGE'], $aData)))
+            return '';
     	return $this->parseHtmlByName('attachments.html', array(
-            'bx_repeat:attachments' => $this->getAttachments($this->getModule()->_oConfig->CNF['OBJECT_STORAGE'], $aData),
+            'bx_repeat:attachments' => $a,
         ));
     }
 
 	function entryAttachmentsByStorage ($sStorage, $aData)
     {
+        if (!($a = $this->getAttachments($sStorage, $aData)))
+            return '';
     	return $this->parseHtmlByName('attachments.html', array(
-            'bx_repeat:attachments' => $this->getAttachments($sStorage, $aData),
+            'bx_repeat:attachments' => $a,
         ));
     }
 
@@ -198,6 +202,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             );
 
         $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
+        if (!$aGhostFiles)
+            return false;
+
+        foreach ($aGhostFiles as $k => $a) {
+            // don't show thumbnail in attachments
+            if ($a['id'] == $aData[$CNF['FIELD_THUMB']])
+                unset($aGhostFiles[$k]);
+        }
         if (!$aGhostFiles)
             return false;
 
