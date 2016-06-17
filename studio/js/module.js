@@ -17,8 +17,6 @@ BxDolStudioModule.prototype.activate = function(sName, oChecbox) {
 	var oDate = new Date();
 	var sAction = 'activate'; 
 
-	$('.bx-popup-applied:visible').dolPopupHide();
-
 	$.get(
 		this.sActionsUrl,
 		{
@@ -28,6 +26,8 @@ BxDolStudioModule.prototype.activate = function(sName, oChecbox) {
 		},
 		function(oData) {
 			if(oData.code != 0) {
+				$('.bx-popup-applied:visible').dolPopupHide();
+
 				$this.popup(sAction, oData.message);
 
 				$(oChecbox).attr('checked', 'checked').trigger('enable');
