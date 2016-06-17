@@ -42,5 +42,16 @@
 ]]></string>
     <string name="_bx_smtp_adm_stg_cpt_type"><![CDATA[SMTP Mailer]]></string>
     <string name="_bx_smtp_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    
+    <string name="_bx_smtp_option_on"><![CDATA[Enable SMTP mailer]]></string>
+    <string name="_bx_smtp_option_auth"><![CDATA[SMTP authentication (Is your SMTP server requires username and password?)]]></string>
+    <string name="_bx_smtp_option_username"><![CDATA[SMTP username (only if SMTP authentication is enabled)]]></string>
+    <string name="_bx_smtp_option_password"><![CDATA[SMTP password (only if SMTP authentication is enabled)]]></string>
+    <string name="_bx_smtp_option_host"><![CDATA[SMTP server name or IP address]]></string>
+    <string name="_bx_smtp_option_port"><![CDATA[SMTP server port number (25 - default, 465 - for secure ssl connection, 587 - for secure tls connection)]]></string>
+    <string name="_bx_smtp_option_secure"><![CDATA[Is your SMTP server requires secure connection]]></string>
+    <string name="_bx_smtp_option_allow_selfsigned"><![CDATA[Allow self-signed certificates]]></string>
+    <string name="_bx_smtp_option_from_name"><![CDATA['From' name of the message]]></string>
+    <string name="_bx_smtp_option_from_email"><![CDATA[Override default sender email address]]></string>
 </resources>
 
