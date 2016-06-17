@@ -248,20 +248,27 @@ class BxDolAccount extends BxDol
     /**
      * Get all profile ids associated with the account
      */
-    public function getProfilesIds ()
+    public function getProfilesIds ($isFilterNonSwitchableProfiles = true)
     {
-        $oProfileQuery = BxDolProfileQuery::getInstance();
-        $a = $oProfileQuery->getProfilesByAccount($this->_iAccountID);
+        $a = $this->getProfiles ($isFilterNonSwitchableProfiles);
         return $a ? array_keys($a) : array();
     }
 
     /**
      * Get all profiles associated with the account
      */
-    public function getProfiles ()
+    public function getProfiles ($isFilterNonSwitchableProfiles = true)
     {
         $oProfileQuery = BxDolProfileQuery::getInstance();
-        return $oProfileQuery->getProfilesByAccount($this->_iAccountID);
+        $aProfiles = $oProfileQuery->getProfilesByAccount($this->_iAccountID);
+
+        if ($isFilterNonSwitchableProfiles) {
+            foreach ($aProfiles as $iProfileId => $aProfile)
+                if (!BxDolService::call($aProfile['type'], 'act_as_profile'))
+                    unset($aProfiles[$iProfileId]);
+        }
+
+        return $aProfiles;
     }
 
     /**

@@ -102,11 +102,11 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $iProfileId = $this->getContentOwnerProfileId($iContentId);
-        $aFiles = $oStorage->getGhosts($iProfileId, $iContentId);
+        $iProfileId = $this->getContentOwnerProfileId($iContentId);        
 
         foreach ($this->_aImageFields as $sField => $aParams) {
             $oStorage = BxDolStorage::getObjectInstance($aParams['storage_object']);
+            $aFiles = $oStorage->getGhosts($iProfileId, $iContentId);
 
             foreach ($aFiles as $aFile) {
                 if (!$oStorage->getFile($aFile['id']))
