@@ -284,7 +284,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->keywordsIsEnabled())
-                $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
+                $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
             if ($oMetatags->locationsIsEnabled())
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }

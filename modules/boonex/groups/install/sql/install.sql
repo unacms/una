@@ -167,7 +167,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_group', 'bx_groups', 'allow_view_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_view_to', '_bx_groups_form_profile_input_allow_view_to', '_bx_groups_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_group', 'bx_groups', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_groups_form_profile_input_sys_delete_confirm', '_bx_groups_form_profile_input_delete_confirm', '_bx_groups_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_groups_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_group', 'bx_groups', 'group_desc', '', '', 0, 'textarea', '_bx_groups_form_profile_input_sys_group_desc', '_bx_groups_form_profile_input_group_desc', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 1),
+('bx_group', 'bx_groups', 'group_desc', '', '', 0, 'textarea', '_bx_groups_form_profile_input_sys_group_desc', '_bx_groups_form_profile_input_group_desc', '', 0, 0, 0, '', '', '', '', '', '', 'XssMultiline', '', 1, 1),
 ('bx_group', 'bx_groups', 'group_cat', '', '#!bx_groups_cats', 0, 'select', '_bx_groups_form_profile_input_sys_group_cat', '_bx_groups_form_profile_input_group_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_group_cat_err', 'Xss', '', 1, 1),
 ('bx_group', 'bx_groups', 'group_name', '', '', 0, 'text', '_bx_groups_form_profile_input_sys_group_name', '_bx_groups_form_profile_input_group_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_group_name_err', 'Xss', '', 1, 0),
 ('bx_group', 'bx_groups', 'initial_members', '', '', 0, 'custom', '_bx_groups_form_profile_input_sys_initial_members', '_bx_groups_form_profile_input_initial_members', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
@@ -215,7 +215,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_view', 'do_submit', 2147483647, 0, 6),
 ('bx_group_view', 'group_name', 2147483647, 1, 7),
 ('bx_group_view', 'group_cat', 2147483647, 1, 8),
-('bx_group_view', 'group_desc', 2147483647, 1, 9);
+('bx_group_view', 'group_desc', 2147483647, 0, 9);
 
 -- PRE-VALUES
 

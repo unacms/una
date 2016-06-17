@@ -56,14 +56,14 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         $aVars = $aData;
         $aVars['entry_title'] = !empty($CNF['FIELD_TITLE']) && isset($aData[$CNF['FIELD_TITLE']]) ? bx_process_output($aData[$CNF['FIELD_TITLE']]) : '';
-        $aVars['entry_text'] = !empty($CNF['FIELD_TEXT']) && isset($aData[$CNF['FIELD_TEXT']]) ? $aData[$CNF['FIELD_TEXT']] : '';
+        $aVars['entry_text'] = !empty($CNF['FIELD_TEXT']) && isset($aData[$CNF['FIELD_TEXT']]) ? bx_process_output($aData[$CNF['FIELD_TEXT']], BX_DATA_HTML) : '';
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-    
+
             // keywords
             if ($oMetatags->keywordsIsEnabled()) {
-                $aFields = $oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
+                $aFields = array_merge($oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']), array('entry_title', 'entry_text'));
                 foreach ($aFields as $sField)
                     $aVars[$sField] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
             }
