@@ -281,7 +281,10 @@ class BxDolStorageQuery extends BxDolDb
             $aBindings['object'] = $this->_aObject['object'];
 
             $sOnProfile = '';
-            if (is_array($mixedProfileId) && $mixedProfileId) {
+            if (isAdmin() && $iContentId) {
+                // don't check profile id for admins, so admin can edit any entry
+            }
+            elseif (is_array($mixedProfileId) && $mixedProfileId) {
                 $sOnProfile = " AND `g`.`profile_id` IN(" . $this->implode_escape($mixedProfileId) . ") ";
             } 
             elseif (!is_array($mixedProfileId) && false !== $mixedProfileId) {

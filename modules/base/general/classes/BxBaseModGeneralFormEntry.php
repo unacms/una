@@ -163,7 +163,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             return true;
 
         foreach ($aGhostFiles as $aFile) {
-            if (!in_array($aFile['id'], $mixedFileIds))
+            if (is_array($mixedFileIds) && !in_array($aFile['id'], $mixedFileIds))
                 continue;
             if ($aFile['private'])
                 $oStorage->setFilePrivate ($aFile['id'], 0);
