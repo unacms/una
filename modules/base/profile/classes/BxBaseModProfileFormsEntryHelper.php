@@ -77,9 +77,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $aTrackTextFieldsChanges = array ();
     }
 
-    public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
+    public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
     {
-        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile))
+        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm))
             return $s;
 
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -91,9 +91,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // process uploaded files
-        $oForm = $this->getObjectFormEdit();
         $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, false);
-        $oForm = $this->getObjectFormEdit($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
         $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, false);
 
         // create an alert

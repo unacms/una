@@ -82,9 +82,6 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (isset($CNF['FIELD_PICTURE']))
-            $aValsToAdd[$CNF['FIELD_PICTURE']] = 0; // we will update this field later, since we don't know content id yet
-        
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
@@ -92,9 +89,6 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        foreach ($this->_aImageFields as $sField => $aParams)
-            $aValsToAdd[$sField] = 0; // we will update this field later
-        
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
