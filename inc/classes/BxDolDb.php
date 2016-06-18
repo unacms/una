@@ -900,7 +900,14 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
     protected function log($s)
     {
-        return file_put_contents(BX_DIRECTORY_PATH_LOGS . 'db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
+        if (defined('BX_DIRECTORY_PATH_LOGS')) {
+            $sPath = BX_DIRECTORY_PATH_LOGS;
+        }
+        else {
+            $sDirName = pathinfo(__FILE__, PATHINFO_DIRNAME);
+            $sPath = $sDirName . '/../../logs/';
+        }
+        return file_put_contents($sPath . 'db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
     }
 
     public function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true)

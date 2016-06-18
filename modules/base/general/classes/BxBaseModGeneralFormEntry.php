@@ -144,6 +144,9 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if (!isset($this->aInputs[$sFieldFile]))
+            return true;
+
         $mixedFileIds = $this->getCleanValue($sFieldFile);
         if(!$mixedFileIds)
             return true;
@@ -160,6 +163,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             return true;
 
         foreach ($aGhostFiles as $aFile) {
+            if (is_array($mixedFileIds) && !in_array($aFile['id'], $mixedFileIds))
+                continue;
             if ($aFile['private'])
                 $oStorage->setFilePrivate ($aFile['id'], 0);
             if ($iContentId)

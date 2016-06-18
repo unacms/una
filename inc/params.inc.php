@@ -85,6 +85,8 @@ require_once(BX_DIRECTORY_PATH_INC . 'version.inc.php');
 
 spl_autoload_register('bx_autoload');
 
+BxDolDb::getInstance();
+
 require_once(BX_DIRECTORY_PATH_INC . 'profiles.inc.php');
 
 $o = new BxDolAlerts('system', 'begin', 0);

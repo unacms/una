@@ -25,6 +25,13 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
         return $this->getRow($sQuery);
     }
 
+    public function resetContentPictureByFileId($iFileId, $sFieldPicture)
+    {
+        return $this->query("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = 0 WHERE `" . $sFieldPicture . "` = :file", [
+    		'file' => $iFileId,
+        ]);
+    }
+
     public function updateContentPictureById($iContentId, $iProfileId, $iPictureId, $sFieldPicture)
     {
     	$aBindings = array(

@@ -359,7 +359,9 @@ abstract class BxDolUploader extends BxDol
     {
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-        $aFile = $oStorage->getFile ($iFileId);
+        $aFile = $oStorage->getGhost ($iFileId);
+        if (!$aFile)
+            $aFile = $oStorage->getFile ($iFileId);
         if (!$aFile)
             return _t('_error occured');
 

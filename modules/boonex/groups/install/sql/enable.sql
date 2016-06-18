@@ -374,6 +374,7 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_timeline', 'post_common', @iHandler),
+('bx_groups_pics', 'file_deleted', @iHandler),
 ('bx_groups_fans', 'connection_added', @iHandler),
 ('bx_groups_fans', 'connection_removed', @iHandler),
 ('profile', 'delete', @iHandler),

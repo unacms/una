@@ -28,8 +28,6 @@
 	<string name="_bx_persons_form_profile_input_picture_err"><![CDATA[Необходима картинка профиля.]]></string>
 	<string name="_bx_persons_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
 	<string name="_bx_persons_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
-	<string name="_bx_persons_form_profile_input_sys_cover_preview"><![CDATA[Предпросмотр картинки обложки]]></string>
-	<string name="_bx_persons_form_profile_input_cover_preview"><![CDATA[Текущая картинка обложки]]></string>
 	<string name="_bx_persons_form_profile_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
 	<string name="_bx_persons_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить этот профиль]]></string>
 	<string name="_bx_persons_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
