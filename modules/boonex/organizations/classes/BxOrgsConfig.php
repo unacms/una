@@ -46,7 +46,6 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         	'FIELD_TITLE' => 'org_name',
         	'FIELD_TEXT' => 'org_desc',
             'FIELD_PICTURE' => 'picture',
-            'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELDS_QUICK_SEARCH' => array('org_name'),

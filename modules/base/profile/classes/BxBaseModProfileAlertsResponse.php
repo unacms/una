@@ -24,6 +24,14 @@ class BxBaseModProfileAlertsResponse extends BxDolAlertsResponse
     {
         $CNF = $this->_oModule->_oConfig->CNF;
 
+        // update picture field id when file is deleted
+        if ($CNF['OBJECT_STORAGE'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction) {
+            $this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_PICTURE']);
+        }
+        if ($CNF['OBJECT_STORAGE_COVER'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction) {
+            $this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_COVER']);
+        }        
+
         // re-translate timeline alert for timeline in this module for posts made by other profiles
         if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id'])) && $oGroupProfile->getModule() == $this->_oModule->getName() && $oGroupProfile->id() != $oAlert->iSender) {            
             $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());

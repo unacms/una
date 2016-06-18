@@ -28,8 +28,6 @@
 	<string name="_bx_persons_form_profile_input_picture_err"><![CDATA[Profile picture is mandatory.]]></string>
 	<string name="_bx_persons_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
 	<string name="_bx_persons_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>
-	<string name="_bx_persons_form_profile_input_sys_cover_preview"><![CDATA[Cover Picture Preview]]></string>
-	<string name="_bx_persons_form_profile_input_cover_preview"><![CDATA[Current Cover Picture]]></string>
 	<string name="_bx_persons_form_profile_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_persons_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this profile]]></string>
 	<string name="_bx_persons_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>

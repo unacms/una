@@ -652,6 +652,16 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * Get ghost file info array by file id.
+     * @param $iFileId file id
+     * @return array
+     */
+    public function getGhost($iFileId)
+    {    
+        return $this->_oDb->getGhost($iFileId);
+    }
+
+    /**
      * check if file is private or public
      * @param $iFileId file id
      * @return boolean
