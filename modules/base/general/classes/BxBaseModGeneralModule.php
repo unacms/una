@@ -129,6 +129,14 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceEntityForm ('viewDataForm', $iContentId);
     }
 
+	public function serviceEntityInfoFull ($iContentId = 0)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sDisplayName = 'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL';
+        return $this->_serviceEntityForm ('viewDataForm', $iContentId, !empty($CNF[$sDisplayName]) ? $CNF[$sDisplayName] : false);
+    }
+
 	public function serviceEntityInfoExtended ($iContentId = 0)
     {
         return $this->_serviceTemplateFunc ('entryInfo', $iContentId);

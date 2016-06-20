@@ -98,7 +98,8 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_person', 'bx_person_delete', 'bx_persons', 0, '_bx_persons_form_profile_display_delete'),
 ('bx_person', 'bx_person_edit', 'bx_persons', 0, '_bx_persons_form_profile_display_edit'),
 ('bx_person', 'bx_person_edit_cover', 'bx_persons', 0, '_bx_persons_form_profile_display_edit_cover'),
-('bx_person', 'bx_person_view', 'bx_persons', 1, '_bx_persons_form_profile_display_view');
+('bx_person', 'bx_person_view', 'bx_persons', 1, '_bx_persons_form_profile_display_view'),
+('bx_person', 'bx_person_view_full', 'bx_persons', 1, '_bx_persons_form_profile_display_view_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_person', 'bx_persons', 'allow_view_to', 3, '', 0, 'custom', '_bx_persons_form_profile_input_sys_allow_view_to', '_bx_persons_form_profile_input_allow_view_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -118,11 +119,13 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_add', 'description', 2147483647, 1, 8),
 ('bx_person_add', 'allow_view_to', 2147483647, 1, 9),
 ('bx_person_add', 'do_submit', 2147483647, 1, 10),
+
 ('bx_person_delete', 'cover', 2147483647, 0, 0),
 ('bx_person_delete', 'picture', 2147483647, 0, 0),
 ('bx_person_delete', 'delete_confirm', 2147483647, 1, 0),
 ('bx_person_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_person_delete', 'fullname', 2147483647, 0, 2),
+
 ('bx_person_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_person_edit', 'cover', 2147483647, 0, 3),
 ('bx_person_edit', 'picture', 2147483647, 1, 5),
@@ -130,17 +133,22 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_edit', 'description', 2147483647, 1, 7),
 ('bx_person_edit', 'allow_view_to', 2147483647, 1, 8),
 ('bx_person_edit', 'do_submit', 2147483647, 1, 9),
+
 ('bx_person_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_edit_cover', 'fullname', 2147483647, 0, 2),
 ('bx_person_edit_cover', 'picture', 2147483647, 0, 3),
 ('bx_person_edit_cover', 'cover', 2147483647, 1, 7),
 ('bx_person_edit_cover', 'do_submit', 2147483647, 1, 8),
+
 ('bx_person_view', 'delete_confirm', 2147483647, 0, 3),
 ('bx_person_view', 'picture', 2147483647, 0, 4),
 ('bx_person_view', 'cover', 2147483647, 0, 5),
 ('bx_person_view', 'do_submit', 2147483647, 0, 6),
 ('bx_person_view', 'fullname', 2147483647, 1, 7),
-('bx_person_view', 'description', 2147483647, 0, 8);
+('bx_person_view', 'description', 2147483647, 0, 8),
+
+('bx_person_view_full', 'fullname', 2147483647, 1, 1),
+('bx_person_view_full', 'description', 2147483647, 1, 2);
 
 -- STUDIO PAGE & WIDGET
 

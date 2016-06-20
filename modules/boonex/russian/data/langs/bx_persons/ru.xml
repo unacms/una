@@ -14,6 +14,7 @@
 	<string name="_bx_persons_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
 	<string name="_bx_persons_form_profile_display_delete"><![CDATA[Удаление персоны]]></string>
 	<string name="_bx_persons_form_profile_display_view"><![CDATA[Просмотр персоны]]></string>
+	<string name="_bx_persons_form_profile_display_view_full"><![CDATA[Полный просмотр персоны]]></string>
     <string name="_bx_persons_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>

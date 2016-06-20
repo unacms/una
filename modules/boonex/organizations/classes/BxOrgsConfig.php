@@ -81,6 +81,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_METATAGS' => 'bx_organizations',
             'OBJECT_FORM_ENTRY' => 'bx_organization',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_organization_view',
+        	'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_organization_view_full', // for "info" tab on view profile page
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_organization_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_organization_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_organization_edit_cover',

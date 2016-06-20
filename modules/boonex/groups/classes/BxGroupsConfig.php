@@ -80,6 +80,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_METATAGS' => 'bx_groups',
             'OBJECT_FORM_ENTRY' => 'bx_group',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_group_view',
+        	'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_group_view_full', // for "info" tab on view group page
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_group_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_group_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_group_edit_cover',

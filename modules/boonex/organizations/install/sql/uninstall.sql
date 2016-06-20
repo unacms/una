@@ -19,12 +19,9 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_organ
 -- FORMS
 
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_organizations';
-
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_organizations';
-
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_organizations';
-
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_organization_add', 'bx_organization_delete', 'bx_organization_edit', 'bx_organization_edit_cover', 'bx_organization_view');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_organization_add', 'bx_organization_delete', 'bx_organization_edit', 'bx_organization_edit_cover', 'bx_organization_view', 'bx_organization_view_full');
 
 -- PRE-VALUES
 
