@@ -18,6 +18,11 @@ class BxPersonsModule extends BxBaseModProfileModule
     {
         parent::__construct($aModule);
     }
+
+    public function serviceGetTimelineData()
+    {
+    	return array();
+    }
 }
 
 /** @} */
