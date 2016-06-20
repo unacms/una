@@ -402,7 +402,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'post_common'),
-                array('unit' => $sModule, 'action' => 'deleted'),
+                array('unit' => $sModule, 'action' => 'delete'),
                 array('unit' => $sModule, 'action' => 'commentPost'),
                 array('unit' => $sModule, 'action' => 'commentRemoved'),
                 array('unit' => $sModule, 'action' => 'doVote'),
