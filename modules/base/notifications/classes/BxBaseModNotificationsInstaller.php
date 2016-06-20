@@ -34,7 +34,7 @@ class BxBaseModNotificationsInstaller extends BxBaseModGeneralInstaller
 
     protected function _processHandlers($sAction)
     {
-    	$aModules = $this->oDb->getModules();
+    	$aModules = $this->oDb->getModulesBy(array('type' => 'all', 'active' => 1));
 	    foreach($aModules as $aModule) {
 	    	$aConfig = self::getModuleConfig($aModule);
 			if(!empty($aConfig['relations']) && is_array($aConfig['relations']) && in_array($this->_aConfig['name'], $aConfig['relations']))
