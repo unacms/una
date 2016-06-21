@@ -96,6 +96,7 @@ class BxMarketModule extends BxBaseModTextModule
         if(!$oGrid)
 			return '';
 
+		$this->_oTemplate->addJs(array('licenses.js'));
 		return array(
         	'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
         );
