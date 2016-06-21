@@ -9,6 +9,11 @@
     margin-top:1px;
 }
 
+.bx-db-content .sys-profile-switch-row.bx-def-margin-leftright-neg {
+	margin-left: 0px;
+    margin-right: 0px;	
+}
+
 .sys-profile-switch-row-control,
 .sys-profile-switch-row-unit {
     display:inline-block;

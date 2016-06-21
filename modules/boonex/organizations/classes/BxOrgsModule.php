@@ -27,6 +27,11 @@ class BxOrgsModule extends BxBaseModProfileModule
         unset($aFieldsProfile['description']);
         return $aFieldsProfile;
     }
+
+    public function serviceGetTimelineData()
+    {
+    	return array();
+    }
 }
 
 /** @} */

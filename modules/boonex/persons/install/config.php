@@ -96,10 +96,12 @@ $aConfig = array(
         'update_languages' => 1,
     	'process_connections' => 1,
     	'process_deleted_profiles' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
 	'enable_success' => array(
@@ -111,6 +113,7 @@ $aConfig = array(
     'disable' => array (
         'execute_sql' => 1,
     	'unregister_transcoders' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'disable_failed' => array (
@@ -127,7 +130,6 @@ $aConfig = array(
      * Connections Section
      */
     'relations' => array(
-        'bx_timeline',
         'bx_notifications',
     ),
 );

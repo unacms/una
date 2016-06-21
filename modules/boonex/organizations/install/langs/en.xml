@@ -14,6 +14,7 @@
 	<string name="_bx_orgs_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_orgs_form_profile_display_delete"><![CDATA[Delete Organization]]></string>
 	<string name="_bx_orgs_form_profile_display_view"><![CDATA[View Organization]]></string>
+	<string name="_bx_orgs_form_profile_display_view_full"><![CDATA[Full View Organization]]></string>
     <string name="_bx_orgs_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>

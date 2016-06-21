@@ -139,6 +139,9 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
             	$sWhereClause .= " AND `path`=:path AND `uri`=:uri";
             	break;
+
+            case 'all':
+            	break;
         }
 
         if(isset($aParams['active'])) {
