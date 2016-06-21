@@ -19,6 +19,7 @@
 	<string name="_bx_acl_form_price"><![CDATA[Price]]></string>
 	<string name="_bx_acl_form_price_display_add"><![CDATA[Add]]></string>
 	<string name="_bx_acl_form_price_display_edit"><![CDATA[Edit]]></string>
+	<string name="_bx_acl_form_price_input_sys_id"><![CDATA[ID]]></string>
 	<string name="_bx_acl_form_price_input_sys_level_id"><![CDATA[Level ID]]></string>
 	<string name="_bx_acl_form_price_input_sys_period"><![CDATA[Period]]></string>
 	<string name="_bx_acl_form_price_input_period"><![CDATA[Period]]></string>
@@ -59,10 +60,12 @@
 	<string name="_bx_acl_popup_title_price_add"><![CDATA[Add Pricing Plan]]></string>
 	<string name="_bx_acl_popup_title_price_edit"><![CDATA[Edit Pricing Plan]]></string>
 
+
 	<!-- Menus -->
 	<string name="_bx_acl_menu_item_title_administration"><![CDATA[Manage]]></string>
 	<string name="_bx_acl_menu_item_title_system_acl_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_menu_item_title_acl_view"><![CDATA[Membership]]></string>
+
 
 	<!-- Common Texts -->
 	<string name="_bx_acl_msg_empty_owner"><![CDATA['Site administrator' is empty. You need to mark some profile as 'Site administrator' in Settings of currently active Payment module.]]></string>
@@ -73,10 +76,4 @@
 	<string name="_bx_acl_txt_cart_item_title"><![CDATA[{0} ({1} {2})]]></string>
 	<string name="_bx_acl_txt_upgrade"><![CDATA[Upgrade]]></string>
 	<string name="_bx_acl_txt_manage"><![CDATA[Manage]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	<string name=""><![CDATA[]]></string>
-	
 </resources>
