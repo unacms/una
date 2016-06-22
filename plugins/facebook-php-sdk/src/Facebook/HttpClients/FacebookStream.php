@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -41,7 +41,7 @@ class FacebookStream
     /**
      * @var array Response headers from the stream wrapper
      */
-    protected $responseHeaders;
+    protected $responseHeaders = [];
 
     /**
      * Make a new context stream reference instance
@@ -56,7 +56,7 @@ class FacebookStream
     /**
      * The response headers from the stream wrapper
      *
-     * @return array|null
+     * @return array
      */
     public function getResponseHeaders()
     {
@@ -73,7 +73,7 @@ class FacebookStream
     public function fileGetContents($url)
     {
         $rawResponse = file_get_contents($url, false, $this->stream);
-        $this->responseHeaders = $http_response_header;
+        $this->responseHeaders = $http_response_header ?: [];
 
         return $rawResponse;
     }

@@ -6,6 +6,19 @@ class ChargeBee_Request
 	const GET = "get";
 	
 	const POST = "post";
+
+	public static function sendListRequest($method, $url, $params = array(), $env = null, $headers = array())
+	{
+		$serialized = array();
+		foreach ($params as $k => $v)
+		{
+			if(is_array($v)){
+				$v = json_encode($v);
+			}
+		    $serialized[$k] = $v;
+		}
+		return self::send($method,$url,$serialized,$env,$headers);
+	}
 	
 	public static function send($method, $url, $params = array(), $env = null, $headers = array())
 	{

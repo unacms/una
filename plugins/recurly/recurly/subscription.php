@@ -108,6 +108,14 @@ class Recurly_Subscription extends Recurly_Resource
     $this->setValues($notes)->_save(Recurly_Client::PUT, $this->uri() . '/notes');
   }
 
+  public function buildUsage($addOnCode, $client = null) {
+    return Recurly_Usage::build($this->uuid, $addOnCode, $client);
+  }
+
+  public function usages($addOnCode, $params = null) {
+    return Recurly_UsageList::get($this->uuid, $addOnCode, $params);
+  }
+
   protected function uri() {
     if (!empty($this->_href))
       return $this->getHref();

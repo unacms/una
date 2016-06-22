@@ -4,17 +4,19 @@ class ChargeBee_Model
 {
 
 	protected $_values;
-
-  protected $_subTypes;
+	
+	protected $_subTypes;
+	protected $_dependantTypes;
 
 	protected $_data = array();
 
 	protected $allowed = array();
 
-	function __construct($values, $subTypes=array())
+	function __construct($values, $subTypes=array(), $dependantTypes=array())
 	{
 		$this->_values = $values;
 		$this->_subTypes = $subTypes;
+		$this->_dependantTypes=$dependantTypes;
 		$this->_load();
 	}
 	
@@ -64,7 +66,23 @@ class ChargeBee_Model
 			throw new Exception("Unknown property $k in " . get_class($this));
 		}
 	}
-
+	
+	private function __getDependant($k)
+	{
+		if (isset($this->_dependantTypes[$k])) 
+		{
+			return $this->_dependantTypes[$k];
+		} 
+		else if(in_array($k, $this->allowed))
+		{
+			return null;
+		}
+		else
+		{
+			throw new Exception("Unknown property $k in " . get_class($this));
+		}
+	}
+	
   private function isHash($array)
   {
     if (!is_array($array))
@@ -81,6 +99,10 @@ class ChargeBee_Model
 		foreach($this->_values as $k => $v) 
 		{
 			$setVal = null;
+			if($this->isHash($v) && array_key_exists($k, $this->_dependantTypes))
+			{
+				continue;
+			}
 			if($this->isHash($v) && array_key_exists($k, $this->_subTypes))
 			{
 				$setVal = new $this->_subTypes[$k]($v);
@@ -100,7 +122,43 @@ class ChargeBee_Model
 			$this->_data[ChargeBee_Util::toCamelCaseFromUnderscore($k)] = $setVal;
 		}
 	}
-
+	
+	public function _initDependant($obj, $type, $subTypes = array())
+	{
+		if(!array_key_exists($type, $obj))
+		{
+	    	return $this;
+		}
+		$class=$this->__getDependant($type);
+		if($this->isHash($obj) && !is_null($class))
+		{
+			$dependantObj = new $class($obj[$type], $subTypes);
+			$this->_data[ChargeBee_Util::toCamelCaseFromUnderscore($type)] = $dependantObj;
+		}
+		return $this;
+	}
+	
+	public function _initDependantList($obj, $type, $subTypes = array())
+	{
+		if(!array_key_exists($type, $obj))
+		{
+	    	return $this;
+		}
+		if(!is_array($obj[$type])){
+			return $this;
+		}
+		$class=$this->__getDependant($type);
+		if(!is_null($class)){
+			$setVal = array();
+			foreach($obj[$type] as $dt)
+			{
+				array_push($setVal, new $class($dt, $subTypes));
+			}
+			$this->_data[ChargeBee_Util::toCamelCaseFromUnderscore($type)] = $setVal;
+		}
+		return $this;
+	}	
+			
 }
 
 ?>

@@ -7,7 +7,7 @@ class Recurly_Currency
 {
   var $currencyCode;
   var $amount_in_cents;
-  
+
   function __construct($currencyCode, $amountInCents) {
     $this->currencyCode = $currencyCode;
     $this->amount_in_cents = $amountInCents;

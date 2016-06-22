@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -77,8 +77,6 @@ class FacebookResponseException extends FacebookSDKException
         $code = isset($data['error']['code']) ? $data['error']['code'] : null;
         $message = isset($data['error']['message']) ? $data['error']['message'] : 'Unknown error from Graph.';
 
-        $previousException = null;
-
         if (isset($data['error']['error_subcode'])) {
             switch ($data['error']['error_subcode']) {
                 // Other authentication issues
@@ -89,6 +87,14 @@ class FacebookResponseException extends FacebookSDKException
                 case 464:
                 case 467:
                     return new static($response, new FacebookAuthenticationException($message, $code));
+                // Video upload resumable error
+                case 1363030:
+                case 1363019:
+                case 1363037:
+                case 1363033:
+                case 1363021:
+                case 1363041:
+                    return new static($response, new FacebookResumableUploadException($message, $code));
             }
         }
 
