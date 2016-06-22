@@ -7,11 +7,12 @@
 	<string name="_bx_groups_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
 
 	<string name="_bx_groups_form_profile"><![CDATA[Группы]]></string>
-	<string name="_bx_groups_form_profile_display_add"><![CDATA[Добавить группу]]></string>
-	<string name="_bx_groups_form_profile_display_edit"><![CDATA[Редактировать группу]]></string>
-	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Редактировать обложку]]></string>
-	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Удалить группу]]></string>
-	<string name="_bx_groups_form_profile_display_view"><![CDATA[Просмотреть группу]]></string>
+	<string name="_bx_groups_form_profile_display_add"><![CDATA[Добавление группы]]></string>
+	<string name="_bx_groups_form_profile_display_edit"><![CDATA[Редактирование группы]]></string>
+	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
+	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Удаление группы]]></string>
+	<string name="_bx_groups_form_profile_display_view"><![CDATA[Полный группы]]></string>
+	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Полный просмотр группы]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>

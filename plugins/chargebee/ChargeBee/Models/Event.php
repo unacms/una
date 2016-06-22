@@ -4,7 +4,7 @@ class ChargeBee_Event extends ChargeBee_Model
 {
 
   protected $allowed = array('id', 'occurredAt', 'source', 'user', 'webhookStatus', 'webhookFailureReason',
-'webhooks', 'eventType');
+'webhooks', 'eventType', 'apiVersion');
 
     public function content()
     {
@@ -19,6 +19,13 @@ class ChargeBee_Event extends ChargeBee_Model
         }
         if($webhookData != null)
         {
+            if( isset($webhookData['api_version']) ) {
+                $apiVersion = strtoupper($webhookData['api_version']);
+                if($apiVersion != null && strcasecmp($apiVersion, ChargeBee_Environment::API_VERSION) != 0){
+                    throw new RuntimeException("API version [".$apiVersion."] in response does not match "
+                        ."with client library API version [".strtoupper(ChargeBee_Environment::API_VERSION)."]");
+                }
+            }
             return new ChargeBee_Event($webhookData);
         }
         return null;
@@ -30,7 +37,7 @@ class ChargeBee_Event extends ChargeBee_Model
 
   public static function all($params = array(), $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("events"), $params, $env, $headers);
+    return ChargeBee_Request::sendListRequest(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("events"), $params, $env, $headers);
   }
 
   public static function retrieve($id, $env = null, $headers = array())

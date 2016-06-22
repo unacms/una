@@ -158,7 +158,6 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $iProfileId = $this->getContentOwnerProfileId($iContentId);
 
         $aGhostFiles = $oStorage->getGhosts ($iProfileId, $isAssociateWithContent ? 0 : $iContentId, true);
-
         if (!$aGhostFiles)
             return true;
 

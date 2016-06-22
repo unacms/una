@@ -2,7 +2,6 @@
 
 namespace Intervention\Image;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class ImageServiceProvider extends ServiceProvider
@@ -61,7 +60,9 @@ class ImageServiceProvider extends ServiceProvider
      */
     private function getProvider()
     {
-        if (version_compare(Application::VERSION, '5.0', '<')) {
+        if ($this->app instanceof \Laravel\Lumen\Application) {
+            $provider = '\Intervention\Image\ImageServiceProviderLumen';
+        } elseif (version_compare(\Illuminate\Foundation\Application::VERSION, '5.0', '<')) {
             $provider = '\Intervention\Image\ImageServiceProviderLaravel4';
         } else {
             $provider = '\Intervention\Image\ImageServiceProviderLaravel5';

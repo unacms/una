@@ -106,8 +106,8 @@
     <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Обновить статус]]></string>
     <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Обновить статус]]></string>
 
-	<string name="_bx_timeline_menu_item_title_system_view_timeline_author"><![CDATA[Лента]]></string>
-	<string name="_bx_timeline_menu_item_title_view_timeline_author"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Лента]]></string>
 
 	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
 	<string name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Лента (разместить снова)]]></string>

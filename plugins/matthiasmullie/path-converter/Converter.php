@@ -1,4 +1,5 @@
 <?php
+
 namespace MatthiasMullie\PathConverter;
 
 /**
@@ -12,7 +13,6 @@ namespace MatthiasMullie\PathConverter;
  * Please report bugs on https://github.com/matthiasmullie/path-converter/issues
  *
  * @author Matthias Mullie <pathconverter@mullie.eu>
- *
  * @copyright Copyright (c) 2015, Matthias Mullie. All rights reserved.
  * @license MIT License
  */
@@ -34,11 +34,25 @@ class Converter
      */
     public function __construct($from, $to)
     {
-        $from = $this->normalize($from);
-        $to = $this->normalize($to);
+        $shared = $this->shared($from, $to);
+        if ($shared === '') {
+            // when both paths have nothing in common, one of them is probably
+            // absolute while the other is relative
+            $cwd = getcwd();
+            $from = strpos($from, $cwd) === 0 ? $from : $cwd.'/'.$from;
+            $to = strpos($to, $cwd) === 0 ? $to : $cwd.'/'.$to;
+
+            // or traveling the tree via `..`
+            // attempt to resolve path, or assume it's fine if it doesn't exist
+            $from = realpath($from) ?: $from;
+            $to = realpath($to) ?: $to;
+        }
 
         $from = $this->dirname($from);
         $to = $this->dirname($to);
+
+        $from = $this->normalize($from);
+        $to = $this->normalize($to);
 
         $this->from = $from;
         $this->to = $to;
@@ -47,14 +61,12 @@ class Converter
     /**
      * Normalize path.
      *
-     * @param  string $path
+     * @param string $path
+     *
      * @return string
      */
     protected function normalize($path)
     {
-        // attempt to resolve path, or assume path is fine if it doesn't exist
-        $path = realpath($path) ?: $path;
-
         // deal with different operating systems' directory structure
         $path = rtrim(str_replace(DIRECTORY_SEPARATOR, '/', $path), '/');
 
@@ -81,8 +93,9 @@ class Converter
      * share
      *     /home/forkcms/frontend
      *
-     * @param  string $path1
-     * @param  string $path2
+     * @param string $path1
+     * @param string $path2
+     *
      * @return string
      */
     protected function shared($path1, $path2)
@@ -116,7 +129,8 @@ class Converter
      *     ../../core/layout/images/img.gif relative to
      *     /home/forkcms/frontend/cache/minified_css
      *
-     * @param  string $path The relative path that needs to be converted.
+     * @param string $path The relative path that needs to be converted.
+     *
      * @return string The new relative path.
      */
     public function convert($path)
@@ -134,12 +148,11 @@ class Converter
 
         // normalize paths
         $path = $this->normalize($this->from.'/'.$path);
-        $to = $this->normalize($this->to);
 
         // strip shared ancestor paths
-        $shared = $this->shared($path, $to);
+        $shared = $this->shared($path, $this->to);
         $path = mb_substr($path, mb_strlen($shared));
-        $to = mb_substr($to, mb_strlen($shared));
+        $to = mb_substr($this->to, mb_strlen($shared));
 
         // add .. for every directory that needs to be traversed to new path
         $to = str_repeat('../', mb_substr_count($to, '/'));
@@ -150,16 +163,17 @@ class Converter
     /**
      * Attempt to get the directory name from a path.
      *
-     * @param  string $path
+     * @param string $path
+     *
      * @return string
      */
     public function dirname($path)
     {
-        if (@is_file($path)) {
+        if (is_file($path)) {
             return dirname($path);
         }
 
-        if (@is_dir($path)) {
+        if (is_dir($path)) {
             return rtrim($path, '/');
         }
 

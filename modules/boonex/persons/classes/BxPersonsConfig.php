@@ -81,6 +81,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_METATAGS' => 'bx_persons',
             'OBJECT_FORM_ENTRY' => 'bx_person',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_person_view',
+        	'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_person_view_full', // for "info" tab on view profile page 
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_person_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_person_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_person_edit_cover',

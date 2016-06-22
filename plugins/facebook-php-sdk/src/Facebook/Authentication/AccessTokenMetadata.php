@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -382,7 +382,7 @@ class AccessTokenMetadata
     private function castTimestampsToDateTime()
     {
         foreach (static::$dateProperties as $key) {
-            if (isset($this->metadata[$key])) {
+            if (isset($this->metadata[$key]) && $this->metadata[$key] !== 0) {
                 $this->metadata[$key] = $this->convertTimestampToDateTime($this->metadata[$key]);
             }
         }

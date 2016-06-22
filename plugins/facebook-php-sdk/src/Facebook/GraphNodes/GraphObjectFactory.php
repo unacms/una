@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -68,7 +68,7 @@ class GraphObjectFactory extends GraphNodeFactory
      */
     public function makeGraphEvent()
     {
-        return $this->makeGraphObject(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphEvent');
+        return $this->makeGraphNode(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphEvent');
     }
 
     /**

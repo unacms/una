@@ -367,7 +367,7 @@ abstract class BxDolUploader extends BxDol
 
         $oProfile = BxDolProfile::getInstance($iProfileId);
         $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
-        $aProfiles = $oAccount ? $oAccount->getProfiles() : array();
+        $aProfiles = $oAccount ? $oAccount->getProfiles(false) : array();
         if (!isset($aProfiles[$aFile['profile_id']]) && !isAdmin())
             return _t('_sys_txt_access_denied');
 

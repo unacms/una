@@ -33,26 +33,6 @@ class BxAclModule extends BxDolModule
     /**
      * SERVICE METHODS
      */
-	public function serviceGetBlockAdministration()
-	{
-		$sContent = '';
-
-		$sGrid = $this->_oConfig->getGridObject('administration');
-		$oGrid = BxDolGrid::getObjectInstance($sGrid);
-        if(!$oGrid)
-            return $sContent;
-
-		if($this->_oConfig->getOwner() == 0)
-			$sContent .= $this->_oTemplate->displayEmptyOwner();
-
-		$sContent .= $this->_oTemplate->getJsCode('administration', array('sObjNameGrid' => $sGrid));
-		$sContent .= $oGrid->getCode();
-
-		return array(
-            'content' => $sContent 
-        );
-	}
-
 	public function serviceGetBlockView()
 	{
 		$sGrid = $this->_oConfig->getGridObject('view');

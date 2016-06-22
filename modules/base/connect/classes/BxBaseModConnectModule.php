@@ -25,6 +25,19 @@ class BxBaseModConnectModule extends BxDolModule
         return $aModules;
     }
 
+    public function serviceGetPrivacyGroups ()
+    {
+        $oPrivacyQuery = new BxDolPrivacyQuery();
+        $a = $oPrivacyQuery->getGroupsBy(array('type' => 'active'));
+        $aGroups = array();
+        foreach ($a as $r) {
+            if (!(int)$r['active'])
+               continue;
+            $aGroups[$r['id']] = _t($r['title']);
+        }
+        return $aGroups;
+    }
+    
     /**
      * Logged profile
      *
@@ -173,6 +186,7 @@ class BxBaseModConnectModule extends BxDolModule
             if (isset($oFormProfile) && $oFormProfile) {
                 
                 $aFieldsProfile['picture'] = $this->_processImage($aFieldsProfile, $iAccountProfileId, $oFormHelperProfile);
+                $_POST['picture'] = $aFieldsProfile['picture']; // set POST variable to correctly process images in processFiles method in form object
 
                 if (!($iContentId = $oFormProfile->insert($aFieldsProfile)))
                     return _t('_sys_txt_error_account_creation');

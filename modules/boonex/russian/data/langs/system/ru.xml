@@ -1439,7 +1439,7 @@
 	<string name="_sys_audit_msg_mail_sent"><![CDATA[нестовое сообщение отослано, пожалуйста, проверьте {0} эл. ящик]]></string>
 	<string name="_sys_audit_msg_manual_audit"><![CDATA[<p>
 Некоторые пункты не могут быть автоматически определены, ручной аудит сервера необходим для проверки. 
-Если Вы не знаете, как провести его самостоятельно, Вы можете запросить <a target="_blank" href="http://www.boonex.com/help/tickets">BoonEx Server Audit</a>.
+Если Вы не знаете, как провести его самостоятельно, Вы можете запросить <a target="_blank" href="mailto:team@boonex.com?subject=Ручной аудит сервера">ручной аудит сервера</a>.
 </p>]]></string>
 	<string name="_sys_audit_msg_must_be"><![CDATA[нужно {0} {1}]]></string>
 	<string name="_sys_audit_msg_optimization_apache_module"><![CDATA[Чтобы применить эту оптимизацию, Вам нужно иметь <b>{0}</b> - {1}]]></string>

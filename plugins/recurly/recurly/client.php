@@ -27,7 +27,7 @@ class Recurly_Client
   /**
    * API Version
    */
-  public static $apiVersion = '2.1';
+  public static $apiVersion = '2.2';
 
   /**
    * The path to your CA certs. Use only if needed (if you can't fix libcurl/php).
@@ -44,7 +44,7 @@ class Recurly_Client
    */
   private $_acceptLanguage = 'en-US';
 
-  const API_CLIENT_VERSION = '2.5.1';
+  const API_CLIENT_VERSION = '2.5.2';
   const DEFAULT_ENCODING = 'UTF-8';
 
   const GET = 'GET';
@@ -67,6 +67,8 @@ class Recurly_Client
   const PATH_PLANS = '/plans';
   const PATH_SUBSCRIPTIONS = '/subscriptions';
   const PATH_TRANSACTIONS = '/transactions';
+  const PATH_MEASURED_UNITS = '/measured_units';
+  const PATH_USAGE = '/usage';
 
   const PATH_RECURLY_JS_RESULT = '/recurly_js/result';
 

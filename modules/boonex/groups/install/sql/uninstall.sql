@@ -19,12 +19,9 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_group
 -- FORMS
 
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_groups';
-
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_groups';
-
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_groups';
-
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_group_add', 'bx_group_delete', 'bx_group_edit', 'bx_group_edit_cover', 'bx_group_view');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_group_add', 'bx_group_delete', 'bx_group_edit', 'bx_group_edit_cover', 'bx_group_view', 'bx_group_view_full');
 
 -- PRE-VALUES
 

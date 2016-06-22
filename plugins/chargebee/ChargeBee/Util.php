@@ -60,6 +60,10 @@ class ChargeBee_Util
     {
       $uriPaths = "";
       foreach(func_get_args() as $arg) {
+            $arg=trim($arg);
+            if( $arg == null || strlen($arg) < 1 ) {
+                 throw new Exception("Id cannot be null or empty");
+            }
             $uriPaths .= "/" . rawurlencode($arg);
       }
       return $uriPaths;
