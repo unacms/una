@@ -2,12 +2,11 @@
 
 namespace Intervention\Image\Commands;
 
-use Intervention\Image\Response;
-
-class ResponseCommand extends AbstractCommand
+class StreamCommand extends AbstractCommand
 {
     /**
-     * Builds HTTP response from given image
+     * Builds PSR7 stream based on image data. Method uses Guzzle PSR7
+     * implementation as easiest choice.
      *
      * @param  \Intervention\Image\Image $image
      * @return boolean
@@ -17,9 +16,9 @@ class ResponseCommand extends AbstractCommand
         $format = $this->argument(0)->value();
         $quality = $this->argument(1)->between(0, 100)->value();
 
-        $response = new Response($image, $format, $quality);
-
-        $this->setOutput($response->make());
+        $this->setOutput(\GuzzleHttp\Psr7\stream_for(
+            $image->encode($format, $quality)->getEncoded()
+        ));
 
         return true;
     }

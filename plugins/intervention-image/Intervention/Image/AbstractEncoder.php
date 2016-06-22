@@ -135,6 +135,7 @@ abstract class AbstractEncoder
                 break;
 
             case 'ico':
+            case 'image/x-ico':
             case 'image/x-icon':
             case 'image/vnd.microsoft.icon':
                 $this->result = $this->processIco();
@@ -150,6 +151,8 @@ abstract class AbstractEncoder
                     "Encoding format ({$format}) is not supported."
                 );
         }
+
+        $this->setImage(null);
 
         return $image->setEncoded($this->result);
     }
