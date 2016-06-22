@@ -203,7 +203,7 @@ class BxBaseServiceProfiles extends BxDol
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
         foreach ($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);
-            if ($oModule instanceof iBxDolProfileService)
+            if ($oModule instanceof iBxDolProfileService && $oModule->serviceActAsProfile())
                 $aRet[] = $aModule;
         }
         return $aRet;
