@@ -3,8 +3,8 @@
 class ChargeBee_Subscription extends ChargeBee_Model
 {
 
-  protected $allowed = array('id', 'planId', 'planQuantity', 'status', 'startDate', 'trialStart', 'trialEnd',
-'currentTermStart', 'currentTermEnd', 'remainingBillingCycles', 'poNumber', 'createdAt', 'startedAt','activatedAt', 'cancelledAt', 'cancelReason', 'affiliateToken', 'createdFromIp', 'dueInvoicesCount','dueSince', 'totalDues', 'addons', 'coupon', 'coupons', 'shippingAddress', 'hasScheduledChanges','invoiceNotes');
+  protected $allowed = array('id', 'customerId', 'planId', 'planQuantity', 'status', 'startDate', 'trialStart',
+'trialEnd', 'currentTermStart', 'currentTermEnd', 'remainingBillingCycles', 'poNumber', 'createdAt','startedAt', 'activatedAt', 'cancelledAt', 'cancelReason', 'affiliateToken', 'createdFromIp','hasScheduledChanges', 'dueInvoicesCount', 'dueSince', 'totalDues', 'addons', 'coupon', 'coupons','shippingAddress', 'invoiceNotes', 'metaData');
 
 
 
@@ -23,7 +23,7 @@ class ChargeBee_Subscription extends ChargeBee_Model
 
   public static function all($params = array(), $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("subscriptions"), $params, $env, $headers);
+    return ChargeBee_Request::sendListRequest(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("subscriptions"), $params, $env, $headers);
   }
 
   public static function subscriptionsForCustomer($id, $params = array(), $env = null, $headers = array())
@@ -79,6 +79,11 @@ class ChargeBee_Subscription extends ChargeBee_Model
   public static function chargeAddonAtTermEnd($id, $params, $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"charge_addon_at_term_end"), $params, $env, $headers);
+  }
+
+  public static function delete($id, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"delete"), array(), $env, $headers);
   }
 
  }

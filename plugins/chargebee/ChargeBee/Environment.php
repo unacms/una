@@ -12,14 +12,15 @@ class ChargeBee_Environment {
 
     public static  $connectTimeout= 50;
     public static  $timeout=100;
+    const API_VERSION = "v2";
     
     function __construct($site, $apiKey) {
         $this->site = $site;
         $this->apiKey = $apiKey;
         if (ChargeBee_Environment::$chargebeeDomain == null) {
-            $this->apiEndPoint = "https://$site.chargebee.com/api/v1";
+            $this->apiEndPoint = "https://$site.chargebee.com/api/" . ChargeBee_Environment::API_VERSION;
         } else {
-            $this->apiEndPoint = ChargeBee_Environment::$scheme . "://$site." . ChargeBee_Environment::$chargebeeDomain . "/api/v1";
+            $this->apiEndPoint = ChargeBee_Environment::$scheme . "://$site." . ChargeBee_Environment::$chargebeeDomain . "/api/" . ChargeBee_Environment::API_VERSION;
         }
     }
 
