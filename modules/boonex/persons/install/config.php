@@ -113,6 +113,7 @@ $aConfig = array(
     'disable' => array (
         'execute_sql' => 1,
     	'unregister_transcoders' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'disable_failed' => array (

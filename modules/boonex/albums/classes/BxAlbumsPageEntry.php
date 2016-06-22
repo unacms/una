@@ -29,7 +29,7 @@ class BxAlbumsPageEntry extends BxBaseModTextPageEntry
 
         $aMedia = array_shift($aMediaList);
 
-        return array('id' => $aMedia['file_id'], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
+        return array('id' => $aMedia['file_id'], 'transcoder' => $CNF['OBJECT_TRANSCODER_COVER']);
     }
 }
 

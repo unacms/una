@@ -55,7 +55,7 @@ class BxDolStudioPageQuery extends BxDolDb
                 	'name' => $aParams['value']
                 );
 
-                $sWhereClause .= "AND `tp`.`name`=?";
+                $sWhereClause .= "AND `tp`.`name`=:name";
                 $sLimitClause = "LIMIT 1";
                 break;
 

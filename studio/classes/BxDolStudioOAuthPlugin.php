@@ -118,6 +118,10 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
 			$oAccessToken = $oService->requestAccessToken($sToken, $sVerifier, $oToken->getRequestTokenSecret());
     	}
     	catch (TokenResponseException $e) {
+    		$sErrorException = $e->getMessage();
+    		if(!empty($sErrorException))
+    			$sError = $sErrorException;
+
     		if(!$this->isAuthorized())
     			return $sError;
 

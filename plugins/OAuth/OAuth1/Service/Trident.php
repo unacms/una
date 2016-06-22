@@ -77,7 +77,7 @@ class Trident extends AbstractService
         if($aData === null || !is_array($aData))
             throw new TokenResponseException('Unable to parse response.');
         else if(isset($aData['oauth_err_code']) && isset($aData['oauth_err_message']))
-            throw new TokenResponseException('Error in retrieving token: "' . $aData['oauth_err_message'] . '"');
+            throw new TokenResponseException($aData['oauth_err_message']);
 
         $oToken = new StdOAuth1Token();
 

@@ -235,6 +235,7 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
             'country'       => isset($sCountry) ? $sCountry : '',
             'city'       	=> isset($sCity) ? $sCity : '',
             'picture'       => $aProfileInfo['picture'],
+            'allow_view_to' => getParam('bx_facebook_connect_privacy'),
         );
 
         return $aProfileFields;

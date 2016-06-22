@@ -72,6 +72,9 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $aVars['location'] = $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aData[$CNF['FIELD_ID']]) : '';
         }
 
+        if (empty($aVars['entry_text']))
+            return false;
+
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 

@@ -19,12 +19,9 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_perso
 -- FORMS
 
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_persons';
-
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_persons';
-
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_persons';
-
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_person_add', 'bx_person_delete', 'bx_person_edit', 'bx_person_edit_cover', 'bx_person_view');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_person_add', 'bx_person_delete', 'bx_person_edit', 'bx_person_edit_cover', 'bx_person_view', 'bx_person_view_full');
 
 -- STUDIO PAGE & WIDGET
 

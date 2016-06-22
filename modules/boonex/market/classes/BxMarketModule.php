@@ -63,11 +63,6 @@ class BxMarketModule extends BxBaseModTextModule
         return $this->_oTemplate->entryAttachmentsByStorage($CNF['OBJECT_STORAGE_FILES'], $aContentInfo);
     }
 
-	public function serviceEntityInfoFull ($iContentId = 0)
-    {
-        return $this->_serviceEntityForm ('viewDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL']);
-    }
-
     public function serviceEntityRating($iContentId = 0)
     {
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
@@ -101,6 +96,7 @@ class BxMarketModule extends BxBaseModTextModule
         if(!$oGrid)
 			return '';
 
+		$this->_oTemplate->addJs(array('licenses.js'));
 		return array(
         	'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
         );

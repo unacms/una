@@ -83,7 +83,8 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_view_entry_info', '_bx_market_page_title_sys_view_entry_info', '_bx_market_page_title_view_entry_info', 'bx_market', 5, 2147483647, 1, 'view-product-info', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_view_entry_info', 1, 'bx_market', '_bx_market_page_block_title_entry_info', '_bx_market_page_block_title_entry_info_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:16:\"entity_info_full\";}', 0, 0, 1);
+('bx_market_view_entry_info', 1, 'bx_market', '_bx_market_page_block_title_entry_info', '_bx_market_page_block_title_entry_info_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:16:\"entity_info_full\";}', 0, 0, 1),
+('bx_market_view_entry_info', 1, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 2);
 
 
 -- PAGE: categories
@@ -234,8 +235,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_market_view_submenu', 'bx_market', 'view-product', '_bx_market_menu_item_title_system_view_entry_submenu_entry', '_bx_market_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-product&id={content_id}', '', '', '', '', 2147483647, 1, 0, 1),
-('bx_market_view_submenu', 'bx_market', 'view-product-comments', '_bx_market_menu_item_title_system_view_entry_submenu_comments', '_bx_market_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-product-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2),
-('bx_market_view_submenu', 'bx_market', 'view-product-info', '_bx_market_menu_item_title_system_view_entry_submenu_info', '_bx_market_menu_item_title_view_entry_submenu_info', 'page.php?i=view-product-info&id={content_id}', '', '', '', '', 2147483647, 1, 0, 3);
+('bx_market_view_submenu', 'bx_market', 'view-product-info', '_bx_market_menu_item_title_system_view_entry_submenu_info', '_bx_market_menu_item_title_view_entry_submenu_info', 'page.php?i=view-product-info&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2),
+('bx_market_view_submenu', 'bx_market', 'view-product-comments', '_bx_market_menu_item_title_system_view_entry_submenu_comments', '_bx_market_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-product-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 3);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);

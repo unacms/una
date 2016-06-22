@@ -23,7 +23,7 @@ class BxAclGridAdministration extends BxTemplGrid
     	$this->MODULE = 'bx_acl';
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
-        parent::__construct ($aOptions, $this->_oModule->_oTemplate);
+        parent::__construct ($aOptions, $oTemplate);
 
         $iLevel = (int)bx_get('level');
         if($iLevel > 0) {
@@ -75,10 +75,10 @@ class BxAclGridAdministration extends BxTemplGrid
 
             echoJson($aRes);
             return;
-        } 
+        }
 
 		bx_import('BxTemplStudioFunctions');
-		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_add'), $this->_oTemplate->parseHtmlByName('popup_price.html', array(
+		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_add'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
 			'form_id' => $oForm->aFormAttrs['id'],
 			'form' => $oForm->getCode(true),
 			'object' => $this->_sObject,
@@ -128,7 +128,7 @@ class BxAclGridAdministration extends BxTemplGrid
         }
 
 		bx_import('BxTemplStudioFunctions');
-		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_edit'), $this->_oTemplate->parseHtmlByName('popup_price.html', array(
+		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_edit'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
 			'form_id' => $oForm->aFormAttrs['id'],
 			'form' => $oForm->getCode(true),
 			'object' => $this->_sObject,
@@ -164,8 +164,8 @@ class BxAclGridAdministration extends BxTemplGrid
     protected function _addJsCss()
     {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.min.js', 'administration.js'));
-        $this->_oTemplate->addCss(array('administration.css'));
+        $this->_oModule->_oTemplate->addStudioJs(array('jquery.form.min.js', 'administration.js'));
+        $this->_oModule->_oTemplate->addStudioCss(array('administration.css'));
 
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();

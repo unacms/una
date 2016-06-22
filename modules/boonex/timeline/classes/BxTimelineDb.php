@@ -241,7 +241,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $sWhereAddon = " AND `id`=:id";
         }
 
-        return $this->query("DELETE FROM `" . $this->_sPrefix . "links` WHERE `profile_id`=:profile_id" . $sWhereAddon);
+        return $this->query("DELETE FROM `" . $this->_sPrefix . "links` WHERE `profile_id`=:profile_id" . $sWhereAddon, $aBindings);
     }
 
     public function saveLink($iEventId, $iLinkId)

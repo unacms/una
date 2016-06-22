@@ -161,7 +161,8 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_group', 'bx_group_delete', 'bx_groups', 0, '_bx_groups_form_profile_display_delete'),
 ('bx_group', 'bx_group_edit', 'bx_groups', 0, '_bx_groups_form_profile_display_edit'),
 ('bx_group', 'bx_group_edit_cover', 'bx_groups', 0, '_bx_groups_form_profile_display_edit_cover'),
-('bx_group', 'bx_group_view', 'bx_groups', 1, '_bx_groups_form_profile_display_view');
+('bx_group', 'bx_group_view', 'bx_groups', 1, '_bx_groups_form_profile_display_view'),
+('bx_group', 'bx_group_view_full', 'bx_groups', 1, '_bx_groups_form_profile_display_view_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_group', 'bx_groups', 'allow_view_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_view_to', '_bx_groups_form_profile_input_allow_view_to', '_bx_groups_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -186,12 +187,14 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_add', 'join_confirmation', 2147483647, 1, 10),
 ('bx_group_add', 'allow_view_to', 2147483647, 1, 11),
 ('bx_group_add', 'do_submit', 2147483647, 1, 12),
+
 ('bx_group_delete', 'delete_confirm', 2147483647, 1, 0),
 ('bx_group_delete', 'cover', 2147483647, 0, 0),
 ('bx_group_delete', 'picture', 2147483647, 0, 0),
 ('bx_group_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_group_delete', 'group_name', 2147483647, 0, 2),
 ('bx_group_delete', 'group_cat', 2147483647, 0, 3),
+
 ('bx_group_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_group_edit', 'cover', 2147483647, 0, 3),
 ('bx_group_edit', 'picture', 2147483647, 1, 5),
@@ -201,6 +204,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_edit', 'join_confirmation', 2147483647, 1, 9),
 ('bx_group_edit', 'allow_view_to', 2147483647, 1, 10),
 ('bx_group_edit', 'do_submit', 2147483647, 1, 11),
+
 ('bx_group_edit_cover', 'join_confirmation', 2147483647, 0, 0),
 ('bx_group_edit_cover', 'group_desc', 2147483647, 0, 0),
 ('bx_group_edit_cover', 'delete_confirm', 2147483647, 0, 1),
@@ -209,13 +213,18 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_edit_cover', 'group_cat', 2147483647, 0, 5),
 ('bx_group_edit_cover', 'cover', 2147483647, 1, 7),
 ('bx_group_edit_cover', 'do_submit', 2147483647, 1, 8),
+
 ('bx_group_view', 'delete_confirm', 2147483647, 0, 3),
 ('bx_group_view', 'picture', 2147483647, 0, 4),
 ('bx_group_view', 'cover', 2147483647, 0, 5),
 ('bx_group_view', 'do_submit', 2147483647, 0, 6),
 ('bx_group_view', 'group_name', 2147483647, 1, 7),
 ('bx_group_view', 'group_cat', 2147483647, 1, 8),
-('bx_group_view', 'group_desc', 2147483647, 0, 9);
+('bx_group_view', 'group_desc', 2147483647, 0, 9),
+
+('bx_group_view_full', 'group_name', 2147483647, 1, 1),
+('bx_group_view_full', 'group_cat', 2147483647, 1, 2),
+('bx_group_view_full', 'group_desc', 2147483647, 1, 3);
 
 -- PRE-VALUES
 

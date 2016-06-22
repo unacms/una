@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -250,9 +250,9 @@ class OAuth2Client
     /**
      * Send a request to Graph with an app access token.
      *
-     * @param string      $endpoint
-     * @param array       $params
-     * @param string|null $accessToken
+     * @param string                  $endpoint
+     * @param array                   $params
+     * @param AccessToken|string|null $accessToken
      *
      * @return FacebookResponse
      *

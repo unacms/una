@@ -8,7 +8,10 @@ class Recurly_SubscriptionAddOn extends Recurly_Resource {
     Recurly_SubscriptionAddOn::$_writeableAttributes = array(
       'add_on_code',
       'quantity',
-      'unit_amount_in_cents'
+      'unit_amount_in_cents',
+      'add_on_type',
+      'usage_type',
+      'usage_percentage'
     );
   }
 

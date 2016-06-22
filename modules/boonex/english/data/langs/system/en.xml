@@ -1439,7 +1439,7 @@
 	<string name="_sys_audit_msg_mail_sent"><![CDATA[test mail was send, please check {0} mailbox]]></string>
 	<string name="_sys_audit_msg_manual_audit"><![CDATA[<p>
 Some things can not be determined automatically, manual server audit is required to check it. 
-If you don't know how to do it by yourself you can submit <a target="_blank" href="http://www.boonex.com/help/tickets">BoonEx Server Audit Request</a>.
+If you don't know how to do it by yourself you can submit <a target="_blank" href="mailto:team@boonex.com?subject=Server Audit Request">BoonEx Server Audit Request</a>.
 </p>]]></string>
 	<string name="_sys_audit_msg_must_be"><![CDATA[must be {0} {1}]]></string>
 	<string name="_sys_audit_msg_optimization_apache_module"><![CDATA[To apply this optimization you need to have <b>{0}</b> - {1}]]></string>
