@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -124,7 +124,7 @@ class FacebookClient
      */
     public function detectHttpClientHandler()
     {
-        return function_exists('curl_init') ? new FacebookCurlHttpClient() : new FacebookStreamHttpClient();
+        return extension_loaded('curl') ? new FacebookCurlHttpClient() : new FacebookStreamHttpClient();
     }
 
     /**
@@ -197,7 +197,7 @@ class FacebookClient
      */
     public function sendRequest(FacebookRequest $request)
     {
-        if (get_class($request) === 'FacebookRequest') {
+        if (get_class($request) === 'Facebook\FacebookRequest') {
             $request->validateAccessToken();
         }
 

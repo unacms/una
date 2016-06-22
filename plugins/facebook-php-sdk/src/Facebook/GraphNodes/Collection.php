@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -69,7 +69,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
             return $this->items[$name];
         }
 
-        return $default ?: null;
+        return $default;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2014 Facebook, Inc.
+ * Copyright 2016 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -62,10 +62,11 @@ class GraphNode extends Collection
         foreach ($data as $k => $v) {
             if ($this->shouldCastAsDateTime($k)
                 && (is_numeric($v)
-                    || $k === 'birthday'
                     || $this->isIso8601DateString($v))
             ) {
                 $items[$k] = $this->castToDateTime($v);
+            } elseif ($k === 'birthday') {
+                $items[$k] = $this->castToBirthday($v);
             } else {
                 $items[$k] = $v;
             }
@@ -149,7 +150,6 @@ class GraphNode extends Collection
             'backdated_time',
             'issued_at',
             'expires_at',
-            'birthday',
             'publish_time'
         ], true);
     }
@@ -171,6 +171,18 @@ class GraphNode extends Collection
         }
 
         return $dt;
+    }
+
+    /**
+     * Casts a birthday value from Graph to Birthday
+     *
+     * @param string $value
+     *
+     * @return Birthday
+     */
+    public function castToBirthday($value)
+    {
+        return new Birthday($value);
     }
 
     /**

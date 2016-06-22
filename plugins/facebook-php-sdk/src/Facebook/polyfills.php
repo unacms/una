@@ -21,27 +21,29 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-namespace Facebook\HttpClients;
 
 /**
- * Interface FacebookHttpClientInterface
- *
- * @package Facebook
+ * @see https://github.com/sarciszewski/php-future/blob/master/src/Security.php#L37-L51
  */
-interface FacebookHttpClientInterface
-{
-    /**
-     * Sends a request to the server and returns the raw response.
-     *
-     * @param string $url     The endpoint to send the request to.
-     * @param string $method  The request method.
-     * @param string $body    The body of the request.
-     * @param array  $headers The request headers.
-     * @param int    $timeOut The timeout in seconds for the request.
-     *
-     * @return \Facebook\Http\GraphRawResponse Raw response from the server.
-     *
-     * @throws \Facebook\Exceptions\FacebookSDKException
-     */
-    public function send($url, $method, $body, array $headers, $timeOut);
+if (!function_exists('hash_equals')) {
+    function hash_equals($knownString, $userString)
+    {
+        if (function_exists('mb_strlen')) {
+            $kLen = mb_strlen($knownString, '8bit');
+            $uLen = mb_strlen($userString, '8bit');
+        } else {
+            $kLen = strlen($knownString);
+            $uLen = strlen($userString);
+        }
+        if ($kLen !== $uLen) {
+            return false;
+        }
+        $result = 0;
+        for ($i = 0; $i < $kLen; $i++) {
+            $result |= (ord($knownString[$i]) ^ ord($userString[$i]));
+        }
+
+        // They are only identical strings if $result is exactly 0...
+        return 0 === $result;
+    }
 }

@@ -21,27 +21,65 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-namespace Facebook\HttpClients;
+namespace Facebook\GraphNodes;
+
+use DateTime;
 
 /**
- * Interface FacebookHttpClientInterface
+ * Birthday object to handle various Graph return formats
  *
  * @package Facebook
  */
-interface FacebookHttpClientInterface
+class Birthday extends DateTime
 {
     /**
-     * Sends a request to the server and returns the raw response.
-     *
-     * @param string $url     The endpoint to send the request to.
-     * @param string $method  The request method.
-     * @param string $body    The body of the request.
-     * @param array  $headers The request headers.
-     * @param int    $timeOut The timeout in seconds for the request.
-     *
-     * @return \Facebook\Http\GraphRawResponse Raw response from the server.
-     *
-     * @throws \Facebook\Exceptions\FacebookSDKException
+     * @var bool
      */
-    public function send($url, $method, $body, array $headers, $timeOut);
+    private $hasDate = false;
+
+    /**
+     * @var bool
+     */
+    private $hasYear = false;
+
+    /**
+     * Parses Graph birthday format to set indication flags, possible values:
+     *
+     *  MM/DD/YYYY
+     *  MM/DD
+     *  YYYY
+     *
+     * @link https://developers.facebook.com/docs/graph-api/reference/user
+     *
+     * @param string $date
+     */
+    public function __construct($date)
+    {
+        $parts = explode('/', $date);
+
+        $this->hasYear = count($parts) === 3 || count($parts) === 1;
+        $this->hasDate = count($parts) === 3 || count($parts) === 2;
+
+        parent::__construct($date);
+    }
+
+    /**
+     * Returns whether date object contains birth day and month
+     *
+     * @return bool
+     */
+    public function hasDate()
+    {
+        return $this->hasDate;
+    }
+
+    /**
+     * Returns whether date object contains birth year
+     *
+     * @return bool
+     */
+    public function hasYear()
+    {
+        return $this->hasYear;
+    }
 }
