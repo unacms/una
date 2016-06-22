@@ -6,7 +6,8 @@ __content__
     $(document).ready (function () {
         var e = CodeMirror.fromTextArea($('textarea[name=code]').get(0), {
             lineNumbers: true,
-            mode: "htmlmixed"
+            mode: "htmlmixed",
+            matchBrackets: true
         });
     });
 </script>
