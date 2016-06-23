@@ -44,6 +44,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
                             media: '{bx_url_tinymce}plugins/media/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
+                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
                         },
                         width: '100%',
                         height: '270',
@@ -64,6 +65,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             link: '{bx_url_tinymce}plugins/link/plugin.min.js',
                             lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
+                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
                         },
                         width: '100%',
                         height: '150',
@@ -100,13 +102,14 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             table: '{bx_url_tinymce}plugins/table/plugin.min.js',
                             textcolor: '{bx_url_tinymce}plugins/textcolor/plugin.min.js',
                             visualblocks: '{bx_url_tinymce}plugins/visualblocks/plugin.min.js',
+                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
                         },
                         width: '100%',
                         height: '320',
                         theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         toolbar: [
                             'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                            'print preview media | forecolor emoticons'
+                            'print preview media | forecolor emoticons | fullscreen'
                         ],
                         statusbar: true,
                         resize: true,
@@ -118,7 +121,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
     /**
      * Available editor languages
      */
-    protected static $CONF_LANGS = array('ar' => 1, 'ar_SA' => 1, 'az' => 1, 'be' => 1, 'bg_BG' => 1, 'bn_BD' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cs_CZ' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'de_AT' => 1, 'dv' => 1, 'el' => 1, 'en' => 1, 'en_CA' => 1, 'en_GB' => 1, 'eo' => 1, 'es' => 1, 'es_MX' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fa_IR' => 1, 'fi' => 1, 'fo' => 1, 'fr_FR' => 1, 'ga' => 1, 'gd' => 1, 'gl' => 1, 'he_IL' => 1, 'hi_IN' => 1, 'hr' => 1, 'hu_HU' => 1, 'hy' => 1, 'id' => 1, 'is_IS' => 1, 'it' => 1, 'ja' => 1, 'ka_GE' => 1, 'kab' => 1, 'kk' => 1, 'km_KH' => 1, 'ko' => 1, 'ko_KR' => 1, 'ku' => 1, 'ku_IQ' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'ml' => 1, 'ml_IN' => 1, 'mn_MN' => 1, 'nb_NO' => 1, 'nl' => 1, 'pl' => 1, 'pt_BR' => 1, 'pt_PT' => 1, 'ro' => 1, 'ru' => 1, 'si_LK' => 1, 'sk' => 1, 'sl_SI' => 1, 'sr' => 1, 'sv_SE' => 1, 'ta' => 1, 'ta_IN' => 1, 'tg' => 1, 'th_TH' => 1, 'tr' => 1, 'tr_TR' => 1, 'tt' => 1, 'ug' => 1, 'uk' => 1, 'uk_UA' => 1, 'vi' => 1, 'vi_VN' => 1, 'zh_CN' => 1, 'zh_TW' => 1);
+    protected static $CONF_LANGS = array('ar' => 1, 'ar_SA' => 1, 'az' => 1, 'be' => 1, 'bg_BG' => 1, 'bn_BD' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cs_CZ' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'de_AT' => 1, 'dv' => 1, 'el' => 1, 'en' => 1, 'en_CA' => 1, 'en_GB' => 1, 'eo' => 1, 'es' => 1, 'es_MX' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fa_IR' => 1, 'fi' => 1, 'fo' => 1, 'fr_CH' => 1, 'fr_FR' => 1, 'ga' => 1, 'gd' => 1, 'gl' => 1, 'he_IL' => 1, 'hi_IN' => 1, 'hr' => 1, 'hu_HU' => 1, 'hy' => 1, 'id' => 1, 'is_IS' => 1, 'it' => 1, 'ja' => 1, 'ka_GE' => 1, 'kab' => 1, 'kk' => 1, 'km_KH' => 1, 'ko' => 1, 'ko_KR' => 1, 'ku' => 1, 'ku_IQ' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'mk_MK' => 1, 'ml' => 1, 'ml_IN' => 1, 'mn_MN' => 1, 'nb_NO' => 1, 'nl' => 1, 'pl' => 1, 'pt_BR' => 1, 'pt_PT' => 1, 'ro' => 1, 'ru' => 1, 'ru_RU' => 1, 'si_LK' => 1, 'sk' => 1, 'sl_SI' => 1, 'sr' => 1, 'sv_SE' => 1, 'ta' => 1, 'ta_IN' => 1, 'tg' => 1, 'th_TH' => 1, 'tr' => 1, 'tr_TR' => 1, 'tt' => 1, 'ug' => 1, 'uk' => 1, 'uk_UA' => 1, 'vi' => 1, 'vi_VN' => 1, 'zh_CN' => 1, 'zh_TW' => 1);
 
     protected $_oTemplate;
     protected $_bJsCssAdded = false;

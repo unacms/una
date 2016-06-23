@@ -86,6 +86,10 @@ blockquote {
     margin-right:auto;
 }
 
+div.mce-fullscreen {
+    z-index: 1200;
+}
+
 /* --------------- design boxes */
 
 .bx-db-container {
