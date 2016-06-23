@@ -24,7 +24,7 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
 	var $this = this;
 	var oForm = $('#' + sFormId);
 
-	oForm.find('textarea').autosize();
+	autosize(oForm.find('textarea'));
 	oForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {

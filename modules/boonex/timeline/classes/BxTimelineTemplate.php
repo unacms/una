@@ -29,8 +29,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $this->addJs(array(
             'jquery-ui/jquery-ui.custom.min.js',
             'jquery.form.min.js',
-        	'jquery.autosize.min.js',
             'jquery.ba-resize.min.js',
+        	'autosize.min.js',
             'masonry.pkgd.min.js',
         	'flickity/flickity.pkgd.min.js',
             'post.js',
