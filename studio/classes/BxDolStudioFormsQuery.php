@@ -551,13 +551,12 @@ class BxDolStudioFormsQuery extends BxDolDb
 
     function deleteValues($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
             case 'by_key':
-            	$aMethod['params'][1] = array(
-                	'key' => $aParams['value']
-                );
+            	$aBindings['key'] = $aParams['value'];
 
                 $sWhereClause = " AND `tv`.`Key`=:key ";
                 break;
@@ -567,7 +566,7 @@ class BxDolStudioFormsQuery extends BxDolDb
         }
 
         $sSql = "DELETE FROM `tv` USING `sys_form_pre_values` AS `tv` WHERE 1 " . $sWhereClause . " " . $sLimitClause;
-        return $this->query($sSql) !== false;
+        return $this->query($sSql, $aBindings) !== false;
     }
 
     function getValuesOrderMax($sKey)

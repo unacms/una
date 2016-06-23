@@ -4,11 +4,6 @@
 	<string name="_bx_acl"><![CDATA[ACL]]></string>
 
 	<!-- Pages -->
-	<string name="_bx_acl_page_title_sys_administration"><![CDATA[Управление ценами]]></string>
-	<string name="_bx_acl_page_title_administration"><![CDATA[Управление ценами]]></string>
-	<string name="_bx_acl_page_block_title_system_administration"><![CDATA[Управление ценами]]></string>
-	<string name="_bx_acl_page_block_title_administration"><![CDATA[Управление ценами]]></string>
-
 	<string name="_bx_acl_page_title_sys_view"><![CDATA[Членство]]></string>
 	<string name="_bx_acl_page_title_view"><![CDATA[Членство]]></string>
 	<string name="_bx_acl_page_block_title_system_view"><![CDATA[Членство]]></string>
@@ -62,7 +57,6 @@
 
 
 	<!-- Menus -->
-	<string name="_bx_acl_menu_item_title_administration"><![CDATA[Управление]]></string>
 	<string name="_bx_acl_menu_item_title_system_acl_view"><![CDATA[Членство]]></string>
 	<string name="_bx_acl_menu_item_title_acl_view"><![CDATA[Членство]]></string>
 

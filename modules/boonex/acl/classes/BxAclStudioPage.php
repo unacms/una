@@ -20,20 +20,29 @@ class BxAclStudioPage extends BxTemplStudioModule
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         parent::__construct($sModule, $sPage);
-
-        $this->aMenuItems = array(
-            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            array('name' => 'manage', 'icon' => 'edit', 'title' => '_bx_acl_menu_item_title_administration', 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oModule->_oConfig->CNF['URL_ADMINISTRATION'])),
-        );
     }
 
     protected function getSettings()
     {
-    	$sContent = parent::getSettings();
-    	if($this->_oModule->_oConfig->getOwner() == 0)
-			$sContent = $this->_oModule->_oTemplate->displayEmptyOwner() . $sContent;
+	    if (!isAdmin()) {
+            $this->_oTemplate->displayAccessDenied();
+            return;
+        }
 
-    	return $sContent;
+    	$sContent = '';
+
+		$sGrid = $this->_oModule->_oConfig->getGridObject('administration');
+		$oGrid = BxDolGrid::getObjectInstance($sGrid, BxDolStudioTemplate::getInstance());
+        if(!$oGrid)
+            return $sContent;
+
+		if($this->_oModule->_oConfig->getOwner() == 0)
+			$sContent .= $this->_oModule->_oTemplate->displayEmptyOwner();
+
+		$sContent .= $this->_oModule->_oTemplate->getJsCode('administration', array('sObjNameGrid' => $sGrid));
+		$sContent .= $oGrid->getCode();
+
+		return $sContent;
     }
 }
 

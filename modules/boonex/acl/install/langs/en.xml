@@ -4,16 +4,11 @@
 	<string name="_bx_acl"><![CDATA[ACL]]></string>
 
 	<!-- Pages -->
-	<string name="_bx_acl_page_title_sys_administration"><![CDATA[Manage Prices]]></string>
-	<string name="_bx_acl_page_title_administration"><![CDATA[Manage Prices]]></string>
-	<string name="_bx_acl_page_block_title_system_administration"><![CDATA[Manage Prices]]></string>
-	<string name="_bx_acl_page_block_title_administration"><![CDATA[Manage Prices]]></string>
-
 	<string name="_bx_acl_page_title_sys_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_page_title_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_page_block_title_system_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_page_block_title_view"><![CDATA[Membership]]></string>
-	
+
 
 	<!-- Forms -->
 	<string name="_bx_acl_form_price"><![CDATA[Price]]></string>
@@ -62,7 +57,6 @@
 
 
 	<!-- Menus -->
-	<string name="_bx_acl_menu_item_title_administration"><![CDATA[Manage]]></string>
 	<string name="_bx_acl_menu_item_title_system_acl_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_menu_item_title_acl_view"><![CDATA[Membership]]></string>
 
