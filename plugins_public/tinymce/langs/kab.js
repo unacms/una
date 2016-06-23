@@ -11,7 +11,7 @@ tinymce.addI18n('kab',{
 "Font Family": "Tasefsit",
 "Pre": "Pre",
 "Align right": "tarigla \u0263er zelma\u1e0d",
-"New document": "Arrat amaynut",
+"New document": "Attaftar amaynut",
 "Blockquote": "Blockquote",
 "Numbered list": "Tabdart s wu\u1e6d\u1e6dunen",
 "Heading 1": "Heading 1",

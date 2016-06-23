@@ -1,8 +1,8 @@
 
 @font-face {
   font-family: 'sys-user';
-  src: url('../fonts/fontawesome-webfont.eot?v=4.4.0');
-  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.4.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.4.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.4.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome-webfont.eot?v=4.6.3');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.6.3') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.6.3') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.6.3') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.6.3') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1217,7 +1217,7 @@
 .sys-icon.digg:before {
   content: "\f1a6";
 }
-.sys-icon.pied-piper:before {
+.sys-icon.pied-piper-pp:before {
   content: "\f1a7";
 }
 .sys-icon.pied-piper-alt:before {
@@ -1343,6 +1343,7 @@
   content: "\f1ce";
 }
 .sys-icon.ra:before,
+.sys-icon.resistance:before,
 .sys-icon.rebel:before {
   content: "\f1d0";
 }
@@ -1858,3 +1859,157 @@
 .sys-icon.fonticons:before {
   content: "\f280";
 }
+.sys-icon.reddit-alien:before {
+  content: "\f281";
+}
+.sys-icon.edge:before {
+  content: "\f282";
+}
+.sys-icon.credit-card-alt:before {
+  content: "\f283";
+}
+.sys-icon.codiepie:before {
+  content: "\f284";
+}
+.sys-icon.modx:before {
+  content: "\f285";
+}
+.sys-icon.fort-awesome:before {
+  content: "\f286";
+}
+.sys-icon.usb:before {
+  content: "\f287";
+}
+.sys-icon.product-hunt:before {
+  content: "\f288";
+}
+.sys-icon.mixcloud:before {
+  content: "\f289";
+}
+.sys-icon.scribd:before {
+  content: "\f28a";
+}
+.sys-icon.pause-circle:before {
+  content: "\f28b";
+}
+.sys-icon.pause-circle-o:before {
+  content: "\f28c";
+}
+.sys-icon.stop-circle:before {
+  content: "\f28d";
+}
+.sys-icon.stop-circle-o:before {
+  content: "\f28e";
+}
+.sys-icon.shopping-bag:before {
+  content: "\f290";
+}
+.sys-icon.shopping-basket:before {
+  content: "\f291";
+}
+.sys-icon.hashtag:before {
+  content: "\f292";
+}
+.sys-icon.bluetooth:before {
+  content: "\f293";
+}
+.sys-icon.bluetooth-b:before {
+  content: "\f294";
+}
+.sys-icon.percent:before {
+  content: "\f295";
+}
+.sys-icon.gitlab:before {
+  content: "\f296";
+}
+.sys-icon.wpbeginner:before {
+  content: "\f297";
+}
+.sys-icon.wpforms:before {
+  content: "\f298";
+}
+.sys-icon.envira:before {
+  content: "\f299";
+}
+.sys-icon.universal-access:before {
+  content: "\f29a";
+}
+.sys-icon.wheelchair-alt:before {
+  content: "\f29b";
+}
+.sys-icon.question-circle-o:before {
+  content: "\f29c";
+}
+.sys-icon.blind:before {
+  content: "\f29d";
+}
+.sys-icon.audio-description:before {
+  content: "\f29e";
+}
+.sys-icon.volume-control-phone:before {
+  content: "\f2a0";
+}
+.sys-icon.braille:before {
+  content: "\f2a1";
+}
+.sys-icon.assistive-listening-systems:before {
+  content: "\f2a2";
+}
+.sys-icon.asl-interpreting:before,
+.sys-icon.american-sign-language-interpreting:before {
+  content: "\f2a3";
+}
+.sys-icon.deafness:before,
+.sys-icon.hard-of-hearing:before,
+.sys-icon.deaf:before {
+  content: "\f2a4";
+}
+.sys-icon.glide:before {
+  content: "\f2a5";
+}
+.sys-icon.glide-g:before {
+  content: "\f2a6";
+}
+.sys-icon.signing:before,
+.sys-icon.sign-language:before {
+  content: "\f2a7";
+}
+.sys-icon.low-vision:before {
+  content: "\f2a8";
+}
+.sys-icon.viadeo:before {
+  content: "\f2a9";
+}
+.sys-icon.viadeo-square:before {
+  content: "\f2aa";
+}
+.sys-icon.snapchat:before {
+  content: "\f2ab";
+}
+.sys-icon.snapchat-ghost:before {
+  content: "\f2ac";
+}
+.sys-icon.snapchat-square:before {
+  content: "\f2ad";
+}
+.sys-icon.pied-piper:before {
+  content: "\f2ae";
+}
+.sys-icon.first-order:before {
+  content: "\f2b0";
+}
+.sys-icon.yoast:before {
+  content: "\f2b1";
+}
+.sys-icon.themeisle:before {
+  content: "\f2b2";
+}
+.sys-icon.google-plus-circle:before,
+.sys-icon.google-plus-official:before {
+  content: "\f2b3";
+}
+.sys-icon.fa:before,
+.sys-icon.font-awesome:before {
+  content: "\f2b4";
+}
+

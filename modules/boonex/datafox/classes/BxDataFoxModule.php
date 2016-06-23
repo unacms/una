@@ -55,7 +55,7 @@ class BxDataFoxModule extends BxDolModule
             $e->parentNode->removeChild($e);
 
         // save the result 
-        if (false === ($s = $dom->saveXML($dom->getElementsByTagName('div')->item(0)))) // in case of error return original string
+        if (false === ($s = $dom->saveHTML($dom->getElementsByTagName('div')->item(0)))) // in case of error return original string
             return $sHtml;
 
         // strip added tags

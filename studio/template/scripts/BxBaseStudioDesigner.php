@@ -470,13 +470,11 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     ),
 				),
 				'code' => array(
-					'type' => 'textarea',
-					'name' => 'code',
+                    'type' => 'textarea',
+                    'code' => true,
+                    'name' => 'code',
 					'caption' => '',
 					'value' => getParam('sys_site_splash_code'),
-					'db' => array (
-                        'pass' => 'XssHtml',
-                    ),
 				),
 				'save' => array(
 					'type' => 'submit',
