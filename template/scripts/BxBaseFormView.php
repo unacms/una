@@ -337,7 +337,7 @@ EOS;
 
             case 'textarea':
                 if (isset($aInput['value']) && '' !== $aInput['value']) 
-                    $sValue = isset($aInput['html']) && $aInput['html'] ? $aInput['value'] : bx_process_output($aInput['value'], BX_DATA_TEXT_MULTILINE);
+                    $sValue = (isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : bx_process_output($aInput['value'], BX_DATA_TEXT_MULTILINE);
                 else
                     $sValue = null;
             break;
@@ -769,7 +769,7 @@ BLAH;
 
         $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}" . ((isset($aInput['html']) and $aInput['html'] and $this->addHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-html' : ''));
 
-        $sValue = isset($aInput['value']) ? bx_process_output(isset($aInput['html']) && $aInput['html'] ? $aInput['value'] : strip_tags($aInput['value'])) : '';
+        $sValue = isset($aInput['value']) ? bx_process_output((isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : strip_tags($aInput['value'])) : '';
 
         return "<textarea $sAttrs>$sValue</textarea>";
     }
