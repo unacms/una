@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_orgs_form_profile_display_view_full"><![CDATA[Full View Organization]]></string_add>
+	<string_add name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string_add>
+	<string_add name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string_add>
+	<string_add name="_bx_orgs_page_title_browse_online"><![CDATA[Online Organizations]]></string_add>
+	<string_add name="_bx_orgs_page_title_sys_online"><![CDATA[Online Organizations]]></string_add>
+	<string_add name="_bx_orgs_page_title_online"><![CDATA[Online Organizations]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_private"><![CDATA[Private Profile]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_membership"><![CDATA[Membership]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_system_profile_membership"><![CDATA[Membership]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_description"><![CDATA[Description]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Online Organizations]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_entries_online"><![CDATA[Online]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_entries_online"><![CDATA[Online]]></string_add>
+	<string_add name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> organization timeline from <a href="{subentry_url}">{subentry_sample}</a>]]></string_add>
+	<string_add name="_bx_orgs_txt_N_friends"><![CDATA[{0} friends]]></string_add>
+
+	<string_upd name="_bx_orgs_form_profile_input_picture"><![CDATA[Upload a profile picture]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Create a Profile - Organization]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_create_profile"><![CDATA[Create a Profile - Organization]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_browse_active"><![CDATA[Active Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_browse_recent"><![CDATA[New Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_sys_recent"><![CDATA[New Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_recent"><![CDATA[New Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_sys_active"><![CDATA[Active Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_active"><![CDATA[Active Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_page_block_title_create_profile"><![CDATA[Create a Profile - Organization]]></string_upd>
+	<string_upd name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[New Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Active Organizations]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Organization]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Organization]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[New]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[New]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Manage]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Active]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Active]]></string_upd>
+
+	<string_del name="_bx_orgs_form_profile_input_sys_picture_preview"><![CDATA[Profile Picture Preview]]></string_del>
+	<string_del name="_bx_orgs_form_profile_input_picture_preview"><![CDATA[Current Profile Picture]]></string_del>
+	<string_del name="_bx_orgs_form_profile_input_sys_cover_preview"><![CDATA[Cover Picture Preview]]></string_del>
+	<string_del name="_bx_orgs_form_profile_input_cover_preview"><![CDATA[Current Cover Picture]]></string_del>
+	<string_del name="_bx_orgs_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string_del>
+	<string_del name="_bx_orgs_menu_title_view_profile_actions_popup"><![CDATA[Organization Popup Actions]]></string_del>
+</resources>

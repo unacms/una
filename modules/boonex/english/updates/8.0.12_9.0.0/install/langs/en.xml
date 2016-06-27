@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_Please select value"><![CDATA[Please select a value from the list]]></string_add>
+	<string_add name="_report_counter"><![CDATA[{0}]]></string_add>
+	<string_add name="_report_do_report"><![CDATA[Report]]></string_add>
+	<string_add name="_report_do_report_by"><![CDATA[Reported by]]></string_add>
+	<string_add name="_report_err_cannot_perform_action"><![CDATA[Cannot perform action.]]></string_add>
+	<string_add name="_report_err_duplicate_report"><![CDATA[You already reported this item.]]></string_add>
+	<string_add name="_report_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string_add>
+	<string_add name="_report_err_wrong_type"><![CDATA[Wrong report type.]]></string_add>
+	<string_add name="_report_reported_as"><![CDATA[Reported as:]]></string_add>
+	<string_add name="_Select_one"><![CDATA[Select one...]]></string_add>
+	<string_add name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Attachments]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on"><![CDATA[Hidden on]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on_phone"><![CDATA[phone]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on_tablet"><![CDATA[tablet]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on_desktop"><![CDATA[desktop]]></string_add>
+	<string_add name="_adm_btn_settings_mix_create"><![CDATA[Add New Mix]]></string_add>
+	<string_add name="_adm_btn_settings_mix_delete"><![CDATA[Delete Mix]]></string_add>
+	<string_add name="_adm_dsg_btn_delete"><![CDATA[Delete]]></string_add>
+	<string_add name="_adm_dsg_dsc_splash_warning"><![CDATA[Note, that improper use of HTML may break the site layout.]]></string_add>
+	<string_add name="_adm_dsg_err_remove_old_cover"><![CDATA[Cannot remove current cover image.]]></string_add>
+	<string_add name="_adm_dsg_txt_cover_common"><![CDATA[Common pages cover]]></string_add>
+	<string_add name="_adm_dsg_txt_cover_home"><![CDATA[Home page cover]]></string_add>
+	<string_add name="_adm_dsg_txt_splash_enabled"><![CDATA[Enable splash page]]></string_add>
+	<string_add name="_adm_dsg_txt_upload_cover_common"><![CDATA[Upload New Common Pages Cover]]></string_add>
+	<string_add name="_adm_dsg_txt_upload_cover_home"><![CDATA[Upload New Home Page Cover]]></string_add>
+	<string_add name="_adm_form_btn_pre_values_delete_item"><![CDATA[Delete Item]]></string_add>
+	<string_add name="_adm_form_btn_pre_values_edit_item"><![CDATA[Edit Item]]></string_add>
+	<string_add name="_adm_form_txt_field_value_files"><![CDATA[Enabled uploaders]]></string_add>
+	<string_add name="_adm_lmi_cpt_splash"><![CDATA[Splash]]></string_add>
+	<string_add name="_adm_stg_cpt_category_acl"><![CDATA[ACL]]></string_add>
+	<string_add name="_adm_stg_cpt_category_hidden"><![CDATA[Hidden]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Online status timeframe (minutes)]]></string_add>
+	<string_add name="_adm_stg_err_option_sys_account_online_time"><![CDATA[You need to enter a value greater than zero.]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members (-1 = after expiration)]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Сaptcha object]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_email_confirmation"><![CDATA[Enable email confirmation]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Payment module]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[HTML editor object]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Enable cache for images]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Cached image max size (in Kb)]]></string_add>
+	<string_add name="_adm_stg_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string_add>
+	<string_add name="_adm_stg_txt_create_mix_popup"><![CDATA[Add New Mix]]></string_add>
+	<string_add name="_adm_stg_txt_mix_title"><![CDATA[Mix Title]]></string_add>
+	<string_add name="_adm_stg_txt_mix_system"><![CDATA[System]]></string_add>
+	<string_add name="_adm_stg_err_remove_old_image"><![CDATA[Cannot remove current image.]]></string_add>
+	<string_add name="_sys_acl_action_report"><![CDATA[Report]]></string_add>
+	<string_add name="_sys_acl_action_report_view"><![CDATA[View reports]]></string_add>
+	<string_add name="_sys_acl_start"><![CDATA[Start: ]]></string_add>
+	<string_add name="_sys_acl_expire"><![CDATA[Expire: ]]></string_add>
+	<string_add name="_sys_acl_expire_never"><![CDATA[never]]></string_add>
+	<string_add name="_sys_et_txt_body_system_reported"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Hello,</p>
+<p>New report with <b>{report_type}</b> type was received. It reads:</p>
+<p>{report_text}</p>
+<p>Please refer to content page for more details <a href="{report_url}">here</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string_add>
+	<string_add name="_sys_et_txt_name_system_reported"><![CDATA[New report notification]]></string_add>
+	<string_add name="_sys_et_txt_subject_system_reported"><![CDATA[New report notification]]></string_add>
+	<string_add name="_sys_form_account_input_agreement"><![CDATA[]]></string_add>
+	<string_add name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-small bx-def-font-grayed">By signing up, you agree to the <a href="{0}">Terms of Service</a> and <a href="{1}">Privacy Policy</a>.</div>]]></string_add>
+	<string_add name="_sys_form_display_report_post"><![CDATA[Report From Post]]></string_add>
+	<string_add name="_sys_form_login_input_caption_system_agreement"><![CDATA[Agreement]]></string_add>
+	<string_add name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Type name here...]]></string_add>
+	<string_add name="_sys_form_report"><![CDATA[Report]]></string_add>
+	<string_add name="_sys_form_report_input_caption_submit"><![CDATA[Post]]></string_add>
+	<string_add name="_sys_form_report_input_caption_text"><![CDATA[Report Text]]></string_add>
+	<string_add name="_sys_form_report_input_caption_type"><![CDATA[Report Type]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_action"><![CDATA[Action]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_object_id"><![CDATA[Object ID]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_id"><![CDATA[Report ID]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_submit"><![CDATA[Post Report]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_text"><![CDATA[Report Text]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_type"><![CDATA[Report Type]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_sys"><![CDATA[Object Type]]></string_add>
+	<string_add name="_sys_menu_item_title_privacy"><![CDATA[Privacy]]></string_add>
+	<string_add name="_sys_menu_item_title_terms"><![CDATA[Terms]]></string_add>
+	<string_add name="_sys_menu_item_title_cart"><![CDATA[Cart]]></string_add>
+	<string_add name="_sys_menu_item_title_orders"><![CDATA[Orders]]></string_add>
+	<string_add name="_sys_menu_item_title_system_privacy"><![CDATA[Privacy]]></string_add>
+	<string_add name="_sys_menu_item_title_system_terms"><![CDATA[Terms]]></string_add>
+	<string_add name="_sys_menu_item_title_system_cart"><![CDATA[Cart]]></string_add>
+	<string_add name="_sys_menu_item_title_system_orders"><![CDATA[Orders]]></string_add>
+	<string_add name="_sys_menu_template_title_empty"><![CDATA[Empty Menu]]></string_add>
+	<string_add name="_sys_menu_title_switch_language_popup"><![CDATA[Language Switcher (popup)]]></string_add>
+	<string_add name="_sys_menu_title_switch_language_inline"><![CDATA[Language Switch (inline)]]></string_add>
+	<string_add name="_sys_page_block_title_account_profile_create"><![CDATA[Create a profile...]]></string_add>
+	<string_add name="_sys_page_block_system_title_login"><![CDATA[Log in with Sign up link]]></string_add>
+	<string_add name="_sys_page_block_system_title_login_only"><![CDATA[Log in]]></string_add>
+	<string_add name="_sys_page_block_title_privacy"><![CDATA[Privacy Policy]]></string_add>
+	<string_add name="_sys_page_block_title_profile_membership"><![CDATA[Membership]]></string_add>
+	<string_add name="_sys_page_block_title_terms"><![CDATA[Terms of Service]]></string_add>
+	<string_add name="_sys_page_lang_block_terms"><![CDATA[Our terms of use.]]></string_add>
+	<string_add name="_sys_page_lang_block_privacy"><![CDATA[Our privacy policy.]]></string_add>
+	<string_add name="_sys_page_title_privacy"><![CDATA[Privacy Policy]]></string_add>
+	<string_add name="_sys_page_title_terms"><![CDATA[Terms of Service]]></string_add>
+	<string_add name="_sys_page_title_system_privacy"><![CDATA[Privacy Policy]]></string_add>
+	<string_add name="_sys_page_title_system_terms"><![CDATA[Terms of Service]]></string_add>
+	<string_add name="_sys_pre_lists_report_types"><![CDATA[Report Types]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_spam"><![CDATA[spam]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_scam"><![CDATA[scam]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_fraud"><![CDATA[fraud]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_nude"><![CDATA[nude]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_other"><![CDATA[other]]></string_add>
+	<string_add name="_sys_profile_sample_single"><![CDATA[profile]]></string_add>
+	<string_add name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> subscribed to <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string_add>
+	<string_add name="_sys_txt_field_created"><![CDATA[Created:]]></string_add>
+	<string_add name="_sys_txt_field_updated"><![CDATA[Updated:]]></string_add>
+	<string_add name="_sys_txt_homepage_cover"><![CDATA[Unity is strength... when there is teamwork and collaboration, wonderful things can be achieved.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Join Now!</button>]]></string_add>
+	<string_add name="_sys_txt_join_description"><![CDATA[Already a member? <a href="{0}">Log in.</a>]]></string_add>
+	<string_add name="_sys_uploader_button_name_single"><![CDATA[Upload File]]></string_add>
+	<string_add name="_sys_uploader_crop_button_name"><![CDATA[Crop Image]]></string_add>
+	<string_add name="_sys_uploader_crop_rotate_left"><![CDATA[Rotate Left]]></string_add>
+	<string_add name="_sys_uploader_crop_rotate_right"><![CDATA[Rotate Right]]></string_add>
+	<string_add name="_sys_uploader_crop_submit_button"><![CDATA[Upload]]></string_add>
+	<string_add name="_sys_uploader_crop_title"><![CDATA[Crop Image]]></string_add>
+	<string_add name="_sys_uploader_crop_err_upload"><![CDATA[Error Uploading.]]></string_add>
+	<string_add name="_sys_uploader_crop_wrong_ext"><![CDATA[Wrong file extension, only images with the following extensions are allowed: jpg, jpeg, png, gif.]]></string_add>
+	<string_add name="_vote_counter"><![CDATA[{0}]]></string_add>
+
+	<string_upd name="_adm_btn_login_submit"><![CDATA[Enter]]></string_upd>
+	<string_upd name="_adm_form_btn_pre_values_delete"><![CDATA[Delete]]></string_upd>
+	<string_upd name="_sys_audit_msg_manual_audit"><![CDATA[<p>
+Some things can not be determined automatically, manual server audit is required to check it. 
+If you don't know how to do it by yourself you can submit <a target="_blank" href="mailto:team@boonex.com?subject=Server Audit Request">BoonEx Server Audit Request</a>.
+</p>]]></string_upd>
+	<string_upd name="_sys_form_account_input_name"><![CDATA[Account name]]></string_upd>
+	<string_upd name="_sys_form_account_input_password"><![CDATA[Create a password]]></string_upd>
+	<string_upd name="_sys_form_account_input_password_confirm"><![CDATA[Confirm a password]]></string_upd>
+	<string_upd name="_sys_form_display_login"><![CDATA[Log in]]></string_upd>
+	<string_upd name="_sys_form_login"><![CDATA[Log in]]></string_upd>
+	<string_upd name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Sign up]]></string_upd>
+	<string_upd name="_sys_form_login_input_caption_system_name"><![CDATA[Account name]]></string_upd>
+	<string_upd name="_sys_form_login_input_submit"><![CDATA[Log in]]></string_upd>
+	<string_upd name="_sys_menu_item_title_system_login"><![CDATA[Log in]]></string_upd>
+	<string_upd name="_sys_menu_item_title_system_logout"><![CDATA[Log out]]></string_upd>
+	<string_upd name="_sys_page_block_title_create_account"><![CDATA[Sign up]]></string_upd>
+	<string_upd name="_sys_page_block_title_login"><![CDATA[Log in]]></string_upd>
+	<string_upd name="_sys_page_title_account_profile_switcher"><![CDATA[My Profiles]]></string_upd>
+	<string_upd name="_sys_page_title_create_account"><![CDATA[Sign up]]></string_upd>
+	<string_upd name="_sys_page_title_login"><![CDATA[Log in]]></string_upd>
+	<string_upd name="_sys_page_title_system_account_profile_switcher"><![CDATA[My Profiles]]></string_upd>
+	<string_upd name="_sys_page_title_system_create_account"><![CDATA[Sign up]]></string_upd>
+	<string_upd name="_sys_page_title_system_login"><![CDATA[Log in]]></string_upd>
+	<string_upd name="_sys_pruning_db"><![CDATA[<h3>Database pruning:</h3>
+	<ul>
+		<li><b>{0}</b> deleted expired membership levels</li>
+		<li><b>{1}</b> deleted expired sessions</li>
+		<li><b>{2}</b> deleted expired views</li>
+		<li><b>{3}</b> deleted expired keys</li>
+		<li><b>{4}</b> deleted expired storage tokens</li>
+		<li><b>{5}</b> deleted outdated transcoded images</li>
+	</ul>]]></string_upd>
+	<string_upd name="_sys_txt_login_description"><![CDATA[Not a member yet? <a href="{0}">Sign up.</a>]]></string_upd>
+
+	<string_del name="_adm_dsg_dsc_cover_warning"><![CDATA[Note, that improper use of HTML may break the site layout.]]></string_del>
+	<string_del name="_adm_dsg_txt_cover_enabled"><![CDATA[Enable cover page]]></string_del>
+	<string_del name="_adm_form_btn_pre_values_edit"><![CDATA[Edit Item]]></string_del>
+	<string_del name="_sys_form_login_input_caption_system_submit_block"><![CDATA[Submit Block]]></string_del>
+	<string_del name="_sys_menu_template_title_main"><![CDATA[Site Navigation]]></string_del>
+	<string_del name="_sys_menu_title_switch_language"><![CDATA[Switch Language]]></string_del>
+</resources>
