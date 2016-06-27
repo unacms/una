@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+
+	<string name="_bx_timeline"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_cmts"><![CDATA[Лента - Комментарии]]></string>
+
+	<string name="_bx_timeline_option_enable_delete"><![CDATA[Разрешить пользователю Ленты удалять элементы]]></string>
+	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Количество событий, отображаемых на странице "Профиль"]]></string>
+	<string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество событий, отображаемых на странице "Аккаунт"]]></string>
+	<string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество событий, отображаемых на странице "Домой"]]></string>
+	<string name="_bx_timeline_option_events_per_page"><![CDATA[Количество событий на странице]]></string>
+	<string name="_bx_timeline_option_rss_length"><![CDATA[Длина RSS-ленты]]></string>
+	<string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события в Ленте]]></string>
+	<string name="_bx_timeline_option_chars_display_max"><![CDATA[Макс. число отображаемых символов в текстовом сообщении]]></string>
+	<string name="_bx_timeline_option_err_chars_display_max"><![CDATA[Введите число, желательно, большее 150.]]></string>
+
+	<string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
+	<string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>
+	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[ID владельца]]></string>
+	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Действие]]></string>
+	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Тип]]></string>
+	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Содержимое]]></string>
+	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Ссылка]]></string>
+	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Добавить ссылку]]></string>
+	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Невозможно удалить ссылку. Пожалуйста, оповестите нас о проблеме.]]></string>
+	<string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Фото]]></string>
+	<string name="_bx_timeline_form_post_input_photo"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_photo_alt"><![CDATA[Добавить фото]]></string>
+	<string name="_bx_timeline_form_post_input_sys_video"><![CDATA[Видео]]></string>
+	<string name="_bx_timeline_form_post_input_video"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_video_alt"><![CDATA[Добавить видео]]></string>
+	<string name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Прикрепления]]></string>
+	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Сообщение]]></string>
+	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Сообщение]]></string>
+
+	<string name="_bx_timeline_form_attach_link"><![CDATA[Прикрепить ссылку]]></string>
+	<string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Прикрепить ссылку]]></string>
+	<string name="_bx_timeline_form_attach_link_input_sys_url"><![CDATA[Url]]></string>
+	<string name="_bx_timeline_form_attach_link_input_url"><![CDATA[Добавить ссылку]]></string>
+	<string name="_bx_timeline_form_attach_link_input_url_err"><![CDATA[Необходима правильная ссылка. Пожалуйста, заполните это поле.]]></string>
+	<string name="_bx_timeline_form_attach_link_input_sys_do_submit"><![CDATA[Добавить]]></string>
+	<string name="_bx_timeline_form_attach_link_input_do_submit"><![CDATA[Добавить]]></string>
+	<string name="_bx_timeline_form_attach_link_input_do_cancel"><![CDATA[Закрыть]]></string>
+
+	<string name="_bx_timeline_privacy_view"><![CDATA[Просматривать события]]></string>
+
+	<string name="_bx_timeline_acl_action_post"><![CDATA[Сообщение]]></string>
+	<string name="_bx_timeline_acl_action_delete"><![CDATA[Удалить]]></string>
+	<string name="_bx_timeline_acl_action_vote"><![CDATA[Голосовать]]></string>
+	<string name="_bx_timeline_acl_action_share"><![CDATA[Поделиться]]></string>
+	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять]]></string>
+
+	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_title_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Элемент Ленты]]></string>
+	<string name="_bx_timeline_page_title_item"><![CDATA[Элемент Ленты]]></string>
+	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_title_account"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_block_title_post"><![CDATA[Разместить в Ленте]]></string>
+	<string name="_bx_timeline_page_block_title_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Разместить в Ленте]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Разместить в Ленте]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_block_title_item"><![CDATA[Элемент]]></string>
+	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Лента Подписки]]></string>
+	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Сводка]]></string>
+	<string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Лента - Комментарии]]></string>
+
+    <string name="_bx_timeline_menu_item_view_all"><![CDATA[Все сообщения]]></string>
+    <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Сообщения от {0}]]></string>
+    <string name="_bx_timeline_menu_item_view_other"><![CDATA[Сообщения от других]]></string>
+    <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
+
+    <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Управлять Элементом]]></string>
+    <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Управлять Элементом]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Прикалывать]]></string>
+    <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Прикалывать]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Откалывать]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Откалывать]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Удалить]]></string>
+
+	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Действия над Элементом]]></string>
+    <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Действия над Элементом]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Комментарий]]></string>
+    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Комментарий]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Голосовать]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Поделиться]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Пожаловаться]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[Ещё]]></string>
+
+	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
+    <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_link"><![CDATA[Добавить Ссылку]]></string>
+    <string name="_bx_timeline_menu_item_title_add_link"><![CDATA[Добавить Ссылку]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_photo"><![CDATA[Добавить Фото]]></string>
+    <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Добавить Фото]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_video"><![CDATA[Добавить Видео]]></string>
+    <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Добавить Видео]]></string>
+
+    <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Лента]]></string>
+
+    <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Обновить статус]]></string>
+    <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Обновить статус]]></string>
+
+	<string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Лента]]></string>
+
+	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
+	<string name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Лента (разместить снова)]]></string>
+	<string name="_bx_timeline_alert_action_added"><![CDATA[добавить]]></string>
+
+	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Пусто]]></string>
+	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
+
+	<string name="_bx_timeline_txt_load_more"><![CDATA[Загрузить ещё]]></string>
+	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... или перейти к:]]></string>
+	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Перейти к {0} году]]></string>
+	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Перейти к недавним сообщениям]]></string>
+	<string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>
+
+	<string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
+	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} добавил {1}]]></string>
+	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} снова разместил {1} {2}]]></string>
+	<string name="_bx_timeline_txt_sample"><![CDATA[сообщение]]></string>
+	<string name="_bx_timeline_txt_sample_ext"><![CDATA[сообщение в ленте]]></string>
+	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[комментарий к сообщению в ленте]]></string>
+	<string name="_bx_timeline_txt_sample_vote_single"><![CDATA[голос за сообщение в ленте]]></string>
+
+	<string name="_bx_timeline_txt_do_share"><![CDATA[Поделиться]]></string>
+	<string name="_bx_timeline_txt_shared"><![CDATA[Поделился {0} {1}.]]></string>
+	<string name="_bx_timeline_txt_shared_by"><![CDATA[Поделился]]></string>
+	<string name="_bx_timeline_txt_err_cannot_share"><![CDATA[Невозможно поделиться. Пожалуйста, сообщите нам об этой проблеме.]]></string>
+	<string name="_bx_timeline_txt_err_already_shared"><![CDATA[Вы уже поделились этим элементом.]]></string>
+	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string>
+
+	<string name="_bx_ntfs_alert_action_post_common"><![CDATA[добавить сообщение]]></string>
+</resources>

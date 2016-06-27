@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_smtp_option_on"><![CDATA[Включить SMTP почтовик]]></string_add>
+	<string_add name="_bx_smtp_option_auth"><![CDATA[SMTP аутентификация (если SMTP сервер требует логин и пароль)]]></string_add>
+	<string_add name="_bx_smtp_option_username"><![CDATA[SMTP логин (только если включена SMTP аутентификация)]]></string_add>
+	<string_add name="_bx_smtp_option_password"><![CDATA[SMTP пароль (только если включена SMTP аутентификация)]]></string_add>
+	<string_add name="_bx_smtp_option_host"><![CDATA[SMTP сервер или IP адрес]]></string_add>
+	<string_add name="_bx_smtp_option_port"><![CDATA[SMTP сервер порт (25 - по умолчанию, 465 - для SSL, 587 - для TLS)]]></string_add>
+	<string_add name="_bx_smtp_option_secure"><![CDATA[Использовать шифрованное соединение для SMTP сервера]]></string_add>
+	<string_add name="_bx_smtp_option_allow_selfsigned"><![CDATA[Разрешить не-безопасные сертификаты]]></string_add>
+	<string_add name="_bx_smtp_option_from_name"><![CDATA[Имя, от которого отправлять все письма]]></string_add>
+	<string_add name="_bx_smtp_option_from_email"><![CDATA[E-mail адрес, от которого отправлять все письма]]></string_add>
+
+	<string_upd name="_bx_smtp_is_html"><![CDATA[HTML форматирование]]></string_upd>
+</resources>

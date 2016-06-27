@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string name="_sys_module_facebook_connect"><![CDATA[Facebook-соединение]]></string>
+	<string name="_bx_facebook"><![CDATA[Facebook-соединение]]></string>
+	<string name="_bx_facebook_settings"><![CDATA[Facebook-соединение]]></string>
+	<string name="_bx_facebook_information"><![CDATA[Facebook-соединение, информация]]></string>
+	<string name="_bx_facebook_information_block"><![CDATA[Чтобы получить "App ID" и "App Secret", нужно <a href="https://developers.facebook.com/apps/" target="_blank">создать новое приложение</a>. <br /><br /><a href="http://www.boonex.com/forums/topic/How-to-setup-Facebook-Connect-module.htm" target="_blank">Инструкции по созданию Facebook приложения</a> <br /><br />Значение поля "Site URL" для приложения: <b>{0}</b> <br /><br />После выполнения этих шагов укажите "API Key" и "App Secret" в форме ниже:]]></string>
+	<string name="_bx_facebook_profile_error_info"><![CDATA[Невозможно получить информацию о Вашем профиле]]></string>
+	<string name="_bx_facebook_profile_error_api_keys"><![CDATA[Пожалуйста, настройте модуль в административной панели (невозможно определить ключи facebook api)]]></string>
+	<string name="_bx_facebook_chart"><![CDATA[Facebook профили]]></string>
+	<string name="_bx_facebook_auth_title"><![CDATA[Facebook-соединение]]></string>
+	<string name="_bx_facebook_error"><![CDATA[Ошибка]]></string>
+
+    <string name="_bx_facebook_adm_stg_cpt_type"><![CDATA[Facebook-соединение]]></string>
+    <string name="_bx_facebook_adm_stg_cpt_category_general"><![CDATA[Общие]]></string>
+    <string name="_bx_facebook_option_app_id"><![CDATA[Facebook App ID]]></string>
+    <string name="_bx_facebook_option_app_secret"><![CDATA[Facebook App Secret]]></string>
+    <string name="_bx_facebook_option_redirect"><![CDATA[Перенаправления после захода на сайт]]></string>
+    <string name="_bx_facebook_option_auto_friends"><![CDATA[Автоматически делать друзьями тех, что уже друг на Facebook'е]]></string>
+    <string name="_bx_facebook_option_fetch_extended_info"><![CDATA[Получить расширенную информацию о профиле (приложение должно быть одобрено Facebook'ом)]]></string>
+    <string name="_bx_facebook_option_module"><![CDATA[Модуль в котором создавать профили]]></string>
+    <string name="_bx_facebook_option_privacy"><![CDATA[Настройки конфиденциальности для созданных профилей]]></string>
+    <string name="_bx_facebook_option_confirm_email"><![CDATA[Всегда подтверждать емейл, когда заходят через Facebook]]></string>
+    <string name="_bx_facebook_option_approve"><![CDATA[Всегда одобрять профиль, когда заходят через Facebook]]></string>
+
+	<string name="_bx_facebook_conect_et_password_generated"><![CDATA[Facebook-соединение: временный пароль]]></string>
+	<string name="_bx_facebook_conect_et_password_generated_subject"><![CDATA[Временный пароль]]></string>
+	<string name="_bx_facebook_conect_et_password_generated_body"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Временный пароль - <b>{password}</b></p>
+<p>Его нужно изменить, после первого захода на сайт.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+</resources>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_Please select value"><![CDATA[Пожалуйста, выберите значение из списка]]></string_add>
+	<string_add name="_report_counter"><![CDATA[{0}]]></string_add>
+	<string_add name="_report_do_report"><![CDATA[Пожаловаться]]></string_add>
+	<string_add name="_report_do_report_by"><![CDATA[Пожаловались]]></string_add>
+	<string_add name="_report_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string_add>
+	<string_add name="_report_err_duplicate_report"><![CDATA[Ваша жалоба уже была принята ранее.]]></string_add>
+	<string_add name="_report_err_not_enabled"><![CDATA[Жалоба не может быть принята в данный момент. Пожалуйста, попробуйте позднее.]]></string_add>
+	<string_add name="_report_err_wrong_type"><![CDATA[Неправильный тип жалобы.]]></string_add>
+	<string_add name="_report_reported_as"><![CDATA[Тип жалобы:]]></string_add>
+	<string_add name="_Select_one"><![CDATA[Выберите один...]]></string_add>
+	<string_add name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Вложения]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on"><![CDATA[Скрыть на]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on_phone"><![CDATA[телефоне]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on_tablet"><![CDATA[планшете]]></string_add>
+	<string_add name="_adm_bp_txt_block_hidden_on_desktop"><![CDATA[настольном компьютере]]></string_add>
+	<string_add name="_adm_btn_settings_mix_create"><![CDATA[Создать набор]]></string_add>
+	<string_add name="_adm_btn_settings_mix_delete"><![CDATA[Удалить набор]]></string_add>
+	<string_add name="_adm_dsg_btn_delete"><![CDATA[Удалить]]></string_add>
+	<string_add name="_adm_dsg_dsc_splash_warning"><![CDATA[Заметьте, что неправильное применение HTML может испортить дизайн сайта.]]></string_add>
+	<string_add name="_adm_dsg_err_remove_old_cover"><![CDATA[Невозможно удалить текущее изображение обложки.]]></string_add>
+	<string_add name="_adm_dsg_txt_cover_common"><![CDATA[Обложка обычных страниц]]></string_add>
+	<string_add name="_adm_dsg_txt_cover_home"><![CDATA[Обложка главной страницы]]></string_add>
+	<string_add name="_adm_dsg_txt_splash_enabled"><![CDATA[Включить титульную страницу]]></string_add>
+	<string_add name="_adm_dsg_txt_upload_cover_common"><![CDATA[Загрузить новое изображение обложки обычных страниц]]></string_add>
+	<string_add name="_adm_dsg_txt_upload_cover_home"><![CDATA[Загрузить новое изображение обложки главной страницы]]></string_add>
+	<string_add name="_adm_form_btn_pre_values_delete_item"><![CDATA[Удалить Элемент]]></string_add>
+	<string_add name="_adm_form_btn_pre_values_edit_item"><![CDATA[Редактировать Элемент]]></string_add>
+	<string_add name="_adm_form_txt_field_value_files"><![CDATA[Активные загрузчики]]></string_add>
+	<string_add name="_adm_lmi_cpt_splash"><![CDATA[Заставка]]></string_add>
+	<string_add name="_adm_stg_cpt_category_acl"><![CDATA[Уровни доступа]]></string_add>
+	<string_add name="_adm_stg_cpt_category_hidden"><![CDATA[Скрытые]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Временные рамки статуса "онлайн" (минуты)]]></string_add>
+	<string_add name="_adm_stg_err_option_sys_account_online_time"><![CDATA[Вам необходимо ввести значение больше нуля.]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[За сколько дней до окончания членства оповестить пользователя об окончании (-1 = после окончания)]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Оповещать пользователей об окончании членства только одинажды (каждый день в противном случае)]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Объект CAPTCHA]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_email_confirmation"><![CDATA[Задействовать подтверждение эл. адреса]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[Объект HTML редактора]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Дата установки]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Задействовать кэш для изображений]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Максимальный размер кэшируемого изображения (в Кб)]]></string_add>
+	<string_add name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string_add>
+	<string_add name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string_add>
+	<string_add name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string_add>
+	<string_add name="_adm_stg_txt_mix_system"><![CDATA[Системный]]></string_add>
+	<string_add name="_adm_stg_err_remove_old_image"><![CDATA[Невозможно удалить текущее изображение.]]></string_add>
+	<string_add name="_sys_acl_action_report"><![CDATA[Жаловаться]]></string_add>
+	<string_add name="_sys_acl_action_report_view"><![CDATA[Просматривать жалобы]]></string_add>
+	<string_add name="_sys_acl_start"><![CDATA[Начало: ]]></string_add>
+	<string_add name="_sys_acl_expire"><![CDATA[Окончание: ]]></string_add>
+	<string_add name="_sys_acl_expire_never"><![CDATA[никогда]]></string_add>
+	<string_add name="_sys_et_txt_body_system_reported"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Привет,</p>
+<p>Была получена новая жалоба с типом <b>{report_type}</b>. Сообщение:</p>
+<p>{report_text}</p>
+<p>Для получения дополнительной информации, пожалуйста, перейдите на <a href="{report_url}">страницу контента</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string_add>
+	<string_add name="_sys_et_txt_name_system_reported"><![CDATA[Уведомление о новой жалобе]]></string_add>
+	<string_add name="_sys_et_txt_subject_system_reported"><![CDATA[Уведомление о новой жалобе]]></string_add>
+	<string_add name="_sys_form_account_input_agreement"><![CDATA[]]></string_add>
+	<string_add name="_sys_form_account_input_agreement_value"><![CDATA[<div class="bx-def-font-small bx-def-font-grayed">Присоединяясь, Вы соглашаетесь с <a href="{0}">Правилами пользования</a> и <a href="{1}">Политикой конфиденциальности</a>.</div>]]></string_add>
+	<string_add name="_sys_form_display_report_post"><![CDATA[Форма добавления жалобы]]></string_add>
+	<string_add name="_sys_form_login_input_caption_system_agreement"><![CDATA[Соглашение]]></string_add>
+	<string_add name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string_add>
+	<string_add name="_sys_form_report"><![CDATA[Пожаловаться]]></string_add>
+	<string_add name="_sys_form_report_input_caption_submit"><![CDATA[Пожаловаться]]></string_add>
+	<string_add name="_sys_form_report_input_caption_text"><![CDATA[Текст жалобы]]></string_add>
+	<string_add name="_sys_form_report_input_caption_type"><![CDATA[Тип жалобы]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_action"><![CDATA[Действие]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_object_id"><![CDATA[ID объекта]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_id"><![CDATA[ID жалобы]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_submit"><![CDATA[Пожаловаться]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_text"><![CDATA[Текст жалобы]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_type"><![CDATA[Тип жалобы]]></string_add>
+	<string_add name="_sys_form_report_input_caption_system_sys"><![CDATA[Тип объекта]]></string_add>
+	<string_add name="_sys_menu_item_title_privacy"><![CDATA[Конфиденциальность]]></string_add>
+	<string_add name="_sys_menu_item_title_terms"><![CDATA[Правила]]></string_add>
+	<string_add name="_sys_menu_item_title_cart"><![CDATA[Корзина]]></string_add>
+	<string_add name="_sys_menu_item_title_orders"><![CDATA[Заказы]]></string_add>
+	<string_add name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string_add>
+	<string_add name="_sys_menu_item_title_system_terms"><![CDATA[Правила]]></string_add>
+	<string_add name="_sys_menu_item_title_system_cart"><![CDATA[Корзина]]></string_add>
+	<string_add name="_sys_menu_item_title_system_orders"><![CDATA[Заказы]]></string_add>
+	<string_add name="_sys_menu_template_title_empty"><![CDATA[Пустое Меню]]></string_add>
+	<string_add name="_sys_menu_title_switch_language_popup"><![CDATA[Переключатель Языка (попап)]]></string_add>
+	<string_add name="_sys_menu_title_switch_language_inline"><![CDATA[Переключатель Языка (встроенный)]]></string_add>
+	<string_add name="_sys_page_block_title_account_profile_create"><![CDATA[Создать профиль...]]></string_add>
+	<string_add name="_sys_page_block_system_title_login"><![CDATA[Вход с линкой регистрации]]></string_add>
+	<string_add name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string_add>
+	<string_add name="_sys_page_block_title_privacy"><![CDATA[Политика конфиденциальности]]></string_add>
+	<string_add name="_sys_page_block_title_profile_membership"><![CDATA[Членство]]></string_add>
+	<string_add name="_sys_page_block_title_terms"><![CDATA[Правила пользования]]></string_add>
+	<string_add name="_sys_page_lang_block_terms"><![CDATA[Правила пользования нашим сайтом.]]></string_add>
+	<string_add name="_sys_page_lang_block_privacy"><![CDATA[Политика конфиденциальности нашего сайта.]]></string_add>
+	<string_add name="_sys_page_title_privacy"><![CDATA[Политика конфиденциальности]]></string_add>
+	<string_add name="_sys_page_title_terms"><![CDATA[Правила пользования]]></string_add>
+	<string_add name="_sys_page_title_system_privacy"><![CDATA[Политика конфиденциальности]]></string_add>
+	<string_add name="_sys_page_title_system_terms"><![CDATA[Правила пользования]]></string_add>
+	<string_add name="_sys_pre_lists_report_types"><![CDATA[Типы жалоб]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_spam"><![CDATA[спам]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_scam"><![CDATA[скам]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_fraud"><![CDATA[обман]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_nude"><![CDATA[обнаженность]]></string_add>
+	<string_add name="_sys_pre_lists_report_types_other"><![CDATA[другое]]></string_add>
+	<string_add name="_sys_profile_sample_single"><![CDATA[профиль]]></string_add>
+	<string_add name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> подписался на <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string_add>
+	<string_add name="_sys_tour_launcher_accounts_title"><![CDATA[Больше чем администратор]]></string_add>
+	<string_add name="_sys_tour_launcher_accounts_txt"><![CDATA[Администраторы и модераторы могут управлять профилями и их содержимым, это не обязательно должно быть в Студии, куда имеет доступ только оператор сайта. Все что нужно, это назначить права для администраторов и модераторов в "Разрешениях". Чтобы назначить профилю права администратора или модератора, нужно перейти в профиль и нажать "Назначить членство".]]></string_add>
+	<string_add name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string_add>
+	<string_add name="_sys_txt_join_description"><![CDATA[Уже зарегистрировались? <a href="{0}">Заходите.</a>]]></string_add>
+	<string_add name="_sys_uploader_button_name_single"><![CDATA[Загрузить файл]]></string_add>
+	<string_add name="_sys_uploader_crop_button_name"><![CDATA[Обрезка картинки]]></string_add>
+	<string_add name="_sys_uploader_crop_rotate_left"><![CDATA[Повернуть налево]]></string_add>
+	<string_add name="_sys_uploader_crop_rotate_right"><![CDATA[Повернуть направо]]></string_add>
+	<string_add name="_sys_uploader_crop_submit_button"><![CDATA[Загрузить]]></string_add>
+	<string_add name="_sys_uploader_crop_title"><![CDATA[Обрезка Картинки]]></string_add>
+	<string_add name="_sys_uploader_crop_err_upload"><![CDATA[Ошибка загрузки.]]></string_add>
+	<string_add name="_sys_uploader_crop_wrong_ext"><![CDATA[Неправильное расширение файла, можно обрезать только изображения в формате: jpg, jpeg, png, gif.]]></string_add>
+	<string_add name="_vote_counter"><![CDATA[{0}]]></string_add>
+
+	<string_upd name="_adm_form_btn_pre_values_delete"><![CDATA[Удалить]]></string_upd>
+	<string_upd name="_sys_audit_msg_manual_audit"><![CDATA[<p>
+Некоторые пункты не могут быть автоматически определены, ручной аудит сервера необходим для проверки. 
+Если Вы не знаете, как провести его самостоятельно, Вы можете запросить <a target="_blank" href="mailto:team@boonex.com?subject=Ручной аудит сервера">ручной аудит сервера</a>.
+</p>]]></string_upd>
+	<string_upd name="_sys_et_txt_body_profile_change_status_active"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Привет {profile_name},</p>
+<p>Ваш профиль был проверен и активирован!</p>
+<p>Просто перейдите по ссылке внизу, чтобы воспользоваться нашими услугами:<br />
+<a href="{site_url}member.php">{site_url}member.php</a></p>
+<p>Ваш имейл, использованный для регистрации: <span style="color:#FF6633">{account_email}</span></p>
+<p><b>Спасибо за использование нашего сервиса!</b></p>
+<bx_include_auto:_email_footer.html />]]></string_upd>
+	<string_upd name="_sys_form_account_input_password"><![CDATA[Создать пароль]]></string_upd>
+	<string_upd name="_sys_form_account_input_password_confirm"><![CDATA[Подтвердить пароль]]></string_upd>
+	<string_upd name="_sys_form_account_input_submit"><![CDATA[Отправить]]></string_upd>
+	<string_upd name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string_upd>
+	<string_upd name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт как ...]]></string_upd>
+	<string_upd name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string_upd>
+	<string_upd name="_sys_page_title_account_profile_switcher"><![CDATA[Мои Профили]]></string_upd>
+	<string_upd name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string_upd>
+	<string_upd name="_sys_page_title_system_account_profile_switcher"><![CDATA[Мои Профили]]></string_upd>
+	<string_upd name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string_upd>
+	<string_upd name="_sys_pruning_db"><![CDATA[<h3>Очистка Базы Данных:</h3>
+	<ul>
+		<li><b>{0}</b> удалено просроченных членств</li>
+		<li><b>{1}</b> удалено просроченных сессий</li>
+		<li><b>{2}</b> удалено просроченных просмотров</li>
+		<li><b>{3}</b> удалено просроченных ключей</li>
+		<li><b>{4}</b> удалено просроченных токенов хранилища</li>
+		<li><b>{5}</b> удалено просроченных транскодированных изображений</li>
+	</ul>]]></string_upd>
+	<string_upd name="_sys_txt_account_unconfirmed"><![CDATA[Ваш емейл не подтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. <br />Не можете найти письмо? Проверьте папку "спам" или <a href="{0}">снова запросите письмо верификации</a>.]]></string_upd>
+	<string_upd name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь.</a>]]></string_upd>
+	<string_upd name="_sys_uploader_err_msg"><![CDATA[Ой! Случилась проблема с файлом {0}: {1}]]></string_upd>
+	<string_upd name="_sys_uploader_simple_submit_button"><![CDATA[Загрузить]]></string_upd>
+
+	<string_del name="_adm_dsg_dsc_cover_warning"><![CDATA[Заметьте, что неправильное применение HTML может испортить дизайн сайта.]]></string_del>
+	<string_del name="_adm_dsg_txt_cover_enabled"><![CDATA[Включить титульную страницу]]></string_del>
+	<string_del name="_adm_form_btn_pre_values_edit"><![CDATA[Редактировать Элемент]]></string_del>
+	<string_del name="_sys_form_login_input_caption_system_submit_block"><![CDATA[Блок Отправки]]></string_del>
+	<string_del name="_sys_menu_template_title_main"><![CDATA[Навигация по Сайту]]></string_del>
+	<string_del name="_sys_menu_title_switch_language"><![CDATA[Переключить Язык]]></string_del>
+</resources>

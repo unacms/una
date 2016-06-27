@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_orgs_form_profile_display_view_full"><![CDATA[Полный просмотр организации]]></string_add>
+	<string_add name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string_add>
+	<string_add name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string_add>
+	<string_add name="_bx_orgs_page_title_browse_online"><![CDATA[Онлайн Организации]]></string_add>
+	<string_add name="_bx_orgs_page_title_sys_online"><![CDATA[Онлайн Организации]]></string_add>
+	<string_add name="_bx_orgs_page_title_online"><![CDATA[Онлайн Организации]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_private"><![CDATA[Приватный профиль]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_membership"><![CDATA[Членство]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_system_profile_membership"><![CDATA[Членство]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_description"><![CDATA[Описание]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Онлайн Организации]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_entries_online"><![CDATA[Онлайн]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_entries_online"><![CDATA[Онлайн]]></string_add>
+	<string_add name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[В организации <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string_add>
+	<string_add name="_bx_orgs_txt_N_friends"><![CDATA[Друзья: {0}]]></string_add>
+
+	<string_upd name="_bx_orgs_form_profile_display_add"><![CDATA[Добавление организации]]></string_upd>
+	<string_upd name="_bx_orgs_form_profile_display_edit"><![CDATA[Редактирование организации]]></string_upd>
+	<string_upd name="_bx_orgs_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string_upd>
+	<string_upd name="_bx_orgs_form_profile_display_delete"><![CDATA[Удаление организации]]></string_upd>
+	<string_upd name="_bx_orgs_form_profile_display_view"><![CDATA[Просмотр организации]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Создать профиль - организация]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_create_profile"><![CDATA[Создать профиль - организация]]></string_upd>
+	<string_upd name="_bx_orgs_page_block_title_create_profile"><![CDATA[Создать профиль - организация]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Организация]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Организация]]></string_upd>
+
+	<string_del name="_bx_orgs_form_profile_input_sys_picture_preview"><![CDATA[Предпросмотр картинки профиля]]></string_del>
+	<string_del name="_bx_orgs_form_profile_input_picture_preview"><![CDATA[Текущая картинка профиля]]></string_del>
+	<string_del name="_bx_orgs_form_profile_input_sys_cover_preview"><![CDATA[Предпросмотр картинки обложки]]></string_del>
+	<string_del name="_bx_orgs_form_profile_input_cover_preview"><![CDATA[Текущая картинка обложки]]></string_del>
+	<string_del name="_bx_orgs_page_block_title_profile_cover"><![CDATA[Обложка профиля]]></string_del>
+	<string_del name="_bx_orgs_menu_title_view_profile_actions_popup"><![CDATA[Организации - Всплывающие действия]]></string_del>
+</resources>

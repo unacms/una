@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_cnv_menu_item_title_system_message_group"><![CDATA[Групповое сообщение]]></string_add>
+	<string_add name="_bx_cnv_menu_item_title_message_group"><![CDATA[Групповое сообщение]]></string_add>
+	<string_add name="_bx_cnv_email_new_message"><![CDATA[Новое сообщение]]></string_add>
+	<string_add name="_bx_cnv_email_new_message_subject"><![CDATA[Новое сообщение от {SenderDisplayName}]]></string_add>
+	<string_add name="_bx_cnv_email_new_message_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Новое сообщение от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<hr />
+<p>{Message}</p>
+<bx_include_auto:_email_footer.html />]]></string_add>
+	<string_add name="_bx_cnv_email_new_reply"><![CDATA[Новый ответ]]></string_add>
+	<string_add name="_bx_cnv_email_new_reply_subject"><![CDATA[Новый ответ от {SenderDisplayName}]]></string_add>
+	<string_add name="_bx_cnv_email_new_reply_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>Новый ответ от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<hr />
+<p>{Message}</p>
+<bx_include_auto:_email_footer.html />]]></string_add>
+
+	<string_del name="_bx_cnv_form_entry_input_recipients_placeholder"><![CDATA[Введите имя здесь...]]></string_del>
+	<string_del name="_bx_cnv_menu_title_view_entry_popup"><![CDATA[Всплывающие действия для сообщения]]></string_del>
+</resources>

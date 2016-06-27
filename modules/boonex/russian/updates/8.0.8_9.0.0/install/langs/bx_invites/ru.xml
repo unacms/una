@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_invites_txt_link_popup_title"><![CDATA[Пригласительная ссылка]]></string_add>
+	<string_add name="_bx_invites_btn_invite_email"><![CDATA[Пригласить по эл. адресу]]></string_add>
+	<string_add name="_bx_invites_btn_invite_link"><![CDATA[Пригласительная ссылка]]></string_add>
+	<string_add name="_bx_invites_btn_copy"><![CDATA[Скопировать]]></string_add>
+
+	<string_del name="_bx_invites_btn_invite"><![CDATA[Пригласить]]></string_del>
+</resources>
