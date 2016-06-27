@@ -371,7 +371,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_header_content_padding', @iMixId, '0.2rem'),
 ('bx_protean_header_bg_color', @iMixId, 'rgba(40, 60, 80, 0.9)'),
 ('bx_protean_header_bg_image', @iMixId, '0'),
-('bx_protean_site_logo', @iMixId, '23'),
+('bx_protean_site_logo', @iMixId, '0'),
 ('bx_protean_site_logo_alt', @iMixId, ''),
 ('bx_protean_site_logo_width', @iMixId, '240'),
 ('bx_protean_site_logo_height', @iMixId, '48'),

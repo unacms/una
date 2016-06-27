@@ -15,7 +15,7 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
     'name' => 'bx_protean',
-    'title' => 'Protean Template',
+    'title' => 'Protean',
     'note' => 'Design template',
     'version' => '9.0.0.DEV',
     'vendor' => 'Boonex',

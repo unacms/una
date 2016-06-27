@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-	<string name="_bx_protean_wgt_cpt"><![CDATA[Protean Template]]></string>
+	<string name="_bx_protean_wgt_cpt"><![CDATA[Protean]]></string>
 
-	<string name="_bx_protean_stg_cpt_type"><![CDATA[Protean Template]]></string>
+	<string name="_bx_protean_stg_cpt_type"><![CDATA[Protean]]></string>
 	<string name="_bx_protean_stg_cpt_category_system"><![CDATA[General]]></string>
 	<string name="_bx_protean_stg_cpt_option_switcher_name"><![CDATA[Name In Template Switcher]]></string>
 
