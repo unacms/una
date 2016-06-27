@@ -10,4 +10,13 @@ class BxPersonsUpdater extends BxDolStudioUpdater
 	{
         parent::__construct($aConfig);
     }
+
+    public function actionExecuteSql($sOperation)
+    {
+    	if($sOperation == 'install')
+    		if(!$this->oDb->isFieldExists('bx_persons_data', 'allow_view_to'))
+        		$this->oDb->query("ALTER TABLE `bx_persons_data` ADD `allow_view_to` int(11) NOT NULL DEFAULT '3' AFTER `views`");
+
+    	return parent::actionExecuteSql($sOperation);
+    }
 }
