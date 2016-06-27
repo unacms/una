@@ -7,7 +7,7 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_TEMPL_DEFAULT', 'uni');
+define('BX_DOL_STUDIO_TEMPL_DEFAULT', 'protean');
 define('BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS', 'settings');
 define('BX_DOL_STUDIO_TEMPL_TYPE_LOGO', 'logo');
 define('BX_DOL_STUDIO_TEMPL_TYPE_DEFAULT', BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS);
