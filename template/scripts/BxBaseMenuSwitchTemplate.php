@@ -34,17 +34,17 @@ class BxBaseMenuSwitchTemplate extends BxTemplMenu
         if(!empty($aPage[1]))
             parse_str($aPage[1], $aPageParams);
 
-        $aTemplates = get_templates_array(true, true);
+        $aTemplates = get_templates_array(true, false);
 
         $aItems = array();
-        foreach( $aTemplates as $sName => $sTemplate ) {
+        foreach( $aTemplates as $sName => $aTemplate ) {
             $aPageParams['skin'] = $sName;
 
             $aItems[] = array(
                 'id' => $sName,
                 'name' => $sName,
                 'class' => '',
-                'title' => $sTemplate,
+                'title' => $this->getItemTitle($sName, $aTemplate),
                 'target' => '_self',
                 'icon' => '',
                 'link' => bx_html_attribute(bx_append_url_params($aPage[0], $aPageParams)),
@@ -53,6 +53,15 @@ class BxBaseMenuSwitchTemplate extends BxTemplMenu
         }
 
         $this->_aObject['menu_items'] = $aItems;
+    }
+
+	protected function getItemTitle($sName, $aTemplate)
+    {
+    	$sTitle = getParam($aTemplate['name'] . '_switcher_title');
+    	if(!empty($sTitle))
+    		return $sTitle;
+
+    	return $aTemplate['title'];
     }
 }
 

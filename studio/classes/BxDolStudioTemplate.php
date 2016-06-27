@@ -7,7 +7,7 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE', 'uni');
+define('BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE', 'protean');
 define('BX_PAGE_COLUMN_DUAL', 3); ///< page, with 2 columns
 
 class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
