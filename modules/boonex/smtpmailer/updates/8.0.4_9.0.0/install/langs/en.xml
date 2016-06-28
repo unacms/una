@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_smtp_option_on"><![CDATA[Enable SMTP mailer]]></string_add>
+	<string_add name="_bx_smtp_option_auth"><![CDATA[SMTP authentication (Is your SMTP server requires username and password?)]]></string_add>
+	<string_add name="_bx_smtp_option_username"><![CDATA[SMTP username (only if SMTP authentication is enabled)]]></string_add>
+	<string_add name="_bx_smtp_option_password"><![CDATA[SMTP password (only if SMTP authentication is enabled)]]></string_add>
+	<string_add name="_bx_smtp_option_host"><![CDATA[SMTP server name or IP address]]></string_add>
+	<string_add name="_bx_smtp_option_port"><![CDATA[SMTP server port number (25 - default, 465 - for secure ssl connection, 587 - for secure tls connection)]]></string_add>
+	<string_add name="_bx_smtp_option_secure"><![CDATA[Is your SMTP server requires secure connection]]></string_add>
+	<string_add name="_bx_smtp_option_allow_selfsigned"><![CDATA[Allow self-signed certificates]]></string_add>
+	<string_add name="_bx_smtp_option_from_name"><![CDATA['From' name of the message]]></string_add>
+	<string_add name="_bx_smtp_option_from_email"><![CDATA[Override default sender email address]]></string_add>
+</resources>
