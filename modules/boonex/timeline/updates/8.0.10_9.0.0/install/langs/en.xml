@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_timeline_acl_action_pin"><![CDATA[Pin]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Pin]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Pin]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Unpin]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Unpin]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Report]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Update Status]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Update Status]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Timeline]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Timeline]]></string_add>
+	<string_add name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string_add>
+	<string_add name="_bx_timeline_txt_sample_vote_single"><![CDATA[timeline post's vote]]></string_add>
+	<string_add name="_bx_ntfs_alert_action_post_common"><![CDATA[add post]]></string_add>
+</resources>
