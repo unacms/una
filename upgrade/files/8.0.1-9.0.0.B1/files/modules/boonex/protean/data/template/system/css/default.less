@@ -1,0 +1,588 @@
+@import '../../../../../../../template/css/default.less';
+
+/* viewport */
+@media (min-width:720px) and (max-width:1024px) {
+	html {
+	    font-size: @bx-viewport-font-tablet !important;
+	}
+}
+@media (max-width:720px) {
+	html {
+	    font-size: @bx-viewport-font-mobile !important;
+	}
+}
+
+/* height */
+.bx-header {
+	height: @bx-height-header !important;
+}
+.bx-menu-toolbar-padding {
+	padding-top: @bx-height-header !important;
+}
+
+/* content paddings */
+.bx-content-padding-header {
+	padding: @bx-content-padding-header;
+}
+.bx-content-padding-footer {
+	padding: @bx-content-padding-footer;
+}
+.bx-content-padding-block {
+	padding: @bx-content-padding-block;
+}
+
+
+/* shadow */
+.bx-shadow-header {
+	-webkit-box-shadow: @bx-shadow-header;
+	-moz-box-shadow: @bx-shadow-header;
+	box-shadow: @bx-shadow-header;
+}
+.bx-shadow-footer {
+	-webkit-box-shadow: @bx-shadow-footer;
+	-moz-box-shadow: @bx-shadow-footer;
+	box-shadow: @bx-shadow-footer;
+}
+.bx-shadow-block {
+	-webkit-box-shadow: @bx-shadow-block;
+	-moz-box-shadow: @bx-shadow-block;
+	box-shadow: @bx-shadow-block;
+}
+.bx-def-box {
+	-webkit-box-shadow: @bx-shadow-card;
+	-moz-box-shadow: @bx-shadow-card;
+	box-shadow: @bx-shadow-card;
+}
+.bx-popup-applied {
+	.radius(@bx-border-radius-popup);
+
+	-webkit-box-shadow: @bx-shadow-popup;
+	-moz-box-shadow: @bx-shadow-popup;
+	box-shadow: @bx-shadow-popup;
+}
+.bx-popup-wrapper.bx-popup-slide-wrapper {
+	-webkit-box-shadow: @bx-shadow-menu-slide;
+	-moz-box-shadow: @bx-shadow-menu-slide;
+	box-shadow: @bx-shadow-menu-slide;
+}
+.bx-btn {
+	-webkit-box-shadow: @bx-shadow-button;
+	-moz-box-shadow: @bx-shadow-button;
+	box-shadow: @bx-shadow-button;
+}
+.bx-btn.bx-btn-small {
+	-webkit-box-shadow: @bx-shadow-button-small;
+	-moz-box-shadow: @bx-shadow-button-small;
+	box-shadow: @bx-shadow-button-small;
+}
+
+
+/* background images */
+.bx-def-image-bg-header,
+.bx-def-image-bg-footer,
+.bx-def-image-bg-page,
+.bx-def-image-bg-block,
+.bx-def-box,
+.bx-popup-color-bg,
+.bx-popup-wrapper.bx-popup-slide-wrapper,
+.bx-sliding-menu-main,
+.bx-menu-main-bar-wrapper {
+    background-position: center center;
+}
+.bx-def-image-bg-header {
+	background-image: url(@bx-image-bg-header);
+	background-repeat: @bx-image-bg-header-repeat;
+    background-size: @bx-image-bg-header-size;
+}
+.bx-def-image-bg-footer {
+	background-image: url(@bx-image-bg-footer);
+	background-repeat: @bx-image-bg-footer-repeat;
+    background-size: @bx-image-bg-footer-size;
+}
+.bx-def-image-bg-page {
+	background-image: url(@bx-image-bg-page);
+	background-repeat: @bx-image-bg-page-repeat;
+    background-size: @bx-image-bg-page-size;
+}
+.bx-def-image-bg-block {
+	background-image: url(@bx-image-bg-block);
+	background-repeat: @bx-image-bg-block-repeat;
+    background-size: @bx-image-bg-block-size;
+}
+.bx-def-box {
+	background-image: url(@bx-image-bg-box);
+	background-repeat: @bx-image-bg-box-repeat;
+    background-size: @bx-image-bg-box-size;
+}
+
+/* body */
+a {
+	color: @bx-color-link-body; 
+}
+a:hover {
+	color: @bx-color-link-body-hover; 
+}
+.sys-icon,
+.sys-icon-a {
+	color: @bx-color-icon-body; 
+}
+a:hover > .sys-icon,
+a:hover > .sys-icon-a {
+	color: @bx-color-icon-body-hover; 
+}
+.sys-icon-a i {
+	.background-color (@bx-color-icon-body) !important;
+	color: @bx-color-icon-body;
+}
+a:hover > .sys-icon-a i {
+	.background-color (@bx-color-icon-body-hover) !important;
+	color: @bx-color-icon-body-hover;
+}
+
+/* header */
+.bx-header.bx-def-color-bg-header {
+    .background-color (@bx-color-header);
+}
+.bx-header.bx-def-border-header {
+    border-bottom: @bx-border-width-header @bx-border-type @bx-color-border-header;
+}
+.bx-header a {
+	color: @bx-color-link-header; 
+}
+.bx-header a:hover {
+	color: @bx-color-link-header-hover;
+}
+.bx-header .sys-icon,
+.bx-header .sys-icon-a {
+	color: @bx-color-icon-header; 
+}
+.bx-header a:hover .sys-icon,
+.bx-header a:hover .sys-icon-a {
+	color: @bx-color-icon-header-hover; 
+} 
+.bx-header .sys-icon-a i {
+	.background-color (@bx-color-icon-header) !important;
+	color: @bx-color-icon-header;
+}
+.bx-header a:hover .sys-icon-a i {
+	.background-color (@bx-color-icon-header-hover) !important;
+	color: @bx-color-icon-header-hover;
+}
+
+/* footer */
+.bx-footer {
+	color: @bx-font-color-footer;
+}
+.bx-footer.bx-def-color-bg-footer {
+    .background-color (@bx-color-footer);    
+}
+.bx-footer.bx-def-border-footer {
+    border-top: @bx-border-width-footer @bx-border-type @bx-color-border-footer;
+}
+.bx-footer a {
+	color: @bx-color-link-footer; 
+}
+.bx-footer a:hover {
+	color: @bx-color-link-footer-hover; 
+}
+.bx-footer .sys-icon,
+.bx-footer .sys-icon-a {
+	color: @bx-color-icon-footer; 
+}
+.bx-footer a:hover .sys-icon,
+.bx-footer a:hover .sys-icon-a {
+	color: @bx-color-icon-footer-hover; 
+}
+.bx-footer .sys-icon-a i {
+	.background-color (@bx-color-icon-footer) !important;
+	color: @bx-color-icon-footer;
+}
+.bx-footer a:hover .sys-icon-a i {
+	.background-color (@bx-color-icon-footer-hover) !important;
+	color: @bx-color-icon-footer-hover;
+}
+
+/* fonts */
+.bx-def-font-inputs {
+	font-family: @bx-font-family-form-input;
+	font-size: @bx-font-size-form-input;
+	color: @bx-font-color-form-input;
+}
+
+h1,
+.bx-def-font-h1 {
+	font-weight: @bx-font-weight-h1;
+	color: @bx-font-color-default-h1;
+}
+h1.bx-def-font-grayed,
+h1 .bx-def-font-grayed,
+.bx-def-font-h1.bx-def-font-grayed,
+.bx-def-font-h1 .bx-def-font-grayed {
+	color: @bx-font-color-grayed-h1;
+}
+h1.bx-def-font-contrasted,
+h1.bx-def-font-contrasted:after,
+h1.bx-def-font-contrasted:before,
+h1 .bx-def-font-contrasted,
+h1 .bx-def-font-contrasted:after,
+h1 .bx-def-font-contrasted:before,
+.bx-def-font-h1.bx-def-font-contrasted,
+.bx-def-font-h1.bx-def-font-contrasted:after,
+.bx-def-font-h1.bx-def-font-contrasted:before,
+.bx-def-font-h1 .bx-def-font-contrasted,
+.bx-def-font-h1 .bx-def-font-contrasted:after,
+.bx-def-font-h1 .bx-def-font-contrasted:before {
+	color: @bx-font-color-contrasted-h1;
+}
+h1 a,
+.bx-def-font-h1 a,
+a.bx-def-font-h1 {
+	color: @bx-font-color-link-h1;
+}
+h1 a:hover,
+.bx-def-font-h1 a:hover,
+a.bx-def-font-h1:hover {
+	color: @bx-font-color-link-h1-hover;
+}
+
+h2,
+.bx-def-font-h2 {
+	font-weight: @bx-font-weight-h2;
+	color: @bx-font-color-default-h2;
+}
+h2.bx-def-font-grayed,
+h2 .bx-def-font-grayed,
+.bx-def-font-h2.bx-def-font-grayed,
+.bx-def-font-h2 .bx-def-font-grayed {
+	color: @bx-font-color-grayed-h2;
+}
+h2.bx-def-font-contrasted,
+h2.bx-def-font-contrasted:after,
+h2.bx-def-font-contrasted:before,
+h2 .bx-def-font-contrasted,
+h2 .bx-def-font-contrasted:after,
+h2 .bx-def-font-contrasted:before,
+.bx-def-font-h2.bx-def-font-contrasted,
+.bx-def-font-h2.bx-def-font-contrasted:after,
+.bx-def-font-h2.bx-def-font-contrasted:before,
+.bx-def-font-h2 .bx-def-font-contrasted,
+.bx-def-font-h2 .bx-def-font-contrasted:after,
+.bx-def-font-h2 .bx-def-font-contrasted:before {
+	color: @bx-font-color-contrasted-h2;
+}
+h2 a,
+.bx-def-font-h2 a,
+a.bx-def-font-h2 {
+	color: @bx-font-color-link-h2;
+}
+h2 a:hover,
+.bx-def-font-h2 a:hover,
+a.bx-def-font-h2:hover {
+	color: @bx-font-color-link-h2-hover;
+}
+
+h3,
+.bx-def-font-h3 {
+	font-weight: @bx-font-weight-h3;
+	color: @bx-font-color-default-h3;
+}
+h3.bx-def-font-grayed,
+h3 .bx-def-font-grayed,
+.bx-def-font-h3.bx-def-font-grayed,
+.bx-def-font-h3 .bx-def-font-grayed {
+	color: @bx-font-color-grayed-h3;
+}
+h3.bx-def-font-contrasted,
+h3.bx-def-font-contrasted:after,
+h3.bx-def-font-contrasted:before,
+h3 .bx-def-font-contrasted,
+h3 .bx-def-font-contrasted:after,
+h3 .bx-def-font-contrasted:before,
+.bx-def-font-h3.bx-def-font-contrasted,
+.bx-def-font-h3.bx-def-font-contrasted:after,
+.bx-def-font-h3.bx-def-font-contrasted:before,
+.bx-def-font-h3 .bx-def-font-contrasted,
+.bx-def-font-h3 .bx-def-font-contrasted:after,
+.bx-def-font-h3 .bx-def-font-contrasted:before {
+	color: @bx-font-color-contrasted-h3;
+}
+h3 a,
+.bx-def-font-h3 a,
+a.bx-def-font-h3 {
+	color: @bx-font-color-link-h3;
+}
+h3 a:hover,
+.bx-def-font-h3 a:hover,
+a.bx-def-font-h3:hover {
+	color: @bx-font-color-link-h3-hover;
+}
+
+/* block */
+.bx-def-border-block {
+	border: @bx-border-width-block @bx-border-type @bx-color-border-block;
+
+	.radius(@bx-border-radius-block);
+}
+.bx-db-header {
+	padding: @bx-title-padding-block;
+
+	background-color: @bx-color-block-title;
+}
+.bx-db-header .bx-db-title {
+	font-family: @bx-font-family-block-title;
+	font-weight: @bx-font-weight-block-title;
+	color: @bx-color-font-block-title;
+}
+.bx-db-header .bx-db-title.bx-def-font-h2 {
+	font-size: @bx-font-size-block-title;
+}
+.bx-db-divider {
+	border-top:@bx-height-block-title-div @bx-border-type @bx-color-block-title-div;
+}
+
+
+/* box */
+.bx-def-box {
+	border: @bx-border-width-box @bx-border-type @bx-color-border-box;
+}
+.bx-def-box.bx-def-padding {
+	padding: @bx-content-padding-card;
+}
+.bx-def-box.bx-def-color-bg-box {
+	.background-color (@bx-color-box);
+}
+.bx-def-box.bx-def-round-corners {
+	.radius(@bx-border-radius-box);
+}
+
+/* popup */
+.bx-popup-border {
+	border: @bx-border-width-popup solid @bx-color-border-popup;
+	.radius(@bx-border-radius-popup);
+}
+.bx-popup-color-bg {
+	background-color: @bx-color-popup;
+
+	background-image: url(@bx-image-bg-popup);
+	background-repeat: @bx-image-bg-popup-repeat;
+    background-size: @bx-image-bg-popup-size;
+}
+.bx-popup-content-indent {
+	padding: @bx-content-padding-popup;
+}
+.bx-popup-header {
+	padding: @bx-title-padding-popup;
+}
+.bx-popup-header-color-bg {
+	background-color: @bx-color-popup-title;
+}
+.bx-popup-header h2 {
+	font-family: @bx-font-family-popup-title;
+	font-size: @bx-font-size-popup-title;
+	color: @bx-color-font-popup-title;
+}
+
+/* slide menu */
+.bx-popup-wrapper.bx-popup-slide-wrapper {
+	border: @bx-border-width-menu-slide solid @bx-color-border-menu-slide;
+
+	.background-color (@bx-color-menu-slide);
+
+	background-image: url(@bx-image-bg-menu-slide);
+	background-repeat: @bx-image-bg-menu-slide-repeat;
+    background-size: @bx-image-bg-menu-slide-size;
+}
+.bx-popup-wrapper.bx-popup-slide-wrapper.bx-def-padding {
+	padding: @bx-content-padding-menu-slide;
+}
+
+/* main menu */
+.bx-sliding-menu-main {
+	-webkit-box-shadow: @bx-shadow-menu-main;
+	-moz-box-shadow: @bx-shadow-menu-main;
+	box-shadow: @bx-shadow-menu-main;
+	
+	border: @bx-border-width-menu-main solid @bx-color-border-menu-main;
+
+	background-color: @bx-color-menu-main;
+
+	background-image: url(@bx-image-bg-menu-main);
+	background-repeat: @bx-image-bg-menu-main-repeat;
+    background-size: @bx-image-bg-menu-main-size;
+}
+.bx-sliding-menu-main-cnt {
+	padding: @bx-content-padding-menu-main;
+}
+.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a {
+	text-shadow: @bx-shadow-font-menu-main;
+
+	font-family: @bx-font-family-menu-main;
+	font-size: @bx-font-size-menu-main;
+	font-weight: @bx-font-weight-menu-main;
+	color: @bx-font-color-menu-main;
+}
+.bx-sliding-menu-main .bx-sliding-menu-main-cnt li.bx-menu-tab-active a {
+	color: @bx-font-color-menu-main-active;
+}
+.bx-sliding-menu-main .bx-sliding-menu-main-cnt li a:hover {
+	color: @bx-font-color-menu-main-hover;
+}
+
+/* page menu */
+.bx-menu-main-bar-wrapper {
+	-webkit-box-shadow: @bx-shadow-menu-page;
+	-moz-box-shadow: @bx-shadow-menu-page;
+	box-shadow: @bx-shadow-menu-page;
+
+	border: @bx-border-width-menu-page solid @bx-color-border-menu-page;
+
+	background-color: @bx-color-menu-page;
+
+	background-image: url(@bx-image-bg-menu-page);
+	background-repeat: @bx-image-bg-menu-page-repeat;
+    background-size: @bx-image-bg-menu-page-size;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu {
+	padding: @bx-content-padding-menu-page;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu li a {
+	text-shadow: @bx-shadow-font-menu-page;
+
+	font-family: @bx-font-family-menu-page;
+	font-size: @bx-font-size-menu-page;
+	font-weight: @bx-font-weight-menu-page;
+	color: @bx-font-color-menu-page;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu li a:hover {
+	color: @bx-font-color-menu-page-hover;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu li.bx-menu-tab-active a {
+	color: @bx-font-color-menu-page-active;
+}
+
+/* form */
+.bx-form-value .bx-form-input-slider,
+.bx-form-value .bx-form-input-doublerange,
+.bx-form-value .bx-form-input-select_multiple,
+.bx-form-value .bx-form-input-select,
+.bx-form-value .bx-form-input-radio_set,
+.bx-form-value .bx-form-input-checkbox_set,
+.bx-form-value .bx-form-input-number,
+.bx-form-value .bx-form-input-datepicker,
+.bx-form-value .bx-form-input-datetime,
+.bx-form-value .bx-form-input-textarea,
+.bx-form-value .bx-form-input-password,
+.bx-form-value .bx-form-input-text {
+	border-color: @bx-color-border-form-input;
+	border-width: @bx-border-width-form-input;
+
+	background-color: @bx-color-form-input;
+
+	-webkit-box-shadow: @bx-shadow-form-input;
+	-moz-box-shadow: @bx-shadow-form-input;
+	box-shadow: @bx-shadow-form-input;
+}
+.bx-form-value .bx-form-input-slider,
+.bx-form-value .bx-form-input-doublerange,
+.bx-form-value .bx-form-input-select,
+.bx-form-value .bx-form-input-number,
+.bx-form-value .bx-form-input-datepicker,
+.bx-form-value .bx-form-input-datetime,
+.bx-form-value .bx-form-input-password,
+.bx-form-value .bx-form-input-text {
+	height: @bx-height-form-input;
+}
+.bx-form-value .bx-form-input-slider:focus,
+.bx-form-value .bx-form-input-doublerange:focus,
+.bx-form-value .bx-form-input-number:focus,
+.bx-form-value .bx-form-input-datepicker:focus,
+.bx-form-value .bx-form-input-datetime:focus,
+.bx-form-value .bx-form-input-textarea:focus,
+.bx-form-value .bx-form-input-password:focus,
+.bx-form-value .bx-form-input-text:focus {
+	border-color: @bx-color-border-form-input-active;
+	background-color: @bx-color-form-input-active;
+}
+.bx-form-value .bx-switcher-cont {
+	border-color: @bx-color-border-form-input;
+	border-width: @bx-border-width-form-input;
+
+	background-color: @bx-color-form-input;
+
+	-webkit-box-shadow: @bx-shadow-form-input;
+	-moz-box-shadow: @bx-shadow-form-input;
+	box-shadow: @bx-shadow-form-input;
+}
+
+/* button large */
+.bx-btn,
+.bx-btn.bx-btn-primary {
+	.box-sizing(content-box);
+
+	height: @bx-height-button;
+	line-height: @bx-height-button;
+
+	.background-color (@bx-color-button);
+
+	border: @bx-border-width-button solid @bx-color-border-button;
+	.radius(@bx-border-radius-button);
+
+	text-shadow: @bx-shadow-font-button;
+
+	font-family: @bx-font-family-button;
+	font-size: @bx-font-size-button;
+	font-weight: @bx-font-weight-button;
+	color: @bx-font-color-button;
+}
+.bx-btn:hover,
+.bx-btn:active,
+.bx-btn.bx-btn-primary:hover,
+.bx-btn.bx-btn-primary:active {
+	border: @bx-border-width-button solid @bx-color-border-button-hover;
+	.background-color (@bx-color-button-hover);
+
+	color: @bx-font-color-button-hover;
+}
+.bx-btn .sys-icon {
+	color: @bx-font-color-button;
+}
+.bx-btn:hover .sys-icon,
+.bx-btn:active .sys-icon,
+.bx-btn.bx-btn-primary:hover .sys-icon,
+.bx-btn.bx-btn-primary:active .sys-icon {
+	color: @bx-font-color-button-hover;
+}
+
+/* button small */
+.bx-btn.bx-btn-small {
+	.box-sizing(content-box);
+
+	height: @bx-height-button-small;
+	line-height: @bx-height-button-small;
+
+	.background-color (@bx-color-button-small);
+
+	border: @bx-border-width-button-small solid @bx-color-border-button-small;
+	.radius(@bx-border-radius-button-small);
+
+	text-shadow: @bx-shadow-font-button-small;
+
+	font-family: @bx-font-family-button-small;
+	font-size: @bx-font-size-button-small;
+	font-weight: @bx-font-weight-button-small;
+	color: @bx-font-color-button-small;
+}
+.bx-btn.bx-btn-small:hover,
+.bx-btn.bx-btn-small:active {
+	border: @bx-border-width-button-small solid @bx-color-border-button-small-hover;
+	.background-color (@bx-color-button-small-hover);
+
+	color: @bx-font-color-button-small-hover;
+}
+.bx-btn.bx-btn-small .sys-icon {
+	color: @bx-font-color-button-small;
+}
+.bx-btn.bx-btn-small:hover .sys-icon,
+.bx-btn.bx-btn-small:active .sys-icon {
+	color: @bx-font-color-button-small-hover;
+}

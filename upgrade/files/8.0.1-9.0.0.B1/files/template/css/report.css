@@ -1,0 +1,66 @@
+/*--- Do Form ---*/
+div.bx-report-do-form {}
+div.bx-report-do-form-cnt {
+	min-width: 220px;
+	min-width: 13.75rem;
+	overflow: hidden;
+}
+
+/*--- Reported By List ---*/
+div.bx-report-by-list {}
+div.bx-report-by-list-cnt {
+	max-height: 400px;
+	max-height: 25rem;
+	min-width: 220px;
+	min-width: 13.75rem;
+	max-width: 320px;
+	max-width: 20rem;
+	overflow: auto;
+}
+div.bx-report-by-list div.bx-def-unit {
+	float: none;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+div.bx-report-bi-thumbnail,
+div.bx-report-bi-info {
+	position: relative;
+}
+div.bx-report-bi-info p {
+	margin: 0px; 
+}
+
+/*--- Report Element Styles ---*/
+div.bx-report div.bx-report-element-holder,
+div.bx-report div.bx-report-counter-holder {
+	position: relative;
+	float: left;
+}
+
+/*--- Report Element Styles ---*/
+.bx-report-report .bx-report-element-holder,
+.bx-report-report .bx-report-counter-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.bx-report-button .bx-report-element-holder,
+.bx-report-button .bx-report-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-report-button-small .bx-report-element-holder,
+.bx-report-button-small .bx-report-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-report .bx-report-element-holder .bx-report-do-report.bx-report-disabled {
+	color: #ddd;
+}
+
+.bx-report-button .bx-report-counter-holder,
+.bx-report-button-small .bx-report-counter-holder {
+	font-size: 1.5rem;
+}

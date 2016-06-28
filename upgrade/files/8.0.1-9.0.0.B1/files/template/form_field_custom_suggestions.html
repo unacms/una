@@ -1,0 +1,49 @@
+<script>
+    $(function() {
+
+        $('#__id__ input[type=text]').autocomplete({
+            source: "__url_get_recipients__",
+            select: function(e, ui) {
+                $(this).val(ui.item.label);
+                $(this).trigger('superselect', ui.item);
+                e.preventDefault();
+            }
+        });
+
+        $('#__id__ input[type=text]').on('superselect', function(e, item) {
+            $(this).hide();
+            if ('undefined' != typeof(item))
+                $(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">'+ item.label +'<input type="hidden" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="__name__[]" value="'+ item.value +'" /></b>');
+            fAutoShrinkInput();
+            $(this).show();
+            this.value = '';
+
+        }).on('keydown', function(e) {
+
+            // if: comma,enter (delimit more keyCodes with | pipe)
+            if (/(13)/.test(e.which))
+                e.preventDefault();
+
+        });
+
+        $('#__id__').on('click', 'b', function() {
+            $(this).remove();
+            fAutoShrinkInput();
+        });
+
+        fAutoShrinkInput = function () {
+            var iWidthCont = $('#__id__.bx-form-input-autotoken').innerWidth();
+            var iWidthExisting = 0;
+            $('#__id__.bx-form-input-autotoken b').each(function () {
+                iWidthExisting += $(this).outerWidth(true);
+            });
+            $('#__id__.bx-form-input-autotoken input').width(parseInt(iWidthCont - iWidthExisting > 180 ? iWidthCont - iWidthExisting : 180) - 5);
+        };
+
+        fAutoShrinkInput();
+    });
+</script>
+<div id="__id__" class="bx-form-input-autotoken bx-def-font-inputs bx-form-input-text">
+    __vals__
+    <input type="text" value="" placeholder="__placeholder__" class="bx-def-font-inputs bx-form-input-text" />
+</div>

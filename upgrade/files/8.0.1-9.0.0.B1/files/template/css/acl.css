@@ -1,0 +1,13 @@
+/*-- Profile Membership block --*/
+div.bx-acl-membeship .bx-acl-m-thumbnail .sys-icon {
+	width: 100px;
+	height: 100px;
+
+	line-height: 100px;
+	font-size: 96px;
+}
+
+div.bx-acl-membeship .bx-acl-m-thumbnail img {
+	width: 100px;
+	height: 100px;
+}
