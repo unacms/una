@@ -1,0 +1,19 @@
+@import url(../../../../base/profile/template/css/main.css);
+
+.bx-base-pofile-cover-info .bx-def-ava {
+    border-width:0.0625rem;
+    border-radius:0.1875rem;
+    -moz-border-radius:0.1875rem;
+    -webkit-border-radius:0.1875rem;
+}
+
+.bx-base-groups-unit-cover .bx-base-pofile-unit-cover .bx-def-thumb {
+    border-width:0.0625rem;
+    border-radius:0.1875rem;
+    -moz-border-radius:0.1875rem;
+    -webkit-border-radius:0.1875rem;
+}
+
+.bx-search-result-block {
+    text-align:center;
+}

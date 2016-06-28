@@ -1,0 +1,14 @@
+__content__
+<script defer type="text/javascript">
+	var __js_object__ = new BxDolStudioDesigner({
+		sActionUrl: '__action_url__'
+	});
+    $(document).ready (function () {
+        var e = CodeMirror.fromTextArea($('textarea[name=code]').get(0), {
+            lineNumbers: true,
+            mode: "htmlmixed",
+            htmlMode: true,
+            matchBrackets: true
+        });
+    });
+</script>

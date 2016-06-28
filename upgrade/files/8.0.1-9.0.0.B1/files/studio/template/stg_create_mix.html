@@ -1,0 +1,19 @@
+<div class="bx-stg-create-mix bx-def-color-bg-block">
+    <div class="bx-stg-create-mix-cnt">
+        __form__
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#__form_id__").ajaxForm({ 
+                    dataType: "json",
+                    beforeSubmit: function (formData, jqForm, options) {
+                        bx_loading($("#__form_id__"), true);
+                    },
+                    success: function (oData) {
+                        $(".bx-popup-applied:visible").dolPopupHide();
+                        __js_object__.processResult(oData);
+                    }
+                });
+            });
+        </script>
+    </div>
+</div>
