@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_cnv_menu_item_title_system_message_group"><![CDATA[Group Message]]></string_add>
+	<string_add name="_bx_cnv_menu_item_title_message_group"><![CDATA[Group Message]]></string_add>
+	<string_add name="_bx_cnv_email_new_message"><![CDATA[New message]]></string_add>
+	<string_add name="_bx_cnv_email_new_message_subject"><![CDATA[New message from {SenderDisplayName}]]></string_add>
+	<string_add name="_bx_cnv_email_new_message_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>New message from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<hr />
+<p>{Message}</p>
+<bx_include_auto:_email_footer.html />]]></string_add>
+	<string_add name="_bx_cnv_email_new_reply"><![CDATA[New reply]]></string_add>
+	<string_add name="_bx_cnv_email_new_reply_subject"><![CDATA[New reply from {SenderDisplayName}]]></string_add>
+	<string_add name="_bx_cnv_email_new_reply_body"><![CDATA[
+<bx_include_auto:_email_header.html />
+<p>New reply from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<hr />
+<p>{Message}</p>
+<bx_include_auto:_email_footer.html />]]></string_add>
+
+	<string_del name="_bx_cnv_form_entry_input_recipients_placeholder"><![CDATA[Type name here...]]></string_del>
+	<string_del name="_bx_cnv_menu_title_view_entry_popup"><![CDATA[Conversation Popup Actions]]></string_del>
+</resources>

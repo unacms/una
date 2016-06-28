@@ -4,18 +4,18 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  */
 
-class BxPersonsUpdater extends BxDolStudioUpdater
+class BxInvUpdater extends BxDolStudioUpdater
 {
     function __construct($aConfig)
 	{
         parent::__construct($aConfig);
     }
 
-    public function actionExecuteSql($sOperation)
+	public function actionExecuteSql($sOperation)
     {
     	if($sOperation == 'install')
-    		if(!$this->oDb->isFieldExists('bx_persons_data', 'allow_view_to'))
-        		$this->oDb->query("ALTER TABLE `bx_persons_data` ADD `allow_view_to` int(11) NOT NULL DEFAULT '3' AFTER `views`");
+    		if(!$this->oDb->isFieldExists('bx_inv_invites', 'key'))
+        		$this->oDb->query("ALTER TABLE `bx_inv_invites` ADD `key` varchar(128) collate utf8_unicode_ci NOT NULL AFTER `profile_id`");
 
     	return parent::actionExecuteSql($sOperation);
     }

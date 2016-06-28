@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_posts_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string_add>
+	<string_add name="_bx_posts_form_entry_input_sys_date_added"><![CDATA[Создано]]></string_add>
+	<string_add name="_bx_posts_form_entry_input_date_added"><![CDATA[Создано]]></string_add>
+	<string_add name="_bx_posts_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string_add>
+	<string_add name="_bx_posts_form_entry_input_date_changed"><![CDATA[Обновлено]]></string_add>
+	<string_add name="_bx_posts_page_block_title_entry_info"><![CDATA[Инфо]]></string_add>
+	<string_add name="_bx_posts_page_block_title_my_entries"><![CDATA[Мои публикации]]></string_add>
+
+	<string_upd name="_bx_posts_menu_item_title_view_entry_submenu_entry"><![CDATA[Публикация]]></string_upd>
+
+	<string_del name="_bx_posts_menu_title_view_entry_popup"><![CDATA[Всплывающие действия для публикации]]></string_del>
+	<string_del name="_bx_posts_txt_category_link"><![CDATA[Категория <a href="{0}">{1}</a>]]></string_del>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_albums_form_entry_display_add_images"><![CDATA[Добавить фотки в альбом]]></string_add>
+	<string_add name="_bx_albums_form_entry_input_sys_date_added"><![CDATA[Создано]]></string_add>
+	<string_add name="_bx_albums_form_entry_input_date_added"><![CDATA[Создано]]></string_add>
+	<string_add name="_bx_albums_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string_add>
+	<string_add name="_bx_albums_form_entry_input_date_changed"><![CDATA[Обновлено]]></string_add>
+	<string_add name="_bx_albums_page_title_sys_add_images"><![CDATA[Добавить фотки]]></string_add>
+	<string_add name="_bx_albums_page_title_add_images"><![CDATA[Добавить фотки]]></string_add>
+	<string_add name="_bx_albums_page_block_title_add_images"><![CDATA[Добавить фотки]]></string_add>
+	<string_add name="_bx_albums_page_block_title_entry_info"><![CDATA[Информация]]></string_add>
+	<string_add name="_bx_albums_page_block_title_my_entries"><![CDATA[Мой альбомы]]></string_add>
+	<string_add name="_bx_albums_menu_set_title_view_media"><![CDATA[Действия для фотки]]></string_add>
+	<string_add name="_bx_albums_menu_title_view_media"><![CDATA[Действия для фотки]]></string_add>
+	<string_add name="_bx_albums_menu_item_title_system_edit_album"><![CDATA[Редактировать альбом]]></string_add>
+	<string_add name="_bx_albums_menu_item_title_edit_album"><![CDATA[Редактировать альбом]]></string_add>
+	<string_add name="_bx_albums_menu_item_title_system_add_images"><![CDATA[Добавить фотки]]></string_add>
+	<string_add name="_bx_albums_menu_item_title_add_images"><![CDATA[Добавить фотки]]></string_add>
+
+	<string_upd name="_bx_albums_menu_item_title_system_edit_entry"><![CDATA[Редактировать]]></string_upd>
+	<string_upd name="_bx_albums_menu_item_title_edit_entry"><![CDATA[Редактировать]]></string_upd>
+	<string_upd name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string_upd>
+	<string_upd name="_bx_albums_menu_item_title_delete_entry"><![CDATA[Удалить]]></string_upd>
+
+	<string_del name="_bx_albums_page_title_sys_entries_updated"><![CDATA[Обновлённые альбомы]]></string_del>
+	<string_del name="_bx_albums_page_title_entries_updated"><![CDATA[Обновлённые альбомы]]></string_del>
+	<string_del name="_bx_albums_menu_title_view_entry_popup"><![CDATA[Всплывающие действия для альбома]]></string_del>
+	<string_del name="_bx_albums_menu_item_title_system_entries_updated"><![CDATA[Обновлённые альбомы]]></string_del>
+	<string_del name="_bx_albums_menu_item_title_entries_updated"><![CDATA[Обновлённые альбомы]]></string_del>
+</resources>

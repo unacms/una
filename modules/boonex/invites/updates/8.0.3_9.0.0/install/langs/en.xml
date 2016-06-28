@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_invites_txt_link_popup_title"><![CDATA[Invitation Link]]></string_add>
+	<string_add name="_bx_invites_btn_invite_email"><![CDATA[Invite By Email]]></string_add>
+	<string_add name="_bx_invites_btn_invite_link"><![CDATA[Get Invitation Link]]></string_add>
+	<string_add name="_bx_invites_btn_copy"><![CDATA[Copy]]></string_add>
+
+	<string_del name="_bx_invites_btn_invite"><![CDATA[Invite]]></string_del>
+</resources>

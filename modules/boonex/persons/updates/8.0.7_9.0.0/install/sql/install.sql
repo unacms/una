@@ -1,6 +1,3 @@
-ALTER TABLE `bx_persons_data` ADD `allow_view_to` int(11) NOT NULL DEFAULT '3' AFTER `views`;
-
-
 -- FORMS
 DELETE FROM `sys_form_displays` WHERE `object`='bx_person' AND `display_name`='bx_person_view_full';
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 

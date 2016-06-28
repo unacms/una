@@ -1,0 +1,2 @@
+-- FORMS
+UPDATE `sys_form_inputs` SET `value`='a:1:{i:0;s:9:"sys_html5";}', `values`='a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}' WHERE `object`='bx_convos' AND `name`='attachments';
