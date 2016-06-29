@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_chat_plus',
     'title' => 'Chat+',
     'note' => 'Chat+ integration.',
-    'version' => '8.0.0.DEV',
+    'version' => '9.0.1.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
     'compatible_with' => array(
-        '8.0.x'
+        '9.0.x'
     ),
 
     /**
