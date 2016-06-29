@@ -31,3 +31,16 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_view_full', 'org_name', 2147483647, 1, 1),
 ('bx_organization_view_full', 'org_cat', 2147483647, 1, 2),
 ('bx_organization_view_full', 'org_desc', 2147483647, 1, 3);
+
+-- Update org pic and cover
+
+UPDATE `sys_storage_ghosts` AS `g`
+INNER JOIN (SELECT `d`.`id`, `d`.`picture` FROM `bx_organizations_data` AS `d`) AS `s` ON (`s`.`picture` = `g`.id)
+SET `g`.`content_id` = `s`.`id`
+WHERE `object` LIKE  'bx_organizations_pics';
+
+UPDATE `sys_storage_ghosts` AS `g`
+INNER JOIN (SELECT `d`.`id`, `d`.`cover` FROM `bx_organizations_data` AS `d`) AS `s` ON (`s`.`cover` = `g`.id)
+SET `g`.`content_id` = `s`.`id`
+WHERE `object` LIKE  'bx_organizations_pics';
+

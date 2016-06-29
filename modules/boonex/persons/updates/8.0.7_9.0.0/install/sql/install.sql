@@ -33,3 +33,16 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_person_view_full'
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_view_full', 'fullname', 2147483647, 1, 1),
 ('bx_person_view_full', 'description', 2147483647, 1, 2);
+
+-- Update profile pic and cover
+
+UPDATE `sys_storage_ghosts` AS `g`
+INNER JOIN (SELECT `d`.`id`, `d`.`picture` FROM `bx_persons_data` AS `d`) AS `s` ON (`s`.`picture` = `g`.id)
+SET `g`.`content_id` = `s`.`id`
+WHERE `object` LIKE  'bx_persons_pictures';
+
+UPDATE `sys_storage_ghosts` AS `g`
+INNER JOIN (SELECT `d`.`id`, `d`.`cover` FROM `bx_persons_data` AS `d`) AS `s` ON (`s`.`cover` = `g`.id)
+SET `g`.`content_id` = `s`.`id`
+WHERE `object` LIKE  'bx_persons_pictures';
+
