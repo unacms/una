@@ -1,0 +1,109 @@
+
+@import url(../../../../base/text/template/css/main.css);
+
+.bx-albums-unit-size {
+    width: 18.75rem;
+    height: 18.75rem;
+    object-fit: cover;
+}
+.bx-albums-media-wrapper {
+    width: 18.75rem;
+}
+
+@media (max-width:520px) {
+    .bx-albums-unit-size {
+        width: 100%;
+        height: auto;
+    }
+    .bx-albums-media-wrapper {
+        width: 100%;
+    }
+}
+
+.bx-search-result-block .bx-base-text-unit-gallery-wrapper {
+	display: block;
+}
+.bx-search-result-block.bx-base-text-unit-gallery-wrapper .bx-base-text-unit.bx-base-text-unit-gallery {
+	display: inline-block;
+}
+
+
+.bx-albums-media-caption,
+.bx-albums-media-actions {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.bx-base-text-unit-ext .bx-albums-unit-text-cont {
+	text-align: left;
+}
+.bx-albums-unit-images {
+    white-space:nowrap;
+    width:100%;
+    overflow: hidden;
+}
+
+.bx-albums-unit-image {
+	display: inline-block;
+    margin-right: 0.125rem;
+}
+
+.bx-albums-unit-image,
+.bx-albums-unit-image img {
+    height: 11.25rem;
+}
+
+.bx-base-text-unit-gallery .bx-albums-unit-image { 
+	width: 100%;
+	text-align: center;
+}
+
+.bx-albums-media-file {
+    text-align: center;    
+}
+
+.bx-albums-media-file img,
+.bx-albums-media-file video {
+    max-width:100%;
+}
+
+.bx-albums-media-title {
+    position:relative;
+    padding-right:6rem;
+}
+
+.bx-albums-media-title h1, 
+.bx-albums-media-title h2, 
+.bx-albums-media-title p {
+    margin:0;
+}
+
+.bx-albums-media-controls {
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.pswp__caption .pswp__caption__center {
+    text-align: center;
+}
+
+.pswp__video {
+    position:absolute;
+    text-align: center;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.pswp__video:before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.pswp__video video {
+    vertical-align: middle;    
+}
