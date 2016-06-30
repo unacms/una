@@ -52,6 +52,7 @@ $aConfig = array(
 		'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
+    	'update_relations' => 1,
 		'process_page_triggers' => 1,
 		'process_menu_triggers' => 1,
 		'clear_db_cache' => 1,
@@ -61,6 +62,13 @@ $aConfig = array(
      * Category for language keys.
      */
     'language_category' => 'Timeline',
+
+    /**
+     * Relations Section
+     */
+    'relations' => array(
+    	'bx_notifications'
+    ),
 
 	/**
      * Files Section

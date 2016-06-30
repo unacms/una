@@ -26,4 +26,27 @@ class BxTimelineUpdater extends BxDolStudioUpdater
 
     	return parent::actionExecuteSql($sOperation);
     }
+
+	protected function actionUpdateRelations($sOperation)
+    {
+        if(!in_array($sOperation, array('install'))) 
+        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+		if(empty($this->_aConfig['relations']) || !is_array($this->_aConfig['relations']))
+            return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+
+		foreach($this->_aConfig['relations'] as $sModule) {
+			if(!$this->oDb->isModuleByName($sModule))
+				continue;
+
+			$aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $sModule));
+			if(empty($aRelation) || empty($aRelation['on_enable']) || empty($aRelation['on_disable']) || !BxDolRequest::serviceExists($aRelation['module'], $aRelation['on_enable']) || !BxDolRequest::serviceExists($aRelation['module'], $aRelation['on_disable']))
+				continue;
+
+			BxDolService::call($aRelation['module'], $aRelation['on_disable'], array($this->_aConfig['module_uri']));
+			BxDolService::call($aRelation['module'], $aRelation['on_enable'], array($this->_aConfig['module_uri']));
+		}
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
 }
