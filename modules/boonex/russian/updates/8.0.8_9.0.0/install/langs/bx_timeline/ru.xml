@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Прикалывать]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Прикалывать]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Откалывать]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Откалывать]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Пожаловаться]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Обновить статус]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Обновить статус]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Лента]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Лента]]></string_add>
+	<string_add name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string_add>
+	<string_add name="_bx_timeline_txt_sample_vote_single"><![CDATA[голос за сообщение в ленте]]></string_add>
+	<string_add name="_bx_ntfs_alert_action_post_common"><![CDATA[добавить сообщение]]></string_add>
+
+	<string_upd name="_bx_timeline_txt_sample"><![CDATA[сообщение]]></string_upd>
+	<string_upd name="_bx_timeline_txt_sample_comment_single"><![CDATA[комментарий к сообщению в ленте]]></string_upd>
+</resources>

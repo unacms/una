@@ -1,0 +1,17 @@
+@import url(../../../template/css/menu.css);
+
+ul.bx-menu-toolbar li .sys-icon-a,
+ul.bx-menu-toolbar li .sys-icon {
+	font-size: 32px;
+    font-size: 2.0rem;
+    width: 2.0rem;
+    height: 2.0rem;
+}
+ul.bx-menu-toolbar li a .sys-icon-a {
+    margin-top:0.5rem;
+}
+
+.bx-popup .bx-menu-ver li div {
+	padding: 10px 20px 10px 10px;
+    padding: 0.625rem 1.25rem 0.625rem 0.625rem;
+}

@@ -1,0 +1,27 @@
+div.bx-stg-mixes {
+	position: relative;
+	white-space: nowrap;
+}
+div.bx-stg-mixes div.bx-sm-cell {
+	position: relative;
+}
+div.bx-stg-mixes div.bx-sm-cell.bx-sm-select {
+	float: left;
+	width: 50%;
+}
+div.bx-stg-mixes div.bx-sm-cell.bx-sm-new {
+	float: right;
+	width: 50%;
+
+	text-align: right;
+}
+
+div.bx-stg-mixes div.bx-sm-cell select {
+	width: auto;
+}
+
+div.bx-stg-mixes div.bx-sm-cell .bx-btn {
+	display: inline-block;
+	float: none;
+	vertical-align: middle;
+}

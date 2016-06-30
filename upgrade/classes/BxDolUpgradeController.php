@@ -17,7 +17,7 @@ class BxDolUpgradeController
 
     public function __construct()
     {
-        $this->oDb = new BxDolUpgradeDb();
+        $this->oDb = BxDolUpgradeDb::getInstance();
         $this->oUtil = new BxDolUpgradeUtil($this->oDb);
     }
 

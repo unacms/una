@@ -1,0 +1,24 @@
+<div id="bx-uploader-file-{storage_object}-{file_id}" class="bx-uploader-ghost bx-def-margin-sec-top bx-clearfix">
+    <input type="hidden" name="__name__[]" value="{file_id}" />
+    <div class="bx-base-general-icon-wrapper bx-def-margin-sec-right">
+        <img src="{file_icon}" class="bx-def-round-corners bx-base-general-icon bx-base-general-icon-{file_id}" />
+    </div>
+    <span class="bx-base-general-uploader-ghost">
+        <b><bx_text:_bx_albums_form_entry_file_title /></b>
+        <br />
+        <input class="bx-def-font-inputs bx-form-input-text bx-def-margin-sec-bottom" type="text" value="{file_title_attr}" name="title-{file_id}" /> <br />
+
+        <a class="bx-btn bx-btn-small bx-def-margin-sec-right" href="javascript:void(0);" onclick="bx_base_general_delete_ghost('{file_id}', '{file_url}', '{file_icon}', ['__editor_id__'], {js_instance_name});"><bx_text:_sys_txt_form_entry_input_picture_delete /></a>
+
+        <bx_if:set_thumb>
+            <span class="bx-base-general-use-as-thumb">
+                <input type="checkbox" name="__name_thumb__[]" value="{file_id}" onclick="bx_base_general_select_thumb(this)" id="__name_thumb__-{file_id}" /> 
+                <label for="__name_thumb__-{file_id}"><bx_text:_sys_txt_form_entry_input_picture_use_as_thumb /></label>
+            </span>
+        </bx_if:set_thumb>
+
+    </span>
+</div>
+<script>
+    $('#bx-uploader-file-{storage_object}-{file_id} .bx-base-general-use-as-thumb input[value="__thumb_id__"]').attr('checked', true);
+</script>

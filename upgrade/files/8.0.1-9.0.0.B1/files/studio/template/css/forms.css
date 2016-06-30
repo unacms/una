@@ -1,0 +1,123 @@
+@import url(../../../template/css/forms.css);
+
+/**
+ * Overwrite default styles
+ */
+.bx-form-value .bx-form-input-slider,
+.bx-form-value .bx-form-input-doublerange,
+.bx-form-value .bx-form-input-select_multiple,
+.bx-form-value .bx-form-input-select,
+.bx-form-value .bx-form-input-radio_set,
+.bx-form-value .bx-form-input-checkbox_set,
+.bx-form-value .bx-form-input-number,
+.bx-form-value .bx-form-input-datepicker,
+.bx-form-value .bx-form-input-datetime,
+.bx-form-value .bx-form-input-textarea,
+.bx-form-value .bx-form-input-password,
+.bx-form-value .bx-form-input-text {
+	height: 40px;
+	height: 2.5rem;
+
+	border-color: rgba(40, 60, 80, 0.5);
+	border-width: 2px;
+	border-width: 0.125;
+
+	background-color: rgba(245, 250, 255, 0.5);
+
+	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+	-moz-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+}
+
+.bx-form-value .bx-form-input-select_multiple,
+.bx-form-value .bx-form-input-radio_set,
+.bx-form-value .bx-form-input-checkbox_set {
+	height:auto;
+}
+
+.bx-form-value .bx-form-input-textarea {
+	height: 150px;
+    height: 10rem;
+	padding: 0.5rem;
+
+    line-height:normal;
+} 
+
+.bx-form-value .bx-form-input-slider:focus,
+.bx-form-value .bx-form-input-doublerange:focus,
+.bx-form-value .bx-form-input-number:focus,
+.bx-form-value .bx-form-input-datepicker:focus,
+.bx-form-value .bx-form-input-datetime:focus,
+.bx-form-value .bx-form-input-textarea:focus,
+.bx-form-value .bx-form-input-password:focus,
+.bx-form-value .bx-form-input-text:focus {
+	border-color: rgba(30, 140, 240, 1);
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.bx-form-value .bx-switcher-cont {
+	border-color: rgba(40, 60, 80, 0.5);
+	border-width: 2px;
+	border-width: 0.125;
+
+	background-color: rgba(245, 250, 255, 0.5);
+
+	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+	-moz-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+}
+
+.bx-form-value .bx-form-input-select_multiple,
+.bx-form-value .bx-form-input-radio_set,
+.bx-form-value .bx-form-input-checkbox_set {
+    height:auto;
+}
+
+/**
+ * General
+ */
+select.bx-form-field-type option {
+	padding-left: 25px;
+	background-repeat: no-repeat;
+	background-position: 5px 0px;
+}
+
+
+/**
+ * Image uploader with with manager
+ */
+div.bx-form-input-preview {}
+div.bx-form-input-preview img {
+    max-width: 768px; 
+    max-height: 256px;
+}
+div.bx-form-input-preview-empty {}
+
+
+/**
+ * Translatable fields.
+ */
+div.bx-form-input-wrapper-textarea {
+	position: relative;
+}
+
+div.bx-form-input-translator {
+	position: absolute;
+	top: -22px;
+	right: 0px;
+}
+
+div.bx-form-input-language,
+div.bx-form-input-language-current{
+	position: relative;
+	height: 17px;
+	line-height: 17px;
+}
+
+div.bx-form-input-language {
+    white-space: nowrap
+}
+
+div.bx-form-input-language-current {
+	font-weight: bold;
+}
