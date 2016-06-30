@@ -11,7 +11,7 @@ UPDATE `sys_pages_blocks` SET `order`='4' WHERE `object`='bx_albums_view_entry' 
 UPDATE `sys_pages_blocks` SET `cell_id`='4', `order`='2' WHERE `object`='bx_albums_view_entry' AND `title`='_bx_albums_page_block_title_entry_social_sharing';
 UPDATE `sys_pages_blocks` SET `designbox_id`='11' WHERE `object`='bx_albums_view_entry' AND `title`='_bx_albums_page_block_title_entry_author';
 
-DELETE FROM `sys_pages_blocks` WHERE `object`='bx_albums_view_entry' AND `title` IN ('_bx_albums_page_block_title_entry_info');
+DELETE FROM `sys_pages_blocks` WHERE `object`='bx_albums_view_entry' AND `title` IN ('_bx_albums_page_block_title_entry_actions', '_bx_albums_page_block_title_entry_info');
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_albums_view_entry', 3, 'bx_albums', '_bx_albums_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0);
 
@@ -20,7 +20,10 @@ UPDATE `sys_pages_blocks` SET `content`='a:3:{s:6:"module";s:9:"bx_albums";s:6:"
 DELETE FROM `sys_objects_page` WHERE `object`='bx_albums_updated';
 DELETE FROM `sys_pages_blocks` WHERE `object`='bx_albums_updated' AND `title` IN ('_bx_albums_page_block_title_updated_entries');
 
-UPDATE `sys_pages_blocks` SET `title`='_bx_albums_page_block_title_updated_entries', `content`='a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"browse_updated\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"extended\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', `order`='1' WHERE `object`='bx_albums_home' AND `title`='_bx_albums_page_block_title_updated_entries';
+DELETE FROM `sys_pages_blocks` WHERE `object`='bx_albums_home' AND `title` IN ('_bx_albums_page_block_title_recent_entries', '_bx_albums_page_block_title_updated_entries');
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_albums_home', 1, 'bx_albums', '', '_bx_albums_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"browse_updated\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"extended\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, 1);
+
 UPDATE `sys_pages_blocks` SET `content`='a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:3:{i:0;s:9:\"bx_albums\";i:1;s:9:\"bx_albums\";i:2;a:1:{s:10:\"show_empty\";b:1;}}s:5:\"class\";s:20:\"TemplServiceMetatags\";}' WHERE `object`='bx_albums_home' AND `title`='_bx_albums_page_block_title_popular_keywords_albums';
 
 DELETE FROM `sys_pages_blocks` WHERE `object`='sys_home' AND `title`='_bx_albums_page_block_title_updated_entries';
