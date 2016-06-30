@@ -23,7 +23,7 @@ $aConfig = array(
     
 
     'compatible_with' => array(
-        '9.0.0-B1'
+        '9.0.x'
     ),
 
     /**
