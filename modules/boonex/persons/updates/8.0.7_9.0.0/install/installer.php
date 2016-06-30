@@ -20,7 +20,10 @@ class BxPersonsUpdater extends BxDolStudioUpdater
 			if(!file_exists($sFile)) {
 				$aEntries = $this->oDb->getAll('SELECT * FROM `bx_persons_data`');
 				foreach($aEntries as $aEntry)
-					$this->oDb->query('UPDATE `bx_persons_data` SET `description`=? WHERE `id`=?', nl2br(htmlspecialchars_adv($aEntry['description'])), $aEntry['id']);
+					$this->oDb->query('UPDATE `bx_persons_data` SET `description`=:description WHERE `id`=:id', array(
+						'description' => nl2br(htmlspecialchars_adv($aEntry['description'])), 
+						'id' => $aEntry['id']
+					));
 
 				$oHandler = fopen($sFile, 'w');
 				if($oHandler) {

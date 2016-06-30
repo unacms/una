@@ -21,7 +21,10 @@ class BxOrgsUpdater extends BxDolStudioUpdater
 			if(!file_exists($sFile)) {
 				$aEntries = $this->oDb->getAll('SELECT * FROM `bx_organizations_data`');
 				foreach($aEntries as $aEntry)
-					$this->oDb->query('UPDATE `bx_organizations_data` SET `org_desc`=? WHERE `id`=?', nl2br(htmlspecialchars_adv($aEntry['org_desc'])), $aEntry['id']);
+					$this->oDb->query('UPDATE `bx_organizations_data` SET `org_desc`=:org_desc WHERE `id`=:id', array(
+						'org_desc' => nl2br(htmlspecialchars_adv($aEntry['org_desc'])), 
+						'id' => $aEntry['id']
+					));
 
 				$oHandler = fopen($sFile, 'w');
 				if($oHandler) {

@@ -18,7 +18,10 @@ class BxContactUpdater extends BxDolStudioUpdater
 			if(!file_exists($sFile)) {
 				$aEntries = $this->oDb->getAll('SELECT * FROM `bx_contact_entries`');
 				foreach($aEntries as $aEntry)
-					$this->oDb->query('UPDATE `bx_contact_entries` SET `body`=? WHERE `id`=?', nl2br(htmlspecialchars_adv($aEntry['body'])), $aEntry['id']);
+					$this->oDb->query('UPDATE `bx_contact_entries` SET `body`=:body WHERE `id`=:id', array(
+						'body' => nl2br(htmlspecialchars_adv($aEntry['body'])), 
+						'id' => $aEntry['id']
+					));
 
 				$oHandler = fopen($sFile, 'w');
 				if($oHandler) {

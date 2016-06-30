@@ -21,7 +21,10 @@ class BxInvUpdater extends BxDolStudioUpdater
 			if(!file_exists($sFile)) {
 				$aEntries = $this->oDb->getAll('SELECT * FROM `bx_inv_requests`');
 				foreach($aEntries as $aEntry)
-					$this->oDb->query('UPDATE `bx_inv_requests` SET `text`=? WHERE `id`=?', nl2br(htmlspecialchars_adv($aEntry['text'])), $aEntry['id']);
+					$this->oDb->query('UPDATE `bx_inv_requests` SET `text`=:text WHERE `id`=:id', array(
+						'text' => nl2br(htmlspecialchars_adv($aEntry['text'])), 
+						'id' => $aEntry['id']
+					));
 
 				$oHandler = fopen($sFile, 'w');
 				if($oHandler) {
