@@ -13,7 +13,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 DELETE FROM `sys_objects_menu` WHERE `object`='bx_convos_menu_folders_more';
 DELETE FROM `sys_menu_sets` WHERE `set_name`='bx_convos_menu_folders_more';
-DELETE FROM `sys_menu_items` WHERE `set_name`='bx_convos_menu_folders_more' AND `name` IN ('convos-drafts', 'convos-spam', 'convos-trash'); 
+DELETE FROM `sys_menu_items` WHERE `set_name`='bx_convos_menu_folders_more'; 
 
 DELETE FROM `sys_menu_items` WHERE `set_name`='trigger_group_view_actions' AND `name`='convos-compose';
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
