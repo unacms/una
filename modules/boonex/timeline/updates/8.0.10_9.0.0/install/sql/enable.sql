@@ -4,6 +4,7 @@ UPDATE `sys_objects_page` SET `override_class_name`='BxTimelinePageView', `overr
 SET @iPBCellProfile = 2;
 SET @iPBCellGroup = 4;
 DELETE FROM `sys_pages_blocks` WHERE `object`='trigger_page_persons_view_entry' AND `title`IN ('_bx_timeline_page_block_title_post_profile_persons', '_bx_timeline_page_block_title_view_profile_persons');
+DELETE FROM `sys_pages_blocks` WHERE `object`='trigger_page_organizations_view_entry' AND `title`IN ('_bx_timeline_page_block_title_post_profile_organizations', '_bx_timeline_page_block_title_view_profile_organizations');
 DELETE FROM `sys_pages_blocks` WHERE `object`='trigger_page_profile_view_entry' AND `title`IN ('_bx_timeline_page_block_title_post_profile_persons', '_bx_timeline_page_block_title_view_profile_persons');
 DELETE FROM `sys_pages_blocks` WHERE `object`='trigger_page_group_view_entry' AND `title`IN ('_bx_timeline_page_block_title_post_profile_persons', '_bx_timeline_page_block_title_view_profile_persons');
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
