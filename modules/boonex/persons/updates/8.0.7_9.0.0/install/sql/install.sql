@@ -24,7 +24,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_edit', 'allow_view_to', 2147483647, 1, 8),
 ('bx_person_edit', 'do_submit', 2147483647, 1, 9);
 
-DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_person_delete' AND `input_name` IN ('cover_preview', 'picture_preview');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_person_edit_cover' AND `input_name` IN ('cover_preview', 'picture_preview');
 
 DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_person_view' AND `input_name` IN ('cover_preview', 'picture_preview');
 UPDATE `sys_form_display_inputs` SET `active`='0' WHERE `display_name`='bx_person_view' AND `input_name`='description';
@@ -34,8 +34,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_view_full', 'fullname', 2147483647, 1, 1),
 ('bx_person_view_full', 'description', 2147483647, 1, 2);
 
--- Update profile pic and cover
 
+-- Update profile pic and cover
 UPDATE `sys_storage_ghosts` AS `g`
 INNER JOIN (SELECT `d`.`id`, `d`.`picture` FROM `bx_persons_data` AS `d`) AS `s` ON (`s`.`picture` = `g`.id)
 SET `g`.`content_id` = `s`.`id`
@@ -45,4 +45,3 @@ UPDATE `sys_storage_ghosts` AS `g`
 INNER JOIN (SELECT `d`.`id`, `d`.`cover` FROM `bx_persons_data` AS `d`) AS `s` ON (`s`.`cover` = `g`.id)
 SET `g`.`content_id` = `s`.`id`
 WHERE `object` LIKE  'bx_persons_pictures';
-
