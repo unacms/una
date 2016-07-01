@@ -1314,6 +1314,7 @@
 	<string name="_adm_txt_modules_show_introduction"><![CDATA[Введение от продавца:]]></string>
 	<string name="_adm_txt_modules_update_files"><![CDATA[Обновить файлы:]]></string>
 	<string name="_adm_txt_modules_update_relations"><![CDATA[Обновить связи:]]></string>
+	<string name="_adm_txt_modules_update_relations_for_all"><![CDATA[Обновить связи для всех зависимых модулей:]]></string>
 	<string name="_adm_txt_modules_update_languages"><![CDATA[Обновить языки:]]></string>
 	<string name="_adm_txt_modules_update_latest"><![CDATA[У Вас самая свежая версия.]]></string>
 	<string name="_adm_txt_modules_update_text"><![CDATA[Доступна новая версия {0}.]]></string>

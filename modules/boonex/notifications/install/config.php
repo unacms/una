@@ -54,10 +54,12 @@ $aConfig = array(
     ),
     'enable' => array(
         'execute_sql' => 1,
+    	'update_relations_for_all' => 1,
         'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
+    	'update_relations_for_all' => 1,
         'clear_db_cache' => 1,
     ),
 
@@ -66,6 +68,15 @@ $aConfig = array(
      */
     'dependencies' => array(),
 
+    /**
+     * Relations Section
+     */
+    'relation_handlers' => array(
+    	'on_install' => '',
+    	'on_uninstall' => 'delete_module_events',
+	    'on_enable' => 'add_handlers',
+	    'on_disable' => 'delete_handlers',
+    ),
 );
 
 /** @} */

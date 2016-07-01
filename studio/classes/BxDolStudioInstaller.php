@@ -45,7 +45,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     protected $_bShowOnSuccess = false;
 
-    function __construct($aConfig)
+    public function __construct($aConfig)
     {
         parent::__construct();
 
@@ -102,6 +102,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             ),
             'update_relations' => array(
                 'title' => _t('_adm_txt_modules_update_relations'),
+            ),
+            'update_relations_for_all' => array(
+                'title' => _t('_adm_txt_modules_update_relations_for_all'),
             ),
 			'process_connections' => array(
                 'title' => _t('_adm_txt_modules_process_connections'),
@@ -365,6 +368,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             );
 
 		$aResult = array();
+		if(!empty($this->_aConfig['before_enable'])) {
+        	$aResult = $this->_perform('before_enable', $aParams);
+        	if($aResult && !$aResult['result'])
+        		return $aResult;
+		}
+
+		$aResult = array();
         bx_alert('system', 'before_enable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         if ($aResult && !$aResult['result'])
             return $aResult;
@@ -406,6 +416,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'message' => _t('_adm_err_modules_already_disabled'),
                 'result' => false
             );
+
+		$aResult = array();
+		if(!empty($this->_aConfig['before_disable'])) {
+        	$aResult = $this->_perform('before_disable', $aParams);
+        	if($aResult && !$aResult['result'])
+        		return $aResult;
+		}
 
 		$aResult = array();
         bx_alert('system', 'before_disable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
@@ -600,6 +617,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         return $bResult && $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
+
+    /**
+     * NOTE. The action is ONLY needed for dependent module to let 
+     * Notifications based module(s) know that he(they) should 
+     * update (request and save) handlers from this dependent module.
+     */
 	protected function actionUpdateRelations($sOperation)
     {
         if(!in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) 
@@ -620,6 +643,35 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 		}
 
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    /**
+     * NOTE. The action is ONLY needed for Notifications based modules 
+     * to update (request and save) handlers from all dependent modules.
+     */
+    protected function actionUpdateRelationsForAll($sOperation)
+    {
+    	if(!in_array($sOperation, array('enable', 'disable'))) 
+        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+        if($sOperation == 'enable')
+        	$this->oDb->insertRelation($this->_aConfig['name'], $this->_aConfig['relation_handlers']);
+
+		$aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $this->_aConfig['name']));
+		if(empty($aRelation) || empty($aRelation['on_' . $sOperation]))
+			return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+
+    	$aModules = $this->oDb->getModulesBy(array('type' => 'all', 'active' => 1));
+	    foreach($aModules as $aModule) {
+	    	$aConfig = self::getModuleConfig($aModule);
+			if(!empty($aConfig['relations']) && is_array($aConfig['relations']) && in_array($this->_aConfig['name'], $aConfig['relations']))
+				BxDolService::call($this->_aConfig['name'], $aRelation['on_' . $sOperation], array($aModule['uri']));
+		}
+
+		if($sOperation == 'disable')
+        	$this->oDb->deleteRelation($this->_aConfig['name']);
+
+		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
 	/**

@@ -9,9 +9,13 @@
 
 class BxDolStudioUpdater extends BxDolStudioInstaller
 {
+	protected $_aModule;
+
     public function __construct($aConfig)
     {
         parent::__construct($aConfig);
+
+        $this->_aModule = $this->oDb->getModuleByUri($aConfig['module_uri']);
         $this->_sModulePath = $this->_sBasePath . $aConfig['module_dir'];
 
         $this->_aActions = array_merge($this->_aActions, array(
@@ -110,7 +114,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
     }
 
     //--- Action Methods ---//
-    public function actionUpdateFiles($bInstall = true)
+    protected function actionUpdateFiles($bInstall = true)
     {
         $sPath = $this->_sHomePath . 'source/';
         if(!file_exists($sPath))
@@ -131,7 +135,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
-    public function actionExecuteSql($sOperation)
+    protected function actionExecuteSql($sOperation)
     {
     	$aModule = $this->oDb->getModuleByUri($this->_aConfig['module_uri']);
     	if(empty($aModule))
@@ -150,7 +154,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         return $mixedResult === true ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $mixedResult);
     }
 
-    public function actionUpdateLanguages($bInstall = true)
+    protected function actionUpdateLanguages($bInstall = true)
     {
         $aConfig = self::getModuleConfig($this->_sHomePath . 'install/config.php');
         if(empty($aConfig) || !is_array($aConfig))
@@ -185,7 +189,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
      * Note. Mainly the action is needed for Updates in 'language' type modules. 
      * It should be used after 'update_files' action if some changes were done in module's language files. 
      */
-    public function actionRestoreLanguages($bInstall = true)
+    protected function actionRestoreLanguages($bInstall = true)
     {
     	$aConfig = self::getModuleConfig($this->_sHomePath . 'install/config.php');
         if(empty($aConfig) || !is_array($aConfig) || empty($aConfig['module_uri']))
@@ -199,6 +203,60 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         	$bResult &= $oLanguages->restoreLanguage($sName, $aConfig['module_uri']);
 
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+    }
+
+    /**
+     * NOTE. The action is ONLY needed for dependent module to let 
+     * Notifications based module(s) know that he(they) should 
+     * update (request and save) handlers from this dependent module.
+     */
+	protected function actionUpdateRelations($sOperation)
+    {
+        if(!in_array($sOperation, array('install'))) 
+        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+		if(empty($this->_aConfig['relations']) || !is_array($this->_aConfig['relations']))
+            return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+
+		foreach($this->_aConfig['relations'] as $sModule) {
+			if(!$this->oDb->isModuleByName($sModule))
+				continue;
+
+			$aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $sModule));
+			if(empty($aRelation) || empty($aRelation['on_enable']) || empty($aRelation['on_disable']) || !BxDolRequest::serviceExists($aRelation['module'], $aRelation['on_enable']) || !BxDolRequest::serviceExists($aRelation['module'], $aRelation['on_disable']))
+				continue;
+
+			BxDolService::call($aRelation['module'], $aRelation['on_disable'], array($this->_aConfig['module_uri']));
+			BxDolService::call($aRelation['module'], $aRelation['on_enable'], array($this->_aConfig['module_uri']));
+		}
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+	/**
+     * NOTE. The action is ONLY needed for Notifications based modules 
+     * to update (request and save) handlers from all dependent modules.
+     */
+    protected function actionUpdateRelationsForAll($sOperation)
+    {
+    	if(!in_array($sOperation, array('install'))) 
+        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+		$aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $this->_aModule['name']));
+		if(empty($aRelation) || empty($aRelation['on_enable']) || empty($aRelation['on_disable']) || !BxDolRequest::serviceExists($this->_aModule['name'], $aRelation['on_enable']) || !BxDolRequest::serviceExists($this->_aModule['name'], $aRelation['on_disable']))
+			return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+
+    	$aModules = $this->oDb->getModulesBy(array('type' => 'all', 'active' => 1));
+	    foreach($aModules as $aModule) {
+	    	$aConfig = self::getModuleConfig($aModule);
+			if(empty($aConfig['relations']) || !is_array($aConfig['relations']) || !in_array($this->_aModule['name'], $aConfig['relations']))
+				continue;
+
+			BxDolService::call($this->_aModule['name'], $aRelation['on_disable'], array($aModule['uri']));
+			BxDolService::call($this->_aModule['name'], $aRelation['on_enable'], array($aModule['uri']));
+		}
+
+		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
     protected function _updateLanguage($bInstall, $sLanguage, $iCategory = 0, $sPath = '')

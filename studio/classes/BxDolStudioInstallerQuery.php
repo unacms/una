@@ -14,6 +14,18 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
         parent::__construct();
     }
 
+    function insertRelation($sModule, $aRelation)
+    {
+    	$aRelation['module'] = $sModule;
+        return (int)$this->query("INSERT INTO `sys_modules_relations` SET `module`=:module, `on_install`=:on_install, `on_uninstall`=:on_uninstall, `on_enable`=:on_enable, `on_disable`=:on_disable", $aRelation) > 0;
+    }
+
+	function deleteRelation($sModule)
+    {
+    	$sQuery = $this->prepare("DELETE FROM `sys_modules_relations` WHERE `module`=? LIMIT 1", $sModule);
+        return (int)$this->query($sQuery) > 0;
+    }
+
     function getRelationsBy($aParams = array())
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
