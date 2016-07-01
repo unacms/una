@@ -501,6 +501,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'js_object' => $sJsObject,
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'item') . $aEvent['id'],
             'class' => $bBrowseItem ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
+        	'class_content' => $bBrowseItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
             'bx_if:show_icon' => array(
                 'condition' => $bAuthorIcon,
                 'content' => array(
@@ -640,7 +641,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bBrowseItem)
         	 $sText = strip_tags($sText, '<br><br/><p>');
         else {
-        	$sText = strip_tags(preg_replace("/<br[\s\/]*>/i", "\n", $sText));
+        	$sText = strip_tags($sText);
 
         	$iMaxLength = $this->_oConfig->getCharsDisplayMax();
         	if(strlen($sText) > $iMaxLength) {
