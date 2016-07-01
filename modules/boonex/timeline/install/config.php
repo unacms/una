@@ -90,6 +90,7 @@ $aConfig = array(
     ),
     'enable' => array(
         'execute_sql' => 1,
+    	'update_relations_for_all' => 1,
     	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
@@ -101,6 +102,7 @@ $aConfig = array(
     ),
     'disable' => array (
         'execute_sql' => 1,
+    	'update_relations_for_all' => 1,
     	'update_relations' => 1,
     	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
@@ -116,8 +118,14 @@ $aConfig = array(
     'dependencies' => array(),
 
     /**
-     * Connections Section
+     * Relations Section
      */
+    'relation_handlers' => array(
+    	'on_install' => '',
+    	'on_uninstall' => 'delete_module_events',
+	    'on_enable' => 'add_handlers',
+	    'on_disable' => 'delete_handlers',
+    ),
     'relations' => array(
     	'bx_notifications'
     )
