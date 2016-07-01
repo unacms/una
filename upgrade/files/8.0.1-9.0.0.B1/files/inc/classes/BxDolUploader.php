@@ -264,6 +264,7 @@ abstract class BxDolUploader extends BxDol
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
             'engine' => $this->_aObject['object'],
             'storage_object' => $this->_sStorageObject,
+            'images_transcoder' => '',
             'uniq_id' => $this->_sUniqId,
             'template_ghost' => $sJsValue,
             'multiple' => $isMultiple ? 1 : 0,
