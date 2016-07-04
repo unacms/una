@@ -293,7 +293,11 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     public function checkModules($bAuthorizedAccess = false)
     {
     	if($bAuthorizedAccess)
-        	$aProducts = $this->getAccessObject(true)->loadItems(array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT));
+        	$aProducts = $this->getAccessObject(true)->loadItems(array(
+        		'dol_type' => 'purchased_products', 
+        		'dol_domain' => BX_DOL_URL_ROOT,
+        		'dol_products' => $this->getInstalledInfoShort()
+        	));
     	else
 			$aProducts = $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_purchased', array('key' => getParam('sys_oauth_key')));
 
@@ -309,21 +313,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function checkUpdates($bAuthorizedAccess = false)
     {
-		$aModules = BxDolModuleQuery::getInstance()->getModules();
-
-        $aProducts = array();
-        foreach($aModules as $aModule) {
-            if(empty($aModule['name']))
-                continue;
-
-            $aProducts[] = array(
-                'name' => $aModule['name'],
-                'version' => $aModule['version'],
-            	'hash' => $aModule['hash'],
-            );
-        }
-
-        $sProducts = base64_encode(serialize($aProducts));
+        $sProducts = $this->getInstalledInfoShort();
 
         if($bAuthorizedAccess)
 	        return $this->getAccessObject(true)->loadItems(array('dol_type' => 'available_updates', 'dol_products' => $sProducts));
@@ -577,6 +567,25 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             $aInstalledInfo[$aModule['path']] = $aModule;
 
         return $aInstalledInfo;
+    }
+
+	private function getInstalledInfoShort()
+    {
+    	$aModules = BxDolModuleQuery::getInstance()->getModules();
+
+        $aProducts = array();
+        foreach($aModules as $aModule) {
+            if(empty($aModule['name']))
+                continue;
+
+            $aProducts[$aModule['name']] = array(
+                'name' => $aModule['name'],
+                'version' => $aModule['version'],
+            	'hash' => $aModule['hash'],
+            );
+        }
+
+        return base64_encode(serialize($aProducts));
     }
 
     private function addTransientJob($sName, $sAction, $aParams)

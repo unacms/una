@@ -69,7 +69,11 @@ class BxDolStudioOAuth extends BxDol
     	if(empty($this->sKey) || empty($this->sSecret))
             return _t('_adm_err_oauth_empty_key_secret');
 
-        return $this->authorize();
+		$mixedResult = $this->authorize();
+		if($mixedResult === true)
+			BxDolStudioInstallerUtils::getInstance()->checkModules(true);
+
+        return $mixedResult;
     }
 
     protected function isAuthorized()
