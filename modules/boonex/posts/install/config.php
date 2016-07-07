@@ -112,7 +112,7 @@ $aConfig = array(
     'dependencies' => array(),
 
     /**
-     * Connections Section
+     * Relations Section
      */
     'relations' => array(
     	'bx_timeline',

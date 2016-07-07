@@ -54,8 +54,3 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('profile', 'delete', @iHandler),
 ('sys_profiles_subscriptions', 'connection_added', @iHandler),
 ('sys_profiles_subscriptions', 'connection_removed', @iHandler);
-
-
--- MODULES' CONNECTIONS
-INSERT INTO `sys_modules_relations` (`module`, `on_install`, `on_uninstall`, `on_enable`, `on_disable`) VALUES
-(@sName, '', 'delete_module_events', 'add_handlers', 'delete_handlers');

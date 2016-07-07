@@ -200,8 +200,3 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline', 'bx_timeline_meta_keywords', 'bx_timeline_meta_locations', '', '', '');
-
-
--- MODULES' CONNECTIONS
-INSERT INTO `sys_modules_relations` (`module`, `on_install`, `on_uninstall`, `on_enable`, `on_disable`) VALUES
-('bx_timeline', '', 'delete_module_events', 'add_handlers', 'delete_handlers');
