@@ -49,7 +49,8 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_scopes` (
 
 INSERT INTO `bx_oauth_scopes` (`scope`, `is_default`) VALUES
 ('basic', 1),
-('service', 0);
+('service', 0),
+('market', 0);
 
 -- Studio page and widget
 
