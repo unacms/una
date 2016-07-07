@@ -19,7 +19,8 @@ class BxOAuthAPI extends BxDol
         'me' => 'basic',
         'user' => 'basic',
         'friends' => 'basic',
-        'service' => 'basic', // service
+        'service' => 'service',
+        'market' => 'market',
     );
 
     function __construct($oModule)
@@ -66,16 +67,23 @@ class BxOAuthAPI extends BxDol
         ));
     }
 
+    function market($aToken) 
+    {
+        $_GET['module'] = $_POST['module'] = 'bx_market_api';
+        $this->service($aToken);
+    }
+
+    /**
+     * Service call should look like this
+     * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params[]=1&params[]=abc&class=custom_class_name_or_remove_it_if_module_class
+     * or
+     * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params=serialized_string_of_params
+     */ 
     function service($aToken) 
     {
-        if (!isAdmin($aToken['user_id'])) {
-            $this->errorOutput(403, 'access_denied', 'Only admin can access service endpoint');
-            return false;
-        }
-
         bx_login($aToken['user_id'], false, false);
 
-        $sUri = bx_get('uri');
+        $sModule = bx_get('module');
         $sMethod = bx_get('method');
 
         if (!($aParams = bx_get('params')))
@@ -88,15 +96,15 @@ class BxOAuthAPI extends BxDol
         if (!($sClass = bx_get('class')))
             $sClass = 'Module';
 
-        if (!BxDolRequest::serviceExists($sUri, $sMethod, $sClass)) {
+        if (!BxDolRequest::serviceExists($sModule, $sMethod, $sClass)) {
             $this->errorOutput(404, 'not_found', 'Service was not found');
             return false;
         }
 
-        $mixedRet = BxDolService::call($sUri, $sMethod, $aParams, $sClass);
+        $mixedRet = BxDolService::call($sModule, $sMethod, $aParams, $sClass);
 
         $this->output(array(
-            'uri' => $sUri,
+            'module' => $sModule,
             'method' => $sMethod,
             'data' => $mixedRet,
         ));
