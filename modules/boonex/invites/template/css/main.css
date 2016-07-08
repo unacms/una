@@ -19,7 +19,10 @@ div.bx-inv-link-actions .bx-btn {
 
 
 /*--- Request Invite block ---*/
-div.bx-inv-request-btn  {}
+div.bx-inv-request-btn  .bx-btn {
+	float: none;
+	display: inline-block;
+}
 
 
 /*--- Manage Requests page ---*/
