@@ -119,7 +119,7 @@ EOS;
     /**
      * Add members in bulk from local database to Intercom
      */      
-    public function actionBulkAdd($iLimit = 2)
+    public function actionBulkAdd($iLimit = 5000)
     {
         if (!isAdmin())
             die('{}');
