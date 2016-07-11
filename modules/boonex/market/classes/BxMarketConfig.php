@@ -31,6 +31,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'products',
         	'TABLE_PHOTOS2ENTRIES' => $aModule['db_prefix'] . 'photos2products',
         	'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2products',
+        	'TABLE_FILES' => $aModule['db_prefix'] . 'files',
         	'TABLE_DOWNLOADS' => $aModule['db_prefix'] . 'downloads_track',
         	'TABLE_LICENSES' => $aModule['db_prefix'] . 'licenses',
 
@@ -43,6 +44,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'product-text',
+        	'FIELD_CATEGORY' => 'cat',
         	'FIELD_HEADER_BEG_SINGLE' => 'header_beg_single',
         	'FIELD_PRICE_SINGLE' => 'price_single',
         	'FIELD_HEADER_END_SINGLE' => 'header_end_single',

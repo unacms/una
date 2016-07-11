@@ -12,6 +12,9 @@
 define('BX_MARKET_LICENSE_TYPE_SINGLE', 'single'); //--- one-time payment license
 define('BX_MARKET_LICENSE_TYPE_RECURRING', 'recurring'); //--- recurring payment license
 
+define('BX_MARKET_FILE_TYPE_VERSION', 'version');
+define('BX_MARKET_FILE_TYPE_UPDATE', 'update');
+
 /**
  * Market module
  */
@@ -115,6 +118,84 @@ class BxMarketModule extends BxBaseModTextModule
         return !empty($aLicenses) && is_array($aLicenses) ? count($aLicenses) : 0;
     }
 
+	public function serviceHasLicense ($iProfileId, $iProductId, $sDomain = '')
+    {
+    	return $this->_oDb->hasLicense($iProfileId, $iProductId, $sDomain);
+    }
+
+    public function serviceUpdateLicense ($aSet, $aWhere)
+    {
+    	return $this->_oDb->updateLicense($aSet, $aWhere);
+    }
+
+    public function serviceGetEntryBy($sType, $mixedValue)
+    {
+    	$sMethod = 'getContentInfoBy' . ucfirst($sType);
+    	return method_exists($this->_oDb, $sMethod) ? $this->_oDb->$sMethod($mixedValue) : array();
+    }
+
+    public function serviceGetEntriesBy($aParams)
+    {
+    	return $this->_oDb->getContentInfoBy($aParams);
+    }
+
+    public function serviceGetThumbnail($iPhotoId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+    	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+
+    	return array(
+    		'small' => $oImagesTranscoder ? $oImagesTranscoder->getFileUrl($iPhotoId) : '',
+    		'big' => $oStorage ? $oStorage->getFileUrlById($iPhotoId) : ''
+    	);
+    }
+
+    public function serviceGetFile($iFileId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$aFile = $this->_oDb->getFile(array(
+    		'type' => 'file_id_ext', 
+    		'file_id' => $iFileId
+    	));
+
+    	if(!empty($aFile) && is_array($aFile)) {
+	    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
+	    	$aFile['file_url'] = $oStorage ? $oStorage->getFileUrlById($iFileId) : '';
+    	}
+
+    	return $aFile;
+    }
+
+    public function serviceGetScreenshots($iItemId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        if(!$iItemId)
+			return array();
+
+    	$aData = $this->_oDb->getContentInfoById($iItemId);
+    	
+    	$aPhotos = $this->_oDb->getPhoto(array('type' => 'content_id', 'content_id' => $aData[$CNF['FIELD_ID']], 'except' => array($aData[$CNF['FIELD_THUMB']], $aData[$CNF['FIELD_COVER']])));
+    	if(empty($aPhotos) || !is_array($aPhotos))
+    		return array();
+
+		$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+    	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
+
+    	$aResult = array();
+    	foreach($aPhotos as $aPhoto) 
+    		$aResult[] = array(
+    			'id' => $aPhoto['file_id'],
+    			'url_sm' => $oImagesTranscoder ? $oImagesTranscoder->getFileUrl($aPhoto['file_id']) : '',
+    			'url_bg' => $oStorage ? $oStorage->getFileUrlById($aPhoto['file_id']) : ''
+    		);
+
+		return $aResult;
+    }
+    
     /**
      * Integration with Payment based modules.  
      */
@@ -241,15 +322,37 @@ class BxMarketModule extends BxBaseModTextModule
         $bFileInfo = !empty($aFileInfo) && is_array($aFileInfo);
 
         $bFileInfoTitle = $bFileInfo && isset($aFileInfo['title']);
-        $bFileInfoVersion = $bFileInfo && isset($aFileInfo['version']);
 
-		return array(
+		$aTmplVars = array(
 			'file_title' => $bFileInfoTitle ? $aFileInfo['title'] : '',
 			'file_title_attr' => $bFileInfoTitle ? bx_html_attribute($aFileInfo['title']) : '',
+		);
 
+		if($sStorage == $CNF['OBJECT_STORAGE'])
+			return $aTmplVars;
+
+		$bFileInfoVersion = $bFileInfo && isset($aFileInfo['version']);
+
+        $bFileInfoTypeVersion = !$bFileInfo || ($bFileInfo && isset($aFileInfo['type']) && $aFileInfo['type'] == BX_MARKET_FILE_TYPE_VERSION);
+        $bFileInfoTypeUpdate = $bFileInfo && isset($aFileInfo['type']) && $aFileInfo['type'] == BX_MARKET_FILE_TYPE_UPDATE;
+
+        $aVersions = $this->_oDb->$sMethod(array('type' => 'content_id', 'content_id' => $iContentId));
+
+		$aTmplVars = array_merge($aTmplVars, array(
 			'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
 			'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
-		);
+
+			'file_type_version_selected' => $bFileInfoTypeVersion ? ' selected="selected"' : '',
+			'file_type_update_selected' => $bFileInfoTypeUpdate ? ' selected="selected"' : '',
+
+			'file_type_version_elements' => !$bFileInfoTypeVersion ? ' style="display:none;"' : '',
+			'file_type_update_elements' => !$bFileInfoTypeUpdate ? ' style="display:none;"' : '',
+
+			'file_version_from_options' => $this->_oTemplate->getGhostTemplateFileOptions('version', $aFileInfo, $aVersions),
+			'file_version_to_options' => $this->_oTemplate->getGhostTemplateFileOptions('version_to', $aFileInfo, $aVersions)
+		));
+
+		return $aTmplVars;
     }
 
     public function checkAllowedSetCover ()

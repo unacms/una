@@ -106,24 +106,15 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     public function getScreenshots($aData)
     {
-    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+    	$oModule = BxDolModule::getInstance($this->MODULE);
 
-    	$aPhotos = $this->_oDb->getPhoto(array('type' => 'content_id', 'content_id' => $aData[$CNF['FIELD_ID']], 'except' => array($aData[$CNF['FIELD_THUMB']], $aData[$CNF['FIELD_COVER']])));
-    	if(empty($aPhotos) || !is_array($aPhotos))
+    	$CNF = &$oModule->_oConfig->CNF;
+    	$aPhotos = $oModule->serviceGetScreenshots($aData[$CNF['FIELD_ID']]);
+		if(empty($aPhotos) || !is_array($aPhotos))
     		return '';
 
-		$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-    	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
-
-    	$aTmplVarsPhotos = array();
-    	foreach($aPhotos as $aPhoto) 
-    		$aTmplVarsPhotos[] = array(
-    			'item_url_sm' => $oImagesTranscoder ? $oImagesTranscoder->getFileUrl($aPhoto['file_id']) : '',
-    			'item_url_bg' => $oStorage ? $oStorage->getFileUrlById($aPhoto['file_id']) : ''
-    		);
-
-    	return $this->parseHtmlByName('entry-screenshots.html', array(
-    		'bx_repeat:items' => $aTmplVarsPhotos
+		return $this->parseHtmlByName('entry-screenshots.html', array(
+    		'bx_repeat:items' => $aPhotos
     	));
     }
     
@@ -138,6 +129,48 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	));
 
     	return $sContent . parent::getAuthorAddon ($aData, $oProfile);
+    }
+
+    public function getGhostTemplateFileOptions($sField, $aFile, $aVersions)
+    {
+    	$bField = !empty($aFile) && is_array($aFile) && isset($aFile[$sField]);
+    	
+    	$aTmplVarsVersions = array();
+    	foreach ($aVersions as $aVersion) {
+    		if($aVersion['type'] != 'version' || empty($aVersion['version']))
+    			continue;
+
+			$aTmplVarsVersions[] = array(
+				'value' => $aVersion['version'],
+				'title' =>  $aVersion['version'],
+				'bx_if:selected' => array(
+					'condition' => $bField && $aFile[$sField] == $aVersion['version'],
+					'content' => array()
+				)
+			);
+    	}
+
+    	return $this->parseHtmlByName('form_ghost_template_file_options.html', array(
+    		'bx_repeat:versions' => $aTmplVarsVersions
+    	));    	
+    }
+
+    public function getGhostTemplateFile($oForm, $aContentInfo)
+    {
+    	$CNF = BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+    	return $this->parseHtmlByName('form_ghost_template_file.html', array (
+                'name' => $oForm->aInputs[$CNF['FIELD_FILE']]['name'],
+                'content_id' => $oForm->aInputs[$CNF['FIELD_FILE']]['content_id'],
+                'editor_id' => $CNF['FIELD_TEXT_ID'],
+                'thumb_id' => isset($aContentInfo[$CNF['FIELD_PACKAGE']]) ? $aContentInfo[$CNF['FIELD_PACKAGE']] : 0,
+                'bx_if:set_thumb' => array (
+                    'condition' => true,
+                    'content' => array(
+            			'name_thumb' => $CNF['FIELD_PACKAGE'],
+            		),
+                ),
+            ));
     }
 
     protected function getUnit ($aData, $aParams = array())
@@ -215,7 +248,22 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     			'content' => array()
     		);
 
-    		$aAttachments[$iIndex]['bx_if:not_image']['content']['file_version'] = !empty($aFiles[$iAttachmentId]) ? $aFiles[$iAttachmentId]['version'] : '';
+    		$bAttachment = !empty($aFiles[$iAttachmentId]);
+    		$aAttachments[$iIndex]['bx_if:not_image']['content'] = array_merge($aAttachments[$iIndex]['bx_if:not_image']['content'], array(
+    			'file_type' => $bAttachment ? _t('_bx_market_form_entry_input_files_type_' . $aFiles[$iAttachmentId]['type']) : '',
+    			'bx_if:show_version' => array(
+    				'condition' => $bAttachment && $aFiles[$iAttachmentId]['type'] == BX_MARKET_FILE_TYPE_VERSION,
+    				'content' => array(
+    					'file_version' => $bAttachment ? $aFiles[$iAttachmentId]['version'] : ''
+    				)
+    			),
+    			'bx_if:show_update' => array(
+    				'condition' => $bAttachment && $aFiles[$iAttachmentId]['type'] == BX_MARKET_FILE_TYPE_UPDATE,
+    				'content' => array(
+    					'file_version_from_to' => $bAttachment ? _t('_bx_market_form_entry_input_files_version_from_x_to_y', $aFiles[$iAttachmentId]['version'], $aFiles[$iAttachmentId]['version_to']) : ''
+    				)
+    			)
+    		));
     	}
 
     	return $aAttachments;

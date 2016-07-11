@@ -67,6 +67,12 @@
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Use as Main]]></string>
 	<string name="_bx_market_form_entry_input_files_name"><![CDATA[Name:]]></string>
 	<string name="_bx_market_form_entry_input_files_version"><![CDATA[Version:]]></string>
+	<string name="_bx_market_form_entry_input_files_type"><![CDATA[Type:]]></string>
+	<string name="_bx_market_form_entry_input_files_type_version"><![CDATA[version]]></string>
+	<string name="_bx_market_form_entry_input_files_type_update"><![CDATA[update]]></string>
+	<string name="_bx_market_form_entry_input_files_version_from"><![CDATA[Version from:]]></string>
+	<string name="_bx_market_form_entry_input_files_version_to"><![CDATA[Version to:]]></string>
+	<string name="_bx_market_form_entry_input_files_version_from_x_to_y"><![CDATA[Version from {0} to {1}]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Who can view]]></string>
     <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Who can view]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_purchase_to"><![CDATA[Who can purchase]]></string>

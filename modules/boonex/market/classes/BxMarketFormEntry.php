@@ -81,18 +81,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
                 $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = $aValues['id'];
             }
 
-            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template_file.html', array (
-                'name' => $this->aInputs[$CNF['FIELD_FILE']]['name'],
-                'content_id' => $this->aInputs[$CNF['FIELD_FILE']]['content_id'],
-                'editor_id' => $CNF['FIELD_TEXT_ID'],
-                'thumb_id' => isset($aContentInfo[$CNF['FIELD_PACKAGE']]) ? $aContentInfo[$CNF['FIELD_PACKAGE']] : 0,
-                'bx_if:set_thumb' => array (
-                    'condition' => true,
-                    'content' => array(
-            			'name_thumb' => $CNF['FIELD_PACKAGE'],
-            		),
-                ),
-            ));
+            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->getGhostTemplateFile($this, $aContentInfo);
         }
 
         return parent::initChecker($aValues, $aSpecificValues);
@@ -169,7 +158,26 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         		break;
 
         	case $this->_oModule->_oConfig->CNF['OBJECT_STORAGE_FILES']:
-        		$this->_oModule->_oDb->associateFileWithContent($iContentId, $iFileId, $this->getCleanValue('version-' . $iFileId));
+        		$aParams = array(
+        			'type' => $this->getCleanValue('type-' . $iFileId)        			
+        		);
+
+        		switch ($aParams['type']) {
+        			case BX_MARKET_FILE_TYPE_VERSION:
+        				$aParams = array_merge($aParams, array(
+        					'version' => $this->getCleanValue('version-' . $iFileId),
+        				));
+        				break;
+        				
+        			case BX_MARKET_FILE_TYPE_UPDATE:
+        				$aParams = array_merge($aParams, array(
+        					'version' => $this->getCleanValue('version-from-' . $iFileId),
+        					'version_to' => $this->getCleanValue('version-to-' . $iFileId),
+        				));
+        				break;
+        		}
+
+        		$this->_oModule->_oDb->associateFileWithContent($iContentId, $iFileId, $aParams);
         		break;
         }
     }

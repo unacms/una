@@ -45,6 +45,14 @@ BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
 	);
 };
 
+BxMarketEntry.prototype.changeFileType = function(oSelect) {
+	var sValue = jQuery(oSelect).val();
+
+	jQuery(oSelect).parents('.bx-uploader-ghost:first').find('.bx-uploader-ghost-type-rel:visible').bx_anim('hide', 'fade', 'fast', function() {
+		jQuery(this).parent().find('.bx-uploader-ghost-type-' + sValue).bx_anim('show', 'fade', 'fast');
+	});
+};
+
 BxMarketEntry.prototype.initScreenshots = function() {
 	var oItems = jQuery(".bx-market-screenshots .bx-market-ss-item");
 	if(oItems.length == 0)
