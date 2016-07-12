@@ -132,6 +132,11 @@ class BxOAuthModule extends BxDolModule
         ));
     }
 
+    function serviceGetClient ($sClientId)
+    {
+    	return $this->_oDb->getClient($sClientId);
+    }
+
     function studioSettings ()
     {
         if (!isAdmin()) {

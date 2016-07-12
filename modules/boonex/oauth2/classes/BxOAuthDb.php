@@ -16,6 +16,12 @@ class BxOAuthDb extends BxDolModuleDb
         parent::__construct($oConfig);
     }
 
+	function getClient($sClientId)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `bx_oauth_clients` WHERE `client_id` = ?", $sClientId);
+        return $this->getOne($sQuery);
+    }
+
     function getClientTitle($sClientId)
     {
         $sQuery = $this->prepare("SELECT `title` FROM `bx_oauth_clients` WHERE `client_id` = ?", $sClientId);
