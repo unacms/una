@@ -123,6 +123,8 @@ class BxMarketDb extends BxBaseModTextDb
 				break;
 		}
 
+		$sOrderClause = $sOrderClause ? " ORDER BY " . $sOrderClause : "";
+
 		$aMethod['params'][0] = "SELECT
         		" . $sFieldsClause . "`te`.*
             FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
