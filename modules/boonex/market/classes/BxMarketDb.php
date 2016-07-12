@@ -47,6 +47,14 @@ class BxMarketDb extends BxBaseModTextDb
     	}
 
 		switch($aParams['type']) {
+			case 'file_id':
+				$aMethod['name'] = 'getRow';
+				$sFieldsClause .= "";
+				$sJoinClause .= "";
+				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=? ", $aParams['value']);
+				$sOrderClause .= "";
+				break;
+
 			case 'latest':
 				$sFieldsClause .= "";
 				$sJoinClause .= "";
@@ -200,9 +208,10 @@ class BxMarketDb extends BxBaseModTextDb
      */
 	public function getLicense($aParams = array())
     {
+    	$CNF = &$this->_oConfig->CNF;
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-    	
-    	$sWhereClause = "";
+
+    	$sJoinClause = $sWhereClause = "";
         switch($aParams['type']) {
             case 'id':
             	$aMethod['name'] = 'getRow';
@@ -220,11 +229,36 @@ class BxMarketDb extends BxBaseModTextDb
 
                 $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`domain`=''";
                 break;
+
+			case 'profile_id':
+				$aMethod['params'][1] = array(
+                	'profile_id' => $aParams['profile_id']
+                );
+
+				$sWhereClause = " AND `tl`.`profile_id`=:profile_id";
+
+				if(!empty($aParams['product_id'])) {
+					$aMethod['params'][1]['product_id'] = $aParams['product_id'];
+					$sWhereClause .= " AND `tl`.`product_id`=:product_id";
+				}
+				break;
+
+			case 'profile_id_file_id_key':
+				$aMethod['name'] = "getRow";
+				$aMethod['params'][1] = array(
+                	'profile_id' => $aParams['profile_id'],
+					'file_id' => $aParams['file_id'],
+					'key' => $aParams['key']
+                );
+
+				$sJoinClause .= " LEFT JOIN `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te` ON `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "`";
+				$sWhereClause .= " AND `tl`.`profile_id`=:profile_id AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=:file_id AND (`tl`.`domain`='' OR `tl`.`domain`=:key)";
+				break;
         }
 
         $aMethod['params'][0] = "SELECT
         		`tl`.*
-            FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`
+            FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`" . $sJoinClause . "
             WHERE 1" . $sWhereClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
@@ -362,6 +396,24 @@ class BxMarketDb extends BxBaseModTextDb
 
                 $sWhereClause = " AND `tfe`.`content_id`=:content_id";
                 break;
+
+			case 'content_id_and_type':
+				$aMethod['name'] = 'getAll';
+            	$aMethod['params'][1] = array(
+                	'content_id' => $aParams['content_id'],
+            		'type' => $aParams['file_type']
+                );
+
+                $sFieldsClause .= ", `tf`.`file_name`, `tf`.`size` AS `file_size`";
+                $sJoinClause = " LEFT JOIN `" . $this->_oConfig->CNF['TABLE_FILES'] . "` AS `tf` ON `tfe`.`file_id`=`tf`.`id` ";
+                $sWhereClause = " AND `tfe`.`content_id`=:content_id AND `tfe`.`type`=:type";
+
+                if(!empty($aParams['version'])) {
+                	$aMethod['name'] = 'getRow';
+                	$aMethod['params'][1]['version'] = $aParams['version'];
+                	$sWhereClause .= " AND `tfe`.`version`=:version";
+                }
+            	break;
         }
 
         $aMethod['params'][0] = "SELECT

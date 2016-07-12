@@ -123,6 +123,11 @@ class BxMarketModule extends BxBaseModTextModule
     	return $this->_oDb->hasLicense($iProfileId, $iProductId, $sDomain);
     }
 
+    public function serviceGetLicense ($aParams)
+    {
+    	return $this->_oDb->getLicense($aParams);
+    }
+
     public function serviceUpdateLicense ($aSet, $aWhere)
     {
     	return $this->_oDb->updateLicense($aSet, $aWhere);
@@ -164,6 +169,25 @@ class BxMarketModule extends BxBaseModTextModule
     	if(!empty($aFile) && is_array($aFile)) {
 	    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
 	    	$aFile['file_url'] = $oStorage ? $oStorage->getFileUrlById($iFileId) : '';
+    	}
+
+    	return $aFile;
+    }
+
+	public function serviceGetUpdates($iContentId, $sVersion = '')
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$aFile = $this->_oDb->getFile(array(
+    		'type' => 'content_id_and_type', 
+    		'content_id' => $iContentId, 
+    		'file_type' => 'update',
+    		'version' => $sVersion
+    	));
+
+    	if(!empty($aFile) && is_array($aFile)) {
+	    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
+	    	$aFile['file_url'] = $oStorage ? $oStorage->getFileUrlById($aFile['file_id']) : '';
     	}
 
     	return $aFile;

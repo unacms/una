@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS `bx_market_products`, `bx_market_licenses`, `bx_market_file
 DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_market_files', 'bx_market_photos', 'bx_market_photos_resized');
 DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_market_files', 'bx_market_photos', 'bx_market_photos_resized');
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_market_preview', 'bx_market_screenshot', 'bx_market_gallery');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_market_preview', 'bx_market_screenshot', 'bx_market_gallery');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_market_preview',  'bx_market_screenshot', 'bx_market_gallery');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_market_preview', 'bx_market_cover', 'bx_market_screenshot', 'bx_market_gallery');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_market_preview', 'bx_market_cover', 'bx_market_screenshot', 'bx_market_gallery');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_market_preview', 'bx_market_cover', 'bx_market_screenshot', 'bx_market_gallery');
 
 -- FORMS
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_market';
