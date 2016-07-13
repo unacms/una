@@ -12,6 +12,9 @@ bx_import('BxDolLanguages');
 define('BX_DOL_UNITY_URL_ROOT', 'https://www.boonex.com/');
 define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
 
+define('BX_DOL_UNA_URL_ROOT', 'https://d.una.io/');
+define('BX_DOL_UNA_URL_MARKET', BX_DOL_UNA_URL_ROOT . 'm/market_api/');
+
 define('BX_DOL_STUDIO_IU_RC_SUCCESS', 0);
 define('BX_DOL_STUDIO_IU_RC_FAILED', 1);
 define('BX_DOL_STUDIO_IU_RC_SCHEDULED', 2);
@@ -29,7 +32,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         parent::__construct();
 
         $this->bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER;
-        $this->sAuthorizedAccessClass = 'BxDolStudioOAuthPlugin';
+        $this->sAuthorizedAccessClass = 'BxDolStudioOAuthOAuth2'; //'BxDolStudioOAuthOAuth1Plugin';
     }
 
     /**
