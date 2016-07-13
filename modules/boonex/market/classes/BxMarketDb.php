@@ -77,9 +77,12 @@ class BxMarketDb extends BxBaseModTextDb
 				break;
 
 			case 'category':
+				if(!is_array($aParams['value']))
+					$aParams['value'] = array($aParams['value']);
+
 				$sFieldsClause .= "";
 				$sJoinClause .= "";
-				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_CATEGORY'] . "`=? ", $aParams['value']);
+				$sWhereClause .= " AND `te`.`" . $CNF['FIELD_CATEGORY'] . "` IN (" . $this->implode_escape($aParams['value']) . ")";
 				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 

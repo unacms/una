@@ -465,8 +465,8 @@ class BxBaseStudioStore extends BxDolStudioStore
             'reviews_url' => $aProduct['reviews_url'],
             'likes' => _t('_adm_str_txt_pv_stats_likes', $aProduct['likes_cnt']),
             'views' => _t('_adm_str_txt_pv_stats_views', $aProduct['views_cnt']),
-            'created' => $aProduct['created'],
-            'updated' => $aProduct['updated'],
+            'created' => bx_time_js($aProduct['created']),
+            'updated' => bx_time_js($aProduct['updated']),
             'description' => $aProduct['description'],
             'bx_if:show_screenshots' => array(
                 'condition' => $bScreenshots,
