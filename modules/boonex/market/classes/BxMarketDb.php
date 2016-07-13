@@ -63,9 +63,12 @@ class BxMarketDb extends BxBaseModTextDb
 				break;
 
 			case 'featured':
+				if(!is_array($aParams['value']))
+					$aParams['value'] = array($aParams['value']);
+
 				$sFieldsClause .= "";
 				$sJoinClause .= "";
-				$sWhereClause .= ""; //TODO: there is no 'featured' flag right now.		" AND `te`.`featured`='1' ";
+				$sWhereClause .= " AND `te`.`" . $CNF['FIELD_AUTHOR'] . "` IN (" . $this->implode_escape($aParams['value']) . ")";
 				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 

@@ -397,8 +397,8 @@
 	<string name="_adm_action_cpt_checkout"><![CDATA[Checkout]]></string>
 	<string name="_adm_action_cpt_delete_all"><![CDATA[Delete All]]></string>
 	<string name="_adm_action_cpt_see_all_featured"><![CDATA[See All Featured]]></string>
-	<string name="_adm_action_cpt_see_all_languages"><![CDATA[See All Languages]]></string>
-	<string name="_adm_action_cpt_see_all_modules"><![CDATA[See All Modules]]></string>
+	<string name="_adm_action_cpt_see_all_translations"><![CDATA[See All Languages]]></string>
+	<string name="_adm_action_cpt_see_all_extensions"><![CDATA[See All Modules]]></string>
 	<string name="_adm_action_cpt_see_all_templates"><![CDATA[See All Templates]]></string>
 	<string name="_adm_admtools_Audit"><![CDATA[Audit]]></string>
 	<string name="_adm_admtools_Current_level"><![CDATA[Current status]]></string>
@@ -418,12 +418,12 @@
 	<string name="_adm_block_cpt_downloaded_updates"><![CDATA[Updates]]></string>
 	<string name="_adm_block_cpt_featured"><![CDATA[Featured]]></string>
 	<string name="_adm_block_cpt_goodies"><![CDATA[Storefront]]></string>
-	<string name="_adm_block_cpt_languages"><![CDATA[Languages]]></string>
+	<string name="_adm_block_cpt_translations"><![CDATA[Languages]]></string>
 	<string name="_adm_block_cpt_last_featured"><![CDATA[Latest Featured]]></string>
-	<string name="_adm_block_cpt_last_languages"><![CDATA[Latest Languages]]></string>
-	<string name="_adm_block_cpt_last_modules"><![CDATA[Latest Modules]]></string>
+	<string name="_adm_block_cpt_last_translations"><![CDATA[Latest Languages]]></string>
+	<string name="_adm_block_cpt_last_extensions"><![CDATA[Latest Modules]]></string>
 	<string name="_adm_block_cpt_last_templates"><![CDATA[Latest Templates]]></string>
-	<string name="_adm_block_cpt_modules"><![CDATA[Modules]]></string>
+	<string name="_adm_block_cpt_extensions"><![CDATA[Modules]]></string>
 	<string name="_adm_block_cpt_modules_upload"><![CDATA[Add New Module]]></string>
 	<string name="_adm_block_cpt_purchases"><![CDATA[Purchases]]></string>
 	<string name="_adm_block_cpt_space"><![CDATA[Space Usage]]></string>
