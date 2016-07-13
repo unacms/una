@@ -125,7 +125,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 			return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
         }
 
-        return $aResponse;
+        return $aResponse['data'];
     }
 
     protected function isReloginRequired($sError)

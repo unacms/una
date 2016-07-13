@@ -329,6 +329,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	else
 			$aProducts = $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_purchased', array('key' => getParam('sys_oauth_key')));
 
+		if(empty($aProducts) || !is_array($aProducts))
+			return $aProducts;
+
     	$oModuleDb = BxDolModuleQuery::getInstance();
 
     	$oModuleDb->updateModule(array('hash' => ''));

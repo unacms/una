@@ -19,7 +19,7 @@ class BxOAuthDb extends BxDolModuleDb
 	function getClient($sClientId)
     {
         $sQuery = $this->prepare("SELECT * FROM `bx_oauth_clients` WHERE `client_id` = ?", $sClientId);
-        return $this->getOne($sQuery);
+        return $this->getRow($sQuery);
     }
 
     function getClientTitle($sClientId)
