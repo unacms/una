@@ -113,11 +113,11 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         if(!$this->isAuthorized())
             return array();
 
-		$sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', array(), 'get', array(
+		$sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', $aParams, 'get', array(
             'Authorization: Bearer ' . $this->oSession->getValue('sys_oauth_token'),
         ));
 
-        //echo $sResponse; exit;		//--- Uncomment to debug
+        echo $sResponse; exit;		//--- Uncomment to debug
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error'])) {
 			return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
         }
