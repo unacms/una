@@ -16,7 +16,7 @@ class BxOAuthAPI extends BxDol
     protected $_oModule;
     protected $_oDb;
     public $aAction2Scope = array (
-        'me' => 'basic',
+        'me' => 'basic,market',
         'user' => 'basic',
         'friends' => 'basic',
         'service' => 'service',

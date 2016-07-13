@@ -23,7 +23,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         $this->sKey = getParam('sys_oauth_key');
         $this->sSecret = getParam('sys_oauth_secret');
         $this->sApiUrl = BX_DOL_UNA_URL_ROOT . 'm/oauth2/';
-        $this->sScope = 'basic';
+        $this->sScope = 'market';
         $this->sPageHandle = BX_DOL_URL_STUDIO . 'store.php?page=goodies';
         $this->sDataRetrieveMethod = 'post';
     }
@@ -77,13 +77,13 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 
     protected function getAccessToken($sCode)
     {
-    	
     	$sResponse = bx_file_get_contents($this->sApiUrl . 'token', array(
             'client_id' => $this->sKey,
             'client_secret' => $this->sSecret,
             'grant_type'    => 'authorization_code',
             'code' => $sCode,
             'redirect_uri'  => $this->sPageHandle,
+    		'scope' => $this->sScope,
         ), $this->sDataRetrieveMethod);
 
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !isset($aResponse['access_token']) || isset($aResponse['error']))
@@ -113,12 +113,14 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         if(!$this->isAuthorized())
             return array();
 
-		$sResponse = bx_file_get_contents($this->sApiUrl . 'api/service', array(), 'get', array(
+		$sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', array(), 'get', array(
             'Authorization: Bearer ' . $this->oSession->getValue('sys_oauth_token'),
         ));
 
-        if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error']))
+        //echo $sResponse; exit;		//--- Uncomment to debug
+        if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error'])) {
 			return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
+        }
 
         return $aResponse;
     }
