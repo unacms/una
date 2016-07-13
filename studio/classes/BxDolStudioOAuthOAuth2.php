@@ -117,12 +117,23 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
             'Authorization: Bearer ' . $this->oSession->getValue('sys_oauth_token'),
         ));
 
-        echo $sResponse; exit;		//--- Uncomment to debug
+        //echo $sResponse; exit;		//--- Uncomment to debug
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error'])) {
+        	if($this->isReloginRequired($aResponse['error']))
+        		$this->unsetAuthorizedUser();
+
 			return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
         }
 
         return $aResponse;
+    }
+
+    protected function isReloginRequired($sError)
+    {
+    	if(in_array($sError, array('expired_token')))
+    		return true;
+
+    	return false;
     }
 
 	protected function _genCsrfToken($bReturn = false)
