@@ -91,7 +91,7 @@ class BxOAuthFormAdd extends BxTemplFormView
         $aValsToAdd['client_id'] = strtolower(genRndPwd(self::$LENGTH_ID, false));
         $aValsToAdd['client_secret'] = strtolower(genRndPwd(self::$LENGTH_SECRET, false));
         $aValsToAdd['scope'] = 'basic';
-        $aValsToAdd['user_id'] = getLoggedId();
+        $aValsToAdd['user_id'] = bx_get_logged_profile_id();
         return parent::insert($aValsToAdd, $isIgnore);
     }
 }
