@@ -875,8 +875,8 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
 
 function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $sAttrContentName, $sCharset = false)
 {
-    if (!preg_match("/<{$sTag}\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"]\s+{$sAttrContentName}[='\" ]+([^('>\")]*)['\"][^>]*>/i", $sContent, $aMatch) || !isset($aMatch[1]))
-        preg_match("/<{$sTag}\s+{$sAttrContentName}[='\" ]+([^('>\")]*)['\"]\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"][^>]*>/i", $sContent, $aMatch);
+    if (!preg_match("/<{$sTag}\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"]\s+{$sAttrContentName}[='\" ]+([^'>\"]*)['\"][^>]*>/i", $sContent, $aMatch) || !isset($aMatch[1]))
+        preg_match("/<{$sTag}\s+{$sAttrContentName}[='\" ]+([^'>\"]*)['\"]\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"][^>]*>/i", $sContent, $aMatch);
 
     $s = isset($aMatch[1]) ? $aMatch[1] : '';
 
