@@ -16,7 +16,7 @@ class BxOAuthAPI extends BxDol
     protected $_oModule;
     protected $_oDb;
     public $aAction2Scope = array (
-        'me' => 'basic',
+        'me' => 'basic,market',
         'user' => 'basic',
         'friends' => 'basic',
         'service' => 'service',
@@ -69,6 +69,7 @@ class BxOAuthAPI extends BxDol
 
     function market($aToken) 
     {
+    	$_GET['key'] = $_POST['key'] = $aToken['client_id'];
         $_GET['module'] = $_POST['module'] = 'bx_market_api';
         $this->service($aToken);
     }

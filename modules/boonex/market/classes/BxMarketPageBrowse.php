@@ -19,6 +19,15 @@ class BxMarketPageBrowse extends BxBaseModTextPageBrowse
         $this->MODULE = 'bx_market';
         parent::__construct($aObject, $oTemplate);
     }
+
+	protected function _addJsCss()
+    {
+        $this->_oTemplate->addJs(array(
+			'jquery.anim.js'
+        ));
+
+        parent::_addJsCss();
+    }
 }
 
 /** @} */

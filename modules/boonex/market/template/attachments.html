@@ -18,7 +18,15 @@
             <bx_if:not_image>
             	<div class="bx-def-padding-sec">
 	                <a target="_blank" href="__url_original__" title="__attr_file_name__">__file_name__</a>
-	                <div class="bx-def-font-grayed"><bx_text:_bx_market_form_entry_input_files_version /> __file_version__</div>
+	                <div class="bx-def-font-grayed"><bx_text:_bx_market_form_entry_input_files_type /> __file_type__</div>
+	                <bx_if:show_version>
+	                	<div class="bx-def-font-grayed"><bx_text:_bx_market_form_entry_input_files_version /> __file_version__</div>
+	                </bx_if:show_version>
+	                <bx_if:show_update>
+	                	<div class="bx-def-font-grayed">__file_version_from_to__</div>
+	                </bx_if:show_update>
+	                
+	                
                 </div>
             </bx_if:not_image>
         </div>

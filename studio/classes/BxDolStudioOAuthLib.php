@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolStudioOAuthLib extends BxDolStudioOAuth implements iBxDolSingleton
+class BxDolStudioOAuthLib extends BxDolStudioOAuthOAuth1 implements iBxDolSingleton
 {
     public function __construct()
     {

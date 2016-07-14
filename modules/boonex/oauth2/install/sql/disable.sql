@@ -11,6 +11,6 @@ DELETE FROM `top`, `toc`, `to` USING `sys_options_types` AS `top` LEFT JOIN `sys
 
 -- PAGES
 
-DELETE FROM `sys_objects_page` WHERE `module` = 'bx_oauth_authorization';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_oauth_authorization';
+DELETE FROM `sys_objects_page` WHERE `module` = 'bx_oauth';
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_oauth' OR `object` IN ('bx_oauth_authorization');
 

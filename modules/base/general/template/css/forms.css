@@ -15,7 +15,8 @@
 	vertical-align: top; 
 }
 
-.bx-base-general-uploader-ghost input.bx-form-input-text {
+.bx-base-general-uploader-ghost input.bx-form-input-text,
+.bx-base-general-uploader-ghost select.bx-form-input-select {
     width:18.75rem;
 }
 

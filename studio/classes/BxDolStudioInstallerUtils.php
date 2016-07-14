@@ -9,8 +9,14 @@
 
 bx_import('BxDolLanguages');
 
+define('BX_DOL_STORE_BOONEX', 'boonex');
+define('BX_DOL_STORE_UNA', 'una');
+
 define('BX_DOL_UNITY_URL_ROOT', 'https://www.boonex.com/');
 define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
+
+define('BX_DOL_UNA_URL_ROOT', 'https://d.una.io/');
+define('BX_DOL_UNA_URL_MARKET', BX_DOL_UNA_URL_ROOT . 'm/market_api/');
 
 define('BX_DOL_STUDIO_IU_RC_SUCCESS', 0);
 define('BX_DOL_STUDIO_IU_RC_FAILED', 1);
@@ -21,6 +27,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	protected $bUseFtp;
 	protected $sAuthorizedAccessClass;
 
+	protected $sStore;
+	protected $sStoreDataUrlPublic;
+
     public function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
@@ -29,7 +38,19 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         parent::__construct();
 
         $this->bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER;
-        $this->sAuthorizedAccessClass = 'BxDolStudioOAuthPlugin';
+
+        $this->sStore = BX_DOL_STORE_UNA;
+        switch($this->sStore) {
+        	case BX_DOL_STORE_UNA:
+        		$this->sAuthorizedAccessClass = 'BxDolStudioOAuthOAuth2';
+        		$this->sStoreDataUrlPublic = BX_DOL_UNA_URL_MARKET;
+        		break;
+
+        	case BX_DOL_STORE_BOONEX:
+        		$this->sAuthorizedAccessClass = 'BxDolStudioOAuthPlugin';
+        		$this->sStoreDataUrlPublic = BX_DOL_UNITY_URL_MARKET;		
+        		break;
+        }
     }
 
     /**
@@ -89,6 +110,11 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	public function servicePerformModulesUpgrade($bEmailNotify)
     {
     	return $this->performModulesUpgrade(true, $bEmailNotify);
+    }
+
+    public function getStoreDataUrl($sType = 'public')
+    {
+    	return $sType == 'public' ? $this->sStoreDataUrlPublic : '';
     }
 
     public function getAccessObject($bAuthorizedAccess)
@@ -292,14 +318,19 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function checkModules($bAuthorizedAccess = false)
     {
-    	if($bAuthorizedAccess)
-        	$aProducts = $this->getAccessObject(true)->loadItems(array(
-        		'dol_type' => 'purchased_products', 
-        		'dol_domain' => BX_DOL_URL_ROOT,
-        		'dol_products' => $this->getInstalledInfoShort()
-        	));
+    	if($bAuthorizedAccess) {
+    		if($this->sStore == BX_DOL_STORE_UNA)
+    			$aParams = array('method' => 'browse_purchased', 'domain' => BX_DOL_URL_ROOT, 'products' => $this->getInstalledInfoShort());
+    		else
+    			$aParams = array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT, 'dol_products' => $this->getInstalledInfoShort());
+
+        	$aProducts = $this->getAccessObject(true)->loadItems($aParams);
+    	}
     	else
-			$aProducts = $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_purchased', array('key' => getParam('sys_oauth_key')));
+			$aProducts = $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_purchased', array('key' => getParam('sys_oauth_key')));
+
+		if(empty($aProducts) || !is_array($aProducts))
+			return $aProducts;
 
     	$oModuleDb = BxDolModuleQuery::getInstance();
 
@@ -318,7 +349,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if($bAuthorizedAccess)
 	        return $this->getAccessObject(true)->loadItems(array('dol_type' => 'available_updates', 'dol_products' => $sProducts));
 
-		return $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_updates', array(
+		return $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_updates', array(
 			'key' => getParam('sys_oauth_key'),
 			'products' => $sProducts
 		));
@@ -335,7 +366,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
 		$aModule = BxDolModuleQuery::getInstance()->getModuleByName($sModuleName);
 
-		$aItem = $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_download_update', array(
+		$aItem = $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_download_update', array(
 			'key' => getParam('sys_oauth_key'),
 			'product' => base64_encode(serialize(array(
 				'name' => $aModule['name'],

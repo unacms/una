@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolForm');
+
 /**
  * Database queries for forms.
  * @see BxDolForm
