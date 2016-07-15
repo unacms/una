@@ -346,8 +346,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
         $sProducts = $this->getInstalledInfoShort();
 
-        if($bAuthorizedAccess)
-	        return $this->getAccessObject(true)->loadItems(array('dol_type' => 'available_updates', 'dol_products' => $sProducts));
+        if($bAuthorizedAccess) {
+        	if($this->sStore == BX_DOL_STORE_UNA)
+        		$aParams = array('method' => 'browse_updates', 'products' => $sProducts);
+        	else
+        		$aParams = array('dol_type' => 'available_updates', 'dol_products' => $sProducts);
+
+	        return $this->getAccessObject(true)->loadItems();
+        }
 
 		return $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_updates', array(
 			'key' => getParam('sys_oauth_key'),
@@ -357,7 +363,12 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function downloadFileAuthorized($iFileId)
     {
-		$aItem = $this->getAccessObject(true)->loadItems(array('dol_type' => 'product_file', 'dol_file_id' => $iFileId));
+    	if($this->sStore == BX_DOL_STORE_UNA)
+    		$aParams = array('method' => 'download_file', 'file_id' => $iFileId);
+    	else
+			$aParams = array('dol_type' => 'product_file', 'dol_file_id' => $iFileId);
+
+		$aItem = $this->getAccessObject(true)->loadItems($aParams);
 
 		return $this->downloadFileInit($aItem, array('module_name' => $aItem['module_name']));
     }

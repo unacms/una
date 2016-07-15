@@ -47,6 +47,14 @@ class BxMarketDb extends BxBaseModTextDb
     	}
 
 		switch($aParams['type']) {
+			case 'id':
+				$aMethod['name'] = 'getRow';
+				$sFieldsClause .= "";
+				$sJoinClause .= "";
+				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_ID'] . "`=? ", $aParams['value']);
+				$sOrderClause .= "";
+				break;
+
 			case 'file_id':
 				$aMethod['name'] = 'getRow';
 				$sFieldsClause .= "";
