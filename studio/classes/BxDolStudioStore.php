@@ -86,40 +86,40 @@ class BxDolStudioStore extends BxTemplStudioPage
                     break;
 
                 case 'add-to-cart':
-                    $sVendor = bx_process_input(bx_get('str_vendor'));
+                    $iVendor = (int)bx_get('str_vendor');
                     $iItem = (int)bx_get('str_item');
                     $iItemCount = 1;
 
-                    if(empty($sVendor) || empty($iItem)) {
+                    if(empty($iVendor) || empty($iItem)) {
                         $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_add_to_cart'));
                         break;
                     }
 
-                    BxDolStudioCart::getInstance()->add($sVendor, $iItem, $iItemCount);
+                    BxDolStudioCart::getInstance()->add($iVendor, $iItem, $iItemCount);
                     $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_msg_modules_success_added_to_cart'));
                     break;
 
                 case 'delete-from-cart':
-                    $sVendor = bx_process_input(bx_get('str_vendor'));
+                    $iVendor = (int)bx_get('str_vendor');
                     $iItem = (int)bx_get('str_item');
 
-                    if(empty($sVendor)) {
+                    if(empty($iVendor)) {
                         $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_delete_from_cart'));
                         break;
                     }
 
-                    BxDolStudioCart::getInstance()->delete($sVendor, $iItem);
+                    BxDolStudioCart::getInstance()->delete($iVendor, $iItem);
                     $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '');
                     break;
 
                 case 'checkout-cart':
-                    $sVendor = bx_process_input(bx_get('str_vendor'));
-                    if(empty($sVendor)) {
+                    $iVendor = (int)bx_get('str_vendor');
+                    if(empty($iVendor)) {
                         $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_checkout_empty_vendor'));
                         break;
                     }
 
-                    $sLocation = $this->checkoutCart($sVendor);
+                    $sLocation = $this->checkoutCart($iVendor);
                     $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'redirect' => $sLocation);
                     break;
 
@@ -288,11 +288,11 @@ class BxDolStudioStore extends BxTemplStudioPage
         return BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($sModuleName, $bAutoUpdate);
     }
 
-    private function checkoutCart($sVendor)
+    private function checkoutCart($iVendor)
     {
         $oCart = BxDolStudioCart::getInstance();
 
-        $aItems = $oCart->getByVendor($sVendor);
+        $aItems = $oCart->getByVendor($iVendor);
         if(empty($aItems) || !is_array($aItems))
             return false;
 
@@ -301,7 +301,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             $aIds[] = $aItem['item_id'];
 
         $sSid = bx_site_hash();
-        return $this->sStoreDataUrlPublic . 'purchase/' . $sVendor . '?sid=' . $sSid . '&products=' . base64_encode(implode(',', $aIds));
+        return $this->sStoreDataUrlPublic . 'purchase/' . $iVendor . '?sid=' . $sSid . '&products=' . base64_encode(implode(',', $aIds));
     }
 }
 

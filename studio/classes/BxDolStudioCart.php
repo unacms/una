@@ -66,61 +66,61 @@ class BxDolStudioCart extends BxDol implements iBxDolSingleton
         return $aResult;
     }
 
-	public function exists($sVendor, $iItemId)
+	public function exists($iVendor, $iItemId)
 	{
 		$sDiv = BxDolStudioCart::$sPDiv;
 
 		$sCartItems = $this->getItems();
-		return strpos($sCartItems, $sVendor . $sDiv . $iItemId . $sDiv) !== false;
+		return strpos($sCartItems, $iVendor . $sDiv . $iItemId . $sDiv) !== false;
 	}
 
-    public function add($sVendor, $iItemId, $iItemCount)
+    public function add($iVendor, $iItemId, $iItemCount)
     {
         $sDiv = BxDolStudioCart::$sPDiv;
 
-        $sCartItem = $sVendor . $sDiv . $iItemId . $sDiv . $iItemCount;
+        $sCartItem = $iVendor . $sDiv . $iItemId . $sDiv . $iItemCount;
         $sCartItems = $this->getItems();
 
-        if(strpos($sCartItems, $sVendor . $sDiv . $iItemId . $sDiv) !== false) {
+        if(strpos($sCartItems, $iVendor . $sDiv . $iItemId . $sDiv) !== false) {
             if($this->bAllowAccumulate)
-                $sCartItems = preg_replace("'" . $sVendor . $sDiv . $iItemId . $sDiv . "([0-9])+'e", "'" . $sVendor . $sDiv . $iItemId . $sDiv ."' . (\\1 + " . $iItemCount . ")",  $sCartItems);
+                $sCartItems = preg_replace("'" . $iVendor . $sDiv . $iItemId . $sDiv . "([0-9])+'e", "'" . $iVendor . $sDiv . $iItemId . $sDiv ."' . (\\1 + " . $iItemCount . ")",  $sCartItems);
         } else
             $sCartItems = empty($sCartItems) ? $sCartItem : $sCartItems . BxDolStudioCart::$sIDiv . $sCartItem;
 
         $this->setItems($sCartItems);
     }
 
-    public function delete($sVendor, $iItemId = 0)
+    public function delete($iVendor, $iItemId = 0)
     {
-        $sPattern = "'" . $sVendor . (!empty($iItemId) ? "_" . $iItemId : "_[0-9]+") . "_[0-9]+:?'";
+        $sPattern = "'" . $iVendor . (!empty($iItemId) ? "_" . $iItemId : "_[0-9]+") . "_[0-9]+:?'";
 
         $sCartItems = $this->getItems();
         $sCartItems = trim(preg_replace($sPattern, "", $sCartItems), BxDolStudioCart::$sIDiv);
         $this->setItems($sCartItems);
     }
 
-    public function getCount($sVendor = '')
+    public function getCount($iVendor = '')
     {
-        if($sVendor == '') {
+        if($iVendor == '') {
             $sItems = $this->getItems();
             $aItems = $this->items2array($sItems);
             return count($aItems);
         }
 
         $aVendors = $this->parseByVendor();
-        if(!isset($aVendors[$sVendor]))
+        if(!isset($aVendors[$iVendor]))
             return 0;
 
-        return count($aVendors[$sVendor]);
+        return count($aVendors[$iVendor]);
     }
 
-    public function getByVendor($sVendor)
+    public function getByVendor($iVendor)
     {
         $aVendors = $this->parseByVendor();
-        if(!isset($aVendors[$sVendor]) || empty($aVendors[$sVendor]))
+        if(!isset($aVendors[$iVendor]) || empty($aVendors[$iVendor]))
             return array();
 
-        return $aVendors[$sVendor];
+        return $aVendors[$iVendor];
     }
 
     public function parseByVendor()

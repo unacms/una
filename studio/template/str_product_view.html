@@ -78,10 +78,10 @@
 	</div>
 	<div class="bx-std-pv-actions bx-def-margin-top">
 		<bx_if:show_purchase>
-			<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)" />
+			<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart(__vendor_id__, __id__, this)" />
 		</bx_if:show_purchase>
 		<bx_if:show_checkout>
-			<button class="bx-btn bx-def-margin-right" type="button" onclick="javascript:__js_object__.checkoutCart('__vendor__', this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
+			<button class="bx-btn bx-def-margin-right" type="button" onclick="javascript:__js_object__.checkoutCart(__vendor_id__, this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
 				<bx_text:_adm_btn_checkout_submit />
 			</button>
 		</bx_if:show_checkout>

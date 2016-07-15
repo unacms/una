@@ -14,19 +14,19 @@
 	            <a href="javascript:void(0)" onclick="javascript:__js_object__.info('__name__', this)">__title__</a>
 	        </div>
 	        <bx_if:show_vendor_price>
-	        	<div class="bx-std-pc-vendor bx-def-margin-thd-top bx-def-font-small">__vendor__ &bull; <span class="bx-std-pc-price">__price__ __discount__</span></div>
+	        	<div class="bx-std-pc-vendor bx-def-margin-thd-top bx-def-font-small">__vendor_name__ &bull; <span class="bx-std-pc-price">__price__ __discount__</span></div>
 	        </bx_if:show_vendor_price>
 	        <bx_if:show_count_price>
 	        	<div class="bx-std-pc-count bx-def-margin-thd-top bx-def-font-small">__count__ <bx_text:_adm_str_txt_items_by /> <span class="bx-std-pc-price">__price__ __discount__</span></div>
 	        </bx_if:show_count_price>
 	        <div class="bx-std-pc-action bx-def-margin-thd-top bx-clearfix">
 	        	<bx_if:show_purchase>
-					<button class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)">
+					<button class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" onclick="javascript:__js_object__.addToCart(__vendor_id__, __id__, this)">
 	            		<bx_text:_adm_btn_purchase_submit />
 	            	</button>
 	            </bx_if:show_purchase>
 	            <bx_if:show_checkout>
-	           		<button class="bx-btn bx-btn-small bx-std-pc-checkout" type="button" onclick="javascript:__js_object__.checkoutCart('__vendor__', this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
+	           		<button class="bx-btn bx-btn-small bx-std-pc-checkout" type="button" onclick="javascript:__js_object__.checkoutCart(__vendor_id__, this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
 	            		<bx_text:_adm_btn_checkout_submit />
 	            	</button>
 	            </bx_if:show_checkout>
@@ -46,7 +46,7 @@
 	            	</button>
 	            </bx_if:show_queued_disabled>
 	            <bx_if:show_delete>
-	            	<button class="bx-btn bx-btn-small bx-std-pc-delete" type="button" onclick="javascript:__js_object__.deleteFromCart('__vendor__', __id__, this)">
+	            	<button class="bx-btn bx-btn-small bx-std-pc-delete" type="button" onclick="javascript:__js_object__.deleteFromCart(__vendor_id__, __id__, this)">
 	            		<bx_text:_adm_btn_delete_submit />
 	            	</button>
 	            </bx_if:show_delete>

@@ -280,25 +280,28 @@ class BxBaseStudioStore extends BxDolStudioStore
             return $this->getMessage('_adm_block_cpt_checkout', '_Empty');        
 
         $sContent = '';
-        foreach($aVendors as $sName => $aInfo) {
+        foreach($aVendors as $iVendor => $aInfo) {
             $fTotal = 0;
-            $sCurrency = '';
+            $sVendor = $sCurrency = '';
             foreach($aInfo['products'] as $aProduct) {
                 $iCount = isset($aInfo['counts'][$aProduct['id']]) ? (int)$aInfo['counts'][$aProduct['id']] : 1;
                 $fTotal += $iCount * $aProduct['price'];
 
-                if($sCurrency == '' && isset($aProduct['currency_sign']))
+                if($sVendor == '' && isset($aProduct['author_name']))
+                    $sVendor = $aProduct['author_name'];
+
+				if($sCurrency == '' && isset($aProduct['currency_sign']))
                     $sCurrency = $aProduct['currency_sign'];
             }
 
             $aMenu = array(
-                array('id' => 'checkout-' . $sName, 'name' => 'checkout-' . $sName, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".checkoutCart('" . $sName . "', this);", 'target' => '_self', 'title' => '_adm_action_cpt_checkout', 'active' => 1),
-                array('id' => 'delete-all-' . $sName, 'name' => 'delete-all-' . $sName, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".deleteAllFromCart('" . $sName . "', this)", 'target' => '_self', 'title' => '_adm_action_cpt_delete_all', 'active' => 1)
+                array('id' => 'checkout-' . $iVendor, 'name' => 'checkout-' . $iVendor, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".checkoutCart(" . $iVendor . ", this);", 'target' => '_self', 'title' => '_adm_action_cpt_checkout', 'active' => 1),
+                array('id' => 'delete-all-' . $iVendor, 'name' => 'delete-all-' . $iVendor, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".deleteAllFromCart(" . $iVendor . ", this)", 'target' => '_self', 'title' => '_adm_action_cpt_delete_all', 'active' => 1)
             );
-	        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_buttons_hor.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
+	        $oMenu = new BxTemplMenu(array('template' => 'menu_buttons_hor.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
 
 	        $sContent .= $this->getBlockCode(array(
-                'caption' => _t('_adm_block_cpt_checkout_by_vendor_csign', $sName, $sCurrency, $fTotal),
+                'caption' => _t('_adm_block_cpt_checkout_by_vendor_csign', $sVendor, $sCurrency, $fTotal),
                 'items' => $oTemplate->parseHtmlByName('str_products.html', array(
 		            'list' => $this->displayProducts($aInfo['products'], array('is_shopping_cart' => true, 'counts' => $aInfo['counts'])),
 		            'paginate' => ''
@@ -434,7 +437,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $bPurchased = (int)$aProduct['is_purchased'] == 1;
         $bPurchase = !$bFree && !$bPurchased;
 
-		$bInCart = $bPurchase && BxDolStudioCart::getInstance()->exists($aProduct['author_name'], $aProduct['id']);
+		$bInCart = $bPurchase && BxDolStudioCart::getInstance()->exists($aProduct['author_id'], $aProduct['id']);
 
         $bDownloadable = (int)$aProduct['is_file'] == 1;
         $bDownloaded = array_key_exists($sModuleName, $aDownloaded);
@@ -491,7 +494,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'content' => array(
                     'js_object' => $sJsObject,
                     'id' => $aProduct['id'],
-                    'vendor' => $aProduct['author_name'],
+                    'vendor_id' => $aProduct['author_id'],
                 )
             ),
             'bx_if:show_checkout' => array(
@@ -499,7 +502,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                     'content' => array(
                         'js_object' => $sJsObject,
                         'id' => $aProduct['id'],
-                        'vendor' => $aProduct['author_name'],
+                        'vendor_id' => $aProduct['author_id'],
                 		'bx_if:show_as_hidden' => array(
                 			'condition' => !$bInCart,
                 			'content' => array()
@@ -565,7 +568,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             $bPurchased = (int)$aItem['is_purchased'] == 1;
             $bPurchase = !$bShoppingCart && !$bFree && !$bPurchased;
 
-            $bInCart = $bPurchase && BxDolStudioCart::getInstance()->exists($aItem['author'], $aItem['id']);
+            $bInCart = $bPurchase && BxDolStudioCart::getInstance()->exists($aItem['author_id'], $aItem['id']);
 
             $bDownloadable = (int)$aItem['is_file'] == 1;
             $bDownloaded = in_array($aItem['name'], $aDownloaded);
@@ -595,7 +598,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'bx_if:show_vendor_price' => array(
                     'condition' => !$bShoppingCart,
                     'content' => array(
-                        'vendor' => $aItem['author'],
+                        'vendor_name' => $aItem['author_name'],
                         'price' => $sPrice,
                         'discount' => $sDiscount,
                     )
@@ -613,7 +616,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                     'content' => array(
                         'js_object' => $sJsObject,
                         'id' => $aItem['id'],
-                        'vendor' => $aItem['author']
+                        'vendor_id' => $aItem['author_id']
                     )
                 ),
                 'bx_if:show_checkout' => array(
@@ -621,7 +624,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                     'content' => array(
                         'js_object' => $sJsObject,
                         'id' => $aItem['id'],
-                        'vendor' => $aItem['author'],
+                        'vendor_id' => $aItem['author_id'],
                 		'bx_if:show_as_hidden' => array(
                 			'condition' => !$bInCart,
                 			'content' => array()
@@ -648,7 +651,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                     'content' => array(
                         'js_object' => $sJsObject,
                         'id' => $aItem['id'],
-                        'vendor' => $aItem['author']
+                        'vendor_id' => $aItem['author_id']
                     )
                 )
             ));
