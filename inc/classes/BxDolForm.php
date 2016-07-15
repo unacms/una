@@ -1230,7 +1230,7 @@ class BxDolFormChecker
 
         // get values from form description array
         foreach ($aInputs as $k => $a) {
-            if (!isset ($a['db'])) continue;
+            if (!isset ($a['db']) || !BxDolForm::isVisible($a)) continue;
             $valClean = $this->get ($a['name'], $a['db']['pass'], !empty($a['db']['params']) ? $a['db']['params'] : array());
             $aValsToUpdate[$a['name']] = $valClean;
             $aInputs[$k]['db']['value'] = $valClean;
