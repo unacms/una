@@ -110,11 +110,12 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
 
     function deletePages($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = "";
 
         switch($aParams['type']) {
             case 'by_id':
-            	$aMethod['params'][1] = array(
+            	$aBindings = array(
                 	'id' => $aParams['value']
                 );
 
@@ -122,7 +123,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 break;
 
             case 'by_object':
-            	$aMethod['params'][1] = array(
+            	$aBindings = array(
                 	'object' => $aParams['value']
                 );
 
@@ -134,7 +135,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         }
 
         $sSql = "DELETE FROM `tp` USING `sys_objects_page` AS `tp` WHERE 1 " . $sWhereClause;
-        return (int)$this->query($sSql) > 0;
+        return (int)$this->query($sSql, $aBindings) > 0;
     }
 
     function isUniqUri($sUri)
