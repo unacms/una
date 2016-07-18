@@ -352,7 +352,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         	else
         		$aParams = array('dol_type' => 'available_updates', 'dol_products' => $sProducts);
 
-	        return $this->getAccessObject(true)->loadItems();
+	        return $this->getAccessObject(true)->loadItems($aParams);
         }
 
 		return $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_updates', array(

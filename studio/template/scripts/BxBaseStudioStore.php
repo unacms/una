@@ -692,7 +692,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 	                'content' => array('icon_url' => $sIcon),
 	            ),
                 'title' => $aItem['title'],
-                'vendor' => $aItem['author'],
+                'vendor' => $aItem['author_name'],
                 'versions' => _t('_adm_str_txt_update_from_to', $aItem['file_version'], $aItem['file_version_to']),
                 'bx_if:show_download' => array(
                     'condition' => $bDownloadable,

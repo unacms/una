@@ -135,8 +135,7 @@ class BxMarketModule extends BxBaseModTextModule
 
     public function serviceGetEntryBy($sType, $mixedValue)
     {
-    	$sMethod = 'getContentInfoBy' . ucfirst($sType);
-    	return method_exists($this->_oDb, $sMethod) ? $this->_oDb->$sMethod($mixedValue) : array();
+    	return $this->_oDb->getContentInfoBy(array('type' => $sType, 'value' => $mixedValue));
     }
 
     public function serviceGetEntriesBy($aParams)
