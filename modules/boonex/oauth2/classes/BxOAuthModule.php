@@ -137,6 +137,21 @@ class BxOAuthModule extends BxDolModule
     	return $this->_oDb->getClient($sClientId);
     }
 
+	function serviceGetClientsBy ($aParams = array())
+    {
+    	return $this->_oDb->getClientsBy($aParams);
+    }
+
+    function serviceAddClient ($aClient)
+    {
+    	return $this->_oDb->addClient($aClient);
+    }
+
+	function serviceDeleteClientsBy ($aParams = array())
+    {
+    	return $this->_oDb->deleteClientsBy($aParams);
+    }
+
     function studioSettings ()
     {
         if (!isAdmin()) {
