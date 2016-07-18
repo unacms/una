@@ -1053,7 +1053,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      */
     static public function isVisible ($aInput)
     {
-        return BxDolAcl::getInstance()->isMemberLevelInSet($aInput['visible_for_levels']);
+        return isset($aInput['visible_for_levels']) ? BxDolAcl::getInstance()->isMemberLevelInSet($aInput['visible_for_levels']) : true;
     }
 
     protected function _genMethodName ($s)
