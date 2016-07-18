@@ -40,6 +40,15 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 $sWhereClause = " AND `tp`.`object`=:object ";
                 break;
 
+			case 'by_uri':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'uri' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tp`.`uri`=:uri ";
+                break;
+
             case 'by_object_full':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
@@ -117,7 +126,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 	'object' => $aParams['value']
                 );
 
-                $sWhereClause = "AND `tp`.`object`=? ";
+                $sWhereClause = "AND `tp`.`object`=:object ";
                 break;
 
             case 'all':

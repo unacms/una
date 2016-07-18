@@ -289,6 +289,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             $sObject = uriGenerate($sObject, 'sys_objects_page', 'object', 'object');
 
             $sUri = $oForm->getCleanValue('uri');
+            
+            $aPage = array();
+            $this->oDb->getPages(array('type' => 'by_uri', 'value' => $sUri), $aPage, false);
+            if(!empty($aPage) && is_array($aPage)) 
+            	return array('msg' => _t('_adm_bp_err_page_uri'));
 
             $iVisibleFor = BxDolStudioUtils::getVisibilityValue($oForm->getCleanValue('visible_for'), $oForm->getCleanValue('visible_for_levels'));
             BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
