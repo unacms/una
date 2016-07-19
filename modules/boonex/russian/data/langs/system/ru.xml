@@ -1091,6 +1091,7 @@
 	<string name="_adm_prm_txt_enable"><![CDATA[Включить]]></string>
 	<string name="_adm_prm_txt_icon"><![CDATA[Иконка]]></string>
 	<string name="_adm_prm_txt_level_account"><![CDATA[Аккаунт]]></string>
+	<string name="_adm_prm_txt_level_actions_copy"><![CDATA[Скопировать действия из]]></string>
 	<string name="_adm_prm_txt_level_administrator"><![CDATA[Администратор]]></string>
 	<string name="_adm_prm_txt_level_create_popup"><![CDATA[Добавить новый уровень]]></string>
 	<string name="_adm_prm_txt_level_description"><![CDATA[Описание]]></string>
