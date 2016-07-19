@@ -1258,6 +1258,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'info' => _t('_adm_bp_dsc_block_content_raw'),
                         'value' => $aBlock['content'],
                         'required' => '0',
+                		'code' => 1,
                         'db' => array (
                             'pass' => 'Xss',
                         ),
