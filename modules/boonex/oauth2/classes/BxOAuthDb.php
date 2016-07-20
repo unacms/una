@@ -32,6 +32,14 @@ class BxOAuthDb extends BxDolModuleDb
                 $sLimitClause .= "LIMIT 1";
                 break;
 
+			case 'parent_id':
+                $aMethod['params'][1] = array(
+                	'parent_id' => $aParams['parent_id']
+                );
+
+                $sWhereClause .= "AND `tc`.`parent_id`=:parent_id";
+                break;
+
             case 'user_id':
                 $aMethod['params'][1] = array(
                 	'user_id' => $aParams['user_id']
