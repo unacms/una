@@ -83,7 +83,6 @@ class BxDolStudioOAuth extends BxDol
 	protected function unsetAuthorizedUser()
 	{
 		$this->oSession->unsetValue('sys_oauth_token');
-		$this->oSession->unsetValue('sys_oauth_secret');
         $this->oSession->unsetValue('sys_oauth_authorized');
 		$this->oSession->unsetValue('sys_oauth_authorized_user');
 	}

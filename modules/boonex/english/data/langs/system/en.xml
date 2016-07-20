@@ -624,9 +624,9 @@
 	<string name="_adm_err_modules_wrong_version"><![CDATA[The module has incompatible version]]></string>
 	<string name="_adm_err_modules_wrong_version_script"><![CDATA[The module is not compatible with your version of Trident]]></string>
 	<string name="_adm_err_modules_wrong_version_script_update"><![CDATA[The new version of {0} module isn't compatible with your version of Trident. Please upgrade Trident first (Studio &gt; Dashboard &gt; Version) and then try to upgrade the module.]]></string>
-	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Cannot connect to <b>BoonEx</b>. Please try again later.]]></string>
-	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Cannot get a valid answer from <b>BoonEx</b>. Please try again later.]]></string>
-	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[You need to enter Key and Secret provided by <b>BoonEx</b> in Settings -> General.]]></string>
+	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Cannot connect to <b>UNA</b>. Please try again later.]]></string>
+	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Cannot get a valid answer from <b>UNA</b>. Please try again later.]]></string>
+	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[You need to enter Key and Secret provided by <b>UNA</b> in Settings -> General.]]></string>
 	<string name="_adm_err_operation_failed"><![CDATA[Operation failed. Please report.]]></string>
 	<string name="_adm_form_btn_displays_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_btn_displays_edit"><![CDATA[Edit display]]></string>
@@ -871,7 +871,7 @@
 	<string name="_adm_msg_modules_success_enable"><![CDATA[The package was enabled successfully]]></string>
 	<string name="_adm_msg_modules_success_install"><![CDATA[The package was installed successfully]]></string>
 	<string name="_adm_msg_modules_success_uninstall"><![CDATA[The package was uninstalled successfully]]></string>
-	<string name="_adm_msg_oauth_need_authorize"><![CDATA[You need to to login into your <b>BoonEx</b> account to get data. Click <a href="{0}">here</a> to login.]]></string>
+	<string name="_adm_msg_oauth_need_authorize"><![CDATA[You need to to login into your <b>UNA</b> account to get data. Click <a href="{0}">here</a> to login.]]></string>
 	<string name="_adm_nav_btn_current_icon_image_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_nav_btn_items_add"><![CDATA[Add]]></string>
 	<string name="_adm_nav_btn_items_cancel"><![CDATA[Cancel]]></string>
@@ -1181,8 +1181,8 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
-	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx account key]]></string>
-	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[BoonEx account secret]]></string>
+	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA account key]]></string>
+	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[UNA account secret]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Enable Page cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Page cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Enable page blocks cache]]></string>
@@ -1294,7 +1294,7 @@
 	<string name="_adm_txt_modules_install"><![CDATA[Install]]></string>
 	<string name="_adm_txt_modules_install_language"><![CDATA[Install language:]]></string>
 	<string name="_adm_txt_modules_login"><![CDATA[Login]]></string>
-	<string name="_adm_txt_modules_market"><![CDATA[BoonEx Market]]></string>
+	<string name="_adm_txt_modules_market"><![CDATA[UNA Market]]></string>
 	<string name="_adm_txt_modules_move_sources"><![CDATA[Move source files:]]></string>
 	<string name="_adm_txt_modules_operation_update"><![CDATA[Installation of update <b>{0}</b> from {1} up to {2}]]></string>
 	<string name="_adm_txt_modules_package_module"><![CDATA[Module]]></string>
@@ -1764,7 +1764,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_desc_db_user"><![CDATA[Your MySQL database user name with read/write access.]]></string>
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Language to install by default.]]></string>
 	<string name="_sys_inst_conf_desc_profiles"><![CDATA[Profiles module to install by default.]]></string>
-	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/key_and_secret">Get BoonEx Key & Secret</a>]]></string>
+	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.una.io/page/kands-manage">Get UNA Key & Secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' binary doesn't exist, you need to install <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
 	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Trident files are stored.]]></string>
 	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Email to send site messages from.]]></string>
@@ -1783,8 +1783,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_field_db_user"><![CDATA[Database user]]></string>
 	<string name="_sys_inst_conf_field_language"><![CDATA[Language]]></string>
 	<string name="_sys_inst_conf_field_profiles"><![CDATA[Profiles]]></string>
-	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[BoonEx key]]></string>
-	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[BoonEx secret]]></string>
+	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[UNA key]]></string>
+	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[UNA secret]]></string>
 	<string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Path to '{0}' binary]]></string>
 	<string name="_sys_inst_conf_field_root_dir"><![CDATA[Site directory]]></string>
 	<string name="_sys_inst_conf_field_site_email"><![CDATA[Site e-mail]]></string>
@@ -1795,7 +1795,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_no_example"><![CDATA[no example]]></string>
 	<string name="_sys_inst_conf_not_found"><![CDATA[<span style="color:red">Not found</span>]]></string>
 	<string name="_sys_inst_conf_section_db_config"><![CDATA[DB config]]></string>
-	<string name="_sys_inst_conf_section_link_with_market"><![CDATA[Link with BoonEx market]]></string>
+	<string name="_sys_inst_conf_section_link_with_market"><![CDATA[Link with UNA market]]></string>
 	<string name="_sys_inst_conf_section_modules"><![CDATA[Modules]]></string>
 	<string name="_sys_inst_conf_section_paths"><![CDATA[Site paths]]></string>
 	<string name="_sys_inst_conf_section_site_info"><![CDATA[Site info]]></string>
@@ -2000,7 +2000,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_std_dash_host_tools"><![CDATA[Host Tools]]></string>
 	<string name="_sys_page_block_title_std_dash_cache"><![CDATA[Cache]]></string>
 	<string name="_sys_page_block_title_terms"><![CDATA[Terms of Service]]></string>
-	<string name="_sys_page_lang_block_about"><![CDATA[This site is powered by BoonEx Trident. The rest is a mystery.]]></string>
+	<string name="_sys_page_lang_block_about"><![CDATA[This site is powered by UNA. The rest is a mystery.]]></string>
 	<string name="_sys_page_lang_block_terms"><![CDATA[Our terms of use.]]></string>
 	<string name="_sys_page_lang_block_privacy"><![CDATA[Our privacy policy.]]></string>
 	<string name="_sys_page_title_about"><![CDATA[About]]></string>
