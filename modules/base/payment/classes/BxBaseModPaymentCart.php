@@ -21,12 +21,15 @@ class BxBaseModPaymentCart extends BxDol
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
-	public function serviceGetCartLink()
+	public function serviceGetCartLink($iVendor = 0)
     {
     	if(!$this->_oModule->isLogged())
             return '';
 
-    	return $this->_oModule->_oConfig->getUrl('URL_CARTS');
+		if($iVendor == 0)
+    		return $this->_oModule->_oConfig->getUrl('URL_CARTS');
+
+    	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART'), array('seller_id' => $iVendor));
     }
 
     public function serviceGetCartJs($bWrapped = true)

@@ -15,10 +15,6 @@ div.bx-grid-header div#bx-form-element-keyword {
 div.bx-pgt-new-key {}
 div.bx-pgt-new-key-cnt {}
 
-div.bx-pgt-new-key .bx-form-input-textarea {
-    height: 40px;
-}
-
 /*--- Keys page -> Edit Email Template block ---*/
 div.bx-pgt-new-etemplate {}
 div.bx-pgt-new-etemplate-cnt {}

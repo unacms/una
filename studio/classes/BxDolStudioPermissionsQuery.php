@@ -54,13 +54,21 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery
         return (int)$this->query($sSql, $aBindings) > 0;
     }
 
-    function switchAction($iLevelId, $iActionId, $bEnable)
+    function switchAction($iLevelId, $iActionId, $bEnable, $aParamsAdd = array())
     {
-        if($bEnable)
-            $sSql = $this->prepare("INSERT INTO `sys_acl_matrix`(`IDLevel`, `IDAction`) VALUES(?, ?)", $iLevelId, $iActionId);
+    	$aBindings = array(
+    		'IDLevel' => $iLevelId,
+    		'IDAction' => $iActionId
+    	);
+
+        if($bEnable) {
+            $sSql = "INSERT INTO `sys_acl_matrix` SET `IDLevel`=:IDLevel, `IDAction`=:IDAction";
+            if(!empty($aParamsAdd) && is_array($aParamsAdd))
+            	$sSql .= ", " . $this->arrayToSQL($aParamsAdd);
+        }
         else
-            $sSql = $this->prepare("DELETE FROM `sys_acl_matrix` WHERE `IDLevel`=? AND `IDAction`=?", $iLevelId, $iActionId);
-        return (int)$this->query($sSql) > 0;
+            $sSql = "DELETE FROM `sys_acl_matrix` WHERE `IDLevel`=:IDLevel AND `IDAction`=:IDAction";
+        return (int)$this->query($sSql, $aBindings) > 0;
     }
 
     function getOptions($aParams, &$aItems, $bReturnCount = true)

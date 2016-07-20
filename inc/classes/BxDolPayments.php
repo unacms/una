@@ -110,12 +110,12 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
 		return BxDolService::call($this->_sActive, 'get_orders_count_new', $aSrvParams, 'Orders');
     }
 
-    public function getCartLink()
+    public function getCartLink($iVendor = 0)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_link', 'Cart'))
     		return '';
 
-    	return BxDolService::call($this->_sActive, 'get_cart_link', array(), 'Cart');
+    	return BxDolService::call($this->_sActive, 'get_cart_link', array($iVendor), 'Cart');
     }
 
     public function getCartItemsCount()

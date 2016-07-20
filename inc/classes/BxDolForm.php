@@ -1053,7 +1053,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      */
     static public function isVisible ($aInput)
     {
-        return BxDolAcl::getInstance()->isMemberLevelInSet($aInput['visible_for_levels']);
+        return isset($aInput['visible_for_levels']) ? BxDolAcl::getInstance()->isMemberLevelInSet($aInput['visible_for_levels']) : true;
     }
 
     protected function _genMethodName ($s)
@@ -1230,7 +1230,7 @@ class BxDolFormChecker
 
         // get values from form description array
         foreach ($aInputs as $k => $a) {
-            if (!isset ($a['db'])) continue;
+            if (!isset ($a['db']) || !BxDolForm::isVisible($a)) continue;
             $valClean = $this->get ($a['name'], $a['db']['pass'], !empty($a['db']['params']) ? $a['db']['params'] : array());
             $aValsToUpdate[$a['name']] = $valClean;
             $aInputs[$k]['db']['value'] = $valClean;

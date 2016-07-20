@@ -419,7 +419,16 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if($bTypeSingle)
 			$this->_oDb->setCartItems($iClientId, $sCartItems);
 
-        return $this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
+        $bResult = $this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
+        if($bResult) {
+			//--- 'System' -> 'Register Payment' for Alerts Engine ---//
+			bx_import('BxDolAlerts');
+	        $oZ = new BxDolAlerts('system', 'register_payment', 0, $iClientId, array('pending' => $aPending));
+	        $oZ->alert();
+			//--- 'System' -> 'Register Payment' for Alerts Engine ---//
+        }
+
+        return $bResult;
     }
 
 	public function refundPayment($mixedPending)

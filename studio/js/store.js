@@ -15,7 +15,7 @@ function BxDolStudioStore(oOptions) {
     this.sIdPopupProduct = 'bx-std-str-popup-product';
 }
 
-BxDolStudioStore.prototype.addToCart = function(sVendor, iProduct, oButton) {
+BxDolStudioStore.prototype.addToCart = function(iVendor, iProduct, oButton) {
 	var oDate = new Date();
 	var $this = this;
 	bx_loading(this.sIdPageContent, true);
@@ -24,7 +24,7 @@ BxDolStudioStore.prototype.addToCart = function(sVendor, iProduct, oButton) {
 		this.sActionsUrl,
 		{
 			str_action: 'add-to-cart',
-			str_vendor: sVendor,
+			str_vendor: iVendor,
 			str_item: iProduct,
 			_t:oDate.getTime()
 		},
@@ -47,7 +47,7 @@ BxDolStudioStore.prototype.addToCart = function(sVendor, iProduct, oButton) {
 	);
 };
 
-BxDolStudioStore.prototype.deleteFromCart = function(sVendor, iProduct, oButton) {
+BxDolStudioStore.prototype.deleteFromCart = function(iVendor, iProduct, oButton) {
 	var oDate = new Date();
 	var $this = this;
 	bx_loading(this.sIdPageContent, true);
@@ -56,7 +56,7 @@ BxDolStudioStore.prototype.deleteFromCart = function(sVendor, iProduct, oButton)
 		this.sActionsUrl,
 		{
 			str_action: 'delete-from-cart',
-			str_vendor: sVendor,
+			str_vendor: iVendor,
 			str_item: iProduct,
 			_t:oDate.getTime()
 		},
@@ -97,11 +97,11 @@ BxDolStudioStore.prototype.deleteFromCart = function(sVendor, iProduct, oButton)
 	);
 };
 
-BxDolStudioStore.prototype.deleteAllFromCart = function(sVendor, oButton) {
-	this.deleteFromCart(sVendor, 0, oButton);
+BxDolStudioStore.prototype.deleteAllFromCart = function(iVendor, oButton) {
+	this.deleteFromCart(iVendor, 0, oButton);
 };
 
-BxDolStudioStore.prototype.checkoutCart = function(sVendor, oButton) {
+BxDolStudioStore.prototype.checkoutCart = function(iVendor, oButton) {
 	var oDate = new Date();
 	var $this = this;
 	bx_loading(this.sIdPageContent, true);
@@ -110,7 +110,7 @@ BxDolStudioStore.prototype.checkoutCart = function(sVendor, oButton) {
 		this.sActionsUrl,
 		{
 			str_action: 'checkout-cart',
-			str_vendor: sVendor,
+			str_vendor: iVendor,
 			_t:oDate.getTime()
 		},
 		function(oData) {
@@ -209,7 +209,7 @@ BxDolStudioStore.prototype.info = function(sModuleName, oLink) {
 			var sId = $this.sIdPopupProduct;
 			if(oData.code == 0 && oData.popup.length > 0) {
 		        $('#' + sId).remove();
-				$(oData.popup).appendTo('body');
+				$(oData.popup).appendTo('body').bxTime();
 				$('#' + sId).dolPopup({
 					onShow: function() {
 						$this.initScreenshots(oData.screenshots);

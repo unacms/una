@@ -67,6 +67,12 @@
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Использовать как главный]]></string>
 	<string name="_bx_market_form_entry_input_files_name"><![CDATA[Имя:]]></string>
 	<string name="_bx_market_form_entry_input_files_version"><![CDATA[Версия:]]></string>
+	<string name="_bx_market_form_entry_input_files_type"><![CDATA[Тип:]]></string>
+	<string name="_bx_market_form_entry_input_files_type_version"><![CDATA[версия]]></string>
+	<string name="_bx_market_form_entry_input_files_type_update"><![CDATA[обновление]]></string>
+	<string name="_bx_market_form_entry_input_files_version_from"><![CDATA[С версии:]]></string>
+	<string name="_bx_market_form_entry_input_files_version_to"><![CDATA[До версии:]]></string>
+	<string name="_bx_market_form_entry_input_files_version_from_x_to_y"><![CDATA[С версии {0} до {1}]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Кто может смотреть]]></string>
     <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Кто может смотреть]]></string>
 	<string name="_bx_market_form_entry_input_sys_allow_purchase_to"><![CDATA[Кто может покупать]]></string>

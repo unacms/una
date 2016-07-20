@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_sys_module_intercom"><![CDATA[Intercom]]></string>
+	<string name="_bx_intercom"><![CDATA[Intercom]]></string>
+
+	<string name="_bx_intercom_setting"><![CDATA[Intercom Setting]]></string>
+    <string name="_bx_intercom_adm_stg_cpt_type"><![CDATA[Intercom]]></string>
+    <string name="_bx_intercom_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    <string name="_bx_intercom_option_app_id"><![CDATA[Intercom App ID]]></string>
+    <string name="_bx_intercom_option_api_key"><![CDATA[Intercom API Key]]></string>
+
+	<string name="_bx_intercom_information"><![CDATA[Information]]></string>
+    <string name="_bx_intercom_information_block"><![CDATA[
+        This module add Intercom services to your website. <br />
+        To enable this module, you need to get Intercom App ID from <a target="_blank" href="https://www.intercom.io">www.intercom.io</a>.]]></string>
+</resources>

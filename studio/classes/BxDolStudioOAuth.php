@@ -9,12 +9,6 @@
 
 bx_import('BxDolStudioInstallerUtils');
 
-define('BX_DOL_OAUTH_URL_BASE', BX_DOL_UNITY_URL_ROOT . 'scripts_public/');
-define('BX_DOL_OAUTH_URL_REQUEST_TOKEN', BX_DOL_OAUTH_URL_BASE . 'oauth_request_token.php5');
-define('BX_DOL_OAUTH_URL_AUTHORIZE', BX_DOL_OAUTH_URL_BASE . 'oauth_authorize.php5');
-define('BX_DOL_OAUTH_URL_ACCESS_TOKEN', BX_DOL_OAUTH_URL_BASE . 'oauth_access_token.php5');
-define('BX_DOL_OAUTH_URL_FETCH_DATA', BX_DOL_OAUTH_URL_BASE . 'oauth_fetch_data.php5');
-
 class BxDolStudioOAuth extends BxDol
 {
     protected $oSession;
@@ -89,7 +83,6 @@ class BxDolStudioOAuth extends BxDol
 	protected function unsetAuthorizedUser()
 	{
 		$this->oSession->unsetValue('sys_oauth_token');
-		$this->oSession->unsetValue('sys_oauth_secret');
         $this->oSession->unsetValue('sys_oauth_authorized');
 		$this->oSession->unsetValue('sys_oauth_authorized_user');
 	}

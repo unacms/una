@@ -17,7 +17,7 @@ use OAuth\Common\Consumer\Credentials;
 
 require_once (BX_DIRECTORY_PATH_PLUGINS . 'OAuth/bootstrap.php');
 
-class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
+class BxDolStudioOAuthPlugin extends BxDolStudioOAuthOAuth1 implements iBxDolSingleton
 {
     protected $sService;
     protected $oStorage;
