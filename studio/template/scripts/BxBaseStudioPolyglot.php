@@ -37,7 +37,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
     }
     function getPageJs()
     {
-        return array_merge(parent::getPageJs(), array('autosize.min.js', 'settings.js', 'polyglot.js'));
+        return array_merge(parent::getPageJs(), array('settings.js', 'polyglot.js'));
     }
     function getPageJsClass()
     {
