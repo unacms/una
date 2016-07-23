@@ -22,7 +22,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 
         $this->sKey = getParam('sys_oauth_key');
         $this->sSecret = getParam('sys_oauth_secret');
-        $this->sApiUrl = BX_DOL_UNA_URL_ROOT . 'm/oauth2/';
+        $this->sApiUrl = BX_DOL_MARKET_URL_ROOT . 'm/oauth2/';
         $this->sScope = 'market';
         $this->sPageHandle = BX_DOL_URL_STUDIO . 'store.php?page=goodies';
         $this->sDataRetrieveMethod = 'post';

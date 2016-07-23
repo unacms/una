@@ -45,7 +45,7 @@ class BxOAuthGrid extends BxTemplGrid
             if ($iNewId)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iNewId); // if record is successfully added, reload grid and highlight added row
             else
-                $aRes = array('msg' => "Error occured"); // if record adding failed, display error message
+                $aRes = array('msg' => _t('_error occured')); // if record adding failed, display error message
 
             echoJson($aRes);
 

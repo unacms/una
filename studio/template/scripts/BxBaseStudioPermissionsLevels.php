@@ -65,8 +65,23 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $oForm->aFormAttrs['method']);
 
             $iId = (int)$oForm->insert(array('ID' => $iId, 'Icon' => $mixedIcon, 'Order' => $this->oDb->getLevelOrderMax() + 1));
-            if($iId != 0)
+            if($iId != 0) {
+            	$iActionsFrom = (int)$oForm->getCleanValue('Actions');
+            	if($iActionsFrom > 0) {
+            		$aActions = array();
+            		$this->oDb->getActions(array('type' => 'by_level_id', 'value' => $iActionsFrom), $aActions, false);
+            		foreach($aActions as $aAction)
+            			$this->oDb->switchAction($iId, $aAction['id'], true, array(
+            				'AllowedCount' => $aAction['allowed_count'],
+            				'AllowedPeriodLen' => $aAction['allowed_period_len'],
+            				'AllowedPeriodStart' => $aAction['allowed_period_start'],
+            				'AllowedPeriodEnd' => $aAction['allowed_period_end'],
+            				'AdditionalParamValue' => $aAction['additional_param_value']
+            			));
+            	}
+
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            }
             else
                 $aRes = array('msg' => _t('_adm_prm_err_level_create'));
 
@@ -480,6 +495,14 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                     'caption' => _t('_adm_prm_txt_level_icon_image_old'),
                     'content' => ''
                 ),
+                'Actions' => array(
+                    'type' => 'select',
+                    'name' => 'Actions',
+                    'caption' => _t('_adm_prm_txt_level_actions_copy'),
+                    'values' => array(
+                		array('key' => 0, 'value' => _t('_sys_txt_empty'))
+                	),
+                ),
                 'controls' => array(
                     'name' => 'controls',
                     'type' => 'input_set',
@@ -501,6 +524,11 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             )
         );
 
+        $aLevels = array(); 
+        $this->oDb->getLevels(array('type' => 'all_pair'), $aLevels, false);
+        foreach($aLevels as $iId => $sName)
+        	$aForm['inputs']['Actions']['values'][] = array('key' => $iId, 'value' => _t($sName));
+
         switch($sAction) {
             case 'add':
                 unset($aForm['inputs']['id']);
@@ -514,6 +542,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                 unset($aForm['inputs']['Purchasable']);
                 unset($aForm['inputs']['Removable']);
                 unset($aForm['inputs']['Name']);
+                unset($aForm['inputs']['Actions']);
 
                 $aForm['form_attrs']['id'] .= 'edit';
                 $aForm['inputs']['Icon_image']['caption'] = _t('_adm_prm_txt_level_icon_image_new');

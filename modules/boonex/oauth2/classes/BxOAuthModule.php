@@ -97,7 +97,7 @@ class BxOAuthModule extends BxDolModule
 
         if (!isLogged()) {
             require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
-            $sForceRelocate = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'auth/?client_id=' . bx_get('client_id') . '&response_type=' . bx_get('response_type') . '&state=' . bx_get('state') . '&redirect_uri=' . bx_get('redirect_uri');
+            $sForceRelocate = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'auth/?client_id=' . bx_get('client_id') . '&response_type=' . bx_get('response_type') . '&scope=' . bx_get('scope') . '&state=' . bx_get('state') . '&redirect_uri=' . bx_get('redirect_uri');
             bx_login_form(false, false, $sForceRelocate);
             return;
         }
@@ -127,14 +127,25 @@ class BxOAuthModule extends BxDolModule
             'client_id' => bx_get('client_id'),
             'response_type' => bx_get('response_type'),
             'redirect_uri' => bx_get('redirect_uri'),
+        	'scope' => bx_get('scope'),
             'state' => bx_get('state'),
             'profiles' => BxDolService::call('system', 'account_profile_switcher', array(getLoggedId(), false, "javascript: $('#bx-auth-profile-id').val('{profile_id}'); $('#bx-auth-form form').submit(); void(0);"), 'TemplServiceProfiles')['content'],
         ));
     }
 
-    function serviceGetClient ($sClientId)
+    function serviceGetClientsBy ($aParams = array())
     {
-    	return $this->_oDb->getClient($sClientId);
+    	return $this->_oDb->getClientsBy($aParams);
+    }
+
+    function serviceAddClient ($aClient)
+    {
+    	return $this->_oDb->addClient($aClient);
+    }
+
+	function serviceDeleteClientsBy ($aParams = array())
+    {
+    	return $this->_oDb->deleteClientsBy($aParams);
     }
 
     function studioSettings ()

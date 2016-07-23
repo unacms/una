@@ -9,14 +9,8 @@
 
 bx_import('BxDolLanguages');
 
-define('BX_DOL_STORE_BOONEX', 'boonex');
-define('BX_DOL_STORE_UNA', 'una');
-
-define('BX_DOL_UNITY_URL_ROOT', 'https://www.boonex.com/');
-define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
-
-define('BX_DOL_UNA_URL_ROOT', 'https://d.una.io/');
-define('BX_DOL_UNA_URL_MARKET', BX_DOL_UNA_URL_ROOT . 'm/market_api/');
+define('BX_DOL_MARKET_URL_ROOT', 'https://d.una.io/');
+define('BX_DOL_MARKET_URL_INTEGRATION', BX_DOL_MARKET_URL_ROOT . 'm/market_api/');
 
 define('BX_DOL_STUDIO_IU_RC_SUCCESS', 0);
 define('BX_DOL_STUDIO_IU_RC_FAILED', 1);
@@ -25,9 +19,8 @@ define('BX_DOL_STUDIO_IU_RC_SCHEDULED', 2);
 class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSingleton
 {
 	protected $bUseFtp;
-	protected $sAuthorizedAccessClass;
 
-	protected $sStore;
+	protected $sAuthorizedAccessClass;
 	protected $sStoreDataUrlPublic;
 
     public function __construct()
@@ -39,18 +32,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         $this->bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER;
 
-        $this->sStore = BX_DOL_STORE_UNA;
-        switch($this->sStore) {
-        	case BX_DOL_STORE_UNA:
-        		$this->sAuthorizedAccessClass = 'BxDolStudioOAuthOAuth2';
-        		$this->sStoreDataUrlPublic = BX_DOL_UNA_URL_MARKET;
-        		break;
-
-        	case BX_DOL_STORE_BOONEX:
-        		$this->sAuthorizedAccessClass = 'BxDolStudioOAuthPlugin';
-        		$this->sStoreDataUrlPublic = BX_DOL_UNITY_URL_MARKET;		
-        		break;
-        }
+		$this->sAuthorizedAccessClass = 'BxDolStudioOAuthOAuth2';
+		$this->sStoreDataUrlPublic = BX_DOL_MARKET_URL_INTEGRATION;
     }
 
     /**
@@ -318,14 +301,12 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function checkModules($bAuthorizedAccess = false)
     {
-    	if($bAuthorizedAccess) {
-    		if($this->sStore == BX_DOL_STORE_UNA)
-    			$aParams = array('method' => 'browse_purchased', 'domain' => BX_DOL_URL_ROOT, 'products' => $this->getInstalledInfoShort());
-    		else
-    			$aParams = array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT, 'dol_products' => $this->getInstalledInfoShort());
-
-        	$aProducts = $this->getAccessObject(true)->loadItems($aParams);
-    	}
+    	if($bAuthorizedAccess)
+        	$aProducts = $this->getAccessObject(true)->loadItems(array(
+        		'method' => 'browse_purchased', 
+        		'domain' => BX_DOL_URL_ROOT, 
+        		'products' => $this->getInstalledInfoShort()
+        	));
     	else
 			$aProducts = $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_purchased', array('key' => getParam('sys_oauth_key')));
 
@@ -346,14 +327,11 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
         $sProducts = $this->getInstalledInfoShort();
 
-        if($bAuthorizedAccess) {
-        	if($this->sStore == BX_DOL_STORE_UNA)
-        		$aParams = array('method' => 'browse_updates', 'products' => $sProducts);
-        	else
-        		$aParams = array('dol_type' => 'available_updates', 'dol_products' => $sProducts);
-
-	        return $this->getAccessObject(true)->loadItems($aParams);
-        }
+        if($bAuthorizedAccess)
+	        return $this->getAccessObject(true)->loadItems(array(
+	        	'method' => 'browse_updates', 
+	        	'products' => $sProducts
+	        ));
 
 		return $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_updates', array(
 			'key' => getParam('sys_oauth_key'),
@@ -363,12 +341,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function downloadFileAuthorized($iFileId)
     {
-    	if($this->sStore == BX_DOL_STORE_UNA)
-    		$aParams = array('method' => 'download_file', 'file_id' => $iFileId);
-    	else
-			$aParams = array('dol_type' => 'product_file', 'dol_file_id' => $iFileId);
-
-		$aItem = $this->getAccessObject(true)->loadItems($aParams);
+		$aItem = $this->getAccessObject(true)->loadItems(array(
+			'method' => 'download_file', 
+			'file_id' => $iFileId
+		));
 
 		return $this->downloadFileInit($aItem, array('module_name' => $aItem['module_name']));
     }

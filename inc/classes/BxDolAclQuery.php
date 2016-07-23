@@ -142,7 +142,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 	'level_code' => pow(2, ($aParams['value'] - 1))
                 );
 
-                $sSelectClause .= ", `tam`.`AllowedCount` AS `allowed_count`, `tam`.`AllowedPeriodLen` AS `allowed_period_len` ";
+                $sSelectClause .= ", `tam`.`AllowedCount` AS `allowed_count`, `tam`.`AllowedPeriodLen` AS `allowed_period_len`, `tam`.`AllowedPeriodStart` AS `allowed_period_start`, `tam`.`AllowedPeriodEnd` AS `allowed_period_end`, `tam`.`AdditionalParamValue` AS `additional_param_value` ";
                 $sJoinClause .= "LEFT JOIN `sys_acl_matrix` AS `tam` ON `taa`.`ID`=`tam`.`IDAction` ";
                 $sWhereClause .= "AND `tam`.`IDLevel`=:level_id AND (`taa`.`DisabledForLevels`='0' OR `taa`.`DisabledForLevels`&:level_code=0)";
                 break;

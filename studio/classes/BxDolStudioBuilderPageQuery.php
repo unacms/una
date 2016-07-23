@@ -40,6 +40,15 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 $sWhereClause = " AND `tp`.`object`=:object ";
                 break;
 
+			case 'by_uri':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'uri' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tp`.`uri`=:uri ";
+                break;
+
             case 'by_object_full':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
@@ -101,11 +110,12 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
 
     function deletePages($aParams)
     {
+    	$aBindings = array();
         $sWhereClause = "";
 
         switch($aParams['type']) {
             case 'by_id':
-            	$aMethod['params'][1] = array(
+            	$aBindings = array(
                 	'id' => $aParams['value']
                 );
 
@@ -113,11 +123,11 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 break;
 
             case 'by_object':
-            	$aMethod['params'][1] = array(
+            	$aBindings = array(
                 	'object' => $aParams['value']
                 );
 
-                $sWhereClause = "AND `tp`.`object`=? ";
+                $sWhereClause = "AND `tp`.`object`=:object ";
                 break;
 
             case 'all':
@@ -125,7 +135,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         }
 
         $sSql = "DELETE FROM `tp` USING `sys_objects_page` AS `tp` WHERE 1 " . $sWhereClause;
-        return (int)$this->query($sSql) > 0;
+        return (int)$this->query($sSql, $aBindings) > 0;
     }
 
     function isUniqUri($sUri)

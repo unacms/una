@@ -624,9 +624,9 @@
 	<string name="_adm_err_modules_wrong_version"><![CDATA[Модуль имеет несовместимую версию]]></string>
 	<string name="_adm_err_modules_wrong_version_script"><![CDATA[Модуль несовместим с Вашей версией Trident]]></string>
 	<string name="_adm_err_modules_wrong_version_script_update"><![CDATA[Новая версия модуля {0} несовместима с Вашей версией Trident. Пожалуйста, сначала обновите Trident (Студия &gt; Панель &gt; Версия) и затем попробуйте обновить модуль.]]></string>
-	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Невозможно соединиться с <b>BoonEx</b>. Пожалуйста, попробуйте позднее.]]></string>
-	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Невозможно получить отклик от <b>BoonEx</b>. Пожалуйста, попробуйте позднее.]]></string>
-	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[Нужно ввести Key и Secret, предоставленные <b>BoonEx</b> в Настройки -> Общие.]]></string>
+	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Невозможно соединиться с <b>UNA</b>. Пожалуйста, попробуйте позднее.]]></string>
+	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Невозможно получить отклик от <b>UNA</b>. Пожалуйста, попробуйте позднее.]]></string>
+	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[Нужно ввести Key и Secret, предоставленные <b>UNA</b> в Настройки -> Общие.]]></string>
 	<string name="_adm_err_operation_failed"><![CDATA[Операция не удалась. Пожалуйста, оповестите нас.]]></string>
 	<string name="_adm_form_btn_displays_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_form_btn_displays_edit"><![CDATA[Редактировать дисплей]]></string>
@@ -871,7 +871,7 @@
 	<string name="_adm_msg_modules_success_enable"><![CDATA[Пакет удачно подключён]]></string>
 	<string name="_adm_msg_modules_success_install"><![CDATA[Пакет удачно установлен]]></string>
 	<string name="_adm_msg_modules_success_uninstall"><![CDATA[Пакет удачно отменён]]></string>
-	<string name="_adm_msg_oauth_need_authorize"><![CDATA[Вам нужно зайти в свой <b>BoonEx</b> аккаунт, чтобы запросить данные. Нажмите <a href="{0}">здесь</a> для входа.]]></string>
+	<string name="_adm_msg_oauth_need_authorize"><![CDATA[Вам нужно зайти в свой <b>UNA</b> аккаунт, чтобы запросить данные. Нажмите <a href="{0}">здесь</a> для входа.]]></string>
 	<string name="_adm_nav_btn_current_icon_image_delete"><![CDATA[Удалить]]></string>
 	<string name="_adm_nav_btn_items_add"><![CDATA[Добавить]]></string>
 	<string name="_adm_nav_btn_items_cancel"><![CDATA[Отменить]]></string>
@@ -1091,6 +1091,7 @@
 	<string name="_adm_prm_txt_enable"><![CDATA[Включить]]></string>
 	<string name="_adm_prm_txt_icon"><![CDATA[Иконка]]></string>
 	<string name="_adm_prm_txt_level_account"><![CDATA[Аккаунт]]></string>
+	<string name="_adm_prm_txt_level_actions_copy"><![CDATA[Скопировать действия из]]></string>
 	<string name="_adm_prm_txt_level_administrator"><![CDATA[Администратор]]></string>
 	<string name="_adm_prm_txt_level_create_popup"><![CDATA[Добавить новый уровень]]></string>
 	<string name="_adm_prm_txt_level_description"><![CDATA[Описание]]></string>
@@ -1180,8 +1181,8 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP-сервер - Пароль]]></string>
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Дата установки]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
-	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx-аккаунт - Key (ключ)]]></string>
-	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[BoonEx-аккаунт - Secret (секретное слово)]]></string>
+	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA-аккаунт - Key (ключ)]]></string>
+	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[UNA-аккаунт - Secret (секретное слово)]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Задействовать кэш для Страниц]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Кэш-движок для Страниц (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Задействовать кэш для блоков страниц]]></string>
@@ -1293,7 +1294,7 @@
 	<string name="_adm_txt_modules_install"><![CDATA[Установить]]></string>
 	<string name="_adm_txt_modules_install_language"><![CDATA[Установить язык:]]></string>
 	<string name="_adm_txt_modules_login"><![CDATA[Войти]]></string>
-	<string name="_adm_txt_modules_market"><![CDATA[BoonEx Market]]></string>
+	<string name="_adm_txt_modules_market"><![CDATA[UNA Market]]></string>
 	<string name="_adm_txt_modules_move_sources"><![CDATA[Перенести файлы исходного кода:]]></string>
 	<string name="_adm_txt_modules_operation_update"><![CDATA[Установка обновления <b>{0}</b> от {1} до {2}]]></string>
 	<string name="_adm_txt_modules_package_module"><![CDATA[Модуль]]></string>
@@ -1763,7 +1764,7 @@
 	<string name="_sys_inst_conf_desc_db_user"><![CDATA[MySQL БД - имя пользователя с правами чтения/записи.]]></string>
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Язык для установки по умолчанию.]]></string>
 	<string name="_sys_inst_conf_desc_profiles"><![CDATA[Модуль профилей для установки по умолчанию.]]></string>
-	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/key_and_secret">Получить BoonEx Key & Secret</a>]]></string>
+	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.una.io/page/kands-manage">Получить UNA Key & Secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' программа не существует, нужно установить <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
 	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Путь к директории, где содержатся файлы Trident.]]></string>
 	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Имейл, с которого будут отправляться сообщения от сайта.]]></string>
@@ -1782,8 +1783,8 @@
 	<string name="_sys_inst_conf_field_db_user"><![CDATA[База Данных - имя пользователя]]></string>
 	<string name="_sys_inst_conf_field_language"><![CDATA[Язык]]></string>
 	<string name="_sys_inst_conf_field_profiles"><![CDATA[Профили]]></string>
-	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[BoonEx key]]></string>
-	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[BoonEx secret]]></string>
+	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[UNA key]]></string>
+	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[UNA secret]]></string>
 	<string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Путь к '{0}' программе]]></string>
 	<string name="_sys_inst_conf_field_root_dir"><![CDATA[Директория сайта]]></string>
 	<string name="_sys_inst_conf_field_site_email"><![CDATA[Имейл сайта]]></string>
@@ -1794,7 +1795,7 @@
 	<string name="_sys_inst_conf_no_example"><![CDATA[нет примера]]></string>
 	<string name="_sys_inst_conf_not_found"><![CDATA[<span style="color:red">Не найдено</span>]]></string>
 	<string name="_sys_inst_conf_section_db_config"><![CDATA[БД - конфигурация]]></string>
-	<string name="_sys_inst_conf_section_link_with_market"><![CDATA[Связать с BoonEx market]]></string>
+	<string name="_sys_inst_conf_section_link_with_market"><![CDATA[Связать с UNA market]]></string>
 	<string name="_sys_inst_conf_section_modules"><![CDATA[Модули]]></string>
 	<string name="_sys_inst_conf_section_paths"><![CDATA[пути сайта]]></string>
 	<string name="_sys_inst_conf_section_site_info"><![CDATA[Инфо сайта]]></string>
@@ -1999,7 +2000,7 @@
 	<string name="_sys_page_block_title_std_dash_host_tools"><![CDATA[Хост - Инструменты]]></string>
 	<string name="_sys_page_block_title_std_dash_cache"><![CDATA[Кэш]]></string>
 	<string name="_sys_page_block_title_terms"><![CDATA[Правила пользования]]></string>
-	<string name="_sys_page_lang_block_about"><![CDATA[Этот сайт регулируется BoonEx Trident. Остальное - тайна, покрытая мраком.]]></string>
+	<string name="_sys_page_lang_block_about"><![CDATA[Этот сайт сделан на UNA. Остальное - тайна, покрытая мраком.]]></string>
 	<string name="_sys_page_lang_block_terms"><![CDATA[Правила пользования нашим сайтом.]]></string>
 	<string name="_sys_page_lang_block_privacy"><![CDATA[Политика конфиденциальности нашего сайта.]]></string>
 	<string name="_sys_page_title_about"><![CDATA[Об...]]></string>

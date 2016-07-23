@@ -112,7 +112,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
         if($oForm->isSubmittedAndValid()) {
             $mixedResult = $this->add($oForm);
 
-            if(is_int($mixedResult))
+            if(is_numeric($mixedResult))
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
             else
                 $aRes = array('msg' => $mixedResult);
@@ -187,6 +187,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
                 'name' => $sName,
                 'caption' => $aLanguage['title'],
                 'value' => isset($aKey['strings'][$aLanguage['name']]) ? $aKey['strings'][$aLanguage['name']]['string'] : '',
+            	'code' => 1,
                 'db' => array (
                     'pass' => 'XssHtml',
                 ),

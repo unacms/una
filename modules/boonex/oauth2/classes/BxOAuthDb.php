@@ -16,10 +16,43 @@ class BxOAuthDb extends BxDolModuleDb
         parent::__construct($oConfig);
     }
 
-	function getClient($sClientId)
+	function getClientsBy($aParams = array())
     {
-        $sQuery = $this->prepare("SELECT * FROM `bx_oauth_clients` WHERE `client_id` = ?", $sClientId);
-        return $this->getRow($sQuery);
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        switch($aParams['type']) {
+            case 'client_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'client_id' => $aParams['client_id']
+                );
+
+                $sWhereClause .= "AND `tc`.`client_id`=:client_id";
+                $sLimitClause .= "LIMIT 1";
+                break;
+
+			case 'parent_id':
+                $aMethod['params'][1] = array(
+                	'parent_id' => $aParams['parent_id']
+                );
+
+                $sWhereClause .= "AND `tc`.`parent_id`=:parent_id";
+                break;
+
+            case 'user_id':
+                $aMethod['params'][1] = array(
+                	'user_id' => $aParams['user_id']
+                );
+
+                $sWhereClause .= "AND `tc`.`user_id`=:user_id";
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT * " . $sSelectClause . "
+            FROM `bx_oauth_clients` AS `tc` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     function getClientTitle($sClientId)
@@ -28,12 +61,26 @@ class BxOAuthDb extends BxDolModuleDb
         return $this->getOne($sQuery);
     }
 
+	function addClient($aClient)
+    {
+        $mixedResult = $this->query("INSERT INTO `bx_oauth_clients` SET " . $this->arrayToSQL($aClient));
+        return (int)$mixedResult > 0 ? $this->lastId() : false;
+    }
+
     function deleteClients($aClients)
     {        
         foreach ($aClients as $sClientId) {
             $sQuery = $this->prepare("DELETE FROM `bx_oauth_clients` WHERE `client_id` = ?", $sClientId);
             $this->query($sQuery);
         }
+    }
+
+	function deleteClientsBy($aParams = array())
+    {
+    	if(empty($aParams))
+    		return false;
+
+        return $this->query("DELETE FROM `bx_oauth_clients` WHERE " . $this->arrayToSQL($aParams, ' AND '));
     }
 
     function getSavedProfile($aProfiles)
