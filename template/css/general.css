@@ -65,13 +65,19 @@
     height: 3rem;
            
     margin:0 48px;
-    margin:0 3rem;
-
-    line-height: 48px;
-    line-height: 3rem;
+    margin:0 6rem;
     
     vertical-align: middle;
     text-align: center;
+}
+
+#bx-logo-container a span {
+    display:inline-block;
+
+    max-width:100%;
+
+    line-height: 48px;
+    line-height: 3rem;
 
     overflow:hidden;
     text-overflow:ellipsis;

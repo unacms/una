@@ -40,6 +40,12 @@ html {
     width:auto;
 }
 
+/* general.css */
+
+#bx-logo-container {
+    margin:0 3rem;
+}
+
 /* common.css */
 
 /* make popup fullscreen */
