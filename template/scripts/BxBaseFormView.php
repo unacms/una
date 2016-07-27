@@ -503,7 +503,7 @@ BLAH;
 
 
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sLegend = '<legend class="bx-def-padding-sec-right bx-def-font-grayed bx-def-font-h3">' . bx_process_output($aInput['caption']) . '</legend>';
+            $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-h3">' . bx_process_output($aInput['caption']) . '</legend>';
         else
             $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-h3"><a href="javascript:void(0);">' . bx_process_output($aInput['caption']) . '</a></legend>';
 
