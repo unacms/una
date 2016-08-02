@@ -347,10 +347,6 @@
 
 /* view mode */
 
-.bx-form-view-section legend {
-    padding-left:0;
-}
-
 .bx-form-row-view-wrapper > div {
     display: inline-block;
     white-space: normal;

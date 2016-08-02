@@ -316,7 +316,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         if(empty($sAlt))
         	$sAlt = getParam('site_title');
 
-        $sLogo = $sAlt;
+        $sLogo = '<span>' . $sAlt . '</span>';
 
         $sFileUrl = $this->getMainLogoUrl();
         if (!empty($sFileUrl)) {
