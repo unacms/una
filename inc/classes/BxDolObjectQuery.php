@@ -91,7 +91,12 @@ class BxDolObjectQuery extends BxDolDb
         if(empty($aEntry) || !is_array($aEntry))
             return false;
 
-        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aEntry['count'], $iObjectId);
+        return $this->_updateTriggerTable($iObjectId, $aEntry);
+    }
+
+    protected function _updateTriggerTable($iObjectId, $aEntry)
+    {
+    	$sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aEntry['count'], $iObjectId);
         return (int)$this->query($sQuery) > 0;
     }
 }

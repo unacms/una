@@ -12,6 +12,8 @@
  */
 class BxDolVoteQuery extends BxDolObjectQuery
 {
+	protected $_sTriggerFieldRate;
+
     protected $_iPostTimeout;
 
     public function __construct(&$oModule)
@@ -97,6 +99,12 @@ class BxDolVoteQuery extends BxDolObjectQuery
 
 		$aResult['fields'] = ",`{$this->_sTable}`.`count` as `vote_count`, (`{$this->_sTable}`.`sum` / `{$this->_sTable}`.`count`) AS `vote_rate` ";
         return $aResult;
+    }
+
+	protected function _updateTriggerTable($iObjectId, $aEntry)
+    {
+    	$sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ?, `{$this->_sTriggerFieldRate}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aEntry['count'], $aEntry['rate'], $iObjectId);
+        return (int)$this->query($sQuery) > 0;
     }
 }
 
