@@ -332,6 +332,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 		$aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
 
+		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+		bx_import('BxDolAlerts');
+        $oZ = new BxDolAlerts('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+        $oZ->alert();
+		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+
 		//--- Check "Pay Before Join" situation
 		if((int)$aPending['client_id'] == 0)
 			$this->getObjectJoin()->performJoin((int)$aPending['id'], isset($aResult['client_name']) ? $aResult['client_name'] : '', isset($aResult['client_email']) ? $aResult['client_email'] : '');
