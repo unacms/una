@@ -123,6 +123,18 @@ class BxDolStudioStore extends BxTemplStudioPage
                     $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'redirect' => $sLocation);
                     break;
 
+				case 'subscribe':
+                    $iVendor = (int)bx_get('str_vendor');
+                    $iItem = (int)bx_get('str_item');
+                    if(empty($iVendor) || empty($iItem)) {
+                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_subscribe'));
+                        break;
+                    }
+
+                    $sLocation = $this->subscribe($iVendor, $iItem);
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'redirect' => $sLocation);
+                    break;
+
                 case 'install':
                     $sValue = bx_process_input(bx_get('str_value'));
                     if(empty($sValue))
@@ -302,6 +314,12 @@ class BxDolStudioStore extends BxTemplStudioPage
 
         $sSid = bx_site_hash();
         return $this->sStoreDataUrlPublic . 'purchase/' . $iVendor . '?sid=' . $sSid . '&products=' . base64_encode(implode(',', $aIds));
+    }
+
+	private function subscribe($iVendor, $iItem)
+    {
+        $sSid = bx_site_hash();
+        return $this->sStoreDataUrlPublic . 'subscribe/' . $iVendor . '/'. $iItem . '?sid=' . $sSid;
     }
 }
 

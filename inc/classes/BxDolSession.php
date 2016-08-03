@@ -135,6 +135,14 @@ class BxDolSession extends BxDol implements iBxDolSingleton
             $this->destroy();
     }
 
+	function isValue($sKey)
+    {
+        if(empty($this->sId))
+            $this->start();
+
+        return isset($this->aData[$sKey]);
+    }
+
     function getValue($sKey)
     {
         if(empty($this->sId))

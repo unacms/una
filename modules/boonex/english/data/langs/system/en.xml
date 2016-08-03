@@ -541,7 +541,6 @@
 	<string name="_adm_btn_install_submit"><![CDATA[Install]]></string>
 	<string name="_adm_btn_installed_submit"><![CDATA[Installed]]></string>
 	<string name="_adm_btn_login_submit"><![CDATA[Enter]]></string>
-	<string name="_adm_btn_purchase_submit"><![CDATA[Purchase]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
 	<string name="_adm_btn_settings_mix_create"><![CDATA[Add New Mix]]></string>
@@ -606,6 +605,7 @@
 	<string name="_adm_err_modules_cannot_checkout_empty_vendor"><![CDATA[Cannot checkout. The vendor is unknown.]]></string>
 	<string name="_adm_err_modules_cannot_delete_from_cart"><![CDATA[Cannot delete the product(s) from shopping cart.]]></string>
 	<string name="_adm_err_modules_cannot_remove_package"><![CDATA[Cannot remove package.]]></string>
+	<string name="_adm_err_modules_cannot_subscribe"><![CDATA[Cannot initialize the subscription.]]></string>
 	<string name="_adm_err_modules_module_not_found"><![CDATA[Module not found]]></string>
 	<string name="_adm_err_modules_module_not_match"><![CDATA[Update is not suitable for this module.]]></string>
 	<string name="_adm_err_modules_module_not_installed"><![CDATA[Module not installed]]></string>
@@ -1240,8 +1240,17 @@
 	<string name="_adm_str_msg_download_and_install_successfully"><![CDATA[Download and subsequent installation were successfully finished]]></string>
 	<string name="_adm_str_txt_discount_csign"><![CDATA[({0}{1} for Premium)]]></string>
 	<string name="_adm_str_txt_items_by"><![CDATA[item(s) by]]></string>
+	<string name="_adm_str_txt_or"><![CDATA[or]]></string>
+	<string name="_adm_str_txt_per_week"><![CDATA[week]]></string>
+    <string name="_adm_str_txt_per_week_short"><![CDATA[wk]]></string>
+    <string name="_adm_str_txt_per_month"><![CDATA[month]]></string>
+    <string name="_adm_str_txt_per_month_short"><![CDATA[mo]]></string>
+    <string name="_adm_str_txt_per_year"><![CDATA[year]]></string>
+    <string name="_adm_str_txt_per_year_short"><![CDATA[yr]]></string>
 	<string name="_adm_str_txt_price_csign"><![CDATA[{0}{1}]]></string>
 	<string name="_adm_str_txt_price_free"><![CDATA[Free]]></string>
+	<string name="_adm_str_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
+	<string name="_adm_str_txt_price_single"><![CDATA[{0}{1}]]></string>
 	<string name="_adm_str_txt_pv_category"><![CDATA[Category]]></string>
 	<string name="_adm_str_txt_pv_created"><![CDATA[Created]]></string>
 	<string name="_adm_str_txt_pv_description"><![CDATA[Description]]></string>
@@ -1249,7 +1258,7 @@
 	<string name="_adm_str_txt_pv_discount_off_csign"><![CDATA[{0}% ({1}{2}) off for Premium]]></string>
 	<string name="_adm_str_txt_pv_price"><![CDATA[Price]]></string>
 	<string name="_adm_str_txt_pv_stats"><![CDATA[Stats]]></string>
-	<string name="_adm_str_txt_pv_stats_likes"><![CDATA[{0} likes]]></string>
+	<string name="_adm_str_txt_pv_stats_votes"><![CDATA[{0} votes]]></string>
 	<string name="_adm_str_txt_pv_stats_reviews"><![CDATA[{0} reviews]]></string>
 	<string name="_adm_str_txt_pv_stats_views"><![CDATA[{0} views]]></string>
 	<string name="_adm_str_txt_pv_tags"><![CDATA[Tags]]></string>

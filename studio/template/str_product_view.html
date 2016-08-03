@@ -37,13 +37,13 @@
 	<div class="bx-std-pv-line">
 		<span class="bx-std-pv-cpt bx-def-font-grayed">
 			<bx_text:_adm_str_txt_pv_price />:
-		</span> __price__ 
+		</span> __price_single__ 
 	</div>
 	<bx_if:show_discount>
 		<div class="bx-std-pv-line">
 			<span class="bx-std-pv-cpt bx-def-font-grayed">
 				<bx_text:_adm_str_txt_pv_discount />:
-			</span> __discount__
+			</span> __discount_single__
 		</div>
 	</bx_if:show_discount>
 	<div class="bx-std-pv-line">
@@ -51,15 +51,17 @@
 			<bx_text:_adm_str_txt_pv_category />:
 		</span> <a href="__category_url__">__category__</a>
 	</div>
+	<!--
 	<div class="bx-std-pv-line">
 		<span class="bx-std-pv-cpt bx-def-font-grayed">
 			<bx_text:_adm_str_txt_pv_tags />:
 		</span> __tags__
 	</div>
+	-->
 	<div class="bx-std-pv-line">
 		<span class="bx-std-pv-cpt bx-def-font-grayed">
 			<bx_text:_adm_str_txt_pv_stats />:
-		</span> <a href="__reviews_url__">__reviews__</a>, __likes__, __views__ 
+		</span> <a href="__reviews_url__">__reviews__</a>, __votes__, __views__ 
 	</div>
 	<div class="bx-std-pv-line">
 		<span class="bx-std-pv-cpt bx-def-font-grayed">
@@ -77,21 +79,32 @@
 		</span> __description__
 	</div>
 	<div class="bx-std-pv-actions bx-def-margin-top">
-		<bx_if:show_purchase>
-			<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart(__vendor_id__, __id__, this)" />
-		</bx_if:show_purchase>
-		<bx_if:show_checkout>
-			<button class="bx-btn bx-def-margin-right" type="button" onclick="javascript:__js_object__.checkoutCart(__vendor_id__, this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
-				<bx_text:_adm_btn_checkout_submit />
-			</button>
-		</bx_if:show_checkout>
+		<div class="bx-std-pv-action bx-std-pva-price bx-def-margin-right">
+			<bx_if:show_purchase_single>
+				<a class="bx-btn" onclick="javascript:__js_object__.addToCart(__vendor_id__, __id__, this)">__price_single__</a>
+			</bx_if:show_purchase_single>
+			<bx_if:show_checkout_single>
+				<a class="bx-btn bx-std-pva-checkout" onclick="javascript:__js_object__.checkoutCart(__vendor_id__, this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
+					<bx_text:_adm_btn_checkout_submit />
+				</a>
+			</bx_if:show_checkout_single>
+			<bx_if:show_purchase_recurring>
+				<span class="bx-def-margin-sec-leftright bx-def-font-grayed"><bx_text:_adm_str_txt_or /></span>
+				<a class="bx-btn" onclick="javascript:__js_object__.subscribe(__vendor_id__, __id__, this)">__price_recurring__</a>
+			</bx_if:show_purchase_recurring>
+		</div>
 		<bx_if:show_download>
-			<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_download_submit />" onclick="javascript:__js_object__.getFile(__file_id__, this)" />
+			<a class="bx-btn bx-def-margin-right" onclick="javascript:__js_object__.getFile(__file_id__, this)">
+				<bx_text:_adm_btn_download_submit />
+			</a>
 		</bx_if:show_download>
 		<bx_if:show_download_disabled>
-			<input class="bx-btn bx-btn-disabled bx-def-margin-right" type="button" value="<bx_text:_adm_btn_download_submit />" disabled="disabled" />
+			<a class="bx-btn bx-btn-disabled bx-def-margin-right" type="button" disabled="disabled">
+				<bx_text:_adm_btn_download_submit />
+			</a>
 		</bx_if:show_download_disabled>
-		<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_cancel_submit />" onclick="javascript:$('.bx-popup-applied:visible').dolPopupHide();" />
-		<div class="bx-std-cb"></div>
+		<a class="bx-btn bx-def-margin-right" onclick="javascript:$('.bx-popup-applied:visible').dolPopupHide();">
+			<bx_text:_adm_btn_cancel_submit />
+		</a>
 	</div>
 </div>

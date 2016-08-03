@@ -40,7 +40,7 @@ BxDolStudioStore.prototype.addToCart = function(iVendor, iProduct, oButton) {
 				if(parseInt(oCounter.html()) > 0)
 					oCounter.parent('.bx-std-pmen-item-counter').show();
 
-				$(oButton).hide().next('.bx-std-pc-checkout').show();
+				$(oButton).hide().next('.bx-std-pc-checkout,.bx-std-pva-checkout').show();
 			}
 		},
 		'json'
@@ -111,6 +111,32 @@ BxDolStudioStore.prototype.checkoutCart = function(iVendor, oButton) {
 		{
 			str_action: 'checkout-cart',
 			str_vendor: iVendor,
+			_t:oDate.getTime()
+		},
+		function(oData) {
+			bx_loading($this.sIdPageContent, false);
+
+			if(oData.message.length > 0)
+				$this.showNotification(oData.message);
+
+			if(parseInt(oData.code) == 0 && oData.redirect.length > 0)
+				document.location=oData.redirect;
+		},
+		'json'
+	);
+};
+
+BxDolStudioStore.prototype.subscribe = function(iVendor, iProduct, oButton) {
+	var oDate = new Date();
+	var $this = this;
+	bx_loading(this.sIdPageContent, true);
+
+	$.get(
+		this.sActionsUrl,
+		{
+			str_action: 'subscribe',
+			str_vendor: iVendor,
+			str_item: iProduct,
 			_t:oDate.getTime()
 		},
 		function(oData) {
