@@ -21,7 +21,7 @@ class BxBaseModPaymentOrders extends BxDol
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
-	public function serviceGetOrdersLink()
+	public function serviceGetOrdersUrl()
     {
     	if(!$this->_oModule->isLogged())
             return '';

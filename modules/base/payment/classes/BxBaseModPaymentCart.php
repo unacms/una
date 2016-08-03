@@ -21,7 +21,7 @@ class BxBaseModPaymentCart extends BxDol
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
-	public function serviceGetCartLink($iVendor = 0)
+	public function serviceGetCartUrl($iVendor = 0)
     {
     	if(!$this->_oModule->isLogged())
             return '';
@@ -53,6 +53,20 @@ class BxBaseModPaymentCart extends BxDol
             return '';
 
 		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
+    }
+
+	public function serviceGetSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
+    {
+    	if(!$this->_oModule->isLogged())
+            return '';
+
+    	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_SUBSCRIBE'), array(
+    		'seller_id' => $iVendorId,
+    		'seller_provider' => $sVendorProvider,
+    		'module_id' => $mixedModuleId, 
+    		'item_id' => $iItemId,
+    		'item_count' => $iItemCount
+    	));
     }
 
 	public function serviceGetSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)

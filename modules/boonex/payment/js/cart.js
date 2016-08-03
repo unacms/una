@@ -75,7 +75,7 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
     	oParams.item_count = parseInt(iItemCount);
 
     $.post(
-        this._sActionsUrl + 'subscribe/',
+        this._sActionsUrl + 'subscribe_json/',
         oParams,
         function(oData){
         	$this.processResult(oData);

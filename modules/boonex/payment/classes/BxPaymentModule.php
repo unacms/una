@@ -192,7 +192,29 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		echoJson($aResult);
     }
 
-    public function actionSubscribe()
+	public function actionSubscribe()
+    {
+    	$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
+    	$sSellerProvider = bx_process_input(bx_get('seller_provider'));
+    	$iModuleId = bx_process_input(bx_get('module_id'), BX_DATA_INT);
+    	$iItemId = bx_process_input(bx_get('item_id'), BX_DATA_INT);
+    	$iItemCount = bx_process_input(bx_get('item_count'), BX_DATA_INT);
+    	if(empty($iItemCount))
+    		$iItemCount = 1;
+
+        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount);
+
+		if($aResult['code'] != 0)
+			return $this->_oTemplate->displayPageCodeError($aResult['message']);
+
+		if(empty($aResult['redirect']) && !empty($aResult['message']))
+			return $this->_oTemplate->displayPageCodeResponse($aResult['message']);
+
+		header('Location: ' . $aResult['redirect']);
+        exit;
+    }
+
+    public function actionSubscribeJson()
     {
     	$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
     	$sSellerProvider = bx_process_input(bx_get('seller_provider'));
