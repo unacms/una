@@ -326,8 +326,8 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         //--- Prepare modules.
         foreach($aProducts['modules'] as $aModule) {
-        	$sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
-        	$bIcon = strpos($sIcon, '.') === false;
+        	$sImage = BxDolStudioUtils::getModuleIcon($aModule, 'store');
+        	$bImage = strpos($sImage, '.') !== false;
 
         	$bInstalled = $aModule['installed'];
         	$bQueued = !$bInstalled && $this->oDb->isQueued('action', $aModule['dir']);
@@ -336,13 +336,19 @@ class BxBaseStudioStore extends BxDolStudioStore
             $sModules .= $oTemplate->parseHtmlByName('str_product_v1.html', array(
                 'js_object' => $sJsObject,
              	'name' => $aModule['name'],
-                'bx_if:icon' => array (
-	                'condition' => $bIcon,
-	                'content' => array('icon' => $sIcon),
+                'bx_if:no_image' => array (
+	                'condition' => !$bImage,
+	                'content' => array(
+	                	'note' => $aModule['note'],
+	                	'strecher' => mb_strlen($aModule['note']) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($aModule['note'])) / 6))
+            		),
 	            ),
                 'bx_if:image' => array (
-	                'condition' => !$bIcon,
-	                'content' => array('icon_url' => $sIcon),
+	                'condition' => $bImage,
+	                'content' => array(
+	                	'image_url' => $sImage,
+	            		'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40)
+	            	),
 	            ),
                 'title' => $aModule['title'],
                 'vendor' => $aModule['vendor'],
@@ -365,19 +371,25 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         //--- Prepare updates.
         foreach($aProducts['updates'] as $aUpdate) {
-        	$sIcon = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
-        	$bIcon = strpos($sIcon, '.') === false;
+        	$sImage = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
+        	$bImage = strpos($sImage, '.') !== false;
 
             $sUpdates .= $oTemplate->parseHtmlByName('str_update_v1.html', array(
                 'js_object' => $sJsObject,
             	'name' => $aUpdate['module_name'],
-                'bx_if:icon' => array (
-	                'condition' => $bIcon,
-	                'content' => array('icon' => $sIcon),
+                'bx_if:no_image' => array (
+	                'condition' => !$bImage,
+	                'content' => array(
+	                	'note' => $aUpdate['title'],
+	                	'strecher' => mb_strlen($aUpdate['title']) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($aUpdate['title'])) / 6))
+            		),
 	            ),
                 'bx_if:image' => array (
-	                'condition' => !$bIcon,
-	                'content' => array('icon_url' => $sIcon),
+	                'condition' => $bImage,
+	                'content' => array(
+	                	'image_url' => $sImage,
+	            		'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40)
+	            	),
 	            ),
                 'title' => $aUpdate['title'],
                 'vendor' => $aUpdate['vendor'],
@@ -713,21 +725,27 @@ class BxBaseStudioStore extends BxDolStudioStore
         foreach($mixedItems as $aItem) {
             $bDownloadable = (int)$aItem['is_file'] == 1;
 
-            $sIcon = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
-			$bIcon = strpos($sIcon, '.') === false;
+            $sImage = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+			$bImage = strpos($sImage, '.') !== false;
 
             $sResult .= $oTemplate->parseHtmlByName('str_update_v2.html', array(
                 'js_object' => $sJsObject,
                 'id' => $aItem['id'],
             	'name' => $aItem['name'],
                 'url' => $aItem['url'],
-            	'bx_if:icon' => array (
-	                'condition' => $bIcon,
-	                'content' => array('icon' => $sIcon),
+            	'bx_if:no_image' => array (
+	                'condition' => !$bImage,
+	                'content' => array(
+	                	'note' => $aItem['description_plain'],
+	                	'strecher' => mb_strlen($aItem['description_plain']) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($aItem['description_plain'])) / 6))
+            		),
 	            ),
                 'bx_if:image' => array (
-	                'condition' => !$bIcon,
-	                'content' => array('icon_url' => $sIcon),
+	                'condition' => $bImage,
+	                'content' => array(
+						'image_url' => $sImage,
+						'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40)
+	            	),
 	            ),
                 'title' => $aItem['title'],
                 'vendor' => $aItem['author_name'],
