@@ -111,7 +111,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         else 
         	$sContent = $this->getBlockCode(array(
                 'caption' => '_adm_block_cpt_goodies',
-                'items' => $mixedResult,
+                'items' => MsgBox($mixedResult),
             ));
 
         return $oTemplate->parseHtmlByName('store.html', array(
@@ -147,7 +147,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 	        ));
         }
         else 
-        	$sContent = $mixedResult;
+        	$sContent = MsgBox($mixedResult);
 
 		if(!$bWrapInBlock)
 			return $sContent;
@@ -298,7 +298,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                 array('id' => 'checkout-' . $iVendor, 'name' => 'checkout-' . $iVendor, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".checkoutCart(" . $iVendor . ", this);", 'target' => '_self', 'title' => '_adm_action_cpt_checkout', 'active' => 1),
                 array('id' => 'delete-all-' . $iVendor, 'name' => 'delete-all-' . $iVendor, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".deleteAllFromCart(" . $iVendor . ", this)", 'target' => '_self', 'title' => '_adm_action_cpt_delete_all', 'active' => 1)
             );
-	        $oMenu = new BxTemplMenu(array('template' => 'menu_buttons_hor.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
+	        $oMenu = new BxTemplMenu(array('object'=> 'adm-std-checkout', 'template' => 'menu_buttons_hor.html', 'menu_items' => $aMenu));
 
 	        $sContent .= $this->getBlockCode(array(
                 'caption' => _t('_adm_block_cpt_checkout_by_vendor_csign', $sVendor, $sCurrency, $fTotal),
@@ -479,13 +479,24 @@ class BxBaseStudioStore extends BxDolStudioStore
             'author_name' => $aProduct['author_name'],
             'author_url' => $aProduct['author_url'],
             'version' => $sVersion,
-            'price_single' => !$bFree ? _t('_adm_str_txt_price_csign', $aProduct['author_currency_sign'], $aProduct['price_single']) : _t('_adm_str_txt_price_free'),
-            'bx_if:show_discount' => array(
-                'condition' => !$bFree && $bDiscount,
-                'content' => array(
-                    'discount_single' => $bDiscount ? _t('_adm_str_txt_pv_discount_off_csign', $aProduct['discount_single']['percent'], $aProduct['author_currency_sign'], $aProduct['discount_single']['save']) : ''
-                )
-            ),
+        	'bx_if:show_price_single' => array(
+        		'condition' => $bFree || (float)$aProduct['price_single'] != 0,
+        		'content' => array(
+        			'price_single' => !$bFree ? _t('_adm_str_txt_price_single', $aProduct['author_currency_sign'], $aProduct['price_single']) : _t('_adm_str_txt_price_free'),
+		        	'bx_if:show_discount' => array(
+		                'condition' => !$bFree && $bDiscount,
+		                'content' => array(
+		                    'discount_single' => $bDiscount ? _t('_adm_str_txt_pv_discount_off_csign', $aProduct['discount_single']['percent'], $aProduct['author_currency_sign'], $aProduct['discount_single']['save']) : ''
+		                )
+		            )
+        		)
+        	),
+        	'bx_if:show_price_recurring' => array(
+				'condition' => (float)$aProduct['price_recurring'] != 0,
+        		'content' => array(
+					'price_recurring' => _t('_adm_str_txt_price_recurring', $aProduct['author_currency_sign'], $aProduct['price_recurring'], _t('_adm_str_txt_per_' . $aProduct['duration_recurring']))
+        		)
+        	),
             'category' => $aProduct['category'],
             'category_url' => $aProduct['category_url'],
             'tags' => implode(', ', explode(',', $aProduct['tags'])),
@@ -606,7 +617,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             $bDownload = !$bShoppingCart && ($bFree || $bPurchased) && $bDownloadable;
             $bQueued = $this->oDb->isQueued('download', $aItem['name']);
 
-            $sPrice = !$bFree ? _t('_adm_str_txt_price_csign', $aItem['author_currency_sign'], $aItem['price_single']) : _t('_adm_str_txt_price_free');
+            $sPrice = !$bFree ? _t('_adm_str_txt_price_single', $aItem['author_currency_sign'], $aItem['price_single']) : _t('_adm_str_txt_price_free');
             $sDiscount = !$bFree && !empty($aItem['discount_single']) ? _t('_adm_str_txt_discount_csign', $aItem['author_currency_sign'], $aItem['discount_single']['price']) : '';
 
             $sImage = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
@@ -671,7 +682,6 @@ class BxBaseStudioStore extends BxDolStudioStore
                 		)
                     )
                 ),
-                //TODO: Continue from here.
                 'bx_if:show_purchase_recurring' => array(
                 	'condition' => $bPurchaseRecurring,
                 	'content' => array(

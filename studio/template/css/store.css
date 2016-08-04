@@ -1,74 +1,12 @@
 /*--- General style ---*/
-div.bx-std-block div.bx-std-block-panel-bottom ul.bx-menu-btns-hor {
+div.bx-std-block-panel-bottom .bx-menu-btns-hor {
 	text-align: left;
 }
-
-/*--- OLD: Product's Snippet style ---*/
-div.bx-std-products {
-	position: relative;
-}
-div.bx-std-products div.bx-paginate div.bx-paginate-btns {
+div.bx-std-block-panel-bottom .bx-menu-btns-hor .bx-btn u {
 	margin-left: 0px;
 }
-div.bx-std-product {
-	position: relative;
-    float: left;
-	width: 100%;
-}
-div.bx-std-product-cnt {
-	position: relative;
-}
-div.bx-stdp-icon {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	overflow: hidden;
-	line-height: 8rem;
-}
-div.bx-stdp-icon i.sys-icon {
-	position: absolute;
-	z-index: 2;
-	left: 0px;
-	width: 128px;
 
-    font-size: 96px;
-    text-align: center;
-    text-shadow: none;
-    color: white;
-}
-div.bx-stdp-content {
-	overflow: hidden;
-}
-div.bx-std-pc-title {
-	white-space: nowrap;	
-}
-div.bx-std-pc-vendor,
-div.bx-std-pc-count {
-	white-space: nowrap;
-}
-span.bx-std-pc-price,
-span.bx-std-pc-version,
-span.bx-std-pc-versions {
-	font-weight: bold;
-}
-div.bx-std-pc-action div.bx-std-pc-buttons {
-	margin-top: -2px;
-	margin-top: -0.125rem;
-	margin-bottom: -2px;
-	margin-bottom: -0.125rem;
-}
-div.bx-std-pc-action div.bx-std-pc-buttons .bx-btn {
-	margin-top: 2px;
-	margin-top: 0.125rem;
-	margin-bottom: 2px;
-	margin-bottom: 0.125rem;
-}
-div.bx-std-pc-action div.bx-std-pc-buttons .bx-btn:first-child {
-	margin-left: 5px;
-	margin-left: 0.625rem;
-}
-
-/*--- NEW: Product's Snippet style ---*/
+/*--- Product's Snippet style ---*/
 .bx-std-products {
     display: -webkit-box;
     display: -webkit-flex;

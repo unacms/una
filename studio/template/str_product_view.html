@@ -34,24 +34,34 @@
 			<bx_text:_adm_str_txt_pv_version />:
 		</span> __version__
 	</div>
-	<div class="bx-std-pv-line">
-		<span class="bx-std-pv-cpt bx-def-font-grayed">
-			<bx_text:_adm_str_txt_pv_price />:
-		</span> __price_single__ 
-	</div>
-	<bx_if:show_discount>
+	<bx_if:show_price_single>
 		<div class="bx-std-pv-line">
 			<span class="bx-std-pv-cpt bx-def-font-grayed">
-				<bx_text:_adm_str_txt_pv_discount />:
-			</span> __discount_single__
+				<bx_text:_adm_str_txt_pv_price />:
+			</span> __price_single__ 
 		</div>
-	</bx_if:show_discount>
+		<bx_if:show_discount>
+			<div class="bx-std-pv-line">
+				<span class="bx-std-pv-cpt bx-def-font-grayed">
+					<bx_text:_adm_str_txt_pv_discount />:
+				</span> __discount_single__
+			</div>
+		</bx_if:show_discount>
+	</bx_if:show_price_single>
+	<bx_if:show_price_recurring>
+		<div class="bx-std-pv-line">
+			<span class="bx-std-pv-cpt bx-def-font-grayed">
+				<bx_text:_adm_str_txt_pv_rent />:
+			</span> __price_recurring__ 
+		</div>
+	</bx_if:show_price_recurring>
 	<div class="bx-std-pv-line">
 		<span class="bx-std-pv-cpt bx-def-font-grayed">
 			<bx_text:_adm_str_txt_pv_category />:
 		</span> <a href="__category_url__">__category__</a>
 	</div>
 	<!--
+	//TODO: There is no tags in current version.
 	<div class="bx-std-pv-line">
 		<span class="bx-std-pv-cpt bx-def-font-grayed">
 			<bx_text:_adm_str_txt_pv_tags />:

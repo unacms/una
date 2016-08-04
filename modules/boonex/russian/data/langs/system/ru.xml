@@ -1247,7 +1247,6 @@
     <string name="_adm_str_txt_per_month_short"><![CDATA[мес]]></string>
     <string name="_adm_str_txt_per_year"><![CDATA[год]]></string>
     <string name="_adm_str_txt_per_year_short"><![CDATA[год]]></string>
-	<string name="_adm_str_txt_price_csign"><![CDATA[{0}{1}]]></string>
 	<string name="_adm_str_txt_price_free"><![CDATA[Бесплатно]]></string>
 	<string name="_adm_str_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
 	<string name="_adm_str_txt_price_single"><![CDATA[{0}{1}]]></string>
@@ -1257,6 +1256,7 @@
 	<string name="_adm_str_txt_pv_discount"><![CDATA[Скидка]]></string>
 	<string name="_adm_str_txt_pv_discount_off_csign"><![CDATA[{0}% ({1}{2}) скидка для Премиум]]></string>
 	<string name="_adm_str_txt_pv_price"><![CDATA[Цена]]></string>
+	<string name="_adm_str_txt_pv_rent"><![CDATA[Рента]]></string>
 	<string name="_adm_str_txt_pv_stats"><![CDATA[Статистика]]></string>
 	<string name="_adm_str_txt_pv_stats_votes"><![CDATA[{0} лайков]]></string>
 	<string name="_adm_str_txt_pv_stats_reviews"><![CDATA[{0} обзоров]]></string>

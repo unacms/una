@@ -1247,7 +1247,6 @@
     <string name="_adm_str_txt_per_month_short"><![CDATA[mo]]></string>
     <string name="_adm_str_txt_per_year"><![CDATA[year]]></string>
     <string name="_adm_str_txt_per_year_short"><![CDATA[yr]]></string>
-	<string name="_adm_str_txt_price_csign"><![CDATA[{0}{1}]]></string>
 	<string name="_adm_str_txt_price_free"><![CDATA[Free]]></string>
 	<string name="_adm_str_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
 	<string name="_adm_str_txt_price_single"><![CDATA[{0}{1}]]></string>
@@ -1257,6 +1256,7 @@
 	<string name="_adm_str_txt_pv_discount"><![CDATA[Discount]]></string>
 	<string name="_adm_str_txt_pv_discount_off_csign"><![CDATA[{0}% ({1}{2}) off for Premium]]></string>
 	<string name="_adm_str_txt_pv_price"><![CDATA[Price]]></string>
+	<string name="_adm_str_txt_pv_rent"><![CDATA[Rent]]></string>
 	<string name="_adm_str_txt_pv_stats"><![CDATA[Stats]]></string>
 	<string name="_adm_str_txt_pv_stats_votes"><![CDATA[{0} votes]]></string>
 	<string name="_adm_str_txt_pv_stats_reviews"><![CDATA[{0} reviews]]></string>
