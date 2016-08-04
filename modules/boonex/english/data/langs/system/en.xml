@@ -518,6 +518,7 @@
 	<string name="_adm_bp_txt_edit_block_popup"><![CDATA[Edit "{0}" Block]]></string>
 	<string name="_adm_bp_txt_new_block_popup"><![CDATA[Add New Block]]></string>
 	<string name="_adm_bp_txt_page_cache_lifetime"><![CDATA[Cache]]></string>
+	<string name="_adm_bp_txt_page_cover"><![CDATA[Cover]]></string>
 	<string name="_adm_bp_txt_page_layout"><![CDATA[Layout]]></string>
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Select Layout...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Page (Meta) Description]]></string>

@@ -518,6 +518,7 @@
 	<string name="_adm_bp_txt_edit_block_popup"><![CDATA[Редактировать "{0}" Блок]]></string>
 	<string name="_adm_bp_txt_new_block_popup"><![CDATA[Добавить новый Блок]]></string>
 	<string name="_adm_bp_txt_page_cache_lifetime"><![CDATA[Кэш]]></string>
+	<string name="_adm_bp_txt_page_cover"><![CDATA[Обложка]]></string>
 	<string name="_adm_bp_txt_page_layout"><![CDATA[Отображение]]></string>
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Выбрать Отображение...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Мета-описание страницы]]></string>

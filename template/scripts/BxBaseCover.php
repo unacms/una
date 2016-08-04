@@ -40,7 +40,7 @@ class BxBaseCover extends BxDolCover
             $mixedOptions = $oMenuSubmenu->getParamsForCover();
 
             if (!$mixedOptions || !is_array($mixedOptions))
-                return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
+                return $this->displayEmpty();
 
             if (!$this->_sCoverImageUrl) {
                 $iId = (int)getParam('sys_site_cover_common');
@@ -61,6 +61,14 @@ class BxBaseCover extends BxDolCover
         }        
 
         return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $this->_aOptions));
+    }
+    
+    /**
+     * Display Empty Cover.
+     */
+    public function displayEmpty ()
+    {
+    	return $this->_oTemplate->parseHtmlByName($this->_sTemplateNameEmpty, array());
     }
 
     /**

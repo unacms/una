@@ -3274,6 +3274,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `title_system` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `module` varchar(32) NOT NULL,
+  `cover` tinyint(4) NOT NULL DEFAULT '1',
   `layout_id` int(11) NOT NULL,
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `visible_for_levels_editable` tinyint(4) NOT NULL DEFAULT '1',

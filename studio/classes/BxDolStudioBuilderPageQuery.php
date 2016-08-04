@@ -79,6 +79,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tp`.`title_system` AS `title_system`,
                 `tp`.`title` AS `title`,
                 `tp`.`module` AS `module`,
+                `tp`.`cover` AS `cover`,
                 `tp`.`layout_id` AS `layout_id`,
                 `tp`.`visible_for_levels` AS `visible_for_levels`,
                 `tp`.`visible_for_levels_editable` AS `visible_for_levels_editable`,

@@ -88,6 +88,15 @@ class BxBasePage extends BxDolPage
     }
 
     /**
+     * Is page cover enabled.
+     * @return string
+     */
+    public function isPageCover()
+    {
+    	return (int)$this->_aObject['cover'] == 1;
+    }
+
+    /**
      * Get block title.
      * @return string
      */

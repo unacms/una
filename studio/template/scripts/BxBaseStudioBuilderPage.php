@@ -910,7 +910,18 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 		'id' => $this->aHtmlIds['url_field_id'],
 						'disabled' => 'disabled'
 					),
-				)
+				),
+				'cover' => array(
+                    'type' => 'switcher',
+                    'name' => 'cover',
+                    'caption' => _t('_adm_bp_txt_page_cover'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => $aPage['cover'] == '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
             )
         );
 
