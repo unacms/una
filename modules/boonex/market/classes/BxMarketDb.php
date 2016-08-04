@@ -140,11 +140,6 @@ class BxMarketDb extends BxBaseModTextDb
 				$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
 				$sWhereClause .= $this->prepareAsString(" AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
 				$sGroupClause .= "`tl`.`product_id`";
-				/*
-				$sFieldsClause .= " `tl`.`license` AS `license`, `tl`.`profile_id` AS `purchased_by`, `tl`.`domain` AS `purchased_for`, `tl`.`added` AS `purchased_on`, ";
-				$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
-				$sWhereClause .= $this->prepareAsString(" AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
-				*/
 				$sOrderClause = "`tl`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 		}
