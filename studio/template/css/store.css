@@ -93,7 +93,10 @@ div.bx-std-pc-action div.bx-std-pc-buttons .bx-btn:first-child {
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }
-
+.bx-std-products .bx-msg-box-container {
+	width: 100%;
+	padding: 0px;
+}
 .bx-std-products .bx-std-product-gallery {
     display: -webkit-box;
     display: -webkit-flex;
@@ -287,9 +290,13 @@ div.bx-std-pv-actions .bx-std-pv-action {
 	vertical-align: top;
 }
 
-div.bx-std-pv-actions .bx-std-pv-action.bx-std-pva-price span {
+div.bx-std-pv-actions .bx-std-pv-action.bx-std-pva-price .bx-std-pva-or {
 	line-height: 40px;
 	line-height: 2.5rem;
+}
+
+div.bx-std-pv-actions .bx-std-pv-action.bx-std-pva-price .bx-std-pva-or:first-child {
+	display: none;
 }
 
 div.bx-std-pv-line span.bx-std-pv-cpt {

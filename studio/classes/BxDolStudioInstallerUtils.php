@@ -318,7 +318,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	$oModuleDb->updateModule(array('hash' => ''));
         if(!empty($aProducts) && is_array($aProducts))
 	        foreach ($aProducts as $aProduct)
-	        	$oModuleDb->updateModule(array('hash' => $aProduct['hash']), array('name' => $aProduct['name']));
+	        	if(!empty($aProduct['hash']))
+	        		$oModuleDb->updateModule(array('hash' => $aProduct['hash']), array('name' => $aProduct['name']));
 
 		return $aProducts;
     }

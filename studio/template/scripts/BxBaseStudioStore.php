@@ -491,36 +491,41 @@ class BxBaseStudioStore extends BxDolStudioStore
                     'bx_repeat:screenshots' => $aScreenshots
                 )
             ),
-            'bx_if:show_purchase_single' => array(
-                'condition' => $bPurchaseSingle && !$bInCart,
-                'content' => array(
-                    'js_object' => $sJsObject,
-                    'id' => $aProduct['id'],
-                    'vendor_id' => $aProduct['author_id'],
-            		'price_single' => _t('_adm_str_txt_price_single', $aProduct['author_currency_sign'], $aProduct['price_single'])
-                )
-            ),
-            'bx_if:show_checkout_single' => array(
-				'condition' => $bPurchaseSingle,
-				'content' => array(
-					'js_object' => $sJsObject,
-					'id' => $aProduct['id'],
-					'vendor_id' => $aProduct['author_id'],
-					'bx_if:show_as_hidden' => array(
-						'condition' => !$bInCart,
-						'content' => array()
+            'bx_if:show_purchase' => array(
+            	'condition' => $bPurchaseSingle || $bPurchaseRecurring,
+            	'content' => array(
+            		'bx_if:show_purchase_single' => array(
+		                'condition' => $bPurchaseSingle && !$bInCart,
+		                'content' => array(
+		                    'js_object' => $sJsObject,
+		                    'id' => $aProduct['id'],
+		                    'vendor_id' => $aProduct['author_id'],
+		            		'price_single' => _t('_adm_str_txt_price_single', $aProduct['author_currency_sign'], $aProduct['price_single'])
+		                )
+		            ),
+		            'bx_if:show_checkout_single' => array(
+						'condition' => $bPurchaseSingle,
+						'content' => array(
+							'js_object' => $sJsObject,
+							'id' => $aProduct['id'],
+							'vendor_id' => $aProduct['author_id'],
+							'bx_if:show_as_hidden' => array(
+								'condition' => !$bInCart,
+								'content' => array()
+							)
+						)
+					),
+					'bx_if:show_purchase_recurring' => array(
+						'condition' => $bPurchaseRecurring,
+						'content' => array(
+							'js_object' => $sJsObject,
+							'id' => $aProduct['id'],
+							'vendor_id' => $aProduct['author_id'],
+							'price_recurring' => _t('_adm_str_txt_price_recurring', $aProduct['author_currency_sign'], $aProduct['price_recurring'], _t('_adm_str_txt_per_' . $aProduct['duration_recurring']))
+						)
 					)
-				)
-			),
-			'bx_if:show_purchase_recurring' => array(
-				'condition' => $bPurchaseRecurring,
-				'content' => array(
-					'js_object' => $sJsObject,
-					'id' => $aProduct['id'],
-					'vendor_id' => $aProduct['author_id'],
-					'price_recurring' => _t('_adm_str_txt_price_recurring', $aProduct['author_currency_sign'], $aProduct['price_recurring'], _t('_adm_str_txt_per_' . $aProduct['duration_recurring']))
-				)
-			),
+            	)
+            ),
             'bx_if:show_download' => array(
                 'condition' => $bDownload && !$bDownloaded,
                 'content' => array(

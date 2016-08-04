@@ -34,17 +34,15 @@ class BxMarketDb extends BxBaseModTextDb
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 		$aOrderWay = array('up' => 'ASC', 'down' => 'DESC');
 
-    	$sFieldsClause = $sJoinClause = $sWhereClause = $sOrderClause = '';
+    	$sFieldsClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = '';
 
     	//--- Add file info.
     	$sFieldsClause .= " `te`.`" . $CNF['FIELD_PACKAGE'] . "` AS `file_id`, `tf`.`file_name` AS `file_name`, `tfe`.`version` AS `file_version`, ";
     	$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_FILES2ENTRIES'] . "` AS `tfe` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tfe`.`content_id` AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=`tfe`.`file_id` LEFT JOIN `" . $CNF['TABLE_FILES'] . "` AS `tf` ON `te`.`" . $CNF['FIELD_PACKAGE'] . "`=`tf`.`id` ";
 
     	//--- Add license checking for Public listings if Client is specified.
-    	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0) {
-    		$sFieldsClause .= " `tl`.`added` AS `purchased_on`, `tl`.`added` AS `purchased_on_f`, UNIX_TIMESTAMP() - `tl`.`added` AS `purchased_ago`, ";
-    		$sJoinClause .= $this->prepareAsString(" LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`id`=`tl`.`product_id` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
-    	}
+    	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0)
+    		$sFieldsClause .= $this->prepareAsString(" (SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` WHERE `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1) AS `purchased_on`, ", (int)$aParams['client'], $aParams['key']);
 
 		switch($aParams['type']) {
 			case 'id':
@@ -132,25 +130,32 @@ class BxMarketDb extends BxBaseModTextDb
 				break;
 
 			case 'granted':
-				$sFieldsClause .= " '" . $aParams['license']['license'] . "' AS `license`, '" . $aParams['license']['profile_id'] . "' AS `purchased_by`, '' AS `purchased_for`, '" . $aParams['license']['added'] . "' AS `purchased_on`, '" . $aParams['license']['added'] . "' AS `purchased_on_f`, UNIX_TIMESTAMP() - '" . $aParams['license']['added'] . "' AS `purchased_ago`, ";
+				$sFieldsClause .= " '" . $aParams['license']['license'] . "' AS `license`, '" . $aParams['license']['profile_id'] . "' AS `purchased_by`, '' AS `purchased_for`, '" . $aParams['license']['added'] . "' AS `purchased_on`, ";
 				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_AUTHOR'] . "`=? AND (`te`.`" . $CNF['FIELD_PRICE_SINGLE'] . "`<>'0' OR `te`.`" . $CNF['FIELD_PRICE_RECURRING'] . "`<>'0') ", (int)$aParams['value']);
 				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 
 			case 'purchased':
-				$sFieldsClause .= " `tl`.`license` AS `license`, `tl`.`profile_id` AS `purchased_by`, `tl`.`domain` AS `purchased_for`, `tl`.`added` AS `purchased_on`, `tl`.`added` AS `purchased_on_f`, UNIX_TIMESTAMP() - `tl`.`added` AS `purchased_ago`, ";
+				$sFieldsClause .= " `tl`.`license` AS `license`, `tl`.`profile_id` AS `purchased_by`, `tl`.`domain` AS `purchased_for`, `tl`.`added` AS `purchased_on`, ";
 				$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
 				$sWhereClause .= $this->prepareAsString(" AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
+				$sGroupClause .= "`tl`.`product_id`";
+				/*
+				$sFieldsClause .= " `tl`.`license` AS `license`, `tl`.`profile_id` AS `purchased_by`, `tl`.`domain` AS `purchased_for`, `tl`.`added` AS `purchased_on`, ";
+				$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
+				$sWhereClause .= $this->prepareAsString(" AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
+				*/
 				$sOrderClause = "`tl`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 		}
 
-		$sOrderClause = $sOrderClause ? " ORDER BY " . $sOrderClause : "";
+		$sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
+		$sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
 
 		$aMethod['params'][0] = "SELECT
         		" . $sFieldsClause . "`te`.*
             FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause . " " . $sOrderClause;
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
