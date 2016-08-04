@@ -23,7 +23,7 @@
 
 			var sFeedURL = (oOptions.forceUrl != undefined) ? oOptions.forceUrl : sUrlRoot + 'get_rss_feed.php?object=' + sRSSObject + '&id=' + iRSSID + '&member=' + iMemID;
 
-            bx_loading_animate($(this).find('.bx-loading-ajax'));
+			bx_loading_content($(this), true, true);
 
             $.getFeed( {
 				url: sFeedURL,

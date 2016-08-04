@@ -63,10 +63,10 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
 	switch(sName) {
 		case 'help':
 			oPopupOptions = $.extend({}, oPopupOptions, {
-				onShow: function() {
+				onBeforeShow: function() {
 					var oPopup = $(sId);
 					var oPopupRss = oPopup.find('.RSSAggrCont');
-					if(!oPopupRss.find('.bx-loading-ajax').length)
+					if(oPopupRss.contents().length)
 						return;
 
 					oPopupRss.dolRSSFeed({
@@ -78,6 +78,8 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
 							oPopup._dolPopupSetPosition(oPopupOptions);
 						}
 					});
+
+					oPopup._dolPopupSetPosition(oPopupOptions);
 				}
 			});
 			break;
