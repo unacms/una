@@ -13,6 +13,7 @@ class BxGroupsPrivacyNotifications extends BxBaseModGroupsPrivacyNotifications
 {
     function __construct($aOptions, $oTemplate = false)
     {
+    	$this->MODULE = 'bx_groups';
         parent::__construct($aOptions, $oTemplate);
     }
 }
