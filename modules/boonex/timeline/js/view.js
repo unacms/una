@@ -205,15 +205,11 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 	        			oView.find('.' + $this.sClassItems).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
 			                $(this).html(sItems).show().bxTime();
 
-			                if($this.isMasonryEmpty()) {
-			                	$this.destroyMasonry();
+			                $this.destroyMasonry();
+			                if($this.isMasonryEmpty())
 			                	return;
-			                }
 
-			                if($this.isMasonry())
-			                	$this.reloadMasonry();
-			        		else
-			        			$this.initMasonry();
+			                $this.initMasonry();
 			            });
 		            	break;
 	            }

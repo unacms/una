@@ -22,14 +22,21 @@ BxTimelineMain.prototype.isMasonryEmpty = function() {
 };
 
 BxTimelineMain.prototype.initMasonry = function() {
-	var oItems = $(this.sIdView + ' .' + this.sClassItems);
+	var $this = this;
+	var oHolder = $(this.sIdView + ' .' + this.sClassItems);
 
-	if(oItems.find('.' + this.sClassItem).length > 0) {
-		oItems.addClass(this.sClassMasonry).masonry({
-		  itemSelector: '.' + this.sClassItem,
-		  columnWidth: '.' + this.sSP + '-grid-sizer'
-		});
-	}
+	var oItems = oHolder.find('.' + this.sClassItem);
+	if(oItems.length == 0) 
+		return;
+
+	oItems.resize(function(){
+		$this.reloadMasonry();
+	});
+
+	oHolder.addClass(this.sClassMasonry).masonry({
+	  itemSelector: '.' + this.sClassItem,
+	  columnWidth: '.' + this.sSP + '-grid-sizer'
+	});
 };
 
 BxTimelineMain.prototype.destroyMasonry = function() {
@@ -39,24 +46,33 @@ BxTimelineMain.prototype.destroyMasonry = function() {
 BxTimelineMain.prototype.appendMasonry = function(oItems) {
 	var $this = this;
 	var oItems = $(oItems);
-	oItems.find('img.' + this.sSP + '-item-image').load(function() {
+	oItems.resize(function(){
+		$this.reloadMasonry();
+	}).find('img.' + this.sSP + '-item-image').load(function() {
 		$this.reloadMasonry();
 	});
-	$(this.sIdView + ' .' + this.sClassItems).append(oItems).masonry('appended', oItems);
+
+	var oHolder = $(this.sIdView + ' .' + this.sClassItems).masonry('layout').append(oItems);
+	if(!this.isMasonry())
+		this.initMasonry();
+	else
+		oHolder.masonry('appended', oItems).masonry('layout');
 };
 
 BxTimelineMain.prototype.prependMasonry = function(oItems) {
 	var $this = this;
 	var oItems = $(oItems);
-	oItems.find('img.' + this.sSP + '-item-image').load(function() {
+	oItems.resize(function(){
+		$this.reloadMasonry();
+	}).find('img.' + this.sSP + '-item-image').load(function() {
 		$this.reloadMasonry();
 	});
 
-	var oHolder = $(this.sIdView + ' .' + this.sClassItems).prepend(oItems);
+	var oHolder = $(this.sIdView + ' .' + this.sClassItems).masonry('layout').prepend(oItems);
 	if(!this.isMasonry())
 		this.initMasonry();
 	else
-		oHolder.masonry('prepended', oItems);
+		oHolder.masonry('prepended', oItems).masonry('layout');
 };
 
 BxTimelineMain.prototype.removeMasonry = function(oItems, onRemove) {
