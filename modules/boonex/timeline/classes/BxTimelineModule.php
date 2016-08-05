@@ -670,19 +670,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
             //--- Process Text ---//
             $sText = $oForm->getCleanValue('text');
+            $sText = $this->_prepareTextForSave($sText);
+            $bText = !empty($sText);
             unset($oForm->aInputs['text']);
 
-            $aContent['text'] = $this->_prepareTextForSave($sText);
+            if($bText)
+            	$aContent['text'] = $sText;
 
             //--- Process Link ---//
             $aLinkIds = $oForm->getCleanValue('link');
+            $bLinkIds = !empty($aLinkIds) && is_array($aLinkIds);
 
             //--- Process Media ---//
             $aPhotoIds = $oForm->getCleanValue(BX_TIMELINE_MEDIA_PHOTO);
+            $bPhotoIds = !empty($aPhotoIds) && is_array($aPhotoIds);
+
             $aVideoIds = $oForm->getCleanValue(BX_TIMELINE_MEDIA_VIDEO);
+            $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
+
+            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds)
+            	return array('msg' => _t('_bx_timeline_txt_err_empty_post'));
 
             $sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample'));
-            $sDescription = !empty($aContent['text']) ? $aContent['text'] : '';
+            $sDescription = $bText ? $sText : '';
 
             $iId = $oForm->insert(array(
                 'object_id' => $iUserId,
@@ -695,17 +705,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
             if(!empty($iId)) {
             	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
- 				$oMetatags->keywordsAdd($iId, $aContent['text']);
+            	if($bText)
+ 					$oMetatags->keywordsAdd($iId, $sText);
  				$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
 				//--- Process Link ---//
-                if(!empty($aLinkIds) && is_array($aLinkIds))
+                if($bLinkIds)
                     foreach($aLinkIds as $iLinkId)
                         $this->_oDb->saveLink($iId, $iLinkId);
 
-				//--- Process Media ---// 
-				$this->_saveMedia(BX_TIMELINE_MEDIA_PHOTO, $iId, $aPhotoIds);
-				$this->_saveMedia(BX_TIMELINE_MEDIA_VIDEO, $iId, $aVideoIds);
+				//--- Process Media ---//
+				if($bPhotoIds) 
+					$this->_saveMedia(BX_TIMELINE_MEDIA_PHOTO, $iId, $aPhotoIds);
+
+				if($bVideoIds)
+					$this->_saveMedia(BX_TIMELINE_MEDIA_VIDEO, $iId, $aVideoIds);
 
                 $this->onPost($iId);
 
