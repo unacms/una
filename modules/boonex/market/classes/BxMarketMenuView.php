@@ -36,6 +36,13 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 
 		$bResult = false;
 		switch ($a['name']) {
+			case 'download':
+				if((int)$this->_aContentInfo[$CNF['FIELD_PACKAGE']] == 0) 
+					break;
+
+				$bResult = true;
+				break;
+
 			case 'add-to-cart':
 				if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] == 0) 
 					break;

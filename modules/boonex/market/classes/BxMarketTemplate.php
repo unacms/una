@@ -240,6 +240,9 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	$aFiles = $this->_oDb->getFile(array('type' => 'content_id_key_file_id', 'content_id' => $aData['id']));
 
     	$aAttachments = parent::getAttachments($sStorage, $aData);
+    	if(empty($aAttachments) || !is_array($aAttachments))
+    		return $aAttachments;
+
     	foreach($aAttachments as $iIndex => $aAttachment) {
     		$iAttachmentId = (int)$aAttachment['id'];
 
