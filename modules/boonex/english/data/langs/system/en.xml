@@ -1284,7 +1284,7 @@
 	<string name="_adm_txt_form_view_iu_preview_empty"><![CDATA[No image uploaded.]]></string>
 	<string name="_adm_txt_form_view_missing"><![CDATA[missing]]></string>
 	<string name="_adm_txt_login_password"><![CDATA[password]]></string>
-	<string name="_adm_txt_login_username"><![CDATA[username]]></string>
+	<string name="_adm_txt_login_email"><![CDATA[email]]></string>
 	<string name="_adm_txt_module_custom"><![CDATA[Custom]]></string>
 	<string name="_adm_txt_module_skeletons"><![CDATA[Skeletons]]></string>
 	<string name="_adm_txt_module_system"><![CDATA[System]]></string>

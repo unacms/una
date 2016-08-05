@@ -90,7 +90,6 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         if (empty($sUrlRelocate) || basename($sUrlRelocate) == 'index.php')
             $sUrlRelocate = '';
 
-        $oTemplate->addJsTranslation(array('_adm_txt_login_username', '_adm_txt_login_password'));
         $sHtml = $oTemplate->parseHtmlByName('login_form.html', array (
             'role' => BX_DOL_ROLE_ADMIN,
             'csrf_token' => BxDolForm::genCsrfToken(true),

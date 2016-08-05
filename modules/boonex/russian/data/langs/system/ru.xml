@@ -1284,7 +1284,7 @@
 	<string name="_adm_txt_form_view_iu_preview_empty"><![CDATA[Ни одно изображение не было загружено.]]></string>
 	<string name="_adm_txt_form_view_missing"><![CDATA[отсутствует]]></string>
 	<string name="_adm_txt_login_password"><![CDATA[пароль]]></string>
-	<string name="_adm_txt_login_username"><![CDATA[имя пользователя]]></string>
+	<string name="_adm_txt_login_email"><![CDATA[эл. адрес]]></string>
 	<string name="_adm_txt_module_custom"><![CDATA[Индивидуальный]]></string>
 	<string name="_adm_txt_module_skeletons"><![CDATA[Скелеты]]></string>
 	<string name="_adm_txt_module_system"><![CDATA[Система]]></string>
