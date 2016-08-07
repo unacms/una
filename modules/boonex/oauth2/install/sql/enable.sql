@@ -2,13 +2,14 @@
 -- GRID
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `override_class_name`, `override_class_file`) VALUES
-('bx_oauth', 'Sql', 'SELECT * FROM `bx_oauth_clients`', 'bx_oauth_clients', 'id', '', '', 10, NULL, 'start', '', 'title,client_id,client_secret', 'auto', 'title,client_id,client_secret', 'BxOAuthGrid', 'modules/boonex/oauth2/classes/BxOAuthGrid.php');
+('bx_oauth', 'Sql', 'SELECT * FROM `bx_oauth_clients`', 'bx_oauth_clients', 'id', '', '', 10, NULL, 'start', '', 'title,client_id,client_secret,redirect_uri', 'auto', 'title,client_id,client_secret,redirect_uri', 'BxOAuthGrid', 'modules/boonex/oauth2/classes/BxOAuthGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_oauth', 'checkbox', 'Select', '2%', '', 10),
-('bx_oauth', 'title', '_Title', '28%', '', 20),
-('bx_oauth', 'client_id', '_bx_oauth_client_id', '35%', '', 30),
-('bx_oauth', 'client_secret', '_bx_oauth_client_secret', '35%', '', 40);
+('bx_oauth', 'title', '_Title', '20%', '', 20),
+('bx_oauth', 'client_id', '_bx_oauth_client_id', '15%', '', 30),
+('bx_oauth', 'client_secret', '_bx_oauth_client_secret', '30%', '', 40),
+('bx_oauth', 'redirect_uri', '_bx_oauth_url', '33%', '', 50);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `confirm`, `order`) VALUES
 ('bx_oauth', 'bulk', 'delete', '_Delete', 1, 1),
