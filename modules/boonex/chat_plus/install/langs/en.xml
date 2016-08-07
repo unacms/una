@@ -23,13 +23,13 @@
 	<string name="_bx_chat_plus_information"><![CDATA[Information]]></string>
 	<string name="_bx_chat_plus_information_block"><![CDATA[To enable this module, chat server must be installed separately. <br />
 
-Enter the chat URL in the form below. <br />
+Enter the chat URL in this module settings. <br />
 
 Then OAuth login must be configured. <a href="{0}modules/?r=oauth2/administration/">Generate Key & Secret pair</a> in OAuth2 Server module by pointing chat URL and  desired name. <br />
 
-After Key & Secret pair is generated you need to enter them in Chat Administration &gt; OAuth &gt; Dolphin.
+After Key & Secret pair is generated you need to enter them in Chat Administration &gt; OAuth &gt; Trident.
 
 <hr />
 
-To enable Helpdesk Chat you need to enable it in the Chat Administration &gt; Livechat and in the form below. You don\'t need to insert JS code into Dolphin, it is added automatically.]]></string>
+To enable Helpdesk Chat you need to enable it in the Chat Administration &gt; Livechat and in this module settings. You don't need to insert JS code, it is added automatically.]]></string>
 </resources>
