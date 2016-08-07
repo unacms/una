@@ -207,7 +207,7 @@ class BxProfiler extends BxDol
 
     function beginAlert($sUnit, $sAction, $sHandler)
     {
-        $sHash = md5($sUnit . $sAction . $sHandler);
+        $sHash = md5($sUnit . $sAction . $sHandler . $this->_iAlertsLevel);
         ++$this->_iAlertsLevel;
         $this->_aAlerts[$sHash] = array (
             'name' => str_repeat("--", $this->_iAlertsLevel-1) . $sHandler,
@@ -221,8 +221,8 @@ class BxProfiler extends BxDol
 
     function endAlert($sUnit, $sAction, $sHandler)
     {
-        $sHash = md5($sUnit . $sAction . $sHandler);
         --$this->_iAlertsLevel;
+        $sHash = md5($sUnit . $sAction . $sHandler . $this->_iAlertsLevel);
         $iTime = $this->_calcTime ($this->_aAlerts[$sHash]['begin']);
         unset ($this->_aAlerts[$sHash]['begin']);
         $this->_aAlerts[$sHash]['time'] = $this->_formatTime($iTime, 5);
