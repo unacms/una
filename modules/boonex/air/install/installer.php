@@ -9,9 +9,7 @@
  * @{
  */
 
-bx_import('BxDolStudioInstaller');
-
-class BxAirInstaller extends BxDolStudioInstaller
+class BxAirInstaller extends BxBaseModTemplateInstaller
 {
     function __construct($aConfig)
     {

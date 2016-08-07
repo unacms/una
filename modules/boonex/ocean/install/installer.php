@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxOceanInstaller extends BxDolStudioInstaller
+class BxOceanInstaller extends BxBaseModTemplateInstaller
 {
     function __construct($aConfig)
     {
