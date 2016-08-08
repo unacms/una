@@ -182,6 +182,15 @@ BxDolStudioBuilderPage.prototype.onEditBlock = function(oData) {
 	window.location.href = this.parsePageUrl({page: this.sPage});
 };
 
+BxDolStudioBuilderPage.prototype.onEditBlockCancel = function(oButton) {
+	var oTextarea = $(oButton).parents('form:first').find('textarea.bx-form-input-html');
+	if(oTextarea.length > 0 && typeof tinymce == 'object') {
+		oTextarea.tinymce().remove();
+	}
+
+	$('.bx-popup-applied:visible').dolPopupHide();
+};
+
 BxDolStudioBuilderPage.prototype.deleteBlock = function(iId) {
 	if(!confirm(aDolLang['_adm_bp_wrn_page_block_delete']))
 		return;

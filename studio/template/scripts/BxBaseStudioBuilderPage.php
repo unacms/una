@@ -726,7 +726,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'name' => 'close',
                         'value' => _t('_adm_bp_btn_block_cancel'),
                         'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+                            'onclick' => $this->getPageJsObject() . '.onEditBlockCancel(this)',
                             'class' => 'bx-def-margin-sec-left',
                         ),
                     )
