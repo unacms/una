@@ -177,6 +177,13 @@ class BxDolStudioNavigationQuery extends BxDolDb
            $sOrderClause = "ORDER BY `tmt`.`title` ASC";
 
         switch($aParams['type']) {
+        	case 'all_visible_key_id':
+        		$aMethod['name'] = 'getAllWithKey';
+        		$aMethod['params'][1] = 'id';
+
+        		$sWhereClause .= "AND `tmt`.`visible`='1'";
+                break;
+
             case 'all':
                 break;
         }
@@ -184,7 +191,8 @@ class BxDolStudioNavigationQuery extends BxDolDb
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tmt`.`id` AS `id`,
                 `tmt`.`template` AS `template`,
-                `tmt`.`title` AS `title`" . $sSelectClause . "
+                `tmt`.`title` AS `title`,
+                `tmt`.`visible` AS `visible`" . $sSelectClause . "
             FROM `sys_menu_templates` AS `tmt` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
