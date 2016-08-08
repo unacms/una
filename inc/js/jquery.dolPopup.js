@@ -200,7 +200,11 @@
                 }
                 
                 setTimeout(function () {
-                    o.onShow($el);                    
+                	if(typeof(o.onShow) == 'function')
+                		o.onShow($el);
+                    else if(typeof(o.onShow) == 'string')
+                    	eval(o.onShow);
+
                     $el.find('input[type=text]:first').focus(); // put cursor to the first input element
                 }, o.speed);
 
@@ -266,7 +270,10 @@
             $(window).off('resize.popupPointer');
             $(window).off('resize.popupFog');
 
-            o.onBeforeHide($el);
+            if(typeof(o.onBeforeHide) == 'function')
+            	o.onBeforeHide($el);
+            else if(typeof(o.onBeforeHide) == 'string')
+            	eval(o.onBeforeHide);
 
             $el.removeClass('bx-popup-active').addClass('bx-popup-inactive');
 

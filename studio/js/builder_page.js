@@ -178,6 +178,17 @@ BxDolStudioBuilderPage.prototype.onChangeVisibleFor = function(oSelect) {
 	$(oSelect).parents('form:first').find('#bx-form-element-visible_for_levels').bx_anim($(oSelect).val() == 'all' ? 'hide' : 'show', this.sAnimationEffect, this.iAnimationSpeed);
 };
 
+BxDolStudioBuilderPage.prototype.onEditBlockBeforeShow = function(oPopup) {
+	var oContentEditor = CodeMirror.fromTextArea($(oPopup).find("textarea[name = 'content']").get(0), {
+        lineNumbers: true,
+        mode: "htmlmixed",
+        htmlMode: true,
+        matchBrackets: true
+    }).on('blur', function(oEditor) {
+    	oEditor.save();
+    });
+};
+
 BxDolStudioBuilderPage.prototype.onEditBlock = function(oData) {
 	window.location.href = this.parsePageUrl({page: this.sPage});
 };
