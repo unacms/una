@@ -36,5 +36,5 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- Injections
 
 INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
-('bx_chat_plus', 0, 'injection_footer', 'service', 'a:2:{s:6:"module";s:9:"chat_plus";s:6:"method";s:13:"helpdesk_code";}', 0, 1);
+('bx_chat_plus', 0, 'injection_footer', 'service', 'a:2:{s:6:"module";s:12:"bx_chat_plus";s:6:"method";s:13:"helpdesk_code";}', 0, 1);
 

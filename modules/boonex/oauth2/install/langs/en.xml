@@ -14,7 +14,9 @@ Specify the following "Dolphin Connect URL" on the client sites:<br />
 	<string name="_bx_oauth_add"><![CDATA[Add new client]]></string>
 	<string name="_bx_oauth_clients"><![CDATA[OAuth2 clients]]></string>
 	<string name="_bx_oauth_authorization"><![CDATA[Authorization]]></string>
-	<string name="_bx_oauth_authorize_app"><![CDATA[Choose profile to use on "{0}" site:]]></string>
+    <string name="_bx_oauth_authorize_app"><![CDATA[Choose profile to use on "{0}" site:]]></string>
+    <string name="_bx_oauth_form_valid_url"><![CDATA[Valid URL is required]]></string>
+    <string name="_bx_oauth_url"><![CDATA[URL]]></string>
 
 	<string name="_bx_oauth_adm_stg_cpt_type"><![CDATA[OAuth2 Server]]></string>
 	<string name="_bx_oauth_adm_stg_cpt_category_general"><![CDATA[General]]></string>

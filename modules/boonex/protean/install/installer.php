@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxProteanInstaller extends BxDolStudioInstaller
+class BxProteanInstaller extends BxBaseModTemplateInstaller
 {
     function __construct($aConfig)
     {

@@ -84,6 +84,9 @@ class BxDolStorageQuery extends BxDolDb
 
     public function getUserQuota($iProfileId)
     {
+        if (!$iProfileId) // for guests and storages without owner don't count per-user quota
+            return array('current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0);
+
         $sQuery = $this->prepare("SELECT `current_size`, `current_number`, 0 as `quota_size`, 0 as `quota_number`, 0 as `max_file_size` FROM `sys_storage_user_quotas` WHERE `profile_id` = ?", $iProfileId);
         $a = $this->getRow($sQuery);
         if (!is_array($a) || !$a)
@@ -105,6 +108,9 @@ class BxDolStorageQuery extends BxDolDb
 
     public function updateUserQuota($iProfileId, $iSize, $iNumber = 1)
     {
+        if (!$iProfileId) // for guests and storages without owner don't update per-user quota
+            return true;
+            
         $iTime = time();
         $sQuery = $this->prepare("
             INSERT INTO `sys_storage_user_quotas`

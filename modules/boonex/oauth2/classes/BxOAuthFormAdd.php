@@ -42,7 +42,7 @@ class BxOAuthFormAdd extends BxTemplFormView
                     'required' => true,
                     'checker' => array (
                         'func' => 'avail',
-                        'error' => _t ('_sys_adm_form_err_required_field'),
+                        'error' => _t ('_sys_form_account_input_name_error'),
                     ),
                     'db' => array (
                         'pass' => 'Xss',
@@ -55,8 +55,9 @@ class BxOAuthFormAdd extends BxTemplFormView
                     'caption' => _t('_bx_oauth_client_url'),
                     'required' => true,
                     'checker' => array (
-                        'func' => 'avail',
-                        'error' => _t ('_sys_adm_form_err_required_field'),
+                        'func' => 'preg',
+                        'params' => array('/^https?:\/\//'),
+                        'error' => _t ('_bx_oauth_form_valid_url'),
                     ),
                     'db' => array (
                         'pass' => 'Xss',

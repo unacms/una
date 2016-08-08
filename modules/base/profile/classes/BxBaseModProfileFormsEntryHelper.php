@@ -96,6 +96,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         // create an alert
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
+        bx_alert('profile', 'edit', $oProfile->id(), 0, array('content' => $iContentId, 'module' => $this->_oModule->getName()));
 
         return '';
     }

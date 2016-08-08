@@ -25,15 +25,17 @@ class BxBaseModConnectAlerts extends BxDolAlertsResponse
 
                 case 'add':
                     // add remote account and local profile association
-                    bx_import('BxDolSession');
-                    $oSession = BxDolSession::getInstance();
+                    $oProfile = BxDolProfile::getInstance($o->iObject);
+                    if ($oProfile && 'system' != $oProfile->getModule()) {
+                        bx_import('BxDolSession');
+                        $oSession = BxDolSession::getInstance();
 
-                    $iRemoteProfileId = $oSession->getValue($this->oModule->_oConfig->sSessionUid);
-                    if ($iRemoteProfileId) {
-                        $oSession->unsetValue($this->oModule->_oConfig->sSessionUid);
-                        $this->oModule->_oDb->saveRemoteId($o->iObject, $iRemoteProfileId);
+                        $iRemoteProfileId = $oSession->getValue($this->oModule->_oConfig->sSessionUid);
+                        if ($iRemoteProfileId) {
+                            $oSession->unsetValue($this->oModule->_oConfig->sSessionUid);
+                            $this->oModule->_oDb->saveRemoteId($o->iObject, $iRemoteProfileId);
+                        }
                     }
-
                     break;
 
             }
