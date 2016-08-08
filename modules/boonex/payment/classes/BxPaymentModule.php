@@ -9,9 +9,6 @@
  * @{
  */
 
-define('BX_PAYMENT_TYPE_SINGLE', 'single');
-define('BX_PAYMENT_TYPE_RECURRING', 'recurring');
-
 define('BX_PAYMENT_ORDERS_TYPE_PENDING', 'pending');
 define('BX_PAYMENT_ORDERS_TYPE_PROCESSED', 'processed');
 define('BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION', 'subscription');
@@ -127,6 +124,30 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /**
      * Payment Details Methods
      */
+    public function serviceIsAcceptingPayments($iVendorId, $sPaymentType = '')
+    {
+    	$bResult = false;
+
+    	switch($sPaymentType) {
+    		case BX_PAYMENT_TYPE_SINGLE:
+    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersCart($iVendorId);
+    			$bResult = !empty($aProvidersCart);
+    			break;
+
+    		case BX_PAYMENT_TYPE_RECURRING:
+    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersSubscription($iVendorId);
+    			$bResult = !empty($aProvidersSubscription);
+    			break;
+
+    		default:
+    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersCart($iVendorId);
+    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersSubscription($iVendorId);
+    			$bResult = !empty($aProvidersCart) || !empty($aProvidersSubscription);
+    	}
+
+		return $bResult;
+    }
+
     public function serviceGetOptionsSiteAdmin()
     {
         $aResult = array(

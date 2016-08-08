@@ -147,6 +147,8 @@
 	<string name="_bx_payment_err_inactive_vendor"><![CDATA[The vendor status is not active.]]></string>
 	<string name="_bx_payment_err_incorrect_provider"><![CDATA[Incorrect or unavailable payment provider.]]></string>
 	<string name="_bx_payment_err_not_accept_payments"><![CDATA[The vendor does not accept payments.]]></string>
+	<string name="_bx_payment_err_not_accept_payments_single"><![CDATA[The vendor does not accept payments via shopping cart.]]></string>
+	<string name="_bx_payment_err_not_accept_payments_recurring"><![CDATA[The vendor does not work with subscriptions.]]></string>
 	<string name="_bx_payment_err_nothing_selected"><![CDATA[You need to select at least one item.]]></string>
 	<string name="_bx_payment_err_self_purchase"><![CDATA[You cannot purchase your own item. It's just a bad luck thing, you know.]]></string>
 	<string name="_bx_payment_err_required_login"><![CDATA[You need to login.]]></string>

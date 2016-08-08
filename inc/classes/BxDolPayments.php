@@ -53,6 +53,23 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
     	return true;
     }
 
+	public function getDetailsUrl()
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_details_url', 'Details'))
+    		return '';
+
+    	return BxDolService::call($this->_sActive, 'get_details_url', array(), 'Details');
+    }
+
+    public function isAcceptingPayments($iVendorId, $sPaymentType = '')
+    {
+    	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'is_accepting_payments'))
+    		return false;
+
+    	$aSrvParams = array($iVendorId, $sPaymentType);
+        return BxDolService::call($this->_sActive, 'is_accepting_payments', $aSrvParams);
+    }
+
 	public function getPayments()
     {
         $aPayments = array(
