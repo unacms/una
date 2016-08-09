@@ -34,7 +34,7 @@ class BxBasePageHome extends BxTemplPage
     public function getCode ()
     {
         $s = parent::getCode ();
-        if (isAdmin())
+        if (isAdmin() && getParam('site_tour_home') == 'on')
             $s .= $this->_oTemplate->parseHtmlByName('homepage_tour.html', array('tour_theme' => $this->_sTourTheme));
         return $s;
     }

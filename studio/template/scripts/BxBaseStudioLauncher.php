@@ -77,7 +77,12 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
             'js_object' => $this->getPageJsObject(),
             'includes' => $sIncludes,
             'items' => parent::getPageCode($bHidden),
-            'tour_theme' => $this->_sTourTheme,
+        	'bx_if:show_tour' => array(
+        		'condition' => getParam('site_tour_studio') == 'on',
+        		'content' => array(
+        			'tour_theme' => $this->_sTourTheme,
+        		)
+        	)
         ));
     }
 

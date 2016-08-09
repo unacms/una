@@ -372,6 +372,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'site_title', '_adm_stg_cpt_option_site_title', 'Community', 'digit', '', '', '', 1),
 (@iCategoryId, 'site_email', '_adm_stg_cpt_option_site_email', 'admin@example.com', 'digit', '', '', '', 2),
 (@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'admin@example.com', 'digit', '', '', '', 3),
+(@iCategoryId, 'site_tour_home', '_adm_stg_cpt_option_site_tour_home', 'on', 'checkbox', '', '', '', 6),
+(@iCategoryId, 'site_tour_studio', '_adm_stg_cpt_option_site_tour_studio', 'on', 'checkbox', '', '', '', 7),
 
 (@iCategoryId, 'sys_autoupdate_system', '_adm_stg_cpt_option_sys_autoupdate_system', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_autoupdate_modules', '_adm_stg_cpt_option_sys_autoupdate_modules', 'on', 'checkbox', '', '', '', 11),
