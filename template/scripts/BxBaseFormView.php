@@ -1140,7 +1140,7 @@ BLAH;
 
             $this->_isSectionOpened = true;
 
-            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <fieldset $sAttrs> $sLegend <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sLegend ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
+            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sLegend <div class=\"bx-form-section-content bx-def-padding-top bx-def-padding-bottom" . ($sLegend ? ' bx-def-padding-left bx-def-padding-right' : '') . "\">\n";
 
         } else {
 
@@ -1153,7 +1153,7 @@ BLAH;
         if ($this->_isSectionOpened) {
 
             $this->_isSectionOpened = false;
-            return "</div> </fieldset> </div> \n<!-- form header content ends -->\n";
+            return "</div> </div> </div> \n<!-- form header content ends -->\n";
 
         } else {
 
@@ -1177,7 +1177,7 @@ BLAH;
 
             $this->_isSectionOpened = true;
 
-            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <fieldset $sAttrs> $sLegend <div class=\"bx-form-section-content bx-def-padding-top\">\n";
+            return "<!-- form header content begins -->\n <div class=\"bx-form-section-wrapper bx-def-margin-top\"> <div $sAttrs> $sLegend <div class=\"bx-form-section-content bx-def-padding-top\">\n";
 
         } else {
 
@@ -1190,7 +1190,7 @@ BLAH;
         if ($this->_isSectionOpened) {
 
             $this->_isSectionOpened = false;
-            return "</div> </fieldset> </div> \n<!-- form header content ends -->\n";
+            return "</div> </div> </div> \n<!-- form header content ends -->\n";
 
         } else {
 
