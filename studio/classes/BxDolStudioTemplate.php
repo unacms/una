@@ -94,6 +94,10 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             case 'page_breadcrumb':
                 $sRet = $this->getPageBreadcrumb();
                 break;
+			case 'popup_loading':
+                $s = $this->parsePageByName('popup_loading.html', array());
+                $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $s, true);
+                break;
             case 'dol_images':
                 $sRet = $this->_processJsImages();
                 break;
