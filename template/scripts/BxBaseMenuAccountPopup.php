@@ -27,6 +27,10 @@ class BxBaseMenuAccountPopup extends BxTemplMenu
         $aVars['url_switch_profile'] = BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher');
         $aVars['menu_account'] = BxDolMenu::getObjectInstance('sys_account')->getCode();
         $aVars['menu_notifications'] = BxDolMenu::getObjectInstance('sys_account_notifications')->getCode();
+        $aVars['bx_if:multiple_profiles_mode'] = array(
+            'condition' => 1 != (int)getParam('sys_account_limit_profiles_number'),
+            'content' => array(),
+        );
 
         $a = BxDolService::call('system', 'account_profile_switcher', array(), 'TemplServiceProfiles');
         $aVars['profile_switcher'] = $a['content'];
