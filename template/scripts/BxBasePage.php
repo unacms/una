@@ -16,6 +16,8 @@ require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
 class BxBasePage extends BxDolPage
 {
     protected $_oTemplate;
+
+    protected $_sStorage; //--- Storage object for page's images like custom cover, HTML block attachments, etc.
     protected $_oPageCacheObject = null;
 
     public function __construct ($aObject, $oTemplate)
@@ -26,6 +28,8 @@ class BxBasePage extends BxDolPage
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+		$this->_sStorage = 'sys_images';
     }
 
     /**
@@ -94,6 +98,17 @@ class BxBasePage extends BxDolPage
     public function isPageCover()
     {
     	return (int)$this->_aObject['cover'] == 1;
+    }
+
+	public function getPageCoverImage()
+    {
+    	if(empty($this->_aObject['cover_image']))
+    		return array();
+
+    	return array(
+    		'id' => (int)$this->_aObject['cover_image'], 
+    		'object' => $this->_sStorage
+    	);
     }
 
     /**

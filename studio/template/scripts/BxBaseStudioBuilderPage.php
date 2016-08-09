@@ -44,7 +44,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     );
 
 	protected $aPageSettings = array(
-		array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 1),
+		array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 0),
+		array('name' => 'cover', 'title' => '_adm_bp_mi_page_cover', 'active' => 1),
         array('name' => 'layout', 'title' => '_adm_bp_mi_page_layout', 'active' => 0),
         array('name' => 'visibility', 'title' => '_adm_bp_mi_page_visibility', 'active' => 0),
         array('name' => 'cache', 'title' => '_adm_bp_mi_page_cache', 'active' => 0),
@@ -376,7 +377,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 }
 
                 return array();
-            } else
+            } 
+            else
                 return array('msg' => _t('_adm_bp_err_save'));
         }
 
@@ -864,7 +866,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
         $aForm = array(
             'form_attrs' => array(
-                'id' => 'adm-bp-settings-seo',
+                'id' => 'adm-bp-settings-options',
             ),
             'params' => array (
                 'remove_form' => '1',
@@ -917,17 +919,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 						'disabled' => 'disabled'
 					),
 				),
-				'cover' => array(
-                    'type' => 'switcher',
-                    'name' => 'cover',
-                    'caption' => _t('_adm_bp_txt_page_cover'),
-                    'info' => '',
-                    'value' => '1',
-                    'checked' => $aPage['cover'] == '1',
-                    'db' => array (
-                        'pass' => 'Int',
-                    )
-                ),
             )
         );
 
@@ -967,9 +958,64 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return $oForm->getCode();
     }
 
-    protected function getSettingsOptionsFields($aPage = array(), $bCreate = true, $bInputsOnly = false)
+    protected function getSettingsOptionsFields($aPage = array(), $bCreate = true)
     {
     	return $this->getSettingsOptions($aPage, $bCreate, true);
+    }
+
+	protected function getSettingsCover($aPage = array(), $bCreate = true, $bInputsOnly = false)
+    {
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => 'adm-bp-settings-cover',
+            ),
+            'params' => array (
+                'remove_form' => '1',
+                'csrf' => array(
+                    'disable' => true
+                )
+            ),
+            'inputs' => array (
+				'cover' => array(
+                    'type' => 'switcher',
+                    'name' => 'cover',
+                    'caption' => _t('_adm_bp_txt_page_cover'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => $aPage['cover'] == '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
+				'cover_image' => array(
+					'type' => 'files',
+					'name' => 'cover_image',
+					'storage_object' => $this->sStorage,
+					'images_transcoder' => $this->sTranscoder,
+					'uploaders' => array ('sys_html5'),
+					'multiple' => false,
+					'content_id' => $aPage['id'],
+					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_fgt_cover.html', array(
+						'name' => 'cover_image',
+					)),
+					'caption' => _t('_adm_bp_txt_page_cover_image'),
+					'db' => array (
+                        'pass' => 'Int',
+                    )
+				)
+            )
+        );
+
+        if($bInputsOnly)
+            return $aForm['inputs'];
+
+        $oForm = new BxTemplStudioFormView($aForm);
+        return $oForm->getCode();
+    }
+
+    protected function getSettingsCoverFields($aPage = array(), $bCreate = true)
+    {
+    	return $this->getSettingsCover($aPage, $bCreate, true);
     }
 
     protected function getSettingsLayout($aPage = array(), $bCreate = true, $bInputsOnly = false)
@@ -1002,7 +1048,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $aForm = array(
             'form_attrs' => array(
-                'id' => 'adm-bp-settings-seo',
+                'id' => 'adm-bp-settings-layout',
             ),
             'params' => array (
                 'remove_form' => '1',
@@ -1307,7 +1353,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 	 					'uploaders' => $this->aUploaders,
 						'multiple' => true,
 	 					'content_id' => $aBlock['id'],
-	 					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_form_ghost_template.html', array(
+	 					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_fgt_attachments.html', array(
                     		'js_object' => $this->getPageJsObject(),
                     		'name' => 'attachments',
 							'editor_id' => $this->aHtmlIds['edit_block_editor_id'],
