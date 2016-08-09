@@ -301,6 +301,9 @@
 	<string name="_bx_market_vote_counter"><![CDATA[{0} голосов]]></string>
 
 	<string name="_bx_market_err_access_denied"><![CDATA[Доступ запрещен.]]></string>
+	<string name="_bx_market_err_not_accept_payments"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
+	<string name="_bx_market_err_not_accept_payments_single"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с корзиной. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
+	<string name="_bx_market_err_not_accept_payments_recurring"><![CDATA[Вам необходимо активировать хотя бы одину платежную систему, работающую с подписками. Вы можете сделать это через меню Мой аккаунт -> страница Заказы -> <a href="{0}">вкладка Настройки</a>.]]></string>
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">Все продукты от {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Категория:]]></string>

@@ -2745,26 +2745,27 @@ CREATE TABLE IF NOT EXISTS `sys_menu_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `template` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
+  `visible` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
-(1, 'menu_empty.html', '_sys_menu_template_title_empty'),
-(2, 'menu_footer.html', '_sys_menu_template_title_footer'),
-(3, 'menu_horizontal.html', '_sys_menu_template_title_hor'),
-(4, 'menu_vertical_lite.html', '_sys_menu_template_title_ver_lite'),
-(5, 'menu_toolbar.html', '_sys_menu_template_title_toolbar'),
-(6, 'menu_vertical.html', '_sys_menu_template_title_ver'),
-(7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks'),
-(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu'),
-(9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor'),
-(10, 'menu_inline.html', '_sys_menu_template_title_inline'),
-(11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical'),
-(12, 'menu_account_popup.html', '_sys_menu_template_title_account_popup'),
-(13, 'menu_account_notifications.html', '_sys_menu_template_title_account_notifications'),
-(14, 'menu_floating_blocks_big.html', '_sys_menu_template_title_floating_blocks_big'),
-(15, 'menu_custom.html', '_sys_menu_template_title_custom'),
-(16, 'menu_buttons_ver.html', '_sys_menu_template_title_buttons_ver');
+INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
+(1, 'menu_empty.html', '_sys_menu_template_title_empty', 1),
+(2, 'menu_footer.html', '_sys_menu_template_title_footer', 0),
+(3, 'menu_horizontal.html', '_sys_menu_template_title_hor', 1),
+(4, 'menu_vertical_lite.html', '_sys_menu_template_title_ver_lite', 1),
+(5, 'menu_toolbar.html', '_sys_menu_template_title_toolbar', 0),
+(6, 'menu_vertical.html', '_sys_menu_template_title_ver', 1),
+(7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks', 1),
+(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 0),
+(9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor', 1),
+(10, 'menu_inline.html', '_sys_menu_template_title_inline', 1),
+(11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical', 1),
+(12, 'menu_account_popup.html', '_sys_menu_template_title_account_popup', 0),
+(13, 'menu_account_notifications.html', '_sys_menu_template_title_account_notifications', 0),
+(14, 'menu_floating_blocks_big.html', '_sys_menu_template_title_floating_blocks_big', 1),
+(15, 'menu_custom.html', '_sys_menu_template_title_custom', 0),
+(16, 'menu_buttons_ver.html', '_sys_menu_template_title_buttons_ver', 1);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

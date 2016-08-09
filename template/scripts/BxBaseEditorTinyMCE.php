@@ -193,7 +193,9 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         });
                     });
                 } else {
-                    $sInitEditor
+                	setTimeout(function () {
+                    	$sInitEditor
+                    }, 10); // wait while html is rendered in case of dynamic adding html with tinymce
                 }
             </script>";
 

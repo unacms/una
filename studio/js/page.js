@@ -10,6 +10,13 @@ function BxDolStudioPage(oOptions) {
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioPage' : oOptions.sObjName;
     this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+    this.oPopupOptions = {
+		fog: {
+			color: '#fff',
+			opacity: .7
+	    },
+	    closeOnOuterClick: false
+    };
 }
 
 BxDolStudioPage.prototype.processJson = function (oData) {
@@ -23,16 +30,19 @@ BxDolStudioPage.prototype.processJson = function (oData) {
 
     //--- Show Popup
     if(oData && oData.popup != undefined) {
-    	var oPopup = $(oData.popup).hide(); 
+    	if (typeof(oData.popup) == 'object') {
+    		var oPopup = $(oData.popup.html).hide(); 
+    		var oPopupOptions = $.extend({}, this.oPopupOptions, oData.popup.options);
 
-    	$('#' + oPopup.attr('id')).remove();
-        oPopup.prependTo('body').dolPopup({
-            fog: {
-				color: '#fff',
-				opacity: .7
-            },
-            closeOnOuterClick: false
-        });
+	    	$('#' + oPopup.attr('id')).remove();
+	        oPopup.prependTo('body').dolPopup(oPopupOptions);
+    	}
+    	else {
+	    	var oPopup = $(oData.popup).hide(); 
+	
+	    	$('#' + oPopup.attr('id')).remove();
+	        oPopup.prependTo('body').dolPopup(this.oPopupOptions);
+    	}
     }
 
     //--- Evaluate JS code

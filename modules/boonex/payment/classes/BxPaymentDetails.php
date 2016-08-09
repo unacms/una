@@ -19,11 +19,8 @@ class BxPaymentDetailsFormCheckerHelper extends BxDolFormCheckerHelper
     }
 }
 
-class BxPaymentDetails extends BxDol
+class BxPaymentDetails extends BxBaseModPaymentDetails
 {
-    protected $MODULE;
-	protected $_oModule;
-
 	protected $_sLangsPrefix;
     protected $_bCollapseFirst;
 
@@ -32,8 +29,6 @@ class BxPaymentDetails extends BxDol
     	$this->MODULE = 'bx_payment';
 
     	parent::__construct();
-
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
     	$this->_sLangsPrefix = $this->_oModule->_oConfig->getPrefix('langs');
         $this->_bCollapseFirst = true;

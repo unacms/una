@@ -73,12 +73,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 				$oUploader->addCssJs();
 		}
 
-        return array_merge(parent::getPageCss(), array('page_layouts.css', 'builder_page.css'));
+        return array_merge(parent::getPageCss(), array(
+        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css',
+        	'page_layouts.css', 
+        	'builder_page.css'
+        ));
     }
 
     function getPageJs()
     {
         return array_merge(parent::getPageJs(), array(
+        	'codemirror/codemirror.min.js',
             'jquery-ui/jquery.ui.core.min.js',
             'jquery-ui/jquery.ui.widget.min.js',
             'jquery-ui/jquery.ui.mouse.min.js',
@@ -518,6 +523,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
             $bResult = true;
             foreach($aBlocks as $aBlock) {
+            	$sModule = $aBlock['module'];
                 $sTitleKey = $this->getSystemName($aBlock['title'] . '_' . time());
                 $aTitleValues = $oLanguage->getLanguageString($aBlock['title']);
 
@@ -526,7 +532,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 $aBlock['cell_id'] = 1;
                 $aBlock['module'] = $this->getBlockModule($aBlock);
                 $aBlock['title'] = $sTitleKey;
-				$aBlock['copyable'] = 0;
+				$aBlock['copyable'] = $sModule == BX_DOL_STUDIO_BP_SKELETONS ? 1 : 0;
                 $aBlock['deletable'] = 1;
 
                 //--- Process Lang copy
@@ -682,7 +688,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     ),
                     'required' => '0',
                     'attrs' => array(
-                        'onchange' => $this->getPageJsObject() . '.onChangeVisibleFor(this)'
+                        'onchange' => $sJsObject . '.onChangeVisibleFor(this)'
                     ),
                     'db' => array (
                         'pass' => 'Xss',
@@ -719,14 +725,14 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     array(
                         'type' => 'submit',
                         'name' => 'do_submit',
-                        'value' => _t('_adm_bp_btn_block_save'),
+                        'value' => _t('_adm_bp_btn_block_save')
                     ),
                     array (
                         'type' => 'reset',
                         'name' => 'close',
                         'value' => _t('_adm_bp_btn_block_cancel'),
                         'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+                            'onclick' => $sJsObject . '.onEditBlockCancel(this)',
                             'class' => 'bx-def-margin-sec-left',
                         ),
                     )
@@ -749,7 +755,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 'name' => 'close',
                 'value' => _t('_adm_bp_btn_block_delete'),
                 'attrs' => array(
-                    'onclick' => $this->getPageJsObject() . ".deleteBlock(" . $aBlock['id'] . ")",
+                    'onclick' => $sJsObject . '.deleteBlock(' . $aBlock['id'] . ')',
                     'class' => 'bx-def-margin-sec-left',
                 ),
             );
@@ -772,7 +778,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             'form' => $oForm->getCode(true)
         )));
 
-        return array('popup' => $sContent);
+        return array('popup' => array('html' => $sContent, 'options' => array('onBeforeShow' => $sJsObject . '.onEditBlockBeforeShow($el)')));
     }
 
     protected function actionBlockDelete()
@@ -1271,7 +1277,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'required' => '0',
                 		'code' => 1,
                         'db' => array (
-                            'pass' => 'Xss',
+                            'pass' => 'XssHtml',
                         ),
                     ),
                 );

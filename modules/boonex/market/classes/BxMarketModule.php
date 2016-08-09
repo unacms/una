@@ -41,8 +41,11 @@ class BxMarketModule extends BxBaseModTextModule
 
     public function serviceEntityCreate ()
     {
-    	$this->_oTemplate->addJs(array('entry.js'));
+    	$oPayments = BxDolPayments::getInstance();
+    	if(!$oPayments->isAcceptingPayments($this->_iProfileId))
+    		return MsgBox(_t('_bx_market_err_not_accept_payments', $oPayments->getDetailsUrl()));
 
+    	$this->_oTemplate->addJs(array('entry.js'));
     	return $this->_oTemplate->getJsCode('entry') . parent::serviceEntityCreate();
     }
 

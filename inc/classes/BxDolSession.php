@@ -17,6 +17,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton
     protected $iUserId;
     protected $aData;
 
+    protected $bAutoLogout;	//--- Auto logout with broken session
+
     private function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
@@ -28,6 +30,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton
         $this->sId = '';
         $this->iUserId = 0;
         $this->aData = array();
+
+        $this->bAutoLogout = true;
     }
 
     /**
@@ -60,6 +64,13 @@ class BxDolSession extends BxDol implements iBxDolSingleton
 
         if($this->exists($this->sId))
             return true;
+
+		/**
+		 * Force logout a logged in user if his session wasn't found and required to be automatically recreated.
+		 * It's needed to avoid problems when different users are logged in at the same time under one account. 
+		 */
+		if($this->bAutoLogout && isLogged())
+			bx_logout();
 
         $this->sId = genRndPwd(32, true);
 

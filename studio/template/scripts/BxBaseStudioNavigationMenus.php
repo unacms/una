@@ -366,7 +366,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             $aForm['inputs']['set_name']['values'][] = array('key' => $sSet['name'], 'value' => _t($sSet['title']));
 
         $aTemplates = array();
-        $this->oDb->getTemplates(array('type' => 'all'), $aTemplates, false);
+        $this->oDb->getTemplates(array('type' => 'all_visible_key_id'), $aTemplates, false);
         foreach($aTemplates as $aTemplate)
             $aForm['inputs']['template_id']['values'][] = array('key' => $aTemplate['id'], 'value' => _t($aTemplate['title']));
 
@@ -380,6 +380,11 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             case 'edit':
                 $aForm['form_attrs']['id'] .= 'edit';
                 $aForm['inputs']['set_title']['checker']['func'] = 'UniqueSet';
+
+                $iTemplateId = (int)$aForm['inputs']['template_id']['value'];
+                if(!empty($iTemplateId) && !array_key_exists($iTemplateId, $aTemplates))
+                	$aForm['inputs']['template_id']['type'] = 'hidden';
+
                 $aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_menus_save');
                 break;
         }
