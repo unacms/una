@@ -386,6 +386,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
+    public function checkAllowedAdd ($isPerformAction = false)
+    {
+        if (BxDolAccount::getInstance()->isProfilesLimitReached())
+            return _t('_sys_txt_access_denied');
+        return parent::checkAllowedAdd ($isPerformAction);
+    }   
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());

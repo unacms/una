@@ -246,6 +246,27 @@ class BxDolAccount extends BxDol
     }
 
     /**
+     * Check if profiles limit reached
+     */
+    public function isProfilesLimitReached ()
+    {
+        $iProfilesLimit = (int)getParam('sys_account_limit_profiles_number');
+        if ($iProfilesLimit && ($iProfilesNum = $this->getProfilesNumber()) && $iProfilesNum >= $iProfilesLimit)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Get number of profiles associated with the account
+     */
+    public function getProfilesNumber ($isFilterNonSwitchableProfiles = true)
+    {
+        $a = $this->getProfilesIds($isFilterNonSwitchableProfiles);
+        return count($a);
+    }
+    
+    /**
      * Get all profile ids associated with the account
      */
     public function getProfilesIds ($isFilterNonSwitchableProfiles = true)
