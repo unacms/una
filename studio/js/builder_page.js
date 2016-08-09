@@ -179,14 +179,16 @@ BxDolStudioBuilderPage.prototype.onChangeVisibleFor = function(oSelect) {
 };
 
 BxDolStudioBuilderPage.prototype.onEditBlockBeforeShow = function(oPopup) {
-	var oContentEditor = CodeMirror.fromTextArea($(oPopup).find("textarea[name = 'content']").get(0), {
-        lineNumbers: true,
-        mode: "htmlmixed",
-        htmlMode: true,
-        matchBrackets: true
-    }).on('blur', function(oEditor) {
-    	oEditor.save();
-    });
+	var oTextarea = $(oPopup).find("textarea.bx-form-input-textarea-codemirror[name = 'content']");
+	if(oTextarea.length > 0)
+		CodeMirror.fromTextArea(oTextarea.get(0), {
+	        lineNumbers: true,
+	        mode: "htmlmixed",
+	        htmlMode: true,
+	        matchBrackets: true
+	    }).on('blur', function(oEditor) {
+	    	oEditor.save();
+	    });
 };
 
 BxDolStudioBuilderPage.prototype.onEditBlock = function(oData) {

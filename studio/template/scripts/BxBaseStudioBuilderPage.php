@@ -1321,7 +1321,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'info' => _t('_adm_bp_dsc_block_content_raw'),
                         'value' => $aBlock['content'],
                         'required' => '0',
-                		'code' => 1,
+                        'code' => 1,
+                        'attrs' => array('class' => 'bx-form-input-textarea-codemirror'),
                         'db' => array (
                             'pass' => 'XssHtml',
                         ),
