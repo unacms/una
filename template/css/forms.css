@@ -30,11 +30,7 @@
 
 .bx-form-section {
     margin:0;
-    border-width:2px;
-    border-width:0.125rem;
-    border-bottom:none;
-    border-left:none;
-    border-right:none;
+    border: none;
 }
 
 .bx-form-section-header legend {
@@ -76,11 +72,11 @@
 .bx-form-collapsable .bx-form-section-toggler {
 
     position:absolute;
-    left:-2px;
-    top:3px;
+    left: -2px;
+    top: 2px;
 
-    width:16px;
-    height:16px;
+    width:20px;
+    height:20px;
 
     text-decoration:none;
 
@@ -103,7 +99,9 @@
 }
 
 .bx-form-section-toggler .sys-icon {
-    margin:5px 0 0 5px;
+	display: inline-block;
+	vertical-align: top;
+    margin: 0 0 0 5px;
     font-size:1.2rem;
     line-height:1.2rem;
 }
