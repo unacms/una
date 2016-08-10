@@ -616,8 +616,8 @@
 	<string name="_adm_err_modules_pending_uninstall"><![CDATA[Module uninstall was postponed. Module will be uninstalled automatically after all its files are deleted.]]></string>
 	<string name="_adm_err_modules_pending_uninstall_already"><![CDATA[Module is pending uninstall already.]]></string>
 	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occurred. Contact with module's vendor]]></string>
-	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Failed to disable. The module has the following dependent modules. You need to disable them first.]]></string>
-	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[The following modules should be installed first:]]></string>
+	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Failed to disable. The module has the following dependent modules. At least you need to disable them first.]]></string>
+	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[The following modules should be installed and activated first:]]></string>
 	<string name="_adm_err_modules_wrong_dependency_uninstall"><![CDATA[Failed to uninstall. The module has the following dependent modules. You need to uninstall them first.]]></string>
 	<string name="_adm_err_modules_wrong_mysql_query"><![CDATA[There are errors in the following MySQL queries:]]></string>
 	<string name="_adm_err_modules_wrong_mysql_query_msg"><![CDATA[Error: {0}]]></string>

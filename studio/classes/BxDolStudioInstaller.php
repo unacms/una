@@ -143,6 +143,10 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     public function install($aParams, $bAutoEnable = false)
     {
+    	//--- Auto uninstall before install ---//
+    	$this->disable($aParams);
+    	$this->uninstall($aParams);
+
     	$bAutoEnable = $bAutoEnable || (isset($aParams['auto_enable']) && (bool)$aParams['auto_enable']);
     	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
 
@@ -351,6 +355,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     public function enable($aParams)
     {
+    	//--- Auto disable before enable ---//
+    	$this->disable($aParams);
+
         $aModule = $this->oDb->getModuleByUri($this->_aConfig['home_uri']);
 
         //--- Check whether the module is installed ---//
@@ -496,7 +503,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 return BX_DOL_STUDIO_INSTALLER_SUCCESS;
 
             foreach($this->_aConfig['dependencies'] as $sModuleUri => $sModuleTitle)
-                if(!$this->oDb->isModule($sModuleUri))
+                if(!$this->oDb->isModule($sModuleUri) || !$this->oDb->isEnabled($sModuleUri))
                     $sContent .= $sModuleTitle . '<br />';
 
             if(!empty($sContent))

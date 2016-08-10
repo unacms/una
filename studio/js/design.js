@@ -8,7 +8,7 @@
 function BxDolStudioDesign(oOptions) {
 	this.sActionsUrl = oOptions.sActionUrl;
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioDesign' : oOptions.sObjName;
-    this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
+    this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 }
 BxDolStudioDesign.prototype.activate = function(sTemplateName, oChecbox) {
