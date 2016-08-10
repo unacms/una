@@ -56,6 +56,7 @@
 	<string name="_Name"><![CDATA[Имя]]></string>
 	<string name="_Name is required"><![CDATA[Необходимо указать имя]]></string>
 	<string name="_No"><![CDATA[Нет]]></string>
+	<string name="_None"><![CDATA[Никакой]]></string>
 	<string name="_No actions allowed for this membership"><![CDATA[Нет разрешённых действий для данного членства]]></string>
 	<string name="_No such comment"><![CDATA[Нет такого комментария]]></string>
 	<string name="_Period"><![CDATA[Период]]></string>
@@ -545,6 +546,7 @@
 	<string name="_adm_btn_installed_submit"><![CDATA[Установленные]]></string>
 	<string name="_adm_btn_login_submit"><![CDATA[Вход в Студию]]></string>
 	<string name="_adm_btn_queued_submit"><![CDATA[В очереди]]></string>
+	<string name="_adm_btn_settings_import"><![CDATA[Импортировать]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Сохранить]]></string>
 	<string name="_adm_btn_settings_mix_create"><![CDATA[Создать набор]]></string>
 	<string name="_adm_btn_settings_mix_delete"><![CDATA[Удалить набор]]></string>
@@ -1225,7 +1227,10 @@
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
 	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string>
+	<string name="_adm_stg_txt_import_mix_popup"><![CDATA[Импортировать набор]]></string>
+	<string name="_adm_stg_txt_mix_duplicate"><![CDATA[Продублировать]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string>
+	<string name="_adm_stg_txt_mix_title_err"><![CDATA[Нужно указать название. Пожалуйста, заполните это поле.]]></string>
 	<string name="_adm_stg_txt_mix_system"><![CDATA[Системный]]></string>
 	<string name="_adm_stg_err_remove_old_image"><![CDATA[Невозможно удалить текущее изображение.]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[Файл]]></string>

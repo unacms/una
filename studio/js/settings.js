@@ -66,6 +66,53 @@ BxDolStudioSettings.prototype.onMixCreate = function(oData) {
 	document.location.href = document.location.href;
 };
 
+BxDolStudioSettings.prototype.mixImport = function(oButton) {
+	var $this = this;
+	var oDate = new Date();
+
+	$.post(
+    	sUrlStudio + 'settings.php',
+    	{
+    		page: this.sType,
+    		category: this.sCategory,
+    		stg_action: 'import-mix',
+    		_t:oDate.getTime()
+    	},
+    	function (oData) {
+    		$this.processResult(oData);
+    	},
+    	'json'
+    );
+};
+
+BxDolStudioSettings.prototype.onMixImport = function(oData) {
+	document.location.href = document.location.href;
+};
+
+
+BxDolStudioSettings.prototype.mixExport = function(oButton, iId) {
+	var $this = this;
+	var oDate = new Date();
+
+	$.post(
+    	sUrlStudio + 'settings.php',
+    	{
+    		page: this.sType,
+    		category: this.sCategory,
+    		stg_action: 'export-mix',
+    		stg_value: iId,
+    		_t:oDate.getTime()
+    	},
+    	function (oData) {
+    		$this.processResult(oData);
+    	},
+    	'json'
+    );
+};
+
+BxDolStudioSettings.prototype.onMixExport = function(oData) {
+	document.location.href = oData.url;
+};
 BxDolStudioSettings.prototype.mixDelete = function(oButton, iId) {
 	var $this = this;
 	var oDate = new Date();

@@ -87,6 +87,18 @@ class BxDolStudioSettings extends BxTemplStudioPage
                 		$aResult = array_merge($aResult, $this->getPopupCodeCreateMix());
 						break;
 
+					case 'import-mix':
+                		$aResult = array_merge($aResult, $this->getPopupCodeImportMix());
+						break;
+
+					case 'export-mix':
+                		$aResult = array_merge($aResult, $this->exportMix((int)$sValue));
+						break;
+
+					case 'download-mix':
+                		$aResult = array_merge($aResult, $this->downloadMix((int)$sValue));
+						break;
+
                 	case 'delete-mix':
                 		$aResult = array_merge($aResult, $this->deleteMix((int)$sValue));
 						break;
@@ -125,6 +137,52 @@ class BxDolStudioSettings extends BxTemplStudioPage
     	return $aResult;
     }
 
+    public function exportMix($iId)
+    {
+    	$aMix = array();
+    	$this->oDb->getMixes(array('type' => 'by_id', 'value' => $iId), $aMix, false);
+    	if(empty($aMix) || !is_array($aMix))
+    		return array('message' => _t('_adm_stg_err_cannot_perform'));
+
+		return array(
+			'url' => bx_append_url_params(BX_DOL_URL_STUDIO . 'settings.php', array(
+				'stg_action' => 'download-mix',
+    			'stg_value' => $iId,
+			)),
+			'eval' => $this->getPageJsObject() . '.onMixExport(oData);'
+		);
+    }
+
+    public function downloadMix($iId)
+    {
+    	$aMix = array();
+    	$this->oDb->getMixes(array('type' => 'by_id', 'value' => $iId), $aMix, false);
+    	if(empty($aMix) || !is_array($aMix))
+    		BxDolStudioTemplate::getInstance()->displayPageNotFound();
+
+		$aOptions = array();
+		$this->oDb->getMixesOptions(array('type' => 'by_mix_id_pair_option_value', 'value' => $iId, 'for_export' => 1), $aOptions, false);
+
+    	$aContent = array(
+    		'mix' => array(
+    			'type' => $aMix['type'],
+    			'category' => $aMix['category'],
+    			'name' => $aMix['name'],
+    			'title' => $aMix['title']
+    		),
+    		'options' => $aOptions
+    	);
+    	$sContent = json_encode($aContent);
+
+    	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-type: application/json");
+        header("Content-Length: " . strlen($sContent));
+        header("Content-Disposition: attachment; filename=\"". strtolower($aMix['name']) . ".json\"");
+
+        echo $sContent;
+        exit;
+    }
+    
     public function deleteMix($iId)
     {
     	$aResult = array();
