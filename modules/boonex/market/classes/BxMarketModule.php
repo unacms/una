@@ -407,7 +407,7 @@ class BxMarketModule extends BxBaseModTextModule
 			return $aCheck[CHECK_ACTION_MESSAGE];
 
 		if(!$this->_oDb->hasLicense($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']]))
-            return true;
+            return CHECK_ACTION_RESULT_NOT_ALLOWED;
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
