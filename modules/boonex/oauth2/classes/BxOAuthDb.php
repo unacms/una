@@ -67,6 +67,14 @@ class BxOAuthDb extends BxDolModuleDb
         return (int)$mixedResult > 0 ? $this->lastId() : false;
     }
 
+	function updateClientsBy($aPrmSet, $aPrmWhere)
+    {
+    	if(empty($aPrmSet) || !is_array($aPrmSet) || empty($aPrmWhere) || !is_array($aPrmWhere))
+    		return false;
+
+        return (int)$this->query("UPDATE `bx_oauth_clients` SET " . $this->arrayToSQL($aPrmSet) . " WHERE " . $this->arrayToSQL($aPrmWhere, ' AND ')) > 0;
+    }
+
     function deleteClients($aClients)
     {        
         foreach ($aClients as $sClientId) {
@@ -75,9 +83,9 @@ class BxOAuthDb extends BxDolModuleDb
         }
     }
 
-	function deleteClientsBy($aParams = array())
+	function deleteClientsBy($aParams)
     {
-    	if(empty($aParams))
+    	if(empty($aParams) || !is_array($aParams))
     		return false;
 
         return $this->query("DELETE FROM `bx_oauth_clients` WHERE " . $this->arrayToSQL($aParams, ' AND '));

@@ -231,7 +231,8 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
                 `tm`.`category` AS `category`,
                 `tm`.`name` AS `name`,
                 `tm`.`title` AS `title`,
-                `tm`.`active` AS `active` " . $sSelectClause . "
+                `tm`.`active` AS `active`,
+                `tm`.`editable` AS `editable` " . $sSelectClause . "
             FROM `sys_options_mixes` AS `tm` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
@@ -274,7 +275,12 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
                 	'mix_id' => $aParams['value']
                 );
 
-                $sWhereClause .= "AND `tmo`.`mix_id`=:mix_id";
+                $sWhereClause .= "AND `tmo`.`mix_id`=:mix_id ";
+
+                if(!empty($aParams['for_export'])) {
+                	$sJoinClause .= "LEFT JOIN `sys_options` AS `to` ON `tmo`.`option`=`to`.`name` ";
+                	$sWhereClause .= "AND `to`.`type` NOT IN ('file', 'image')";
+                }
                 break;
         }
 
@@ -292,6 +298,14 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
+	public function insertMixesOptions($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `sys_options_mixes2options` SET " . $this->arrayToSQL($aParamsSet)) > 0;
+    }
+
 	function deleteMixesOptions($aParamsWhere)
     {
         if(empty($aParamsWhere))
@@ -299,6 +313,17 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
 
         $sSql = "DELETE FROM `sys_options_mixes2options` WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
         return $this->query($sSql) !== false;
+    }
+
+    function duplicateMixesOptions($iIdFrom, $iIdTo)
+    {
+    	$aBindings = array(
+    		'mix_id_from' => $iIdFrom,
+    		'mix_id_to' => $iIdTo
+    	);
+
+    	$sSql = "INSERT INTO `sys_options_mixes2options`(`option`, `mix_id`, `value`) SELECT `option`, :mix_id_to, `value` FROM `sys_options_mixes2options` WHERE `mix_id`=:mix_id_from";
+    	return $this->query($sSql, $aBindings) !== false;
     }
 
     function getOptions($aParams, &$aItems, $bReturnCount = true)

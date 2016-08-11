@@ -143,7 +143,12 @@ class BxOAuthModule extends BxDolModule
     	return $this->_oDb->addClient($aClient);
     }
 
-	function serviceDeleteClientsBy ($aParams = array())
+	function serviceUpdateClientsBy ($aParamsSet, $aParamsWhere)
+    {
+    	return $this->_oDb->updateClientsBy($aParamsSet, $aParamsWhere);
+    }
+
+	function serviceDeleteClientsBy ($aParams)
     {
     	return $this->_oDb->deleteClientsBy($aParams);
     }

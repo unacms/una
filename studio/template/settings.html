@@ -23,6 +23,14 @@
 			<a class="bx-btn" href="javascript:void(0)" onclick="javascript: __js_object__.mixCreate(this)">
 				<bx_text:_adm_btn_settings_mix_create />
 			</a>
+			<a class="bx-btn" href="javascript:void(0)" onclick="javascript: __js_object__.mixImport(this)">
+				<bx_text:_adm_btn_settings_mix_import />
+			</a>
+			<bx_if:show_export_mix>
+				<a class="bx-btn" href="javascript:void(0)" onclick="javascript: __js_object__.mixExport(this, __id__)">
+					<bx_text:_adm_btn_settings_mix_export />
+				</a>
+			</bx_if:show_export_mix>
 			<bx_if:show_delete_mix>
 				<a class="bx-btn" href="javascript:void(0)" onclick="javascript: __js_object__.mixDelete(this, __id__)">
 					<bx_text:_adm_btn_settings_mix_delete />
