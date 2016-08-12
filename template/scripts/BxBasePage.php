@@ -100,15 +100,44 @@ class BxBasePage extends BxDolPage
     	return (int)$this->_aObject['cover'] == 1;
     }
 
-	public function getPageCoverImage()
+	public function getPageCoverImage($bTranscoder = true)
     {
-    	if(empty($this->_aObject['cover_image']))
-    		return array();
+    	$iId = (int)$this->_aObject['cover_image'];
+    	if(empty($iId)) {
+    		$iId = (int)getParam('sys_site_cover_common');
+    		if(empty($iId))
+    			return array();
+    	}
 
-    	return array(
-    		'id' => (int)$this->_aObject['cover_image'], 
-    		'object' => $this->_sStorage
+    	$aResult = array(
+    		'id' => $iId
     	);
+    	if($bTranscoder)
+    		$aResult['transcoder'] = BX_DOL_TRANSCODER_OBJ_COVER;
+    	else 
+    		$aResult['object'] = $this->_sStorage;
+
+    	return $aResult;
+    }
+
+    public function getPageCoverParams()
+    {
+    	$aParams = BxDolMenu::getObjectInstance('sys_site_submenu')->getPageCoverParams();
+    	if(!empty($aParams) && is_array($aParams))
+    		return $aParams;
+
+    	return array (
+            'title' => $this->_getPageTitle(),
+            'actions' => '',
+            'bx_if:image' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+            'bx_if:icon' => array (
+                'condition' => false,
+                'content' => array(),
+            ),
+        );
     }
 
     /**

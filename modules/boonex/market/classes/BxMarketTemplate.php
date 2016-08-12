@@ -65,6 +65,14 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     {
 		$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
+		if(empty($aData[$CNF['FIELD_COVER']]))
+			return;
+
+		$mixedOptions = BxDolPage::getObjectInstanceByURI()->getPageCoverParams();
+        if(empty($mixedOptions) || !is_array($mixedOptions))
+        	return;
+
+        //--- Get Cover image URL
         $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
 		if(empty($oImagesTranscoder))
 			return;
@@ -73,13 +81,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 		if(empty($sCoverUrl))
 			return;
 
-		$oCover = BxDolCover::getInstance($this);
-		$oCover->setCoverImageUrl($sCoverUrl);
-
-		$mixedOptions = BxDolMenu::getObjectInstance('sys_site_submenu')->getParamsForCover();
-        if(empty($mixedOptions) || !is_array($mixedOptions))
-        	return;
-
+		//--- Get Thumbnail image URL
 		$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
 		if(empty($oImagesTranscoder))
 			return;
@@ -88,6 +90,8 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 		if(empty($sThumbnailUrl))
 			return;
 
+		$oCover = BxDolCover::getInstance($this);
+		$oCover->setCoverImageUrl($sCoverUrl);
 		$oCover->set(array_merge($mixedOptions, array(
 			'bx_if:image' => array (
                 'condition' => true,

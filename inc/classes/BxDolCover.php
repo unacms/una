@@ -96,6 +96,14 @@ class BxDolCover extends BxDol implements iBxDolSingleton
     }
 
     /**
+     * Determine whether cover is already set for the page or not.  
+     */
+    public function isCover()
+    {
+    	return !empty($this->_sCoverImageUrl) || !empty($this->_aOptions);
+    }
+
+    /**
      * Set custom cover options
      * @param $aOptions - cover options, default template supports the following: title. For more info @see template/cover.html
      * @param $sTemplateName - optional template name

@@ -88,7 +88,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         return '';
     }
 
-    public function getParamsForCover ()
+    public function getPageCoverParams ()
     {
         $aMenuItemSelected = $this->getSelectedMenuItem ();
         if (!$aMenuItemSelected)
