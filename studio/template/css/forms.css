@@ -121,3 +121,19 @@ div.bx-form-input-language {
 div.bx-form-input-language-current {
 	font-weight: bold;
 }
+
+/**
+ * Files Uploader field in popup.
+ */
+div.bx-popup .bx-uploader-ghost .bx-ug-icon {
+    float: left;
+}
+
+div.bx-popup .bx-uploader-ghost .bx-ug-icon img {
+    max-height: 8rem;
+}
+div.bx-popup .bx-uploader-ghost .bx-btn {
+	float: none;
+	display: inline-block;
+	vertical-align: top; 
+}

@@ -167,18 +167,6 @@ div.adm-bp-edit-block-form {
 }
 
 /*--- Uploader Ghost in Popup style ---*/
-div.bx-popup .bx-uploader-ghost .bx-ug-icon {
-    float: left;
-}
-
-div.bx-popup .bx-uploader-ghost .bx-ug-icon img {
-    max-height: 8rem;
-}
-div.bx-popup .bx-uploader-ghost .bx-btn {
-	float: none;
-	display: inline-block;
-	vertical-align: top; 
-}
 div.bx-popup .bx-uploader-ghost .bx-ug-content input.bx-ug-url.bx-form-input-text {
     width: 18.0rem;
 }
