@@ -480,7 +480,7 @@ class BxBaseGrid extends BxDolGrid
         $mixedDisabledBehavior = $this->_getActionsDisabledBehavior($aRow);
         $sActions = $this->_getActions('single', $aRow[$this->_aOptions['field_id']], false, null === $mixedDisabledBehavior ? $this->_isRowDisabled($aRow) : $mixedDisabledBehavior, null !== $mixedDisabledBehavior, $aRow);
 
-        return '<td ' . $sAttr . '><div class="bx-grid-cell-single-actions-wrapper">' . $sActions . '</div></td>';
+        return '<td ' . $sAttr . '><div class="bx-grid-cell-single-actions-wrapper bx-def-margin-thd-neg">' . $sActions . '</div></td>';
     }
 
     protected function _getCellDefault ($mixedValue, $sKey, $aField, $aRow)
@@ -528,7 +528,7 @@ class BxBaseGrid extends BxDolGrid
 
         $sAttr = $this->_convertAttrs(
             $a, 'attr',
-            'bx-btn bx-def-margin-sec-left' . ($isSmall ? ' bx-btn-small' : '') . ($isDisabled ? ' bx-btn-disabled' : '') // add default classes
+            'bx-btn bx-def-margin-thd' . ($isSmall ? ' bx-btn-small' : '') . ($isDisabled ? ' bx-btn-disabled' : '') // add default classes
         );
 
         $sIcon = '';

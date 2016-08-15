@@ -40,12 +40,8 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
         		foreach($aFiles as $iFileId)
 					$this->_oStorage->updateGhostsContentId($iFileId, $iProfileId, time());
 
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $aFiles);
+                echoJson(array('grid' => $this->getCode(false), 'blink' => $aFiles));
         	}
-            else
-                $aRes = array('msg' => _t($this->_aT['err_files_add']));
-
-            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-strg-' . $this->_sType . '-add-popup', _t($this->_aT['txt_files_add_popup']), $this->_oTemplate->parseHtmlByName('strg_add_' . $this->_sType . '.html', array(
@@ -96,24 +92,36 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
 
 	protected function _getCellPath ($mixedValue, $sKey, $aField, $aRow)
     {
-    	$sValue = $this->_oStorage->getFileUrlById($aRow['id']);
-    	$aValue = $this->_limitMaxLength($sValue, $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow, false);
+    	$oForm = new BxTemplStudioFormView(array());
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => $sValue,
-            'title' => _t('_adm_strg_txt_download'),
-            'bx_repeat:attrs' => array(
-        		array('key' => 'target', 'value' => '_blank')
+        $aInput = array(
+            'type' => 'text',
+            'name' => 'url-' . $aRow['id'],
+        	'value' => $this->_oStorage->getFileUrlById($aRow['id']),
+        	'attrs' => array(
+        		'readonly' => 1
         	),
-            'content' => $aValue[0]
-        )) . (isset($aValue[1]) ? $aValue[1] : '');
-
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+        	'tr_attrs' => array(
+                'class' => 'bx-strg-field-url',
+            ),
+        );
+        return parent::_getCellDefault($oForm->genRow($aInput), $sKey, $aField, $aRow);
     }
 
 	protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+    }
+
+	protected function _getActionDownload ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	$sUrl = $this->_oStorage->getFileUrlById($aRow['id']);
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "window.open('" . $sUrl . "','_blank');"
+    	));
+
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
 	protected function _getFormObject($sAction)
@@ -149,24 +157,11 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
 					)),
 					'caption' => ''
                 ),
-                'controls' => array(
-                    'name' => 'controls',
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_strg_btn_add'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_strg_btn_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
+                'submit' => array(
+					'type' => 'submit',
+					'name' => 'do_submit',
+					'value' => _t('_adm_strg_btn_done'),
+				)
             )
         );
 

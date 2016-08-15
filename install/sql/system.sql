@@ -3145,30 +3145,32 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 -- Storages: Files
 ('sys_studio_strg_files', 'checkbox', '', '1%', 0, '', '', 1),
-('sys_studio_strg_files', 'file_name', '_adm_strg_txt_file_name', '24%', 0, '20', '', 2),
-('sys_studio_strg_files', 'path', '_adm_strg_txt_path', '40%', 0, '50', '', 3),
+('sys_studio_strg_files', 'file_name', '_adm_strg_txt_file_name', '24%', 0, '25', '', 2),
+('sys_studio_strg_files', 'path', '_adm_strg_txt_path', '25%', 0, '', '', 3),
 ('sys_studio_strg_files', 'mime_type', '_adm_strg_txt_mime_type', '15%', 0, '15', '', 4),
 ('sys_studio_strg_files', 'added', '_adm_strg_txt_added', '10%', 0, '10', '', 5),
-('sys_studio_strg_files', 'actions', '', '10%', 0, '', '', 6),
+('sys_studio_strg_files', 'actions', '', '25%', 0, '', '', 6),
 
 -- Storages: Images
 ('sys_studio_strg_images', 'checkbox', '', '1%', 0, '', '', 1),
-('sys_studio_strg_images', 'file_name', '_adm_strg_txt_file_name', '24%', 0, '20', '', 2),
-('sys_studio_strg_images', 'path', '_adm_strg_txt_path', '40%', 0, '50', '', 3),
+('sys_studio_strg_images', 'file_name', '_adm_strg_txt_file_name', '24%', 0, '25', '', 2),
+('sys_studio_strg_images', 'path', '_adm_strg_txt_path', '25%', 0, '', '', 3),
 ('sys_studio_strg_images', 'mime_type', '_adm_strg_txt_mime_type', '15%', 0, '15', '', 4),
 ('sys_studio_strg_images', 'added', '_adm_strg_txt_added', '10%', 0, '10', '', 5),
-('sys_studio_strg_images', 'actions', '', '10%', 0, '', '', 6);
+('sys_studio_strg_images', 'actions', '', '25%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 -- Storages: Files
 ('sys_studio_strg_files', 'bulk', 'delete', '_adm_strg_btn_delete', '', 0, 1, 1),
-('sys_studio_strg_files', 'single', 'delete', '_adm_strg_btn_delete', 'remove', 1, 1, 1),
+('sys_studio_strg_files', 'single', 'download', '_adm_strg_btn_download', 'download', 1, 0, 1),
+('sys_studio_strg_files', 'single', 'delete', '_adm_strg_btn_delete', 'remove', 1, 1, 2),
 ('sys_studio_strg_files', 'independent', 'add', '_adm_strg_btn_add', '', 0, 0, 1),
 
 -- Storages: Images
 ('sys_studio_strg_images', 'bulk', 'delete', '_adm_strg_btn_delete', '', 0, 1, 1),
-('sys_studio_strg_images', 'single', 'resize', '_adm_strg_btn_resize', 'pencil-square-o', 1, 0, 1),
-('sys_studio_strg_images', 'single', 'delete', '_adm_strg_btn_delete', 'remove', 1, 1, 2),
+('sys_studio_strg_images', 'single', 'download', '_adm_strg_btn_download', 'download', 1, 0, 1),
+('sys_studio_strg_images', 'single', 'resize', '_adm_strg_btn_resize', 'compress', 1, 0, 2),
+('sys_studio_strg_images', 'single', 'delete', '_adm_strg_btn_delete', 'remove', 1, 1, 3),
 ('sys_studio_strg_images', 'independent', 'add', '_adm_strg_btn_add', '', 0, 0, 1);
 
 

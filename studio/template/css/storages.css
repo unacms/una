@@ -1,4 +1,8 @@
-/*--- Keys page -> Add Key block ---*/
+div.bx-strg-field-url {
+	width: 200px;
+}
+
+/*--- Storage page -> Resize image popup ---*/
 div.bx-strg-resize-file {}
 div.bx-strg-resize-file-cnt {}
 

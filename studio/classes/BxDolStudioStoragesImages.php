@@ -21,7 +21,6 @@ class BxDolStudioStoragesImages extends BxTemplStudioGridStorages
         $this->_sTranscoderResize = 'sys_image_resize';
 
         $this->_aT = array(
-        	'err_files_add' => '_adm_strg_err_images_add',
         	'err_files_delete' => '_adm_strg_err_images_delete',
         	'msg_files_delete' => '_adm_strg_msg_images_delete',
         	'err_files_resize' => '_adm_strg_err_images_resize',

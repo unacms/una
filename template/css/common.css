@@ -501,9 +501,6 @@ svg .gray .outer .p2 {
     background-color: #79bd9a;
     text-decoration:none;
 }
-.bx-btn:first-child {
-    margin-left:0;
-}
 button.bx-btn,
 input.bx-btn {
 	padding-top:0px;
