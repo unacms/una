@@ -20,7 +20,7 @@ class BxMailchimpModule extends BxDolModule
         'STATUS' => 'text', 
         'TYPE' => 'text', 
         'PROFILES' => 'text',
-        'PROFILE_URL' => 'url',
+        'PROFILE_URL' => 'website',
         'IMAGE_URL' => 'imageurl',
     );
 
@@ -234,7 +234,7 @@ class BxMailchimpModule extends BxDolModule
                 'TYPE' => $aInfoProfile['type'],
                 'PROFILES' => $sProfiles,
                 'PROFILE_URL' => $oProfile->getUrl(),
-                'IMAGE_URL' => $oProfile->getThumb(),
+                'IMAGE_URL' => $oProfile->getAvatar(),
             ),
         );
     }
