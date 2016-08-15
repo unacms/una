@@ -90,6 +90,8 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
 
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js'));
+
+        $this->_oTemplate->addCss(array('storages.css'));
     }
 
 	protected function _getCellPath ($mixedValue, $sKey, $aField, $aRow)

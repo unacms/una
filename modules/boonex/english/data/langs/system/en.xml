@@ -1283,7 +1283,6 @@
 	<string name="_adm_str_txt_pv_version"><![CDATA[Version]]></string>
 	<string name="_adm_str_txt_pv_version_mask"><![CDATA[{0} ({1} is available)]]></string>
 	<string name="_adm_str_txt_update_from_to"><![CDATA[{0} - {1}]]></string>
-	
 	<string name="_adm_strg_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
 	<string name="_adm_strg_err_files_add"><![CDATA[Nothing to add. Please select file first.]]></string>
 	<string name="_adm_strg_err_files_delete"><![CDATA[Cannot delete file(s).]]></string>
@@ -1291,6 +1290,7 @@
 	<string name="_adm_strg_err_images_add"><![CDATA[Nothing to add. Please select image first.]]></string>
 	<string name="_adm_strg_err_images_delete"><![CDATA[Cannot delete image(s).]]></string>
 	<string name="_adm_strg_msg_images_delete"><![CDATA[Images were queued for deletion. They will be deleted a little bit later.]]></string>
+	<string name="_adm_strg_err_images_resize"><![CDATA[Cannot resize image.]]></string>
 	<string name="_adm_strg_txt_file_name"><![CDATA[Name]]></string>
 	<string name="_adm_strg_txt_path"><![CDATA[URL]]></string>
 	<string name="_adm_strg_txt_mime_type"><![CDATA[Type]]></string>
@@ -1298,10 +1298,16 @@
 	<string name="_adm_strg_btn_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_strg_btn_add"><![CDATA[Add]]></string>
 	<string name="_adm_strg_btn_cancel"><![CDATA[Cancel]]></string>
+	<string name="_adm_strg_btn_resize"><![CDATA[Resize]]></string>
 	<string name="_adm_strg_txt_download"><![CDATA[View/Download file]]></string>
 	<string name="_adm_strg_txt_files_add_popup"><![CDATA[Add File]]></string>
 	<string name="_adm_strg_txt_images_add_popup"><![CDATA[Add Image]]></string>
-	<string name="_adm_strg_txt_size_mime_type"><![CDATA[{0}x{1}, {}]]></string>
+	<string name="_adm_strg_txt_images_resize_popup"><![CDATA[Resize Image]]></string>
+	<string name="_adm_strg_txt_size_mime_type"><![CDATA[{0}x{1}, {2}]]></string>
+	<string name="_adm_strg_txt_width"><![CDATA[Width]]></string>
+	<string name="_adm_strg_err_width"><![CDATA[Width is essential. Please, fill in this field.]]></string>
+	<string name="_adm_strg_txt_height"><![CDATA[Height]]></string>
+	<string name="_adm_strg_err_height"><![CDATA[Height is essential. Please, fill in this field.]]></string>
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Manage Launcher]]></string>
 	<string name="_adm_tmi_cpt_extensions"><![CDATA[Add Apps]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Show Favorite Only]]></string>

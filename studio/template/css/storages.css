@@ -1,0 +1,10 @@
+/*--- Keys page -> Add Key block ---*/
+div.bx-strg-resize-file {}
+div.bx-strg-resize-file-cnt {}
+
+div.bx-strg-rf-img img {
+	max-width: 440px;
+	max-width: 27.5rem;
+	max-height: 440px;
+	max-height: 27.5rem;
+}
