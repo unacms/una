@@ -33,7 +33,7 @@ class BxMailchimpAlerts extends BxDolAlertsResponse
         }
         
         if ('profile' == $o->sUnit && ('delete' == $o->sAction || 'edit' == $o->sAction || 'add' == $o->sAction)) {
-            $oProfile = BxDolProfile::getInstanc($o->iObject);
+            $oProfile = BxDolProfile::getInstance($o->iObject);
             $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
             
             if ($oAccount)

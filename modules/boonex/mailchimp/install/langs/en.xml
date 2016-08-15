@@ -12,9 +12,9 @@
 
 	<string name="_bx_mailchimp_information"><![CDATA[Information]]></string>
     <string name="_bx_mailchimp_information_block"><![CDATA[
-                <p>This module add Mailchimp services to your website.<p>
+                <p>This module adds Mailchimp service to your website.<p>
                 <p>To enable this module, you need to get Mailchimp API Key from <a target="_blank" href="http://mailchimp.com">Mailchimp</a> &gt; Account &gt; Extras &gt; API keys and specify it in this module settings.</p>
-                <p>Then you need to create the mailing list in <a target="_blank" href="http://mailchimp.com">Mailchimp</a> &gt; Lists &gt; Create List</p>
+                <p>Then you need to create the mailing list in <a target="_blank" href="http://mailchimp.com">Mailchimp</a> &gt; Lists &gt; Create List.</p>
                 <p>After mailing list is created you need to select it in this module settings.</p>
                 <hr class="bx-def-hr bx-def-margin-sec-topbottom" />
                 <button class="bx-btn bx-mailchimp-bulk-add">Add or update current members in Mailchimp (limit - {1})</button>
