@@ -21,7 +21,7 @@ class BxMailchimpModule extends BxDolModule
         'STATUS' => 'text', 
         'TYPE' => 'text', 
         'PROFILES' => 'text',
-        'PROFILE_URL' => 'website',
+        'PROFILE_URL' => 'url',
         'IMAGE_URL' => 'imageurl',
     );
 
