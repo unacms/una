@@ -16,6 +16,7 @@ class BxMailchimpModule extends BxDolModule
     protected $sHostnameAPI = 'https://{dc}.api.mailchimp.com/3.0';                
     protected $aFields = array(
         'ACCOUNT_ID' => 'number', 
+        'PROFILE_ID' => 'number',
         'MEMBERSHIP' => 'text', 
         'STATUS' => 'text', 
         'TYPE' => 'text', 
@@ -229,6 +230,7 @@ class BxMailchimpModule extends BxDolModule
             'merge_fields' => array(
                 'FNAME' => $oProfile->getDisplayName(),
                 'ACCOUNT_ID' => $oAccount->id(),
+                'PROFILE_ID' => $oProfile->id(),
                 'MEMBERSHIP' => _t($aMembership['name']) . (isset($aMembership['date_expires']) && $aMembership['date_expires'] ? ' (expires:' . bx_time_utc($aMembership['date_expires']) . ')' : ''),
                 'STATUS' => $aInfoProfile['status'],
                 'TYPE' => $aInfoProfile['type'],
