@@ -16,9 +16,7 @@ check_logged();
 
 $oTemplate = BxDolTemplate::getInstance();
 
-$sURI = bx_process_input(bx_get('i'));
-$oPage = $sURI ? BxDolPage::getObjectInstanceByURI($sURI) : false;
-
+$oPage = BxDolPage::getObjectInstanceByURI();
 if ($oPage) {
 
     $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);

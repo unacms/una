@@ -44,8 +44,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     );
 
 	protected $aPageSettings = array(
-		array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 0),
-		array('name' => 'cover', 'title' => '_adm_bp_mi_page_cover', 'active' => 1),
+		array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 1),
+		array('name' => 'cover', 'title' => '_adm_bp_mi_page_cover', 'active' => 0),
         array('name' => 'layout', 'title' => '_adm_bp_mi_page_layout', 'active' => 0),
         array('name' => 'visibility', 'title' => '_adm_bp_mi_page_visibility', 'active' => 0),
         array('name' => 'cache', 'title' => '_adm_bp_mi_page_cache', 'active' => 0),

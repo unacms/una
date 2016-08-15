@@ -34,33 +34,26 @@ class BxBaseCover extends BxDolCover
     {
         $this->_addJsCss();
 
-        if (!$this->_aOptions) {
+        if(!empty($this->_aOptions) && is_array($this->_aOptions))
+        	return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $this->_aOptions));
 
-            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-            $mixedOptions = $oMenuSubmenu->getParamsForCover();
+		$mixedOptions = BxDolPage::getObjectInstanceByURI()->getPageCoverParams();
+		if(empty($mixedOptions) || !is_array($mixedOptions))
+			return $this->displayEmpty();
 
-            if (!$mixedOptions || !is_array($mixedOptions))
-                return $this->displayEmpty();
+		if(!$this->_sCoverImageUrl) {
+			$iId = (int)getParam('sys_site_cover_common');
+			if($iId != 0)
+				$this->setCoverImageUrl(array('id' => $iId, 'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER));
+		}
 
-            if (!$this->_sCoverImageUrl) {
-                $iId = (int)getParam('sys_site_cover_common');
-                if ($iId != 0)
-                	$this->setCoverImageUrl(array(
-                		'id' => $iId,
-                		'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER
-                    ));
-            }
-                
-            if ($this->_sCoverImageUrl)
-                $mixedOptions['bx_if:bg'] = array (
-                    'condition' => true,
-                    'content' => array('image_url' => $this->_sCoverImageUrl),
-                );
+		if($this->_sCoverImageUrl)
+			$mixedOptions['bx_if:bg'] = array (
+				'condition' => true,
+				'content' => array('image_url' => $this->_sCoverImageUrl),
+			);
 
-            return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $mixedOptions));
-        }        
-
-        return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $this->_aOptions));
+		return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $mixedOptions));        
     }
     
     /**

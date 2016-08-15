@@ -48,7 +48,6 @@ class BxDolStudioDesigner extends BxTemplStudioPage
 
 		$this->aCovers = array(
         	'cover_common' => array('setting' => 'sys_site_cover_common', 'title' => '_adm_dsg_txt_cover_common'),
-        	'cover_home' => array('setting' => 'sys_site_cover_home', 'title' => '_adm_dsg_txt_cover_home')
         );
     }
 
@@ -153,18 +152,6 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         return true;
     }
 
-	function deleteCover($sCover)
-    {
-        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-
-        $iId = (int)getParam($this->aCovers[$sCover]['setting']);
-        if($iId != 0 && !$oStorage->deleteFile($iId, getLoggedId()))
-            return false;
-
-        $this->oDb->setParam($this->aCovers[$sCover]['setting'], 0);
-        return true;
-    }
-
     function submitIcon(&$oForm)
     {
         $iProfileId = getLoggedId();
@@ -212,6 +199,18 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         }
 
 		return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_COVER);
+    }
+
+	function deleteCover($sCover)
+    {
+        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+
+        $iId = (int)getParam($this->aCovers[$sCover]['setting']);
+        if($iId != 0 && !$oStorage->deleteFile($iId, getLoggedId()))
+            return false;
+
+        $this->oDb->setParam($this->aCovers[$sCover]['setting'], 0);
+        return true;
     }
 
     function submitSplash(&$oForm)

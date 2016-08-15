@@ -1155,13 +1155,14 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             		break;
 
             	$bCover = true;
-            	if(bx_get('i') !== false) {
-            		$oPage = BxDolPage::getObjectInstanceByURI(bx_process_input(bx_get('i')));
-
+            	$oPage = BxDolPage::getObjectInstanceByURI();
+            	if($oPage !== false) {
 					$bCover = $oPage->isPageCover();
-					$aCover = $oPage->getPageCoverImage();
-					if($bCover && !empty($aCover))
-						$oCover->setCoverImageUrl($aCover);
+					if($bCover && !$oCover->isCover()) {
+						$aCover = $oPage->getPageCoverImage();
+						if(!empty($aCover))
+							$oCover->setCoverImageUrl($aCover);
+					}
             	}
 
                 $sRet = $bCover ? $oCover->display() : $oCover->displayEmpty();
