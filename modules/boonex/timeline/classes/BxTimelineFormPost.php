@@ -67,6 +67,9 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
         if(isset($this->aInputs['attachments']))
             $this->aInputs['attachments']['content'] = '__attachments_menu__';
+
+        if (isset($this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']]))
+            $this->aInputs[$this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = false;
     }
 
     public function getCode($bDynamicMode = false)

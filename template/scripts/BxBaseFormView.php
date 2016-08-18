@@ -614,6 +614,10 @@ BLAH;
                 $sInput = $this->genInputCaptcha($aInput);
             break;
 
+            case 'location':
+                $sInput = $this->genInputLocation($aInput);
+            break;
+
             case 'value':
                 $sInput = isset($aInput['value']) ? $aInput['value'] : '';
             break;
@@ -1074,6 +1078,64 @@ BLAH;
         return $sCode;
     }
 
+    function genInputLocation(&$aInput)
+    {
+        $isManualInput = (int)(isset($aInput['manual_input']) && $aInput['manual_input']);
+        $sIdStatus = $this->getInputId($aInput) . '_status';
+        $sIdInput = $this->getInputId($aInput) . '_location';
+        $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
+        $this->oTemplate->addJs($sProto . '://maps.google.com/maps/api/js?libraries=places&language=' . bx_lang_name() . '&key=' . trim(getParam('sys_maps_api_key')));
+
+        $aVars = array (
+            'name' => $aInput['name'],
+            'id_status' => $sIdStatus,
+            'id_input' => $sIdInput,
+            'manual_input' => $isManualInput,            
+            'bx_if:manual_input' => array(
+                'condition' => $isManualInput,
+                'content' => array(),
+            ),
+            'bx_if:auto_input' => array(
+                'condition' => !$isManualInput,
+                'content' => array(
+                    'id_status' => $sIdStatus,
+                    'location_string' => _t('_sys_location_undefined'),
+                ),
+            ),            
+        );
+        $aLocationIndexes = array ('lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number');
+        foreach ($aLocationIndexes as $sKey)
+            $aVars[$sKey] = $this->getLocationVal($aInput, $sKey);
+        if ($aVars['country']) {
+            $aCountries = BxDolFormQuery::getDataItems('Country');
+            $s = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
+            $aVars['bx_if:auto_input']['content']['location_string'] = $s;
+        }
+
+        if ($isManualInput) {
+            $aInput['type'] = 'text';
+            $aInput['attrs']['id'] = $sIdInput;
+            $aVars['input'] = $this->genInputStandard($aInput);
+        } 
+        else {
+            if ($this->getLocationVal($aInput, 'lat') && $this->getLocationVal($aInput, 'lng'))
+                $aInput['checked'] = true;
+            else
+                $aInput['checked'] = $this->getCleanValue($aInput['name'] . '_lat') && $this->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
+            $aVars['input'] = $isManualInput ? $this->genInputStandard($aInput) : $this->genInputSwitcher($aInput);
+        }
+
+        return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+    }
+
+    protected function getLocationVal ($aInput, $sIndex) 
+    {
+        $s = $aInput['name'] . '_' . $sIndex;
+        if (isset($this->_aSpecificValues[$s]))
+            return $this->_aSpecificValues[$s];
+        return $this->getCleanValue($s);
+    }
+    
     function genInputCaptcha(&$aInput)
     {
         $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];

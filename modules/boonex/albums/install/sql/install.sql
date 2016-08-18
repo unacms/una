@@ -194,6 +194,8 @@ CREATE TABLE `bx_albums_meta_locations` (
   `state` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   `zip` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `street_number` varchar(255) NOT NULL,
   PRIMARY KEY (`object_id`),
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -269,7 +271,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_albums', 'bx_albums', 'text', '', '', 0, 'textarea', '_bx_albums_form_entry_input_sys_text', '_bx_albums_form_entry_input_text', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_albums', 'bx_albums', 'pictures', 'a:2:{i:0;s:15:"bx_albums_html5";i:1;s:14:"bx_albums_crop";}', 'a:3:{s:16:"bx_albums_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_albums_html5";s:25:"_sys_uploader_html5_title";s:14:"bx_albums_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_albums_form_entry_input_sys_pictures', '_bx_albums_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_albums', 'bx_albums', 'allow_view_to', '', '', 0, 'custom', '_bx_albums_form_entry_input_sys_allow_view_to', '_bx_albums_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_albums', 'bx_albums', 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_albums', 'bx_albums', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_albums', 'bx_albums', 'added', '', '', 0, 'datetime', '_bx_albums_form_entry_input_sys_date_added', '_bx_albums_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_albums', 'bx_albums', 'changed', '', '', 0, 'datetime', '_bx_albums_form_entry_input_sys_date_changed', '_bx_albums_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 

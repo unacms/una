@@ -1193,6 +1193,7 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
+	<string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Google Maps API key]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA account key]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[UNA account secret]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Enable Page cache]]></string>
@@ -1887,7 +1888,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Top&bottom areas with 2 columns in the middle]]></string>
 	<string name="_sys_loading"><![CDATA[Loading...]]></string>
 	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
-	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {1}, {0}]]></string>
+	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {2}, {1}, {0}]]></string>
+    <string name="_sys_location_country_city_street"><![CDATA[<i class="sys-icon location-arrow"></i> {4} {3}, {2}, {1}, {0} ]]></string>
 	<string name="_sys_location_determining"><![CDATA[Determining location...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Location off]]></string>

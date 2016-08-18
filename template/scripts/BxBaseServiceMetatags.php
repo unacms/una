@@ -78,8 +78,10 @@ class BxBaseServiceMetatags extends BxDol
      * @param $iId content id
      * @return map HTML string
      */
-    public function serviceLocationsMap ($sObject, $iId, $sMapSize = '1000x144', $sMapKey = '')
+    public function serviceLocationsMap ($sObject, $iId, $sMapSize = '1000x144')
     {
+        $sMapKey = trim(getParam('sys_maps_api_key'));
+
         $o = BxDolMetatags::getObjectInstance($sObject);
         $sLocationHtml = $o->locationsString($iId);
         if (!$sLocationHtml)
@@ -88,7 +90,7 @@ class BxBaseServiceMetatags extends BxDol
         $sLocationEncoded = rawurlencode(strip_tags($sLocationHtml));
         $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
         $iScale = isset($_COOKIE['devicePixelRatio']) && (int)$_COOKIE['devicePixelRatio'] >= 2 ? 2 : 1;
-        $sLang = BxDolLanguages::getInstance()->getCurrentLanguage();
+        $sLang = bx_lang_name();
         $aVars = array (
             'map_img' => $sProto . '://maps.googleapis.com/maps/api/staticmap?center=' . $sLocationEncoded . '&zoom=7&size=' . $sMapSize . '&maptype=roadmap&markers=size:small%7C' . $sLocationEncoded . '&scale=' . $iScale . '&language=' . $sLang  . ($sMapKey ? '&key=' . $sMapKey : ''),
             'location_string' => $sLocationHtml,
