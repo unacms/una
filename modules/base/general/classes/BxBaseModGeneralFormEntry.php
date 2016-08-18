@@ -38,9 +38,22 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($CNF['FIELD_CHANGED']) && isset($this->aInputs[$CNF['FIELD_CHANGED']])) {
             $this->aInputs[$CNF['FIELD_CHANGED']]['date_filter'] = BX_DATA_INT;
             $this->aInputs[$CNF['FIELD_CHANGED']]['date_format'] = BX_FORMAT_DATE;
-        }        
+        }
+
+        if (isset($CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$CNF['FIELD_LOCATION_PREFIX']])) {
+            $this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = true;
+        }
     }
 
+    function initChecker ($aValues = array (), $aSpecificValues = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (!empty($CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && isset($aValues[$CNF['FIELD_ID']]) && !empty($CNF['OBJECT_METATAGS']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->locationsIsEnabled())
+            $this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]['value'] = $oMetatags->locationsString($aValues[$CNF['FIELD_ID']], false);
+
+        parent::initChecker ($aValues, $aSpecificValues);
+    }
+    
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -104,40 +117,6 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         // delete db record
 
         return parent::delete($iContentId);
-    }
-
-    protected function genCustomInputLocation ($aInput) 
-    {
-        $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
-        $this->oTemplate->addJs($sProto . '://maps.google.com/maps/api/js?sensor=false');
-
-        $aInput['checked'] = $this->getCleanValue($aInput['name'] . '_lat') && $this->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
-
-        $aVars = array (
-            'name' => $aInput['name'],
-            'id_status' => $this->getInputId($aInput) . '_status',
-            'location_string' => _t('_sys_location_undefined'),
-        );
-        $aLocationIndexes = array ('lat', 'lng', 'country', 'state', 'city', 'zip');
-        foreach ($aLocationIndexes as $sKey)
-            $aVars[$sKey] = $this->getLoctionVal($aInput, $sKey);
-        if ($aVars['country']) {
-            $aCountries = BxDolFormQuery::getDataItems('Country');
-            $aVars['location_string'] = ($aVars['city'] ? $aVars['city'] . ', ' : '') . $aCountries[$aVars['country']];
-        }
-        if ($this->getLoctionVal($aInput, 'lat') && $this->getLoctionVal($aInput, 'lng'))
-            $aInput['checked'] = true;
-        $aVars['input'] = $this->genInputSwitcher($aInput);
-
-        return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
-    }
-
-    protected function getLoctionVal ($aInput, $sIndex) 
-    {
-        $s = $aInput['name'] . '_' . $sIndex;
-        if (isset($this->_aSpecificValues[$s]))
-            return $this->_aSpecificValues[$s];
-        return $this->getCleanValue($s);
     }
 
     public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)

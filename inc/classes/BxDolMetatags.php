@@ -403,11 +403,13 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * @param $sState optional state/province/territory name
      * @param $sCity optional city name
      * @param $sZip optional ZIP/postcode
+     * @param $sStreet optional street name
+     * @param $sStreetNumber optional street number
      * @return true if location was added, or false otherwise
      */
-    public function locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip = '') 
+    public function locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip = '', $sStreet = '', $sStreetNumber = '') 
     {
-        return $this->_oQuery->locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip);
+        return $this->_oQuery->locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip, $sStreet, $sStreetNumber);
     }
 
     /**
@@ -425,7 +427,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
             $sPrefix .= '_';
         if (!$oForm)
             $oForm = new BxDolForm(array(), false);
-        $this->locationsAdd($iId, $oForm->getCleanValue($sPrefix.'lat'), $oForm->getCleanValue($sPrefix.'lng'), $oForm->getCleanValue($sPrefix.'country'), $oForm->getCleanValue($sPrefix.'state'), $oForm->getCleanValue($sPrefix.'city'), $oForm->getCleanValue($sPrefix.'zip'));
+        $this->locationsAdd($iId, $oForm->getCleanValue($sPrefix.'lat'), $oForm->getCleanValue($sPrefix.'lng'), $oForm->getCleanValue($sPrefix.'country'), $oForm->getCleanValue($sPrefix.'state'), $oForm->getCleanValue($sPrefix.'city'), $oForm->getCleanValue($sPrefix.'zip'), $oForm->getCleanValue($sPrefix.'street'), $oForm->getCleanValue($sPrefix.'street_number'));
     }
 
     /**
@@ -433,7 +435,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * @param $iId content id
      * @return string with links to country and city
      */
-    public function locationsString($iId)
+    public function locationsString($iId, $bHTML = true)
     {
         bx_import('BxDolForm');
         $aCountries = BxDolFormQuery::getDataItems('Country');
@@ -446,8 +448,15 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
             return _t('_sys_location_country', $sCountryUrl);
 
         $sCityUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_city&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '&city=' . rawurlencode($aLocation['city']) . '">' . $aLocation['city'] . '</a>';
-            
-        return _t('_sys_location_country_city', $sCountryUrl, $sCityUrl);
+
+        $sStateUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_state&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '">' . $aLocation['state'] . '</a>';
+
+        if ($aLocation['street'])
+            $s = _t('_sys_location_country_city_street', $sCountryUrl, $sStateUrl, $sCityUrl, $aLocation['street'], $aLocation['street_number']);
+        else
+            $s = _t('_sys_location_country_city', $sCountryUrl, $sStateUrl, $sCityUrl);
+
+        return $bHTML ? $s : trim(strip_tags($s));
     }
 
     /**
@@ -504,7 +513,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * Get location
      * @param $iId content id
      * @param $sPrefix field prefix for returning data array
-     * @return location array with the following keys (when no prefix specified): object_id, lat, lng, country, state, city, zip
+     * @return location array with the following keys (when no prefix specified): object_id, lat, lng, country, state, city, zip, street, street_number
      */
     public function locationGet($iId, $sPrefix = '')
     {

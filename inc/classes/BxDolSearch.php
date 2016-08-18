@@ -130,7 +130,7 @@ class BxDolSearch extends BxDol
 
     public function setMetaType($s)
     {
-        $aMetaTypes = array('location_country', 'location_country_city', 'mention', 'keyword');
+        $aMetaTypes = array('location_country', 'location_country_city', 'location_country_state', 'mention', 'keyword');
         if (in_array($s, $aMetaTypes))
             $this->_sMetaType = $s;
     }
@@ -611,6 +611,9 @@ class BxDolSearchResult implements iBxDolReplaceable
                 switch ($this->_sMetaType) {
                     case 'location_country':
                         $o->locationsSetSearchCondition($this, $sKeyword);
+                        break;
+                    case 'location_country_state':
+                        $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(bx_get('state')));
                         break;
                     case 'location_country_city':
                         $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(bx_get('state')), bx_process_input(bx_get('city')));

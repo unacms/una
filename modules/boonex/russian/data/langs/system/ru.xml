@@ -1190,7 +1190,8 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP-сервер - Логин]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP-сервер - Пароль]]></string>
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Дата установки]]></string>
-	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
+    <string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
+    <string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Ключ Google Maps API]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA-аккаунт - Key (ключ)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[UNA-аккаунт - Secret (секретное слово)]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Задействовать кэш для Страниц]]></string>
@@ -1885,7 +1886,8 @@
 	<string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Верхнее и нижнее пространства с 2 столбцами посередине]]></string>
 	<string name="_sys_loading"><![CDATA[Загрузка...]]></string>
 	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
-	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {1}, {0}]]></string>
+	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {2}, {1}, {0}]]></string>
+    <string name="_sys_location_country_city_street"><![CDATA[<i class="sys-icon location-arrow"></i> {4} {3}, {2}, {1}, {0} ]]></string>
 	<string name="_sys_location_determining"><![CDATA[Определение местоположения...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
