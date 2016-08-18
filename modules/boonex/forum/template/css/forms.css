@@ -1,0 +1,8 @@
+
+@import url(../../../../base/text/template/css/forms.css);
+
+.bx-forum-form-submit-text {
+    float:left;
+    line-height:36px; 
+    line-height:2.2rem;
+}
