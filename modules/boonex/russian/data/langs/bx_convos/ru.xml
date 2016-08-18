@@ -76,7 +76,7 @@
     <string name="_bx_cnv_menu_item_title_system_convos"><![CDATA[Переписка]]></string>
     <string name="_bx_cnv_menu_item_title_convos"><![CDATA[переписка]]></string>
     <string name="_bx_cnv_menu_item_title_system_unread_messages"><![CDATA[Количество непрочитанных сообщений]]></string>
-    <string name="_bx_cnv_menu_item_title_unread_messages"><![CDATA[{addon} - непрочитанные сообщения]]></string>
+    <string name="_bx_cnv_menu_item_title_unread_messages"><![CDATA[{addon} непрочитанных сообщений]]></string>
 
     <string name="_bx_cnv_txt_sample_single"><![CDATA[переписка]]></string>
 

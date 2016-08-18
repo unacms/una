@@ -170,7 +170,7 @@ class BxBaseCmts extends BxDolCmts
 
         list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
 
-        $sClass = '';
+        $sClass = $sClassCnt = '';
         if(isset($aCmt['vote_rate']) && (float)$aCmt['vote_rate'] < $this->_aSystem['viewing_threshold']) {
             $this->_oTemplate->pareseHtmlByName('comment_hidden.html', array(
                 'js_object' => $this->_sJsObjName,
@@ -184,15 +184,21 @@ class BxBaseCmts extends BxDolCmts
                 )
             ));
 
-            $sClass = ' cmt-hidden';
+            $sClass = ' ' . $this->_sStylePrefix . '-hidden';
         }
 
         if($aCmt['cmt_author_id'] == $iUserId)
-            $sClass .= ' cmt-mine';
+            $sClass .= ' ' . $this->_sStylePrefix . '-mine';
 
 		if(!empty($aDp['blink']) && in_array($aCmt['cmt_id'], $aDp['blink']))
-			$sClass .= ' cmt-blink';
+			$sClass .= ' ' . $this->_sStylePrefix . '-blink';
 
+		if(!empty($aDp['class_comment']))
+			$sClass .= ' ' . $aDp['class_comment'];
+
+		if(!empty($aDp['class_comment_content']))
+			$sClassCnt .= ' ' . $aDp['class_comment_content'];
+			
         $sActions = $this->_getActionsBox($aCmt, $aDp);
 
         $aTmplReplyTo = array();
@@ -240,6 +246,7 @@ class BxBaseCmts extends BxDolCmts
             'js_object' => $this->_sJsObjName,
             'id' => $aCmt['cmt_id'],
             'class' => $sClass,
+        	'class_cnt' => $sClassCnt,
             'bx_if:show_reply_to' => array(
                 'condition' => !empty($aTmplReplyTo),
                 'content' => $aTmplReplyTo

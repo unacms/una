@@ -118,7 +118,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         // get thumb url
         $sPhotoThumb = '';
         $sPhotoGallery = '';
-        if ($aData[$CNF['FIELD_THUMB']]) {
+        if(!empty($CNF['FIELD_THUMB']) && $aData[$CNF['FIELD_THUMB']]) {
 
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
             if ($oImagesTranscoder)
