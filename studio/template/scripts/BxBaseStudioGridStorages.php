@@ -117,6 +117,7 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
     {
     	$sUrl = $this->_oStorage->getFileUrlById($aRow['id']);
 
+    	unset($a['attr']['bx_grid_action_single']);
     	$a['attr'] = array_merge($a['attr'], array(
     		"onclick" => "window.open('" . $sUrl . "','_blank');"
     	));
