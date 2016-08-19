@@ -64,15 +64,21 @@ class BxForumGrid extends BxTemplGrid
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getCellLastReplyTimestamp($mixedValue, $sKey, $aField, $aRow)
+    protected function _getRowHeader ()
     {
-        $s = $this->_oModule->_oTemplate->getEntryPreviewGrid($aRow);
-        return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
+    	return array();
     }
 
     protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
     {
     	$mixedValue = $this->_oModule->_oTemplate->getEntryAuthor($aRow);
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellLastReplyTimestamp($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = $this->_oModule->_oTemplate->getEntryPreviewGrid($aRow);
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

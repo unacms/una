@@ -41,6 +41,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_THUMB' => '',
             'FIELD_COMMENTS' => 'comments',
         	'FIELD_STATUS' => 'status',
+	        'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-discussion',
@@ -73,6 +74,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => '',
             'OBJECT_COMMENTS' => 'bx_forum',
+        	'OBJECT_METATAGS' => 'bx_forum',
             'OBJECT_PRIVACY_VIEW' => 'bx_forum_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_forum',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_forum_entry_view',
