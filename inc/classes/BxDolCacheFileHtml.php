@@ -61,6 +61,8 @@ class BxDolCacheFileHtml extends BxDolCacheFile
         fclose($rHandler);
         @chmod($this->sPath . $sKey, 0666);
 
+        if (function_exists('opcache_invalidate')) opcache_invalidate($this->sPath . $sKey);
+        
         return true;
     }
 }

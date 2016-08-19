@@ -363,6 +363,8 @@ EOF;
 
         @chmod(BX_INSTALL_PATH_HEADER, 0666);
 
+        if (function_exists('opcache_invalidate')) opcache_invalidate(BX_INSTALL_PATH_HEADER);
+        
         return array();
     }
 
