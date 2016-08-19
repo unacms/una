@@ -127,6 +127,11 @@
         
         $('input[name=__name__][type=text]').on('focus', bx_location_geolocate);
 
+        $('input[name=__name__][type=text]').on('blur', function () {
+            if (!$(this).val().length)
+                bx_location_reset ();
+        });
+
         if ($('input[name=__name__][type=text]').size()) {
 
             // Create the autocomplete object, restricting the search to geographical location types.
