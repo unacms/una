@@ -166,6 +166,8 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
                 return false;
 
             @chmod( BX_DIRECTORY_PATH_CACHE . "lang-{$aLanguage['name']}.php", 0666);
+
+            if (function_exists('opcache_invalidate')) opcache_invalidate(BX_DIRECTORY_PATH_CACHE . "lang-{$aLanguage['name']}.php");
         }
 
         $this->init();
