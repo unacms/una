@@ -1157,6 +1157,12 @@ class BxDolFormChecker
                 continue;
             }
 
+            // special check for location field
+            if ('location' == $aInputs[$k]['type'] && $val && !BxDolForm::getSubmittedValue($a['name'] . '_country', $this->_sFormMethod, $this->_aSpecificValues)) {
+                $aInputs[$k]['value'] = '';
+                $val = '';
+            }
+
             $sCheckFunction = array($oChecker, 'check' . bx_gen_method_name($a['checker']['func']));
 
             if (is_callable($sCheckFunction))
