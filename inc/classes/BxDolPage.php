@@ -142,11 +142,11 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      */
     static public function getObjectInstanceByURI($sURI = '')
     {
-    	if(empty($sURI) && bx_get('i') !== false) {
+    	if(empty($sURI) && bx_get('i') !== false)
     		$sURI = bx_process_input(bx_get('i'));
-    		if(empty($sURI))
-    			return false;
-    	}
+
+    	if(empty($sURI))
+			return false;
 
         $sObject = BxDolPageQuery::getPageObjectNameByURI($sURI);
         return $sObject ? self::getObjectInstance($sObject) : false;

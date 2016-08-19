@@ -37,7 +37,11 @@ class BxBaseCover extends BxDolCover
         if(!empty($this->_aOptions) && is_array($this->_aOptions))
         	return $this->_oTemplate->parseHtmlByName($this->_sTemplateName, array_merge($this->_aOptiondDefault, $this->_aOptions));
 
-		$mixedOptions = BxDolPage::getObjectInstanceByURI()->getPageCoverParams();
+		$oPage = BxDolPage::getObjectInstanceByURI();
+		if(empty($oPage) || !is_a($oPage, 'BxDolPage'))
+			return $this->displayEmpty();
+
+		$mixedOptions = $oPage->getPageCoverParams();
 		if(empty($mixedOptions) || !is_array($mixedOptions))
 			return $this->displayEmpty();
 
