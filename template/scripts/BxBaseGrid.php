@@ -176,6 +176,8 @@ class BxBaseGrid extends BxDolGrid
         if (!empty($this->_aConfirmMessages) && is_array($this->_aConfirmMessages))
             $sConfirmMessages = json_encode($this->_aConfirmMessages);
 
+		$aVarsHead = $this->_getRowHeader();
+
         $aVars = array (
             'object' => $this->_sObject,
             'id_table' => $sIdTable,
@@ -185,7 +187,12 @@ class BxBaseGrid extends BxDolGrid
             'sorting' => empty($this->_aOptions['sorting_fields']) ? 0 : 1,
             'sorting_field' => $sOrderField,
             'sorting_dir' => $sOrderDir,
-            'bx_repeat:row_header' => $this->_getRowHeader (),
+        	'bx_if:display_head' => array(
+        		'condition' => !empty($aVarsHead),
+        		'content' => array(
+        			'bx_repeat:row_header' => $aVarsHead
+        		)
+        	),
             'bx_repeat:rows_data' => $this->_getRowsDataDesign ($aData),
             'paginate' => $sPaginate,
             'paginate_get_start' => $this->_aOptions['paginate_get_start'],
