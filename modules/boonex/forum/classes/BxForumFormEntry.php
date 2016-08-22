@@ -31,8 +31,8 @@ class BxForumFormEntry extends BxBaseModTextFormEntry
     {
     	$CNF = $this->_oModule->_oConfig->CNF;
 
-        $aValsToAdd['last_reply_timestamp'] = time();
-        $aValsToAdd['last_reply_profile_id'] = bx_get_logged_profile_id();
+        $aValsToAdd['lr_timestamp'] = time();
+        $aValsToAdd['lr_profile_id'] = bx_get_logged_profile_id();
 
         $iDraftId = (int)bx_get('draft_id');
         $bDraftSave = (int)bx_get('draft_save') == 1; //--- draft is saved via ajax call only, upon successfull draft saving content id is returned

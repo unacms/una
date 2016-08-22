@@ -31,7 +31,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
         $aParticipants = $this->_oDb->getComments(array('type' => 'author_comments', 'object_id' => $aContentInfo[$CNF['FIELD_ID']]));
 
         // sort participants: first - current user, second - last replier, third - author, all others sorted by max number of posts
-        $aParticipants = $oModule->sortParticipants($aParticipants, $aContentInfo['last_reply_profile_id'], $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        $aParticipants = $oModule->sortParticipants($aParticipants, $aContentInfo['lr_profile_id'], $aContentInfo[$CNF['FIELD_AUTHOR']]);
         $iParticipantsNum = count($aParticipants);
 
         // prepare template variables
@@ -65,7 +65,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
             $sInfo = '';
             if ($aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId)
                 $sInfo = _t('_bx_forum_participant_author');
-            if ($aContentInfo['last_reply_profile_id'] == $iProfileId)
+            if ($aContentInfo['lr_profile_id'] == $iProfileId)
                 $sInfo .= ', ' . _t('_bx_forum_participant_last_replier');
             $sInfo = trim($sInfo, ', ');
             $sInfo = $sInfo ? _t('_bx_forum_participant_info', $oProfile->getDisplayName(), $sInfo) : $oProfile->getDisplayName();
@@ -85,7 +85,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
             		)
             	),
                 'bx_if:last_replier' => array (
-                    'condition' => ($aContentInfo['last_reply_profile_id'] == $iProfileId),
+                    'condition' => ($aContentInfo['lr_profile_id'] == $iProfileId),
                     'content' => array (
                         'id' => $oProfile->id(),
                     ),
@@ -113,56 +113,6 @@ class BxForumTemplate extends BxBaseModTextTemplate
         return $this->parseHtmlByName('participants.html', $aVars);
     }
 
-    function getMessagesPreviews ($a)
-    {
-        if (empty($a))
-            return MsgBox(_t('_Empty'));
-
-        $oModule = BxDolModule::getInstance($this->MODULE);
-
-        $aVars = array(
-            'see_all_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($oModule->_oConfig->CNF['URL_HOME']),
-            'bx_repeat:messages' => array(),
-        );
-        foreach ($a as $r) {
-
-            $oProfileAuthor = BxDolProfile::getInstance($r['author']);
-            if (!$oProfileAuthor)
-                $oProfileAuthor = BxDolProfileUndefined::getInstance();
-
-            $oProfileLast = BxDolProfile::getInstance($r['last_reply_profile_id']);
-            if (!$oProfileLast)
-                $oProfileLast = BxDolProfileUndefined::getInstance();
-
-            $sText = strmaxtextlen($r['text'], 90);
-            $sTextCmt = strmaxtextlen($r['cmt_text'], 50);
-
-            $aVars['bx_repeat:messages'][] = array (
-                'id' => $r['id'],
-                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']),
-                'text' => $sText ? $sText : $oProfileAuthor->getDisplayName(),
-                'cmt_text' => $sTextCmt,
-                'unread_messages' => $r['unread_messages'],
-                'last_reply_time_and_replier' => _t('_bx_forum_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
-                'font_weight' => $r['unread_messages'] > 0 ? 'bold' : 'normal',
-                'label' => $this->getEntryLabel($r, array('show_count' => 0), $oProfileLast),
-
-                'author_id' => $oProfileAuthor->id(),
-                'author_url' => $oProfileAuthor->getUrl(),
-                'author_title' => $oProfileAuthor->getDisplayName(),
-                'author_title_attr' => bx_html_attribute($oProfileAuthor->getDisplayName()),
-                'author_thumb_url' => $oProfileAuthor->getThumb(),
-
-                'last_replier_id' => $oProfileLast->id(),
-                'last_replier_url' => $oProfileLast->getUrl(),
-                'last_replier_title' => $oProfileLast->getDisplayName(),
-                'last_replier_title_attr' => bx_html_attribute($oProfileLast->getDisplayName()),
-                'last_replier_thumb_url' => $oProfileLast->getThumb(),
-            );
-        }
-        return $this->parseHtmlByName('messages_previews.html', $aVars);
-    }
-
 	function getEntryAuthor($aRow)
     {
     	$oProfileAuthor = BxDolProfile::getInstance($aRow['author']);
@@ -178,15 +128,13 @@ class BxForumTemplate extends BxBaseModTextTemplate
     	));
     }
 
-	function getEntryLabel($aRow, $aParams = array(), $oProfileLast = null)
+	function getEntryLabel($aRow, $aParams = array())
     {
     	$bShowCount = isset($aParams['show_count']) ? (int)$aParams['show_count'] == 1 : false;
 
-        if(!$oProfileLast) {
-            $oProfileLast = BxDolProfile::getInstance($aRow['last_reply_profile_id']);
-            if(!$oProfileLast)
-				$oProfileLast = BxDolProfileUndefined::getInstance();
-        }
+		$oProfileLast = BxDolProfile::getInstance($aRow['lr_profile_id']);
+		if(!$oProfileLast)
+			$oProfileLast = BxDolProfileUndefined::getInstance();
 
         return $this->parseHtmlByName('entry-label.html', array(
         	'bx_if:show_count' => array(
@@ -202,22 +150,31 @@ class BxForumTemplate extends BxBaseModTextTemplate
         ));
     }
 
-    function getEntryPreviewGrid($aRow)
+    function getEntryPreview($aRow)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
 
-        $oProfileLast = BxDolProfile::getInstance($aRow['last_reply_profile_id']);
-        if (!$oProfileLast)
+        $oProfileLast = BxDolProfile::getInstance($aRow['lr_profile_id']);
+        if(!$oProfileLast)
             $oProfileLast = BxDolProfileUndefined::getInstance();
 
-        $sText = strmaxtextlen($aRow['text'], 100);
-        $sTextCmt = strmaxtextlen($aRow['cmt_text'], 100);
+		$sTitle = strmaxtextlen($aRow['title'], 100);
+        $sText = strmaxtextlen(!empty($aRow['cmt_text']) ? $aRow['cmt_text'] : $aRow['text'], 100);
 
-        return $this->parseHtmlByName('entry-preview-grid.html', array(
+        return $this->parseHtmlByName('entry-preview.html', array(
+        	'bx_if:show_stick' => array(
+        		'condition' => (int)$aRow[$CNF['FIELD_STICK']] == 1,
+        		'content' => array()
+        	),
+        	'bx_if:show_lock' => array(
+        		'condition' => (int)$aRow[$CNF['FIELD_LOCK']] == 1,
+        		'content' => array()
+        	),
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow['id']),
-            'text' => $sText ? $sText : _t('_Empty'),
-            'cmt_text' => $sTextCmt,
-            'last_reply_time_and_replier' => _t('_bx_forum_x_date_by_x_replier', bx_time_js($aRow['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
+            'title' => $sTitle ? $sTitle : _t('_Empty'),
+            'text' => $sText,
+            'lr_time_and_replier' => _t('_bx_forum_x_date_by_x_replier', bx_time_js($aRow['lr_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
         ));
     }
 

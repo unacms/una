@@ -19,9 +19,15 @@ class BxForumDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
+	public function updateEntries($aSet, $aWhere)
+    {
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1");
+        return (int)$this->query($sQuery) > 0;
+    }
+
     public function updateLastCommentTimeProfile($iConversationId, $iProfileId, $iCommentId, $iTimestamp)
     {
-        $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "discussions` SET `last_reply_profile_id` = ?, `last_reply_timestamp` = ?, `last_reply_comment_id` = ? WHERE `id` = ?", $iProfileId, $iTimestamp, $iCommentId, $iConversationId);
+        $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "discussions` SET `lr_profile_id` = ?, `lr_timestamp` = ?, `lr_comment_id` = ? WHERE `id` = ?", $iProfileId, $iTimestamp, $iCommentId, $iConversationId);
         return $this->query($sQuery);
     }
 
@@ -62,25 +68,26 @@ class BxForumDb extends BxBaseModTextDb
 
         $sQuery = $this->prepare("SELECT COUNT(`te`.`id`)
             FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te`
-            WHERE `te`.`author`=? AND `te`.`last_reply_profile_id`<>?", $iProfileId, $iProfileId);
+            WHERE `te`.`author`=? AND `te`.`lr_profile_id`<>?", $iProfileId, $iProfileId);
 
 		return $this->getOne($sQuery);
     }
 
-    public function getMessagesPreviews ($iProfileId, $iStart = 0, $iLimit = 4)
-    {
-    	/*
-        $sQuery = $this->prepare("SELECT `c`.`id`, `c`.`text`, `c`.`author`, `cmts`.`cmt_text`, `c`.`last_reply_profile_id`, `c`.`comments`, (`c`.`comments` - `f`.`read_comments`) AS `unread_messages`, `last_reply_timestamp`
-            FROM `" . $this->getPrefix() . "discussion2folder` as `f`
-            INNER JOIN `" . $this->getPrefix() . "discussions` AS `c` ON (`c`.`id` = `f`.`discussion_id`)
-            LEFT JOIN `" . $this->getPrefix() . "cmts` AS `cmts` ON (`cmts`.`cmt_id` = `c`.`last_reply_comment_id`)
-            WHERE `f`.`collaborator` = ? AND `f`.`folder_id` = ?
-            ORDER BY `c`.`last_reply_timestamp` DESC
-            LIMIT ?, ?", $iProfileId, $iFolderId, $iStart, $iLimit);
-        return $this->getAll($sQuery);
-        */
-    	return array();
-    }
+	public function updateStatus($sAction, $aContentInfo)
+	{
+		$CNF = &$this->_oConfig->CNF;
+
+		$aActions = array(
+			'stick' => array($CNF['FIELD_STICK'] => 1),
+			'unstick' => array($CNF['FIELD_STICK'] => 0),
+			'lock' =>  array($CNF['FIELD_LOCK'] => 1),
+			'unlock' =>  array($CNF['FIELD_LOCK'] => 0),
+			'hide' =>  array($CNF['FIELD_STATUS_ADMIN'] => 'hidden'),
+			'unhide' =>  array($CNF['FIELD_STATUS_ADMIN'] => 'active')
+		);
+
+		return $this->updateEntries($aActions[$sAction], array($CNF['FIELD_ID'] => $aContentInfo[$CNF['FIELD_ID']]));
+	}
 }
 
 /** @} */

@@ -37,6 +37,31 @@ class BxForumModule extends BxBaseModTextModule
         return $aParticipants;
     }
 
+    /**
+     * Action methods
+     */
+    public function actionUpdateStatus($sAction = '', $iContentId = 0)
+    {
+    	if(empty($sAction) && bx_get('action') !== false)
+   			$sAction = bx_process_input(bx_get('action'));
+
+		if(empty($iContentId) && bx_get('id') !== false)
+    		$iContentId = (int)bx_get('id');
+
+    	$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+			return echoJson(array('code' => 1, 'message' => _t('_bx_forum_err_not_found')));
+
+		$sMethodCheck = 'checkAllowed' . bx_gen_method_name($sAction) . 'AnyEntry';
+		$sResult = $this->$sMethodCheck($aContentInfo);
+        if($sResult !== CHECK_ACTION_RESULT_ALLOWED)
+        	return echoJson(array('code' => 2, 'message' => $sResult));
+
+        if(!$this->_oDb->updateStatus($sAction, $aContentInfo))
+        	return echoJson(array('code' => 3, 'message' => _t('_error occured')));
+
+    	echoJson(array('code' => 0, 'id' => $iContentId, 'reload' => 1));
+    }
 
     /**
      * Service methods
@@ -70,16 +95,6 @@ class BxForumModule extends BxBaseModTextModule
 
 		return $this->_serviceBrowseTable($sType);
     }  
-
-    public function serviceMessagesPreviews ($iProfileId = 0)
-    {
-        if (!$iProfileId)
-            $iProfileId = bx_get_logged_profile_id();
-
-        $a = $this->_oDb->getMessagesPreviews($iProfileId, 0, (int)getParam('bx_forum_per_page_preview'));
-
-        return 'TODO: Need to know where to take previews from.'; //TODO: $this->_oTemplate->getMessagesPreviews($a);
-    }
 
     /**
      * Get number of unread messages for spme profile
@@ -158,6 +173,81 @@ class BxForumModule extends BxBaseModTextModule
      */
     public function checkAllowedSetThumb()
     {
+        return _t('_sys_txt_access_denied');
+    }
+
+    public function checkAllowedStickAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	if((int)$aDataEntry[$CNF['FIELD_STICK']] != 0)
+    		return false;
+
+		return $this->_checkAllowedAction('stick any entry', $aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedUnstickAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	if((int)$aDataEntry[$CNF['FIELD_STICK']] != 1)
+			return false;
+
+    	return $this->_checkAllowedAction('stick any entry', $aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedLockAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	if((int)$aDataEntry[$CNF['FIELD_LOCK']] != 0)
+    		return false;
+
+		return $this->_checkAllowedAction('lock any entry', $aDataEntry, $isPerformAction);
+    }
+
+	public function checkAllowedUnlockAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	if((int)$aDataEntry[$CNF['FIELD_LOCK']] != 1)
+    		return false;
+
+		return $this->_checkAllowedAction('lock any entry', $aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedHideAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	if($aDataEntry[$CNF['FIELD_STATUS_ADMIN']] == 'hidden')
+    		return false;
+
+		return $this->_checkAllowedAction('hide any entry', $aDataEntry, $isPerformAction);
+    }
+
+	public function checkAllowedUnhideAnyEntry($aDataEntry, $isPerformAction = false)
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	if($aDataEntry[$CNF['FIELD_STATUS_ADMIN']] != 'hidden')
+    		return false;
+
+		return $this->_checkAllowedAction('hide any entry', $aDataEntry, $isPerformAction);
+    }
+
+	/**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    protected function _checkAllowedAction($sAction, $aDataEntry, $isPerformAction = false)
+    {
+        if($this->_isModerator($isPerformAction))
+			return CHECK_ACTION_RESULT_ALLOWED;
+
+		$aCheck = checkActionModule($this->_iProfileId, $sAction, $this->getName(), $isPerformAction);
+    	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+    		return CHECK_ACTION_RESULT_ALLOWED;
+
         return _t('_sys_txt_access_denied');
     }
 

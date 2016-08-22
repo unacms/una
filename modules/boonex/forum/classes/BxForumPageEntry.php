@@ -21,8 +21,13 @@ class BxForumPageEntry extends BxBaseModTextPageEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_oModule->_oTemplate->addJs(array('main.js'));
+        $this->_oModule->_oTemplate->addJs(array('main.js', 'entry.js'));
         $this->_oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));
+    }
+
+    public function getCode()
+    {
+    	return $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode();
     }
 }
 

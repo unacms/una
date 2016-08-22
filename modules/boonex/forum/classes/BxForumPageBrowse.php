@@ -18,6 +18,13 @@ class BxForumPageBrowse extends BxBaseModTextPageBrowse
     {
         $this->MODULE = 'bx_forum';
         parent::__construct($aObject, $oTemplate);
+
+        $this->_oModule->_oTemplate->addJs(array('main.js'));
+    }
+
+	public function getCode()
+    {
+    	return $this->_oModule->_oTemplate->getJsCode('main') . parent::getCode();
     }
 }
 

@@ -37,7 +37,7 @@ class BxForumGrid extends BxTemplGrid
                 break;
 
 			case 'latest':
-				$sField = 'last_reply_timestamp';
+				$sField = 'lr_timestamp';
                 break;
 
 			case 'top':
@@ -76,9 +76,9 @@ class BxForumGrid extends BxTemplGrid
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellLastReplyTimestamp($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellLrTimestamp($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oModule->_oTemplate->getEntryPreviewGrid($aRow);
+        $mixedValue = $this->_oModule->_oTemplate->getEntryPreview($aRow);
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -96,6 +96,34 @@ class BxForumGrid extends BxTemplGrid
 
         $this->_oModule->_oTemplate->addJs('main.js');
         $this->_oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));
+    }
+
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+    	$sJoinClause = $sWhereClause = '';
+
+    	//--- Check status
+    	$sWhereClause .= " AND `" . $this->_oModule->_oConfig->CNF['FIELD_STATUS'] . "`='active'";
+    	$sWhereClause .= " AND `" . $this->_oModule->_oConfig->CNF['FIELD_STATUS_ADMIN'] . "`='active'";
+
+    	//--- Check privacy
+		$sPrivacy = $this->_oModule->_oConfig->CNF['OBJECT_PRIVACY_VIEW'];
+		$oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
+		$aCondition = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart() : array();
+		if(isset($aCondition['join']))
+			$sJoinClause .= $aCondition['join'];
+		if(isset($aCondition['where']))
+			$sWhereClause .= $aCondition['where'];
+
+		$this->_aOptions['source'] = sprintf($this->_aOptions['source'], $sJoinClause, $sWhereClause);
+		return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+
+    protected function _getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
+    {
+    	$sOrder = parent::_getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, true);
+
+    	return " ORDER BY `" . $this->_oModule->_oConfig->CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
     }
 }
 

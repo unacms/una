@@ -16,8 +16,14 @@ class BxForumConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
-            'delete-discussion' => 'checkAllowedDelete',
-            'mark-unread-discussion' => 'checkAllowedView',
+        	'stick-discussion' => 'checkAllowedStickAnyEntry',
+        	'unstick-discussion' => 'checkAllowedUnstickAnyEntry',
+        	'lock-discussion' => 'checkAllowedLockAnyEntry',
+        	'unlock-discussion' => 'checkAllowedUnlockAnyEntry',
+        	'hide-discussion' => 'checkAllowedHideAnyEntry',
+        	'unhide-discussion' => 'checkAllowedUnhideAnyEntry',
+        	'edit-discussion' => 'checkAllowedEdit',
+            'delete-discussion' => 'checkAllowedDelete'
         );
 
         $this->CNF = array (
@@ -40,7 +46,10 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_PHOTO' => 'attachments',
             'FIELD_THUMB' => '',
             'FIELD_COMMENTS' => 'comments',
+        	'FIELD_STICK' => 'stick',
+        	'FIELD_LOCK' => 'lock',
         	'FIELD_STATUS' => 'status',
+        	'FIELD_STATUS_ADMIN' => 'status_admin',
 	        'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -108,10 +117,14 @@ class BxForumConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+        	'main' => 'BxForumMain',
+        	'entry' => 'BxForumEntry',
         	'manage_tools' => 'BxForumManageTools'
         );
 
         $this->_aJsObjects = array(
+        	'main' => 'oBxForumMain',
+        	'entry' => 'oBxForumEntry',
         	'manage_tools' => 'oBxForumManageTools'
         );
 
