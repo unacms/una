@@ -16,7 +16,7 @@ class BxBaseCmtsForm extends BxTemplFormView
     public function __construct($aInfo, $oTemplate)
     {
         parent::__construct($aInfo, $oTemplate);
-
+//TODO: Continue from HERE
         $this->_sStorageObject = 'sys_cmts_images';
         $this->_sTranscoderPreview = 'sys_cmts_images_preview';
 

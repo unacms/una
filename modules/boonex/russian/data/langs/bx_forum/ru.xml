@@ -2,6 +2,7 @@
 <resources name="ru" flag="ru" title="Russian">
 
 	<string name="_bx_forum"><![CDATA[Форум]]></string>
+	<string name="_bx_forum_cmts"><![CDATA[Форум - Комментарии]]></string>
 
 	<string name="_bx_forum_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к обсуждению]]></string>
 	<string name="_bx_forum_option_plain_summary_chars"><![CDATA[Количество символов в описании обсуждения при отсутствующей картинке обсуждения]]></string>
@@ -102,7 +103,7 @@
     <string name="_bx_forum_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Обсуждения]]></string>   
     <string name="_bx_forum_page_block_title_sys_entries_of_author"><![CDATA[Обсуждения автора]]></string>
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Обсуждения - Действия]]></string>
-    <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Обсуждения - Комментарии]]></string>
+    <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Форум - Комментарии]]></string>
     <string name="_bx_forum_page_title_sys_manage"><![CDATA[Управление собственными Обсуждениями]]></string>
 	<string name="_bx_forum_page_title_sys_manage_administration"><![CDATA[Управление всеми Обсуждениями]]></string>
 	<string name="_bx_forum_page_title_manage"><![CDATA[Управление Обсуждениями]]></string>
@@ -181,15 +182,19 @@
     <string name="_bx_forum_pre_lists_cats"><![CDATA[Категории обсуждений]]></string>
     <string name="_bx_forum_cat_General"><![CDATA[Общие]]></string>
 
-	<string name="_bx_forum_txt_entry_locked"><![CDATA[Заблокированное обсуждение]]></string>
-	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Закрепленное обсуждение]]></string>
-	<string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
     <string name="_bx_forum_draft_saving_error"><![CDATA[Ошибка сохранения черновика!]]></string>
     <string name="_bx_forum_draft_saved_success"><![CDATA[Черновик сохранён.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Обсуждение не найдено.]]></string>
+    <string name="_bx_forum_more"><![CDATA[{0} ещё]]></string>
     <string name="_bx_forum_participant_info"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_forum_participant_author"><![CDATA[автор]]></string>
     <string name="_bx_forum_participant_last_replier"><![CDATA[последний ответивший]]></string>
+    <string name="_bx_forum_txt_entry_locked"><![CDATA[Заблокированное обсуждение]]></string>
+	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Закрепленное обсуждение]]></string>
+	<string name="_bx_forum_txt_sample_comment_single"><![CDATA[комментарий к обсуждению]]></string>
+	<string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
+    <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} {1}]]></string>
+    <string name="_bx_forum_you_are_last_replier"><![CDATA[Вы - последний ответивший]]></string>
 
     <string name="_bx_forum_email_new_reply"><![CDATA[Новый ответ]]></string>
     <string name="_bx_forum_email_new_reply_subject"><![CDATA[Новый ответ от {SenderDisplayName}]]></string>
@@ -199,18 +204,4 @@
 <hr />
 <p>{Message}</p>
 <bx_include_auto:_email_footer.html />]]></string>
-
-
-	
-	
-	    
-
-    
-    <string name="_bx_forum_more"><![CDATA[{0} ещё]]></string>
-
-    <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} {1}]]></string>
-
-    <string name="_bx_forum_read_by_all"><![CDATA[Прочитано всеми]]></string>
-    <string name="_bx_forum_see_all"><![CDATA[Просмотреть все обсуждение...]]></string>
-    <string name="_bx_forum_you_are_last_replier"><![CDATA[Вы - последний ответивший]]></string>
 </resources>

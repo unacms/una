@@ -2,6 +2,7 @@
 <resources name="en" flag="gb" title="English">
 
 	<string name="_bx_forum"><![CDATA[Forum]]></string>
+	<string name="_bx_forum_cmts"><![CDATA[Forum's Comments]]></string>
 
 	<string name="_bx_forum_option_summary_chars"><![CDATA[Number of characters in auto-cropped discussion summary]]></string>
 	<string name="_bx_forum_option_plain_summary_chars"><![CDATA[Number of characters in plain discussion description when discussion hasn't thumb]]></string>
@@ -102,7 +103,7 @@
     <string name="_bx_forum_page_block_title_entries_of_author"><![CDATA[Discussions by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_of_author"><![CDATA[Discussions of author]]></string>
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Discussions actions]]></string>
-    <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Discussions' Comments]]></string>
+    <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Forum's Comments]]></string>
     <string name="_bx_forum_page_title_sys_manage"><![CDATA[Manage Own]]></string>
 	<string name="_bx_forum_page_title_sys_manage_administration"><![CDATA[Manage All]]></string>
 	<string name="_bx_forum_page_title_manage"><![CDATA[Manage]]></string>
@@ -181,15 +182,20 @@
 	<string name="_bx_forum_pre_lists_cats"><![CDATA[Forum categories]]></string>
     <string name="_bx_forum_cat_General"><![CDATA[General]]></string>
 
-	<string name="_bx_forum_txt_entry_locked"><![CDATA[Locked discussion]]></string>
-	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Sticked discussion]]></string>
-    <string name="_bx_forum_txt_sample_single"><![CDATA[discussion]]></string>
     <string name="_bx_forum_draft_saving_error"><![CDATA[Draft saving error!]]></string>
     <string name="_bx_forum_draft_saved_success"><![CDATA[Draft saved.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Discussion wasn't found.]]></string>
+    <string name="_bx_forum_more"><![CDATA[{0} more]]></string>
     <string name="_bx_forum_participant_info"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_forum_participant_author"><![CDATA[author]]></string>
     <string name="_bx_forum_participant_last_replier"><![CDATA[last replier]]></string>
+    <string name="_bx_forum_txt_entry_locked"><![CDATA[Locked discussion]]></string>
+	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Sticked discussion]]></string>
+    <string name="_bx_forum_txt_sample_comment_single"><![CDATA[discussion's comment]]></string>
+    <string name="_bx_forum_txt_sample_single"><![CDATA[discussion]]></string>
+    <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>
+    <string name="_bx_forum_you_are_last_replier"><![CDATA[You are last replier]]></string>
+    
     
     <string name="_bx_forum_email_new_reply"><![CDATA[New reply]]></string>
     <string name="_bx_forum_email_new_reply_subject"><![CDATA[New reply from {SenderDisplayName}]]></string>
@@ -199,18 +205,4 @@
 <hr />
 <p>{Message}</p>
 <bx_include_auto:_email_footer.html />]]></string>
-    
-    
-
-
-    <string name="_bx_forum_more"><![CDATA[{0} more]]></string>
-
-    <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>
-
-    <string name="_bx_forum_read_by_all"><![CDATA[Read by all]]></string>
-    <string name="_bx_forum_see_all"><![CDATA[See all discussions...]]></string>
-    <string name="_bx_forum_you_are_last_replier"><![CDATA[You are last replier]]></string>
-
-    <string name="_bx_forum_email_new_message"><![CDATA[New message]]></string>
-
 </resources>
