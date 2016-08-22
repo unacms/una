@@ -11,7 +11,27 @@
 
 class BxForumCmts extends BxTemplCmts
 {
-    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
+	protected $MODULE;
+	protected $_oModule;
+
+	public function __construct($sSystem, $iId, $iInit = 1)
+    {
+    	$this->MODULE = 'bx_forum';
+    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        parent::__construct($sSystem, $iId, $iInit);
+    }
+
+	public function isPostReplyAllowed($isPerformAction = false)
+    {
+    	$aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iId);
+        if(!$aContentInfo || (int)$aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_LOCK']] == 1)
+            return false;
+
+    	return parent::isPostReplyAllowed($isPerformAction);
+    }
+
+    public function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
     {
         $mixedBlock = parent::getCommentsBlock($iParentId, $iVParentId, $bInDesignbox);
         if (is_array($mixedBlock) && isset($mixedBlock['title']))
@@ -19,7 +39,7 @@ class BxForumCmts extends BxTemplCmts
         return $mixedBlock;
     }
 
-    function getComment($mixedCmt, $aBp = array(), $aDp = array())
+    public function getComment($mixedCmt, $aBp = array(), $aDp = array())
     {
     	return parent::getComment($mixedCmt, $aBp, array_merge($aDp, array(
     		'class_comment' => ' bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'

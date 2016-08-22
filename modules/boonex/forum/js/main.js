@@ -1,9 +1,31 @@
-$(document).ready(function () {
-    var ePreviews = $('.bx-forum-grid-preview');
-    if (!ePreviews.length)
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    Forum Forum
+ * @ingroup     TridentModules
+ *
+ * @{
+ */
+
+function BxForumMain(oOptions) {
+	this._sActionsUrl = oOptions.sActionUrl;
+    this._sObjName = oOptions.sObjName == undefined ? 'oFormMain' : oOptions.sObjName;
+    this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
+    this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+
+	var $this = this;
+	$(document).ready(function () {
+		$this.init();
+	});
+}
+
+BxForumMain.prototype.init = function() {
+	var ePreviews = $('.bx-forum-grid-preview');
+    if(!ePreviews.length)
         return;
 
-    var f = function () {
+    var oFunction = function () {
 
         // calculate width of all table rows, except the one which contains messages preview
         var iInnerWidth = $('.bx-grid-table').parent().innerWidth();
@@ -22,14 +44,12 @@ $(document).ready(function () {
     };
 
     $(window).resize(function() {
-        f();
+    	oFunction();
     });
 
     BxDolGrid.prototype.onDataReloaded = function (isSkipSearchInput) {
-        f();
+    	oFunction();
     };
 
-    f();
-});
-
-
+    oFunction();
+};

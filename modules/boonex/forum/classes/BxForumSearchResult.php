@@ -21,7 +21,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_forum',
             'title' => _t('_bx_forum_page_title_browse'),
             'table' => 'bx_forum_discussions',
-            'ownFields' => array('id', 'title', 'text', 'author', 'added', 'comments', 'last_reply_profile_id'),
+            'ownFields' => array('id', 'title', 'text', 'author', 'added', 'comments', 'lr_profile_id'),
             'searchFields' => array('title', 'text'),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
@@ -130,7 +130,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`changed` DESC';
                 break;
 			case 'latest':
-                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`last_reply_timestamp` DESC';
+                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`lr_timestamp` DESC';
                 break;
 			case 'top':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`comments` DESC';

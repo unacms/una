@@ -468,7 +468,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         return $oDb->getAll($sQuery);
     }
 
-    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir)
+    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
     {
         $sOrderClause = '';
 
@@ -481,34 +481,35 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                 // translatable fields
                 $iLang = BxDolLanguages::getInstance()->getCurrentLangId();
                 $oDb = BxDolDb::getInstance();
-                $sOrderClause = $oDb->prepareAsString("ORDER BY (SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
+                $sOrderClause = $oDb->prepareAsString("(SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
 
             } else {
 
                 // regular fields
-                $sOrderClause = " ORDER BY `$sOrderField` $sDir";
+                $sOrderClause = "`" . $sOrderField . "` $sDir";
 
             }
 
         } elseif ($sOrderByFilter) { // order by filter
 
-            $sOrderClause = " ORDER BY $sOrderByFilter DESC";
+            $sOrderClause = $sOrderByFilter . " DESC";
 
         } elseif (!empty($this->_aOptions['field_order'])) { // order by "order" field
 
             if (false == strpos($this->_aOptions['field_order'], ',')) {
-                $sOrderClause = " ORDER BY `" . $this->_aOptions['field_order'] . "` " . $this->_sDefaultSortingOrder;
+                $sOrderClause = "`" . $this->_aOptions['field_order'] . "` " . $this->_sDefaultSortingOrder;
             } else {
                 $a = explode(',', $this->_aOptions['field_order']);
                 foreach ($a as $sField)
                     $sOrderClause .= "`" . trim($sField) . "` " . $this->_sDefaultSortingOrder . ", ";
+
                 if ($sOrderClause)
-                    $sOrderClause = " ORDER BY " . trim($sOrderClause, ', ');
+                    $sOrderClause = trim($sOrderClause, ', ');
             }
 
         }
 
-        return $sOrderClause;
+        return $bFieldsOnly ? $sOrderClause : " ORDER BY " . $sOrderClause;
     }
 
     protected function _getCellData($sKey, $aField, $aRow)

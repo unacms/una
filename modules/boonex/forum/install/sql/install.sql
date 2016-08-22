@@ -10,16 +10,19 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `text` text NOT NULL,
+  `lr_timestamp` int(11) NOT NULL,
+  `lr_profile_id` int(10) unsigned NOT NULL,
+  `lr_comment_id` int(11) NOT NULL,
   `views` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
+  `stick` tinyint(4) NOT NULL DEFAULT '0',
+  `lock` tinyint(4) NOT NULL DEFAULT '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   `status` enum('active','draft','hidden') NOT NULL DEFAULT 'active',
-  `last_reply_timestamp` int(11) NOT NULL,
-  `last_reply_profile_id` int(10) unsigned NOT NULL,
-  `last_reply_comment_id` int(11) NOT NULL,
+  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
-  KEY `last_reply_timestamp` (`last_reply_timestamp`)
+  KEY `lr_timestamp` (`lr_timestamp`)
 );
 
 -- TABLE: storages & transcoders
@@ -179,38 +182,8 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUE
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_forum_cats', '', 0, '_sys_please_select', ''),
-('bx_forum_cats', '1', 1, '_bx_forum_cat_Animals_Pets', ''),
-('bx_forum_cats', '2', 2, '_bx_forum_cat_Architecture', ''),
-('bx_forum_cats', '3', 3, '_bx_forum_cat_Art', ''),
-('bx_forum_cats', '4', 4, '_bx_forum_cat_Cars_Motorcycles', ''),
-('bx_forum_cats', '5', 5, '_bx_forum_cat_Celebrities', ''),
-('bx_forum_cats', '6', 6, '_bx_forum_cat_Design', ''),
-('bx_forum_cats', '7', 7, '_bx_forum_cat_DIY_Crafts', ''),
-('bx_forum_cats', '8', 8, '_bx_forum_cat_Education', ''),
-('bx_forum_cats', '9', 9, '_bx_forum_cat_Film_Music_Books', ''),
-('bx_forum_cats', '10', 10, '_bx_forum_cat_Food_Drink', ''),
-('bx_forum_cats', '11', 11, '_bx_forum_cat_Gardening', ''),
-('bx_forum_cats', '12', 12, '_bx_forum_cat_Geek', ''),
-('bx_forum_cats', '13', 13, '_bx_forum_cat_Hair_Beauty', ''),
-('bx_forum_cats', '14', 14, '_bx_forum_cat_Health_Fitness', ''),
-('bx_forum_cats', '15', 15, '_bx_forum_cat_History', ''),
-('bx_forum_cats', '16', 16, '_bx_forum_cat_Holidays_Events', ''),
-('bx_forum_cats', '17', 17, '_bx_forum_cat_Home_Decor', ''),
-('bx_forum_cats', '18', 18, '_bx_forum_cat_Humor', ''),
-('bx_forum_cats', '19', 19, '_bx_forum_cat_Illustrations_Posters', ''),
-('bx_forum_cats', '20', 20, '_bx_forum_cat_Kids_Parenting', ''),
-('bx_forum_cats', '21', 21, '_bx_forum_cat_Mens_Fashion', ''),
-('bx_forum_cats', '22', 22, '_bx_forum_cat_Outdoors', ''),
-('bx_forum_cats', '23', 23, '_bx_forum_cat_Photography', ''),
-('bx_forum_cats', '24', 24, '_bx_forum_cat_Products', ''),
-('bx_forum_cats', '25', 25, '_bx_forum_cat_Quotes', ''),
-('bx_forum_cats', '26', 26, '_bx_forum_cat_Science_Nature', ''),
-('bx_forum_cats', '27', 27, '_bx_forum_cat_Sports', ''),
-('bx_forum_cats', '28', 28, '_bx_forum_cat_Tattoos', ''),
-('bx_forum_cats', '29', 29, '_bx_forum_cat_Technology', ''),
-('bx_forum_cats', '30', 30, '_bx_forum_cat_Travel', ''),
-('bx_forum_cats', '31', 31, '_bx_forum_cat_Weddings', ''),
-('bx_forum_cats', '32', 32, '_bx_forum_cat_Womens_Fashion', '');
+('bx_forum_cats', '1', 1, '_bx_forum_cat_General', '');
+
 
 -- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
