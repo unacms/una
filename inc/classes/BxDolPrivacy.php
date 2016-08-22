@@ -209,18 +209,8 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      */
     public function getContentPublicAsCondition($iProfileIdOwner = 0, $aCustomGroups = array())
     {
-        $mixedPrivacyGroups = array(BX_DOL_PG_ALL);
-        if(isLogged()) {
-            $iProfileIdLogged = bx_get_logged_profile_id();
-            if($iProfileIdLogged == $iProfileIdOwner)
-                return array();
+        $mixedPrivacyGroups = $this->getPrivacyGroupsForContentPublic($iProfileIdOwner, $aCustomGroups);
 
-            if ($iProfileIdOwner && $this->checkFriends($iProfileIdOwner, bx_get_logged_profile_id()))
-                $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS, BX_DOL_PG_FRIENDS);
-            else
-                $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS);
-        }
-        $mixedPrivacyGroups = array_merge($mixedPrivacyGroups, $aCustomGroups);
         return $this->getContentByGroupAsCondition($mixedPrivacyGroups);
     }
 
@@ -233,6 +223,18 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
     {
         $sField = $this->convertActionToField($this->_aObject['action']);
         return $this->_oDb->getContentByGroupAsSQLPart($sField, $mixedGroupId);
+    }
+
+	/**
+     * Get necessary parts of SQL query to use privacy in other queries
+     * @param $iProfileIdOwner owner profile ID
+     * @return array of SQL string parts, for now 'where' part only is returned
+     */
+    public function getContentPublicAsSQLPart($iProfileIdOwner = 0, $aCustomGroups = array())
+    {
+        $mixedPrivacyGroups = $this->getPrivacyGroupsForContentPublic($iProfileIdOwner, $aCustomGroups);
+
+        return $this->getContentByGroupAsSQLPart($mixedPrivacyGroups);
     }
 
     /**
@@ -285,6 +287,23 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
     public function checkFriends($iOwnerId, $iViewerId)
     {
         return BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iOwnerId, $iViewerId, true);
+    }
+
+	protected function getPrivacyGroupsForContentPublic($iProfileIdOwner = 0, $aCustomGroups = array())
+    {
+    	$mixedPrivacyGroups = array(BX_DOL_PG_ALL);
+        if(isLogged()) {
+            $iProfileIdLogged = bx_get_logged_profile_id();
+            if($iProfileIdLogged == $iProfileIdOwner)
+                return array();
+
+            if ($iProfileIdOwner && $this->checkFriends($iProfileIdOwner, bx_get_logged_profile_id()))
+                $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS, BX_DOL_PG_FRIENDS);
+            else
+                $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS);
+        }
+
+        return array_merge($mixedPrivacyGroups, $aCustomGroups);
     }
 
     protected function getCheckMethod($s)

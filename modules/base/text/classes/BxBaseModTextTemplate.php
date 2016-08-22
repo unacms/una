@@ -205,12 +205,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if (!$aGhostFiles)
             return false;
 
-        foreach ($aGhostFiles as $k => $a) {
-            // don't show thumbnail in attachments
-            if ($a['id'] == $aData[$CNF['FIELD_THUMB']])
-                unset($aGhostFiles[$k]);
-        }
-        if (!$aGhostFiles)
+		if(isset($aData[$CNF['FIELD_THUMB']]))
+	        foreach ($aGhostFiles as $k => $a) {
+	            // don't show thumbnail in attachments
+	            if ($a['id'] == $aData[$CNF['FIELD_THUMB']])
+	                unset($aGhostFiles[$k]);
+	        }
+
+        if(!$aGhostFiles)
             return false;
 
         foreach ($aGhostFiles as $k => $a) {
