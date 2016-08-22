@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   `allow_comment_to` varchar(32) NOT NULL DEFAULT 'c',
   `allow_vote_to` varchar(32) NOT NULL DEFAULT 'c',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   FULLTEXT KEY `title_text` (`title`,`text`)

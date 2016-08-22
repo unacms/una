@@ -348,7 +348,7 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_albums_administration', 'Sql', 'SELECT * FROM `bx_albums_albums` WHERE 1 ', 'bx_albums_albums', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxAlbumsGridAdministration', 'modules/boonex/albums/classes/BxAlbumsGridAdministration.php'),
+('bx_albums_administration', 'Sql', 'SELECT * FROM `bx_albums_albums` WHERE 1 ', 'bx_albums_albums', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxAlbumsGridAdministration', 'modules/boonex/albums/classes/BxAlbumsGridAdministration.php'),
 ('bx_albums_common', 'Sql', 'SELECT * FROM `bx_albums_albums` WHERE 1 ', 'bx_albums_albums', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxAlbumsGridCommon', 'modules/boonex/albums/classes/BxAlbumsGridCommon.php');
 
 

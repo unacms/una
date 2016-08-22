@@ -379,7 +379,7 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_market_administration', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxMarketGridAdministration', 'modules/boonex/market/classes/BxMarketGridAdministration.php'),
+('bx_market_administration', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxMarketGridAdministration', 'modules/boonex/market/classes/BxMarketGridAdministration.php'),
 ('bx_market_common', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxMarketGridCommon', 'modules/boonex/market/classes/BxMarketGridCommon.php'),
 
 -- GRIDS: Licenses
