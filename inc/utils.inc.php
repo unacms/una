@@ -776,6 +776,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
     if(function_exists('curl_init')) {
         $rConnect = curl_init();
 
+        curl_setopt($rConnect, CURLOPT_USERAGENT, 'Trident ' . BX_DOL_VERSION);
         curl_setopt($rConnect, CURLOPT_TIMEOUT, 10);
         curl_setopt($rConnect, CURLOPT_URL, $sFileUrl);
         curl_setopt($rConnect, CURLOPT_HEADER, NULL === $sHttpCode ? false : true);
@@ -797,7 +798,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
 
         if ('post' == $sMethod) {
             curl_setopt($rConnect, CURLOPT_POST, true);
-            curl_setopt($rConnect, CURLOPT_POSTFIELDS, $aParams);
+            curl_setopt($rConnect, CURLOPT_POSTFIELDS, http_build_query($aParams));
         }
 
         $sAllCookies = '';

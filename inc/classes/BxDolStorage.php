@@ -1221,15 +1221,32 @@ class BxDolStorageHelperPath
  */
 class BxDolStorageHelperUrl extends BxDolStorageHelperPath
 {
+    protected $aMime2Ext = array (
+        'image/bmp' => 'bmp',
+        'image/gif' => 'gif',
+        'image/jpeg' => 'jpg',
+        'image/pjpeg' => 'jpg',
+        'image/png' => 'png',
+    );
+
     function BxDolStorageHelperUrl ($aParams)
     {   
         $aParams['path'] = '';
         $sExt = pathinfo(parse_url($aParams['url'], PHP_URL_PATH), PATHINFO_EXTENSION);
         if ($sTmpFilename = tempnam(BX_DIRECTORY_PATH_TMP, '')) {
+            $s = '';
+            if (!$sExt) {
+                $s = file_get_contents($aParams['url']);
+                $oFinfo = new finfo(FILEINFO_MIME_TYPE);
+                $sMime = $oFinfo->buffer($s);
+                if (isset($this->aMime2Ext[$sMime]))
+                    $sExt = $this->aMime2Ext[$sMime];
+            }
+
             $aParams['path'] =  $sTmpFilename . '.' . $sExt;
             @rename($sTmpFilename, $aParams['path']);
 
-            if ($s = bx_file_get_contents ($aParams['url']))
+            if ($s || $s = bx_file_get_contents ($aParams['url']))
                 file_put_contents($aParams['path'], $s);
         }
         parent::BxDolStorageHelperPath($aParams);
