@@ -79,7 +79,7 @@ class BxMailchimpModule extends BxDolModule
      */      
     public function serviceRemoveAccount($mixed)
     {
-        return $this->_accountAction($sEmail, 'DELETE');
+        return $this->_accountAction($mixed, 'DELETE');
     }
 
     /**
