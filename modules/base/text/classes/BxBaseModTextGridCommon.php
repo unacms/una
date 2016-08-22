@@ -15,6 +15,10 @@ class BxBaseModTextGridCommon extends BxBaseModTextGridAdministration
     {
         parent::__construct ($aOptions, $oTemplate);
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_sFieldStatus = $CNF['FIELD_STATUS'];
+
         $this->_sManageType = BX_DOL_MANAGE_TOOLS_COMMON;
     }
 

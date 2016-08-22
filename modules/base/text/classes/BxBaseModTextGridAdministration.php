@@ -11,6 +11,7 @@
 
 class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 {
+	protected $_sFieldStatus;
 	protected $_sFilter1Name;
 	protected $_sFilter1Value;
 	protected $_aFilter1Values;
@@ -20,6 +21,8 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         parent::__construct ($aOptions, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_sFieldStatus = $CNF['FIELD_STATUS_ADMIN'];
 
         $this->_sFilter1Name = 'filter1';
         $this->_aFilter1Values = array(
@@ -50,7 +53,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
             list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
     	if(!empty($this->_sFilter1Value))
-        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `status`=?", $this->_sFilter1Value);
+        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `" . $this->_sFieldStatus . "`=?", $this->_sFilter1Value);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
