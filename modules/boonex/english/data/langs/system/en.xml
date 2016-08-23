@@ -1402,6 +1402,7 @@
 	<string name="_cmt_msg_login_required"><![CDATA[<a href="{0}">Login</a> or <a href="{1}">Join</a> to comment.]]></string>
 	<string name="_cmt_page_view_header"><![CDATA[Comment to {0}]]></string>
 	<string name="_cmt_page_view_title"><![CDATA[Comment to <a href="{0}">{1}</a>]]></string>
+	<string name="_cmt_download_attached_file"><![CDATA[Download file]]></string>
 	<string name="_cmt_view_attached_image"><![CDATA[View image]]></string>
 	<string name="_cmt_load_more_comments_head"><![CDATA[See newer comments...]]></string>
 	<string name="_cmt_load_more_comments_tail"><![CDATA[See older comments...]]></string>

@@ -216,19 +216,43 @@ class BxBaseCmts extends BxDolCmts
 
         $aTmplImages = array();
         if($this->isAttachImageEnabled()) {
-            $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
-            if(!empty($aImages) && is_array($aImages)) {
+            $aFiles = $this->_oQuery->getFiles($this->_aSystem['system_id'], $aCmt['cmt_id']);
+            if(!empty($aFiles) && is_array($aFiles)) {
         		$oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
-
                 $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
-                foreach($aImages as $aImage)
+                foreach($aFiles as $aFile) {
+                	$bImage = strncmp($aFile['mime_type'], 'image/', 6) == 0;
+                	$bVideo = strncmp($aFile['mime_type'], 'video/', 6) == 0;
+
+                	$sPreview = '';
+                	if($oTranscoder && ($bImage || $bVideo))
+                		$sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
+
+            		if(!$sPreview)
+                		$sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
+
+					$sFile = $oStorage->getFileUrlById($aFile['image_id']);
+
                     $aTmplImages[] = array(
                         'style_prefix' => $this->_sStylePrefix,
-                        'js_object' => $this->_sJsObjName,
-                        'image' => $oTranscoder->getFileUrl($aImage['image_id']),
-                    	'image_orig' => $oStorage->getFileUrlById($aImage['image_id'])
+                    	'bx_if:show_image' => array(
+                    		'condition' => $bImage,
+                    		'content' => array(
+								'js_object' => $this->_sJsObjName,
+								'preview' => $sPreview,
+								'file' => $sFile
+                    		)
+                    	),
+                        'bx_if:show_file' => array(
+                    		'condition' => !$bImage,
+                    		'content' => array(
+								'preview' => $sPreview,
+								'file' => $sFile
+                    		)
+                    	),
                     );
+                }
             }
         }
 

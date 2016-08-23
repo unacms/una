@@ -137,9 +137,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected $_sFormDisplayPost;
     protected $_sFormDisplayEdit;
 
-    protected $_sTableImages;
-    protected $_sTableImages2Entries;
-
     protected $_sConnObjFriends;
     protected $_sConnObjSubscriptions;
 
@@ -433,6 +430,18 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 	{
 		return 'cmts-notification-' . $this->_sSystem . '-' . $this->_iId;
 	}
+
+	public function setTableNameFiles($sTable)
+    {
+    	$this->_aSystem['table_images'] = $sTable;
+    	$this->_oQuery->setTableNameFiles($sTable);
+    }
+
+	public function setTableNameFiles2Entries($sTable)
+    {
+    	$this->_aSystem['table_images2entries'] = $sTable;
+    	$this->_oQuery->setTableNameFiles2Entries($sTable);
+    }
 
     public function isNl2br ()
     {
@@ -799,7 +808,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
             $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
-            $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+            $aImages = $this->_oQuery->getFiles($this->_aSystem['system_id'], $aCmt['cmt_id']);
             foreach($aImages as $aImage)
                 $oStorage->deleteFile($aImage['image_id']);
 

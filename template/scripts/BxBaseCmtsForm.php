@@ -9,18 +9,9 @@
 
 class BxBaseCmtsForm extends BxTemplFormView
 {
-	protected $_sStorageObject;
-    protected $_sTranscoderPreview;
-    protected $_aImageUploaders;
-
     public function __construct($aInfo, $oTemplate)
     {
         parent::__construct($aInfo, $oTemplate);
-//TODO: Continue from HERE
-        $this->_sStorageObject = 'sys_cmts_images';
-        $this->_sTranscoderPreview = 'sys_cmts_images_preview';
-
-        $this->_aImageUploaders = array('sys_cmts_simple');
 
     	if(isset($this->aInputs['cmt_image'])) {
             $aFormNested = array(
@@ -32,9 +23,9 @@ class BxBaseCmtsForm extends BxTemplFormView
 
             $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
 
-            $this->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
-            $this->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
-            $this->aInputs['cmt_image']['uploaders'] = !empty($this->aInputs['cmt_image']['value']) ? unserialize($this->aInputs['cmt_image']['value']) : $this->_aImageUploaders;
+            $this->aInputs['cmt_image']['storage_object'] = 'sys_cmts_images';
+            $this->aInputs['cmt_image']['images_transcoder'] = 'sys_cmts_images_preview';
+            $this->aInputs['cmt_image']['uploaders'] = !empty($this->aInputs['cmt_image']['value']) ? unserialize($this->aInputs['cmt_image']['value']) : array('sys_cmts_simple');
             $this->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
             $this->aInputs['cmt_image']['multiple'] = true;
             $this->aInputs['cmt_image']['ghost_template'] = $oFormNested;
@@ -43,12 +34,12 @@ class BxBaseCmtsForm extends BxTemplFormView
 
 	public function getStorageObjectName()
     {
-        return $this->_sStorageObject;
+        return isset($this->aInputs['cmt_image']['storage_object']) ? $this->aInputs['cmt_image']['storage_object'] : '';
     }
 
     public function getTranscoderPreviewName()
     {
-    	return $this->_sTranscoderPreview;
+    	return isset($this->aInputs['cmt_image']['images_transcoder']) ? $this->aInputs['cmt_image']['images_transcoder'] : '';
     }
 }
 

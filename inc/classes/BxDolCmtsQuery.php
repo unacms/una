@@ -21,8 +21,8 @@ class BxDolCmtsQuery extends BxDolDb
     protected $_sTriggerFieldTitle;
     protected $_sTriggerFieldComments;
 
-    protected $_sTableImages;
-    protected $_sTableImages2Entries;
+    protected $_sTableFiles;
+    protected $_sTableFiles2Entries;
 
     protected $_sTableIds;
 
@@ -38,8 +38,8 @@ class BxDolCmtsQuery extends BxDolDb
         $this->_sTriggerFieldTitle = $aSystem['trigger_field_title'];
         $this->_sTriggerFieldComments = $aSystem['trigger_field_comments'];
 
-        $this->_sTableImages = $aSystem['table_images'];
-        $this->_sTableImages2Entries = $aSystem['table_images2entries'];
+        $this->_sTableFiles = $aSystem['table_images'];
+        $this->_sTableFiles2Entries = $aSystem['table_images2entries'];
 
         $this->_sTableIds = $aSystem['table_ids'];
 
@@ -50,7 +50,17 @@ class BxDolCmtsQuery extends BxDolDb
     {
         return $this->_sTable;
     }
-    
+
+    function setTableNameFiles($sTable)
+    {
+    	$this->_sTableFiles = $sTable;
+    }
+
+	function setTableNameFiles2Entries($sTable)
+    {
+    	$this->_sTableFiles2Entries = $sTable;
+    }
+
     function getCommentsCountAll ($iId)
     {
         $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldComments}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ?", $iId);
@@ -249,33 +259,41 @@ class BxDolCmtsQuery extends BxDolDb
 
     function saveImages($iSystemId, $iCmtId, $iImageId)
     {
-        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableImages2Entries}` SET `system_id`=?, `cmt_id`=?, `image_id`=?", $iSystemId, $iCmtId, $iImageId);
+        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableFiles2Entries}` SET `system_id`=?, `cmt_id`=?, `image_id`=?", $iSystemId, $iCmtId, $iImageId);
         return (int)$this->query($sQuery) > 0;
     }
 
-    function getImages($iSystemId, $iCmtId, $iId = false)
+    function getFiles($iSystemId, $iCmtId, $iId = false)
     {
     	$aBindings = array(
     		'system_id' => $iSystemId
     	);
 
         $sJoin = "";
-        $sWhere = " AND `i`.`system_id` = :system_id ";
+        $sWhere = " AND `tf2e`.`system_id` = :system_id ";
 
-        if (false !== $iCmtId) {
+        if($iCmtId !== false) {
         	$aBindings['cmt_id'] = $iCmtId;
 
-            $sWhere .= " AND `i`.`cmt_id` = :cmt_id ";
+            $sWhere .= " AND `tf2e`.`cmt_id` = :cmt_id ";
         }
 
-        if (false !== $iId) {
+        if($iId !== false) {
         	$aBindings['cmt_object_id'] = $iId;
 
-            $sWhere .= " AND `c`.`cmt_object_id` = :cmt_object_id";
-            $sJoin .= " INNER JOIN `{$this->_sTable}` AS `c` ON (`i`.`cmt_id` = `c`.`cmt_id`) ";
+            $sWhere .= " AND `te`.`cmt_object_id` = :cmt_object_id";
+            $sJoin .= " INNER JOIN `{$this->_sTable}` AS `te` ON (`tf2e`.`cmt_id` = `te`.`cmt_id`) ";
         }
 
-        return $this->getAll("SELECT * FROM `{$this->_sTableImages2Entries}` AS `i` " . $sJoin . " WHERE 1 " . $sWhere, $aBindings);
+        $sQuery = "SELECT 
+        		`tf2e`.*,
+        		`tf`.`file_name` AS `file_name`,
+        		`tf`.`mime_type` AS `mime_type` 
+        	FROM `{$this->_sTableFiles2Entries}` AS `tf2e` 
+        	LEFT JOIN `{$this->_sTableFiles}` AS `tf` ON (`tf2e`.`image_id` = `tf`.`id`) " . $sJoin . " 
+        	WHERE 1 " . $sWhere;
+
+        return $this->getAll($sQuery, $aBindings);
     }
 
     function deleteImages($iSystemId, $iCmtId)
@@ -291,7 +309,7 @@ class BxDolCmtsQuery extends BxDolDb
             $sWhereAddon = " AND `cmt_id` = :cmt_id ";
         }
 
-        return $this->query("DELETE FROM `{$this->_sTableImages2Entries}` WHERE `system_id` = :system_id" . $sWhereAddon, $aBindings);
+        return $this->query("DELETE FROM `{$this->_sTableFiles2Entries}` WHERE `system_id` = :system_id" . $sWhereAddon, $aBindings);
     }
 
     function updateRepliesCount($iCmtId, $iCount)
@@ -314,7 +332,7 @@ class BxDolCmtsQuery extends BxDolDb
             $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_replies` = `cmt_replies` - 1 WHERE `cmt_id` = ?", $r['cmt_parent_id']);
             $this->query ($sQuery);
 
-            $aFilesMore = $this->convertImagesArray($this->getImages($aSystem['system_id'], $r['cmt_id']));
+            $aFilesMore = $this->convertImagesArray($this->getFiles($aSystem['system_id'], $r['cmt_id']));
             $this->deleteImages($aSystem['system_id'], $r['cmt_id']);
             if ($aFilesMore && null !== $aFiles)
                 $aFiles = array_merge($aFiles, $aFilesMore);
@@ -333,10 +351,10 @@ class BxDolCmtsQuery extends BxDolDb
     function deleteObjectComments ($iObjectId, &$aFilesReturn = null, &$aCmtIds = null)
     {
         $aSystem = $this->_oMain->getSystemInfo();
-        $aFiles = $this->convertImagesArray($this->getImages($aSystem['system_id'], false, $iObjectId));
+        $aFiles = $this->convertImagesArray($this->getFiles($aSystem['system_id'], false, $iObjectId));
 
         if ($aFiles) {
-            $sQuery = $this->prepare("DELETE FROM {$this->_sTableImages2Entries} WHERE `system_id` = ? AND `image_id` IN(" . $this->implode_escape($aFiles) . ")", $aSystem['system_id']);
+            $sQuery = $this->prepare("DELETE FROM {$this->_sTableFiles2Entries} WHERE `system_id` = ? AND `image_id` IN(" . $this->implode_escape($aFiles) . ")", $aSystem['system_id']);
             $this->query($sQuery);
         }
 
@@ -357,7 +375,7 @@ class BxDolCmtsQuery extends BxDolDb
     {
         // get files
         if (null !== $aFiles)
-            $aFiles = $this->convertImagesArray($this->getImages($iSystemId, false));
+            $aFiles = $this->convertImagesArray($this->getFiles($iSystemId, false));
 
         // delete files
         $this->deleteImages($iSystemId, false);
