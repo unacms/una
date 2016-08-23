@@ -6,12 +6,12 @@ DROP TABLE IF EXISTS `bx_forum_discussions`, `bx_forum_files`, `bx_forum_photos_
 
 
 -- STORAGES & TRANSCODERS
-DELETE FROM `sys_objects_storage` WHERE `object` IN ('bx_forum_files', 'bx_forum_photos_resized');
-DELETE FROM `sys_storage_tokens` WHERE `object` IN ('bx_forum_files', 'bx_forum_photos_resized');
+DELETE FROM `sys_objects_storage` WHERE `object` IN ('bx_forum_files', 'bx_forum_files_cmts', 'bx_forum_photos_resized');
+DELETE FROM `sys_storage_tokens` WHERE `object` IN ('bx_forum_files', 'bx_forum_files_cmts', 'bx_forum_photos_resized');
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` = 'bx_forum_preview';
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` = 'bx_forum_preview';
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_forum_preview';
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN ('bx_forum_preview', 'bx_forum_preview_cmts');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN ('bx_forum_preview', 'bx_forum_preview_cmts');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN ('bx_forum_preview', 'bx_forum_preview_cmts');
 
 
 -- FORMS

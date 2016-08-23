@@ -20,6 +20,8 @@ class BxForumCmts extends BxTemplCmts
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         parent::__construct($sSystem, $iId, $iInit);
+
+        $this->setTableNameFiles('bx_forum_files');
     }
 
 	public function isPostReplyAllowed($isPerformAction = false)
@@ -44,6 +46,21 @@ class BxForumCmts extends BxTemplCmts
     	return parent::getComment($mixedCmt, $aBp, array_merge($aDp, array(
     		'class_comment' => ' bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
     	)));
+    }
+
+	protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	$oResult = parent::_getFormObject($sAction);
+    	if(!isset($oResult->aInputs['cmt_image']))
+    		return $oResult;
+
+		$oResult->aInputs['cmt_image']['storage_object'] = $CNF['OBJECT_STORAGE_CMTS']; 
+		$oResult->aInputs['cmt_image']['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS'];
+		$oResult->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'paperclip');
+
+        return $oResult;
     }
 
     protected function _getForm($sAction, $iId)
