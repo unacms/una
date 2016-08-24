@@ -25,6 +25,15 @@ class BxBaseCategory extends BxDolCategory
             $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
+    public function getCategoryTitle($sValue)
+    {
+    	$a = BxDolForm::getDataItems($this->_aObject['list_name']);
+        if (!$a || !isset($a[$sValue]))
+            return '';
+
+		return $a[$sValue];
+    }
+
     public function getCategoryUrl($sValue)
     {
         $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?cat=' . rawurlencode($this->getObjectName()) . '&keyword=' . rawurlencode($sValue);

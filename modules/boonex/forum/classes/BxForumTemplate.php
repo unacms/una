@@ -23,7 +23,28 @@ class BxForumTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    public function entryParticipants ($aContentInfo, $iMaxVisible = 2, $sFloat = 'left')
+    public function entryBreadcrumb($aContentInfo)
+    {
+        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+        $oPermalink = BxDolPermalinks::getInstance();
+        $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+
+        $aTmplVarsItems = array(array(
+        	'url' => $oCategory->getCategoryUrl($aContentInfo[$CNF['FIELD_CATEGORY']]),
+        	'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
+        ), array(
+        	'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+        	'title' => $aContentInfo[$CNF['FIELD_TITLE']]
+        ));
+
+    	return $this->parseHtmlByName('breadcrumb.html', array(
+    		'url_home' => BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_HOME']),
+    		'bx_repeat:items' => $aTmplVarsItems
+    	));
+    }
+
+    public function entryParticipants($aContentInfo, $iMaxVisible = 2, $sFloat = 'left')
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;

@@ -45,9 +45,10 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_forum_view_entry', 'view-discussion', '_bx_forum_page_title_sys_view_entry', '_bx_forum_page_title_view_entry', @sName, 10, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxForumPageEntry', 'modules/boonex/forum/classes/BxForumPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
-('bx_forum_view_entry', 3, @sName, '_bx_forum_page_block_title_entry_participants', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:19:"entity_participants";}', 0, 0, 1, 0),
+('bx_forum_view_entry', 1, @sName, '_bx_forum_page_block_title_entry_breadcrumb', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 1, 0),
 ('bx_forum_view_entry', 2, @sName, '_bx_forum_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 0),
+('bx_forum_view_entry', 3, @sName, '_bx_forum_page_block_title_entry_participants', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:19:"entity_participants";}', 0, 0, 1, 0),
+('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
 ('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"entity_attachments";}', 0, 0, 1, 1),
 ('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 2);
 

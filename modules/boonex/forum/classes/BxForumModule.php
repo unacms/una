@@ -144,6 +144,19 @@ class BxForumModule extends BxBaseModTextModule
         return true;
     }
 
+    public function serviceEntityBreadcrumb ($iContentId = 0)
+    {
+    	if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+
+		return $this->_oTemplate->entryBreadcrumb($aContentInfo);
+    }
+
     /**
      * Entry collaborators block
      */

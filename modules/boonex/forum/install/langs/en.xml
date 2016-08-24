@@ -60,6 +60,7 @@
 	<string name="_bx_forum_page_block_title_entry_text"><![CDATA[Text]]></string>
     <string name="_bx_forum_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_forum_page_block_title_entry_actions"><![CDATA[Actions]]></string>
+    <string name="_bx_forum_page_block_title_entry_breadcrumb"><![CDATA[Breadcrumb]]></string>
     <string name="_bx_forum_page_block_title_entry_comments"><![CDATA[Replies ({0})]]></string>
     <string name="_bx_forum_page_block_title_entry_participants"><![CDATA[Participants]]></string>
     <string name="_bx_forum_page_title_browse"><![CDATA[Forum]]></string>

@@ -1,5 +1,15 @@
 @import url(../../../../base/text/template/css/main.css);
 
+/*-- Breadcrumb --*/
+div.bx-forum-breadcrumb a,
+div.bx-forum-breadcrumb i {
+	display: inline-block;
+	vertical-align: middle;
+
+	height: 1.4rem;
+	line-height: 1.4rem;
+}
+
 /*-- Participants --*/
 .bx-forum-participants {
     white-space:nowrap;

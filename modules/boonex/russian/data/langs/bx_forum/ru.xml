@@ -60,6 +60,7 @@
 	<string name="_bx_forum_page_block_title_entry_text"><![CDATA[Текст]]></string>
     <string name="_bx_forum_page_block_title_entry_author"><![CDATA[Автор]]></string>
     <string name="_bx_forum_page_block_title_entry_actions"><![CDATA[Действия]]></string>
+    <string name="_bx_forum_page_block_title_entry_breadcrumb"><![CDATA["Хлебные крошки"]]></string>
     <string name="_bx_forum_page_block_title_entry_comments"><![CDATA[Ответов ({0})]]></string>
     <string name="_bx_forum_page_block_title_entry_participants"><![CDATA[Участники]]></string>
     <string name="_bx_forum_page_title_browse"><![CDATA[Форум]]></string>
