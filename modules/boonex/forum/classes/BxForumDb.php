@@ -88,6 +88,44 @@ class BxForumDb extends BxBaseModTextDb
 
 		return $this->updateEntries($aActions[$sAction], array($CNF['FIELD_ID'] => $aContentInfo[$CNF['FIELD_ID']]));
 	}
+
+	public function insertCategory($aSet)
+    {
+        $sQuery = "INSERT INTO `" . $this->getPrefix() . "categories` SET " . $this->arrayToSQL($aSet);
+        return (int)$this->query($sQuery) > 0;
+    }
+
+	public function getCategories($aParams)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+
+        if(!isset($aParams['order']) || empty($aParams['order']))
+           $sOrderClause = "ORDER BY `tc`.`category` ASC";
+
+        switch($aParams['type']) {
+            case 'by_category':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'category' => $aParams['category']
+                );
+
+                $sWhereClause = " AND `tc`.`category`=:category ";
+                break;
+
+            case 'all_pairs':
+            	$aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'category';
+                $aMethod['params'][2] = 'visible_for_levels';
+            	break;
+        }
+
+        $aMethod['params'][0] = "SELECT 
+                `tc`.*" . $sSelectClause . " 
+            FROM `" . $this->getPrefix() . "categories` AS `tc` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
 }
 
 /** @} */

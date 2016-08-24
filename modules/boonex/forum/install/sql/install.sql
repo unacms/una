@@ -25,6 +25,12 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   KEY `lr_timestamp` (`lr_timestamp`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_forum_categories` (
+  `category` int(11) NOT NULL default '0',
+  `visible_for_levels` int(11) NOT NULL default '2147483647',
+  PRIMARY KEY (`category`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
 -- TABLE: storages & transcoders
 CREATE TABLE IF NOT EXISTS `bx_forum_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

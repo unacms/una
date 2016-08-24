@@ -25,6 +25,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array('title', 'text'),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+        		'category' => array('value' => '', 'field' => 'cat', 'operator' => '='),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_forum_per_page_browse'), 'start' => 0),
@@ -65,6 +66,20 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_by_author');
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode . '/' . $oProfileAuthor->id();
+                break;
+
+			case 'category':
+				$iCategory = (int)$aParams['category'];
+				$this->addMarkers(array(
+					'category_id' => $iCategory,
+					'category_name' => BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
+				));
+
+                $this->aCurrent['restriction']['category']['value'] = $iCategory;
+
+                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_CATEGORY_ENTRIES'] . '&category={category_id}';
+                $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_by_category');
+                $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode . '/' . $iCategory;
                 break;
 
 			case 'new':

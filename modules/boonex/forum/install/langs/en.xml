@@ -66,6 +66,7 @@
     <string name="_bx_forum_page_title_browse"><![CDATA[Forum]]></string>
 	<string name="_bx_forum_page_title_search_results"><![CDATA[Discussions matching "{0}"]]></string>
 	<string name="_bx_forum_page_title_browse_by_author"><![CDATA[Discussions of {display_name}]]></string>
+	<string name="_bx_forum_page_title_browse_by_category"><![CDATA[Discussions by {category_name}]]></string>
 	<string name="_bx_forum_page_title_browse_new"><![CDATA[New]]></string>
     <string name="_bx_forum_page_title_browse_latest"><![CDATA[Latest]]></string>
     <string name="_bx_forum_page_title_browse_top"><![CDATA[Top]]></string>
@@ -97,8 +98,10 @@
     <string name="_bx_forum_page_title_sys_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_forum_page_title_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_forum_page_block_title_entries_categories"><![CDATA[Categories]]></string>
-    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Discussions by <a href="{link}">{title}</a>]]></string>
+    <string name="_bx_forum_page_title_sys_entries_by_category"><![CDATA[Discussions by category]]></string>
+    <string name="_bx_forum_page_title_entries_by_category"><![CDATA[Discussions by {category_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_category"><![CDATA[Discussions by category]]></string>
+    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Discussions by {category_name}]]></string>
     <string name="_bx_forum_page_title_sys_entries_of_author"><![CDATA[Discussions of author]]></string>
     <string name="_bx_forum_page_title_entries_of_author"><![CDATA[Discussions by {display_name}]]></string>
     <string name="_bx_forum_page_block_title_entries_of_author"><![CDATA[Discussions by <a href="{profile_link}">{display_name}</a>]]></string>
@@ -165,6 +168,7 @@
     <string name="_bx_forum_menu_item_title_forum"><![CDATA[Forum]]></string>
     <string name="_bx_forum_menu_item_title_system_unreplied_discussions"><![CDATA[Unreplied discussions number]]></string>
     <string name="_bx_forum_menu_item_title_unreplied_discussions"><![CDATA[{addon} unreplied discussions]]></string>
+    <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Categories]]></string>
 
 	<string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_forum_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -173,12 +177,29 @@
     <string name="_bx_forum_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_forum_grid_column_title_adm_added"><![CDATA[Added]]></string>
     <string name="_bx_forum_grid_column_title_adm_author"><![CDATA[Author]]></string>
+    <string name="_bx_forum_grid_column_title_title"><![CDATA[Category]]></string>
+    <string name="_bx_forum_grid_column_title_visible_for_levels"><![CDATA[Visible For]]></string>
     <string name="_bx_forum_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
     <string name="_bx_forum_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_forum_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
+    <string name="_bx_forum_grid_action_title_add"><![CDATA[New discussion]]></string>
+    <string name="_bx_forum_grid_action_title_show_to"><![CDATA[Show To]]></string>
     <string name="_bx_forum_grid_action_err_delete"><![CDATA[Cannot delete the selected discussion(s).]]></string>
     <string name="_bx_forum_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
-    <string name="_bx_forum_grid_action_title_add"><![CDATA[New discussion]]></string>
+    <string name="_bx_forum_grid_txt_manage_visibility"><![CDATA[Manage visibility settings.]]></string>
+    <string name="_bx_forum_grid_show_to_popup"><![CDATA[Show category to:]]></string>
+    <string name="_bx_forum_grid_txt_visible_for"><![CDATA[Visible For]]></string>
+    <string name="_bx_forum_grid_txt_visible_for_all"><![CDATA[Anyone]]></string>
+	<string name="_bx_forum_grid_txt_visible_for_levels"><![CDATA[Select Levels]]></string>
+	<string name="_bx_forum_grid_txt_visible_for_selected"><![CDATA[Selected levels]]></string>
+	<string name="_bx_forum_grid_inf_visible_for_levels"><![CDATA[Select user levels that can view this category]]></string>
+	<string name="_bx_forum_grid_err_show_to"><![CDATA[Cannot update category.]]></string>
+	<string name="_bx_forum_grid_btn_save"><![CDATA[Save]]></string>
+	<string name="_bx_forum_grid_btn_cancel"><![CDATA[Cancel]]></string>
+	
+    <string name="_bx_forum_grid_txt_"><![CDATA[]]></string>
+    <string name="_bx_forum_grid_txt_"><![CDATA[]]></string>
+    <string name="_bx_forum_grid_txt_"><![CDATA[]]></string>
 
 	<string name="_bx_forum_pre_lists_cats"><![CDATA[Forum categories]]></string>
     <string name="_bx_forum_cat_General"><![CDATA[General]]></string>

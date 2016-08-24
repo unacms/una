@@ -66,6 +66,7 @@
     <string name="_bx_forum_page_title_browse"><![CDATA[Форум]]></string>
 	<string name="_bx_forum_page_title_search_results"><![CDATA[Обсуждения, соответствующие "{0}"]]></string>
 	<string name="_bx_forum_page_title_browse_by_author"><![CDATA[Обсуждения {display_name}]]></string>
+	<string name="_bx_forum_page_title_browse_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
 	<string name="_bx_forum_page_title_browse_new"><![CDATA[Новые]]></string>
     <string name="_bx_forum_page_title_browse_latest"><![CDATA[Недавние]]></string>
     <string name="_bx_forum_page_title_browse_top"><![CDATA[ТОП]]></string>
@@ -97,8 +98,10 @@
     <string name="_bx_forum_page_title_sys_entries_categories"><![CDATA[Категории]]></string>
     <string name="_bx_forum_page_title_entries_categories"><![CDATA[Категории]]></string>
     <string name="_bx_forum_page_block_title_entries_categories"><![CDATA[Категории]]></string>
-    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Обсуждения в <a href="{link}">{title}</a>]]></string>
+    <string name="_bx_forum_page_title_sys_entries_by_category"><![CDATA[Обсуждения в категории]]></string>
+    <string name="_bx_forum_page_title_entries_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_category"><![CDATA[Обсуждения в категории]]></string>
+    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
     <string name="_bx_forum_page_title_sys_entries_of_author"><![CDATA[Обсуждения автора]]></string>
     <string name="_bx_forum_page_title_entries_of_author"><![CDATA[{display_name} - Обсуждения]]></string>
     <string name="_bx_forum_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Обсуждения]]></string>   
@@ -165,6 +168,7 @@
     <string name="_bx_forum_menu_item_title_forum"><![CDATA[обсуждение]]></string>
     <string name="_bx_forum_menu_item_title_system_unreplied_discussions"><![CDATA[Количество неотвеченных дискуссий]]></string>
     <string name="_bx_forum_menu_item_title_unreplied_discussions"><![CDATA[{addon} неотвеченных дискуссий]]></string>
+    <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Категории]]></string>
 
 	<string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_forum_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
@@ -173,12 +177,25 @@
     <string name="_bx_forum_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_forum_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>
     <string name="_bx_forum_grid_column_title_adm_author"><![CDATA[Автор]]></string>
+    <string name="_bx_forum_grid_column_title_title"><![CDATA[Категория]]></string>
+    <string name="_bx_forum_grid_column_title_visible_for_levels"><![CDATA[Видимо для]]></string>
     <string name="_bx_forum_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_forum_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_forum_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
+    <string name="_bx_forum_grid_action_title_add"><![CDATA[Новое сообщение]]></string>
+    <string name="_bx_forum_grid_action_title_show_to"><![CDATA[Показать]]></string>
     <string name="_bx_forum_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) обсуждение(ния).]]></string>
     <string name="_bx_forum_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
-    <string name="_bx_forum_grid_action_title_add"><![CDATA[Новое сообщение]]></string>
+	<string name="_bx_forum_grid_txt_manage_visibility"><![CDATA[Управление настройками видимости.]]></string>
+	<string name="_bx_forum_grid_show_to_popup"><![CDATA[Категория видна:]]></string>
+    <string name="_bx_forum_grid_txt_visible_for"><![CDATA[Видимо для]]></string>
+    <string name="_bx_forum_grid_txt_visible_for_all"><![CDATA[Всех]]></string>
+	<string name="_bx_forum_grid_txt_visible_for_levels"><![CDATA[Выбрать Уровни]]></string>
+	<string name="_bx_forum_grid_txt_visible_for_selected"><![CDATA[Выбранные уровни]]></string>
+	<string name="_bx_forum_grid_inf_visible_for_levels"><![CDATA[Выбрать членства, которым разрешено просматривать данную категорию.]]></string>
+	<string name="_bx_forum_grid_err_show_to"><![CDATA[Невозможно обновить категорию.]]></string>
+	<string name="_bx_forum_grid_btn_save"><![CDATA[Сохранить]]></string>
+	<string name="_bx_forum_grid_btn_cancel"><![CDATA[Отменить]]></string>
 
     <string name="_bx_forum_pre_lists_cats"><![CDATA[Категории обсуждений]]></string>
     <string name="_bx_forum_cat_General"><![CDATA[Общие]]></string>

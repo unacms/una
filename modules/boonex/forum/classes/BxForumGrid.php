@@ -14,6 +14,7 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 class BxForumGrid extends BxTemplGrid
 {
     protected $_oModule;
+    protected $_aParams;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -23,33 +24,36 @@ class BxForumGrid extends BxTemplGrid
         $this->_sDefaultSortingOrder = 'DESC';
     }
 
-    public function setBrowseType($sType)
+    public function setBrowseParams($aParams)
     {
-    	$sField = '';
-    	$sDir = 'DESC';
-    	switch($sType) {
-    		case 'new':
-                $sField = 'added';
-                break;
+    	$this->_aParams = $aParams;
 
-			case 'updated':
-				$sField = 'changed';
-                break;
+    	$sField = 'added';
+    	if(!empty($this->_aParams['type']))
+	    	switch($this->_aParams['type']) {
+	    		case 'new':
+	    		case 'category':
+	                $sField = 'added';
+	                break;
+	
+				case 'updated':
+					$sField = 'changed';
+	                break;
+	
+				case 'latest':
+					$sField = 'lr_timestamp';
+	                break;
+	
+				case 'top':
+					$sField = 'comments';
+	                break;
+	
+	            case 'popular':
+	            	$sField = 'views';
+	                break;
+	    	}
 
-			case 'latest':
-				$sField = 'lr_timestamp';
-                break;
-
-			case 'top':
-				$sField = 'comments';
-                break;
-
-            case 'popular':
-            	$sField = 'views';
-                break;
-    	}
-
-    	$this->_aOptions['field_order'] = $sField;
+		$this->_aOptions['field_order'] = $sField;
     }
 
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -114,6 +118,10 @@ class BxForumGrid extends BxTemplGrid
 			$sJoinClause .= $aCondition['join'];
 		if(isset($aCondition['where']))
 			$sWhereClause .= $aCondition['where'];
+
+		//--- Check browse params
+		if(!empty($this->_aParams['where']) && is_array($this->_aParams['where']))
+			$sWhereClause .= " AND " . $this->_oModule->_oDb->arrayToSQL($this->_aParams['where'], " AND ");
 
 		$this->_aOptions['source'] = sprintf($this->_aOptions['source'], $sJoinClause, $sWhereClause);
 		return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);

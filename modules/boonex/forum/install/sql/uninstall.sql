@@ -2,7 +2,7 @@ SET @sName = 'bx_forum';
 
 
 -- TABLES: entries
-DROP TABLE IF EXISTS `bx_forum_discussions`, `bx_forum_files`, `bx_forum_photos_resized`, `bx_forum_cmts`, `bx_forum_views_track`, `bx_forum_meta_keywords`, `bx_forum_reports`, `bx_forum_reports_track`;
+DROP TABLE IF EXISTS `bx_forum_discussions`, `bx_forum_categories`, `bx_forum_files`, `bx_forum_photos_resized`, `bx_forum_cmts`, `bx_forum_views_track`, `bx_forum_meta_keywords`, `bx_forum_reports`, `bx_forum_reports_track`;
 
 
 -- STORAGES & TRANSCODERS

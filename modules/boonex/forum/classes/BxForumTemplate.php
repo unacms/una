@@ -31,7 +31,9 @@ class BxForumTemplate extends BxBaseModTextTemplate
         $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
 
         $aTmplVarsItems = array(array(
-        	'url' => $oCategory->getCategoryUrl($aContentInfo[$CNF['FIELD_CATEGORY']]),
+        	'url' => bx_append_url_params($oPermalink->permalink('page.php?i=' . $CNF['URI_CATEGORY_ENTRIES']), array(
+        		'category' => $aContentInfo[$CNF['FIELD_CATEGORY']]
+        	)),
         	'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
         ), array(
         	'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
@@ -132,6 +134,34 @@ class BxForumTemplate extends BxBaseModTextTemplate
         }
 
         return $this->parseHtmlByName('participants.html', $aVars);
+    }
+
+    function getCategories($bEmptyMessage = true)
+    {
+    	$CNF = BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+    	$aCategories = BxDolForm::getDataItems($CNF['OBJECT_CATEGORY']);
+    	if(empty($aCategories) ||  !is_array($aCategories))
+    		return $bEmptyMessage ? MsgBox(_t('Empty')) : '';
+
+		$oPermalink = BxDolPermalinks::getInstance();
+		$oCategories = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+
+		$aTmplVarsCategories = array();
+		foreach($aCategories as $iValue => $sTitle) {
+			if(empty($iValue))
+				continue;
+
+			$aTmplVarsCategories[] = array(
+				'title' => $sTitle,
+				'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_CATEGORY_ENTRIES'] . '&category=' . $iValue),
+				'count' => $oCategories->getItemsNum($iValue)
+			);
+        }
+
+        return $this->parseHtmlByName('categories.html', array(
+        	'bx_repeat:categories' => $aTmplVarsCategories
+        ));
     }
 
 	function getEntryAuthor($aRow)

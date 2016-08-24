@@ -55,7 +55,8 @@ class BxForumConfig extends BxBaseModTextConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-discussion',
-            'URI_AUTHOR_ENTRIES' => 'discussions',
+            'URI_AUTHOR_ENTRIES' => 'discussions-author',
+        	'URI_CATEGORY_ENTRIES' => 'discussions-category',
             'URI_ADD_ENTRY' => 'create-discussion',
         	'URI_EDIT_ENTRY' => 'edit-discussion',
         	'URI_MANAGE_COMMON' => 'discussions-manage',
@@ -77,6 +78,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_GRID' => 'bx_forum',
         	'OBJECT_GRID_ADMINISTRATION' => 'bx_forum_administration',
         	'OBJECT_GRID_COMMON' => 'bx_forum_common',
+        	'OBJECT_GRID_CATEGORIES' => 'bx_forum_categories',
             'OBJECT_STORAGE' => 'bx_forum_files',
         	'OBJECT_STORAGE_CMTS' => 'bx_forum_files_cmts',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_forum_preview',
@@ -124,13 +126,15 @@ class BxForumConfig extends BxBaseModTextConfig
         $this->_aJsClasses = array(
         	'main' => 'BxForumMain',
         	'entry' => 'BxForumEntry',
-        	'manage_tools' => 'BxForumManageTools'
+        	'manage_tools' => 'BxForumManageTools',
+        	'studio' => 'BxForumStudio'
         );
 
         $this->_aJsObjects = array(
         	'main' => 'oBxForumMain',
         	'entry' => 'oBxForumEntry',
-        	'manage_tools' => 'oBxForumManageTools'
+        	'manage_tools' => 'oBxForumManageTools',
+        	'studio' => 'oBxForumStudio'
         );
 
         $this->_aGridObjects = array(
