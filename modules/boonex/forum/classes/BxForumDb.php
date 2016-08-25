@@ -41,6 +41,13 @@ class BxForumDb extends BxBaseModTextDb
     	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = "";
 
     	switch($aParams['type']) {
+    		case 'entries_keyword_search':
+    			$aMethod['name'] = 'getColumn';
+    			$sFieldsClause = "`te`.`cmt_object_id`"; 
+    			$sWhereClause = " AND `te`.`cmt_text` LIKE " . $this->escape("%" . $aParams['keyword'] . "%");
+    			$sGroupClause = "`te`.`cmt_object_id`";
+    			break;
+
 			case 'author_comments':
 				$aMethod['name'] = 'getPairs';
 				$sFieldsClause = "`te`.`cmt_author_id`, COUNT(`te`.`cmt_id`) AS `cmt_count`";

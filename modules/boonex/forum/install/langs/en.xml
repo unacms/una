@@ -36,6 +36,16 @@
     <string name="_bx_forum_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
     <string name="_bx_forum_form_entry_input_sys_submit_text"><![CDATA[Draft status]]></string>
     <string name="_bx_forum_form_entry_input_sys_submit_block"><![CDATA[Submit block]]></string>
+    <string name="_bx_forum_form_search"><![CDATA[Search]]></string>
+	<string name="_bx_forum_form_search_display_full"><![CDATA[Full Search]]></string>
+	<string name="_bx_forum_form_search_input_sys_author"><![CDATA[Author]]></string>
+	<string name="_bx_forum_form_search_input_author"><![CDATA[Author]]></string>
+	<string name="_bx_forum_form_search_input_sys_category"><![CDATA[Category]]></string>
+	<string name="_bx_forum_form_search_input_category"><![CDATA[Category]]></string>
+	<string name="_bx_forum_form_search_input_sys_keyword"><![CDATA[Keyword]]></string>
+	<string name="_bx_forum_form_search_input_keyword"><![CDATA[Keyword]]></string>
+	<string name="_bx_forum_form_search_input_do_submit"><![CDATA[Search]]></string>
+	<string name="_bx_forum_form_search_input_sys_do_submit"><![CDATA[Search]]></string>
 
 	<string name="_bx_forum_acl_action_create_entry"><![CDATA[New discussion]]></string>
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Delete discussion]]></string>
@@ -117,6 +127,10 @@
     <string name="_bx_forum_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
 	<string name="_bx_forum_page_block_title_cats"><![CDATA[Categories]]></string>
 	<string name="_bx_forum_page_block_title_my_entries"><![CDATA[My Discussions]]></string>
+	<string name="_bx_forum_page_title_sys_entries_search"><![CDATA[Search]]></string>
+	<string name="_bx_forum_page_title_entries_search"><![CDATA[Search]]></string>
+	<string name="_bx_forum_page_block_title_entries_search_form"><![CDATA[Search]]></string>
+	<string name="_bx_forum_page_block_title_entries_search_results"><![CDATA[Search Results]]></string>
 
     <string name="_bx_forum_menu_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Forum Submenu]]></string>
@@ -150,6 +164,8 @@
     <string name="_bx_forum_menu_item_title_entries_top"><![CDATA[Top]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_categories"><![CDATA[Сategories]]></string>
     <string name="_bx_forum_menu_item_title_entries_categories"><![CDATA[Сategories]]></string>
+    <string name="_bx_forum_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_forum_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_forum_menu_set_title_view_entry"><![CDATA[Discussion Actions]]></string>
     <string name="_bx_forum_menu_title_view_entry"><![CDATA[Discussion Actions]]></string>
     <string name="_bx_forum_menu_item_title_system_view_entries_author"><![CDATA[Discussions]]></string>

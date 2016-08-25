@@ -136,13 +136,16 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-(@sName, @sName, '_bx_forum_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_forum_discussions', 'id', '', '', 'do_submit', '', 0, 1, 'BxForumFormEntry', 'modules/boonex/forum/classes/BxForumFormEntry.php');
+(@sName, @sName, '_bx_forum_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_forum_discussions', 'id', '', '', 'do_submit', '', 0, 1, 'BxForumFormEntry', 'modules/boonex/forum/classes/BxForumFormEntry.php'),
+('bx_forum_search', @sName, '_bx_forum_form_search', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_forum_discussions', 'id', '', '', 'do_submit', '', 0, 1, 'BxForumFormSearch', 'modules/boonex/forum/classes/BxForumFormSearch.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 (@sName, 'bx_forum_entry_add', @sName, 0, '_bx_forum_form_entry_display_add'),
 (@sName, 'bx_forum_entry_delete', @sName, 0, '_bx_forum_form_entry_display_delete'),
 (@sName, 'bx_forum_entry_edit', @sName, 0, '_bx_forum_form_entry_display_edit'),
-(@sName, 'bx_forum_entry_view', @sName, 1, '_bx_forum_form_entry_display_view');
+(@sName, 'bx_forum_entry_view', @sName, 1, '_bx_forum_form_entry_display_view'),
+
+('bx_forum_search', 'bx_forum_search_full', @sName, 0, '_bx_forum_form_search_display_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 (@sName, @sName, 'allow_view_to', '', '', 0, 'custom', '_bx_forum_form_entry_input_sys_allow_view_to', '_bx_forum_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -154,7 +157,12 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 (@sName, @sName, 'text', '', '', 0, 'textarea', '_bx_forum_form_entry_input_sys_text', '_bx_forum_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_forum_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'title', '', '', 0, 'text', '_bx_forum_form_entry_input_sys_title', '_bx_forum_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_forum_form_entry_input_title_err', 'Xss', '', 1, 0),
 (@sName, @sName, 'cat', '', '#!bx_forum_cats', 0, 'select', '_bx_forum_form_entry_input_sys_cat', '_bx_forum_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_forum_form_entry_input_cat_err', 'Xss', '', 1, 0),
-(@sName, @sName, 'attachments', 'a:1:{i:0;s:9:"sys_html5";}', 'a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_forum_form_entry_input_sys_attachments', '_bx_forum_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+(@sName, @sName, 'attachments', 'a:1:{i:0;s:9:"sys_html5";}', 'a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_forum_form_entry_input_sys_attachments', '_bx_forum_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+
+('bx_forum_search', @sName, 'author', '', '', 0, 'custom', '_bx_forum_form_search_input_sys_author', '_bx_forum_form_search_input_author', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_forum_search', @sName, 'category', '', '#!bx_forum_cats', 0, 'select', '_bx_forum_form_search_input_sys_category', '_bx_forum_form_search_input_category', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_forum_search', @sName, 'keyword', '', '', 0, 'text', '_bx_forum_form_search_input_sys_keyword', '_bx_forum_form_search_input_keyword', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_forum_search', @sName, 'do_submit', '_bx_forum_form_search_input_do_submit', '', 0, 'submit', '_bx_forum_form_search_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_forum_entry_add', 'title', 2147483647, 1, 1),
@@ -182,7 +190,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_entry_view', 'text', 2147483647, 1, 3),
 
 ('bx_forum_entry_delete', 'delete_confirm', 2147483647, 1, 1),
-('bx_forum_entry_delete', 'do_submit', 2147483647, 1, 2);
+('bx_forum_entry_delete', 'do_submit', 2147483647, 1, 2),
+
+('bx_forum_search_full', 'author', 2147483647, 1, 1),
+('bx_forum_search_full', 'category', 2147483647, 1, 2),
+('bx_forum_search_full', 'keyword', 2147483647, 1, 3),
+('bx_forum_search_full', 'do_submit', 2147483647, 1, 4);
+
 
 
 -- PRE-VALUES

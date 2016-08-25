@@ -18,7 +18,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN ('bx_foru
 DELETE FROM `sys_objects_form` WHERE `module` = @sName;
 DELETE FROM `sys_form_displays` WHERE `module` = @sName;
 DELETE FROM `sys_form_inputs` WHERE `module` = @sName;
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_forum_entry_add', 'bx_forum_entry_edit', 'bx_forum_entry_view', 'bx_forum_entry_delete');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_forum_entry_add', 'bx_forum_entry_edit', 'bx_forum_entry_view', 'bx_forum_entry_delete', 'bx_forum_search_full');
 
 
 -- PRE-VALUES

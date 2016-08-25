@@ -68,7 +68,7 @@ class BxForumGrid extends BxTemplGrid
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getRowHeader ()
+    protected function _getRowHead ()
     {
     	return array();
     }
@@ -120,8 +120,11 @@ class BxForumGrid extends BxTemplGrid
 			$sWhereClause .= $aCondition['where'];
 
 		//--- Check browse params
-		if(!empty($this->_aParams['where']) && is_array($this->_aParams['where']))
-			$sWhereClause .= " AND " . $this->_oModule->_oDb->arrayToSQL($this->_aParams['where'], " AND ");
+		if(!empty($this->_aParams['where']) && is_array($this->_aParams['where'])) {
+			$sWhereClauseBrowse = $this->_getSqlWhereFromArray($this->_aParams['where']);
+			if(!empty($sWhereClauseBrowse))
+				$sWhereClause .= " AND " . $sWhereClauseBrowse;
+		}
 
 		$this->_aOptions['source'] = sprintf($this->_aOptions['source'], $sJoinClause, $sWhereClause);
 		return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
@@ -132,6 +135,41 @@ class BxForumGrid extends BxTemplGrid
     	$sOrder = parent::_getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, true);
 
     	return " ORDER BY `" . $this->_oModule->_oConfig->CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
+    }
+
+    protected function _getSqlWhereFromArray($aGroup)
+    {
+    	$sResult = "";
+    	if(empty($aGroup['grp']) || empty($aGroup['cnds']) || !is_array($aGroup['cnds']))
+    		return $sResult;
+
+		$sOprGrp = " " . $aGroup['opr'] . " ";
+    	foreach($aGroup['cnds'] as $aCnd) {
+    		if(!empty($aCnd['grp'])) {
+    			$sResult .= $sOprGrp . $this->_getSqlWhereFromArray($aCnd);
+
+    			continue;
+    		}
+
+			switch($aCnd['opr']) {
+				case '=':
+					$sResult .= $sOprGrp . "`" . $aCnd['fld'] . "` = " . $this->_oModule->_oDb->escape($aCnd['val']);
+					break;
+	
+				case 'IN':
+					if(empty($aCnd['val']) || !is_array($aCnd['val']))
+						break;
+	
+					$sResult .= $sOprGrp . "`" . $aCnd['fld'] . "` IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
+					break;
+	
+				case 'LIKE':
+					$sResult .= $sOprGrp . "`" . $aCnd['fld'] . "` LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
+					break;
+			}
+    	}
+
+    	return "(" . trim($sResult, $sOprGrp) . ")";
     }
 }
 

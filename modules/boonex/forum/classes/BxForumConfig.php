@@ -96,6 +96,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_forum_entry_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_forum_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_forum_entry_delete',
+        	'OBJECT_FORM_SEARCH' => 'bx_forum_search',
+            'OBJECT_FORM_SEARCH_DISPLAY_FULL' => 'bx_forum_search_full',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_forum_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_forum_my', // actions menu on my entries page
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_forum_menu_manage_tools', //manage menu in content administration tools
