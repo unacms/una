@@ -32,6 +32,7 @@ class BxForumGrid extends BxTemplGrid
     	if(!empty($this->_aParams['type']))
 	    	switch($this->_aParams['type']) {
 	    		case 'new':
+	    		case 'author':
 	    		case 'category':
 	                $sField = 'added';
 	                break;
@@ -121,7 +122,7 @@ class BxForumGrid extends BxTemplGrid
 
 		//--- Check browse params
 		if(!empty($this->_aParams['where']) && is_array($this->_aParams['where'])) {
-			$sWhereClauseBrowse = $this->_getSqlWhereFromArray($this->_aParams['where']);
+			$sWhereClauseBrowse = $this->_getSqlWhereFromGroup($this->_aParams['where']);
 			if(!empty($sWhereClauseBrowse))
 				$sWhereClause .= " AND " . $sWhereClauseBrowse;
 		}
@@ -137,39 +138,54 @@ class BxForumGrid extends BxTemplGrid
     	return " ORDER BY `" . $this->_oModule->_oConfig->CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
     }
 
-    protected function _getSqlWhereFromArray($aGroup)
+    protected function _getSqlWhereFromGroup($aGrp)
     {
-    	$sResult = "";
-    	if(empty($aGroup['grp']) || empty($aGroup['cnds']) || !is_array($aGroup['cnds']))
+    	if(!isset($aGrp['grp']) || (bool)$aGrp['grp'] !== true)
+			return $this->_getSqlWhereFromCondition($aGrp);
+
+		$sResult = "";
+    	if(!isset($aGrp['opr'], $aGrp['cnds']) || empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
     		return $sResult;
 
-		$sOprGrp = " " . $aGroup['opr'] . " ";
-    	foreach($aGroup['cnds'] as $aCnd) {
-    		if(!empty($aCnd['grp'])) {
-    			$sResult .= $sOprGrp . $this->_getSqlWhereFromArray($aCnd);
-
-    			continue;
-    		}
-
-			switch($aCnd['opr']) {
-				case '=':
-					$sResult .= $sOprGrp . "`" . $aCnd['fld'] . "` = " . $this->_oModule->_oDb->escape($aCnd['val']);
-					break;
-	
-				case 'IN':
-					if(empty($aCnd['val']) || !is_array($aCnd['val']))
-						break;
-	
-					$sResult .= $sOprGrp . "`" . $aCnd['fld'] . "` IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
-					break;
-	
-				case 'LIKE':
-					$sResult .= $sOprGrp . "`" . $aCnd['fld'] . "` LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
-					break;
-			}
+		$sOprGrp = " " . $aGrp['opr'] . " ";
+    	foreach($aGrp['cnds'] as $aCnd) {
+    		$sMethod = '_getSqlWhereFrom' . (isset($aGrp['grp']) && (bool)$aGrp['grp'] === true ? 'Group' : 'Condition');
+    		$sResultCnd = $this->$sMethod($aCnd);
+    		if(!empty($sResultCnd))
+				$sResult .= $sOprGrp . $sResultCnd;
     	}
 
-    	return "(" . trim($sResult, $sOprGrp) . ")";
+    	$sResult = trim($sResult, $sOprGrp);
+    	if(!empty($sResult))
+    		$sResult = "(" . $sResult . ")";
+
+    	return $sResult;
+    }
+
+    protected function _getSqlWhereFromCondition($aCnd)
+    {
+    	$sResult = "";
+    	if(!isset($aCnd['fld'], $aCnd['val'], $aCnd['opr']))
+    		return $sResult;
+
+		switch($aCnd['opr']) {
+			case '=':
+				$sResult .= "`" . $aCnd['fld'] . "` = " . $this->_oModule->_oDb->escape($aCnd['val']);
+				break;
+
+			case 'IN':
+				if(empty($aCnd['val']) || !is_array($aCnd['val']))
+					break;
+
+				$sResult .= "`" . $aCnd['fld'] . "` IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
+				break;
+
+			case 'LIKE':
+				$sResult .= "`" . $aCnd['fld'] . "` LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
+				break;
+		}
+
+		return $sResult;
     }
 }
 

@@ -104,6 +104,17 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
+	public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        if(!$iProfileId)
+            return '';
+
+        return $this->_serviceBrowseTable(array('type' => 'author', 'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '=')), false);
+    }
+
     public function serviceBrowseCategories($bEmptyMessage = true)
     {
     	return $this->_oTemplate->getCategories($bEmptyMessage);
@@ -121,9 +132,7 @@ class BxForumModule extends BxBaseModTextModule
     	if($sUnitView != 'table')   
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array(
-			array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')
-		)));
+		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')));
     }
 
     public function serviceBrowseSearchResults($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
@@ -141,7 +150,7 @@ class BxForumModule extends BxBaseModTextModule
     	if($sUnitView != 'table')   
         	return $this->_serviceBrowse('', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        $aWhereGroupAnd = array('grp' => 1, 'opr' => 'AND', 'cnds' => array());
+        $aWhereGroupAnd = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
         if(!empty($aAutors) && is_array($aAutors))
         	$aWhereGroupAnd['cnds'][] = array('fld' => 'author', 'val' => $aAutors, 'opr' => 'IN');
 
@@ -149,7 +158,7 @@ class BxForumModule extends BxBaseModTextModule
         	$aWhereGroupAnd['cnds'][] = array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=');
 
         if(!empty($sKeyword)) {
-        	$aWhereGroupOr = array('grp' => 1, 'opr' => 'OR', 'cnds' => array(
+        	$aWhereGroupOr = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
         		array('fld' => 'title', 'val' => $sKeyword, 'opr' => 'LIKE'),
         		array('fld' => 'text', 'val' => $sKeyword, 'opr' => 'LIKE')
         	));
