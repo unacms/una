@@ -159,7 +159,9 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         if (!$aObject || !is_array($aObject))
             return false;
 
-        $sClass = $aObject['override_class_name'] ? $aObject['override_class_name'] : 'BxDolMetatags';
+        $sClass = 'BxTemplMetatags';
+        if (!empty($aObject['override_class_name']))
+            $sClass = $aObject['override_class_name'];
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
 
