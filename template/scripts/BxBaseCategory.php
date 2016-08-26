@@ -14,6 +14,7 @@
 class BxBaseCategory extends BxDolCategory
 {
     protected $_oTemplate;
+    protected $_sBrowseUrl;
 
     public function __construct ($aObject, $oTemplate = null)
     {
@@ -23,6 +24,11 @@ class BxBaseCategory extends BxDolCategory
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+		$this->_sBrowseUrl = bx_append_url_params('searchKeyword.php', array(
+			'cat' => '{category}',
+			'keyword' => '{keyword}'
+		)) . '{sections}';
     }
 
     public function getCategoryTitle($sValue)
@@ -36,10 +42,11 @@ class BxBaseCategory extends BxDolCategory
 
     public function getCategoryUrl($sValue)
     {
-        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?cat=' . rawurlencode($this->getObjectName()) . '&keyword=' . rawurlencode($sValue);
-        if ($this->_aObject['search_object'])
-            $sUrl .= '&section[]=' . rawurlencode($this->_aObject['search_object']);
-        return $sUrl;
+        return BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
+        	'category' => rawurlencode($this->getObjectName()),
+        	'keyword' => rawurlencode($sValue),
+    		'sections' => $this->_aObject['search_object'] ? '&section[]=' . rawurlencode($this->_aObject['search_object']) : ''
+        ));
     }
 
     /**

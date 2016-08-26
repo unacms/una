@@ -33,6 +33,10 @@ class BxBaseServiceMetatags extends BxDol
     {
     	$iMaxCount = isset($aParams['max_count']) ? (int)$aParams['max_count'] : BX_METATAGS_KEYWORDS_IN_CLOUD;
     	$bShowEmpty = isset($aParams['show_empty']) ? (bool)$aParams['show_empty'] : false;
+    	$sBrowseUrl = isset($aParams['browse_url']) ? $aParams['browse_url'] : bx_append_url_params('searchKeyword.php', array(
+    		'type' => 'keyword', 
+    		'keyword' => '{keyword}'
+    	)) . '{sections}';
 
         $o = BxDolMetatags::getObjectInstance($sObject);
         $aKeywords = $o->keywordsPopularList($iMaxCount);
@@ -58,7 +62,10 @@ class BxBaseServiceMetatags extends BxDol
         foreach($aKeywords as $sKeyword => $iCount) {
             $aUnits[] = array(
                 'size' => $this->_iKeywordsCloudFontSizeMin + floor($iFontDiff * (($iCount - $iMinRating) / $iRatingDiff)),
-                'href' => BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . $sSectionPart,
+                'href' => BX_DOL_URL_ROOT . bx_replace_markers($sBrowseUrl, array(
+            		'keyword' => rawurlencode($sKeyword),
+            		'sections' => $sSectionPart
+            	)),
                 'count' => $iCount,
                 'keyword' => htmlspecialchars_adv($sKeyword),
             );
