@@ -3,7 +3,7 @@
     width:100%;
     border-collapse:collapse;
 }
-
+.bx-grid-header .bx-def-hr, 
 .bx-grid-table-wrapper .bx-def-hr {
     margin:0;
 }

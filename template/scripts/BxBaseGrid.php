@@ -194,7 +194,6 @@ class BxBaseGrid extends BxDolGrid
         		)
         	),
             'bx_repeat:rows_data' => $this->_getRowsDataDesign ($aData),
-            'paginate' => $sPaginate,
             'paginate_get_start' => $this->_aOptions['paginate_get_start'],
             'paginate_get_per_page' => $this->_aOptions['paginate_get_per_page'],
             'start' => $iStart,
@@ -206,12 +205,18 @@ class BxBaseGrid extends BxDolGrid
             'query_append' => $sQueryAppend,
             'confirm_messages' => $sConfirmMessages,
             'columns' => count($this->_aOptions['fields']),
-            'bx_if:actions_bulk' => array (
-                'condition' => !empty($this->_aOptions['actions_bulk']),
-                'content' => array(
-                    'actions_bulk' => $this->_getActions ('bulk'),
-                ),
-            ),
+            'bx_if:display_footer' => array(
+        		'condition' => !empty($this->_aOptions['actions_bulk']) || !empty($sPaginate),
+        		'content' => array(
+		            'bx_if:actions_bulk' => array (
+		                'condition' => !empty($this->_aOptions['actions_bulk']),
+		                'content' => array(
+		                    'actions_bulk' => $this->_getActions ('bulk'),
+		                ),
+		            ),
+		            'paginate' => $sPaginate,
+				)
+			),
             'bx_if:display_header' => array (
                 'condition' => $isDisplayHeader,
                 'content' => array (

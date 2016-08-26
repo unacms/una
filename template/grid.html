@@ -1,28 +1,22 @@
-
 <div id="__id_wrap__">
-
     <bx_if:display_header>
-        <div class="bx-grid-header bx-clearfix">
-
-            <bx_if:filter>
-                <div style="float:left;">
-                    __controls__
-                </div>  
-            </bx_if:filter>
-
-            <bx_if:actions_independent>
-                <div class="bx-def-margin-thd-neg" style="float:right;">
-                    __actions_independent__
-                </div>
-            </bx_if:actions_independent>
-
+        <div class="bx-grid-header">
+        	<div class="bx-grid-header-cnt bx-def-padding-sec-bottom bx-clearfix">
+	            <bx_if:filter>
+	                <div style="float:left;">
+	                    __controls__
+	                </div>  
+	            </bx_if:filter>
+	            <bx_if:actions_independent>
+	                <div class="bx-def-margin-thd-neg" style="float:right;">
+	                    __actions_independent__
+	                </div>
+	            </bx_if:actions_independent>
+			</div>
+			<hr class="bx-def-hr" />
         </div>
     </bx_if:display_header>
-
-    <div id="__id_cont__" class="bx-grid-table-wrapper bx-def-margin-top">
-        
-        <hr class="bx-def-hr" />
-
+    <div id="__id_cont__" class="bx-grid-table-wrapper">
         <table id="__id_table__" class="bx-grid-table">
         	<bx_if:display_head>
 	            <thead>
@@ -44,23 +38,23 @@
                     </bx_repeat:rows_data>
             </tbody>
         </table>
-
-        <hr class="bx-def-hr" />
-
-        <div class="bx-grid-footer bx-def-margin-bottom bx-def-margin-sec-top bx-clearfix">
-            <bx_if:actions_bulk>
-                <div style="float:left;">
-                    __actions_bulk__
-                </div>
-            </bx_if:actions_bulk>
-
-            <div style="float:right;">
-                __paginate__
-            </div>
-        </div>
-
+		<bx_if:display_footer>
+	        <div class="bx-grid-footer ">
+	        	<hr class="bx-def-hr" />
+	        	<div class="bx-grid-footer-cnt bx-def-padding-sec-top bx-def-margin-thd-neg bx-clearfix">
+		            <bx_if:actions_bulk>
+		                <div style="float:left;">
+		                    __actions_bulk__
+		                </div>
+		            </bx_if:actions_bulk>
+		
+		            <div class="bx-def-margin-thd" style="float:right;">
+		                __paginate__
+		            </div>
+				</div>
+	        </div>
+		</bx_if:display_footer>
     </div>
-
 </div>
 
 <script>
