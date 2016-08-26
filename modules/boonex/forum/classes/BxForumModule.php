@@ -84,14 +84,14 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
-	public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+	public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
     	$sType = 'latest';
 
     	if($sUnitView != 'table')
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array('type' => $sType));
+		return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
 
 	public function serviceBrowseTop($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)

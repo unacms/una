@@ -7,7 +7,6 @@
 	<string name="_bx_forum_option_summary_chars"><![CDATA[Number of characters in auto-cropped discussion summary]]></string>
 	<string name="_bx_forum_option_plain_summary_chars"><![CDATA[Number of characters in plain discussion description when discussion hasn't thumb]]></string>
 	<string name="_bx_forum_option_per_page_browse"><![CDATA[Number of discussions per page]]></string>
-	<string name="_bx_forum_option_per_page_preview"><![CDATA[Number of preview discussions]]></string>
 	<string name="_bx_forum_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 
 	<string name="_bx_forum_form_entry"><![CDATA[Forum]]></string>

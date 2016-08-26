@@ -14,8 +14,7 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_forum_summary_chars', '700', @iCategId, '_bx_forum_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_forum_plain_summary_chars', '240', @iCategId, '_bx_forum_option_plain_summary_chars', 'digit', '', '', '', 2),
-('bx_forum_per_page_browse', '12', @iCategId, '_bx_forum_option_per_page_browse', 'digit', '', '', '', 10),
-('bx_forum_per_page_preview', '3', @iCategId, '_bx_forum_option_per_page_preview', 'digit', '', '', '', 11),
+('bx_forum_per_page_browse', '10', @iCategId, '_bx_forum_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_forum_rss_num', '10', @iCategId, '_bx_forum_option_rss_num', 'digit', '', '', '', 20);
 
 
@@ -143,10 +142,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('sys_home', 1, @sName, '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_public";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
+('sys_home', 1, @sName, '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_latest";s:6:"params";a:4:{i:0;s:5:"table";i:1;b:0;i:2;b:1;i:3;b:0;}}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
 
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
-SET @iPBCellProfile = 3;
+SET @iPBCellProfile = 2;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('trigger_page_profile_view_entry', @iPBCellProfile, @sName, '_bx_forum_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_author";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0);
 
