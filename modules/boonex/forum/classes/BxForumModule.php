@@ -130,16 +130,6 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')));
     }
 
-    public function serviceBrowseKeywords()
-    {
-    	$CNF = $this->_oConfig->CNF;
-
-    	$aSrvParams = array($CNF['OBJECT_METATAGS'], $this->_oConfig->getName(), array(
-			'browse_url' => bx_append_url_params(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_KEYWORD_ENTRIES']), array('keyword' => '{keyword}'))
-    	));
-    	return BxDolService::call('system', 'keywords_cloud', $aSrvParams, 'TemplServiceMetatags');
-    }
-
 	public function serviceBrowseKeyword($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'keyword';
