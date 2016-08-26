@@ -14,6 +14,7 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 class BxForumGrid extends BxTemplGrid
 {
     protected $_oModule;
+    protected $_aParams;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -23,33 +24,37 @@ class BxForumGrid extends BxTemplGrid
         $this->_sDefaultSortingOrder = 'DESC';
     }
 
-    public function setBrowseType($sType)
+    public function setBrowseParams($aParams)
     {
-    	$sField = '';
-    	$sDir = 'DESC';
-    	switch($sType) {
-    		case 'new':
-                $sField = 'added';
-                break;
+    	$this->_aParams = $aParams;
 
-			case 'updated':
-				$sField = 'changed';
-                break;
+    	$sField = 'added';
+    	if(!empty($this->_aParams['type']))
+	    	switch($this->_aParams['type']) {
+	    		case 'new':
+	    		case 'author':
+	    		case 'category':
+	                $sField = 'added';
+	                break;
+	
+				case 'updated':
+					$sField = 'changed';
+	                break;
+	
+				case 'latest':
+					$sField = 'lr_timestamp';
+	                break;
+	
+				case 'top':
+					$sField = 'comments';
+	                break;
+	
+	            case 'popular':
+	            	$sField = 'views';
+	                break;
+	    	}
 
-			case 'latest':
-				$sField = 'lr_timestamp';
-                break;
-
-			case 'top':
-				$sField = 'comments';
-                break;
-
-            case 'popular':
-            	$sField = 'views';
-                break;
-    	}
-
-    	$this->_aOptions['field_order'] = $sField;
+		$this->_aOptions['field_order'] = $sField;
     }
 
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -64,7 +69,7 @@ class BxForumGrid extends BxTemplGrid
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getRowHeader ()
+    protected function _getRowHead ()
     {
     	return array();
     }
@@ -115,6 +120,13 @@ class BxForumGrid extends BxTemplGrid
 		if(isset($aCondition['where']))
 			$sWhereClause .= $aCondition['where'];
 
+		//--- Check browse params
+		if(!empty($this->_aParams['where']) && is_array($this->_aParams['where'])) {
+			$sWhereClauseBrowse = $this->_getSqlWhereFromGroup($this->_aParams['where']);
+			if(!empty($sWhereClauseBrowse))
+				$sWhereClause .= " AND " . $sWhereClauseBrowse;
+		}
+
 		$this->_aOptions['source'] = sprintf($this->_aOptions['source'], $sJoinClause, $sWhereClause);
 		return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
@@ -124,6 +136,56 @@ class BxForumGrid extends BxTemplGrid
     	$sOrder = parent::_getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, true);
 
     	return " ORDER BY `" . $this->_oModule->_oConfig->CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
+    }
+
+    protected function _getSqlWhereFromGroup($aGrp)
+    {
+    	if(!isset($aGrp['grp']) || (bool)$aGrp['grp'] !== true)
+			return $this->_getSqlWhereFromCondition($aGrp);
+
+		$sResult = "";
+    	if(!isset($aGrp['opr'], $aGrp['cnds']) || empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
+    		return $sResult;
+
+		$sOprGrp = " " . $aGrp['opr'] . " ";
+    	foreach($aGrp['cnds'] as $aCnd) {
+    		$sMethod = '_getSqlWhereFrom' . (isset($aGrp['grp']) && (bool)$aGrp['grp'] === true ? 'Group' : 'Condition');
+    		$sResultCnd = $this->$sMethod($aCnd);
+    		if(!empty($sResultCnd))
+				$sResult .= $sOprGrp . $sResultCnd;
+    	}
+
+    	$sResult = trim($sResult, $sOprGrp);
+    	if(!empty($sResult))
+    		$sResult = "(" . $sResult . ")";
+
+    	return $sResult;
+    }
+
+    protected function _getSqlWhereFromCondition($aCnd)
+    {
+    	$sResult = "";
+    	if(!isset($aCnd['fld'], $aCnd['val'], $aCnd['opr']))
+    		return $sResult;
+
+		switch($aCnd['opr']) {
+			case '=':
+				$sResult .= "`" . $aCnd['fld'] . "` = " . $this->_oModule->_oDb->escape($aCnd['val']);
+				break;
+
+			case 'IN':
+				if(empty($aCnd['val']) || !is_array($aCnd['val']))
+					break;
+
+				$sResult .= "`" . $aCnd['fld'] . "` IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
+				break;
+
+			case 'LIKE':
+				$sResult .= "`" . $aCnd['fld'] . "` LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
+				break;
+		}
+
+		return $sResult;
     }
 }
 

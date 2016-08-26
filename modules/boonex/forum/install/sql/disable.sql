@@ -21,9 +21,9 @@ DELETE FROM `sys_menu_items` WHERE `module` = @sName OR `set_name` IN('bx_forum_
 
 
 -- GRID
-DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_forum%';
-DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_forum%';
-DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_forum%';
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_forum', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_forum', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_forum', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
 
 
 -- ACL

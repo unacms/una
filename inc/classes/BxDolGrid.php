@@ -509,7 +509,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
 
         }
 
-        return $bFieldsOnly ? $sOrderClause : " ORDER BY " . $sOrderClause;
+        return $bFieldsOnly || empty($sOrderClause) ? $sOrderClause : " ORDER BY " . $sOrderClause;
     }
 
     protected function _getCellData($sKey, $aField, $aRow)

@@ -63,6 +63,14 @@ class BxForumModule extends BxBaseModTextModule
     	echoJson(array('code' => 0, 'id' => $iContentId, 'reload' => 1));
     }
 
+    public function actionAjaxGetAuthors()
+    {
+        $aResult = BxDolService::call('system', 'profiles_search', array(bx_get('term')), 'TemplServiceProfiles');
+
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo json_encode($aResult);
+    }
+
     /**
      * Service methods
      */
@@ -73,7 +81,7 @@ class BxForumModule extends BxBaseModTextModule
     	if($sUnitView != 'table')   
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable($sType);
+        return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
 	public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
@@ -83,7 +91,7 @@ class BxForumModule extends BxBaseModTextModule
     	if($sUnitView != 'table')
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable($sType);
+		return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
 	public function serviceBrowseTop($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
@@ -93,8 +101,77 @@ class BxForumModule extends BxBaseModTextModule
     	if($sUnitView != 'table')   
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable($sType);
-    }  
+		return $this->_serviceBrowseTable(array('type' => $sType));
+    }
+
+	public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        if(!$iProfileId)
+            return '';
+
+        return $this->_serviceBrowseTable(array('type' => 'author', 'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '=')), false);
+    }
+
+    public function serviceBrowseCategories($bEmptyMessage = true)
+    {
+    	return $this->_oTemplate->getCategories($bEmptyMessage);
+    }
+
+    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+    	$sType = 'category';
+    	$iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
+
+    	$aCategory = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $iCategory));
+    	if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
+    		return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
+
+    	if($sUnitView != 'table')   
+        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')));
+    }
+
+    public function serviceBrowseSearchResults($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+    	$sType = 'search';
+
+    	$aAutors = bx_process_input(bx_get('author'));
+    	$iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
+    	$sKeyword = bx_process_input(bx_get('keyword'));
+
+    	$aCategory = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $iCategory));
+    	if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
+    		return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
+
+    	if($sUnitView != 'table')   
+        	return $this->_serviceBrowse('', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+        $aWhereGroupAnd = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
+        if(!empty($aAutors) && is_array($aAutors))
+        	$aWhereGroupAnd['cnds'][] = array('fld' => 'author', 'val' => $aAutors, 'opr' => 'IN');
+
+        if(!empty($iCategory))
+        	$aWhereGroupAnd['cnds'][] = array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=');
+
+        if(!empty($sKeyword)) {
+        	$aWhereGroupOr = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
+        		array('fld' => 'title', 'val' => $sKeyword, 'opr' => 'LIKE'),
+        		array('fld' => 'text', 'val' => $sKeyword, 'opr' => 'LIKE')
+        	));
+
+        	$aEntriesIds = $this->_oDb->getComments(array('type' => 'entries_keyword_search', 'keyword' => $sKeyword));
+        	if(!empty($aEntriesIds) && is_array($aEntriesIds))
+        		$aWhereGroupOr['cnds'][] = array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
+
+        	$aWhereGroupAnd['cnds'][] = $aWhereGroupOr;
+        }
+
+		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $aWhereGroupAnd), false);
+    }
 
     /**
      * Get number of unread messages for spme profile
@@ -181,6 +258,15 @@ class BxForumModule extends BxBaseModTextModule
         return '';
     }
 
+	public function serviceSearch()
+    {
+    	$CNF = $this->_oConfig->CNF;
+    	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_SEARCH'], $CNF['OBJECT_FORM_SEARCH_DISPLAY_FULL'], $this->_oTemplate);
+    	$oForm->initChecker();
+
+        return $oForm->getCode();
+    }
+
     /**
      * No thumbs for discussions
      */
@@ -264,18 +350,15 @@ class BxForumModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
-	protected function _serviceBrowseTable($sType)
+	protected function _serviceBrowseTable($aParams, $isDisplayHeader = true)
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
         if(!$oGrid)
 			return false;
 
-		$oGrid->setBrowseType($sType);
-        $oGrid->addMarkers(array(
-            'profile_id' => bx_get_logged_profile_id(),
-        ));
+		$oGrid->setBrowseParams($aParams);
 
-        return $oGrid->getCode();
+        return $oGrid->getCode($isDisplayHeader);
     }
 }
 

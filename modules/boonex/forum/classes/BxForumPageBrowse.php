@@ -20,6 +20,13 @@ class BxForumPageBrowse extends BxBaseModTextPageBrowse
         parent::__construct($aObject, $oTemplate);
 
         $this->_oModule->_oTemplate->addJs(array('main.js'));
+
+        $iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
+        if(!empty($iCategory))
+	        $this->addMarkers(array(
+	        	'category_id' => $iCategory,
+	        	'category_name' => BxDolCategory::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
+	        ));
     }
 
 	public function getCode()

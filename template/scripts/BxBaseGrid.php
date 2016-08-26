@@ -176,7 +176,7 @@ class BxBaseGrid extends BxDolGrid
         if (!empty($this->_aConfirmMessages) && is_array($this->_aConfirmMessages))
             $sConfirmMessages = json_encode($this->_aConfirmMessages);
 
-		$aVarsHead = $this->_getRowHeader();
+		$aVarsHead = $this->_getRowHead();
 
         $aVars = array (
             'object' => $this->_sObject,
@@ -248,7 +248,7 @@ class BxBaseGrid extends BxDolGrid
         }
     }
 
-    protected function _getRowHeader ()
+    protected function _getRowHead ()
     {
         $aRet = array();
         foreach ($this->_aOptions['fields'] as $sKey => $a) {

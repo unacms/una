@@ -80,17 +80,23 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_forum_updated', 1, @sName, '_bx_forum_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1);
 
--- PAGE: entries by category
+-- PAGE: categories
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_categories', 'discussions-categories', '_bx_forum_page_title_sys_entries_categories', '_bx_forum_page_title_entries_categories', @sName, 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
+('bx_forum_categories', 'discussions-categories', '_bx_forum_page_title_sys_entries_categories', '_bx_forum_page_title_entries_categories', @sName, 5, 2147483647, 1, 'page.php?i=discussions-categories', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_forum_categories', 1, @sName, '', '_bx_forum_page_block_title_entries_categories', 13, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:13:"bx_forum_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 0, 1, 0);
---('bx_forum_categories', 1, @sName, '_bx_forum_page_block_title_sys_entries_by_category', '_bx_forum_page_block_title_entries_by_category', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_category";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 0, 1, 1);
+('bx_forum_categories', 1, @sName, '', '_bx_forum_page_block_title_entries_categories', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:17:"browse_categories";}', 0, 0, 1, 0);
+
+-- PAGE: entries by category
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_forum_category', 'discussions-category', '_bx_forum_page_title_sys_entries_by_category', '_bx_forum_page_title_entries_by_category', @sName, 5, 2147483647, 1, 'page.php?i=discussions-category', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_forum_category', 1, @sName, '_bx_forum_page_block_title_sys_entries_by_category', '_bx_forum_page_block_title_entries_by_category', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_category";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 0, 1, 1);
 
 -- PAGE: entries of author
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_forum_author', 'discussions-author', '_bx_forum_page_title_sys_entries_of_author', '_bx_forum_page_title_entries_of_author', @sName, 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxForumPageAuthor', 'modules/boonex/forum/classes/BxForumPageAuthor.php');
+('bx_forum_author', 'discussions-author', '_bx_forum_page_title_sys_entries_of_author', '_bx_forum_page_title_entries_of_author', @sName, 5, 2147483647, 1, 'page.php?i=discussions-author', '', '', '', 0, 1, 0, 'BxForumPageAuthor', 'modules/boonex/forum/classes/BxForumPageAuthor.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_forum_author', 1, @sName, '', '_bx_forum_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 0),
@@ -102,8 +108,16 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_forum_home', 1, @sName, '', '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_latest";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1, 0),
-('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:13:"bx_forum_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1, 0),
+('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_cats', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:17:"browse_categories";}', 0, 1, 1, 0),
 ('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:8:"bx_forum";i:1;s:8:"bx_forum";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 1);
+
+-- PAGE: module search
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_forum_search', 'discussions-search', '_bx_forum_page_title_sys_entries_search', '_bx_forum_page_title_entries_search', @sName, 5, 2147483647, 1, 'page.php?i=discussions-search', '', '', '', 0, 1, 0, 'BxForumPageBrowse', 'modules/boonex/forum/classes/BxForumPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_forum_search', 1, @sName, '', '_bx_forum_page_block_title_entries_search_form', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:6:"search";}', 0, 0, 1, 0),
+('bx_forum_search', 1, @sName, '', '_bx_forum_page_block_title_entries_search_results', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"browse_search_results";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 0, 1, 1);
 
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -196,7 +210,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_forum_submenu', @sName, 'discussions-new', '_bx_forum_menu_item_title_system_entries_new', '_bx_forum_menu_item_title_entries_new', 'page.php?i=discussions-new', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_forum_submenu', @sName, 'discussions-top', '_bx_forum_menu_item_title_system_entries_top', '_bx_forum_menu_item_title_entries_top', 'page.php?i=discussions-top', '', '', '', '', 2147483647, 1, 1, 3),
 ('bx_forum_submenu', @sName, 'discussions-categories', '_bx_forum_menu_item_title_system_entries_categories', '_bx_forum_menu_item_title_entries_categories', 'page.php?i=discussions-categories', '', '', '', '', 2147483647, 1, 1, 4),
-('bx_forum_submenu', @sName, 'discussions-manage', '_bx_forum_menu_item_title_system_entries_manage', '_bx_forum_menu_item_title_entries_manage', 'page.php?i=discussions-manage', '', '', '', '', 2147483646, 1, 1, 5);
+('bx_forum_submenu', @sName, 'discussions-search', '_bx_forum_menu_item_title_system_entries_search', '_bx_forum_menu_item_title_entries_search', 'page.php?i=discussions-search', '', '', '', '', 2147483647, 1, 1, 5),
+('bx_forum_submenu', @sName, 'discussions-manage', '_bx_forum_menu_item_title_system_entries_manage', '_bx_forum_menu_item_title_entries_manage', 'page.php?i=discussions-manage', '', '', '', '', 2147483646, 1, 1, 6);
 
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -229,7 +244,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- GRIDS: main
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-(@sName, 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'text', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php');
+(@sName, 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` AS `cmt_text` FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'text', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 (@sName, 'author', '', '10%', '', 1),
@@ -266,6 +281,17 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_forum_common', 'single', 'edit', '_bx_forum_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
 ('bx_forum_common', 'single', 'delete', '_bx_forum_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_forum_common', 'single', 'settings', '_bx_forum_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+
+-- GRIDS: categories manager
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_forum_categories', 'Array', '', '', 'category', '', '', 10, NULL, 'start', '', 'title', 'auto', '', 192, 'BxForumGridCategories', 'modules/boonex/forum/classes/BxForumGridCategories.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
+('bx_forum_categories', 'title', '_bx_forum_grid_column_title_title', '60%', '', 1),
+('bx_forum_categories', 'visible_for_levels', '_bx_forum_grid_column_title_visible_for_levels', '40%', '', 2);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_forum_categories', 'single', 'show_to', '_bx_forum_grid_action_title_show_to', '', 0, 1);
 
 
 -- ACL
