@@ -27,6 +27,12 @@ class BxForumPageBrowse extends BxBaseModTextPageBrowse
 	        	'category_id' => $iCategory,
 	        	'category_name' => BxDolCategory::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
 	        ));
+
+		$sKeyword = bx_process_input(bx_get('keyword'));
+        if(!empty($sKeyword))
+	        $this->addMarkers(array(
+	        	'keyword_name' => '#' . $sKeyword
+	        ));
     }
 
 	public function getCode()

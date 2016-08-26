@@ -57,6 +57,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'URI_VIEW_ENTRY' => 'view-discussion',
             'URI_AUTHOR_ENTRIES' => 'discussions-author',
         	'URI_CATEGORY_ENTRIES' => 'discussions-category',
+        	'URI_KEYWORD_ENTRIES' => 'discussions-keyword',
             'URI_ADD_ENTRY' => 'create-discussion',
         	'URI_EDIT_ENTRY' => 'edit-discussion',
         	'URI_MANAGE_COMMON' => 'discussions-manage',

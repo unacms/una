@@ -47,7 +47,7 @@
 	<string name="_bx_forum_form_search_input_do_submit"><![CDATA[Искать]]></string>
 	<string name="_bx_forum_form_search_input_sys_do_submit"><![CDATA[Искать]]></string>
 
-	<string name="_bx_forum_acl_action_create_entry"><![CDATA[Новое обсуждение]]></string>
+	<string name="_bx_forum_acl_action_create_entry"><![CDATA[Создавать новое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Удалить обсуждение]]></string>
 	<string name="_bx_forum_acl_action_view_entry"><![CDATA[Просмотреть обсуждение]]></string>
 	<string name="_bx_forum_acl_action_edit_any_entry"><![CDATA[Редактировать любое обсуждение]]></string>
@@ -112,6 +112,10 @@
     <string name="_bx_forum_page_title_entries_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_category"><![CDATA[Обсуждения в категории]]></string>
     <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
+    <string name="_bx_forum_page_title_sys_entries_by_keyword"><![CDATA[Обсуждения по хэштегу]]></string>
+    <string name="_bx_forum_page_title_entries_by_keyword"><![CDATA[Обсуждения по хэштегу: {keyword_name}]]></string>
+    <string name="_bx_forum_page_block_title_sys_entries_by_keyword"><![CDATA[Обсуждения по Хэштегу]]></string>
+    <string name="_bx_forum_page_block_title_entries_by_keyword"><![CDATA[Обсуждения по хэштегу: {keyword_name}]]></string>
     <string name="_bx_forum_page_title_sys_entries_of_author"><![CDATA[Обсуждения автора]]></string>
     <string name="_bx_forum_page_title_entries_of_author"><![CDATA[{display_name} - Обсуждения]]></string>
     <string name="_bx_forum_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Обсуждения]]></string>   

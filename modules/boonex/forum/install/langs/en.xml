@@ -47,7 +47,7 @@
 	<string name="_bx_forum_form_search_input_do_submit"><![CDATA[Search]]></string>
 	<string name="_bx_forum_form_search_input_sys_do_submit"><![CDATA[Search]]></string>
 
-	<string name="_bx_forum_acl_action_create_entry"><![CDATA[New discussion]]></string>
+	<string name="_bx_forum_acl_action_create_entry"><![CDATA[Create new discussion]]></string>
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Delete discussion]]></string>
 	<string name="_bx_forum_acl_action_view_entry"><![CDATA[View discussion]]></string>
 	<string name="_bx_forum_acl_action_edit_any_entry"><![CDATA[Edit any discussion]]></string>
@@ -112,6 +112,10 @@
     <string name="_bx_forum_page_title_entries_by_category"><![CDATA[Discussions by {category_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_category"><![CDATA[Discussions by category]]></string>
     <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Discussions by {category_name}]]></string>
+    <string name="_bx_forum_page_title_sys_entries_by_keyword"><![CDATA[Discussions by keyword]]></string>
+    <string name="_bx_forum_page_title_entries_by_keyword"><![CDATA[Discussions by {keyword_name}]]></string>
+    <string name="_bx_forum_page_block_title_sys_entries_by_keyword"><![CDATA[Discussions by keyword]]></string>
+    <string name="_bx_forum_page_block_title_entries_by_keyword"><![CDATA[Discussions by {keyword_name}]]></string>
     <string name="_bx_forum_page_title_sys_entries_of_author"><![CDATA[Discussions of author]]></string>
     <string name="_bx_forum_page_title_entries_of_author"><![CDATA[Discussions by {display_name}]]></string>
     <string name="_bx_forum_page_block_title_entries_of_author"><![CDATA[Discussions by <a href="{profile_link}">{display_name}</a>]]></string>

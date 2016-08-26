@@ -115,11 +115,6 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_serviceBrowseTable(array('type' => 'author', 'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '=')), false);
     }
 
-    public function serviceBrowseCategories($bEmptyMessage = true)
-    {
-    	return $this->_oTemplate->getCategories($bEmptyMessage);
-    }
-
     public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'category';
@@ -133,6 +128,27 @@ class BxForumModule extends BxBaseModTextModule
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
 		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')));
+    }
+
+    public function serviceBrowseKeywords()
+    {
+    	$CNF = $this->_oConfig->CNF;
+
+    	$aSrvParams = array($CNF['OBJECT_METATAGS'], $this->_oConfig->getName(), array(
+			'browse_url' => bx_append_url_params(BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_KEYWORD_ENTRIES']), array('keyword' => '{keyword}'))
+    	));
+    	return BxDolService::call('system', 'keywords_cloud', $aSrvParams, 'TemplServiceMetatags');
+    }
+
+	public function serviceBrowseKeyword($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+    	$sType = 'keyword';
+    	$sKeyword = bx_process_input(bx_get('keyword'));
+
+    	if($sUnitView != 'table')   
+        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $this->_getSearchKeywordDescriptor('#' . $sKeyword)));
     }
 
     public function serviceBrowseSearchResults($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
@@ -157,18 +173,8 @@ class BxForumModule extends BxBaseModTextModule
         if(!empty($iCategory))
         	$aWhereGroupAnd['cnds'][] = array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=');
 
-        if(!empty($sKeyword)) {
-        	$aWhereGroupOr = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
-        		array('fld' => 'title', 'val' => $sKeyword, 'opr' => 'LIKE'),
-        		array('fld' => 'text', 'val' => $sKeyword, 'opr' => 'LIKE')
-        	));
-
-        	$aEntriesIds = $this->_oDb->getComments(array('type' => 'entries_keyword_search', 'keyword' => $sKeyword));
-        	if(!empty($aEntriesIds) && is_array($aEntriesIds))
-        		$aWhereGroupOr['cnds'][] = array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
-
-        	$aWhereGroupAnd['cnds'][] = $aWhereGroupOr;
-        }
+        if(!empty($sKeyword))
+        	$aWhereGroupAnd['cnds'][] = $this->_getSearchKeywordDescriptor($sKeyword);
 
 		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $aWhereGroupAnd), false);
     }
@@ -191,7 +197,7 @@ class BxForumModule extends BxBaseModTextModule
      */
     public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iCommentId, $iTimestamp = 0, $sCommentText = '')
     {
-    	$CNT = $this->_oConfig->CNF;
+    	$CNF = $this->_oConfig->CNF;
 
     	$iContentId = (int)$iContentId;
         if(!$iContentId)
@@ -208,10 +214,10 @@ class BxForumModule extends BxBaseModTextModule
 			return false;
 
         // send notification to author
-        if($iProfileId != $aContentInfo[$CNT['FIELD_AUTHOR']]) {
+        if($iProfileId != $aContentInfo[$CNF['FIELD_AUTHOR']]) {
 	        $oProfile = BxDolProfile::getInstance($iProfileId);
 	        if($oProfile)
-                sendMailTemplate('bx_forum_new_reply', 0, $aContentInfo[$CNT['FIELD_AUTHOR']], array(
+                sendMailTemplate('bx_forum_new_reply', 0, $aContentInfo[$CNF['FIELD_AUTHOR']], array(
                     'SenderDisplayName' => $oProfile->getDisplayName(),
                     'SenderUrl' => $oProfile->getUrl(),
                     'Message' => $sCommentText,
@@ -359,6 +365,20 @@ class BxForumModule extends BxBaseModTextModule
 		$oGrid->setBrowseParams($aParams);
 
         return $oGrid->getCode($isDisplayHeader);
+    }
+
+    protected function _getSearchKeywordDescriptor($sKeyword)
+    {
+		$aWhereGroupOr = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
+			array('fld' => 'title', 'val' => $sKeyword, 'opr' => 'LIKE'),
+			array('fld' => 'text', 'val' => $sKeyword, 'opr' => 'LIKE')
+		));
+		
+		$aEntriesIds = $this->_oDb->getComments(array('type' => 'entries_keyword_search', 'keyword' => $sKeyword));
+		if(!empty($aEntriesIds) && is_array($aEntriesIds))
+			$aWhereGroupOr['cnds'][] = array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
+			
+		return $aWhereGroupOr;
     }
 }
 
