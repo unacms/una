@@ -1,0 +1,35 @@
+<div class="bx-pfw-ec-confirm bx-def-padding-sec">
+	<div class="bx-pfw-ecc-buyer bx-def-font-large"><bx_text:_bx_pfw_txt_buyer_info />:</div>
+	<div class="bx-pfw-ecc-buyer-info bx-def-padding-left">
+		<table class="bx-pfw-ecc-buyer-info">
+			<tr>
+				<td class="bx-pfw-ecc-bi-caption"><bx_text:_bx_pfw_txt_buyer_name />:</td><td>__buyer_name__</td>
+			</tr>
+			<tr>
+				<td class="bx-pfw-ecc-bi-caption"><bx_text:_bx_pfw_txt_buyer_email />:</td><td>__buyer_email__</td>
+			</tr>
+		</table>
+	</div>
+	<div class="bx-pfw-ecc-products bx-def-margin-top bx-def-font-large">__txt_items_info__:</div>
+	<div class="bx-pfw-ecc-products-info bx-def-padding-left">
+		<table class="bx-pfw-ecc-products-info">
+			<tr>
+				<th><bx_text:_bx_pfw_fcpt_details_title /></th>
+				<th><bx_text:_bx_pfw_fcpt_details_quantity /></th>
+				<th><bx_text:_bx_pfw_fcpt_details_price /></th>
+			</tr>
+			<bx_repeat:items>
+				<tr>
+					<td><a href="__link__">__title__</a></td>
+					<td class="bx-pfw-ecc-pi-quantity">__quantity__</td>
+					<td>__price__ __currency__<bx_if:show_duration> __duration__</bx_if:show_duration></td>
+				</tr>
+			</bx_repeat:items>
+			<tr>
+				<td class="bx-pfw-ecc-pi-caption"><bx_text:_bx_pfw_fcpt_details_total /></td>
+				<td class="bx-pfw-ecc-pi-quantity">__total_count__</td>
+				<td>__total_price__ __currency__</td>
+			</tr>
+		</table>
+	</div>
+</div>

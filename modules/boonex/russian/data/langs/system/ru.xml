@@ -585,7 +585,7 @@
 	<string name="_adm_dsg_err_remove_old_icon"><![CDATA[Невозможно удалить текущую иконку.]]></string>
 	<string name="_adm_dsg_err_remove_old_logo"><![CDATA[Невозможно удалить текущую лого-картинку.]]></string>
 	<string name="_adm_dsg_err_save"><![CDATA[Невозможно сохранить: ]]></string>
-	<string name="_adm_dsg_err_save_file"><![CDATA[Не удается сохранить изменения в файле.]]></string>
+	<string name="_adm_dsg_err_save_changes"><![CDATA[Невозможно сохранить изменения.]]></string>
 	<string name="_adm_dsg_scs_save"><![CDATA[Изменения удачно сохранены]]></string>
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Текст лого]]></string>
 	<string name="_adm_dsg_txt_cover_common"><![CDATA[Стандартная обложка страницы]]></string>
@@ -599,6 +599,10 @@
 	<string name="_adm_dsg_txt_upload_icon"><![CDATA[Загрузить новую иконку сайта]]></string>
 	<string name="_adm_dsg_txt_upload_image"><![CDATA[Загрузить новую лого-картинку]]></string>
 	<string name="_adm_dsg_txt_upload_image_preview"><![CDATA[Текущая лого-картинка]]></string>
+	<string name="_adm_dsg_txt_inj_head"><![CDATA[&lt;HEAD&gt; инъекция]]></string>
+	<string name="_adm_dsg_txt_inj_head_inf"><![CDATA[Код для вставки перед закрывающим HEAD тагом]]></string>
+	<string name="_adm_dsg_txt_inj_body"><![CDATA[&lt;BODY&gt; инъекция]]></string>
+	<string name="_adm_dsg_txt_inj_body_inf"><![CDATA[Код для вставки перед закрывающим BODY тагом]]></string>
 	<string name="_adm_err_cannot_process_action"><![CDATA[Невозможно выполнить действие. Отсутствует связанный обработчик.]]></string>
 	<string name="_adm_err_form_view_iu_delete"><![CDATA[Невозможно удалить текущую картинку.]]></string>
 	<string name="_adm_err_form_view_iu_save"><![CDATA[Невозможно сохранить: ]]></string>
@@ -2282,7 +2286,7 @@
 	<string name="_sys_uploader_close"><![CDATA[Закрыть]]></string>
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[О нет! Вы уверены? Это может прервать загрузку файлов.]]></string>
     <string name="_sys_uploader_confirm_leaving_page"><![CDATA[Загрузка в процессе! Не закрывайте эту страницу, или загрузка будет прервана на полпути.]]></string>
-    <string name="_sys_uploader_crop_button_name"><![CDATA[Обрезка картинки]]></string>
+    <string name="_sys_uploader_crop_button_name"><![CDATA[Обрезка Картинки]]></string>
     <string name="_sys_uploader_crop_rotate_left"><![CDATA[Повернуть налево]]></string>
 	<string name="_sys_uploader_crop_rotate_right"><![CDATA[Повернуть направо]]></string>
 	<string name="_sys_uploader_crop_submit_button"><![CDATA[Загрузить]]></string>    

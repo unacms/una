@@ -1,0 +1,27 @@
+/*--- Express Checkout ---*/
+div.bx-pfw-ec-confirm-wrp {
+	width: 50%;
+}
+div.bx-pfw-ec-confirm {
+	left: -50%;
+}
+div.bx-pfw-ecc-buyer,
+div.bx-pfw-ecc-products {
+	font-weight: bold;
+}
+table.bx-pfw-ecc-buyer-info th,
+table.bx-pfw-ecc-buyer-info td,
+table.bx-pfw-ecc-products-info th, 
+table.bx-pfw-ecc-products-info td {
+	padding: 5px;
+	border: 0px;
+}
+td.bx-pfw-ecc-pi-quantity {
+	text-align: center;
+}
+td.bx-pfw-ecc-bi-caption,
+td.bx-pfw-ecc-pi-caption {
+	font-weight: bold;
+}
+
+/*--- Hosted Checout Pages ---*/

@@ -553,12 +553,21 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 					'name' => 'page',
 					'value' => $this->sPage
 				),
-				'code' => array(
+				'sys_head' => array(
                     'type' => 'textarea',
                     'code' => true,
-                    'name' => 'code',
-					'caption' => '',
-					'value' => BxDolTemplate::getInstance()->getHtml('_header.html', BX_DOL_TEMPLATE_CHECK_IN_BASE),
+                    'name' => 'sys_head',
+					'caption' => _t('_adm_dsg_txt_inj_head'),
+					'info' => _t('_adm_dsg_txt_inj_head_inf'),
+					'value' => $this->oDb->getOne("SELECT `data` FROM `sys_injections` WHERE `name`='sys_head'"),
+				),
+				'sys_body' => array(
+                    'type' => 'textarea',
+                    'code' => true,
+                    'name' => 'sys_body',
+					'caption' => _t('_adm_dsg_txt_inj_body'),
+					'info' => _t('_adm_dsg_txt_inj_body_inf'),
+					'value' => $this->oDb->getOne("SELECT `data` FROM `sys_injections` WHERE `name`='sys_body'"),
 				),
 				'save' => array(
 					'type' => 'submit',
@@ -582,13 +591,13 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 		return $oTemplate->parseHtmlByName('designer.html', array(
 			'content' => $this->getBlockCode(array(
 				'items' => $oTemplate->parseHtmlByName('dsr_injections.html', array(
-					'warning' => MsgBox(_t('_adm_dsg_dsc_splash_warning')),
+					'warning' => '',
 					'splash_iframe_id' => $this->sInjectionsIframeId, 
 					'form' => $oForm->getCode()
 				)),
 			)),
 			'js_content' => $this->getPageJsCode(array(
-				'sCodeMirror' => 'textarea[name=code]'
+				'sCodeMirror' => 'textarea[name=sys_head],textarea[name=sys_body]'
 			))
 		));
     }

@@ -13,6 +13,15 @@ class BxDolStudioDesignerQuery extends BxDolStudioPageQuery
     {
         parent::__construct();
     }
+
+    public function updateInjection($sName, $sValue)
+    {
+		return (int)$this->query("UPDATE `sys_injections` SET `data`=:data WHERE `name`=:name", array(
+			'name' => $sName,
+			'data' => $sValue
+		)) > 0;
+    }
+    
 }
 
 /** @} */

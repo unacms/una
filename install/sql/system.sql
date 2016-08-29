@@ -1031,7 +1031,9 @@ CREATE TABLE `sys_injections` (
 
 INSERT INTO `sys_injections`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
 ('update_cache', 150, 'injection_head', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_cache_updater";s:6:"params";a:0:{}s:5:"class";s:19:"TemplStudioLauncher";}', 0, 1),
-('live_updates', 0, 'injection_head', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:4:"init";s:6:"params";a:0:{}s:5:"class";s:24:"TemplLiveUpdatesServices";}', 0, 1);
+('live_updates', 0, 'injection_head', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:4:"init";s:6:"params";a:0:{}s:5:"class";s:24:"TemplLiveUpdatesServices";}', 0, 1),
+('sys_head', 0, 'injection_head', 'text', '', 0, 1),
+('sys_body', 0, 'injection_footer', 'text', '', 0, 1);
 
 -- --------------------------------------------------------
 

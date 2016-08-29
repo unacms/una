@@ -224,19 +224,16 @@ class BxDolStudioDesigner extends BxTemplStudioPage
 
 	function submitInjections(&$oForm)
     {
-		$sPath = BxDolTemplate::getInstance()->getTemplatePath('_header.html', BX_DOL_TEMPLATE_CHECK_IN_BASE);
+		$bResult = $this->oDb->updateInjection('sys_head', $oForm->getCleanValue('sys_head'));
+        $bResult |= $this->oDb->updateInjection('sys_body', $oForm->getCleanValue('sys_body'));
+        if($bResult) {
+        	if(getParam('sys_db_cache_enable'))
+            	$this->oDb->cleanCache('sys_injections.inc');
 
-		$rHandle = fopen($sPath, 'w');
-		if(!$rHandle)
-			return $this->getJsResult('_adm_dsg_err_save_file');
+            return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_INJECTIONS);
+        }
 
-		$bResult = fwrite($rHandle, $oForm->getCleanValue('code'));
-		fclose($rHandle);
-
-		if(!$bResult)
-			return $this->getJsResult('_adm_dsg_err_save_file');
-
-        return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_INJECTIONS);
+        return $this->getJsResult('_adm_dsg_err_save_changes');
     }
 }
 

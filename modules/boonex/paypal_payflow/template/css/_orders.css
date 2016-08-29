@@ -1,0 +1,11 @@
+div.pmt-vo-row-actions div.pmt-vo-caption, 
+div.pmt-vo-row-actions div.pmt-vo-content {
+	height: 36px;
+}
+div.pmt-vo-row-actions .bx-btn {
+	margin: 5px 0px;
+}
+div.pmt-orders-field.pmt-of-subscription {
+	width: 90px;
+    text-align: center;
+}

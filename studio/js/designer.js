@@ -20,12 +20,15 @@ function BxDolStudioDesigner(oOptions) {
 }
 
 BxDolStudioDesigner.prototype.initCodeMirror = function(sSelector) {
-    var e = CodeMirror.fromTextArea($(sSelector).get(0), {
-        lineNumbers: true,
-        mode: "htmlmixed",
-        htmlMode: true,
-        matchBrackets: true
-    });
+	var oSelector = $(sSelector);
+	for(var i = 0; i < oSelector.length; i++) {
+	    var e = CodeMirror.fromTextArea(oSelector.get(i), {
+	        lineNumbers: true,
+	        mode: "htmlmixed",
+	        htmlMode: true,
+	        matchBrackets: true
+	    });
+	}
 };
 
 BxDolStudioDesigner.prototype.makeDefault = function(sUri) {
