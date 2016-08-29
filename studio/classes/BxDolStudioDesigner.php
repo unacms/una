@@ -12,6 +12,7 @@ define('BX_DOL_STUDIO_DSG_TYPE_LOGO', 'logo');
 define('BX_DOL_STUDIO_DSG_TYPE_ICON', 'icon');
 define('BX_DOL_STUDIO_DSG_TYPE_COVER', 'cover');
 define('BX_DOL_STUDIO_DSG_TYPE_SPLASH', 'splash');
+define('BX_DOL_STUDIO_DSG_TYPE_INJECTIONS', 'injections');
 define('BX_DOL_STUDIO_DSG_TYPE_SETTINGS', 'settings');
 
 define('BX_DOL_STUDIO_DSG_TYPE_DEFAULT', 'general');
@@ -219,6 +220,23 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         $this->oDb->setParam('sys_site_splash_enabled', $oForm->getCleanValue('enabled') == 'on' ? 'on' : '');
 
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_SPLASH);
+    }
+
+	function submitInjections(&$oForm)
+    {
+		$sPath = BxDolTemplate::getInstance()->getTemplatePath('_header.html', BX_DOL_TEMPLATE_CHECK_IN_BASE);
+
+		$rHandle = fopen($sPath, 'w');
+		if(!$rHandle)
+			return $this->getJsResult('_adm_dsg_err_save_file');
+
+		$bResult = fwrite($rHandle, $oForm->getCleanValue('code'));
+		fclose($rHandle);
+
+		if(!$bResult)
+			return $this->getJsResult('_adm_dsg_err_save_file');
+
+        return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_INJECTIONS);
     }
 }
 

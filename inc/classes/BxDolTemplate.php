@@ -964,6 +964,26 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     {
         return $this->_getAbsoluteLocationJs('path', $sName);
     }
+    /**
+     * Get full URL of Template (HTML) file.
+     *
+     * @param  string $sName    - Template file name.
+     * @return string full URL.
+     */
+    function getTemplateUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
+        return $this->_getAbsoluteLocation('url', $this->_sFolderHtml, $sName, $sCheckIn);
+    }
+    /**
+     * Get full Path of JS file.
+     *
+     * @param  string $sName    - JS file name.
+     * @return string full URL.
+     */
+    function getTemplatePath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
+        return $this->_getAbsoluteLocation('path', $this->_sFolderHtml, $sName, $sCheckIn);
+    }
 
     /**
      * Get menu.

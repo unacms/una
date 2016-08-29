@@ -585,6 +585,7 @@
 	<string name="_adm_dsg_err_remove_old_icon"><![CDATA[Невозможно удалить текущую иконку.]]></string>
 	<string name="_adm_dsg_err_remove_old_logo"><![CDATA[Невозможно удалить текущую лого-картинку.]]></string>
 	<string name="_adm_dsg_err_save"><![CDATA[Невозможно сохранить: ]]></string>
+	<string name="_adm_dsg_err_save_file"><![CDATA[Не удается сохранить изменения в файле.]]></string>
 	<string name="_adm_dsg_scs_save"><![CDATA[Изменения удачно сохранены]]></string>
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Текст лого]]></string>
 	<string name="_adm_dsg_txt_cover_common"><![CDATA[Стандартная обложка страницы]]></string>
@@ -851,6 +852,7 @@
 	<string name="_adm_lmi_cpt_general"><![CDATA[Общие]]></string>
 	<string name="_adm_lmi_cpt_goodies"><![CDATA[Витрина]]></string>
 	<string name="_adm_lmi_cpt_icon"><![CDATA[Иконка сайта]]></string>
+	<string name="_adm_lmi_cpt_injections"><![CDATA[Вставки]]></string>
 	<string name="_adm_lmi_cpt_images"><![CDATA[Изображения]]></string>
 	<string name="_adm_lmi_cpt_items"><![CDATA[Элементы]]></string>
 	<string name="_adm_lmi_cpt_keys"><![CDATA[Ключи]]></string>
