@@ -51,8 +51,12 @@ class BxBaseUploaderCrop extends BxDolUploader
      */
     public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
+    	$oForm = new BxTemplFormView(array());
+    	$aFormInput = array('type' => 'file', 'name' => 'f');
+
         return $this->_oTemplate->parseHtmlByName($this->_sUploaderFormTemplate, array(
             'form_container_id' => $this->_sFormContainerId,
+        	'file_field' => $oForm->genRow($aFormInput),
             'errors_container_id' => $this->_sErrorsContainerId,
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
             'restrictions_text' => $this->getRestrictionsText(),

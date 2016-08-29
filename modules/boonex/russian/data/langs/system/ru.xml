@@ -1799,6 +1799,7 @@
 	<string name="_sys_form_unsubscribe_input_receive_news"><![CDATA[Получать Новости]]></string>
 	<string name="_sys_form_unsubscribe_input_receive_updates"><![CDATA[Получать Обновления Сайта]]></string>
 	<string name="_sys_form_unsubscribe_input_submit"><![CDATA[Выполнить]]></string>
+	<string name="_sys_form_txt_select_file"><![CDATA[Выбрать файл]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} байт]]></string>
 	<string name="_sys_format_size_gb"><![CDATA[{0} ГБ]]></string>
 	<string name="_sys_format_size_kb"><![CDATA[{0} КБ]]></string>
@@ -2286,7 +2287,7 @@
 	<string name="_sys_uploader_close"><![CDATA[Закрыть]]></string>
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[О нет! Вы уверены? Это может прервать загрузку файлов.]]></string>
     <string name="_sys_uploader_confirm_leaving_page"><![CDATA[Загрузка в процессе! Не закрывайте эту страницу, или загрузка будет прервана на полпути.]]></string>
-    <string name="_sys_uploader_crop_button_name"><![CDATA[Обрезка Картинки]]></string>
+    <string name="_sys_uploader_crop_button_name"><![CDATA[Загрузить и обрезать]]></string>
     <string name="_sys_uploader_crop_rotate_left"><![CDATA[Повернуть налево]]></string>
 	<string name="_sys_uploader_crop_rotate_right"><![CDATA[Повернуть направо]]></string>
 	<string name="_sys_uploader_crop_submit_button"><![CDATA[Загрузить]]></string>    

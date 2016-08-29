@@ -545,7 +545,6 @@ BLAH;
             case 'number':
             case 'checkbox':
             case 'radio':
-            case 'file':
             case 'image':
             case 'password':
             case 'slider':
@@ -553,6 +552,10 @@ BLAH;
             case 'hidden':
                 $sInput = $this->genInputStandard($aInput);
             break;
+
+            case 'file':
+            	$sInput = $this->genInputFile($aInput);
+            	break;
 
             case 'rgb':
             case 'rgba':
@@ -811,6 +814,24 @@ BLAH;
                 $sError
 BLAH;
 
+    }
+
+    /**
+     * Generate Browse File Element
+     *
+     * @param  array  $aInput
+     * @return string
+     */
+    function genInputFile(&$aInput)
+    {
+    	$sOnChange = "$(this).parents('.bx-form-input-wrapper-file:first').find('.bx-fif-value').html($(this).val());";
+    	if(!empty($aInput['attrs']['onchange']))
+    		$aInput['attrs']['onchange'] = $sOnChange . $aInput['attrs']['onchange'];
+    	else
+    		$aInput['attrs']['onchange'] = $sOnChange;
+
+    	$sInput = $this->genInputStandard($aInput);
+    	return '<label class="bx-btn">' . $sInput . '<span class="bx-fif-label">' . _t('_sys_form_txt_select_file') . '</span></label><span class="bx-fif-value bx-def-margin-thd-left"></span>';
     }
 
     /**
