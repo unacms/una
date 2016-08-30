@@ -42,6 +42,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
     	return $this->parseHtmlByName('breadcrumb.html', array(
     		'url_home' => BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_HOME']),
+    		'icon_home' => $CNF['ICON'],
     		'bx_repeat:items' => $aTmplVarsItems
     	));
     }
@@ -51,10 +52,12 @@ class BxForumTemplate extends BxBaseModTextTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
+        $iAuthorId = $aContentInfo[$CNF['FIELD_AUTHOR']];
         $aParticipants = $this->_oDb->getComments(array('type' => 'author_comments', 'object_id' => $aContentInfo[$CNF['FIELD_ID']]));
+        $aParticipants[$iAuthorId] = !empty($aParticipants[$iAuthorId]) ? $aParticipants[$iAuthorId] + 1 : 1;
 
         // sort participants: first - current user, second - last replier, third - author, all others sorted by max number of posts
-        $aParticipants = $oModule->sortParticipants($aParticipants, $aContentInfo['lr_profile_id'], $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        $aParticipants = $oModule->sortParticipants($aParticipants, $aContentInfo['lr_profile_id'], $iAuthorId);
         $iParticipantsNum = count($aParticipants);
 
         // prepare template variables
@@ -86,7 +89,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
                 continue;
 
             $sInfo = '';
-            if ($aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId)
+            if ($iAuthorId == $iProfileId)
                 $sInfo = _t('_bx_forum_participant_author');
             if ($aContentInfo['lr_profile_id'] == $iProfileId)
                 $sInfo .= ', ' . _t('_bx_forum_participant_last_replier');
@@ -100,7 +103,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
                 'title' => $oProfile->getDisplayName(),
                 'title_attr' =>  bx_html_attribute($sInfo),
                 'float' => $sFloat,
-                'class' => $aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId ? 'bx-forum-participant-author' : '',
+                'class' => $iAuthorId == $iProfileId ? 'bx-forum-participant-author' : '',
             	'bx_if:replies_count' => array(
             		'condition' => $iComments > 0,
             		'content' => array(
@@ -114,7 +117,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
                     ),
                 ),
                 'bx_if:author'  => array (
-                    'condition' => $aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId,
+                    'condition' => $iAuthorId == $iProfileId,
                     'content' => array (
                         'id' => $oProfile->id(),
                     ),

@@ -50,7 +50,7 @@
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Delete discussion]]></string>
 	<string name="_bx_forum_acl_action_view_entry"><![CDATA[View discussion]]></string>
 	<string name="_bx_forum_acl_action_edit_any_entry"><![CDATA[Edit any discussion]]></string>
-	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Stick any discussion]]></string>
+	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Pin any discussion]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Lock any discussion]]></string>
 	<string name="_bx_forum_acl_action_hide_any_entry"><![CDATA[Hide any discussion]]></string>
 
@@ -110,7 +110,7 @@
     <string name="_bx_forum_page_title_sys_entries_by_category"><![CDATA[Discussions by category]]></string>
     <string name="_bx_forum_page_title_entries_by_category"><![CDATA[Discussions by {category_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_category"><![CDATA[Discussions by category]]></string>
-    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Discussions by {category_name}]]></string>
+    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[{category_name}]]></string>
     <string name="_bx_forum_page_title_sys_entries_by_keyword"><![CDATA[Discussions by keyword]]></string>
     <string name="_bx_forum_page_title_entries_by_keyword"><![CDATA[Discussions by {keyword_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_keyword"><![CDATA[Discussions by keyword]]></string>
@@ -143,10 +143,10 @@
     <string name="_bx_forum_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_forum_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_forum_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
-    <string name="_bx_forum_menu_item_title_system_stick_entry"><![CDATA[Stick]]></string>
-    <string name="_bx_forum_menu_item_title_stick_entry"><![CDATA[Stick]]></string>
-    <string name="_bx_forum_menu_item_title_system_unstick_entry"><![CDATA[Unstick]]></string>
-    <string name="_bx_forum_menu_item_title_unstick_entry"><![CDATA[Unstick]]></string>
+    <string name="_bx_forum_menu_item_title_system_stick_entry"><![CDATA[Pin]]></string>
+    <string name="_bx_forum_menu_item_title_stick_entry"><![CDATA[Pin]]></string>
+    <string name="_bx_forum_menu_item_title_system_unstick_entry"><![CDATA[Unpin]]></string>
+    <string name="_bx_forum_menu_item_title_unstick_entry"><![CDATA[Unpin]]></string>
     <string name="_bx_forum_menu_item_title_system_lock_entry"><![CDATA[Lock]]></string>
     <string name="_bx_forum_menu_item_title_lock_entry"><![CDATA[Lock]]></string>
     <string name="_bx_forum_menu_item_title_system_unlock_entry"><![CDATA[Unlock]]></string>
@@ -231,7 +231,7 @@
     <string name="_bx_forum_participant_author"><![CDATA[author]]></string>
     <string name="_bx_forum_participant_last_replier"><![CDATA[last replier]]></string>
     <string name="_bx_forum_txt_entry_locked"><![CDATA[Locked discussion]]></string>
-	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Sticked discussion]]></string>
+	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Pinned discussion]]></string>
     <string name="_bx_forum_txt_sample_comment_single"><![CDATA[discussion's comment]]></string>
     <string name="_bx_forum_txt_sample_single"><![CDATA[discussion]]></string>
     <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>

@@ -110,7 +110,7 @@
     <string name="_bx_forum_page_title_sys_entries_by_category"><![CDATA[Обсуждения в категории]]></string>
     <string name="_bx_forum_page_title_entries_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_category"><![CDATA[Обсуждения в категории]]></string>
-    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
+    <string name="_bx_forum_page_block_title_entries_by_category"><![CDATA[{category_name}]]></string>
     <string name="_bx_forum_page_title_sys_entries_by_keyword"><![CDATA[Обсуждения по хэштегу]]></string>
     <string name="_bx_forum_page_title_entries_by_keyword"><![CDATA[Обсуждения по хэштегу: {keyword_name}]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_by_keyword"><![CDATA[Обсуждения по Хэштегу]]></string>

@@ -1,31 +1,40 @@
 @import url(../../../../base/text/template/css/main.css);
 
 /*-- Breadcrumb --*/
+div.bx-forum-breadcrumb  {
+	white-space: nowrap;
+	overflow: hidden;
+}
 div.bx-forum-breadcrumb a,
 div.bx-forum-breadcrumb i {
 	display: inline-block;
-	vertical-align: middle;
+	vertical-align: top;
 
-	height: 1.4rem;
-	line-height: 1.4rem;
+	height: 2.2rem;
+	line-height: 2.2rem;	
+}
+.bx-forum-breadcrumb-home i.sys-icon {
+	font-size: 2.0rem;
 }
 
 /*-- Participants --*/
 .bx-forum-participants {
-    white-space:nowrap;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .bx-popup-content .bx-forum-participants {
-    margin-right:0px;
+    margin-right: 0px;
 }
 
 .bx-forum-participant {
-    display:none;
+    display: inline;
+    display: inline-block;
 }
 
 .bx-forum-participant-author {
-    display:inline;
-    display:inline-block;
+    display: inline;
+    display: inline-block;
 }
 
 /*-- Replies --*/
