@@ -442,21 +442,20 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         bx_import('BxDolForm');
         $aCountries = BxDolFormQuery::getDataItems('Country');
         $aLocation = $this->locationGet($iId);
-        if (!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']]))
+        if(!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']]))
             return '';
 
         $sCountryUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country&keyword=' . $aLocation['country'] . '">' . $aCountries[$aLocation['country']] . '</a>';
-        if (!$aLocation['city'])
+        if(empty($aLocation['state']) || empty($aLocation['city']))
             return _t('_sys_location_country', $sCountryUrl);
 
         $sCityUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_city&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '&city=' . rawurlencode($aLocation['city']) . '">' . $aLocation['city'] . '</a>';
-
         $sStateUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_state&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '">' . $aLocation['state'] . '</a>';
 
-        if ($aLocation['street'])
-            $s = _t('_sys_location_country_city_street', $sCountryUrl, $sStateUrl, $sCityUrl, $aLocation['street'], $aLocation['street_number']);
+        if(empty($aLocation['street']) || empty($aLocation['street_number']))
+        	$s = _t('_sys_location_country_city', $sCountryUrl, $sStateUrl, $sCityUrl);
         else
-            $s = _t('_sys_location_country_city', $sCountryUrl, $sStateUrl, $sCityUrl);
+            $s = _t('_sys_location_country_city_street', $sCountryUrl, $sStateUrl, $sCityUrl, $aLocation['street'], $aLocation['street_number']);
 
         return $bHTML ? $s : trim(strip_tags($s));
     }
