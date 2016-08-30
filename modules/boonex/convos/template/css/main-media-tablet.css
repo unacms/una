@@ -1,11 +1,11 @@
 @media (min-width:720px) and (max-width:1024px) {
 
-.bx-cnv-collaborator {
+.bx-grid-table .bx-cnv-collaborator {
     display:inline;
     display:inline-block;
 }
 
-.bx-grid-header-collaborators span {
+.bx-grid-table .bx-grid-header-collaborators span {
     display:inline;
 }
 
