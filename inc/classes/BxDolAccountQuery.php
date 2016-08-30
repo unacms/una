@@ -108,6 +108,24 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
         return $this->_getFieldByField('password', 'id', (int)$iID);
     }
 
+	/**
+     * Is account online by id
+     * @param  int $iId account id 
+     * @return account online status
+     */
+    public function isOnline($iId)
+    {
+        $sSql = $this->prepare("SELECT 
+        		`ta`.`id` 
+        	FROM `sys_accounts` AS `ta` 
+        	INNER JOIN `sys_sessions` AS `ts` ON `ta`.`id`=`ts`.`user_id` 
+        	WHERE 
+        		`ta`.`id` = ? AND 
+        		`ts`.`date` > (UNIX_TIMESTAMP() - 60 * ?) 
+        	LIMIT 1", $iId, (int)getParam('sys_account_online_time'));
+        return (int)$this->getOne($sSql) > 0;
+    }
+
     /**
      * Update last logged in time
      * @param $sPasswordHash - password hash

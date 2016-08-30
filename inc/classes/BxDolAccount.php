@@ -228,6 +228,15 @@ class BxDolAccount extends BxDol
     }
 
     /**
+     * Is account online
+     */
+	public function isOnline($iAccountId = false)
+    {
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        return $this->_oQuery->isOnline($iAccountId);
+    }
+
+    /**
      * Validate account.
      * @param $s - account identifier (id or email)
      * @return account id or false if account was not found

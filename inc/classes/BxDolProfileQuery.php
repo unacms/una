@@ -178,6 +178,26 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         return $this->_getDataByField('id', (int)$iID);
     }
 
+	/**
+     * Is profile online by id
+     * @param  int $iId profile id
+     * @return profile online status
+     */
+    public function isOnline($iId)
+    {
+        $sSql = $this->prepare("SELECT 
+        		`tp`.`id` 
+        	FROM `sys_profiles` AS `tp` 
+        	INNER JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` 
+        	INNER JOIN `sys_sessions` AS `ts` ON `tp`.`account_id`=`ts`.`user_id` 
+        	WHERE 
+        		`tp`.`id` = ? AND 
+        		`ta`.`profile_id`=`tp`.`id` AND 
+        		`ts`.`date` > (UNIX_TIMESTAMP() - 60 * ?) 
+        	LIMIT 1", $iId, (int)getParam('sys_account_online_time'));
+        return (int)$this->getOne($sSql) > 0;
+    }
+
     /**
      * Get profile field by specified field name and value.
      * In most cases it is for internal usage only.

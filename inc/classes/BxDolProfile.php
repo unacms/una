@@ -157,6 +157,15 @@ class BxDolProfile extends BxDol implements iBxDolProfile
         return BX_PROFILE_STATUS_ACTIVE == $this->getStatus($iProfileId);
     }
 
+	/**
+     * Is profile online
+     */
+	public function isOnline($iProfileId = false)
+    {
+        $iProfileId = (int)$iProfileId ? $iProfileId : $this->_iProfileID;
+        return $this->_oQuery->isOnline($iProfileId);
+    }
+
     /**
      * Get profile status
      */
