@@ -21,7 +21,7 @@
     <string name="_bx_tricon_option_app_id"><![CDATA[Trident App ID]]></string>
     <string name="_bx_tricon_option_app_secret"><![CDATA[Trident App Secret]]></string>
     <string name="_bx_tricon_option_app_url"><![CDATA[URL главного Trident сайта]]></string>
-    <string name="_bx_tricon_option_redirect"><![CDATA[Перенаправления после захода на сайт]]></string>
+    <string name="_bx_tricon_option_redirect"><![CDATA[Перенаправление после захода на сайт]]></string>
     <string name="_bx_tricon_option_auto_friends"><![CDATA[Автоматически делать друзьями тех, что уже друг на другом Trident сайте]]></string>
     <string name="_bx_tricon_option_module"><![CDATA[Модуль в котором создавать профили]]></string>
     <string name="_bx_tricon_option_confirm_email"><![CDATA[Всегда подтверждать емейл, когда заходят через Trident-соединение]]></string>
