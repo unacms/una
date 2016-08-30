@@ -280,6 +280,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
     }
 
+	public function serviceBrowseByAcl ($mixedLevelId, $iDesignBox = BX_DB_PADDING_DEF)
+    {
+        return $this->_serviceBrowse (
+            'acl',
+            array(
+                'level' => $mixedLevelId,
+			),
+            $iDesignBox,
+            true
+        );
+    }
+
     public function serviceEntityEditCover ($iContentId = 0)
     {
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);

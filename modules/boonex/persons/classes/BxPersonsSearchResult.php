@@ -87,6 +87,13 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 }
                 break;
 
+			case 'acl':
+                if ($this->_setAclConditions($aParams)) {
+					$this->aCurrent['title'] = _t('_bx_persons_page_title_browse_by_acl', implode(', ', $this->aCurrent['title']));
+                    unset($this->aCurrent['rss']);
+                }
+                break;
+
             case 'recent':
                 $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_recent');

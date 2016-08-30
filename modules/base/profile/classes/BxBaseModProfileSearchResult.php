@@ -32,6 +32,32 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
         return true;
     }
+
+	protected function _setAclConditions ($aParams)
+    {
+        $oAcl =  BxDolAcl::getInstance();
+        if(!$oAcl || empty($aParams['level']))
+            return false;
+
+		if(!is_array($aParams['level']))
+			$aParams['level'] = array($aParams['level']);
+
+		$this->aCurrent['title'] = array();
+		foreach($aParams['level'] as $iLevelId) {
+			$aInfo = $oAcl->getMembershipInfo($iLevelId);
+			if(empty($aInfo) || !is_array($aInfo))
+				continue;
+
+			$this->aCurrent['title'][] = _t($aInfo['name']);
+		}
+
+        $aCondition = $oAcl->getContentByLevelAsCondition('id', $aParams['level']);        
+        $this->aCurrent['restriction_sql'] = (!empty($this->aCurrent['restriction_sql']) ? $this->aCurrent['restriction_sql'] : '') . $aCondition['restriction_sql'];
+        $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aCondition['restriction']);
+        $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aCondition['join']);
+
+        return true;
+    }
 }
 
 /** @} */

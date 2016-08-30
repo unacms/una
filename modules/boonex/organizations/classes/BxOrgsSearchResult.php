@@ -87,6 +87,13 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 }
                 break;
 
+			case 'acl':
+                if ($this->_setAclConditions($aParams)) {
+					$this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_by_acl', implode(', ', $this->aCurrent['title']));
+                    unset($this->aCurrent['rss']);
+                }
+                break;
+
             case 'recent':
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_recent');
