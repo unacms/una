@@ -164,7 +164,7 @@ class BxOAuthModule extends BxDolModule
         if ($oGrid)
             return $oGrid->getCode();
 
-        $this->_oTemplate->displayPageNotFound();
+        return '';
     }
 }
 

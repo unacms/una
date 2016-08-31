@@ -185,6 +185,11 @@ class BxForumGridCategories extends BxTemplStudioGrid
         $oForm->addCssJs();
     }
 
+	protected function _isVisibleGrid ($a)
+    {
+        return isAdmin();
+    }
+
 	protected function _getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
     	$this->_aOptions['source'] = array();

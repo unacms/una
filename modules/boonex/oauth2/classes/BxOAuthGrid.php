@@ -28,6 +28,11 @@ class BxOAuthGrid extends BxTemplGrid
         $oForm->addCssJs();
     }
 
+	protected function _isVisibleGrid ($a)
+    {
+        return isAdmin();
+    }
+
     /**
      * 'add' action handler
      */

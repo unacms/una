@@ -37,20 +37,20 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function getModuleById($iId)
+    function getModuleById($iId, $bFromCache = true)
     {
         $sSql = $this->prepare("SELECT * FROM `sys_modules` WHERE `id`=? LIMIT 1", $iId);
-        return $this->fromMemory('sys_modules_' . $iId, 'getRow', $sSql);
+        return $bFromCache ? $this->fromMemory('sys_modules_' . $iId, 'getRow', $sSql) : $this->getRow($sSql);
     }
-    function getModuleByName($sName)
+    function getModuleByName($sName, $bFromCache = true)
     {
         $sSql = $this->prepare("SELECT * FROM `sys_modules` WHERE `name`=? LIMIT 1", $sName);
-        return $this->fromMemory('sys_modules_' . $sName, 'getRow', $sSql);
+        return $bFromCache ? $this->fromMemory('sys_modules_' . $sName, 'getRow', $sSql) : $this->getRow($sSql);
     }
-    function getModuleByUri($sUri)
+    function getModuleByUri($sUri, $bFromCache = true)
     {
         $sSql = $this->prepare("SELECT * FROM `sys_modules` WHERE `uri`=? LIMIT 1", $sUri);
-        return $this->fromMemory('sys_modules_' . $sUri, 'getRow', $sSql);
+        return $bFromCache ? $this->fromMemory('sys_modules_' . $sUri, 'getRow', $sSql) : $this->getRow($sSql);
     }
     function enableModuleByUri($sUri)
     {
@@ -97,7 +97,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
         $sSql = "SELECT * FROM `sys_modules` ORDER BY `title`";
         return $this->fromMemory('sys_modules', 'getAll', $sSql);
     }
-    function getModulesBy($aParams = array())
+    function getModulesBy($aParams = array(), $bFromCache = true)
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sPostfix = $sWhereClause = $sOrderByClause = "";
@@ -171,7 +171,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
             FROM `sys_modules`
             WHERE 1 " . $sWhereClause . $sOrderByClause;
 
-        if(empty($sPostfix))
+        if(!$bFromCache || empty($sPostfix))
         	return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         return call_user_func_array(array($this, 'fromMemory'), array_merge(array('sys_modules' . $sPostfix, $aMethod['name']), $aMethod['params']));

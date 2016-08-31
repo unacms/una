@@ -26,6 +26,8 @@ class BxOAuthStudioPage extends BxTemplStudioModule
 
     function getSettings ()
     {
+    	$this->oModule->_oTemplate->addStudioJs(array('BxDolGrid.js'));
+    	$this->oModule->_oTemplate->addStudioCss(array('grid.css'));
         return $this->oModule->studioSettings();
     }
 

@@ -622,7 +622,7 @@
 	<string name="_adm_err_modules_pending_uninstall"><![CDATA[Удаление модуль отложено. Модуль будет удалён автоматически после удаления всех его файлов.]]></string>
 	<string name="_adm_err_modules_pending_uninstall_already"><![CDATA[Модуль уже находится в ожидании удаления.]]></string>
 	<string name="_adm_err_modules_process_action_failed"><![CDATA[Произошла ошибка. Свяжитесь с продавцом модуля]]></string>
-	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Невозможно деативировать. У модуля есть следующие зависимые модули. Нужно сначала как минимум деативировать их.]]></string>
+	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Невозможно деактивировать. У модуля есть следующие зависимые модули. Нужно сначала как минимум деактивировать их.]]></string>
 	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[Сначала нужно установить и активировать следующие модули:]]></string>
 	<string name="_adm_err_modules_wrong_dependency_uninstall"><![CDATA[Невозможно удалить. У модуля есть следующие зависимые модули. Нужно сначала удалить их.]]></string>
 	<string name="_adm_err_modules_wrong_mysql_query"><![CDATA[В следующих MySQL-запросах имеются ошибки:]]></string>
