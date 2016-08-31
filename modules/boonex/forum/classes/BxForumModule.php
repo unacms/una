@@ -112,7 +112,7 @@ class BxForumModule extends BxBaseModTextModule
         if(!$iProfileId)
             return '';
 
-        return $this->_serviceBrowseTable(array('type' => 'author', 'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '=')), false);
+        return $this->_serviceBrowseTable(array('type' => 'author', 'author' => $iProfileId, 'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '=')), false);
     }
 
     public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)

@@ -114,9 +114,16 @@ class BxForumGrid extends BxTemplGrid
     	$sWhereClause .= " AND `" . $this->_oModule->_oConfig->CNF['FIELD_STATUS_ADMIN'] . "`='active'";
 
     	//--- Check privacy
+    	$iAuthorId = 0;
+    	if(!empty($this->_aParams['author'])) {
+    		$oProfileAuthor = BxDolProfile::getInstance((int)$this->_aParams['author']);
+    		if($oProfileAuthor)
+    			$iAuthorId = $oProfileAuthor->id();
+    	}
+
 		$sPrivacy = $this->_oModule->_oConfig->CNF['OBJECT_PRIVACY_VIEW'];
 		$oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
-		$aCondition = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart() : array();
+		$aCondition = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart($iAuthorId) : array();
 		if(isset($aCondition['join']))
 			$sJoinClause .= $aCondition['join'];
 		if(isset($aCondition['where']))
