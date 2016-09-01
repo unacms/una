@@ -162,6 +162,19 @@ class BxMarketModule extends BxBaseModTextModule
     	);
     }
 
+	public function serviceGetCover($iPhotoId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+    	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+
+    	return array(
+    		'small' => $oImagesTranscoder ? $oImagesTranscoder->getFileUrl($iPhotoId) : '',
+    		'big' => $oStorage ? $oStorage->getFileUrlById($iPhotoId) : ''
+    	);
+    }
+
     public function serviceGetFile($iFileId)
     {
     	$CNF = &$this->_oConfig->CNF;
