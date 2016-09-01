@@ -24,9 +24,12 @@ class BxBaseModPaymentModule extends BxDolModule
 
 	public function serviceUpdateDependentModules($sModule = 'all', $bInstall = true)
     {
-    	$aModules = $sModule == 'all' ? $this->_oDb->getModulesBy(array('type' => 'modules')) : array($this->_oDb->getModuleByName($sModule));
+    	$aModules = $sModule == 'all' ? $this->_oDb->getModulesBy(array('type' => 'modules'), false) : array($this->_oDb->getModuleByName($sModule, false));
 
         foreach($aModules as $aModule) {
+        	if(empty($aModule) || empty($aModule['name']))
+        		continue;
+
         	$mixedData = $this->callGetPaymentData($aModule['name']);
         	if($mixedData === false)
         		continue;

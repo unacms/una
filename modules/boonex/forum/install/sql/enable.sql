@@ -290,7 +290,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 -- GRIDS: categories manager
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_forum_categories', 'Array', '', '', 'category', '', '', 10, NULL, 'start', '', 'title', 'auto', '', 192, 'BxForumGridCategories', 'modules/boonex/forum/classes/BxForumGridCategories.php');
+('bx_forum_categories', 'Array', '', '', 'category', '', '', 10, NULL, 'start', '', 'title', 'auto', '', 128, 'BxForumGridCategories', 'modules/boonex/forum/classes/BxForumGridCategories.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_forum_categories', 'title', '_bx_forum_grid_column_title_title', '60%', '', 1),

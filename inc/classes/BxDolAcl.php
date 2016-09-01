@@ -128,6 +128,58 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
+	/**
+     * Get necessary condition array to use membership level in search classes
+     * @param $sContentField content table field name
+     * @param $mixedLevelId level ID or array of level IDs
+     * @return array of conditions is returned
+     */
+    public function getContentByLevelAsCondition($sContentField, $mixedLevelId)
+    {
+        return array(
+        	'restriction_sql' => ' AND (`tlm`.DateStarts IS NULL OR `tlm`.DateStarts <= NOW()) AND (`tlm`.DateExpires IS NULL OR `tlm`.DateExpires > NOW())',
+            'restriction' => array (
+                'acl_members' => array(
+                    'value' => $mixedLevelId,
+                    'field' => 'IDLevel',
+                    'operator' => is_array($mixedLevelId) ? 'in' : '=',
+                    'table' => 'tlm',
+                ),
+            ),
+            'join' => array (
+                'acl_members' => array(
+                    'type' => 'INNER',
+                    'table' => 'sys_acl_levels_members',
+                    'table_alias' => 'tlm',
+                    'mainField' => $sContentField,
+                    'onField' => 'IDMember',
+                    'joinFields' => array(),
+                ),
+                'acl_levels' => array(
+                    'type' => 'INNER',
+                    'table' => 'sys_acl_levels',
+                    'table_alias' => 'tl',
+                    'mainTable' => 'tlm',
+                    'mainField' => 'IDLevel',
+                    'onField' => 'ID',
+                    'joinFields' => array(),
+                ),
+            ),
+        );
+    }
+
+	/**
+     * Get necessary parts of SQL query to use membership levels in other queries
+     * @param $sContentTable content table name
+     * @param $sContentField content table field name
+     * @param $mixedLevelId level ID or array of level IDs
+     * @return array of SQL string parts, for now 'where' part only is returned
+     */
+    public function getContentByLevelAsSQLPart($sContentTable, $sContentField, $mixedLevelId)
+    {
+        return $this->oDb->getContentByLevelAsSQLPart($sContentTable, $sContentField, $mixedLevelId);
+    }
+
     /**
      * Check if member has one of the provided membership levels
      * @param $iPermissions - integer value to check permissions for, every bit is matched with some membership id

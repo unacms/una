@@ -356,6 +356,25 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
         $sQuery = $this->prepare("DELETE FROM `sys_acl_actions_track` WHERE `IDMember` = ?", (int)$iMemberId);
 	    return $this->query($sQuery);
     }
+
+	function getContentByLevelAsSQLPart($sContentTable, $sContentField, $mixedLevelId)
+    {
+    	$sJoin = $sWhere = ""; 
+
+        if(is_array($mixedLevelId))
+            $sWhere .= " AND `tlm`.`IDLevel` IN (" . $this->implode_escape($mixedLevelId) . ")";
+        else
+            $sWhere .= $this->prepareAsString(" AND `tlm`.`IDLevel` = ?", (int)$mixedLevelId);
+		$sWhere .= " AND (`tlm`.DateStarts IS NULL OR `tlm`.DateStarts <= NOW()) AND (`tlm`.DateExpires IS NULL OR `tlm`.DateExpires > NOW())";
+
+		$sJoin .= " INNER JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember`";
+		$sJoin .= " INNER JOIN `sys_acl_levels` AS `tl` ON `tlm`.`IDLevel`=`tl`.`ID`"; 
+
+        return array(
+            'where' => $sWhere,
+        	'join' => $sJoin
+        );
+    }
 }
 
 /** @} */

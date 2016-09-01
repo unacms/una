@@ -1,8 +1,8 @@
 
 -- GRID
 
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `override_class_name`, `override_class_file`) VALUES
-('bx_oauth', 'Sql', 'SELECT * FROM `bx_oauth_clients`', 'bx_oauth_clients', 'id', '', '', 10, NULL, 'start', '', 'title,client_id,client_secret,redirect_uri', 'auto', 'title,client_id,client_secret,redirect_uri', 'BxOAuthGrid', 'modules/boonex/oauth2/classes/BxOAuthGrid.php');
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_oauth', 'Sql', 'SELECT * FROM `bx_oauth_clients`', 'bx_oauth_clients', 'id', '', '', 10, NULL, 'start', '', 'title,client_id,client_secret,redirect_uri', 'auto', 'title,client_id,client_secret,redirect_uri', 128, 'BxOAuthGrid', 'modules/boonex/oauth2/classes/BxOAuthGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_oauth', 'checkbox', 'Select', '2%', '', 10),

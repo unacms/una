@@ -121,6 +121,11 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
     	return BxDolAccount::getInstance($iId)->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
     }
+
+    protected function _isVisibleGrid ($a)
+    {
+        return isAdmin();
+    }
 }
 
 /** @} */
