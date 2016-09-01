@@ -42,9 +42,9 @@
     @rem-y: (unit(@y) / @base-font-size-px);
     @rem-b: (unit(@blur) / @base-font-size-px);
     @rem-s: (unit(@spread) / @base-font-size-px);
-	-webkit-box-shadow: ~"@{rem-x}rem @{rem-y}rem @{rem-b}rem @{rem-s}rem rgba(0, 0, 0, @alpha)";
-	-moz-box-shadow: ~"@{rem-x}rem @{rem-y}rem @{rem-b}rem @{rem-s}rem rgba(0, 0, 0, @alpha)";
-	box-shadow: ~"@{rem-x}rem @{rem-y}rem @{rem-b}rem @{rem-s}rem rgba(0, 0, 0, @alpha)";
+	-webkit-box-shadow: ~"@{rem-x}rem @{rem-y}rem @{rem-b}rem @{rem-s}rem @{color}";
+	-moz-box-shadow: ~"@{rem-x}rem @{rem-y}rem @{rem-b}rem @{rem-s}rem @{color}";
+	box-shadow: ~"@{rem-x}rem @{rem-y}rem @{rem-b}rem @{rem-s}rem @{color}";
 }
 
 .box-sizing (@type: border-box) {
