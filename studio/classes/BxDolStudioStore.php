@@ -176,6 +176,8 @@ class BxDolStudioStore extends BxTemplStudioPage
 
         $oJson = BxDolStudioJson::getInstance();
 
+        /*
+		//TODO: Uncomment 'featured loading' when "Mark As Featured" functionality will be ready.
         // Load featured
         $aProducts[] = array(
             'caption' => '_adm_block_cpt_last_featured',
@@ -184,7 +186,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             ),
             'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_featured', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
         );
-
+        */
 
         // Load modules
         $aProducts[] = array(

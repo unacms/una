@@ -40,8 +40,11 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         $aMenu = array();
         $aMenuItems = array(
-	        'goodies' => array('icon' => 'home'), 
-	        'featured' => array('icon' => 'thumbs-up'), 
+	        'goodies' => array('icon' => 'home'),
+        	/*
+        	//TODO: Uncomment 'featured' when "Mark As Featured" functionality will be ready. 
+	        'featured' => array('icon' => 'thumbs-up'),
+	        */
 	        'purchases' => array('icon' => 'shopping-cart'), 
 	        'updates' => array('icon' => 'refresh'), 
 	        'checkout' => array('icon' => 'credit-card'), 
@@ -329,7 +332,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         	$sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
         	$bIcon = strpos($sIcon, '.') !== false;
 
-        	$sImage = '';
+        	$sImage = ''; //TODO: Use it if local Cover image will be used. BxDolStudioUtils::getModuleImage($aModule, 'std-sc.png');
         	$bImage = strpos($sImage, '.') !== false;
 
         	$bInstalled = $aModule['installed'];
