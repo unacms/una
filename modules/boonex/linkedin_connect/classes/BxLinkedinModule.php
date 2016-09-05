@@ -15,17 +15,7 @@ class BxLinkedinModule extends BxBaseModConnectModule
     {
         parent::__construct($aModule);
     }
-
-    /**
-     * Generate admin page;
-     *
-     * @return : (text) - html presentation data;
-     */
-    function actionAdministration()
-    {
-        parent::_actionAdministration('bx_linkedin_api_key', '_bx_linkedin_settings', '_bx_linkedin_information', '_bx_linkedin_information_block');
-    }
-
+    
     /**
      * Redirect to remote site login form
      *
@@ -62,7 +52,7 @@ class BxLinkedinModule extends BxBaseModConnectModule
 
         // check CSRF token
         if ($this->_getCsrfToken() != bx_get('state')) {
-            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_bx_linkedin_state_invalid')));
+            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_sys_connect_state_invalid')));
             return;
         }
 
@@ -124,14 +114,8 @@ class BxLinkedinModule extends BxBaseModConnectModule
             }
         } 
         else {
-            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_bx_linkedin_profile_error_info')));
+            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_sys_connect_profile_error_info')));
         }
-    }
-
-    protected function _redirect($sUrl, $iStatus = 302)
-    {
-        header("Location:{$sUrl}", true, $iStatus);
-        exit;
     }
 
     /**

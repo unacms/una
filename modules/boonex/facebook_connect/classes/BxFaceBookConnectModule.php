@@ -37,7 +37,8 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
         $this -> oFacebook = null;
 
         if ($this -> _oConfig -> mApiID) {
-            session_start();
+            if (!isset($_SESSION))
+                session_start();
             $this -> oFacebook = new Facebook\Facebook(array(
                 'app_id'  => $this -> _oConfig -> mApiID,
                 'app_secret' => $this -> _oConfig -> mApiSecret,
@@ -111,7 +112,7 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
                 }
             } else {
                 // FB profile info is not defined;
-                $this->_setLastError(_t('_bx_facebook_profile_error_info'));
+                $this->_setLastError(_t('_sys_connect_profile_error_info'));
             }
         }
 
