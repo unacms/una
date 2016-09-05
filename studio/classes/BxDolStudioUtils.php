@@ -79,6 +79,22 @@ class BxDolStudioUtils extends BxDol
         return !empty($sModuleIcon) && !empty($sModuleIconUrl) ? ($bReturnAsUrl ? $sModuleIconUrl : $sModuleIcon) : $sDefaultIcon;
     }
 
+	public static function getModuleImage($mixedModule, $sName, $bReturnAsUrl = true)
+    {
+		$aModule = is_array($mixedModule) ? $mixedModule : BxDolModuleQuery::getInstance()->getModuleByName($mixedModule);
+        if(empty($aModule))
+            return '';
+
+        $sModuleImage = '';
+        if(isset($aModule['path']))
+			$sModuleImage = $aModule['name'] . '@modules/' . $aModule['path'] . '|' . $sName;
+		else if(isset($aModule['dir']))
+			$sModuleImage = $aModule['name'] . '@modules/' . $aModule['dir'] . '|' . $sName;
+        $sModuleImageUrl = BxDolStudioTemplate::getInstance()->getImageUrl($sModuleImage);
+
+        return !empty($sModuleImage) && !empty($sModuleImageUrl) ? ($bReturnAsUrl ? $sModuleImageUrl : $sModuleImage) : '';
+    }
+
     public static function getModuleTitle($sName)
     {
         $sPrefix = '_adm_txt_module_';

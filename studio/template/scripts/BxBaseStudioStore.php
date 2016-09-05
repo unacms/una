@@ -40,8 +40,11 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         $aMenu = array();
         $aMenuItems = array(
-	        'goodies' => array('icon' => 'home'), 
-	        'featured' => array('icon' => 'thumbs-up'), 
+	        'goodies' => array('icon' => 'home'),
+        	/*
+        	//TODO: Uncomment 'featured' when "Mark As Featured" functionality will be ready. 
+	        'featured' => array('icon' => 'thumbs-up'),
+	        */
 	        'purchases' => array('icon' => 'shopping-cart'), 
 	        'updates' => array('icon' => 'refresh'), 
 	        'checkout' => array('icon' => 'credit-card'), 
@@ -326,16 +329,30 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         //--- Prepare modules.
         foreach($aProducts['modules'] as $aModule) {
-        	$sImage = BxDolStudioUtils::getModuleIcon($aModule, 'store');
+        	$sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
+        	$bIcon = strpos($sIcon, '.') !== false;
+
+        	$sImage = ''; //TODO: Use it if local Cover image will be used. BxDolStudioUtils::getModuleImage($aModule, 'std-sc.png');
         	$bImage = strpos($sImage, '.') !== false;
 
         	$bInstalled = $aModule['installed'];
         	$bQueued = !$bInstalled && $this->oDb->isQueued('action', $aModule['dir']);
-        	
 
             $sModules .= $oTemplate->parseHtmlByName('str_product_v1.html', array(
                 'js_object' => $sJsObject,
              	'name' => $aModule['name'],
+            	'bx_if:no_icon' => array (
+	                'condition' => !$bIcon,
+	                'content' => array(
+            			'icon' => $sIcon
+            		),
+	            ),
+                'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array(
+	                	'icon_url' => $sIcon,
+	            	),
+	            ),
                 'bx_if:no_image' => array (
 	                'condition' => !$bImage,
 	                'content' => array(
@@ -371,12 +388,27 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         //--- Prepare updates.
         foreach($aProducts['updates'] as $aUpdate) {
-        	$sImage = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
+        	$sIcon = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
+        	$bIcon = strpos($sIcon, '.') !== false;
+
+        	$sImage = '';
         	$bImage = strpos($sImage, '.') !== false;
 
             $sUpdates .= $oTemplate->parseHtmlByName('str_update_v1.html', array(
                 'js_object' => $sJsObject,
             	'name' => $aUpdate['module_name'],
+            	'bx_if:no_icon' => array (
+	                'condition' => !$bIcon,
+	                'content' => array(
+            			'icon' => $sIcon
+            		),
+	            ),
+                'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array(
+	                	'icon_url' => $sIcon,
+	            	),
+	            ),
                 'bx_if:no_image' => array (
 	                'condition' => !$bImage,
 	                'content' => array(
@@ -620,7 +652,10 @@ class BxBaseStudioStore extends BxDolStudioStore
             $sPrice = !$bFree ? _t('_adm_str_txt_price_single', $aItem['author_currency_sign'], $aItem['price_single']) : _t('_adm_str_txt_price_free');
             $sDiscount = !$bFree && !empty($aItem['discount_single']) ? _t('_adm_str_txt_discount_csign', $aItem['author_currency_sign'], $aItem['discount_single']['price']) : '';
 
-            $sImage = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+            $sIcon = !empty($aItem['thumbnail']['small']) ? $aItem['thumbnail']['small'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+			$bIcon = strpos($sIcon, '.') !== false;
+
+            $sImage = !empty($aItem['cover']['big']) ? $aItem['cover']['big'] : '';
 			$bImage = strpos($sImage, '.') !== false;
 
             $sResult .= $oTemplate->parseHtmlByName('str_product_v2.html', array(
@@ -629,6 +664,18 @@ class BxBaseStudioStore extends BxDolStudioStore
             	'name' => $aItem['name'],
                 'url' => $aItem['url'],
             	'description_plain_attr' => bx_html_attribute($aItem['description_plain']),
+            	'bx_if:no_icon' => array (
+	                'condition' => !$bIcon,
+	                'content' => array(
+            			'icon' => $sIcon
+            		),
+	            ),
+                'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array(
+	                	'icon_url' => $sIcon,
+	            	),
+	            ),
                 'bx_if:no_image' => array (
 	                'condition' => !$bImage,
 	                'content' => array(
@@ -644,12 +691,17 @@ class BxBaseStudioStore extends BxDolStudioStore
 	            	),
 	            ),
                 'title' => $aItem['title'],
-                'bx_if:show_vendor_price' => array(
-                    'condition' => !$bShoppingCart && false, //--- Completely hidden for now.
+                'bx_if:show_vendor' => array(
+                    'condition' => !$bShoppingCart,
                     'content' => array(
                         'vendor_name' => $aItem['author_name'],
-                        'price_single' => $sPrice,
-                        'discount_single' => $sDiscount,
+	            		'vendor_url' => $aItem['author_url'],
+	            		'bx_if:show_version' => array(
+	            			'condition' => !empty($aItem['file_version']),
+	            			'content' => array(
+	            				'version' => $aItem['file_version'],
+	            			)
+	            		),
                     )
                 ),
                 'bx_if:show_count_price' => array(
@@ -661,6 +713,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                     )
                 ),
                 'rate' => !$bShoppingCart ? $this->getVoteStars($aItem) : '',
+                'votes_cnt' => !$bShoppingCart && (int)$aItem['votes_cnt'] > 0 ? (int)$aItem['votes_cnt'] : '',
                 'bx_if:show_purchase_single' => array(
                     'condition' => $bPurchaseSingle && !$bInCart,
                     'content' => array(
@@ -735,7 +788,10 @@ class BxBaseStudioStore extends BxDolStudioStore
         foreach($mixedItems as $aItem) {
             $bDownloadable = (int)$aItem['is_file'] == 1;
 
-            $sImage = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+            $sIcon = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+			$bIcon = strpos($sIcon, '.') !== false;
+
+            $sImage = !empty($aItem['cover']['big']) ? $aItem['cover']['big'] : '';
 			$bImage = strpos($sImage, '.') !== false;
 
             $sResult .= $oTemplate->parseHtmlByName('str_update_v2.html', array(
@@ -743,6 +799,18 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'id' => $aItem['id'],
             	'name' => $aItem['name'],
                 'url' => $aItem['url'],
+            	'bx_if:no_icon' => array (
+	                'condition' => !$bIcon,
+	                'content' => array(
+            			'icon' => $sIcon
+            		),
+	            ),
+                'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array(
+	                	'icon_url' => $sIcon,
+	            	),
+	            ),
             	'bx_if:no_image' => array (
 	                'condition' => !$bImage,
 	                'content' => array(
