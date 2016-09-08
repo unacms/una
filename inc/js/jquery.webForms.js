@@ -65,11 +65,11 @@
                     eFormSection.removeClass('bx-form-collapsed');
 
                     if (eFormSection.hasClass('bx-form-section-hidden')) {
-                        $('.bx-form-section-content', eFormSection).hide();
+                        $('.bx-form-section-content:first', eFormSection).hide();
                         eFormSection.removeClass('bx-form-section-hidden');
                     }
 
-                    $('.bx-form-section-content', eFormSection).slideDown(function () {
+                    $('.bx-form-section-content:first', eFormSection).slideDown(function () {
                         eFormSection.removeClass('bx-form-section-hidden');
                     }); 
 
@@ -79,7 +79,7 @@
 
                     eFormSection.addClass('bx-form-collapsed');
 
-                    $('.bx-form-section-content', eFormSection).slideUp(function () {                    
+                    $('.bx-form-section-content:first', eFormSection).slideUp(function () {                    
                         eFormSection.addClass('bx-form-collapsed bx-form-section-hidden');
                     }); 
                 }
@@ -87,7 +87,7 @@
             };
 
             $('<u class="bx-form-section-toggler"><i class="sys-icon chevron-right"></i></u>').prependTo($('legend', eFormSection));
-            $('legend', eFormSection).click(fCallback);
+            $('legend:first', eFormSection).click(fCallback);
         });
 
         

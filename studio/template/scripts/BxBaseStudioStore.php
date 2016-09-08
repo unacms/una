@@ -332,9 +332,6 @@ class BxBaseStudioStore extends BxDolStudioStore
         	$sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
         	$bIcon = strpos($sIcon, '.') !== false;
 
-        	$sImage = ''; //TODO: Use it if local Cover image will be used. BxDolStudioUtils::getModuleImage($aModule, 'std-sc.png');
-        	$bImage = strpos($sImage, '.') !== false;
-
         	$bInstalled = $aModule['installed'];
         	$bQueued = !$bInstalled && $this->oDb->isQueued('action', $aModule['dir']);
 
@@ -351,20 +348,6 @@ class BxBaseStudioStore extends BxDolStudioStore
 	                'condition' => $bIcon,
 	                'content' => array(
 	                	'icon_url' => $sIcon,
-	            	),
-	            ),
-                'bx_if:no_image' => array (
-	                'condition' => !$bImage,
-	                'content' => array(
-	                	'note' => $aModule['note'],
-	                	'strecher' => mb_strlen($aModule['note']) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($aModule['note'])) / 6))
-            		),
-	            ),
-                'bx_if:image' => array (
-	                'condition' => $bImage,
-	                'content' => array(
-	                	'image_url' => $sImage,
-	            		'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40)
 	            	),
 	            ),
                 'title' => $aModule['title'],
@@ -391,9 +374,6 @@ class BxBaseStudioStore extends BxDolStudioStore
         	$sIcon = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
         	$bIcon = strpos($sIcon, '.') !== false;
 
-        	$sImage = '';
-        	$bImage = strpos($sImage, '.') !== false;
-
             $sUpdates .= $oTemplate->parseHtmlByName('str_update_v1.html', array(
                 'js_object' => $sJsObject,
             	'name' => $aUpdate['module_name'],
@@ -407,20 +387,6 @@ class BxBaseStudioStore extends BxDolStudioStore
 	                'condition' => $bIcon,
 	                'content' => array(
 	                	'icon_url' => $sIcon,
-	            	),
-	            ),
-                'bx_if:no_image' => array (
-	                'condition' => !$bImage,
-	                'content' => array(
-	                	'note' => $aUpdate['title'],
-	                	'strecher' => mb_strlen($aUpdate['title']) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($aUpdate['title'])) / 6))
-            		),
-	            ),
-                'bx_if:image' => array (
-	                'condition' => $bImage,
-	                'content' => array(
-	                	'image_url' => $sImage,
-	            		'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40)
 	            	),
 	            ),
                 'title' => $aUpdate['title'],
