@@ -28,18 +28,18 @@ INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VA
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  
-VALUES (@iTypeId, 'bx_tricon_general', '_bx_tricon_adm_stg_cpt_category_general', 1);
+VALUES (@iTypeId, 'bx_tricon_general', '_sys_connect_adm_stg_cpt_category_general', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `order`, `extra`) VALUES
 ('bx_tricon_api_key', '', @iCategId, '_bx_tricon_option_app_id', 'digit', '', '', 10, ''),
 ('bx_tricon_secret', '', @iCategId, '_bx_tricon_option_app_secret', 'digit', '', '', 20, ''),
 ('bx_tricon_url', '', @iCategId, '_bx_tricon_option_app_url', 'digit', '', '', 30, ''),
-('bx_tricon_redirect_page', 'dashboard', @iCategId, '_bx_tricon_option_redirect', 'select', '', '', 40, 'join,settings,dashboard,index'),
-('bx_tricon_module', 'bx_persons', @iCategId, '_bx_tricon_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:9:"bx_tricon";s:6:"method";s:20:"get_profiles_modules";}'),
+('bx_tricon_redirect_page', 'dashboard', @iCategId, '_sys_connect_option_redirect', 'select', '', '', 40, 'join,settings,dashboard,index'),
+('bx_tricon_module', 'bx_persons', @iCategId, '_sys_connect_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:9:"bx_tricon";s:6:"method";s:20:"get_profiles_modules";}'),
 ('bx_tricon_auto_friends', 'on', @iCategId, '_bx_tricon_option_auto_friends', 'checkbox', '', '', 60, ''),
-('bx_tricon_confirm_email', 'on', @iCategId, '_bx_tricon_option_confirm_email', 'checkbox', '', '', 70, ''),
-('bx_tricon_approve', '', @iCategId, '_bx_tricon_option_approve', 'checkbox', '', '', 80, ''),
+('bx_tricon_confirm_email', 'on', @iCategId, '_sys_connect_option_confirm_email', 'checkbox', '', '', 70, ''),
+('bx_tricon_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, ''),
 ('bx_tricon_url_rewrite', 'on', @iCategId, '_bx_tricon_option_rewrite', 'checkbox', '', '', 90, '');
 
 -- Pages

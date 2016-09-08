@@ -17,16 +17,6 @@ class BxTriConModule extends BxBaseModConnectModule
     }
 
     /**
-     * Generate admin page;
-     *
-     * @return : (text) - html presentation data;
-     */
-    function actionAdministration()
-    {
-        parent::_actionAdministration('bx_tricon_api_key', '_bx_tricon_settings', '_bx_tricon_information', '_bx_tricon_information_block');
-    }
-
-    /**
      * Redirect to remote Trident site login form
      *
      * @return n/a/ - redirect or HTML page in case of error
@@ -62,7 +52,7 @@ class BxTriConModule extends BxBaseModConnectModule
 
         // check CSRF token
         if ($this->_getCsrfToken() != bx_get('state')) {
-            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_bx_tricon_state_invalid')));
+            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_sys_connect_state_invalid')));
             return;
         }
 
@@ -125,14 +115,8 @@ class BxTriConModule extends BxBaseModConnectModule
             }
         } 
         else {
-            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_bx_tricon_profile_error_info')));
+            $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_sys_connect_profile_error_info')));
         }
-    }
-
-    protected function _redirect($sUrl, $iStatus = 302)
-    {
-        header("Location:{$sUrl}", true, $iStatus);
-        exit;
     }
 
     /**

@@ -19,7 +19,7 @@ class BxTriConStudioPage extends BxTemplStudioModule
     protected function getPageCaptionHelp()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
-        $sContent = '<a href="' . BX_DOL_URL_STUDIO . 'module.php?name=bx_tricon&page=help">' . _t('_bx_tricon_information') . "</a>";
+        $sContent = '<a href="' . BX_DOL_URL_STUDIO . 'module.php?name=bx_tricon&page=help">' . _t('_sys_connect_information') . "</a>";
         return $oTemplate->parseHtmlByName('page_caption_help.html', array('content' => $sContent));
     }
 }
