@@ -29,7 +29,9 @@ class BxDolStudioSettings extends BxTemplStudioPage
     protected $aCategories;
     protected $aCustomCategories;
 
-    protected $bMixes;
+    protected $bReadOnly;	//--- Enable/Disable ReadOnly mode for system settings. Note. It doesn't affect Editable mixes.
+
+    protected $bMixes;	//--- Enable/Disable mixes feature.
     protected $sMix;
     protected $aMix;
 
@@ -58,6 +60,8 @@ class BxDolStudioSettings extends BxTemplStudioPage
         			$this->sCategory = $mixedCategory;
         	}
         }
+
+        $this->bReadOnly = false;
 
 		$this->bMixes = false;
 		$this->sMix = '';
@@ -113,6 +117,11 @@ class BxDolStudioSettings extends BxTemplStudioPage
             }
             exit;
         }
+    }
+
+	public function enableReadOnly($bReadOnly = true)
+    {
+    	$this->bReadOnly = $bReadOnly;
     }
 
     public function enableMixes($bMixes = true)
@@ -248,6 +257,12 @@ class BxDolStudioSettings extends BxTemplStudioPage
         }
 
         return $this->getJsResult('_adm_stg_scs_save');
+    }
+
+    protected function isReadOnly()
+    {
+    	$bMix = !empty($this->aMix);
+    	return (!$bMix && $this->bReadOnly) || ($bMix && (int)$this->aMix['editable'] == 0);
     }
 
     protected function getSubmittedValue($aOption, &$oForm)

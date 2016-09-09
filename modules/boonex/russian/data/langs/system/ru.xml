@@ -1239,6 +1239,7 @@
 	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string>
 	<string name="_adm_stg_txt_import_mix_popup"><![CDATA[Импортировать набор]]></string>
 	<string name="_adm_stg_txt_mix_duplicate"><![CDATA[Продублировать]]></string>
+	<string name="_adm_stg_txt_mix_duplicate_inf"><![CDATA[Используйте 'Никакой', чтобы продублировать Системные значения]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string>
 	<string name="_adm_stg_txt_mix_title_err"><![CDATA[Нужно указать название. Пожалуйста, заполните это поле.]]></string>
 	<string name="_adm_stg_txt_mix_system"><![CDATA[Системный]]></string>

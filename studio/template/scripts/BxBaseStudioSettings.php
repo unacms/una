@@ -151,13 +151,16 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'db' => array (
                         'pass' => 'Xss',
                     ),
-                ),
+                )
+            ),
+
+            ($this->isReadOnly() ? array() : array(
                 'save' => array(
                     'type' => 'submit',
                     'name' => 'save',
                     'value' => _t("_adm_btn_settings_save"),
-                )
-            )
+                ),
+            ))
         );
 
         $oForm = new BxTemplStudioFormView($aForm, $oTemplate);
@@ -284,6 +287,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 					'type' => 'select',
                     'name' => 'duplicate',
                     'caption' => _t('_adm_stg_txt_mix_duplicate'),
+					'info' => _t('_adm_stg_txt_mix_duplicate_inf'),
 					'values' => array(
 						array('key' => '', 'value' => _t('_None'))
 					),
@@ -489,14 +493,13 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
     protected function field($aItem, $aItems2Mixes)
     {
-    	$oTemplate = BxDolStudioTemplate::getInstance();
-
     	$mixedValue = isset($aItems2Mixes[$aItem['name']]) ? $aItems2Mixes[$aItem['name']] : $aItem['value'];
+
     	$aAttributes = array();
-    	if(!empty($this->aMix) && (int)$this->aMix['editable'] == 0)
-    	$aAttributes = array_merge($aAttributes, array(
-    		'disabled' => 'disabled'
-    	)); 	
+    	if($this->isReadOnly())
+	    	$aAttributes = array_merge($aAttributes, array(
+	    		'disabled' => 'disabled'
+	    	));
 
         $aField = array();
         switch($aItem['type']) {

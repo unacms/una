@@ -52,6 +52,7 @@ class BxProteanStudioPage extends BxTemplStudioDesign
 			$sPrefix . '_viewport_mobile'
 		);
     	$oPage = new BxTemplStudioSettings($this->sTemplate, $aCategories, $sMix);
+    	$oPage->enableReadOnly(true);
     	$oPage->enableMixes(true);
 
     	$oTemplate->addJs(array('codemirror/codemirror.min.js'));
