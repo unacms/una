@@ -22,7 +22,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
             'title' => _t('_bx_market_page_title_browse'),
             'table' => 'bx_market_products',
             'ownFields' => array('id', 'title', 'text', 'price_single', 'price_recurring', 'duration_recurring', 'thumb', 'author', 'added'),
-            'searchFields' => array('title', 'text'),
+            'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
         		'except' => array('value' => '', 'field' => 'id', 'operator' => 'not in'),
@@ -48,6 +48,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
 
         $this->sFilterName = 'bx_market_filter';
         $this->oModule = $this->getMain();
+        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
         $oProfileAuthor = null;
 

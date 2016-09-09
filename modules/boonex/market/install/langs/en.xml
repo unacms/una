@@ -11,6 +11,7 @@
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_market_option_per_page_profile"><![CDATA[Number of items per page on Profile View page]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
+	<string name="_bx_market_option_searchable_fields"><![CDATA[Searchable fields]]></string>
 
 	<string name="_bx_market_form_entry"><![CDATA[Market]]></string>
 	<string name="_bx_market_form_entry_display_add"><![CDATA[Add Product]]></string>

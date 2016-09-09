@@ -29,6 +29,7 @@ class BxMarketConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'products',
+        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
         	'TABLE_PHOTOS2ENTRIES' => $aModule['db_prefix'] . 'photos2products',
         	'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2products',
         	'TABLE_FILES' => $aModule['db_prefix'] . 'files',
@@ -87,6 +88,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY' => 'bx_market_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_market_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_market_rss_num',
+        	'PARAM_SEARCHABLE_FIELDS' => 'bx_market_searchable_fields',
 
             // objects            
             'OBJECT_STORAGE' => 'bx_market_photos',
