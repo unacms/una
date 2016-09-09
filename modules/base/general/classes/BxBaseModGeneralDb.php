@@ -49,7 +49,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         }
 
         if ($bFulltextIndex)
-            $this->pdoExec("ALTER TABLE `" . $CNF['TABLE_ENTRIES'] . "` DROP INDEX `" . $CNF['TABLE_ENTRIES_FULLTEXT'] . "`");
+            $this->query("ALTER TABLE `" . $CNF['TABLE_ENTRIES'] . "` DROP INDEX `" . $CNF['TABLE_ENTRIES_FULLTEXT'] . "`");
 
         if (!($aFields = explode(',', getParam($CNF['PARAM_SEARCHABLE_FIELDS']))))
             return true;
@@ -58,7 +58,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         foreach ($aFields as $s)
             $sFields .= "`$s`,";
 
-        return $this->pdoExec("ALTER TABLE `" . $CNF['TABLE_ENTRIES'] . "` ADD FULLTEXT `" . $CNF['TABLE_ENTRIES_FULLTEXT'] . "` (" . trim($sFields, ', ') . ")");
+        return $this->query("ALTER TABLE `" . $CNF['TABLE_ENTRIES'] . "` ADD FULLTEXT `" . $CNF['TABLE_ENTRIES_FULLTEXT'] . "` (" . trim($sFields, ', ') . ")");
     }
 
 }

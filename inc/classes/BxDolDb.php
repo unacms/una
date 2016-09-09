@@ -211,6 +211,13 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     	if(!($oException instanceof PDOException))
     		return;
 
+		if(!isset($oException->errorInfo[self::$_sErrorKey]))
+			$oException->errorInfo[self::$_sErrorKey] = array(
+				'code' => BX_DB_ERR_QUERY_ERROR,
+				'message' => !empty($oException->errorInfo[2]) ? $oException->errorInfo[2] : $oException->getMessage(),
+				'trace' => $oException->getTrace()
+			);
+
     	$this->error($oException->errorInfo[self::$_sErrorKey]);
     	return;
     }
