@@ -27,7 +27,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
             'title' => _t('_bx_albums_page_title_browse'),
             'table' => 'bx_albums_albums',
             'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
-            'searchFields' => array('title', 'text'),
+            'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
@@ -52,6 +52,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
 
         $this->sFilterName = 'bx_albums_filter';
         $this->oModule = $this->getMain();
+        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
         $oProfileAuthor = null;
 

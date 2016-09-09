@@ -27,6 +27,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'albums',
+        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
             'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2albums',
             'TABLE_FILES' => $aModule['db_prefix'] . 'files',
 
@@ -67,6 +68,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY' => 'bx_albums_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_albums_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_albums_rss_num',
+        	'PARAM_SEARCHABLE_FIELDS' => 'bx_albums_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => 'bx_albums_files',
