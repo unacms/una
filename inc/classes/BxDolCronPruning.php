@@ -23,6 +23,9 @@ class BxDolCronPruning extends BxDolCron
         if (!($sOutput = ob_get_clean()))
             return;
 
+		if(getParam('enable_notification_pruning') != 'on')
+			return;
+
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Pruning', array('pruning_output' => $sOutput, 'site_title' => getParam('site_title')), 0, 0);
         if ($aTemplate)
             sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY);

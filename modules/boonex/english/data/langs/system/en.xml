@@ -1161,6 +1161,7 @@
 	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
 	<string name="_adm_stg_err_option_currency_sign"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_enable_gd"><![CDATA[Use GD library for image processing]]></string>
+	<string name="_adm_stg_cpt_option_enable_notification_pruning"><![CDATA[Enable email notifications for pruning results]]></string>
 	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
 	<string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
 	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
