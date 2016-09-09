@@ -14,7 +14,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_posts_summary_chars', '700', @iCategId, '_bx_posts_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_posts_plain_summary_chars', '240', @iCategId, '_bx_posts_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_posts_per_page_browse', '12', @iCategId, '_bx_posts_option_per_page_browse', 'digit', '', '', '', 10),
-('bx_posts_rss_num', '10', @iCategId, '_bx_posts_option_rss_num', 'digit', '', '', '', 20);
+('bx_posts_rss_num', '10', @iCategId, '_bx_posts_option_rss_num', 'digit', '', '', '', 20),
+('bx_posts_searchable_fields', 'title,text', @iCategId, '_bx_posts_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
 -- PAGE: create entry
 
@@ -360,5 +361,6 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALU
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'save_setting', @iHandler),
 ('profile', 'delete', @iHandler);
 

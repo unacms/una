@@ -22,7 +22,7 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
             'title' => _t('_bx_posts_page_title_browse'),
             'table' => 'bx_posts_posts',
             'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
-            'searchFields' => array('title', 'text'),
+            'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
@@ -47,6 +47,7 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
 
         $this->sFilterName = 'bx_posts_filter';
         $this->oModule = $this->getMain();
+        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
         $oProfileAuthor = null;
 

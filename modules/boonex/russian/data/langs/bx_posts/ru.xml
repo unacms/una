@@ -8,6 +8,7 @@
 	<string name="_bx_posts_option_plain_summary_chars"><![CDATA[Количество символов в описании публикации при отсутствующей картинке публикации]]></string>
 	<string name="_bx_posts_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
 	<string name="_bx_posts_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
+	<string name="_bx_posts_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
 
 	<string name="_bx_posts_form_entry"><![CDATA[Публикации]]></string>
 	<string name="_bx_posts_form_entry_display_add"><![CDATA[Добавить публикацию]]></string>

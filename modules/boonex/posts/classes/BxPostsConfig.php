@@ -27,6 +27,7 @@ class BxPostsConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'posts',
+        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -62,6 +63,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY' => 'bx_posts_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_posts_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_posts_rss_num',
+        	'PARAM_SEARCHABLE_FIELDS' => 'bx_posts_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => 'bx_posts_files',
