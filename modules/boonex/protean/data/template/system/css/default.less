@@ -322,12 +322,20 @@ a.bx-def-font-h3:hover {
 
 /* block */
 .bx-def-border-block {
-	border: @bx-border-width-block @bx-border-type @bx-color-border-block;
+	border-width: @bx-border-width-block;
+	border-style: @bx-border-type;
+	border-color: @bx-color-border-block;
 
 	.radius(@bx-border-radius-block);
 }
 .bx-db-header {
 	padding: @bx-title-padding-block;
+
+	border-width: @bx-border-width-block-title;
+	border-style: solid;
+	border-color: @bx-color-border-block-title;
+
+	.radius(@bx-border-radius-block-title);
 
 	background-color: @bx-color-block-title;
 }
@@ -346,7 +354,9 @@ a.bx-def-font-h3:hover {
 
 /* box */
 .bx-def-box {
-	border: @bx-border-width-box @bx-border-type @bx-color-border-box;
+	border-width: @bx-border-width-box;
+	border-style: @bx-border-type;
+	border-color: @bx-color-border-box;
 }
 .bx-def-box.bx-def-padding {
 	padding: @bx-content-padding-card;
@@ -360,7 +370,10 @@ a.bx-def-font-h3:hover {
 
 /* popup */
 .bx-popup-border {
-	border: @bx-border-width-popup solid @bx-color-border-popup;
+	border-width: @bx-border-width-popup;
+	border-style: solid;
+	border-color: @bx-color-border-popup;
+
 	.radius(@bx-border-radius-popup);
 }
 .bx-popup-color-bg {
@@ -387,7 +400,9 @@ a.bx-def-font-h3:hover {
 
 /* slide menu */
 .bx-popup-wrapper.bx-popup-slide-wrapper {
-	border: @bx-border-width-menu-slide solid @bx-color-border-menu-slide;
+	border-width: @bx-border-width-menu-slide;
+	border-style: solid;
+	border-color: @bx-color-border-menu-slide;
 
 	.background-color (@bx-color-menu-slide);
 
@@ -398,6 +413,21 @@ a.bx-def-font-h3:hover {
 .bx-popup-wrapper.bx-popup-slide-wrapper.bx-def-padding {
 	padding: @bx-content-padding-menu-slide;
 }
+.bx-popup-wrapper.bx-popup-slide-wrapper li a {
+	text-shadow: @bx-shadow-font-menu-slide;
+
+	font-family: @bx-font-family-menu-slide;
+	font-size: @bx-font-size-menu-slide;
+	font-weight: @bx-font-weight-menu-slide;
+	color: @bx-font-color-menu-slide;
+}
+.bx-popup-wrapper.bx-popup-slide-wrapper li a:hover {
+	color: @bx-font-color-menu-slide-hover;
+}
+.bx-popup-wrapper.bx-popup-slide-wrapper li.bx-menu-tab-active a,
+.bx-popup-wrapper.bx-popup-slide-wrapper li.bx-menu-inter-act {
+	color: @bx-font-color-menu-slide-active;
+}
 
 /* main menu */
 #bx-sliding-menu-sys_site.bx-sliding-menu-main {
@@ -405,7 +435,9 @@ a.bx-def-font-h3:hover {
 	-moz-box-shadow: @bx-shadow-menu-main;
 	box-shadow: @bx-shadow-menu-main;
 	
-	border: @bx-border-width-menu-main solid @bx-color-border-menu-main;
+	border-width: @bx-border-width-menu-main;
+	border-style: solid;
+	border-color: @bx-color-border-menu-main;
 
 	background-color: @bx-color-menu-main;
 
@@ -437,7 +469,9 @@ a.bx-def-font-h3:hover {
 	-moz-box-shadow: @bx-shadow-menu-page;
 	box-shadow: @bx-shadow-menu-page;
 
-	border: @bx-border-width-menu-page solid @bx-color-border-menu-page;
+	border-width: @bx-border-width-menu-page;
+	border-style: solid;
+	border-color: @bx-color-border-menu-page;
 
 	background-color: @bx-color-menu-page;
 
@@ -527,7 +561,10 @@ a.bx-def-font-h3:hover {
 
 	.background-color (@bx-color-button);
 
-	border: @bx-border-width-button solid @bx-color-border-button;
+	border-width: @bx-border-width-button;
+	border-style: solid;
+	border-color: @bx-color-border-button;
+
 	.radius(@bx-border-radius-button);
 
 	text-shadow: @bx-shadow-font-button;
@@ -541,7 +578,10 @@ a.bx-def-font-h3:hover {
 .bx-btn:active,
 .bx-btn.bx-btn-primary:hover,
 .bx-btn.bx-btn-primary:active {
-	border: @bx-border-width-button solid @bx-color-border-button-hover;
+	border-width: @bx-border-width-button;
+	border-style: solid;
+	border-color: @bx-color-border-button-hover;
+
 	.background-color (@bx-color-button-hover);
 
 	color: @bx-font-color-button-hover;
@@ -565,7 +605,10 @@ a.bx-def-font-h3:hover {
 
 	.background-color (@bx-color-button-small);
 
-	border: @bx-border-width-button-small solid @bx-color-border-button-small;
+	border-width: @bx-border-width-button-small;
+	border-style: solid;
+	border-color: @bx-color-border-button-small;
+
 	.radius(@bx-border-radius-button-small);
 
 	text-shadow: @bx-shadow-font-button-small;
@@ -577,7 +620,10 @@ a.bx-def-font-h3:hover {
 }
 .bx-btn.bx-btn-small:hover,
 .bx-btn.bx-btn-small:active {
-	border: @bx-border-width-button-small solid @bx-color-border-button-small-hover;
+	border-width: @bx-border-width-button-small;
+	border-style: solid;
+	border-color: @bx-color-border-button-small-hover;
+
 	.background-color (@bx-color-button-small-hover);
 
 	color: @bx-font-color-button-small-hover;
