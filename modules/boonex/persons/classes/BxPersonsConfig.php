@@ -36,6 +36,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
+            'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -67,6 +68,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'PARAM_DEFAULT_ACL_LEVEL' => 'bx_persons_default_acl_level',
             'PARAM_NUM_RSS' => 'bx_persons_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_persons_num_connections_quick',
+            'PARAM_SEARCHABLE_FIELDS' => 'bx_persons_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => 'bx_persons_pictures',
