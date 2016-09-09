@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `views` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `org_name` (`org_name`)
+  FULLTEXT KEY `search_fields` (`org_name`,`org_desc`)
 );
 
 -- TABLE: STORAGES & TRANSCODERS

@@ -6,7 +6,8 @@
 	<string name="_bx_orgs_option_autoapproval"><![CDATA[Автоматически активировать все организации после создания]]></string>
 	<string name="_bx_orgs_option_default_acl_level"><![CDATA[Уровень, назначаемый созданному профилю организации по умолчанию]]></string>
 	<string name="_bx_orgs_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
-	<string name="_bx_orgs_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
+    <string name="_bx_orgs_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
+    <string name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
 
 	<string name="_bx_orgs_form_profile"><![CDATA[Организации]]></string>
 	<string name="_bx_orgs_form_profile_display_add"><![CDATA[Добавление организации]]></string>

@@ -14,7 +14,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_organizations_autoapproval', 'on', @iCategId, '_bx_orgs_option_autoapproval', 'checkbox', '', '', '', 1),
 ('bx_organizations_default_acl_level', '3', @iCategId, '_bx_orgs_option_default_acl_level', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:2:{i:0;b:0;i:1;b:1;}s:5:"class";s:16:"TemplAclServices";}', '', '', 2),
 ('bx_organizations_num_connections_quick', '4', @iCategId, '_bx_orgs_option_num_connections_quick', 'digit', '', '', '', 10),
-('bx_organizations_num_rss', '10', @iCategId, '_bx_orgs_option_num_rss', 'digit', '', '', '', 12);
+('bx_organizations_num_rss', '10', @iCategId, '_bx_orgs_option_num_rss', 'digit', '', '', '', 12),
+('bx_organizations_searchable_fields', 'org_name,org_desc', @iCategId, '_bx_orgs_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"get_searchable_fields";}', '', '', 20);
 
 -- PAGES
 
@@ -357,6 +358,7 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALU
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'save_setting', @iHandlerId),
 ('bx_timeline', 'post_common', @iHandler),
 ('bx_organizations_pics', 'file_deleted', @iHandler),
 ('bx_organizations', 'timeline_view', @iHandler),
