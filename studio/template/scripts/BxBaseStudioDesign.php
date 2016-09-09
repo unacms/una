@@ -27,19 +27,13 @@ class BxBaseStudioDesign extends BxDolStudioDesign
     {
         return array_merge(parent::getPageJs(), array('jquery.form.min.js', 'jquery.webForms.js', 'settings.js', 'design.js'));
     }
+	function getPageJsClass()
+    {
+        return 'BxDolStudioDesign';
+    }
     function getPageJsObject()
     {
         return 'oBxDolStudioDesign';
-    }
-    function getPageCaption()
-    {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        $aTmplVars = array(
-            'js_object' => $this->getPageJsObject(),
-            'content' => parent::getPageCaption(),
-        );
-        return $oTemplate->parseHtmlByName('dsn_page_caption.html', $aTmplVars);
     }
     function getPageAttributes()
     {
@@ -81,7 +75,8 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         $oPage = new BxTemplStudioSettings($this->sTemplate, $mixedCategory, $sMix);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
-            'content' => $oPage->getPageCode()
+            'content' => $oPage->getPageCode(),
+        	'js_content' => $this->getPageJsCode(),
         ));
     }
 
@@ -93,7 +88,8 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         $oTemplate->addJs($oPage->getPageJs());
         $oTemplate->addCss($oPage->getPageCss());
     	return $oTemplate->parseHtmlByName('design.html', array(
-            'content' => $oPage->getPageCode()
+            'content' => $oPage->getPageCode(),
+    		'js_content' => $this->getPageJsCode()
         ));
     }
 }

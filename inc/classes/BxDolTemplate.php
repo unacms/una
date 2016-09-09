@@ -1657,7 +1657,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
     function _wrapInTagCssCode($sCode)
     {
-        return "<link rel=\"stylesheet\" type=\"text/css\">" . $sCode . "</link>";
+        return "<style>" . $sCode . "</style>";
     }
     /**
      * Include CSS/JS file(s) attached to the page in its head section.

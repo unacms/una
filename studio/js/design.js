@@ -10,7 +10,38 @@ function BxDolStudioDesign(oOptions) {
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioDesign' : oOptions.sObjName;
     this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+    this.sCodeMirror = oOptions.sCodeMirror == undefined ? '' : oOptions.sCodeMirror;
+
+    var $this = this;
+    $(document).ready (function () {
+    	if($this.sCodeMirror != '')
+    		$this.initCodeMirror($this.sCodeMirror);
+    });
+
+    var oCollapsable = $('#adm-settings-form .bx-form-collapsable');
+    oCollapsable.on('bx_show', function() {
+    	$this.refreshCodeMirror();
+    });
 }
+
+BxDolStudioDesign.prototype.initCodeMirror = function(sSelector) {
+	var oSelector = $(sSelector);
+	for(var i = 0; i < oSelector.length; i++) {
+	    var e = CodeMirror.fromTextArea(oSelector.get(i), {
+	        lineNumbers: true,
+	        mode: "htmlmixed",
+	        htmlMode: true,
+	        matchBrackets: true
+	    });
+	}
+};
+
+BxDolStudioDesign.prototype.refreshCodeMirror = function() {
+	$('.CodeMirror').each(function() {
+	    this.CodeMirror.refresh();
+	});
+};
+
 BxDolStudioDesign.prototype.activate = function(sTemplateName, oChecbox) {
 	var $this = this;
 	var oDate = new Date();

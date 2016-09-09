@@ -507,10 +507,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 			echo $this->submitSplash($oForm);
 			exit;
 		}
-
-        $oTemplate->addJs(array('codemirror/codemirror.min.js'));
+		
+		$oTemplate->addJs(array('codemirror/codemirror.min.js'));
         $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
-
 		return $oTemplate->parseHtmlByName('designer.html', array(
 			'content' => $this->getBlockCode(array(
 				'items' => $oTemplate->parseHtmlByName('dsr_splash.html', array(
@@ -521,7 +520,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 			)),
 			'js_content' => $this->getPageJsCode(array(
 				'sCodeMirror' => 'textarea[name=code]'
-			))
+			)),
 		));
     }
 

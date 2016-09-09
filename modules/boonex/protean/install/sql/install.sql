@@ -317,9 +317,17 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_font_color_link_h3'), '_bx_protean_stg_cpt_option_font_color_link_h3', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 28),
 (@iCategoryId, CONCAT(@sName, '_font_color_link_h3_hover'), '_bx_protean_stg_cpt_option_font_color_link_h3_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 29);
 
+-- SETTINGS: Protean template Custom Styles
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
+(@iTypeId, CONCAT(@sName, '_styles_custom'), '_bx_protean_stg_cpt_category_styles_custom', 17);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, CONCAT(@sName, '_styles_custom'), '_bx_protean_stg_cpt_option_styles_custom', '', 'text', '', '', '', 1);
+
 -- SETTINGS: Protean template Viewport Tablet
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_viewport_tablet'), '_bx_protean_stg_cpt_category_viewport_tablet', 16);
+(@iTypeId, CONCAT(@sName, '_viewport_tablet'), '_bx_protean_stg_cpt_category_viewport_tablet', 18);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -327,7 +335,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Viewport Mobile
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_viewport_mobile'), '_bx_protean_stg_cpt_category_viewport_mobile', 17);
+(@iTypeId, CONCAT(@sName, '_viewport_mobile'), '_bx_protean_stg_cpt_category_viewport_mobile', 19);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES

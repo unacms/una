@@ -230,6 +230,9 @@
 	<string name="_bx_protean_stg_cpt_option_font_color_link_h3"><![CDATA[H3 link font color]]></string>
 	<string name="_bx_protean_stg_cpt_option_font_color_link_h3_hover"><![CDATA[H3 on-hover link font color]]></string>
 
+	<string name="_bx_protean_stg_cpt_category_styles_custom"><![CDATA[Custom Styles]]></string>
+	<string name="_bx_protean_stg_cpt_option_styles_custom"><![CDATA[]]></string>
+
 	<string name="_bx_protean_stg_cpt_category_viewport_tablet"><![CDATA[Tablet Viewport]]></string>
 	<string name="_bx_protean_stg_cpt_option_vpt_font_size_scale"><![CDATA[Fonts size scale]]></string>
 

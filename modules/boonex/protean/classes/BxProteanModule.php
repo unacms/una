@@ -17,6 +17,12 @@ class BxProteanModule extends BxBaseModTemplateModule
     {
         parent::__construct($aModule);
     }
+
+	function serviceIncludeCssJs()
+    {
+    	$sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
+        return !empty($sCss) ? $this->_oTemplate->_wrapInTagCssCode($sCss) : '';
+    }
 }
 
 /** @} */

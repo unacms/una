@@ -29,6 +29,8 @@ class BxProteanStudioPage extends BxTemplStudioDesign
 
 	protected function getStyles($sMix = '')
     {
+    	$oTemplate = BxDolStudioTemplate::getInstance();
+
     	$sPrefix = $this->MODULE;
     	$aCategories = array(
     		$sPrefix . '_styles_general',
@@ -45,14 +47,21 @@ class BxProteanStudioPage extends BxTemplStudioDesign
 			$sPrefix . '_styles_large_button',
 			$sPrefix . '_styles_small_button',
 			$sPrefix . '_styles_font',
+			$sPrefix . '_styles_custom',
 			$sPrefix . '_viewport_tablet',
 			$sPrefix . '_viewport_mobile'
 		);
     	$oPage = new BxTemplStudioSettings($this->sTemplate, $aCategories, $sMix);
     	$oPage->enableMixes(true);
 
+    	$oTemplate->addJs(array('codemirror/codemirror.min.js'));
+        $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
+
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
-            'content' => $oPage->getPageCode()
+            'content' => $oPage->getPageCode(),
+        	'js_content' => $this->getPageJsCode(array(
+				"sCodeMirror" => "textarea[name='" . $sPrefix . "_styles_custom']"
+			))
         ));
     }
 }

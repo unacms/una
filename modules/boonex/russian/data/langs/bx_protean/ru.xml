@@ -230,6 +230,9 @@
 	<string name="_bx_protean_stg_cpt_option_font_color_link_h3"><![CDATA[Цвет линок в тэге H3]]></string>
 	<string name="_bx_protean_stg_cpt_option_font_color_link_h3_hover"><![CDATA[Цвет линок в тэге H3 при наведении курсора]]></string>
 
+	<string name="_bx_protean_stg_cpt_category_styles_custom"><![CDATA[Пользовательские стили]]></string>
+	<string name="_bx_protean_stg_cpt_option_styles_custom"><![CDATA[]]></string>
+
 	<string name="_bx_protean_stg_cpt_category_viewport_tablet"><![CDATA[Просмотр на планшете]]></string>
 	<string name="_bx_protean_stg_cpt_option_vpt_font_size_scale"><![CDATA[Масштаб размера шрифта]]></string>
 

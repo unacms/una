@@ -59,9 +59,7 @@
             var fCallback = function() {
 
                 if (eFormSection.hasClass('bx-form-collapsed')) {
-
                     // show
-
                     eFormSection.removeClass('bx-form-collapsed');
 
                     if (eFormSection.hasClass('bx-form-section-hidden')) {
@@ -71,16 +69,20 @@
 
                     $('.bx-form-section-content:first', eFormSection).slideDown(function () {
                         eFormSection.removeClass('bx-form-section-hidden');
+
+                        //--- fire custom event 'bx_show'
+                        eFormSection.trigger('bx_show');
                     }); 
 
                 } else {
-
                     // hide
-
                     eFormSection.addClass('bx-form-collapsed');
 
                     $('.bx-form-section-content:first', eFormSection).slideUp(function () {                    
                         eFormSection.addClass('bx-form-collapsed bx-form-section-hidden');
+
+                        //--- fire custom event 'bx_hide'
+                        eFormSection.trigger('bx_hide');
                     }); 
                 }
 
