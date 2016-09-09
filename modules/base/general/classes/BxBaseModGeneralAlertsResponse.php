@@ -24,7 +24,7 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
     {
         $CNF = $this->_oModule->_oConfig->CNF;
 
-        if (isset($CNF['PARAM_SEARCHABLE_FIELDS']) && 'system' == $oAlert->sUnit && 'save_setting' == $oAlert->sAction)
+        if (isset($CNF['PARAM_SEARCHABLE_FIELDS']) && $CNF['PARAM_SEARCHABLE_FIELDS'] == $oAlert->aExtras['option'] && 'system' == $oAlert->sUnit && 'save_setting' == $oAlert->sAction)
             $this->_oModule->_oDb->alterFulltextIndex();
     }
 }
