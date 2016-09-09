@@ -9,12 +9,12 @@
  * @{
  */
 
-class BxBaseModTextAlertsResponse extends BxDolAlertsResponse
+class BxBaseModTextAlertsResponse extends BxBaseModGeneralAlertsResponse
 {
-    protected $MODULE;
-
     public function response($oAlert)
     {
+        parent::response($oAlert);
+
         if ('profile' != $oAlert->sUnit || 'delete' != $oAlert->sAction || !isset($oAlert->aExtras['delete_with_content']) || !$oAlert->aExtras['delete_with_content'])
             return;
 
