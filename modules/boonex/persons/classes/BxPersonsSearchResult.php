@@ -25,7 +25,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
             'table' => 'sys_profiles',
             'tableSearch' => 'bx_persons_data',
             'ownFields' => array(),
-            'searchFields' => array('fullname', 'description'),
+            'searchFields' => array(),
             'restriction' => array(
         		'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
@@ -70,6 +70,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
 
         $this->sFilterName = 'bx_persons_filter';
         $this->oModule = $this->getMain();
+        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
         switch ($sMode) {
 

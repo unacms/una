@@ -9,19 +9,17 @@
  * @{
  */
 
-class BxBaseModProfileAlertsResponse extends BxDolAlertsResponse
+class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
 {
-    protected $MODULE;
-    protected $_oModule;
-
     public function __construct()
     {
         parent::__construct();
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
     public function response($oAlert)
     {
+        parent::response($oAlert);
+
         $CNF = $this->_oModule->_oConfig->CNF;
 
         // update picture field id when file is deleted

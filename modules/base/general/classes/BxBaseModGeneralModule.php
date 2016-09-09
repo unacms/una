@@ -39,6 +39,23 @@ class BxBaseModGeneralModule extends BxDolModule
         return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
     }
 
+    public function serviceGetSearchableFields ()
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        if (!isset($CNF['PARAM_SEARCHABLE_FIELDS']) || !isset($CNF['OBJECT_FORM_ENTRY']) || !isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']))
+            return array();
+
+        $aTextTypes = array('text', 'textarea');
+        $aTextFields = array();
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
+        foreach ($oForm->aInputs as $r) {
+            if (in_array($r['type'], $aTextTypes))
+                $aTextFields[$r['name']] = $r['caption'];
+        }
+        return $aTextFields;
+    }
+    
 	public function serviceManageTools($sType = 'common')
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));
