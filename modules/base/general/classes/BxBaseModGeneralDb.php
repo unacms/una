@@ -39,7 +39,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         $CNF = $this->_oConfig->CNF;        
 
         $bFulltextIndex = false;
-        $aIndexes = $this->getAll("SHOW INDEXES FROM `bx_persons_data`");
+        $aIndexes = $this->getAll("SHOW INDEXES FROM `" . $CNF['TABLE_ENTRIES'] . "`");
 
         foreach ($aIndexes as $r) {
             if ($CNF['TABLE_ENTRIES_FULLTEXT'] == $r['Key_name']) {
