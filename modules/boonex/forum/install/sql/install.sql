@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `status` enum('active','draft','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
+  FULLTEXT KEY `title_text` (`title`,`text`),
   KEY `lr_timestamp` (`lr_timestamp`)
 );
 

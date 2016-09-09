@@ -358,7 +358,7 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALU
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('system', 'save_setting', @iHandlerId),
+('system', 'save_setting', @iHandler),
 ('bx_timeline', 'post_common', @iHandler),
 ('bx_organizations_pics', 'file_deleted', @iHandler),
 ('bx_organizations', 'timeline_view', @iHandler),

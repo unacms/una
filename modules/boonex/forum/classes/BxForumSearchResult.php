@@ -22,7 +22,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
             'title' => _t('_bx_forum_page_title_browse'),
             'table' => 'bx_forum_discussions',
             'ownFields' => array('id', 'title', 'text', 'author', 'added', 'comments', 'lr_profile_id'),
-            'searchFields' => array('title', 'text'),
+            'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
         		'category' => array('value' => '', 'field' => 'cat', 'operator' => '='),
@@ -48,6 +48,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
 
         $this->sFilterName = 'bx_forum_filter';
         $this->oModule = $this->getMain();
+        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
         $oProfileAuthor = null;
 

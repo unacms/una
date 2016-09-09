@@ -33,6 +33,7 @@ class BxForumConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'discussions',
+        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -74,6 +75,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY' => 'bx_forum_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_forum_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_forum_rss_num',
+        	'PARAM_SEARCHABLE_FIELDS' => 'bx_forum_searchable_fields',
 
             // objects
             'OBJECT_GRID' => 'bx_forum',
