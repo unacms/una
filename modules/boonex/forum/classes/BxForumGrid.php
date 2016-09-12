@@ -59,6 +59,11 @@ class BxForumGrid extends BxTemplGrid
 		$this->_aOptions['field_order'] = $sField;
     }
 
+    public function getCode ($isDisplayHeader = true)
+    {
+    	return $this->_oModule->_oTemplate->getJsCode('main') . parent::getCode($isDisplayHeader);
+    }
+
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_ADD_ENTRY']);
@@ -101,7 +106,7 @@ class BxForumGrid extends BxTemplGrid
     {
         parent::_addJsCss();
 
-        $this->_oModule->_oTemplate->addJs('main.js');
+        $this->_oModule->_oTemplate->addJs(array('main.js'));
         $this->_oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));
     }
 

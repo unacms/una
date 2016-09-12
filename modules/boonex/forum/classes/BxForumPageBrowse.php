@@ -34,11 +34,6 @@ class BxForumPageBrowse extends BxBaseModTextPageBrowse
 	        	'keyword_name' => '#' . $sKeyword
 	        ));
     }
-
-	public function getCode()
-    {
-    	return $this->_oModule->_oTemplate->getJsCode('main') . parent::getCode();
-    }
 }
 
 /** @} */
