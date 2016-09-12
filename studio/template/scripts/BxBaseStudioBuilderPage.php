@@ -982,7 +982,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'caption' => _t('_adm_bp_txt_page_cover'),
                     'info' => '',
                     'value' => '1',
-                    'checked' => $aPage['cover'] == '1',
+                    'checked' => isset($aPage['cover']) && $aPage['cover'] == '1',
                     'db' => array (
                         'pass' => 'Int',
                     )
@@ -994,7 +994,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 					'images_transcoder' => $this->sTranscoder,
 					'uploaders' => array ('sys_html5'),
 					'multiple' => false,
-					'content_id' => $aPage['id'],
+					'content_id' => isset($aPage['id']) ? $aPage['id'] : 0,
 					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_fgt_cover.html', array(
 						'name' => 'cover_image',
 					)),
