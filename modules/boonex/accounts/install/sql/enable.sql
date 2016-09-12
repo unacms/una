@@ -19,7 +19,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_accounts_menu_manage_tools', @sName, 'resend-cemail', '_bx_accnt_menu_item_title_system_resend_cemail', '_bx_accnt_menu_item_title_resend_cemail', 'javascript:void(0)', 'javascript:{js_object}.onClickResendCemail({content_id});', '_self', 'envelope-o', '', 192, 1, 0, 1),
 ('bx_accounts_menu_manage_tools', @sName, 'delete', '_bx_accnt_menu_item_title_system_delete', '_bx_accnt_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'trash-o', '', 192, 1, 0, 2),
-('bx_accounts_menu_manage_tools', @sName, 'delete-with-content', '_bx_accnt_menu_item_title_system_delete_with_content', '_bx_accnt_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'trash-o', '', 192, 1, 0, 3);
+('bx_accounts_menu_manage_tools', @sName, 'delete-with-content', '_bx_accnt_menu_item_title_system_delete_with_content', '_bx_accnt_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'trash-o', '', 192, 1, 0, 3),
+('bx_accounts_menu_manage_tools', @sName, 'make-operator', '_bx_accnt_menu_item_title_system_make_operator', '_bx_accnt_menu_item_title_make_operator', 'javascript:void(0)', 'javascript:{js_object}.onClickMakeOperator({content_id});', '_self', 'wrench', '', 192, 1, 0, 4),
+('bx_accounts_menu_manage_tools', @sName, 'unmake-operator', '_bx_accnt_menu_item_title_system_unmake_operator', '_bx_accnt_menu_item_title_unmake_operator', 'javascript:void(0)', 'javascript:{js_object}.onClickUnmakeOperator({content_id});', '_self', 'wrench', '', 192, 1, 0, 5);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -51,7 +53,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_accounts_administration', 'Sql', 'SELECT `ta`.*, `tp`.`status` AS `status` FROM `sys_accounts` AS `ta` LEFT JOIN `sys_profiles` AS `tp` ON `ta`.`id`=`tp`.`account_id` AND `tp`.`type`=''system'' WHERE 1 ', 'sys_accounts', 'id', 'logged', 'status', '', 20, NULL, 'start', '', 'name,email', '', 'like', '', '', 2147483647, 'BxAccntGridAdministration', 'modules/boonex/accounts/classes/BxAccntGridAdministration.php');
+('bx_accounts_administration', 'Sql', 'SELECT `ta`.*, `tp`.`status` AS `status` FROM `sys_accounts` AS `ta` LEFT JOIN `sys_profiles` AS `tp` ON `ta`.`id`=`tp`.`account_id` AND `tp`.`type`=''system'' WHERE 1 ', 'sys_accounts', 'id', 'logged', 'status', '', 20, NULL, 'start', '', 'name,email', '', 'like', '', '', 192, 'BxAccntGridAdministration', 'modules/boonex/accounts/classes/BxAccntGridAdministration.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_accounts_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),

@@ -51,6 +51,16 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
     }
 
+	public function performActionMakeOperator()
+    {
+    	$this->_performActionChangeRole(3);
+    }
+
+	public function performActionUnmakeOperator()
+    {
+    	$this->_performActionChangeRole(1);
+    }
+
     public function resetQueryParams()
     {
         $aKeys = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
@@ -58,6 +68,27 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             unset($_GET[$sKey]);
             unset($_POST[$sKey]);
         }
+    }
+
+	protected function _performActionChangeRole($iRole)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            echoJson(array());
+            return;
+        }
+
+        $iAffected = 0;
+        $aIdsAffected = array();
+        foreach($aIds as $iId)
+			if($this->_oModule->_oDb->updateAccount(array('role' => $iRole), array('id' => $iId))) {
+				$aIdsAffected[] = $iId;
+        		$iAffected++;
+			}
+
+		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
     }
 
 	protected function _performActionEnable($isChecked)
@@ -120,11 +151,6 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 	protected function _doDelete($iId, $aParams = array())
     {
     	return BxDolAccount::getInstance($iId)->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
-    }
-
-    protected function _isVisibleGrid ($a)
-    {
-        return isAdmin();
     }
 }
 

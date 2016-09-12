@@ -46,6 +46,24 @@ class BxAccntModule extends BxBaseModGeneralModule
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
+
+    public function checkAllowedMakeOperator(&$aDataEntry, $isPerformAction = false)
+    {
+    	$bAdmin = isAdmin();
+    	if(!$bAdmin || (int)$aDataEntry['id'] == getLoggedId() || (int)$aDataEntry['role'] == 3)
+    		return _t('_sys_txt_access_denied');
+
+    	return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+	public function checkAllowedUnmakeOperator(&$aDataEntry, $isPerformAction = false)
+    {
+    	$bAdmin = isAdmin();
+    	if(!$bAdmin || (int)$aDataEntry['id'] == getLoggedId() || (int)$aDataEntry['role'] != 3)
+    		return _t('_sys_txt_access_denied');
+
+    	return CHECK_ACTION_RESULT_ALLOWED;
+    }
 }
 
 /** @} */

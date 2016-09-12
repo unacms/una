@@ -60,4 +60,24 @@ BxAccntManageTools.prototype.onClickDeleteWithContent = function(iContentId) {
 	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete_with_content', {}, '', false, 1);
 };
 
+BxAccntManageTools.prototype.onClickMakeOperator = function(iContentId) {
+	$('.bx-popup-applied:visible').dolPopupHide({
+		onHide: function(oPopup) {
+			$(oPopup).remove();
+		} 
+	});
+
+	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'make_operator', {}, '', false, 0);
+};
+
+BxAccntManageTools.prototype.onClickUnmakeOperator = function(iContentId) {
+	$('.bx-popup-applied:visible').dolPopupHide({
+		onHide: function(oPopup) {
+			$(oPopup).remove();
+		} 
+	});
+
+	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'unmake_operator', {}, '', false, 0);
+};
+
 /** @} */

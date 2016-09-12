@@ -17,6 +17,10 @@
     <string name="_bx_accnt_menu_item_title_delete"><![CDATA[Delete]]></string>
     <string name="_bx_accnt_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_accnt_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_accnt_menu_item_title_system_make_operator"><![CDATA[Make Operator]]></string>
+    <string name="_bx_accnt_menu_item_title_make_operator"><![CDATA[Make Operator]]></string>
+    <string name="_bx_accnt_menu_item_title_system_unmake_operator"><![CDATA[Unmake Operator]]></string>
+    <string name="_bx_accnt_menu_item_title_unmake_operator"><![CDATA[Unmake Operator]]></string>
 	<string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Accounts]]></string>
 	<string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Accounts - {addon} unconfirmed]]></string>
 	<string name="_bx_accnt_menu_item_title_manage"><![CDATA[Manage]]></string>

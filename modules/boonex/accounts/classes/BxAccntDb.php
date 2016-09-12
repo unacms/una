@@ -11,12 +11,14 @@
 
 class BxAccntDb extends BxBaseModGeneralDb
 {
-    /*
-     * Constructor.
-     */
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
+    }
+
+    public function updateAccount($aSet, $aWhere)
+    {
+    	return (int)$this->query("UPDATE `sys_accounts` SET " . $this->arrayToSQL($aSet) . " WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
     }
 }
 
