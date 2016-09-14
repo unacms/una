@@ -1906,6 +1906,8 @@
 	<string name="_sys_layout_top_area_bar_left"><![CDATA[Верхнее пространство с левой линейкой]]></string>
 	<string name="_sys_layout_top_area_bar_right"><![CDATA[Верхнее пространство с правой линейкой]]></string>
 	<string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Верхнее и нижнее пространства с 2 столбцами посередине]]></string>
+	<string name="_sys_layout_topbottom_area_bar_left"><![CDATA[Верхнее и нижнее пространства с левой линейкой посередине]]></string>
+	<string name="_sys_layout_topbottom_area_bar_right"><![CDATA[Верхнее и нижнее пространства с правой линейкой посередине]]></string>
 	<string name="_sys_loading"><![CDATA[Загрузка...]]></string>
 	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
 	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {2}, {1}, {0}]]></string>
