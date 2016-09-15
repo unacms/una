@@ -168,12 +168,18 @@ class BxBaseEditorTinyMCE extends BxDolEditor
         // detect language
         $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
 
+        $sCss = 'editor.less';
+        $aCss = BxDolTemplate::getInstance()->_lessCss(array(
+        	'path' => $this->_oTemplate->getCssPath($sCss),
+        	'url' => $this->_oTemplate->getCssUrl($sCss)
+        ));
+
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sToolsItems,
             'bx_var_custom_conf' => $this->_sConfCustom,
             'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS, BX_ESCAPE_STR_APOS),
-            'bx_var_css_path' => bx_js_string($this->_oTemplate->getCssUrl('editor.css'), BX_ESCAPE_STR_APOS),
+            'bx_var_css_path' => bx_js_string($aCss['url'], BX_ESCAPE_STR_APOS),
             'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
             'bx_var_lang' => bx_js_string($sLang, BX_ESCAPE_STR_APOS),
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
