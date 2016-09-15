@@ -365,7 +365,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             $sWhere .= " AND `tlm`.`IDLevel` IN (" . $this->implode_escape($mixedLevelId) . ")";
         else
             $sWhere .= $this->prepareAsString(" AND `tlm`.`IDLevel` = ?", (int)$mixedLevelId);
-		$sWhere .= " AND (`tlm`.DateStarts IS NULL OR `tlm`.DateStarts <= NOW()) AND (`tlm`.DateExpires IS NULL OR `tlm`.DateExpires > NOW())";
+		$sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW())";
 
 		$sJoin .= " INNER JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember`";
 		$sJoin .= " INNER JOIN `sys_acl_levels` AS `tl` ON `tlm`.`IDLevel`=`tl`.`ID`"; 
@@ -374,6 +374,14 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             'where' => $sWhere,
         	'join' => $sJoin
         );
+    }
+
+    function getProfilesByMembership($mixedLevelId)
+    {
+    	$aSqlParts = $this->getContentByLevelAsSQLPart('sys_profiles', 'id', $mixedLevelId);
+
+    	$sSql = $this->prepare("SELECT `sys_profiles`.* FROM `sys_profiles`" . $aSqlParts['join'] . " WHERE 1" . $aSqlParts['where']);
+    	return $this->getAll($sSql); 
     }
 }
 

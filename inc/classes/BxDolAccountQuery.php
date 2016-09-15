@@ -222,6 +222,39 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
         return $this->query($sSql);
     }
 
+	/**
+     * Get account(s) by params
+     * @param  array   $aParams browse params
+     * @return array with account(s)
+     */
+    public function getAccounts($aParams)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$sFieldsClause = "`ta`.*"; 
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = "";
+
+    	switch($aParams['type']) {
+    		case 'by_join_date':
+    			$aMethod['params'][1] = array(
+    				'date' => $aParams['date']
+    			);
+
+    			$sWhereClause = " AND `ta`.`added` > :date AND `ta`.`added` < UNIX_TIMESTAMP()";
+    			break;
+    	}
+
+    	$sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
+		$sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
+
+		$aMethod['params'][0] = "SELECT
+				" . $sFieldsClause . "
+            FROM `sys_accounts` AS `ta`" . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
     /**
      * Search account profile by keyword
      */
