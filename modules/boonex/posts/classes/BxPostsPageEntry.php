@@ -19,6 +19,14 @@ class BxPostsPageEntry extends BxBaseModTextPageEntry
         $this->MODULE = 'bx_posts';
         parent::__construct($aObject, $oTemplate);
     }
+
+    protected function _setSubmenu($aParams)
+    {
+    	parent::_setSubmenu(array_merge($aParams, array(
+    		'title' => '',
+    		'icon' => ''
+    	)));
+    }
 }
 
 /** @} */
