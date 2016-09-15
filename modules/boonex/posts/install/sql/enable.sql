@@ -209,8 +209,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_posts_view_submenu', 'bx_posts', '_bx_posts_menu_set_title_view_entry_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_posts_view_submenu', 'bx_posts', 'view-post', '_bx_posts_menu_item_title_system_view_entry', '_bx_posts_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-post&id={content_id}', '', '', '', '', 2147483647, 1, 0, 1),
-('bx_posts_view_submenu', 'bx_posts', 'view-post-comments', '_bx_posts_menu_item_title_system_view_entry_comments', '_bx_posts_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-post-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2);
+('bx_posts_view_submenu', 'bx_posts', 'view-post', '_bx_posts_menu_item_title_system_view_entry', '_bx_posts_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-post&id={content_id}', '', '', '', '', 2147483647, 0, 0, 1),
+('bx_posts_view_submenu', 'bx_posts', 'view-post-comments', '_bx_posts_menu_item_title_system_view_entry_comments', '_bx_posts_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-post-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 2);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
