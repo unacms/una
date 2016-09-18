@@ -850,30 +850,7 @@ BLAH;
             if (!$oUploader)
                 continue;
 
-            $sGhostTemplate = false;
-            if (isset($aInput['ghost_template']) && is_object($aInput['ghost_template'])) { // form is not submitted and ghost template is BxDolFormNested object
-
-                $oFormNested = $aInput['ghost_template'];
-                if ($oFormNested instanceof BxDolFormNested)
-                    $sGhostTemplate = $oFormNested->getCode();
-
-            } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) { // form is not submitted and ghost template is form array
-
-                $oFormNested = new BxDolFormNested($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
-                $sGhostTemplate = $oFormNested->getCode();
-
-            } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && $aInput['ghost_template']) { // form is submitted and ghost template is array of BxDolFormNested objects
-
-                $sGhostTemplate = array ();
-                foreach ($aInput['ghost_template'] as $iFileId => $oFormNested)
-                    if (is_object($oFormNested) && $oFormNested instanceof BxDolFormNested)
-                        $sGhostTemplate[$iFileId] = $oFormNested->getCode();
-
-            } elseif (isset($aInput['ghost_template']) && is_string($aInput['ghost_template'])) { // ghost template is just string template, without nested form
-
-                $sGhostTemplate = $aInput['ghost_template'];
-
-            }
+            $sGhostTemplate = $this->genGhostTemplate($aInput);
 
             $aAttrs = !empty($aInput['attrs']) ? $aInput['attrs'] : array();
             if (empty($aInput['attrs']['disabled']))
@@ -901,6 +878,36 @@ BLAH;
             'uploader_instance_name' => $oUploader ? $oUploader->getNameJsInstanceUploader() : '',
             'is_init_ghosts' => isset($aInput['init_ghosts']) && !$aInput['init_ghosts'] ? 0 : 1,
         ));
+    }
+
+    protected function genGhostTemplate(&$aInput)
+    {
+        $sGhostTemplate = false;
+        if (isset($aInput['ghost_template']) && is_object($aInput['ghost_template'])) { // form is not submitted and ghost template is BxDolFormNested object
+
+            $oFormNested = $aInput['ghost_template'];
+            if ($oFormNested instanceof BxDolFormNested)
+                $sGhostTemplate = $oFormNested->genForm();
+
+        } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) { // form is not submitted and ghost template is form array
+
+            $oFormNested = new BxDolFormNested($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
+            $sGhostTemplate = $oFormNested->getCode();
+
+        } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && $aInput['ghost_template']) { // form is submitted and ghost template is array of BxDolFormNested objects
+
+            $sGhostTemplate = array ();
+            foreach ($aInput['ghost_template'] as $iFileId => $oFormNested)
+                if (is_object($oFormNested) && $oFormNested instanceof BxDolFormNested)
+                    $sGhostTemplate[$iFileId] = $oFormNested->genForm();
+
+        } elseif (isset($aInput['ghost_template']) && is_string($aInput['ghost_template'])) { // ghost template is just string template, without nested form
+
+            $sGhostTemplate = $aInput['ghost_template'];
+
+        }
+
+        return $sGhostTemplate;
     }
 
     protected function genCustomInputUsernamesSuggestions ($aInput)

@@ -184,9 +184,9 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATE:
         return $mixedData;
     case BX_DATA_DATE_TS:
-        return empty($mixedData) ? '' : date("Y-m-d", $mixedData);
+        return empty($mixedData) ? '' : date("Y-m-d", (int)$mixedData);
     case BX_DATA_DATETIME_TS:
-        return empty($mixedData) ? '' : date("Y-m-d H:i", $mixedData);
+        return empty($mixedData) ? '' : date("Y-m-d H:i", (int)$mixedData);
 
     case BX_DATA_HTML:
         return $mixedData;
