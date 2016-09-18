@@ -12,6 +12,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_groups_num_connections_quick', '4', @iCategId, '_bx_groups_option_num_connections_quick', 'digit', '', '', '', 10),
+('bx_groups_per_page_browse', '20', @iCategId, '_bx_groups_option_per_page_browse', 'digit', '', '', '', 11),
 ('bx_groups_num_rss', '10', @iCategId, '_bx_groups_option_num_rss', 'digit', '', '', '', 12);
 
 -- PAGES

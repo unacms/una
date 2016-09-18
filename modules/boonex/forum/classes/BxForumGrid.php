@@ -24,11 +24,19 @@ class BxForumGrid extends BxTemplGrid
 
         $this->_aOptions['paginate_per_page'] = (int)$this->_oModule->_oDb->getParam('bx_forum_per_page_browse');
         $this->_sDefaultSortingOrder = 'DESC';
+
+	    $sParams = bx_get('params');
+        if(!empty($sParams)) {
+        	$aParams = unserialize(urldecode($sParams));
+        	if(!empty($aParams) && is_array($aParams))
+            	$this->setBrowseParams($aParams);
+        }
     }
 
     public function setBrowseParams($aParams)
     {
     	$this->_aParams = $aParams;
+    	$this->_aQueryAppend['params'] = urlencode(serialize($this->_aParams));
 
     	$sField = 'added';
     	if(!empty($this->_aParams['type']))

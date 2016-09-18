@@ -34,13 +34,23 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             ));
 
             // select view entry submenu
-            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-            $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
-                'title' => $sTitle,
-                'link' => $sUrl,
-                'icon' => $CNF['ICON'],
+            $this->_setSubmenu(array(
+            	'title' => $sTitle,
+				'link' => $sUrl,
             ));
         }
+    }
+
+    protected function _setSubmenu($aParams)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+		$oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+		$oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array_merge(array(
+			'title' => '',
+			'link' => '',
+			'icon' => $CNF['ICON'],
+		), $aParams));
     }
 
     protected function _getBlockService ($aBlock)

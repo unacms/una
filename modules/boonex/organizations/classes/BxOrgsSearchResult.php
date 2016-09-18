@@ -49,7 +49,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                     'joinFields' => array(),
                 ),
             ),
-            'paginate' => array('perPage' => 20, 'start' => 0),
+            'paginate' => array('perPage' => getParam('bx_organizations_per_page_browse'), 'start' => 0),
             'sorting' => 'none',
             'rss' => array(
                 'title' => '',
