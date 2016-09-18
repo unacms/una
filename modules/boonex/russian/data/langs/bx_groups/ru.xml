@@ -11,7 +11,7 @@
 	<string name="_bx_groups_form_profile_display_edit"><![CDATA[Редактирование группы]]></string>
 	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
 	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Удаление группы]]></string>
-	<string name="_bx_groups_form_profile_display_view"><![CDATA[Полный группы]]></string>
+	<string name="_bx_groups_form_profile_display_view"><![CDATA[Просмотр группы]]></string>
 	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Полный просмотр группы]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
@@ -34,7 +34,7 @@
 	<string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Необходима картинка группы.]]></string>
 	<string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
 	<string name="_bx_groups_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
-	<string name="_bx_groups_form_profile_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
+	<string name="_bx_groups_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
 	<string name="_bx_groups_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту группу]]></string>
 	<string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
 	<string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить группу.]]></string>
@@ -54,8 +54,8 @@
 	<string name="_bx_groups_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
 	<string name="_bx_groups_page_title_sys_delete_profile"><![CDATA[Удалить группу]]></string>
 	<string name="_bx_groups_page_title_delete_profile"><![CDATA[Удалить группу]]></string>
-	<string name="_bx_groups_page_title_sys_view_profile_closed"><![CDATA[Просмотреть закрытую группу]]></string>
-	<string name="_bx_groups_page_title_sys_view_profile"><![CDATA[Просмотреть группу]]></string>
+	<string name="_bx_groups_page_title_sys_view_profile_closed"><![CDATA[Просмотр закрытой группы]]></string>
+	<string name="_bx_groups_page_title_sys_view_profile"><![CDATA[Просмотр группы]]></string>
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_groups_page_title_browse"><![CDATA[Группы]]></string>
     <string name="_bx_groups_page_title_browse_top"><![CDATA[Популярные Группы]]></string>
@@ -103,15 +103,15 @@
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>
-    <string name="_bx_groups_menu_set_title_view_profile_actions"><![CDATA[Группы - Действия]]></string>
-    <string name="_bx_groups_menu_title_view_profile_actions"><![CDATA[Группы - Действия]]></string>
-    <string name="_bx_groups_menu_set_title_view_profile_actions_more"><![CDATA[Группы - Дополнительные Действия]]></string>
-    <string name="_bx_groups_menu_title_view_profile_actions_more"><![CDATA[Группы - Дополнительные Действия]]></string>
+    <string name="_bx_groups_menu_set_title_view_profile_actions"><![CDATA[Группа - Действия]]></string>
+    <string name="_bx_groups_menu_title_view_profile_actions"><![CDATA[Группа - Действия]]></string>
+    <string name="_bx_groups_menu_set_title_view_profile_actions_more"><![CDATA[Группа - Дополнительные действия]]></string>
+    <string name="_bx_groups_menu_title_view_profile_actions_more"><![CDATA[Группа - Дополнительные действия]]></string>
     <string name="_bx_groups_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра группы]]></string>
     <string name="_bx_groups_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра группы]]></string>
     <string name="_bx_groups_menu_title_view_profile_submenu_cover"><![CDATA[Подменю группы на обложке]]></string>
-	<string name="_bx_groups_menu_set_title_manage_tools"><![CDATA[Управление подменю инструментов]]></string>
-    <string name="_bx_groups_menu_title_manage_tools"><![CDATA[Управление подменю инструментов]]></string>
+	<string name="_bx_groups_menu_set_title_manage_tools"><![CDATA[Подменю инструментов управления]]></string>
+    <string name="_bx_groups_menu_title_manage_tools"><![CDATA[Подменю инструментов управления]]></string>
     <string name="_bx_groups_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_menu_item_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
@@ -194,7 +194,7 @@
     <string name="_bx_groups_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_groups_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
 	<string name="_bx_groups_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) группу(ы).]]></string>
-	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
+	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
     <string name="_bx_groups_txt_account_pending"><![CDATA[Эта группа ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>
