@@ -41,6 +41,14 @@
     <string name="_bx_events_form_profile_input_sys_reoccurring"><![CDATA[Reoccurring]]></string>
     <string name="_bx_events_form_profile_input_reoccurring"><![CDATA[Reoccurring]]></string>
     <string name="_bx_events_form_profile_input_reoccurring_add_interval"><![CDATA[Add repeating interval]]></string>
+    <string name="_bx_events_form_profile_input_sys_date_start"><![CDATA[Date start]]></string>
+    <string name="_bx_events_form_profile_input_date_start"><![CDATA[Date start]]></string>
+    <string name="_bx_events_form_profile_input_date_start_err"><![CDATA[Start date is mandatory]]></string>
+    <string name="_bx_events_form_profile_input_sys_date_end"><![CDATA[Date end]]></string>
+    <string name="_bx_events_form_profile_input_date_end"><![CDATA[Date end]]></string>    
+    <string name="_bx_events_form_profile_input_date_end_err"><![CDATA[End date is mandatory]]></string>
+    <string name="_bx_events_form_profile_input_sys_timezone"><![CDATA[Timezone]]></string>
+    <string name="_bx_events_form_profile_input_timezone"><![CDATA[Timezone]]></string>
 
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Repeat year]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Repeat month]]></string>
@@ -84,7 +92,9 @@
 	<string name="_bx_events_page_title_sys_manage_administration"><![CDATA[Manage All Events]]></string>
 	<string name="_bx_events_page_title_manage"><![CDATA[Manage Events]]></string>
 	<string name="_bx_events_page_title_sys_top"><![CDATA[Top Events]]></string>
-	<string name="_bx_events_page_title_top"><![CDATA[Top Events]]></string>
+    <string name="_bx_events_page_title_top"><![CDATA[Top Events]]></string>
+	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Events Calendar]]></string>
+	<string name="_bx_events_page_title_calendar"><![CDATA[Events Calendar]]></string>
 
 	<string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Joined Events]]></string>
 	<string name="_bx_events_page_block_title_joined_entries"><![CDATA[Joined Events]]></string>
@@ -109,8 +119,8 @@
 	<string name="_bx_events_page_block_title_manage"><![CDATA[Manage Events]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Top Events]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
-
     <string name="_bx_events_page_block_title_categories"><![CDATA[Event categories]]></string>
+    <string name="_bx_events_page_block_title_calendar"><![CDATA[Events calendar]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>
@@ -192,7 +202,9 @@
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[All Events]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Top]]></string>
 	<string name="_bx_events_menu_item_title_entries_top"><![CDATA[Top]]></string>
-
+	<string name="_bx_events_menu_item_title_system_calendar"><![CDATA[Calendar]]></string>
+    <string name="_bx_events_menu_item_title_calendar"><![CDATA[Calendar]]></string>
+    
 	<string name="_bx_events_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_events_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
 	<string name="_bx_events_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>

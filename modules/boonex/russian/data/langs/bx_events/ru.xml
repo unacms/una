@@ -41,6 +41,12 @@
     <string name="_bx_events_form_profile_input_sys_reoccurring"><![CDATA[Повторяющееся событие]]></string>
     <string name="_bx_events_form_profile_input_reoccurring"><![CDATA[Повторяющееся событие]]></string>
     <string name="_bx_events_form_profile_input_reoccurring_add_interval"><![CDATA[Добавить повторяющийся интервал]]></string>
+    <string name="_bx_events_form_profile_input_sys_date_start"><![CDATA[Начало]]></string>
+    <string name="_bx_events_form_profile_input_date_start"><![CDATA[Начало]]></string>
+    <string name="_bx_events_form_profile_input_sys_date_end"><![CDATA[Конец]]></string>
+    <string name="_bx_events_form_profile_input_date_end"><![CDATA[Конец]]></string>
+    <string name="_bx_events_form_profile_input_sys_timezone"><![CDATA[Часовой пояс]]></string>
+    <string name="_bx_events_form_profile_input_timezone"><![CDATA[Часовой пояс]]></string>
 
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Повторять: год]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Повторять: месяц]]></string>
@@ -84,7 +90,9 @@
 	<string name="_bx_events_page_title_sys_manage_administration"><![CDATA[Управлять всеми событиями]]></string>
 	<string name="_bx_events_page_title_manage"><![CDATA[Управлять событиями]]></string>
 	<string name="_bx_events_page_title_sys_top"><![CDATA[Лучшие события]]></string>
-	<string name="_bx_events_page_title_top"><![CDATA[Лучшие события]]></string>
+    <string name="_bx_events_page_title_top"><![CDATA[Лучшие события]]></string>
+	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Календарь событий]]></string>
+	<string name="_bx_events_page_title_calendar"><![CDATA[Календарь событий]]></string>
 
 	<string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Участие в событиях]]></string>
 	<string name="_bx_events_page_block_title_joined_entries"><![CDATA[Участие в событиях]]></string>
@@ -110,6 +118,7 @@
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Лучшие события]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
+    <string name="_bx_events_page_block_title_calendar"><![CDATA[Календарь событий]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Под-меню событий]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Под-меню событий]]></string>
@@ -190,7 +199,9 @@
 	<string name="_bx_events_menu_item_title_manage_my"><![CDATA[Мой события]]></string>
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[Все события]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>
-	<string name="_bx_events_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
+    <string name="_bx_events_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
+	<string name="_bx_events_menu_item_title_system_calendar"><![CDATA[Календарь]]></string>
+    <string name="_bx_events_menu_item_title_calendar"><![CDATA[Календарь]]></string>
 
 	<string name="_bx_events_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_events_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>

@@ -104,6 +104,10 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
                 ),
             );
         }
+
+        if (isset($this->aInputs['timezone'])) {
+            $this->aInputs['timezone']['values'] = array_combine(timezone_identifiers_list(), timezone_identifiers_list());
+        }
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())

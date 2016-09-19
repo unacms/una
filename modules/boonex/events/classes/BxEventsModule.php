@@ -19,6 +19,22 @@ class BxEventsModule extends BxBaseModGroupsModule
         parent::__construct($aModule);
     }
 
+    public function actionCalendarData()
+    {
+        // TODO: check permissions
+        
+        $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'));
+        
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($aEntries);
+    }
+
+    public function serviceCalendar()
+    {
+        $o = new BxTemplCalendar(array('events' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data'), $this->_oTemplate);
+        return $o->display();
+    }
+
     public function actionIntervals()
     {
         $sAction = bx_get('a');
