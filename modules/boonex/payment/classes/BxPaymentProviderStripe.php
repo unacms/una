@@ -357,7 +357,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		return $oSubscription;
 	}
 
-	public function _retrieveCoupon($sId) {
+	protected function _retrieveCoupon($sId) {
 		try {
 			$oCoupon = \Stripe\Coupon::retrieve($sId);
 		}
@@ -368,7 +368,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		return $oCoupon;
 	}
 
-	public function _retrieveEvent($sId) {
+	protected function _retrieveEvent($sId) {
 		try {
 			$oEvent = \Stripe\Event::retrieve($sId);
 		}

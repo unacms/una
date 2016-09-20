@@ -430,11 +430,11 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	if(empty($aPending) || !is_array($aPending))
     		return false;
 
-		if((int)$aPending['processed'] == 1)
-			return true;
-
 		$sType = $aPending['type'];
 		$bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
+
+		if($bTypeSingle && (int)$aPending['processed'] == 1)
+			return true;
 
 		$iClientId = (int)$aPending['client_id'];
 		$sLicense = $this->_oConfig->getLicense();

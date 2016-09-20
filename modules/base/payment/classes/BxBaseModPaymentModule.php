@@ -89,7 +89,7 @@ class BxBaseModPaymentModule extends BxDolModule
         $oAccount = $oProfile->getAccountObject();
 
         return array(
-        	'id' => $iUserId,
+        	'id' => $oProfile->id(),
             'name' => $oProfile->getDisplayName(),
         	'email' => $oAccount->getEmail(),
             'link' => $oProfile->getUrl(),
