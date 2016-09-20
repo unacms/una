@@ -325,6 +325,26 @@ class BxMarketDb extends BxBaseModTextDb
     {
     	$CNF = &$this->_oConfig->CNF;
 
+    	$bRegistered = (int)$this->getOne("SELECT `id` FROM `" . $CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = :profile_id AND `product_id` = :product_id AND `order` = :order LIMIT 1", array(
+    		'profile_id' => $iProfileId,
+    		'product_id' => $iProductId,
+    		'order' => $sOrder,
+    	)) > 0;
+
+    	$sMethod = $bRegistered ? '_prolongLicense' : '_registerLicense';
+    	return $this->$sMethod($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration);
+    }
+
+    public function unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType)
+    {
+    	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iProfileId, $iProductId, $sOrder, $sLicense);
+        return (int)$this->query($sQuery) > 0;
+    }
+
+    protected function _registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
     	$aQueryParams = array(
     		'profile_id' => $iProfileId,
     		'product_id' => $iProductId,
@@ -335,16 +355,33 @@ class BxMarketDb extends BxBaseModTextDb
     	);
 
 		$sExpireParam = ''; 
-		if(!empty($sDuration))
+		if(!empty($sDuration) && isset($this->_aRecurringDurations[$sDuration]))
 			$sExpireParam = ', `expired`=UNIX_TIMESTAMP(DATE_ADD(DATE_ADD(NOW(), ' . $this->_aRecurringDurations[$sDuration] . '), INTERVAL ' . (int)$this->getParam($CNF['OPTION_RECURRING_RESERVE']) . ' DAY))';
 
-    	$sQuery = $this->prepare("INSERT INTO `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()" . $sExpireParam);
+    	$sQuery = $this->prepare("INSERT INTO `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()" . $sExpireParam);
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType)
+    protected function _prolongLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
     {
-    	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iProfileId, $iProductId, $sOrder, $sLicense);
+    	$CNF = &$this->_oConfig->CNF;
+
+    	if($sType == BX_MARKET_LICENSE_TYPE_SINGLE)
+    		return true;
+
+    	if(empty($sDuration) || empty($this->_aRecurringDurations[$sDuration]))
+    		return false;
+
+    	$sQuery = $this->prepare("UPDATE 
+    			`" . $CNF['TABLE_LICENSES'] . "` 
+    		SET 
+    			`expired`=UNIX_TIMESTAMP(DATE_ADD(FROM_UNIXTIME(`expired`), " . $this->_aRecurringDurations[$sDuration] . ")) 
+    		WHERE 
+    			`profile_id` = ? AND 
+    			`product_id` = ? AND 
+    			`order` = ? 
+    		LIMIT 1", $iProfileId, $iProductId, $sOrder);
+
         return (int)$this->query($sQuery) > 0;
     }
 

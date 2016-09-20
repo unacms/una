@@ -19,7 +19,7 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_market_entry_
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_market';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_market_cats');
+DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_market_cats', 'bx_market_prices', 'bx_market_durations');
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_market';
