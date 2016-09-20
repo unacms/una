@@ -338,7 +338,7 @@ class BxMarketDb extends BxBaseModTextDb
     public function unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType)
     {
     	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iProfileId, $iProductId, $sOrder, $sLicense);
-        return (int)$this->query($sQuery) > 0;
+        return $this->query($sQuery) !== false;
     }
 
     protected function _registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
