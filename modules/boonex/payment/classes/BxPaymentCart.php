@@ -89,7 +89,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	if($mixedResult !== true)
     		return $mixedResult;
 
-        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersCart($iSellerId);
+        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($iSellerId);
         if(empty($aSellerProviders))
             return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
 
@@ -154,7 +154,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	if($mixedResult !== true)
     		return $mixedResult;
 
-        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersSubscription($iSellerId);
+        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersRecurring($iSellerId);
         if(empty($aSellerProviders))
             return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
 

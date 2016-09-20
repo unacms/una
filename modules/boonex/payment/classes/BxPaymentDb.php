@@ -48,30 +48,31 @@ class BxPaymentDb extends BxBaseModPaymentDb
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
         $sWhereClause = "";
-        switch($aParams['type']) {
-        	case 'by_name':
-        		$aMethod['name'] = 'getRow';
-        		$aMethod['params'][1] = array(
-                	'name' => $aParams['name']
-                );
-
-        		$sWhereClause = " AND `tp`.`name`=:name";
-        		break;
-
-			case 'for_cart':
-				$aMethod['name'] = 'getAllWithKey';
-				$aMethod['params'][1] = 'name';
-
-				$sWhereClause = " AND `tp`.`for_subscription`='0'";
-        		break;
-
-			case 'for_subscription':
-				$aMethod['name'] = 'getAllWithKey';
-				$aMethod['params'][1] = 'name';
-
-				$sWhereClause = " AND `tp`.`for_subscription`='1'";
-        		break;
-        }          
+        if(!empty($aParams['type']))
+	        switch($aParams['type']) {
+	        	case 'by_name':
+	        		$aMethod['name'] = 'getRow';
+	        		$aMethod['params'][1] = array(
+	                	'name' => $aParams['name']
+	                );
+	
+	        		$sWhereClause = " AND `tp`.`name`=:name";
+	        		break;
+	
+				case 'for_single':
+					$aMethod['name'] = 'getAllWithKey';
+					$aMethod['params'][1] = 'name';
+	
+					$sWhereClause = " AND `tp`.`for_single`='1'";
+	        		break;
+	
+				case 'for_recurring':
+					$aMethod['name'] = 'getAllWithKey';
+					$aMethod['params'][1] = 'name';
+	
+					$sWhereClause = " AND `tp`.`for_recurring`='1'";
+	        		break;
+	        }          
 
         $aMethod['params'][0] = "SELECT
                 `tp`.`id` AS `id`,
@@ -80,7 +81,8 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 `tp`.`description` AS `description`,
                 `tp`.`option_prefix` AS `option_prefix`,
                 `tp`.`for_visitor` AS `for_visitor`,
-                `tp`.`for_subscription` AS `for_subscription`,
+                `tp`.`for_single` AS `for_single`,
+                `tp`.`for_recurring` AS `for_recurring`,
                 `tp`.`class_name` AS `class_name`,
                 `tp`.`class_file` AS `class_file`
             FROM `" . $this->_sPrefix . "providers` AS `tp`
@@ -141,14 +143,14 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->query($sQuery);
     }
 
-	public function getVendorInfoProvidersCart($iVendorId)
+	public function getVendorInfoProvidersSingle($iVendorId)
     {
-    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_cart'));
+    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_single'));
     }
 
-	public function getVendorInfoProvidersSubscription($iVendorId)
+	public function getVendorInfoProvidersRecurring($iVendorId)
     {
-    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_subscription'));
+    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_recurring'));
     }
 
     public function getVendorInfoProviders($iVendorId, $aParams = array())

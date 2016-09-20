@@ -59,7 +59,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 		$iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
 
         if(empty($sPageId) || empty($iPendingId))
-        	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'pp_err_no_data_given');
+        	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
 
 		$oPage = $this->retreiveHostedPage($sPageId);
 		if($oPage === false)
@@ -67,7 +67,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 		
 		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
-            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'pp_err_already_processed');
+            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
 		$oCustomer = $oPage->content()->customer();
 		$oSubscription = $oPage->content()->subscription();

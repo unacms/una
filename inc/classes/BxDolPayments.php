@@ -156,12 +156,12 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
     /**
      * Returns cart JavaScript code which should be included in the page to make "Add To Cart" and "Subscribe" buttons work properly.
      */
-    public function getCartJs($bWrapped = true)
+    public function getCartJs($sType = '')
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_js', 'Cart'))
 			return '';
 
-		$aSrvParams = array($bWrapped);
+		$aSrvParams = array($sType);
 		return BxDolService::call($this->_sActive, 'get_cart_js', $aSrvParams, 'Cart');
     }
 
@@ -180,12 +180,12 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
     /**
      * Returns "Add To Cart" JavaScript code to use in onclick attribute.
      */
-    public function getAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $bWrapped = true)
+    public function getAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_js', 'Cart'))
 			return array();
 
-		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect, $bWrapped);
+		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect);
 		return BxDolService::call($this->_sActive, 'get_add_to_cart_js', $aSrvParams, 'Cart');
     }
 
@@ -212,12 +212,12 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
 	/**
      * Returns "Subscribe" JavaScript code to use in onclick attribute.
      */
-    public function getSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
+    public function getSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_js', 'Cart'))
 			return array();
 
-		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $bWrapped);
+		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount);
 		return BxDolService::call($this->_sActive, 'get_subscribe_js', $aSrvParams, 'Cart');
     }
 

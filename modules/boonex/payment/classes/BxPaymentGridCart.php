@@ -25,7 +25,7 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     {
     	$aParams = array(
 			'seller_id' => bx_process_input(bx_get('seller_id'), BX_DATA_INT), 
-			'provider' => bx_process_input(bx_get('proviter')), 
+			'provider' => bx_process_input(bx_get('provider')), 
 			'items' => bx_process_input(bx_get('ids'))    		
     	);
     	if(empty($aParams['seller_id']) || empty($aParams['provider']))
@@ -33,6 +33,10 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
         if(empty($aParams['items']) || !is_array($aParams['items'])) 
         	return echoJson(array('msg' => _t('_bx_payment_err_nothing_selected')));
+
+		$oProvider = $this->_oModule->getObjectProvider($aParams['provider'], $aParams['seller_id']);
+		if($oProvider !== false && method_exists($oProvider, 'getCheckoutParamsSingle'))
+			$aParams = $oProvider->getCheckoutParamsSingle($aParams, $this);
 
 		$sLink = $this->_oModule->_oConfig->getUrl('URL_CART_CHECKOUT');
 		$sLink = $sLink . (strpos($sLink, '?') === false ? '?' : '&') . http_build_query($aParams);
@@ -61,30 +65,36 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
     	
-    	$sActionsCustom = '';
+    	$sActions = '';
     	if($sType == 'bulk' && !empty($this->_aQueryAppend['seller_id'])) {
     		$sActionName = 'checkout';
 
-    		$aProviders = $this->_oModule->_oDb->getVendorInfoProvidersCart($this->_aQueryAppend['seller_id']);
+    		$aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($this->_aQueryAppend['seller_id']);
     		foreach($aProviders as $aProvider) {
-				$aAction = array(
+				$sAction = $this->_getActionDefault($sType, $sActionName, array(
 					'title'=> _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name']),
 	    			'icon' => '',
 					'icon_only' => 0,
 	    			'confirm' => 0,
 					'attr' => array(
 						'bx_grid_action_' . $sType => $sActionName,
-						'bx_grid_action_append' => json_encode(array('proviter' => $aProvider['name'])),
+						'bx_grid_action_append' => json_encode(array('provider' => $aProvider['name'])),
 						'bx_grid_action_confirm' => 0,
 						'bx_grid_action_reset_paginate' => 0,
 					)
-				);
+				), $isSmall, $isDisabled, $aRow);
 
-    			$sActionsCustom .= $this->_getActionDefault($sType, $sActionName, $aAction, $isSmall, $isDisabled, $aRow);
+    			$oProvider = $this->_oModule->getObjectProvider($aProvider['name'], $this->_aQueryAppend['seller_id']);
+    			if($oProvider !== false && method_exists($oProvider, 'getButtonSingle'))
+    				$sAction = $oProvider->getButtonSingle($this->_aQueryAppend['client_id'], $this->_aQueryAppend['seller_id'], array(
+    					'sObjNameGrid' => $this->getObject()
+    				));
+
+    			$sActions .= $sAction;
     		}
     	}
 
-    	return $sActionsCustom . parent::_getActions ($sType, $sActionData, $isSmall, $isDisabled, $isPermanentState, $aRow);
+    	return $sActions . parent::_getActions ($sType, $sActionData, $isSmall, $isDisabled, $isPermanentState, $aRow);
     }
 
 	protected function _getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

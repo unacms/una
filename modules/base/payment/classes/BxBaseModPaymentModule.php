@@ -58,7 +58,7 @@ class BxBaseModPaymentModule extends BxDolModule
 
 	public function serviceGetProvidersCart($iVendorId)
 	{
-		$aVendorProviders = $this->_oDb->getVendorInfoProvidersCart($iVendorId);
+		$aVendorProviders = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
 
 		$aResult = array();
 		foreach($aVendorProviders as $aProvider) {

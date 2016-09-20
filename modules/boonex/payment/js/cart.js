@@ -2,6 +2,8 @@ function BxPaymentCart(oOptions) {
 	this.init(oOptions);
 }
 
+BxPaymentCart.prototype = new BxPaymentMain();
+
 BxPaymentCart.prototype.init = function(oOptions) {
 	if($.isEmptyObject(oOptions))
 		return;
@@ -86,38 +88,4 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
 
 BxPaymentCart.prototype.onSubscribeSubmit = function(oData) {
 	document.location = oData.redirect;
-};
-
-BxPaymentCart.prototype.processResult = function(oData) {
-	var $this = this;
-
-	if(oData && oData.message != undefined && oData.message.length != 0)
-    	alert(oData.message);
-
-    if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
-    	document.location = document.location;
-
-    if(oData && oData.popup != undefined) {
-    	var oPopup = null;
-    	var oOptions = {
-            fog: {
-				color: '#fff',
-				opacity: .7
-            },
-            closeOnOuterClick: false
-        };
-
-    	if(typeof(oData.popup) == 'object') {
-    		oOptions = $.extend({}, oOptions, oData.popup.options);
-    		oPopup = $(oData.popup.html);
-    	}
-    	else 
-    		oPopup = $(oData.popup);
-
-    	$('#' + oPopup.attr('id')).remove();
-        oPopup.hide().prependTo('body').dolPopup(oOptions);
-    }
-
-    if (oData && oData.eval != undefined)
-        eval(oData.eval);
 };

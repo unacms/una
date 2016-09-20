@@ -90,7 +90,7 @@ class BxPaymentProviderRecurly extends BxBaseModPaymentProvider implements iBxBa
 		
 		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
-            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'pp_err_already_processed');
+            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
 		$oSubscription = $this->createSubscription($sToken, $sItem, $aClient);
 		if($oSubscription === false)

@@ -130,18 +130,18 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     	switch($sPaymentType) {
     		case BX_PAYMENT_TYPE_SINGLE:
-    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersCart($iVendorId);
+    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
     			$bResult = !empty($aProvidersCart);
     			break;
 
     		case BX_PAYMENT_TYPE_RECURRING:
-    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersSubscription($iVendorId);
+    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
     			$bResult = !empty($aProvidersSubscription);
     			break;
 
     		default:
-    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersCart($iVendorId);
-    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersSubscription($iVendorId);
+    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
+    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
     			$bResult = !empty($aProvidersCart) || !empty($aProvidersSubscription);
     	}
 

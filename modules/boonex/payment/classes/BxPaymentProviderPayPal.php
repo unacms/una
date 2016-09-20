@@ -50,7 +50,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
         $aFormData = array_merge($aFormData, array(
             'business' => $iMode == PP_MODE_LIVE ? $this->getOption('business') : $this->getOption('sandbox'),
             'bn' => 'Boonex_SP',
-            'item_name' => _t($this->_sLangsPrefix . 'txt_payment_to', $aCartInfo['vendor_name']),
+            'item_name' => _t($this->_sLangsPrefix . 'txt_payment_to_for', $aCartInfo['vendor_name']),
             'item_number' => $iPendingId,
             'currency_code' => $aCartInfo['vendor_currency_code'],
             'no_note' => '1',
@@ -104,7 +104,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
             $this->_aOptions = $this->getOptionsByPending($aData['item_number']);
 
         if(empty($this->_aOptions))
-            return array('code' => 2, 'message' => $this->_sLangsPrefix . 'pp_err_no_vendor_given');
+            return array('code' => 2, 'message' => $this->_sLangsPrefix . 'err_unknown_vendor');
 
         $iPrcType = (int)$this->getOption('prc_type');
         if(($iPrcType == PP_PRC_TYPE_IPN || $iPrcType == PP_PRC_TYPE_DIRECT) && (!isset($aData['item_number']) || !isset($aData['txn_id'])))
@@ -119,7 +119,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
         $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
-            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'pp_err_already_processed');
+            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
         //--- Update pending transaction ---//
         $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
