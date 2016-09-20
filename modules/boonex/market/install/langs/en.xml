@@ -297,6 +297,7 @@
     <string name="_bx_market_cat_price_5"><![CDATA[5]]></string>
 
 	<string name="_bx_market_pre_lists_durations"><![CDATA[Product durations]]></string>
+	<string name="_bx_market_cat_duration_day"><![CDATA[daily]]></string>
 	<string name="_bx_market_cat_duration_week"><![CDATA[weekly]]></string>
 	<string name="_bx_market_cat_duration_month"><![CDATA[monthly]]></string>
 	<string name="_bx_market_cat_duration_year"><![CDATA[yearly]]></string>
@@ -319,6 +320,8 @@
     <string name="_bx_market_txt_last_active"><![CDATA[Last Active:]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[{0}{1}]]></string>
     <string name="_bx_market_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
+    <string name="_bx_market_txt_per_day"><![CDATA[day]]></string>
+    <string name="_bx_market_txt_per_day_short"><![CDATA[dy]]></string>
     <string name="_bx_market_txt_per_week"><![CDATA[week]]></string>
     <string name="_bx_market_txt_per_week_short"><![CDATA[wk]]></string>
     <string name="_bx_market_txt_per_month"><![CDATA[month]]></string>

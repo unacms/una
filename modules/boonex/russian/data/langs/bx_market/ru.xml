@@ -295,6 +295,7 @@
     <string name="_bx_market_cat_price_5"><![CDATA[5]]></string>
 
 	<string name="_bx_market_pre_lists_durations"><![CDATA[Продолжительность]]></string>
+	<string name="_bx_market_cat_duration_day"><![CDATA[ежедневно]]></string>
 	<string name="_bx_market_cat_duration_week"><![CDATA[еженедельно]]></string>
 	<string name="_bx_market_cat_duration_month"><![CDATA[ежемесячно]]></string>
 	<string name="_bx_market_cat_duration_year"><![CDATA[ежегодно]]></string>
@@ -317,6 +318,8 @@
     <string name="_bx_market_txt_last_active"><![CDATA[Последняя активность:]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[{0}{1}]]></string>
     <string name="_bx_market_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
+    <string name="_bx_market_txt_per_day"><![CDATA[день]]></string>
+    <string name="_bx_market_txt_per_day_short"><![CDATA[дн]]></string>
     <string name="_bx_market_txt_per_week"><![CDATA[неделю]]></string>
     <string name="_bx_market_txt_per_week_short"><![CDATA[нед]]></string>
     <string name="_bx_market_txt_per_month"><![CDATA[месяц]]></string>

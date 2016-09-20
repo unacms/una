@@ -21,6 +21,7 @@ class BxMarketDb extends BxBaseModTextDb
         parent::__construct($oConfig);
 
         $this->_aRecurringDurations = array(
+        	'day' => 'INTERVAL 1 DAY',
         	'week' => 'INTERVAL 7 DAY',
         	'month' => 'INTERVAL 1 MONTH',
         	'year' => 'INTERVAL 1 YEAR',

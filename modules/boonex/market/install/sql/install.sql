@@ -446,9 +446,10 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_market_prices', '4', 4, '_bx_market_cat_price_4', ''),
 ('bx_market_prices', '5', 5, '_bx_market_cat_price_5', ''),
 
-('bx_market_durations', 'week', 1, '_bx_market_cat_duration_week', ''),
-('bx_market_durations', 'month', 2, '_bx_market_cat_duration_month', ''),
-('bx_market_durations', 'year', 3, '_bx_market_cat_duration_year', '');
+('bx_market_durations', 'day', 1, '_bx_market_cat_duration_day', ''),
+('bx_market_durations', 'week', 2, '_bx_market_cat_duration_week', ''),
+('bx_market_durations', 'month', 3, '_bx_market_cat_duration_month', ''),
+('bx_market_durations', 'year', 4, '_bx_market_cat_duration_year', '');
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
