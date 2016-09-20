@@ -158,21 +158,16 @@ class BxPaymentCart extends BxBaseModPaymentCart
         if(empty($aSellerProviders))
             return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
 
-		$aCartItem = array($iSellerId, $iModuleId, $iItemId, $iItemCount);
+        $aCartItem = array($iSellerId, $iModuleId, $iItemId, $iItemCount);
         $sCartItem = $this->_oModule->_oConfig->descriptorA2S($aCartItem);
 
-        if(count($aSellerProviders) > 1) {
-        	if(empty($sSellerProvider)) {
-		        $sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
-		    	$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
-	        	return array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders)));
-        	}
+		if(empty($sSellerProvider)) {
+			$sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
+			$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
+			return array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders)));
+		}
 
-        	$aProvider = $aSellerProviders[$sSellerProvider];
-        }
-        else 
-        	$aProvider = array_shift($aSellerProviders);
-
+		$aProvider = $aSellerProviders[$sSellerProvider];
         $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem));
         if(is_string($mixedResult))
         	return array('code' => 6, 'message' => _t($mixedResult));
