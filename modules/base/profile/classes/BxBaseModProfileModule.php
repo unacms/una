@@ -400,7 +400,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
      */
     public function checkAllowedAdd ($isPerformAction = false)
     {
-        if (BxDolAccount::getInstance()->isProfilesLimitReached())
+        if ($this->serviceActAsProfile() && BxDolAccount::getInstance()->isProfilesLimitReached())
             return _t('_sys_txt_access_denied');
         return parent::checkAllowedAdd ($isPerformAction);
     }   

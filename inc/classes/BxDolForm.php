@@ -836,7 +836,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
-        $oChecker->setFormMethod($this->aFormAttrs['method']);
+        $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbInsert($this->aParams['db'], $this->aInputs, $aValsToAdd, $isIgnore);
         if (!$sSql)
             return false;
@@ -849,7 +849,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
-        $oChecker->setFormMethod($this->aFormAttrs['method']);
+        $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbUpdate($val, $this->aParams['db'], $this->aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
         if (!$sSql)
             return false;
@@ -859,7 +859,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function delete ($val)
     {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
-        $oChecker->setFormMethod($this->aFormAttrs['method']);
+        $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbDelete($val, $this->aParams['db'], $this->aInputs);
         if (!$sSql)
             return false;
@@ -876,7 +876,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function getCleanValue ($sName)
     {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
-        $oChecker->setFormMethod($this->aFormAttrs['method']);
+        $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
         if ($a && isset($a['db']['pass']))
             return $oChecker->get ($a['name'], $a['db']['pass'], isset($a['db']['params']) && $a['db']['params'] ? $a['db']['params'] : array());
@@ -918,6 +918,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function isSubmittedAndValid ()
     {
         return ($this->isSubmitted() && $this->isValid());
+    }
+
+    function getSpecificValues()
+    {
+        return $this->_aSpecificValues;
     }
 
     public static function getSubmittedValue($sKey, $sMethod, &$aSpecificValues = false)
@@ -999,7 +1004,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         // process nested forms
         foreach ($this->aInputs as $sKey => $aInput) {
 
-            if ((isset($aInput['type']) && $aInput['type'] != 'files') || !isset($aInput['ghost_template']))
+            if (!isset($aInput['ghost_template']))
                 continue;
 
             if (!(is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) && !(is_object($aInput['ghost_template']) && $aInput['ghost_template'] instanceof BxDolFormNested))
@@ -1020,7 +1025,10 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
                 } else {
                     $oFormNested = new BxDolFormNested($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
                 }
-                $aNestedForms[$iFileId] = $oFormNested;
+                if ($iFileId && 0 != $iFileId)
+                    $aNestedForms[$iFileId] = $oFormNested;
+                else
+                    $aNestedForms[] = $oFormNested;
 
                 // collect nested form values
                 $aSpecificValues = array ();
@@ -1237,8 +1245,9 @@ class BxDolFormChecker
         // get values from form description array
         foreach ($aInputs as $k => $a) {
             if (!isset ($a['db']) || !BxDolForm::isVisible($a)) continue;
-            $valClean = $this->get ($a['name'], $a['db']['pass'], !empty($a['db']['params']) ? $a['db']['params'] : array());
-            $aValsToUpdate[$a['name']] = $valClean;
+            $sKey = str_replace('[]', '', $a['name']);
+            $valClean = $this->get ($sKey, $a['db']['pass'], !empty($a['db']['params']) ? $a['db']['params'] : array());
+            $aValsToUpdate[$sKey] = $valClean;
             $aInputs[$k]['db']['value'] = $valClean;
 
             if (null !== $aTrackTextFieldsChanges && isset(BxDolForm::$TYPES_TEXT[$aInputs[$k]['type']]) && isset($aTrackTextFieldsChanges['data'][$a['name']]) && $aTrackTextFieldsChanges['data'][$a['name']] != $valClean)
