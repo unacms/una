@@ -258,7 +258,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 				'description' => $aCartInfo['items_title'],
 				'metadata' => array(
 					'vendor' => $aCartInfo['vendor_id'],
-					'customer' => $aClient['id'],
+					'client' => $aClient['id'],
 					'product' => $iPendingId,
 					'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
 				)
@@ -273,7 +273,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 			return false;
 
 		$aMetadata = $aResult['metadata'];
-		if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeCharge($aMetadata['vendor'], $aMetadata['customer'], $aResult['amount'], $aResult['currency']))
+		if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $aResult['amount'], $aResult['currency']))
 			return false;
 
 		return array(
@@ -318,7 +318,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 				'plan' => $aItem['name'],
 				'metadata' => array(
 					'vendor' => $aCartInfo['vendor_id'],
-					'customer' => $aClient['id'],
+					'client' => $aClient['id'],
 					'product' => $iPendingId,
 					'verification' => $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aItem['name'], $aCartInfo['vendor_currency_code'])
 				)

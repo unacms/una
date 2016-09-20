@@ -443,6 +443,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		if($bTypeSingle)
 			$sCartItems = $this->_oDb->getCartItems($iClientId);
 
+		$bResult = false;
         $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
         foreach($aItems as $aItem) {
         	$sMethod = $bTypeSingle ? 'callRegisterCartItem' : 'callRegisterSubscriptionItem';
@@ -463,13 +464,16 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
             if($bTypeSingle)
             	$sCartItems = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aItem) . ":?'", "", $sCartItems), ":");
+
+			$bResult = true;
         }
 
         if($bTypeSingle)
 			$this->_oDb->setCartItems($iClientId, $sCartItems);
 
-        $bResult = $this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
         if($bResult) {
+        	$this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
+
 			//--- 'System' -> 'Register Payment' for Alerts Engine ---//
 			bx_import('BxDolAlerts');
 	        $oZ = new BxDolAlerts('system', 'register_payment', 0, $iClientId, array('pending' => $aPending));
