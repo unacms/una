@@ -32,6 +32,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = false;
+        $this->_iMode = (int)$this->getOption('mode');
+        $this->_bCheckAmount = $this->getOption('check_amount') == 'on'; 
         $this->_bUseSsl = $this->getOption('ssl') == 'on';
         $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
 
@@ -43,9 +45,6 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         $this->_aIncludeCss = array(
         	'stripe.css'
         );
-
-        $this->_iMode = (int)$this->getOption('mode');
-        $this->_bCheckAmount = false; // Disabled for easier processing of discounted subscriptions.
 
         $this->_oCustomer = null;
 
