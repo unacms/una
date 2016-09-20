@@ -357,7 +357,28 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		return $oSubscription;
 	}
 
-	//TODO: Work with WEBHOOKS
+	public function _retrieveCoupon($sId) {
+		try {
+			$oCoupon = \Stripe\Coupon::retrieve($sId);
+		}
+		catch (Exception $oException) {
+			return $this->_processException('Retrieve Coupon Error: ', $oException);
+		}
+
+		return $oCoupon;
+	}
+
+	public function _retrieveEvent($sId) {
+		try {
+			$oEvent = \Stripe\Event::retrieve($sId);
+		}
+		catch (Exception $oException) {
+			return $this->_processException('Retrieve Event Error: ', $oException);
+		}
+
+		return $oEvent;
+	}
+
 	protected function _processEvent()
 	{
     	$sInput = @file_get_contents("php://input");
@@ -432,7 +453,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 	protected function _getData(&$aEvent, $bRetrieve = true)
 	{
 		if($bRetrieve)
-			$oEvent = $this->retrieveEvent($aEvent['id']);
+			$oEvent = $this->_retrieveEvent($aEvent['id']);
 		else 
 			$oEvent = \Stripe\Util\Util::convertToStripeObject($aEvent, array());
 
