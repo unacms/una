@@ -155,11 +155,13 @@
 	<string name="_bx_payment_err_not_found_pending"><![CDATA[Pending order was not found.]]></string>
 	<string name="_bx_payment_err_cannot_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
 	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Incorrect quantity specified.]]></string>
+	<string name="_bx_payment_err_already_processed"><![CDATA[This payment has already processed.]]></string>
 
 	<!-- Other -->
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[Add to Cart]]></string>
 	<string name="_bx_payment_txt_subscribe"><![CDATA[Subscribe]]></string>
-	<string name="_bx_payment_txt_payment_to"><![CDATA[Payment to {0} for:]]></string>
+	<string name="_bx_payment_txt_payment_to"><![CDATA[Payment to {0}]]></string>
+	<string name="_bx_payment_txt_payment_to_for"><![CDATA[Payment to {0} for:]]></string>
 	<string name="_bx_payment_txt_checkout_to"><![CDATA[Continue checkouting to {0}]]></string>
 	<string name="_bx_payment_txt_checkout_with"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Client]]></string>
@@ -169,6 +171,7 @@
 	<string name="_bx_payment_txt_message"><![CDATA[Result]]></string>
 	<string name="_bx_payment_txt_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_txt_products"><![CDATA[Products]]></string>
+	<string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>
@@ -192,14 +195,12 @@
 	<string name="_bx_payment_pp_sandbox_dsc"><![CDATA[Sandbox email address]]></string>
 	<string name="_bx_payment_pp_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_pp_err_no_data_given"><![CDATA[No data given.]]></string>
-	<string name="_bx_payment_pp_err_no_vendor_given"><![CDATA[Unknown vendor.]]></string>
 	<string name="_bx_payment_pp_err_not_completed"><![CDATA[Payment is not completed.]]></string>
 	<string name="_bx_payment_pp_err_wrong_business"><![CDATA[Wrong receiver email.]]></string>
 	<string name="_bx_payment_pp_err_wrong_transaction"><![CDATA[Transaction verification failed.]]></string>
 	<string name="_bx_payment_pp_err_wrong_verification_status"><![CDATA[No verification status received.]]></string>
 	<string name="_bx_payment_pp_err_wrong_amount"><![CDATA[Wrong amount.]]></string>
 	<string name="_bx_payment_pp_err_wrong_custom_data"><![CDATA[Incorrect custom data.]]></string>
-	<string name="_bx_payment_pp_err_already_processed"><![CDATA[This payment has already processed.]]></string>
 	<string name="_bx_payment_pp_msg_verified"><![CDATA[Payment was successfully accepted.]]></string>
 	<string name="_bx_payment_txt_cart_paypal"><![CDATA[PayPal]]></string>
 
@@ -300,7 +301,7 @@
 	<string name="_bx_payment_rcrl_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
 	<string name="_bx_payment_rcrl_msg_subscribed"><![CDATA[Subscription was successfully created.]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Recurly]]></string>
-	
+
 	<string name="_bx_payment_form_rcrl_card"><![CDATA[Recurly: Card Form]]></string>
 	<string name="_bx_payment_form_rcrl_card_display_add"><![CDATA[Recurly: Add Card Display]]></string>
 	<string name="_bx_payment_form_rcrl_card_input_pending_id_sys"><![CDATA[Pending ID]]></string>
@@ -332,4 +333,32 @@
 	<string name="_bx_payment_form_rcrl_card_input_cancel"><![CDATA[Cancel]]></string>
 	
 	<string name="_bx_payment_popup_title_rcrl_card_add"><![CDATA[Card details]]></string>
+
+	<!-- Stripe payment provider -->
+	<string name="_bx_payment_strp_cpt"><![CDATA[Stripe]]></string>
+	<string name="_bx_payment_strp_dsc"><![CDATA[Stripe payment provider]]></string>
+	<string name="_bx_payment_strp_active_cpt"><![CDATA[Active]]></string>
+	<string name="_bx_payment_strp_active_dsc"><![CDATA[Activate(Deactivate) provider. Note. It's recommended to use SSL for better payment processing.]]></string>
+	<string name="_bx_payment_strp_mode_cpt"><![CDATA[Mode]]></string>
+	<string name="_bx_payment_strp_mode_dsc"><![CDATA[Mode to process payments]]></string>
+	<string name="_bx_payment_strp_mode_live"><![CDATA[live]]></string>
+	<string name="_bx_payment_strp_mode_test"><![CDATA[test]]></string>
+	<string name="_bx_payment_strp_live_pub_key_cpt"><![CDATA[Public Key (live)]]></string>
+	<string name="_bx_payment_strp_live_pub_key_dsc"><![CDATA[Your Public Key generated in Stripe for 'live' mode]]></string>
+	<string name="_bx_payment_strp_live_sec_key_cpt"><![CDATA[Secret Key (live)]]></string>
+	<string name="_bx_payment_strp_live_sec_key_dsc"><![CDATA[Your Stripe Secret Key for 'live' mode]]></string>
+	<string name="_bx_payment_strp_test_pub_key_cpt"><![CDATA[Public Key (test)]]></string>
+	<string name="_bx_payment_strp_test_pub_key_dsc"><![CDATA[Your Public Key generated in Stripe for 'test' mode]]></string>
+	<string name="_bx_payment_strp_test_sec_key_cpt"><![CDATA[Secret Key (test)]]></string>
+	<string name="_bx_payment_strp_test_sec_key_dsc"><![CDATA[Your Stripe Secret Key for 'test' mode]]></string>
+	<string name="_bx_payment_strp_check_amount_cpt"><![CDATA[Enable amount checking]]></string>
+	<string name="_bx_payment_strp_check_amount_dsc"><![CDATA[Enable amount checking for Stripe Webhooks (recomended). However checking should be disabled when discounts and coupons are used.]]></string>
+	<string name="_bx_payment_strp_ssl_cpt"><![CDATA[Enable SSL]]></string>
+	<string name="_bx_payment_strp_ssl_dsc"><![CDATA[Enable SSL connection to communicate with Stripe. Note. URLs below will be updated after saving.]]></string>
+	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
+	<string name="_bx_payment_strp_msg_charged"><![CDATA[Payment was successfully accepted.]]></string>
+	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Subscription was successfully created.]]></string>
+	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
+	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Checkout with {0}]]></string>
+	<string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
 </resources>

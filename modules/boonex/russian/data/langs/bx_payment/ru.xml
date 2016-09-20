@@ -169,6 +169,7 @@
 	<string name="_bx_payment_txt_message"><![CDATA[Результат]]></string>
 	<string name="_bx_payment_txt_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_txt_products"><![CDATA[Продукты]]></string>
+	<string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>
@@ -267,7 +268,7 @@
 	<string name="_bx_payment_cbee_mode_test"><![CDATA[тестовый]]></string>
 	<string name="_bx_payment_cbee_live_site_cpt"><![CDATA[Имя сайта (рабочее)]]></string>
 	<string name="_bx_payment_cbee_live_site_dsc"><![CDATA[Имя вашего сайта зарегистрированного в Chargebee для "рабочего" режима.]]></string>
-	<string name="_bx_payment_cbee_live_api_key_cpt"><![CDATA[API ключ (рабочей)]]></string>
+	<string name="_bx_payment_cbee_live_api_key_cpt"><![CDATA[API ключ (рабочий)]]></string>
 	<string name="_bx_payment_cbee_live_api_key_dsc"><![CDATA[Ваш API ключ доступа, предоставленный Chargebee, для "рабочего" режима.]]></string>
 	<string name="_bx_payment_cbee_test_site_cpt"><![CDATA[Имя сайта (тестовое)]]></string>
 	<string name="_bx_payment_cbee_test_site_dsc"><![CDATA[Имя вашего сайта зарегистрированного в Chargebee для "тестового" режима.]]></string>
@@ -300,7 +301,7 @@
 	<string name="_bx_payment_rcrl_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
 	<string name="_bx_payment_rcrl_msg_subscribed"><![CDATA[Подписка была успешно создана.]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Recurly]]></string>
-	
+
 	<string name="_bx_payment_form_rcrl_card"><![CDATA[Recurly: форма ввода карты]]></string>
 	<string name="_bx_payment_form_rcrl_card_display_add"><![CDATA[Recurly: добавление карты]]></string>
 	<string name="_bx_payment_form_rcrl_card_input_pending_id_sys"><![CDATA[Обрабатываемый заказ]]></string>
@@ -332,4 +333,32 @@
 	<string name="_bx_payment_form_rcrl_card_input_cancel"><![CDATA[Отменить]]></string>
 	
 	<string name="_bx_payment_popup_title_rcrl_card_add"><![CDATA[Детали карты]]></string>
+
+	<!-- Stripe payment provider -->
+	<string name="_bx_payment_strp_cpt"><![CDATA[Stripe]]></string>
+	<string name="_bx_payment_strp_dsc"><![CDATA[Платежная система Stripe]]></string>
+	<string name="_bx_payment_strp_active_cpt"><![CDATA[Активировать]]></string>
+	<string name="_bx_payment_strp_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему. Внимание. Рекомендуется использовать SSL сертификат для улучшения обработки платежей.]]></string>
+	<string name="_bx_payment_strp_mode_cpt"><![CDATA[Режим]]></string>
+	<string name="_bx_payment_strp_mode_dsc"><![CDATA[Режим обработки платежей]]></string>
+	<string name="_bx_payment_strp_mode_live"><![CDATA[рабочий]]></string>
+	<string name="_bx_payment_strp_mode_test"><![CDATA[тестовый]]></string>
+	<string name="_bx_payment_strp_live_pub_key_cpt"><![CDATA[Открытый ключ (рабочий)]]></string>
+	<string name="_bx_payment_strp_live_pub_key_dsc"><![CDATA[Ваш Открытый ключ доступа, предоставленный Stripe, для "рабочего" режима.]]></string>
+	<string name="_bx_payment_strp_live_sec_key_cpt"><![CDATA[Секретный ключ (рабочий)]]></string>
+	<string name="_bx_payment_strp_live_sec_key_dsc"><![CDATA[Ваш Секретный ключ доступа для "рабочего" режима.]]></string>
+	<string name="_bx_payment_strp_test_pub_key_cpt"><![CDATA[Открытый ключ (тестовый)]]></string>
+	<string name="_bx_payment_strp_test_pub_key_dsc"><![CDATA[Ваш Открытый ключ доступа, предоставленный Stripe, для "тестового" режима.]]></string>
+	<string name="_bx_payment_strp_test_sec_key_cpt"><![CDATA[Секретный ключ (тестовый)]]></string>
+	<string name="_bx_payment_strp_test_sec_key_dsc"><![CDATA[Ваш Секретный ключ доступа для "тестового" режима.]]></string>
+	<string name="_bx_payment_strp_check_amount_cpt"><![CDATA[Активировать проверку суммы]]></string>
+	<string name="_bx_payment_strp_check_amount_dsc"><![CDATA[Активировать проверку суммы для Stripe Webhooks (рекомендуется). Однако проверка должна быть отключена когда используются скидки и купоны.]]></string>
+	<string name="_bx_payment_strp_ssl_cpt"><![CDATA[Активировать SSL]]></string>
+	<string name="_bx_payment_strp_ssl_dsc"><![CDATA[Активировать SSL соединение для связи с Stripe. Внимание. Нижеприведенная Webhooks ссылка будет обновлена после сохранения.]]></string>
+	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
+	<string name="_bx_payment_strp_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
+	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Подписка успешно создана.]]></string>
+	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
+	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Заплатить используя {0}]]></string>
+	<string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
 </resources>

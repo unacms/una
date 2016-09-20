@@ -83,6 +83,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'history' => 'BxPaymentOrders',
         	'pending' => 'BxPaymentOrders',
         	'processed' => 'BxPaymentOrders',
+        	'stripe' => 'BxPaymentProviderStripe'
         );
 
         $this->_aJsObjects = array(
@@ -90,6 +91,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'history' => 'oPaymentOrders',
         	'pending' => 'oPaymentOrders',
         	'processed' => 'oPaymentOrders',
+        	'stripe' => 'oPaymentProviderStripe'
         );
     }
 
