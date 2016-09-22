@@ -50,10 +50,10 @@
 	<string name="_bx_albums_page_block_title_create_entry"><![CDATA[New Album]]></string>
 	<string name="_bx_albums_page_title_sys_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_albums_page_title_edit_entry"><![CDATA[Edit]]></string>
-	<string name="_bx_albums_page_title_sys_add_images"><![CDATA[Add Images]]></string>
-	<string name="_bx_albums_page_title_add_images"><![CDATA[Add Images]]></string>
+	<string name="_bx_albums_page_title_sys_add_images"><![CDATA[Add/Edit Pictures]]></string>
+	<string name="_bx_albums_page_title_add_images"><![CDATA[Add/Edit Pictures]]></string>
     <string name="_bx_albums_page_block_title_edit_entry"><![CDATA[Edit]]></string>
-	<string name="_bx_albums_page_block_title_add_images"><![CDATA[Add Images]]></string>
+	<string name="_bx_albums_page_block_title_add_images"><![CDATA[Add/Edit Pictures]]></string>
     <string name="_bx_albums_page_title_sys_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_page_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_page_block_title_delete_entry"><![CDATA[Delete]]></string>
@@ -124,8 +124,8 @@
     <string name="_bx_albums_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_albums_menu_item_title_system_edit_album"><![CDATA[Edit Album]]></string>
     <string name="_bx_albums_menu_item_title_edit_album"><![CDATA[Edit Album]]></string>
-    <string name="_bx_albums_menu_item_title_system_add_images"><![CDATA[Add Images]]></string>
-    <string name="_bx_albums_menu_item_title_add_images"><![CDATA[Add Images]]></string>
+    <string name="_bx_albums_menu_item_title_system_add_images"><![CDATA[Add/Edit Pictures]]></string>
+    <string name="_bx_albums_menu_item_title_add_images"><![CDATA[Add/Edit Pictures]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry"><![CDATA[View Album]]></string>
