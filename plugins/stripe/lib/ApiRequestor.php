@@ -2,6 +2,11 @@
 
 namespace Stripe;
 
+/**
+ * Class ApiRequestor
+ *
+ * @package Stripe
+ */
 class ApiRequestor
 {
     private $_apiKey;
@@ -44,7 +49,7 @@ class ApiRequestor
      * @param array|null $params
      * @param array|null $headers
      *
-     * @return array An array whose first element is the response and second
+     * @return array An array whose first element is an API response and second
      *    element is the API key used to make the request.
      */
     public function request($method, $url, $params = null, $headers = null)
@@ -57,7 +62,8 @@ class ApiRequestor
         }
         list($rbody, $rcode, $rheaders, $myApiKey) =
         $this->_requestRaw($method, $url, $params, $headers);
-        $resp = $this->_interpretResponse($rbody, $rcode, $rheaders);
+        $json = $this->_interpretResponse($rbody, $rcode, $rheaders);
+        $resp = new ApiResponse($rbody, $rcode, $rheaders, $json);
         return array($resp, $myApiKey);
     }
 
@@ -91,7 +97,7 @@ class ApiRequestor
 
         switch ($rcode) {
             case 400:
-                // 'rate_limit' code is depreciated, but left here for backwards compatibility
+                // 'rate_limit' code is deprecated, but left here for backwards compatibility
                 // for API versions earlier than 2015-09-08
                 if ($code == 'rate_limit') {
                     throw new Error\RateLimit($msg, $param, $rcode, $rbody, $resp, $rheaders);
@@ -111,6 +117,51 @@ class ApiRequestor
         }
     }
 
+    private static function _formatAppInfo($appInfo)
+    {
+        if ($appInfo !== null) {
+            $string = $appInfo['name'];
+            if ($appInfo['version'] !== null) {
+                $string .= '/' . $appInfo['version'];
+            }
+            if ($appInfo['url'] !== null) {
+                $string .= ' (' . $appInfo['url'] . ')';
+            }
+            return $string;
+        } else {
+            return null;
+        }
+    }
+
+    private static function _defaultHeaders($apiKey)
+    {
+        $appInfo = Stripe::getAppInfo();
+
+        $uaString = 'Stripe/v1 PhpBindings/' . Stripe::VERSION;
+
+        $langVersion = phpversion();
+        $uname = php_uname();
+        $appInfo = Stripe::getAppInfo();
+        $ua = array(
+            'bindings_version' => Stripe::VERSION,
+            'lang' => 'php',
+            'lang_version' => $langVersion,
+            'publisher' => 'stripe',
+            'uname' => $uname,
+        );
+        if ($appInfo !== null) {
+            $uaString .= ' ' . self::_formatAppInfo($appInfo);
+            $ua['application'] = $appInfo;
+        }
+
+        $defaultHeaders = array(
+            'X-Stripe-Client-User-Agent' => json_encode($ua),
+            'User-Agent' => $uaString,
+            'Authorization' => 'Bearer ' . $apiKey,
+        );
+        return $defaultHeaders;
+    }
+
     private function _requestRaw($method, $url, $params, $headers)
     {
         $myApiKey = $this->_apiKey;
@@ -128,23 +179,15 @@ class ApiRequestor
 
         $absUrl = $this->_apiBase.$url;
         $params = self::_encodeObjects($params);
-        $langVersion = phpversion();
-        $uname = php_uname();
-        $ua = array(
-            'bindings_version' => Stripe::VERSION,
-            'lang' => 'php',
-            'lang_version' => $langVersion,
-            'publisher' => 'stripe',
-            'uname' => $uname,
-        );
-        $defaultHeaders = array(
-            'X-Stripe-Client-User-Agent' => json_encode($ua),
-            'User-Agent' => 'Stripe/v1 PhpBindings/' . Stripe::VERSION,
-            'Authorization' => 'Bearer ' . $myApiKey,
-        );
+        $defaultHeaders = $this->_defaultHeaders($myApiKey);
         if (Stripe::$apiVersion) {
             $defaultHeaders['Stripe-Version'] = Stripe::$apiVersion;
         }
+
+        if (Stripe::$accountId) {
+            $defaultHeaders['Stripe-Account'] = Stripe::$accountId;
+        }
+
         $hasFile = false;
         $hasCurlFile = class_exists('\CURLFile', false);
         foreach ($params as $k => $v) {
