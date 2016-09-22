@@ -276,6 +276,7 @@
     <string name="_bx_events_cat_repeat_week_of_month_third_week_of_month"><![CDATA[Every 3rd week of the month]]></string>
     <string name="_bx_events_cat_repeat_week_of_month_fourth_week_of_month"><![CDATA[Every 4th week of the month]]></string>
     <string name="_bx_events_cat_repeat_week_of_month_fifth_week_of_month"><![CDATA[Every 5th week of the month]]></string>
+    <string name="_bx_events_cat_repeat_week_of_month_sixth_week_of_month"><![CDATA[Every 6th week of the month]]></string>
 
     <string name="_bx_events_pre_lists_repeat_day_of_month"><![CDATA[Repeat day of the month]]></string>
     <string name="_bx_events_cat_repeat_day_of_month_every_day"><![CDATA[Every day]]></string>

@@ -21,9 +21,23 @@ class BxEventsModule extends BxBaseModGroupsModule
 
     public function actionCalendarData()
     {
-        // TODO: check permissions
-        
-        $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), bx_get('event'));
+        // check permissions
+        $iContentId = (int)bx_get('event');
+        if ($iContentId) {
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aContentInfo)) {
+                $this->_oTemplate->displayAccessDenied();
+                exit;
+            }
+            $aSQLPart = array();
+        }
+        else {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
+            $aSQLPart = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart(0, $oPrivacy->getPartiallyVisiblePrivacyGroups()) : array();
+        }
+
+        // get entries
+        $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), bx_get('event'), $aSQLPart);
         
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($aEntries);
@@ -33,9 +47,9 @@ class BxEventsModule extends BxBaseModGroupsModule
     {
         if (isset($aData['event'])) {
             $aContentInfo = $this->_oDb->getContentInfoById ((int)$aData['event']);
-            if (!$aContentInfo['repeat_stop']) // don't display calendar for non repeating events
+            if ('' == $aContentInfo['repeat_stop']) // don't display calendar for non repeating events
                 return '';
-        }
+        } 
 
         $o = new BxTemplCalendar(array(
             'eventSources' => array (
@@ -57,11 +71,20 @@ class BxEventsModule extends BxBaseModGroupsModule
         $this->$sMethodName();
     }
 
-    public function subactionRestore()
+    public function subactionRestore($iContentId = 0)
     {
-        // TODO: check permissions
+        if (!$iContentId)
+            $iContentId = (int)bx_get('c');
 
-        $iContentId = (int)bx_get('c');
+        if (!($aContentInfo = $this->_oDb->getContentInfoById($iContentId))) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedEdit ($aContentInfo)) {
+            $this->_oTemplate->displayAccessDenied();
+            exit;
+        }
+
         $a = $this->_oDb->getIntervals($iContentId);
         foreach ($a as $iIntervalId => $r) {
             $a[$iIntervalId]['file_id'] = $r['interval_id'];
@@ -76,7 +99,22 @@ class BxEventsModule extends BxBaseModGroupsModule
 
     public function subactionDelete()
     {
-        // TODO: check permissions        
+        header('Content-type: text/html; charset=utf-8');
+
+        $iIntervalId = (int)bx_get('id');
+
+        if (!($aContentInfo = $this->_oDb->getContentInfoByIntervalId($iIntervalId))) {
+            echo _t('_sys_request_page_not_found_cpt');
+        }
+        elseif (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedEdit ($aContentInfo))) {
+            echo $sMsg;
+        } 
+        elseif (!$this->_oDb->deleteIntervalById($iIntervalId)) {
+            echo _t('_sys_txt_error_occured');
+        } 
+        else {
+            echo 'ok';
+        }
     }
 }
 

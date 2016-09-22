@@ -236,8 +236,10 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
     
     function addCssJs ()
     {
-        if (!self::$_isCssJsAdded)
+        if (!self::$_isCssJsAdded) {
             $this->oTemplate->addJs('intervals.js');
+            $this->oTemplate->addCss('informer.css');
+        }
 
         parent::addCssJs ();
     }

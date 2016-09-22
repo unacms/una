@@ -329,8 +329,8 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_events_repeat_week_of_month', '2', 2, '_bx_events_cat_repeat_week_of_month_second_week_of_month', ''),
 ('bx_events_repeat_week_of_month', '3', 3, '_bx_events_cat_repeat_week_of_month_third_week_of_month', ''),
 ('bx_events_repeat_week_of_month', '4', 4, '_bx_events_cat_repeat_week_of_month_fourth_week_of_month', ''),
-('bx_events_repeat_week_of_month', '5', 5, '_bx_events_cat_repeat_week_of_month_fifth_week_of_month', '');
-
+('bx_events_repeat_week_of_month', '5', 5, '_bx_events_cat_repeat_week_of_month_fifth_week_of_month', ''),
+('bx_events_repeat_week_of_month', '6', 6, '_bx_events_cat_repeat_week_of_month_sixth_week_of_month', '');
 
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
