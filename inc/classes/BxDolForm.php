@@ -1416,37 +1416,52 @@ class BxDolFormCheckerHelper
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
-                $a[$k] = self::_passDate ($v);
+                $a[$k] = self::_passDate ($v, BX_DATA_DATE_TS);
             }
             return $a;
         }
-        return self::_passDate ($s);
+        return self::_passDate ($s, BX_DATA_DATE_TS);
     }
-    static public function _passDate ($s)
+    static public function passDateUTC ($s)
     {
-        $iRet = bx_process_input ($s, BX_DATA_DATE_TS);
-        if (false === $iRet)
-            return 0;
-        return $iRet;
-    }
+        if (is_array($s)) {
+            $a = array ();
+            foreach ($s as $k => $v) {
+                $a[$k] = self::_passDate ($v, BX_DATA_DATE_TS_UTC);
+            }
+            return $a;
+        }
+        return self::_passDate ($s, BX_DATA_DATE_TS_UTC);
+    }    
     static public function passDateTime ($s)
     {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
-                $a[$k] = self::_passDateTime ($v);
+                $a[$k] = self::_passDate ($v, BX_DATA_DATETIME_TS);
             }
             return $a;
         }
-        return self::_passDateTime ($s);
+        return self::_passDate ($s, BX_DATA_DATETIME_TS);
     }
-    static public function _passDateTime ($s)
+    static public function passDateTimeUTC ($s)
     {
-        $iRet = bx_process_input ($s, BX_DATA_DATETIME_TS);
+        if (is_array($s)) {
+            $a = array ();
+            foreach ($s as $k => $v) {
+                $a[$k] = self::_passDate ($v, BX_DATA_DATETIME_TS_UTC);
+            }
+            return $a;
+        }
+        return self::_passDate ($s, BX_DATA_DATETIME_TS_UTC);
+    }
+    static public function _passDate ($s, $iFormat)
+    {
+        $iRet = bx_process_input ($s, $iFormat);
         if (false === $iRet)
             return 0;
         return $iRet;
-    }
+    }    
     static public function passXss ($s)
     {
         if (is_array($s)) {
@@ -1542,10 +1557,18 @@ class BxDolFormCheckerHelper
     {
         return bx_process_output ($i, BX_DATA_DATE_TS);
     }
+    static public function displayDateUTC ($i)
+    {
+        return bx_process_output ($i, BX_DATA_DATE_TS_UTC);
+    }    
     static public function displayDateTime ($i)
     {
         return bx_process_output ($i, BX_DATA_DATETIME_TS);
     }
+    static public function displayDateTimeUTC ($i)
+    {
+        return bx_process_output ($i, BX_DATA_DATETIME_TS_UTC);
+    }    
     static public function displaySet ($i)
     {
         $bit = 1;

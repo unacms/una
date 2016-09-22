@@ -36,10 +36,10 @@ class BxBaseCalendar extends BxDolCalendar
         $this->_aOptions = array_merge($aOptionsDefault, $aOptions);
     }
 
-    public function display ()
+    public function display ($sTemplate = 'calendar.html')
     {
         $this->_addJsCss();
-        return $this->_oTemplate->parseHtmlByName('calendar.html', array(
+        return $this->_oTemplate->parseHtmlByName($sTemplate, array(
             'id' => 'bx_events_calendar_' . genRndPwd (8, false),
             'options' => json_encode($this->_aOptions),
         ));

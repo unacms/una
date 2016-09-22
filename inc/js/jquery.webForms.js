@@ -215,7 +215,7 @@
                         changeYear: true,
                         changeMonth: true,
                         dateFormat: 'yy-mm-dd',
-                        defaultDate: '-22y',
+                        //defaultDate: '-22y',
                         yearRange: iYearMin + ':' + iYearMax 
                     });
 

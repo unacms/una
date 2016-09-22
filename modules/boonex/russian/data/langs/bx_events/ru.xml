@@ -5,6 +5,7 @@
 
 	<string name="_bx_events_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
 	<string name="_bx_events_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
+	<string name="_bx_events_option_time_format"><![CDATA[Формат времени]]></string>
 
 	<string name="_bx_events_form_profile"><![CDATA[События]]></string>
 	<string name="_bx_events_form_profile_display_add"><![CDATA[Добавление события]]></string>
@@ -47,6 +48,8 @@
     <string name="_bx_events_form_profile_input_date_end"><![CDATA[Конец]]></string>
     <string name="_bx_events_form_profile_input_sys_timezone"><![CDATA[Часовой пояс]]></string>
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Часовой пояс]]></string>
+    <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Время]]></string>
+    <string name="_bx_events_form_profile_input_time"><![CDATA[Время]]></string>
 
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Повторять: год]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Повторять: месяц]]></string>
@@ -119,6 +122,7 @@
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Календарь событий]]></string>
+    <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Календарь]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Под-меню событий]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Под-меню событий]]></string>
@@ -225,6 +229,7 @@
     <string name="_bx_events_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_events_txt_from_admins"><![CDATA[Из админов]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Приватная группа]]></string>
+    <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
 
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[У <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> события новый участник - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[У <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> события новый запрос на присоединение от <a href="{subentry_url}">{subentry_sample}</a>]]></string>

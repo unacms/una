@@ -12,7 +12,8 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_events_num_connections_quick', '4', @iCategId, '_bx_events_option_num_connections_quick', 'digit', '', '', '', 10),
-('bx_events_num_rss', '10', @iCategId, '_bx_events_option_num_rss', 'digit', '', '', '', 12);
+('bx_events_num_rss', '10', @iCategId, '_bx_events_option_num_rss', 'digit', '', '', '', 12),
+('bx_events_time_format', 'H:i', @iCategId, '_bx_events_option_time_format', 'digit', '', '', '', 20);
 
 -- PAGES
 
@@ -29,11 +30,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_events_view_profile', 'view-event-profile', '_bx_events_page_title_sys_view_profile', '_bx_events_page_title_view_profile', 'bx_events', 10, 2147483647, 1, 'page.php?i=view-event-profile', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_events_view_profile', 1, 'bx_events', '', '_bx_events_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
-('bx_events_view_profile', 2, 'bx_events', '', '_bx_events_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
-('bx_events_view_profile', 3, 'bx_events', '', '_bx_events_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 0),
-('bx_events_view_profile', 4, 'bx_events', '', '_bx_events_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `hidden_on`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_events_view_profile', 4, 'bx_events', '', '_bx_events_page_block_title_profile_description', 13, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
+('bx_events_view_profile', 2, 'bx_events', '', '_bx_events_page_block_title_profile_info', 11, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
+('bx_events_view_profile', 1, 'bx_events', '', '_bx_events_page_block_title_entry_social_sharing', 13, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
+('bx_events_view_profile', 3, 'bx_events', '', '_bx_events_page_block_title_profile_calendar', 11, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:8:\"calendar\";s:6:\"params\";a:2:{i:0;a:1:{s:5:\"event\";s:12:\"{content_id}\";}i:1;s:21:\"calendar_compact.html\";}}', 0, 0, 1, 0),
+('bx_events_view_profile', 4, 'bx_events', '', '_bx_events_page_block_title_fans', 11, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 1);
 
 -- PAGE: view closed profile 
 
@@ -73,9 +75,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_events_profile_info', 'event-profile-info', '_bx_events_page_title_sys_profile_info', '_bx_events_page_title_profile_info', 'bx_events', 5, 2147483647, 1, 'page.php?i=event-profile-info', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_events_profile_info', 1, 'bx_events', '_bx_events_page_block_title_system_profile_info', '_bx_events_page_block_title_profile_info_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:16:\"entity_info_full\";}', 0, 0, 1, 1),
-('bx_events_profile_info', 1, 'bx_events', '', '_bx_events_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `hidden_on`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_events_profile_info', 1, 'bx_events', '', '_bx_events_page_block_title_profile_description', 13, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
+('bx_events_profile_info', 2, 'bx_events', '_bx_events_page_block_title_system_profile_info', '_bx_events_page_block_title_profile_info_link', 11, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:16:\"entity_info_full\";}', 0, 0, 1, 0),
+('bx_events_profile_info', 3, 'bx_events', '', '_bx_events_page_block_title_profile_calendar', 11, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:8:\"calendar\";s:6:\"params\";a:2:{i:0;a:1:{s:5:\"event\";s:12:\"{content_id}\";}i:1;s:21:\"calendar_compact.html\";}}', 0, 0, 1, 0);
 
 -- PAGE: event fans
 

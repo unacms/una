@@ -105,9 +105,9 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             );
         }
 
-        if (isset($this->aInputs['timezone'])) {
+        if (isset($this->aInputs['timezone']) && !$this->aParams['view_mode']) {
             $this->aInputs['timezone']['values'] = array_combine(timezone_identifiers_list(), timezone_identifiers_list());
-        }
+        }        
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -117,7 +117,68 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
         parent::initChecker($aValues, $aSpecificValues);
     }
+
+    protected function genCustomRowDateEnd (&$aInput)
+    {
+        if ($this->aParams['view_mode'])
+            return $this->_isSameDayEvent() ? '' : $this->genViewRowWrapped($aInput);
+
+        return $this->genRowStandard($aInput);
+    }
+
+    protected function _isSameDayEvent()
+    {
+        if (false === ($aStartEnd = $this->_getStartEnd()))
+            return false;
+        else
+            return $aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d');
+    }
+
+    protected function _getStartEnd()
+    {
+        if (!isset($this->aInputs['timezone']['value']) || !isset($this->aInputs['date_start']['value']) || !isset($this->aInputs['date_end']['value']))
+            return false;
+
+        $iTimeStart = bx_process_input ($this->aInputs['date_start']['value'], isset($this->aInputs['date_start']['date_filter']) ? $this->aInputs['date_start']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
+        $iTimeEnd = bx_process_input ($this->aInputs['date_end']['value'], isset($this->aInputs['date_end']['date_filter']) ? $this->aInputs['date_end']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
+        $oDateStart = date_create(date('Y-m-d H:i:s', $iTimeStart), new DateTimeZone($this->aInputs['timezone']['value']));
+        $oDateEnd = date_create(date('Y-m-d H:i:s', $iTimeEnd), new DateTimeZone($this->aInputs['timezone']['value']));
+
+        return array('start' => $oDateStart, 'end' => $oDateEnd);
+    }
     
+    protected function genCustomRowTime (&$aInput)
+    {
+        if (!$this->aParams['view_mode'])
+            return '';
+
+        if (false === ($aStartEnd = $this->_getStartEnd())) {
+            $aInput['value'] = "Timezone, date start & date end fields are required to display this field";
+        }
+        else {            
+            if ($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d'))
+                $aInput['value'] = _t('_bx_events_txt_from_time_to_time', $aStartEnd['start']->format(getParam('bx_events_time_format')), $aStartEnd['end']->format(getParam('bx_events_time_format')));
+            else
+                $aInput['value'] = '';
+        }
+
+        return $this->genViewRowWrapped($aInput);
+    }
+ 
+    function genViewRowValue(&$aInput)
+    {
+        if (in_array($aInput['name'], array('date_start', 'date_end'))) {
+
+            if (false === ($aStartEnd = $this->_getStartEnd()))
+                return "Timezone, date start & date end fields are required to display this field";
+        
+            $sFormat = $aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d') ? BX_FORMAT_DATE : BX_FORMAT_DATE_TIME;
+            $oDate = 'date_start' == $aInput['name'] ? $aStartEnd['start'] : $aStartEnd['end'];
+            return bx_time_js ($oDate->getTimestamp(), $sFormat, true);
+        }
+        return parent::genViewRowValue($aInput);
+    }
+
     protected function genCustomRowReoccurring (&$aInput)
     {
         return $this->genRowCustom($aInput, 'genInputReoccurring');

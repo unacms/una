@@ -12,6 +12,7 @@ class BxBaseFormView extends BxDolForm
     protected static $_isToggleJsAdded = false;
 
     protected static $_isCssJsAdded = false;
+    protected static $_isJQueryUIAdded = false;
     protected static $_isCssJsAddedViewMode = false;
 
     /**
@@ -912,8 +913,9 @@ BLAH;
 
     protected function genCustomInputUsernamesSuggestions ($aInput)
     {
+        $this->addJsJQueryUI();
+
         $this->oTemplate->addJs(array(
-            'jquery-ui/jquery-ui.custom.min.js',
             'jquery.form.min.js',
         ));
 
@@ -1307,6 +1309,8 @@ BLAH;
 
         } else {
 
+            $this->addJsJQueryUI();
+                
             if (self::$_isCssJsAdded)
                 return;
 
@@ -1330,12 +1334,6 @@ BLAH;
             $aJs = array(
                 'jquery.webForms.js',
 
-                'jquery-ui/jquery.ui.core.min.js',
-                'jquery-ui/jquery.ui.widget.min.js',
-                'jquery-ui/jquery.ui.mouse.min.js',
-                'jquery-ui/jquery.ui.position.min.js',
-                'jquery-ui/jquery.ui.slider.min.js',
-                'jquery-ui/jquery.ui.datepicker.min.js',
                 'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.js',
 
             	'jquery-minicolors/jquery.minicolors.min.js',
@@ -1355,7 +1353,6 @@ BLAH;
                         $oUploader->addCssJs();
                 }
             }
-                    
 
             $this->oTemplate->addJs($aJs);
             $this->oTemplate->addCss($aCss);
@@ -1364,6 +1361,14 @@ BLAH;
 
         }
     }
+
+    function addJsJQueryUI ()
+    {
+        if (self::$_isJQueryUIAdded)
+            return;
+        $this->oTemplate->addJs('jquery-ui/jquery-ui.custom.min.js');
+        self::$_isJQueryUIAdded = true;
+    }    
 }
 
 /** @} */
