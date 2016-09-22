@@ -274,6 +274,7 @@
     <string name="_bx_events_cat_repeat_week_of_month_third_week_of_month"><![CDATA[Каждую 3-ю неделю месяца]]></string>
     <string name="_bx_events_cat_repeat_week_of_month_fourth_week_of_month"><![CDATA[Каждую 4-ю неделю месяца]]></string>
     <string name="_bx_events_cat_repeat_week_of_month_fifth_week_of_month"><![CDATA[Каждую 5-ю неделю месяца]]></string>
+    <string name="_bx_events_cat_repeat_week_of_month_sixth_week_of_month"><![CDATA[Каждую 6-ю неделю месяца]]></string>
 
     <string name="_bx_events_pre_lists_repeat_day_of_month"><![CDATA[Повторять: число месяца]]></string>
     <string name="_bx_events_cat_repeat_day_of_month_every_day"><![CDATA[Каждый день]]></string>

@@ -19,6 +19,16 @@ class BxEventsDb extends BxBaseModGroupsDb
         parent::__construct($oConfig);
     }
 
+    public function getContentInfoByIntervalId ($iIntervalId)
+    {
+        $iContentId = $this->getOne("SELECT `event_id` FROM `bx_events_intervals` WHERE `interval_id` = :interval", array(
+            'interval' => $iIntervalId,
+        ));
+        if (!$iContentId)
+            return 0;
+        return $this->getContentInfoById ($iContentId);
+    }
+
     public function getContentInfoById ($iContentId)
     {
         $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status`, MAX(`i`.`repeat_stop`) AS `repeat_stop` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` 
@@ -28,6 +38,13 @@ class BxEventsDb extends BxBaseModGroupsDb
             GROUP BY `c`.`id`", $this->_oConfig->getName(), $iContentId);
         return $this->getRow($sQuery);
     }
+
+    public function deleteIntervalById ($iIntervalId)
+    {
+        return $this->query("DELETE FROM `bx_events_intervals` WHERE `interval_id` = :interval", array(
+            'interval' => $iIntervalId,
+        ));
+    }
     
     public function getIntervals ($iContentId) 
     {
@@ -36,7 +53,7 @@ class BxEventsDb extends BxBaseModGroupsDb
         ));
     }
 
-    public function getEntriesByDate($sDateFrom, $sDateTo, $iEventId = 0)
+    public function getEntriesByDate($sDateFrom, $sDateTo, $iEventId = 0, $aSQLPart = array())
     {
         // validate input data
         if (false === ($oDateFrom = date_create($sDateFrom, new DateTimeZone('UTC'))))
@@ -68,27 +85,28 @@ class BxEventsDb extends BxBaseModGroupsDb
                 'year_start' => $oDateFrom->format('Y'),
                 'year' => $oDateIter->format('Y'),
                 'month' => $oDateIter->format('n'),
-                'week_of_month' => $oDateIter->format('W') - $oDateMonthBegin->format('W') + 1,
+                'week_of_month' => $oDateIter->format('W') - $oDateMonthBegin->format('W') + 1, // TODO: sometimes in January it is negative
                 'day_of_month' => $oDateIter->format('j'),
                 'day_of_week' => $oDateIter->format('N'),
             );
-            $sWhere = '';
+
+            $sWhere = isset($aSQLPart['where']) ? $aSQLPart['where'] : '';
             if ((int)$iEventId) {
                 $aBindings['event'] = (int)$iEventId;
-                $sWhere = " AND `e`.`id` = :event ";
+                $sWhere .= " AND `bx_events_data`.`id` = :event ";
             }
-            $a = $this->getAll("SELECT DISTINCT `e`.`id`, `e`.`event_name` AS `title`, `e`.`date_start`, `e`.`date_end`, `e`.`timezone`
-                FROM `bx_events_data` AS `e`
+            $a = $this->getAll("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`
+                FROM `bx_events_data`
                 LEFT JOIN `bx_events_intervals` AS `i` ON (
-                    `e`.`id` = `i`.`event_id`                    
+                    `bx_events_data`.`id` = `i`.`event_id`
                     AND
-                    `e`.`date_start` < :timestamp_max                    
+                    `bx_events_data`.`date_start` < :timestamp_max
                     AND
-                    `i`.`repeat_stop` >= :timestamp_min
+                    (0 = `i`.`repeat_stop` OR `i`.`repeat_stop` >= :timestamp_min)
                     AND (
                         (0 = `i`.`repeat_year` OR 0 = (:year - :year_start) % `i`.`repeat_year`)
                         AND 
-                        (0 = `i`.`repeat_month` OR  :month = `i`.`repeat_month`)
+                        (0 = `i`.`repeat_month` OR :month = `i`.`repeat_month`)
                         AND 
                         (0 = `i`.`repeat_week_of_month` OR :week_of_month = `i`.`repeat_week_of_month`)
                         AND 
@@ -97,13 +115,12 @@ class BxEventsDb extends BxBaseModGroupsDb
                         (0 = `i`.`repeat_day_of_week` OR :day_of_week = `i`.`repeat_day_of_week`)
                     )
                 )
-                WHERE ((`e`.`date_start` >= :timestamp_min AND `e`.`date_start` <= :timestamp_max AND `i`.`interval_id` IS NULL) OR (`i`.`interval_id` IS NOT NULL)) $sWhere
+                WHERE ((`bx_events_data`.`date_start` >= :timestamp_min AND `bx_events_data`.`date_start` <= :timestamp_max AND `i`.`interval_id` IS NULL) OR (`i`.`interval_id` IS NOT NULL)) $sWhere
             ", $aBindings);
 
             // prepare variables for each event
             $sCurrentDay = $oDateIter->format('Y-m-d');
             foreach ($a as $k => $r) {
-                // TODO: check permissions
                 $oDateStart = new DateTime();
                 $oDateStart->setTimestamp($r['date_start']);
                 $oDateStart->setTimezone(new DateTimeZone('UTC'));
