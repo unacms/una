@@ -18,6 +18,8 @@ define('BX_DATA_HTML', 6); ///< HTML data type
 define('BX_DATA_DATE', 7); ///< date data type stored as yyyy-mm-dd
 define('BX_DATA_DATE_TS', 8); ///< date data type stored as unixtimestamp
 define('BX_DATA_DATETIME_TS', 9); ///< date/time data type stored as unixtimestamp
+define('BX_DATA_DATE_TS_UTC', 10); ///< date data type stored as unixtimestamp from UTC time
+define('BX_DATA_DATETIME_TS_UTC', 11); ///< date/time data type stored as unixtimestamp from UTC time
 
 define('BX_SLASHES_AUTO', 0);
 define('BX_SLASHES_ADD', 1);
@@ -126,6 +128,7 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
         $iYear  = intval($iYear);
         return sprintf("%04d-%02d-%02d", $iYear, $iMonth, $iDay);
     case BX_DATA_DATE_TS:
+    case BX_DATA_DATE_TS_UTC:
         $mixedData = trim($mixedData);
         if (!preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/', $mixedData))
             return false;
@@ -133,9 +136,11 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
         $iDay   = intval($iDay);
         $iMonth = intval($iMonth);
         $iYear  = intval($iYear);
-        $iRet = mktime (0, 0, 0, $iMonth, $iDay, $iYear);
+        $sFunc = BX_DATA_DATE_TS_UTC == $iDataType ? 'gmmktime' : 'mktime';
+        $iRet = $sFunc (0, 0, 0, $iMonth, $iDay, $iYear);
         return $iRet > 0 ? $iRet : false;
     case BX_DATA_DATETIME_TS:
+    case BX_DATA_DATETIME_TS_UTC:
         if (!preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+):(\d+)#', $mixedData, $m) && !preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+)#', $mixedData, $m))
             return bx_process_input ($mixedData, BX_DATA_DATE_TS, $mixedParams, $isCheckMagicQuotes);
         $iDay   = $m[3];
@@ -144,7 +149,8 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
         $iH = $m[4];
         $iM = $m[5];
         $iS = isset($m[6]) ? $m[6] : 0;
-        $iRet = mktime ($iH, $iM, $iS, $iMonth, $iDay, $iYear);
+        $sFunc = BX_DATA_DATETIME_TS_UTC == $iDataType ? 'gmmktime' : 'mktime';
+        $iRet = $sFunc ($iH, $iM, $iS, $iMonth, $iDay, $iYear);
         return $iRet > 0 ? $iRet : false;
 
     case BX_DATA_HTML:
@@ -185,8 +191,12 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
         return $mixedData;
     case BX_DATA_DATE_TS:
         return empty($mixedData) ? '' : date("Y-m-d", (int)$mixedData);
+    case BX_DATA_DATE_TS_UTC:
+        return empty($mixedData) ? '' : gmdate("Y-m-d", (int)$mixedData);
     case BX_DATA_DATETIME_TS:
         return empty($mixedData) ? '' : date("Y-m-d H:i", (int)$mixedData);
+    case BX_DATA_DATETIME_TS_UTC:
+        return empty($mixedData) ? '' : gmdate("Y-m-d H:i", (int)$mixedData);
 
     case BX_DATA_HTML:
         return $mixedData;

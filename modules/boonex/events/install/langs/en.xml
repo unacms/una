@@ -5,6 +5,7 @@
 
 	<string name="_bx_events_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
 	<string name="_bx_events_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
+	<string name="_bx_events_option_time_format"><![CDATA[Time format]]></string>
 
 	<string name="_bx_events_form_profile"><![CDATA[Events]]></string>
 	<string name="_bx_events_form_profile_display_add"><![CDATA[Add Event]]></string>
@@ -49,6 +50,8 @@
     <string name="_bx_events_form_profile_input_date_end_err"><![CDATA[End date is mandatory]]></string>
     <string name="_bx_events_form_profile_input_sys_timezone"><![CDATA[Timezone]]></string>
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Timezone]]></string>
+    <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Time]]></string>
+    <string name="_bx_events_form_profile_input_time"><![CDATA[Time]]></string>
 
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Repeat year]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Repeat month]]></string>
@@ -121,6 +124,7 @@
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Event categories]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Events calendar]]></string>
+    <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Calendar]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>
@@ -227,6 +231,7 @@
     <string name="_bx_events_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_events_txt_from_admins"><![CDATA[From Admins]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Private event]]></string>
+    <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
 
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> event has got new member - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> event has new request from <a href="{subentry_url}">{subentry_sample}</a>]]></string>

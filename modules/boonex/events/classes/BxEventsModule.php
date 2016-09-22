@@ -23,16 +23,27 @@ class BxEventsModule extends BxBaseModGroupsModule
     {
         // TODO: check permissions
         
-        $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'));
+        $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), bx_get('event'));
         
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($aEntries);
     }
 
-    public function serviceCalendar()
+    public function serviceCalendar($aData = array(), $sTemplate = 'calendar.html')
     {
-        $o = new BxTemplCalendar(array('events' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data'), $this->_oTemplate);
-        return $o->display();
+        if (isset($aData['event'])) {
+            $aContentInfo = $this->_oDb->getContentInfoById ((int)$aData['event']);
+            if (!$aContentInfo['repeat_stop']) // don't display calendar for non repeating events
+                return '';
+        }
+
+        $o = new BxTemplCalendar(array(
+            'eventSources' => array (
+                'url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data',
+                'data' => $aData,
+            ),
+        ), $this->_oTemplate);
+        return $o->display($sTemplate);
     }
 
     public function actionIntervals()

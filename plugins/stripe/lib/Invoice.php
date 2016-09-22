@@ -2,6 +2,11 @@
 
 namespace Stripe;
 
+/**
+ * Class Invoice
+ *
+ * @package Stripe
+ */
 class Invoice extends ApiResource
 {
     /**
@@ -38,6 +43,18 @@ class Invoice extends ApiResource
     }
 
     /**
+     * @param string $id The ID of the invoice to update.
+     * @param array|null $params
+     * @param array|string|null $options
+     *
+     * @return Invoice The updated invoice.
+     */
+    public static function update($id, $params = null, $options = null)
+    {
+        return self::_update($id, $params, $options);
+    }
+
+    /**
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -47,7 +64,9 @@ class Invoice extends ApiResource
     {
         $url = static::classUrl() . '/upcoming';
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
-        return Util\Util::convertToStripeObject($response, $opts);
+        $obj = Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+        return $obj;
     }
 
     /**

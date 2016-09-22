@@ -2,6 +2,11 @@
 
 namespace Stripe;
 
+/**
+ * Class ApplicationFee
+ *
+ * @package Stripe
+ */
 class ApplicationFee extends ApiResource
 {
     /**
@@ -27,6 +32,18 @@ class ApplicationFee extends ApiResource
     }
 
     /**
+     * @param string $id The ID of the application fee to update.
+     * @param array|null $params
+     * @param array|string|null $options
+     *
+     * @return ApplicationFee The updated application fee.
+     */
+    public static function update($id, $params = null, $options = null)
+    {
+        return self::_update($id, $params, $options);
+    }
+
+    /**
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -45,9 +62,8 @@ class ApplicationFee extends ApiResource
      */
     public function refund($params = null, $opts = null)
     {
-        $url = $this->instanceUrl() . '/refund';
-        list($response, $opts) = $this->_request('post', $url, $params, $opts);
-        $this->refreshFrom($response, $opts);
+        $this->refunds->create($params, $opts);
+        $this->refresh();
         return $this;
     }
 }
