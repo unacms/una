@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxBaseModPaymentModule extends BxDolModule
+class BxBaseModPaymentModule extends BxBaseModGeneralModule
 {
 	protected $_sLangsPrefix;
 
@@ -76,39 +76,6 @@ class BxBaseModPaymentModule extends BxDolModule
         	'currency_code' => $this->_oConfig->getDefaultCurrencyCode(),
 			'currency_sign' => $this->_oConfig->getDefaultCurrencySign()
         ));
-    }
-
-    public function getProfileId()
-    {
-    	return bx_get_logged_profile_id();
-    }
-
-	public function getProfileInfo($iUserId = 0)
-    {
-        $oProfile = $this->getObjectUser($iUserId);
-        $oAccount = $oProfile->getAccountObject();
-
-        return array(
-        	'id' => $oProfile->id(),
-            'name' => $oProfile->getDisplayName(),
-        	'email' => $oAccount->getEmail(),
-            'link' => $oProfile->getUrl(),
-            'icon' => $oProfile->getIcon(),
-            'unit' => $oProfile->getUnit(),
-        	'active' => $oProfile->isActive(),
-        );
-    }
-    
-    public function getObjectUser($iUserId = 0)
-    {
-    	bx_import('BxDolProfile');
-        $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
-            $oProfile = BxDolProfileUndefined::getInstance();
-        }
-
-        return $oProfile;
     }
 
 	public function getObjectJoin()

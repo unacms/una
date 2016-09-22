@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxBaseModConnectModule extends BxDolModule
+class BxBaseModConnectModule extends BxBaseModGeneralModule
 {
     function __construct(&$aModule)
     {

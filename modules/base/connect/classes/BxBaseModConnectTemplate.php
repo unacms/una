@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxBaseModConnectTemplate extends BxDolModuleTemplate
+class BxBaseModConnectTemplate extends BxBaseModGeneralTemplate
 {
     function __construct(&$oConfig, &$oDb)
     {
