@@ -140,12 +140,36 @@ class BxPaymentModule extends BxBaseModPaymentModule
     			break;
 
     		default:
-    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
-    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
-    			$bResult = !empty($aProvidersCart) || !empty($aProvidersSubscription);
+    			$aProviders = $this->_oDb->getVendorInfoProviders($iVendorId);
+    			$bResult = !empty($aProviders);
     	}
 
 		return $bResult;
+    }
+
+    public function serviceIsPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    {
+    	$aProvider = $this->serviceGetPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType);
+    	return $aProvider !== false;
+    }
+
+    public function serviceGetPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    {
+    	$aProviders = array();
+    	switch($sPaymentType) {
+    		case BX_PAYMENT_TYPE_SINGLE:
+    			$aProviders = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
+    			break;
+
+    		case BX_PAYMENT_TYPE_RECURRING:
+    			$aProviders = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
+    			break;
+
+    		default:
+    			$aProviders = $this->_oDb->getVendorInfoProviders($iVendorId);
+    	}
+
+    	return !empty($aProviders) && !empty($aProviders[$sVendorProvider]) && is_array(($aProviders[$sVendorProvider])) ? $aProviders[$sVendorProvider] : false;
     }
 
     public function serviceGetOptionsSiteAdmin()

@@ -72,6 +72,11 @@ class BxPaymentDb extends BxBaseModPaymentDb
 	
 					$sWhereClause = " AND `tp`.`for_recurring`='1'";
 	        		break;
+
+	        	case 'all':
+					$aMethod['name'] = 'getAllWithKey';
+					$aMethod['params'][1] = 'name';
+	        		break;
 	        }          
 
         $aMethod['params'][0] = "SELECT
@@ -155,6 +160,9 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
     public function getVendorInfoProviders($iVendorId, $aParams = array())
     {
+    	if(empty($aParams))
+    		$aParams = array('type' => 'all');
+
 		$aProviders = $this->getProviders($aParams);
 		$aOptions = $this->getOptions($iVendorId);
 

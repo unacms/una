@@ -28,7 +28,7 @@ class BxForumStudioPage extends BxTemplStudioModule
 
 	protected function getCategories()
     {
-        $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_GRID_CATEGORIES']);
+        $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_GRID_CATEGORIES'], BxDolStudioTemplate::getInstance());
         if(!$oGrid)
             return '';
 
