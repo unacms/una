@@ -77,6 +77,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                 
             // get all events for the specific day            
             $oDateMonthBegin = date_create($oDateIter->format('Y-m-01'), new DateTimeZone('UTC'));
+            $iWeekOfMonth = $oDateIter->format('W') - $oDateMonthBegin->format('W') + 1;
             $aBindings = array(
                 'timestamp_min' => $oDateMin->getTimestamp(),
                 'timestamp_max' => $oDateMax->getTimestamp(),
@@ -85,7 +86,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                 'year_start' => $oDateFrom->format('Y'),
                 'year' => $oDateIter->format('Y'),
                 'month' => $oDateIter->format('n'),
-                'week_of_month' => $oDateIter->format('W') - $oDateMonthBegin->format('W') + 1, // TODO: sometimes in January it is negative
+                'week_of_month' => $iWeekOfMonth > 0 ? $iWeekOfMonth : $oDateIter->format('W') + 1,
                 'day_of_month' => $oDateIter->format('j'),
                 'day_of_week' => $oDateIter->format('N'),
             );
