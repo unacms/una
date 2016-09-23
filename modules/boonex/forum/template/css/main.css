@@ -1,22 +1,5 @@
 @import url(../../../../base/text/template/css/main.css);
 
-/*-- Breadcrumb --*/
-div.bx-forum-breadcrumb  {
-	white-space: nowrap;
-	overflow: hidden;
-}
-div.bx-forum-breadcrumb a,
-div.bx-forum-breadcrumb i {
-	display: inline-block;
-	vertical-align: top;
-
-	height: 2.2rem;
-	line-height: 2.2rem;	
-}
-.bx-forum-breadcrumb-home i.sys-icon {
-	font-size: 2.0rem;
-}
-
 /*-- Participants --*/
 .bx-forum-participants {
     white-space: nowrap;

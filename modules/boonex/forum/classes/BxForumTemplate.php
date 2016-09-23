@@ -23,14 +23,14 @@ class BxForumTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    public function entryBreadcrumb($aContentInfo)
+    public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
     {
-        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
         $oPermalink = BxDolPermalinks::getInstance();
         $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
 
-        $aTmplVarsItems = array(array(
+    	$aTmplVarsItems = array(array(
         	'url' => bx_append_url_params($oPermalink->permalink('page.php?i=' . $CNF['URI_CATEGORY_ENTRIES']), array(
         		'category' => $aContentInfo[$CNF['FIELD_CATEGORY']]
         	)),
@@ -40,11 +40,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
         	'title' => $aContentInfo[$CNF['FIELD_TITLE']]
         ));
 
-    	return $this->parseHtmlByName('breadcrumb.html', array(
-    		'url_home' => BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_HOME']),
-    		'icon_home' => $CNF['ICON'],
-    		'bx_repeat:items' => $aTmplVarsItems
-    	));
+    	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
     }
 
     public function entryParticipants($aContentInfo, $iMaxVisible = 2, $sFloat = 'left')
