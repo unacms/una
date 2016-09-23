@@ -76,11 +76,13 @@ class BxEventsModule extends BxBaseModGroupsModule
         if (!$iContentId)
             $iContentId = (int)bx_get('c');
 
-        if (!($aContentInfo = $this->_oDb->getContentInfoById($iContentId))) {
-            $this->_oTemplate->displayPageNotFound();
-            exit;
-        }
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedEdit ($aContentInfo)) {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        if (
+            ($aContentInfo && CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedEdit ($aContentInfo))
+            ||
+            (!$aContentInfo && CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedAdd ())
+        ) {
             $this->_oTemplate->displayAccessDenied();
             exit;
         }
