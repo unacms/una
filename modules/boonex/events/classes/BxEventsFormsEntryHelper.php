@@ -10,29 +10,13 @@
  */
 
 /**
- * Group profile forms functions
+ * Event forms functions
  */
 class BxEventsFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
 {
     public function __construct($oModule)
     {
         parent::__construct($oModule);
-    }
-
-    public function onDataAddAfter ($iAccountId, $iContentId)
-    {
-        if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
-            return $s;
-
-        return '';
-    }
-
-    public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
-    {
-        if ($s = parent::onDataDeleteAfter($iAccountId, $iContentId))
-            return $s;
-
-        return '';
     }
 }
 
