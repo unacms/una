@@ -294,18 +294,23 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     public function onDataAddAfter ($iAccountId, $iContentId)
     {
+        $this->_processMetas($iAccountId, $iContentId);
+
+        return '';
+    }
+
+    protected function _processMetas($iAccountId, $iContentId)
+    {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            if ($oMetatags->keywordsIsEnabled())
+            if ($oMetatags->keywordsIsEnabled() && $aContentInfo)
                 $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
-            if ($oMetatags->locationsIsEnabled())
+            if ($oMetatags->locationsIsEnabled() && $aContentInfo)
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
         }
-
-        return '';
     }
 }
 

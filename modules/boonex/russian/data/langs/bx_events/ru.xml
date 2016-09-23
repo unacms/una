@@ -123,6 +123,7 @@
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Календарь событий]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Календарь]]></string>
+    <string name="_bx_events_page_block_title_entry_location"><![CDATA[Местоположение]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Под-меню событий]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Под-меню событий]]></string>

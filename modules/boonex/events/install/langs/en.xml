@@ -125,6 +125,7 @@
     <string name="_bx_events_page_block_title_categories"><![CDATA[Event categories]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Events calendar]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Calendar]]></string>
+    <string name="_bx_events_page_block_title_entry_location"><![CDATA[Location]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>

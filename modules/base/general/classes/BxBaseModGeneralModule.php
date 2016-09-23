@@ -158,6 +158,19 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         return $this->_serviceTemplateFunc ('entryInfo', $iContentId);
     }
+
+    /**
+     * Entry location info
+     */
+    public function serviceEntityLocation ($iContentId = 0)
+    {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        return $this->_oTemplate->entryLocation ($iContentId);
+    }
     
     /**
      * Delete content entry
