@@ -176,6 +176,7 @@ class BxBaseGrid extends BxDolGrid
         if (!empty($this->_aConfirmMessages) && is_array($this->_aConfirmMessages))
             $sConfirmMessages = json_encode($this->_aConfirmMessages);
 
+		$iColumns = count($this->_aOptions['fields']);
 		$aVarsHead = $this->_getRowHead();
 
         $aVars = array (
@@ -190,7 +191,8 @@ class BxBaseGrid extends BxDolGrid
         	'bx_if:display_head' => array(
         		'condition' => !empty($aVarsHead),
         		'content' => array(
-        			'bx_repeat:row_header' => $aVarsHead
+        			'bx_repeat:row_header' => $aVarsHead,
+        			'columns' => $iColumns,
         		)
         	),
             'bx_repeat:rows_data' => $this->_getRowsDataDesign ($aData),
@@ -204,7 +206,7 @@ class BxBaseGrid extends BxDolGrid
             'popup_options' => $sPopupOptions,
             'query_append' => $sQueryAppend,
             'confirm_messages' => $sConfirmMessages,
-            'columns' => count($this->_aOptions['fields']),
+            'columns' => $iColumns,
             'bx_if:display_footer' => array(
         		'condition' => !empty($this->_aOptions['actions_bulk']) || !empty($sPaginate),
         		'content' => array(
