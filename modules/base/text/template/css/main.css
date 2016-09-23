@@ -1,5 +1,21 @@
-
 @import url(../../../general/template/css/main.css);
+
+/* Breadcrumb */
+div.bx-base-text-breadcrumb  {
+	white-space: nowrap;
+	overflow: hidden;
+}
+div.bx-base-text-breadcrumb a,
+div.bx-base-text-breadcrumb i {
+	display: inline-block;
+	vertical-align: top;
+
+	height: 2.2rem;
+	line-height: 2.2rem;	
+}
+.bx-base-text-breadcrumb-home i.sys-icon {
+	font-size: 2.0rem;
+}
 
 /* unit */
 .bx-base-text-unit h2,
