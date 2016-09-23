@@ -135,8 +135,8 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *              available values are the following:
  *      - Int - convert value to integer.
  *      - Float - convert value to floating point number.
- *      - Date - convert value to timestamp value before saving to database, and convert from timespamp value after restoring from database.
- *      - DateTime - convert value to timestamp value before saving to database, and convert from timespamp value after restoring from database.
+ *      - Date,DateUtc - convert value to timestamp value before saving to database, and convert from timespamp value after restoring from database.
+ *      - DateTime,DateTimeUtc - convert value to timestamp value before saving to database, and convert from timespamp value after restoring from database.
  *      - Xss - it warns you that this text can contain XSS vulnerabilities and you need to be extra careful with this, and always use Forms engine to output string to the browser or use bx_process_output if going to output text manually.
  *      - XssHtml - this text cam have HTML tags, so perform XSS vulnerabilies cleaning before saving to database.
  *      - All - do not perform any conversion and pass text as it is, be careful with this, use it only when no other function can be used, and make all necessary security checking by yourself.
@@ -372,7 +372,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Can be used here: Date
  *          Make no sense to use it here: Length, Preg, Avail, Email, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Date
+ *          Can be used here: Date, DateUtc
  *          Make no sense to use it here: Int, Float, Xss, All, Preg, DateTime, XssHtml, Boolean, Set
  *
  * datetime - date/time selection control.
@@ -386,7 +386,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Can be used here: DateTime
  *          Make no sense to use it here: Length, Preg, Avail, Email, Date, Captcha
  *      - db_pass
- *          Can be used here: DateTime
+ *          Can be used here: DateTime, DateTimeUtc
  *          Make no sense to use it here: Int, Float, Xss, All, Preg, Date, XssHtml, Boolean, Set
  *
  * captcha - image captcha. Displayed as image with some text along with HTML text input for entering displayed on the image text.
@@ -414,7 +414,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Can be used here: Length, Preg, Avail, Email, Date, DateTime
  *          Make no sense to use it here: Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean
+ *          Can be used here: Int, Float, Xss, All, Preg, Date, DateUtc, DateTime, DateTimeUtc, XssHtml, Boolean
  *          Make no sense to use it here: Set
  *
  * file - file upload input. Displayed as file upload HTML input.
@@ -1422,7 +1422,7 @@ class BxDolFormCheckerHelper
         }
         return self::_passDate ($s, BX_DATA_DATE_TS);
     }
-    static public function passDateUTC ($s)
+    static public function passDateUtc ($s)
     {
         if (is_array($s)) {
             $a = array ();
@@ -1444,7 +1444,7 @@ class BxDolFormCheckerHelper
         }
         return self::_passDate ($s, BX_DATA_DATETIME_TS);
     }
-    static public function passDateTimeUTC ($s)
+    static public function passDateTimeUtc ($s)
     {
         if (is_array($s)) {
             $a = array ();
@@ -1557,7 +1557,7 @@ class BxDolFormCheckerHelper
     {
         return bx_process_output ($i, BX_DATA_DATE_TS);
     }
-    static public function displayDateUTC ($i)
+    static public function displayDateUtc ($i)
     {
         return bx_process_output ($i, BX_DATA_DATE_TS_UTC);
     }    
@@ -1565,7 +1565,7 @@ class BxDolFormCheckerHelper
     {
         return bx_process_output ($i, BX_DATA_DATETIME_TS);
     }
-    static public function displayDateTimeUTC ($i)
+    static public function displayDateTimeUtc ($i)
     {
         return bx_process_output ($i, BX_DATA_DATETIME_TS_UTC);
     }    
