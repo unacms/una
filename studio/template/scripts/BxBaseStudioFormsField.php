@@ -519,8 +519,8 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                     'pass' => 'Xss',
                 ),
                 'checker' => array (
-                    'func' => 'avail',
-                    'params' => array(),
+                    'func' => 'availTranslatable',
+                    'params' => array('checker_error'),
                     'error' => _t('_adm_form_err_field_checker_error'),
                 ),
             ),
