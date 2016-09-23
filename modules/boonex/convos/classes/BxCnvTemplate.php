@@ -244,6 +244,30 @@ class BxCnvTemplate extends BxBaseModTextTemplate
     {
         return '';
     }
+
+	public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
+    {
+        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+        $oPermalink = BxDolPermalinks::getInstance();
+
+        $oAuthor = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
+		if(!$oAuthor)
+			$oAuthor = BxDolProfileUndefined::getInstance();
+
+        $sText = strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 50);
+        $iFolder = $this->_oDb->getConversationFolder($aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id());
+
+    	$aTmplVarsItems = array(array(
+        	'url' => BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_FOLDER'] . $iFolder),
+        	'title' => _t($CNF['T']['txt_folder_' . $iFolder])
+        ), array(
+        	'url' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+        	'title' => $sText ? $sText : $oAuthor->getDisplayName(),
+        ));
+
+    	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
+    }
 }
 
 /** @} */

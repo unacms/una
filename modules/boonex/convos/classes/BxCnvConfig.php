@@ -47,6 +47,7 @@ class BxCnvConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'start-convo',
 
             'URL_HOME' => 'modules/?r=convos/folder/1',
+        	'URL_FOLDER' => 'modules/?r=convos/folder/',
 
             // some params
             'PARAM_CHARS_SUMMARY' => '',
@@ -83,6 +84,10 @@ class BxCnvConfig extends BxBaseModTextConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_cnv_txt_sample_single',
+            	'txt_folder_' . BX_CNV_FOLDER_INBOX => '_bx_cnv_folder_inbox',
+	            'txt_folder_' . BX_CNV_FOLDER_DRAFTS => '_bx_cnv_folder_drafts',
+	            'txt_folder_' . BX_CNV_FOLDER_SPAM => '_bx_cnv_folder_spam',
+	            'txt_folder_' . BX_CNV_FOLDER_TRASH => '_bx_cnv_folder_trash',
             ),
         );
 
