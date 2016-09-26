@@ -35,6 +35,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 -- MIXES
 UPDATE `sys_options_mixes` SET `editable`='0' WHERE `type`=@sName AND `name`='Neat-Mix';
 
+SET @iMixId = (SELECT `id` FROM `sys_options_mixes` WHERE `type`=@sName AND `name`='Neat-Mix' LIMIT 1);
 DELETE FROM `sys_options_mixes2options` WHERE `option` IN ('bx_protean_block_title_border_color', 'bx_protean_block_title_border_size', 'bx_protean_block_title_border_radius');
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_block_title_border_color', @iMixId, 'rgba(208, 208, 208, 1)'),
