@@ -65,6 +65,8 @@ class BxForumGrid extends BxTemplGrid
 	    	}
 
 		$this->_aOptions['field_order'] = $sField;
+
+		$this->_aOptions['paginate_per_page'] = !empty($this->_aParams['per_page']) ? (int)$this->_aParams['per_page'] : (int)$this->_oModule->_oDb->getParam('bx_forum_per_page_browse');
     }
 
     public function getCode ($isDisplayHeader = true)

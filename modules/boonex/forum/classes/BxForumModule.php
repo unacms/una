@@ -104,6 +104,19 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
+	public function serviceBrowseIndex($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    {
+    	$sType = 'index';
+
+    	if($sUnitView != 'table')
+        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+		return $this->_serviceBrowseTable(array(
+			'type' => $sType,
+			'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_index')
+		), $bShowHeader);
+    }
+
 	public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
     {
         if(!$iProfileId)
@@ -112,7 +125,12 @@ class BxForumModule extends BxBaseModTextModule
         if(!$iProfileId)
             return '';
 
-        return $this->_serviceBrowseTable(array('type' => 'author', 'author' => $iProfileId, 'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '=')), false);
+        return $this->_serviceBrowseTable(array(
+        	'type' => 'author', 
+        	'author' => $iProfileId, 
+        	'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '='), 
+        	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile')
+        ), false);
     }
 
     public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)

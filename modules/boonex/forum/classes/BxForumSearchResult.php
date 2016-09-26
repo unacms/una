@@ -63,6 +63,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 }
 
                 $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
+                $this->aCurrent['paginate']['perPage'] = getParam('bx_forum_per_page_profile');
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_by_author');
@@ -89,6 +90,9 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_new');
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode;
                 break;
+
+			case 'index':
+                $this->aCurrent['paginate']['perPage'] = getParam('bx_forum_per_page_index');
 
 			case 'latest':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
