@@ -118,14 +118,14 @@ CREATE TABLE IF NOT EXISTS `bx_events_reports_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: metas
-CREATE TABLE `bx_events_meta_keywords` (
+CREATE TABLE IF NOT EXISTS `bx_events_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `bx_events_meta_locations` (
+CREATE TABLE IF NOT EXISTS `bx_events_meta_locations` (
   `object_id` int(10) unsigned NOT NULL,
   `lat` double NOT NULL,
   `lng` double NOT NULL,
