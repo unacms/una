@@ -1,14 +1,14 @@
-#[Trident](http://www.online.me)
+#[UNA](https://una.io)
 
-Community software platform
+Community Management System
 
 ##License
 
-Trident is licensed under the Creative Commons Public License, see license.txt for full details.
+UNA is licensed under the MIT License, see license.txt for full details.
 
 ##Help
 
-- [Wiki](https://github.com/boonex/trident/wiki)
+- [Wiki](https://github.com/unaio/una/wiki)
 - [Auto generated documentation](http://ci.boonex.com/docs)
-- [Forum](http://www.boonex.com/forums)
-- [Contact us](http://www.boonex.com/help/contact)
+- [Forum](https://una.io/page/discussions-home)
+- [Contact us](https://una.io/page/contact)
