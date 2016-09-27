@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  */
 
-class BxInvUpdater extends BxDolStudioUpdater
+class BxAccntUpdater extends BxDolStudioUpdater
 {
     function __construct($aConfig)
 	{
