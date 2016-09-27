@@ -513,7 +513,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	        if(!$oFile->connect())
 	            return _t('_adm_str_err_cannot_connect_to_ftp');
 	
-	        if(!$oFile->isTrident())
+	        if(!$oFile->isUna())
 	            return _t('_adm_str_err_destination_not_valid');
         }
         else

@@ -916,7 +916,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             if(!$oFile->connect())
                 return null;
 
-            if(!$oFile->isTrident())
+            if(!$oFile->isUna())
                 return null;
         }
         else

@@ -446,7 +446,7 @@ class BxDolStudioToolsAudit extends BxDol
             $s .= $this->getBlock($sName, $sVal, $this->getMsgHTML($sName, $aMessage));
         }
 
-        echo $this->getSection('Trident', '', $s);
+        echo $this->getSection('UNA', '', $s);
     }
 
     protected function manualCheck()
