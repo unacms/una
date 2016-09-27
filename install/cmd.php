@@ -38,11 +38,11 @@ class BxDolInstallCmd
             'db_name' => 'test',
             'db_user' => 'root',
             'db_password' => 'root',
-            'site_title' => 'Trident Test',
+            'site_title' => 'UNA Test',
             'site_email' => 'no-reply@example.com',
             'admin_email' => 'admin@example.com',
             'admin_username' => 'admin',
-            'admin_password' => 'trident',
+            'admin_password' => 'unauna',
             'language' => 'en',
         );
 
