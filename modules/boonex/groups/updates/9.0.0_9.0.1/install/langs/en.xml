@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string_add>
+</resources>

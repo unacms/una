@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Protean Protean template
+ * @defgroup    OAuth2 OAuth2 server
  * @ingroup     TridentModules
  *
  * @{
@@ -13,13 +13,13 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
-    'name' => 'bx_protean',
-    'title' => 'Protean',
-    'note' => 'Design template',
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
+    'name' => 'bx_oauth',
+    'title' => 'OAuth2 Server',
+    'note' => 'Allow to use site user credentials and basic API',
     'version' => '9.0.1',
-    'vendor' => 'Boonex',
-	'help_url' => 'http://feed.boonex.com/?section={module_name}',
+    'vendor' => 'BoonEx',
+    'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
     'compatible_with' => array(
         '9.0.0-B2'
@@ -28,16 +28,16 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/protean/',
-    'home_uri' => 'protean',
+    'home_dir' => 'boonex/oauth2/',
+    'home_uri' => 'oauth2',
 
-    'db_prefix' => 'bx_protean_',
-    'class_prefix' => 'BxProtean',
+    'db_prefix' => 'bx_oauth_',
+    'class_prefix' => 'BxOAuth',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Boonex Protean Template',
+    'language_category' => 'OAuth2 Server',
 
     /**
      * Installation/Uninstallation Section.
@@ -45,18 +45,18 @@ $aConfig = array(
     'install' => array(
         'execute_sql' => 1,
         'update_languages' => 1,
-    	'clear_db_cache' => 1
     ),
     'uninstall' => array (
         'execute_sql' => 1,
         'update_languages' => 1,
-    	'clear_db_cache' => 1
     ),
     'enable' => array(
-        'execute_sql' => 1
+        'execute_sql' => 1,
+        'clear_db_cache' => 1,
     ),
-    'disable' => array(
-        'execute_sql' => 1
+    'disable' => array (
+        'execute_sql' => 1,
+        'clear_db_cache' => 1,
     ),
 
     /**

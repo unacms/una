@@ -1,0 +1,69 @@
+
+@import url(../../../../base/text/template/css/main.css);
+
+.bx-cnv-collaborators {
+    white-space:nowrap;
+}
+.bx-popup-content .bx-cnv-collaborators {
+    margin-right:0px;
+}
+.bx-cnv-collaborator {
+	display:inline;
+    display:inline-block;
+}
+
+.bx-grid-table .bx-cnv-collaborator,
+.bx-grid-table .bx-grid-header-collaborators span {
+    display:none;
+}
+
+.bx-grid-table .bx-cnv-collaborator-author {
+    display:inline;
+    display:inline-block;
+}
+
+.bx-cnv-preview {
+    position:relative;
+}
+
+.bx-cnv-title {    
+    padding-right:2em;
+    white-space:nowrap;    
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+.bx-cnv-grid-field-label {
+    display:inline-block;
+}
+
+.bx-cnv-preview .bx-cnv-grid-field-label {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.bx-cnv-grid-field-messages .bx-def-unit-alert-middle {
+    position:static;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.bx-cnv-grid-field-messages > span {
+    vertical-align:middle;
+}
+
+.bx-cnv-grid-field-messages {
+    white-space:nowrap;
+}
+
+.bx-cnv-preview .bx-def-unit-info {
+    line-height:1.15em;
+}
+
+.bx-cnv-grid-preview div {
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    line-height:1.4em;
+}
