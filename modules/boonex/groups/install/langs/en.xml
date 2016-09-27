@@ -270,8 +270,4 @@
 <bx_include_auto:_email_header.html />
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} group</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
-
-    <string name="_bx_ntfs_alert_action_fan_added"><![CDATA[member joined]]></string>
-    <string name="_bx_ntfs_alert_action_join_request"><![CDATA[join request]]></string>
-    <string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[post to timeline]]></string>
 </resources>
