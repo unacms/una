@@ -324,7 +324,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
 
     // get site vars
     $sEmailNotify = !$isDisableAlert ? getParam('site_email_notify') : $sRecipientEmail;
-    $sSiteTitle = !$isDisableAlert ? getParam('site_title') : 'Trident ' . BX_DOL_VERSION;
+    $sSiteTitle = !$isDisableAlert ? getParam('site_title') : 'UNA ' . BX_DOL_VERSION;
 
     // add unsubscribe link
     if (!$isDisableAlert && empty($aPlus['unsubscribe'])) {
@@ -786,7 +786,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
     if(function_exists('curl_init')) {
         $rConnect = curl_init();
 
-        curl_setopt($rConnect, CURLOPT_USERAGENT, 'Trident ' . BX_DOL_VERSION);
+        curl_setopt($rConnect, CURLOPT_USERAGENT, 'UNA ' . BX_DOL_VERSION);
         curl_setopt($rConnect, CURLOPT_TIMEOUT, 10);
         curl_setopt($rConnect, CURLOPT_URL, $sFileUrl);
         curl_setopt($rConnect, CURLOPT_HEADER, NULL === $sHttpCode ? false : true);

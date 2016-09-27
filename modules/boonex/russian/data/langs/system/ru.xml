@@ -551,8 +551,8 @@
 	<string name="_adm_btn_settings_mix_create"><![CDATA[Создать набор]]></string>
 	<string name="_adm_btn_settings_mix_delete"><![CDATA[Удалить набор]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Обновить]]></string>
-	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Доступен Trident {0}!]]></string>
-	<string name="_adm_dbd_txt_script_on"><![CDATA[Trident на]]></string>
+	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Новая версия UNA {0}!]]></string>
+	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA на]]></string>
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Установлено:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Версия:]]></string>
@@ -631,8 +631,8 @@
 	<string name="_adm_err_modules_wrong_permissions_check"><![CDATA[Вам нужно изменить разрешения для следующих файлов и папок:]]></string>
 	<string name="_adm_err_modules_wrong_permissions_msg"><![CDATA[{0} - {1}]]></string>
 	<string name="_adm_err_modules_wrong_version"><![CDATA[Модуль имеет несовместимую версию]]></string>
-	<string name="_adm_err_modules_wrong_version_script"><![CDATA[Модуль несовместим с Вашей версией Trident]]></string>
-	<string name="_adm_err_modules_wrong_version_script_update"><![CDATA[Новая версия модуля {0} несовместима с Вашей версией Trident. Пожалуйста, сначала обновите Trident (Студия &gt; Панель &gt; Версия) и затем попробуйте обновить модуль.]]></string>
+	<string name="_adm_err_modules_wrong_version_script"><![CDATA[Модуль несовместим с Вашей версией UNA]]></string>
+	<string name="_adm_err_modules_wrong_version_script_update"><![CDATA[Новая версия модуля {0} несовместима с Вашей версией UNA. Пожалуйста, сначала обновите UNA (Студия &gt; Панель &gt; Версия) и затем попробуйте обновить модуль.]]></string>
 	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Невозможно соединиться с <b>UNA</b>. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Невозможно получить отклик от <b>UNA</b>. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[Нужно ввести Key и Secret, предоставленные <b>UNA</b> в Настройки -> Общие.]]></string>
@@ -1516,7 +1516,7 @@
 <a href="{0}">нажмите здесь для проверки в Google Page Speed</a><br />
 Если он не задействован, тогда попробуйте применить эту оптимизацию, так как она улучшает скорость сайта и сохраняет трафик, обратитесь к <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">этому руководству</a>, чтобы узнать больше.<br />{1}]]></string>
 	<string name="_sys_audit_msg_value_checking_failed"><![CDATA[проверка значения не удалась]]></string>
-	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[Ваша версия несовместима с Trident, нужно как минимум {0}]]></string>
+	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[Ваша версия несовместима с UNA, нужно как минимум {0}]]></string>
 	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[Ваша версия устарела, может потребоваться обновление до последней версии {0}]]></string>
 	<string name="_sys_audit_permissions"><![CDATA[Разрешения файлов и папок]]></string>
 	<string name="_sys_audit_php_accelerator"><![CDATA[PHP-акселератор]]></string>
@@ -1531,7 +1531,7 @@
 	<string name="_sys_audit_title_warn"><![CDATA[ПРЕДУПРЕЖДЕНИЕ]]></string>
 	<string name="_sys_audit_userside_caching"><![CDATA[Кэширование статичного содержимого на стороне пользователя]]></string>
 	<string name="_sys_audit_version"><![CDATA[версия]]></string>
-	<string name="_sys_audit_version_script"><![CDATA[Версия Trident]]></string>
+	<string name="_sys_audit_version_script"><![CDATA[Версия UNA]]></string>
 	<string name="_sys_block_type_html"><![CDATA[html]]></string>
 	<string name="_sys_block_type_image"><![CDATA[изображение]]></string>
 	<string name="_sys_block_type_lang"><![CDATA[язык]]></string>
@@ -1843,7 +1843,7 @@
 	<string name="_sys_inst_conf_desc_profiles"><![CDATA[Модуль профилей для установки по умолчанию.]]></string>
 	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.una.io/page/kands-manage">Получить UNA Key & Secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' программа не существует, нужно установить <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
-	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Путь к директории, где содержатся файлы Trident.]]></string>
+	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Путь к директории, где содержатся файлы UNA.]]></string>
 	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Имейл, с которого будут отправляться сообщения от сайта.]]></string>
 	<string name="_sys_inst_conf_desc_site_title"><![CDATA[Название Вашего сайта.]]></string>
 	<string name="_sys_inst_conf_desc_site_url"><![CDATA[URL Вашего сайта (косая черта в конце необходима).]]></string>
@@ -1901,7 +1901,7 @@
 	<string name="_sys_inst_server_audit"><![CDATA[Аудит сервера]]></string>
 	<string name="_sys_inst_site_config"><![CDATA[Конфигурация сайта]]></string>
 	<string name="_sys_inst_start_installation"><![CDATA[Начать установку]]></string>
-	<string name="_sys_inst_title"><![CDATA[Установка Trident {0}]]></string>
+	<string name="_sys_inst_title"><![CDATA[Установка UNA {0}]]></string>
 	<string name="_sys_layout_1_column"><![CDATA[1 столбец]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 столбца]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 столбца]]></string>
@@ -2199,7 +2199,7 @@
 	<string name="_sys_submit"><![CDATA[Выполнить]]></string>
 
 
-	<string name="_sys_tour_launcher_welcome_title"><![CDATA[Добро пожаловать в Trident Студию!]]></string>
+	<string name="_sys_tour_launcher_welcome_title"><![CDATA[Добро пожаловать в UNA Студию!]]></string>
 	<string name="_sys_tour_launcher_welcome_txt"><![CDATA[Студия это место, где можно настроить свой сайт: добавлять приложения и управлять ими; управлять языками и изменять дизайн; контролировать уровни доступа для пользователей; настраивать страницы и навигацию, а также многое другое. Текущая страница - стартовый экран Студии.]]></string>
 	<string name="_sys_tour_launcher_apps_title"><![CDATA[Добавь новые приложения]]></string>
 	<string name="_sys_tour_launcher_apps_txt"><![CDATA[Приложения это модули, языковые переводы, инструменты, различные дизайны сайта - кирпичики из которых складывается твой уникальный сайт. После скачивания и установки проложения, оно появляется на этой страничке. Приложения дополняют и изменяют функциональность сайта.]]></string>
@@ -2208,7 +2208,7 @@
     <string name="_sys_tour_launcher_accounts_title"><![CDATA[Больше чем администратор]]></string>
     <string name="_sys_tour_launcher_accounts_txt"><![CDATA[Администраторы и модераторы могут управлять профилями и их содержимым, это не обязательно должно быть в Студии, куда имеет доступ только оператор сайта. Все что нужно, это назначить права для администраторов и модераторов в "Разрешениях". Чтобы назначить профилю права администратора или модератора, нужно перейти в профиль и нажать "Назначить членство".]]></string>    
 	<string name="_sys_tour_launcher_dashboard_title"><![CDATA[Основная информация под рукой]]></string>
-	<string name="_sys_tour_launcher_dashboard_txt"><![CDATA["Приборная панель" показывает основную информацию о сайте: версию Trident, использование места, инструменты хостинга и кэш. Различные проложения могут добавлять свои блоки на эту страничку.]]></string>
+	<string name="_sys_tour_launcher_dashboard_txt"><![CDATA["Приборная панель" показывает основную информацию о сайте: версию UNA, использование места, инструменты хостинга и кэш. Различные проложения могут добавлять свои блоки на эту страничку.]]></string>
 	<string name="_sys_tour_launcher_builder_page_title"><![CDATA[Перестрой свой сайт под себя]]></string>
 	<string name="_sys_tour_launcher_builder_page_txt"><![CDATA[Построитель страниц позволяет редактировать страницы перемещая, удаляя и добавляя секции на конкретной странице. Можно даже создавать новые страницы различного вида. Также можно контролировать доступ к странице, поисковую оптимизацию, кэш и дизайн страницы.]]></string>
     <string name="_sys_tour_launcher_builder_permissions_title"><![CDATA[Определи уровни доступа пользователей]]></string>
@@ -2224,7 +2224,7 @@
 	<string name="_sys_tour_launcher_favourites_title"><![CDATA[<i class="sys-icon star"></i> Выбери лучшие]]></string>
 	<string name="_sys_tour_launcher_favourites_txt"><![CDATA[В Студии может быть сотни приложений, выбери те, которыми пользуешся чаще всего. Их можно отфильтровать нажав на иконку звезды.]]></string>
 	<string name="_sys_tour_launcher_add_apps_title"><![CDATA[<i class="sys-icon plus"></i> А сейчас, добавь новые приложения!]]></string>
-	<string name="_sys_tour_launcher_add_apps_txt"><![CDATA[В Trident уже входят самые необходимые приложения. Выбери нужные, скачай и затем проинсталлируй приложения, чтобы добавить разные виды профайлов, модулей, системных утилит, языков и дизайнов. Проинсталлированные приложения можно активировать и деактивировать. Trident очень гибкий и имеет модульную архитектуру, тем самым позволяя создать сайт мечты выбрав нужную функциональность, настройки и структуру базы данных. Но даже не меняя ничего вы получите прекрасно фунционирующий сайт!]]></string>
+	<string name="_sys_tour_launcher_add_apps_txt"><![CDATA[В UNA уже входят самые необходимые приложения. Выбери нужные, скачай и затем проинсталлируй приложения, чтобы добавить разные виды профайлов, модулей, системных утилит, языков и дизайнов. Проинсталлированные приложения можно активировать и деактивировать. UNA очень гибкий и имеет модульную архитектуру, тем самым позволяя создать сайт мечты выбрав нужную функциональность, настройки и структуру базы данных. Но даже не меняя ничего вы получите прекрасно фунционирующий сайт!]]></string>
 
 	<string name="_sys_tour_homepage_welcome_title"><![CDATA[Это главная страница сайта]]></string>
 	<string name="_sys_tour_homepage_welcome_txt"><![CDATA[В самом начале, тут не много информации, но после инсталляции нескольких модулей, добавлении дополнительных секций на страницу из Студии и добавлении содержимого - сайт оживёт!]]></string>
