@@ -347,6 +347,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			'file_id' => $iFileId
 		));
 
+		if(empty($aItem) || !is_array($aItem))
+			return $aItem;
+
 		return $this->downloadFileInit($aItem, array('module_name' => $aItem['module_name']));
     }
 
