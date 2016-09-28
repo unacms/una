@@ -35,7 +35,7 @@ class BxMarketDb extends BxBaseModTextDb
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 		$aOrderWay = array('up' => 'ASC', 'down' => 'DESC');
 
-    	$sFieldsClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = '';
+    	$sFieldsClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = '';
 
     	//--- Add file info.
     	$sFieldsClause .= " `te`.`" . $CNF['FIELD_PACKAGE'] . "` AS `file_id`, `tf`.`file_name` AS `file_name`, `tfe`.`version` AS `file_version`, ";
@@ -44,6 +44,9 @@ class BxMarketDb extends BxBaseModTextDb
     	//--- Add license checking for Public listings if Client is specified.
     	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0)
     		$sFieldsClause .= $this->prepareAsString(" (SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` WHERE `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1) AS `purchased_on`, ", (int)$aParams['client'], $aParams['key']);
+
+    	if(isset($aParams['start']) && !empty($aParams['per_page']))
+    		$sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
 
 		switch($aParams['type']) {
 			case 'id':
@@ -147,11 +150,12 @@ class BxMarketDb extends BxBaseModTextDb
 
 		$sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
 		$sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
+		$sLimitClause = $sLimitClause ? "LIMIT " . $sLimitClause : "";
 
 		$aMethod['params'][0] = "SELECT
         		" . $sFieldsClause . "`te`.*
             FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
