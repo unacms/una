@@ -175,13 +175,13 @@ class BxDolInstallSiteConfig
                 'name' => _t('_sys_inst_conf_field_oauth_key'),
                 'ex' => '123abc4d',
                 'desc' => _t('_sys_inst_conf_desc_oauth_key_secret'),
-                'check' => array('checkLengthExactOrEmpty', 8),
+                'check' => array('checkLengthExactOrEmpty', 10),
             ),
             'oauth_secret' => array(
                 'name' => _t('_sys_inst_conf_field_oauth_secret'),
                 'ex' => '45de12368a9b367abc23512a',
                 'desc' => _t('_sys_inst_conf_desc_oauth_key_secret'),
-                'check' => array('checkLengthExactOrEmpty', 24),
+                'check' => array('checkLengthExactOrEmpty', 32),
             ),
 
             'section_link_to_market_close' => array(
