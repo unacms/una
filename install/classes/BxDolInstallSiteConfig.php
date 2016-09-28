@@ -363,6 +363,8 @@ EOF;
 
         @chmod(BX_INSTALL_PATH_HEADER, 0666);
 
+        if (function_exists('opcache_invalidate')) opcache_invalidate(BX_INSTALL_PATH_HEADER);
+        
         return array();
     }
 
@@ -581,8 +583,8 @@ EOF;
     {
         if (isset($aData[$sKey]))
             return bx_process_pass($aData[$sKey]);
-        elseif (false !== getenv('TRIDENT_' . strtoupper($sKey)))
-            return bx_process_pass(getenv('TRIDENT_' . strtoupper($sKey)));
+        elseif (false !== getenv('UNA_' . strtoupper($sKey)))
+            return bx_process_pass(getenv('UNA_' . strtoupper($sKey)));
         elseif (!empty($a['def_exp'])) {
             $s = $this->{$a['def_exp'][0]}($a['def_exp'][1]);
             if ($s) {
@@ -619,7 +621,7 @@ EOF;
 
     protected function proto()
     {
-        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) || getenv('TRIDENT_HTTPS') ? 'https://' : 'http://';
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) || getenv('UNA_HTTPS') ? 'https://' : 'http://';
     }
 }
 

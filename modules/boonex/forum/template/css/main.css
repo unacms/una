@@ -1,0 +1,80 @@
+@import url(../../../../base/text/template/css/main.css);
+
+/*-- Participants --*/
+.bx-forum-participants {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.bx-popup-content .bx-forum-participants {
+    margin-right: 0px;
+}
+
+.bx-forum-participant {
+    display: inline;
+    display: inline-block;
+}
+
+.bx-forum-participant-author {
+    display: inline;
+    display: inline-block;
+}
+
+/*-- Replies --*/
+.cmt.bx-def-box .cmts.cmts-margin {
+	margin-top: 0px;
+} 
+
+/*-- Preview --*/
+.bx-forum-preview {
+    position:relative;
+}
+
+.bx-forum-title {    
+    padding-right:2em;
+    white-space:nowrap;    
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+/*-- Grid --*/
+.bx-forum-grid-field-replies .bx-def-unit-alert-middle {
+    position:static;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.bx-forum-grid-field-replies > span {
+    vertical-align:middle;
+}
+
+.bx-forum-grid-field-replies {
+    white-space:nowrap;
+}
+
+.bx-forum-grid-field-label {
+    display:inline-block;
+}
+
+.bx-forum-preview .bx-forum-grid-field-label {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.bx-forum-preview .bx-def-unit-info {
+    line-height:1.15em;
+}
+
+.bx-forum-grid-preview div {
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    line-height:1.4em;
+}
+
+/*--- Snippet ---*/
+.bx-base-text-unit .bx-forum-grid-field-replies {
+	display: inline-block;
+	vertical-align: middle;
+}

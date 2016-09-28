@@ -6,7 +6,9 @@
 	<string name="_bx_orgs_option_autoapproval"><![CDATA[Автоматически активировать все организации после создания]]></string>
 	<string name="_bx_orgs_option_default_acl_level"><![CDATA[Уровень, назначаемый созданному профилю организации по умолчанию]]></string>
 	<string name="_bx_orgs_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
-	<string name="_bx_orgs_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
+	<string name="_bx_orgs_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
+    <string name="_bx_orgs_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
+    <string name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
 
 	<string name="_bx_orgs_form_profile"><![CDATA[Организации]]></string>
 	<string name="_bx_orgs_form_profile_display_add"><![CDATA[Добавление организации]]></string>
@@ -57,6 +59,7 @@
 	<string name="_bx_orgs_page_title_browse_recent"><![CDATA[Последние Добавленные Организации]]></string>
 	<string name="_bx_orgs_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
+	<string name="_bx_orgs_page_title_browse_by_acl"><![CDATA[Организации уровня {0}]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_info"><![CDATA[Инфо профиля]]></string>

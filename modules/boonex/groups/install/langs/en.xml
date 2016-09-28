@@ -4,6 +4,7 @@
 	<string name="_bx_groups"><![CDATA[Groups]]></string>
 
 	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
+	<string name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_groups_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
 
 	<string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
@@ -269,8 +270,4 @@
 <bx_include_auto:_email_header.html />
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} group</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
-
-    <string name="_bx_ntfs_alert_action_fan_added"><![CDATA[member joined]]></string>
-    <string name="_bx_ntfs_alert_action_join_request"><![CDATA[join request]]></string>
-    <string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[post to timeline]]></string>
 </resources>

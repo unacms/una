@@ -107,9 +107,9 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 
 
 -- GRIDS
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_sites_browse', 'Sql', 'SELECT * FROM `bx_sites_accounts` WHERE 1 ', 'bx_sites_accounts', 'id', '', '', '', 100, NULL, 'start', '', 'domain,title,status', '', 'auto', 'domain,title,created,status', '', 'BxSitesGridBrowse', 'modules/boonex/sites/classes/BxSitesGridBrowse.php'),
-('bx_sites_overview', 'Array', '', '', 'id', '', '', '', 100, NULL, '', '', 'transaction', '', 'auto', '', '', 'BxSitesGridOverview', 'modules/boonex/sites/classes/BxSitesGridOverview.php');
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_sites_browse', 'Sql', 'SELECT * FROM `bx_sites_accounts` WHERE 1 ', 'bx_sites_accounts', 'id', '', '', '', 100, NULL, 'start', '', 'domain,title,status', '', 'auto', 'domain,title,created,status', '', 2147483647, 'BxSitesGridBrowse', 'modules/boonex/sites/classes/BxSitesGridBrowse.php'),
+('bx_sites_overview', 'Array', '', '', 'id', '', '', '', 100, NULL, '', '', 'transaction', '', 'auto', '', '', 2147483647, 'BxSitesGridOverview', 'modules/boonex/sites/classes/BxSitesGridOverview.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_sites_browse', 'domain', '_bx_sites_grid_browse_lbl_domain', '50%', 0, '64', '', 1),

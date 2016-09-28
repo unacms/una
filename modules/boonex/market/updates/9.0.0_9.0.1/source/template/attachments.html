@@ -1,0 +1,39 @@
+<div class="bx-base-text-attachments bx-market-attachments bx-clearfix">
+    <bx_repeat:attachments>
+        <div class="bx-base-text-attachment bx-market-attachment bx-def-box bx-def-color-bg-box bx-def-gal-img-size" style="float:left;">
+        	<bx_if:main>
+        		<div class="bx-market-a-main bx-def-font-h2">
+        			<i class="sys-icon check col-green3" title="<bx_text_attribute:_bx_market_txt_most_current_version />"></i>
+        		</div>
+        	</bx_if:main>
+            <bx_if:image>
+                <a target="_blank" href="javascript:void(0);" title="__attr_file_name__" onclick="$('#__popup_id__').dolPopupImage('__url_original__', $(this).parent())">
+                    <img class="bx-def-gal-img-size" src="__url_preview__" />
+                </a>
+                __popup__
+            </bx_if:image>
+            <bx_if:video>
+                __video__
+            </bx_if:video>
+            <bx_if:not_image>
+            	<div class="bx-def-padding-sec">
+	                <a target="_blank" href="__url_original__" title="__attr_file_name__">__file_name__</a>
+	                <div class="bx-def-font-grayed"><bx_text:_bx_market_form_entry_input_files_type /> __file_type__</div>
+	                <bx_if:show_version>
+	                	<div class="bx-def-font-grayed"><bx_text:_bx_market_form_entry_input_files_version /> __file_version__</div>
+	                </bx_if:show_version>
+	                <bx_if:show_update>
+	                	<div class="bx-def-font-grayed">__file_version_from_to__</div>
+	                </bx_if:show_update>
+	                
+	                
+                </div>
+            </bx_if:not_image>
+        </div>
+    </bx_repeat:attachments>
+    <script>
+        $(document).ready(function() {
+            bx_center_content('.bx-base-text-attachments', '.bx-base-text-attachment', true);
+        });
+    </script>
+</div>
