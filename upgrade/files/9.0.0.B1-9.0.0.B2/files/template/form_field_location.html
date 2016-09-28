@@ -1,0 +1,149 @@
+
+<div class="bx-form-input-location-cont bx-clearfix">
+    __input__
+    <bx_if:auto_input>
+        <div id="__id_status__" class="bx-def-margin-left">__location_string__</div>
+    </bx_if:auto_input>
+</div>
+
+<input type="hidden" name="__name___lat" value="__lat__" />
+<input type="hidden" name="__name___lng" value="__lng__" />
+<input type="hidden" name="__name___country" value="__country__" />
+<input type="hidden" name="__name___state" value="__state__" />
+<input type="hidden" name="__name___city" value="__city__" />
+<input type="hidden" name="__name___zip" value="__zip__" />
+<input type="hidden" name="__name___street" value="__street__" />
+<input type="hidden" name="__name___street_number" value="__street_number__" />
+
+<script>
+
+    var oBxLocationHashMap = {
+        '__name___lat': '',
+        '__name___lng': '',
+        '__name___city': 'locality',
+        '__name___state': 'administrative_area_level_1',
+        '__name___country': 'country',
+        '__name___zip': 'postal_code',
+        '__name___street': 'route',
+        '__name___street_number': 'street_number'
+    };
+
+    var bx_location_reset = function () {
+        for (sKey in oBxLocationHashMap)
+            $('[name="' + sKey + '"]').val('');
+    };
+
+    var bx_location_process_address = function (o) {
+        var i, sKey, sCountry, sCity;
+        for (i in o) {
+            for (sKey in oBxLocationHashMap) {
+                if (o[i].types.indexOf(oBxLocationHashMap[sKey]) > -1) {
+                    var sIndex = 'route' == oBxLocationHashMap[sKey] || 'locality' == oBxLocationHashMap[sKey] ? 'long_name' : 'short_name';
+                    $('[name="' + sKey + '"]').val(o[i][sIndex]);
+                }
+                
+                if (o[i].types.indexOf('locality') > -1)
+                    sCity = o[i].short_name;
+                else if (o[i].types.indexOf('country') > -1)
+                    sCountry = o[i].long_name;
+            }
+        }
+        if ('undefined' != typeof(sCity) && sCity.length)
+            $('#__id_status__').html(sCity + ", " + sCountry);
+        else
+            $('#__id_status__').html(sCountry);
+    };
+
+    var bx_location_geolocate = function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                glBxAutocomplete__name__.setBounds(circle.getBounds());
+            });
+        }
+    }
+
+    $('input[name=__name__][type=checkbox]').on('change', function () {
+
+        var callbackOnLocationReset = function (error) {
+            var sKey;
+            for (sKey in oBxLocationHashMap) 
+                $('[name="' + sKey + '"]').val('');
+            $('#__id_status__').html("<bx_text_js:_sys_location_undefined />");
+        }
+
+        var callbackOnLocationSucess = function (position) {
+            bx_location_reset ();
+
+            $('[name="__name___lat"]').val(position.coords.latitude);
+            $('[name="__name___lng"]').val(position.coords.longitude);
+
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({'latLng': latlng}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    bx_location_process_address(results[0]['address_components']);
+                } 
+                else {
+                    $('#__id_status__').html(status);
+                }
+            });
+
+        }
+
+        if ($(this).is(':checked')) {
+            $('#__id_status__').html('<bx_text_js:_sys_location_determining />');
+            if (navigator.geolocation)
+                navigator.geolocation.getCurrentPosition(callbackOnLocationSucess, callbackOnLocationReset);
+            else
+                $('#__id_status__').html('<bx_text_js:_sys_location_geolocation_not_supported_by_browser />');
+        } else {
+            callbackOnLocationReset();
+        }
+    });
+
+
+    $(document).ready(function () {
+
+        var callbackFillInAddress = function () {
+            // Get the place details from the autocomplete object.
+            var place = glBxAutocomplete__name__.getPlace();
+
+            bx_location_reset ();
+
+            $('[name="__name___lat"]').val(place.geometry.location.lat);
+            $('[name="__name___lng"]').val(place.geometry.location.lng);
+            
+            bx_location_process_address(place.address_components);
+        }
+        
+        $('input[name=__name__][type=text]').on('focus', bx_location_geolocate);
+
+        $('input[name=__name__][type=text]').on('blur', function () {
+            if (!$(this).val().length)
+                bx_location_reset ();
+        });
+
+        if ($('input[name=__name__][type=text]').size()) {
+
+            // Create the autocomplete object, restricting the search to geographical location types.
+            glBxAutocomplete__name__ = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */(document.getElementById('__id_input__')),
+                {types: ['geocode']});
+
+            // When the user selects an address from the dropdown, populate the address fields in the form.
+            glBxAutocomplete__name__.addListener('place_changed', callbackFillInAddress);
+        }
+
+    });
+
+</script>
+

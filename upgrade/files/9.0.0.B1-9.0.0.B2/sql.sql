@@ -174,5 +174,5 @@ INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iId
 -- last step is to update current version
 
 
-UPDATE `sys_modules` SET `version` = '9.0.0.B2' WHERE `version` = '9.0.0.B1' AND `name` = 'system';
+UPDATE `sys_modules` SET `version` = '9.0.0-B2' WHERE (`version` = '9.0.0.B1' OR `version` = '9.0.0-B1') AND `name` = 'system';
 

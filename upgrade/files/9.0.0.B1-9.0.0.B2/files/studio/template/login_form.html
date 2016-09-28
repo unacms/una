@@ -1,0 +1,23 @@
+<div class="bx-std-login-form bx-def-padding-sec">
+    <form class="bx-std-login-form" action="__action_url__" method="post" onsubmit="return validateLoginForm(this);">
+        <input type="hidden" name="role" value="__role__" />
+        <input type="hidden" name="csrf_token" value="__csrf_token__" />
+        <input type="hidden" name="relocate" value="__relocate_url__" />
+        <div class="bx-std-lf-input">
+            <input class="bx-def-font-inputs bx-form-input-text bx-def-color-ft-grayed-i" id="admin_email" type="text" name="ID" value="" placeholder="<bx_text_attribute:_adm_txt_login_email />" tabindex="1" />
+            <div class="bx-def-padding-sec-top">
+                <input class="form_input_checkbox" type="checkbox" name="rememberMe" id="login_box_form_input_rememberMe" tabindex="3"  /> <label for="login_box_form_input_rememberMe"><bx_text:_adm_txt_remember_me /></label>
+            </div>
+        </div>
+        <div class="bx-std-lf-input">
+            <input class="bx-def-font-inputs bx-form-input-text bx-def-color-ft-grayed-i" id="admin_password" type="password" name="Password" value="" placeholder="<bx_text_attribute:_adm_txt_login_password />" tabindex="2" />
+            <div class="bx-def-padding-sec-top">
+                <a href="__forgot_password_url__"><bx_text:_adm_txt_forgot_password /></a>
+            </div>
+        </div>
+        <div class="bx-std-lf-submit">
+            <input class="bx-btn bx-btn-primary" id="admin_login_form_submit" type="submit" value="<bx_text:_adm_btn_login_submit />" tabindex="4"  />            
+        </div>
+        <div class="bx-std-cb"></div>
+    </form>
+</div>
