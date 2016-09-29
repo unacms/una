@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_tricon',
     'title' => 'Trident connect',
     'note' => 'Join the site using another Trident site account credentials.',
-    'version' => '9.0.1.DEV',
+    'version' => '9.0.2.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
