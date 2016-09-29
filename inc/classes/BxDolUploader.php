@@ -26,6 +26,7 @@
  *     'uploaders' => array ('sys_simple', 'sys_html5'), // the set of uploaders to use to upload files
  *     'upload_buttons_titles' => array('Simple' => 'Upload one by one', 'HTML5' => 'Upload several files in bulk'); // change default button titles, array with button names, or string to assign to all bnuttons
  *     'multiple' => true, // allow to upload multiple files per one upload
+ *     'storage_private' => 0, // private or public storage (by default - private), if file is provate generated link will expire, for public storage the link is always persistent
  *     'content_id' => 4321, // content id to associate ghost files with
  *     'ghost_template' => $mixedGhostTemplate, // template for nested form
  *     'name' => 'attachment', // name of file form field, resulted file id is assigned to this field name
