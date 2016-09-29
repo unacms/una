@@ -35,6 +35,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'TABLE_FILES' => $aModule['db_prefix'] . 'files',
         	'TABLE_DOWNLOADS' => $aModule['db_prefix'] . 'downloads_track',
         	'TABLE_LICENSES' => $aModule['db_prefix'] . 'licenses',
+        	'TABLE_LICENSES_DELETED' => $aModule['db_prefix'] . 'licenses_deleted',
 
             // database fields
             'FIELD_ID' => 'id',

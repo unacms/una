@@ -333,15 +333,38 @@ class BxMarketModule extends BxBaseModTextModule
 			$sDuration = $aProduct[$this->_oConfig->CNF['FIELD_DURATION_RECURRING']];
 		}
 
-        if(!$this->_oDb->registerLicense($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType, $sDuration))
+    	$sAction = $this->_oDb->hasLicenseByOrder($iClientId, $iItemId, $sOrder) ? 'prolong' : 'register';
+        if(!$this->_oDb->{$sAction . 'License'}($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType, $sDuration))
             return array();
+
+		bx_alert($this->getName(), 'license_' . $sAction, 0, false, array(
+			'product_id' => $iItemId,
+			'profile_id' => $iClientId,
+			'order' => $sOrder,
+			'license' => $sLicense,
+			'type' => $sType,
+			'count' => $iItemCount,
+			'duration' => $sDuration
+		));
 
         return $aItem;
     }
 
     protected function _serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
     {
-    	return $this->_oDb->unregisterLicense($iClientId, $iItemId, $sOrder, $sLicense, $sType);
+    	if(!$this->_oDb->unregisterLicense($iClientId, $iItemId, $sOrder, $sLicense, $sType))
+    		return false;
+
+    	bx_alert($this->getName(), 'license_unregister', 0, false, array(
+			'product_id' => $iItemId,
+			'profile_id' => $iClientId,
+			'order' => $sOrder,
+			'license' => $sLicense,
+			'type' => $sType,
+			'count' => $iItemCount
+		));
+
+    	return true;
     }
 
     public function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)

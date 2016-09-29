@@ -438,3 +438,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_market_files', 'file_downloaded', @iHandler),
 ('bx_market_photos', 'file_deleted', @iHandler),
 ('profile', 'delete', @iHandler);
+
+
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_market_pruning', '0 0 * * *', 'BxMarketCronPruning', 'modules/boonex/market/classes/BxMarketCronPruning.php', '');
