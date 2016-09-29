@@ -599,6 +599,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'type' => 'files',
                     'name' => $aItem['name'],
 					'storage_object' => $this->sStorage,
+                	'storage_private' => 0, 
  					'images_transcoder' => $this->sTranscoder,
  					'uploaders' => array('sys_settings_html5'),
                 	'upload_buttons_titles' => array('HTML5' => _t('_sys_uploader_button_name_single')),

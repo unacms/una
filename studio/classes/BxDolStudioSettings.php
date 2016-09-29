@@ -68,7 +68,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
 		$this->aMix = array();
 
 		$this->sStorage = 'sys_images_custom';
-		$this->sTranscoder = 'sys_images_custom';
+		$this->sTranscoder = 'sys_custom_images';
 
 		$this->sErrorMessage = '';
 
