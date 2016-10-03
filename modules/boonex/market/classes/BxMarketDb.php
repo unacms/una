@@ -123,7 +123,7 @@ class BxMarketDb extends BxBaseModTextDb
 				if(isset($aParams['paid']) && (int)$aParams['paid'] == 1)
 					$sWhereClause .= " AND `te`.`" . $CNF['FIELD_PRICE_SINGLE'] . "`<>'0' AND `te`.`" . $CNF['FIELD_PRICE_RECURRING'] . "`<>'0'";
 
-				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+				$sOrderClause = "`te`.`" . (isset($aParams['order_by']) ? $aParams['order_by'] : "added") . "` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 
 			case 'keyword':
@@ -301,7 +301,7 @@ class BxMarketDb extends BxBaseModTextDb
                 );
 
                 $sSelectClause = "`tl`.`id`";
-                $sWhereClause = " `tl`.`profile_id`=:profile_id AND `tl`.`product_id`=:product_id";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`product_id`=:product_id";
 
                 if(!empty($aParams['domain'])) {
                 	$aMethod['params'][1]['domain'] = $aParams['domain'];
@@ -431,6 +431,7 @@ class BxMarketDb extends BxBaseModTextDb
     		'type' => BX_MARKET_LICENSE_TYPE_RECURRING
     	);
 
+    	//--- Move to deleted licenses table with 'expire' as reason.  
 		$sQuery = "INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, 'expire' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
 		$this->query($sQuery);
 
