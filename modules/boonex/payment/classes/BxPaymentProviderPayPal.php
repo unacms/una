@@ -85,7 +85,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
     public function finalizeCheckout(&$aData)
     {
-        if($aData['txn_type'] != 'web_accept' && !isset($aData['tx']))
+        if((!isset($aData['txn_type']) || $aData['txn_type'] != 'web_accept') && !isset($aData['tx']))
         	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'pp_err_no_data_given');
 
 		return $this->_registerCheckout($aData);
@@ -238,6 +238,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
         return array('code' => 0, 'content' => explode("\n", $sResponseContent));
     }
+
     protected function _getReceivedAmount($sCurrencyCode, &$aResultData)
     {
         $fAmount = 0.00;

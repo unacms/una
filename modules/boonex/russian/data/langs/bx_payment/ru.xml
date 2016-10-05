@@ -278,7 +278,7 @@
 	<string name="_bx_payment_cbee_ssl_dsc"><![CDATA[Активировать SSL соединение для связи с Chargebee. Внимание. Нижеприведенные ссылки будут обновлены после сохранения.]]></string>
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
 	<string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
-	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Подписка была успешно создана.]]></string>
+	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Chargebee]]></string>
 
 	<!-- Recurly payment provider -->
@@ -299,7 +299,7 @@
 	<string name="_bx_payment_rcrl_api_key_public_dsc"><![CDATA[Ваш Публичный API ключ доступа, предоставленный Recurly.]]></string>
 	<string name="_bx_payment_rcrl_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
 	<string name="_bx_payment_rcrl_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
-	<string name="_bx_payment_rcrl_msg_subscribed"><![CDATA[Подписка была успешно создана.]]></string>
+	<string name="_bx_payment_rcrl_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Recurly]]></string>
 
 	<string name="_bx_payment_form_rcrl_card"><![CDATA[Recurly: форма ввода карты]]></string>
@@ -357,7 +357,7 @@
 	<string name="_bx_payment_strp_ssl_dsc"><![CDATA[Активировать SSL соединение для связи с Stripe. Внимание. Нижеприведенная Webhooks ссылка будет обновлена после сохранения.]]></string>
 	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
 	<string name="_bx_payment_strp_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
-	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Подписка успешно создана.]]></string>
+	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Заплатить используя {0}]]></string>
 	<string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>

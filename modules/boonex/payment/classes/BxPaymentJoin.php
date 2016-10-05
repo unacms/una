@@ -55,9 +55,7 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
 		$bOverride = false;
 		$sOverrideError = '';
 
-		bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts('system', 'join_after_payment', 0, 0, array('override' => &$bOverride, 'override_error' => &$sOverrideError));
-        $oAlert->alert();
+		bx_alert('system', 'join_after_payment', 0, 0, array('override' => &$bOverride, 'override_error' => &$sOverrideError));
 
         if($bOverride)
         	return;
