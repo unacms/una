@@ -37,7 +37,7 @@ function fviuDelete(sName, oLink) {
  * Functions for "Form View Translatable" fields. 
  */
 function fvtTogglePopup(sName, oLink) {
-	var oPopup = $('#bx-form-field-translator-popup-' + sName);
+	var oPopup = $(oLink).parents('.bx-form-input-translator:first').find('#bx-form-field-translator-popup-' + sName);
     if(oPopup.filter(':visible').length > 0) {
         oPopup.dolPopupHide();
         return;
