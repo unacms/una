@@ -1,6 +1,6 @@
 #[UNA](https://una.io)
 
-UNA (United Networking Applications) is CMS - Community Management System. It is not just one thing or one application. UNA is a combination of various web applications, databases, server apps and supporting ecosystem, which together enable you to create a community website. 
+UNA (United Networking Applications) is a **C**MS - **Community** Management System. It is not just one thing or one application. UNA is a combination of various web applications, databases, server apps and supporting ecosystem, which together enable you to create a community website. 
 
 An online community powered by UNA can work as a social network, business collaboration hub or any kind of multi-user system with various memberships, roles, content types and permissions defining the rules of the community operation.  
 
