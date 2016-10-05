@@ -433,10 +433,10 @@ class BxMarketDb extends BxBaseModTextDb
 
     	//--- Move to deleted licenses table with 'expire' as reason.  
 		$sQuery = "INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, 'expire' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
-		$this->query($sQuery);
+		$this->query($sQuery, $aWhereBindings);
 
-		$sSql = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
-		return $this->query($sSql) !== false;	    
+		$sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+		return $this->query($sQuery, $aWhereBindings) !== false;	    
 	}
 
 	protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
