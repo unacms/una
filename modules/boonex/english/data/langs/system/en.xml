@@ -1593,10 +1593,9 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>Please refer to content page for more details <a href="{report_url}">here</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Hello!</p>
-<p>Please, click email confirmation link:</p>
-<p><a href="{conf_link}">{conf_link}</a></p>
-<p>Thank you.</p>
+<p>Hello, {name}.</p>
+<p>Please verify your email address by clicking on the link below:</p>
+<p><a href="{conf_link}">Verify email address</a></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Module: <b>{Module}</b></p>

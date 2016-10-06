@@ -1591,10 +1591,9 @@
 <p>Для получения дополнительной информации, пожалуйста, перейдите на <a href="{report_url}">страницу контента</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Привет!</p>
-<p>Пожалуйста, перейдите по ссылке подтверждения имейла:</p>
-<p><a href="{conf_link}">{conf_link}</a></p>
-<p>Спасибо.</p>
+<p>Привет, {name}.</p>
+<p>Пожалуйста, подтвердите ваш имейл, перейдя по ссылке:</p>
+<p><a href="{conf_link}">Подтвердить имейл</a></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Модуль: <b>{Module}</b></p>
