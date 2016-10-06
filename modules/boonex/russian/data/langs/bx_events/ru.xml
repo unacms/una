@@ -232,7 +232,9 @@
     <string name="_bx_events_txt_private_group"><![CDATA[Приватная группа]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
 
+	<string name="_bx_events_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[У <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> события новый участник - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_events_alert_action_join_request"><![CDATA[запрос на присоединение к событию]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[У <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> события новый запрос на присоединение от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_events_txt_ntfs_timeline_post_common"><![CDATA[В <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> событии новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
 

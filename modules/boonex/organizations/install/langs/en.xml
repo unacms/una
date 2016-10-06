@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-
 	<string name="_bx_orgs"><![CDATA[Organizations]]></string>
+	<string name="_bx_organizations"><![CDATA[Organizations]]></string>
 
 	<string name="_bx_orgs_option_autoapproval"><![CDATA[Activate all organizations after creation automatically]]></string>
 	<string name="_bx_orgs_option_default_acl_level"><![CDATA[Default level to assign after organizations's profile creation]]></string>

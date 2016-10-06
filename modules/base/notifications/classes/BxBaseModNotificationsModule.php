@@ -59,15 +59,22 @@ class BxBaseModNotificationsModule extends BxDolModule
             if($aHandler['type'] != BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT)
                 continue;
 
-			$aModule = array();
-			if(!empty($aHandler['module_name']))
-            	$aModule = $this->_oDb->getModuleByName($aHandler['module_name']);
+			$_sUnit = '_' . $aHandler['alert_unit'];
+			$sUnit = _t($_sUnit);
+			if(strcmp($_sUnit, $sUnit) == 0)
+				$sUnit = _t($sLangPrefix . '_alert_module_' . $aHandler['alert_unit']);
 
-            if(empty($aModule))
-                $aModule['title'] = _t($sLangPrefix . '_alert_module_' . $aHandler['alert_unit']);
+			$sAction = '';
+            if(!empty($aHandler['alert_action'])) {
+            	$_sAction = '_' . $aHandler['alert_unit'] . '_alert_action_' . $aHandler['alert_action'];
+            	$sAction = _t($_sAction);
+            	if(strcmp($_sAction, $sAction) == 0)
+					$sAction = _t($sLangPrefix . '_alert_action_' . $aHandler['alert_action']);
 
-			$sAction = !empty($aHandler['alert_action']) ? ' (' . _t($sLangPrefix . '_alert_action_' . $aHandler['alert_action']) . ')' : '';
-            $aResults[$aHandler['id']] = $aModule['title'] . $sAction;
+            	$sAction = ' (' . $sAction . ')';
+            }
+
+            $aResults[$aHandler['id']] = $sUnit . $sAction;
         }
 
         asort($aResults);

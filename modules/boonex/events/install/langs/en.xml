@@ -234,7 +234,9 @@
     <string name="_bx_events_txt_private_group"><![CDATA[Private event]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
 
+	<string name="_bx_events_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> event has got new member - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_events_alert_action_join_request"><![CDATA[join request]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> event has new request from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_events_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> event timeline  from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
 
