@@ -179,7 +179,6 @@ div.bx-base-text-breadcrumb i {
 }
 
 /* view page */
-
 .bx-base-text-entity-content p:first-child,
 .bx-base-text-entity-content h2:first-child,
 .bx-base-text-entity-content h1:first-child {
@@ -190,14 +189,6 @@ div.bx-base-text-breadcrumb i {
 .bx-base-text-entity-content h2:last-child,
 .bx-base-text-entity-content h1:last-child {
     margin-bottom:0;
-}
-
-.bx-base-text-entity-share .bx-vote-wrapper,
-.bx-base-text-entity-share .bx-report,
-.bx-base-text-entity-share .bx-tl-share,
-.bx-base-text-entity-share .bx-social-sharing {
-	position: relative;
-	float: left;
 }
 
 .bx-base-text-attachments .bx-base-text-attachment video,

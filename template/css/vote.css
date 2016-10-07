@@ -39,7 +39,8 @@ div.bx-vote div.bx-vote-counter-holder {
 	line-height: 1.6rem;
 }
 
-.bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled {
+.bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled,
+.bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled .sys-icon {
 	color: #ddd;
 }
 
