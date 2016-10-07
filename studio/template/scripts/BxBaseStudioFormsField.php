@@ -1465,4 +1465,27 @@ class BxBaseStudioFormsFieldCaptcha extends BxBaseStudioFormsFieldText
     }
 }
 
+class BxBaseStudioFormsFieldLocation extends BxBaseStudioFormsFieldText
+{
+    protected $sType = 'location';
+    protected $aCheckFunctions = array();
+    protected $sDbPass = '';
+
+    function __construct($aParams = array(), $aField = array())
+    {
+        parent::__construct($aParams, $aField);
+
+        $this->aParams['table_alter'] = false;
+
+        unset(
+            $this->aForm['inputs']['required'],
+            $this->aForm['inputs']['checker_func'],
+            $this->aForm['inputs']['checker_params'],
+            $this->aForm['inputs']['checker_params_length_min'],
+            $this->aForm['inputs']['checker_params_length_max'],
+            $this->aForm['inputs']['checker_params_preg'],
+            $this->aForm['inputs']['checker_error']
+        );
+    }
+}
 /** @} */

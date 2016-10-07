@@ -774,6 +774,7 @@
 	<string name="_adm_form_txt_field_type_hidden"><![CDATA[hidden]]></string>
 	<string name="_adm_form_txt_field_type_image"><![CDATA[image]]></string>
 	<string name="_adm_form_txt_field_type_input_set"><![CDATA[input set]]></string>
+	<string name="_adm_form_txt_field_type_location"><![CDATA[location]]></string>
 	<string name="_adm_form_txt_field_type_number"><![CDATA[number]]></string>
 	<string name="_adm_form_txt_field_type_password"><![CDATA[password]]></string>
 	<string name="_adm_form_txt_field_type_radio_set"><![CDATA[radio set]]></string>

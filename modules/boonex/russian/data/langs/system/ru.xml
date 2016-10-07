@@ -772,6 +772,7 @@
 	<string name="_adm_form_txt_field_type_hidden"><![CDATA[спрятано]]></string>
 	<string name="_adm_form_txt_field_type_image"><![CDATA[картинка]]></string>
 	<string name="_adm_form_txt_field_type_input_set"><![CDATA[набор полей ввода]]></string>
+	<string name="_adm_form_txt_field_type_location"><![CDATA[местонахождение]]></string>
 	<string name="_adm_form_txt_field_type_number"><![CDATA[число]]></string>
 	<string name="_adm_form_txt_field_type_password"><![CDATA[пароль]]></string>
 	<string name="_adm_form_txt_field_type_radio_set"><![CDATA[набор переключателей]]></string>

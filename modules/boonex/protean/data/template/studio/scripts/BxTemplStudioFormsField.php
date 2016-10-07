@@ -117,4 +117,8 @@ class BxTemplStudioFormsFieldCaptcha extends BxBaseStudioFormsFieldCaptcha
 {
 }
 
+class BxTemplStudioFormsFieldLocation extends BxBaseStudioFormsFieldLocation
+{
+}
+
 /** @} */
