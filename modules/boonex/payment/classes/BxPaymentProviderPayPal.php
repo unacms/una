@@ -25,6 +25,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = false;
+        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)
@@ -167,9 +168,9 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
                return $aResponse;
 
             array_walk($aResponse['content'], create_function('&$arg', "\$arg = trim(\$arg);"));
-            if(strcmp($aResponse['content'][1], "INVALID") == 0)
+            if(strcmp($aResponse['content'][0], "INVALID") == 0)
                 return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
-            else if(strcmp($aResponse['content'][1], "VERIFIED") != 0)
+            else if(strcmp($aResponse['content'][0], "VERIFIED") != 0)
                 return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
         }
          else if($iPrcType == PP_PRC_TYPE_PDT) {
@@ -179,9 +180,9 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
             if((int)$aResponse['code'] !== 0)
                return $aResponse;
 
-            if(strcmp($aResponse['content'][1], "FAIL") == 0)
+            if(strcmp($aResponse['content'][0], "FAIL") == 0)
                 return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
-            else if(strcmp($aResponse['content'][1], "SUCCESS") != 0)
+            else if(strcmp($aResponse['content'][0], "SUCCESS") != 0)
                 return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
 
             $aKeys = array();
@@ -213,42 +214,44 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
     protected function _readValidationData($sConnectionUrl, $sRequest)
     {
-        $sHeader = "POST /cgi-bin/webscr HTTP/1.1\r\n";
-        $sHeader .= "Host: " . $sConnectionUrl . "\r\n";
-        $sHeader .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $sHeader .= "Content-Length: " . strlen($sRequest) . "\r\n";
-        $sHeader .= "Connection: close\r\n\r\n";
+		$rConnect = curl_init('https://' . $sConnectionUrl . '/cgi-bin/webscr');
+		curl_setopt($rConnect, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		curl_setopt($rConnect, CURLOPT_POST, 1);
+		curl_setopt($rConnect, CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($rConnect, CURLOPT_POSTFIELDS, $sRequest);
+		curl_setopt($rConnect, CURLOPT_SSL_VERIFYPEER, 1);
+		curl_setopt($rConnect, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($rConnect, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($rConnect, CURLOPT_HTTPHEADER, array('Connection: Close'));
 
-        $iErrCode = 0;
-        $sErrMessage = "";
+		$sResponse = curl_exec($rConnect);
+    	if(curl_errno($rConnect) == 60) { // CURLE_SSL_CACERT
+            curl_setopt($rConnect, CURLOPT_CAINFO, BX_DIRECTORY_PATH_PLUGINS . 'curl/cacert.pem');
+            $sResponse = curl_exec($rConnect);
+        }
 
-        $rSocket = fsockopen("ssl://" . $sConnectionUrl, 443, $iErrCode, $sErrMessage, 60);
-		if(!$rSocket)
-            return array('code' => 6, 'message' => $this->_sLangsPrefix . 'err_cannot_validate');
+		if(!$sResponse) {
+			$this->log(curl_error($rConnect));
+			curl_close($rConnect);
 
-        fputs($rSocket, $sHeader);
-        fputs($rSocket, $sRequest);
+			return array('code' => 6, 'message' => $this->_sLangsPrefix . 'err_cannot_validate');
+		}
 
-        $sResponse = '';
-        while(!feof($rSocket))
-            $sResponse .= fread($rSocket, 1024);
-        fclose($rSocket);
-
-        list($sResponseHeader, $sResponseContent) = explode("\r\n\r\n", $sResponse);
-
-        return array('code' => 0, 'content' => explode("\n", $sResponseContent));
+		curl_close($rConnect);
+		return array('code' => 0, 'content' => explode("\n", $sResponse));
     }
 
     protected function _getReceivedAmount($sCurrencyCode, &$aResultData)
     {
         $fAmount = 0.00;
+        $fTax = isset($aResultData['tax']) ? (float)$aResultData['tax'] : 0.00;
 
         if($aResultData['mc_currency'] == $sCurrencyCode && isset($aResultData['payment_gross']) && !empty($aResultData['payment_gross']))
-            $fAmount = (float)$aResultData['payment_gross'];
+            $fAmount = (float)$aResultData['payment_gross'] - $fTax;
         else if($aResultData['mc_currency'] == $sCurrencyCode && isset($aResultData['mc_gross']) && !empty($aResultData['mc_gross']))
-            $fAmount = (float)$aResultData['mc_gross'];
+            $fAmount = (float)$aResultData['mc_gross'] - $fTax;
         else if($aResultData['settle_currency'] == $sCurrencyCode && isset($aResultData['settle_amount']) && !empty($aResultData['settle_amount']))
-            $fAmount = (float)$aResultData['settle_amount'];
+            $fAmount = (float)$aResultData['settle_amount'] - $fTax;
 
         return $fAmount;
     }
