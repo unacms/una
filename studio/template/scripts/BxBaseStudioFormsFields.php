@@ -37,10 +37,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         if(($mixedType = bx_get('type')) !== false)
             $sType = bx_process_input($mixedType);
 
-        $sClass = $this->sClass . $this->getClassName($sType);
-        $oClass = new $sClass(array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay));
-
-        if(!$oClass->canAdd()) {
+        $oClass = $this->_getFieldObject($sType, array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay));
+        if($oClass === false || !$oClass->canAdd()) {
             echoJson(array('msg' => _t('_adm_form_err_field_add_not_allowed')));
             exit;
         }
@@ -81,14 +79,13 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $sType = '';
         if(($mixedType = bx_get('type')) !== false)
             $aField['type'] = bx_process_input($mixedType);
-
-        $sClass = $this->sClass . $this->getClassName($aField['type']);
-        if(!class_exists($sClass)) {
+        
+        $oClass = $this->_getFieldObject($aField['type'], array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay), $aField);
+        if($oClass === false) {
             echoJson(array());
             exit;
         }
 
-        $oClass = new $sClass(array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay), $aField);
         $mixedResult = $oClass->getCode($sAction, $this->_sObject);
         if(is_string($mixedResult))
             echoJson(array('popup' => array('html' => $mixedResult, 'options' => array('closeOnOuterClick' => false))));
@@ -119,10 +116,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
             if((int)$aField['deletable'] != 1)
                 continue;
 
-            $sClass = $this->sClass . $this->getClassName($aField['type']);
-            $oClass = new $sClass(array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay));
-
-            if((int)$this->_delete($iId) <= 0 || !$this->oDb->deleteInputs(array('type' => 'by_id', 'value' => $aField['id'], 'object' => $aField['object'], 'name' => $aField['name'])))
+            $oClass = $this->_getFieldObject($aField['type'], array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay));
+            if($oClass === false || (int)$this->_delete($iId) <= 0 || !$this->oDb->deleteInputs(array('type' => 'by_id', 'value' => $aField['id'], 'object' => $aField['object'], 'name' => $aField['name'])))
                 continue;
 
             $oClass->alterRemove($aField['name']);
@@ -344,6 +339,18 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
+
+	protected function _getFieldObject ($sType, $aParams = array(), $aField = array())
+	{
+		$sClass = $this->sClass . $this->getClassName($sType);
+        if(!class_exists($sClass)) 
+        	return false;
+
+        $oClass = new $sClass($aParams, $aField);
+        $oClass->init();
+
+        return $oClass;
+	}
 
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
     {

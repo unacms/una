@@ -16,9 +16,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     function __construct($aParams = array(), $aField = array())
     {
         parent::__construct($aParams, $aField);
+    }
 
-        $sJsObject = $this->getJsObject();
-        $oTemplate = BxDolStudioTemplate::getInstance();
+	public function init()
+	{
+		parent::init();
+
+		$sJsObject = $this->getJsObject();
 
         bx_import('BxTemplStudioFormView');
 
@@ -61,8 +65,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         );
 
         $aTypes = array();
-        foreach($this->aTypes as $sType)
-            $aTypes[$sType] = _t($this->sTypeTitlePrefix . $sType);
+        foreach($this->aTypes as $sType => $aParams)
+        	if(isset($aParams['add']) && (int)$aParams['add'] == 1)
+            	$aTypes[$sType] = _t($this->sTypeTitlePrefix . $sType);
 
         asort($aTypes);
 
@@ -77,14 +82,14 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_vertical.html', 'menu_items' => $aMenu));
         $this->aForm['inputs']['type']['content'] = $oMenu->getCode();
-    }
+	}
 
-    function getJsObject()
+    public function getJsObject()
     {
         return BX_DOL_STUDIO_FORMS_FIELDS_JS_OBJECT;
     }
 
-    function getCode($sAction, $sObject)
+    public function getCode($sAction, $sObject)
     {
         $sFunction = 'getCode' . $this->getClassName($sAction);
         if(method_exists($this, $sFunction))
@@ -151,7 +156,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 				$this->alterChange($sInputNameOld, $sInputNameNew);
             return true;
         } else
-            return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-edit-' . $this->aField['type'] . '-popup', _t('_adm_form_txt_field_edit_popup', _t($this->aField['caption'])), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
+            return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-edit-' . $this->aField['type'] . '-popup', _t('_adm_form_txt_field_edit_popup', _t($this->aField['caption_system'])), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $sObject,
@@ -322,7 +327,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $aTypesList = $sRelatedTo != '' && isset($this->aTypesRelated[$sRelatedTo]) ? $this->aTypesRelated[$sRelatedTo]['types'] : $this->aTypes;
+        $aTypesList = $sRelatedTo != '' && isset($this->aTypesRelated[$sRelatedTo]) ? $this->aTypesRelated[$sRelatedTo]['types'] : array_keys($this->aTypes);
 
         $aTypes = array();
         foreach($aTypesList as $sType)
@@ -644,11 +649,11 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
 {
     protected $sType = 'block_header';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
-        $this->aForm = array(
+		$this->aForm = array(
             'form_attrs' => array(
                 'id' => '',
                 'action' => '',
@@ -766,16 +771,16 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                 )
             )
         );
-    }
+	}
 }
 
 class BxBaseStudioFormsFieldValue extends BxBaseStudioFormsFieldBlockHeader
 {
     protected $sType = 'value';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aForm['inputs']['caption']['info'] = _t('_adm_form_dsc_field_caption');
 
@@ -806,9 +811,9 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
     protected $aCheckFunctions = array('avail', 'length', 'preg', 'email');
     protected $sDbPass = 'Xss';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_alter'] = true;
         $this->aParams['table_field_type'] = 'varchar(255)';
@@ -866,11 +871,6 @@ class BxBaseStudioFormsFieldPassword extends BxBaseStudioFormsFieldText
 {
     protected $sType = 'password';
     protected $aCheckFunctions = array('avail', 'length', 'preg');
-
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
-    }
 }
 
 class BxBaseStudioFormsFieldTextarea extends BxBaseStudioFormsFieldText
@@ -878,9 +878,9 @@ class BxBaseStudioFormsFieldTextarea extends BxBaseStudioFormsFieldText
     protected $sType = 'textarea';
     protected $aCheckFunctions = array('avail', 'length', 'preg');
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_field_type'] = 'text';
 
@@ -916,9 +916,9 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
     protected $aCheckFunctions = array('date');
     protected $sDbPass = 'Date';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_field_type'] = 'int(11)';
 
@@ -933,9 +933,9 @@ class BxBaseStudioFormsFieldDatetime extends BxBaseStudioFormsFieldDatepicker
     protected $aCheckFunctions = array('date_time');
     protected $sDbPass = 'DateTime';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aForm['inputs']['value']['db']['pass'] = 'DateTime';
     }
@@ -946,9 +946,9 @@ class BxBaseStudioFormsFieldCheckbox extends BxBaseStudioFormsFieldText
     protected $sType = 'checkbox';
     protected $aCheckFunctions = array('avail', 'length', 'preg');
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aForm['inputs']['value']['type'] = 'hidden';
         $this->aForm['inputs']['value']['caption'] = _t('_adm_form_txt_field_value_checkbox');
@@ -975,9 +975,9 @@ class BxBaseStudioFormsFieldSwitcher extends BxBaseStudioFormsFieldCheckbox
 {
     protected $sType = 'switcher';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aForm['inputs']['checked']['caption'] = _t('_adm_form_txt_field_checked_switcher');
     }
@@ -989,9 +989,9 @@ class BxBaseStudioFormsFieldFile extends BxBaseStudioFormsFieldText
     protected $aCheckFunctions = array('avail', 'length', 'preg');
     protected $sDbPass = '';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         unset($this->aForm['inputs']['value']);
     }
@@ -1001,9 +1001,9 @@ class BxBaseStudioFormsFieldFiles extends BxBaseStudioFormsFieldFile
 {
     protected $sType = 'files';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $aFields = array(
         	'values' => array(
@@ -1078,9 +1078,9 @@ class BxBaseStudioFormsFieldNumber extends BxBaseStudioFormsFieldText
     protected $aCheckFunctions = array('avail', 'length', 'preg');
     protected $sDbPass = 'Int';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_field_type'] = 'int(11)';
 
@@ -1098,9 +1098,9 @@ class BxBaseStudioFormsFieldSlider extends BxBaseStudioFormsFieldNumber
     protected $sType = 'slider';
     protected $aCheckFunctions = array('avail', 'length');
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $aFields = array(
             'attrs' => array(
@@ -1155,9 +1155,9 @@ class BxBaseStudioFormsFieldDoublerange extends BxBaseStudioFormsFieldSlider
     protected $aCheckFunctions = array('avail', 'length');
     protected $sDbPass = 'Xss';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_field_type'] = 'varchar(255)';
 
@@ -1176,9 +1176,9 @@ class BxBaseStudioFormsFieldHidden extends BxBaseStudioFormsFieldText
     protected $aCheckFunctions = array('avail', 'length', 'preg', 'date', 'date_time', 'email');
     protected $sDbPass = '';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         unset(
             $this->aForm['inputs']['caption'],
@@ -1199,9 +1199,9 @@ class BxBaseStudioFormsFieldButton extends BxBaseStudioFormsFieldText
     protected $sType = 'button';
     protected $sDbPass = '';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_alter'] = false;
 
@@ -1228,9 +1228,9 @@ class BxBaseStudioFormsFieldReset extends BxBaseStudioFormsFieldButton
 {
     protected $sType = 'reset';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aForm['inputs']['value']['info'] = _t('_adm_form_dsc_field_value_reset');
     }
@@ -1240,9 +1240,9 @@ class BxBaseStudioFormsFieldSubmit extends BxBaseStudioFormsFieldButton
 {
     protected $sType = 'submit';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aForm['inputs']['value']['info'] = _t('_adm_form_dsc_field_value_submit');
     }
@@ -1252,9 +1252,9 @@ class BxBaseStudioFormsFieldImage extends BxBaseStudioFormsFieldButton
 {
     protected $sType = 'image';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $aFields = array(
             'attrs' => array(
@@ -1290,9 +1290,9 @@ class BxBaseStudioFormsFieldSelect extends BxBaseStudioFormsFieldText
     protected $sType = 'select';
     protected $aCheckFunctions = array('avail', 'length', 'preg');
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aForm['inputs']['value']['type'] = 'select';
         $this->aForm['inputs']['value']['values'] = array(
@@ -1340,11 +1340,6 @@ class BxBaseStudioFormsFieldRadioSet extends BxBaseStudioFormsFieldSelect
 {
     protected $sType = 'radio_set';
     protected $aCheckFunctions = array('avail', 'length', 'preg');
-
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
-    }
 }
 
 class BxBaseStudioFormsFieldSelectMultiple extends BxBaseStudioFormsFieldSelect
@@ -1353,9 +1348,9 @@ class BxBaseStudioFormsFieldSelectMultiple extends BxBaseStudioFormsFieldSelect
     protected $aCheckFunctions = array('avail', 'length', 'preg');
     protected $sDbPass = 'Set';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_field_type'] = 'int(11)';
 
@@ -1378,11 +1373,6 @@ class BxBaseStudioFormsFieldCheckboxSet extends BxBaseStudioFormsFieldSelectMult
 {
     protected $sType = 'checkbox_set';
     protected $aCheckFunctions = array('avail', 'length', 'preg');
-
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
-    }
 }
 
 class BxBaseStudioFormsFieldCustom extends BxBaseStudioFormsFieldText
@@ -1390,9 +1380,9 @@ class BxBaseStudioFormsFieldCustom extends BxBaseStudioFormsFieldText
     protected $sType = 'custom';
     protected $sDbPass = '';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+	public function init()
+	{
+		parent::init();
 
         unset(
             $this->aForm['inputs']['required'],
@@ -1410,9 +1400,9 @@ class BxBaseStudioFormsFieldInputSet extends BxBaseStudioFormsFieldCustom
 {
     protected $sType = 'input_set';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_alter'] = false;
 
@@ -1438,9 +1428,9 @@ class BxBaseStudioFormsFieldCaptcha extends BxBaseStudioFormsFieldText
     protected $aCheckFunctions = array('captcha');
     protected $sDbPass = '';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_alter'] = false;
 
@@ -1471,9 +1461,9 @@ class BxBaseStudioFormsFieldLocation extends BxBaseStudioFormsFieldText
     protected $aCheckFunctions = array();
     protected $sDbPass = '';
 
-    function __construct($aParams = array(), $aField = array())
-    {
-        parent::__construct($aParams, $aField);
+    public function init()
+	{
+		parent::init();
 
         $this->aParams['table_alter'] = false;
 
