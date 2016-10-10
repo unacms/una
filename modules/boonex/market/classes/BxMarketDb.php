@@ -45,6 +45,10 @@ class BxMarketDb extends BxBaseModTextDb
     	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0)
     		$sFieldsClause .= $this->prepareAsString(" (SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` WHERE `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1) AS `purchased_on`, ", (int)$aParams['client'], $aParams['key']);
 
+    	//--- Exclude content by ids or names
+		if(!empty($aParams['exclude_by']) && in_array($aParams['exclude_by'], array('id', 'name')) && !empty($aParams['exclude_values']))
+			$sWhereClause .= " AND `te`.`" . $aParams['exclude_by'] . "` NOT IN (" . $this->implode_escape($aParams['exclude_values']) . ") ";
+
     	if(isset($aParams['start']) && !empty($aParams['per_page']))
     		$sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
 
