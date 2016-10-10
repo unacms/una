@@ -20,7 +20,7 @@ class BxForumPageEntry extends BxBaseModTextPageEntry
         parent::__construct($aObject, $oTemplate);
 
         $this->_oModule->_oTemplate->addJs(array('main.js', 'entry.js'));
-        $this->_oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));
+        $this->_oModule->_oTemplate->addCss(array('main-media-phone.css', 'main-media-tablet.css', 'main-media-desktop.css'));
     }
 
     public function getCode()
