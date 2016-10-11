@@ -32,6 +32,12 @@
 	<string name="_Empty"><![CDATA[Empty]]></string>
 	<string name="_Error"><![CDATA[Error]]></string>
 	<string name="_Failed"><![CDATA[Failed]]></string>
+	<string name="_favorite_counter"><![CDATA[{0}]]></string>
+	<string name="_favorite_do_favorite"><![CDATA[Favorite]]></string>
+	<string name="_favorite_do_favorite_by"><![CDATA[Favorited by]]></string>
+	<string name="_favorite_err_cannot_perform_action"><![CDATA[Cannot perform the action.]]></string>
+	<string name="_favorite_err_duplicate_favorite"><![CDATA[You already favorited this item.]]></string>
+	<string name="_favorite_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
 	<string name="_Female"><![CDATA[Woman]]></string>
 	<string name="_From"><![CDATA[From]]></string>
 	<string name="_Header"><![CDATA[Header]]></string>
@@ -1465,6 +1471,8 @@
 	<string name="_sys_acl_action_delete_account"><![CDATA[Delete Account]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Delete account also deletes account's content.]]></string>
 	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours]]></string>
+	<string name="_sys_acl_action_favorite"><![CDATA[Favorite]]></string>
+	<string name="_sys_acl_action_favorite_view"><![CDATA[View favorites]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[You have reached your limit for now. Your current membership ({2}) allows you to {1} no more than {3} times]]></string>
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership ({2}) doesn't allow you to '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Your current membership ({2}) stopped to allow you to '{1}' {5}.]]></string>
