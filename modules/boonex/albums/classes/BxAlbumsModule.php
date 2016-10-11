@@ -92,8 +92,18 @@ class BxAlbumsModule extends BxBaseModTextModule
             return false;
 
         $CNF = &$this->_oConfig->CNF;
-
-        return $this->_entitySocialSharing ($iMediaId, 0, $aMediaInfo['file_id'], $aMediaInfo['title'], false, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], $CNF['OBJECT_VOTES_MEDIA'], '', $CNF['URI_VIEW_MEDIA'], $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '', $bEnableSocialSharing);
+        return $this->_entitySocialSharing ($iMediaId, array(
+            'id_timeline' => 0,
+        	'id_thumb' => $aMediaInfo['file_id'],
+        	'title' => $aMediaInfo['title'],
+        	'object_storage' => false,
+            'object_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG'],
+        	'object_vote' => $CNF['OBJECT_VOTES_MEDIA'],
+        	'object_report' => '',
+        	'object_comments' => $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '',
+        	'uri_view_entry' => $CNF['URI_VIEW_MEDIA'],
+            'social_sharing' => $bEnableSocialSharing
+        ));
     }
 
     public function serviceMediaView ($iMediaId = 0, $mixedContext = false)

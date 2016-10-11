@@ -213,8 +213,16 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         $CNF = &$this->_oConfig->CNF;
-
-        return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
+        return $this->_entitySocialSharing ($iContentId, array(
+            'id_timeline' => $iContentId,
+        	'id_thumb' => $aContentInfo[$CNF['FIELD_THUMB']],
+        	'title' => $aContentInfo[$CNF['FIELD_TITLE']],
+        	'object_storage' => $CNF['OBJECT_STORAGE'],
+            'object_transcoder' => false,
+        	'object_vote' => $CNF['OBJECT_VOTES'],
+        	'object_report' => $CNF['OBJECT_REPORTS'],
+        	'uri_view_entry' => $CNF['URI_VIEW_ENTRY'],
+        ));
     }
 
 	/**
@@ -701,12 +709,15 @@ class BxBaseModGeneralModule extends BxDolModule
 		);
     }
 
-    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sObjectReport, $sUriViewEntry, $sCommentsObject = '', $bEnableSocialSharing = true)
+    protected function _entitySocialSharing ($iId, $aParams = array())
     {
-        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUriViewEntry . '&id=' . $iId);
+        $sUrl = !empty($aParams['uri_view_entry']) ? BxDolPermalinks::getInstance()->permalink('page.php?i=' . $aParams['uri_view_entry'] . '&id=' . $iId) : '';
+        $sTitle = !empty($aParams['title']) ? $aParams['title'] : '';
 
+        //--- Comments
         $sComments = '';
-        if ($sCommentsObject && ($oComments = BxTemplCmts::getObjectInstance($sCommentsObject, $iId))) {
+        $oComments = !empty($aParams['object_comments']) ? BxTemplCmts::getObjectInstance($aParams['object_comments'], $iId) : false;
+        if ($oComments) {
             $iNum = $oComments->getCommentsCountAll();
             $sComments = $this->_oTemplate->parseHtmlByName('comments-item.html', array (
                 'url' => $sUrl . '#' . $oComments->getListAnchor(),
@@ -720,40 +731,56 @@ class BxBaseModGeneralModule extends BxDolModule
         }
 
         $aCustomParams = false;
-        if ($iIdThumb && $bEnableSocialSharing) {
-            if ($sObjectTranscoder)
-                $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
-            else
-                $o = BxDolStorage::getObjectInstance($sObjectStorage);
+        $iIdThumb = isset($aParams['id_thumb']) ? (int)$aParams['id_thumb'] : 0;
+        $bSocialSharing = isset($aParams['social_sharing']) ? (bool)$aParams['social_sharing'] : true;
+        if ($iIdThumb && $bSocialSharing) {
+            if(!empty($aParams['object_transcoder']))
+                $o = BxDolTranscoder::getObjectInstance($aParams['object_transcoder']);
+            else if(!empty($aParams['object_storage']))
+                $o = BxDolStorage::getObjectInstance($aParams['object_storage']);
 
-            if ($sImgUrl = $o->getFileUrlById($iIdThumb)) {
+            $sImgUrl = $o ? $o->getFileUrlById($iIdThumb) : '';
+            if($sImgUrl)
                 $aCustomParams = array (
                     'img_url' => $sImgUrl,
                     'img_url_encoded' => rawurlencode($sImgUrl),
                 );
-            }
         }
 
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        //--- Votes
         $sVotes = '';
-        $oVotes = BxDolVote::getObjectInstance($sObjectVote, $iId);
+        $oVotes = !empty($aParams['object_vote']) ? BxDolVote::getObjectInstance($aParams['object_vote'], $iId) : false;
         if ($oVotes)
             $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true));
 
-        $sShare = '';
-        if ($iIdForTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-            $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdForTimeline, array('show_do_share_as_button' => true)));
+        //--- Favorite
+        $sFavorites = '';
+        $oFavorites = !empty($aParams['object_favorite']) ? BxDolFavorite::getObjectInstance($aParams['object_favorite'], $iId) : false;
+        if ($oFavorites)
+            $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => true));
 
+        //--- Timeline Repost (Internal Share)
+        $sShare = '';
+        $iIdTimeline = isset($aParams['id_timeline']) ? (int)$aParams['id_timeline'] : $iId;
+        if ($iIdTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
+            $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_share_as_button' => true)));
+
+        //--- Report
 		$sReport = '';
-        $oReport = BxDolReport::getObjectInstance($sObjectReport, $iId);
+        $oReport = !empty($aParams['object_report']) ? BxDolReport::getObjectInstance($aParams['object_report'], $iId) : false;
         if ($oReport)
             $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => true));
 
-        $sSocial = $bEnableSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
+        $sSocial = $bSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
+
+        if(empty($sComments) && empty($sVotes) && empty($sFavorites) && empty($sShare) && empty($sReport) && empty($sSocial))
+            return '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'comments' => $sComments,
             'vote' => $sVotes,
+            'favorite' => $sFavorites,
             'share' => $sShare,
         	'report' => $sReport,
             'social' => $sSocial,

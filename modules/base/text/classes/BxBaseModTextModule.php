@@ -100,8 +100,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
             return false;
 
         $CNF = &$this->_oConfig->CNF;
-
-        return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
+        return $this->_entitySocialSharing ($iContentId, array(
+            'id_timeline' => $iContentId,
+        	'id_thumb' => $aContentInfo[$CNF['FIELD_THUMB']],
+        	'title' => $aContentInfo[$CNF['FIELD_TITLE']],
+        	'object_storage' => $CNF['OBJECT_STORAGE'],
+            'object_transcoder' => false,
+        	'object_vote' => $CNF['OBJECT_VOTES'],
+        	'object_report' => $CNF['OBJECT_REPORTS'],
+        	'uri_view_entry' => $CNF['URI_VIEW_ENTRY']
+        ));
     }
 
     public function serviceEntityAllActions ($iContentId = 0)

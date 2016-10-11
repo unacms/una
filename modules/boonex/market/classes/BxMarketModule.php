@@ -462,6 +462,16 @@ class BxMarketModule extends BxBaseModTextModule
 
 		return $aContentInfo;
     }
+
+    protected function _entitySocialSharing ($iId, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        return parent::_entitySocialSharing($iId, array_merge($aParams, array(
+        	'object_vote' => '',
+            'object_favorite' => $CNF['OBJECT_FAVORITES'],
+            'social_sharing' => false
+        )));
+    }
 }
 
 /** @} */
