@@ -33,33 +33,16 @@ class BxDolFavoriteQuery extends BxDolObjectQuery
 
 	public function getFavorite($iObjectId)
     {
-        $sQuery = $this->prepare("SELECT `count` as `count` FROM {$this->_sTable} WHERE `object_id` = ? LIMIT 1", $iObjectId);
-
-        $aResult = $this->getRow($sQuery);
-        if(empty($aResult) || !is_array($aResult))
-            $aResult = array('count' => 0);
-
-        return $aResult;
+        return array('count' => $this->getObjectCount($iObjectId));
     }
 
-    public function doFavorite($iObjectId, $iAuthorId, $sAuthorIp)
+    public function doFavorite($iObjectId, $iAuthorId)
     {
-        $iAuthorNip = ip2long($sAuthorIp);
-
         $sQuery = $this->prepare("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
         if((int)$this->getOne($sQuery) > 0)
         	return true;
 
-        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `date` = ?", $iObjectId, $iAuthorId, $iAuthorNip, time());
-        if((int)$this->query($sQuery) == 0)
-            return false;
-
-        $sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTable}` WHERE `object_id` = ? LIMIT 1", $iObjectId);
-        if((int)$this->getOne($sQuery) == 0)
-            $sQuery = $this->prepare("INSERT INTO `{$this->_sTable}` SET `object_id` = ?, `count` = '1'", $iObjectId);
-        else
-            $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `count` = `count` + 1 WHERE `object_id` = ?", $iObjectId);
-
+        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `date` = ?", $iObjectId, $iAuthorId, time());
         return (int)$this->query($sQuery) > 0;
     }
 
@@ -70,10 +53,6 @@ class BxDolFavoriteQuery extends BxDolObjectQuery
         	return true;
 
         $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
-		if((int)$this->query($sQuery) == 0)
-		    return false;
-
-        $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `count` = `count` - 1 WHERE `object_id` = ?", $iObjectId);
         return (int)$this->query($sQuery) > 0;
     }
 

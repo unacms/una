@@ -40,7 +40,7 @@ class BxDolObjectQuery extends BxDolDb
 
     public function getSqlParts($sMainTable, $sMainField)
     {
-        if(empty($sMainTable) || empty($sMainField))
+        if(empty($this->_sTable) || empty($sMainTable) || empty($sMainField))
             return array();
 
         return array (
@@ -51,7 +51,7 @@ class BxDolObjectQuery extends BxDolDb
 
     public function getSqlPartsTrack($sMainTable, $sMainField)
     {
-        if(empty($sMainTable) || empty($sMainField))
+        if(empty($this->_sTableTrack) || empty($sMainTable) || empty($sMainField))
             return array();
 
         return array (
@@ -90,7 +90,13 @@ class BxDolObjectQuery extends BxDolDb
 	public function getObjectAuthorId($iId)
     {
         $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldAuthor}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
-        return $this->getOne($sQuery);
+        return (int)$this->getOne($sQuery);
+    }
+
+    public function getObjectCount($iId)
+    {
+        $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldCount}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
+        return (int)$this->getOne($sQuery);
     }
 
     public function updateTriggerTable($iObjectId)

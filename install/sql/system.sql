@@ -1184,9 +1184,9 @@ CREATE TABLE `sys_objects_view` (
 CREATE TABLE `sys_objects_favorite` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
-  `table_main` varchar(32) NOT NULL,
   `table_track` varchar(32) NOT NULL,
   `is_on` tinyint(4) NOT NULL default '1',
+  `is_public` tinyint(4) NOT NULL default '1',
   `base_url` varchar(256) NOT NULL default '',
   `trigger_table` varchar(32) NOT NULL,
   `trigger_field_id` varchar(32) NOT NULL,

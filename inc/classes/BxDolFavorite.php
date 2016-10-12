@@ -44,7 +44,6 @@ define('BX_DOL_FAVORITE_USAGE_DEFAULT', BX_DOL_FAVORITE_USAGE_BLOCK);
  *  CREATE TABLE `my_favorites_track` (
  *      `object_id` int(11) NOT NULL default '0', -- this field type must be exact as your object id type
  *      `author_id` int(11) NOT NULL default '0', -- favoring user profile id
- *      `author_nip` int(11) unsigned NOT NULL default '0', -- favoring user ip address
  *      `date` int(11) NOT NULL default '0', -- timestamp of last recorded view
  *      KEY `id` (`object_id`,`author_id`)
  *  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -112,9 +111,9 @@ class BxDolFavorite extends BxDolObject
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
-                    `table_main` AS `table_main`,
                     `table_track` AS `table_track`,
                     `is_on` AS `is_on`,
+                    `is_public` AS `is_public`,
                     `base_url` AS `base_url`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,
@@ -149,6 +148,11 @@ class BxDolFavorite extends BxDolObject
     /**
      * Permissions functions
      */
+    public function isPublic()
+    {
+        return (int)$this->_aSystem['is_public'] == 1;
+    }
+
     public function isAllowedFavorite($isPerformAction = false)
     {
         if(isAdmin())
@@ -164,6 +168,9 @@ class BxDolFavorite extends BxDolObject
 
     public function isAllowedFavoriteView($isPerformAction = false)
     {
+        if(!$this->isPublic())
+            return false;
+
         if(isAdmin())
             return true;
 
@@ -189,13 +196,12 @@ class BxDolFavorite extends BxDolObject
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
         $iAuthorId = $this->_getAuthorId();
-        $sAuthorIp = $this->_getAuthorIp();
 
         $bPerformed = $this->_oQuery->isPerformed($iObjectId, $iAuthorId);
         if($bPerformed)
         	return array('code' => 3, 'msg' => _t('_favorite_err_duplicate_favorite'));
 
-        $iId = (int)$this->_oQuery->doFavorite($iObjectId, $iAuthorId, $sAuthorIp);
+        $iId = (int)$this->_oQuery->doFavorite($iObjectId, $iAuthorId);
         if($iId == 0)
             return array('code' => 4, 'msg' => _t('_favorite_err_cannot_perform_action'));
 
