@@ -3713,7 +3713,7 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdSettings = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'store', '_adm_page_cpt_store', '_adm_page_cpt_store', 'pi-store.png');
+(3, 'store', '_adm_page_cpt_store', '_adm_page_cpt_store', 'wi-store.svg');
 SET @iIdStore = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
@@ -3741,7 +3741,7 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdBuilderPermissions = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'storages', '_adm_page_cpt_storages', '_adm_page_cpt_storages', 'pi-storages.png');
+(3, 'storages', '_adm_page_cpt_storages', '_adm_page_cpt_storages', 'wi-storages.svg');
 SET @iIdManagerStorages = LAST_INSERT_ID();
 
 --
