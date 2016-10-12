@@ -3753,7 +3753,7 @@ INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `capt
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 1);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdStore, 'system', '{url_studio}store.php', '', 'wi-store.png', '_adm_wgt_cpt_store', '', '');
+(@iIdStore, 'system', '{url_studio}store.php', '', 'wi-store.svg', '_adm_wgt_cpt_store', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 2);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
@@ -3801,5 +3801,5 @@ INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iId
 -- Storages Page
 --
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdManagerStorages, 'system', '{url_studio}storages.php', '', 'wi-storages.png', '_adm_wgt_cpt_storages', '', '');
+(@iIdManagerStorages, 'system', '{url_studio}storages.php', '', 'wi-storages.svg', '_adm_wgt_cpt_storages', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 1);

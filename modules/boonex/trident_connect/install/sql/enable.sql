@@ -24,7 +24,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', 'bx_tricon', '_bx_tricon_adm_stg_cpt_type', 'bx_tricon@modules/boonex/tricon/|std-mi.png', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
+('modules', 'bx_tricon', '_bx_tricon_adm_stg_cpt_type', 'bx_tricon@modules/boonex/tricon/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  

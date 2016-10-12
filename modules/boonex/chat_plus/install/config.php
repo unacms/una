@@ -15,8 +15,8 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_chat_plus',
-    'title' => 'Chat+',
-    'note' => 'Chat+ integration.',
+    'title' => 'RocketChat',
+    'note' => 'RocketChat integration.',
     'version' => '9.0.2.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',

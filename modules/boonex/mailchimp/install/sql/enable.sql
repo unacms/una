@@ -3,7 +3,7 @@
 
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', 'bx_mailchimp', '_bx_mailchimp_adm_stg_cpt_type', 'bx_mailchimp@modules/boonex/mailchimp/|std-mi.png', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
+('modules', 'bx_mailchimp', '_bx_mailchimp_adm_stg_cpt_type', 'bx_mailchimp@modules/boonex/mailchimp/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  

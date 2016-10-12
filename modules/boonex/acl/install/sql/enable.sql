@@ -18,7 +18,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- SETTINGS
 -- SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 -- INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
--- ('modules', @sName, '_bx_acl', 'bx_acl@modules/boonex/acl/|std-mi.png', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
+-- ('modules', @sName, '_bx_acl', 'bx_acl@modules/boonex/acl/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
 -- SET @iTypeId = LAST_INSERT_ID();
 
 -- INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)

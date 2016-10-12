@@ -33,10 +33,10 @@
 	<string name="_Error"><![CDATA[Ошибка]]></string>
 	<string name="_Failed"><![CDATA[Неудача]]></string>
 	<string name="_favorite_counter"><![CDATA[{0}]]></string>
-	<string name="_favorite_do_favorite"><![CDATA[Фаворит]]></string>
-	<string name="_favorite_do_favorite_by"><![CDATA[Добавили в фавориты]]></string>
+	<string name="_favorite_do_favorite"><![CDATA[В избранное]]></string>
+	<string name="_favorite_do_favorite_by"><![CDATA[Добавили в избранное]]></string>
 	<string name="_favorite_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string>
-	<string name="_favorite_err_duplicate_favorite"><![CDATA[Вы уже добавляли данный объект в список фаворитов ранее.]]></string>
+	<string name="_favorite_err_duplicate_favorite"><![CDATA[Вы уже добавляли данный объект в избранное ранее.]]></string>
 	<string name="_favorite_err_not_enabled"><![CDATA[Действие не доступно в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_Female"><![CDATA[Женщина]]></string>
 	<string name="_From"><![CDATA[От]]></string>
@@ -1326,7 +1326,7 @@
 	<string name="_adm_strg_err_height"><![CDATA[Нужно указать высоту. Пожалуйста, заполните это поле.]]></string>
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Управление Загрузчиком]]></string>
 	<string name="_adm_tmi_cpt_extensions"><![CDATA[Добавить Приложения]]></string>
-	<string name="_adm_tmi_cpt_favorite"><![CDATA[Показывать только Любимые]]></string>
+	<string name="_adm_tmi_cpt_favorite"><![CDATA[Показывать только Избранные]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Выйти]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
@@ -1388,7 +1388,7 @@
 	<string name="_adm_txt_modules_upload"><![CDATA[Добавить новый Модуль]]></string>
 	<string name="_adm_txt_modules_writable"><![CDATA[Записываемый]]></string>
 	<string name="_adm_txt_pca_active"><![CDATA[Активные]]></string>
-	<string name="_adm_txt_pca_favorite"><![CDATA[Любимые]]></string>
+	<string name="_adm_txt_pca_favorite"><![CDATA[Избранные]]></string>
 	<string name="_adm_txt_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_adm_txt_select_module"><![CDATA[Выбрать Модуль...]]></string>
 	<string name="_adm_txt_show_help"><![CDATA[Помощь]]></string>
@@ -1403,7 +1403,7 @@
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Полиглот]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Настройки]]></string>
 	<string name="_adm_wgt_cpt_storages"><![CDATA[Хранилища]]></string>
-	<string name="_adm_wgt_cpt_store"><![CDATA[Приложения]]></string>
+	<string name="_adm_wgt_cpt_store"><![CDATA[Магазин Приложений]]></string>
 	<string name="_are you sure?"><![CDATA[Вы уверены?]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Комментарии ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[Все]]></string>
@@ -1469,8 +1469,8 @@
 	<string name="_sys_acl_action_delete_account"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Удалить аккаунт, также удалить содержимое аккаунта.]]></string>
 	<string name="_sys_acl_action_every_period"><![CDATA[ каждые {4} часа]]></string>
-	<string name="_sys_acl_action_favorite"><![CDATA[Фавориты - Добавлять]]></string>
-	<string name="_sys_acl_action_favorite_view"><![CDATA[Фавориты - Просматривать]]></string>
+	<string name="_sys_acl_action_favorite"><![CDATA[Избранное - Добавлять]]></string>
+	<string name="_sys_acl_action_favorite_view"><![CDATA[Избранное - Просматривать]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[Вы достигли лимита. Ваше текущее членство ({2}) позволяет {1} не более {3} раз]]></string>
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Ваше текущее членство ({2}) не позволяет '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Ваше текущее членство ({2}) более не позволяет '{1}' {5}.]]></string>

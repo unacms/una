@@ -15,8 +15,8 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_tricon',
-    'title' => 'Trident connect',
-    'note' => 'Join the site using another Trident site account credentials.',
+    'title' => 'UNA connect',
+    'note' => 'Join the site using another UNA site account credentials.',
     'version' => '9.0.2.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.boonex.com/?section={module_name}',
@@ -37,7 +37,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Trident Connect',
+    'language_category' => 'UNA Connect',
 
     /**
      * Installation/Uninstallation Section.

@@ -3,7 +3,7 @@
 
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', 'bx_chat_plus', '_bx_chat_plus_adm_stg_cpt_type', 'bx_chat_plus@modules/boonex/chat_plus/|std-mi.png', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
+('modules', 'bx_chat_plus', '_bx_chat_plus_adm_stg_cpt_type', 'bx_chat_plus@modules/boonex/chat_plus/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  

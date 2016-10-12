@@ -4,7 +4,7 @@ SET @sName = 'bx_payment';
 -- OPTIONS
 SET @iTypeOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', @sName, '_bx_payment', 'bx_payment@modules/boonex/payment/|std-mi.png', @iTypeOrder + 1);
+('modules', @sName, '_bx_payment', 'bx_payment@modules/boonex/payment/|std-icon.svg', @iTypeOrder + 1);
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
