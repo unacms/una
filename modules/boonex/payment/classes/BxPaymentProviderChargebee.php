@@ -88,6 +88,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
             'error_msg' => _t($aResult['message'])
         ));
 
+        $this->_oModule->onSubscriptionCreate($aPending, $aResult);
         return $aResult;
     }
 

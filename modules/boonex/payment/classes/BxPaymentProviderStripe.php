@@ -164,6 +164,12 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
             'error_msg' => _t($aResult['message'])
         ));
 
+        switch($aPending['type']) {
+        	case BX_PAYMENT_TYPE_RECURRING:
+        		$this->_oModule->onSubscriptionCreate($aPending, $aResult);
+        		break;
+        }
+
         return $aResult;
     }
 

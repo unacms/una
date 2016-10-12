@@ -135,18 +135,20 @@ class BxDolAccount extends BxDol
      */
     public function sendConfirmationEmail($iAccountId = false)
     {
+    	$sName = $this->getDisplayName($iAccountId); 
         $sEmail = $this->getEmail($iAccountId);
 
         $oKey = BxDolKey::getInstance();
         $sConfirmationCode = $oKey->getNewKey(array('account_id' => $iAccountId));
-
         $sConfirmationLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&code=' . urlencode($sConfirmationCode);
 
-        $aPlus = array();
-        $aPlus['email'] = $sEmail;
-        $aPlus['conf_code'] = $sConfirmationCode;
-        $aPlus['conf_link'] = $sConfirmationLink;
-        $aPlus['conf_form_link'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email');
+        $aPlus = array(
+        	'name' => $sName,
+        	'email' => $sEmail,
+        	'conf_code' => $sConfirmationCode,
+        	'conf_link' => $sConfirmationLink,
+        	'conf_form_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email')
+        );
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Confirmation', $aPlus);
         return $aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);

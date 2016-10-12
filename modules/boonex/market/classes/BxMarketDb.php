@@ -45,6 +45,10 @@ class BxMarketDb extends BxBaseModTextDb
     	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0)
     		$sFieldsClause .= $this->prepareAsString(" (SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` WHERE `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1) AS `purchased_on`, ", (int)$aParams['client'], $aParams['key']);
 
+    	//--- Exclude content by ids or names
+		if(!empty($aParams['exclude_by']) && in_array($aParams['exclude_by'], array('id', 'name')) && !empty($aParams['exclude_values']))
+			$sWhereClause .= " AND `te`.`" . $aParams['exclude_by'] . "` NOT IN (" . $this->implode_escape($aParams['exclude_values']) . ") ";
+
     	if(isset($aParams['start']) && !empty($aParams['per_page']))
     		$sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
 
@@ -123,7 +127,7 @@ class BxMarketDb extends BxBaseModTextDb
 				if(isset($aParams['paid']) && (int)$aParams['paid'] == 1)
 					$sWhereClause .= " AND `te`.`" . $CNF['FIELD_PRICE_SINGLE'] . "`<>'0' AND `te`.`" . $CNF['FIELD_PRICE_RECURRING'] . "`<>'0'";
 
-				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+				$sOrderClause = "`te`.`" . (isset($aParams['order_by']) ? $aParams['order_by'] : "added") . "` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 
 			case 'keyword':
@@ -240,7 +244,8 @@ class BxMarketDb extends BxBaseModTextDb
     	$CNF = &$this->_oConfig->CNF;
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
-    	$sJoinClause = $sWhereClause = "";
+    	$sSelectClause = "`tl`.*";
+    	$sJoinClause = $sWhereClause = $sLimitClause = "";
         switch($aParams['type']) {
             case 'id':
             	$aMethod['name'] = 'getRow';
@@ -258,6 +263,14 @@ class BxMarketDb extends BxBaseModTextDb
 
                 $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`domain`=''";
                 break;
+
+			case 'expired':
+				$aMethod['params'][1] = array(
+                	'type' => BX_MARKET_LICENSE_TYPE_RECURRING
+                );
+
+				$sWhereClause = " AND `type` = :type AND `added` < UNIX_TIMESTAMP() AND `expired` <> 0 AND `expired` < UNIX_TIMESTAMP()";
+				break;
 
 			case 'profile_id':
 				$aMethod['params'][1] = array(
@@ -283,12 +296,37 @@ class BxMarketDb extends BxBaseModTextDb
 				$sJoinClause .= " LEFT JOIN `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te` ON `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "`";
 				$sWhereClause .= " AND `tl`.`profile_id`=:profile_id AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=:file_id AND (`tl`.`domain`='' OR `tl`.`domain`=:key)";
 				break;
+
+			case 'has_by':
+				$aMethod['name'] = "getOne";
+				$aMethod['params'][1] = array(
+                	'profile_id' => $aParams['profile_id'],
+    				'product_id' => $aParams['product_id'],
+                );
+
+                $sSelectClause = "`tl`.`id`";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`product_id`=:product_id";
+
+                if(!empty($aParams['domain'])) {
+                	$aMethod['params'][1]['domain'] = $aParams['domain'];
+                	$sWhereClause .= " AND `tl`.`domain`=:domain";
+                }
+
+		        if(!empty($aParams['order'])) {
+                	$aMethod['params'][1]['order'] = $aParams['order'];
+                	$sWhereClause .= " AND `tl`.`order`=:order";
+                }
+
+                $sLimitClause = "1";
+                break;
         }
 
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
         $aMethod['params'][0] = "SELECT
-        		`tl`.*
+        		" . $sSelectClause . "
             FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause;
+            WHERE 1" . $sWhereClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
@@ -310,42 +348,25 @@ class BxMarketDb extends BxBaseModTextDb
 
     public function hasLicense ($iProfileId, $iProductId, $sDomain = '')
     {
-    	$aBindings = array(
-    		'profile_id' => $iProfileId,
-    		'product_id' => $iProductId,
-    	);
+    	return (int)$this->getLicense(array(
+    		'type' => 'has_by', 
+    		'profile_id' => $iProfileId, 
+    		'product_id' => $iProductId, 
+    		'domain' => !empty($sDomain) ? $sDomain : ''
+    	)) > 0;
+    }
 
-    	$sWhereAddon = '';
-    	if(!empty($sDomain)) {
-    		$aBindings['domain'] = $sDomain;
-    		$sWhereAddon = " AND `domain`=:domain";
-    	}
-
-    	$sQuery = "SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = :profile_id AND `product_id` = :product_id" . $sWhereAddon . " LIMIT 1";
-        return (int)$this->getOne($sQuery, $aBindings) > 0;
+	public function hasLicenseByOrder ($iProfileId, $iProductId, $sOrder = '')
+    {
+    	return (int)$this->getLicense(array(
+    		'type' => 'has_by', 
+    		'profile_id' => $iProfileId, 
+    		'product_id' => $iProductId, 
+    		'order' => !empty($sOrder) ? $sOrder : ''
+    	)) > 0;
     }
 
 	public function registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
-    {
-    	$CNF = &$this->_oConfig->CNF;
-
-    	$bRegistered = (int)$this->getOne("SELECT `id` FROM `" . $CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = :profile_id AND `product_id` = :product_id AND `order` = :order LIMIT 1", array(
-    		'profile_id' => $iProfileId,
-    		'product_id' => $iProductId,
-    		'order' => $sOrder,
-    	)) > 0;
-
-    	$sMethod = $bRegistered ? '_prolongLicense' : '_registerLicense';
-    	return $this->$sMethod($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration);
-    }
-
-    public function unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType)
-    {
-    	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iProfileId, $iProductId, $sOrder, $sLicense);
-        return $this->query($sQuery) !== false;
-    }
-
-    protected function _registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
     {
     	$CNF = &$this->_oConfig->CNF;
 
@@ -366,7 +387,7 @@ class BxMarketDb extends BxBaseModTextDb
         return (int)$this->query($sQuery) > 0;
     }
 
-    protected function _prolongLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
+    public function prolongLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
     {
     	$CNF = &$this->_oConfig->CNF;
 
@@ -388,6 +409,39 @@ class BxMarketDb extends BxBaseModTextDb
 
         return (int)$this->query($sQuery) > 0;
     }
+
+    public function unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType)
+    {
+    	$sWhereClause = "`profile_id` = :profile_id AND `product_id` = :product_id AND `order` = :order AND `license` = :license";
+    	$aWhereBindings = array(
+    		'profile_id' => $iProfileId,
+    		'product_id' => $iProductId,
+    		'order' => $sOrder,
+    		'license' => $sLicense
+    	);
+    	
+		//--- Move to deleted licenses table with 'refund' as reason.   
+    	$sQuery = "INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, 'refund' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+		$this->query($sQuery, $aWhereBindings);
+
+    	$sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+        return $this->query($sQuery, $aWhereBindings) !== false;
+    }
+
+	function processExpiredLicenses()
+	{
+		$sWhereClause = "`type` = :type AND `added` < UNIX_TIMESTAMP() AND `expired` <> 0 AND `expired` < UNIX_TIMESTAMP()";
+    	$aWhereBindings = array(
+    		'type' => BX_MARKET_LICENSE_TYPE_RECURRING
+    	);
+
+    	//--- Move to deleted licenses table with 'expire' as reason.  
+		$sQuery = "INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, 'expire' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+		$this->query($sQuery, $aWhereBindings);
+
+		$sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+		return $this->query($sQuery, $aWhereBindings) !== false;	    
+	}
 
 	protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
     {

@@ -40,6 +40,11 @@ class BxMarketGridLicenses extends BxTemplGrid
 		$aAffected = array();
 		foreach($aIds as $iId)
 			if($this->_oModule->_oDb->updateLicense(array('domain' => ''), array('id' => $iId, 'profile_id' => $this->_aQueryAppend['profile_id']))) {
+				bx_alert($this->_oModule->getName(), 'license_reset', 0, false, $this->_oModule->_oDb->getLicense(array(
+					'type' => 'id',
+					'id' => $iId
+				)));
+
 				$aAffected[] = $iId;
             	$iAffected++;
 			}

@@ -49,6 +49,17 @@ class BxDolObjectQuery extends BxDolDb
         );
     }
 
+    public function getSqlPartsTrack($sMainTable, $sMainField)
+    {
+        if(empty($sMainTable) || empty($sMainField))
+            return array();
+
+        return array (
+            'fields' => ", `{$this->_sTableTrack}`.`author_id` as `favorer_id` ",
+            'join' => " LEFT JOIN `{$this->_sTableTrack}` ON (`{$this->_sTableTrack}`.`object_id` = `{$sMainTable}`.`{$sMainField}`) ",
+        );
+    }
+
 	public function isPerformed($iObjectId, $iAuthorId)
     {
         $sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);

@@ -76,6 +76,7 @@
     }
     div.cmt-info {
     	position: realtive;
+    	overflow: hidden;
 	}
 	div.cmt-blink-plate {
 		position: absolute;

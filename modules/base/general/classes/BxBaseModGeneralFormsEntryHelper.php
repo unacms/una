@@ -34,9 +34,22 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     public function getObjectFormEdit ($sDisplay = false)
     {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
         if (false === $sDisplay)
-            $sDisplay = $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];        
-        return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];
+
+        return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+    }
+
+	public function getObjectFormView ($sDisplay = false)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (false === $sDisplay)
+            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW'];
+
+        return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
     }
 
     public function getObjectFormDelete ()
@@ -101,9 +114,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay)
-            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];
-
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
@@ -114,7 +124,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // check and display form
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        $oForm = $this->getObjectFormEdit($sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
@@ -228,9 +238,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay)
-            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW'];
-
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
@@ -241,7 +248,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // get form
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        $oForm = $this->getObjectFormView($sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 

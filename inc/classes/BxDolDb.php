@@ -531,6 +531,20 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         return in_array(strtoupper($sFieldName), $aFields['uppercase']);
     }
 
+	public function isIndexExists($sTable, $sIndexName)
+	{
+		$bIndex = false;
+
+        $aIndexes = $this->getAll("SHOW INDEXES FROM `" . $sTable . "`");
+        foreach($aIndexes as $aIndex)
+			if($aIndex['Key_name'] == $sIndexName) {
+				$bIndex = true;
+				break;
+			}
+
+		return $bIndex;
+	}
+
     public function error($aError)
     {
     	$sErrorType = self::$_aErrors[$aError['code']];

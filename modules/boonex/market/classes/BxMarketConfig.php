@@ -35,6 +35,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'TABLE_FILES' => $aModule['db_prefix'] . 'files',
         	'TABLE_DOWNLOADS' => $aModule['db_prefix'] . 'downloads_track',
         	'TABLE_LICENSES' => $aModule['db_prefix'] . 'licenses',
+        	'TABLE_LICENSES_DELETED' => $aModule['db_prefix'] . 'licenses_deleted',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -101,6 +102,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'OBJECT_REPORTS' => 'bx_market',
             'OBJECT_VIEWS' => 'bx_market',
             'OBJECT_VOTES' => 'bx_market',
+        	'OBJECT_FAVORITES' => 'bx_market',
             'OBJECT_METATAGS' => 'bx_market',
             'OBJECT_COMMENTS' => 'bx_market',
             'OBJECT_PRIVACY_VIEW' => 'bx_market_allow_view_to',

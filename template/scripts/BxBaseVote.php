@@ -217,7 +217,7 @@ class BxBaseVote extends BxDolVote
         $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         //--- Do Vote
-        $bTmplVarsDoVote = $bShowDoVote && (!$this->_bLike || ($this->_bLike && $isAllowedVote));
+        $bTmplVarsDoVote = $bShowDoVote && (!$this->_bLike || $bCount || $isAllowedVote);
         $aTmplVarsDoVote = array();
         if($bTmplVarsDoVote)
         	$aTmplVarsDoVote = array(
@@ -239,11 +239,15 @@ class BxBaseVote extends BxDolVote
         	);
 
 		//--- Legend
+		$bTmplVarsLegend = $bShowLegend;
 		$aTmplVarsLegend = array();
-		if($bShowLegend)
+		if($bTmplVarsLegend)
 			$aTmplVarsLegend = array(
 				'legend' => $this->getLegend($aParams)
 			);
+
+		if(!$bTmplVarsDoVote && !$bTmplVarsCounter && !$bTmplVarsLegend)
+			return '';
 
         $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
@@ -261,7 +265,7 @@ class BxBaseVote extends BxDolVote
 				'content' => $aTmplVarsCounter
 			),
             'bx_if:show_legend' => array(
-            	'condition' => $bShowLegend,
+            	'condition' => $bTmplVarsLegend,
             	'content' => $aTmplVarsLegend
             ),
             'script' => $this->getJsScript($bDynamicMode)
@@ -318,7 +322,7 @@ class BxBaseVote extends BxDolVote
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
-		$bDisabled = !$this->isAllowedVote() || ($bVoted && !$this->isUndo());
+		$bDisabled = !$isAllowedVote || ($bVoted && !$this->isUndo());
 
         $sClass = '';
 		if($bShowDoVoteAsButton)

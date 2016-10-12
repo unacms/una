@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `allow_view_to` varchar(32) NOT NULL DEFAULT '3',
@@ -44,6 +45,23 @@ CREATE TABLE IF NOT EXISTS `bx_market_licenses` (
   `domain` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `added` int(11) unsigned NOT NULL default '0',
   `expired` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`,`profile_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_market_licenses_deleted` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL default '0',
+  `product_id` int(11) unsigned NOT NULL default '0',
+  `count` int(11) unsigned NOT NULL default '0',
+  `order` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `license` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `type` varchar(16) collate utf8_unicode_ci NOT NULL default '',
+  `domain` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `added` int(11) unsigned NOT NULL default '0',
+  `expired` int(11) unsigned NOT NULL default '0',
+  `reason` varchar(16) collate utf8_unicode_ci NOT NULL default '',
+  `deleted` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`,`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -218,6 +236,21 @@ CREATE TABLE IF NOT EXISTS `bx_market_reports_track` (
   KEY `report` (`object_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: favorites
+CREATE TABLE IF NOT EXISTS `bx_market_favorites` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bx_market_favorites_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`author_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
@@ -272,9 +305,9 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_market', 'bx_market', 'header_beg_single', '', '', 0, 'block_header', '_bx_market_form_entry_input_sys_header_beg_single', '_bx_market_form_entry_input_header_beg_single', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'header_beg_recurring', '', '', 0, 'block_header', '_bx_market_form_entry_input_sys_header_beg_recurring', '_bx_market_form_entry_input_header_beg_recurring', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'header_beg_privacy', '', '', 0, 'block_header', '_bx_market_form_entry_input_sys_header_beg_privacy', '_bx_market_form_entry_input_header_beg_privacy', '', 0, 1, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_market', 'bx_market', 'header_end_single', '', '', 0, 'block_end', '_bx_market_form_entry_input_sys_header_end_single', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_market', 'bx_market', 'header_end_recurring', '', '', 0, 'block_end', '_bx_market_form_entry_input_sys_header_end_recurring', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_market', 'bx_market', 'header_end_privacy', '', '', 0, 'block_end', '_bx_market_form_entry_input_sys_header_end_privacy', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_market', 'bx_market', 'header_end_single', '', '', 0, 'block_end', '_bx_market_form_entry_input_sys_header_end_single', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_market', 'bx_market', 'header_end_recurring', '', '', 0, 'block_end', '_bx_market_form_entry_input_sys_header_end_recurring', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_market', 'bx_market', 'header_end_privacy', '', '', 0, 'block_end', '_bx_market_form_entry_input_sys_header_end_privacy', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_market', 'bx_market', 'warning_single', '_bx_market_err_not_accept_payments_single', '', 0, 'value', '_bx_market_form_entry_input_sys_warning_single', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'warning_recurring', '_bx_market_err_not_accept_payments_recurring', '', 0, 'value', '_bx_market_form_entry_input_sys_warning_recurring', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
@@ -466,6 +499,10 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_market', 'bx_market_views_track', '86400', '1', 'bx_market_products', 'id', 'views', '', '');
+
+-- FAFORITES
+INSERT INTO `sys_objects_favorite` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_market', 'bx_market_favorites', 'bx_market_favorites_track', '1', 'page.php?i=view-product&id={object_id}', 'bx_market_products', 'id', 'author', 'favorites', '', '');
 
 -- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

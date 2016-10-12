@@ -251,7 +251,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
     function check($iObjectId, $iViewerId = 0)
     {
         if(empty($iViewerId))
-            $iViewerId = bx_get_logged_profile_id();
+            $iViewerId = (int)bx_get_logged_profile_id();
 
         $aObject = $this->_oDb->getObjectInfo($this->convertActionToField($this->_aObject['action']), $iObjectId);
         if(empty($aObject) || !is_array($aObject))

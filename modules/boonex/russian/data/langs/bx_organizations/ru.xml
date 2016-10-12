@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-
 	<string name="_bx_orgs"><![CDATA[Организации]]></string>
+	<string name="_bx_organizations"><![CDATA[Организации]]></string>
 
 	<string name="_bx_orgs_option_autoapproval"><![CDATA[Автоматически активировать все организации после создания]]></string>
 	<string name="_bx_orgs_option_default_acl_level"><![CDATA[Уровень, назначаемый созданному профилю организации по умолчанию]]></string>

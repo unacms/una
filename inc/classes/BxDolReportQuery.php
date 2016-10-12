@@ -60,7 +60,7 @@ class BxDolReportQuery extends BxDolObjectQuery
         $bExists = (int)$this->getOne($sQuery) != 0;
 
         if(!$bExists)
-            $sQuery = $this->prepare("INSERT INTO {$this->_sTable} SET `object_id` = ?, `count` = '1'", $iObjectId);
+            $sQuery = $this->prepare("INSERT INTO `{$this->_sTable}` SET `object_id` = ?, `count` = '1'", $iObjectId);
         else
             $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `count` = `count` + 1 WHERE `object_id` = ?", $iObjectId);
 

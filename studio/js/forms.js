@@ -37,7 +37,7 @@ function fviuDelete(sName, oLink) {
  * Functions for "Form View Translatable" fields. 
  */
 function fvtTogglePopup(sName, oLink) {
-	var oPopup = $('#bx-form-field-translator-popup-' + sName);
+	var oPopup = $(oLink).parents('.bx-form-input-translator:first').find('#bx-form-field-translator-popup-' + sName);
     if(oPopup.filter(':visible').length > 0) {
         oPopup.dolPopupHide();
         return;
@@ -52,20 +52,20 @@ function fvtTogglePopup(sName, oLink) {
 };
 
 function fvtSelectLanguage(sName, sLangName, oLink) {
+	var oTranslator = $(oLink).parents('.bx-form-input-translator:first');
+
 	//--- Update popup languages
 	var sId = '#bx-form-language-' + sName + '-' + sLangName;
     $(oLink).parent().siblings('.active:visible').hide().siblings('.not-active:hidden').show().siblings(sId + '-pas:visible').hide().siblings(sId + '-act:hidden').show();
 
     //--- Update current language
-    var sIdElement = '#bx-form-element-' + sName;
-    $(sIdElement).find('.bx-form-input-language-current').css('background-image', $(oLink).parent('.bx-form-input-language').css('background-image')).find('a').html($(oLink).html());
-
-    //--- Update inputs
-    var sIdInput = '#bx-form-input-' + sName + '-' + sLangName;
-    $(sIdElement).find('.bx-form-input-text:visible, .bx-form-input-textarea:visible').hide().siblings(sIdInput + ':hidden').show();
+    oTranslator.find('.bx-form-input-language-current').css('background-image', $(oLink).parent('.bx-form-input-language').css('background-image')).find('a').html($(oLink).html());
 
     //--- Close selector
-    $('#bx-form-field-translator-popup-' + sName).dolPopupHide();
+    oTranslator.find('#bx-form-field-translator-popup-' + sName).dolPopupHide();
+
+    //--- Update inputs
+    $(oLink).parents('#bx-form-element-' + sName + ':first').find('.bx-form-input-text:visible, .bx-form-input-textarea:visible').hide().siblings('#bx-form-input-' + sName + '-' + sLangName + ':hidden').show();    
 };
 
 /** @} */

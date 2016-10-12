@@ -27,7 +27,34 @@ class BxDolStudioFormsField extends BxDol
         parent::__construct();
 
         $this->oDb = new BxDolStudioFormsQuery();
-        $this->aTypes = array('block_header', 'text', 'datepicker', 'datetime', 'number', 'checkbox', 'password', 'slider', 'doublerange', 'hidden', 'switcher', 'reset', 'submit', 'textarea', 'select', 'select_multiple', 'checkbox_set', 'radio_set', 'value', 'captcha', 'file', 'files', 'custom');
+
+        $this->aTypes = array(
+        	'block_header' => array('add' => 1), 
+        	'text' => array('add' => 1), 
+        	'datepicker' => array('add' => 1), 
+        	'datetime' => array('add' => 1), 
+        	'number' => array('add' => 1), 
+        	'checkbox' => array('add' => 1), 
+        	'password' => array('add' => 1), 
+        	'slider' => array('add' => 1), 
+        	'doublerange' => array('add' => 1), 
+        	'hidden' => array('add' => 1), 
+        	'switcher' => array('add' => 1), 
+        	'reset' => array('add' => 1), 
+        	'submit' => array('add' => 1), 
+        	'textarea' => array('add' => 1), 
+        	'select' => array('add' => 1), 
+        	'select_multiple' => array('add' => 1), 
+        	'checkbox_set' => array('add' => 1), 
+        	'radio_set' => array('add' => 1), 
+        	'value' => array('add' => 1), 
+        	'file' => array('add' => 1), 
+        	'files' => array('add' => 1),
+        	'captcha' => array('add' => 0),
+        	'location' => array('add' => 0), 
+        	'custom' => array('add' => 0)
+        );
+
         $this->aTypesRelated = array(
             'select_multiple' => array('types' => array('select_multiple', 'checkbox_set'), 'reload_on_change' => 0),
             'checkbox_set' => array('types' => array('select_multiple', 'checkbox_set'), 'reload_on_change' => 0),
@@ -47,8 +74,11 @@ class BxDolStudioFormsField extends BxDol
 
         $this->aParams = $aParams;
         $this->aField = $aField;
+    }
 
-        if(isset($this->aParams['object']) && isset($this->aParams['display'])) {
+    public function init()
+    {
+    	if(isset($this->aParams['object']) && isset($this->aParams['display'])) {
             $aForm = array();
             $this->oDb->getForms(array('type' => 'by_object_display', 'object' => $this->aParams['object'], 'display' => $this->aParams['display']), $aForm, false);
 
@@ -56,12 +86,12 @@ class BxDolStudioFormsField extends BxDol
         }
     }
 
-    function canAdd()
+    public function canAdd()
     {
         return isset($this->aParams['table']) && !empty($this->aParams['table']);
     }
 
-    function alterAdd($sName)
+    public function alterAdd($sName)
     {
         if(!isset($this->aParams['table'], $this->aParams['table_alter'], $this->aParams['table_field_type']) || $this->aParams['table_alter'] !== true)
             return '';
@@ -69,7 +99,7 @@ class BxDolStudioFormsField extends BxDol
         return $this->oDb->alterAdd($this->aParams['table'], $sName, $this->aParams['table_field_type']);
     }
 
-	function alterChange($sNameOld, $sNameNews)
+	public function alterChange($sNameOld, $sNameNews)
     {
         if(!isset($this->aParams['table'], $this->aParams['table_alter'], $this->aParams['table_field_type']) || $this->aParams['table_alter'] !== true)
             return '';
@@ -77,7 +107,7 @@ class BxDolStudioFormsField extends BxDol
         return $this->oDb->alterChange($this->aParams['table'], $sNameOld, $sNameNews, $this->aParams['table_field_type']);
     }
 
-    function alterRemove($sName)
+    public function alterRemove($sName)
     {
         if(!isset($this->aParams['table'], $this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)
             return '';

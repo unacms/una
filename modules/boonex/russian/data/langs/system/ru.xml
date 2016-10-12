@@ -32,6 +32,12 @@
 	<string name="_Empty"><![CDATA[Пусто]]></string>
 	<string name="_Error"><![CDATA[Ошибка]]></string>
 	<string name="_Failed"><![CDATA[Неудача]]></string>
+	<string name="_favorite_counter"><![CDATA[{0}]]></string>
+	<string name="_favorite_do_favorite"><![CDATA[Фаворит]]></string>
+	<string name="_favorite_do_favorite_by"><![CDATA[Добавили в фавориты]]></string>
+	<string name="_favorite_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string>
+	<string name="_favorite_err_duplicate_favorite"><![CDATA[Вы уже добавляли данный объект в список фаворитов ранее.]]></string>
+	<string name="_favorite_err_not_enabled"><![CDATA[Действие не доступно в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_Female"><![CDATA[Женщина]]></string>
 	<string name="_From"><![CDATA[От]]></string>
 	<string name="_Header"><![CDATA[Заголовок]]></string>
@@ -772,6 +778,7 @@
 	<string name="_adm_form_txt_field_type_hidden"><![CDATA[спрятано]]></string>
 	<string name="_adm_form_txt_field_type_image"><![CDATA[картинка]]></string>
 	<string name="_adm_form_txt_field_type_input_set"><![CDATA[набор полей ввода]]></string>
+	<string name="_adm_form_txt_field_type_location"><![CDATA[местонахождение]]></string>
 	<string name="_adm_form_txt_field_type_number"><![CDATA[число]]></string>
 	<string name="_adm_form_txt_field_type_password"><![CDATA[пароль]]></string>
 	<string name="_adm_form_txt_field_type_radio_set"><![CDATA[набор переключателей]]></string>
@@ -1462,6 +1469,8 @@
 	<string name="_sys_acl_action_delete_account"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Удалить аккаунт, также удалить содержимое аккаунта.]]></string>
 	<string name="_sys_acl_action_every_period"><![CDATA[ каждые {4} часа]]></string>
+	<string name="_sys_acl_action_favorite"><![CDATA[Фавориты - Добавлять]]></string>
+	<string name="_sys_acl_action_favorite_view"><![CDATA[Фавориты - Просматривать]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[Вы достигли лимита. Ваше текущее членство ({2}) позволяет {1} не более {3} раз]]></string>
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Ваше текущее членство ({2}) не позволяет '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Ваше текущее членство ({2}) более не позволяет '{1}' {5}.]]></string>
@@ -1591,10 +1600,9 @@
 <p>Для получения дополнительной информации, пожалуйста, перейдите на <a href="{report_url}">страницу контента</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Привет!</p>
-<p>Пожалуйста, перейдите по ссылке подтверждения имейла:</p>
-<p><a href="{conf_link}">{conf_link}</a></p>
-<p>Спасибо.</p>
+<p>Привет, {name}.</p>
+<p>Пожалуйста, подтвердите ваш имейл, перейдя по ссылке:</p>
+<p><a href="{conf_link}">Подтвердить имейл</a></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Модуль: <b>{Module}</b></p>

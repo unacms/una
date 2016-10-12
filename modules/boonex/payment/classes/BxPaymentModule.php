@@ -377,11 +377,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 		$aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
 
-		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
-		bx_import('BxDolAlerts');
-        $oZ = new BxDolAlerts('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
-        $oZ->alert();
-		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+		$this->onPaymentRegisterBefore($aPending);
 
 		//--- Check "Pay Before Join" situation
 		if((int)$aPending['client_id'] == 0)
@@ -498,11 +494,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if($bResult) {
         	$this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
 
-			//--- 'System' -> 'Register Payment' for Alerts Engine ---//
-			bx_import('BxDolAlerts');
-	        $oZ = new BxDolAlerts('system', 'register_payment', 0, $iClientId, array('pending' => $aPending));
-	        $oZ->alert();
-			//--- 'System' -> 'Register Payment' for Alerts Engine ---//
+        	$this->onPaymentRegister($aPending);
         }
 
         return $bResult;
@@ -531,7 +523,11 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		if($iCanceled != count($aOrders))
 			return false;
 
-		return $this->_oDb->deleteOrderPending($aPending['id']);
+		$bResult = $this->_oDb->deleteOrderPending($aPending['id']);
+		if($bResult)
+			$this->onPaymentRefund($aPending);
+
+		return $bResult;
 	}
 
 	public function cancelSubscription($mixedPending)
@@ -543,6 +539,43 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		$aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
         foreach($aItems as $aItem)
 			$this->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
+
+		$this->onSubscriptionCancel($aPending);
+	}
+
+	public function onPaymentRegisterBefore($aPending, $aResult = array())
+	{
+		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+		bx_alert('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+	}
+
+	public function onPaymentRegister($aPending, $aResult = array())
+	{
+		//--- 'System' -> 'Register Payment' for Alerts Engine ---//
+		bx_alert('system', 'register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+		//--- 'System' -> 'Register Payment' for Alerts Engine ---//
+	}
+
+	public function onPaymentRefund($aPending, $aResult = array())
+	{
+		//--- 'System' -> 'Refund Payment' for Alerts Engine ---//
+		bx_alert('system', 'refund_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+		//--- 'System' -> 'Refund Payment' for Alerts Engine ---//
+	}
+
+	public function onSubscriptionCreate($aPending, $aResult = array())
+	{
+		//--- 'System' -> 'Create Subscription' for Alerts Engine ---//
+		bx_alert('system', 'create_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+		//--- 'System' -> 'Create Subscription' for Alerts Engine ---//
+	}
+
+	public function onSubscriptionCancel($aPending, $aResult = array())
+	{
+		//--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
+		bx_alert('system', 'cancel_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+		//--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
 	}
 }
 

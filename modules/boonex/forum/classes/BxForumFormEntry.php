@@ -94,6 +94,14 @@ class BxForumFormEntry extends BxBaseModTextFormEntry
 
         return parent::isValid ();
     }
+
+    public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
+    {
+        if (!$isAssociateWithContent && bx_get('draft_id')) // when draft is already saved then db update is called but we still need to do association since it's draft
+            $isAssociateWithContent = true; // TODO: if edit mode will be added, then this functionality maybe reconsidered
+         
+        return parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent);
+    }
 }
 
 /** @} */

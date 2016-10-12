@@ -231,8 +231,16 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
 
         $CNF = &$this->_oConfig->CNF;
-
-        return $this->_entitySocialSharing ($iContentId, $iContentId, 0, $oGroupProfile->getDisplayName(), false, false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
+        return $this->_entitySocialSharing ($iContentId, array(
+            'id_timeline' => $iContentId,
+            'id_thumb' => 0,
+            'title' => $oGroupProfile->getDisplayName(),
+            'object_storage' => false,
+            'object_transcoder' => false,
+            'object_vote' => $CNF['OBJECT_VOTES'],
+        	'object_report' => $CNF['OBJECT_REPORTS'],
+            'uri_view_entry' => $CNF['URI_VIEW_ENTRY']
+        ));
     }
 
 	/**
