@@ -299,6 +299,12 @@ EOS;
      */
     function genViewRowValue(&$aInput)
     {
+        if (!empty($aInput['name'])) {
+            $sCustomMethod = 'genCustomViewRowValue' . $this->_genMethodName($aInput['name']);
+            if (method_exists($this, $sCustomMethod))
+                return $this->$sCustomMethod($aInput);
+        }
+
         switch ($aInput['type']) {
 
             case 'hidden':
@@ -342,6 +348,10 @@ EOS;
                 else
                     $sValue = null;
             break;
+
+            case 'custom':
+                $sValue = isset($aInput['content']) && '' !== $aInput['content'] ? bx_process_output($aInput['content'], BX_DATA_HTML) : null;
+                break;
 
             default:
                 $sValue = isset($aInput['value']) && '' !== $aInput['value'] ? bx_process_output($aInput['value']) : null;
