@@ -17,7 +17,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_convos
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_convos';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_convos';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_convos';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_convos_entry_add', 'bx_convos_entry_view', 'bx_convos_entry_delete');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_convos_entry_add', 'bx_convos_entry_edit', 'bx_convos_entry_view', 'bx_convos_entry_delete');
 
 -- STUDIO: page & widget
 

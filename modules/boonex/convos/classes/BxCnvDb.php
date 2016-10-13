@@ -21,7 +21,7 @@ class BxCnvDb extends BxBaseModTextDb
 
     public function conversationToFolder($iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum = -1)
     {
-        $sQuery = $this->prepare("INSERT INTO `" . $this->getPrefix() . "conv2folder` SET `conv_id` = ?, `folder_id` = ?, `collaborator` = ?, `read_comments` = ?", $iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum);
+        $sQuery = $this->prepare("INSERT IGNORE INTO `" . $this->getPrefix() . "conv2folder` SET `conv_id` = ?, `folder_id` = ?, `collaborator` = ?, `read_comments` = ?", $iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum);
         return $this->query($sQuery);
     }
 
@@ -35,6 +35,12 @@ class BxCnvDb extends BxBaseModTextDb
     {
         $sQuery = $this->prepare("SELECT `folder_id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ? AND `collaborator` = ?", $iConversationId, $iProfileCollaborator);
         return $this->getOne($sQuery);
+    }
+
+    public function removeCollaborator($iConversationId, $iProfileId) 
+    {
+        $sQuery = $this->prepare("DELETE FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ? AND `collaborator` = ?", $iConversationId, $iProfileId);
+        return $this->query($sQuery);
     }
 
     public function getCollaborators($iConversationId)
