@@ -219,8 +219,9 @@ class BxBaseModGeneralModule extends BxDolModule
         	'title' => $aContentInfo[$CNF['FIELD_TITLE']],
         	'object_storage' => $CNF['OBJECT_STORAGE'],
             'object_transcoder' => false,
-        	'object_vote' => $CNF['OBJECT_VOTES'],
-        	'object_report' => $CNF['OBJECT_REPORTS'],
+        	'object_vote' => !empty($CNF['OBJECT_VOTES']) ? $CNF['OBJECT_VOTES'] : '',
+        	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
+        	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
         	'uri_view_entry' => $CNF['URI_VIEW_ENTRY'],
         ));
     }

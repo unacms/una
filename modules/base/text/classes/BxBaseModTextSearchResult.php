@@ -66,6 +66,56 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         return parent::getCurrentOnclick($aAdditionalParams, $bReplacePagesParams);
     }
 
+    protected function _updateCurrentForAuthor($sMode, $aParams, &$oProfileAuthor)
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
+        if (!$oProfileAuthor) {
+            $this->isError = true;
+            break;
+        }
+
+        $iProfileAuthor = $oProfileAuthor->id();
+        $this->aCurrent['restriction']['author']['value'] = $iProfileAuthor;
+
+        if(!empty($aParams['except']))
+        	$this->aCurrent['restriction']['except']['value'] = is_array($aParams['except']) ? $aParams['except'] : array($aParams['except']); 
+
+        if(!empty($aParams['per_page']))
+        	$this->aCurrent['paginate']['perPage'] = is_numeric($aParams['per_page']) ? (int)$aParams['per_page'] : (int)getParam($aParams['per_page']);
+
+        $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
+        $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
+        $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $iProfileAuthor;
+    }
+
+    protected function _updateCurrentForFavorite($sMode, $aParams, &$oProfileAuthor)
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
+        if (!$oProfileAuthor) {
+            $this->isError = true;
+            break;
+        }
+
+        $iProfileAuthor = $oProfileAuthor->id();
+        $oFavorite = $this->oModule->getObjectFavorite();
+        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()){
+            $this->isError = true;
+            break;
+        }
+
+        $aConditions = $oFavorite->getConditionsTrack($this->aCurrent['table'], 'id', $iProfileAuthor);
+        if(!empty($aConditions) && is_array($aConditions))
+            $this->aCurrent = array_merge($this->aCurrent, $aConditions);
+
+        $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
+        $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
+        $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $iProfileAuthor;
+    }
+
     function _getPseud ()
     {
         return array(
