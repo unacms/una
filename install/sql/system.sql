@@ -3706,11 +3706,11 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdHome = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(4, 'dashboard', '_adm_page_cpt_dashboard', '_adm_page_cpt_dashboard', 'pi-dashboard.png');
+(4, 'dashboard', '_adm_page_cpt_dashboard', '_adm_page_cpt_dashboard', 'wi-dashboard.svg');
 SET @iIdDashboard = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'settings', '_adm_page_cpt_settings', '_adm_page_cpt_settings', 'pi-settings.png');
+(3, 'settings', '_adm_page_cpt_settings', '_adm_page_cpt_settings', 'wi-settings.svg');
 SET @iIdSettings = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
@@ -3718,7 +3718,7 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdStore = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'designer', '_adm_page_cpt_designer', '_adm_page_cpt_designer', 'pi-designer.png');
+(3, 'designer', '_adm_page_cpt_designer', '_adm_page_cpt_designer', 'wi-designer.svg');
 SET @iIdDesigner = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
@@ -3726,19 +3726,19 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdPolyglot = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'builder_pages', '_adm_page_cpt_builder_pages', '_adm_page_cpt_builder_pages', 'pi-builder-pages.png');
+(3, 'builder_pages', '_adm_page_cpt_builder_pages', '_adm_page_cpt_builder_pages', 'wi-bld-pages.svg');
 SET @iIdBuilderPages = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'builder_menus', '_adm_page_cpt_builder_menus', '_adm_page_cpt_builder_menus', 'pi-builder-menus.png');
+(3, 'builder_menus', '_adm_page_cpt_builder_menus', '_adm_page_cpt_builder_menus', 'wi-bld-navigation.svg');
 SET @iIdBuilderMenus = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'builder_forms', '_adm_page_cpt_builder_forms', '_adm_page_cpt_builder_forms', 'pi-builder-forms.png');
+(3, 'builder_forms', '_adm_page_cpt_builder_forms', '_adm_page_cpt_builder_forms', 'wi-bld-forms.svg');
 SET @iIdBuilderForms = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'builder_permissions', '_adm_page_cpt_builder_permissions', '_adm_page_cpt_builder_permissions', 'pi-builder-permissions.png');
+(3, 'builder_permissions', '_adm_page_cpt_builder_permissions', '_adm_page_cpt_builder_permissions', 'wi-bld-permissions.svg');
 SET @iIdBuilderPermissions = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
@@ -3750,7 +3750,7 @@ SET @iIdManagerStorages = LAST_INSERT_ID();
 -- Home Page
 --
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdSettings, 'system', '{url_studio}settings.php', '', 'wi-settings.png', '_adm_wgt_cpt_settings', '', '');
+(@iIdSettings, 'system', '{url_studio}settings.php', '', 'wi-settings.svg', '_adm_wgt_cpt_settings', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 1);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
@@ -3758,7 +3758,7 @@ INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `capt
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 2);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdDashboard, 'system', '{url_studio}dashboard.php', '', 'wi-dashboard.png', '_adm_wgt_cpt_dashboard', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"get_widget_notices";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', '');
+(@iIdDashboard, 'system', '{url_studio}dashboard.php', '', 'wi-dashboard.svg', '_adm_wgt_cpt_dashboard', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"get_widget_notices";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 3);
 
 
@@ -3766,7 +3766,7 @@ INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iId
 -- Templates Page
 --
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdDesigner, 'system', '{url_studio}designer.php', '', 'wi-templ-designer.png', '_adm_wgt_cpt_designer', '', '');
+(@iIdDesigner, 'system', '{url_studio}designer.php', '', 'wi-designer.svg', '_adm_wgt_cpt_designer', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 1);
 
 
@@ -3782,19 +3782,19 @@ INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iId
 -- Builders Page
 --
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderPages, 'system', '{url_studio}builder_page.php', '', 'wi-bld-pages.png', '_adm_wgt_cpt_builder_pages', '', '');
+(@iIdBuilderPages, 'system', '{url_studio}builder_page.php', '', 'wi-bld-pages.svg', '_adm_wgt_cpt_builder_pages', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 1);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderMenus, 'system', '{url_studio}builder_menu.php', '', 'wi-bld-navigation.png', '_adm_wgt_cpt_builder_menus', '', '');
+(@iIdBuilderMenus, 'system', '{url_studio}builder_menu.php', '', 'wi-bld-navigation.svg', '_adm_wgt_cpt_builder_menus', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 2);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderForms, 'system', '{url_studio}builder_forms.php', '', 'wi-bld-forms.png', '_adm_wgt_cpt_builder_forms', '', '');
+(@iIdBuilderForms, 'system', '{url_studio}builder_forms.php', '', 'wi-bld-forms.svg', '_adm_wgt_cpt_builder_forms', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 3);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderPermissions, 'system', '{url_studio}builder_permissions.php', '', 'wi-bld-permissions.png', '_adm_wgt_cpt_builder_permissions', '', '');
+(@iIdBuilderPermissions, 'system', '{url_studio}builder_permissions.php', '', 'wi-bld-permissions.svg', '_adm_wgt_cpt_builder_permissions', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 4);
 
 

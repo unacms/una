@@ -3,7 +3,7 @@
 
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', 'bx_persons', '_bx_persons', 'bx_persons@modules/boonex/persons/|std-mi.png', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
+('modules', 'bx_persons', '_bx_persons', 'bx_persons@modules/boonex/persons/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)

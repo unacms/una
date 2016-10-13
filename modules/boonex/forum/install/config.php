@@ -16,8 +16,8 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_forum',
-    'title' => 'Forum',
-    'note' => 'Forum module.',
+    'title' => 'Discussions',
+    'note' => 'Discussions module.',
     'version' => '9.0.1.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
@@ -38,7 +38,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Forum',
+    'language_category' => 'Discussions',
     
     /**
      * List of page triggers.
