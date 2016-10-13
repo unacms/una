@@ -145,8 +145,10 @@ class BxBaseFavorite extends BxDolFavorite
 		$iObjectId = $this->getId();
 		$iAuthorId = $this->_getAuthorId();
         $aFavorite = $this->_oQuery->getFavorite($iObjectId);
+        $bCount = (int)$aFavorite['count'] != 0;
 
-        if(!$this->isAllowedFavorite() && (!$this->isAllowedFavoriteView() || (int)$aFavorite['count'] == 0))
+        $bAllowedFavorite = $this->isAllowedFavorite();
+        if(!$bAllowedFavorite && (!$this->isAllowedFavoriteView() || !$bCount))
             return '';
 
         $aParams['is_favorited'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
@@ -157,13 +159,13 @@ class BxBaseFavorite extends BxDolFavorite
             'html_id' => $this->_aHtmlIds['main'],
             'class' => $this->_sStylePrefix . ($bShowDoFavoriteAsButton ? '-button' : '') . ($bShowDoFavoriteAsButtonSmall ? '-button-small' : ''),
             'count' => $aFavorite['count'],
-            'do_favorite' => $this->_getDoFavorite($aParams),
+            'do_favorite' => $this->_getDoFavorite($aParams, $bAllowedFavorite),
             'bx_if:show_counter' => array(
                 'condition' => $bShowCounter,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
         			'bx_if:show_hidden' => array(
-        				'condition' => (int)$aFavorite['count'] == 0,
+        				'condition' => !$bCount,
         				'content' => array()
         			),
                     'counter' => $this->getCounter()
@@ -173,12 +175,12 @@ class BxBaseFavorite extends BxDolFavorite
         ));
     }
 
-    protected function _getDoFavorite($aParams = array())
+    protected function _getDoFavorite($aParams = array(), $bAllowedFavorite = true)
     {
     	$bFavorited = isset($aParams['is_favorited']) && $aParams['is_favorited'] === true;
         $bShowDoFavoriteAsButtonSmall = isset($aParams['show_do_favorite_as_button_small']) && $aParams['show_do_favorite_as_button_small'] == true;
         $bShowDoFavoriteAsButton = !$bShowDoFavoriteAsButtonSmall && isset($aParams['show_do_favorite_as_button']) && $aParams['show_do_favorite_as_button'] == true;
-		$bDisabled = !$this->isAllowedFavorite() || $bFavorited;
+		$bDisabled = !$bAllowedFavorite || ($bFavorited  && !$this->isUndo());
 
         $sClass = '';
 		if($bShowDoFavoriteAsButton)
@@ -193,7 +195,7 @@ class BxBaseFavorite extends BxDolFavorite
             'style_prefix' => $this->_sStylePrefix,
         	'html_id' => $this->_aHtmlIds['do_link'],
             'class' => $sClass,
-            'title' => _t('_favorite_do_favorite'),
+            'title' => bx_html_attribute(_t($this->_getTitleDoFavorite($bFavorited))),
         	'bx_if:show_onclick' => array(
         		'condition' => !$bDisabled,
         		'content' => array(

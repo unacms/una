@@ -34,6 +34,7 @@
 	<string name="_Failed"><![CDATA[Failed]]></string>
 	<string name="_favorite_counter"><![CDATA[{0}]]></string>
 	<string name="_favorite_do_favorite"><![CDATA[Favorite]]></string>
+	<string name="_favorite_do_unfavorite"><![CDATA[Unfavorite]]></string>
 	<string name="_favorite_do_favorite_by"><![CDATA[Favorited by]]></string>
 	<string name="_favorite_err_cannot_perform_action"><![CDATA[Cannot perform the action.]]></string>
 	<string name="_favorite_err_duplicate_favorite"><![CDATA[You already favorited this item.]]></string>

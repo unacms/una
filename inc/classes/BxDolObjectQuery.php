@@ -118,6 +118,12 @@ class BxDolObjectQuery extends BxDolDb
         return $this->_updateTriggerTable($iObjectId, $aEntry);
     }
 
+    public function updateTriggerTableValue($iObjectId, $iValue)
+    {
+        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = `{$this->_sTriggerFieldCount}` + ? WHERE `{$this->_sTriggerFieldId}` = ?", (int)$iValue, $iObjectId);
+        return (int)$this->query($sQuery) > 0;
+    }
+
     protected function _updateTriggerTable($iObjectId, $aEntry)
     {
     	$sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aEntry['count'], $iObjectId);

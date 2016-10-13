@@ -238,6 +238,9 @@ class BxDolObject extends BxDol
         return $oProfile;
     }
 
+    /**
+     * Update Trigger table using data which is automatically gotten from object's internal table.
+     */
 	protected function _trigger()
     {
         if(!$this->_aSystem['trigger_table'])
@@ -248,6 +251,21 @@ class BxDolObject extends BxDol
             return false;
 
         return $this->_oQuery->updateTriggerTable($iId);
+    }
+
+    /**
+     * Update (increment/decrement) Trigger table using provided value.
+     */
+    protected function _triggerValue($iValue)
+    {
+        if(!$this->_aSystem['trigger_table'])
+            return false;
+
+        $iId = $this->getId();
+        if(!$iId)
+            return false;
+
+        return $this->_oQuery->updateTriggerTableValue($iId, $iValue);
     }
 
     /**

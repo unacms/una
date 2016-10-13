@@ -113,6 +113,7 @@ class BxDolFavorite extends BxDolObject
                     `name` AS `name`,
                     `table_track` AS `table_track`,
                     `is_on` AS `is_on`,
+                    `is_undo` AS `is_undo`,
                     `is_public` AS `is_public`,
                     `base_url` AS `base_url`,
                     `trigger_table` AS `trigger_table`,
@@ -148,11 +149,6 @@ class BxDolFavorite extends BxDolObject
     /**
      * Permissions functions
      */
-    public function isPublic()
-    {
-        return (int)$this->_aSystem['is_public'] == 1;
-    }
-
     public function isAllowedFavorite($isPerformAction = false)
     {
         if(isAdmin())
@@ -182,6 +178,19 @@ class BxDolFavorite extends BxDolObject
         return $this->checkActionErrorMsg('favorite_view');
     }
 
+    /**
+     * Auxiliary functions
+     */
+    public function isUndo()
+    {
+        return (int)$this->_aSystem['is_undo'] == 1;
+    }
+
+    public function isPublic()
+    {
+        return (int)$this->_aSystem['is_public'] == 1;
+    }
+
 	/**
      * Internal functions
      */
@@ -190,28 +199,31 @@ class BxDolFavorite extends BxDolObject
         if (!$this->isEnabled())
            return array('code' => 1, 'msg' => _t('_favorite_err_not_enabled'));
 
-	    if(!$this->isAllowedFavorite())
-            return array('code' => 2, 'msg' => $this->msgErrAllowedFavorite());
-
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
         $iAuthorId = $this->_getAuthorId();
 
+        $bUndo = $this->isUndo();
         $bPerformed = $this->_oQuery->isPerformed($iObjectId, $iAuthorId);
-        if($bPerformed)
+        $bPerformUndo = $bPerformed && $bUndo ? true : false;
+
+        if(!$bPerformUndo && !$this->isAllowedFavorite())
+            return array('code' => 2, 'msg' => $this->msgErrAllowedFavorite());
+
+        if($bPerformed && !$bUndo)
         	return array('code' => 3, 'msg' => _t('_favorite_err_duplicate_favorite'));
 
-        $iId = (int)$this->_oQuery->doFavorite($iObjectId, $iAuthorId);
+        $iId = (int)$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId);
         if($iId == 0)
             return array('code' => 4, 'msg' => _t('_favorite_err_cannot_perform_action'));
 
-        if(!$this->isAllowedFavorite(true))
-            return array('code' => 2, 'msg' => $this->msgErrAllowedFavorite());
+        if(!$bPerformUndo)
+            $this->isAllowedFavorite(true);
 
-        $this->_trigger();
+        $this->_triggerValue($bPerformUndo ? -1 : 1);
 
-        bx_alert($this->_sSystem, 'favorite', $iObjectId, $iAuthorId, array('favorite_id' => $iId, 'favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        bx_alert('favorite', 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, array('favorite_id' => $iId, 'favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+        bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
         $aFavorite = $this->_oQuery->getFavorite($iObjectId);
         return array(
@@ -222,18 +234,18 @@ class BxDolFavorite extends BxDolObject
         	'countf' => (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : '',
             'label_icon' => $this->_getIconDoFavorite(!$bPerformed),
             'label_title' => _t($this->_getTitleDoFavorite(!$bPerformed)),
-            'disabled' => !$bPerformed
+            'disabled' => !$bPerformed && !$bUndo
         );
     }
 
     protected function _getIconDoFavorite($bPerformed)
     {
-    	return 'star';
+    	return $bPerformed && $this->isUndo() ?  'star-o' : 'star';
     }
 
     protected function _getTitleDoFavorite($bPerformed)
     {
-    	return '_favorite_do_favorite';
+    	return $bPerformed && $this->isUndo() ? '_favorite_do_unfavorite' : '_favorite_do_favorite';
     }
 }
 

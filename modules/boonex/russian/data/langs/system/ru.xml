@@ -34,6 +34,7 @@
 	<string name="_Failed"><![CDATA[Неудача]]></string>
 	<string name="_favorite_counter"><![CDATA[{0}]]></string>
 	<string name="_favorite_do_favorite"><![CDATA[В избранное]]></string>
+	<string name="_favorite_do_unfavorite"><![CDATA[Из избранного]]></string>
 	<string name="_favorite_do_favorite_by"><![CDATA[Добавили в избранное]]></string>
 	<string name="_favorite_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string>
 	<string name="_favorite_err_duplicate_favorite"><![CDATA[Вы уже добавляли данный объект в избранное ранее.]]></string>

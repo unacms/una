@@ -1186,6 +1186,7 @@ CREATE TABLE `sys_objects_favorite` (
   `name` varchar(64) NOT NULL,
   `table_track` varchar(32) NOT NULL,
   `is_on` tinyint(4) NOT NULL default '1',
+  `is_undo` tinyint(4) NOT NULL default '1',
   `is_public` tinyint(4) NOT NULL default '1',
   `base_url` varchar(256) NOT NULL default '',
   `trigger_table` varchar(32) NOT NULL,

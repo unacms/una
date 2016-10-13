@@ -55,12 +55,6 @@ class BxDolFavoriteQuery extends BxDolObjectQuery
         $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
         return (int)$this->query($sQuery) > 0;
     }
-
-    public function updateTriggerTable($iObjectId)
-    {
-        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = `{$this->_sTriggerFieldCount}` + 1 WHERE `{$this->_sTriggerFieldId}` = ?", $iObjectId);
-        return (int)$this->query($sQuery) > 0;
-    }
 }
 
 /** @} */

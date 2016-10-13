@@ -54,7 +54,6 @@ BxDolFavorite.prototype.favorite = function(oLink) {
 
 BxDolFavorite.prototype.onFavorite = function(oData, oElement)
 {
-	console.log(oData);
 	if(oData && oData.msg != undefined && oData.msg.length > 0)
         alert(oData.msg);
 
@@ -73,7 +72,6 @@ BxDolFavorite.prototype.onFavorite = function(oData, oElement)
 		$(oElement).removeAttr('onclick').addClass($(oElement).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-favorite-disabled');
 
     var oCounter = this._getCounter(oElement);
-    console.log(oCounter, oData.countf);
     if(oCounter && oCounter.length > 0) {
     	oCounter.html(oData.countf);
 
