@@ -73,18 +73,16 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         foreach($this->aIncludes as $sName => $oInclude)
             $sIncludes .= $oInclude->getJsCode();
 
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('launcher.html', array(
+        $s = BxDolStudioTemplate::getInstance()->parseHtmlByName('launcher.html', array(
             'js_object' => $this->getPageJsObject(),
             'includes' => $sIncludes,
             'items' => parent::getPageCode($bHidden),
-        	'tour_theme' => $this->_sTourTheme,
-        	'bx_if:show_tour' => array(
-        		'condition' => getParam('site_tour_studio') == 'on',
-        		'content' => array(
-        			'tour_theme' => $this->_sTourTheme,
-        		)
-        	)
         ));
+
+        if (getParam('site_tour_studio') == 'on')
+            $s .= BxDolStudioTemplate::getInstance()->parseHtmlByName('launcher_tour.html', array('tour_theme' => $this->_sTourTheme));
+
+        return $s;
     }
 
 	public function serviceGetCacheUpdater()
