@@ -59,9 +59,9 @@ class BxDolFavorite extends BxDolObject
     /**
      * Constructor
      */
-    function __construct($sSystem, $iId, $iInit = true)
+    function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
-        parent::__construct($sSystem, $iId, $iInit, $oTemplate = false);
+        parent::__construct($sSystem, $iId, $iInit);
         if(empty($this->_sSystem))
             return;
 

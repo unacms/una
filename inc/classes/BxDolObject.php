@@ -91,12 +91,75 @@ class BxDolObject extends BxDol
 	/**
 	 * Interface functions for outer usage
 	 */
+    public function getConditions($sMainTable, $sMainField)
+    {
+        if(!$this->isEnabled())
+            return array();
+
+        $sTable = isset($this->_aSystem['table_main']) ? $this->_aSystem['table_main'] : '';
+        if(empty($sTable) || empty($sMainTable) || empty($sMainField))
+            return array();
+
+        return array(
+            'join' => array (
+                'objects_' . $this->_sSystem => array(
+                    'type' => 'INNER',
+                    'table' => $sTable,
+                    'mainTable' => $sMainTable,
+                    'mainField' => $sMainField,
+                    'onField' => 'object_id',
+                    'joinFields' => array('count'),
+                ),
+            ),
+        );
+    }
+
+    public function getConditionsTrack($sMainTable, $sMainField, $iAuthorId = 0)
+    {
+        if(!$this->isEnabled())
+            return array();
+
+        $sTableTrack = isset($this->_aSystem['table_track']) ? $this->_aSystem['table_track'] : '';
+        if(empty($sTableTrack) || empty($sMainTable) || empty($sMainField))
+            return array();
+
+        return array(
+            'restriction' => array (
+                'objects_' . $this->_sSystem . '_author' => array(
+                    'value' => $iAuthorId,
+                    'field' => 'author_id',
+                    'operator' => '=',
+                    'table' => $sTableTrack,
+                ),
+            ),
+            'join' => array (
+                'objects_' . $this->_sSystem => array(
+                    'type' => 'INNER',
+                    'table' => $sTableTrack,
+                    'mainTable' => $sMainTable,
+                    'mainField' => $sMainField,
+                    'onField' => 'object_id',
+                    'joinFields' => array('author_id'),
+                ),
+            ),
+
+        );
+    }
+    
 	public function getSqlParts($sMainTable, $sMainField)
     {
         if(!$this->isEnabled())
             return array();
 
         return $this->_oQuery->getSqlParts($sMainTable, $sMainField);
+    }
+
+    public function getSqlPartsTrack($sMainTable, $sMainField, $iAuthorId = 0)
+    {
+        if(!$this->isEnabled())
+            return array();
+
+        return $this->_oQuery->getSqlPartsTrack($sMainTable, $sMainField, $iAuthorId);
     }
 
     public function addMarkers($aMarkers)

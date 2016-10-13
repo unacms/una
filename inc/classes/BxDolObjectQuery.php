@@ -38,6 +38,9 @@ class BxDolObjectQuery extends BxDolDb
         $this->_sTriggerFieldCount = isset($aSystem['trigger_field_count']) ? $aSystem['trigger_field_count'] : '';
     }
 
+    /**
+     * Get SQL parts for main table. 
+     */
     public function getSqlParts($sMainTable, $sMainField)
     {
         if(empty($this->_sTable) || empty($sMainTable) || empty($sMainField))
@@ -49,13 +52,17 @@ class BxDolObjectQuery extends BxDolDb
         );
     }
 
-    public function getSqlPartsTrack($sMainTable, $sMainField)
+    /**
+     * Get SQL parts for track table. 
+     */
+    public function getSqlPartsTrack($sMainTable, $sMainField, $iAuthorId = 0)
     {
         if(empty($this->_sTableTrack) || empty($sMainTable) || empty($sMainField))
             return array();
 
         return array (
             'fields' => ", `{$this->_sTableTrack}`.`author_id` as `favorer_id` ",
+            'where' => $this->prepareAsString(" AND `{$this->_sTableTrack}`.`author_id` = ?", $iAuthorId),
             'join' => " LEFT JOIN `{$this->_sTableTrack}` ON (`{$this->_sTableTrack}`.`object_id` = `{$sMainTable}`.`{$sMainField}`) ",
         );
     }
