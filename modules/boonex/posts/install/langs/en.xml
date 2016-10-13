@@ -91,6 +91,8 @@
     <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>
     <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts by {display_name}]]></string>
+    <string name="_bx_posts_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_posts_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>   
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Posts actions]]></string>

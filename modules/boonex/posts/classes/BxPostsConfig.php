@@ -73,6 +73,7 @@ class BxPostsConfig extends BxBaseModTextConfig
         	'OBJECT_REPORTS' => 'bx_posts',
             'OBJECT_VIEWS' => 'bx_posts',
             'OBJECT_VOTES' => 'bx_posts',
+        	'OBJECT_FAVORITES' => 'bx_posts',
             'OBJECT_METATAGS' => 'bx_posts',
             'OBJECT_COMMENTS' => 'bx_posts',
             'OBJECT_PRIVACY_VIEW' => 'bx_posts_allow_view_to',
@@ -112,6 +113,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_posts_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_posts_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_posts_txt_all_entries_by',
+                'txt_all_entries_by_author' => '_bx_posts_page_title_browse_by_author',
             	'txt_pict_use_as_thumb' => '_bx_posts_form_entry_input_picture_use_as_thumb'
             ),
         );
