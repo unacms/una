@@ -11,7 +11,7 @@ INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
 
 -- Alerts
 
-INSERT INTO `sys_alerts_handlers` SET `name` = 'bx_tricon', `class` = 'BxTriConAlerts', `file` = 'modules/boonex/dolphin_connect/classes/BxTriConAlerts.php';
+INSERT INTO `sys_alerts_handlers` SET `name` = 'bx_tricon', `class` = 'BxTriConAlerts', `file` = 'modules/boonex/trident_connect/classes/BxTriConAlerts.php';
 
 SET @iHandlerId := (SELECT `id` FROM `sys_alerts_handlers`  WHERE `name` = 'bx_tricon');
 
@@ -24,7 +24,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', 'bx_tricon', '_bx_tricon_adm_stg_cpt_type', 'bx_tricon@modules/boonex/tricon/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
+('modules', 'bx_tricon', '_bx_tricon_adm_stg_cpt_type', 'bx_tricon@modules/boonex/trident_connect/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  
@@ -45,7 +45,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 -- Pages
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_tricon_error', 'tricon-error', '_bx_tricon_error', '_bx_tricon_error', 'bx_tricon', 5, 2147483647, 0, '', '', '', '', 0, 1, 0, 'BxTriConPage', 'modules/boonex/tricon/classes/BxTriConPage.php');
+('bx_tricon_error', 'tricon-error', '_bx_tricon_error', '_bx_tricon_error', 'bx_tricon', 5, 2147483647, 0, '', '', '', '', 0, 1, 0, 'BxTriConPage', 'modules/boonex/trident_connect/classes/BxTriConPage.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_tricon_error', 1, 'bx_tricon', '_bx_tricon_error', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_tricon\";s:6:\"method\";s:10:\"last_error\";}', 0, 0, 1, 1);

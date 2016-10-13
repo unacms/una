@@ -11,7 +11,7 @@ INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
 
 -- Alerts
 
-INSERT INTO `sys_alerts_handlers` SET `name` = 'bx_twitter', `class` = 'BxTwitterAlerts', `file` = 'modules/boonex/dolphin_connect/classes/BxTwitterAlerts.php';
+INSERT INTO `sys_alerts_handlers` SET `name` = 'bx_twitter', `class` = 'BxTwitterAlerts', `file` = 'modules/boonex/twitter_connect/classes/BxTwitterAlerts.php';
 
 SET @iHandlerId := (SELECT `id` FROM `sys_alerts_handlers`  WHERE `name` = 'bx_twitter');
 
@@ -24,7 +24,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', 'bx_twitter', '_bx_twitter_adm_stg_cpt_type', 'bx_twitter@modules/boonex/twitter/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
+('modules', 'bx_twitter', '_bx_twitter_adm_stg_cpt_type', 'bx_twitter@modules/boonex/twitter_connect/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  
@@ -42,7 +42,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 -- Pages
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_twitter_error', 'twitter-error', '_bx_twitter_error', '_bx_twitter_error', 'bx_twitter', 5, 2147483647, 0, '', '', '', '', 0, 1, 0, 'BxTwitterPage', 'modules/boonex/twitter/classes/BxTwitterPage.php');
+('bx_twitter_error', 'twitter-error', '_bx_twitter_error', '_bx_twitter_error', 'bx_twitter', 5, 2147483647, 0, '', '', '', '', 0, 1, 0, 'BxTwitterPage', 'modules/boonex/twitter_connect/classes/BxTwitterPage.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_twitter_error', 1, 'bx_twitter', '_bx_twitter_error', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_twitter\";s:6:\"method\";s:10:\"last_error\";}', 0, 0, 1, 1);

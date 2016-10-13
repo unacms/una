@@ -76,6 +76,14 @@ class BxDolStudioUtils extends BxDol
 			$sModuleIcon = $aModule['name'] . '@modules/' . $aModule['dir'] . '|std-' . $aType2Prefix[$sType] . '.png';
         $sModuleIconUrl = BxDolStudioTemplate::getInstance()->getIconUrl($sModuleIcon);
 
+        if(empty($sModuleIconUrl)) {
+            if(isset($aModule['path']))
+    			$sModuleIcon = $aModule['name'] . '@modules/' . $aModule['path'] . '|std-icon.svg';
+    		else if(isset($aModule['dir']))
+    			$sModuleIcon = $aModule['name'] . '@modules/' . $aModule['dir'] . '|std-icon.svg';
+            $sModuleIconUrl = BxDolStudioTemplate::getInstance()->getIconUrl($sModuleIcon);
+        }
+
         return !empty($sModuleIcon) && !empty($sModuleIconUrl) ? ($bReturnAsUrl ? $sModuleIconUrl : $sModuleIcon) : $sDefaultIcon;
     }
 
