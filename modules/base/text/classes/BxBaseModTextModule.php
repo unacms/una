@@ -92,6 +92,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
      */
     public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
     {
+        $oProfile = null;
         if((int)$iProfileId)
             $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile && bx_get('profile_id') !== false)
