@@ -83,13 +83,20 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                     break;
                 }
 
-                $aConditions = $this->oModule->getObjectFavorite()->getConditionsTrack($this->aCurrent['table'], 'id', $oProfileAuthor->id());
+                $iProfileAuthor = $oProfileAuthor->id();
+                $oFavorite = $this->oModule->getObjectFavorite();
+                if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()){
+                    $this->isError = true;
+                    break;
+                }
+
+                $aConditions = $oFavorite->getConditionsTrack($this->aCurrent['table'], 'id', $iProfileAuthor);
                 if(!empty($aConditions) && is_array($aConditions))
                     $this->aCurrent = array_merge($this->aCurrent, $aConditions);
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_by_author');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $oProfileAuthor->id();
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $iProfileAuthor;
                 break;
 
             case 'public':
