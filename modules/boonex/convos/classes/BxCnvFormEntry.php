@@ -26,6 +26,16 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         ));
     }
 
+    public function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
+        if ($bRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges)) {
+            $iFolder = $this->_oModule->_oDb->getConversationFolder($iContentId, bx_get_logged_profile_id());
+            $this->_updateParticipants ($iContentId, $iFolder, $iFolder == BX_CNV_FOLDER_DRAFTS ? true : false);
+        }
+
+        return $bRet;
+    }
+
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $aValsToAdd['last_reply_timestamp'] = time();
@@ -65,21 +75,34 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $this->getCleanValue('text'), 'where' => $this->MODULE));
             $iFolder = $bSpam ? BX_CNV_FOLDER_SPAM : BX_CNV_FOLDER_INBOX;
 
-            // place conversation to "inbox" (or "spam" - in case of spam) folder
-            $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array(bx_get_logged_profile_id())), SORT_NUMERIC);
-            foreach ($aRecipients as $iProfile) {
-                $oProfile = BxDolProfile::getInstance($iProfile);
-                if (!$oProfile)
-                    continue;
-
-                if ($bDraft && $oProfile->id() == bx_get_logged_profile_id())
-                    $this->_oModule->_oDb->moveConvo($iContentId, $oProfile->id(), $iFolder);
-                else
-                    $this->_oModule->_oDb->conversationToFolder($iContentId, $iFolder, $oProfile->id(), $oProfile->id() == bx_get_logged_profile_id() ? 0 : -1);
-            }
+            $this->_updateParticipants ($iContentId, $iFolder, $bDraft);
         }
 
         return $iContentId;
+    }
+
+    protected function _updateParticipants ($iContentId, $iFolder, $bDraft) 
+    {
+        $aRecipientsOld = $this->_oModule->_oDb->getCollaborators($iContentId);
+
+        // place conversation to "inbox" (or "spam" - in case of spam) folder
+        $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array(bx_get_logged_profile_id())), SORT_NUMERIC);
+        foreach ($aRecipients as $iProfile) {
+            $oProfile = BxDolProfile::getInstance($iProfile);
+            if (!$oProfile)
+                continue;
+
+            if ($bDraft && $oProfile->id() == bx_get_logged_profile_id())
+                $this->_oModule->_oDb->moveConvo($iContentId, $oProfile->id(), $iFolder);
+            else
+                $this->_oModule->_oDb->conversationToFolder($iContentId, $iFolder, $oProfile->id(), $oProfile->id() == bx_get_logged_profile_id() ? 0 : -1);
+        }
+
+        // remove participants
+        foreach ($aRecipientsOld as $iProfileId => $iCount) {
+            if (!in_array($iProfileId, $aRecipients))
+                $this->_oModule->_oDb->removeCollaborator($iContentId, $iProfileId);
+        }
     }
 
     protected function genCustomInputRecipients ($aInput)

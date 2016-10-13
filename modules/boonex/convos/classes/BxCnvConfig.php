@@ -67,7 +67,7 @@ class BxCnvConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY' => 'bx_convos',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_convos_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_convos_entry_add',
-            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => '',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_convos_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_convos_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_convos_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_convos_my', // actions menu on my entries page

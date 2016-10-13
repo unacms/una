@@ -58,6 +58,21 @@ class BxCnvFormsEntryHelper extends BxBaseModTextFormsEntryHelper
             
         return '';
     }
+
+    protected function _getProfileAndContentData ($iContentId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        list ($oProfile, $aContentInfo) = parent::_getProfileAndContentData($iContentId);
+        if (!$aContentInfo)
+            return array($oProfile, $aContentInfo);
+
+        $aCollaborators = $this->_oModule->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
+        if ($aCollaborators)
+            $aContentInfo['recipients'] = array_keys($aCollaborators);
+
+        return array($oProfile, $aContentInfo);
+    }
 }
 
 /** @} */

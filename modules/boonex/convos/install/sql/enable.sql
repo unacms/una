@@ -27,6 +27,13 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_convos_create_entry', 1, 'bx_convos', '_bx_cnv_page_block_title_create_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_convos";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
 
+-- PAGE: edit entry
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_convos_edit_entry', '_bx_cnv_page_title_sys_edit_entry', '_bx_cnv_page_title_edit_entry', 'bx_convos', 5, 2147483647, 0, 'edit-convo', '', '', '', '', 0, 0, 0, 'BxCnvPageBrowse', 'modules/boonex/convos/classes/BxCnvPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_convos_edit_entry', 1, 'bx_convos', '_bx_cnv_page_block_title_edit_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_convos";s:6:"method";s:11:"entity_edit";}', 0, 0, 0);
 
 -- PAGE: view entry
 

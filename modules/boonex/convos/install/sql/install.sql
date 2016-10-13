@@ -123,6 +123,7 @@ INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attr
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_convos', 'bx_convos_entry_add', 'bx_convos', 0, '_bx_cnv_form_entry_display_add'),
+('bx_convos', 'bx_convos_entry_edit', 'bx_convos', 0, '_bx_cnv_form_entry_display_edit'),
 ('bx_convos', 'bx_convos_entry_delete', 'bx_convos', 0, '_bx_cnv_form_entry_display_delete'),
 ('bx_convos', 'bx_convos_entry_view', 'bx_convos', 1, '_bx_cnv_form_entry_display_view');
 

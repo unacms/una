@@ -7,6 +7,7 @@
 
 	<string name="_bx_cnv_form_entry"><![CDATA[Conversations]]></string>
 	<string name="_bx_cnv_form_entry_display_add"><![CDATA[New conversation]]></string>
+	<string name="_bx_cnv_form_entry_display_edit"><![CDATA[Edit conversation]]></string>
 	<string name="_bx_cnv_form_entry_display_delete"><![CDATA[Delete conversation]]></string>
 	<string name="_bx_cnv_form_entry_display_view"><![CDATA[View conversation]]></string>
 	<string name="_bx_cnv_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
@@ -25,6 +26,7 @@
     <string name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Recipients is mandatory]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_text"><![CDATA[Draft status]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_block"><![CDATA[Submit block]]></string>
+    <string name="_bx_cnv_form_entry_input_sys_draft_id"><![CDATA[Draft ID]]></string>
 
 	<string name="_bx_cnv_acl_action_create_entry"><![CDATA[New conversation]]></string>
 	<string name="_bx_cnv_acl_action_delete_entry"><![CDATA[Delete conversation]]></string>
@@ -46,6 +48,9 @@
     <string name="_bx_cnv_page_title_folder"><![CDATA[Folder: {folder}]]></string>
     <string name="_bx_cnv_page_block_title_folder"><![CDATA[Folder: {folder}]]></string>
     <string name="_bx_cnv_page_block_title_convos"><![CDATA[Conversations]]></string>
+    <string name="_bx_cnv_page_title_sys_edit_entry"><![CDATA[Edit conversation]]></string>
+    <string name="_bx_cnv_page_title_edit_entry"><![CDATA[Edit conversation]]></string>
+    <string name="_bx_cnv_page_block_title_edit_entry"><![CDATA[Edit conversation]]></string>
 
     <string name="_bx_cnv_menu_set_title_view_entry"><![CDATA[Conversation Actions]]></string>
     <string name="_bx_cnv_menu_title_view_entry"><![CDATA[Conversation Actions]]></string>

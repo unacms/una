@@ -6,7 +6,8 @@
 	<string name="_bx_cnv_option_preview_messages_num"><![CDATA[Количество сообщений для предпросмотра]]></string>
 
 	<string name="_bx_cnv_form_entry"><![CDATA[Переписка]]></string>
-	<string name="_bx_cnv_form_entry_display_add"><![CDATA[Новая переписка]]></string>
+    <string name="_bx_cnv_form_entry_display_add"><![CDATA[Новая переписка]]></string>
+    <string name="_bx_cnv_form_entry_display_edit"><![CDATA[Редактирование сообщения]]></string>
 	<string name="_bx_cnv_form_entry_display_delete"><![CDATA[Удалить переписку]]></string>
 	<string name="_bx_cnv_form_entry_display_view"><![CDATA[Просмотреть переписку]]></string>
 	<string name="_bx_cnv_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
@@ -25,6 +26,7 @@
     <string name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Необходимо указать хотя бы одного получателя]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_text"><![CDATA[Статус черновика]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_block"><![CDATA[Блок отправки сообщения]]></string>
+    <string name="_bx_cnv_form_entry_input_sys_draft_id"><![CDATA[ID черновика]]></string>
 
 	<string name="_bx_cnv_acl_action_create_entry"><![CDATA[Новое сообщение]]></string>
 	<string name="_bx_cnv_acl_action_delete_entry"><![CDATA[Удалить сообщение]]></string>
@@ -46,6 +48,9 @@
     <string name="_bx_cnv_page_title_folder"><![CDATA[Папка: {folder}]]></string>
     <string name="_bx_cnv_page_block_title_folder"><![CDATA[Папка: {folder}]]></string>
     <string name="_bx_cnv_page_block_title_convos"><![CDATA[Сообщения]]></string>
+    <string name="_bx_cnv_page_title_sys_edit_entry"><![CDATA[Редактирование сообщения]]></string>
+    <string name="_bx_cnv_page_title_edit_entry"><![CDATA[Редактирование сообщения]]></string>
+    <string name="_bx_cnv_page_block_title_edit_entry"><![CDATA[Редактирование сообщения]]></string>
 
     <string name="_bx_cnv_menu_set_title_view_entry"><![CDATA[Действия для сообщения]]></string>
     <string name="_bx_cnv_menu_title_view_entry"><![CDATA[Действия для сообщения]]></string>
