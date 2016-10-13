@@ -76,6 +76,22 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $oProfileAuthor->id();
                 break;
 
+            case 'favorite':
+                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
+                if (!$oProfileAuthor) {
+                    $this->isError = true;
+                    break;
+                }
+
+                $aConditions = $this->oModule->getObjectFavorite()->getConditionsTrack($this->aCurrent['table'], 'id', $oProfileAuthor->id());
+                if(!empty($aConditions) && is_array($aConditions))
+                    $this->aCurrent = array_merge($this->aCurrent, $aConditions);
+
+                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
+                $this->aCurrent['title'] = _t('_bx_market_page_title_browse_by_author');
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $oProfileAuthor->id();
+                break;
+
             case 'public':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_recent');

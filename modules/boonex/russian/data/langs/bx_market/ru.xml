@@ -149,6 +149,8 @@
     <string name="_bx_market_page_title_view_entry_info"><![CDATA[Информация к {title}]]></string>
     <string name="_bx_market_page_title_sys_entries_of_author"><![CDATA[Продукты автора]]></string>
     <string name="_bx_market_page_title_entries_of_author"><![CDATA[{display_name} - Продукты]]></string>
+    <string name="_bx_market_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
+    <string name="_bx_market_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_market_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Продукты]]></string>   
     <string name="_bx_market_page_block_title_sys_entries_of_author"><![CDATA[Продукты автора]]></string>   
     <string name="_bx_market_page_block_title_entries_actions"><![CDATA[Продукты - Действия]]></string>

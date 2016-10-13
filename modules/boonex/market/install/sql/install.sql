@@ -237,16 +237,9 @@ CREATE TABLE IF NOT EXISTS `bx_market_reports_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: favorites
-CREATE TABLE IF NOT EXISTS `bx_market_favorites` (
-  `object_id` int(11) NOT NULL default '0',
-  `count` int(11) NOT NULL default '0',
-  UNIQUE KEY `object_id` (`object_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE `bx_market_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
-  `author_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`author_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -501,8 +494,8 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 ('bx_market', 'bx_market_views_track', '86400', '1', 'bx_market_products', 'id', 'views', '', '');
 
 -- FAFORITES
-INSERT INTO `sys_objects_favorite` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_market', 'bx_market_favorites', 'bx_market_favorites_track', '1', 'page.php?i=view-product&id={object_id}', 'bx_market_products', 'id', 'author', 'favorites', '', '');
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_market', 'bx_market_favorites_track', '1', '1', 'page.php?i=view-product&id={object_id}', 'bx_market_products', 'id', 'author', 'favorites', '', '');
 
 -- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

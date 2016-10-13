@@ -149,6 +149,8 @@
     <string name="_bx_market_page_title_view_entry_info"><![CDATA[{title} Info]]></string>
     <string name="_bx_market_page_title_sys_entries_of_author"><![CDATA[Products of author]]></string>
     <string name="_bx_market_page_title_entries_of_author"><![CDATA[Products by {display_name}]]></string>
+    <string name="_bx_market_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_market_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_market_page_block_title_entries_of_author"><![CDATA[Products by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_market_page_block_title_sys_entries_of_author"><![CDATA[Products of author]]></string>   
     <string name="_bx_market_page_block_title_entries_actions"><![CDATA[Products actions]]></string>
