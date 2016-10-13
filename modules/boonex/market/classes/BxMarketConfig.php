@@ -151,6 +151,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_market_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_market_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_market_txt_all_entries_by',
+                'txt_all_entries_by_author' => '_bx_market_page_title_browse_by_author'
             ),
         );
 
