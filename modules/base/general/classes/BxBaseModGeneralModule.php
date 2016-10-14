@@ -107,6 +107,25 @@ class BxBaseModGeneralModule extends BxDolModule
     	return 0;
     }
 
+	/**
+     * Display entries favored by a member
+     * @return HTML string
+     */
+    public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
+    {
+        $oProfile = null;
+        if((int)$iProfileId)
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile && bx_get('profile_id') !== false)
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+        if(!$oProfile)
+            $oProfile = BxDolProfile::getInstance();
+        if(!$oProfile)
+            return '';
+
+        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, true);
+    }
+
     public function serviceFormsHelper ()
     {
         bx_import('FormsEntryHelper', $this->_aModule);
@@ -614,8 +633,23 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oProfile;
     }
 
-    // ====== PROTECTED METHODS
+    public function getObjectFavorite($sSystem = '', $iId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($sSystem) && !empty($CNF['OBJECT_FAVORITES']))
+            $sSystem = $CNF['OBJECT_FAVORITES'];
 
+        if(empty($sSystem))
+            return false;
+
+        $oFavorite = BxDolFavorite::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
+        if(!$oFavorite->isEnabled())
+            return false;
+
+        return $oFavorite;
+    }
+
+    // ====== PROTECTED METHODS
     protected function _isModerator ($isPerformAction = false)
     {
         return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntry ($isPerformAction);

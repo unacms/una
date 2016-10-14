@@ -87,7 +87,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 
         $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
         $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
-        $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $iProfileAuthor;
+        $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
     }
 
     protected function _updateCurrentForFavorite($sMode, $aParams, &$oProfileAuthor)
@@ -108,12 +108,19 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         }
 
         $aConditions = $oFavorite->getConditionsTrack($this->aCurrent['table'], 'id', $iProfileAuthor);
-        if(!empty($aConditions) && is_array($aConditions))
-            $this->aCurrent = array_merge($this->aCurrent, $aConditions);
+        if(!empty($aConditions) && is_array($aConditions)) {
+            if(empty($this->aCurrent['restriction']) || !is_array($this->aCurrent['restriction']))
+                $this->aCurrent['restriction'] = array();
+            $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aConditions['restriction']);
+
+            if(empty($this->aCurrent['join']) || !is_array($this->aCurrent['join']))
+                $this->aCurrent['join'] = array();
+            $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aConditions['join']);
+        }
 
         $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
         $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
-        $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $iProfileAuthor;
+        $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
     }
 
     function _getPseud ()
