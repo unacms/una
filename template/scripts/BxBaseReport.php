@@ -116,7 +116,7 @@ class BxBaseReport extends BxDolReport
             'title' => _t('_report_do_report_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter'),
+                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter bx-btn-height'),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
             ),
             'content' => (int)$aReport['count'] > 0 ? $this->_getLabelCounter($aReport['count']) : ''

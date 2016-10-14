@@ -129,7 +129,7 @@ class BxBaseVote extends BxDolVote
             'title' => _t('_vote_do_like_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter'),
+                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter bx-btn-height'),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
             ),
             'content' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''

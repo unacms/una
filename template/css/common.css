@@ -496,6 +496,15 @@ svg .gray .outer .p2 {
     font-size:1rem;
     color:#fff;
 }
+.bx-btn-height {
+	height: 36px;
+    height: 2.2rem;
+    line-height: 36px;
+    line-height: 2.2rem;
+}
+.bx-btn-border {
+	border: none;
+}
 .bx-btn:active,
 .bx-btn:hover {	
     background-color: #79bd9a;
@@ -530,6 +539,17 @@ input.bx-btn {
     line-height:24px;
     line-height:1.5rem;
     font-size:0.9rem;
+}
+
+.bx-btn-small-height {
+	height: 24px; 
+    height: 1.6rem;
+    line-height: 24px;
+    line-height: 1.5rem;
+}
+
+.bx-btn-small-border {
+	border: none;
 }
 
 .bx-btn.bx-btn-primary {

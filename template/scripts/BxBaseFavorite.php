@@ -112,7 +112,7 @@ class BxBaseFavorite extends BxDolFavorite
             'title' => _t('_favorite_do_favorite_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter'),
+                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter bx-btn-height'),
                 array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)')
             ),
             'content' => (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : ''

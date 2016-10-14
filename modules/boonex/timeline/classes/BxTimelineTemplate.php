@@ -356,7 +356,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'title' => _t('_bx_timeline_txt_shared_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_oConfig->getHtmlIds('share', 'counter') . $aEvent['id']),
-                array('key' => 'class', 'value' => $sStylePrefix . '-share-counter'),
+                array('key' => 'class', 'value' => $sStylePrefix . '-share-counter bx-btn-height'),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')')
             ),
             'content' => !empty($aEvent['shares']) && (int)$aEvent['shares'] > 0 ? $aEvent['shares'] : ''
