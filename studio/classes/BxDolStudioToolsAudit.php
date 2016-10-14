@@ -46,7 +46,7 @@ class BxDolStudioToolsAudit extends BxDol
             BX_DOL_AUDIT_OK => _t('_sys_audit_title_ok'),
         );
 
-        $this->sMinPhpVer = '5.3.0';
+        $this->sMinPhpVer = '5.4.0';
         $this->aPhpSettings = array (
             'allow_url_fopen' => array('op' => '=', 'val' => true, 'type' => 'bool'),
             'allow_url_include' => array('op' => '=', 'val' => false, 'type' => 'bool'),
@@ -569,7 +569,6 @@ class BxDolStudioToolsAudit extends BxDol
     protected function getPhpAccelerator ()
     {
         $aAccelerators = array (
-            'eAccelerator' => array('op' => 'module', 'val' => 'eaccelerator'),
             'APC' => array('op' => 'module', 'val' => 'apc'),
             'XCache' => array('op' => 'module', 'val' => 'xcache'),
         	'ZendOPcache' => array('op' => 'module', 'val' => 'Zend OPcache'),
