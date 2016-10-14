@@ -54,19 +54,12 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
-
             case 'author':
-                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
-                if (!$oProfileAuthor) {
-                    $this->isError = true;
-                    break;
-                }
+                $this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor);
+                break;
 
-                $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
-
-                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_by_author');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $oProfileAuthor->id();
+            case 'favorite':
+                $this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor);
                 break;
 
             case 'public':

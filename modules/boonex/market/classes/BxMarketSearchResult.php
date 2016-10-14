@@ -57,46 +57,11 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
         switch ($sMode) {
 
             case 'author':
-                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
-                if (!$oProfileAuthor) {
-                    $this->isError = true;
-                    break;
-                }
-
-                $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
-
-                if(!empty($aParams['except']))
-                	$this->aCurrent['restriction']['except']['value'] = is_array($aParams['except']) ? $aParams['except'] : array($aParams['except']); 
-
-                if(!empty($aParams['per_page']))
-                	$this->aCurrent['paginate']['perPage'] = is_numeric($aParams['per_page']) ? (int)$aParams['per_page'] : (int)getParam($aParams['per_page']);
-
-                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_market_page_title_browse_by_author');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $oProfileAuthor->id();
+                $this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor);
                 break;
 
             case 'favorite':
-                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
-                if (!$oProfileAuthor) {
-                    $this->isError = true;
-                    break;
-                }
-
-                $iProfileAuthor = $oProfileAuthor->id();
-                $oFavorite = $this->oModule->getObjectFavorite();
-                if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()){
-                    $this->isError = true;
-                    break;
-                }
-
-                $aConditions = $oFavorite->getConditionsTrack($this->aCurrent['table'], 'id', $iProfileAuthor);
-                if(!empty($aConditions) && is_array($aConditions))
-                    $this->aCurrent = array_merge($this->aCurrent, $aConditions);
-
-                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_market_page_title_browse_by_author');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $iProfileAuthor;
+                $this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor);
                 break;
 
             case 'public':
@@ -135,7 +100,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
-
+    
     function displayResultBlock ()
     {
     	return BxDolPayments::getInstance()->getCartJs() . parent::displayResultBlock();

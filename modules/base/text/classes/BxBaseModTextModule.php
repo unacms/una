@@ -92,6 +92,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
      */
     public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
     {
+        $oProfile = null;
         if((int)$iProfileId)
             $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile && bx_get('profile_id') !== false)
@@ -107,29 +108,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     /**
      * Entry social sharing block
      */
-    public function serviceEntitySocialSharing ($iContentId = 0)
-    {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
-
-        $CNF = &$this->_oConfig->CNF;
-        return $this->_entitySocialSharing ($iContentId, array(
-            'id_timeline' => $iContentId,
-        	'id_thumb' => $aContentInfo[$CNF['FIELD_THUMB']],
-        	'title' => $aContentInfo[$CNF['FIELD_TITLE']],
-        	'object_storage' => $CNF['OBJECT_STORAGE'],
-            'object_transcoder' => false,
-        	'object_vote' => $CNF['OBJECT_VOTES'],
-        	'object_report' => $CNF['OBJECT_REPORTS'],
-        	'uri_view_entry' => $CNF['URI_VIEW_ENTRY']
-        ));
-    }
-
     public function serviceEntityAllActions ($iContentId = 0)
     {
         return $this->_oTemplate->entryAllActions('', $this->serviceEntitySocialSharing($iContentId));

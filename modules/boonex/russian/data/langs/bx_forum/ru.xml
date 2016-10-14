@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_forum"><![CDATA[Форум]]></string>
-	<string name="_bx_forum_cmts"><![CDATA[Форум - Комментарии]]></string>
+	<string name="_bx_forum"><![CDATA[Обсуждения]]></string>
+	<string name="_bx_forum_cmts"><![CDATA[Обсуждения - Комментарии]]></string>
 
 	<string name="_bx_forum_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к обсуждению]]></string>
 	<string name="_bx_forum_option_plain_summary_chars"><![CDATA[Количество символов в описании обсуждения при отсутствующей картинке обсуждения]]></string>

@@ -51,13 +51,13 @@ CREATE TABLE `bx_antispam_block_log` (
 -- Studio page and widget
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'bx_antispam', '_bx_antispam', '_bx_antispam', 'bx_antispam@modules/boonex/antispam/|std-pi.png');
+(3, 'bx_antispam', '_bx_antispam', '_bx_antispam', 'bx_antispam@modules/boonex/antispam/|std-icon.svg');
 SET @iPageId = LAST_INSERT_ID();
 
 SET @iParentPageId = (SELECT `id` FROM `sys_std_pages` WHERE `name` = 'home');
 SET @iParentPageOrder = (SELECT MAX(`order`) FROM `sys_std_pages_widgets` WHERE `page_id` = @iParentPageId);
 INSERT INTO `sys_std_widgets` (`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iPageId, 'bx_antispam', '{url_studio}module.php?name=bx_antispam', '', 'bx_antispam@modules/boonex/antispam/|std-wi.png', '_bx_antispam', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
+(@iPageId, 'bx_antispam', '{url_studio}module.php?name=bx_antispam', '', 'bx_antispam@modules/boonex/antispam/|std-icon.svg', '_bx_antispam', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets` (`page_id`, `widget_id`, `order`) VALUES
 (@iParentPageId, LAST_INSERT_ID(), IF(ISNULL(@iParentPageOrder), 1, @iParentPageOrder + 1));
 
