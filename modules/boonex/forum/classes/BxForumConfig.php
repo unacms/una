@@ -79,6 +79,7 @@ class BxForumConfig extends BxBaseModTextConfig
 
             // objects
             'OBJECT_GRID' => 'bx_forum',
+        	'OBJECT_GRID_FAVORITE' => 'bx_forum_favorite',
         	'OBJECT_GRID_ADMINISTRATION' => 'bx_forum_administration',
         	'OBJECT_GRID_COMMON' => 'bx_forum_common',
         	'OBJECT_GRID_CATEGORIES' => 'bx_forum_categories',
@@ -89,7 +90,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => '',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
             'OBJECT_VIEWS' => 'bx_forum',
-            'OBJECT_VOTES' => '',
+            'OBJECT_VOTES' => 'bx_forum',
+        	'OBJECT_FAVORITES' => 'bx_forum',
         	'OBJECT_CATEGORY' => 'bx_forum_cats',
             'OBJECT_COMMENTS' => 'bx_forum',
         	'OBJECT_METATAGS' => 'bx_forum',
@@ -125,6 +127,7 @@ class BxForumConfig extends BxBaseModTextConfig
             	'filter_item_select_one_filter1' => '_bx_forum_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_forum_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_forum_menu_item_title_manage_all',
+            	'txt_all_entries_by_author' => '_bx_forum_page_title_browse_by_author',
             ),
         );
 

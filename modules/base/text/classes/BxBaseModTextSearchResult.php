@@ -102,7 +102,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 
         $iProfileAuthor = $oProfileAuthor->id();
         $oFavorite = $this->oModule->getObjectFavorite();
-        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()){
+        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()) {
             $this->isError = true;
             break;
         }

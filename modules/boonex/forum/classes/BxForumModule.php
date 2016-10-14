@@ -133,6 +133,60 @@ class BxForumModule extends BxBaseModTextModule
         ), false);
     }
 
+    public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oProfile = null;
+        if((int)$iProfileId)
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile && bx_get('profile_id') !== false)
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+        if(!$oProfile)
+            $oProfile = BxDolProfile::getInstance();
+        if(!$oProfile)
+            return '';
+
+        $iProfileAuthor = $oProfile->id();
+        $oFavorite = $this->getObjectFavorite();
+        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id())
+            return '';
+
+        $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
+        if(empty($aConditions) || !is_array($aConditions)) 
+            return '';
+
+        $aJoinGroup = array('grp' => true, 'cnds' => array());
+        if(!empty($aConditions['join']))
+            foreach($aConditions['join'] as $aCondition)
+                $aJoinGroup['cnds'][] = array(
+                    'tp' => $aCondition['type'],
+                    'tbl1' => $aCondition['table'],
+                    'fld1' => $aCondition['onField'],
+                    'tbl2' => $aCondition['mainTable'],
+                	'fld2' => $aCondition['mainField']
+                );
+
+        $aWhereGroup = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
+        if(!empty($aConditions['restriction']))
+            foreach($aConditions['restriction'] as $aCondition)
+                $aWhereGroup['cnds'][] = array(
+                	'tbl' => (!empty($aCondition['table']) ? $aCondition['table'] : ''), 
+                	'fld' => $aCondition['field'], 
+                	'val' => $aCondition['value'], 
+                	'opr' => $aCondition['operator']
+                );
+
+        return $this->_serviceBrowseTable(array(
+			'grid' => $CNF['OBJECT_GRID_FAVORITE'],
+        	'type' => 'favorite', 
+        	'author' => $iProfileId, 
+            'join' => $aJoinGroup,
+        	'where' => $aWhereGroup, 
+        	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile')
+        ), false);
+    }
+
     public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'category';
@@ -251,14 +305,6 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_oTemplate->entryParticipants ($aContentInfo, 5, 'right');
     }
 
-    /**
-     * No social sharing for private discussions
-     */
-    public function serviceEntitySocialSharing($iContentId = 0)
-    {
-        return '';
-    }
-
 	public function serviceSearch()
     {
     	$CNF = $this->_oConfig->CNF;
@@ -353,7 +399,13 @@ class BxForumModule extends BxBaseModTextModule
 
 	protected function _serviceBrowseTable($aParams, $isDisplayHeader = true)
     {
-        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
+        $sGrid = $this->_oConfig->CNF['OBJECT_GRID'];
+        if(!empty($aParams['grid'])) {
+            $sGrid = $aParams['grid'];
+            unset($aParams['grid']);
+        }
+
+        $oGrid = BxDolGrid::getObjectInstance($sGrid);
         if(!$oGrid)
 			return false;
 

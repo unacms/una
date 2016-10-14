@@ -51,8 +51,9 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_forum_view_entry', 2, @sName, '_bx_forum_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 0),
 ('bx_forum_view_entry', 3, @sName, '_bx_forum_page_block_title_entry_participants', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:19:"entity_participants";}', 0, 0, 1, 0),
 ('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
-('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"entity_attachments";}', 0, 0, 1, 1),
-('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 2);
+('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 1),
+('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"entity_attachments";}', 0, 0, 1, 2),
+('bx_forum_view_entry', 4, @sName, '_bx_forum_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 3);
 
 -- PAGE: new entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -108,8 +109,9 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_forum_author', 'discussions-author', '_bx_forum_page_title_sys_entries_of_author', '_bx_forum_page_title_entries_of_author', @sName, 5, 2147483647, 1, 'page.php?i=discussions-author', '', '', '', 0, 1, 0, 'BxForumPageAuthor', 'modules/boonex/forum/classes/BxForumPageAuthor.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_forum_author', 1, @sName, '', '_bx_forum_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 0),
-('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_entries_of_author', '_bx_forum_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 1);
+('bx_forum_author', 1, @sName, '', '_bx_forum_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
+('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_favorites_of_author', '_bx_forum_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
+('bx_forum_author', 1, @sName, '_bx_forum_page_block_title_sys_entries_of_author', '_bx_forum_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3);
 
 -- PAGE: module home
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -253,12 +255,17 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- GRIDS: main
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-(@sName, 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` AS `cmt_text` FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'title,text,cmt_text', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php');
+(@sName, 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` AS `cmt_text` FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'title,text,cmt_text', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php'),
+('bx_forum_favorite', 'Sql', 'SELECT `bx_forum_discussions`.*, `bx_forum_cmts`.`cmt_text` AS `cmt_text` FROM `bx_forum_discussions` LEFT JOIN `bx_forum_cmts` ON (`bx_forum_cmts`.`cmt_id` = `bx_forum_discussions`.`lr_comment_id`) %s WHERE 1 %s', 'bx_forum_discussions', 'id', 'lr_timestamp', '', 10, NULL, 'start', '', 'title,text,cmt_text', 'auto', '', 2147483647, 'BxForumGrid', 'modules/boonex/forum/classes/BxForumGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 (@sName, 'author', '', '10%', '', 1),
 (@sName, 'lr_timestamp', '', '85%', '', 2),
-(@sName, 'comments', '', '5%', '', 3);
+(@sName, 'comments', '', '5%', '', 3),
+
+('bx_forum_favorite', 'author', '', '10%', '', 1),
+('bx_forum_favorite', 'lr_timestamp', '', '85%', '', 2),
+('bx_forum_favorite', 'comments', '', '5%', '', 3);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 (@sName, 'independent', 'add', '_bx_forum_grid_action_title_add', '', 0, 1);
@@ -275,6 +282,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_forum_administration', 'added', '_bx_forum_grid_column_title_adm_added', '20%', 1, '25', '', 4),
 ('bx_forum_administration', 'author', '_bx_forum_grid_column_title_adm_author', '25%', 0, '25', '', 5),
 ('bx_forum_administration', 'actions', '', '20%', 0, '', '', 6),
+
 ('bx_forum_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_forum_common', 'switcher', '_bx_forum_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_forum_common', 'title', '_bx_forum_grid_column_title_adm_title', '40%', 0, '', '', 3),
@@ -286,6 +294,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_forum_administration', 'single', 'edit', '_bx_forum_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
 ('bx_forum_administration', 'single', 'delete', '_bx_forum_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_forum_administration', 'single', 'settings', '_bx_forum_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
+
 ('bx_forum_common', 'bulk', 'delete', '_bx_forum_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_forum_common', 'single', 'edit', '_bx_forum_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
 ('bx_forum_common', 'single', 'delete', '_bx_forum_grid_action_title_adm_delete', 'remove', 1, 1, 2),
@@ -413,6 +422,16 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`,
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 (@sName, 'bx_forum_views_track', '86400', '1', 'bx_forum_discussions', 'id', 'views', '', '');
+
+
+-- VOTES
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+(@sName, 'bx_forum_votes', 'bx_forum_votes_track', '604800', '1', '1', '0', '1', 'bx_forum_discussions', 'id', 'author', 'rate', 'votes', '', '');
+
+
+-- FAFORITES
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+(@sName, 'bx_forum_favorites_track', '1', '1', '1', 'page.php?i=view-discussion&id={object_id}', 'bx_forum_discussions', 'id', 'author', 'favorites', '', '');
 
 
 -- ALERTS

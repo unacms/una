@@ -43,6 +43,7 @@ class BxForumGrid extends BxTemplGrid
 	    	switch($this->_aParams['type']) {
 	    		case 'new':
 	    		case 'author':
+                case 'favorite':
 	    		case 'category':
 	                $sField = 'added';
 	                break;
@@ -145,6 +146,12 @@ class BxForumGrid extends BxTemplGrid
 			$sWhereClause .= $aCondition['where'];
 
 		//--- Check browse params
+        if(!empty($this->_aParams['join']) && is_array($this->_aParams['join'])) {
+			$sJoinClauseBrowse = $this->_getSqlJoinGroup($this->_aParams['join']);
+			if(!empty($sJoinClauseBrowse))
+				$sJoinClause .= " " . $sJoinClauseBrowse;
+		}
+
 		if(!empty($this->_aParams['where']) && is_array($this->_aParams['where'])) {
 			$sWhereClauseBrowse = $this->_getSqlWhereFromGroup($this->_aParams['where']);
 			if(!empty($sWhereClauseBrowse))
@@ -160,6 +167,40 @@ class BxForumGrid extends BxTemplGrid
     	$sOrder = parent::_getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, true);
 
     	return " ORDER BY `" . $this->_oModule->_oConfig->CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
+    }
+
+    protected function _getSqlJoinGroup($aGrp)
+    {
+    	if(!isset($aGrp['grp']) || (bool)$aGrp['grp'] !== true)
+			return $this->_getSqlJoinCondition($aGrp);
+
+		$sResult = "";
+    	if(empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
+    		return $sResult;
+
+		$sOprGrp = " ";
+    	foreach($aGrp['cnds'] as $aCnd) {
+    		$sResultCnd = $this->_getSqlJoinCondition($aCnd);
+    		if(!empty($sResultCnd))
+				$sResult .= $sOprGrp . $sResultCnd;
+    	}
+
+    	return trim($sResult, $sOprGrp);
+    }
+
+    protected function _getSqlJoinCondition($aCnd)
+    {
+    	$sResult = "";
+    	if(!isset($aCnd['tp'], $aCnd['tbl1'], $aCnd['fld1'], $aCnd['fld2']))
+    		return $sResult;
+
+        $sField1 = "`" . $aCnd['tbl1'] . "`.`" . $aCnd['fld1'] . "`";
+
+        $sField2 = "`" . $aCnd['fld2'] . "`";
+        if(!empty($aCnd['tbl2']))
+            $sField2 = "`" . $aCnd['tbl2'] . "`." . $sField2;
+
+		return $aCnd['tp'] . " JOIN `" . $aCnd['tbl1'] . "` ON (" . $sField1 . " = " . $sField2 . ")";
     }
 
     protected function _getSqlWhereFromGroup($aGrp)
@@ -192,20 +233,24 @@ class BxForumGrid extends BxTemplGrid
     	if(!isset($aCnd['fld'], $aCnd['val'], $aCnd['opr']))
     		return $sResult;
 
+        $sField = "`" . $aCnd['fld'] . "`";
+        if(!empty($aCnd['tbl']))
+            $sField = "`" . $aCnd['tbl'] . "`." . $sField;
+
 		switch($aCnd['opr']) {
 			case '=':
-				$sResult .= "`" . $aCnd['fld'] . "` = " . $this->_oModule->_oDb->escape($aCnd['val']);
+				$sResult .= $sField . " = " . $this->_oModule->_oDb->escape($aCnd['val']);
 				break;
 
 			case 'IN':
 				if(empty($aCnd['val']) || !is_array($aCnd['val']))
 					break;
 
-				$sResult .= "`" . $aCnd['fld'] . "` IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
+				$sResult .= $sField . " IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
 				break;
 
 			case 'LIKE':
-				$sResult .= "`" . $aCnd['fld'] . "` LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
+				$sResult .= $sField . " LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
 				break;
 		}
 

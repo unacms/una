@@ -14,6 +14,9 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `lr_profile_id` int(10) unsigned NOT NULL,
   `lr_comment_id` int(11) NOT NULL,
   `views` int(11) NOT NULL default '0',
+  `rate` float NOT NULL default '0',
+  `votes` int(11) NOT NULL default '0',
+  `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `stick` tinyint(4) NOT NULL DEFAULT '0',
@@ -92,6 +95,25 @@ CREATE TABLE `bx_forum_views_track` (
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 );
 
+-- TABLE: votes
+CREATE TABLE IF NOT EXISTS `bx_forum_votes` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_forum_votes_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
 -- TABLE: metas
 CREATE TABLE `bx_forum_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
@@ -118,6 +140,14 @@ CREATE TABLE IF NOT EXISTS `bx_forum_reports_track` (
   PRIMARY KEY (`id`),
   KEY `report` (`object_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+-- TABLE: favorites
+CREATE TABLE `bx_forum_favorites_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`author_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 -- STORAGES & TRANSCODERS

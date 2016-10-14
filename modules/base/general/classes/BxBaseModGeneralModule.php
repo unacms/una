@@ -215,14 +215,14 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
         return $this->_entitySocialSharing ($iContentId, array(
             'id_timeline' => $iContentId,
-        	'id_thumb' => $aContentInfo[$CNF['FIELD_THUMB']],
-        	'title' => $aContentInfo[$CNF['FIELD_TITLE']],
-        	'object_storage' => $CNF['OBJECT_STORAGE'],
+        	'id_thumb' => !empty($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : '',
+        	'title' => !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+        	'object_storage' => !empty($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
             'object_transcoder' => false,
         	'object_vote' => !empty($CNF['OBJECT_VOTES']) ? $CNF['OBJECT_VOTES'] : '',
         	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
         	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
-        	'uri_view_entry' => $CNF['URI_VIEW_ENTRY'],
+        	'uri_view_entry' => !empty($CNF['URI_VIEW_ENTRY']) ? $CNF['URI_VIEW_ENTRY'] : '',
         ));
     }
 

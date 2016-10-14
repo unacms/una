@@ -68,6 +68,7 @@
     <string name="_bx_forum_page_block_title_delete_entry"><![CDATA[Удалить обсуждение]]></string>
 	<string name="_bx_forum_page_title_sys_view_entry"><![CDATA[Просмотреть обсуждение]]></string>
 	<string name="_bx_forum_page_title_view_entry"><![CDATA[{title}]]></string>
+	<string name="_bx_forum_page_block_title_entry_all_actions"><![CDATA[Все Действия]]></string>
 	<string name="_bx_forum_page_block_title_entry_attachments"><![CDATA[Прикрепления]]></string>
 	<string name="_bx_forum_page_block_title_entry_text"><![CDATA[Текст]]></string>
     <string name="_bx_forum_page_block_title_entry_author"><![CDATA[Автор]]></string>
@@ -120,6 +121,8 @@
     <string name="_bx_forum_page_block_title_entries_by_keyword"><![CDATA[Обсуждения по хэштегу: {keyword_name}]]></string>
     <string name="_bx_forum_page_title_sys_entries_of_author"><![CDATA[Обсуждения автора]]></string>
     <string name="_bx_forum_page_title_entries_of_author"><![CDATA[{display_name} - Обсуждения]]></string>
+    <string name="_bx_forum_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
+    <string name="_bx_forum_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_forum_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Обсуждения]]></string>   
     <string name="_bx_forum_page_block_title_sys_entries_of_author"><![CDATA[Обсуждения автора]]></string>
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Обсуждения - Действия]]></string>
