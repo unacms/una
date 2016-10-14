@@ -76,6 +76,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_groups_cover_thumb',
             'OBJECT_VIEWS' => 'bx_groups',
             'OBJECT_VOTES' => 'bx_groups',
+        	'OBJECT_FAVORITES' => 'bx_groups',
             'OBJECT_REPORTS' => 'bx_groups',
             'OBJECT_METATAGS' => 'bx_groups',
             'OBJECT_FORM_ENTRY' => 'bx_group',
@@ -161,6 +162,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
                 
                 'menu_item_title_become_fan_sent' => '_bx_groups_menu_item_title_become_fan_sent',
                 'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
+            	'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author'
             ),
 
         );

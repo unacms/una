@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxGroupsSearchResult extends BxBaseModProfileSearchResult
+class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
 {
     function __construct($sMode = '', $aParams = false)
     {
@@ -112,6 +112,10 @@ class BxGroupsSearchResult extends BxBaseModProfileSearchResult
 
                     $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode . '/' . $aParams['object'] . '/' . $aParams['type'] . '/' . (int)$aParams['profile'] . '/' . (int)$aParams['profile2'] . '/' . (int)$aParams['mutual'];
                 }
+                break;
+
+            case 'favorite':
+                $this->_setFavoriteConditions($sMode, $aParams, $oJoinedProfile);
                 break;
 
             case 'recent':

@@ -31,6 +31,9 @@ DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_groups';
 -- REPORTS
 DELETE FROM `sys_objects_report` WHERE `name` = 'bx_groups';
 
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `Name` = 'bx_groups';
+
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_groups';
 

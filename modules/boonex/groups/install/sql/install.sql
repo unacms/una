@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `bx_groups_data` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `favorites` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(255) DEFAULT NULL,
@@ -129,8 +130,16 @@ CREATE TABLE IF NOT EXISTS `bx_groups_admins` (
   UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- STORAGES & TRANSCODERS
+-- TABLE: favorites
+CREATE TABLE `bx_groups_favorites_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`author_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
+-- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_groups_pics', 'Local', '', 360, 2592000, 3, 'bx_groups_pics', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_groups_pics_resized', 'Local', '', 360, 2592000, 3, 'bx_groups_pics_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
