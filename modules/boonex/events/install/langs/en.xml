@@ -79,6 +79,7 @@
 	<string name="_bx_events_page_title_sys_view_profile"><![CDATA[View Event]]></string>
 	<string name="_bx_events_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_events_page_title_browse"><![CDATA[Events]]></string>
+	<string name="_bx_events_page_title_browse_by_author"><![CDATA[Events of {display_name}]]></string>
 	<string name="_bx_events_page_title_browse_top"><![CDATA[Top Events]]></string>
 	<string name="_bx_events_page_title_browse_recent"><![CDATA[New Events]]></string>
 	<string name="_bx_events_page_title_browse_connections"><![CDATA[{0} connections]]></string>
@@ -99,6 +100,8 @@
 	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Events Calendar]]></string>
 	<string name="_bx_events_page_title_calendar"><![CDATA[Events Calendar]]></string>
 
+	<string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Favorite Events]]></string>
+    <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Events]]></string>
 	<string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Joined Events]]></string>
 	<string name="_bx_events_page_block_title_joined_entries"><![CDATA[Joined Events]]></string>
 	<string name="_bx_events_page_block_title_create_profile"><![CDATA[Create Event]]></string>

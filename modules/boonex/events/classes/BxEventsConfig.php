@@ -77,6 +77,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_events_cover_thumb',
             'OBJECT_VIEWS' => 'bx_events',
             'OBJECT_VOTES' => 'bx_events',
+        	'OBJECT_FAVORITES' => 'bx_events',
             'OBJECT_REPORTS' => 'bx_events',
             'OBJECT_METATAGS' => 'bx_events',
             'OBJECT_FORM_ENTRY' => 'bx_event',
@@ -162,6 +163,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
                 
                 'menu_item_title_become_fan_sent' => '_bx_events_menu_item_title_become_fan_sent',
                 'menu_item_title_become_fan' => '_bx_events_menu_item_title_become_fan',
+            	'txt_all_entries_by_author' => '_bx_events_page_title_browse_by_author'
             ),
 
         );

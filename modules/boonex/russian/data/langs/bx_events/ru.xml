@@ -77,6 +77,7 @@
 	<string name="_bx_events_page_title_sys_view_profile"><![CDATA[Просмотр события]]></string>
 	<string name="_bx_events_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_events_page_title_browse"><![CDATA[События]]></string>
+	<string name="_bx_events_page_title_browse_by_author"><![CDATA[События {display_name}]]></string>
 	<string name="_bx_events_page_title_browse_top"><![CDATA[Лучшие события]]></string>
 	<string name="_bx_events_page_title_browse_recent"><![CDATA[Новые события]]></string>
 	<string name="_bx_events_page_title_browse_connections"><![CDATA[{0} связей]]></string>
@@ -97,6 +98,8 @@
 	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Календарь событий]]></string>
 	<string name="_bx_events_page_title_calendar"><![CDATA[Календарь событий]]></string>
 
+	<string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Избранные события]]></string>   
+    <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Избранные события]]></string>
 	<string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Участие в событиях]]></string>
 	<string name="_bx_events_page_block_title_joined_entries"><![CDATA[Участие в событиях]]></string>
 	<string name="_bx_events_page_block_title_create_profile"><![CDATA[Создать событие]]></string>

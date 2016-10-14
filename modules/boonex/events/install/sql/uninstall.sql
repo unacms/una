@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_events_data`, `bx_events_intervals`, `bx_events_pics`, `bx_events_pics_resized`, `bx_events_views_track`, `bx_events_meta_keywords`, `bx_events_meta_locations`, `bx_events_fans`, `bx_events_admins`, `bx_events_votes`, `bx_events_votes_track`, `bx_events_reports`, `bx_events_reports_track`;
+DROP TABLE IF EXISTS `bx_events_data`, `bx_events_intervals`, `bx_events_pics`, `bx_events_pics_resized`, `bx_events_views_track`, `bx_events_meta_keywords`, `bx_events_meta_locations`, `bx_events_fans`, `bx_events_admins`, `bx_events_votes`, `bx_events_votes_track`, `bx_events_reports`, `bx_events_reports_track`, `bx_events_favorites_track`;
 
 -- PROFILES
 
