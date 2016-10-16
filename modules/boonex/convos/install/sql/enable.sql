@@ -67,8 +67,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_convos_view', 'bx_convos', '_bx_cnv_menu_set_title_view_entry', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_convos_view', 'bx_convos', 'delete-convo', '_bx_cnv_menu_item_title_system_delete_entry', '_bx_cnv_menu_item_title_delete_entry', 'javascript:void(0);', 'bx_cnv_delete(this, \'{content_id}\')', '', 'remove', '', 2147483647, 1, 0, 1),
-('bx_convos_view', 'bx_convos', 'mark-unread-convo', '_bx_cnv_menu_item_title_system_mark_unread_entry', '_bx_cnv_menu_item_title_mark_unread_entry', 'javascript:void(0);', 'bx_cnv_mark_unread(this, \'{content_id}\')', '', 'check', '', 2147483647, 1, 0, 2);
+('bx_convos_view', 'bx_convos', 'edit-convo', '_bx_cnv_menu_item_title_system_edit_entry', '_bx_cnv_menu_item_title_edit_entry', 'page.php?i=edit-convo&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
+('bx_convos_view', 'bx_convos', 'delete-convo', '_bx_cnv_menu_item_title_system_delete_entry', '_bx_cnv_menu_item_title_delete_entry', 'javascript:void(0);', 'bx_cnv_delete(this, \'{content_id}\')', '', 'remove', '', 2147483647, 1, 0, 2),
+('bx_convos_view', 'bx_convos', 'mark-unread-convo', '_bx_cnv_menu_item_title_system_mark_unread_entry', '_bx_cnv_menu_item_title_mark_unread_entry', 'javascript:void(0);', 'bx_cnv_mark_unread(this, \'{content_id}\')', '', 'check', '', 2147483647, 1, 0, 3);
 
 
 -- MENU: module sub-menu

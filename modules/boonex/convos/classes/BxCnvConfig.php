@@ -16,6 +16,7 @@ class BxCnvConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'edit-convo' => 'checkAllowedEdit',
             'delete-convos' => 'checkAllowedDelete',
             'mark-unread-convo' => 'checkAllowedView',
         );
