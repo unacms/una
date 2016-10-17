@@ -3722,7 +3722,7 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdDesigner = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'polyglot', '_adm_page_cpt_polyglot', '_adm_page_cpt_polyglot', 'pi-polyglot.png');
+(3, 'polyglot', '_adm_page_cpt_polyglot', '_adm_page_cpt_polyglot', 'wi-polyglot.svg');
 SET @iIdPolyglot = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
@@ -3774,7 +3774,7 @@ INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iId
 -- Languages Page
 --
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdPolyglot, 'system', '{url_studio}polyglot.php', '', 'wi-lang-polyglot.png', '_adm_wgt_cpt_polyglot', '', '');
+(@iIdPolyglot, 'system', '{url_studio}polyglot.php', '', 'wi-polyglot.svg', '_adm_wgt_cpt_polyglot', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 1);
 
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="130px" height="130px" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>albums copy 6</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M64,0 C111.3344,0 128,16.6656 128,64 C128,111.3344 111.3344,128 64,128 C16.6656,128 0,111.3344 0,64 C0,16.6656 16.6656,0 64,0 L64,0 Z" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-1" y="-1" width="130" height="130">
+            <rect x="-1" y="-1" width="130" height="130" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+        <ellipse id="path-3" cx="41.5" cy="40" rx="41.3270833" ry="39.8333333"></ellipse>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#FFFFFF" stop-opacity="0.2" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.2" offset="100%"></stop>
+        </linearGradient>
+        <path d="M128,64 C128,111.3344 111.3344,128 64,128 C16.6656,128 0,111.3344 0,64 C0,16.6656 16.6656,0 64,0 C111.3344,0 128,16.6656 128,64 Z" id="path-6"></path>
+        <mask id="mask-7" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-1" y="-1" width="130" height="130">
+            <rect x="-1" y="-1" width="130" height="130" fill="white"></rect>
+            <use xlink:href="#path-6" fill="black"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="albums-copy-6" transform="translate(1.000000, 1.000000)">
+            <g id="Group"></g>
+            <g id="Shape">
+                <use fill="#AEE2FF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use stroke-opacity="0.3" stroke="#000000" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+            </g>
+            <g id="Group" transform="translate(23.000000, 22.000000)">
+                <ellipse id="Oval" stroke="#3498DB" fill="#9EE5FF" transform="translate(41.500000, 42.000000) rotate(-90.000000) translate(-41.500000, -42.000000) " cx="41.5" cy="42" rx="41.5" ry="40"></ellipse>
+                <g id="Clipped" transform="translate(0.000000, 2.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Oval" fill="#FFE4AF" xlink:href="#path-3"></use>
+                    <g id="Group" mask="url(#mask-4)">
+                        <g transform="translate(-1.729167, -1.666667)">
+                            <g transform="translate(1.729167, 25.000000)">
+                                <path d="M3.45833333,0 L79.5416667,0" id="Shape" stroke="#3498DB" stroke-width="2"></path>
+                                <path d="M0,16.6666667 L86.4583333,16.6666667" id="Shape" stroke="#3498DB" stroke-width="2"></path>
+                                <path d="M3.45833333,33.3333333 L79.5416667,33.3333333" id="Shape" stroke="#3498DB" stroke-width="2"></path>
+                            </g>
+                            <g>
+                                <path d="M43.2291667,83.3333333 C19.349375,83.3333333 0,64.6833333 0,41.6666667 C0,18.65 19.349375,0 43.2291667,0" id="Shape" stroke="#3498DB" stroke-width="2"></path>
+                                <path d="M43.1427083,83.3333333 C29.1364583,75.1333333 19.0208333,58.6166667 19.0208333,41.6666667 C19.0208333,24.7166667 29.1364583,8.2 43.1427083,0" id="Shape" stroke="#3498DB" stroke-width="2"></path>
+                                <path d="M43.2291667,83.3333333 L43.2291667,41.6666667 L43.2291667,0" id="Shape" stroke="#3498DB" stroke-width="2"></path>
+                                <path d="M43.2291667,83.3333333 C57.2354167,75.1333333 67.4375,58.6166667 67.4375,41.6666667 C67.4375,24.7166667 57.2354167,8.2 43.2291667,0" id="Shape" stroke="#3498DB" stroke-width="2"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <ellipse id="Oval" stroke="#3498DB" stroke-width="2" transform="translate(41.500000, 42.000000) rotate(-90.000000) translate(-41.500000, -42.000000) " cx="41.5" cy="42" rx="41.5" ry="40"></ellipse>
+            </g>
+            <g id="Shape-Copy">
+                <use fill="url(#linearGradient-5)" fill-rule="evenodd" xlink:href="#path-6"></use>
+                <use stroke-opacity="0.5" stroke="#000000" mask="url(#mask-7)" stroke-width="2" xlink:href="#path-6"></use>
+            </g>
+        </g>
+    </g>
+</svg>
