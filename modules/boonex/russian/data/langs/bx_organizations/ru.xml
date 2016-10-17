@@ -59,7 +59,10 @@
 	<string name="_bx_orgs_page_title_browse_recent"><![CDATA[Последние Добавленные Организации]]></string>
 	<string name="_bx_orgs_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
+	<string name="_bx_orgs_page_title_browse_favorites"><![CDATA[{0} избранных]]></string>
 	<string name="_bx_orgs_page_title_browse_by_acl"><![CDATA[Организации уровня {0}]]></string>
+	<string name="_bx_orgs_page_title_sys_profile_favorites"><![CDATA[Избранное]]></string>
+	<string name="_bx_orgs_page_title_profile_favorites"><![CDATA[Избранное]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_info"><![CDATA[Инфо профиля]]></string>
@@ -79,12 +82,15 @@
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
 	<string name="_bx_orgs_page_block_title_delete_profile"><![CDATA[Удалить профиль]]></string>
+	<string name="_bx_orgs_page_block_title_profile_all_actions"><![CDATA[Все Действия]]></string>
 	<string name="_bx_orgs_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_profile_info"><![CDATA[Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
 	<string name="_bx_orgs_page_block_title_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_membership"><![CDATA[Членство]]></string>
 	<string name="_bx_orgs_page_block_title_profile_description"><![CDATA[Описание]]></string>
+	<string name="_bx_orgs_page_block_title_profile_favorites_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>
+	<string name="_bx_orgs_page_block_title_system_profile_favorites"><![CDATA[Избранное]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
@@ -125,6 +131,8 @@
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Организация]]></string>
+    <string name="_bx_orgs_menu_item_title_system_view_profile_favorites"><![CDATA[Избранное]]></string>
+    <string name="_bx_orgs_menu_item_title_view_profile_favorites"><![CDATA[Избранное]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>

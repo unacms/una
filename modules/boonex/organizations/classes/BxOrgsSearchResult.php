@@ -95,6 +95,10 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 }
                 break;
 
+            case 'favorite':
+                $this->_setFavoriteConditions($sMode, $aParams);
+                break;
+
             case 'recent':
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_recent');

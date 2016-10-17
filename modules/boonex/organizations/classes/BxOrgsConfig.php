@@ -54,6 +54,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-organization-profile',
+        	'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',
         	'URI_MANAGE_COMMON' => 'organizations-manage',
@@ -80,6 +81,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_organizations_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_organizations_cover_thumb',
             'OBJECT_VIEWS' => 'bx_organizations',
+        	'OBJECT_FAVORITES' => 'bx_organizations',
+        	'OBJECT_REPORTS' => 'bx_organizations',
             'OBJECT_METATAGS' => 'bx_organizations',
             'OBJECT_FORM_ENTRY' => 'bx_organization',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_organization_view',
@@ -142,6 +145,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             	'filter_item_select_one_filter1' => '_bx_orgs_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_orgs_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_orgs_menu_item_title_manage_all',
+            	'txt_browse_favorites' => '_bx_orgs_page_title_browse_favorites',
             ),
 
         );

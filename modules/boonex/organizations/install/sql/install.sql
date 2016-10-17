@@ -11,13 +11,15 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `org_cat` int(11) NOT NULL,
   `org_desc` text NOT NULL,
   `views` int(11) NOT NULL default '0',
+  `favorites` int(11) NOT NULL default '0',
+  `reports` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`org_name`,`org_desc`)
 );
 
 -- TABLE: STORAGES & TRANSCODERS
-CREATE TABLE `bx_organizations_pics` (
+CREATE TABLE IF NOT EXISTS `bx_organizations_pics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -33,7 +35,7 @@ CREATE TABLE `bx_organizations_pics` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
-CREATE TABLE `bx_organizations_pics_resized` (
+CREATE TABLE IF NOT EXISTS `bx_organizations_pics_resized` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -50,7 +52,7 @@ CREATE TABLE `bx_organizations_pics_resized` (
 );
 
 -- TABLE: VIEWS
-CREATE TABLE `bx_organizations_views_track` (
+CREATE TABLE IF NOT EXISTS `bx_organizations_views_track` (
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
   `viewer_nip` int(11) unsigned NOT NULL default '0',
@@ -58,8 +60,35 @@ CREATE TABLE `bx_organizations_views_track` (
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: favorites
+CREATE TABLE IF NOT EXISTS `bx_organizations_favorites_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`author_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- TABLE: reports
+CREATE TABLE IF NOT EXISTS `bx_organizations_reports` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_organizations_reports_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `type` varchar(32) NOT NULL default '',
+  `text` text NOT NULL default '',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `report` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
 -- TABLE: metas
-CREATE TABLE `bx_organizations_meta_keywords` (
+CREATE TABLE IF NOT EXISTS `bx_organizations_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),
