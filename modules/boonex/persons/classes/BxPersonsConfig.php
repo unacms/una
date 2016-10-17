@@ -54,6 +54,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-persons-profile',
+        	'URI_VIEW_FAVORITES' => 'persons-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-persons-profile',
             'URI_EDIT_COVER' => 'edit-persons-cover',
         	'URI_MANAGE_COMMON' => 'persons-manage',
@@ -80,6 +81,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_persons_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_persons_cover_thumb',
             'OBJECT_VIEWS' => 'bx_persons',
+        	'OBJECT_FAVORITES' => 'bx_persons',
+        	'OBJECT_REPORTS' => 'bx_persons',
             'OBJECT_METATAGS' => 'bx_persons',
             'OBJECT_FORM_ENTRY' => 'bx_person',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_person_view',
@@ -142,6 +145,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             	'filter_item_select_one_filter1' => '_bx_persons_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_persons_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_persons_menu_item_title_manage_all',
+            	'txt_browse_favorites' => '_bx_persons_page_title_browse_favorites'
             ),
 
         );

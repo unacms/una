@@ -95,6 +95,10 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 }
                 break;
 
+            case 'favorite':
+                $this->_setFavoriteConditions($sMode, $aParams);
+                break;
+
             case 'recent':
                 $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_recent');
