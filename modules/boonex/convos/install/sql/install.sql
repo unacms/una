@@ -147,6 +147,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_convos_entry_add', 'submit_text', 2147483647, 1, 6),
 ('bx_convos_entry_add', 'draft_id', 2147483647, 1, 7),
 
+('bx_convos_entry_edit', 'delete_confirm', 2147483647, 0, 1),
+('bx_convos_entry_edit', 'recipients', 2147483647, 1, 2),
+('bx_convos_entry_edit', 'text', 2147483647, 1, 3),
+('bx_convos_entry_edit', 'attachments', 2147483647, 1, 4),
+('bx_convos_entry_edit', 'submit_block', 2147483647, 1, 5),
+('bx_convos_entry_edit', 'do_submit', 2147483647, 1, 6),
+('bx_convos_entry_edit', 'submit_text', 2147483647, 0, 7),
+('bx_convos_entry_edit', 'draft_id', 2147483647, 0, 8),
+
 ('bx_convos_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_convos_entry_view', 'do_submit', 2147483647, 0, 0),
 ('bx_convos_entry_view', 'recipients', 2147483647, 0, 0),
