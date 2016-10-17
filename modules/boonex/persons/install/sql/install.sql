@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
 );
 
 -- TABLE: STORAGES & TRANSCODERS
-CREATE TABLE `bx_persons_pictures` (
+CREATE TABLE IF NOT EXISTS `bx_persons_pictures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `bx_persons_pictures` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
-CREATE TABLE `bx_persons_pictures_resized` (
+CREATE TABLE IF NOT EXISTS `bx_persons_pictures_resized` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE `bx_persons_pictures_resized` (
 );
 
 -- TABLE: VIEWS
-CREATE TABLE `bx_persons_views_track` (
+CREATE TABLE IF NOT EXISTS `bx_persons_views_track` (
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
   `viewer_nip` int(11) unsigned NOT NULL default '0',
@@ -60,7 +60,7 @@ CREATE TABLE `bx_persons_views_track` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: favorites
-CREATE TABLE `bx_persons_favorites_track` (
+CREATE TABLE IF NOT EXISTS `bx_persons_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_reports_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: metas
-CREATE TABLE `bx_persons_meta_keywords` (
+CREATE TABLE IF NOT EXISTS `bx_persons_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),
