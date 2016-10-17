@@ -115,7 +115,10 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 break;
 
             case 'favorite':
-                $this->_setFavoriteConditions($sMode, $aParams, $oJoinedProfile);
+                if(!$this->_setFavoriteConditions($sMode, $aParams, $oJoinedProfile)) {
+                    $this->isError = true;
+                    break;
+                }
                 break;
 
             case 'recent':

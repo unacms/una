@@ -71,7 +71,10 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 break;
 
             case 'favorite':
-                $this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor);
+                if(!$this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor)) {
+                    $this->isError = true;
+                    break;
+                }
                 break;
 
 			case 'category':

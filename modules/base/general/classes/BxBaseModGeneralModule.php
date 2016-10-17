@@ -205,6 +205,14 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
+     * Entry actions and social sharing block
+     */
+    public function serviceEntityAllActions ($iContentId = 0)
+    {
+        return $this->_oTemplate->entryAllActions('', $this->serviceEntitySocialSharing($iContentId));
+    }
+
+    /**
      * Entry actions block
      */
     public function serviceEntityActions ($iContentId = 0)
@@ -234,7 +242,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
         return $this->_entitySocialSharing ($iContentId, array(
             'id_timeline' => $iContentId,
-        	'id_thumb' => !empty($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : '',
+        	'id_thumb' => !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : '',
         	'title' => !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
         	'object_storage' => !empty($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
             'object_transcoder' => false,

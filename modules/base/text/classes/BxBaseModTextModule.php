@@ -87,14 +87,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
     /**
-     * Entry social sharing block
-     */
-    public function serviceEntityAllActions ($iContentId = 0)
-    {
-        return $this->_oTemplate->entryAllActions('', $this->serviceEntitySocialSharing($iContentId));
-    }
-
-    /**
      * Entry comments
      */
     public function serviceEntityComments ($iContentId = 0)

@@ -21,17 +21,13 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
-        if (!$oProfileAuthor) {
-            $this->isError = true;
-            break;
-        }
+        if (!$oProfileAuthor) 
+            return false;
 
         $iProfileAuthor = $oProfileAuthor->id();
         $oFavorite = $this->oModule->getObjectFavorite();
-        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()) {
-            $this->isError = true;
-            break;
-        }
+        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()) 
+            return false;
 
         $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
         if(!empty($aConditions) && is_array($aConditions)) {
@@ -47,6 +43,8 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_JOINED_ENTRIES'] . '&profile_id={profile_id}';
         $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
         $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
+
+        return true;
     }
 }
 

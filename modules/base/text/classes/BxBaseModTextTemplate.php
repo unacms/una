@@ -101,15 +101,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         ));
     }
 
-    function entryAllActions ($sActionsEntity, $sActionsSocial)
-    {
-        $aVars = array (
-            'actions_entity' => $sActionsEntity,
-            'actions_social' => $sActionsSocial,
-        );
-        return $this->parseHtmlByName('entry-all-actions.html', $aVars);
-    }
-
     protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule)
     {
         if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
