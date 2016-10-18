@@ -96,7 +96,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 break;
 
             case 'favorite':
-                if(!$this->_setFavoriteConditions($sMode, $aParams)) {
+                $oProfileAuthor = null;
+                if(!$this->_setFavoriteConditions($sMode, $aParams, $oProfileAuthor)) {
                     $this->isError = true;
                     break;
                 }
