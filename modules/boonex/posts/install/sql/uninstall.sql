@@ -35,15 +35,15 @@ DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_posts';
 
 -- REPORTS
 
-DELETE FROM `sys_objects_report` WHERE `Name` = 'bx_posts';
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_posts';
 
 -- VIEWS
 
-DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_posts';
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_posts';
 
 -- FAFORITES
 
-DELETE FROM `sys_objects_favorite` WHERE `Name` = 'bx_posts';
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_posts';
 
 -- STUDIO: page & widget
 

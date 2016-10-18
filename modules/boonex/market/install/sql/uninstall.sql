@@ -28,13 +28,13 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_market';
 DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_market';
 
 -- REPORTS
-DELETE FROM `sys_objects_report` WHERE `Name` = 'bx_market';
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_market';
 
 -- VIEWS
-DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_market';
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_market';
 
 -- FAFORITES
-DELETE FROM `sys_objects_favorite` WHERE `Name` = 'bx_market';
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_market';
 
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`

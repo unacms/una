@@ -23,13 +23,13 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_persons';
 
 -- VIEWS
-DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_persons';
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_persons';
 
 -- FAFORITES
-DELETE FROM `sys_objects_favorite` WHERE `Name` = 'bx_persons';
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_persons';
 
 -- REPORTS
-DELETE FROM `sys_objects_report` WHERE `Name` = 'bx_persons';
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_persons';
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_persons';

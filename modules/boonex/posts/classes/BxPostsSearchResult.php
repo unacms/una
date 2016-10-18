@@ -55,7 +55,10 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
 
         switch ($sMode) {
             case 'author':
-                $this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor);
+                if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor)) {
+                    $this->isError = true;
+                    break;
+                }
                 break;
 
             case 'favorite':
