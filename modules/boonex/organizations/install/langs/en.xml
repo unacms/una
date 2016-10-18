@@ -61,8 +61,8 @@
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
 	<string name="_bx_orgs_page_title_browse_favorites"><![CDATA[{0} favorites]]></string>
 	<string name="_bx_orgs_page_title_browse_by_acl"><![CDATA[{0} Organizations]]></string>
-	<string name="_bx_orgs_page_title_sys_profile_favorites"><![CDATA[Favorites]]></string>
-	<string name="_bx_orgs_page_title_profile_favorites"><![CDATA[Favorites]]></string>
+	<string name="_bx_orgs_page_title_sys_profile_favorites"><![CDATA[Favorite Organizations]]></string>
+	<string name="_bx_orgs_page_title_profile_favorites"><![CDATA[Favorite Organizations]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
@@ -89,8 +89,8 @@
 	<string name="_bx_orgs_page_block_title_profile_membership"><![CDATA[Membership]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_membership"><![CDATA[Membership]]></string>
 	<string name="_bx_orgs_page_block_title_profile_description"><![CDATA[Description]]></string>
-	<string name="_bx_orgs_page_block_title_profile_favorites_link"><![CDATA[Favorites of <a href="{profile_link}">{display_name}</a>]]></string>
-	<string name="_bx_orgs_page_block_title_system_profile_favorites"><![CDATA[Favorites]]></string>
+	<string name="_bx_orgs_page_block_title_profile_favorites"><![CDATA[Favorite Organizations]]></string>
+	<string name="_bx_orgs_page_block_title_system_profile_favorites"><![CDATA[Favorite Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
@@ -131,8 +131,6 @@
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Organization]]></string>
-    <string name="_bx_orgs_menu_item_title_system_view_profile_favorites"><![CDATA[Favorites]]></string>
-    <string name="_bx_orgs_menu_item_title_view_profile_favorites"><![CDATA[Favorites]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
@@ -159,6 +157,8 @@
     <string name="_bx_orgs_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
     <string name="_bx_orgs_menu_item_title_system_manage_my_organizations"><![CDATA[My organizations]]></string>
     <string name="_bx_orgs_menu_item_title_manage_my_organizations"><![CDATA[{addon} organizations]]></string>
+    <string name="_bx_orgs_menu_item_title_system_favorites"><![CDATA[Favorite Organizations]]></string>
+    <string name="_bx_orgs_menu_item_title_favorites"><![CDATA[{addon} favorite organizations]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
