@@ -61,17 +61,17 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
         switch ($sMode) {
 
             case 'author':
-                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
-                if (!$oProfileAuthor) {
+                if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor)) {
                     $this->isError = true;
                     break;
                 }
+                break;
 
-                $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
-
-                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_by_author');
-                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode . '/' . $oProfileAuthor->id();
+            case 'favorite':
+                if(!$this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor)) {
+                    $this->isError = true;
+                    break;
+                }
                 break;
 
             case 'public':

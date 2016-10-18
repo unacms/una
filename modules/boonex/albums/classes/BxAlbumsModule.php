@@ -99,6 +99,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         	'object_storage' => false,
             'object_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG'],
         	'object_vote' => $CNF['OBJECT_VOTES_MEDIA'],
+        	'object_favorite' => $CNF['OBJECT_FAVORITES_MEDIA'],
         	'object_report' => '',
         	'object_comments' => $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '',
         	'uri_view_entry' => $CNF['URI_VIEW_MEDIA'],
@@ -135,6 +136,21 @@ class BxAlbumsModule extends BxBaseModTextModule
     public function serviceBrowsePopularMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('popular', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
+    }
+
+    public function serviceBrowseFavoriteMedia ($iProfileId = 0, $aParams = array())
+    {
+        $oProfile = null;
+        if((int)$iProfileId)
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile && bx_get('profile_id') !== false)
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+        if(!$oProfile)
+            $oProfile = BxDolProfile::getInstance();
+        if(!$oProfile)
+            return '';
+
+        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, true, true, 'SearchResultMedia');
     }
 
     public function actionGetSiblingMedia($iMediaId, $mixedContext)

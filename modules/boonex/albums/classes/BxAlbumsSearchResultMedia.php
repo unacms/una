@@ -91,6 +91,13 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->sOrderDirection = 'ASC';                
                 break;
 
+            case 'favorite':
+                if(!$this->_updateCurrentForFavorite($sMode, array_merge($aParams, array('system' => $CNF['OBJECT_FAVORITES_MEDIA'])), $oProfileAuthor)) {
+                    $this->isError = true;
+                    break;
+                }
+                break;
+
             case 'recent':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_RECENT_MEDIA']);
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_recent_media');

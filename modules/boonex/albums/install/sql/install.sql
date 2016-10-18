@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_albums` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
@@ -63,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
   `views` int(11) NOT NULL,
   `rate` float NOT NULL,
   `votes` int(11) NOT NULL,
+  `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL,
   `data` text NOT NULL,
   `exif` text NOT NULL,
@@ -73,7 +75,6 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
 );
 
 -- TABLE: comments
-
 CREATE TABLE IF NOT EXISTS `bx_albums_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
@@ -202,7 +203,6 @@ CREATE TABLE `bx_albums_meta_locations` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: reports
-
 CREATE TABLE IF NOT EXISTS `bx_albums_reports` (
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
@@ -221,8 +221,23 @@ CREATE TABLE IF NOT EXISTS `bx_albums_reports_track` (
   KEY `report` (`object_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
--- STORAGES & TRANSCODERS
+-- TABLE: favorites
+CREATE TABLE `bx_albums_favorites_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`author_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bx_albums_favorites_media_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`author_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+-- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_albums_files', 'Local', '', 360, 2592000, 3, 'bx_albums_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
 ('bx_albums_photos_resized', 'Local', '', 360, 2592000, 3, 'bx_albums_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0);
@@ -341,8 +356,13 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 ('bx_albums', 'bx_albums_views_track', '86400', '1', 'bx_albums_albums', 'id', 'views', '', ''),
 ('bx_albums_media', 'bx_albums_views_media_track', '86400', '1', 'bx_albums_files2albums', 'id', 'views', '', '');
 
--- STUDIO: page & widget
+-- FAFORITES
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_albums', 'bx_albums_favorites_track', '1', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'favorites', '', ''),
+('bx_albums_media', 'bx_albums_favorites_media_track', '1', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', '', 'favorites', '', '');
 
+
+-- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'bx_albums', '_bx_albums', '_bx_albums', 'bx_albums@modules/boonex/albums/|std-pi.png');
 SET @iPageId = LAST_INSERT_ID();

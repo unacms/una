@@ -84,6 +84,8 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_VIEWS_MEDIA' => 'bx_albums_media',
             'OBJECT_VOTES' => 'bx_albums',
             'OBJECT_VOTES_MEDIA' => 'bx_albums_media',
+        	'OBJECT_FAVORITES' => 'bx_albums',
+            'OBJECT_FAVORITES_MEDIA' => 'bx_albums_media',
             'OBJECT_METATAGS' => 'bx_albums',
             'OBJECT_METATAGS_MEDIA' => 'bx_albums_media',
             'OBJECT_METATAGS_MEDIA_CAMERA' => 'bx_albums_media_camera',
@@ -129,6 +131,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_albums_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_albums_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_albums_txt_all_entries_by',
+            	'txt_all_entries_by_author' => '_bx_albums_page_title_browse_by_author'
             ),
         );
 
