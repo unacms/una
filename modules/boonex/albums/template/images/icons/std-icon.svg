@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="104px" height="104px" viewBox="0 0 104 104" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>albums</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M50,2.96059473e-15 C86.98,2.96059473e-15 100,13.02 100,50 C100,86.98 86.98,100 50,100 C13.02,100 0,86.98 0,50 C0,13.02 13.02,2.96059473e-15 50,2.96059473e-15 L50,2.96059473e-15 Z" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-2" y="-2" width="104" height="104">
+            <rect x="-2" y="-2" width="104" height="104" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+        <path d="M60,46.9565217 C60,48.3913043 58.826087,49.5652174 57.3913043,49.5652174 L2.60869565,49.5652174 C1.17391304,49.5652174 0,48.3913043 0,46.9565217 L0,2.60869565 C0,1.17391304 1.17391304,0 2.60869565,0 L57.3913043,0 C58.826087,0 60,1.17391304 60,2.60869565 L60,46.9565217 L60,46.9565217 Z" id="path-3"></path>
+        <polygon id="path-5" points="0 0 33.9130435 33.9130435 41.7391304 33.9130435 41.7391304 0"></polygon>
+        <polygon id="path-7" points="0 15.6521739 20.8695652 36.5217391 31.3043478 26.0869565 41.7391304 36.5217391 41.7391304 0 0 0"></polygon>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-9">
+            <stop stop-color="#FFFFFF" stop-opacity="0.2" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.1" offset="100%"></stop>
+        </linearGradient>
+        <path d="M100,50 C100,86.98 86.98,100 50,100 C13.02,100 0,86.98 0,50 C0,13.02 13.02,3.55271368e-15 50,3.55271368e-15 C86.98,3.55271368e-15 100,13.02 100,50 Z" id="path-10"></path>
+        <mask id="mask-11" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-2" y="-2" width="104" height="104">
+            <rect x="-2" y="-2" width="104" height="104" fill="white"></rect>
+            <use xlink:href="#path-10" fill="black"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="albums" transform="translate(2.000000, 2.000000)">
+            <g id="Shape">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use stroke-opacity="0.3" stroke="#000000" mask="url(#mask-2)" stroke-width="4" xlink:href="#path-1"></use>
+            </g>
+            <g id="Group">
+                <g id="Clipped" transform="translate(20.000000, 25.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <g id="Shape"></g>
+                    <g id="Group" mask="url(#mask-4)">
+                        <g id="Clipped" transform="translate(18.260870, 15.652174)">
+                            <mask id="mask-6" fill="white">
+                                <use xlink:href="#path-5"></use>
+                            </mask>
+                            <g id="Shape"></g>
+                            <path d="M31.3043478,10.4347826 L41.7391304,20.8695652 L41.7391304,31.3043478 C41.7391304,32.7391304 40.5652174,33.9130435 39.1304348,33.9130435 L20.8695652,33.9130435 L20.8695652,20.8695652 L31.3043478,10.4347826 L31.3043478,10.4347826 Z" id="Shape" stroke="#009C41" stroke-width="2" fill="#1EBC61" mask="url(#mask-6)"></path>
+                        </g>
+                        <path d="M18.2608696,15.6521739 L0,33.9130435 L0,46.9565217 C0,48.3913043 1.17391304,49.5652174 2.60869565,49.5652174 L52.173913,49.5652174 L18.2608696,15.6521739 L18.2608696,15.6521739 Z" id="Shape" stroke="#0EAC51" stroke-width="2" fill="#2ECC71"></path>
+                        <g id="Clipped" transform="translate(18.260870, 0.000000)">
+                            <mask id="mask-8" fill="white">
+                                <use xlink:href="#path-7"></use>
+                            </mask>
+                            <g id="Shape"></g>
+                            <circle id="Oval" stroke="#F9B32F" stroke-width="2" fill="#FFCF4B" mask="url(#mask-8)" cx="22.173913" cy="14.3478261" r="6.52173913"></circle>
+                        </g>
+                    </g>
+                </g>
+                <path d="M50,25 L77.3913043,25 C78.826087,25 80,26.173913 80,27.6086957 L80,71.9565217 C80,73.3913043 78.826087,74.5652174 77.3913043,74.5652174 L22.6086957,74.5652174 C21.173913,74.5652174 20,73.3913043 20,71.9565217 L20,27.6086957 C20,26.173913 21.173913,25 22.6086957,25 L50,25 L50,25 Z" id="Shape" stroke="#657576" stroke-width="2"></path>
+                <g id="Shape-Copy">
+                    <use fill="url(#linearGradient-9)" fill-rule="evenodd" xlink:href="#path-10"></use>
+                    <use stroke-opacity="0.5" stroke="#000000" mask="url(#mask-11)" stroke-width="4" xlink:href="#path-10"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
