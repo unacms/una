@@ -1633,17 +1633,17 @@ If it is not enabled then please consider implement this optimization, since it 
 <p><b>{password}</b></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Hello {profile_name},</p>
-<p>Your profile was reviewed and activated!</p>
-<p>Simply follow the link below to enjoy our services:<br />
-<a href="{site_url}member.php">{site_url}member.php</a></p>
-<p>Your e-mail used for registration: <span style="color:#FF6633">{account_email}</span></p>
-<p><b>Thank you for using our services!</b></p>
+<p>Hello, {profile_name}.</p>
+<p>Welcome to {site_name}! Here's a copy of your account details:</p>
+<p>Name: {account_name}</p>
+<p>Email Address: {account_email}</p>
+<p>Site URL: <a href="{site_url}">{site_url}</a></p>
+<p>Thank you!</p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Hello {profile_name},</p>
+<p>Hello, {profile_name}.</p>
 <p>Your profile is waiting for review, as soon as it is reviewed you will receive notification by email.</p>
-<p><b>Thank you for using our services.</b></p>
+<p>Thank you!</p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Hello {profile_name},</p>

@@ -1631,17 +1631,17 @@
 <p><b>{password}</b></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Привет {profile_name},</p>
-<p>Ваш профиль был проверен и активирован!</p>
-<p>Просто перейдите по ссылке внизу, чтобы воспользоваться нашими услугами:<br />
-<a href="{site_url}member.php">{site_url}member.php</a></p>
-<p>Ваш имейл, использованный для регистрации: <span style="color:#FF6633">{account_email}</span></p>
-<p><b>Спасибо за использование нашего сервиса!</b></p>
+<p>Привет, {profile_name}.</p>
+<p>Добро пожаловать на сайт {site_name}! Вот копия данных вашего аккаунта:</p>
+<p>Имя: {account_name}</p>
+<p>Имейл: {account_email}</p>
+<p>URL сайта: <a href="{site_url}">{site_url}</a></p>
+<p>Спасибо!</p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Привет {profile_name},</p>
 <p>Ваш профиль ожидает одобрения. Как только он будет одобрен, Вы получите уведомление по эл. почте.</p>
-<p><b>Спасибо за использование нашего сервиса.</b></p>
+<p>Спасибо!</p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Привет {profile_name},</p>
