@@ -59,7 +59,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         return true;
     }
 
-    protected function _setFavoriteConditions($sMode, $aParams)
+    protected function _setFavoriteConditions($sMode, $aParams,  &$oProfileAuthor)
     {
         $CNF = &$this->oModule->_oConfig->CNF;
 

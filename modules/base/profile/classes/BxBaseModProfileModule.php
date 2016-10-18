@@ -88,6 +88,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $o->getNum();
 	}
 
+    public function serviceGetMenuAddonFavoritesProfileStats()
+    {
+    	bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass('favorite', array('user' => bx_get_logged_profile_id()));
+        $o->unsetPaginate();
+
+        return $o->getNum();
+    }
+
     public function serviceGetSubmenuObject ()
     {
         return $this->_oConfig->CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
