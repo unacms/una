@@ -71,10 +71,8 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
-        if (!$oProfileAuthor) {
-            $this->isError = true;
-            break;
-        }
+        if (!$oProfileAuthor) 
+            return false;
 
         $iProfileAuthor = $oProfileAuthor->id();
         $this->aCurrent['restriction']['author']['value'] = $iProfileAuthor;
@@ -88,18 +86,26 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
         $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
         $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
+
+        return true;
     }
 
     protected function _updateCurrentForFavorite($sMode, $aParams, &$oProfileAuthor)
     {
         $CNF = &$this->oModule->_oConfig->CNF;
+        
+        $sSystem = '';
+        if(!empty($aParams['system'])) {
+            $sSystem = $aParams['system'];
+            unset($aParams['system']);
+        }
 
         $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
         if(!$oProfileAuthor) 
             return false;
 
         $iProfileAuthor = $oProfileAuthor->id();
-        $oFavorite = $this->oModule->getObjectFavorite();
+        $oFavorite = $this->oModule->getObjectFavorite($sSystem);
         if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()) 
             return false;
 

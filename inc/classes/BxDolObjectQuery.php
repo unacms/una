@@ -96,6 +96,9 @@ class BxDolObjectQuery extends BxDolDb
 
 	public function getObjectAuthorId($iId)
     {
+        if(empty($this->_sTriggerFieldAuthor))
+            return 0;
+
         $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldAuthor}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
         return (int)$this->getOne($sQuery);
     }
