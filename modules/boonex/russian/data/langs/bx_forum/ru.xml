@@ -11,6 +11,8 @@
 	<string name="_bx_forum_option_per_page_profile"><![CDATA[Количество элементов на странице профиля]]></string>
 	<string name="_bx_forum_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 	<string name="_bx_forum_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+	<string name="_bx_forum_option_autosubscribe_created"><![CDATA[Автоподписка на новые обсуждения]]></string>
+	<string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Автоподписка на отвеченные обсуждения]]></string>
 
 	<string name="_bx_forum_form_entry"><![CDATA[Форум]]></string>
 	<string name="_bx_forum_form_entry_display_add"><![CDATA[Создание обсуждения]]></string>
@@ -160,6 +162,12 @@
     <string name="_bx_forum_menu_item_title_system_hide_entry"><![CDATA[Скрыть]]></string>
     <string name="_bx_forum_menu_item_title_hide_entry"><![CDATA[Скрыть]]></string>
     <string name="_bx_forum_menu_item_title_system_unhide_entry"><![CDATA[Показать]]></string>
+    <string name="_bx_forum_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string>
+    <string name="_bx_forum_menu_item_title_subscribe"><![CDATA[Подписаться]]></string>
+    <string name="_bx_forum_menu_item_title_system_unsubscribe"><![CDATA[Отписаться]]></string>
+    <string name="_bx_forum_menu_item_title_unsubscribe"><![CDATA[Отписаться]]></string>
+    <string name="_bx_forum_menu_item_title_system_more"><![CDATA[Дополнительные действия]]></string>
+    <string name="_bx_forum_menu_item_title_more"><![CDATA[]]></string>
     <string name="_bx_forum_menu_item_title_unhide_entry"><![CDATA[Показать]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_home"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_entries_home"><![CDATA[Обсуждения]]></string>
@@ -177,6 +185,8 @@
     <string name="_bx_forum_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_forum_menu_set_title_view_entry"><![CDATA[Действия для тем]]></string>
     <string name="_bx_forum_menu_title_view_entry"><![CDATA[Действия для тем]]></string>
+    <string name="_bx_forum_menu_set_title_view_more"><![CDATA[Обсуждения - Дополнительные действия]]></string>
+    <string name="_bx_forum_menu_title_view_more"><![CDATA[Обсуждения - Дополнительные действия]]></string>
     <string name="_bx_forum_menu_item_title_system_view_entries_author"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_view_entries_author"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_title_entries_my"><![CDATA[Мои Обсуждения - Меню действий]]></string>
@@ -189,10 +199,8 @@
 	<string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Обсуждения - {addon} спрятано]]></string>
 	<string name="_bx_forum_menu_item_title_manage_my"><![CDATA[Мои Обсуждения]]></string>
 	<string name="_bx_forum_menu_item_title_manage_all"><![CDATA[Все Обсуждения]]></string>
-    <string name="_bx_forum_menu_item_title_system_forum"><![CDATA[Форум]]></string>
-    <string name="_bx_forum_menu_item_title_forum"><![CDATA[обсуждение]]></string>
-    <string name="_bx_forum_menu_item_title_system_unreplied_discussions"><![CDATA[Количество неотвеченных дискуссий]]></string>
-    <string name="_bx_forum_menu_item_title_unreplied_discussions"><![CDATA[{addon} неотвеченных дискуссий]]></string>
+    <string name="_bx_forum_menu_item_title_system_discussions"><![CDATA[Количество дискуссий]]></string>
+    <string name="_bx_forum_menu_item_title_discussions"><![CDATA[{addon} дискуссий]]></string>
     <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Категории]]></string>
 
 	<string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>

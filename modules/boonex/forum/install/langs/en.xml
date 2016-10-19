@@ -11,6 +11,8 @@
 	<string name="_bx_forum_option_per_page_profile"><![CDATA[Number of items per page on profile page]]></string>
 	<string name="_bx_forum_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_forum_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+	<string name="_bx_forum_option_autosubscribe_created"><![CDATA[Autosubscribe to newly created discussions]]></string>
+	<string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Autosubscribe to replied discussions]]></string>
 
 	<string name="_bx_forum_form_entry"><![CDATA[Forum]]></string>
 	<string name="_bx_forum_form_entry_display_add"><![CDATA[New discussion]]></string>
@@ -161,6 +163,12 @@
     <string name="_bx_forum_menu_item_title_hide_entry"><![CDATA[Hide]]></string>
     <string name="_bx_forum_menu_item_title_system_unhide_entry"><![CDATA[Unhide]]></string>
     <string name="_bx_forum_menu_item_title_unhide_entry"><![CDATA[Unhide]]></string>
+    <string name="_bx_forum_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_forum_menu_item_title_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_forum_menu_item_title_system_unsubscribe"><![CDATA[Unsubscribe]]></string>
+    <string name="_bx_forum_menu_item_title_unsubscribe"><![CDATA[Unsubscribe]]></string>
+    <string name="_bx_forum_menu_item_title_system_more"><![CDATA[More Actions]]></string>
+    <string name="_bx_forum_menu_item_title_more"><![CDATA[]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_home"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_menu_item_title_entries_home"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_public"><![CDATA[Latest]]></string>
@@ -177,6 +185,8 @@
     <string name="_bx_forum_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_forum_menu_set_title_view_entry"><![CDATA[Discussion Actions]]></string>
     <string name="_bx_forum_menu_title_view_entry"><![CDATA[Discussion Actions]]></string>
+    <string name="_bx_forum_menu_set_title_view_more"><![CDATA[Discussion More Actions]]></string>
+    <string name="_bx_forum_menu_title_view_more"><![CDATA[Discussion More Actions]]></string>
     <string name="_bx_forum_menu_item_title_system_view_entries_author"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_menu_item_title_view_entries_author"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_menu_title_entries_my"><![CDATA[My Discussions Action Menu]]></string>
@@ -189,10 +199,8 @@
 	<string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Discussions - {addon} hidden]]></string>
 	<string name="_bx_forum_menu_item_title_manage_my"><![CDATA[My Discussions]]></string>
 	<string name="_bx_forum_menu_item_title_manage_all"><![CDATA[All Discussions]]></string>
-    <string name="_bx_forum_menu_item_title_system_forum"><![CDATA[Forum]]></string>
-    <string name="_bx_forum_menu_item_title_forum"><![CDATA[Forum]]></string>
-    <string name="_bx_forum_menu_item_title_system_unreplied_discussions"><![CDATA[Unreplied discussions number]]></string>
-    <string name="_bx_forum_menu_item_title_unreplied_discussions"><![CDATA[{addon} unreplied discussions]]></string>
+    <string name="_bx_forum_menu_item_title_system_discussions"><![CDATA[Discussions number]]></string>
+    <string name="_bx_forum_menu_item_title_discussions"><![CDATA[{addon} discussions]]></string>
     <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Categories]]></string>
 
 	<string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>

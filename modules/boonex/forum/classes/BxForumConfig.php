@@ -16,6 +16,8 @@ class BxForumConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'subscribe-discussion' => 'checkAllowedSubscribe',
+            'unsubscribe-discussion' => 'checkAllowedUnsubscribe',
         	'stick-discussion' => 'checkAllowedStickAnyEntry',
         	'unstick-discussion' => 'checkAllowedUnstickAnyEntry',
         	'lock-discussion' => 'checkAllowedLockAnyEntry',
@@ -76,6 +78,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_forum_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_forum_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_forum_searchable_fields',
+        	'PARAM_AUTOSUBSCRIBE_CREATED' => 'bx_forum_autosubscribe_created',
+        	'PARAM_AUTOSUBSCRIBE_REPLIED' => 'bx_forum_autosubscribe_replied',
 
             // objects
             'OBJECT_GRID' => 'bx_forum',
@@ -104,16 +108,19 @@ class BxForumConfig extends BxBaseModTextConfig
         	'OBJECT_FORM_SEARCH' => 'bx_forum_search',
             'OBJECT_FORM_SEARCH_DISPLAY_FULL' => 'bx_forum_search_full',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_forum_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_forum_view_more', // more actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_forum_my', // actions menu on my entries page
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_forum_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_MENU_SUBMENU' => 'bx_forum_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'forum', // first item in view entry submenu from main module submenu
             'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+            'OBJECT_CONNECTION_SUBSCRIBERS' => 'bx_forum_subscribers',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_forum_view' => $aMenuItems2Methods,
+        		'bx_forum_view_more' => $aMenuItems2Methods,
             ),
 
             // some language keys
