@@ -74,6 +74,10 @@ class BxContactModule extends BxDolModule
                 if(sendMail($sRecipientEmail, $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM)) {
                     $this->onContact();
 
+                    foreach($oForm->aInputs as $iKey => $aInput) 
+                        if(in_array($aInput['type'], array('text', 'textarea')))
+                            $oForm->aInputs[$iKey]['value'] = '';
+
                     $sResult = '_ADM_PROFILE_SEND_MSG';
                 } else
                     $sResult = '_Email sent failed';
