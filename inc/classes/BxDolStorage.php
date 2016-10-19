@@ -1092,7 +1092,7 @@ class BxDolStorageHelperXhr
 {
     protected $sName;
 
-    function BxDolStorageHelperXhr ($aParams)
+    function __construct ($aParams)
     {
         $this->sName = $aParams['name'];
     }
@@ -1142,7 +1142,7 @@ class BxDolStorageHelperForm
 {
     protected $aFile;
 
-    function BxDolStorageHelperForm ($aParams)
+    function __construct ($aParams)
     {
         $this->aFile = $aParams['file'];
     }
@@ -1184,7 +1184,7 @@ class BxDolStorageHelperPath
 {
     protected $sPath;
 
-    function BxDolStorageHelperPath ($aParams)
+    function __construct ($aParams)
     {
         $this->sPath = $aParams['path'];
     }
@@ -1229,7 +1229,7 @@ class BxDolStorageHelperUrl extends BxDolStorageHelperPath
         'image/png' => 'png',
     );
 
-    function BxDolStorageHelperUrl ($aParams)
+    function __construct ($aParams)
     {   
         $aParams['path'] = '';
         $sExt = pathinfo(parse_url($aParams['url'], PHP_URL_PATH), PATHINFO_EXTENSION);
@@ -1249,7 +1249,7 @@ class BxDolStorageHelperUrl extends BxDolStorageHelperPath
             if ($s || $s = bx_file_get_contents ($aParams['url']))
                 file_put_contents($aParams['path'], $s);
         }
-        parent::BxDolStorageHelperPath($aParams);
+        parent::__construct($aParams);
     }
 
     function getImmediateError()
@@ -1275,7 +1275,7 @@ class BxDolStorageHelperStorage
     protected $oStorage;
     protected $aFile;
 
-    function BxDolStorageHelperStorage ($aParams)
+    function __construct ($aParams)
     {
         $this->iFileId = $aParams['id'];
         $this->oStorage = BxDolStorage::getObjectInstance($aParams['storage']);
