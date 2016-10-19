@@ -68,6 +68,17 @@ CREATE TABLE IF NOT EXISTS `bx_forum_photos_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+-- TABLE: subscribers
+CREATE TABLE IF NOT EXISTS `bx_forum_subscribers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `initiator` int(11) NOT NULL,
+  `content` int(11) NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `initiator` (`initiator`,`content`),
+  KEY `content` (`content`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- TABLE: comments
 CREATE TABLE IF NOT EXISTS `bx_forum_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,

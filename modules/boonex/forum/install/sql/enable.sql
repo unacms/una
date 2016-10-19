@@ -18,7 +18,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_forum_per_page_index', '10', @iCategId, '_bx_forum_option_per_page_index', 'digit', '', '', '', 11),
 ('bx_forum_per_page_profile', '10', @iCategId, '_bx_forum_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_forum_rss_num', '10', @iCategId, '_bx_forum_option_rss_num', 'digit', '', '', '', 20),
-('bx_forum_searchable_fields', 'title,text', @iCategId, '_bx_forum_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_forum_searchable_fields', 'title,text', @iCategId, '_bx_forum_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_forum_autosubscribe_created', 'on', @iCategId, '_bx_forum_option_autosubscribe_created', 'checkbox', '', '', '', 40),
+('bx_forum_autosubscribe_replied', 'on', @iCategId, '_bx_forum_option_autosubscribe_replied', 'checkbox', '', '', '', 41);
 
 
 -- PAGE: create entry
@@ -189,15 +191,27 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_forum_view', @sName, '_bx_forum_menu_set_title_view_entry', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('bx_forum_view', @sName, 'stick-discussion', '_bx_forum_menu_item_title_system_stick_entry', '_bx_forum_menu_item_title_stick_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'stick\', {content_id});', '', 'thumb-tack', '', 2147483647, 1, 0, 1),
-('bx_forum_view', @sName, 'unstick-discussion', '_bx_forum_menu_item_title_system_unstick_entry', '_bx_forum_menu_item_title_unstick_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unstick\', {content_id});', '', 'thumb-tack', '', 2147483647, 1, 0, 2),
-('bx_forum_view', @sName, 'lock-discussion', '_bx_forum_menu_item_title_system_lock_entry', '_bx_forum_menu_item_title_lock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'lock\', {content_id});', '', 'lock', '', 2147483647, 1, 0, 3),
-('bx_forum_view', @sName, 'unlock-discussion', '_bx_forum_menu_item_title_system_unlock_entry', '_bx_forum_menu_item_title_unlock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unlock\', {content_id});', '', 'unlock', '', 2147483647, 1, 0, 4),
-('bx_forum_view', @sName, 'hide-discussion', '_bx_forum_menu_item_title_system_hide_entry', '_bx_forum_menu_item_title_hide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'hide\', {content_id});', '', 'eye-slash', '', 2147483647, 1, 0, 5),
-('bx_forum_view', @sName, 'unhide-discussion', '_bx_forum_menu_item_title_system_unhide_entry', '_bx_forum_menu_item_title_unhide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unhide\', {content_id});', '', 'eye', '', 2147483647, 1, 0, 6),
-('bx_forum_view', @sName, 'edit-discussion', '_bx_forum_menu_item_title_system_edit_entry', '_bx_forum_menu_item_title_edit_entry', 'page.php?i=edit-discussion&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 7),
-('bx_forum_view', @sName, 'delete-discussion', '_bx_forum_menu_item_title_system_delete_entry', '_bx_forum_menu_item_title_delete_entry', 'page.php?i=delete-discussion&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 8);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('bx_forum_view', @sName, 'subscribe-discussion', '_bx_forum_menu_item_title_system_subscribe', '_bx_forum_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'bx_forum_subscribers\', \'add\', \'{content_id}\')', '', 'check', '', 0, 2147483647, 1, 0, 1),
+('bx_forum_view', @sName, 'stick-discussion', '_bx_forum_menu_item_title_system_stick_entry', '_bx_forum_menu_item_title_stick_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'stick\', {content_id});', '', 'thumb-tack', '', 0, 2147483647, 1, 0, 2),
+('bx_forum_view', @sName, 'lock-discussion', '_bx_forum_menu_item_title_system_lock_entry', '_bx_forum_menu_item_title_lock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'lock\', {content_id});', '', 'lock', '', 0, 2147483647, 1, 0, 3),
+('bx_forum_view', @sName, 'hide-discussion', '_bx_forum_menu_item_title_system_hide_entry', '_bx_forum_menu_item_title_hide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'hide\', {content_id});', '', 'eye-slash', '', 0, 2147483647, 1, 0, 4),
+('bx_forum_view', @sName, 'more', '_bx_forum_menu_item_title_system_more', '_bx_forum_menu_item_title_more', 'javascript:void(0)', 'bx_menu_popup(\'bx_forum_view_more\', this, {}, {id:{content_id}});', '', 'cog', 'bx_forum_view_more', 1, 2147483647, 1, 0, 9999);
+
+-- MENU: view actions more
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_forum_view_more', '_bx_forum_menu_title_view_more', 'bx_forum_view_more', @sName, 6, 0, 1, 'BxForumMenuView', 'modules/boonex/forum/classes/BxForumMenuView.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_forum_view_more', @sName, '_bx_forum_menu_set_title_view_more', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_forum_view_more', @sName, 'unsubscribe-discussion', '_bx_forum_menu_item_title_system_unsubscribe', '_bx_forum_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'bx_forum_subscribers\', \'remove\', \'{content_id}\')', '', 'check', '', 2147483647, 1, 0, 1),
+('bx_forum_view_more', @sName, 'unstick-discussion', '_bx_forum_menu_item_title_system_unstick_entry', '_bx_forum_menu_item_title_unstick_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unstick\', {content_id});', '', 'thumb-tack', '', 2147483647, 1, 0, 2),
+('bx_forum_view_more', @sName, 'unlock-discussion', '_bx_forum_menu_item_title_system_unlock_entry', '_bx_forum_menu_item_title_unlock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unlock\', {content_id});', '', 'unlock', '', 2147483647, 1, 0, 3),
+('bx_forum_view_more', @sName, 'unhide-discussion', '_bx_forum_menu_item_title_system_unhide_entry', '_bx_forum_menu_item_title_unhide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unhide\', {content_id});', '', 'eye', '', 2147483647, 1, 0, 4),
+('bx_forum_view_more', @sName, 'edit-discussion', '_bx_forum_menu_item_title_system_edit_entry', '_bx_forum_menu_item_title_edit_entry', 'page.php?i=edit-discussion&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 5),
+('bx_forum_view_more', @sName, 'delete-discussion', '_bx_forum_menu_item_title_system_delete_entry', '_bx_forum_menu_item_title_delete_entry', 'page.php?i=delete-discussion&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 6);
 
 -- MENU: actions menu for my entries
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -234,14 +248,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 --INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 --('bx_forum_menu_manage_tools', 'bx_forum', 'delete-with-content', '_bx_forum_menu_item_title_system_delete_with_content', '_bx_forum_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'trash-o', '', 128, 1, 0, 0);
 
--- MENU: notifications
-SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications');
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_notifications', @sName, 'notifications-forum', '_bx_forum_menu_item_title_system_forum', '_bx_forum_menu_item_title_forum', 'page.php?i=discussions-author&profile_id={member_id}', '', '', 'comments-o col-blue2', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:29:"get_unreplied_discussions_num";}', '', 2147483646, 1, 0, @iMIOrder + 1);
-
 -- MENU: profile stats
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', @sName, 'profile-stats-unreplied-discussions', '_bx_forum_menu_item_title_system_unreplied_discussions', '_bx_forum_menu_item_title_unreplied_discussions', 'page.php?i=discussions-author&profile_id={member_id}', '', '', 'comments-o col-blue2', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:29:"get_unreplied_discussions_num";}', '', 2147483646, 1, 0, 2);
+('sys_profile_stats', @sName, 'profile-stats-discussions', '_bx_forum_menu_item_title_system_discussions', '_bx_forum_menu_item_title_discussions', 'page.php?i=discussions-author&profile_id={member_id}', '', '', 'comments-o col-blue2', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:19:"get_discussions_num";}', '', 2147483646, 1, 0, 2);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -402,6 +411,10 @@ SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 (@sName, '_bx_forum', @iSearchOrder + 1, 'BxForumSearchResult', 'modules/boonex/forum/classes/BxForumSearchResult.php'),
 ('bx_forum_cmts', '_bx_forum_cmts', @iSearchOrder + 2, 'BxForumCmtsSearchResult', 'modules/boonex/forum/classes/BxForumCmtsSearchResult.php');
+
+-- CONNECTIONS
+INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
+('bx_forum_subscribers', 'bx_forum_subscribers', 'one-way', '', '');
 
 
 -- METATAGS

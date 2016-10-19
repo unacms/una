@@ -17,7 +17,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = @sName OR `object` LIKE 'bx_foru
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = @sName;
 DELETE FROM `sys_menu_sets` WHERE `module` = @sName;
-DELETE FROM `sys_menu_items` WHERE `module` = @sName OR `set_name` IN('bx_forum_view', 'bx_forum_submenu', 'bx_forum_my');
+DELETE FROM `sys_menu_items` WHERE `module` = @sName OR `set_name` IN('bx_forum_view', 'bx_forum_view_more', 'bx_forum_submenu', 'bx_forum_my');
 
 
 -- GRID
@@ -37,6 +37,10 @@ DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_forum_allow_view_to');
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_forum', 'bx_forum_cmts');
+
+
+-- CONNECTIONS
+DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_forum_subscribers';
 
 
 -- METATAGS

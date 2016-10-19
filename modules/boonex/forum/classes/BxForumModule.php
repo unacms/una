@@ -241,9 +241,22 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $aWhereGroupAnd), false);
     }
 
+	/**
+     * Get number of discussions for some profile
+     * @param $iProfileId - profile to get discussions for, if omitted then currently logged in profile is used
+     * @return integer
+     */
+    public function serviceGetDiscussionsNum ($iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        return $this->_oDb->getEntriesNumByAuthor((int)$iProfileId);
+    }
+
     /**
-     * Get number of unread messages for spme profile
-     * @param $iProfileId - profile to get unread messages for, if omitted then currently logged is profile is used
+     * Get number of unreplied discussions for some profile
+     * @param $iProfileId - profile to get unreplied discussions for, if omitted then currently logged is profile is used
      * @return integer
      */
     public function serviceGetUnrepliedDiscussionsNum ($iProfileId = 0)
@@ -322,9 +335,27 @@ class BxForumModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
+    public function checkAllowedSubscribe(&$aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sMsg = $this->checkAllowedView($aDataEntry);
+        if($sMsg !== CHECK_ACTION_RESULT_ALLOWED)
+            return $sMsg;
+
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $CNF['OBJECT_CONNECTION_SUBSCRIBERS'], false, false);
+    }
+
+    public function checkAllowedUnsubscribe(&$aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $CNF['OBJECT_CONNECTION_SUBSCRIBERS'], false, true);
+    }
+
     public function checkAllowedStickAnyEntry($aDataEntry, $isPerformAction = false)
     {
-    	$CNF = $this->_oConfig->CNF;
+    	$CNF = &$this->_oConfig->CNF;
 
     	if((int)$aDataEntry[$CNF['FIELD_STICK']] != 0)
     		return false;
@@ -374,12 +405,26 @@ class BxForumModule extends BxBaseModTextModule
 
 	public function checkAllowedUnhideAnyEntry($aDataEntry, $isPerformAction = false)
     {
-    	$CNF = $this->_oConfig->CNF;
+    	$CNF = &$this->_oConfig->CNF;
 
     	if($aDataEntry[$CNF['FIELD_STATUS_ADMIN']] != 'hidden')
     		return false;
 
 		return $this->_checkAllowedAction('hide any entry', $aDataEntry, $isPerformAction);
+    }
+
+    protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_iProfileId)
+            return _t('_sys_txt_access_denied');
+
+        $isConnected = BxDolConnection::getObjectInstance($sObjConnection)->isConnected($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']], $isMutual);
+        if($isInvertResult)
+            $isConnected = !$isConnected;
+
+        return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
     }
 
 	/**

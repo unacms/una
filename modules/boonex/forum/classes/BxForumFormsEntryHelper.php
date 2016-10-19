@@ -18,6 +18,19 @@ class BxForumFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+
+    public function onDataAddAfter ($iAccountId, $iContentId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($s = parent::onDataAddAfter($iAccountId, $iContentId))
+            return $s;     
+
+        if(getParam($CNF['PARAM_AUTOSUBSCRIBE_CREATED']) == 'on')
+            BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBSCRIBERS'])->actionAdd($iContentId, $this->_iProfileId);
+
+        return '';
+    }
 }
 
 /** @} */

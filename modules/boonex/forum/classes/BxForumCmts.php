@@ -33,6 +33,17 @@ class BxForumCmts extends BxTemplCmts
     	return parent::isPostReplyAllowed($isPerformAction);
     }
 
+    public function onPostAfter($iId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!parent::onPostAfter($iId))
+            return false;
+
+        if(getParam($CNF['PARAM_AUTOSUBSCRIBE_REPLIED']) == 'on')
+            BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBSCRIBERS'])->actionAdd((int)$this->getId(), (int)$this->_getAuthorId());
+    }
+
     public function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
     {
         $mixedBlock = parent::getCommentsBlock($iParentId, $iVParentId, $bInDesignbox);
