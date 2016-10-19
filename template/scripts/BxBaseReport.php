@@ -109,14 +109,22 @@ class BxBaseReport extends BxDolReport
     {
         $sJsObject = $this->getJsObjectName();
 
+        $bShowDoReportAsButtonSmall = isset($aParams['show_do_report_as_button_small']) && $aParams['show_do_report_as_button_small'] == true;
+        $bShowDoReportAsButton = !$bShowDoReportAsButtonSmall && isset($aParams['show_do_report_as_button']) && $aParams['show_do_report_as_button'] == true;
+
         $aReport = $this->_oQuery->getReport($this->getId());
+        $sClass = $this->_sStylePrefix . '-counter';
+        if($bShowDoReportAsButtonSmall)
+            $sClass .= ' bx-btn-small-height';
+        if($bShowDoReportAsButton)
+            $sClass .= ' bx-btn-height';
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
             'href' => 'javascript:void(0)',
             'title' => _t('_report_do_report_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter bx-btn-height'),
+                array('key' => 'class', 'value' => $sClass),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
             ),
             'content' => (int)$aReport['count'] > 0 ? $this->_getLabelCounter($aReport['count']) : ''
@@ -170,7 +178,7 @@ class BxBaseReport extends BxDolReport
         				'condition' => (int)$aReport['count'] == 0,
         				'content' => array()
         			),
-                    'counter' => $this->getCounter()
+                    'counter' => $this->getCounter($aParams)
                 )
             ),
             'script' => $this->getJsScript($bDynamicMode)

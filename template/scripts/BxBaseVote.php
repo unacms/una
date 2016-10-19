@@ -122,14 +122,22 @@ class BxBaseVote extends BxDolVote
     {
         $sJsObject = $this->getJsObjectName();
 
+        $bShowDoVoteAsButtonSmall = $this->_bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
+        $bShowDoVoteAsButton = $this->_bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+
         $aVote = $this->_oQuery->getVote($this->getId());
+        $sClass = $this->_sStylePrefix . '-counter';
+        if($bShowDoVoteAsButtonSmall)
+            $sClass .= ' bx-btn-small-height';
+        if($bShowDoVoteAsButton)
+            $sClass .= ' bx-btn-height';
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
             'href' => 'javascript:void(0)',
             'title' => _t('_vote_do_like_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter bx-btn-height'),
+                array('key' => 'class', 'value' => $sClass),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
             ),
             'content' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''

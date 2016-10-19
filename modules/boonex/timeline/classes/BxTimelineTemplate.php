@@ -339,24 +339,33 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         				'condition' => (int)$aShared['shares'] == 0,
         				'content' => array()
         			),
-                    'counter' => $this->getShareCounter($aShared)
+                    'counter' => $this->getShareCounter($aShared, $aParams)
                 )
             ),
             'script' => $this->getShareJsScript()
         ));
     }
 
-    public function getShareCounter($aEvent)
+    public function getShareCounter($aEvent, $aParams = array())
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('share');
+
+        $bShowDoShareAsButtonSmall = isset($aParams['show_do_share_as_button_small']) && $aParams['show_do_share_as_button_small'] == true;
+        $bShowDoShareAsButton = !$bShowDoShareAsButtonSmall && isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
+
+        $sClass = $sStylePrefix . '-share-counter';
+        if($bShowDoShareAsButtonSmall)
+            $sClass .= ' bx-btn-small-height';
+        if($bShowDoShareAsButton)
+            $sClass .= ' bx-btn-height';
 
         return $this->parseHtmlByName('share_counter.html', array(
             'href' => 'javascript:void(0)',
             'title' => _t('_bx_timeline_txt_shared_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_oConfig->getHtmlIds('share', 'counter') . $aEvent['id']),
-                array('key' => 'class', 'value' => $sStylePrefix . '-share-counter bx-btn-height'),
+                array('key' => 'class', 'value' => $sClass),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')')
             ),
             'content' => !empty($aEvent['shares']) && (int)$aEvent['shares'] > 0 ? $aEvent['shares'] : ''
