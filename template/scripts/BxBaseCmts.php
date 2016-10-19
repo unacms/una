@@ -565,8 +565,6 @@ class BxBaseCmts extends BxDolCmts
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-        	$iCmtObjectId = (int)$this->getId();
-        	$iCmtObjectAuthorId = $this->getObjectAuthorId($iCmtObjectId);
             $iCmtAuthorId = $this->_getAuthorId();
             $iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
             $sCmtText = $oForm->getCleanValue('cmt_text');
@@ -610,11 +608,7 @@ class BxBaseCmts extends BxDolCmts
                     $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
-                $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $iCmtObjectId, $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_text' => $sCmtText, 'comment_author_id' => $iCmtAuthorId, 'object_author_id' => $iCmtObjectAuthorId));
-                $oZ->alert();
-
-                $oZ = new BxDolAlerts('comment', 'added', $iCmtId, $iCmtAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iCmtObjectId, 'object_author_id' => $iCmtObjectAuthorId, 'comment_text' => $sCmtText));
-        		$oZ->alert();
+                $this->onPostAfter($iCmtId);
 
                 return array('id' => $iCmtId, 'parent_id' => $iCmtParentId);
             }
@@ -627,10 +621,7 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getFormEdit($iCmtId)
     {
-    	$iCmtObjectId = (int)$this->getId();
-    	$iCmtObjectAuthorId = $this->getObjectAuthorId($iCmtObjectId);
-
-        $aCmt = $this->_oQuery->getCommentSimple ($iCmtObjectId, $iCmtId);
+        $aCmt = $this->_oQuery->getCommentSimple ((int)$this->getId(), $iCmtId);
         if(!$aCmt)
             return array('msg' => _t('_No such comment'));
 
@@ -656,11 +647,7 @@ class BxBaseCmts extends BxDolCmts
                     $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
-                $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $iCmtObjectId, $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id'], 'object_author_id' => $iCmtObjectAuthorId));
-                $oZ->alert();
-
-                $oZ = new BxDolAlerts('comment', 'edited', $iCmtId, $iCmtAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iCmtObjectId, 'object_author_id' => $iCmtObjectAuthorId));
-        		$oZ->alert();
+                $this->onEditAfter($iCmtId);
 
                 return array('id' => $iCmtId, 'text' => $this->_prepareTextForOutput($sCmtText, $iCmtId));
             }

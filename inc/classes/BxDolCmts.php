@@ -847,6 +847,44 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     	BxDolSession::getInstance()->setValue($sKey, 1);
     }
 
+    public function onPostAfter($iId)
+    {
+        $iObjectId = (int)$this->getId();
+        $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
+
+        $aComment = $this->_oQuery->getCommentSimple($iObjectId, $iId);
+        if(empty($aComment) || !is_array($aComment))
+            return false;
+
+        $iAuthorId = (int)$aComment['cmt_author_id'];
+        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $iObjectId, $iAuthorId, array('comment_id' => $iId, 'comment_text' => $aComment['cmt_text'], 'comment_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+        $oZ->alert();
+
+        $oZ = new BxDolAlerts('comment', 'added', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'comment_text' => $aComment['cmt_text']));
+        $oZ->alert();
+        
+        return true;
+    }
+
+    public function onEditAfter($iId)
+    {
+        $iObjectId = (int)$this->getId();
+    	$iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
+
+    	$aComment = $this->_oQuery->getCommentSimple($iObjectId, $iId);
+        if(empty($aComment) || !is_array($aComment))
+            return false;
+
+        $iAuthorId = (int)$aComment['cmt_author_id'];
+        $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $iObjectId, $iAuthorId, array('comment_id' => $iId, 'comment_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+        $oZ->alert();
+
+        $oZ = new BxDolAlerts('comment', 'edited', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+        $oZ->alert();
+
+        return true;
+    }
+
     /**
      * Internal functions
      */
