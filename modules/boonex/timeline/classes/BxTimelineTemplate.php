@@ -456,9 +456,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sLinkIdPrefix = $this->_oConfig->getHtmlIds('post', 'attach_link_item');
 
         $aLinkAttrs = array();
-        if($this->_oDb->getParam('sys_add_nofollow') == 'on' && strncmp(BX_DOL_URL_ROOT, $aLink['url'], strlen(BX_DOL_URL_ROOT)) != 0)
-        	$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
-        
+        if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
+            $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
+
+            if($this->_oDb->getParam('sys_add_nofollow') == 'on')
+        	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+        }
+
 		$sThumbnail = '';
 		if((int)$aLink['media_id'] != 0)
 			$sThumbnail = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'))->getFileUrl($aLink['media_id']);		
@@ -673,9 +677,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsLinks = array();
         if(!empty($aContent['links']))
             foreach($aContent['links'] as $aLink) {
-            	$aLinkAttrs = array();
-		        if($bAddNofollow && strncmp(BX_DOL_URL_ROOT, $aLink['url'], strlen(BX_DOL_URL_ROOT)) != 0)
-       				$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+                $aLinkAttrs = array();
+                if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
+                    $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
+
+                    if($bAddNofollow)
+                	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+                }
 
                 $aTmplVarsLinks[] = array(
                     'style_prefix' => $sStylePrefix,
