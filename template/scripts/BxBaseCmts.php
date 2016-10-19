@@ -315,6 +315,8 @@ class BxBaseCmts extends BxDolCmts
         $bAuthorIcon = !empty($sAuthorIcon);
 
         $sViewLink = $this->getViewUrl($aCmt['cmt_id']);
+        if(empty($sViewLink))
+            $sViewLink = '#';
 
         return BxDolTemplate::getInstance()->parseHtmlByName('comment_live_search.html', array(
             'bx_if:show_icon' => array(
