@@ -196,17 +196,19 @@ class BxInvModule extends BxDolModule
 
     /**
      * Perform neccessary checking on join form
-     * @return empty string - if join is allowed and shoulb be processed as usual, non-empty string - if join form need to be replaced with this code
+     * @return empty string - if join is allowed and should be processed as usual, non-empty string - if join form need to be replaced with this code
      */
 	public function serviceAccountAddFormCheck()
 	{
+	    $sReturn = '';
     	if (!$this->_oConfig->isRegistrationByInvitation())
-    		return '';
+    		return $sReturn;
 
     	$oSession = BxDolSession::getInstance();
-
 		$sKeyCode = $this->_oConfig->getKeyCode();
-		if (bx_get($sKeyCode) !== false) {
+
+		$bKey = bx_get($sKeyCode) !== false;
+		if($bKey) {
 			$sKey = bx_process_input(bx_get($sKeyCode));
 
         	$oKeys = BxDolKey::getInstance();
@@ -215,10 +217,14 @@ class BxInvModule extends BxDolModule
 		}
 
 		$sKey = $oSession->getValue($sKeyCode);
-		if ($sKey === false)
-			return $this->_oTemplate->getBlockRequest();
+		if($sKey !== false)
+		    return $sReturn;
 
-		return '';
+        if($bKey)
+            $sReturn .= MsgBox(_t('_bx_invites_err_used'));
+        $sReturn .= $this->_oTemplate->getBlockRequest();
+
+        return $sReturn;
 	}
 
 	public function invite($sType, $sEmails, $sText, $mixedLimit = false, $oForm = null)

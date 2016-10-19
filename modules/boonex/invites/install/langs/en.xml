@@ -124,4 +124,5 @@
 	<string name="_bx_invites_err_not_available"><![CDATA[The feature is not available now. Please, try again later.]]></string>
 	<string name="_bx_invites_err_invite"><![CDATA[Cannot send an invitation on request.]]></string>
 	<string name="_bx_invites_err_delete_request"><![CDATA[Cannot delete the request.]]></string>
+	<string name="_bx_invites_err_used"><![CDATA[The invitation link isn't available or already used.]]></string>
 </resources>

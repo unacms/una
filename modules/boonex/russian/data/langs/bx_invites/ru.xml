@@ -124,4 +124,5 @@
 	<string name="_bx_invites_err_not_available"><![CDATA[Эта функция сейчас недоступна. Пожалуйста, попытайтесь ещё раз позднее.]]></string>
 	<string name="_bx_invites_err_invite"><![CDATA[Невозможно послать приглашение по запросу.]]></string>
 	<string name="_bx_invites_err_delete_request"><![CDATA[Невозможно удалить запрос.]]></string>
+	<string name="_bx_invites_err_used"><![CDATA[Приглашение не доступно или уже использовано.]]></string>
 </resources>

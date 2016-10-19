@@ -39,8 +39,8 @@ class BxInvResponse extends BxDolAlertsResponse
     protected function _processAccountAddForm($oAlert)
     {
         $sCode = $this->_oModule->serviceAccountAddFormCheck();
-        if ($sCode)
-            $oAlert->aExtras['form_code'] = $this->_oModule->_oTemplate->getBlockRequest();
+        if($sCode)
+            $oAlert->aExtras['form_code'] = $sCode;
     }
 
     protected function _processAccountAdded($oAlert)
