@@ -75,13 +75,29 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
         $this->iDefaultLangId = $oLang->getCurrentLangId();
         $this->iFallbackLangId = $oLang->getLangId('en');
 
-        $sAboutUsLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=about');
-
-        $this->aDefaultKeys = array(
-            'site_url' => BX_DOL_URL_ROOT,
-            'site_name' => getParam('site_title'),
-            'about_us' => '<a href="' . $sAboutUsLink . '">' . _t('_sys_et_txt_about_us') . '</a>',
+        $sAboutUs = _t('_sys_et_txt_about_us');
+        $aDefaultKeys = array(
+        	'site_url' => BX_DOL_URL_ROOT,
+        	'site_name' => getParam('site_title'),
+            'about_us' => BxDolTemplate::getInstance()->parseHtmlByName('bx_a.html', array(
+                'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=about'),
+				'title' => bx_html_attribute($sAboutUs),
+                'bx_repeat:attrs' => array(),
+                'content' => $sAboutUs
+            ))
         );
+
+        $bUseEmailHtmlTemplate = getParam('site_email_html_template') == 'on';
+        $this->aDefaultKeys = array_merge($aDefaultKeys, array(
+            'bx_if:show_html_header' => array(
+                'condition' => $bUseEmailHtmlTemplate,
+            	'content' => $aDefaultKeys
+            ),
+            'bx_if:show_html_footer' => array(
+                'condition' => $bUseEmailHtmlTemplate,
+            	'content' => $aDefaultKeys
+            )
+        ));
 
         $this->_oEmailTemplatesQuery = BxDolEmailTemplatesQuery::getInstance();
     }

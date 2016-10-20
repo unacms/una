@@ -1178,6 +1178,7 @@
 	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Задействовать дружественные ссылки для Страниц]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Имейл для получения критических уведомлений от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Имейл, с которого будут посылаться сообщения от сайта]]></string>
+	<string name="_adm_stg_cpt_option_site_email_html_template"><![CDATA[Использовать HTML шаблон в имейл сообщениях сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Название сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Экскурсия по главной странице сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по главной странице Студии]]></string>
