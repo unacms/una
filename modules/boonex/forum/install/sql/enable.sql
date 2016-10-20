@@ -19,8 +19,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_forum_per_page_profile', '10', @iCategId, '_bx_forum_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_forum_rss_num', '10', @iCategId, '_bx_forum_option_rss_num', 'digit', '', '', '', 20),
 ('bx_forum_searchable_fields', 'title,text', @iCategId, '_bx_forum_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"get_searchable_fields";}', 30),
-('bx_forum_autosubscribe_created', 'on', @iCategId, '_bx_forum_option_autosubscribe_created', 'checkbox', '', '', '', 40),
-('bx_forum_autosubscribe_replied', 'on', @iCategId, '_bx_forum_option_autosubscribe_replied', 'checkbox', '', '', '', 41);
+('bx_forum_autosubscribe_created', '', @iCategId, '_bx_forum_option_autosubscribe_created', 'checkbox', '', '', '', 40),
+('bx_forum_autosubscribe_replied', '', @iCategId, '_bx_forum_option_autosubscribe_replied', 'checkbox', '', '', '', 41);
 
 
 -- PAGE: create entry
