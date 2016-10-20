@@ -9,7 +9,7 @@
 
 bx_import('BxDolStudioInstallerUtils');
 
-class BxDolStudioOAuth extends BxDol
+class BxDolStudioOAuth extends BxDolFactory
 {
     protected $oSession;
 
@@ -20,7 +20,7 @@ class BxDolStudioOAuth extends BxDol
     protected $sSecret;
     protected $sDataRetrieveMethod;
 
-    public function __construct()
+    protected function __construct()
     {
         parent::__construct ();
 

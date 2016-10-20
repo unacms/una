@@ -190,7 +190,7 @@ define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file 
  * you control this period using 'token_life' field in 'sys_objects_storage' table.
  *
  */
-abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
+abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_aObject; ///< object properties
     protected $_iCacheControl; ///< browser cache in seconds, 0 - disabled

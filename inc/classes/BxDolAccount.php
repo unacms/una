@@ -9,7 +9,7 @@
 
 bx_import('BxDolAcl');
 
-class BxDolAccount extends BxDol
+class BxDolAccount extends BxDolFactory implements iBxDolSingleton
 {
     protected $_iAccountID;
     protected $_oQuery;

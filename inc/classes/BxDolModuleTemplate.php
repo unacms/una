@@ -16,7 +16,7 @@ class BxDolModuleTemplate extends BxDolTemplate
     /*
      * Constructor.
      */
-    function __construct(&$oConfig, &$oDb, $sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT)
+    public function __construct(&$oConfig, &$oDb, $sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT)
     {
         parent::__construct($sRootPath, $sRootUrl);
 

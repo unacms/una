@@ -31,7 +31,7 @@
  * @endcode
  *
  */
-class BxDolCover extends BxDol implements iBxDolSingleton
+class BxDolCover extends BxDolFactory implements iBxDolSingleton
 {
     protected $_aOptions = array();
     protected $_sTemplateName = 'cover.html';
@@ -39,10 +39,7 @@ class BxDolCover extends BxDol implements iBxDolSingleton
     protected $_sCoverImageUrl = false;
     protected $_aOptiondDefault = array();
 
-    /**
-     * Constructor
-     */
-    public function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses']['BxDolCover']))
             trigger_error ('Multiple instances are not allowed for the BxDolCover class.', E_USER_ERROR);

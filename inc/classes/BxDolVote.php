@@ -84,23 +84,16 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
 class BxDolVote extends BxDolObject
 {
-	protected $_oTemplate;
-
 	protected $_bLike = true;
 	protected $_sType = BX_DOL_VOTE_TYPE_LIKES;
 
-    public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
+    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
-        parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
         if(empty($this->_sSystem))
             return;
 
         $this->_oQuery = new BxDolVoteQuery($this);
-
-        if ($oTemplate)
-            $this->_oTemplate = $oTemplate;
-        else
-            $this->_oTemplate = BxDolTemplate::getInstance();
 
 		$this->_bLike = $this->isLikeMode();
         $this->_sType = $this->_bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;

@@ -105,7 +105,7 @@
  * - {js_instance_name} - instance of BxDolUploader javascript class
  *
  */
-abstract class BxDolUploader extends BxDol
+abstract class BxDolUploader extends BxDolFactory
 {
     protected $_oTemplate;
 

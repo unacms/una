@@ -728,7 +728,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     public $aParams; ///< additional form parameters
     public $id; ///< Form element id
 
-    function __construct ($aInfo, $oTemplate)
+    public function __construct ($aInfo, $oTemplate)
     {
         parent::__construct();
 

@@ -34,7 +34,7 @@
  * - override_class_file: the location of the user defined class, leave it empty if class is located in system folders.
  *
  */
-class BxDolCategory extends BxDol implements iBxDolFactoryObject
+class BxDolCategory extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
@@ -43,7 +43,7 @@ class BxDolCategory extends BxDol implements iBxDolFactoryObject
      * Constructor
      * @param $aObject array of editor options
      */
-    public function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

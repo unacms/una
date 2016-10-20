@@ -17,7 +17,7 @@ define('BX_DB_ERR_ESCAPE', 3);
 define('BX_PDO_STATE_NOT_EXECUTED', NULL);
 define('BX_PDO_STATE_SUCCESS', '00000');
 
-class BxDolDb extends BxDol implements iBxDolSingleton
+class BxDolDb extends BxDolFactory implements iBxDolSingleton
 {	
     protected static $_rLink;
     protected static $_aDbCacheData;

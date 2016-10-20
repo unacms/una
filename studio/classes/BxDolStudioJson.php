@@ -7,9 +7,9 @@
  * @{
  */
 
-class BxDolStudioJson extends BxDol implements iBxDolSingleton
+class BxDolStudioJson extends BxDolFactory implements iBxDolSingleton
 {
-    public function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);

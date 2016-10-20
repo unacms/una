@@ -14,7 +14,7 @@ class BxDolInstallerUtils extends BxDolIO
 {
     protected $_aNonHashableFiles = array();
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }

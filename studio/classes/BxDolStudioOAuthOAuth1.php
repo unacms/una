@@ -16,7 +16,7 @@ define('BX_DOL_OAUTH_URL_FETCH_DATA', BX_DOL_OAUTH_URL_BASE . 'oauth_fetch_data.
 
 class BxDolStudioOAuthOAuth1 extends BxDolStudioOAuth
 {
-    public function __construct()
+    protected function __construct()
     {
     	parent::__construct();
     }

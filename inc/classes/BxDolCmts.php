@@ -128,7 +128,7 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  *      - $aExtra['rate'] - comment rate 1 or -1
  *
  */
-class BxDolCmts extends BxDol implements iBxDolReplaceable
+class BxDolCmts extends BxDolFactory implements iBxDolReplaceable
 {
     protected $_oQuery = null;
     protected $_oTemplate = null;
@@ -174,7 +174,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
      * $sSystem - comments system name
      * $iId - obect id to be commented
      */
-    function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
+    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct();
 

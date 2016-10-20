@@ -81,7 +81,7 @@
  * menu objects are integrated into pages - there is special 'menu' page block type for it.
  *
  */
-class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
+class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolReplaceable
 {
     protected static $SEL_MODULE = '';
     protected static $SEL_NAME = '';
@@ -101,7 +101,7 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * Constructor
      * @param $aObject array of menu options
      */
-    public function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

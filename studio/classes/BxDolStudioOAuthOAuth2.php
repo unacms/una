@@ -13,7 +13,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 	protected $sScope;
 	protected $sPageHandle;
 
-    public function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);

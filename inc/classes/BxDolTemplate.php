@@ -121,7 +121,7 @@ define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display
  * no alerts available
  *
  */
-class BxDolTemplate extends BxDol implements iBxDolSingleton
+class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 {
     /**
      * Main fields

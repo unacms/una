@@ -52,25 +52,15 @@ define('BX_DOL_FAVORITE_USAGE_DEFAULT', BX_DOL_FAVORITE_USAGE_BLOCK);
  */
 class BxDolFavorite extends BxDolObject
 {
-    protected $_oTemplate;
-
     protected $_sBaseUrl;
 
-    /**
-     * Constructor
-     */
-    function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
+    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
-        parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
         if(empty($this->_sSystem))
             return;
 
         $this->_oQuery = new BxDolFavoriteQuery($this);
-
-        if ($oTemplate)
-            $this->_oTemplate = $oTemplate;
-        else
-            $this->_oTemplate = BxDolTemplate::getInstance();
 
         $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')

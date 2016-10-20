@@ -11,7 +11,7 @@ class BxDolRssBoonEx extends BxTemplRss
 {
 	protected $aFeeds;
 
-    function __construct($aObject)
+    public function __construct($aObject)
     {
         parent::__construct($aObject);
 

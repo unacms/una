@@ -10,7 +10,7 @@
 /**
  * Functions to automate profile creation/editing/deletion forms.
  */
-class BxDolProfileForms extends BxDol
+class BxDolProfileForms extends BxDolFactory
 {
     /**
      * Constructor

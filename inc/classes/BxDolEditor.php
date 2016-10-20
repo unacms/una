@@ -63,7 +63,7 @@ define('BX_EDITOR_MINI', 3);
  * @endcode
  *
  */
-class BxDolEditor extends BxDol implements iBxDolFactoryObject
+class BxDolEditor extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
@@ -72,7 +72,7 @@ class BxDolEditor extends BxDol implements iBxDolFactoryObject
      * Constructor
      * @param $aObject array of editor options
      */
-    public function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

@@ -110,7 +110,7 @@ define('BX_CONNECTIONS_CONTENT_TYPE_COMMON', 'common');
  * @endcode
  *
  */
-class BxDolConnection extends BxDol implements iBxDolFactoryObject
+class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;

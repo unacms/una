@@ -53,7 +53,7 @@ bx_import('BxDolPermalinks');
  * @endcode
  *
  */
-class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
+class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oEmailTemplatesQuery;
 
@@ -61,9 +61,6 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
     protected $iFallbackLangId;
     protected $aDefaultKeys;
 
-    /**
-     * Class constructor.
-     */
     protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))

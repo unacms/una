@@ -7,14 +7,14 @@
  * @{
  */
 
-class BxDolStudioCart extends BxDol implements iBxDolSingleton
+class BxDolStudioCart extends BxDolFactory implements iBxDolSingleton
 {
     public static $sIDiv = ':';
     public static $sPDiv = '_';
     private $sSessionKey = 'bx-std-str-cart';
     private $bAllowAccumulate = false;
 
-    public function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);

@@ -14,7 +14,7 @@ class BxDolFtp extends BxDolFile
     protected $_sPassword;
     protected $_rStream;
 
-    function __construct($sHost, $sLogin, $sPassword, $sPath = '/')
+    public function __construct($sHost, $sLogin, $sPassword, $sPath = '/')
     {
         parent::__construct();
         $this->_sHost = $sHost;

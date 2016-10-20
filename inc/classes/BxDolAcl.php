@@ -72,7 +72,7 @@ define('MEMBERSHIP_PERIOD_UNIT_MONTH', 'month');
 define('MEMBERSHIP_PERIOD_UNIT_YEAR', 'year');
 
 
-class BxDolAcl extends BxDol implements iBxDolSingleton
+class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 {
     protected $oDb;
 
@@ -105,7 +105,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
 
         parent::__construct();
 
-        $this->oDb = new BxDolAclQuery();
+        $this->oDb = BxDolAclQuery::getInstance();
     }
 
     /**

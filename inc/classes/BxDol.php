@@ -26,6 +26,14 @@ class BxDol
 }
 
 /**
+ * Base class for all classes with protected constructor
+ */
+class BxDolFactory
+{
+    protected function __construct () {}
+}
+
+/**
  * Singleton interface, for objects with one instance only
  */
 interface iBxDolSingleton

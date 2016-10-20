@@ -7,14 +7,14 @@
  * @{
  */
 
-class BxDolPayments extends BxDol implements iBxDolSingleton
+class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 {
 	protected $_oDb;
 
 	protected $_aObjects;
 	protected $_sActive;
 
-    public function __construct()
+    protected function __construct()
     {
         parent::__construct();
 

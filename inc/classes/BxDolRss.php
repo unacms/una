@@ -44,7 +44,7 @@
  *
  */
 
-class BxDolRss extends BxDol implements iBxDolFactoryObject
+class BxDolRss extends BxDolFactory implements iBxDolFactoryObject
 {
 	protected $_oDb;
 	protected $_sObject;
@@ -55,7 +55,7 @@ class BxDolRss extends BxDol implements iBxDolFactoryObject
     /**
      * Constructor
      */
-    function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

@@ -11,8 +11,9 @@
  * Base class for all "Object" classes.
  * Child classes usually represents high level programming constructions to generate ready 'objects' functionality, like Comments, Votings, Forms.
  */
-class BxDolObject extends BxDol
+class BxDolObject extends BxDolFactory implements iBxDolReplaceable
 {
+    protected $_oTemplate = null;
 	protected $_oQuery = null;
 
     protected $_iId = 0; ///< item id the action to be performed with
@@ -21,7 +22,7 @@ class BxDolObject extends BxDol
 
     protected $_aMarkers = array ();
 
-    public function __construct($sSystem, $iId, $iInit = 1)
+    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct();
 
@@ -31,6 +32,11 @@ class BxDolObject extends BxDol
 
         $this->_sSystem = $sSystem;
         $this->_aSystem = $aSystems[$sSystem];
+
+        if ($oTemplate)
+            $this->_oTemplate = $oTemplate;
+        else
+            $this->_oTemplate = BxDolTemplate::getInstance();
 
         if(!$this->isEnabled())
             return;

@@ -52,12 +52,9 @@ define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number o
  */
 class BxDolView extends BxDolObject
 {
-    /**
-     * Constructor
-     */
-    function __construct($sSystem, $iId, $iInit = true)
+    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
-        parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
         if(empty($this->_sSystem))
             return;
 

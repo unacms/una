@@ -14,7 +14,7 @@ require_once(BX_DIRECTORY_PATH_PLUGINS . 'matthiasmullie/minify/Minify.php');
 require_once(BX_DIRECTORY_PATH_PLUGINS . 'matthiasmullie/minify/CSS.php');
 require_once(BX_DIRECTORY_PATH_PLUGINS . 'matthiasmullie/minify/JS.php');
 
-class BxDolMinify extends BxDol implements iBxDolSingleton
+class BxDolMinify extends BxDolFactory implements iBxDolSingleton
 {
     protected function __construct()
     {

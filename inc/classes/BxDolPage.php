@@ -115,7 +115,7 @@
  * @endcode
  *
  */
-class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
+class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolReplaceable
 {
     protected $_sObject;
     protected $_aObject;
@@ -126,7 +126,7 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * Constructor
      * @param $aObject array of page options
      */
-    public function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

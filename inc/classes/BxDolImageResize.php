@@ -20,7 +20,7 @@ spl_autoload_register(function ($sClass) {
 define('IMAGE_ERROR_SUCCESS', 0); ///< operation was successfull
 define('IMAGE_ERROR_WRONG_TYPE', 2); ///< operation failed, most probably because incorrect image format(or not image file) was provided
 
-class BxDolImageResize extends BxDol implements iBxDolSingleton
+class BxDolImageResize extends BxDolFactory implements iBxDolSingleton
 {
     protected $w = 64, $h = 64; ///< size of destination image
     protected $_isAutoCrop = false;
@@ -30,7 +30,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton
     protected $_oManager; ///< Intervention Image Manager
     protected $_sError; ///< Intervention Image Manager error string
 
-    function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);

@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxBaseFunctions extends BxDol implements iBxDolSingleton
+class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oTemplate;
     protected $_sDesignBoxIcon = 'chevron';

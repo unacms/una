@@ -13,7 +13,7 @@
  * @ref BxDolLiveUpdates
  */
 
-class BxDolLiveUpdates extends BxDol
+class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 {
 	protected $_oQuery;
     protected $_aSystems;
@@ -27,7 +27,7 @@ class BxDolLiveUpdates extends BxDol
     protected $_sJsClass;
     protected $_sJsObject;
 
-    public function __construct()
+    protected function __construct()
     {
         parent::__construct();
 

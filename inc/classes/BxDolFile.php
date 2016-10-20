@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolFile extends BxDol implements iBxDolSingleton
+class BxDolFile extends BxDolFactory implements iBxDolSingleton
 {
     protected $_sPathFrom;
     protected $_sPathTo;

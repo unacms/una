@@ -13,12 +13,12 @@
 class BxDolSocialSharingQuery extends BxDolDb
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function getActiveButtons ()
+    public function getActiveButtons ()
     {
         return $this->fromCache('sys_objects_social_sharing', 'getAll', 'SELECT * FROM `sys_objects_social_sharing` WHERE `active` = 1 ORDER BY `order` ASC');
     }

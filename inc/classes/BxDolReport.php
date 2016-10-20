@@ -83,7 +83,7 @@ class BxDolReport extends BxDolObject
 
 	protected $_aTypes;
 
-    public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
+    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit);
         if(empty($this->_sSystem))

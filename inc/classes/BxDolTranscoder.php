@@ -16,7 +16,7 @@ define('BX_DOL_QUEUE_DELETE', 'delete'); ///< file is subject to delete
 /**
  * Base class for @see BxDolTranscoderImage and @see BxDolTranscoderVideo transcoders
  */
-class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
+class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sLog = ''; ///< file conversion log
     protected $_aObject; ///< object properties

@@ -36,7 +36,7 @@
  *      override_output - override output string
  *
  */
-class BxDolSocialSharing extends BxDol implements iBxDolSingleton
+class BxDolSocialSharing extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oQuery;
     protected $_aSocialButtons = array (); // active social buttons array

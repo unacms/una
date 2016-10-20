@@ -49,7 +49,7 @@
  *      echo 'captcha is incorrect'; //
  * @endcode
  */
-class BxDolCaptcha extends BxDol implements iBxDolFactoryObject
+class BxDolCaptcha extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
@@ -58,7 +58,7 @@ class BxDolCaptcha extends BxDol implements iBxDolFactoryObject
      * Constructor
      * @param $aObject array of captcha options
      */
-    public function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

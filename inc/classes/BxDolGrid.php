@@ -245,7 +245,7 @@
  *
  */
 
-class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
+class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolReplaceable
 {
     protected $_aMarkers = array ();
 
@@ -257,7 +257,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * Constructor
      * @param $aOptions array of grid options
      */
-    public function __construct($aOptions)
+    protected function __construct($aOptions)
     {
         parent::__construct();
 

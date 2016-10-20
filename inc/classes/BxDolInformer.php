@@ -33,7 +33,7 @@ define('BX_INFORMER_ERROR', 3);
  * @endcode
  *
  */
-class BxDolInformer extends BxDol
+class BxDolInformer extends BxDolFactory implements iBxDolSingleton
 {
 	protected $_bEnabled = true;
     protected $_aMessages = array();
@@ -41,7 +41,7 @@ class BxDolInformer extends BxDol
     /**
      * Constructor
      */
-    public function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses']['BxDolInformer']))
             trigger_error ('Multiple instances are not allowed for the BxDolInformer class.', E_USER_ERROR);

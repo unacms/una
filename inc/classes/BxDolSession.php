@@ -10,7 +10,7 @@
 define('BX_DOL_SESSION_LIFETIME', 3600);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 
-class BxDolSession extends BxDol implements iBxDolSingleton
+class BxDolSession extends BxDolFactory implements iBxDolSingleton
 {
     protected $oDb;
     protected $sId;

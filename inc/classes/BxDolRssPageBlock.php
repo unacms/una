@@ -9,7 +9,7 @@
 
 class BxDolRssPageBlock extends BxTemplRss
 {
-    function __construct($aObject)
+    public function __construct($aObject)
     {
         parent::__construct($aObject);
     }

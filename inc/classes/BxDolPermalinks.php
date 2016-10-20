@@ -59,7 +59,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
     protected $aPrefixesStandard;
     protected $aPrefixesPermalink;
 
-    function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);

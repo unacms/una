@@ -12,12 +12,12 @@ define('BX_DOL_LANGUAGE_DEFAULT', 'en');
 define('BX_DOL_LANGUAGE_CATEGORY_SYSTEM', 1);
 define('BX_DOL_LANGUAGE_CATEGORY_CUSTOM', 2);
 
-class BxDolLanguages extends BxDol implements iBxDolSingleton
+class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
 {
     protected $oDb;
     protected $sCurrentLanguage;
 
-    function __construct()
+    protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);

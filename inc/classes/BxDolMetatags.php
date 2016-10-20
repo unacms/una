@@ -117,7 +117,7 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  * @endcode
  *
  */
-class BxDolMetatags extends BxDol implements iBxDolFactoryObject
+class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
@@ -128,7 +128,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * Constructor
      * @param $aObject array of metags object options
      */
-    public function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

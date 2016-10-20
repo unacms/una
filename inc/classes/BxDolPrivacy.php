@@ -59,7 +59,7 @@ define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
  * no alerts available
  *
  */
-class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
+class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_oDb;
     protected $_sObject;
@@ -69,7 +69,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * Constructor
      * @param $aObject array of grid options
      */
-    function __construct($aObject)
+    protected function __construct($aObject)
     {
         parent::__construct();
 

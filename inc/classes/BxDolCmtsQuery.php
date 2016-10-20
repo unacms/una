@@ -26,7 +26,7 @@ class BxDolCmtsQuery extends BxDolDb
 
     protected $_sTableIds;
 
-    function __construct(&$oMain)
+    public function __construct(&$oMain)
     {
         $this->_oMain = $oMain;
 

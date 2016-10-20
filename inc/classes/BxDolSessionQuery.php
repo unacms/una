@@ -14,7 +14,7 @@ class BxDolSessionQuery extends BxDolDb
 {
     protected $sTable;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 

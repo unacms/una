@@ -49,7 +49,7 @@ class BxDolModule extends BxDol
     /**
      * constructor
      */
-    function __construct($aModule)
+    public function __construct($aModule)
     {
         parent::__construct();
 

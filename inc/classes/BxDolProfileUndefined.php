@@ -18,7 +18,7 @@
  *     $oProfile = BxDolProfileUndefined::getInstance();
  * @endcode
  */
-class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProfile
+class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBxDolProfile
 {
     /**
      * Constructor
