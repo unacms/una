@@ -99,7 +99,7 @@ class BxDolTranscoderQuery extends BxDolDb
     public function getFilesForPruning ()
     {
         if (!$this->_aObject['atime_tracking'] || !$this->_aObject['atime_pruning'])
-            continue;
+            return array();
 
         $sQuery = $this->prepare("SELECT * FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `atime` != 0 AND `atime` < ?", $this->_aObject['object'], time() - $this->_aObject['atime_pruning']);
         return $this->getAll($sQuery);

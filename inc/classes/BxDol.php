@@ -22,7 +22,7 @@ $GLOBALS['bxDolClasses'] = array();
  */
 class BxDol
 {
-    public function BxDol () {}
+    public function __construct () {}
 }
 
 /**

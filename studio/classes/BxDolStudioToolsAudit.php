@@ -58,7 +58,6 @@ class BxDolStudioToolsAudit extends BxDol
             'safe_mode' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'short_open_tag' => array('op' => '=', 'val' => true, 'type' => 'bool'),
             'disable_functions' => array('op' => 'without', 'val' => 'shell_exec,eval,assert,phpinfo,getenv,ini_set,mail,fsockopen,chmod,parse_ini_file'),
-            'php module: mysql' => array('op' => 'module', 'val' => 'mysql'),
             'php module: curl' => array('op' => 'module', 'val' => 'curl'),
             'php module: gd' => array('op' => 'module', 'val' => 'gd'),
             'php module: mbstring' => array('op' => 'module', 'val' => 'mbstring'),
@@ -69,7 +68,7 @@ class BxDolStudioToolsAudit extends BxDol
             'php module: exif' => array('op' => 'module', 'val' => 'exif'),
         );
 
-        $this->sMinMysqlVer = '4.1.2';
+        $this->sMinMysqlVer = '5.1';
         $this->aMysqlOptimizationSettings = array (
             'key_buffer_size' => array('op' => '>=', 'val' => 128*1024, 'type' => 'bytes'),
             'query_cache_limit' => array('op' => '>=', 'val' => 1000000),
