@@ -42,42 +42,52 @@ BxAccntManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {
 	});
 };
 
-BxAccntManageTools.prototype.onClickResendCemail = function(iContentId) {
+BxAccntManageTools.prototype.onClickResendCemail = function(iContentId, oLink) {
 	$('.bx-popup-applied:visible').dolPopupHide();
 
-	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'resend_cemail', {}, '', false, 0);
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
+	oGrid.actionWithId(iContentId, 'resend_cemail', oData, '', false, 0);
 };
 
-BxAccntManageTools.prototype.onClickDelete = function(iContentId) {
+BxAccntManageTools.prototype.onClickDelete = function(iContentId, oLink) {
 	$('.bx-popup-applied:visible').dolPopupHide();
 
-	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete', {}, '', false, 1);
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, {});
+	oGrid.actionWithId(iContentId, 'delete', oData, '', false, 1);
 };
 
-BxAccntManageTools.prototype.onClickDeleteWithContent = function(iContentId) {
+BxAccntManageTools.prototype.onClickDeleteWithContent = function(iContentId, oLink) {
 	$('.bx-popup-applied:visible').dolPopupHide();
 
-	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete_with_content', {}, '', false, 1);
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, {});
+	oGrid.actionWithId(iContentId, 'delete_with_content', oData, '', false, 1);
 };
 
-BxAccntManageTools.prototype.onClickMakeOperator = function(iContentId) {
+BxAccntManageTools.prototype.onClickMakeOperator = function(iContentId, oLink) {
 	$('.bx-popup-applied:visible').dolPopupHide({
 		onHide: function(oPopup) {
 			$(oPopup).remove();
 		} 
 	});
 
-	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'make_operator', {}, '', false, 0);
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
+    oGrid.actionWithId(iContentId, 'make_operator', oData, '', false, 0);
 };
 
-BxAccntManageTools.prototype.onClickUnmakeOperator = function(iContentId) {
+BxAccntManageTools.prototype.onClickUnmakeOperator = function(iContentId, oLink) {
 	$('.bx-popup-applied:visible').dolPopupHide({
 		onHide: function(oPopup) {
 			$(oPopup).remove();
 		} 
 	});
 
-	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'unmake_operator', {}, '', false, 0);
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
+	oGrid.actionWithId(iContentId, 'unmake_operator', oData, '', false, 0);
 };
 
 /** @} */
