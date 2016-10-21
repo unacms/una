@@ -16,6 +16,7 @@ define('BX_DATA_FLOAT', 4); ///< float data type
 define('BX_DATA_CHECKBOX', 5); ///< checkbox data type, 'on' or empty value
 define('BX_DATA_HTML', 6); ///< HTML data type
 define('BX_DATA_DATE', 7); ///< date data type stored as yyyy-mm-dd
+define('BX_DATA_DATETIME', 12); ///< date/time data type stored as yyyy-mm-dd hh:mm:ss
 define('BX_DATA_DATE_TS', 8); ///< date data type stored as unixtimestamp
 define('BX_DATA_DATETIME_TS', 9); ///< date/time data type stored as unixtimestamp
 define('BX_DATA_DATE_TS_UTC', 10); ///< date data type stored as unixtimestamp from UTC time
@@ -93,8 +94,11 @@ function html2txt($content, $tags = "")
  *          BX_DATA_TEXT_MULTILINE - text data, multiple lines
  *          BX_DATA_HTML - HTML data
  *          BX_DATA_DATE - date data type stored as yyyy-mm-dd
+ *          BX_DATA_DATETIME - date/time data type stored as yyyy-mm-dd hh:mm:ss
  *          BX_DATA_DATE_TS' -  date data type stored as unixtimestamp
  *          BX_DATA_DATETIME_TS - date/time data type stored as unixtimestamp
+ *          BX_DATA_DATE_TS_UTC - date data type stored as unixtimestamp from UTC time
+ *          BX_DATA_DATETIME_TS_UTC - date/time data type stored as unixtimestamp from UTC time
  * @param $mixedParams optional parameters to pass for validation
  * @return the filtered data, or FALSE if the filter fails.
  */
@@ -127,6 +131,18 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
         $iMonth = intval($iMonth);
         $iYear  = intval($iYear);
         return sprintf("%04d-%02d-%02d", $iYear, $iMonth, $iDay);
+    case BX_DATA_DATETIME:
+        // maybe consider using strtotime
+        $mixedData = trim($mixedData);
+        if (!preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+):(\d+)#', $mixedData, $m) && !preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+)#', $mixedData, $m))
+            return bx_process_input ($mixedData, BX_DATA_DATE, $mixedParams, $isCheckMagicQuotes);
+        $iDay   = intval($m[3]);
+        $iMonth = intval($m[2]);
+        $iYear  = intval($m[1]);
+        $iH = intval($m[4]);
+        $iM = intval($m[5]);
+        $iS = isset($m[6]) ? intval($m[6]) : 0;
+        return sprintf("%04d-%02d-%02d %02d:%02d:%02d", $iYear, $iMonth, $iDay, $iH, $iM, $iS); // 1985-10-28 00:59:35
     case BX_DATA_DATE_TS:
     case BX_DATA_DATE_TS_UTC:
         $mixedData = trim($mixedData);
@@ -188,6 +204,7 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
         return 'on' == trim($mixedData) ? 'on' : '';
 
     case BX_DATA_DATE:
+    case BX_DATA_DATETIME:
         return $mixedData;
     case BX_DATA_DATE_TS:
         return empty($mixedData) ? '' : date("Y-m-d", (int)$mixedData);

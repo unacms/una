@@ -914,7 +914,7 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
 {
     protected $sType = 'datepicker';
     protected $aCheckFunctions = array('date');
-    protected $sDbPass = 'Date';
+    protected $sDbPass = 'DateTs';
 
     public function init()
 	{
@@ -923,7 +923,7 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
         $this->aParams['table_field_type'] = 'int(11)';
 
         $this->aForm['inputs']['value']['type'] = $this->sType;
-        $this->aForm['inputs']['value']['db']['pass'] = 'Date';
+        $this->aForm['inputs']['value']['db']['pass'] = 'DateTs';
     }
 }
 
@@ -931,13 +931,13 @@ class BxBaseStudioFormsFieldDatetime extends BxBaseStudioFormsFieldDatepicker
 {
     protected $sType = 'datetime';
     protected $aCheckFunctions = array('date_time');
-    protected $sDbPass = 'DateTime';
+    protected $sDbPass = 'DateTimeTs';
 
     public function init()
 	{
 		parent::init();
 
-        $this->aForm['inputs']['value']['db']['pass'] = 'DateTime';
+        $this->aForm['inputs']['value']['db']['pass'] = 'DateTimeTs';
     }
 }
 

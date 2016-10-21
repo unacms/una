@@ -1416,6 +1416,17 @@ class BxDolFormCheckerHelper
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
+                $a[$k] = self::_passDate ($v, BX_DATA_DATE);
+            }
+            return $a;
+        }
+        return self::_passDate ($s, BX_DATA_DATE);
+    }
+    static public function passDateTs ($s)
+    {
+        if (is_array($s)) {
+            $a = array ();
+            foreach ($s as $k => $v) {
                 $a[$k] = self::_passDate ($v, BX_DATA_DATE_TS);
             }
             return $a;
@@ -1432,8 +1443,19 @@ class BxDolFormCheckerHelper
             return $a;
         }
         return self::_passDate ($s, BX_DATA_DATE_TS_UTC);
-    }    
+    }
     static public function passDateTime ($s)
+    {
+        if (is_array($s)) {
+            $a = array ();
+            foreach ($s as $k => $v) {
+                $a[$k] = self::_passDate ($v, BX_DATA_DATETIME);
+            }
+            return $a;
+        }
+        return self::_passDate ($s, BX_DATA_DATETIME);
+    }
+    static public function passDateTimeTs ($s)
     {
         if (is_array($s)) {
             $a = array ();
@@ -1555,6 +1577,10 @@ class BxDolFormCheckerHelper
 
     static public function displayDate ($i)
     {
+        return bx_process_output ($i, BX_DATA_DATE);
+    }
+    static public function displayDateTs ($i)
+    {
         return bx_process_output ($i, BX_DATA_DATE_TS);
     }
     static public function displayDateUtc ($i)
@@ -1562,6 +1588,10 @@ class BxDolFormCheckerHelper
         return bx_process_output ($i, BX_DATA_DATE_TS_UTC);
     }    
     static public function displayDateTime ($i)
+    {
+        return bx_process_output ($i, BX_DATA_DATETIME);
+    }
+    static public function displayDateTimeTs ($i)
     {
         return bx_process_output ($i, BX_DATA_DATETIME_TS);
     }
