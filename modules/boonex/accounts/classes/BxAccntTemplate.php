@@ -19,9 +19,7 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
 
     public function getProfilesByAccount($aContentInfo, $iMaxVisible = 2)
     {
-        $oProfilesQuery = BxDolProfileQuery::getInstance();
-
-        $aProfiles = $oProfilesQuery->getProfilesByAccount($aContentInfo['id']);
+        $aProfiles = BxDolAccount::getInstance($aContentInfo['id'])->getProfiles();
         $iProfiles = count($aProfiles);
 
         $aTmplVars = array (
