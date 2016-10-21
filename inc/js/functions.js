@@ -119,7 +119,8 @@ function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams
  * @return true on success, or false on error - particularly, if block isn't found
  */
 function loadDynamicBlockAuto(e, sUrl) {
-    var sId = $(e).parents('.bx-page-block-container:first').attr('id');
+	var oContainer = $(e).parents('.bx-page-block-container:first');
+    var sId = oContainer.attr('id');
 
     if ('undefined' == typeof(sUrl))
         sUrl = location.href;
@@ -130,7 +131,15 @@ function loadDynamicBlockAuto(e, sUrl) {
     var aMatches = sId.match(/\-(\d+)$/);
     if (!aMatches || !aMatches[1])
         return false;
-        
+
+    var oPaginate = oContainer.find('.bx-paginate'); 
+    if(oPaginate.length > 0) {
+    	var iStart = parseInt(oPaginate.attr('bx-data-start'));
+    	var iPerPage = parseInt(oPaginate.attr('bx-data-perpage'));
+    	if(!isNaN(iStart) && !isNaN(iPerPage) && sUrl.indexOf('start') == -1 && sUrl.indexOf('per_page') == -1)
+    		sUrl = bx_append_url_params(sUrl, 'start=' + iStart + '&per_page=' + iPerPage);
+    }
+
     loadDynamicBlock(parseInt(aMatches[1]), sUrl);
     return true;
 }

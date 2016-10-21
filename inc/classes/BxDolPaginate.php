@@ -296,6 +296,10 @@ abstract class BxDolPaginate extends BxDol
             'btn_prev' => '<a href="' . $sPrevLnkUrl . '" ' . $sPrevLnkClick . ' class="bx-paginate-btn-prev bx-btn' . $sClassAdd . $sPrevClassAdd . '"><i class="sys-icon sys-icon-bigger angle-double-left"></i></a>',
             'btn_next' => '<a href="' . $sNextLnkUrl . '" ' . $sNextLnkClick . ' class="bx-paginate-btn-next bx-btn' . $sClassAdd . $sNextClassAdd . '"><i class="sys-icon sys-icon-bigger angle-double-right"></i></a>',
             'paginate_class' => $this->_sPaginateClass,
+			'bx_repeat:attrs' => array(
+                array('key' => 'bx-data-start', 'value' => $this->_iStart),
+                array('key' => 'bx-data-perpage', 'value' => $this->_iPerPage)
+            )
         );
 
         $this->addCssJs();
