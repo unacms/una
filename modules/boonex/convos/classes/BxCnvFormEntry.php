@@ -119,6 +119,12 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
     {
+        $CNF = $this->_oModule->_oConfig->CNF;
+        if (bx_get_logged_profile_id() != $aValues[$CNF['FIELD_AUTHOR']]) { // unset some fields for non author
+            unset($this->aInputs[$CNF['FIELD_ALLOW_EDIT']]);
+            unset($this->aInputs['recipients']);
+        }
+
         if ($iContentId = bx_get('draft_id')) { // if adding from draft, fill in existing fields info
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
             if ($aContentInfo)
@@ -129,9 +135,9 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             $a = explode(',', $sProfilesIds);
             $a = array_unique(BxDolFormCheckerHelper::passInt($a));
             if ($a)
-                $aValues['recipients'] = array_merge(empty($aValues['recipients']) ? array() : $aValues['recipients'], $a);
-            
-        }
+                $aValues['recipients'] = array_merge(empty($aValues['recipients']) ? array() : $aValues['recipients'], $a);            
+        }        
+
         return parent::initChecker ($aValues, $aSpecificValues);
     }
 

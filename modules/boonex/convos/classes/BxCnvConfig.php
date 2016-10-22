@@ -41,6 +41,7 @@ class BxCnvConfig extends BxBaseModTextConfig
             'FIELD_PHOTO' => 'attachments',
             'FIELD_THUMB' => '',
             'FIELD_COMMENTS' => 'comments',
+            'FIELD_ALLOW_EDIT' => 'allow_edit',
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-convo',

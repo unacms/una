@@ -27,6 +27,8 @@
     <string name="_bx_cnv_form_entry_input_sys_submit_text"><![CDATA[Draft status]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_block"><![CDATA[Submit block]]></string>
     <string name="_bx_cnv_form_entry_input_sys_draft_id"><![CDATA[Draft ID]]></string>
+    <string name="_bx_cnv_form_entry_input_sys_allow_edit"><![CDATA[Main post editing by participants]]></string>
+    <string name="_bx_cnv_form_entry_input_allow_edit"><![CDATA[Main post editing by participants]]></string>
 
 	<string name="_bx_cnv_acl_action_create_entry"><![CDATA[New conversation]]></string>
 	<string name="_bx_cnv_acl_action_delete_entry"><![CDATA[Delete conversation]]></string>
