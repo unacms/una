@@ -310,6 +310,14 @@ class BxCnvModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
+    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
+    {       
+        if ($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_EDIT']] && $this->isCollaborator($aDataEntry, bx_get_logged_profile_id()))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
+    }
+    
     /**
      * Conversations can be deleted by author and/or collaborators only.
      * Admins can't delete conversations, since it's designed for participant only, it's moved to trash actually, also it's private content.

@@ -27,7 +27,9 @@
     <string name="_bx_cnv_form_entry_input_sys_submit_text"><![CDATA[Статус черновика]]></string>
     <string name="_bx_cnv_form_entry_input_sys_submit_block"><![CDATA[Блок отправки сообщения]]></string>
     <string name="_bx_cnv_form_entry_input_sys_draft_id"><![CDATA[ID черновика]]></string>
-
+    <string name="_bx_cnv_form_entry_input_sys_allow_edit"><![CDATA[Редактирование главного сообщения участниками]]></string>
+    <string name="_bx_cnv_form_entry_input_allow_edit"><![CDATA[Редактирование главного сообщения участниками]]></string>
+    
 	<string name="_bx_cnv_acl_action_create_entry"><![CDATA[Новое сообщение]]></string>
 	<string name="_bx_cnv_acl_action_delete_entry"><![CDATA[Удалить сообщение]]></string>
 	<string name="_bx_cnv_acl_action_view_entry"><![CDATA[Просмотреть сообщение]]></string>
