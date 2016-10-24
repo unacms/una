@@ -40,6 +40,24 @@ html {
     width:auto;
 }
 
+.bx-page-wrapper.bx-def-padding-sec-leftright {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#bx-content-container.bx-def-padding-sec-left {
+	padding-left: 0px;
+}
+
+#bx-content-container.bx-def-padding-sec-right {
+	padding-right: 0px;
+}
+
+.bx-db-container.bx-def-border-block {
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
 /* general.css */
 
 #bx-logo-container {
