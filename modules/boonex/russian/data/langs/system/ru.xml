@@ -688,6 +688,7 @@
 	<string name="_adm_form_dsc_field_value_reset"><![CDATA[Заголовок для кнопки (этот тип кнопки используется для сброса формы в исходное состояние)]]></string>
 	<string name="_adm_form_dsc_field_value_submit"><![CDATA[Заголовок для кнопки (этот тип кнопки используется для посылки данных формы)]]></string>
 	<string name="_adm_form_dsc_field_visible_for_levels"><![CDATA[Выбрать членства, разрешённые для просмотра элемента данного меню]]></string>
+	<string name="_adm_form_dsc_field_db_pass"><![CDATA[Выберите, как данные поля будут обрабатываться перед записью в базу данных]]></string>
 	<string name="_adm_form_dsc_forms_title"><![CDATA[Название Формы. Отображается только в Студии.]]></string>
 	<string name="_adm_form_dsc_pre_lists_title"><![CDATA[Название Списка для использования только в Студии]]></string>
 	<string name="_adm_form_dsc_pre_values_empty"><![CDATA[Вы можете использовать его для элементов, таких как "Пожалуйста, выберите...", которые не могут быть отправлены.]]></string>
@@ -805,6 +806,13 @@
 	<string name="_adm_form_txt_field_visible_for_all"><![CDATA[Всех]]></string>
 	<string name="_adm_form_txt_field_visible_for_levels"><![CDATA[Выбрать Уровни]]></string>
 	<string name="_adm_form_txt_field_visible_for_selected"><![CDATA[Выбранные уровни]]></string>
+	<string name="_adm_form_txt_field_db_pass"><![CDATA[Обработать как]]></string>
+    <string name="_adm_form_txt_field_db_pass_date"><![CDATA[Дата]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_ts"><![CDATA[Дата (метка времени Unix)]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_utc"><![CDATA[UTC Дата (метка времени Unix)]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_time"><![CDATA[Дата и время]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_time_ts"><![CDATA[Дата и время (метка времени Unix)]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_time_utc"><![CDATA[UTC Дата и время (метка времени Unix)]]></string>
 	<string name="_adm_form_txt_fields_caption_system"><![CDATA[Системное имя]]></string>
 	<string name="_adm_form_txt_fields_manage_visibility"><![CDATA[Управление настройками видимости]]></string>
 	<string name="_adm_form_txt_fields_module"><![CDATA[Модуль]]></string>

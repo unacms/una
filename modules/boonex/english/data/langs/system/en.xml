@@ -690,6 +690,7 @@
 	<string name="_adm_form_dsc_field_value_reset"><![CDATA[Button title (this button type is used to reset the form to its default state)]]></string>
 	<string name="_adm_form_dsc_field_value_submit"><![CDATA[Button title (this button type is used to send in the form data)]]></string>
 	<string name="_adm_form_dsc_field_visible_for_levels"><![CDATA[Select user levels that can see this menu item]]></string>
+	<string name="_adm_form_dsc_field_db_pass"><![CDATA[Select how field's data will be processed before saving in the database]]></string>
 	<string name="_adm_form_dsc_forms_title"><![CDATA[Name of the form. Displayed in Studio only.]]></string>
 	<string name="_adm_form_dsc_pre_lists_title"><![CDATA[List Name for Studio use only]]></string>
 	<string name="_adm_form_dsc_pre_values_empty"><![CDATA[You can use it for items like "Please select..." which can't be submitted.]]></string>
@@ -807,6 +808,13 @@
 	<string name="_adm_form_txt_field_visible_for_all"><![CDATA[Anyone]]></string>
 	<string name="_adm_form_txt_field_visible_for_levels"><![CDATA[Select Levels]]></string>
 	<string name="_adm_form_txt_field_visible_for_selected"><![CDATA[Selected levels]]></string>
+	<string name="_adm_form_txt_field_db_pass"><![CDATA[Process data as]]></string>
+	<string name="_adm_form_txt_field_db_pass_date"><![CDATA[Date]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_ts"><![CDATA[Date as Unix Timestamp]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_utc"><![CDATA[UTC Date as Unix Timestamp]]></string>
+	<string name="_adm_form_txt_field_db_pass_date_time"><![CDATA[Date/time]]></string>
+	<string name="_adm_form_txt_field_db_pass_date_time_ts"><![CDATA[Date/time as Unix Timestamp]]></string>
+	<string name="_adm_form_txt_field_db_pass_date_time_utc"><![CDATA[UTC Date/time as Unix Timestamp]]></string>
 	<string name="_adm_form_txt_fields_caption_system"><![CDATA[System Name]]></string>
 	<string name="_adm_form_txt_fields_manage_visibility"><![CDATA[Manage visibility settings]]></string>
 	<string name="_adm_form_txt_fields_module"><![CDATA[Module]]></string>
