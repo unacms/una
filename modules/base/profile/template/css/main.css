@@ -97,14 +97,19 @@ a.bx-base-pofile-cover-image:hover,
 }
 
 .bx-base-pofile-cover-info-container {
-    display:block;
     position:relative;
-    height:100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    min-height: 40vh;
+
     cursor:pointer; 
     cursor:hand;
 }
 
 .bx-base-pofile-cover-info {
+	width: 100%;
     text-align:center;
 }
 .bx-base-pofile-cover-info .bx-def-ava,
