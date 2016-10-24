@@ -128,11 +128,11 @@
 	<!-- EMAIL TEMPLATES -->
 	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Заплатил - присоединяйся.]]></string>
 	<string name="_bx_payment_et_txt_subject_paid_need_join"><![CDATA[Оплата была принята.]]></string>
-	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[{email_header}
 <p><b>Дорогой {RealName}</b>,</p>
 <p>Ваша оплата была принята. Если вы ещё не заполняли регистрационную форму, то Вы можете сделать это используя следующую ссылку.</p>
 <p><a href="{JoinLink}">Присоединяйтесь</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
 	<!-- MESSAGES, WARNINGS and ERRORS -->
 	<string name="_bx_payment_msg_no_results"><![CDATA[Пусто]]></string>

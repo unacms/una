@@ -20,9 +20,8 @@
 
 	<string name="_bx_googlecon_et_password_generated"><![CDATA[Google connect temporary password]]></string>
 	<string name="_bx_googlecon_et_password_generated_subject"><![CDATA[Temporary password]]></string>
-	<string name="_bx_googlecon_et_password_generated_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_googlecon_et_password_generated_body"><![CDATA[{email_header}
 <p>Temporary password - <b>{password}</b></p>
 <p>Change it after logging-in.</p>
-<bx_include_auto:_email_footer.html />]]></string>
-    
+{email_footer}]]></string>
 </resources>

@@ -129,9 +129,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 
     <string name="_bx_antispam_spam_report_name"><![CDATA[Spam report message]]></string>
     <string name="_bx_antispam_spam_report_subject"><![CDATA[Automatic spam report]]></string>
-    <string name="_bx_antispam_spam_report_body"><![CDATA[
-<bx_include_auto:_email_header.html />
-
+    <string name="_bx_antispam_spam_report_body"><![CDATA[{email_header}
 <b>Profile:</b> <a href="{SpammerUrl}">{SpammerNickName}</a><br />
 
 <b>Page:</b> {Page}<br /><br />
@@ -150,8 +148,5 @@ This antispam method scan submitted content for the URLs and check them if any o
 <pre>
 {SpamContent}
 </pre>
-
-<bx_include_auto:_email_footer.html />]]></string>
-
+{email_footer}]]></string>
 </resources>
-

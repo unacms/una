@@ -149,7 +149,7 @@
 
 	<string name="_bx_sites_et_site_created"><![CDATA[Site was created.]]></string>
 	<string name="_bx_sites_et_site_created_subject"><![CDATA[Site was created.]]></string>
-	<string name="_bx_sites_et_site_created_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_site_created_body"><![CDATA[{email_header}
 <p><b>Dear {RealName}</b>,</p>
 <p>Site was activated.</p>
 <p>Your domain: {Domain}</p>
@@ -157,10 +157,10 @@
 <p>Subscription status: {Status}</p>
 <p>Next payment date: {NextPaymentDate}</p>
 <p>Now you may fill in a site details form <a href="{DetailsFormUrl}">here</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 	<string name="_bx_sites_et_site_created_and_paid"><![CDATA[Site was created and paid.]]></string>
 	<string name="_bx_sites_et_site_created_and_paid_subject"><![CDATA[Site was created and paid.]]></string>
-	<string name="_bx_sites_et_site_created_and_paid_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_site_created_and_paid_body"><![CDATA[{email_header}
 <p><b>Dear {RealName}</b>,</p>
 <p>A payment ({Amount}) was received from you and site was activated.</p>
 <p>Your domain: {Domain}</p>
@@ -168,19 +168,19 @@
 <p>Subscription status: {Status}</p>
 <p>Next payment date: {NextPaymentDate}</p>
 <p>Now you may fill in a site details form <a href="{DetailsFormUrl}">here</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 	<string name="_bx_sites_et_payment_received"><![CDATA[Payment received.]]></string>
 	<string name="_bx_sites_et_payment_received_subject"><![CDATA[Payment Received.]]></string>
-	<string name="_bx_sites_et_payment_received_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_payment_received_body"><![CDATA[{email_header}
 <p><b>Dear {RealName}</b>,</p>
 <p>We received a payment ({Amount}) from you. Your site was prolonged up to {NextPaymentDate}.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 	<string name="_bx_sites_et_site_canceled"><![CDATA[Site was canceled.]]></string>
 	<string name="_bx_sites_et_site_canceled_subject"><![CDATA[Site was canceled.]]></string>
-	<string name="_bx_sites_et_site_canceled_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_site_canceled_body"><![CDATA[{email_header}
 <p><b>Dear {RealName}</b>,</p>
 <p>Subscription for {Domain} site was canceled.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
 	<string name="_bx_sites_paypal_product_description"><![CDATA[{0} recurring payment {1} {2} with single trial period {3} {4}]]></string>
 	<string name="_bx_sites_paypal_product_description_free_trial"><![CDATA[{0} recurring payment {1} {2} with FREE trial period]]></string>

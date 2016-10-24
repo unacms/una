@@ -228,50 +228,43 @@
 
     <string name="_bx_groups_email_join_request"><![CDATA[Запрос на присоединение к группе]]></string>
     <string name="_bx_groups_email_join_request_subject"><![CDATA[Запрос на присоединение к группе]]></string>
-    <string name="_bx_groups_email_join_request_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_groups_email_join_request_body"><![CDATA[{email_header}
 <p>Получен запрос на присоединение к группе <a href="{EntryUrl}">{EntryTitle}</a> от <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_groups_email_join_reject"><![CDATA[Отклонение запроса на присоединение к группе]]></string>
     <string name="_bx_groups_email_join_reject_subject"><![CDATA[Ваш запрос на присоединение к группе был отклонен]]></string>
-    <string name="_bx_groups_email_join_reject_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_groups_email_join_reject_body"><![CDATA[{email_header}
 <p>Ваш запрос на присоединение к группе <a href="{EntryUrl}">{EntryTitle}</a> был отклонен администратором группы.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_groups_email_join_confirm"><![CDATA[Одобрение запроса на присоединение к группе]]></string>
     <string name="_bx_groups_email_join_confirm_subject"><![CDATA[Ваш запрос на присоединение к группе был одобрен]]></string>
-    <string name="_bx_groups_email_join_confirm_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_groups_email_join_confirm_body"><![CDATA[{email_header}
 <p>Ваш запрос на присоединение к группе <a href="{EntryUrl}">{EntryTitle}</a> был одобрен.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_groups_email_fan_remove"><![CDATA[Удаление из группы]]></string>
     <string name="_bx_groups_email_fan_remove_subject"><![CDATA[Вы были удалены из группы]]></string>
-    <string name="_bx_groups_email_fan_remove_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_groups_email_fan_remove_body"><![CDATA[{email_header}
 <p>Ваш профиль был удален из группы <a href="{EntryUrl}">{EntryTitle}</a> администратором группы.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_groups_email_fan_become_admin"><![CDATA[Получение статуса администратора группы]]></string>
     <string name="_bx_groups_email_fan_become_admin_subject"><![CDATA[Вы стали администратором группы]]></string>
-    <string name="_bx_groups_email_fan_become_admin_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_groups_email_fan_become_admin_body"><![CDATA[{email_header}
 <p>Вы получили статус администратора группы <a href="{EntryUrl}">{EntryTitle}</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_groups_email_admin_become_fan"><![CDATA[Лишение статуса администратора группы]]></string>
     <string name="_bx_groups_email_admin_become_fan_subject"><![CDATA[Вы были лишены статуса администратора группы]]></string>
-    <string name="_bx_groups_email_admin_become_fan_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_groups_email_admin_become_fan_body"><![CDATA[{email_header}
 <p>Вы были лишены статуса администратора группы <a href="{EntryUrl}">{EntryTitle}</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_groups_email_invitation"><![CDATA[Приглашение в группу]]></string>
     <string name="_bx_groups_email_invitation_subject"><![CDATA[Приглашение в группу "{EntryTitle}"]]></string>
-    <string name="_bx_groups_email_invitation_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_groups_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас в группу <a href="{EntryUrl}">{EntryTitle}</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 </resources>

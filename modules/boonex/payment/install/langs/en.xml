@@ -128,11 +128,11 @@
 	<!-- EMAIL TEMPLATES -->
 	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Paid and need to join.]]></string>
 	<string name="_bx_payment_et_txt_subject_paid_need_join"><![CDATA[Payment was accepted.]]></string>
-	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[{email_header}
 <p><b>Dear {RealName}</b>,</p>
 <p>Your payment was accepted. If you did not fill in the join form yet, then you may do it using the following link.</p>
 <p><a href="{JoinLink}">Join Now</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
 	<!-- MESSAGES, WARNINGS and ERRORS -->
 	<string name="_bx_payment_msg_no_results"><![CDATA[Empty]]></string>

@@ -129,9 +129,7 @@ URI DNSBL - это DNSBL, которые перечисляют доменные
 
     <string name="_bx_antispam_spam_report_name"><![CDATA[Сообщение отчёта о спаме]]></string>
     <string name="_bx_antispam_spam_report_subject"><![CDATA[Автоматический отчёт о спаме]]></string>
-    <string name="_bx_antispam_spam_report_body"><![CDATA[
-<bx_include_auto:_email_header.html />
-
+    <string name="_bx_antispam_spam_report_body"><![CDATA[{email_header}
 <b>Профиль:</b> <a href="{SpammerUrl}">{SpammerNickName}</a><br />
 
 <b>Страница:</b> {Page}<br /><br />
@@ -150,8 +148,5 @@ URI DNSBL - это DNSBL, которые перечисляют доменные
 <pre>
 {SpamContent}
 </pre>
-
-<bx_include_auto:_email_footer.html />]]></string>
-
+{email_footer}]]></string>
 </resources>
-
