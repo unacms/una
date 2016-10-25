@@ -16,6 +16,9 @@ class BxBaseStudioSettingsUploaderHTML5 extends BxTemplUploaderHTML5
 {
     function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+        if(!$oTemplate)
+            $oTemplate = BxDolStudioTemplate::getInstance();
+
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
     }
 

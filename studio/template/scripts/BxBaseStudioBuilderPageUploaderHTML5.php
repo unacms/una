@@ -18,6 +18,9 @@ class BxBaseStudioBuilderPageUploaderHTML5 extends BxTemplUploaderHTML5
 
     function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+        if(!$oTemplate)
+            $oTemplate = BxDolStudioTemplate::getInstance();
+
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $this->_sTranscoderEmbed = 'sys_builder_page_embed';

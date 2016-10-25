@@ -177,26 +177,20 @@ class BxDolStudioDesigner extends BxTemplStudioPage
 
 	function submitCover(&$oForm)
     {
-        $iProfileId = getLoggedId();
-
-        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        $iProfile = bx_get_logged_profile_id();
+        $oStorage = BxDolStorage::getObjectInstance($this->sCoverStorage);
 
         foreach($this->aCovers as $sCover => $aCover) {
-        	if(empty($_FILES[$sCover]['tmp_name']))
+            $iIdNew = $oForm->getCleanValue($sCover);
+        	if(empty($iIdNew))
         		continue;
 
-			$iId = (int)getParam($aCover['setting']);
-			if($iId != 0 && !$oStorage->deleteFile($iId, $iProfileId))
+			$iIdOld = (int)getParam($aCover['setting']);
+			if($iIdOld != 0 && !$oStorage->deleteFile($iIdOld, $iProfile))
 				return $this->getJsResult('_adm_dsg_err_remove_old_cover');
 
-			$iId = $oStorage->storeFileFromForm($_FILES[$sCover], true, $iProfileId);
-			if($iId === false) {
-				$this->oDb->setParam($aCover['setting'], 0);
-				return $this->getJsResult(_t('_adm_dsg_err_save') . $oStorage->getErrorString(), false);
-			}
-
-			$this->oDb->setParam($aCover['setting'], $iId);
-			$oStorage->afterUploadCleanup($iId, $iProfileId);
+			$this->oDb->setParam($aCover['setting'], $iIdNew);
+			$oStorage->afterUploadCleanup($iIdNew, $iProfile);
         }
 
 		return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_COVER);
@@ -204,10 +198,11 @@ class BxDolStudioDesigner extends BxTemplStudioPage
 
 	function deleteCover($sCover)
     {
-        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        $iProfile = bx_get_logged_profile_id();
+        $oStorage = BxDolStorage::getObjectInstance($this->sCoverStorage);
 
         $iId = (int)getParam($this->aCovers[$sCover]['setting']);
-        if($iId != 0 && !$oStorage->deleteFile($iId, getLoggedId()))
+        if($iId != 0 && !$oStorage->deleteFile($iId, $iProfile))
             return false;
 
         $this->oDb->setParam($this->aCovers[$sCover]['setting'], 0);
