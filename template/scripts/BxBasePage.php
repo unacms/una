@@ -100,6 +100,11 @@ class BxBasePage extends BxDolPage
     	return (int)$this->_aObject['cover'] == 1;
     }
 
+    public function setPageCover($bCover = true)
+    {
+        $this->_aObject['cover'] = (bool)$bCover;
+    }
+
 	public function getPageCoverImage($bTranscoder = true)
     {
     	$iId = (int)$this->_aObject['cover_image'];

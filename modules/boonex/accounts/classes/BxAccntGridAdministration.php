@@ -114,12 +114,20 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
     protected function _enable($mixedId, $isChecked)
     {
-    	$iAction = BX_PROFILE_ACTION_MANUAL;
     	$oProfile = BxDolProfile::getInstanceAccountProfile($mixedId);
     	if(!$oProfile)
     	    return false;
 
-    	return $isChecked ? $oProfile->activate($iAction) : $oProfile->suspend($iAction);
+        $iAction = BX_PROFILE_ACTION_MANUAL;
+        $sMethod = $isChecked ? 'activate' : 'suspend';
+        if(!$oProfile->$sMethod($iAction))
+            return false;
+
+        $aProfiles = $oProfile->getAccountObject()->getProfiles();
+        foreach($aProfiles as $aProfile)
+            BxDolProfile::getInstance($aProfile['id'])->$sMethod($iAction);
+
+    	return true;
     }
 
     //--- Layout methods ---//

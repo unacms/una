@@ -38,8 +38,10 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
         }
 
-        if (!$this->_aContentInfo || !$this->_oProfile)
+        if (!$this->_aContentInfo || !$this->_oProfile || (!$this->_oProfile->isActive() && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)) {
+            $this->setPageCover(false);
             return;
+        }
 
         // select view profile submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
@@ -79,6 +81,17 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 
         // set cover
         $this->_oModule->_oTemplate->setCover($this->_aContentInfo);
+    }
+
+    public function getCode ()
+    {
+        // check if profile is active
+        if (!$this->_oProfile || (!$this->_oProfile->isActive() && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+
+        return parent::getCode();
     }
 
     protected function _processPermissionsCheck ()
