@@ -1978,6 +1978,7 @@
 	<string name="_sys_menu_item_title_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
+	<string name="_sys_menu_item_title_subscriptions"><![CDATA[Подписки]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Язык]]></string>
@@ -2008,6 +2009,7 @@
 	<string name="_sys_menu_item_title_system_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_system_studio"><![CDATA[Студия]]></string>
+	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Инструменты управления Панелью Аккаунта]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Настройки Аккаунта]]></string>

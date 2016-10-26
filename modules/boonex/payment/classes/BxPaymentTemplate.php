@@ -144,16 +144,22 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
     public function displayBlockHistory($iClientId, $iSellerId)
     {
-    	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_history'));
-        if(!$oGrid || empty($iClientId))
-            return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+        return $this->_displayBlockHistory('grid_history', $iClientId, $iSellerId);
+    }
 
-		$oGrid->addQueryParam('client_id', $iClientId);
-		if(!empty($iSellerId))
-			$oGrid->addQueryParam('seller_id', $iSellerId);
+    public function displayBlockSbsList($iClientId)
+    {
+        return $this->_displayBlockHistory('grid_sbs_list', $iClientId);
+    }
 
-		$this->addJsCssOrders();
-        return $this->displayJsCode('history') . $oGrid->getCode();
+    public function displayBlockSbsHistory($iClientId)
+    {
+        return $this->_displayBlockHistory('grid_sbs_history', $iClientId);
+    }
+
+    public function displayBlockSbsDetails($iClientId)
+    {
+        return 'Details would be here';
     }
 
 	public function displayBlockOrders($sType, $iSellerId)
@@ -312,6 +318,20 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     {
         $sName = $this->_oConfig->getName();
         return BxDolModule::getInstance($sName);
+    }
+
+    protected function _displayBlockHistory($sObject, $iClientId, $iSellerId = 0)
+    {
+    	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject($sObject));
+        if(!$oGrid || empty($iClientId))
+            return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+
+		$oGrid->addQueryParam('client_id', $iClientId);
+		if(!empty($iSellerId))
+			$oGrid->addQueryParam('seller_id', $iSellerId);
+
+		$this->addJsCssOrders();
+        return $this->displayJsCode('history') . $oGrid->getCode();
     }
 }
 

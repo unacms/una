@@ -86,8 +86,11 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
     public function finalizeCheckout(&$aData)
     {
-        if((!isset($aData['txn_type']) || $aData['txn_type'] != 'web_accept') && !isset($aData['tx']))
+        if((!isset($aData['txn_type']) || $aData['txn_type'] != 'web_accept') && !isset($aData['tx'])) {
+            $this->log('Finalize Checkout');
+            $this->log($aData);
         	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'pp_err_no_data_given');
+        }
 
 		return $this->_registerCheckout($aData);
     }
@@ -231,7 +234,8 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
         }
 
 		if(!$sResponse) {
-			$this->log(curl_error($rConnect));
+		    $this->log('Validation Data: ' . curl_error($rConnect));
+            $this->log($sResponse);
 			curl_close($rConnect);
 
 			return array('code' => 6, 'message' => $this->_sLangsPrefix . 'err_cannot_validate');
