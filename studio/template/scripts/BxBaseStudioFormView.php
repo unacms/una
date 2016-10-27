@@ -166,7 +166,7 @@ class BxBaseStudioFormView extends BxDolStudioForm
                 'id' => $sInputIdPrefix . $aInput['name'],
                 'style' => !$bLanguage ? 'display:none;' : ''
             ));
-            $sInput .= $this->$aInputMethod[$sType]($aInput);
+            $sInput .= $this->{$aInputMethod[$sType]}($aInput);
 
             $aTmplVarValue = array(
                 'condition' => $bValue,

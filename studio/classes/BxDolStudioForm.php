@@ -111,7 +111,7 @@ class BxDolStudioForm extends BxBaseFormView
                 foreach($aLanguages as $aLanguage) {
                     $sString = BxDolForm::getSubmittedValue($sName . '-' . $aLanguage['name'], $this->aFormAttrs['method']);
                     if($sString !== false)
-                        $oLanguage->$aType2Method[$sType]($sKey, $sString, $aLanguage['id']);
+                        $oLanguage->{$aType2Method[$sType]}($sKey, $sString, $aLanguage['id']);
                 }
             }
     }
