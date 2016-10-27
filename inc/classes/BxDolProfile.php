@@ -382,7 +382,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $oQuery = BxDolProfileQuery::getInstance();
         if (!($iProfileId = $oQuery->insertProfile ($iAccountId, $iContentId, $sStatus, $sType)))
             return false;
-        bx_alert('profile', 'add', $iProfileId, 0, array('module' => $sType, 'content' => $iContentId, 'account' => $iAccountId, 'status' => $sStatus, 'action' => $iAction));
+        bx_alert('profile', 'add', $iProfileId, 0, array('module' => $sType, 'content' => $iContentId, 'account' => $iAccountId, 'status' => $sStatus, 'action' => $iAction, 'profile_id' => &$iProfileId));
         return $iProfileId;
     }
 
