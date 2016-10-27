@@ -22,6 +22,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     protected $sStorage;
     protected $sTranscoder;
     protected $aUploaders; 
+    
+    protected $sTranscoderCover;
+    protected $aUploadersCover;
 
     protected $sBaseUrl;
     protected $sTypeUrl;
@@ -56,10 +59,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
         parent::__construct($sType, $sPage);
 
-        $this->sStorage = 'sys_images';
+        $this->sStorage = BX_DOL_STORAGE_OBJ_IMAGES;
 		$this->sTranscoder = 'sys_builder_page_preview';
 		$this->aUploaders = array('sys_builder_page_simple', 'sys_builder_page_html5');
-        
+
+		$this->sTranscoderCover = 'sys_cover_preview';
+		$this->aUploadersCover = array('sys_std_crop_cover');
+
         $this->sBaseUrl = BX_DOL_URL_STUDIO . 'builder_page.php';
         $this->sTypeUrl = $this->sBaseUrl . '?type=%s';
         $this->sPageUrl = $this->sTypeUrl . '&page=%s';
@@ -68,7 +74,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     function getPageCss()
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
-		foreach($this->aUploaders as $sUploader) {
+    	$aUploaders = array_merge($this->aUploaders, $this->aUploadersCover);
+		foreach($aUploaders as $sUploader) {
 			$oUploader = BxDolUploader::getObjectInstance($sUploader, $this->sStorage, '', $oTemplate);
 			if($oUploader)
 				$oUploader->addCssJs();
@@ -991,11 +998,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 					'type' => 'files',
 					'name' => 'cover_image',
 					'storage_object' => $this->sStorage,
-					'images_transcoder' => $this->sTranscoder,
-					'uploaders' => array ('sys_html5'),
+					'images_transcoder' => $this->sTranscoderCover,
+					'uploaders' => $this->aUploadersCover,
 					'multiple' => false,
 					'content_id' => isset($aPage['id']) ? $aPage['id'] : 0,
-					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_fgt_cover.html', array(
+					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
 						'name' => 'cover_image',
 					)),
 					'caption' => _t('_adm_bp_txt_page_cover_image'),

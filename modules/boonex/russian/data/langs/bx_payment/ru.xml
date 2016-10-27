@@ -15,6 +15,18 @@
 	<string name="_bx_payment_page_block_title_carts"><![CDATA[Корзины]]></string>
 	<string name="_bx_payment_page_block_title_cart"><![CDATA[Корзина продавца {0}]]></string>
 
+    <string name="_bx_payment_page_title_sys_sbs_list"><![CDATA[Лист подписок]]></string>
+    <string name="_bx_payment_page_title_sbs_list"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_page_block_title_sbs_list"><![CDATA[Подписки]]></string>
+
+    <string name="_bx_payment_page_title_sys_sbs_history"><![CDATA[История подписок]]></string>
+    <string name="_bx_payment_page_title_sbs_history"><![CDATA[История выплат]]></string>
+    <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[История выплат]]></string>
+
+    <string name="_bx_payment_page_title_sys_sbs_details"><![CDATA[Детали подписок]]></string>
+    <string name="_bx_payment_page_title_sbs_details"><![CDATA[Платежная информация]]></string>
+    <string name="_bx_payment_page_block_title_sbs_details"><![CDATA[Платежная информация]]></string>
+
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[История покупок]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[История покупок]]></string>
 	<string name="_bx_payment_page_block_title_history"><![CDATA[История покупок]]></string>
@@ -54,6 +66,15 @@
     <string name="_bx_payment_menu_item_title_system_cart_history"><![CDATA[История покупок]]></string>
     <string name="_bx_payment_menu_item_title_cart_history"><![CDATA[История покупок]]></string>
 
+    <string name="_bx_payment_menu_title_sbs_submenu"><![CDATA[Подменю подписок]]></string>
+    <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Подменю подписок]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_list"><![CDATA[Лист подписок]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[История подписок]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[История выплат]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_details"><![CDATA[Детали подписок]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_details"><![CDATA[Платежная информация]]></string>
+
 	<!-- GRIDS -->
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Покупатель]]></string>
 	<string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Продавец]]></string>
@@ -61,6 +82,11 @@
 	<string name="_bx_payment_grid_column_title_ods_license"><![CDATA[Лицензия]]></string>
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Сумма]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Дата]]></string>
+	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Продавец]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Подписка]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_license"><![CDATA[Лицензия]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Сумма]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Количество]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_price"><![CDATA[Цена]]></string>
@@ -73,6 +99,7 @@
 	<string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Отмена]]></string>
 	<string name="_bx_payment_grid_action_title_ods_process"><![CDATA[Обработать]]></string>
 	<string name="_bx_payment_grid_action_title_ods_view_order"><![CDATA[Детали заказа]]></string>
+	<string name="_bx_payment_grid_action_title_sbs_view_order"><![CDATA[Детали выплаты]]></string>
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Удалить]]></string>
 	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Продолжить]]></string>
 	<string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Удалить]]></string>
@@ -128,11 +155,11 @@
 	<!-- EMAIL TEMPLATES -->
 	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Заплатил - присоединяйся.]]></string>
 	<string name="_bx_payment_et_txt_subject_paid_need_join"><![CDATA[Оплата была принята.]]></string>
-	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[{email_header}
 <p><b>Дорогой {RealName}</b>,</p>
 <p>Ваша оплата была принята. Если вы ещё не заполняли регистрационную форму, то Вы можете сделать это используя следующую ссылку.</p>
 <p><a href="{JoinLink}">Присоединяйтесь</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
 	<!-- MESSAGES, WARNINGS and ERRORS -->
 	<string name="_bx_payment_msg_no_results"><![CDATA[Пусто]]></string>

@@ -10,8 +10,27 @@ function BxDolStudioPolyglot(oOptions) {
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioPolyglot' : oOptions.sObjName;
     this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+    this.sCodeMirror = oOptions.sCodeMirror == undefined ? '' : oOptions.sCodeMirror;
     this.sPage = oOptions.sPage == undefined ? 'general' : oOptions.sPage;
+
+    var $this = this;
+    $(document).ready (function () {
+    	if($this.sCodeMirror != '')
+    		$this.initCodeMirror($this.sCodeMirror);
+    });
 }
+
+BxDolStudioPolyglot.prototype.initCodeMirror = function(sSelector) {
+	var oSelector = $(sSelector);
+	for(var i = 0; i < oSelector.length; i++) {
+	    var e = CodeMirror.fromTextArea(oSelector.get(i), {
+	        lineNumbers: true,
+	        mode: "htmlmixed",
+	        htmlMode: true,
+	        matchBrackets: true
+	    });
+	}
+};
 
 /**
  * Is needed if AJAX is used to change (reload) pages. 

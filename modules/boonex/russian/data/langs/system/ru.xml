@@ -688,6 +688,7 @@
 	<string name="_adm_form_dsc_field_value_reset"><![CDATA[Заголовок для кнопки (этот тип кнопки используется для сброса формы в исходное состояние)]]></string>
 	<string name="_adm_form_dsc_field_value_submit"><![CDATA[Заголовок для кнопки (этот тип кнопки используется для посылки данных формы)]]></string>
 	<string name="_adm_form_dsc_field_visible_for_levels"><![CDATA[Выбрать членства, разрешённые для просмотра элемента данного меню]]></string>
+	<string name="_adm_form_dsc_field_db_pass"><![CDATA[Выберите, как данные поля будут обрабатываться перед записью в базу данных]]></string>
 	<string name="_adm_form_dsc_forms_title"><![CDATA[Название Формы. Отображается только в Студии.]]></string>
 	<string name="_adm_form_dsc_pre_lists_title"><![CDATA[Название Списка для использования только в Студии]]></string>
 	<string name="_adm_form_dsc_pre_values_empty"><![CDATA[Вы можете использовать его для элементов, таких как "Пожалуйста, выберите...", которые не могут быть отправлены.]]></string>
@@ -805,6 +806,13 @@
 	<string name="_adm_form_txt_field_visible_for_all"><![CDATA[Всех]]></string>
 	<string name="_adm_form_txt_field_visible_for_levels"><![CDATA[Выбрать Уровни]]></string>
 	<string name="_adm_form_txt_field_visible_for_selected"><![CDATA[Выбранные уровни]]></string>
+	<string name="_adm_form_txt_field_db_pass"><![CDATA[Обработать как]]></string>
+    <string name="_adm_form_txt_field_db_pass_date"><![CDATA[Дата]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_ts"><![CDATA[Дата (метка времени Unix)]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_utc"><![CDATA[UTC Дата (метка времени Unix)]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_time"><![CDATA[Дата и время]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_time_ts"><![CDATA[Дата и время (метка времени Unix)]]></string>
+    <string name="_adm_form_txt_field_db_pass_date_time_utc"><![CDATA[UTC Дата и время (метка времени Unix)]]></string>
 	<string name="_adm_form_txt_fields_caption_system"><![CDATA[Системное имя]]></string>
 	<string name="_adm_form_txt_fields_manage_visibility"><![CDATA[Управление настройками видимости]]></string>
 	<string name="_adm_form_txt_fields_module"><![CDATA[Модуль]]></string>
@@ -857,6 +865,7 @@
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Дисплеи]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>
 	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Имейл-шаблоны]]></string>
+	<string name="_adm_lmi_cpt_etemplates_hf"><![CDATA[Заголовок/основание имейлов]]></string>
 	<string name="_adm_lmi_cpt_featured"><![CDATA[Избранные]]></string>
 	<string name="_adm_lmi_cpt_fields"><![CDATA[Поля]]></string>
 	<string name="_adm_lmi_cpt_files"><![CDATA[Файлы]]></string>
@@ -1061,6 +1070,11 @@
 	<string name="_adm_pgt_txt_nkp_key_name"><![CDATA[Имя Ключа]]></string>
 	<string name="_adm_pgt_txt_nkp_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_pgt_txt_text"><![CDATA[Текст]]></string>
+    <string name="_adm_pgt_txt_et_hf_inf"><![CDATA[Внимание. Неправильное применение HTML может повредить дизайн имейл сообщения. Также убедитесь в том, что маркер {unsubscribe} присутствует хотя бы в одном из темплейтов (заголовок и/или основание).]]></string>
+    <string name="_adm_pgt_btn_et_hf_submit"><![CDATA[Выполнить]]></string>
+    <string name="_adm_pgt_scs_et_hf_save"><![CDATA[Изменения сохранены.]]></string>
+    <string name="_adm_pgt_err_et_hf_save"><![CDATA[Невозможно сохранить изменения.]]></string>
+    <string name="_adm_pgt_err_et_hf_save_unsubscribe"><![CDATA[Невозможно сохранить изменения, тк маркер {unsubscribe} был удален из темплейтов заголовка и основания одновременно.]]></string>
 	<string name="_adm_prm_btn_actions_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_prm_btn_actions_options"><![CDATA[Редактировать опции]]></string>
 	<string name="_adm_prm_btn_actions_save"><![CDATA[Сохранить]]></string>
@@ -1178,7 +1192,8 @@
 	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Задействовать дружественные ссылки для Страниц]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Имейл для получения критических уведомлений от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Имейл, с которого будут посылаться сообщения от сайта]]></string>
-	<string name="_adm_stg_cpt_option_site_email_html_template"><![CDATA[Использовать HTML шаблон в имейл сообщениях сайта]]></string>
+	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Заголовок имейл HTML шаблона]]></string>
+    <string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Основание имейл HTML шаблона]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Название сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Экскурсия по главной странице сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по главной странице Студии]]></string>
@@ -1582,98 +1597,98 @@
 	<string name="_sys_designbox_4"><![CDATA[Содержимое + заголовок]]></string>
 	<string name="_sys_done"><![CDATA[Готово]]></string>
 	<string name="_sys_et_txt_about_us"><![CDATA[О нас]]></string>
-	<string name="_sys_et_txt_body_admin_email"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_sys_et_txt_body_admin_email"><![CDATA[{email_header}
 <p>Привет,</p>
 <p>Администрация сайта <a href="{site_url}">{site_name}</a> рада проинформировать Вас о том, что</p>
 <p>=========================</p>
 <p style="color:#3B5C8E">{MessageText}</p>
 <p>=========================</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_comment_replied"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
 <p>Привет,</p>
 <p>На Ваш комментарий ответили. Ответ:</p>
 <p>{reply_text}</p>
 <p>Пожалуйста, перейдите на страницу комментария для дополнительной информации: <a href="{comment_url}">Мой Комментарий</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_system_reported"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
 <p>Привет,</p>
 <p>Была получена новая жалоба с типом <b>{report_type}</b>. Сообщение:</p>
 <p>{report_text}</p>
 <p>Для получения дополнительной информации, пожалуйста, перейдите на <a href="{report_url}">страницу контента</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_confirmation"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
 <p>Привет, {name}.</p>
 <p>Пожалуйста, подтвердите ваш имейл, перейдя по ссылке:</p>
 <p><a href="{conf_link}">Подтвердить имейл</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
 <p>Модуль: <b>{Module}</b></p>
 <p>Результат демонтажа: {Result}</p>
 <p>{Message}</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_forgot"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
 <p>Привет!</p>
 <p>Пожалуйста, перейдите по ссылке, чтобы сбросить свой пароль:</p>
 <p><a href="{forgot_password_url}">{forgot_password_url}</a></p>
 <p>Спасибо.</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_mem_changed"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_mem_changed"><![CDATA[{email_header}
 <p>Привет,</p>
 <p>Уровень Вашего членства изменён на: <b>{membership_level}</b></p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_mem_expiration"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_mem_expiration"><![CDATA[{email_header}
 <p>Привет,</p>
 <p>Мы уведомляем Вас о том, что Ваше членство {membership_name} на сайте {site_name} истекает через {expire_days} дней (-1 означает: уже истекло).</p>
 <p>Чтобы обновить своё членство, зайдите в свой аккаунт {site_name} по ссылке <a href="{site_url}member.php">{site_url}member.php</a> и перейдите в <a href="{site_url}modules/?r=membership/index/">Моё Членство</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_password_reset"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_password_reset"><![CDATA[{email_header}
 <p>Привет!</p>
 <p>Ваш новый пароль:</p>
 <p><b>{password}</b></p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[{email_header}
 <p>Привет, {profile_name}.</p>
 <p>Добро пожаловать на сайт {site_name}! Вот копия данных вашего аккаунта:</p>
 <p>Имя: {account_name}</p>
 <p>Имейл: {account_email}</p>
 <p>URL сайта: <a href="{site_url}">{site_url}</a></p>
 <p>Спасибо!</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[{email_header}
 <p>Привет {profile_name},</p>
 <p>Ваш профиль ожидает одобрения. Как только он будет одобрен, Вы получите уведомление по эл. почте.</p>
 <p>Спасибо!</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[{email_header}
 <p>Привет {profile_name},</p>
 <p>Ваш профиль был заблокирован.</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_account"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_account"><![CDATA[{email_header}
 <p>{account_output}</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_pruning"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_pruning"><![CDATA[{email_header}
 <p>{pruning_output}</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_upgrade_failed"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_upgrade_failed"><![CDATA[{email_header}
 <p>Обновление не удалось в связи со следующей ошибкой:</p>
 <p>{error_msg}</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[{email_header}
 <p>В процессе обновления модулей произошли следующие ошибки:</p>
 <p>{conclusion}</p>
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Сайт был удачно обновлён до {new_version}.</p>
 {conclusion}
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[{email_header}
 <p>Следующие модули были удачно обновлены.</p>
 {conclusion}
-<bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[<bx_include_auto:_email_header.html />
+{email_footer}]]></string>
+	<string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[{email_header}
 <p>Фоновый процесс завершился ошибкой со следующим сообщением.</p>
 {conclusion}
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_success"><![CDATA[<b>{0}</b> модуль: up to {1} версия.<br />]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> молуль: {1}<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Посылка сообщения из Панели Администратора]]></string>
@@ -1963,6 +1978,7 @@
 	<string name="_sys_menu_item_title_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
+	<string name="_sys_menu_item_title_subscriptions"><![CDATA[Подписки]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Язык]]></string>
@@ -1993,6 +2009,7 @@
 	<string name="_sys_menu_item_title_system_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_system_studio"><![CDATA[Студия]]></string>
+	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Инструменты управления Панелью Аккаунта]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Настройки Аккаунта]]></string>

@@ -55,6 +55,17 @@ class BxBaseModPaymentCart extends BxDol
 		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
     }
 
+	public function serviceGetSubscriptionsUrl($iVendor = 0)
+    {
+    	if(!$this->_oModule->isLogged())
+            return '';
+
+		if($iVendor == 0)
+    		return $this->_oModule->_oConfig->getUrl('URL_SUBSCRIPTIONS');
+
+    	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_SUBSCRIPTIONS'), array('seller_id' => $iVendor));
+    }
+
 	public function serviceGetSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
     	if(!$this->_oModule->isLogged())

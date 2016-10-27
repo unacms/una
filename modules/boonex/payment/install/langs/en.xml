@@ -15,6 +15,18 @@
 	<string name="_bx_payment_page_block_title_carts"><![CDATA[Shopping Carts]]></string>
 	<string name="_bx_payment_page_block_title_cart"><![CDATA[{0}'s Shopping Cart]]></string>
 
+    <string name="_bx_payment_page_title_sys_sbs_list"><![CDATA[Subscriptions List]]></string>
+    <string name="_bx_payment_page_title_sbs_list"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_payment_page_block_title_sbs_list"><![CDATA[Subscriptions]]></string>
+
+    <string name="_bx_payment_page_title_sys_sbs_history"><![CDATA[Subscriptions History]]></string>
+    <string name="_bx_payment_page_title_sbs_history"><![CDATA[Payment History]]></string>
+    <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[Payment History]]></string>
+
+    <string name="_bx_payment_page_title_sys_sbs_details"><![CDATA[Subscriptions Details]]></string>
+    <string name="_bx_payment_page_title_sbs_details"><![CDATA[Billing Information]]></string>
+    <string name="_bx_payment_page_block_title_sbs_details"><![CDATA[Billing Information]]></string>
+
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[Shopping History]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[Shopping History]]></string>
 	<string name="_bx_payment_page_block_title_history"><![CDATA[Shopping History]]></string>
@@ -54,6 +66,15 @@
     <string name="_bx_payment_menu_item_title_system_cart_history"><![CDATA[Cart History]]></string>
     <string name="_bx_payment_menu_item_title_cart_history"><![CDATA[Cart History]]></string>
 
+    <string name="_bx_payment_menu_title_sbs_submenu"><![CDATA[Subscriptions Submenu]]></string>
+    <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Subscriptions Submenu]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_list"><![CDATA[Subscriptions List]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[Subscriptions History]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[Payments History]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_details"><![CDATA[Subscriptions Details]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_details"><![CDATA[Billing Information]]></string>
+
 	<!-- GRIDS -->
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Client]]></string>
 	<string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Seller]]></string>
@@ -61,6 +82,11 @@
 	<string name="_bx_payment_grid_column_title_ods_license"><![CDATA[License]]></string>
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Amount]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Date]]></string>
+	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Seller]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Subscription]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_license"><![CDATA[License]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Vendor]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Count]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_price"><![CDATA[Price]]></string>
@@ -73,6 +99,7 @@
 	<string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Cancel]]></string>
 	<string name="_bx_payment_grid_action_title_ods_process"><![CDATA[Process]]></string>
 	<string name="_bx_payment_grid_action_title_ods_view_order"><![CDATA[View]]></string>
+	<string name="_bx_payment_grid_action_title_sbs_view_order"><![CDATA[View]]></string>
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Continue]]></string>
 	<string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Delete]]></string>
@@ -128,11 +155,11 @@
 	<!-- EMAIL TEMPLATES -->
 	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Paid and need to join.]]></string>
 	<string name="_bx_payment_et_txt_subject_paid_need_join"><![CDATA[Payment was accepted.]]></string>
-	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[{email_header}
 <p><b>Dear {RealName}</b>,</p>
 <p>Your payment was accepted. If you did not fill in the join form yet, then you may do it using the following link.</p>
 <p><a href="{JoinLink}">Join Now</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
 	<!-- MESSAGES, WARNINGS and ERRORS -->
 	<string name="_bx_payment_msg_no_results"><![CDATA[Empty]]></string>

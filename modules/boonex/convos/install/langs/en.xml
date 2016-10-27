@@ -118,20 +118,17 @@
 
     <string name="_bx_cnv_email_new_message"><![CDATA[New message]]></string>
     <string name="_bx_cnv_email_new_message_subject"><![CDATA[New message from {SenderDisplayName}]]></string>
-    <string name="_bx_cnv_email_new_message_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}
 <p>New message from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_cnv_email_new_reply"><![CDATA[New reply]]></string>
     <string name="_bx_cnv_email_new_reply_subject"><![CDATA[New reply from {SenderDisplayName}]]></string>
-    <string name="_bx_cnv_email_new_reply_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_cnv_email_new_reply_body"><![CDATA[{email_header}
 <p>New reply from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
-<bx_include_auto:_email_footer.html />]]></string>
-
+{email_footer}]]></string>
 </resources>

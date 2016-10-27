@@ -36,11 +36,11 @@
 
 	<string name="_bx_contact_et_contact_form_message"><![CDATA[Сообщение формы для контактов.]]></string>
 	<string name="_bx_contact_et_contact_form_message_subject"><![CDATA[Сообщение формы для контактов.]]></string>
-	<string name="_bx_contact_et_contact_form_message_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_contact_et_contact_form_message_body"><![CDATA[{email_header}
 <p><b>Дорогой Administrator</b>,</p>
 <p>Вам написал пользователь <u>{SenderName}</u> с имейл-адресом <u>{SenderEmail}</u></p>
 <hr />
 <p><b>{MessageSubject}</b></p>
 <p>{MessageBody}</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 </resources>

@@ -18,6 +18,7 @@ class BxDolStudioFormsField extends BxDol
     protected $sType = '';
     protected $aCheckFunctions = array();
     protected $sDbPass = '';
+    protected $aDbPassDependency = array();
 
     protected $aParams = array();
     protected $aField = array();

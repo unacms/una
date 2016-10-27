@@ -24,10 +24,18 @@
 }
 
 .bx-cover {
-    position:relative;
-    z-index:2;
-    min-height:6rem;
-    text-align:center;
+    position: relative;
+    z-index: 2;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    min-height: 40vh;
+    text-align: center;
+}
+
+.bx-cover-cnt {
+	width: 100%;
 }
 
 .bx-cover-title {

@@ -299,50 +299,43 @@
 
     <string name="_bx_events_email_join_request"><![CDATA[Event join request]]></string>
     <string name="_bx_events_email_join_request_subject"><![CDATA[Request to join your event]]></string>
-    <string name="_bx_events_email_join_request_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_events_email_join_request_body"><![CDATA[{email_header}
 <p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> event from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_events_email_join_reject"><![CDATA[Event join request was rejected]]></string>
     <string name="_bx_events_email_join_reject_subject"><![CDATA[Request to join an event was rejected]]></string>
-    <string name="_bx_events_email_join_reject_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_events_email_join_reject_body"><![CDATA[{email_header}
 <p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> event was rejected by event admin.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_events_email_join_confirm"><![CDATA[Event join request was confirmed]]></string>
     <string name="_bx_events_email_join_confirm_subject"><![CDATA[Your request to join an event was confirmed]]></string>
-    <string name="_bx_events_email_join_confirm_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_events_email_join_confirm_body"><![CDATA[{email_header}
 <p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> event was confirmed by the event admin.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_events_email_fan_remove"><![CDATA[Profile was removed from event participants]]></string>
     <string name="_bx_events_email_fan_remove_subject"><![CDATA[Your profile was removed from the event]]></string>
-    <string name="_bx_events_email_fan_remove_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_events_email_fan_remove_body"><![CDATA[{email_header}
 <p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> event by the event admin.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_events_email_fan_become_admin"><![CDATA[Event admin status was granted]]></string>
     <string name="_bx_events_email_fan_become_admin_subject"><![CDATA[You are an event admin now]]></string>
-    <string name="_bx_events_email_fan_become_admin_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_events_email_fan_become_admin_body"><![CDATA[{email_header}
 <p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> event now.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_events_email_admin_become_fan"><![CDATA[Event admin status was revoked]]></string>
     <string name="_bx_events_email_admin_become_fan_subject"><![CDATA[Your event admin status was revoked]]></string>
-    <string name="_bx_events_email_admin_become_fan_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_events_email_admin_become_fan_body"><![CDATA[{email_header}
 <p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> event.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
     <string name="_bx_events_email_invitation"><![CDATA[Invitation to event]]></string>
     <string name="_bx_events_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" event]]></string>
-    <string name="_bx_events_email_invitation_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_events_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} event</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 </resources>

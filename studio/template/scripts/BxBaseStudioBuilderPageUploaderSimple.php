@@ -18,6 +18,9 @@ class BxBaseStudioBuilderPageUploaderSimple extends BxTemplUploaderSimple
 
     function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+        if(!$oTemplate)
+            $oTemplate = BxDolStudioTemplate::getInstance();
+
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $this->_sTranscoderEmbed = 'sys_builder_page_embed';

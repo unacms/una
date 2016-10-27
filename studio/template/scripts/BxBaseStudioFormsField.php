@@ -103,8 +103,8 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         $aForm = $this->getFormAdd($sAction, $sObject);
         $oForm = new BxTemplStudioFormView($aForm);
 
-        if($oForm->isSubmitted() && isset($oForm->aInputs['required']))
-            $this->updateCheckerFields($oForm);
+        if($oForm->isSubmitted())
+            $this->onCheckField($oForm);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -140,8 +140,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         $aForm = $this->getFormEdit($sAction, $sObject);
         $oForm = new BxTemplStudioFormView($aForm);
 
-        if($oForm->isSubmitted() && isset($oForm->aInputs['required']))
-            $this->updateCheckerFields($oForm);
+        $bAlter = false;
+        if($oForm->isSubmitted())
+            $bAlter = $this->onCheckField($oForm);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -152,8 +153,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             if($oForm->update((int)$this->aField['id']) === false)
                 return false;
 
-			if(strcmp($sInputNameOld, $sInputNameNew) != 0)
+			if($bAlter || strcmp($sInputNameOld, $sInputNameNew) != 0)
 				$this->alterChange($sInputNameOld, $sInputNameNew);
+
             return true;
         } else
             return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-edit-' . $this->aField['type'] . '-popup', _t('_adm_form_txt_field_edit_popup', _t($this->aField['caption_system'])), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
@@ -600,6 +602,29 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         return $sPrefix . $iIndex;
     }
 
+    protected function onCheckField(&$oForm)
+    {
+        $bAlter = false;
+
+        //--- Process field 'required' and related 'checker' fields.
+        if(isset($oForm->aInputs['required']))
+            $this->updateCheckerFields($oForm);
+
+        //--- Process field 'db_pass' and related dependencies.
+        if(isset($oForm->aInputs['db_pass']) && $oForm->aInputs['db_pass']['type'] == 'select') {
+            $sDbPass = $oForm->getCleanValue('db_pass');
+
+            $this->aForm['inputs']['value']['db']['pass'] = $sDbPass;
+
+            if(!empty($this->aDbPassDependency[$sDbPass])) {
+                $this->aParams['table_field_type'] = $this->aDbPassDependency[$sDbPass]['alter'];
+                $bAlter = true;
+            }
+        }
+
+        return $bAlter;
+    }
+
     protected function onSubmitField(&$oForm)
     {
         //--- Process field values.
@@ -915,6 +940,11 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
     protected $sType = 'datepicker';
     protected $aCheckFunctions = array('date');
     protected $sDbPass = 'DateTs';
+    protected $aDbPassDependency = array(
+        'Date' => array('alter' => 'date'),
+    	'DateTs' => array('alter' => 'int(11)'),
+    	'DateUtc' => array('alter' => 'int(11)'),
+    );
 
     public function init()
 	{
@@ -924,6 +954,28 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
 
         $this->aForm['inputs']['value']['type'] = $this->sType;
         $this->aForm['inputs']['value']['db']['pass'] = 'DateTs';
+
+        $aFields = array(
+            'db_pass' => array(
+                'type' => 'select',
+                'name' => 'db_pass',
+                'caption' => _t('_adm_form_txt_field_db_pass'),
+                'info' => _t('_adm_form_dsc_field_db_pass'),
+                'value' => $this->sDbPass,
+                'values' => array(
+                    array('key' => 'Date', 'value' => _t('_adm_form_txt_field_db_pass_date')),
+                    array('key' => 'DateTs', 'value' => _t('_adm_form_txt_field_db_pass_date_ts')),
+                    array('key' => 'DateUtc', 'value' => _t('_adm_form_txt_field_db_pass_date_utc')),
+                ),
+                'required' => '0',
+                'db' => array (
+                    'pass' => 'Xss',
+                )
+            ),
+        );
+
+        unset($this->aForm['inputs']['db_pass']);
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'controls', $aFields, false);
     }
 }
 
@@ -932,12 +984,23 @@ class BxBaseStudioFormsFieldDatetime extends BxBaseStudioFormsFieldDatepicker
     protected $sType = 'datetime';
     protected $aCheckFunctions = array('date_time');
     protected $sDbPass = 'DateTimeTs';
+    protected $aDbPassDependency = array(
+        'DateTime' => array('alter' => 'datetime'),
+    	'DateTimeTs' => array('alter' => 'int(11)'),
+    	'DateTimeUtc' => array('alter' => 'int(11)'),
+    );
 
     public function init()
 	{
 		parent::init();
 
         $this->aForm['inputs']['value']['db']['pass'] = 'DateTimeTs';
+
+        $this->aForm['inputs']['db_pass']['values'] = array(
+            array('key' => 'DateTime', 'value' => _t('_adm_form_txt_field_db_pass_date_time')),
+            array('key' => 'DateTimeTs', 'value' => _t('_adm_form_txt_field_db_pass_date_time_ts')),
+            array('key' => 'DateTimeUtc', 'value' => _t('_adm_form_txt_field_db_pass_date_time_utc')),
+        );
     }
 }
 

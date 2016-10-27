@@ -219,6 +219,14 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 		return BxDolService::call($this->_sActive, 'get_add_to_cart_link', $aSrvParams, 'Cart');
     }
 
+    public function getSubscriptionsUrl()
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscriptions_url', 'Subscriptions'))
+    		return '';
+
+    	return BxDolService::call($this->_sActive, 'get_subscriptions_url', array(), 'Subscriptions');
+    }
+
 	public function getSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_url', 'Cart'))
@@ -232,11 +240,11 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
      */
     public function getSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_js', 'Cart'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_js', 'Subscriptions'))
 			return array();
 
 		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount);
-		return BxDolService::call($this->_sActive, 'get_subscribe_js', $aSrvParams, 'Cart');
+		return BxDolService::call($this->_sActive, 'get_subscribe_js', $aSrvParams, 'Subscriptions');
     }
 
     /**
@@ -244,11 +252,11 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
      */
     public function getSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
-		if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_link', 'Cart'))
+		if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_link', 'Subscriptions'))
 			return '';
 
 		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount);
-		return BxDolService::call($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Cart');
+		return BxDolService::call($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Subscriptions');
     }
 
     public function initializeCheckout($iVendorId, $sProvider, $aItems = array())

@@ -254,10 +254,9 @@
     
     <string name="_bx_forum_email_new_reply"><![CDATA[New reply]]></string>
     <string name="_bx_forum_email_new_reply_subject"><![CDATA[New reply from {SenderDisplayName}]]></string>
-    <string name="_bx_forum_email_new_reply_body"><![CDATA[
-<bx_include_auto:_email_header.html />
+    <string name="_bx_forum_email_new_reply_body"><![CDATA[{email_header}
 <p>New reply from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 </resources>

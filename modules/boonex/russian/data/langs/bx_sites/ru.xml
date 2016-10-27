@@ -149,7 +149,7 @@
 
 	<string name="_bx_sites_et_site_created"><![CDATA[Сайт был создан.]]></string>
 	<string name="_bx_sites_et_site_created_subject"><![CDATA[Сайт был создан.]]></string>
-	<string name="_bx_sites_et_site_created_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_site_created_body"><![CDATA[{email_header}
 <p><b>Дорогой {RealName}</b>,</p>
 <p>сайт активирован.</p>
 <p>Ваш домен: {Domain}</p>
@@ -157,10 +157,10 @@
 <p>Статус подписки: {Status}</p>
 <p>Дата следующей оплаты: {NextPaymentDate}</p>
 <p>Теперь можно заполнить детализированную форму сайта <a href="{DetailsFormUrl}">здесь</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 	<string name="_bx_sites_et_site_created_and_paid"><![CDATA[Сайт был создан и оплачен.]]></string>
 	<string name="_bx_sites_et_site_created_and_paid_subject"><![CDATA[Сайт был создан и оплачен.]]></string>
-	<string name="_bx_sites_et_site_created_and_paid_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_site_created_and_paid_body"><![CDATA[{email_header}
 <p><b>Дорогой {RealName}</b>,</p>
 <p>Оплата в количестве ({Amount}) была от Вас получена, и сайт был активирован.</p>
 <p>Ваш домен: {Domain}</p>
@@ -168,19 +168,19 @@
 <p>Статус подписки: {Status}</p>
 <p>Дата следующей оплаты: {NextPaymentDate}</p>
 <p>Теперь можно заполнить детализированную форму сайта <a href="{DetailsFormUrl}">здесь</a>.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 	<string name="_bx_sites_et_payment_received"><![CDATA[Оплата получена.]]></string>
 	<string name="_bx_sites_et_payment_received_subject"><![CDATA[Оплата получена.]]></string>
-	<string name="_bx_sites_et_payment_received_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_payment_received_body"><![CDATA[{email_header}
 <p><b>Дорогой {RealName}</b>,</p>
 <p>Оплата в количестве ({Amount}) была от Вас получена. Ваш сайт был продлён до {NextPaymentDate}.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 	<string name="_bx_sites_et_site_canceled"><![CDATA[Сайт был отменён.]]></string>
 	<string name="_bx_sites_et_site_canceled_subject"><![CDATA[Сайт was отменён.]]></string>
-	<string name="_bx_sites_et_site_canceled_body"><![CDATA[<bx_include_auto:_email_header.html />
+	<string name="_bx_sites_et_site_canceled_body"><![CDATA[{email_header}
 <p><b>Дорогой {RealName}</b>,</p>
 <p>Подписка для домена {Domain} была отменена.</p>
-<bx_include_auto:_email_footer.html />]]></string>
+{email_footer}]]></string>
 
 	<string name="_bx_sites_paypal_product_description"><![CDATA[{0} периодический платёж {1} {2} с одним тестовым периодом {3} {4}]]></string>
 	<string name="_bx_sites_paypal_product_description_free_trial"><![CDATA[{0} периодический платёж {1} {2} с бесплатным тестовым периодом]]></string>

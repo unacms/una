@@ -18,6 +18,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
     protected $sCoverFormId = 'adm-dsg-cover-form';
     protected $sCoverIframeId = 'adm-dsg-cover-iframe';
+    protected $sCoverStorage = BX_DOL_STORAGE_OBJ_IMAGES;
+	protected $sCoverTranscoder = 'sys_cover_preview';
 
     protected $sSplashFormId = 'adm-dsg-splash-form';
     protected $sSplashIframeId = 'adm-dsg-splash-iframe';
@@ -359,11 +361,22 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         $aFormInputs = array();
         $aTmplVarsCovers = array();
         foreach($this->aCovers as $sCover => $aCover) {
-        	$aFormInputs[$sCover] = array(
-				'type' => 'file',
+            $aFormInputs[$sCover] = array(
+                'type' => 'files',
 				'name' => $sCover,
-				'caption' => _t('_adm_dsg_txt_upload_' . $sCover)
-			);
+				'storage_object' => $this->sCoverStorage,
+				'images_transcoder' => $this->sCoverTranscoder,
+				'uploaders' => array('sys_std_crop_cover'),
+				'multiple' => false,
+				'content_id' => 0,
+				'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
+					'name' => $sCover,
+				)),
+				'caption' => _t('_adm_dsg_txt_upload_' . $sCover),
+				'db' => array (
+                    'pass' => 'Int',
+                )
+            );
 
         	if(($iImageId = (int)getParam($aCover['setting'])) == 0)
         		continue;

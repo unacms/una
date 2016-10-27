@@ -10,6 +10,7 @@
 define('BX_DOL_STUDIO_PGT_TYPE_SETTINGS', 'settings');
 define('BX_DOL_STUDIO_PGT_TYPE_KEYS', 'keys');
 define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES', 'etemplates');
+define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF', 'etemplates_hf');
 
 define('BX_DOL_STUDIO_PGT_TYPE_DEFAULT', BX_DOL_STUDIO_PGT_TYPE_SETTINGS);
 
@@ -81,6 +82,23 @@ class BxDolStudioPolyglot extends BxTemplStudioPage
 
 		echo json_encode($aResult);
 		exit;
+    }
+
+	public function submitEtemplatesHf(&$oForm)
+    {
+        $sUnsubscribe = "{unsubscribe}";
+        $sHeader = $oForm->getCleanValue('et_hf_header');
+        $sFooter = $oForm->getCleanValue('et_hf_footer');
+        if(strpos($sHeader, $sUnsubscribe) === false && strpos($sFooter, $sUnsubscribe) === false)
+            return $this->getJsResult('_adm_pgt_err_et_hf_save_unsubscribe'); 
+
+        $bResult = false;
+        $bResult |= $this->oDb->setParam('site_email_html_template_header', $sHeader);
+        $bResult |= $this->oDb->setParam('site_email_html_template_footer', $sFooter);
+        if(!$bResult)
+            return $this->getJsResult('_adm_pgt_err_et_hf_save');
+
+        return $this->getJsResult('_adm_pgt_scs_et_hf_save', true, true, BX_DOL_URL_STUDIO . 'polyglot.php?page=' . BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF); 
     }
 }
 

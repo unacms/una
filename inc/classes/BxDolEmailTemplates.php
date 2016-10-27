@@ -22,9 +22,7 @@ bx_import('BxDolPermalinks');
  *
  * User is sent email in language which is defined in their account, if account language is not set - then default site language is used.
  *
- * Email templates use template system, so it is possible to customize header/footer accross all templates, by default header/footer files are:
- * - templates/base/_email_header.html
- * - templates/base/_email_footer.html
+ * Email templates use template system, so it is possible to customize header/footer via Studio -> Polyglot -> Emails header/footer
  *
  * 1-click unsubscribe link is added automatically to every email (except a few system emails, which is not supposed to unsubscribe from, like forgot password email).
  * Please note: make sure that {unsubscribe} marker is not removed, or unsubscribe link will not be added.
@@ -73,9 +71,11 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
         $this->iFallbackLangId = $oLang->getLangId('en');
 
         $sAboutUs = _t('_sys_et_txt_about_us');
-        $aDefaultKeys = array(
+        $this->aDefaultKeys = array(
         	'site_url' => BX_DOL_URL_ROOT,
         	'site_name' => getParam('site_title'),
+            'email_header' => getParam('site_email_html_template_header'),
+            'email_footer' => getParam('site_email_html_template_footer'),
             'about_us' => BxDolTemplate::getInstance()->parseHtmlByName('bx_a.html', array(
                 'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=about'),
 				'title' => bx_html_attribute($sAboutUs),
@@ -83,18 +83,6 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
                 'content' => $sAboutUs
             ))
         );
-
-        $bUseEmailHtmlTemplate = getParam('site_email_html_template') == 'on';
-        $this->aDefaultKeys = array_merge($aDefaultKeys, array(
-            'bx_if:show_html_header' => array(
-                'condition' => $bUseEmailHtmlTemplate,
-            	'content' => $aDefaultKeys
-            ),
-            'bx_if:show_html_footer' => array(
-                'condition' => $bUseEmailHtmlTemplate,
-            	'content' => $aDefaultKeys
-            )
-        ));
 
         $this->_oEmailTemplatesQuery = BxDolEmailTemplatesQuery::getInstance();
     }
