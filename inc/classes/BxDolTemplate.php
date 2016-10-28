@@ -839,7 +839,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         //--- Check in template folders.
         if($sUrl == "" && is_string($mixedId) && strpos($mixedId, '.') !== false)
-            $sUrl = $this->$aType2Method[$sType]($mixedId);
+            $sUrl = $this->{$aType2Method[$sType]}($mixedId);
 
         if($sUrl != "") {
         	$bAlt = isset($aParams['alt']) && !empty($aParams['alt']);
