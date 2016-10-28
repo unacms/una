@@ -35,6 +35,11 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     	));
     	$this->addCss(array('orders.css'));
     }
+    public function addJsCssSubscriptions()
+    {
+        $this->addJs(array('jquery.form.min.js', 'jquery.anim.js', 'jquery.webForms.js', 'main.js', 'subscriptions.js'));
+        $this->addCss(array('orders.css', 'subscriptions.css'));
+    }
 
     public function addJsCssCart($sType = '', $iVendorId = 0)
     {
@@ -42,7 +47,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     	$this->addJs(array('jquery.anim.js', 'main.js', 'cart.js'));
     	$this->addCss(array('orders.css', 'cart.css'));
 
-    	$oModule = $this->_getModule();
+    	$oModule = $this->getModule();
     	if(!empty($iVendorId)) {
     		$sMethod = 'getVendorInfoProviders' . bx_gen_method_name($sType);
     		$aProviders = $this->_oDb->$sMethod($iVendorId);
@@ -117,6 +122,21 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         ));
     }
 
+    public function displaySubscriptionGetDetails($iId)
+    {
+    	return $this->_displaySubscriptionData('get_details', $iId);
+    }
+
+    public function displaySubscriptionGetBilling($iId)
+    {
+    	return $this->_displaySubscriptionData('get_billing', $iId);
+    }
+
+    public function displaySubscriptionChangeBilling($iId)
+    {
+    	return $this->_displaySubscriptionData('change_billing', $iId);
+    }
+
 	public function displayBlockCarts($iClientId)
     {
     	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_carts'));
@@ -149,7 +169,14 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
     public function displayBlockSbsList($iClientId)
     {
-        return $this->_displayBlockHistory('grid_sbs_list', $iClientId);
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_sbs_list'), $this->getModule()->_oTemplate);
+        if(!$oGrid || empty($iClientId))
+            return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+
+		$oGrid->addQueryParam('client_id', $iClientId);
+
+		$this->addJsCssSubscriptions();
+        return $this->displayJsCode(BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION) . $oGrid->getCode();
     }
 
     public function displayBlockSbsHistory($iClientId)
@@ -179,7 +206,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         $sMethodName = 'getOrder' . bx_gen_method_name($sType);
         $aOrder = $this->_oDb->$sMethodName(array('type' => 'id', 'id' => $iId));
 
-        $oModule = $this->_getModule();
+        $oModule = $this->getModule();
         $aSeller = $oModule->getVendorInfo((int)$aOrder['seller_id']);
         $aClient = $oModule->getProfileInfo((int)$aOrder['client_id']);
 
@@ -207,13 +234,13 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                 )
             ),
             'order' => $aOrder['order'],
-            'provider' => $aOrder['provider'],
+            'provider' => _t('_bx_payment_txt_name_' . $aOrder['provider']),
             'error' => $aOrder['error_msg'],
             'date' => bx_time_js($aOrder['date']),
             'bx_repeat:items' => array()
         );
 
-        if($sType == BX_PAYMENT_ORDERS_TYPE_PENDING)
+        if(in_array($sType, array(BX_PAYMENT_ORDERS_TYPE_PENDING, BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION)))
             $aItems = $this->_oConfig->descriptorsM2A($aOrder['items']);
         else
             $aItems = $this->_oConfig->descriptorsM2A($this->_oConfig->descriptorA2S(array($aOrder['seller_id'], $aOrder['module_id'], $aOrder['item_id'], $aOrder['item_count'])));
@@ -279,7 +306,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
     public function displayProvidersSelector($aCartItem, $aProviders)
     {
-    	$oModule = $this->_getModule();
+    	$oModule = $this->getModule();
 
 		$oCart = $oModule->getObjectCart();
 		list($iSellerId, $iModuleId, $iItemId, $iItemCount) = $aCartItem;
@@ -314,15 +341,9 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 		));
     }
 
-	protected function _getModule()
-    {
-        $sName = $this->_oConfig->getName();
-        return BxDolModule::getInstance($sName);
-    }
-
     protected function _displayBlockHistory($sObject, $iClientId, $iSellerId = 0)
     {
-    	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject($sObject));
+    	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject($sObject), $this->getModule()->_oTemplate);
         if(!$oGrid || empty($iClientId))
             return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
@@ -331,7 +352,37 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 			$oGrid->addQueryParam('seller_id', $iSellerId);
 
 		$this->addJsCssOrders();
-        return $this->displayJsCode('history') . $oGrid->getCode();
+        return $this->displayJsCode(BX_PAYMENT_ORDERS_TYPE_HISTORY) . $oGrid->getCode();
+    }
+
+    protected function _displaySubscriptionData($sType, $iId)
+    {
+        $aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => $iId));
+        if(empty($aPending) && !is_array($aPending))
+            return array();
+
+        $aSubscription = $this->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iId));
+        if(empty($aSubscription) && !is_array($aSubscription))
+            return array();
+
+        $sMethod = bx_gen_method_name($sType) . 'Recurring';
+        $oProvider = $this->getModule()->getObjectProvider($aPending['provider'], $aPending['seller_id']);
+        if($oProvider === false || !$oProvider->isActive() || !method_exists($oProvider, $sMethod))
+        	return array();
+
+        $mixedContent = $oProvider->$sMethod($iId, $aSubscription['customer_id'], $aSubscription['subscription_id']);
+        if(empty($mixedContent))
+            return array();
+        else if(is_array($mixedContent))
+            return $mixedContent;
+
+        $sKey = 'order_' . BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION . '_' . $sType;
+    	$sId = $this->_oConfig->getHtmlIds(BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION, $sKey);
+    	$sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);
+    	return array('popup' => array(
+    		'html' => BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $mixedContent), 
+    		'options' => array('closeOnOuterClick' => 1)
+    	));
     }
 }
 

@@ -8,6 +8,7 @@
  */
 
 require_once('./inc/header.inc.php');
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "utils.inc.php");
 
 bx_import('BxDolLanguages');

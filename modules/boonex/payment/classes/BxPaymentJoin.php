@@ -75,15 +75,12 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
 		BxDolSession::getInstance()->setValue($this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING'), (int)$iPendingId);
 
 		if(!empty($sClientName) && !empty($sClientEmail)) {
-			bx_import('BxDolEmailTemplates');
-			$oEmailTemplates = new BxDolEmailTemplates();
-
-			$aTemplate = $oEmailTemplates->parseTemplate($this->_oModule->_oConfig->getPrefix('general') . 'paid_need_join', array(
+			$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oModule->_oConfig->getPrefix('general') . 'paid_need_join', array(
 				'RealName' => $sClientName,
 				'JoinLink' => $this->_oModule->_oConfig->getUrl('URL_JOIN', array($this->_oModule->_oConfig->getKey('KEY_REQUEST_PENDING') => (int)$iPendingId))
 			));
 
-			sendMail($sClientEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), 'html', false, true);
+			sendMail($sClientEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
 		}
 
 		header('Location: ' . $this->_oModule->_oConfig->getUrl('URL_JOIN'));

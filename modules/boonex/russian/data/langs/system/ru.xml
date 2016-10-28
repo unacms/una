@@ -1627,7 +1627,7 @@
 <p>{Message}</p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
-<p>Привет!</p>
+<p>Привет,</p>
 <p>Пожалуйста, перейдите по ссылке, чтобы сбросить свой пароль:</p>
 <p><a href="{forgot_password_url}">{forgot_password_url}</a></p>
 <p>Спасибо.</p>
@@ -1642,7 +1642,7 @@
 <p>Чтобы обновить своё членство, зайдите в свой аккаунт {site_name} по ссылке <a href="{site_url}member.php">{site_url}member.php</a> и перейдите в <a href="{site_url}modules/?r=membership/index/">Моё Членство</a></p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_password_reset"><![CDATA[{email_header}
-<p>Привет!</p>
+<p>Привет,</p>
 <p>Ваш новый пароль:</p>
 <p><b>{password}</b></p>
 {email_footer}]]></string>

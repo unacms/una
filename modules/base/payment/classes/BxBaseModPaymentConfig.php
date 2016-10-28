@@ -52,8 +52,9 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 			'display_processed_add' => $this->_sName . '_form_processed_add',
 
 			'menu_cart_submenu' => $this->_sName . '_menu_cart_submenu',
-		    'menu_sbs_submenu' => $this->_sName . '_menu_sbs_submenu',
         	'menu_orders_submenu' => $this->_sName . '_menu_orders_submenu',
+    		'menu_sbs_submenu' => $this->_sName . '_menu_sbs_submenu',
+		    'menu_sbs_actions' => $this->_sName . '_menu_sbs_actions',
 
 			'grid_history' => $this->_sName . '_grid_orders_history',
 			'grid_processed' => $this->_sName . '_grid_orders_processed',

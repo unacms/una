@@ -60,6 +60,13 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'history' => array(
         		'order_history_view' => $this->_sName . '-order-view-history',
         	),
+        	'subscription' => array(
+        		'order_subscription_view' => $this->_sName . '-order-view-subscription',
+        		'order_subscription_get_details' => $this->_sName . '-order-get-details-subscription',
+        		'order_subscription_get_billing' => $this->_sName . '-order-get-billing-subscription',
+        		'order_subscription_change_billing' => $this->_sName . '-order-change-billing-subscription',
+        		'form_subscription_change_billing' => $this->_sName . '-form-change-billing-subscription',
+        	),
         	'pending' => array(
         		'order_pending_view' => $this->_sName . '-order-view-pending',
         		'order_pending_process' => $this->_sName . '-order-process',
@@ -82,6 +89,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         $this->_aJsClasses = array(
         	'cart' => 'BxPaymentCart',
         	'history' => 'BxPaymentOrders',
+        	'subscription' => 'BxPaymentSubscriptions',
         	'pending' => 'BxPaymentOrders',
         	'processed' => 'BxPaymentOrders',
         	'stripe' => 'BxPaymentProviderStripe'
@@ -90,6 +98,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         $this->_aJsObjects = array(
         	'cart' => 'oPaymentCart',
         	'history' => 'oPaymentOrders',
+        	'subscription' => 'oBxPaymentSubscriptions',
         	'pending' => 'oPaymentOrders',
         	'processed' => 'oPaymentOrders',
         	'stripe' => 'oPaymentProviderStripe'

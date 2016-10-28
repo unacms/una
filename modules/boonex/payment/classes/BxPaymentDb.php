@@ -354,6 +354,51 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->getOrderProcessed($aParams);
     }
 
+	/*
+     * Subscriptions methods
+     */
+    public function getOrderSubscription($aParams)
+    {
+        return $this->getOrderPending($aParams);
+    }
+
+    public function getSubscription($aParams)
+    {
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$sWhereClause = $sLimitClause = '';
+        switch($aParams['type']) {
+            case 'pending_id':
+                $aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                	'pending_id' => $aParams['pending_id']
+                );
+
+                $sWhereClause = " AND `pending_id`=:pending_id";
+                $sLimitClause = " LIMIT 1";
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT * FROM `" . $this->_sPrefix . "subscriptions` WHERE 1 " . $sWhereClause . $sLimitClause;
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function insertSubscription($aValues)
+    {
+        if(empty($aValues) || !is_array($aValues))
+            return false;
+
+        return $this->query("INSERT INTO `" . $this->_sPrefix . "subscriptions` SET " . $this->arrayToSQL($aValues) . ", `date`=UNIX_TIMESTAMP()");
+    }
+
+	public function updateSubscription($aValues, $aWhere)
+    {
+        if(empty($aValues) || !is_array($aValues) || empty($aWhere) || !is_array($aWhere))
+            return false;
+
+        return (int)$this->query("UPDATE `" . $this->_sPrefix . "subscriptions` SET " . $this->arrayToSQL($aValues) . " WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
+    }
+
     //--- Order Administration ---//
     public function onProfileDelete($iId)
     {

@@ -56,7 +56,7 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         $iId = (int)$aIds[0];
 
         $sKey = 'order_' . $this->_sOrdersType . '_view';
-    	$sId = $this->_oModule->_oConfig->getHtmlIds($sKey);
+    	$sId = $this->_oModule->_oConfig->getHtmlIds($this->_sOrdersType, $sKey);
     	$sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);
     	$sContent = $this->_oModule->getObjectOrders()->getOrder($this->_sOrdersType, $iId);
 

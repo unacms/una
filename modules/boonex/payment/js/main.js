@@ -27,7 +27,7 @@ BxPaymentMain.prototype.processResult = function(oData) {
     		oPopup = $(oData.popup);
 
     	$('#' + oPopup.attr('id')).remove();
-        oPopup.hide().prependTo('body').dolPopup(oOptions);
+        oPopup.hide().prependTo('body').bxTime().dolPopup(oOptions);
     }
 
     if (oData && oData.eval != undefined)

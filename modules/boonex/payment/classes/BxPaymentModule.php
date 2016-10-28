@@ -273,6 +273,52 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		echoJson($aResult);
     }
 
+    public function actionSubscriptionGetDetails($iId)
+    {
+        $aResult = $this->_oTemplate->displaySubscriptionGetDetails($iId);
+		echoJson($aResult);
+    }
+
+    public function actionSubscriptionGetBilling($iId)
+    {
+        $aResult = $this->_oTemplate->displaySubscriptionGetBilling($iId);
+		echoJson($aResult);
+    }
+
+    public function actionSubscriptionChangeBilling($iId)
+    {
+        $aResult = $this->_oTemplate->displaySubscriptionChangeBilling($iId);
+		echoJson($aResult);
+    }
+
+    public function actionSubscriptionCancelation($iId)
+    {
+        $aResult = array('code' => 1, 'message' => _t('_bx_payment_err_cannot_perform'));
+
+        $aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => $iId));
+        if(empty($aPending) && !is_array($aPending))
+            return echoJson($aResult);
+
+        $aSubscription = $this->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iId));
+        if(empty($aSubscription) && !is_array($aSubscription))
+            return echoJson($aResult);
+
+        $oRecipient = BxDolProfile::getInstance((int)$aPending['seller_id']);
+        if(!$oRecipient)
+            return echoJson($aResult);
+
+		$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oConfig->getPrefix('general') . 'cancelation_request', array(
+			'sibscription_id' => $aSubscription['subscription_id'],
+			'sibscription_customer' => $aSubscription['customer_id'],
+		    'sibscription_date' => bx_time_js($aSubscription['date'], BX_FORMAT_DATE, true)
+		), 0, (int)$aPending['client_id']);
+
+		if(!sendMail($oRecipient->getAccountObject()->getEmail(), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM))
+		    return echoJson($aResult);
+
+        echoJson(array('code' => 0, 'message' => _t('_bx_payment_msg_cancelation_request_sent')));
+    }
+
 
     /**
      * Payment Processing Methods
@@ -376,6 +422,11 @@ class BxPaymentModule extends BxBaseModPaymentModule
         	return $this->_oTemplate->displayPageCodeError($aResult['message']);
 
 		$aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
+		if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
+		    $this->registerSubscription($aPending, array(
+		        'customer_id' => $aResult['customer_id'], 
+		    	'subscription_id' => $aResult['subscription_id']
+		    ));
 
 		$this->onPaymentRegisterBefore($aPending);
 
@@ -528,6 +579,17 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			$this->onPaymentRefund($aPending);
 
 		return $bResult;
+	}
+
+	public function registerSubscription($aPending, $aParams = array())
+	{
+	    $this->_oDb->insertSubscription(array(
+	        'pending_id' => $aPending['id'],
+	        'customer_id' => $aParams['customer_id'],
+	        'subscription_id' => $aParams['subscription_id']
+	    ));
+
+	    $this->onSubscriptionCreate($aPending);
 	}
 
 	public function cancelSubscription($mixedPending)

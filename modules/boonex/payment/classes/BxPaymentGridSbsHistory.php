@@ -10,6 +10,8 @@
  */
 
 
+require_once('BxPaymentGridHistory.php');
+
 class BxPaymentGridSbsHistory extends BxPaymentGridHistory
 {
     public function __construct ($aOptions, $oTemplate = false)

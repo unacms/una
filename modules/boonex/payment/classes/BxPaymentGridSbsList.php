@@ -18,7 +18,22 @@ class BxPaymentGridSbsList extends BxBaseModPaymentGridOrders
 
         parent::__construct ($aOptions, $oTemplate);
 
-        $this->_sOrdersType = 'history';
+        $this->_sOrdersType = BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION;
+    }
+
+    protected function _getCellProvider($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(_t('_bx_payment_txt_name_' . $mixedValue), $sKey, $aField, $aRow);
+    }
+
+    protected function _getActionActions ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	unset($a['attr']['bx_grid_action_single']);
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "bx_menu_popup('" . $this->_oModule->_oConfig->getObject('menu_sbs_actions') . "', this, {id: 'bx-payment-subscription-" . $aRow['id'] . "'}, {id: " . $aRow['id'] . "});"
+    	));
+
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
 	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

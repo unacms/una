@@ -24,7 +24,6 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_payment_history', '_bx_payment_page_title_sys_history', '_bx_payment_page_title_history', @sName, 5, 2147483647, 1, 'payment-history', 'page.php?i=payment-history', '', '', '', 0, 1, 0, 'BxPaymentPageHistory', 'modules/boonex/payment/classes/BxPaymentPageHistory.php'),
 ('bx_payment_sbs_list', '_bx_payment_page_title_sys_sbs_list', '_bx_payment_page_title_sbs_list', @sName, 5, 2147483647, 1, 'payment-sbs-list', 'page.php?i=payment-sbs-list', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
 ('bx_payment_sbs_history', '_bx_payment_page_title_sys_sbs_history', '_bx_payment_page_title_sbs_history', @sName, 5, 2147483647, 1, 'payment-sbs-history', 'page.php?i=payment-sbs-history', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
-('bx_payment_sbs_details', '_bx_payment_page_title_sys_sbs_details', '_bx_payment_page_title_sbs_details', @sName, 5, 2147483647, 1, 'payment-sbs-details', 'page.php?i=payment-sbs-details', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
 ('bx_payment_orders', '_bx_payment_page_title_sys_orders', '_bx_payment_page_title_orders', @sName, 5, 2147483647, 1, 'payment-orders', 'page.php?i=payment-orders', '', '', '', 0, 1, 0, 'BxPaymentPageOrders', 'modules/boonex/payment/classes/BxPaymentPageOrders.php'),
 ('bx_payment_details', '_bx_payment_page_title_sys_details', '_bx_payment_page_title_details', @sName, 5, 2147483647, 1, 'payment-details', 'page.php?i=payment-details', '', '', '', 0, 1, 0, 'BxPaymentPageDetails', 'modules/boonex/payment/classes/BxPaymentPageDetails.php');
 
@@ -37,7 +36,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 ('bx_payment_sbs_list', 1, @sName, '_bx_payment_page_block_title_sbs_list', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:14:"get_block_list";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 ('bx_payment_sbs_history', 1, @sName, '_bx_payment_page_block_title_sbs_history', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_history";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
-('bx_payment_sbs_details', 1, @sName, '_bx_payment_page_block_title_sbs_details', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_details";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 
 ('bx_payment_orders', 1, @sName, '_bx_payment_page_block_title_orders', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:16:"get_block_orders";s:6:"params";a:0:{}s:5:"class";s:6:"Orders";}', 0, 0, 1),
 
@@ -64,8 +62,17 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-list', '_bx_payment_menu_item_title_system_sbs_list', '_bx_payment_menu_item_title_sbs_list', 'page.php?i=payment-sbs-list', '', '_self', '', '', '', 2147483647, 1, 0, 1, 1),
-('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-history', '_bx_payment_menu_item_title_system_sbs_history', '_bx_payment_menu_item_title_sbs_history', 'page.php?i=payment-sbs-history', '', '_self', '', '', '', 2147483647, 1, 0, 1, 2),
-('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-details', '_bx_payment_menu_item_title_system_sbs_details', '_bx_payment_menu_item_title_sbs_details', 'page.php?i=payment-sbs-details', '', '_self', '', '', '', 2147483647, 1, 0, 1, 3);
+('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-history', '_bx_payment_menu_item_title_system_sbs_history', '_bx_payment_menu_item_title_sbs_history', 'page.php?i=payment-sbs-history', '', '_self', '', '', '', 2147483647, 1, 0, 1, 2);
+
+-- MENU: subscription actions
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_payment_menu_sbs_actions', '_bx_payment_menu_title_sbs_actions', 'bx_payment_menu_sbs_actions', 'bx_payment', 6, 0, 1, 'BxPaymentMenuSbsActions', 'modules/boonex/payment/classes/BxPaymentMenuSbsActions.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_payment_menu_sbs_actions', 'bx_payment', '_bx_payment_menu_set_title_sbs_actions', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_payment_menu_sbs_actions', 'bx_payment', 'sbs-cancel', '_bx_payment_menu_item_title_system_sbs_cancel', '_bx_payment_menu_item_title_sbs_cancel', 'javascript:void(0)', '{js_object}.requestCancelation(this, {id})', '_self', '', '', '', 2147483647, 1, 0, 1, 1);
 
 -- MENU: orders submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -126,7 +133,8 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
-(@sName, '_bx_payment_et_txt_name_paid_need_join', 'bx_payment_paid_need_join', '_bx_payment_et_txt_subject_paid_need_join', '_bx_payment_et_txt_body_paid_need_join');
+(@sName, '_bx_payment_et_txt_name_paid_need_join', 'bx_payment_paid_need_join', '_bx_payment_et_txt_subject_paid_need_join', '_bx_payment_et_txt_body_paid_need_join'),
+(@sName, '_bx_payment_et_txt_name_cancelation_request', 'bx_payment_cancelation_request', '_bx_payment_et_txt_subject_cancelation_request', '_bx_payment_et_txt_body_cancelation_request');
 
 
 -- PAYMENTS

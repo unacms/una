@@ -23,10 +23,6 @@
     <string name="_bx_payment_page_title_sbs_history"><![CDATA[История выплат]]></string>
     <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[История выплат]]></string>
 
-    <string name="_bx_payment_page_title_sys_sbs_details"><![CDATA[Детали подписок]]></string>
-    <string name="_bx_payment_page_title_sbs_details"><![CDATA[Платежная информация]]></string>
-    <string name="_bx_payment_page_block_title_sbs_details"><![CDATA[Платежная информация]]></string>
-
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[История покупок]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[История покупок]]></string>
 	<string name="_bx_payment_page_block_title_history"><![CDATA[История покупок]]></string>
@@ -72,8 +68,11 @@
     <string name="_bx_payment_menu_item_title_sbs_list"><![CDATA[Подписки]]></string>
     <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[История подписок]]></string>
     <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[История выплат]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_details"><![CDATA[Детали подписок]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_details"><![CDATA[Платежная информация]]></string>
+
+    <string name="_bx_payment_menu_title_sbs_actions"><![CDATA[Действия с подпиской]]></string>
+    <string name="_bx_payment_menu_set_title_sbs_actions"><![CDATA[Действия с подпиской]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_cancel"><![CDATA[Запросить отмену]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Запросить отмену]]></string>
 
 	<!-- GRIDS -->
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Покупатель]]></string>
@@ -83,9 +82,12 @@
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Сумма]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Продавец]]></string>
-    <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Подписка]]></string>
+	<string name="_bx_payment_grid_column_title_sbs_customer_id"><![CDATA[Покупатель]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_subscription_id"><![CDATA[Подписка]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Транзакция]]></string>
     <string name="_bx_payment_grid_column_title_sbs_license"><![CDATA[Лицензия]]></string>
     <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Сумма]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_provider"><![CDATA[Поставщик]]></string>
     <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Количество]]></string>
@@ -99,11 +101,16 @@
 	<string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Отмена]]></string>
 	<string name="_bx_payment_grid_action_title_ods_process"><![CDATA[Обработать]]></string>
 	<string name="_bx_payment_grid_action_title_ods_view_order"><![CDATA[Детали заказа]]></string>
+	<string name="_bx_payment_grid_action_title_sbs_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_payment_grid_action_title_sbs_view_order"><![CDATA[Детали выплаты]]></string>
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Удалить]]></string>
 	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Продолжить]]></string>
 	<string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Удалить]]></string>
 
+    <string name="_bx_payment_popup_title_ods_order_subscription_view"><![CDATA[Подписка]]></string>
+    <string name="_bx_payment_popup_title_ods_order_subscription_get_details"><![CDATA[Детали подписки]]></string>
+    <string name="_bx_payment_popup_title_ods_order_subscription_get_billing"><![CDATA[Платежная информация]]></string>
+    <string name="_bx_payment_popup_title_ods_order_subscription_change_billing"><![CDATA[Изменить платежную информацию]]></string>
 	<string name="_bx_payment_popup_title_ods_order_history_view"><![CDATA[Заказ]]></string>
 	<string name="_bx_payment_popup_title_ods_order_pending_view"><![CDATA[Обрабатываемый заказ]]></string>
 	<string name="_bx_payment_popup_title_ods_order_pending_process"><![CDATA[Обработать заказ]]></string>
@@ -156,9 +163,17 @@
 	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Заплатил - присоединяйся.]]></string>
 	<string name="_bx_payment_et_txt_subject_paid_need_join"><![CDATA[Оплата была принята.]]></string>
 	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[{email_header}
-<p><b>Дорогой {RealName}</b>,</p>
+<p>Привет, {RealName}.</p>
 <p>Ваша оплата была принята. Если вы ещё не заполняли регистрационную форму, то Вы можете сделать это используя следующую ссылку.</p>
 <p><a href="{JoinLink}">Присоединяйтесь</a></p>
+{email_footer}]]></string>
+
+    <string name="_bx_payment_et_txt_name_cancelation_request"><![CDATA[Запрос на отмену подписки.]]></string>
+    <string name="_bx_payment_et_txt_subject_cancelation_request"><![CDATA[Запрос на отмену подписки.]]></string>
+    <string name="_bx_payment_et_txt_body_cancelation_request"><![CDATA[{email_header}
+<p>Привет,</p>
+<p>Пользователь с именем профиля {profile_name} отправил запрос на отмену подписки.</p>
+<p>Информация о подписке:<br />ID: {sibscription_id}<br />Клиент: {sibscription_customer}<br />Дата: {sibscription_date}</p>
 {email_footer}]]></string>
 
 	<!-- MESSAGES, WARNINGS and ERRORS -->
@@ -167,6 +182,7 @@
 	<string name="_bx_payment_msg_item_added"><![CDATA[Товар был успешно добавлен в вашу корзину.]]></string>
 	<string name="_bx_payment_msg_item_deleted"><![CDATA[Товар был успешно удален из вашей корзины.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Бесплатный товар был успешно обработан.]]></string>
+	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Запрос на отмену был отправлен. Пожалуйста, ждите.]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Ошибка обращения к базе данных.]]></string>
 	<string name="_bx_payment_err_cannot_validate"><![CDATA[Не могу присоединиться к удаленному хосту для проверки данных.]]></string>
 	<string name="_bx_payment_err_empty_items"><![CDATA[Товары не выбраны.]]></string>
@@ -197,6 +213,7 @@
 	<string name="_bx_payment_txt_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_txt_products"><![CDATA[Продукты]]></string>
 	<string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
+	<string name="_bx_payment_txt_none"><![CDATA[нет]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>
@@ -229,6 +246,7 @@
 	<string name="_bx_payment_pp_err_wrong_custom_data"><![CDATA[Неправильные пользовательские данные.]]></string>
 	<string name="_bx_payment_pp_err_already_processed"><![CDATA[Этот платеж был уже обработан.]]></string>
 	<string name="_bx_payment_pp_msg_verified"><![CDATA[Платеж удачно принят.]]></string>
+	<string name="_bx_payment_txt_name_paypal"><![CDATA[PayPal]]></string>
 	<string name="_bx_payment_txt_cart_paypal"><![CDATA[PayPal]]></string>
 
 	<!-- 2Checkout payment provider -->
@@ -255,6 +273,7 @@
 	<string name="_bx_payment_2co_err_wrong_payment"><![CDATA[Неправильный метод оплаты.]]></string>
 	<string name="_bx_payment_2co_err_already_processed"><![CDATA[Этот платеж был уже обработан.]]></string>
 	<string name="_bx_payment_2co_msg_verified"><![CDATA[Успешно верифицировано.]]></string>
+	<string name="_bx_payment_txt_name_2checkout"><![CDATA[2Checkout]]></string>
 	<string name="_bx_payment_txt_cart_2checkout"><![CDATA[2Checkout]]></string>
 
 	<!-- BitPay payment provider -->
@@ -282,6 +301,7 @@
 	<string name="_bx_payment_bp_err_already_processed"><![CDATA[Этот  платеж уже обработан.]]></string>
 	<string name="_bx_payment_bp_err_no_confirmation_given"><![CDATA[Платеж ожидает полного подтверждения от Bitcoin сети.]]></string>
 	<string name="_bx_payment_bp_msg_checkout_finished"><![CDATA[Платеж был подтвержден. Когда транзакция будет полностью подтверждена в Bitcoin сети, платеж будет автоматически обработан. Купленный продукт(ы) появится в истории платежей.<br /><b>Внимание.</b> Если это по какой-либо причине не произойдёт, Вам необходимо связаться с продавцом продукта и предоставить ему детали вашего платежа. Он сможет обработать платеж вручную, если средства были получены.]]></string>
+	<string name="_bx_payment_txt_name_bitpay"><![CDATA[BitPay]]></string>
 	<string name="_bx_payment_txt_cart_bitpay"><![CDATA[BitPay]]></string>
 
 	<!-- Chargebee payment provider -->
@@ -306,6 +326,7 @@
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
 	<string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
 	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
+	<string name="_bx_payment_txt_name_chargebee"><![CDATA[Chargebee]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Chargebee]]></string>
 
 	<!-- Recurly payment provider -->
@@ -327,7 +348,8 @@
 	<string name="_bx_payment_rcrl_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
 	<string name="_bx_payment_rcrl_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
 	<string name="_bx_payment_rcrl_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
-	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Recurly]]></string>
+	<string name="_bx_payment_txt_name_recurly"><![CDATA[Recurly]]></string>
+	<string name="_bx_payment_txt_cart_recurly"><![CDATA[Recurly]]></string>
 
 	<string name="_bx_payment_form_rcrl_card"><![CDATA[Recurly: форма ввода карты]]></string>
 	<string name="_bx_payment_form_rcrl_card_display_add"><![CDATA[Recurly: добавление карты]]></string>
@@ -385,7 +407,32 @@
 	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
 	<string name="_bx_payment_strp_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
 	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
+	<string name="_bx_payment_strp_msg_billing_changed"><![CDATA[Платежная информация была изменена.]]></string>
+    <string name="_bx_payment_strp_err_billing_changed"><![CDATA[Не могу изменить платежную информацию. Перепроверьте данные и попробуйте ещё раз.]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Заплатить используя {0}]]></string>
+	<string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Детали]]></string>
+	<string name="_bx_payment_strp_menu_item_title_billing"><![CDATA[Реквизиты]]></string>
+    <string name="_bx_payment_strp_menu_item_title_billing_change"><![CDATA[Изменить реквизиты]]></string>
+    <string name="_bx_payment_strp_txt_plan"><![CDATA[План]]></string>
+    <string name="_bx_payment_strp_txt_cost"><![CDATA[Стоимость]]></string>
+    <string name="_bx_payment_strp_txt_cost_mask"><![CDATA[{0} {1} / {2}]]></string>
+    <string name="_bx_payment_strp_txt_status"><![CDATA[Статуч]]></string>
+    <string name="_bx_payment_strp_txt_created"><![CDATA[Создана]]></string>
+    <string name="_bx_payment_strp_txt_started"><![CDATA[Активирована]]></string>
+    <string name="_bx_payment_strp_txt_trial_start"><![CDATA[Пробный период с]]></string>
+    <string name="_bx_payment_strp_txt_trial_end"><![CDATA[Пробный период до]]></string>
+    <string name="_bx_payment_strp_txt_cperiod_start"><![CDATA[Текущий период с]]></string>
+    <string name="_bx_payment_strp_txt_cperiod_end"><![CDATA[Текущий период до]]></string>
+    <string name="_bx_payment_strp_txt_card_brand"><![CDATA[Торговая марка]]></string>
+    <string name="_bx_payment_strp_txt_card_origin"><![CDATA[Происхождение]]></string>
+    <string name="_bx_payment_strp_txt_card_type"><![CDATA[Тип]]></string>
+    <string name="_bx_payment_strp_txt_card_number"><![CDATA[Номер]]></string>
+    <string name="_bx_payment_strp_txt_card_number_mask"><![CDATA[....{0}]]></string>
+    <string name="_bx_payment_strp_txt_card_expires"><![CDATA[Дата окончания]]></string>
+    <string name="_bx_payment_strp_txt_card_expires_mask"><![CDATA[{0} / {1}]]></string>
+    <string name="_bx_payment_strp_txt_card_cvc"><![CDATA[Проверка CVC]]></string>
+    <string name="_bx_payment_strp_txt_card_cvc_passed"><![CDATA[пройдена]]></string>
+    <string name="_bx_payment_txt_name_stripe"><![CDATA[Stripe]]></string>
 	<string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
 </resources>

@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `bx_payment_providers_options`;
 DROP TABLE IF EXISTS `bx_payment_user_values`;
 DROP TABLE IF EXISTS `bx_payment_cart`;
 DROP TABLE IF EXISTS `bx_payment_transactions`;
+DROP TABLE IF EXISTS `bx_payment_subscriptions`;
 DROP TABLE IF EXISTS `bx_payment_transactions_pending`;
 DROP TABLE IF EXISTS `bx_payment_modules`;
 

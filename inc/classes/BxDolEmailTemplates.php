@@ -74,8 +74,6 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
         $this->aDefaultKeys = array(
         	'site_url' => BX_DOL_URL_ROOT,
         	'site_name' => getParam('site_title'),
-            'email_header' => getParam('site_email_html_template_header'),
-            'email_footer' => getParam('site_email_html_template_footer'),
             'about_us' => BxDolTemplate::getInstance()->parseHtmlByName('bx_a.html', array(
                 'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=about'),
 				'title' => bx_html_attribute($sAboutUs),
@@ -183,7 +181,13 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
         if (is_array($aKeys))
             $aResultKeys = array_merge($aResultKeys, $aKeys);
 
-        return BxDolTemplate::getInstance()->parseHtmlByContent($sContent, $aResultKeys, array('{', '}'));
+        $aKeyWrapper = array('{', '}');
+        $sContent = BxDolTemplate::getInstance()->parseHtmlByContent($sContent, array(
+            'email_header' => getParam('site_email_html_template_header'),
+            'email_footer' => getParam('site_email_html_template_footer'),
+        ), $aKeyWrapper);
+
+        return BxDolTemplate::getInstance()->parseHtmlByContent($sContent, $aResultKeys, $aKeyWrapper);
     }
 }
 

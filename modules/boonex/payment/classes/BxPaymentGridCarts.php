@@ -19,20 +19,6 @@ class BxPaymentGridCarts extends BxBaseModPaymentGridCarts
         parent::__construct ($aOptions, $oTemplate);
     }
 
-    public function performActionContinue()
-    {
-    	$aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) 
-        	return echoJson(array());
-
-		$iId = array_shift($aIds);
-
-		echoJson(array(
-			'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onCartContinue(oData);', 
-			'link' => bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART'), array('seller_id' => $iId)) 
-		));
-    }
-
 	protected function _getCellVendorId($mixedValue, $sKey, $aField, $aRow)
     {
     	return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink(array(
@@ -46,6 +32,16 @@ class BxPaymentGridCarts extends BxBaseModPaymentGridCarts
 	protected function _getCellItemsPrice($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault($this->_sCurrencySign . $mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getActionContinue ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	unset($a['attr']['bx_grid_action_single']);
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "window.open('" . bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART'), array('seller_id' => $aRow['vendor_id'])) . "','_self');"
+    	));
+
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
     protected function _getFilterControls ()

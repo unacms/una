@@ -1629,7 +1629,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>{Message}</p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
-<p>Hello!</p>
+<p>Hello,</p>
 <p>Please, follow the link below to reset your password:</p>
 <p><a href="{forgot_password_url}">{forgot_password_url}</a></p>
 <p>Thank you.</p>
@@ -1644,7 +1644,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>To renew your membership login to your {site_name} account at <a href="{site_url}member.php">{site_url}member.php</a> and go to <a href="{site_url}modules/?r=membership/index/">My Membership</a></p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_password_reset"><![CDATA[{email_header}
-<p>Hello!</p>
+<p>Hello,</p>
 <p>Your new password is:</p>
 <p><b>{password}</b></p>
 {email_footer}]]></string>

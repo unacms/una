@@ -28,7 +28,6 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 
     public function serviceGetBlockHistory()
     {
-        bx_import('GridHistory', $this->_oModule->_aModule);
         return $this->_getBlock('history');
     }
 
