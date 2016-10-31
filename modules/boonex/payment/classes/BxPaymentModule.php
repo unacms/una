@@ -639,6 +639,21 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		bx_alert('system', 'cancel_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
 		//--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
 	}
+
+    public function setSiteSubmenu($sSubmenu, $sSelected)
+    {
+        $oSiteSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if(!$oSiteSubmenu)
+            return;
+
+        $sModuleSubmenu = $this->_oConfig->getObject($sSubmenu);
+        $oModuleSubmenu = BxDolMenu::getObjectInstance($sModuleSubmenu);
+        if(!$oModuleSubmenu) 
+            return;
+
+        $oSiteSubmenu->setObjectSubmenu($sModuleSubmenu, array('title' => _t('_bx_payment'), 'link' => '','icon' => ''));
+        $oModuleSubmenu->setSelected($this->_aModule['name'], $sSelected);
+    }
 }
 
 /** @} */

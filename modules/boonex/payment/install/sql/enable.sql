@@ -44,7 +44,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 -- MENU: cart submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_payment_menu_cart_submenu', '_bx_payment_menu_title_cart_submenu', 'bx_payment_menu_cart_submenu', 'bx_payment', 6, 0, 1, '', '');
+('bx_payment_menu_cart_submenu', '_bx_payment_menu_title_cart_submenu', 'bx_payment_menu_cart_submenu', 'bx_payment', 8, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_payment_menu_cart_submenu', 'bx_payment', '_bx_payment_menu_set_title_cart_submenu', 0);
@@ -55,7 +55,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: subscriptions submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_payment_menu_sbs_submenu', '_bx_payment_menu_title_sbs_submenu', 'bx_payment_menu_sbs_submenu', 'bx_payment', 6, 0, 1, '', '');
+('bx_payment_menu_sbs_submenu', '_bx_payment_menu_title_sbs_submenu', 'bx_payment_menu_sbs_submenu', 'bx_payment', 8, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_payment_menu_sbs_submenu', 'bx_payment', '_bx_payment_menu_set_title_sbs_submenu', 0);
@@ -76,7 +76,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: orders submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_payment_menu_orders_submenu', '_bx_payment_menu_title_orders_submenu', 'bx_payment_menu_orders_submenu', 'bx_payment', 6, 0, 1, '', '');
+('bx_payment_menu_orders_submenu', '_bx_payment_menu_title_orders_submenu', 'bx_payment_menu_orders_submenu', 'bx_payment', 8, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_payment_menu_orders_submenu', 'bx_payment', '_bx_payment_menu_set_title_orders_submenu', 0);

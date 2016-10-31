@@ -33,11 +33,12 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
     	if(!$this->_oModule->isLogged())
             return MsgBox(_t($this->_sLangsPrefix . 'err_required_login'));
 
+        $this->_oModule->setSiteSubmenu('menu_orders_submenu', 'orders-' . $sType);
+
         $iUserId = $iUserId != BX_PAYMENT_EMPTY_ID ? $iUserId : $this->_oModule->getProfileId();
         return array(
         	'title' => _t($this->_sLangsPrefix . 'page_block_title_orders_' . $sType),
-        	'content' => $this->_oModule->_oTemplate->displayBlockOrders($sType, $iUserId),
-        	'menu' => $this->_oModule->_oConfig->getObject('menu_orders_submenu')
+        	'content' => $this->_oModule->_oTemplate->displayBlockOrders($sType, $iUserId)
         );
     }
 

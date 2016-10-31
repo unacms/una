@@ -31,11 +31,6 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         return $this->_getBlock('history');
     }
 
-    public function serviceGetBlockDetails()
-    {
-        return $this->_getBlock('details');
-    }
-
 	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -79,9 +74,11 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         if(empty($iUserId))
             return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
 
+        $this->_oModule->setSiteSubmenu('menu_sbs_submenu', 'sbs-' . $sType);
+        
+
         return array(
-        	'content' => $this->_oModule->_oTemplate->$sMethod($iUserId),
-        	'menu' => $this->_oModule->_oConfig->getObject('menu_sbs_submenu')
+        	'content' => $this->_oModule->_oTemplate->$sMethod($iUserId)
         );
     }
 }
