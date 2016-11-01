@@ -207,7 +207,7 @@ function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
     $aAccountInfo = $oAccount->getInfo();
 
     // If password is incorrect
-    if (strcmp($aAccountInfo['password'], $sPassword) != 0) {
+    if (strcmp($aAccountInfo['password'], $sPassword) !== 0) {
         bx_import('BxDolLanguages');
         return _t("_sys_txt_login_error");
     }

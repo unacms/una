@@ -86,13 +86,13 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
     public function finalizeCheckout(&$aData)
     {
-        if((!isset($aData['txn_type']) || $aData['txn_type'] != 'web_accept') && !isset($aData['tx'])) {
-            $this->log('Finalize Checkout');
+		$aResult = $this->_registerCheckout($aData);
+		if(!isset($aResult['code']) || (int)$aResult['code'] != BX_PAYMENT_RESULT_SUCCESS) {
+			$this->log('Finalize Checkout Failed');
             $this->log($aData);
-        	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'pp_err_no_data_given');
-        }
+		}
 
-		return $this->_registerCheckout($aData);
+		return $aResult;
     }
 
     /**
