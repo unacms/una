@@ -37,7 +37,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Acl',
+    'language_category' => 'Paid Levels',
 
     /**
      * Installation/Uninstallation Section.
