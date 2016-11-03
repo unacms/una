@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 
-	<string name="_bx_acl"><![CDATA[ACL]]></string>
+	<string name="_bx_acl"><![CDATA[Paid Levels]]></string>
 
 	<!-- Pages -->
 	<string name="_bx_acl_page_title_sys_view"><![CDATA[Membership]]></string>

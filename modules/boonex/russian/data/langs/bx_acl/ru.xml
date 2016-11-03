@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_acl"><![CDATA[ACL]]></string>
+	<string name="_bx_acl"><![CDATA[Платные Уровни]]></string>
 
 	<!-- Pages -->
 	<string name="_bx_acl_page_title_sys_view"><![CDATA[Членство]]></string>
