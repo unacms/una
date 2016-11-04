@@ -30,7 +30,7 @@ class BxDolGridQuery extends BxDolDb
             return false;
 
         // paginate
-        if (!empty($aObject['paginate_url']) && 0 != strncasecmp($aObject['paginate_url'], 'http://', 7) && 0 != strncasecmp($aObject['paginate_url'], 'https://', 8))
+        if (!empty($aObject['paginate_url']) && 0 !== strncasecmp($aObject['paginate_url'], 'http://', 7) && 0 !== strncasecmp($aObject['paginate_url'], 'https://', 8))
             $aObject['paginate_url'] = BX_DOL_URL_ROOT . $aObject['paginate_url'];
 
         // filter

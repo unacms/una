@@ -61,14 +61,14 @@ class BxBaseModNotificationsModule extends BxDolModule
 
 			$_sUnit = '_' . $aHandler['alert_unit'];
 			$sUnit = _t($_sUnit);
-			if(strcmp($_sUnit, $sUnit) == 0)
+			if(strcmp($_sUnit, $sUnit) === 0)
 				$sUnit = _t($sLangPrefix . '_alert_module_' . $aHandler['alert_unit']);
 
 			$sAction = '';
             if(!empty($aHandler['alert_action'])) {
             	$_sAction = '_' . $aHandler['alert_unit'] . '_alert_action_' . $aHandler['alert_action'];
             	$sAction = _t($_sAction);
-            	if(strcmp($_sAction, $sAction) == 0)
+            	if(strcmp($_sAction, $sAction) === 0)
 					$sAction = _t($sLangPrefix . '_alert_action_' . $aHandler['alert_action']);
 
             	$sAction = ' (' . $sAction . ')';

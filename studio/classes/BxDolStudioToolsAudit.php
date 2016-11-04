@@ -386,7 +386,7 @@ class BxDolStudioToolsAudit extends BxDol
         $s .= $this->getBlock(_t('_sys_audit_php_accelerator'), $sAccel, $this->getMsgHTML(_t('_sys_audit_php_accelerator'), $aMessage));
 
         $sSapi = php_sapi_name();
-        if (0 == strcasecmp('cgi', $sSapi))
+        if (0 === strcasecmp('cgi', $sSapi))
             $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_php_setup_inefficient'));
         else
             $aMessage = array('type' => BX_DOL_AUDIT_OK);
@@ -497,7 +497,7 @@ class BxDolStudioToolsAudit extends BxDol
                 $bResult = ($mixedVal >= $a['val']);
                 break;
             case 'strcasecmp':
-                $bResult = 0 == strcasecmp($mixedVal, $a['val']);
+                $bResult = 0 === strcasecmp($mixedVal, $a['val']);
                 break;
             case '=':
             default:

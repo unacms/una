@@ -572,7 +572,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable
     {
         $aSystems = self::getSystems();
         foreach($aSystems as $sSystem => $aSystem) {
-            if (0 != strncasecmp($sModuleName, $sSystem, strlen($sModuleName)))
+            if (0 !== strncasecmp($sModuleName, $sSystem, strlen($sModuleName)))
                 continue;
 
             $o = self::getObjectInstance($sSystem, 0);

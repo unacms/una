@@ -108,7 +108,7 @@ class BxBaseGrid extends BxDolGrid
 
         $sFilter = bx_unicode_urldecode(bx_process_input(bx_get('filter')));
         $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get('order_field')));
-        $sOrderDir = 0 == strcasecmp('desc', bx_get('order_dir')) ? 'DESC' : 'ASC';
+        $sOrderDir = 0 === strcasecmp('desc', bx_get('order_dir')) ? 'DESC' : 'ASC';
 
         if ($this->_aOptions['paginate_get_start'])
             $iStart = (int)bx_get($this->_aOptions['paginate_get_start']);

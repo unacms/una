@@ -1129,7 +1129,7 @@ BLAH;
         $isManualInput = (int)(isset($aInput['manual_input']) && $aInput['manual_input']);
         $sIdStatus = $this->getInputId($aInput) . '_status';
         $sIdInput = $this->getInputId($aInput) . '_location';
-        $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
+        $sProto = (0 === strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
         $this->oTemplate->addJs($sProto . '://maps.google.com/maps/api/js?libraries=places&language=' . bx_lang_name() . '&key=' . trim(getParam('sys_maps_api_key')));
 
         $aVars = array (

@@ -252,7 +252,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
             'type' => $aCard['funding'],
             'number' => _t('_bx_payment_strp_txt_card_number_mask', $aCard['last4']),
             'expires' => _t('_bx_payment_strp_txt_card_expires_mask', $aCard['exp_month'], $aCard['exp_year']),
-            'cvc' => _t(strcmp($aCard['cvc_check'], 'pass') == 0 ? '_bx_payment_strp_txt_card_cvc_passed' : '_bx_payment_txt_none'),
+            'cvc' => _t(strcmp($aCard['cvc_check'], 'pass') === 0 ? '_bx_payment_strp_txt_card_cvc_passed' : '_bx_payment_txt_none'),
         ));
     }
 
@@ -546,7 +546,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
 		$fChargeAmount = (float)$oCharge->amount / 100;
 		$sChargeCurrency = strtoupper($oCharge->currency);
-		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) != 0))
+		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) !== 0))
 			return false;
 
 		return $this->_oModule->registerPayment($aPending);

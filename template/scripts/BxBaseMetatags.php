@@ -85,7 +85,7 @@ class BxBaseMetatags extends BxDolMetatags
 
 		$sMapKey = trim(getParam('sys_maps_api_key'));
         $sLocationEncoded = rawurlencode(strip_tags($sLocationHtml));
-        $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
+        $sProto = (0 === strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
         $iScale = isset($_COOKIE['devicePixelRatio']) && (int)$_COOKIE['devicePixelRatio'] >= 2 ? 2 : 1;
         $sLang = bx_lang_name();
 

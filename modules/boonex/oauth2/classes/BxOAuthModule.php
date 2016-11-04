@@ -69,7 +69,7 @@ class BxOAuthModule extends BxDolModule
             $this->_oAPI = new BxOAuthAPI($this);
         }
 
-        if (!$sAction || !method_exists($this->_oAPI, $sAction) || 0 == strcasecmp('errorOutput', $sAction) || 0 == strcasecmp('output', $sAction)) {
+        if (!$sAction || !method_exists($this->_oAPI, $sAction) || 0 === strcasecmp('errorOutput', $sAction) || 0 === strcasecmp('output', $sAction)) {
             $this->_oAPI->errorOutput(404, 'not_found', 'No such API endpoint available');
             return;
         }

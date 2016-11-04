@@ -834,7 +834,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             foreach ($aExts as $sExt) {
                 $sIcon = '';
                 foreach ($aIcons as $sIc => $if) {
-                    if (!(is_array($if) && in_array($sExt, $if)) && !(is_string($if) && 0 == strncmp($if, $sMimeType, strlen($if))))
+                    if (!(is_array($if) && in_array($sExt, $if)) && !(is_string($if) && 0 === strncmp($if, $sMimeType, strlen($if))))
                         continue;
                     $sIcon = $sIc;
                     break;

@@ -412,12 +412,12 @@ class BxSitesPaypal
         $aLines = explode("\n", $sResponseContent);
         array_walk($aLines, create_function('&$arg', "\$arg = trim(\$arg);") );
 
-        if(strcmp($aLines[0], "INVALID") == 0) {
+        if(strcmp($aLines[0], "INVALID") === 0) {
             $this->sResultMessage = 'Transaction verification failed: ' . $sResponse;
             return false;
         }
 
-        if(strcmp($aLines[0], "VERIFIED") != 0) {
+        if(strcmp($aLines[0], "VERIFIED") !== 0) {
             $this->sResultMessage = 'No verification status received (' . $aLines[0] . '): ' . $sResponse;
             return false;
         }

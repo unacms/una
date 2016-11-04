@@ -222,8 +222,8 @@ class BxBaseCmts extends BxDolCmts
                 $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
                 foreach($aFiles as $aFile) {
-                	$bImage = strncmp($aFile['mime_type'], 'image/', 6) == 0;
-                	$bVideo = strncmp($aFile['mime_type'], 'video/', 6) == 0;
+                	$bImage = strncmp($aFile['mime_type'], 'image/', 6) === 0;
+                	$bVideo = strncmp($aFile['mime_type'], 'video/', 6) === 0;
 
                 	$sPreview = '';
                 	if($oTranscoder && ($bImage || $bVideo))

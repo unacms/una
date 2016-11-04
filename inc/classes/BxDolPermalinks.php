@@ -198,7 +198,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
      */
     function unpermalink($sLink, $isStripBaseUrl = true)
     {
-        if ($isStripBaseUrl && 0 == strncmp($sLink, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
+        if ($isStripBaseUrl && 0 === strncmp($sLink, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
             $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
 
         $sRet = null;
