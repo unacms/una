@@ -1027,7 +1027,7 @@
 	<string name="_adm_page_cpt_login"><![CDATA[Login]]></string>
 	<string name="_adm_page_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_page_cpt_settings"><![CDATA[Settings]]></string>
-	<string name="_adm_page_cpt_storages"><![CDATA[Storages]]></string>
+	<string name="_adm_page_cpt_storages"><![CDATA[Storage]]></string>
 	<string name="_adm_page_cpt_store"><![CDATA[Apps]]></string>
 	<string name="_adm_pgt_btn_add_new_key"><![CDATA[Create New Key]]></string>
 	<string name="_adm_pgt_btn_delete"><![CDATA[Delete]]></string>
@@ -1191,7 +1191,8 @@
 	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
 	<string name="_adm_stg_cpt_option_lang_subst_from_en"><![CDATA[Substitute (during compilation) missing translations with english ones]]></string>	
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
-	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
+    <string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
+	<string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Enable friendly permalinks for local Storage]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Email to receive critical site notifications]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email to send site messages from]]></string>
 	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Email template header]]></string>
@@ -1421,7 +1422,7 @@
 	<string name="_adm_wgt_cpt_designer"><![CDATA[Designer]]></string>
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
-	<string name="_adm_wgt_cpt_storages"><![CDATA[Storages]]></string>
+	<string name="_adm_wgt_cpt_storages"><![CDATA[Storage]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Apps Market]]></string>
 	<string name="_are you sure?"><![CDATA[Are you sure?]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>

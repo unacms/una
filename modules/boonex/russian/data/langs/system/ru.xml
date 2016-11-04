@@ -1025,7 +1025,7 @@
 	<string name="_adm_page_cpt_login"><![CDATA[Войти]]></string>
 	<string name="_adm_page_cpt_polyglot"><![CDATA[Полиглот]]></string>
 	<string name="_adm_page_cpt_settings"><![CDATA[Настройки]]></string>
-	<string name="_adm_page_cpt_storages"><![CDATA[Хранилища]]></string>
+	<string name="_adm_page_cpt_storages"><![CDATA[Хранилище]]></string>
 	<string name="_adm_page_cpt_store"><![CDATA[Приложения]]></string>
 	<string name="_adm_pgt_btn_add_new_key"><![CDATA[Создать Новый Ключ]]></string>
 	<string name="_adm_pgt_btn_delete"><![CDATA[Удалить]]></string>
@@ -1189,7 +1189,8 @@
 	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Основной Язык]]></string>
 	<string name="_adm_stg_cpt_option_lang_subst_from_en"><![CDATA[Заменить (на этапе компиляции) отсутствующий перевод английским эквивалентом]]></string>	
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Задействовать дружественные ссылки для Модулей]]></string>
-	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Задействовать дружественные ссылки для Страниц]]></string>
+    <string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Задействовать дружественные ссылки для Страниц]]></string>
+    <string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Задействовать дружественные ссылки для локального Хранилища]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Имейл для получения критических уведомлений от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Имейл, с которого будут посылаться сообщения от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Заголовок имейл HTML шаблона]]></string>
@@ -1419,7 +1420,7 @@
 	<string name="_adm_wgt_cpt_designer"><![CDATA[Дизайнер]]></string>
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Полиглот]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Настройки]]></string>
-	<string name="_adm_wgt_cpt_storages"><![CDATA[Хранилища]]></string>
+	<string name="_adm_wgt_cpt_storages"><![CDATA[Хранилище]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Магазин Приложений]]></string>
 	<string name="_are you sure?"><![CDATA[Вы уверены?]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Комментарии ({0})]]></string>
