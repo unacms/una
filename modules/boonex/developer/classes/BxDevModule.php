@@ -27,12 +27,12 @@ class BxDevModule extends BxDolModule
         parent::__construct($aModule);
 
         $this->aTools = array(
-            array('name' => BX_DEV_TOOLS_SETTINGS, 'title' => '', 'icon' => 'cogs'),
-            array('name' => BX_DEV_TOOLS_FORMS, 'title' => '', 'icon' => 'bx-dev-mi-forms.svg'),
-            array('name' => BX_DEV_TOOLS_NAVIGATION, 'title' => '', 'icon' => 'bx-dev-mi-navigation.svg'),
-            array('name' => BX_DEV_TOOLS_PAGES, 'title' => '', 'icon' => 'bx-dev-mi-pages.svg'),
-            array('name' => BX_DEV_TOOLS_POLYGLOT, 'title' => '', 'icon' => 'bx-dev-mi-polyglot.png'),
-            //array('name' => BX_DEV_TOOLS_PERMISSIONS, 'title' => '', 'icon' => 'bx-dev-mi-permissions.png'),
+            array('name' => BX_DEV_TOOLS_SETTINGS, 'title' => '_adm_page_cpt_settings', 'icon' => 'bx-dev-mi-settings.svg'),
+            array('name' => BX_DEV_TOOLS_POLYGLOT, 'title' => '_adm_page_cpt_polyglot', 'icon' => 'bx-dev-mi-polyglot.svg'),
+            array('name' => BX_DEV_TOOLS_FORMS, 'title' => '_adm_page_cpt_builder_forms', 'icon' => 'bx-dev-mi-forms.svg'),
+            array('name' => BX_DEV_TOOLS_NAVIGATION, 'title' => '_adm_page_cpt_builder_menus', 'icon' => 'bx-dev-mi-navigation.svg'),
+            array('name' => BX_DEV_TOOLS_PAGES, 'title' => '_adm_page_cpt_builder_pages', 'icon' => 'bx-dev-mi-pages.svg'),
+            //array('name' => BX_DEV_TOOLS_PERMISSIONS, 'title' => '_adm_page_cpt_builder_permissions', 'icon' => 'bx-dev-mi-permissions.png'),
         );
     }
 
