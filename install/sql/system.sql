@@ -1106,7 +1106,7 @@ CREATE TABLE `sys_permalinks` (
 INSERT INTO `sys_permalinks` (`standard`, `permalink`, `check`, `compare_by_prefix`) VALUES
 ('page.php?i=', 'page/', 'permalinks_pages', 1),
 ('modules/?r=', 'm/', 'permalinks_modules', 1),
-('storage.php?o=', 'storage/', 'permalinks_storage', 1);
+('storage.php?o=', 's/', 'permalinks_storage', 1);
 
 
 -- --------------------------------------------------------
