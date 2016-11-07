@@ -551,8 +551,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
     	$bVerbose = isset($aError['verbose']) ? (bool)$aError['verbose'] : $this->_bErrorChecking;
         if(!$bVerbose) {
-			$this->log($sErrorType . ': ' . $aError['message']);
-			return;
+            $this->log($sErrorType . ': ' . $aError['message']);
+            if (!defined('BX_DOL_INSTALL')) // this is needed to display error during installation
+    			return;
         }
 
         if(defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) {
@@ -1069,9 +1070,11 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 			$sOutput .= '<p><b>Location:</b><br />The error was found in <b>' . $aErrorLocation['function'] . '</b> function in the file <b>' . $aErrorLocation['file'] . '</b> at line <b>' . $aErrorLocation['line'] . '</b>.</p>';
 
 		if(!empty($aError['trace'])) {
-			$sBackTrace = print_r($aError['trace'], true);
-            $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
-            $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
+            $sBackTrace = print_r($aError['trace'], true);
+            if (defined ('BX_DATABASE_USER'))
+                $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
+            if (defined ('BX_DATABASE_PASS'))
+                $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
 
 			$sOutput .= '<div><b>Debug backtrace:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sBackTrace) . '</pre></div>';
 		}
