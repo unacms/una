@@ -153,7 +153,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             if($oForm->update((int)$this->aField['id']) === false)
                 return false;
 
-			if($bAlter || strcmp($sInputNameOld, $sInputNameNew) != 0)
+			if($bAlter || strcmp($sInputNameOld, $sInputNameNew) !== 0)
 				$this->alterChange($sInputNameOld, $sInputNameNew);
 
             return true;

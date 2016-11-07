@@ -535,7 +535,7 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
         if (!$a || $a['server'] != gethostname()) // deletion must be performed on the server where it was transcoded
             return false;
         
-        if ($a['file_id_result'] && $this->_sQueueStorage && 0 != strncmp($a['log'], $sErrMsg, strlen($sErrMsg))) {
+        if ($a['file_id_result'] && $this->_sQueueStorage && 0 !== strncmp($a['log'], $sErrMsg, strlen($sErrMsg))) {
             $oStorage = BxDolStorage::getObjectInstance($this->_sQueueStorage);
             if (!$oStorage->deleteFile($a['file_id_result'])) {
                 $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, $sErrMsg . $this->getLog());

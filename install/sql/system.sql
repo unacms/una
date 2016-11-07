@@ -351,7 +351,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'permalinks_pages', '_adm_stg_cpt_option_permalinks_pages', 'on', 'checkbox', '', '', '', 1),
-(@iCategoryId, 'permalinks_modules', '_adm_stg_cpt_option_permalinks_modules', 'on', 'checkbox', '', '', '', 2);
+(@iCategoryId, 'permalinks_modules', '_adm_stg_cpt_option_permalinks_modules', 'on', 'checkbox', '', '', '', 2),
+(@iCategoryId, 'permalinks_storage', '_adm_stg_cpt_option_permalinks_storage', 'on', 'checkbox', '', '', '', 3);
 
 
 --
@@ -1104,7 +1105,8 @@ CREATE TABLE `sys_permalinks` (
 
 INSERT INTO `sys_permalinks` (`standard`, `permalink`, `check`, `compare_by_prefix`) VALUES
 ('page.php?i=', 'page/', 'permalinks_pages', 1),
-('modules/?r=', 'm/', 'permalinks_modules', 1);
+('modules/?r=', 'm/', 'permalinks_modules', 1),
+('storage.php?o=', 's/', 'permalinks_storage', 1);
 
 
 -- --------------------------------------------------------

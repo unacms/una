@@ -108,7 +108,7 @@ class BxSMTPModule extends BxDolModule
             'recipient' => $aRecipientInfo,
             'html'      => $isHtml,
         );
-        bx_alert('profile', 'send_mail', $aRecipientInfo ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
+        bx_alert('profile', 'send_mail', $aRecipientInfo && isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
         //--- create system event [ end ]
 
         return $iRet;

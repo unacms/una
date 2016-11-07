@@ -249,7 +249,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sUrl1 = trim($sUrl1, "/");
         $sUrl2 = trim($sUrl2, "/");
 
-        return strncmp($sUrl1, $sUrl2, strlen($sUrl1)) == 0;
+        return strncmp($sUrl1, $sUrl2, strlen($sUrl1)) === 0;
     }
 }
 

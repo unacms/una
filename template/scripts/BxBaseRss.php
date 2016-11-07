@@ -42,7 +42,7 @@ class BxBaseRss extends BxDolRss
     	$sUrl = bx_replace_markers($sUrl, $aMarkers);
 
 		header('Content-Type: text/xml; charset=utf-8');
-		return bx_file_get_contents($sUrl . (defined('BX_PROFILER') && BX_PROFILER && 0 == strncmp(BX_DOL_URL_ROOT, $sUrl, strlen(BX_DOL_URL_ROOT)) ? '&bx_profiler_disable=1' : ''));
+		return bx_file_get_contents($sUrl . (defined('BX_PROFILER') && BX_PROFILER && 0 === strncmp(BX_DOL_URL_ROOT, $sUrl, strlen(BX_DOL_URL_ROOT)) ? '&bx_profiler_disable=1' : ''));
     }
 
 	/**

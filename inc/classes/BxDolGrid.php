@@ -367,7 +367,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $iSortDir = 1;
         if ($sOrderField && !empty($this->_aOptions['sorting_fields']) && is_array($this->_aOptions['sorting_fields']) && in_array($sOrderField, $this->_aOptions['sorting_fields'])) { // explicit order
             $sSortField = $sOrderField;
-            $iSortDir = 0 == strcasecmp($sOrderDir, 'desc') ? -1 : 1;
+            $iSortDir = 0 === strcasecmp($sOrderDir, 'desc') ? -1 : 1;
         } elseif (!empty($this->_aOptions['field_order'])) { // order by "order" field
             $sSortField = $this->_aOptions['field_order'];
         }
@@ -474,7 +474,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         if ($sOrderField && is_array($this->_aOptions['sorting_fields']) && in_array($sOrderField, $this->_aOptions['sorting_fields'])) { // explicit order
 
-            $sDir = (0 == strcasecmp($sOrderDir, 'desc') ? 'DESC' : 'ASC');
+            $sDir = (0 === strcasecmp($sOrderDir, 'desc') ? 'DESC' : 'ASC');
 
             if (is_array($this->_aOptions['sorting_fields_translatable']) && in_array($sOrderField, $this->_aOptions['sorting_fields_translatable'])) {
 

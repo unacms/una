@@ -87,7 +87,7 @@ class BxDolCacheFile extends BxDolCache
 
         $l = strlen($s);
         while (($sFile = readdir($rHandler)) !== false)
-            if (0 == strncmp($sFile, $s, $l))
+            if (0 === strncmp($sFile, $s, $l))
                 @unlink ($this->sPath . $sFile);
 
         closedir($rHandler);
@@ -106,7 +106,7 @@ class BxDolCacheFile extends BxDolCache
         $iSize = 0;
         $l = strlen($s);
         while (($sFile = readdir($rHandler)) !== false)
-            if (0 == strncmp($sFile, $s, $l))
+            if (0 === strncmp($sFile, $s, $l))
                 $iSize += @filesize ($this->sPath . $sFile);
 
         closedir($rHandler);

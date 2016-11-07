@@ -19,7 +19,8 @@ class BxBaseMenuProfileAdd extends BxTemplMenu
 
     public function getCode ()
     {
-        if (BxDolAccount::getInstance()->isProfilesLimitReached())
+        $oAccount = BxDolAccount::getInstance();
+        if ($oAccount && $oAccount->isProfilesLimitReached())
             return '';
 
         return parent::getCode ();

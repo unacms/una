@@ -281,7 +281,7 @@ class BxPaymentProviderRecurly extends BxBaseModPaymentProvider implements iBxBa
 
 		$fTransactionAmount = (float)$aTransaction['amount'] / 100;
 		$sTransactionCurrency = strtoupper($aTransaction['currency_code']);
-		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fTransactionAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sTransactionCurrency) != 0))
+		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fTransactionAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sTransactionCurrency) !== 0))
 			return false;
 
 		return $this->_oModule->registerPayment($aPending);

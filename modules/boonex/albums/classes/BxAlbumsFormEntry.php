@@ -30,7 +30,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         $sExif = '';
         $aExif = false;
         $aFile = $oStorage->getFile($iFileId);
-        if (0 == strncmp('image/', $aFile['mime_type'], 6)) {
+        if (0 === strncmp('image/', $aFile['mime_type'], 6)) {
             $oImageReize = BxDolImageResize::getInstance();
 
             $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_BIG']);            

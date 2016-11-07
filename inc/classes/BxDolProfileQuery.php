@@ -47,6 +47,9 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getProfilesByAccount ($iAccountId)
     {
+        if (!$iAccountId)
+            return array();
+
         $oAccountQuery = BxDolAccountQuery::getInstance();
         $aAccountInfo = $oAccountQuery->getInfoById($iAccountId);
 

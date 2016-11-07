@@ -62,7 +62,7 @@ class BxDolFormQuery extends BxDolDb
         $aForm['form_attrs'] = array_merge($aDefaultsFormAttrs, !empty($aAddFormAttrs) && is_array($aAddFormAttrs) ? $aAddFormAttrs : array());
 
         // form action
-        if (!empty($aForm['form_attrs']['action']) && 0 != strncasecmp($aForm['form_attrs']['action'], 'http://', 7) && 0 != strncasecmp($aForm['form_attrs']['action'], 'https://', 8))
+        if (!empty($aForm['form_attrs']['action']) && 0 !== strncasecmp($aForm['form_attrs']['action'], 'http://', 7) && 0 !== strncasecmp($aForm['form_attrs']['action'], 'https://', 8))
             $aForm['form_attrs']['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($aForm['form_attrs']['action']);
 
         // params
@@ -117,7 +117,7 @@ class BxDolFormQuery extends BxDolDb
                 $aInput['value'] = isset(self::$TYPES_TRANSLATABLE[$aInput['type']]) ? _t($a['value']) : $a['value'];
 
             if (!empty($a['values'])) {
-                if (0 == strncmp(BX_DATA_LISTS_KEY_PREFIX, $a['values'], 2)) {
+                if (0 === strncmp(BX_DATA_LISTS_KEY_PREFIX, $a['values'], 2)) {
                     $aInput['values_list_name'] = trim($a['values'], BX_DATA_LISTS_KEY_PREFIX . ' ');
                     $aInput['values'] = self::getDataItems(trim($a['values'], BX_DATA_LISTS_KEY_PREFIX . ' '), isset(self::$TYPES_SET[$aInput['type']]));
                 } else {

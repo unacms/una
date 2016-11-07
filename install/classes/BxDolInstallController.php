@@ -83,6 +83,9 @@ class BxDolInstallController
 
     function actionSiteConfig ()
     {
+        define('BX_DB_FULL_VISUAL_PROCESSING', true);
+        define('BX_DB_FULL_DEBUG_MODE', true);
+        
         $this->_oView->pageStart();
 
         $oSiteConfig = new BxDolInstallSiteConfig();

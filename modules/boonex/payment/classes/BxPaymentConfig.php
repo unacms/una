@@ -198,7 +198,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
 	public function http2https($s)
     {
-    	if(strncmp($s, 'https://', 8) == 0)
+    	if(strncmp($s, 'https://', 8) === 0)
     		return $s;
 
         return 'https://' . bx_ltrim_str($s, 'http://');

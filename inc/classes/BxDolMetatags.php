@@ -334,7 +334,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             return $s;
     
         foreach ($a as $sKeyword)
-            if (0 == strcasecmp(mb_strtolower($s), mb_strtolower($sKeyword)))
+            if (0 === strcasecmp(mb_strtolower($s), mb_strtolower($sKeyword)))
                 $s = '<a rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '">' . $sKeyword . '</a>';
 
         return $s;

@@ -94,7 +94,7 @@ class BxDolCacheUtilities extends BxDol
 
         $l = strlen($sPrefix);
         while (($sFile = readdir($rHandler)) !== false)
-            if (0 == strncmp($sFile, $sPrefix, $l))
+            if (0 === strncmp($sFile, $sPrefix, $l))
                 @unlink($sPath . $sFile);
 
         closedir($rHandler);
@@ -115,7 +115,7 @@ class BxDolCacheUtilities extends BxDol
         $iSize = 0;
         $l = strlen($sPrefix);
         while (($sFile = readdir($rHandler)) !== false)
-            if (0 == strncmp($sFile, $sPrefix, $l))
+            if (0 === strncmp($sFile, $sPrefix, $l))
                 $iSize += filesize($sPath . $sFile);
 
         closedir($rHandler);

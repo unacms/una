@@ -639,22 +639,22 @@ function bx_import($sClassName, $mixedModule = array())
         return;
     }
 
-    if (0 == strncmp($sClassName, 'BxDol', 5)) {
-        if (0 == strncmp($sClassName, 'BxDolStudio', 11))
+    if (0 === strncmp($sClassName, 'BxDol', 5)) {
+        if (0 === strncmp($sClassName, 'BxDolStudio', 11))
             require_once(BX_DOL_DIR_STUDIO_CLASSES . $sClassName . '.php');
         else
             require_once(BX_DIRECTORY_PATH_CLASSES . $sClassName . '.php');
         return;
     }
 
-    if (0 == strncmp($sClassName, 'BxBase', 6)) {
-        if (0 == strncmp($sClassName, 'BxBaseMod', 9)) {
+    if (0 === strncmp($sClassName, 'BxBase', 6)) {
+        if (0 === strncmp($sClassName, 'BxBaseMod', 9)) {
             $aMatches = array();
             if (preg_match('/BxBaseMod([A-Z][a-z]+)/', $sClassName, $aMatches)) {
                 require_once(BX_DIRECTORY_PATH_MODULES . 'base/' . strtolower($aMatches[1]) . '/classes/' . $sClassName . '.php');
                 return;
             }
-        } if (0 == strncmp($sClassName, 'BxBaseStudio', 12)) {
+        } if (0 === strncmp($sClassName, 'BxBaseStudio', 12)) {
             require_once(BX_DOL_DIR_STUDIO_BASE . 'scripts/' . $sClassName . '.php');
             return;
         } else {
@@ -663,8 +663,8 @@ function bx_import($sClassName, $mixedModule = array())
         }
     }
 
-    if (0 == strncmp($sClassName, 'BxTempl', 7)) {
-        if(0 == strncmp($sClassName, 'BxTemplStudio', 13)) {
+    if (0 === strncmp($sClassName, 'BxTempl', 7)) {
+        if(0 === strncmp($sClassName, 'BxTemplStudio', 13)) {
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolStudioTemplate::getInstance()->getPath() . 'data/template/studio/scripts/' . $sClassName . '.php';
         } else {
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolTemplate::getInstance()->getPath() . 'data/template/system/scripts/' . $sClassName . '.php';
@@ -684,7 +684,7 @@ function bx_import($sClassName, $mixedModule = array())
  */
 function bx_autoload($sClassName)
 {
-    if (0 == strncmp($sClassName, 'BxDol', 5) || 0 == strncmp($sClassName, 'BxBase', 6) || 0 == strncmp($sClassName, 'BxTempl', 7))
+    if (0 === strncmp($sClassName, 'BxDol', 5) || 0 === strncmp($sClassName, 'BxBase', 6) || 0 === strncmp($sClassName, 'BxTempl', 7))
         bx_import($sClassName);
 }
 
@@ -1309,7 +1309,7 @@ function bx_check_redirect_to_correct_hostname ($bProcessRedirect = false)
     $aUrl = parse_url(BX_DOL_URL_ROOT);
     $iPortDefault = 'https' == $aUrl['scheme'] ? '443' : '80';
 
-    $bRedirectRequired = isset($_SERVER['HTTP_HOST']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':' . (!empty($aUrl['port']) ? $aUrl['port'] : $iPortDefault));
+    $bRedirectRequired = isset($_SERVER['HTTP_HOST']) && 0 !== strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) && 0 !== strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':' . (!empty($aUrl['port']) ? $aUrl['port'] : $iPortDefault));
 
     if ($bRedirectRequired && $bProcessRedirect) {
         $sPort = empty($aUrl['port']) || 80 == $aUrl['port'] || 443 == $aUrl['port'] ? '' : ':' . $aUrl['port'];
@@ -1450,7 +1450,7 @@ function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
         if (!preg_match('@^https?://@', $url))
             $url = 'http://'.$url;
 
-        if (strncmp(BX_DOL_URL_ROOT, $url, strlen(BX_DOL_URL_ROOT)) != 0) {
+        if (strncmp(BX_DOL_URL_ROOT, $url, strlen(BX_DOL_URL_ROOT)) !== 0) {
             $sAttrs .= ' target="_blank" ';
             if ($bAddNofollow)
                 $sAttrs .= ' rel="nofollow" ';

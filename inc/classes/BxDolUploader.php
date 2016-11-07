@@ -327,7 +327,7 @@ abstract class BxDolUploader extends BxDolFactory
         foreach ($aGhosts as $aFile) {
             $sFileIcon = '';
 
-            if ($oImagesTranscoder && (0 == strncmp($aFile['mime_type'], 'image/', 6) || 0 == strncmp($aFile['mime_type'], 'video/', 6)))
+            if ($oImagesTranscoder && (0 === strncmp($aFile['mime_type'], 'image/', 6) || 0 === strncmp($aFile['mime_type'], 'video/', 6)))
                 $sFileIcon = $oImagesTranscoder->getFileUrl($aFile['id']);
 
             if (!$sFileIcon)

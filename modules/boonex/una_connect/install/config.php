@@ -1,10 +1,10 @@
 <?php 
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    TridentConnect Trident Connect
- * @ingroup     TridentModules
+ * @defgroup    UnaConnect UNA Connect
+ * @ingroup     UnaModules
  *
  * @{
  */
@@ -14,10 +14,10 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_tricon',
+    'name' => 'bx_unacon',
     'title' => 'UNA connect',
     'note' => 'Join the site using another UNA site account credentials.',
-    'version' => '9.0.2.DEV',
+    'version' => '9.0.0.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
@@ -28,11 +28,11 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/trident_connect/',
-    'home_uri' => 'tricon',
+    'home_dir' => 'boonex/una_connect/',
+    'home_uri' => 'unacon',
 
-    'db_prefix' => 'bx_tricon_',
-    'class_prefix' => 'BxTriCon',
+    'db_prefix' => 'bx_unacon_',
+    'class_prefix' => 'BxUnaCon',
 
     /**
      * Category for language keys.

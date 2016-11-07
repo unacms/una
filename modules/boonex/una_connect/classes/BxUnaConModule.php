@@ -1,15 +1,15 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    TridentConnect Trident Connect
- * @ingroup     TridentModules
+ * @defgroup    UnaConnect UNA Connect
+ * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxTriConModule extends BxBaseModConnectModule
+class BxUnaConModule extends BxBaseModConnectModule
 {
     function __construct(&$aModule)
     {
@@ -17,7 +17,7 @@ class BxTriConModule extends BxBaseModConnectModule
     }
 
     /**
-     * Redirect to remote Trident site login form
+     * Redirect to remote site login form
      *
      * @return n/a/ - redirect or HTML page in case of error
      */
@@ -29,12 +29,12 @@ class BxTriConModule extends BxBaseModConnectModule
         if (!$this->_oConfig->sApiID || !$this->_oConfig->sApiSecret || !$this->_oConfig->sApiUrl) {
             require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
             bx_import('BxDolLanguages');
-            $sCode =  MsgBox( _t('_bx_tricon_profile_error_api_keys') );
-            $this->_oTemplate->getPage(_t('_bx_tricon'), $sCode);            
+            $sCode =  MsgBox( _t('_bx_unacon_profile_error_api_keys') );
+            $this->_oTemplate->getPage(_t('_bx_unacon'), $sCode);            
         } 
         else {
 
-            // define redirect URL to the remote Trident site                
+            // define redirect URL to the remote site                
             $sUrl = bx_append_url_params($this->_oConfig->sApiUrl . 'auth', array(
                 'response_type' => 'code',
                 'client_id' => $this->_oConfig->sApiID,
@@ -130,7 +130,8 @@ class BxTriConModule extends BxBaseModConnectModule
 
         $aProfileFields['name'] = $aProfileInfo['profile_display_name'];
         $aProfileFields['fullname'] = $aProfileInfo['profile_display_name'];
-
+        $aProfileFields['picture'] = $aProfileInfo['picture'];
+        
         return $aProfileFields;
     }
 
@@ -142,13 +143,13 @@ class BxTriConModule extends BxBaseModConnectModule
         $oSession = BxDolSession::getInstance();
 
         $iCsrfTokenLifetime = (int)$this->_oDb->getParam('sys_security_form_token_lifetime');
-        if ($oSession->getValue('bx_tricon_csrf_token') === false || ($iCsrfTokenLifetime != 0 && time() - (int)$oSession->getValue('csrf_token_time') > $iCsrfTokenLifetime)) {
+        if ($oSession->getValue('bx_unacon_csrf_token') === false || ($iCsrfTokenLifetime != 0 && time() - (int)$oSession->getValue('csrf_token_time') > $iCsrfTokenLifetime)) {
             $sToken = genRndPwd(20, false);
-            $oSession->setValue('bx_tricon_csrf_token', $sToken);
-            $oSession->setValue('bx_tricon_csrf_token_time', time());
+            $oSession->setValue('bx_unacon_csrf_token', $sToken);
+            $oSession->setValue('bx_unacon_csrf_token_time', time());
         }
         else {
-            $sToken = $oSession->getValue('bx_tricon_csrf_token');
+            $sToken = $oSession->getValue('bx_unacon_csrf_token');
         }
 
         return $sToken;
@@ -157,7 +158,7 @@ class BxTriConModule extends BxBaseModConnectModule
     protected function _getCsrfToken()
     {
         $oSession = BxDolSession::getInstance();
-        return $oSession->getValue('bx_tricon_csrf_token');
+        return $oSession->getValue('bx_unacon_csrf_token');
     }
 
 }
