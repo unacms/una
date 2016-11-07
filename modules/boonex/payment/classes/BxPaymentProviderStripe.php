@@ -543,6 +543,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 			return false;
 
 		list($aPending, $oCharge) = $mixedResult;
+		if(empty($aPending) || !is_array($aPending) || empty($oCharge))
+			return false;
 
 		$fChargeAmount = (float)$oCharge->amount / 100;
 		$sChargeCurrency = strtoupper($oCharge->currency);
@@ -559,6 +561,9 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 			return false;
 
 		list($aPending) = $mixedResult;
+		if(empty($aPending) || !is_array($aPending))
+			return false;
+
 		return $this->_oModule->refundPayment($aPending);
 	}
 
@@ -569,6 +574,9 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 			return false;
 
 		list($aPending) = $mixedResult;
+		if(empty($aPending) || !is_array($aPending))
+			return true;
+
 		return $this->_oModule->cancelSubscription($aPending);
 	}
 
@@ -597,12 +605,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 			return false;
 
 		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'order', 'order' => $oEvent->data->object->subscription));
-		if(empty($aPending) || !is_array($aPending))
-			return false;
-
 		$oCharge = $this->_retrieveCharge($oEvent->data->object->charge);
-		if(empty($oCharge))
-			return false;
 
 		return array($aPending, $oCharge);
 	}
