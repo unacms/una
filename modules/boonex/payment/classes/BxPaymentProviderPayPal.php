@@ -9,6 +9,17 @@
  * @{
  */
 
+/**
+ * Usefull links related to the integration:
+ * 
+ * HTML Form Basics for PayPal Payments Standard
+ * https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/formbasics/
+ * 
+ * HTML Variables for PayPal Payments Standard
+ * https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/
+ * 
+ */
+
 define('PP_MODE_LIVE', 1);
 define('PP_MODE_TEST', 2);
 
@@ -44,16 +55,16 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
             );
         else
             $aFormData = array(
-                'cmd' => '_xclick',
+                'cmd' => '_cart',
+                'upload' => '1',
                 'amount' => sprintf( "%.2f", (float)$aCartInfo['items_price'])
             );
 
         $aFormData = array_merge($aFormData, array(
             'business' => $iMode == PP_MODE_LIVE ? $this->getOption('business') : $this->getOption('sandbox'),
-            'bn' => 'Boonex_SP',
+            'currency_code' => $aCartInfo['vendor_currency_code'],
             'item_name' => _t($this->_sLangsPrefix . 'txt_payment_to_for', $aCartInfo['vendor_name']),
             'item_number' => $iPendingId,
-            'currency_code' => $aCartInfo['vendor_currency_code'],
             'no_note' => '1',
             'no_shipping' => '1',
             'custom' => md5($aCartInfo['vendor_id'] . $iPendingId)
