@@ -341,7 +341,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $a = unserialize($aMediaInfo['exif']);
 
         $s = '';
-        if (isset($a['Make'])) {
+        if (!empty($a['Make'])) {
             $oModule = BxDolModule::getInstance($this->MODULE);
             $CNF = &$oModule->_oConfig->CNF;
 
@@ -351,32 +351,34 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                 if ($oMetatags->keywordsIsEnabled()) {
                     $sCamera = $oMetatags->keywordsParseOne($aMediaInfo['id'], $sCamera);
                 }
-            }       
-            $s .= $this->parseHtmlByName('media-exif-value.html', array(
-                'key' => _t('_bx_albums_txt_media_album_camera'), 
-                'val' => $sCamera,
-            ));
+            }
+
+            if (!empty($sCamera))
+                $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                    'key' => _t('_bx_albums_txt_media_album_camera'), 
+                    'val' => $sCamera,
+                ));
         }
 
-        if (isset($a['FocalLength']))
+        if (!empty($a['FocalLength']))
             $s .= $this->parseHtmlByName('media-exif-value.html', array(
                 'key' => _t('_bx_albums_txt_media_album_focal_length'),
                 'val' => _t('_bx_albums_txt_media_album_focal_length_value', $a['FocalLength']),
             ));
 
-        if (isset($a['COMPUTED']['ApertureFNumber']))
+        if (!empty($a['COMPUTED']['ApertureFNumber']))
             $s .= $this->parseHtmlByName('media-exif-value.html', array(
                 'key' => _t('_bx_albums_txt_media_album_aperture'),
                 'val' => $a['COMPUTED']['ApertureFNumber'],
             ));
 
-        if (isset($a['ExposureTime']))
+        if (!empty($a['ExposureTime']))
             $s .= $this->parseHtmlByName('media-exif-value.html', array(
                 'key' => _t('_bx_albums_txt_media_album_shutter_speed'),
                 'val' => _t('_bx_albums_txt_media_album_shutter_speed_value', $a['ExposureTime']),
             ));
 
-        if (isset($a['ISOSpeedRatings']))
+        if (!empty($a['ISOSpeedRatings']))
             $s .= $this->parseHtmlByName('media-exif-value.html', array(
                 'key' => _t('_bx_albums_txt_media_album_iso'),
                 'val' => $a['ISOSpeedRatings'],
