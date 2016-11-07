@@ -72,6 +72,13 @@ class BxBasePageAccount extends BxTemplPage
 
     }
 
+    protected function _isVisiblePage ($a)
+    {
+        if (!isLogged())
+            return false;
+        return parent::_isVisiblePage ($a);
+    }
+    
 	protected function _addJsCss()
     {
     	parent::_addJsCss();
