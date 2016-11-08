@@ -101,6 +101,11 @@ class BxBaseModPaymentProvider extends BxDol
         return $this->_oModule->_oDb->getOptions((int)$aPending['seller_id'], $this->_iId);
     }
 
+    protected function getOptionsByVendor($iVendorId)
+    {
+        return $this->_oModule->_oDb->getOptions((int)$iVendorId, $this->_iId);
+    }
+
     /**
 	 *
 	 * Writes $contents to a log file specified in the bp_options file or, if missing,

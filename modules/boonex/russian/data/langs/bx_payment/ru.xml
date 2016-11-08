@@ -12,8 +12,12 @@
 	<string name="_bx_payment_page_title_carts"><![CDATA[Корзины]]></string>
 	<string name="_bx_payment_page_title_sys_cart"><![CDATA[Корзина]]></string>
 	<string name="_bx_payment_page_title_cart"><![CDATA[Корзина]]></string>
+    <string name="_bx_payment_page_title_sys_cart_thank_you"><![CDATA[Спасибо!]]></string>
+    <string name="_bx_payment_page_title_cart_thank_you"><![CDATA[Спасибо!]]></string>
 	<string name="_bx_payment_page_block_title_carts"><![CDATA[Корзины]]></string>
 	<string name="_bx_payment_page_block_title_cart"><![CDATA[Корзина продавца {0}]]></string>
+    <string name="_bx_payment_page_block_title_cart_thank_you"><![CDATA[Спасибо!]]></string>
+    <string name="_bx_payment_page_block_content_cart_thank_you"><![CDATA[Спасибо! Оплата успешно завершена. Данные будут обработаны в ближайшее время. Пожалуйста, подождите.]]></string>
 
     <string name="_bx_payment_page_title_sys_sbs_list"><![CDATA[Лист подписок]]></string>
     <string name="_bx_payment_page_title_sbs_list"><![CDATA[Подписки]]></string>
@@ -237,8 +241,8 @@
 	<string name="_bx_payment_pp_sandbox_dsc"><![CDATA[E-mail вашего Sandbox аккаунта на PayPal]]></string>
 	<string name="_bx_payment_pp_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
 	<string name="_bx_payment_pp_err_no_data_given"><![CDATA[Нет переданных данных.]]></string>
-	<string name="_bx_payment_pp_err_no_vendor_given"><![CDATA[Неизвестный продавец.]]></string>
 	<string name="_bx_payment_pp_err_not_completed"><![CDATA[Платеж не завершен.]]></string>
+	<string name="_bx_payment_pp_err_wrong_vendor"><![CDATA[Неправильные данные продавеца.]]></string>
 	<string name="_bx_payment_pp_err_wrong_business"><![CDATA[Неправильный E-mail получателя.]]></string>
 	<string name="_bx_payment_pp_err_wrong_transaction"><![CDATA[Не удалось верифицировать транзакцию.]]></string>
 	<string name="_bx_payment_pp_err_wrong_verification_status"><![CDATA[Не получен статус верификации.]]></string>

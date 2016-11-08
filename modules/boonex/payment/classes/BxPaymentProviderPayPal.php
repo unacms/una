@@ -42,9 +42,10 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
     public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)
     {
         $iMode = (int)$this->getOption('mode');
+        $sItemName = _t($this->_sLangsPrefix . 'txt_payment_to_for', $aCartInfo['vendor_name']);
         $sActionURL = $iMode == PP_MODE_LIVE ? 'https://www.paypal.com/cgi-bin/webscr' : 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
-        if($bRecurring)
+        if($bRecurring) {
             $aFormData = array(
                 'cmd' => '_xclick-subscriptions',
                 'a3' => sprintf("%.2f", (float)$aCartInfo['items_price']),
@@ -53,26 +54,37 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
                 'src' => '1', // repeat billings unles member cancels subscription
                 'sra' => '1' // reattempt on failure
             );
-        else
+
+            foreach($aCartInfo['items'] as $aItem)
+                $sItemName .= ' ' . $aItem['title'] . ',';
+		    $sItemName = trim($sItemName, ', ');
+        }
+        else {
             $aFormData = array(
                 'cmd' => '_cart',
                 'upload' => '1',
+                'item_name' => $sItemName,
                 'amount' => sprintf( "%.2f", (float)$aCartInfo['items_price'])
             );
+
+            foreach($aCartInfo['items'] as $iIndex => $aItem) {
+                $i = $iIndex + 1; 
+
+                $aFormData['item_name_' . $i] = bx_process_output($aItem['title']);
+			    $aFormData['quantity_' . $i] = $aItem['quantity'];
+			    $aFormData['amount_' . $i] = $this->_oModule->_oConfig->getPrice(BX_PAYMENT_TYPE_SINGLE, $aItem);
+            }
+        }
 
         $aFormData = array_merge($aFormData, array(
             'business' => $iMode == PP_MODE_LIVE ? $this->getOption('business') : $this->getOption('sandbox'),
             'currency_code' => $aCartInfo['vendor_currency_code'],
-            'item_name' => _t($this->_sLangsPrefix . 'txt_payment_to_for', $aCartInfo['vendor_name']),
-            'item_number' => $iPendingId,
             'no_note' => '1',
             'no_shipping' => '1',
-            'custom' => md5($aCartInfo['vendor_id'] . $iPendingId)
+            'custom' => $this->_constructCustomData($aCartInfo['vendor_id'], $iPendingId),
+        	'item_name' => $sItemName,
+            'item_number' => $iPendingId,
         ));
-
-        foreach($aCartInfo['items'] as $aItem)
-            $aFormData['item_name'] .= ' ' . $aItem['title'] . ',';
-		$aFormData['item_name'] = trim($aFormData['item_name'], ', ');
 
         switch($this->getOption('prc_type')) {
             case PP_PRC_TYPE_PDT:
@@ -109,48 +121,41 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
     /**
      *
      * @param $aData - data from payment provider.
-     * @param $bSubscription - Is not needed. May be used in the future for subscriptions.
-     * @param $iPendingId - Is not needed. May be used in the future for subscriptions.
      * @return array with results.
      */
-    protected function _registerCheckout(&$aData, $bSubscription = false, $iPendingId = 0)
+    protected function _registerCheckout(&$aData)
     {
-        if(empty($this->_aOptions) && isset($aData['item_number']))
-            $this->_aOptions = $this->getOptionsByPending($aData['item_number']);
+        if(empty($this->_aOptions) && !empty($aData['item_number']))
+            $this->_aOptions = $this->getOptionsByPending((int)$aData['item_number']);
 
         if(empty($this->_aOptions))
-            return array('code' => 2, 'message' => $this->_sLangsPrefix . 'err_unknown_vendor');
+            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_incorrect_provider');
 
         $iPrcType = (int)$this->getOption('prc_type');
-        if(($iPrcType == PP_PRC_TYPE_IPN || $iPrcType == PP_PRC_TYPE_DIRECT) && (!isset($aData['item_number']) || !isset($aData['txn_id'])))
-            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'pp_err_no_data_given');
-        else if($iPrcType == PP_PRC_TYPE_PDT && !isset($aData['tx']))
-            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'pp_err_no_data_given');
+        if((in_array($iPrcType, array(PP_PRC_TYPE_DIRECT, PP_PRC_TYPE_IPN)) && !isset($aData['txn_id'])) || ($iPrcType == PP_PRC_TYPE_PDT && !isset($aData['tx'])))
+            return array('code' => 2, 'message' => $this->_sLangsPrefix . 'pp_err_no_data_given');
 
-        $aResult = $this->_validateCheckout($aData);
+        $aPending = array();
+        $aResult = $this->_validateCheckout($aData, $aPending);
 
-        if(!$bSubscription || empty($iPendingId))
-            $iPendingId = (int)$aData['item_number'];
-
-        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
-            return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
+            return array('code' => 11, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
-        //--- Update pending transaction ---//
-        $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
+        //--- Update pending transaction
+        $this->_oModule->_oDb->updateOrderPending($aPending['id'], array(
             'order' => $aData['txn_id'],
             'error_code' => $aResult['code'],
             'error_msg' => _t($aResult['message'])
         ));
 
-        $aResult['pending_id'] = $iPendingId;
+        $aResult['pending_id'] = $aPending['id'];
         $aResult['client_name'] = _t($this->_sLangsPrefix . 'txt_buyer_name_mask', bx_process_input($aData['first_name']), bx_process_input($aData['last_name'])); 
 		$aResult['client_email'] = bx_process_input($aData['payer_email']);
 		$aResult['paid'] = true;
         return $aResult;
     }
 
-    protected function _validateCheckout(&$aData)
+    protected function _validateCheckout(&$aData, &$aPending)
     {
         $iMode = (int)$this->getOption('mode');
         if($iMode == PP_MODE_LIVE) {
@@ -164,10 +169,10 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
         $iPrcType = $this->getOption('prc_type');
         if($iPrcType == PP_PRC_TYPE_DIRECT || $iPrcType == PP_PRC_TYPE_IPN) {
             if($aData['payment_status'] != 'Completed' )
-                return array('code' => 4, 'message' => $this->_sLangsPrefix . 'pp_err_not_completed');
+                return array('code' => 3, 'message' => $this->_sLangsPrefix . 'pp_err_not_completed');
 
             if($aData['business'] != $sBusiness)
-                return array('code' => 5, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_business');
+                return array('code' => 4, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_business');
 
             $sRequest = 'cmd=_notify-validate';
             foreach($aData as $sKey => $sValue) {
@@ -183,9 +188,9 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
             array_walk($aResponse['content'], create_function('&$arg', "\$arg = trim(\$arg);"));
             if(strcmp($aResponse['content'][0], "INVALID") === 0)
-                return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
+                return array('code' => 6, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
             else if(strcmp($aResponse['content'][0], "VERIFIED") !== 0)
-                return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
+                return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
         }
          else if($iPrcType == PP_PRC_TYPE_PDT) {
             $sRequest = "cmd=_notify-synch&tx=" . $aData['tx'] . "&at=" . $this->getOption('token');
@@ -195,33 +200,41 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
                return $aResponse;
 
             if(strcmp($aResponse['content'][0], "FAIL") === 0)
-                return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
+                return array('code' => 6, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
             else if(strcmp($aResponse['content'][0], "SUCCESS") !== 0)
-                return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
+                return array('code' => 7, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_verification_status');
 
             $aKeys = array();
-            foreach($aResponse['content'] as $sLine) {
-                list($sKey, $sValue) = explode("=", $sLine);
-                $aKeys[urldecode($sKey)] = urldecode($sValue);
-            }
+            foreach($aResponse['content'] as $sLine) 
+                if(strpos($sLine, '=') !== false) {
+                    list($sKey, $sValue) = explode('=', $sLine);
+                    $aKeys[urldecode($sKey)] = urldecode($sValue);
+                }
 
             $aData = array_merge($aData, $aKeys);
 
             if($aData['payment_status'] != 'Completed' )
-                return array('code' => 4, 'message' => $this->_sLangsPrefix . 'pp_err_not_completed');
+                return array('code' => 3, 'message' => $this->_sLangsPrefix . 'pp_err_not_completed');
 
             if($aData['business'] != $sBusiness)
-                return array('code' => 5, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_business');
+                return array('code' => 4, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_business');
         }
 
-        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $aData['item_number']));
-        $aVendor = $this->_oModule->getVendorInfo($aPending['seller_id']);
+        if(empty($aData['custom']))
+            return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_custom_data');
+
+        list($iVendorId, $iPendingId) = $this->_deconstructCustomData($aData['custom']);
+        if(empty($iVendorId) || empty($iPendingId))
+            return array('code' => 8, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_custom_data');
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        if((int)$iVendorId != (int)$aPending['seller_id'])
+            return array('code' => 9, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_vendor');
+
+        $aVendor = $this->_oModule->getVendorInfo($iVendorId);
         $fAmount = (float)$this->_getReceivedAmount($aVendor['currency_code'], $aData);
         if($fAmount != (float)$aPending['amount'])
-            return array('code' => 9, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_amount');
-
-        if($aData['custom'] != md5($aPending['seller_id'] . $aPending['id']))
-            return array('code' => 10, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_custom_data');
+            return array('code' => 10, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_amount');
 
         return array('code' => BX_PAYMENT_RESULT_SUCCESS, 'message' => $this->_sLangsPrefix . 'pp_msg_verified');
     }
@@ -249,7 +262,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
             $this->log($sResponse);
 			curl_close($rConnect);
 
-			return array('code' => 6, 'message' => $this->_sLangsPrefix . 'err_cannot_validate');
+			return array('code' => 5, 'message' => $this->_sLangsPrefix . 'err_cannot_validate');
 		}
 
 		curl_close($rConnect);
@@ -270,6 +283,17 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
         return $fAmount;
     }
+
+	protected function _constructCustomData()
+	{
+		$aParams = func_get_args();
+		return urlencode(base64_encode(implode('|', $aParams)));
+	}
+
+	protected function _deconstructCustomData($data)
+	{
+		return explode('|', base64_decode(urldecode($data)));
+	}
 }
 
 /** @} */
