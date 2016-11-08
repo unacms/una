@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `hidden` tinyint(4) NOT NULL default '0',
   `pinned` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
-  KEY `owner_id` (`owner_id`)
+  KEY `owner_id` (`owner_id`),
+  FULLTEXT KEY `search_fields` (`description`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
@@ -166,7 +167,8 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_comments` (
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmt_id`),
-  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
+  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
+  FULLTEXT KEY `search_fields` (`cmt_text`)
 );
 
 -- TABLES: VOTES

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `event_name` (`event_name`)
+  FULLTEXT KEY `search_fields` (`event_name`, `event_desc`)
 );
 
 -- TABLE: REPEATING INTERVALS
