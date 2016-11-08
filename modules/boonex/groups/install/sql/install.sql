@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `bx_groups_data` (
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `group_name` (`group_name`)
+  FULLTEXT KEY `search_fields` (`group_name`, `group_desc`)
 );
 
 -- TABLE: STORAGES & TRANSCODERS
