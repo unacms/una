@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    Profiler Profiler
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
 function bx_profiler_switch (e) {
     var a = e.parentNode.childNodes;
     var ee;
@@ -26,3 +36,4 @@ function bx_profiler_switch (e) {
     }
 }
 
+/** @} */
