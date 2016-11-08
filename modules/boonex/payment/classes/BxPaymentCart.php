@@ -32,8 +32,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
         if(empty($iUserId))
             return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
 
-        $this->_oModule->setSiteSubmenu('menu_cart_submenu', 'cart');
-
         return array(
         	'content' => $this->_oModule->_oTemplate->displayBlockCarts($iUserId)
         );
@@ -55,8 +53,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	if(empty($iSellerId))
     		return MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']));
 
-        $this->_oModule->setSiteSubmenu('menu_cart_submenu', 'cart');
-
 		$aSeller = $this->_oModule->getProfileInfo();
         return array(
         	'title' => _t($CNF['T']['BLOCK_TITLE_CART'], $aSeller['name']),
@@ -73,8 +69,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
             return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
-
-        $this->_oModule->setSiteSubmenu('menu_cart_submenu', 'cart-history');
 
         return array(
         	'content' => $this->_oModule->_oTemplate->displayBlockHistory($iUserId, $iSellerId),

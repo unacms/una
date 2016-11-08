@@ -12,8 +12,12 @@
 	<string name="_bx_payment_page_title_carts"><![CDATA[Shopping Carts]]></string>
 	<string name="_bx_payment_page_title_sys_cart"><![CDATA[Shopping Cart]]></string>
 	<string name="_bx_payment_page_title_cart"><![CDATA[Shopping Cart]]></string>
+    <string name="_bx_payment_page_title_sys_cart_thank_you"><![CDATA[Thank you!]]></string>
+    <string name="_bx_payment_page_title_cart_thank_you"><![CDATA[Thank you!]]></string>
 	<string name="_bx_payment_page_block_title_carts"><![CDATA[Shopping Carts]]></string>
 	<string name="_bx_payment_page_block_title_cart"><![CDATA[{0}'s Shopping Cart]]></string>
+    <string name="_bx_payment_page_block_title_cart_thank_you"><![CDATA[Thank you!]]></string>
+    <string name="_bx_payment_page_block_content_cart_thank_you"><![CDATA[Thank you! Payment was successfully performed. The data will be processed shortly. Please wait.]]></string>
 
     <string name="_bx_payment_page_title_sys_sbs_list"><![CDATA[Subscriptions List]]></string>
     <string name="_bx_payment_page_title_sbs_list"><![CDATA[Subscriptions]]></string>
@@ -240,6 +244,7 @@
 	<string name="_bx_payment_pp_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_pp_err_no_data_given"><![CDATA[No data given.]]></string>
 	<string name="_bx_payment_pp_err_not_completed"><![CDATA[Payment is not completed.]]></string>
+	<string name="_bx_payment_pp_err_wrong_vendor"><![CDATA[Wrong vendor.]]></string>
 	<string name="_bx_payment_pp_err_wrong_business"><![CDATA[Wrong receiver email.]]></string>
 	<string name="_bx_payment_pp_err_wrong_transaction"><![CDATA[Transaction verification failed.]]></string>
 	<string name="_bx_payment_pp_err_wrong_verification_status"><![CDATA[No verification status received.]]></string>

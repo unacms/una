@@ -19,11 +19,15 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 -- PAGES & BLOCKS
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
 ('bx_payment_join', '_bx_payment_page_title_sys_join', '_bx_payment_page_title_join', @sName, 5, 2147483647, 1, 'payment-join', 'page.php?i=payment-join', '', '', '', 0, 1, 0, 'BxPaymentPageJoin', 'modules/boonex/payment/classes/BxPaymentPageJoin.php'),
+
 ('bx_payment_carts', '_bx_payment_page_title_sys_carts', '_bx_payment_page_title_carts', @sName, 5, 2147483647, 1, 'payment-carts', 'page.php?i=payment-carts', '', '', '', 0, 1, 0, 'BxPaymentPageCart', 'modules/boonex/payment/classes/BxPaymentPageCart.php'),
 ('bx_payment_cart', '_bx_payment_page_title_sys_cart', '_bx_payment_page_title_cart', @sName, 5, 2147483647, 1, 'payment-cart', 'page.php?i=payment-cart', '', '', '', 0, 1, 0, 'BxPaymentPageCart', 'modules/boonex/payment/classes/BxPaymentPageCart.php'),
+('bx_payment_cart_thank_you', '_bx_payment_page_title_sys_cart_thank_you', '_bx_payment_page_title_cart_thank_you', @sName, 5, 2147483647, 1, 'payment-cart-thank-you', 'page.php?i=payment-cart-thank-you', '', '', '', 0, 1, 0, 'BxPaymentPageCart', 'modules/boonex/payment/classes/BxPaymentPageCart.php'),
 ('bx_payment_history', '_bx_payment_page_title_sys_history', '_bx_payment_page_title_history', @sName, 5, 2147483647, 1, 'payment-history', 'page.php?i=payment-history', '', '', '', 0, 1, 0, 'BxPaymentPageHistory', 'modules/boonex/payment/classes/BxPaymentPageHistory.php'),
+
 ('bx_payment_sbs_list', '_bx_payment_page_title_sys_sbs_list', '_bx_payment_page_title_sbs_list', @sName, 5, 2147483647, 1, 'payment-sbs-list', 'page.php?i=payment-sbs-list', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
 ('bx_payment_sbs_history', '_bx_payment_page_title_sys_sbs_history', '_bx_payment_page_title_sbs_history', @sName, 5, 2147483647, 1, 'payment-sbs-history', 'page.php?i=payment-sbs-history', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
+
 ('bx_payment_orders', '_bx_payment_page_title_sys_orders', '_bx_payment_page_title_orders', @sName, 5, 2147483647, 1, 'payment-orders', 'page.php?i=payment-orders', '', '', '', 0, 1, 0, 'BxPaymentPageOrders', 'modules/boonex/payment/classes/BxPaymentPageOrders.php'),
 ('bx_payment_details', '_bx_payment_page_title_sys_details', '_bx_payment_page_title_details', @sName, 5, 2147483647, 1, 'payment-details', 'page.php?i=payment-details', '', '', '', 0, 1, 0, 'BxPaymentPageDetails', 'modules/boonex/payment/classes/BxPaymentPageDetails.php');
 
@@ -32,13 +36,13 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 ('bx_payment_carts', 1, @sName, '_bx_payment_page_block_title_carts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:15:"get_block_carts";s:6:"params";a:0:{}s:5:"class";s:4:"Cart";}', 0, 0, 1),
 ('bx_payment_cart', 1, @sName, '_bx_payment_page_block_title_cart', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:14:"get_block_cart";s:6:"params";a:0:{}s:5:"class";s:4:"Cart";}', 0, 0, 1),
+('bx_payment_cart_thank_you', 1, @sName, '_bx_payment_page_block_title_cart_thank_you', 11, 2147483647, 'lang', '_bx_payment_page_block_content_cart_thank_you', 0, 0, 1),
 ('bx_payment_history', 1, @sName, '_bx_payment_page_block_title_history', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:22:"get_block_cart_history";s:6:"params";a:0:{}s:5:"class";s:4:"Cart";}', 0, 0, 1),
 
 ('bx_payment_sbs_list', 1, @sName, '_bx_payment_page_block_title_sbs_list', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:14:"get_block_list";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 ('bx_payment_sbs_history', 1, @sName, '_bx_payment_page_block_title_sbs_history', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_history";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 
 ('bx_payment_orders', 1, @sName, '_bx_payment_page_block_title_orders', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:16:"get_block_orders";s:6:"params";a:0:{}s:5:"class";s:6:"Orders";}', 0, 0, 1),
-
 ('bx_payment_details', 1, @sName, '_bx_payment_page_block_title_details', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_details";s:6:"params";a:0:{}s:5:"class";s:7:"Details";}', 0, 0, 1);
 
 

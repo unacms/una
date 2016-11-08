@@ -27,7 +27,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'URL_HISTORY' => 'page.php?i=payment-history',
         	'URL_ORDERS' => 'page.php?i=payment-orders',
         	'URL_DETAILS' => 'page.php?i=payment-details',
-        	'URL_RETURN' => 'page.php?i=payment-cart',
+        	'URL_RETURN' => 'page.php?i=payment-cart-thank-you',
         	'URL_RETURN_DATA' => $sBaseUrl . 'finalize_checkout/',
         	'URL_NOTIFY' => $sBaseUrl . 'notify/',
 
