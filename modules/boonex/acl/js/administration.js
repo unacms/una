@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    PaidLevels Paid Levels
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
 function BxAclAdministration(oOptions) {
 	this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
@@ -29,3 +39,5 @@ BxAclAdministration.prototype.reloadGrid = function(iLevel) {
 	glGrids[this._sObjNameGrid]._oQueryAppend['level'] = iLevel;
 	glGrids[this._sObjNameGrid].reload(0);
 };
+
+/** @} */

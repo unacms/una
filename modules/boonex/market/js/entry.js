@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    Market Market
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
 function BxMarketEntry(oOptions) {
 	this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
@@ -79,3 +89,5 @@ BxMarketEntry.prototype.initScreenshots = function() {
 		imagesLoaded: true
 	});
 };
+
+/** @} */

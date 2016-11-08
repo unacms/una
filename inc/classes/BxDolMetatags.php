@@ -216,13 +216,13 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             return '';
 
         $sMake = trim($aExif['Make']);
-        if (isset($aExif['Model'])) {
+        if ($sMake && isset($aExif['Model'])) {
             $sModel = trim($aExif['Model']);
             if (0 === mb_strpos($sModel, $sMake))
                 $sModel = mb_substr($sModel, mb_strlen($sMake));
         }
 
-        return $sMake . ' ' . trim($sModel);
+        return $sMake . (empty($sModel) ? '' : ' ' . trim($sModel));
     }
 
     /**

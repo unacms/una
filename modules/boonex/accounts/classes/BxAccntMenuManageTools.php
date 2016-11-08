@@ -1,16 +1,16 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Accounts Accounts
- * @ingroup     TridentModules
+ * @ingroup     UnaModules
  *
  * @{
  */
 
 /**
- * 'Persons manage tools' menu.
+ * 'Manage tools' menu.
  */
 class BxAccntMenuManageTools extends BxBaseModGeneralMenuManageTools
 {
