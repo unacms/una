@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    PaidLevels Paid Levels
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
 function BxAclMain(oOptions) {
 	this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
@@ -22,3 +32,5 @@ BxAclMain.prototype._getDefaultData = function () {
 	var oDate = new Date();
     return jQuery.extend({}, this._oRequestParams, {_t:oDate.getTime()});
 };
+
+/** @} */
