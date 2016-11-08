@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    BaseGeneral Base classes for modules
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
 
 function bx_base_general_select_thumb(eCheckbox) {
 	bx_base_general_select_ghost(eCheckbox, 'thumb');
@@ -28,3 +37,4 @@ function bx_base_general_insert_to_post (iFileId, sFileUrl, sEditorId) {
     bx_editor_insert_img (sEditorId, 'bx-base-general-img-' + iFileId, sFileUrl, 'bx-base-general-img');
 }
 
+/** @} */

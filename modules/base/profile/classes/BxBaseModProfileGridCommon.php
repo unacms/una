@@ -1,10 +1,10 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    BaseText Base classes for text modules
- * @ingroup     TridentModules
+ * @defgroup    BaseProfile Base classes for profile modules
+ * @ingroup     UnaModules
  * 
  * @{
  */
