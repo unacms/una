@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    Payment Payment
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
 function BxPaymentOrders(oOptions) {
 	this.init(oOptions);
 }
@@ -54,3 +64,5 @@ BxPaymentOrders.prototype.paOnSelectModule = function(oSelect) {
         'json'
     );
 };
+
+/** @} */

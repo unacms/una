@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    Payment Payment
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
 function BxPaymentCart(oOptions) {
 	this.init(oOptions);
 }
@@ -89,3 +99,5 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
 BxPaymentCart.prototype.onSubscribeSubmit = function(oData) {
 	document.location = oData.redirect;
 };
+
+/** @} */
