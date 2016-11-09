@@ -1,10 +1,10 @@
 <?php
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    TridentEndAdmin Trident Studio End Admin Pages
- * @ingroup     TridentStudio
+ * @defgroup    UnaEndAdmin UNA Studio End Admin Pages
+ * @ingroup     UnaStudio
  * @{
  */
 

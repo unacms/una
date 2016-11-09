@@ -1,8 +1,8 @@
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    TridentStudio Trident Studio
+ * @defgroup    UnaStudio UNA Studio
  * @{
  */
 function BxDolStudioNavigationMenus(oOptions) {
