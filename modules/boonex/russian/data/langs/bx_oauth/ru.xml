@@ -5,8 +5,8 @@
 	<string name="_bx_oauth"><![CDATA[OAuth2 сервер]]></string>
 	<string name="_bx_oauth_help"><![CDATA[Информация]]></string>
 	<string name="_bx_oauth_help_text"><![CDATA[Что-бы использовать информацию из профайла на клиентских сайтах, нужно добавить новый клиентский сайт. <br />
-На клиентском сайте должен быть установлен "Dolphin Connect" модуль.<br />
-Нужно указать следующий "Dolphin Connect URL" на клиентских сайтах:<br />
+На клиентском сайте должен быть установлен "UNA Connect" модуль.<br />
+Нужно указать следующий "URL главного UNA сайта" на клиентских сайтах:<br />
 <strong>{0}</strong>]]></string>
     <string name="_bx_oauth_client_url"><![CDATA[Ссылка на клиентский сайт]]></string>
 	<string name="_bx_oauth_client_id"><![CDATA[Ключ клиента]]></string>
