@@ -888,7 +888,7 @@ CREATE TABLE `sys_modules` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
-('module', 'system', 'System', 'BoonEx', '9', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
+('module', 'system', 'System', 'UNA, Inc', '9', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
 
 
 CREATE TABLE `sys_modules_file_tracks` (
