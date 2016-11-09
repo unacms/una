@@ -124,7 +124,7 @@ function getSiteStatUser()
 }
 
 /**
- * Output time wrapped in <time> tag in HTML.
+ * Output time wrapped in &lt;time&gt; tag in HTML.
  * Then time is autoformatted using JS upon page load, this is aumatically converted to user's timezone and
  * updated in realtime in case of short periods of 'from now' time format.
  *

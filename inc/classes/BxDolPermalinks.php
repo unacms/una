@@ -142,7 +142,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
      * Get page name (changeable page of URL) from the URL.
      * @param $sLink - relative UNpermalinked, it is better to use unpermalink method to make sure that correct url is passed here
      * @param $iLength - position of the page name, or false to detect automatically
-     * @returm page name (changeable part of URL) or empty string if page name is not detectable.
+     * @return page name (changeable part of URL) or empty string if page name is not detectable.
      */
     function getPageNameFromLink($sLink, $iLength = false)
     {

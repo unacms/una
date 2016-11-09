@@ -64,3 +64,5 @@ $aConfig = array(
      */
     'dependencies' => array(),
 );
+
+/** @} */

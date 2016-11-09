@@ -87,6 +87,7 @@ function html2txt($content, $tags = "")
  * It is ok to use bx_process_input and then db prepare.
  * @param $mixedData data to process
  * @param $iDataType how to handle data, possible valies:
+ *      @code
  *          BX_DATA_INT - integer value
  *          BX_DATA_FLOAT - float values
  *          BX_DATA_CHECKBOX - 'on' or empty string
@@ -99,7 +100,9 @@ function html2txt($content, $tags = "")
  *          BX_DATA_DATETIME_TS - date/time data type stored as unixtimestamp
  *          BX_DATA_DATE_TS_UTC - date data type stored as unixtimestamp from UTC time
  *          BX_DATA_DATETIME_TS_UTC - date/time data type stored as unixtimestamp from UTC time
+ *      @encode
  * @param $mixedParams optional parameters to pass for validation
+ * @param $isCheckMagicQuotes deprecated
  * @return the filtered data, or FALSE if the filter fails.
  */
 function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = false, $isCheckMagicQuotes = true)
@@ -311,6 +314,8 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
  * @param $iRecipientID - ID of recipient profile
  * @param $aPlus - Array of additional information
  * @param $iEmailType - email message type: BX_EMAIL_SYSTEM, BX_EMAIL_NOTIFY or BX_EMAIL_MASS
+ * @param $sEmailFlag - use 'html' for HTML email message
+ * @param $isDisableAlert - disable alert
  * @return true if message was send or false otherwise
  */
 function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false)
@@ -693,7 +698,7 @@ function bx_autoload($sClassName)
  *
  * @param string $sClassName class name.
  * @param array $aParams an array of parameters to be pathed to the constructor of the class.
- * @param array $aModule an array with module description. Is used when the requested class is located in some module.
+ * @param array $mixedModule an array with module description. Is used when the requested class is located in some module.
  * @return unknown
  */
 function bx_instance($sClassName, $aParams = array(), $mixedModule = array())
@@ -752,7 +757,8 @@ function bx_js_string ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO)
 /**
  * Return input string/array ready to pass to html attribute with filtered symbols like ', " etc
  *
- * @param mixed $mixedInput - string/array which should be filtered
+ * @param $mixedInput - string/array which should be filtered
+ * @param $iQuoteType - string escaping BX_ESCAPE_STR_AUTO, BX_ESCAPE_STR_APOS or BX_ESCAPE_STR_QUOTE
  * @return converted string / array
  */
 function bx_html_attribute ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO)
@@ -790,6 +796,8 @@ function bx_php_string_quot ($mixedInput)
  * @param array $aParams - an array of parameters to be pathed with URL.
  * @param string $sMethod - post or get.
  * @param array $aHeaders - custom headers.
+ * @param string $sHttpCode - HTTP code to return
+ * @param array $aBasicAuth - array with 'user' and 'password' for Basic HTTP Auth
  * @return string the file's contents.
  */
 function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array())
@@ -1184,10 +1192,11 @@ function bx_unicode_urldecode($s)
 
 /**
  * Raise an alert
- * @param string $sType - system type
+ * @param string $sUnit - system type
  * @param string $sAction - system action
  * @param int $iObjectId - object id
- * @param int $iSenderId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
+ * @param int $iSender - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
+ * @param array $aExtras - extra parameters 
  */
 function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array())
 {
@@ -1218,7 +1227,8 @@ function bx_site_hash($sSalt = '', $isSkipVersion = false)
 
 /**
  * Transform string to method name string, for example it changes 'some_method' string to 'SomeMethod' string
- * @param array where words are separated with underscore
+ * @param $s string where words are separated with underscore
+ * @param $aWordsDelimiter word delimeters
  * @return string where every word begins with capital letter
  */
 function bx_gen_method_name ($s, $aWordsDelimiter = array('_'))
@@ -1427,8 +1437,9 @@ function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/oc
 
 /**
  * Wrap in A tag links in TEXT string
- * @param $sHtmlOrig - text string without tags
+ * @param $text - text string without tags
  * @param $sAttrs - attributes string to add to the added A tag
+ * @param $bHtmlSpecialChars - apply htmlspecialchars before processing
  * @return string where all links are wrapped in A tag
  */
 function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)

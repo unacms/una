@@ -34,20 +34,20 @@ define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display
  *
  *
  * Avalable constructions.
- *  1. <bx_include_auto:template_name.html /> - the content of the file would be inserted. File would be taken from current template if it existes there, and from base directory otherwise.
- *  2. <bx_include_base:template_name.html /> - the content of the file would be inserted. File would be taken from base directory.
- *  3. <bx_include_tmpl:template_name.html /> - the content of the file would be inserted. File would be taken from tmpl_xxx directory.
- *  4. <bx_url_root /> - the value of BX_DOL_URL_ROOT variable will be inserted.
- *  5. <bx_url_admin /> - the value of BX_DOL_URL_ADMIN variable will be inserted.
- *  6. <bx_text:_language_key /> - _language_key will be translated using language file(function _t()) and inserted.
-       <bx_text_js:_language_key /> - _language_key will be translated using language file(function _t()) and inserted, use it to insert text into js string.
-       <bx_text_attribute:_language_key /> - _language_key will be translated using language file(function _t()) and inserted, use it to insert text into html attribute.
- *  7. <bx_image_url:image_file_name /> - image with 'image_file_name' file name will be searched in the images folder of current template.
+ *  1. &lt;bx_include_auto:template_name.html /&gt; - the content of the file would be inserted. File would be taken from current template if it existes there, and from base directory otherwise.
+ *  2. &lt;bx_include_base:template_name.html /&gt; - the content of the file would be inserted. File would be taken from base directory.
+ *  3. &lt;bx_include_tmpl:template_name.html /&gt; - the content of the file would be inserted. File would be taken from tmpl_xxx directory.
+ *  4. &lt;bx_url_root /&gt; - the value of BX_DOL_URL_ROOT variable will be inserted.
+ *  5. &lt;bx_url_admin /&gt; - the value of BX_DOL_URL_ADMIN variable will be inserted.
+ *  6. &lt;bx_text:_language_key /&gt; - _language_key will be translated using language file(function _t()) and inserted.
+       &lt;bx_text_js:_language_key /&gt; - _language_key will be translated using language file(function _t()) and inserted, use it to insert text into js string.
+       &lt;bx_text_attribute:_language_key /&gt; - _language_key will be translated using language file(function _t()) and inserted, use it to insert text into html attribute.
+ *  7. &lt;bx_image_url:image_file_name /&gt; - image with 'image_file_name' file name will be searched in the images folder of current template.
  *     If it's not found, then it will be searched in the images folder of base template. On success full URL will be inserted, otherwise an empty string.
- *  8. <bx_icon_url:icon_file_name /> - the same with <bx_image_url:image_file_name />, but icons will be searched in the images/icons/ folders.
- *  9. <bx_injection:injection_name /> - will be replaced with injections registered with the page and injection_name in the `sys_injections`/`sys_injections_admin`/ tables.
- *  10. <bx_if:tag_name>some_HTML</bx_if:tag_name> - will be replaced with provided content if the condition is true, and with empty string otherwise.
- *  11. <bx_repeat:cycle_name>some_HTML</bx_repeat:cycle_name> - an inner HTML content will be repeated in accordance with received data.
+ *  8. &lt;bx_icon_url:icon_file_name /&gt; - the same with &lt;bx_image_url:image_file_name /&gt;, but icons will be searched in the images/icons/ folders.
+ *  9. &lt;bx_injection:injection_name /&gt; - will be replaced with injections registered with the page and injection_name in the `sys_injections`/`sys_injections_admin`/ tables.
+ *  10. &lt;bx_if:tag_name&gt;some_HTML&lt;/bx_if:tag_name&gt; - will be replaced with provided content if the condition is true, and with empty string otherwise.
+ *  11. &lt;bx_repeat:cycle_name&gt;some_HTML&lt;/bx_repeat:cycle_name&gt; - an inner HTML content will be repeated in accordance with received data.
  *
  *
  * Related classes:
@@ -66,9 +66,9 @@ define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display
  *
  *
  * Predefined template keys to add injections:
- *  1. injection_head - add injections in the <head> tag.
- *  2. injection_body - add ingection(attribute) in the <body> tag.
- *  3. injection_header - add injection inside the <body> tag at the very beginning.
+ *  1. injection_head - add injections in the &lt;head&gt; tag.
+ *  2. injection_body - add ingection(attribute) in the &lt;body&gt; tag.
+ *  3. injection_header - add injection inside the &lt;body&gt; tag at the very beginning.
  *  4. injection_logo_before - add injection at the left of the main logo(inside logo's DIV).
  *  5. injection_logo_after - add injection at the right of the main logo(inside logo's DIV).
  *  6. injection_between_logo_top_menu - add injection between logo and top menu.
@@ -79,7 +79,7 @@ define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display
  *  15. injection_between_content_footer - add injection between content and footer.
  *  16. injection_footer_before - add injection at the left of the footer(inside footer's DIV).
  *  17. injection_footer_after - add injection at the right of the footer(inside footer's DIV).
- *  18. injection_footer - add injection inside the <body> tag at the very end.
+ *  18. injection_footer - add injection inside the &lt;body&gt; tag at the very end.
  *
  *
  * Example of usage:

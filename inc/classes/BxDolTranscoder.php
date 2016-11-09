@@ -318,7 +318,7 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
      * Get transcoded file url.
      * If transcoded file is ready then direct url to the file is returned.
      * If there is no transcoded data available, then special url is returned, upon opening this url image is transcoded automatically and redirects to the ready transcoed image.
-     * @params $mixedHandler - file handler
+     * @param $mixedHandler - file handler
      * @return file url, or false on error.
      */
     public function getFileUrl($mixedHandler)
@@ -357,8 +357,8 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
     /**
      * Check if transcoded data is available. No need to call it directly, it is called automatically when it is needed.
-     * @params $mixedHandler - file handler
-     * @params $isCheckOutdated - check if transcoded file is outdated
+     * @param $mixedHandler - file handler
+     * @param $isCheckOutdated - check if transcoded file is outdated
      * @return false if there is no ready transcoded file is available or it is outdated, true if file is ready
      */
     public function isFileReady ($mixedHandler, $isCheckOutdated = true)
@@ -369,8 +369,8 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
     /**
      * Transcode file, no need to call it directly, it is called automatically when it is needed.
-     * @params $mixedHandler - file handler
-     * @params $iProfileId - optional profile id, to assign transcoded file ownership to, usually it is NOT assigned to any particular profile, so just leave it default
+     * @param $mixedHandler - file handler
+     * @param $iProfileId - optional profile id, to assign transcoded file ownership to, usually it is NOT assigned to any particular profile, so just leave it default
      * @return true on success, false on error
      */
     public function transcode ($mixedHandler, $iProfileId = 0)

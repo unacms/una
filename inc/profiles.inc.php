@@ -89,6 +89,7 @@ function isRole($iRole, $iId = 0)
 /**
  * Login user by setting necessary cookies
  * @param $iId account id
+ * @param $bRememberMe remember session
  * @return false if id isn't correct or array of user info if user was logged in
  */
 function bx_login($iId, $bRememberMe = false)
@@ -247,6 +248,7 @@ function bx_require_authentication ($bStudio = false)
  * Display login form and exit
  * @param $bStudio display login form for studio
  * @param $bAjaxMode login form displayed via AJAX
+ * @param sForceRelocate forece relocate
  */
 function bx_login_form($bStudio = false, $bAjaxMode = false, $sForceRelocate = '')
 {

@@ -15,13 +15,13 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  * @ref BxDolMetatags
  */
 
-// TODO: client side controls: some js to help to enter @mentions and #keywords(optional)
+// TODO: client side controls: some js to help to enter \@mentions and #keywords(optional)
 // TODO: integrate to comments, try to integrate to one metatags object - maybe specify metatags object in comments object and make appropriate changes in comments, 
 //       comments content should be treated as main conetent and main content should be shown in search results
-// TODO: integration with notifications, when smbd is @mentioned
+// TODO: integration with notifications, when smbd is \@mentioned
 
 /**
- * Meta-tags for different content. It can handle #keywords, @mentions, locations and meta image for the content.
+ * Meta-tags for different content. It can handle \#keywords, \@mentions, locations and meta image for the content.
  *
  * Keywords are parsed after content add and edit and added to the database, 
  * later when content is displayed #keywords are highlighted as links to the search page with all content with this keyword, 

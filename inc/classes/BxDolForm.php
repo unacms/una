@@ -114,9 +114,9 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  * - collapsed - display section as collapsed by default, for block_header field type only.
  * - html - display visual editor of certain type, for textarea field type only.
  *      - 0 - no visual editor, leave textarea field as it is.
- *      - 1 - standard(default) visual editor, see @BxDolEditor.
- *      - 2 - full visual editor, see @BxDolEditor.
- *      - 3 - mini visual editor, see @BxDolEditor.
+ *      - 1 - standard(default) visual editor, @see BxDolEditor.
+ *      - 2 - full visual editor, @see BxDolEditor.
+ *      - 3 - mini visual editor, @see BxDolEditor.
  * - attrs - serialized array of additional input attributes.
  * - attrs_tr - serialized array of additional attributes for the whole input row.
  * - attrs_wrapper - serialized array of additional attributes for input wrapper.
@@ -217,9 +217,9 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - use visual editor or not.
  *          - 0 - no visual editor, leave textarea field as it is.
- *          - 1 - standard(default) visual editor, see @BxDolEditor.
- *          - 2 - full visual editor, see @BxDolEditor.
- *          - 3 - mini visual editor, see @BxDolEditor.
+ *          - 1 - standard(default) visual editor, @see BxDolEditor.
+ *          - 2 - full visual editor, @see BxDolEditor.
+ *          - 3 - mini visual editor, @see BxDolEditor.
  *      - checker_func
  *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha

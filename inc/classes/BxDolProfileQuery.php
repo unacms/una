@@ -248,7 +248,7 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      * It can be called automatically if 
      * @code
      * 'process_deleted_profiles' => 1 
-     * @code
+     * @endcode
      * is specified in module config.php file in 'uninstall' section.
      */
     public function processDeletedProfiles ()
