@@ -1,7 +1,7 @@
 ABOUT
 =====
 
-Unit test for Trident.
+Unit test for UNA.
 
 INSTALLATION
 ============

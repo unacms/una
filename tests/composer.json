@@ -1,5 +1,5 @@
 {
-    "name": "BoonEx/Trident Tests",
+    "name": "UNA.IO/UNA Tests",
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "sebastian/phpcpd": "*",
