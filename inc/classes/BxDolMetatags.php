@@ -15,16 +15,16 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  * @ref BxDolMetatags
  */
 
-// TODO: client side controls: some js to help to enter &commat;mentions and &num;keywords(optional)
+// TODO: client side controls: some js to help to enter \@mentions and \#keywords(optional)
 // TODO: integrate to comments, try to integrate to one metatags object - maybe specify metatags object in comments object and make appropriate changes in comments, 
 //       comments content should be treated as main conetent and main content should be shown in search results
-// TODO: integration with notifications, when smbd is &commat;mentioned
+// TODO: integration with notifications, when smbd is \@mentioned
 
 /**
- * Meta-tags for different content. It can handle &num;keywords, &commat;mentions, locations and meta image for the content.
+ * Meta-tags for different content. It can handle \#keywords, \@mentions, locations and meta image for the content.
  *
  * Keywords are parsed after content add and edit and added to the database, 
- * later when content is displayed &num;keywords are highlighted as links to the search page with all content with this keyword, 
+ * later when content is displayed \#keywords are highlighted as links to the search page with all content with this keyword, 
  * also keywords are displayed as meta info in page header.
  * 
  * Location info upon content adding/editing is displayed as custom field, it detects current user location and attach location as hidden form fields.
@@ -83,7 +83,7 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  *
  *
  *
- * @section metatags_keywords &num;keyword
+ * @section metatags_keywords \#keyword
  *
  * Upon content 'add' and 'edit' form submit, call BxDolMetatags::locationsAddFromForm
  * @code
@@ -103,7 +103,7 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  *
  *
  *
- * @section metatags_mention &commat;mention
+ * @section metatags_mention \@mention
  * TODO:
  *
  *
@@ -226,9 +226,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Add &num;keywords from the string
+     * Add \#keywords from the string
      * @param $iId content id
-     * @param $s string with &num;keywords
+     * @param $s string with \#keywords
      * @return number of found keywords
      */
     public function keywordsAdd($iId, $s) 
@@ -260,9 +260,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Add &num;keywords from the content fields
+     * Add \#keywords from the content fields
      * @param $iId content id
-     * @param $s string with &num;keywords
+     * @param $s string with \#keywords
      * @return number of found keywords
      */
     public function keywordsAddAuto($iId, $aContentInfo, $CNF, $sFormDisplay) 
@@ -304,10 +304,10 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Add links to the &num;keywords in the string
+     * Add links to the \#keywords in the string
      * @param $iId content id
-     * @param $s string with &num;keywords
-     * @return modified string where all &num;keywords are transformed to links with rel="tag" attribute
+     * @param $s string with \#keywords
+     * @return modified string where all \#keywords are transformed to links with rel="tag" attribute
      */
     public function keywordsParse($iId, $s) 
     {   
@@ -540,9 +540,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Add &commat;mentions from the string (most probably &commat;mentions will be some sort of links already, so parsing may have to look for smth like <a data-mention="bx_persons|123">mention name</a> instead of @mention, since there is no usernames for profiles modules and name could contain spaces and othr characters)
+     * Add \@mentions from the string (most probably \@mentions will be some sort of links already, so parsing may have to look for smth like <a data-mention="bx_persons|123">mention name</a> instead of @mention, since there is no usernames for profiles modules and name could contain spaces and othr characters)
      * @param $iId content id
-     * @param $s string with &commat;mentions
+     * @param $s string with \@mentions
      * @return number of found mentions 
      */
     public function mentionsAdd($iId, $s) 
@@ -551,10 +551,10 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Add links to the &commat;mentions in the string (actual tranformation may have to be performed with ready links like <a data-mention="bx_persons|123">mention name</a>)
+     * Add links to the \@mentions in the string (actual tranformation may have to be performed with ready links like <a data-mention="bx_persons|123">mention name</a>)
      * @param $iId content id
-     * @param $s string with &commat;mentions
-     * @return modified string where all &commat;mentions are transformed to links
+     * @param $s string with \@mentions
+     * @return modified string where all \@mentions are transformed to links
      */
     public function mentionsParse($iId, $s) 
     {
