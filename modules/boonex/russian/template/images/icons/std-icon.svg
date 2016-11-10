@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600px" height="600px" viewBox="0 0 600 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2 Copy 31</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M552.268958,552.268958 C600,504.537813 600,431.458333 600,300 C600,168.541667 600,95.4621875 552.268958,47.7310417 C504.537813,0 431.458333,0 300,0 C168.541667,0 95.4621875,0 47.7310417,47.7310417 C0,95.4621875 0,168.541667 0,300 C0,431.458333 0,504.537813 47.7310417,552.268958 C95.4621875,600 168.541667,600 300,600 C431.458333,600 504.537813,600 552.268958,552.268958 L552.268958,552.268958 Z" id="path-1"></path>
+        <pattern id="pattern-2" patternUnits="objectBoundingBox" x="nan%" width="nan%" height="100%">
+            <use xlink:href="#image-3" transform="scale(inf,inf)"></use>
+        </pattern>
+        <image id="image-3" width="0" height="0"></image>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#FFFFFF" stop-opacity="0.2" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.138870018" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2-Copy-31">
+            <g id="ru">
+                <mask id="mask-4" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="url(#pattern-2)" xlink:href="#path-1"></use>
+                <g mask="url(#mask-4)" id="Group">
+                    <g>
+                        <polygon id="Shape" fill="#FFFFFF" points="0 0 599.901802 0 599.901802 600 0 600"></polygon>
+                        <polygon id="Shape" fill="#0039A6" points="0 200.000391 599.901802 200.000391 599.901802 600 0 600"></polygon>
+                        <polygon id="Shape" fill="#D52B1E" points="0 399.999609 599.901802 399.999609 599.901802 600 0 600"></polygon>
+                    </g>
+                </g>
+            </g>
+            <path d="M552.268958,552.268958 C600,504.537813 600,431.458333 600,300 C600,168.541667 600,95.4621875 552.268958,47.7310417 C504.537813,0 431.458333,0 300,0 C168.541667,0 95.4621875,0 47.7310417,47.7310417 C0,95.4621875 0,168.541667 0,300 C0,431.458333 0,504.537813 47.7310417,552.268958 C95.4621875,600 168.541667,600 300,600 C431.458333,600 504.537813,600 552.268958,552.268958 L552.268958,552.268958 Z" id="path-copy" fill="url(#linearGradient-5)"></path>
+        </g>
+    </g>
+</svg>
