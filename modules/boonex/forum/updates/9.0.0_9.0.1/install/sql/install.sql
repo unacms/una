@@ -37,9 +37,6 @@ CREATE TABLE IF NOT EXISTS `bx_forum_favorites_track` (
   KEY `id` (`object_id`,`author_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-ALTER TABLE `bx_forum_cmts` DROP INDEX `search_fields`;
-ALTER TABLE `bx_forum_cmts` ADD FULLTEXT KEY `search_fields` (`cmt_text`);
-
 
 -- STUDIO PAGE & WIDGET
 UPDATE `sys_std_pages` SET `icon`='bx_forum@modules/boonex/forum/|std-icon.svg' WHERE `name`=@sName;

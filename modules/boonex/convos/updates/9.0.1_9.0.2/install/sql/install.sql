@@ -1,8 +1,3 @@
--- TABLES
-ALTER TABLE `bx_convos_cmts` DROP INDEX `search_fields`;
-ALTER TABLE `bx_convos_cmts` ADD FULLTEXT `search_fields` (`cmt_text`);
-
-
 -- FORMS
 DELETE FROM `sys_form_displays` WHERE `object`='bx_convos' AND `display_name`='bx_convos_entry_edit';
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 

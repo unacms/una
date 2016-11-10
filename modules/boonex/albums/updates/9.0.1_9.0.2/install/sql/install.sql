@@ -1,14 +1,4 @@
 -- TABLES
-ALTER TABLE `bx_albums_files2albums` DROP INDEX `search_fields`;
-ALTER TABLE `bx_albums_files2albums` ADD FULLTEXT `search_fields` (`title`);
-
-ALTER TABLE `bx_albums_cmts` DROP INDEX `search_fields`;
-ALTER TABLE `bx_albums_cmts` ADD FULLTEXT `search_fields` (`cmt_text`);
-
-ALTER TABLE `bx_albums_cmts_media` DROP INDEX `search_fields`;
-ALTER TABLE `bx_albums_cmts_media` ADD FULLTEXT `search_fields` (`cmt_text`);
-
--- TABLE: favorites
 CREATE TABLE IF NOT EXISTS `bx_albums_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
