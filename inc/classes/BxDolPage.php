@@ -85,7 +85,7 @@
  *      - raw: HTML string.
  *      - html: HTML string.
  *      - lang: language key.
- *      - image: image id in the storage and alignment (left, center, right) for example: 36#center
+ *      - image: image id in the storage and alignment (left, center, right) for example: 36\#center
  *      - rss: URL to RSS with number of displayed items, for example: http://www.example.com/rss#4
  *      - menu: menu object name.
  *      - service: serialized array of service call parameters: module - module name, method - service method name, params - array of parameters.

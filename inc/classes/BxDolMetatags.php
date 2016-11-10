@@ -540,7 +540,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Add \@mentions from the string (most probably \@mentions will be some sort of links already, so parsing may have to look for smth like <a data-mention="bx_persons|123">mention name</a> instead of @mention, since there is no usernames for profiles modules and name could contain spaces and othr characters)
+     * Add \@mentions from the string (most probably \@mentions will be some sort of links already, so parsing may have to look for smth like <a data-mention="bx_persons|123">mention name</a> instead of \@mention, since there is no usernames for profiles modules and name could contain spaces and othr characters)
      * @param $iId content id
      * @param $s string with \@mentions
      * @return number of found mentions 

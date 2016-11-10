@@ -1496,7 +1496,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $this->_processFiles('css', 'delete', $mixedFiles, false, true);
     }
     /**
-     * Compile CSS files' structure(@see @import css_file_path) in one file.
+     * Compile CSS files' structure(@see \@import css_file_path) in one file.
      *
      * @param  string $sAbsolutePath CSS file absolute path(full URL for external CSS/JS files).
      * @param  array  $aIncluded     an array of already included CSS files.

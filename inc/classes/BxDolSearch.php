@@ -482,7 +482,7 @@ class BxDolSearchResult implements iBxDolReplaceable
 
     /**
      * Get array with code for sql elements
-     * @param boolean #bREnameMode indicator of renmaing fields
+     * @param $bRenameMode indicator of renmaing fields
      * return array with joinFields, ownFields, groupBy and join elements
      */
     function getJoins ($bRenameMode = true)
