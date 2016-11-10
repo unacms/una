@@ -1,0 +1,25 @@
+<div class="bx-dev-menu-main">
+    <div class="bx-dev-mm-cnt">
+        <ul class="bx-menu-ver">        
+            <bx_repeat:menu_items>
+                <li class="bx-def-round-corners bx-def-margin-sec-bottom __class_add__">
+                    <a href="__link__" target="__target__" onclick="__onclick__" title="__title__">
+                        <div class="bx-dev-mm-item">
+                            <bx_if:icon>
+                            	<img src="<bx_icon_url:mi-empty.png />" />
+                            	<i class="sys-icon __icon__ bx-def-margin-sec-right"></i>
+                            </bx_if:icon>
+                            <bx_if:image><img src="__icon_url__" /></bx_if:image>
+                        </div>
+                    </a>
+                </li>
+            </bx_repeat:menu_items>
+            <div class="bx-clear"></div>
+        </ul>
+    </div>
+</div>
+<script language="javascript">
+    $(document).ready(function () {
+        $('.bx-menu-ver > li.bx-menu-tab-active').not('.bx-def-color-bg-active').addClass('bx-def-color-bg-active');
+    });
+</script>
