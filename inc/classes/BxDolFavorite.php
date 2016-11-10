@@ -13,7 +13,7 @@ define('BX_DOL_FAVORITE_USAGE_DEFAULT', BX_DOL_FAVORITE_USAGE_BLOCK);
 
 /**
  * @page objects
- * @section views Favorites
+ * @section favorites Favorites
  * @ref BxDolFavorite
  */
 
