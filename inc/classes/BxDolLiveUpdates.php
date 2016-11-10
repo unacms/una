@@ -9,7 +9,7 @@
 
 /**
  * @page objects
- * @section live updates Live Updates
+ * @section live_updates Live Updates
  * @ref BxDolLiveUpdates
  */
 
