@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    UnaView UNA Studio Representation classes
+ * @defgroup    UnaStudioView UNA Studio Representation classes
  * @ingroup     UnaStudio
  * @{
  */
