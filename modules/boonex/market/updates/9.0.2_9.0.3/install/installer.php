@@ -17,7 +17,7 @@ class BxMarketUpdater extends BxDolStudioUpdater
     		if(!$this->oDb->isFieldExists('bx_market_products', 'favorites'))
         		$this->oDb->query("ALTER TABLE `bx_market_products` ADD `favorites` int(11) NOT NULL default '0' AFTER `votes`");
 
-			if ($this->isIndexExists('bx_market_cmts', 'search_fields'))
+			if ($this->oDb->isIndexExists('bx_market_cmts', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_market_cmts` DROP INDEX `search_fields`");
 
 			$this->oDb->query("ALTER TABLE `bx_market_cmts` ADD FULLTEXT KEY `search_fields` (`cmt_text`)");

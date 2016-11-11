@@ -17,7 +17,7 @@ class BxPostsUpdater extends BxDolStudioUpdater
     		if(!$this->oDb->isFieldExists('bx_posts_posts', 'favorites'))
         		$this->oDb->query("ALTER TABLE `bx_posts_posts` ADD `favorites` int(11) NOT NULL default '0' AFTER `votes`");
 
-			if ($this->isIndexExists('bx_posts_cmts', 'search_fields'))
+			if ($this->oDb->isIndexExists('bx_posts_cmts', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_posts_cmts` DROP INDEX `search_fields`");
 
 			$this->oDb->query("ALTER TABLE `bx_posts_cmts` ADD FULLTEXT KEY `search_fields` (`cmt_text`)");
