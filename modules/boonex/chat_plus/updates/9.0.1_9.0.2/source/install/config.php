@@ -66,3 +66,5 @@ $aConfig = array(
         //'oauth2' => 'BoonEx OAuth2 Server Module'
     ),
 );
+
+/** @} */

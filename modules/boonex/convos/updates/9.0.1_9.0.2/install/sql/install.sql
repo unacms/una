@@ -7,9 +7,17 @@ DELETE FROM `sys_form_inputs` WHERE `object`='bx_convos' AND `name`='allow_edit'
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_convos', 'bx_convos', 'allow_edit', 1, '', 0, 'switcher', '_bx_cnv_form_entry_input_sys_allow_edit', '_bx_cnv_form_entry_input_allow_edit', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
 
-DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_convos_entry_add' AND `input_name`='allow_edit';
+DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_convos_entry_add';
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_convos_entry_add', 'allow_edit', 2147483647, 1, 4);
+('bx_convos_entry_add', 'delete_confirm', 2147483647, 0, 0),
+('bx_convos_entry_add', 'recipients', 2147483647, 1, 1),
+('bx_convos_entry_add', 'text', 2147483647, 1, 2),
+('bx_convos_entry_add', 'attachments', 2147483647, 1, 3),
+('bx_convos_entry_add', 'allow_edit', 2147483647, 1, 4),
+('bx_convos_entry_add', 'submit_block', 2147483647, 1, 5),
+('bx_convos_entry_add', 'do_submit', 2147483647, 1, 6),
+('bx_convos_entry_add', 'submit_text', 2147483647, 1, 7),
+('bx_convos_entry_add', 'draft_id', 2147483647, 1, 8);
 
 DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_convos_entry_edit';
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
