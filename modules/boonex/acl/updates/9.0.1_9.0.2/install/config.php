@@ -8,7 +8,7 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'ACL',
+    'title' => 'Paid Levels',
     'version_from' => '9.0.1',
 	'version_to' => '9.0.2',
     'vendor' => 'BoonEx',
@@ -42,7 +42,7 @@ $aConfig = array(
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Acl',
+    'language_category' => 'Paid Levels',
 
 	/**
      * Files Section

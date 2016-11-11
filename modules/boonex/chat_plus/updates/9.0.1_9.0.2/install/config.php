@@ -8,7 +8,7 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Chat+',
+    'title' => 'RocketChat',
     'version_from' => '9.0.1',
 	'version_to' => '9.0.2',
     'vendor' => 'BoonEx',
