@@ -130,6 +130,10 @@ UPDATE `sys_std_widgets` SET `icon` = 'wi-storages.svg' WHERE `caption` = '_adm_
 
 
 
+UPDATE `sys_form_inputs` SET `db_pass` = 'DateTimeTs' WHERE `db_pass` = 'DateTime';
+
+
+
 UPDATE `sys_modules` SET `vendor` = 'UNA, Inc' WHERE `name` = 'system';
 
 
