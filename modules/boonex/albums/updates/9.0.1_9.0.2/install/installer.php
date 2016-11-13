@@ -20,17 +20,17 @@ class BxAlbumsUpdater extends BxDolStudioUpdater
 			if(!$this->oDb->isFieldExists('bx_albums_files2albums', 'favorites'))
 	        		$this->oDb->query("ALTER TABLE `bx_albums_files2albums` ADD `favorites` int(11) NOT NULL default '0' AFTER `votes`");
 
-			if ($this->isIndexExists('bx_albums_files2albums', 'search_fields'))
+			if ($this->oDb->isIndexExists('bx_albums_files2albums', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_albums_files2albums` DROP INDEX `search_fields`");
 
 			$this->oDb->query("ALTER TABLE `bx_albums_files2albums` ADD FULLTEXT `search_fields` (`title`)");
 
-			if ($this->isIndexExists('bx_albums_cmts', 'search_fields'))
+			if ($this->oDb->isIndexExists('bx_albums_cmts', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_albums_cmts` DROP INDEX `search_fields`");
 
 			$this->oDb->query("ALTER TABLE `bx_albums_cmts` ADD FULLTEXT `search_fields` (`cmt_text`)");
 
-			if ($this->isIndexExists('bx_albums_cmts_media', 'search_fields'))
+			if ($this->oDb->isIndexExists('bx_albums_cmts_media', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_albums_cmts_media` DROP INDEX `search_fields`");
 
 			$this->oDb->query("ALTER TABLE `bx_albums_cmts_media` ADD FULLTEXT `search_fields` (`cmt_text`)");

@@ -14,12 +14,12 @@ class BxTimelineUpdater extends BxDolStudioUpdater
 	public function actionExecuteSql($sOperation)
     {
     	if($sOperation == 'install') {
-			if ($this->isIndexExists('bx_timeline_events', 'search_fields'))
+			if ($this->oDb->isIndexExists('bx_timeline_events', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_timeline_events` DROP INDEX `search_fields`");
 
 			$this->oDb->query("ALTER TABLE `bx_timeline_events` ADD FULLTEXT KEY `search_fields` (`description`)");
 
-			if ($this->isIndexExists('bx_timeline_comments', 'search_fields'))
+			if ($this->oDb->isIndexExists('bx_timeline_comments', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_timeline_comments` DROP INDEX `search_fields`");
 
 			$this->oDb->query("ALTER TABLE `bx_timeline_comments` ADD FULLTEXT KEY `search_fields` (`cmt_text`)");
