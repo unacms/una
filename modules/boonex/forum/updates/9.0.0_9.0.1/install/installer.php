@@ -15,13 +15,13 @@ class BxForumUpdater extends BxDolStudioUpdater
     {
     	if($sOperation == 'install') {
     		if(!$this->oDb->isFieldExists('bx_forum_discussions', 'rate'))
-        		$this->oDb->query("bx_forum_discussions` ADD `rate` float NOT NULL default '0' AFTER `views`");
+        		$this->oDb->query("ALTER TABLE `bx_forum_discussions` ADD `rate` float NOT NULL default '0' AFTER `views`");
 
     		if(!$this->oDb->isFieldExists('bx_forum_discussions', 'votes'))
-        		$this->oDb->query("bx_forum_discussions` ADD `votes` int(11) NOT NULL default '0' AFTER `rate`");
+        		$this->oDb->query("ALTER TABLE `bx_forum_discussions` ADD `votes` int(11) NOT NULL default '0' AFTER `rate`");
 
     		if(!$this->oDb->isFieldExists('bx_forum_discussions', 'favorites'))
-        		$this->oDb->query("bx_forum_discussions` ADD `favorites` int(11) NOT NULL default '0' AFTER `votes`");
+        		$this->oDb->query("ALTER TABLE `bx_forum_discussions` ADD `favorites` int(11) NOT NULL default '0' AFTER `votes`");
 
 			if ($this->oDb->isIndexExists('bx_forum_cmts', 'search_fields'))
 				$this->oDb->query("ALTER TABLE `bx_forum_cmts` DROP INDEX `search_fields`");
