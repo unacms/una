@@ -1,0 +1,76 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    UnaCore UNA Core
+ * @{
+ */
+
+define('BX_MENU_LAST_ITEM_ORDER', 9999);
+
+/**
+ * Database queries for menus.
+ * @see BxDolMenu
+ */
+class BxDolMenuQuery extends BxDolDb
+{
+    protected $_aObject;
+
+    public function __construct($aObject)
+    {
+        parent::__construct();
+        $this->_aObject = $aObject;
+    }
+
+    static public function getMenuObject ($sObject)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT `o`.*, `t`.`template` FROM `sys_objects_menu` AS `o` INNER JOIN `sys_menu_templates` AS `t` ON (`t`.`id` = `o`.`template_id`) WHERE `o`.`object` = ?", $sObject);
+        $aObject = $oDb->getRow($sQuery);
+        if (!$aObject || !is_array($aObject))
+            return false;
+
+        return $aObject;
+    }
+
+    static public function getMenuTriggers($sTriggerName)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` DESC", $sTriggerName);
+        return $oDb->getAll($sQuery);
+    }
+
+    static public function addMenuItemToSet($aMenuItem)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        if (empty($aMenuItem['set_name']))
+            return false;
+
+        if (empty($aMenuItem['order'])) {
+            $sQuery = $oDb->prepare("SELECT `order` FROM `sys_menu_items` WHERE `set_name` = ? AND `active` = 1 AND `order` != ? ORDER BY `order` DESC LIMIT 1", $aMenuItem['set_name'], BX_MENU_LAST_ITEM_ORDER);
+            $iProfileMenuOrder = (int)$oDb->getOne($sQuery);
+            $aMenuItem['order'] = $iProfileMenuOrder + 1;
+        }
+
+        $sQuery = $oDb->prepare("DELETE FROM `sys_menu_items` WHERE `set_name` = ? AND `name` = ?", $aMenuItem['set_name'], $aMenuItem['name']);
+        $oDb->query($sQuery);
+
+        unset($aMenuItem['id']);
+        return $oDb->query("INSERT INTO `sys_menu_items` SET " . $oDb->arrayToSQL($aMenuItem));
+    }
+
+    public function getMenuItems()
+    {
+        return $this->getMenuItemsFromSet($this->_aObject['set_name']);
+    }
+
+    public function getMenuItemsFromSet($sSetName)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` ASC", $sSetName);
+        return $this->getAll($sQuery);
+    }
+}
+
+/** @} */

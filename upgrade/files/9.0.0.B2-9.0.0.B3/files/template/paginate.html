@@ -1,0 +1,20 @@
+<div class="bx-paginate bx-clearfix __paginate_class__" <bx_repeat:attrs>__key__="__value__" </bx_repeat:attrs>>
+
+    <div class="bx-paginate-btns bx-def-margin-sec-right bx-btn-group bx-clearfix">
+        __btn_prev__
+        __btn_next__
+    </div>
+
+    <bx_if:info>
+        <div class="bx-paginate-info">
+            __text__
+        </div>
+    </bx_if:info>
+
+    <bx_if:view_all>
+        <div class="bx-paginate-view-all">
+            <a href="__lnk_url__" title="__lnk_title__">__lnk_content__</a>
+        </div>
+    </bx_if:view_all>
+
+</div>
