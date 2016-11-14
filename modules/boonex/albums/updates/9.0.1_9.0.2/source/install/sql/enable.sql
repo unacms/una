@@ -104,7 +104,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_albums_author', 1, 'bx_albums', '', '_bx_albums_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 1),
-('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_sys_favorites_of_author', '_bx_albums_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:15:\"browse_favorite\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 0, 2),
+('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_sys_favorites_of_author', '_bx_albums_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:15:\"browse_favorite\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
 ('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_sys_favorites_of_author_media', '_bx_albums_page_block_title_favorites_of_author_media', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:21:\"browse_favorite_media\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 3),
 ('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_sys_entries_of_author', '_bx_albums_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 4);
 

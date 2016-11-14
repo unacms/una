@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_convos';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_convos' OR `object` IN('bx_convos_create_entry', 'bx_posts_edit_entry', 'bx_convos_view_entry', 'bx_convos_home');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_convos' OR `object` IN('bx_convos_create_entry', 'bx_convos_edit_entry', 'bx_convos_view_entry', 'bx_convos_home');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_convos';

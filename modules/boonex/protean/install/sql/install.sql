@@ -344,7 +344,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- MIXES
 INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `editable`) VALUES
-(@sName, '', 'Neat-Mix', 'Neat Mix', 0, 0);
+(@sName, '', 'Neat-Mix', 'Neat Mix', 1, 0);
 SET @iMixId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
