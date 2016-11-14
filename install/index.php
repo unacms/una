@@ -35,6 +35,7 @@ if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
 
 require_once(BX_INSTALL_DIR_ROOT . 'inc/utils.inc.php');
 require_once(BX_INSTALL_DIR_ROOT . 'inc/classes/BxDol.php');
+require_once(BX_INSTALL_DIR_ROOT . 'inc/classes/BxDolFactory.php');
 require_once(BX_INSTALL_DIR_ROOT . 'inc/classes/BxDolIO.php');
 require_once(BX_INSTALL_DIR_ROOT . 'inc/classes/BxDolDb.php');
 require_once(BX_INSTALL_DIR_ROOT . 'inc/classes/BxDolXmlParser.php');
