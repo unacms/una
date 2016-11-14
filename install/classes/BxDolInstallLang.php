@@ -61,7 +61,7 @@ class BxDolInstallLang
             $aRet[$aModuleConfig['home_uri']] = array(
                 'code' => $aModuleConfig['home_uri'],
                 'title' => $aModuleConfig['title'],
-                'icon' => BX_INSTALL_URL_MODULES . $aModuleConfig['home_dir'] . 'template/images/icons/std-pi.png',
+                'icon' => BX_INSTALL_URL_MODULES . $aModuleConfig['home_dir'] . 'template/images/icons/' . (file_exists(BX_INSTALL_DIR_MODULES .  $aModuleConfig['home_dir'] . 'template/images/icons/std-pi.png') ? 'std-pi.png' : 'std-icon.svg'),
             );
         return $aRet;
     }
