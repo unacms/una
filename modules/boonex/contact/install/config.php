@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_contact',
     'title' => 'Contact',
     'note' => 'Contact module.',
-    'version' => '9.0.1.DEV',
+    'version' => '9.0.2.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
     
