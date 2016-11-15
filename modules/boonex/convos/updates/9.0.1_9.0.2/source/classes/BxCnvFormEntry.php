@@ -28,9 +28,13 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
     public function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
+        $CNF = $this->_oModule->_oConfig->CNF;
         if ($bRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges)) {
             $iFolder = $this->_oModule->_oDb->getConversationFolder($iContentId, bx_get_logged_profile_id());
-            $this->_updateParticipants ($iContentId, $iFolder, $iFolder == BX_CNV_FOLDER_DRAFTS ? true : false);
+
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+            if ($aContentInfo && bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']]) // allow to edit participants for author only
+                $this->_updateParticipants ($iContentId, $iFolder, $iFolder == BX_CNV_FOLDER_DRAFTS ? true : false);
         }
 
         return $bRet;
@@ -120,7 +124,7 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
     function initChecker ($aValues = array (), $aSpecificValues = array())
     {
         $CNF = $this->_oModule->_oConfig->CNF;
-        if (bx_get_logged_profile_id() != $aValues[$CNF['FIELD_AUTHOR']]) { // unset some fields for non author
+        if ($aValues && bx_get_logged_profile_id() != $aValues[$CNF['FIELD_AUTHOR']]) { // unset some fields for non author
             unset($this->aInputs[$CNF['FIELD_ALLOW_EDIT']]);
             unset($this->aInputs['recipients']);
         }
