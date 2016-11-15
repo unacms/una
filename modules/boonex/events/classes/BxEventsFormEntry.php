@@ -98,7 +98,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
                         'value' => '{repeat_stop}',
                         'caption' => _t('_bx_events_form_input_stop_repeating'),
                         'db' => array (
-                            'pass' => 'Date',
+                            'pass' => 'DateTs',
                         ),
                     ),
                 ),
