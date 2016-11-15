@@ -138,8 +138,11 @@ class BxDolStudioSettings extends BxTemplStudioPage
 		));
 
 		$aResult = array();
-		if($sName == BX_DOL_STUDIO_STG_MIX_SYSTEM || $this->oDb->updateMixes(array('active' => 1), array('name' => $sName)))
+		if($sName == BX_DOL_STUDIO_STG_MIX_SYSTEM || $this->oDb->updateMixes(array('active' => 1), array('name' => $sName))) {
+		    BxDolCacheUtilities::getInstance()->clear('css');
+
 			$aResult = array('eval' => $this->getPageJsObject() . '.onMixSelect(oData);');
+		}
 		else 
     		$aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
 
