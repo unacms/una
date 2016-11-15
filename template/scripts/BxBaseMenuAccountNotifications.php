@@ -36,6 +36,12 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
         			return false;
         		break;
 
+            case 'subscriptions':
+        		$oPayments = BxDolPayments::getInstance();
+        		if(!$oPayments->isActive())
+        			return false;
+        		break;
+
         	case 'orders':
         		$oPayments = BxDolPayments::getInstance();
         		if(!$oPayments->isActive())
