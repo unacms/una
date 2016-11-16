@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_datafox',
     'title' => 'Data Fox',
     'note' => 'Data Fox API integration.',
-    'version' => '9.0.1.DEV',
+    'version' => '9.0.2.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
