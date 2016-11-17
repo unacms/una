@@ -29,7 +29,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     public function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $aTypes = $aMenu = array();
-        if($this->oDb->getTypes(array('type' => 'all'), $aTypes) > 0 ) {
+        if($this->oDb->getTypes(array('type' => 'all', 'not_in_group' => array(BX_DOL_STUDIO_STG_GROUP_TEMPLATES)), $aTypes) > 0 ) {
             $aTypesGrouped = array();
             foreach($aTypes as $aType)
                 $aTypesGrouped[$aType['group']][] = $aType;

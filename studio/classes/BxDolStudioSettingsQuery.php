@@ -42,6 +42,22 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
                 $sWhereClause .= "AND `tt`.`name`=:name";
                 $sLimitClause .= "LIMIT 1";
                 break;
+
+            case 'all':
+                if(!empty($aParams['in_group'])) {
+                    if(!is_array($aParams['in_group']))
+                        $aParams['in_group'] = array($aParams['in_group']);
+
+                    $sWhereClause .= "AND `tt`.`group` IN (" . $this->implode_escape($aParams['in_group']) . ")";
+                }
+
+                if(!empty($aParams['not_in_group'])) {
+                    if(!is_array($aParams['not_in_group']))
+                        $aParams['not_in_group'] = array($aParams['not_in_group']);
+
+                    $sWhereClause .= "AND `tt`.`group` NOT IN (" . $this->implode_escape($aParams['not_in_group']) . ")";
+                }
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
