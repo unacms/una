@@ -57,7 +57,7 @@ class BxBaseStudioLanguage extends BxDolStudioLanguage
             $aMenu[] = array(
                 'name' => $sName,
                 'icon' => $aItem['icon'],
-                'link' => BX_DOL_URL_STUDIO . 'languages.php?name=' . $this->sLanguage . '&page=' . $sName,
+                'link' => bx_append_url_params($this->sManageUrl, array('page' => $sName)),
                 'title' => _t($aItem['caption']),
                 'selected' => $sName == $this->sPage
             );

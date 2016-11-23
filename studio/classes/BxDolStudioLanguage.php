@@ -17,6 +17,8 @@ class BxDolStudioLanguage extends BxTemplStudioPage
     protected $sLanguage;
     protected $aLanguage;
 
+    protected $sManageUrl;
+    
     function __construct($sLanguage, $sPage)
     {
         parent::__construct($sLanguage);
@@ -31,24 +33,33 @@ class BxDolStudioLanguage extends BxTemplStudioPage
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
 
-        //--- Check actions ---//
-        if(($sAction = bx_get('lang_action')) !== false) {
-            $sAction = bx_process_input($sAction);
+        $this->sManageUrl = BX_DOL_URL_STUDIO . 'language.php?name=' . $this->sLanguage;
+    }
 
-            $aResult = array('code' => 1, 'message' => _t('_adm_pgt_err_cannot_process_action'));
-            switch($sAction) {
-                case 'activate':
-                    $sValue = bx_process_input(bx_get('lang_value'));
-                    if(empty($sValue))
-                        break;
+    public static function getObjectInstance($sModule = "", $sPage = "", $bInit = true)
+	{
+	    $oModuleDb = BxDolModuleQuery::getInstance();
 
-                    $aResult = $this->activate($sValue);
-                    break;
-            }
+        $sClass = 'BxTemplStudioLanguage';
+	    if($sModule != '' && $oModuleDb->isModuleByName($sModule)) {
+	        $aModule = $oModuleDb->getModuleByName($sModule);
 
-            echo json_encode($aResult);
-            exit;
-        }
+	        if(file_exists(BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $aModule['class_prefix'] . 'StudioPage.php')) {
+	            bx_import('StudioPage', $aModule);
+	            $sClass = $aModule['class_prefix'] . 'StudioPage';
+	        }
+	    }
+
+	    $oObject = new $sClass($sModule, $sPage);
+	    if($bInit)
+	    	$oObject->init();
+
+	    return $oObject;
+	}
+
+    public function init()
+    {
+    	$this->checkAction();
 
         $this->aLanguage = BxDolModuleQuery::getInstance()->getModuleByName($this->sLanguage);
         if(empty($this->aLanguage) || !is_array($this->aLanguage))
@@ -64,6 +75,29 @@ class BxDolStudioLanguage extends BxTemplStudioPage
             'checked' => (int)$this->aLanguage['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sLanguage . "', this)"
         ), false);
+    }
+
+	public function checkAction()
+    {
+    	$sAction = bx_get('lang_action');
+    	if($sAction === false)
+    		return;
+
+		$sAction = bx_process_input($sAction);
+
+		$aResult = array('code' => 1, 'message' => _t('_adm_pgt_err_cannot_process_action'));
+		switch($sAction) {
+		    case 'activate':
+                $sValue = bx_process_input(bx_get('lang_value'));
+                if(empty($sValue))
+                    break;
+
+                $aResult = $this->activate($sValue);
+                break;
+		}
+
+        echoJson($aResult);
+		exit;
     }
 
     function activate($sLanguage)
