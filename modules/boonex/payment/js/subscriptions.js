@@ -25,76 +25,33 @@ BxPaymentSubscriptions.prototype.init = function(oOptions) {
 };
 
 BxPaymentSubscriptions.prototype.getDetails = function(oLink, iId) {
-	var $this = this;
-    var oDate = new Date();
+	this._performRequest(oLink, iId, 'subscription_get_details');
+};
 
-    this.loadingInButton(oLink, true);
-
-    $.post(
-        this._sActionsUrl + 'subscription_get_details/' + iId + '/',
-        {
-            _t:oDate.getTime()
-        },
-        function(oData){
-        	$this.loadingInButton(oLink, false);
-        	$(".bx-popup-applied:visible").dolPopupHide();
-
-        	$this.processResult(oData);
-        },
-        'json'
-    );
+BxPaymentSubscriptions.prototype.changeDetails = function(oLink, iId) {
+	this._performRequest(oLink, iId, 'subscription_change_details');
 };
 
 BxPaymentSubscriptions.prototype.getBilling = function(oLink, iId) {
-	var $this = this;
-    var oDate = new Date();
-
-    this.loadingInButton(oLink, true);
-
-    $.post(
-        this._sActionsUrl + 'subscription_get_billing/' + iId + '/',
-        {
-            _t:oDate.getTime()
-        },
-        function(oData){
-        	$this.loadingInButton(oLink, false);
-        	$(".bx-popup-applied:visible").dolPopupHide();
-
-        	$this.processResult(oData);
-        },
-        'json'
-    );
+	this._performRequest(oLink, iId, 'subscription_get_billing');
 };
 
 BxPaymentSubscriptions.prototype.changeBilling = function(oLink, iId) {
-	var $this = this;
-    var oDate = new Date();
-
-    this.loadingInButton(oLink, true);
-
-    $.post(
-        this._sActionsUrl + 'subscription_change_billing/' + iId + '/',
-        {
-            _t:oDate.getTime()
-        },
-        function(oData){
-        	$this.loadingInButton(oLink, false);
-        	$(".bx-popup-applied:visible").dolPopupHide();
-
-        	$this.processResult(oData);
-        },
-        'json'
-    );
+	this._performRequest(oLink, iId, 'subscription_change_billing');
 };
 
 BxPaymentSubscriptions.prototype.requestCancelation = function(oLink, iId) {
+	this._performRequest(oLink, iId, 'subscription_cancelation');
+};
+
+BxPaymentSubscriptions.prototype._performRequest = function(oLink, iId, sUri) {
 	var $this = this;
     var oDate = new Date();
 
     this.loadingInButton(oLink, true);
 
     $.post(
-        this._sActionsUrl + 'subscription_cancelation/' + iId + '/',
+        this._sActionsUrl + sUri + '/' + iId + '/',
         {
             _t:oDate.getTime()
         },

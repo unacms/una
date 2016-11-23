@@ -127,6 +127,11 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     	return $this->_displaySubscriptionData('get_details', $iId);
     }
 
+    public function displaySubscriptionChangeDetails($iId)
+    {
+    	return $this->_displaySubscriptionData('change_details', $iId);
+    }
+
     public function displaySubscriptionGetBilling($iId)
     {
     	return $this->_displaySubscriptionData('get_billing', $iId);
@@ -375,7 +380,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             return array();
         else if(is_array($mixedContent))
             return $mixedContent;
-
+//TODO: Continue from here. Popup Should use correct HTML ID to avoid duplocations. 
         $sKey = 'order_' . BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION . '_' . $sType;
     	$sId = $this->_oConfig->getHtmlIds(BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION, $sKey);
     	$sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);

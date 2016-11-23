@@ -113,6 +113,7 @@
 
     <string name="_bx_payment_popup_title_ods_order_subscription_view"><![CDATA[Подписка]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_get_details"><![CDATA[Детали подписки]]></string>
+    <string name="_bx_payment_popup_title_ods_order_subscription_change_details"><![CDATA[Изменить детали подписки]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_get_billing"><![CDATA[Платежная информация]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_change_billing"><![CDATA[Изменить платежную информацию]]></string>
 	<string name="_bx_payment_popup_title_ods_order_history_view"><![CDATA[Заказ]]></string>
@@ -411,6 +412,8 @@
 	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
 	<string name="_bx_payment_strp_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
 	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
+	<string name="_bx_payment_strp_msg_details_changed"><![CDATA[Детали подписки были изменены.]]></string>
+    <string name="_bx_payment_strp_err_details_changed"><![CDATA[Не могу изменить детали подписки. Перепроверьте данные и попробуйте ещё раз.]]></string>
 	<string name="_bx_payment_strp_msg_billing_changed"><![CDATA[Платежная информация была изменена.]]></string>
     <string name="_bx_payment_strp_err_billing_changed"><![CDATA[Не могу изменить платежную информацию. Перепроверьте данные и попробуйте ещё раз.]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
@@ -437,6 +440,38 @@
     <string name="_bx_payment_strp_txt_card_expires_mask"><![CDATA[{0} / {1}]]></string>
     <string name="_bx_payment_strp_txt_card_cvc"><![CDATA[Проверка CVC]]></string>
     <string name="_bx_payment_strp_txt_card_cvc_passed"><![CDATA[пройдена]]></string>
+    
+    <string name="_bx_payment_form_strp_details"><![CDATA[Stripe: Форма деталей]]></string>
+    <string name="_bx_payment_form_strp_details_display_edit"><![CDATA[Stripe: Редактирование деталей]]></string>
+    <string name="_bx_payment_form_strp_details_input_item_id_sys"><![CDATA[План]]></string>
+    <string name="_bx_payment_form_strp_details_input_item_id"><![CDATA[План]]></string>
+    <string name="_bx_payment_form_strp_details_input_item_id_err"><![CDATA[Вам необходимо выбрать один из планов]]></string>
+    <string name="_bx_payment_form_strp_details_input_submit_sys"><![CDATA[Отправить]]></string>
+    <string name="_bx_payment_form_strp_details_input_submit"><![CDATA[Отправить]]></string>
+    <string name="_bx_payment_form_strp_details_input_cancel_sys"><![CDATA[Отменить]]></string>
+    <string name="_bx_payment_form_strp_details_input_cancel"><![CDATA[Отменить]]></string>
+
+    <string name="_bx_payment_form_strp_card"><![CDATA[Stripe: Форма карты]]></string>
+    <string name="_bx_payment_form_strp_card_display_add"><![CDATA[Stripe: Добавление карты]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_number_sys"><![CDATA[Номер карты]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_number"><![CDATA[Номер карты]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_number_inf"><![CDATA[16-ти значный номер без пробелов.]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_number_err"><![CDATA[Вам необходимо ввести номер карты]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_expire_sys"><![CDATA[Дата окончания]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_expire"><![CDATA[Дата окончания]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_expire_month"><![CDATA[Месяц]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_expire_year"><![CDATA[Год]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_expire_inf"><![CDATA[Используйте 'mm yyyy' формат ввода.]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_expire_err"><![CDATA[Вам необходимо ввести дату окончания в указанном формате]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_cvv_sys"><![CDATA[CVV]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_cvv"><![CDATA[CVV]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_cvv_inf"><![CDATA[Три цифры, которые Вы можете найти на обратной стороне вашей карты.]]></string>
+    <string name="_bx_payment_form_strp_card_input_card_cvv_err"><![CDATA[Вам необходимо ввести CVV вашей карты]]></string>
+    <string name="_bx_payment_form_strp_card_input_submit_sys"><![CDATA[Отправить]]></string>
+    <string name="_bx_payment_form_strp_card_input_submit"><![CDATA[Отправить]]></string>
+    <string name="_bx_payment_form_strp_card_input_cancel_sys"><![CDATA[Отменить]]></string>
+    <string name="_bx_payment_form_strp_card_input_cancel"><![CDATA[Отменить]]></string>
+    
     <string name="_bx_payment_txt_name_stripe"><![CDATA[Stripe]]></string>
 	<string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
 </resources>

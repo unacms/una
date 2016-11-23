@@ -63,9 +63,11 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'subscription' => array(
         		'order_subscription_view' => $this->_sName . '-order-view-subscription',
         		'order_subscription_get_details' => $this->_sName . '-order-get-details-subscription',
+        	    'order_subscription_change_details' => $this->_sName . '-order-change-details-subscription',
         		'order_subscription_get_billing' => $this->_sName . '-order-get-billing-subscription',
         		'order_subscription_change_billing' => $this->_sName . '-order-change-billing-subscription',
         		'form_subscription_change_billing' => $this->_sName . '-form-change-billing-subscription',
+        	    'form_subscription_change_details' => $this->_sName . '-form-change-details-subscription',
         	),
         	'pending' => array(
         		'order_pending_view' => $this->_sName . '-order-view-pending',
