@@ -14,6 +14,7 @@
  */
 class BxBaseModTextMenu extends BxBaseModGeneralMenuView
 {
+    protected $_iContentId;
     protected $_aContentInfo;
 
     public function __construct($aObject, $oTemplate = false)
@@ -21,6 +22,14 @@ class BxBaseModTextMenu extends BxBaseModGeneralMenuView
         parent::__construct($aObject, $oTemplate);
     }
 
+    public function setContentId($iContentId)
+    {
+        $this->_iContentId = (int)$iContentId;
+
+        $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
+        if($this->_aContentInfo)
+            $this->addMarkers(array('content_id' => (int)$this->_iContentId));
+    }
 }
 
 /** @} */

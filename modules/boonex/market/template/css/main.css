@@ -7,10 +7,58 @@ div.bx-market-unit-gallery-cnt {
 	width: 100%;
 	overflow: hidden;
 }
-div.bx-market-unit-title {
-	text-align: center;
-}
 div.bx-market-unit-info {
+	position: relative;
+}
+
+/*+++ Item Author +++*/
+div.bx-market-unit-author {
+    position: relative;
+	text-align: left;
+}
+div.bx-market-unit-author-avatar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+div.bx-market-unit-author {
+    white-space: nowrap;
+}
+div.bx-market-unit-author-name,
+div.bx-market-unit-author div.bx-market-unit-info {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/*+++ Item Actions +++*/
+div.bx-market-unit-actions {
+	position: absolute;
+	top: 0px;
+	right: 0px;	
+}
+
+/*+++ Item Info +++*/
+div.bx-market-unit-cnt {
+	text-align: left;
+}
+div.bx-market-unit-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+div.bx-market-unit-icon-empty {
+	background-color: #ffffff;
+	text-align: center;
+	font-size: 32px;
+	font-size: 2rem;
+}
+div.bx-market-unit-icon-empty .sys-icon {
+    vertical-align: top;	
+}
+div.bx-market-unit-cover {
+	background-color: #ffffff;
+}
+div.bx-market-unit-cnt div.bx-market-unit-info {
 	overflow: visible;
 	white-space: nowrap;
 }

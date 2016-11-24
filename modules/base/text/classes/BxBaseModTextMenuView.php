@@ -17,12 +17,8 @@ class BxBaseModTextMenuView extends BxBaseModTextMenu
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
-
-        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-
-        $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-        if ($this->_aContentInfo)
-            $this->addMarkers(array('content_id' => (int)$iContentId));
+ 
+        $this->setContentId(bx_process_input(bx_get('id'), BX_DATA_INT));
     }
 }
 

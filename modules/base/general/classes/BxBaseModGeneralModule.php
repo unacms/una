@@ -657,6 +657,30 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oFavorite;
     }
 
+	public function getUserId()
+    {
+        return isLogged() ? bx_get_logged_profile_id() : 0;
+    }
+
+    public function getUserIp()
+    {
+        return getVisitorIP();
+    }
+
+    public function getUserInfo($iUserId = 0)
+    {
+        $oProfile = BxDolProfile::getInstance($iUserId);
+        if (!$oProfile)
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+        return array(
+            $oProfile->getDisplayName(),
+            $oProfile->getUrl(),
+            $oProfile->getThumb(),
+            $oProfile->getUnit()
+        );
+    }
+
     // ====== PROTECTED METHODS
     protected function _isModerator ($isPerformAction = false)
     {

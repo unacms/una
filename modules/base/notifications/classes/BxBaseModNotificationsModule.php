@@ -21,7 +21,7 @@ define('BX_BASE_MOD_NTFS_TYPE_PUBLIC', 'public');
 /**
  * Base module class.
  */
-class BxBaseModNotificationsModule extends BxDolModule
+class BxBaseModNotificationsModule extends BxBaseModGeneralModule
 {
 	public $_iOwnerId;
 
@@ -89,30 +89,6 @@ class BxBaseModNotificationsModule extends BxDolModule
     public function getOwnerId()
     {
     	return $this->_iOwnerId;
-    }
-
-	public function getUserId()
-    {
-        return isLogged() ? bx_get_logged_profile_id() : 0;
-    }
-
-    public function getUserIp()
-    {
-        return getVisitorIP();
-    }
-
-    public function getUserInfo($iUserId = 0)
-    {
-        $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile)
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return array(
-            $oProfile->getDisplayName(),
-            $oProfile->getUrl(),
-            $oProfile->getThumb(),
-            $oProfile->getUnit()
-        );
     }
 
 	protected function _updateModuleData($sAction, $sModuleUri)

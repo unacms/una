@@ -30,7 +30,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     public function entryRating($aData)
     {
-        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+        $CNF = &$this->getModule()->_oConfig->CNF;
 
     	$sVotes = '';
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);
@@ -63,7 +63,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     public function setCover($aData)
     {
-		$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+		$CNF = &$this->getModule()->_oConfig->CNF;
 
 		if(empty($aData[$CNF['FIELD_COVER']]))
 			return;
@@ -73,33 +73,39 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         	return;
 
         //--- Get Cover image URL
-        $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
-		if(empty($oImagesTranscoder))
+        $oTranscoderCover = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+		if(empty($oTranscoderCover))
 			return;
 
-		$sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
+		$sCoverUrl = $oTranscoderCover->getFileUrl($aData[$CNF['FIELD_COVER']]);
 		if(empty($sCoverUrl))
 			return;
 
 		//--- Get Thumbnail image URL
-		$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
-		if(empty($oImagesTranscoder))
-			return;
+		$sThumbnailUrl = '';
+		$bThumbnailUrl = false;
+		if(!empty($aData[$CNF['FIELD_THUMB']])) {
+		    $oTranscoderThumbnail = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']);
+    		if($oTranscoderThumbnail)
+    			$sThumbnailUrl = $oTranscoderThumbnail->getFileUrl($aData[$CNF['FIELD_THUMB']]);
 
-		$sThumbnailUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
-		if(empty($sThumbnailUrl))
-			return;
+            $bThumbnailUrl = !empty($sThumbnailUrl);
+		}
 
 		$oCover = BxDolCover::getInstance($this);
 		$oCover->setCoverImageUrl($sCoverUrl);
 		$oCover->set(array_merge($mixedOptions, array(
 			'bx_if:image' => array (
-                'condition' => true,
-                'content' => array('icon_url' => $sThumbnailUrl),
+                'condition' => $bThumbnailUrl,
+                'content' => array(
+                	'icon_url' => $sThumbnailUrl
+		        ),
             ),
             'bx_if:icon' => array (
-                'condition' => false,
-                'content' => array(),
+                'condition' => !$bThumbnailUrl,
+                'content' => array(
+                    'icon' => $CNF['ICON']
+                ),
             ),
             'bx_if:bg' => array (
                 'condition' => true,
@@ -110,7 +116,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     public function getScreenshots($aData)
     {
-    	$oModule = BxDolModule::getInstance($this->MODULE);
+    	$oModule = $this->getModule();
 
     	$CNF = &$oModule->_oConfig->CNF;
     	$aPhotos = $oModule->serviceGetScreenshots($aData[$CNF['FIELD_ID']]);
@@ -161,7 +167,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     public function getGhostTemplateFile($oForm, $aContentInfo)
     {
-    	$CNF = BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+    	$CNF = &$this->getModule()->_oConfig->CNF;
 
     	return $this->parseHtmlByName('form_ghost_template_file.html', array (
                 'name' => $oForm->aInputs[$CNF['FIELD_FILE']]['name'],
@@ -179,11 +185,51 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     protected function getUnit ($aData, $aParams = array())
     {
-    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+        $oModule = $this->getModule();
+    	$CNF = &$oModule->_oConfig->CNF;
 
     	$aUnit = parent::getUnit($aData, $aParams);
         $oPayment = BxDolPayments::getInstance();
 
+        //--- Author Info
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aData[$CNF['FIELD_AUTHOR']]);
+        $bAuthorIcon = !empty($sAuthorIcon);      
+
+        //--- Main Info
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
+        $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
+        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
+
+        //--- Icon Info
+        $sIconUrl = '';
+        if(!empty($CNF['FIELD_THUMB']) && $aData[$CNF['FIELD_THUMB']]) {
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_ICON']);
+            if($oImagesTranscoder)
+                $sIconUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+
+            if(empty($sIconUrl)) {
+                $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']);
+                if($oImagesTranscoder)
+                    $sIconUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+            }
+        }
+
+        //--- Cover Info
+        $sCoverUrl = '';
+        if(!empty($CNF['FIELD_COVER']) && $aData[$CNF['FIELD_COVER']]) {
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+            if($oImagesTranscoder)
+                $sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
+
+            if(empty($sCoverUrl)) {
+                $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+                if($oImagesTranscoder)
+                    $sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
+            }
+        }
+
+        //--- Price Single
     	$bTmplVarsSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
     	$aTmplVarsSingle = array();
     	if($bTmplVarsSingle) {
@@ -192,14 +238,15 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     			list($sJsCode, $sSingleOnclick) = $aJsSingle;
     			
 	    		$aTmplVarsSingle = array(
-	    			'entry_price_single_onclick' => $sSingleOnclick,
-					'entry_price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
+	    			'price_single_onclick' => $sSingleOnclick,
+					'price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
 				);
     		}
     		else 
     			$bTmplVarsSingle = false;
     	}
 
+    	//--- Price Recurring
     	$bTmplVarsRecurring = (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
     	$aTmplVarsRecurring = array();
     	if($bTmplVarsRecurring) {
@@ -208,20 +255,72 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 				list($sJsCode, $sRecurringOnclick) = $aJsRecurring;
 
 	        	$aTmplVarsRecurring = array(
-	        		'entry_price_recurring_onclick' => $sRecurringOnclick,
-					'entry_price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short'))
+	        		'price_recurring_onclick' => $sRecurringOnclick,
+					'price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short'))
 				);
         	}
         	else 
         		$bTmplVarsRecurring = false;
     	}
 
-    	$oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);
+    	$sActions = '';
+    	$oActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_SNIPPET']);
+    	if($oActions) {
+    	    $oActions->setContentId($aData[$CNF['FIELD_ID']]);
+    	    $sActions = $oActions->getCode();
+    	}
+
+    	$sVotes = '';
+    	$oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData[$CNF['FIELD_ID']]);
         if($oVotes)
 			$sVotes = $oVotes->getElementBlock(array('show_counter' => false));
 
     	$aUnit = array_merge($aUnit, array(
-    		'entry_votes' => $sVotes,
+    	    'actions' => $sActions,
+    	    'bx_if:show_author_icon' => array(
+                'condition' => $bAuthorIcon,
+                'content' => array(
+                    'author_icon' => $sAuthorIcon
+                )
+            ),
+            'bx_if:show_author_icon_empty' => array(
+                'condition' => !$bAuthorIcon,
+                'content' => array()
+            ),
+            'author_url' => $sAuthorUrl,
+            'author_title' => bx_html_attribute($sAuthorName),
+            'author_name' => $sAuthorName,
+            'bx_if:show_icon' => array (
+                'condition' => $sIconUrl,
+                'content' => array(
+                	'icon_url' => $sIconUrl,
+                ),
+            ),
+            'bx_if:show_icon_empty' => array (
+                'condition' => !$sIconUrl,
+                'content' => array(
+                    'icon' => $CNF['ICON']
+                ),
+            ),
+            'bx_if:show_cover' => array (
+                'condition' => $sCoverUrl,
+                'content' => array (
+                    'summary_attr' => bx_html_attribute($sSummaryPlain),
+                    'content_url' => $sUrl,
+                    'cover_url' => $sCoverUrl,
+                    'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40),
+                ),
+            ),
+            'bx_if:show_cover_empty' => array (
+                'condition' => !$sCoverUrl,
+                'content' => array (
+                    'summary_plain' => $sSummaryPlain,
+                    'strecher' => mb_strlen($sSummaryPlain) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($sSummaryPlain)) / 6)),
+                ),
+            ),
+            'content_url' => $sUrl,
+    		'votes' => $sVotes,
+            'date' => bx_time_js($aData[$CNF['FIELD_ADDED']]),
     		'bx_if:show_single' => array(
     			'condition' => $bTmplVarsSingle,
     			'content' => $aTmplVarsSingle
