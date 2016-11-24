@@ -260,8 +260,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         echo $this->_oTemplate->getSharedBy($iSharedId);
     }
 
-    function actionRss($iOwnerId)
+    function actionRss()
     {
+        $aArgs = func_get_args();
+        $iOwnerId = array_shift($aArgs);
+
         list($sUserName) = $this->getUserInfo($iOwnerId);
 
         $sRssCaption = _t('_bx_timeline_txt_rss_caption', $sUserName);
