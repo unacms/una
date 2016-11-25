@@ -88,8 +88,11 @@ div.bx-tl-item-image {
 	overflow: hidden;
 }
 div.bx-tl-item-image img {
-	max-width: 18.4375rem;
+	max-width: 100%;
+	min-height: 12.5rem;
 	max-height: 18.4375rem;
+	object-fit: cover;
+	object-position: center center;
 }
 
 /*+++ Item Link +++*/

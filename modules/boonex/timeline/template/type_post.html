@@ -1,3 +1,17 @@
+<bx_if:show_images>
+    <div class="__style_prefix__-item-images bx-def-margin-top bx-def-margin-leftright-neg">
+        <bx_repeat:images>
+            <div class="__style_prefix__-item-image">__image__</div>
+        </bx_repeat:images>
+    </div>
+</bx_if:show_images>
+<bx_if:show_videos>
+    <div class="__style_prefix__-item-videos bx-def-margin-top bx-def-margin-leftright-neg">
+        <bx_repeat:videos>
+            <div class="__style_prefix__-item-video bx-def-margin-top-auto">__video__</div>
+        </bx_repeat:videos>
+    </div>
+</bx_if:show_videos>
 <div class="__style_prefix__-item-text">
 	<bx_if:show_title>
 		<div class="__style_prefix__-title bx-def-margin-sec-bottom bx-def-font-large">__title__</div>
@@ -25,17 +39,3 @@
 	   	</bx_repeat:links>
 	</div>
 </bx_if:show_links>
-<bx_if:show_images>
-	<div class="__style_prefix__-item-images bx-def-margin-top bx-def-margin-leftright-neg">
-		<bx_repeat:images>
-	   		<div class="__style_prefix__-item-image">__image__</div>
-	   	</bx_repeat:images>
-	</div>
-</bx_if:show_images>
-<bx_if:show_videos>
-	<div class="__style_prefix__-item-videos bx-def-margin-top bx-def-margin-leftright-neg">
-		<bx_repeat:videos>
-	   		<div class="__style_prefix__-item-video bx-def-margin-top-auto">__video__</div>
-	   	</bx_repeat:videos>
-	</div>
-</bx_if:show_videos>
