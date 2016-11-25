@@ -551,7 +551,8 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_popup_title_bg_color', @iMixId, 'rgba(40, 60, 80, 0.9)'),
 ('bx_protean_font_weight_h1', @iMixId, '700'),
 ('bx_protean_font_weight_h2', @iMixId, '700'),
-('bx_protean_font_weight_h3', @iMixId, '500');
+('bx_protean_font_weight_h3', @iMixId, '500'),
+('bx_protean_styles_custom', @iMixId, 'div.bx-market-unit-cover div.bx-base-text-unit-no-thumb {\r\n border-width: 0px;\r\n}');
 
 
 -- STUDIO PAGE & WIDGET
