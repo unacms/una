@@ -18,10 +18,8 @@ class BxDolCronAccount extends BxDolCron
 
     protected function finish()
     {
-        if (!($sOutput = ob_get_clean()))
-            return;
-
-		if(getParam('enable_notification_account') != 'on')
+        $sOutput = ob_get_clean();
+		if(!$sOutput || getParam('enable_notification_account') != 'on')
 			return;
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Account', array(
@@ -57,12 +55,20 @@ class BxDolCronAccount extends BxDolCron
     protected function processNewlyJoined()
     {
         $aAccounts = BxDolAccountQuery::getInstance()->getAccounts(array('type' => 'by_join_date', 'date' => time() - 86400));
+        if(empty($aAccounts) || !is_array($aAccounts))
+            return;
 
         $sAccounts = "";
         foreach($aAccounts as $aAccount) {
         	$oProfile = BxDolProfile::getInstance($aAccount['profile_id']);
+        	if(!$oProfile)
+        	    continue;
+
         	$sAccounts .= _t('_sys_notification_account_link', $oProfile->getUrl(), $oProfile->getDisplayName(), $aAccount['email']);
         }
+
+        if(!$sAccounts)
+            return;
 
         echo _t('_sys_notification_account', $sAccounts);
     }
