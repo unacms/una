@@ -62,8 +62,11 @@ div.bx-market-unit-cover div.bx-base-text-unit-no-thumb {
 	border-color: #f2f2f2;
 }
 div.bx-market-unit-cnt div.bx-market-unit-info {
-	overflow: visible;
 	white-space: nowrap;
+}
+div.bx-market-unit-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 div.bx-market-ui-cell {
 	display: inline-block;

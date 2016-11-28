@@ -154,11 +154,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 $sText = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $sText);
         }
 
+        $sTitle = bx_process_output($aData[$CNF['FIELD_TITLE']]);
+
         // generate html
         return array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
-            'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
+            'title' => $sTitle,
+            'title_attr' => bx_html_attribute($sTitle),
             'summary' => $sSummary,
             'text' => $sText,
             'author' => $oProfile->getDisplayName(),
@@ -169,7 +172,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'bx_if:thumb' => array (
                 'condition' => $sPhotoThumb,
                 'content' => array (
-                    'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
+                    'title' => $sTitle,
                     'summary_attr' => bx_html_attribute($sSummaryPlain),
                     'content_url' => $sUrl,
                     'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
