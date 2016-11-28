@@ -215,8 +215,8 @@
     <string name="_bx_market_menu_title_manage_tools"><![CDATA[Управление Подменю инструментов]]></string>
     <string name="_bx_market_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_market_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
-	<string name="_bx_market_menu_item_title_system_admt_posts"><![CDATA[Продукты]]></string>
-	<string name="_bx_market_menu_item_title_admt_posts"><![CDATA[Продукты - {addon} спрятано]]></string>
+	<string name="_bx_market_menu_item_title_system_admt_products"><![CDATA[Продукты]]></string>
+	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Продукты - {addon} спрятано]]></string>
 	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[Мои Продукты]]></string>
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[Все Продукты]]></string>
 	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Лицензии]]></string>
