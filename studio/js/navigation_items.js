@@ -20,7 +20,14 @@ function BxDolStudioNavigationItems(oOptions) {
 BxDolStudioNavigationItems.prototype.onChangeSubmenu = function(oSelect) {
 	var sSubmenu = $(oSelect).val();
 	$('#bx-form-element-submenu_popup').bx_anim(sSubmenu == '' ? 'hide' : 'show',  this.sAnimationEffect, this.iAnimationSpeed);
-	$('#bx-form-element-link, #bx-form-element-target').bx_anim(sSubmenu == '' ? 'show' : 'hide',  this.sAnimationEffect, this.iAnimationSpeed);
+
+	var oLink = $(oSelect).parents(".bx-form-advanced:first").find(".bx-form-input-text[name='link']");
+	if(sSubmenu != '' && oLink.val() == '')
+		oLink.val("javascript:void(0);");
+
+	var oOnclick = $(oSelect).parents(".bx-form-advanced:first").find(".bx-form-input-text[name='onclick']");
+	if(sSubmenu != '' && (oOnclick.val() == '' || oOnclick.val().substr(0, 13) == 'bx_menu_popup'))
+		oOnclick.val("bx_menu_popup('" + sSubmenu + "', this);");
 };
 
 BxDolStudioNavigationItems.prototype.onChangeModule = function() {
