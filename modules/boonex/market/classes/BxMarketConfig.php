@@ -76,6 +76,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URI_AUTHOR_ENTRIES' => 'products-author',
             'URI_ADD_ENTRY' => 'create-product',
         	'URI_EDIT_ENTRY' => 'edit-product',
+        	'URI_DOWNLOAD_ENTRY' => 'download-product',
         	'URI_MANAGE_COMMON' => 'products-manage',
 
             'URL_HOME' => 'page.php?i=products-home',
@@ -156,7 +157,16 @@ class BxMarketConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_market_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_market_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_market_txt_all_entries_by',
-                'txt_all_entries_by_author' => '_bx_market_page_title_browse_by_author'
+                'txt_all_entries_by_author' => '_bx_market_page_title_browse_by_author',
+                'txt_per_day' => '_bx_market_txt_per_day',
+                'txt_per_day_short' => '_bx_market_txt_per_day_short',
+                'txt_per_week' => '_bx_market_txt_per_week',
+                'txt_per_week_short' => '_bx_market_txt_per_week_short',
+                'txt_per_month' => '_bx_market_txt_per_month',
+                'txt_per_month_short' => '_bx_market_txt_per_month_short',
+            	'txt_per_year' => '_bx_market_txt_per_year',
+                'txt_per_year_short' => '_bx_market_txt_per_year_short',
+                
             ),
         );
 

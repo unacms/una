@@ -190,13 +190,14 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     	$aUnit = parent::getUnit($aData, $aParams);
         $oPayment = BxDolPayments::getInstance();
+        $oPermalinks = BxDolPermalinks::getInstance();
 
         //--- Author Info
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aData[$CNF['FIELD_AUTHOR']]);
         $bAuthorIcon = !empty($sAuthorIcon);      
 
         //--- Main Info
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+        $sUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
         $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
         $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
         $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
@@ -256,7 +257,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
 	        	$aTmplVarsRecurring = array(
 	        		'price_recurring_onclick' => $sRecurringOnclick,
-					'price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short'))
+					'price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t($CNF['T']['txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short']))
 				);
         	}
         	else 
@@ -331,7 +332,9 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     		),
     		'bx_if:show_free' => array(
     			'condition' => !$bTmplVarsSingle && !$bTmplVarsRecurring,
-    			'content' => array()
+    			'content' => array(
+    		        'price_free_href' => $oPermalinks->permalink('page.php?i=' . $CNF['URI_DOWNLOAD_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']])
+    		    )
     		),
     	));
 

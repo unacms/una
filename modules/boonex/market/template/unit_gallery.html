@@ -55,20 +55,16 @@
 					__votes__
 			    </div>
 		    </div>
-		    <div class="bx-market-unit-info bx-base-text-unit-info bx-def-margin-sec-top">
-		    	<div class="bx-market-ui-cell bx-market-uic-left"></div>
-		        <div class="bx-market-ui-cell bx-market-uic-right">
-		        	<bx_if:show_single>
-			        	<a class="bx-market-ui-price bx-btn bx-btn-small" href="javascript:void(0)" onclick="javascript:__price_single_onclick__">__price_single__</a>
-					</bx_if:show_single>
-		        	<bx_if:show_recurring>
-		        		<span class="bx-market-ui-price-or bx-def-font-grayed"><bx_text:_bx_market_txt_or /></span>
-		        		<a class="bx-market-ui-price bx-btn bx-btn-small" href="javascript:void(0)" onclick="javascript:__price_recurring_onclick__">__price_recurring__</a>
-		        	</bx_if:show_recurring>
-		        	<bx_if:show_free>
-		        		<span class="bx-market-ui-price bx-def-font-semibold col-green3"><bx_text:_bx_market_txt_get_for_free /></span>
-		        	</bx_if:show_free>
-		        </div>
+		    <div class="bx-market-unit-info bx-base-text-unit-info bx-def-margin-top bx-def-font-align-center">
+	        	<bx_if:show_single>
+		        	<a class="bx-market-ui-price bx-btn bx-btn-small bx-def-margin-sec-top-auto" href="javascript:void(0)" onclick="javascript:__price_single_onclick__">__price_single__</a>
+				</bx_if:show_single>
+	        	<bx_if:show_recurring>
+	        		<a class="bx-market-ui-price bx-btn bx-btn-small bx-def-margin-sec-top-auto" href="javascript:void(0)" onclick="javascript:__price_recurring_onclick__">__price_recurring__</a>
+	        	</bx_if:show_recurring>
+	        	<bx_if:show_free>
+    	        	<a class="bx-market-ui-price bx-btn bx-btn-small bx-def-margin-sec-top-auto" href="__price_free_href__"><bx_text:_bx_market_txt_get_for_free /></a>
+	        	</bx_if:show_free>
 		    </div>
 		</div>
 	</div>
