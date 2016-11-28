@@ -105,9 +105,10 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
                     'caption' => _t('_adm_pgt_txt_etemplates_body'),
                     'info' => _t('_adm_pgt_dsc_etemplates_body'),
                     'value' => $aEtemplate['body'],
+                	'code' => 1,
                     'required' => '1',
                     'db' => array (
-                        'pass' => 'Xss',
+                        'pass' => 'XssHtml',
                     ),
                     'checker' => array (
                         'func' => 'AvailTranslatable',

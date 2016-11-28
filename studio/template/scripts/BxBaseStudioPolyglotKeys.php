@@ -71,6 +71,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
                 'name' => $sName,
                 'caption' => $aLanguage['title'],
                 'value' => '',
+            	'code' => 1,
                 'db' => array (
                     'pass' => 'XssHtml',
                 ),
