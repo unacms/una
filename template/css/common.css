@@ -474,13 +474,6 @@ svg .gray .outer .p2 {
     margin:0;
     padding:0px 12px 0px 12px;
 
-    line-height:36px;
-    line-height:2.2rem;
-    font-size:1rem;
-	color:#fff;
-	text-decoration:none;
-    cursor: pointer;
-
     background-color: #6caa8a;
 
     border:none;
@@ -493,6 +486,10 @@ svg .gray .outer .p2 {
     -o-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
 
+    line-height:36px;
+    line-height:2.2rem;
+    text-decoration:none;
+    cursor: pointer;
     font-size:1rem;
     color:#fff;
 }

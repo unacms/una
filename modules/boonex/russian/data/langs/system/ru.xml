@@ -2039,6 +2039,7 @@
 	<string name="_sys_menu_template_title_footer"><![CDATA[Футер - Ссылки]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Горизонтальные Ссылки]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[В тексте]]></string>
+	<string name="_sys_menu_template_title_inline_sbtn"><![CDATA[В тексте ('спец' кнопки)]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные Вертикальные Ссылки]]></string>
 	<string name="_sys_menu_template_title_empty"><![CDATA[Пустое Меню]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Навигация по Сайту - Подменю]]></string>

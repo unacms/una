@@ -2041,6 +2041,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_footer"><![CDATA[Footer Links]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Horizontal Links]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[Inline]]></string>
+	<string name="_sys_menu_template_title_inline_sbtn"><![CDATA[Inline ('special' buttons)]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Interactive Vertical Links]]></string>
 	<string name="_sys_menu_template_title_empty"><![CDATA[Empty Menu]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Site Navigation Submenu]]></string>

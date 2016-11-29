@@ -28,6 +28,18 @@ ul.bx-menu-hor {
 	display:inline-block;
 }
 
+/* --------------- horizontal inline menu with 'special' buttons */
+.bx-menu-hor-inline-sbtn li a {
+    position: relative;
+    display: inline-block;
+
+    height: 24px; 
+    height: 1.6rem;
+
+    line-height: 24px;
+    line-height: 1.6rem;
+}
+
 /* --------------- vertical, vertical lite, notifications menu */
 
 ul.bx-menu-notif,
