@@ -217,13 +217,13 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: actions menu for snippet
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_market_snippet', '_bx_market_menu_title_snippet', 'bx_market_snippet', 'bx_market', 10, 0, 1, 'BxMarketMenuSnippetActions', 'modules/boonex/market/classes/BxMarketMenuSnippetActions.php');
+('bx_market_snippet', '_bx_market_menu_title_snippet', 'bx_market_snippet', 'bx_market', 17, 0, 1, 'BxMarketMenuSnippetActions', 'modules/boonex/market/classes/BxMarketMenuSnippetActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_market_snippet', 'bx_market', '_bx_market_menu_set_title_snippet', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_market_snippet', 'bx_market', 'snippet-more', '_bx_market_menu_item_title_system_snippet_more', '_bx_market_menu_item_title_snippet_more', 'javascript:void(0)', 'bx_menu_popup(''bx_market_view_popup'', this, {''id'':''bx_market_snippet_{content_id}''}, {id:{content_id}});', '', 'chevron-down', '', 'bx_market_view_popup', 1, 2147483647, 1, 0, 0, 1);
+('bx_market_snippet', 'bx_market', 'snippet-more', '_bx_market_menu_item_title_system_snippet_more', '_bx_market_menu_item_title_snippet_more', 'javascript:void(0)', 'bx_menu_popup(''bx_market_view_popup'', this, {''id'':''bx_market_snippet_{content_id}''}, {id:{content_id}});', '', 'ellipsis-v', '', 'bx_market_view_popup', 1, 2147483647, 1, 0, 0, 1);
 
 
 -- MENU: module sub-menu

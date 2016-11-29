@@ -194,7 +194,17 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
         //--- Author Info
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aData[$CNF['FIELD_AUTHOR']]);
-        $bAuthorIcon = !empty($sAuthorIcon);      
+        $bAuthorIcon = !empty($sAuthorIcon);
+        $sAuthorName = $this->parseHtmlByName('author_link.html', array(
+            'href' => $sAuthorUrl,
+            'title' => bx_html_attribute($sAuthorName),
+            'content' => $sAuthorName,
+            'bx_if:show_account' => array(
+                'condition' => false,
+                'content' => array()
+            )
+        ));
+        
 
         //--- Main Info
         $sUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
@@ -288,9 +298,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 'condition' => !$bAuthorIcon,
                 'content' => array()
             ),
-            'author_url' => $sAuthorUrl,
-            'author_title' => bx_html_attribute($sAuthorName),
-            'author_name' => $sAuthorName,
+            'author_width_date' => _t('_bx_market_txt_author_added_product', $sAuthorName, bx_time_js($aData[$CNF['FIELD_ADDED']])),
             'bx_if:show_icon' => array (
                 'condition' => $sIconUrl,
                 'content' => array(
@@ -321,7 +329,6 @@ class BxMarketTemplate extends BxBaseModTextTemplate
             ),
             'content_url' => $sUrl,
     		'votes' => $sVotes,
-            'date' => bx_time_js($aData[$CNF['FIELD_ADDED']]),
     		'bx_if:show_single' => array(
     			'condition' => $bTmplVarsSingle,
     			'content' => $aTmplVarsSingle
