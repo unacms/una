@@ -26,7 +26,7 @@ class BxMarketCronPruning extends BxDolCron
     {
         $aLicenses = $this->_oModule->_oDb->getLicense(array('type' => 'expired'));
         foreach($aLicenses as $aLicense)
-        	bx_alert($this->getName(), 'license_expire', 0, false, $aLicense);
+        	bx_alert($this->_oModule->getName(), 'license_expire', 0, false, $aLicense);
 
         $this->_oModule->_oDb->processExpiredLicenses();
     }
