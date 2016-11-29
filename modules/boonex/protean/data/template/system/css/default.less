@@ -147,7 +147,9 @@ a:hover > .sys-icon-a i {
     .background-color (@bx-color-header);
 }
 .bx-header.bx-def-border-header {
-    border-bottom: @bx-border-width-header @bx-border-type @bx-color-border-header;
+    border-bottom-width: @bx-border-width-header;
+    border-bottom-style: @bx-border-type;
+    border-bottom-color: @bx-color-border-header;
 }
 .bx-header a {
 	color: @bx-color-link-header; 
@@ -180,7 +182,9 @@ a:hover > .sys-icon-a i {
     .background-color (@bx-color-footer);    
 }
 .bx-footer.bx-def-border-footer {
-    border-top: @bx-border-width-footer @bx-border-type @bx-color-border-footer;
+    border-top-width: @bx-border-width-footer;
+    border-top-style: @bx-border-type;
+    border-top-color: @bx-color-border-footer;
 }
 .bx-footer a {
 	color: @bx-color-link-footer; 
@@ -319,6 +323,61 @@ h3 a:hover,
 a.bx-def-font-h3:hover {
 	color: @bx-font-color-link-h3-hover;
 }
+
+/* cover */
+.bx-menu-toolbar-padding,
+.bx-menu-toolbar-padding .bx-cover-wrapper {
+    background-color: @bx-color-cover;
+}
+
+.bx-menu-toolbar-padding .bx-cover-wrapper {
+    border-width: @bx-border-width-cover;
+    border-style: @bx-border-type;
+    border-color: @bx-color-border-cover;
+
+    .radius(@bx-border-radius-cover);
+
+    -webkit-box-shadow: @bx-shadow-cover;
+    -moz-box-shadow: @bx-shadow-cover;
+    box-shadow: @bx-shadow-cover;
+}
+.bx-cover-wrapper .bx-cover {
+    min-height: @bx-height-cover;
+}
+.bx-cover-wrapper .bx-cover,
+.bx-cover-wrapper .bx-cover .bx-cover-actions .bx-menu-btns-hor {
+    text-align: @bx-text-align-cover;
+}
+.bx-cover-wrapper .bx-cover.bx-def-padding {
+    padding: @bx-content-padding-cover;
+}
+.bx-cover-wrapper .bx-cover .bx-cover-image img {
+    border-width: @bx-border-width-cover-icon;
+    border-style: @bx-border-type;
+    border-color: @bx-color-border-cover-icon;
+
+    .radius(@bx-border-radius-cover-icon);
+
+    -webkit-box-shadow: @bx-shadow-cover-icon;
+    -moz-box-shadow: @bx-shadow-cover-icon;
+    box-shadow: @bx-shadow-cover-icon;
+}
+
+.bx-cover-wrapper .bx-cover .bx-cover-title {
+    text-shadow: @bx-shadow-text-cover;
+
+    font-family: @bx-font-family-cover;
+}
+.bx-cover-wrapper .bx-cover .bx-cover-title,
+.bx-cover-wrapper .bx-cover .bx-cover-title .bx-def-font-contrasted {
+    color: @bx-color-font-cover;
+}
+.bx-cover-wrapper .bx-cover .bx-cover-title,
+.bx-cover-wrapper .bx-cover .bx-cover-title.bx-def-font-h1 {
+    font-size: @bx-font-size-cover;
+    font-weight: @bx-font-weight-cover;
+}
+
 
 /* block */
 .bx-def-border-block {

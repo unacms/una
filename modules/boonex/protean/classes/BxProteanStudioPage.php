@@ -37,6 +37,7 @@ class BxProteanStudioPage extends BxTemplStudioDesign
 			$sPrefix . '_styles_header',
 			$sPrefix . '_styles_footer',
 			$sPrefix . '_styles_body',
+			$sPrefix . '_styles_cover',
 			$sPrefix . '_styles_block',
 			$sPrefix . '_styles_card',
 			$sPrefix . '_styles_popup',

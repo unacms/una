@@ -8,7 +8,7 @@ SET @iTypeId = LAST_INSERT_ID();
 
 -- SETTINGS: Protean template System
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_system'), '_bx_protean_stg_cpt_category_system', 1);
+(@iTypeId, CONCAT(@sName, '_system'), '_bx_protean_stg_cpt_category_system', 10);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -17,7 +17,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles General
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_general'), '_bx_protean_stg_cpt_category_styles_general', 2);
+(@iTypeId, CONCAT(@sName, '_styles_general'), '_bx_protean_stg_cpt_category_styles_general', 20);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -27,7 +27,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Header
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_header'), '_bx_protean_stg_cpt_category_styles_header', 3);
+(@iTypeId, CONCAT(@sName, '_styles_header'), '_bx_protean_stg_cpt_category_styles_header', 30);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -51,7 +51,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Footer
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_footer'), '_bx_protean_stg_cpt_category_styles_footer', 4);
+(@iTypeId, CONCAT(@sName, '_styles_footer'), '_bx_protean_stg_cpt_category_styles_footer', 40);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -71,7 +71,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Body
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_body'), '_bx_protean_stg_cpt_category_styles_body', 5);
+(@iTypeId, CONCAT(@sName, '_styles_body'), '_bx_protean_stg_cpt_category_styles_body', 50);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -85,9 +85,35 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_body_link_color'), '_bx_protean_stg_cpt_option_body_link_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_body_link_color_hover'), '_bx_protean_stg_cpt_option_body_link_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 9);
 
+
+-- SETTINGS: Protean template Styles Cover
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
+(@iTypeId, CONCAT(@sName, '_styles_cover'), '_bx_protean_stg_cpt_category_styles_cover', 55);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, CONCAT(@sName, '_cover_height'), '_bx_protean_stg_cpt_option_cover_height', '40vh', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_cover_bg_color'), '_bx_protean_stg_cpt_option_cover_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_cover_content_padding'), '_bx_protean_stg_cpt_option_cover_content_padding', '20px 20px 20px 20px', 'digit', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_cover_border_color'), '_bx_protean_stg_cpt_option_cover_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_cover_border_size'), '_bx_protean_stg_cpt_option_cover_border_size', '0px', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_cover_border_radius'), '_bx_protean_stg_cpt_option_cover_border_radius', '0px', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_cover_shadow'), '_bx_protean_stg_cpt_option_cover_shadow', 'none', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_cover_icon_border_color'), '_bx_protean_stg_cpt_option_cover_icon_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_cover_icon_border_size'), '_bx_protean_stg_cpt_option_cover_icon_border_size', '1px', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_cover_icon_border_radius'), '_bx_protean_stg_cpt_option_cover_icon_border_radius', '3px', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_cover_icon_shadow'), '_bx_protean_stg_cpt_option_cover_icon_shadow', 'none', 'digit', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_cover_text_align'), '_bx_protean_stg_cpt_option_cover_text_align', 'center', 'select', 'left,center,right', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_cover_text_shadow'), '_bx_protean_stg_cpt_option_cover_text_shadow', '-1px 0px 0px rgba(0, 0, 0, 0.3), 1px 0px 0px rgba(0, 0, 0, 0.3), 0px -1px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px rgba(0, 0, 0, 0.3)', 'digit', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_cover_font_family'), '_bx_protean_stg_cpt_option_cover_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_cover_font_size'), '_bx_protean_stg_cpt_option_cover_font_size', '2.0rem', 'digit', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_cover_font_color'), '_bx_protean_stg_cpt_option_cover_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 16),
+(@iCategoryId, CONCAT(@sName, '_cover_font_weight'), '_bx_protean_stg_cpt_option_cover_font_weight', '700', 'digit', '', '', '', 17);
+
+
 -- SETTINGS: Protean template Styles Block
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_block'), '_bx_protean_stg_cpt_category_styles_block', 6);
+(@iTypeId, CONCAT(@sName, '_styles_block'), '_bx_protean_stg_cpt_category_styles_block', 60);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -115,7 +141,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Card
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_card'), '_bx_protean_stg_cpt_category_styles_card', 7);
+(@iTypeId, CONCAT(@sName, '_styles_card'), '_bx_protean_stg_cpt_category_styles_card', 70);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -132,7 +158,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Popups
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_popup'), '_bx_protean_stg_cpt_category_styles_popup', 8);
+(@iTypeId, CONCAT(@sName, '_styles_popup'), '_bx_protean_stg_cpt_category_styles_popup', 80);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -154,7 +180,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Main Menu
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_menu_main'), '_bx_protean_stg_cpt_category_styles_menu_main', 9);
+(@iTypeId, CONCAT(@sName, '_styles_menu_main'), '_bx_protean_stg_cpt_category_styles_menu_main', 90);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -177,7 +203,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Page Menu
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_menu_page'), '_bx_protean_stg_cpt_category_styles_menu_page', 10);
+(@iTypeId, CONCAT(@sName, '_styles_menu_page'), '_bx_protean_stg_cpt_category_styles_menu_page', 100);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -200,7 +226,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Slide Menus
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_menu_slide'), '_bx_protean_stg_cpt_category_styles_menu_slide', 11);
+(@iTypeId, CONCAT(@sName, '_styles_menu_slide'), '_bx_protean_stg_cpt_category_styles_menu_slide', 110);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -223,7 +249,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Forms
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_form'), '_bx_protean_stg_cpt_category_styles_form', 12);
+(@iTypeId, CONCAT(@sName, '_styles_form'), '_bx_protean_stg_cpt_category_styles_form', 120);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -241,7 +267,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Large Buttons
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_large_button'), '_bx_protean_stg_cpt_category_styles_large_button', 13);
+(@iTypeId, CONCAT(@sName, '_styles_large_button'), '_bx_protean_stg_cpt_category_styles_large_button', 130);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -262,7 +288,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Small Buttons
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_small_button'), '_bx_protean_stg_cpt_category_styles_small_button', 14);
+(@iTypeId, CONCAT(@sName, '_styles_small_button'), '_bx_protean_stg_cpt_category_styles_small_button', 140);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -283,7 +309,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Styles Font
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_font'), '_bx_protean_stg_cpt_category_styles_font', 15);
+(@iTypeId, CONCAT(@sName, '_styles_font'), '_bx_protean_stg_cpt_category_styles_font', 150);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -319,7 +345,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Custom Styles
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_styles_custom'), '_bx_protean_stg_cpt_category_styles_custom', 17);
+(@iTypeId, CONCAT(@sName, '_styles_custom'), '_bx_protean_stg_cpt_category_styles_custom', 170);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -327,7 +353,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Viewport Tablet
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_viewport_tablet'), '_bx_protean_stg_cpt_category_viewport_tablet', 18);
+(@iTypeId, CONCAT(@sName, '_viewport_tablet'), '_bx_protean_stg_cpt_category_viewport_tablet', 180);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
@@ -335,7 +361,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- SETTINGS: Protean template Viewport Mobile
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
-(@iTypeId, CONCAT(@sName, '_viewport_mobile'), '_bx_protean_stg_cpt_category_viewport_mobile', 19);
+(@iTypeId, CONCAT(@sName, '_viewport_mobile'), '_bx_protean_stg_cpt_category_viewport_mobile', 190);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES

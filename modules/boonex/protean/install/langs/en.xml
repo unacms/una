@@ -55,6 +55,25 @@
 	<string name="_bx_protean_stg_cpt_option_body_link_color"><![CDATA[Links color]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_link_color_hover"><![CDATA[On-hover links color]]></string>
 
+    <string name="_bx_protean_stg_cpt_category_styles_cover"><![CDATA[Cover]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_height"><![CDATA[Cover height]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_bg_color"><![CDATA[Background color]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_content_padding"><![CDATA[Content margin]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_border_color"><![CDATA[Border color]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_border_size"><![CDATA[Border size]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_border_radius"><![CDATA[Corners radius]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_shadow"><![CDATA[Shadow]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_border_color"><![CDATA[Icon border color]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_border_size"><![CDATA[Icon border size]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_border_radius"><![CDATA[Icon corners radius]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_shadow"><![CDATA[Icon shadow]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_text_align"><![CDATA[Text alignment]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_text_shadow"><![CDATA[Text shadow]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_family"><![CDATA[Font stack]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_size"><![CDATA[Font size]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_color"><![CDATA[Font color]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_weight"><![CDATA[Font weight]]></string>
+
 	<string name="_bx_protean_stg_cpt_category_styles_block"><![CDATA[Blocks]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_image"><![CDATA[Background image]]></string>

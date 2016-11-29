@@ -54,6 +54,25 @@
 	<string name="_bx_protean_stg_cpt_option_body_icon_color_hover"><![CDATA[Цвет иконок при наведении курсора]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_link_color"><![CDATA[Цвет линок]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_link_color_hover"><![CDATA[Цвет линок при наведении курсора]]></string>
+	
+    <string name="_bx_protean_stg_cpt_category_styles_cover"><![CDATA[Обложка]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_height"><![CDATA[Высота обложки]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_bg_color"><![CDATA[Цвет фона]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_content_padding"><![CDATA[Контентные отступы]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_border_color"><![CDATA[Цвет границы]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_border_size"><![CDATA[Размер границы]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_border_radius"><![CDATA[Радиус углов]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_shadow"><![CDATA[Тень]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_border_color"><![CDATA[Цвет границы иконки]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_border_size"><![CDATA[Размер границы иконки]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_border_radius"><![CDATA[Радиус углов иконки]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_icon_shadow"><![CDATA[Тень иконки]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_text_align"><![CDATA[Выравнивание текста]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_text_shadow"><![CDATA[Тень текста]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_family"><![CDATA[Шрифт]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_size"><![CDATA[Размер шрифта]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_color"><![CDATA[Цвет шрифта]]></string>
+    <string name="_bx_protean_stg_cpt_option_cover_font_weight"><![CDATA[Плотность шрифта]]></string>
 
 	<string name="_bx_protean_stg_cpt_category_styles_block"><![CDATA[Блоки]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_color"><![CDATA[Цвет фона]]></string>
