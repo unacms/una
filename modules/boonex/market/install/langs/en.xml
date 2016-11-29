@@ -170,13 +170,10 @@
     <string name="_bx_market_page_title_licenses"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_block_title_licenses"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_block_title_view_profile"><![CDATA[My Products]]></string>
-    
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Product Actions]]></string>
-    <string name="_bx_market_menu_title_view_entry"><![CDATA[Product Actions]]></string>
-    
-    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Product Actions in popup)]]></string>
-    
+    <string name="_bx_market_menu_title_view_entry"><![CDATA[Product Actions]]></string>    
+    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Product Actions (in popup)]]></string>
     <string name="_bx_market_menu_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[New Product]]></string>
@@ -225,7 +222,6 @@
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[All Products]]></string>
 	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Licenses]]></string>
 	<string name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Licenses]]></string>
-
 	<string name="_bx_market_menu_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[More Actions]]></string>

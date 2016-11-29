@@ -171,8 +171,9 @@
     <string name="_bx_market_page_block_title_licenses"><![CDATA[Лицензии]]></string>
     <string name="_bx_market_page_block_title_view_profile"><![CDATA[Мои Продукты]]></string>
 
-    <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Действия для продукта]]></string>
-    <string name="_bx_market_menu_title_view_entry"><![CDATA[Действия для продукта]]></string>
+    <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Действия с продуктом]]></string>
+    <string name="_bx_market_menu_title_view_entry"><![CDATA[Действия с продуктом]]></string>
+    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Действия с продуктом (во всплывающем окне)]]></string>
     <string name="_bx_market_menu_title_submenu"><![CDATA[Рынок - Подменю]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Рынок - Подменю]]></string>
     <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[Новый продукт]]></string>
@@ -209,8 +210,8 @@
     <string name="_bx_market_menu_item_title_view_entries_author"><![CDATA[Продукты]]></string>
     <string name="_bx_market_menu_title_entries_my"><![CDATA[Мои продукты - Меню действий]]></string>
     <string name="_bx_market_menu_set_title_entries_my"><![CDATA[Мои продукты - Меню]]></string>
-	<string name="_bx_market_menu_item_title_system_manage_my_posts"><![CDATA[Мои продукты]]></string>
-    <string name="_bx_market_menu_item_title_manage_my_posts"><![CDATA[{addon} продукты]]></string>
+	<string name="_bx_market_menu_item_title_system_manage_my_products"><![CDATA[Мои продукты]]></string>
+    <string name="_bx_market_menu_item_title_manage_my_products"><![CDATA[{addon} продукты]]></string>
     <string name="_bx_market_menu_set_title_manage_tools"><![CDATA[Управление Подменю инструментов]]></string>
     <string name="_bx_market_menu_title_manage_tools"><![CDATA[Управление Подменю инструментов]]></string>
     <string name="_bx_market_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
@@ -221,6 +222,10 @@
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[Все Продукты]]></string>
 	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Лицензии]]></string>
 	<string name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Лицензии]]></string>
+    <string name="_bx_market_menu_title_snippet"><![CDATA[Действия с отрывоком]]></string>
+    <string name="_bx_market_menu_set_title_snippet"><![CDATA[Действия с отрывоком]]></string>
+    <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[Ещё действия]]></string>
+    <string name="_bx_market_menu_item_title_snippet_more"><![CDATA[Ещё действия]]></string>
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
