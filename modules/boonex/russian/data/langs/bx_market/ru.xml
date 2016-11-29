@@ -321,7 +321,7 @@
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[Обзоры к продукту]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[голос за продукт]]></string>
-    <string name="_bx_market_txt_author_added_product"><![CDATA[{0} добавил {1}]]></string>
+    <string name="_bx_market_txt_author_added_product"><![CDATA[{0} добавил продукт {1}]]></string>
     <string name="_bx_market_txt_joined"><![CDATA[Зарегистрирован:]]></string>
     <string name="_bx_market_txt_last_active"><![CDATA[Последняя активность:]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[Приобрести за {0}{1}]]></string>

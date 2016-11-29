@@ -321,7 +321,7 @@
     <string name="_bx_market_txt_sample_single"><![CDATA[product]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[product's comment]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[product's vote]]></string>
-    <string name="_bx_market_txt_author_added_product"><![CDATA[{0} added {1}]]></string>
+    <string name="_bx_market_txt_author_added_product"><![CDATA[{0} added a product {1}]]></string>
     <string name="_bx_market_txt_joined"><![CDATA[Joined:]]></string>
     <string name="_bx_market_txt_last_active"><![CDATA[Last Active:]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[Buy for {0}{1}]]></string>

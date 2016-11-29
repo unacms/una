@@ -1,5 +1,6 @@
 /*--- Entry Cover ---*/
-.bx-cover .bx-cover-image img {
+.bx-cover-wrapper .bx-cover .bx-cover-image img {
+	border-width: 0px;
 	background-position: center center;
 }
 

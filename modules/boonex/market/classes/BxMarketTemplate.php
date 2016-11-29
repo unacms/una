@@ -211,6 +211,10 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
         $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
         $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
+        $sDate = $this->parseHtmlByName('snippet-date.html', array(
+            'date' => bx_time_js($aData[$CNF['FIELD_ADDED']])
+        ));
+        
 
         //--- Icon Info
         $sIconUrl = '';
@@ -298,7 +302,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 'condition' => !$bAuthorIcon,
                 'content' => array()
             ),
-            'author_width_date' => _t('_bx_market_txt_author_added_product', $sAuthorName, bx_time_js($aData[$CNF['FIELD_ADDED']])),
+            'author_width_date' => _t('_bx_market_txt_author_added_product', $sAuthorName, $sDate),
             'bx_if:show_icon' => array (
                 'condition' => $sIconUrl,
                 'content' => array(
