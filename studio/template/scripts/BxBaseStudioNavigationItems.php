@@ -72,16 +72,6 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 $sName = uriGenerate($sName, 'sys_menu_items', 'name', 'item');
             }
 
-            $sSubmenu = $oForm->getCleanValue('submenu_object');
-            if(!empty($sSubmenu)) {
-            	$sLink = $oForm->getCleanValue('link');
-            	if(empty($sLink))
-                	BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
-
-                BxDolForm::setSubmittedValue('target', '', $oForm->aFormAttrs['method']);
-                BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $oForm->aFormAttrs['method']);
-            }
-
             bx_import('BxDolStudioUtils');
             $iId = (int)$oForm->insert(array('module' => BX_DOL_STUDIO_MODULE_CUSTOM, 'name' => $sName, 'active' => 1, 'order' => $this->oDb->getItemOrderMax($this->sSet) + 1));
             if($iId != 0)
@@ -151,23 +141,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             BxDolForm::setSubmittedValue('link', $sLink, $oForm->aFormAttrs['method']);
 
             $sSubmenu = $oForm->getCleanValue('submenu_object');
-            if(!empty($sSubmenu)) {
-            	$sLink = $oForm->getCleanValue('link');
-            	if(empty($sLink))
-                	BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
-
-                BxDolForm::setSubmittedValue('target', '', $oForm->aFormAttrs['method']);
-
-                $iSubmenuPopup = $oForm->getCleanValue('submenu_popup');
-               	BxDolForm::setSubmittedValue('onclick', $iSubmenuPopup == 1 ? 'bx_menu_popup(\'' . $sSubmenu . '\', this);' : '', $oForm->aFormAttrs['method']);
-            } 
-            else {
-                $sOnClick = $oForm->getCleanValue('onclick');
-                if(mb_substr($sOnClick, 0, 13) == 'bx_menu_popup') {
-                    BxDolForm::setSubmittedValue('onclick', '', $oForm->aFormAttrs['method']);
-                    BxDolForm::setSubmittedValue('submenu_popup', 0, $oForm->aFormAttrs['method']);
-                }
-            }
+            if(empty($sSubmenu))
+            	BxDolForm::setSubmittedValue('submenu_popup', 0, $oForm->aFormAttrs['method']);
 
             $sTarget = $oForm->getCleanValue('target');
             if($sTarget === false && !in_array($aItem['target'], array('', '_blank')))
@@ -578,14 +553,6 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Xss',
                     ),
                 ),
-                'onclick' => array(
-                    'type' => 'hidden',
-                    'name' => 'onclick',
-                    'value' => isset($aItem['onclick']) ? $aItem['onclick'] : '',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
                 'title_system' => array(
                     'type' => 'text_translatable',
                     'name' => 'title_system',
@@ -670,6 +637,22 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Xss',
                     )
                 ),
+                'onclick' => array(
+                    'type' => 'text',
+                    'name' => 'onclick',
+                	'caption' => _t('_adm_nav_txt_items_onclick'),
+                	'info' => _t('_adm_nav_dsc_items_onclick'),
+                    'value' => isset($aItem['onclick']) ? $aItem['onclick'] : '',
+                	'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => '',
+                        'params' => array(),
+                        'error' => _t('_adm_nav_err_items_onclick'),
+                    ),
+                ),
                 'icon' => array(
                     'type' => 'text',
                     'name' => 'icon',
@@ -749,11 +732,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 $aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_items_save');
 
                 $bSubmenu = !empty($aItem['submenu_object']);
-                if($bSubmenu === true) {
-                    $aForm['inputs']['link']['tr_attrs']['style'] = 'display:none;';
-                    $aForm['inputs']['target']['tr_attrs']['style'] = 'display:none;';
-                }
-                else 
+                if($bSubmenu !== true)
                 	$aForm['inputs']['submenu_popup']['tr_attrs']['style'] = 'display:none;';
 
                 if(!$bSubmenu && ($aItem['onclick'] != "" || !in_array($aItem['target'], array('', '_blank')))) {

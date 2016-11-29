@@ -25,7 +25,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'file-text col-red3',
+            'ICON' => 'shopping-cart col-green3',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'products',
@@ -76,6 +76,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URI_AUTHOR_ENTRIES' => 'products-author',
             'URI_ADD_ENTRY' => 'create-product',
         	'URI_EDIT_ENTRY' => 'edit-product',
+        	'URI_DOWNLOAD_ENTRY' => 'download-product',
         	'URI_MANAGE_COMMON' => 'products-manage',
 
             'URL_HOME' => 'page.php?i=products-home',
@@ -95,6 +96,8 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE' => 'bx_market_photos',
         	'OBJECT_STORAGE_FILES' => 'bx_market_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_market_preview',
+        	'OBJECT_IMAGES_TRANSCODER_ICON' => 'bx_market_icon',
+        	'OBJECT_IMAGES_TRANSCODER_THUMB' => 'bx_market_thumb',
         	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_market_cover',
         	'OBJECT_IMAGES_TRANSCODER_SCREENSHOT' => 'bx_market_screenshot',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_market_gallery',
@@ -116,7 +119,9 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_market_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_market_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_market_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP' => 'bx_market_view_popup', // actions menu from view entry page but created for popup submenu
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_market_my', // actions menu on my entries page
+            'OBJECT_MENU_ACTIONS_SNIPPET' => 'bx_market_snippet', // actions menu for entry snippet
             'OBJECT_MENU_SUBMENU' => 'bx_market_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_market_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'products-home', // first item in view entry submenu from main module submenu
@@ -132,6 +137,7 @@ class BxMarketConfig extends BxBaseModTextConfig
                     'create-product' => 'checkAllowedAdd',
                 ),
                 'bx_market_view' => $aMenuItems2Methods,
+                'bx_market_view_popup' => $aMenuItems2Methods,
             ),
 
             // global settings
@@ -151,7 +157,16 @@ class BxMarketConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_market_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_market_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_market_txt_all_entries_by',
-                'txt_all_entries_by_author' => '_bx_market_page_title_browse_by_author'
+                'txt_all_entries_by_author' => '_bx_market_page_title_browse_by_author',
+                'txt_per_day' => '_bx_market_txt_per_day',
+                'txt_per_day_short' => '_bx_market_txt_per_day_short',
+                'txt_per_week' => '_bx_market_txt_per_week',
+                'txt_per_week_short' => '_bx_market_txt_per_week_short',
+                'txt_per_month' => '_bx_market_txt_per_month',
+                'txt_per_month_short' => '_bx_market_txt_per_month_short',
+            	'txt_per_year' => '_bx_market_txt_per_year',
+                'txt_per_year_short' => '_bx_market_txt_per_year_short',
+                
             ),
         );
 

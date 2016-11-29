@@ -174,6 +174,9 @@
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Product Actions]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Product Actions]]></string>
+    
+    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Product Actions in popup)]]></string>
+    
     <string name="_bx_market_menu_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[New Product]]></string>
@@ -223,6 +226,10 @@
 	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Licenses]]></string>
 	<string name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Licenses]]></string>
 
+	<string name="_bx_market_menu_title_snippet"><![CDATA[Snippet Actions]]></string>
+    <string name="_bx_market_menu_set_title_snippet"><![CDATA[Snippet Actions]]></string>
+    <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[More Actions]]></string>
+    <string name="_bx_market_menu_item_title_snippet_more"><![CDATA[More Actions]]></string>
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -320,16 +327,15 @@
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[product's vote]]></string>
     <string name="_bx_market_txt_joined"><![CDATA[Joined:]]></string>
     <string name="_bx_market_txt_last_active"><![CDATA[Last Active:]]></string>
-    <string name="_bx_market_txt_price_single"><![CDATA[{0}{1}]]></string>
-    <string name="_bx_market_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
+    <string name="_bx_market_txt_price_single"><![CDATA[Buy for {0}{1}]]></string>
+    <string name="_bx_market_txt_price_recurring"><![CDATA[Rent for {0}{1}/{2}]]></string>
     <string name="_bx_market_txt_per_day"><![CDATA[day]]></string>
-    <string name="_bx_market_txt_per_day_short"><![CDATA[dy]]></string>
+    <string name="_bx_market_txt_per_day_short"><![CDATA[day]]></string>
     <string name="_bx_market_txt_per_week"><![CDATA[week]]></string>
-    <string name="_bx_market_txt_per_week_short"><![CDATA[wk]]></string>
+    <string name="_bx_market_txt_per_week_short"><![CDATA[week]]></string>
     <string name="_bx_market_txt_per_month"><![CDATA[month]]></string>
-    <string name="_bx_market_txt_per_month_short"><![CDATA[mo]]></string>
+    <string name="_bx_market_txt_per_month_short"><![CDATA[month]]></string>
     <string name="_bx_market_txt_per_year"><![CDATA[year]]></string>
-    <string name="_bx_market_txt_per_year_short"><![CDATA[yr]]></string>
-    <string name="_bx_market_txt_or"><![CDATA[or]]></string>
-    <string name="_bx_market_txt_get_for_free"><![CDATA[Free]]></string>
+    <string name="_bx_market_txt_per_year_short"><![CDATA[year]]></string>
+    <string name="_bx_market_txt_get_for_free"><![CDATA[Download for Free]]></string>
 </resources>

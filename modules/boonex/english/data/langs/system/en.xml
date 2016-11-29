@@ -929,6 +929,7 @@
 	<string name="_adm_nav_dsc_items_icon_image"><![CDATA[or upload a small image to be displayed near the link.]]></string>
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
 	<string name="_adm_nav_dsc_items_link"><![CDATA[Enter the link URL]]></string>
+	<string name="_adm_nav_dsc_items_onclick"><![CDATA[Enter a correct JavaScript code for the link]]></string>
 	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Select if you want the link to have a submenu.]]></string>
 	<string name="_adm_nav_dsc_items_target"><![CDATA[Select if you want the link to open as a new page or within current page.]]></string>
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Link name displayed in site menus. Use at least 3 characters.]]></string>
@@ -948,6 +949,7 @@
 	<string name="_adm_nav_err_items_icon_image_remove"><![CDATA[Cannot remove icon image: ]]></string>
 	<string name="_adm_nav_err_items_import"><![CDATA[Cannot import item(s)]]></string>
 	<string name="_adm_nav_err_items_link"><![CDATA[You need to enter item URL]]></string>
+	<string name="_adm_nav_err_items_onclick"><![CDATA[You need to enter item OnClick]]></string>
 	<string name="_adm_nav_err_items_show_to"><![CDATA[Cannot update item]]></string>
 	<string name="_adm_nav_err_items_title_system"><![CDATA[A name with at least 3 characters is required.]]></string>
 	<string name="_adm_nav_err_menus_create"><![CDATA[Cannot create menu]]></string>
@@ -979,6 +981,7 @@
 	<string name="_adm_nav_txt_items_icon_image_old"><![CDATA[Current Icon]]></string>
 	<string name="_adm_nav_txt_items_import_popup"><![CDATA[Import Items]]></string>
 	<string name="_adm_nav_txt_items_link"><![CDATA[URL]]></string>
+	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Show "{0}" menu item to: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[No Submenu]]></string>

@@ -657,6 +657,30 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oFavorite;
     }
 
+	public function getUserId()
+    {
+        return isLogged() ? bx_get_logged_profile_id() : 0;
+    }
+
+    public function getUserIp()
+    {
+        return getVisitorIP();
+    }
+
+    public function getUserInfo($iUserId = 0)
+    {
+        $oProfile = BxDolProfile::getInstance($iUserId);
+        if (!$oProfile)
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+        return array(
+            $oProfile->getDisplayName(),
+            $oProfile->getUrl(),
+            $oProfile->getThumb(),
+            $oProfile->getUnit()
+        );
+    }
+
     // ====== PROTECTED METHODS
     protected function _isModerator ($isPerformAction = false)
     {
@@ -737,14 +761,35 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         $sImage = '';
-        if (isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
-        	
-        	$oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
-        	if($oTranscoder)
-                $sImage = $oTranscoder->getFileUrl($aContentInfo[$CNF['FIELD_THUMB']]);
+        if(isset($CNF['FIELD_COVER']) && isset($aContentInfo[$CNF['FIELD_COVER']]) && $aContentInfo[$CNF['FIELD_COVER']]) {
+            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])) {
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+            	if($oTranscoder)
+                    $sImage = $oTranscoder->getFileUrl($aContentInfo[$CNF['FIELD_COVER']]);
+            }
+
+            if($sImage == '' && !empty($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])) {
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']);
+            	if($oTranscoder)
+                    $sImage = $oTranscoder->getFileUrl($aContentInfo[$CNF['FIELD_COVER']]);
+            }
         }
 
-        if (empty($sImage))
+        if($sImage == '' && isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
+            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_THUMB'])) {
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']);
+            	if($oTranscoder)
+                    $sImage = $oTranscoder->getFileUrl($aContentInfo[$CNF['FIELD_THUMB']]);
+            }
+
+            if($sImage == '' && !empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'])) {
+            	$oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+            	if($oTranscoder)
+                    $sImage = $oTranscoder->getFileUrl($aContentInfo[$CNF['FIELD_THUMB']]);
+            }
+        }
+
+        if(empty($sImage))
             return array();
 
         return array(

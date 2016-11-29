@@ -20,11 +20,15 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 	protected $_aIncludeJs;
 	protected $_aIncludeCss;
 
+	protected $_sFormDetails;
+	protected $_sFormDisplayDetailsEdit;
+
     protected $_sFormCard;
 	protected $_sFormDisplayCardAdd;
 
 	protected $_iMode;
 	protected $_bCheckAmount;
+	protected $_bProrate;
 
 	protected $_oCustomer;
 
@@ -35,6 +39,9 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
         parent::__construct($aConfig);
 
+        $this->_sFormDetails = 'bx_payment_form_strp_details';
+        $this->_sFormDisplayDetailsEdit = 'bx_payment_form_strp_details_edit';
+
         $this->_sFormCard = 'bx_payment_form_strp_card';
         $this->_sFormDisplayCardAdd = 'bx_payment_form_strp_card_add';
 
@@ -42,6 +49,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         $this->_iMode = (int)$this->getOption('mode');
         $this->_bCheckAmount = $this->getOption('check_amount') == 'on'; 
         $this->_bUseSsl = $this->getOption('ssl') == 'on';
+        $this->_bProrate = false;
         $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
 
         $this->_aIncludeJs = array(
@@ -141,8 +149,13 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
 		switch($aPending['type']) {
 			case BX_PAYMENT_TYPE_SINGLE:
-				$aCustomer = $this->_retrieveCustomer($sCustomerId)->jsonSerialize();
-				$aCharge = $this->_retrieveCharge($sOrderId)->jsonSerialize();
+			    $oCustomer = $this->_retrieveCustomer($sCustomerId);
+				$oCharge = $this->_retrieveCharge($sOrderId);
+				if($oCustomer === false || $oCharge === false)
+				    return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+				
+				$aCustomer = $oCustomer->jsonSerialize();
+				$aCharge = $oCharge->jsonSerialize();
 				if(empty($aCustomer) || !is_array($aCustomer) || empty($aCharge) || !is_array($aCharge))
 					return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
@@ -154,8 +167,13 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 				break;
 
 			case BX_PAYMENT_TYPE_RECURRING:
-				$aCustomer = $this->_retrieveCustomer($sCustomerId)->jsonSerialize();
-				$aSubscription = $this->_retrieveSubscription($sCustomerId, $sOrderId)->jsonSerialize();
+			    $oCustomer = $this->_retrieveCustomer($sCustomerId);
+				$oSubscription = $this->_retrieveSubscription($sCustomerId, $sOrderId);
+				if($oCustomer === false || $oSubscription === false)
+					return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+
+				$aCustomer = $oCustomer->jsonSerialize();
+				$aSubscription = $oSubscription->jsonSerialize();
 				if(empty($aCustomer) || !is_array($aCustomer) || empty($aSubscription) || !is_array($aSubscription))
 					return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
@@ -217,14 +235,19 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         $sPrefix = 'bx-payment-strp-';
         return array(
             array('id' => $sPrefix . 'details', 'name' => $sPrefix . 'details', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".getDetails(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_strp_menu_item_title_details')),
+            array('id' => $sPrefix . 'details_change', 'name' => $sPrefix . 'details_change', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changeDetails(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_strp_menu_item_title_details_change')),
             array('id' => $sPrefix . 'billing', 'name' => $sPrefix . 'billing', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".getBilling(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_strp_menu_item_title_billing')),
-            array('id' => $sPrefix . 'change', 'name' => $sPrefix . 'change', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changeBilling(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_strp_menu_item_title_billing_change')),
+            array('id' => $sPrefix . 'billing_change', 'name' => $sPrefix . 'billing_change', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changeBilling(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_strp_menu_item_title_billing_change')),
         );
     }
 
     public function getDetailsRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
     {
-        $aSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId)->jsonSerialize();
+        $oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId);
+        if($oSubscription === false)
+            return '';
+
+        $aSubscription = $oSubscription->jsonSerialize();
         if(empty($aSubscription) || !is_array($aSubscription))
             return '';
 
@@ -239,6 +262,49 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         	'trial_end' => !empty($aSubscription['trial_end']) ? bx_time_js($aSubscription['trial_end']) : $sNone,
             'cperiod_start' => !empty($aSubscription['current_period_start']) ? bx_time_js($aSubscription['current_period_start']) : $sNone,
         	'cperiod_end' => !empty($aSubscription['current_period_end']) ? bx_time_js($aSubscription['current_period_end']) : $sNone,
+        ));
+    }
+
+    public function changeDetailsRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        $oForm = BxDolForm::getObjectInstance($this->_sFormDetails, $this->_sFormDisplayDetailsEdit, $this->_oModule->_oTemplate);
+        $oForm->aFormAttrs['id'] = $this->_oModule->_oConfig->getHtmlIds('subscription', 'form_subscription_change_details');
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'subscription_change_details/' . $iPendingId;
+
+        $oForm->aInputs['item_id']['values'] = $this->_getDataChangeDetailsRecurring($iPendingId);
+
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+            $aResultError = array('code' => 1, 'message' => _t('_bx_payment_strp_err_details_changed'));
+
+            $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+            list($iVendorId, $iModuleId, $iItemId, $iItemCount) = $this->_oModule->_oConfig->descriptorS2A($aPending['items']);
+
+            $aItem = $this->_oModule->callGetCartItem($iModuleId, array($oForm->getCleanValue('item_id')));
+    		if(empty($aItem) || !is_array($aItem))
+    			return $aResultError;
+
+            $oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId);
+            if($oSubscription === false)
+                return $aResultError;
+
+            $oSubscription->plan = $aItem['name'];
+            $oSubscription->prorate = $this->_bProrate;
+            $oSubscription = $oSubscription->save();
+            if(strcmp($oSubscription->plan->id, $aItem['name']) !== 0)
+                return $aResultError;
+
+            $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
+                'items' => $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $aItem['id'], $iItemCount)),
+            ));
+
+            return array('code' => 0, 'message' => _t('_bx_payment_strp_msg_details_changed'));
+        }
+
+        return $this->_oModule->_oTemplate->parseHtmlByName('strp_details_change_recuring.html', array(
+        	'object' => $this->_oModule->_oConfig->getJsObject('subscription'),
+            'form' => $oForm->getCode(),
+            'form_id' => $oForm->aFormAttrs['id'],
         ));
     }
 
@@ -264,6 +330,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
+            $aResultError = array('code' => 1, 'message' => _t('_bx_payment_strp_err_billing_changed'));
+
             list($iMonth, $iYear) = explode(' ', $oForm->getCleanValue('card_expire'));
 
         	$aToken = $this->_createToken(array(
@@ -273,20 +341,23 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
                 'cvc' => $oForm->getCleanValue('card_cvv')
             ));
             if(empty($aToken) || !is_array($aToken))
-                return array('code' => 1, 'message' => _t('_bx_payment_strp_err_billing_changed'));
+                return $aResultError;
 
             $aCard = $this->_createCard($sCustomerId, $aToken['id']);
             if(empty($aCard) || !is_array($aCard))
-                return array('code' => 1, 'message' => _t('_bx_payment_strp_err_billing_changed'));
+                return $aResultError;
 
             $oCustomer = $this->_retrieveCustomer($sCustomerId);
+            if($oCustomer === false)
+                return $aResultError;
+
             $oCustomer->default_source = $aCard['id'];
             $oCustomer->save();
 
             return array('code' => 0, 'message' => _t('_bx_payment_strp_msg_billing_changed'));
         }
 
-        return $this->_oModule->_oTemplate->parseHtmlByName('strp_card_recuring.html', array(
+        return $this->_oModule->_oTemplate->parseHtmlByName('strp_billing_change_recuring.html', array(
         	'object' => $this->_oModule->_oConfig->getJsObject('subscription'),
             'form' => $oForm->getCode(),
             'form_id' => $oForm->aFormAttrs['id'],
@@ -455,7 +526,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		);
 	}
 
-	protected function _retrieveSubscription($sCustomerId, $sSubscriptionId) {
+	protected function _retrieveSubscription($sCustomerId, $sSubscriptionId)
+	{
 		try {
 			$oCustomer = \Stripe\Customer::retrieve($sCustomerId);
 			$oSubscription = $oCustomer->subscriptions->retrieve($sSubscriptionId);
@@ -465,6 +537,18 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		}
 
 		return $oSubscription;
+	}
+
+    protected function _listPlans()
+	{
+		try {
+			$oPlans = \Stripe\Plan::all();
+		}
+		catch (Exception $oException) {
+			return $this->_processException('List Plans Error: ', $oException);
+		}
+
+		return $oPlans;
 	}
 
     protected function _createCard($sCustomerId, $sToken)
@@ -609,6 +693,46 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
 		return array($aPending, $oCharge);
 	}
+
+    protected function _getDataChangeDetailsRecurring($iPendingId)
+    {
+        $aResult = array();
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        list($iVendorId, $iModuleId, $iItemId) = $this->_oModule->_oConfig->descriptorS2A($aPending['items']);
+        if(empty($iModuleId) || empty($iVendorId) || (int)$iVendorId != (int)$aPending['seller_id'])
+            return $aResult;
+
+        $aItems = $this->_oModule->callGetCartItems((int)$iModuleId, array($iVendorId));
+        if(empty($aItems) || !is_array($aItems))
+            return $aResult;
+
+        $oPlans = $this->_listPlans();
+        if($oPlans === false)
+            return $aResult;
+
+        $aPlans = $oPlans->jsonSerialize();
+        if(empty($aPlans) || !is_array($aPlans) || empty($aPlans['data']) || !is_array($aPlans['data']))
+            return $aResult;
+
+        $aPlans = $aPlans['data'];
+
+        $aPlanNames = array();
+        foreach($aPlans as $aPlan)
+            $aPlanNames[] = $aPlan['id'];
+        if(empty($aPlanNames) || !is_array($aPlanNames))
+            return $aResult;
+
+        foreach($aItems as $aItem) {
+            $fPrice = $this->_oModule->_oConfig->getPrice(BX_PAYMENT_TYPE_RECURRING, $aItem);
+            if($fPrice == 0 || (int)$aItem['id'] == (int)$iItemId || !in_array($aItem['name'], $aPlanNames))
+                continue;
+
+            $aResult[] = array('key' => $aItem['id'], 'value' => $aItem['title']);
+        }
+
+        return $aResult;
+    }
 
 	protected function _getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency) {
 		return md5(implode('#-#', array(

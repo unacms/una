@@ -31,7 +31,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', @sName, 'invites-requests', '_bx_invites_menu_item_title_system_requests', '_bx_invites_menu_item_title_requests', 'page.php?i=invites-requests', '', '_self', '', 'a:2:{s:6:"module";s:10:"bx_invites";s:6:"method";s:23:"get_menu_addon_requests";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', @sName, 'invites-requests', '_bx_invites_menu_item_title_system_admt_requests', '_bx_invites_menu_item_title_admt_requests', 'page.php?i=invites-requests', '', '_self', '', 'a:2:{s:6:"module";s:10:"bx_invites";s:6:"method";s:23:"get_menu_addon_requests";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 
 -- SETTINGS

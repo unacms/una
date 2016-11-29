@@ -432,8 +432,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
     {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aContentInfo[$CNF['FIELD_PICTURE']]))
+            return array();
+
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
-                
+
         return array(
 		    array('url' => $sUrl, 'src' => $oGroupProfile->getPicture()),
 		);

@@ -26,8 +26,11 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
     protected function loadData()
     {
-        $sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
+        $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
+        if(empty($aLanguages) || !is_array($aLanguages) || count($aLanguages) < 2)
+            return;
 
+        $sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
         $this->setSelected('', $sLanguage);
 
         $oPermalink = BxDolPermalinks::getInstance();
@@ -50,8 +53,6 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 			if(!empty($aPageParamsAdd) && is_array($aPageParamsAdd))
 				$aPageParams = array_merge($aPageParams, $aPageParamsAdd);
 		}
-
-        $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
 
         $aItems = array();
         foreach( $aLanguages as $sName => $sLang ) {

@@ -927,6 +927,7 @@
 	<string name="_adm_nav_dsc_items_icon_image"><![CDATA[или загрузить маленькую картинку для отображения рядом со ссылкой.]]></string>
 	<string name="_adm_nav_dsc_items_icon_image_current"><![CDATA[Картинка не загружена. В элементе меню будет использован текст.]]></string>
 	<string name="_adm_nav_dsc_items_link"><![CDATA[Введите URL ссылки]]></string>
+	<string name="_adm_nav_dsc_items_onclick"><![CDATA[Введите корректный JavaScript код для ссылки]]></string>
 	<string name="_adm_nav_dsc_items_submenu"><![CDATA[Выберите, если у ссылки должно быть подменю.]]></string>
 	<string name="_adm_nav_dsc_items_target"><![CDATA[Выберите, если ссылка должна открываться на новой или текущей странице.]]></string>
 	<string name="_adm_nav_dsc_items_title"><![CDATA[Название ссылки для отображения в меню сайта. Используйте как минимум 3 символа.]]></string>
@@ -946,6 +947,7 @@
 	<string name="_adm_nav_err_items_icon_image_remove"><![CDATA[Невозможно удалить изображение иконки: ]]></string>
 	<string name="_adm_nav_err_items_import"><![CDATA[Невозможно импортировать элемент(ы)]]></string>
 	<string name="_adm_nav_err_items_link"><![CDATA[Нужно ввести URL элемента]]></string>
+	<string name="_adm_nav_err_items_onclick"><![CDATA[Нужно ввести OnClick элемента]]></string>
 	<string name="_adm_nav_err_items_show_to"><![CDATA[Невозможно обновить элемент]]></string>
 	<string name="_adm_nav_err_items_title_system"><![CDATA[Необходимо указать название из как минимум 3 символов.]]></string>
 	<string name="_adm_nav_err_menus_create"><![CDATA[Невозможно создать menu]]></string>
@@ -977,6 +979,7 @@
 	<string name="_adm_nav_txt_items_icon_image_old"><![CDATA[Текущая Иконка]]></string>
 	<string name="_adm_nav_txt_items_import_popup"><![CDATA[Импортировать Элементы]]></string>
 	<string name="_adm_nav_txt_items_link"><![CDATA[URL]]></string>
+	<string name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string>
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Отображать "{0}" элемент меню для: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Подменю]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[Без Подменю]]></string>

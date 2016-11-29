@@ -409,6 +409,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                     'caption' => _t('_adm_prm_txt_level_description'),
                     'info' => _t('_adm_prm_dsc_level_description'),
                     'value' => isset($aLevel['description']) ? $aLevel['description'] : '_adm_prm_txt_level',
+                	'code' => 1,
                     'db' => array (
                         'pass' => 'XssHtml',
                     )

@@ -279,6 +279,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		echoJson($aResult);
     }
 
+    public function actionSubscriptionChangeDetails($iId)
+    {
+        $aResult = $this->_oTemplate->displaySubscriptionChangeDetails($iId);
+		echoJson($aResult);
+    }
+
     public function actionSubscriptionGetBilling($iId)
     {
         $aResult = $this->_oTemplate->displaySubscriptionGetBilling($iId);

@@ -65,6 +65,10 @@ $aConfig = array(
      * Transcoders.
      */
     'transcoders' => array(
+        'bx_market_icon',
+        'bx_market_thumb',
+        'bx_market_cover',
+        'bx_market_screenshot',
 		'bx_market_preview',
         'bx_market_gallery',
     ),

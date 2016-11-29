@@ -59,8 +59,8 @@
 
 
 	<!-- Menus -->
-	<string name="_bx_invites_menu_item_title_system_requests"><![CDATA[Invitation requests]]></string>
-	<string name="_bx_invites_menu_item_title_requests"><![CDATA[Invitation requests - {addon} awaiting]]></string>
+	<string name="_bx_invites_menu_item_title_system_admt_requests"><![CDATA[Invitation requests]]></string>
+	<string name="_bx_invites_menu_item_title_admt_requests"><![CDATA[Invitation requests - {addon} awaiting]]></string>
 	<string name="_bx_invites_menu_item_title_requests"><![CDATA[Requests]]></string>
 
 

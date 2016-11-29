@@ -198,6 +198,27 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
     /**
+     * Check if the menu is visible. The menu is visible if at least one menu item is visible.
+     * @return boolean
+     */
+    public function isVisible()
+    {
+    	if(!isset($this->_aObject['menu_items']))
+			$this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
+
+    	$bVisible = false;
+    	foreach ($this->_aObject['menu_items'] as $a) {
+    		if((isset($a['active']) && !$a['active']) || (isset($a['visible_for_levels']) && !$this->_isVisible($a)))
+				continue;
+			
+			$bVisible = true;
+			break;
+    	}
+
+    	return $bVisible;
+    }
+
+    /**
      * Set selected menu item for current menu object only.
      * @param $sModule menu item module to set as selected
      * @param $sName menu item name to set as selected

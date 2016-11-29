@@ -277,6 +277,7 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 -- FORMS: Recurly
 ('bx_payment_form_rcrl_card', @sName, '_bx_payment_form_rcrl_card', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', ''),
 -- FORMS: Stripe
+('bx_payment_form_strp_details', @sName, '_bx_payment_form_strp_details', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', ''),
 ('bx_payment_form_strp_card', @sName, '_bx_payment_form_strp_card', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', '');
 
 
@@ -286,6 +287,7 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 -- FORMS: Recurly
 ('bx_payment_form_rcrl_card_add', @sName, 'bx_payment_form_rcrl_card', '_bx_payment_form_rcrl_card_display_add', 0),
 -- FORMS: Stripe
+('bx_payment_form_strp_details_edit', @sName, 'bx_payment_form_strp_details', '_bx_payment_form_strp_details_display_edit', 0),
 ('bx_payment_form_strp_card_add', @sName, 'bx_payment_form_strp_card', '_bx_payment_form_strp_card_display_add', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
@@ -322,9 +324,14 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_payment_form_rcrl_card', @sName, 'do_cancel', '_bx_payment_form_rcrl_card_input_cancel', '', 0, 'button', '_bx_payment_form_rcrl_card_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
 
 -- FORMS: Stripe
-('bx_payment_form_strp_card', @sName, 'card_number', '', '', 0, 'text', '_bx_payment_form_strp_card_input_card_number_sys', '_bx_payment_form_strp_card_input_card_number', '_bx_payment_form_strp_card_input_card_number_inf', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('bx_payment_form_strp_card', @sName, 'card_expire', '', '', 0, 'text', '_bx_payment_form_strp_card_input_card_expire_sys', '_bx_payment_form_strp_card_input_card_expire', '_bx_payment_form_strp_card_input_card_expire_inf', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('bx_payment_form_strp_card', @sName, 'card_cvv', '', '', 0, 'text', '_bx_payment_form_strp_card_input_card_cvv_sys', '_bx_payment_form_strp_card_input_card_cvv', '_bx_payment_form_strp_card_input_card_cvv_inf', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_strp_details', @sName, 'item_id', '', '', 0, 'select', '_bx_payment_form_strp_details_input_item_id_sys', '_bx_payment_form_strp_details_input_item_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_payment_form_strp_details_input_item_id_err', 'Int', '', 0, 0),
+('bx_payment_form_strp_details', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_strp_details', @sName, 'do_submit', '_bx_payment_form_strp_details_input_submit', '', 0, 'submit', '_bx_payment_form_strp_details_input_submit_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_strp_details', @sName, 'do_cancel', '_bx_payment_form_strp_details_input_cancel', '', 0, 'button', '_bx_payment_form_strp_details_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+
+('bx_payment_form_strp_card', @sName, 'card_number', '', '', 0, 'text', '_bx_payment_form_strp_card_input_card_number_sys', '_bx_payment_form_strp_card_input_card_number', '_bx_payment_form_strp_card_input_card_number_inf', 1, 0, 0, '', '', '', 'Avail', '', '_bx_payment_form_strp_card_input_card_number_err', 'Xss', '', 0, 0),
+('bx_payment_form_strp_card', @sName, 'card_expire', '', '', 0, 'text', '_bx_payment_form_strp_card_input_card_expire_sys', '_bx_payment_form_strp_card_input_card_expire', '_bx_payment_form_strp_card_input_card_expire_inf', 1, 0, 0, '', '', '', 'Avail', '', '_bx_payment_form_strp_card_input_card_expire_err', 'Xss', '', 0, 0),
+('bx_payment_form_strp_card', @sName, 'card_cvv', '', '', 0, 'text', '_bx_payment_form_strp_card_input_card_cvv_sys', '_bx_payment_form_strp_card_input_card_cvv', '_bx_payment_form_strp_card_input_card_cvv_inf', 1, 0, 0, '', '', '', 'Avail', '', '_bx_payment_form_strp_card_input_card_cvv_err', 'Xss', '', 0, 0),
 ('bx_payment_form_strp_card', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_payment_form_strp_card', @sName, 'do_submit', '_bx_payment_form_strp_card_input_submit', '', 0, 'submit', '_bx_payment_form_strp_card_input_submit_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_payment_form_strp_card', @sName, 'do_cancel', '_bx_payment_form_strp_card_input_cancel', '', 0, 'button', '_bx_payment_form_strp_card_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -364,6 +371,11 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_payment_form_rcrl_card_add', 'do_cancel', 2147483647, 1, 12),
 
 -- FORMS: Stripe
+('bx_payment_form_strp_details_edit', 'item_id', 2147483647, 1, 1),
+('bx_payment_form_strp_details_edit', 'controls', 2147483647, 1, 2),
+('bx_payment_form_strp_details_edit', 'do_submit', 2147483647, 1, 3),
+('bx_payment_form_strp_details_edit', 'do_cancel', 2147483647, 1, 4),
+
 ('bx_payment_form_strp_card_add', 'card_number', 2147483647, 1, 1),
 ('bx_payment_form_strp_card_add', 'card_expire', 2147483647, 1, 2),
 ('bx_payment_form_strp_card_add', 'card_cvv', 2147483647, 1, 3),
