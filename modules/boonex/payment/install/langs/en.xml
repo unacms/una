@@ -252,6 +252,7 @@
 	<string name="_bx_payment_pp_err_wrong_amount"><![CDATA[Wrong amount.]]></string>
 	<string name="_bx_payment_pp_err_wrong_custom_data"><![CDATA[Incorrect custom data.]]></string>
 	<string name="_bx_payment_pp_msg_verified"><![CDATA[Payment was successfully accepted.]]></string>
+	<string name="_bx_payment_txt_name_paypal"><![CDATA[PayPal]]></string>
 	<string name="_bx_payment_txt_cart_paypal"><![CDATA[PayPal]]></string>
 
 	<!-- 2Checkout payment provider -->

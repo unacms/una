@@ -203,11 +203,13 @@
 	<string name="_bx_payment_err_not_found_pending"><![CDATA[Обрабатываемый заказ не найден.]]></string>
 	<string name="_bx_payment_err_cannot_perform"><![CDATA[Действие не может быть выполнено. Свяжитесь с нами.]]></string>
 	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Указано неправильное количество.]]></string>
+	<string name="_bx_payment_err_already_processed"><![CDATA[Этот платеж уже обработан.]]></string>
 
 	<!-- Other -->
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[В корзину]]></string>
 	<string name="_bx_payment_txt_subscribe"><![CDATA[Подписаться]]></string>
-	<string name="_bx_payment_txt_payment_to"><![CDATA[Платеж для {0} за:]]></string>
+	<string name="_bx_payment_txt_payment_to"><![CDATA[Платеж для {0}]]></string>
+	<string name="_bx_payment_txt_payment_to_for"><![CDATA[Платеж для {0} за:]]></string>
 	<string name="_bx_payment_txt_checkout_to"><![CDATA[Продолжить оплату в пользу {0}]]></string>
 	<string name="_bx_payment_txt_checkout_with"><![CDATA[Заплатить используя {0}]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Покупатель]]></string>
@@ -249,7 +251,6 @@
 	<string name="_bx_payment_pp_err_wrong_verification_status"><![CDATA[Не получен статус верификации.]]></string>
 	<string name="_bx_payment_pp_err_wrong_amount"><![CDATA[Неправильная сумма платежа.]]></string>
 	<string name="_bx_payment_pp_err_wrong_custom_data"><![CDATA[Неправильные пользовательские данные.]]></string>
-	<string name="_bx_payment_pp_err_already_processed"><![CDATA[Этот платеж был уже обработан.]]></string>
 	<string name="_bx_payment_pp_msg_verified"><![CDATA[Платеж удачно принят.]]></string>
 	<string name="_bx_payment_txt_name_paypal"><![CDATA[PayPal]]></string>
 	<string name="_bx_payment_txt_cart_paypal"><![CDATA[PayPal]]></string>
@@ -419,6 +420,7 @@
 	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Заплатить используя {0}]]></string>
 	<string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Детали]]></string>
+	<string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Изменить детали]]></string>
 	<string name="_bx_payment_strp_menu_item_title_billing"><![CDATA[Реквизиты]]></string>
     <string name="_bx_payment_strp_menu_item_title_billing_change"><![CDATA[Изменить реквизиты]]></string>
     <string name="_bx_payment_strp_txt_plan"><![CDATA[План]]></string>
