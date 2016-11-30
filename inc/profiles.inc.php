@@ -179,6 +179,13 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
 
     $sPassCheck = encryptUserPwd($sPassword, $aAccountInfo['salt']);
 
+	// regenerate password using another encrypt function if necessary
+	bx_alert('system', 'encrypt_password_after', 0, false, array(
+            'info' => $aAccountInfo,
+			'pwd' => $sPassword,
+            'password' => &$sPassCheck,
+        ));		
+	
     if ($sErrorMsg = bx_check_login($aAccountInfo['id'], $sPassCheck, $iRole))
         return $sErrorMsg;
 
