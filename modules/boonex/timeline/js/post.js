@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    Timeline Timeline
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
 function BxTimelinePost(oOptions) {
 	this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
@@ -53,7 +63,12 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
         if(iId <= 0) 
         	return;
 
-        this._getPost(oForm, iId);
+        if($('#' + this._aHtmlIds['main_timeline']).length)
+        	this._getPost(oForm, iId, 'timeline');
+
+        if($('#' + this._aHtmlIds['main_outline']).length)
+        	this._getPost(oForm, iId, 'outline');
+
         this._getForm(oForm, $(oForm).find("input[name = 'type']").val());
 
         return;
@@ -177,30 +192,52 @@ BxTimelinePost.prototype._getForm = function(oElement, sType) {
 	);
 };
 
-BxTimelinePost.prototype._getPost = function(oElement, iPostId) {
+BxTimelinePost.prototype._getPost = function(oElement, iId, sView) {
     var $this = this;
     var oData = this._getDefaultData();
-    oData['id'] = iPostId;
+    oData['id'] = iId;
+    oData['view'] = sView;
 
-    var oView = $(this.sIdView);
-    this.loadingInBlock(oView, true);
+    var oElementView = $('#' + this._aHtmlIds['main_' + sView]);
+    this.loadingInBlock(oElementView, true);
 
     jQuery.post (
         this._sActionsUrl + 'get_post/',
         oData,
         function(oData) {
-        	$this.loadingInBlock(oView, false);
+        	$this.loadingInBlock(oElementView, false);
 
-        	if($.trim(oData.item).length) {
-        		if(!oView.find('.' + $this.sSP + '-load-more').is(':visible'))
-        			oView.find('.' + $this.sSP + '-load-more').show();
-
-        		if(oView.find('.' + $this.sSP + '-empty').is(':visible'))
-        			oView.find('.' + $this.sSP + '-empty').hide();
-
-        		$this.prependMasonry($(oData.item).bxTime());
-        	}
+        	$this.processResult(oData);
         },
         'json'
     );
+};
+
+BxTimelinePost.prototype._onGetPost = function(oData) {
+	if(!$.trim(oData.item).length) 
+		return;
+
+	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
+
+	var oLoadMore = oView.find('.' + this.sSP + '-load-more');
+	if(!oLoadMore.is(':visible'))
+		oLoadMore.show();
+
+	var oEmpty = oView.find('.' + this.sSP + '-empty');
+	if(oEmpty.is(':visible'))
+		oEmpty.hide();
+
+	switch(oData.view) {
+		case 'timeline':
+			var oViewTimeline = $('#' + this._aHtmlIds['main_timeline']);
+			if(!oViewTimeline.find('.' + this.sClassDividerToday).is(':visible'))
+				oViewTimeline.find('.' + this.sClassDividerToday).show();
+		
+			oViewTimeline.find('.' + this.sClassDividerToday).after($(oData.item).bxTime().hide()).next('.' + this.sClassItem + ':hidden').bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
+			break;
+
+		case 'outline':
+			this.prependMasonry($(oData.item).bxTime());
+			break;
+	}
 };

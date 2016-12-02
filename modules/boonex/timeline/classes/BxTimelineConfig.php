@@ -108,23 +108,33 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'share' => 'oTimelineShare'
         );
 
-        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $sHp = str_replace('_', '-', $this->_sName);
+        $sHpT = BX_TIMELINE_VIEW_TIMELINE;
+        $sHpO = BX_TIMELINE_VIEW_OUTLINE;
         $this->_aHtmlIds = array(
-            'view' => array(
-        		'main' => $sHtmlPrefix,
-        		'item' => $sHtmlPrefix . '-item-',
-                'menu_popup' => $sHtmlPrefix . '-menu-popup-',
-                'photo_popup' => $sHtmlPrefix . '-photo-popup',
+        	'view' => array(
+                'main_' . $sHpT => $sHp . '-' . $sHpT,
+        		'item_' . $sHpT => $sHp . '-item-' . $sHpT . '-',
+                'photo_popup_' . $sHpT => $sHp . '-photo-popup-' . $sHpT,
+
+        		'main_' . $sHpO => $sHp . '-' . $sHpO,
+        		'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
+                'photo_popup_' . $sHpO => $sHp . '-photo-popup-' . $sHpO,
+
+				'menu_popup' => $sHp . '-menu-popup-',
             ),
             'post' => array(
-                'attach_link_popup' =>  $sHtmlPrefix . '-attach-link-popup',
-                'attach_link_form_field' => $sHtmlPrefix . '-attach-link-form_field',
-                'attach_link_item' => $sHtmlPrefix . '-attach-link-item-',
+                'attach_link_popup' =>  $sHp . '-attach-link-popup',
+                'attach_link_form_field' => $sHp . '-attach-link-form_field',
+                'attach_link_item' => $sHp . '-attach-link-item-',
+
+            	'main_' . $sHpT => $sHp . '-' . $sHpT,
+            	'main_' . $sHpO => $sHp . '-' . $sHpO,
             ),
             'share' => array(
-                'main' => $sHtmlPrefix . '-share-',
-                'counter' => $sHtmlPrefix . '-share-counter-',
-                'by_popup' => $sHtmlPrefix . '-share-by-',
+                'main' => $sHp . '-share-',
+                'counter' => $sHp . '-share-counter-',
+                'by_popup' => $sHp . '-share-by-',
             )
         );
 

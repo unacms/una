@@ -59,13 +59,15 @@
 	<string name="_bx_timeline_page_title_account"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_post"><![CDATA[Post to Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view"><![CDATA[Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Post to Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Post to Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Timeline]]></string>	
+	<string name="_bx_timeline_page_block_title_view_profile_outline"><![CDATA[Outline]]></string>
 	<string name="_bx_timeline_page_block_title_item"><![CDATA[Item]]></string>
 	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Subscriptions Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Outline]]></string>
+	<string name="_bx_timeline_page_block_title_view_account_outline"><![CDATA[Subscriptions Outline]]></string>
+	<string name="_bx_timeline_page_block_title_post_home"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_home_outline"><![CDATA[Outline]]></string>
 	<string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Timelines' Comments]]></string>
 
     <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>
@@ -130,6 +132,7 @@
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[timeline post's comment]]></string>
     <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[timeline post's vote]]></string>
+    <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
 
 	<string name="_bx_timeline_txt_do_share"><![CDATA[Repost]]></string>
 	<string name="_bx_timeline_txt_shared"><![CDATA[Reposted {0}'s {1}.]]></string>

@@ -22,13 +22,9 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         parent::__construct($aObject, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance('bx_timeline');
-
-        $this->addMarkers(array(
-            'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
-        ));
     }
 
-    public function setEvent($aEvent)
+    public function setEvent($sView, $aEvent)
     {
         if(empty($aEvent) || !is_array($aEvent))
             return;
@@ -44,6 +40,9 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         }
 
         $this->addMarkers(array(
+        	'js_object_view' => $this->_oModule->_oConfig->getJsObject('view_' . $sView),
+
+            'view' => $sView,
             'content_id' => $aEvent['id'],
 
             'comment_system' => $sCommentsSystem,

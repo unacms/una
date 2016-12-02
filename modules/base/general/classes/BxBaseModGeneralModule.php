@@ -468,6 +468,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return array(
             'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
             'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'votes' => $aVotes,
