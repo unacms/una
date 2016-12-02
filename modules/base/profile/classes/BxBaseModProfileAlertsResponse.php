@@ -42,7 +42,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         // timeline events to override permissions
         switch ($oAlert->sAction) {
         case 'timeline_view':
-            $this->processTimelineView($oAlert, $oAlert->iObject, true);
+            $this->processTimelineView($oAlert, $oAlert->iObject);
             break;
 
         case 'timeline_comment':
@@ -71,6 +71,8 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
         if (!$oGroupProfile) 
             return;
+
+        $bDisableOwnerActions = !BxDolService::call($oGroupProfile->getModule(), 'act_as_profile');
 
         $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
         if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedView($aContentInfo)) {
