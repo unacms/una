@@ -32,6 +32,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'jquery.ba-resize.min.js',
         	'autosize.min.js',
             'masonry.pkgd.min.js',
+            'modernizr.js',
         	'flickity/flickity.pkgd.min.js',
             'post.js',
             'share.js',
@@ -552,6 +553,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('view');
@@ -588,13 +591,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !$bAuthorIcon,
                 'content' => array()
             ),
-            'bx_if:show_item_icon' => array(
-                'condition' => !empty($aEvent['icon']),
-                'content' => array(
-            		'style_prefix' => $sStylePrefix,
-                    'item_icon' => $aEvent['icon'],
-                )
-            ),
+            'item_icon' => !empty($aEvent['icon']) ? $aEvent['icon'] : $CNF['ICON'],
             'item_owner_url' => $sAuthorUrl,
             'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName,
