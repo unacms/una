@@ -21,7 +21,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_general_item_bg_color_hover'), '_bx_protean_stg_cpt_option_general_item_bg_color_hover', 'rgba(196, 248, 156, 0.2)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_general_item_bg_color_hover'), '_bx_protean_stg_cpt_option_general_item_bg_color_hover', 'rgba(210, 230, 250, 0.3)', 'rgba', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_general_item_bg_color_active'), '_bx_protean_stg_cpt_option_general_item_bg_color_active', 'rgba(196, 248, 156, 0.4)', 'rgba', '', '', '', 2);
 
 
@@ -31,9 +31,9 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_header_height'), '_bx_protean_stg_cpt_option_header_height', '3rem', 'digit', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_header_content_padding'), '_bx_protean_stg_cpt_option_header_content_padding', '0px', 'digit', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_header_bg_color'), '_bx_protean_stg_cpt_option_header_bg_color', 'rgba(59, 134, 134, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_header_height'), '_bx_protean_stg_cpt_option_header_height', '4rem', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_header_content_padding'), '_bx_protean_stg_cpt_option_header_content_padding', '0.5rem', 'digit', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_header_bg_color'), '_bx_protean_stg_cpt_option_header_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_header_bg_image'), '_bx_protean_stg_cpt_option_header_bg_image', '', 'image', '', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_header_bg_image_repeat'), '_bx_protean_stg_cpt_option_header_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_header_bg_image_size'), '_bx_protean_stg_cpt_option_header_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 6),
@@ -41,13 +41,13 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_site_logo_alt'), '_bx_protean_stg_cpt_option_site_logo_alt', '', 'text', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_site_logo_width'), '_bx_protean_stg_cpt_option_site_logo_width', '240', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_site_logo_height'), '_bx_protean_stg_cpt_option_site_logo_height', '48', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_header_border_color'), '_bx_protean_stg_cpt_option_header_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_header_border_size'), '_bx_protean_stg_cpt_option_header_border_size', '0px', 'digit', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_header_shadow'), '_bx_protean_stg_cpt_option_header_shadow', 'none', 'digit', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_header_icon_color'), '_bx_protean_stg_cpt_option_header_icon_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_header_icon_color_hover'), '_bx_protean_stg_cpt_option_header_icon_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 15),
-(@iCategoryId, CONCAT(@sName, '_header_link_color'), '_bx_protean_stg_cpt_option_header_link_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 16),
-(@iCategoryId, CONCAT(@sName, '_header_link_color_hover'), '_bx_protean_stg_cpt_option_header_link_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 17);
+(@iCategoryId, CONCAT(@sName, '_header_border_color'), '_bx_protean_stg_cpt_option_header_border_color', 'rgba(0, 0, 0, 0.2)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_header_border_size'), '_bx_protean_stg_cpt_option_header_border_size', '1px', 'digit', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_header_shadow'), '_bx_protean_stg_cpt_option_header_shadow', '0px 1px 3px 0px rgba(0, 0, 0, 0.05)', 'digit', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_header_icon_color'), '_bx_protean_stg_cpt_option_header_icon_color', 'rgba(30, 150, 250, 0.8)', 'rgba', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_header_icon_color_hover'), '_bx_protean_stg_cpt_option_header_icon_color_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_header_link_color'), '_bx_protean_stg_cpt_option_header_link_color', 'rgba(30, 150, 250, 0.8)', 'rgba', '', '', '', 16),
+(@iCategoryId, CONCAT(@sName, '_header_link_color_hover'), '_bx_protean_stg_cpt_option_header_link_color_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 17);
 
 -- SETTINGS: Protean template Styles Footer
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -55,19 +55,19 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_footer_bg_color'), '_bx_protean_stg_cpt_option_footer_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_footer_bg_color'), '_bx_protean_stg_cpt_option_footer_bg_color', 'rgba(30, 150, 250, 0.5)', 'rgba', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_footer_bg_image'), '_bx_protean_stg_cpt_option_footer_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_footer_bg_image_repeat'), '_bx_protean_stg_cpt_option_footer_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_footer_bg_image_size'), '_bx_protean_stg_cpt_option_footer_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_footer_content_padding'), '_bx_protean_stg_cpt_option_footer_content_padding', '0px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_footer_border_color'), '_bx_protean_stg_cpt_option_footer_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_footer_content_padding'), '_bx_protean_stg_cpt_option_footer_content_padding', '1rem', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_footer_border_color'), '_bx_protean_stg_cpt_option_footer_border_color', 'rgba(0, 0, 0, 1)', 'rgba', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_footer_border_size'), '_bx_protean_stg_cpt_option_footer_border_size', '1px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_footer_shadow'), '_bx_protean_stg_cpt_option_footer_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_footer_font_color'), '_bx_protean_stg_cpt_option_footer_font_color', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_footer_icon_color'), '_bx_protean_stg_cpt_option_footer_icon_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_footer_icon_color_hover'), '_bx_protean_stg_cpt_option_footer_icon_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_footer_link_color'), '_bx_protean_stg_cpt_option_footer_link_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_footer_link_color_hover'), '_bx_protean_stg_cpt_option_footer_link_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 13);
+(@iCategoryId, CONCAT(@sName, '_footer_font_color'), '_bx_protean_stg_cpt_option_footer_font_color', 'rgba(40, 50, 60, 0.9)', 'rgba', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_footer_icon_color'), '_bx_protean_stg_cpt_option_footer_icon_color', 'rgba(10, 120, 220, 1)', 'rgba', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_footer_icon_color_hover'), '_bx_protean_stg_cpt_option_footer_icon_color_hover', 'rgba(10, 120, 220, 1)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_footer_link_color'), '_bx_protean_stg_cpt_option_footer_link_color', 'rgba(10, 120, 220, 1)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_footer_link_color_hover'), '_bx_protean_stg_cpt_option_footer_link_color_hover', 'rgba(10, 120, 220, 1)', 'rgba', '', '', '', 13);
 
 -- SETTINGS: Protean template Styles Body
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -75,15 +75,15 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_body_bg_color'), '_bx_protean_stg_cpt_option_body_bg_color', 'rgb(255, 255, 255)', 'rgb', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_body_bg_color'), '_bx_protean_stg_cpt_option_body_bg_color', 'rgb(230, 240, 250)', 'rgb', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_body_bg_image'), '_bx_protean_stg_cpt_option_body_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_body_bg_image_repeat'), '_bx_protean_stg_cpt_option_body_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_body_bg_image_size'), '_bx_protean_stg_cpt_option_body_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_page_width'), '_bx_protean_stg_cpt_option_page_width', '1024', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_body_icon_color'), '_bx_protean_stg_cpt_option_body_icon_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_body_icon_color_hover'), '_bx_protean_stg_cpt_option_body_icon_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_body_link_color'), '_bx_protean_stg_cpt_option_body_link_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_body_link_color_hover'), '_bx_protean_stg_cpt_option_body_link_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 9);
+(@iCategoryId, CONCAT(@sName, '_body_icon_color'), '_bx_protean_stg_cpt_option_body_icon_color', 'rgba(30, 150, 250, 0.9)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_body_icon_color_hover'), '_bx_protean_stg_cpt_option_body_icon_color_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_body_link_color'), '_bx_protean_stg_cpt_option_body_link_color', 'rgba(30, 150, 250, 0.9)', 'rgba', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_body_link_color_hover'), '_bx_protean_stg_cpt_option_body_link_color_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 9);
 
 
 -- SETTINGS: Protean template Styles Cover
@@ -92,10 +92,10 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_cover_height'), '_bx_protean_stg_cpt_option_cover_height', '40vh', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_cover_height'), '_bx_protean_stg_cpt_option_cover_height', '30vh', 'digit', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_cover_bg_color'), '_bx_protean_stg_cpt_option_cover_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_cover_content_padding'), '_bx_protean_stg_cpt_option_cover_content_padding', '20px 20px 20px 20px', 'digit', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_cover_border_color'), '_bx_protean_stg_cpt_option_cover_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_cover_content_padding'), '_bx_protean_stg_cpt_option_cover_content_padding', '2rem 3rem 2rem 3rem', 'digit', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_cover_border_color'), '_bx_protean_stg_cpt_option_cover_border_color', 'rgba(208, 208, 208, 0)', 'rgba', '', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_cover_border_size'), '_bx_protean_stg_cpt_option_cover_border_size', '0px', 'digit', '', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_cover_border_radius'), '_bx_protean_stg_cpt_option_cover_border_radius', '0px', 'digit', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_cover_shadow'), '_bx_protean_stg_cpt_option_cover_shadow', 'none', 'digit', '', '', '', 7),
@@ -103,9 +103,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_cover_icon_border_size'), '_bx_protean_stg_cpt_option_cover_icon_border_size', '1px', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_cover_icon_border_radius'), '_bx_protean_stg_cpt_option_cover_icon_border_radius', '3px', 'digit', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_cover_icon_shadow'), '_bx_protean_stg_cpt_option_cover_icon_shadow', 'none', 'digit', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_cover_text_align'), '_bx_protean_stg_cpt_option_cover_text_align', 'center', 'select', 'left,center,right', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_cover_text_shadow'), '_bx_protean_stg_cpt_option_cover_text_shadow', '-1px 0px 0px rgba(0, 0, 0, 0.3), 1px 0px 0px rgba(0, 0, 0, 0.3), 0px -1px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px rgba(0, 0, 0, 0.3)', 'digit', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_cover_font_family'), '_bx_protean_stg_cpt_option_cover_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_cover_text_align'), '_bx_protean_stg_cpt_option_cover_text_align', 'left', 'select', 'left,center,right', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_cover_text_shadow'), '_bx_protean_stg_cpt_option_cover_text_shadow', '0px 1px 3px rgba(0, 0, 0, .3)', 'digit', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_cover_font_family'), '_bx_protean_stg_cpt_option_cover_font_family', 'Arial, sans-serif', 'digit', '', '', '', 14),
 (@iCategoryId, CONCAT(@sName, '_cover_font_size'), '_bx_protean_stg_cpt_option_cover_font_size', '2.0rem', 'digit', '', '', '', 15),
 (@iCategoryId, CONCAT(@sName, '_cover_font_color'), '_bx_protean_stg_cpt_option_cover_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 16),
 (@iCategoryId, CONCAT(@sName, '_cover_font_weight'), '_bx_protean_stg_cpt_option_cover_font_weight', '700', 'digit', '', '', '', 17);
@@ -117,26 +117,26 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_block_bg_color'), '_bx_protean_stg_cpt_option_block_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_block_bg_color'), '_bx_protean_stg_cpt_option_block_bg_color', 'rgba(245, 250, 255, 0.9)', 'rgba', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_block_bg_image'), '_bx_protean_stg_cpt_option_block_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_block_bg_image_repeat'), '_bx_protean_stg_cpt_option_block_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_block_bg_image_size'), '_bx_protean_stg_cpt_option_block_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_block_content_padding'), '_bx_protean_stg_cpt_option_block_content_padding', '20px 0px 0px 0px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_block_border_color'), '_bx_protean_stg_cpt_option_block_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_block_content_padding'), '_bx_protean_stg_cpt_option_block_content_padding', '1rem', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_block_border_color'), '_bx_protean_stg_cpt_option_block_border_color', 'rgba(0, 0, 0, 0)', 'rgba', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_block_border_size'), '_bx_protean_stg_cpt_option_block_border_size', '0px', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_block_border_radius'), '_bx_protean_stg_cpt_option_block_border_radius', '0px', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_block_shadow'), '_bx_protean_stg_cpt_option_block_shadow', 'none', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_block_title_bg_color'), '_bx_protean_stg_cpt_option_block_title_bg_color', 'rgba(255, 255, 255, 1.0)', 'rgba', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_protean_stg_cpt_option_block_title_padding', '0px', 'digit', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_block_title_border_color'), '_bx_protean_stg_cpt_option_block_title_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_block_border_radius'), '_bx_protean_stg_cpt_option_block_border_radius', '3px', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_block_shadow'), '_bx_protean_stg_cpt_option_block_shadow', '0px 1px 2px 0px rgba(0, 0, 0, 0.05);', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_block_title_bg_color'), '_bx_protean_stg_cpt_option_block_title_bg_color', 'rgba(255, 255, 255, 0)', 'rgba', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_protean_stg_cpt_option_block_title_padding', '0.3rem 1rem 0rem 1rem', 'digit', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_block_title_border_color'), '_bx_protean_stg_cpt_option_block_title_border_color', 'rgba(0, 0, 0, 0)', 'rgba', '', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_block_title_border_size'), '_bx_protean_stg_cpt_option_block_title_border_size', '0px', 'digit', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_block_title_border_radius'), '_bx_protean_stg_cpt_option_block_title_border_radius', '0px', 'digit', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_protean_stg_cpt_option_block_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 15),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_protean_stg_cpt_option_block_title_font_size', '1.5rem', 'digit', '', '', '', 16),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_protean_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 20, 1)', 'rgba', '', '', '', 17),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_weight'), '_bx_protean_stg_cpt_option_block_title_font_weight', '500', 'digit', '', '', '', 18),
-(@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_protean_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 19),
-(@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_protean_stg_cpt_option_block_title_div_bg_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 20);
+(@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_protean_stg_cpt_option_block_title_font_family', 'Arial, sans-serif', 'digit', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_protean_stg_cpt_option_block_title_font_size', '1rem', 'digit', '', '', '', 16),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_protean_stg_cpt_option_block_title_font_color', 'rgba(40, 50, 60, 0.8)', 'rgba', '', '', '', 17),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_weight'), '_bx_protean_stg_cpt_option_block_title_font_weight', '700', 'digit', '', '', '', 18),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_protean_stg_cpt_option_block_title_div_height', '0px', 'digit', '', '', '', 19),
+(@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_protean_stg_cpt_option_block_title_div_bg_color', 'rgba(40, 60, 80, 0)', 'rgba', '', '', '', 20);
 
 
 -- SETTINGS: Protean template Styles Card
@@ -145,15 +145,15 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_card_bg_color'), '_bx_protean_stg_cpt_option_card_bg_color', 'rgba(242, 242, 242, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_card_bg_color'), '_bx_protean_stg_cpt_option_card_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_card_bg_image'), '_bx_protean_stg_cpt_option_card_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_card_bg_image_repeat'), '_bx_protean_stg_cpt_option_card_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_card_bg_image_size'), '_bx_protean_stg_cpt_option_card_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_card_content_padding'), '_bx_protean_stg_cpt_option_card_content_padding', '20px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_card_border_color'), '_bx_protean_stg_cpt_option_card_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_card_border_size'), '_bx_protean_stg_cpt_option_card_border_size', '0px', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_card_content_padding'), '_bx_protean_stg_cpt_option_card_content_padding', '1rem', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_card_border_color'), '_bx_protean_stg_cpt_option_card_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_card_border_size'), '_bx_protean_stg_cpt_option_card_border_size', '1px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_card_border_radius'), '_bx_protean_stg_cpt_option_card_border_radius', '3px', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_card_shadow'), '_bx_protean_stg_cpt_option_card_shadow', 'none', 'digit', '', '', '', 9);
+(@iCategoryId, CONCAT(@sName, '_card_shadow'), '_bx_protean_stg_cpt_option_card_shadow', '0px 1px 3px 0px rgba(0, 0, 0, 0.05)', 'digit', '', '', '', 9);
 
 
 -- SETTINGS: Protean template Styles Popups
@@ -167,15 +167,15 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_popup_bg_image_repeat'), '_bx_protean_stg_cpt_option_popup_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_popup_bg_image_size'), '_bx_protean_stg_cpt_option_popup_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_popup_content_padding'), '_bx_protean_stg_cpt_option_popup_content_padding', '1.25rem', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_popup_border_color'), '_bx_protean_stg_cpt_option_popup_border_color', 'rgba(56, 61, 102, 1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_popup_border_color'), '_bx_protean_stg_cpt_option_popup_border_color', 'rgba(0, 0, 0, 0.2)', 'rgba', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_popup_border_size'), '_bx_protean_stg_cpt_option_popup_border_size', '1px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_popup_border_radius'), '_bx_protean_stg_cpt_option_popup_border_radius', '3px', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_popup_shadow'), '_bx_protean_stg_cpt_option_popup_shadow', 'none', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_popup_title_bg_color'), '_bx_protean_stg_cpt_option_popup_title_bg_color', 'rgba(40, 60, 80, 0.9)', 'rgba', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_popup_shadow'), '_bx_protean_stg_cpt_option_popup_shadow', '0px 1px 5px 0px rgba(0, 0, 0, 0.05)', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_popup_title_bg_color'), '_bx_protean_stg_cpt_option_popup_title_bg_color', 'rgba(230, 240, 250, 0.9)', 'rgba', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_popup_title_padding'), '_bx_protean_stg_cpt_option_popup_title_padding', '1.25rem', 'digit', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_popup_title_font_family'), '_bx_protean_stg_cpt_option_popup_title_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_popup_title_font_size'), '_bx_protean_stg_cpt_option_popup_title_font_size', '1.5rem', 'digit', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_popup_title_font_color'), '_bx_protean_stg_cpt_option_popup_title_font_color', 'rgba(255, 255, 255, 1.0)', 'rgba', '', '', '', 14);
+(@iCategoryId, CONCAT(@sName, '_popup_title_font_family'), '_bx_protean_stg_cpt_option_popup_title_font_family', 'Arial, sans-serif', 'digit', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_popup_title_font_size'), '_bx_protean_stg_cpt_option_popup_title_font_size', '1rem', 'digit', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_popup_title_font_color'), '_bx_protean_stg_cpt_option_popup_title_font_color', 'rgba(40, 50, 60, 0.9)', 'rgba', '', '', '', 14);
 
 
 -- SETTINGS: Protean template Styles Main Menu
@@ -189,16 +189,16 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_menu_main_bg_image_repeat'), '_bx_protean_stg_cpt_option_menu_main_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_menu_main_bg_image_size'), '_bx_protean_stg_cpt_option_menu_main_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_menu_main_content_padding'), '_bx_protean_stg_cpt_option_menu_main_content_padding', '0px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_menu_main_border_color'), '_bx_protean_stg_cpt_option_menu_main_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_menu_main_border_color'), '_bx_protean_stg_cpt_option_menu_main_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_menu_main_border_size'), '_bx_protean_stg_cpt_option_menu_main_border_size', '0px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_menu_main_shadow'), '_bx_protean_stg_cpt_option_menu_main_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_menu_main_font_family'), '_bx_protean_stg_cpt_option_menu_main_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_menu_main_font_size'), '_bx_protean_stg_cpt_option_menu_main_font_size', '1.125rem', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_menu_main_font_color'), '_bx_protean_stg_cpt_option_menu_main_font_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_menu_main_font_color_hover'), '_bx_protean_stg_cpt_option_menu_main_font_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_menu_main_font_color_active'), '_bx_protean_stg_cpt_option_menu_main_font_color_active', 'rgba(0, 0, 0, 1)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_menu_main_font_family'), '_bx_protean_stg_cpt_option_menu_main_font_family', 'Arial, sans-serif', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_menu_main_font_size'), '_bx_protean_stg_cpt_option_menu_main_font_size', '1rem', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_menu_main_font_color'), '_bx_protean_stg_cpt_option_menu_main_font_color', 'rgba(40, 50, 60, 0.8)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_menu_main_font_color_hover'), '_bx_protean_stg_cpt_option_menu_main_font_color_hover', 'rgba(40, 50, 60, 0.9)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_menu_main_font_color_active'), '_bx_protean_stg_cpt_option_menu_main_font_color_active', 'rgba(20, 30, 40, 1)', 'rgba', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_menu_main_font_shadow'), '_bx_protean_stg_cpt_option_menu_main_font_shadow', 'none', 'digit', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_menu_main_font_weight'), '_bx_protean_stg_cpt_option_menu_main_font_weight', '400', 'digit', '', '', '', 15);
+(@iCategoryId, CONCAT(@sName, '_menu_main_font_weight'), '_bx_protean_stg_cpt_option_menu_main_font_weight', '700', 'digit', '', '', '', 15);
 
 
 -- SETTINGS: Protean template Styles Page Menu
@@ -207,19 +207,19 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_menu_page_bg_color'), '_bx_protean_stg_cpt_option_menu_page_bg_color', 'rgba(242, 242, 242, 1)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_menu_page_bg_color'), '_bx_protean_stg_cpt_option_menu_page_bg_color', 'rgba(255, 255, 255, 0.9)', 'rgba', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_menu_page_bg_image'), '_bx_protean_stg_cpt_option_menu_page_bg_image', '', 'image', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_menu_page_bg_image_repeat'), '_bx_protean_stg_cpt_option_menu_page_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_menu_page_bg_image_size'), '_bx_protean_stg_cpt_option_menu_page_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_menu_page_content_padding'), '_bx_protean_stg_cpt_option_menu_page_content_padding', '0px', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_menu_page_border_color'), '_bx_protean_stg_cpt_option_menu_page_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_menu_page_border_size'), '_bx_protean_stg_cpt_option_menu_page_border_size', '0px', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_menu_page_content_padding'), '_bx_protean_stg_cpt_option_menu_page_content_padding', '0.3rem', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_menu_page_border_color'), '_bx_protean_stg_cpt_option_menu_page_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_menu_page_border_size'), '_bx_protean_stg_cpt_option_menu_page_border_size', '1px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_menu_page_shadow'), '_bx_protean_stg_cpt_option_menu_page_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_menu_page_font_family'), '_bx_protean_stg_cpt_option_menu_page_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_menu_page_font_size'), '_bx_protean_stg_cpt_option_menu_page_font_size', '1.2rem', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_menu_page_font_color'), '_bx_protean_stg_cpt_option_menu_page_font_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_menu_page_font_color_hover'), '_bx_protean_stg_cpt_option_menu_page_font_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_menu_page_font_color_active'), '_bx_protean_stg_cpt_option_menu_page_font_color_active', 'rgba(0, 0, 0, 1)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_menu_page_font_family'), '_bx_protean_stg_cpt_option_menu_page_font_family', 'Arial, sans-serif', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_menu_page_font_size'), '_bx_protean_stg_cpt_option_menu_page_font_size', '1rem', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_menu_page_font_color'), '_bx_protean_stg_cpt_option_menu_page_font_color', 'rgba(40, 50, 60, 0.8)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_menu_page_font_color_hover'), '_bx_protean_stg_cpt_option_menu_page_font_color_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_menu_page_font_color_active'), '_bx_protean_stg_cpt_option_menu_page_font_color_active', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_menu_page_font_shadow'), '_bx_protean_stg_cpt_option_menu_page_font_shadow', 'none', 'digit', '', '', '', 14),
 (@iCategoryId, CONCAT(@sName, '_menu_page_font_weight'), '_bx_protean_stg_cpt_option_menu_page_font_weight', '400', 'digit', '', '', '', 15);
 
@@ -235,14 +235,14 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_menu_slide_bg_image_repeat'), '_bx_protean_stg_cpt_option_menu_slide_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_bg_image_size'), '_bx_protean_stg_cpt_option_menu_slide_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_content_padding'), '_bx_protean_stg_cpt_option_menu_slide_content_padding', '1.25rem', 'digit', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_menu_slide_border_color'), '_bx_protean_stg_cpt_option_menu_slide_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_border_color'), '_bx_protean_stg_cpt_option_menu_slide_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_border_size'), '_bx_protean_stg_cpt_option_menu_slide_border_size', '1px 0px 1px 0px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_shadow'), '_bx_protean_stg_cpt_option_menu_slide_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_menu_slide_font_family'), '_bx_protean_stg_cpt_option_menu_slide_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_font_family'), '_bx_protean_stg_cpt_option_menu_slide_font_family', 'Arial, sans-serif', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_font_size'), '_bx_protean_stg_cpt_option_menu_slide_font_size', '1.0rem', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_menu_slide_font_color'), '_bx_protean_stg_cpt_option_menu_slide_font_color', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_menu_slide_font_color_hover'), '_bx_protean_stg_cpt_option_menu_slide_font_color_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_menu_slide_font_color_active'), '_bx_protean_stg_cpt_option_menu_slide_font_color_active', 'rgba(0, 0, 0, 1)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_font_color'), '_bx_protean_stg_cpt_option_menu_slide_font_color', 'rgba(40, 50, 60, 0.8)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_font_color_hover'), '_bx_protean_stg_cpt_option_menu_slide_font_color_hover', 'rgba(40, 50, 60, 0.9)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_menu_slide_font_color_active'), '_bx_protean_stg_cpt_option_menu_slide_font_color_active', 'rgba(20, 30, 40, 1)', 'rgba', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_font_shadow'), '_bx_protean_stg_cpt_option_menu_slide_font_shadow', 'none', 'digit', '', '', '', 14),
 (@iCategoryId, CONCAT(@sName, '_menu_slide_font_weight'), '_bx_protean_stg_cpt_option_menu_slide_font_weight', '400', 'digit', '', '', '', 15);
 
@@ -253,16 +253,16 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_form_input_height'), '_bx_protean_stg_cpt_option_form_input_height', '2.2rem', 'digit', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_form_input_bg_color'), '_bx_protean_stg_cpt_option_form_input_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_form_input_height'), '_bx_protean_stg_cpt_option_form_input_height', '2rem', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_form_input_bg_color'), '_bx_protean_stg_cpt_option_form_input_bg_color', 'rgba(255, 255, 255, 0.8)', 'rgba', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_form_input_bg_color_active'), '_bx_protean_stg_cpt_option_form_input_bg_color_active', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_form_input_border_color'), '_bx_protean_stg_cpt_option_form_input_border_color', 'rgba(121, 189, 154, 1)', 'rgba', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_form_input_border_color_active'), '_bx_protean_stg_cpt_option_form_input_border_color_active', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_form_input_border_size'), '_bx_protean_stg_cpt_option_form_input_border_size', '2px', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_form_input_shadow'), '_bx_protean_stg_cpt_option_form_input_shadow', 'none', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_form_input_font_family'), '_bx_protean_stg_cpt_option_form_input_font_family', 'Helvetica, Arial, sans-serif', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_form_input_font_size'), '_bx_protean_stg_cpt_option_form_input_font_size', '1.125rem', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_form_input_font_color'), '_bx_protean_stg_cpt_option_form_input_font_color', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 10);
+(@iCategoryId, CONCAT(@sName, '_form_input_border_color'), '_bx_protean_stg_cpt_option_form_input_border_color', 'rgba(40, 60, 80, 0.5)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_color_active'), '_bx_protean_stg_cpt_option_form_input_border_color_active', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_form_input_border_size'), '_bx_protean_stg_cpt_option_form_input_border_size', '1px', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_form_input_shadow'), '_bx_protean_stg_cpt_option_form_input_shadow', 'inset 0px 0px 2px 1px rgba(0,0,0,0.15);', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_family'), '_bx_protean_stg_cpt_option_form_input_font_family', 'Arial, sans-serif', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_size'), '_bx_protean_stg_cpt_option_form_input_font_size', '1rem', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_form_input_font_color'), '_bx_protean_stg_cpt_option_form_input_font_color', 'rgba(20, 30, 40, 1)', 'rgba', '', '', '', 10);
 
 
 -- SETTINGS: Protean template Styles Large Buttons
@@ -271,20 +271,20 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_button_lg_height'), '_bx_protean_stg_cpt_option_button_lg_height', '2.25rem', 'digit', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_button_lg_bg_color'), '_bx_protean_stg_cpt_option_button_lg_bg_color', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_button_lg_bg_color_hover'), '_bx_protean_stg_cpt_option_button_lg_bg_color_hover', 'rgba(58, 134, 134, 1)', 'rgba', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_button_lg_border_color'), '_bx_protean_stg_cpt_option_button_lg_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_button_lg_border_color_hover'), '_bx_protean_stg_cpt_option_button_lg_border_color_hover', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_button_lg_height'), '_bx_protean_stg_cpt_option_button_lg_height', '2rem', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_button_lg_bg_color'), '_bx_protean_stg_cpt_option_button_lg_bg_color', 'rgba(30, 150, 250, 0.8)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_button_lg_bg_color_hover'), '_bx_protean_stg_cpt_option_button_lg_bg_color_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_button_lg_border_color'), '_bx_protean_stg_cpt_option_button_lg_border_color', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_button_lg_border_color_hover'), '_bx_protean_stg_cpt_option_button_lg_border_color_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_button_lg_border_size'), '_bx_protean_stg_cpt_option_button_lg_border_size', '0px', 'digit', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_button_lg_border_radius'), '_bx_protean_stg_cpt_option_button_lg_border_radius', '3px', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_button_lg_shadow'), '_bx_protean_stg_cpt_option_button_lg_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_family'), '_bx_protean_stg_cpt_option_button_lg_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_button_lg_shadow'), '_bx_protean_stg_cpt_option_button_lg_shadow', '0px 0px 0px 1px rgba(0,0,0,0.0);', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_family'), '_bx_protean_stg_cpt_option_button_lg_font_family', 'Arial, sans-serif', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_button_lg_font_size'), '_bx_protean_stg_cpt_option_button_lg_font_size', '1rem', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_color'), '_bx_protean_stg_cpt_option_button_lg_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_color'), '_bx_protean_stg_cpt_option_button_lg_font_color', 'rgba(255, 255, 255, 0.9)', 'rgba', '', '', '', 11),
 (@iCategoryId, CONCAT(@sName, '_button_lg_font_color_hover'), '_bx_protean_stg_cpt_option_button_lg_font_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_button_lg_font_shadow'), '_bx_protean_stg_cpt_option_button_lg_font_shadow', 'none', 'digit', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_weight'), '_bx_protean_stg_cpt_option_button_lg_font_weight', '400', 'digit', '', '', '', 14);
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_weight'), '_bx_protean_stg_cpt_option_button_lg_font_weight', '700', 'digit', '', '', '', 14);
 
 -- SETTINGS: Protean template Styles Small Buttons
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -293,16 +293,16 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, CONCAT(@sName, '_button_sm_height'), '_bx_protean_stg_cpt_option_button_sm_height', '1.5rem', 'digit', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_button_sm_bg_color'), '_bx_protean_stg_cpt_option_button_sm_bg_color', 'rgba(108, 170, 138, 1)', 'rgba', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_button_sm_bg_color_hover'), '_bx_protean_stg_cpt_option_button_sm_bg_color_hover', 'rgba(58, 134, 134, 1)', 'rgba', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_button_sm_border_color'), '_bx_protean_stg_cpt_option_button_sm_border_color', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_button_sm_border_color_hover'), '_bx_protean_stg_cpt_option_button_sm_border_color_hover', 'rgba(208, 208, 208, 1)', 'rgba', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_button_sm_bg_color'), '_bx_protean_stg_cpt_option_button_sm_bg_color', 'rgba(40, 180, 140, 0.8)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_button_sm_bg_color_hover'), '_bx_protean_stg_cpt_option_button_sm_bg_color_hover', 'rgba(40, 180, 140, 1)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_button_sm_border_color'), '_bx_protean_stg_cpt_option_button_sm_border_color', 'rgba(40, 180, 140, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_button_sm_border_color_hover'), '_bx_protean_stg_cpt_option_button_sm_border_color_hover', 'rgba(40, 180, 140, 1)', 'rgba', '', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_button_sm_border_size'), '_bx_protean_stg_cpt_option_button_sm_border_size', '0px', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_button_sm_border_radius'), '_bx_protean_stg_cpt_option_button_sm_border_radius', '3px', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_button_sm_shadow'), '_bx_protean_stg_cpt_option_button_sm_shadow', 'none', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_family'), '_bx_protean_stg_cpt_option_button_sm_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_size'), '_bx_protean_stg_cpt_option_button_sm_font_size', '0.9rem', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_button_sm_font_color'), '_bx_protean_stg_cpt_option_button_sm_font_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_button_sm_border_radius'), '_bx_protean_stg_cpt_option_button_sm_border_radius', '2px', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_button_sm_shadow'), '_bx_protean_stg_cpt_option_button_sm_shadow', '0px 0px 0px 1px rgba(0,0,0,0);', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_family'), '_bx_protean_stg_cpt_option_button_sm_font_family', 'Arial, sans-serif', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_size'), '_bx_protean_stg_cpt_option_button_sm_font_size', '0.75rem', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_button_sm_font_color'), '_bx_protean_stg_cpt_option_button_sm_font_color', 'rgba(255, 255, 255, 0.9)', 'rgba', '', '', '', 11),
 (@iCategoryId, CONCAT(@sName, '_button_sm_font_color_hover'), '_bx_protean_stg_cpt_option_button_sm_font_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_button_sm_font_shadow'), '_bx_protean_stg_cpt_option_button_sm_font_shadow', 'none', 'digit', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_button_sm_font_weight'), '_bx_protean_stg_cpt_option_button_sm_font_weight', '400', 'digit', '', '', '', 14);
@@ -313,35 +313,35 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_font_family'), '_bx_protean_stg_cpt_option_font_family', '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_font_family'), '_bx_protean_stg_cpt_option_font_family', 'Arial, sans-serif', 'digit', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_font_size_default'), '_bx_protean_stg_cpt_option_font_size_default', '18px', 'digit', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_font_color_default'), '_bx_protean_stg_cpt_option_font_color_default', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_font_color_grayed'), '_bx_protean_stg_cpt_option_font_color_grayed', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_font_color_default'), '_bx_protean_stg_cpt_option_font_color_default', 'rgba(40, 50, 60, 0.9)', 'rgba', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed'), '_bx_protean_stg_cpt_option_font_color_grayed', 'rgba(40, 50, 60, 0.5)', 'rgba', '', '', '', 4),
 (@iCategoryId, CONCAT(@sName, '_font_color_contrasted'), '_bx_protean_stg_cpt_option_font_color_contrasted', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_font_size_small'), '_bx_protean_stg_cpt_option_font_size_small', '14px', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_font_size_middle'), '_bx_protean_stg_cpt_option_font_size_middle', '16px', 'digit', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_font_size_large'), '_bx_protean_stg_cpt_option_font_size_large', '22px', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_font_size_h1'), '_bx_protean_stg_cpt_option_font_size_h1', '38px', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_font_size_small'), '_bx_protean_stg_cpt_option_font_size_small', '12px', 'digit', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_font_size_middle'), '_bx_protean_stg_cpt_option_font_size_middle', '15px', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_font_size_large'), '_bx_protean_stg_cpt_option_font_size_large', '18px', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_font_size_h1'), '_bx_protean_stg_cpt_option_font_size_h1', '32px', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_font_weight_h1'), '_bx_protean_stg_cpt_option_font_weight_h1', '700', 'digit', '', '', '', 10),
-(@iCategoryId, CONCAT(@sName, '_font_color_default_h1'), '_bx_protean_stg_cpt_option_font_color_default_h1', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h1'), '_bx_protean_stg_cpt_option_font_color_grayed_h1', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 12),
-(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h1'), '_bx_protean_stg_cpt_option_font_color_contrasted_h1', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h1'), '_bx_protean_stg_cpt_option_font_color_link_h1', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 14),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h1_hover'), '_bx_protean_stg_cpt_option_font_color_link_h1_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 15),
+(@iCategoryId, CONCAT(@sName, '_font_color_default_h1'), '_bx_protean_stg_cpt_option_font_color_default_h1', 'rgba(40, 50, 60, 1)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h1'), '_bx_protean_stg_cpt_option_font_color_grayed_h1', 'rgba(40, 50, 60, 0.5)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h1'), '_bx_protean_stg_cpt_option_font_color_contrasted_h1', 'rgba(255, 255, 255, 0.9)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h1'), '_bx_protean_stg_cpt_option_font_color_link_h1', 'rgba(30, 150, 250, 0.9)', 'rgba', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h1_hover'), '_bx_protean_stg_cpt_option_font_color_link_h1_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 15),
 (@iCategoryId, CONCAT(@sName, '_font_size_h2'), '_bx_protean_stg_cpt_option_font_size_h2', '24px', 'digit', '', '', '', 16),
 (@iCategoryId, CONCAT(@sName, '_font_weight_h2'), '_bx_protean_stg_cpt_option_font_weight_h2', '700', 'digit', '', '', '', 17),
-(@iCategoryId, CONCAT(@sName, '_font_color_default_h2'), '_bx_protean_stg_cpt_option_font_color_default_h2', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 18),
-(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h2'), '_bx_protean_stg_cpt_option_font_color_grayed_h2', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 19),
+(@iCategoryId, CONCAT(@sName, '_font_color_default_h2'), '_bx_protean_stg_cpt_option_font_color_default_h2', 'rgba(40, 60, 80, 0.9)', 'rgba', '', '', '', 18),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h2'), '_bx_protean_stg_cpt_option_font_color_grayed_h2', 'rgba(40, 60, 80, 0.5)', 'rgba', '', '', '', 19),
 (@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h2'), '_bx_protean_stg_cpt_option_font_color_contrasted_h2', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 20),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h2'), '_bx_protean_stg_cpt_option_font_color_link_h2', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 21),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h2_hover'), '_bx_protean_stg_cpt_option_font_color_link_h2_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 22),
-(@iCategoryId, CONCAT(@sName, '_font_size_h3'), '_bx_protean_stg_cpt_option_font_size_h3', '18px', 'digit', '', '', '', 23),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h2'), '_bx_protean_stg_cpt_option_font_color_link_h2', 'rgba(30, 150, 250, 0.9)', 'rgba', '', '', '', 21),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h2_hover'), '_bx_protean_stg_cpt_option_font_color_link_h2_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 22),
+(@iCategoryId, CONCAT(@sName, '_font_size_h3'), '_bx_protean_stg_cpt_option_font_size_h3', '20px', 'digit', '', '', '', 23),
 (@iCategoryId, CONCAT(@sName, '_font_weight_h3'), '_bx_protean_stg_cpt_option_font_weight_h3', '500', 'digit', '', '', '', 24),
-(@iCategoryId, CONCAT(@sName, '_font_color_default_h3'), '_bx_protean_stg_cpt_option_font_color_default_h3', 'rgba(51, 51, 51, 1)', 'rgba', '', '', '', 25),
-(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h3'), '_bx_protean_stg_cpt_option_font_color_grayed_h3', 'rgba(153, 153, 153, 1)', 'rgba', '', '', '', 26),
+(@iCategoryId, CONCAT(@sName, '_font_color_default_h3'), '_bx_protean_stg_cpt_option_font_color_default_h3', 'rgba(40, 60, 80, 0.9)', 'rgba', '', '', '', 25),
+(@iCategoryId, CONCAT(@sName, '_font_color_grayed_h3'), '_bx_protean_stg_cpt_option_font_color_grayed_h3', 'rgba(40, 60, 80, 0.5)', 'rgba', '', '', '', 26),
 (@iCategoryId, CONCAT(@sName, '_font_color_contrasted_h3'), '_bx_protean_stg_cpt_option_font_color_contrasted_h3', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 27),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h3'), '_bx_protean_stg_cpt_option_font_color_link_h3', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 28),
-(@iCategoryId, CONCAT(@sName, '_font_color_link_h3_hover'), '_bx_protean_stg_cpt_option_font_color_link_h3_hover', 'rgba(62, 134, 133, 1)', 'rgba', '', '', '', 29);
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h3'), '_bx_protean_stg_cpt_option_font_color_link_h3', 'rgba(30, 150, 250, 0.9)', 'rgba', '', '', '', 28),
+(@iCategoryId, CONCAT(@sName, '_font_color_link_h3_hover'), '_bx_protean_stg_cpt_option_font_color_link_h3_hover', 'rgba(30, 150, 250, 1)', 'rgba', '', '', '', 29);
 
 -- SETTINGS: Protean template Custom Styles
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -349,7 +349,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_styles_custom'), '_bx_protean_stg_cpt_option_styles_custom', '', 'text', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_styles_custom'), '_bx_protean_stg_cpt_option_styles_custom', 'div.bx-market-unit-cover div.bx-base-text-unit-no-thumb {\r\n border-width: 0px;\r\n}', 'text', '', '', '', 1);
 
 -- SETTINGS: Protean template Viewport Tablet
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -365,7 +365,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_protean_stg_cpt_option_vpm_font_size_scale', '85%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_protean_stg_cpt_option_vpm_font_size_scale', '100%', 'digit', '', '', '', 1);
 
 
 -- MIXES
@@ -387,11 +387,6 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_button_lg_border_color_hover', @iMixId, 'rgba(20, 40, 60, 0.9)'),
 ('bx_protean_popup_menu_shadow', @iMixId, 'none'),
 ('bx_protean_button_lg_border_color', @iMixId, 'rgba(20, 40, 60, 0.8)'),
-('bx_protean_popup_menu_border_size', @iMixId, '0px'),
-('bx_protean_popup_menu_border_color', @iMixId, 'rgba(208, 208, 208, 1)'),
-('bx_protean_popup_menu_content_padding', @iMixId, 'inherit'),
-('bx_protean_popup_menu_bg_image', @iMixId, '0'),
-('bx_protean_popup_menu_bg_color', @iMixId, 'rgba(255, 255, 255, 1)'),
 ('bx_protean_popup_title_font_color', @iMixId, 'rgba(0, 0, 20, 1)'),
 ('bx_protean_popup_title_font_size', @iMixId, '1.5rem'),
 ('bx_protean_popup_title_padding', @iMixId, '1.25rem'),
@@ -480,20 +475,16 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_button_sm_font_shadow', @iMixId, 'none'),
 ('bx_protean_button_sm_font_weight', @iMixId, '400'),
 ('bx_protean_font_family', @iMixId, 'Arial, sans-serif'),
-('bx_protean_font_size_default', @iMixId, '16px'),
+('bx_protean_font_size_default', @iMixId, '15px'),
 ('bx_protean_font_color_default', @iMixId, 'rgba(40, 60, 80, 0.9)'),
 ('bx_protean_font_size_small', @iMixId, '12px'),
-('bx_protean_font_color_small', @iMixId, 'rgba(40, 60, 80, 0.9)'),
 ('bx_protean_font_size_middle', @iMixId, '14px'),
 ('bx_protean_font_color_middle', @iMixId, 'rgba(40, 60, 80, 0.9)'),
 ('bx_protean_font_size_large', @iMixId, '18px'),
 ('bx_protean_font_color_large', @iMixId, 'rgba(40, 60, 80, 0.9)'),
 ('bx_protean_font_size_h1', @iMixId, '32px'),
-('bx_protean_font_color_h1', @iMixId, 'rgba(40, 60, 80, 1)'),
 ('bx_protean_font_size_h2', @iMixId, '24px'),
-('bx_protean_font_color_h2', @iMixId, 'rgba(40, 60, 80, 1)'),
 ('bx_protean_font_size_h3', @iMixId, '20px'),
-('bx_protean_font_color_h3', @iMixId, 'rgba(40, 60, 80, 1)'),
 ('bx_protean_font_color_grayed', @iMixId, 'rgba(40, 60, 80, 0.5)'),
 ('bx_protean_font_color_contrasted', @iMixId, 'rgba(255, 255, 255, 1)'),
 ('bx_protean_vpt_font_size_scale', @iMixId, '100%'),
@@ -512,7 +503,6 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_popup_bg_image_size', @iMixId, 'cover'),
 ('bx_protean_menu_slide_bg_image_repeat', @iMixId, 'no-repeat'),
 ('bx_protean_menu_slide_bg_image_size', @iMixId, 'cover'),
-('bx_protean_menu_page_height', @iMixId, '2.6rem'),
 ('bx_protean_menu_page_bg_color', @iMixId, 'rgba(255, 255, 255, 0.9)'),
 ('bx_protean_menu_page_bg_image_repeat', @iMixId, 'no-repeat'),
 ('bx_protean_menu_page_bg_image', @iMixId, '0'),
