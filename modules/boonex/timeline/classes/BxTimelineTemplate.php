@@ -105,12 +105,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         list($sUserName) = $this->getModule()->getUserInfo($aResult['owner_id']);
 
+        $sSample = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         if(empty($aEvent['title']) || empty($aEvent['description'])) {
-            $sTitle = !empty($aResult['title']) ? $aResult['title'] : '';
-            if($sTitle == '') {
-                $sSample = !empty($aResult['content']['sample']) ? $aResult['content']['sample'] : '_bx_timeline_txt_sample';
-                $sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
-            }
+            $sTitle = !empty($aResult['title']) ? $aResult['title'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
 
             $sDescription = !empty($aResult['description']) ? $aResult['description'] : '';
             if($sDescription == '' && !empty($aResult['content']['text']))
@@ -124,6 +121,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aEvent['object_owner_id'] = $aResult['owner_id'];
         $aEvent['icon'] = !empty($aResult['icon']) ? $aResult['icon'] : '';
+        $aEvent['sample'] = $sSample;
+        $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['reports'] = $aResult['reports'];
@@ -595,6 +594,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_owner_url' => $sAuthorUrl,
             'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName,
+            'item_owner_action' => _t($aEvent['sample_action'], _t($aEvent['sample'])),
             'bx_if:show_timeline_owner' => array(
                 'condition' => !empty($aTmplVarsTimelineOwner),
                 'content' => $aTmplVarsTimelineOwner
@@ -681,6 +681,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             list($sTimelineAuthorName, $sTimelineAuthorUrl) = $oModule->getUserInfo($aEvent['owner_id']);
 
             $aTmplVarsTimelineOwner = array(
+            	'style_prefix' => $this->_oConfig->getPrefix('style'),
                 'owner_url' => $sTimelineAuthorUrl,
                 'owner_username' => $sTimelineAuthorName,
             );
@@ -924,6 +925,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getCommonData(&$aEvent)
     {
+        $CNF = $this->_oConfig->CNF;
+
         $oModule = $this->getModule();
         $sJsObject = $this->_oConfig->getJsObject('view');
         $sPrefix = $this->_oConfig->getPrefix('common_post');
@@ -931,9 +934,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aResult = array(
             'owner_id' => $aEvent['object_id'],
+            'icon' => $CNF['ICON'],
+        	'sample' => '_bx_timeline_txt_sample',
+        	'sample_action' => '_bx_timeline_txt_added_sample',
             'content_type' => $sType,
             'content' => array(
                 'sample' => '_bx_timeline_txt_sample',
+        		'sample_action' => '_bx_timeline_txt_added_sample',
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
             'votes' => '',

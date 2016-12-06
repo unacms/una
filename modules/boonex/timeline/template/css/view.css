@@ -75,12 +75,6 @@ div.bx-tl-view-timeline div.bx-tl-item:before {
 div.bx-tl-view-timeline div.bx-tl-item {
     position: relative;
 }
-div.bx-tl-view-timeline div.bx-tl-item-cnt {
-    position: relative;
-
-	margin: 0px 0px 0px 56px;
-	margin: 0px 0px 0px 3.5rem;
-}
 div.bx-tl-view-timeline div.bx-tl-item-type {
 	position: absolute;
     top: 0px;
@@ -122,8 +116,9 @@ div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
     font-size: 20px;
 	font-size: 1.25rem;
 }
-
-
+div.bx-tl-view-timeline div.bx-tl-item-cnt {
+    position: relative;
+}
 
 /*--- Outline Item Style ---*/
 div.bx-tl-view-outline div.bx-tl-item {
@@ -150,7 +145,10 @@ div.bx-tl-view-outline div.bx-tl-owner-avatar {
 }
 div.bx-tl-view-timeline div.bx-tl-owner-info, 
 div.bx-tl-view-outline div.bx-tl-owner-info {
-	white-space: nowrap;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
 }
 div.bx-tl-view-timeline div.bx-tl-owner-name,
 div.bx-tl-view-timeline div.bx-tl-item-info, 
@@ -159,6 +157,13 @@ div.bx-tl-view-outline div.bx-tl-item-info {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+div.bx-tl-view-timeline div.bx-tl-owner-name a.bx-tl-owner-name,
+div.bx-tl-view-outline div.bx-tl-owner-name a.bx-tl-owner-name,
+div.bx-tl-view-timeline div.bx-tl-owner-name a.bx-tl-timeline-owner-name,
+div.bx-tl-view-outline div.bx-tl-owner-name a.bx-tl-timeline-owner-name {
+	font-weight: 700;
+}
+
 div.bx-tl-view-timeline div.bx-tl-item-info .bx-tl-date,
 div.bx-tl-view-timeline div.bx-tl-item-info .bx-tl-pinned .sys-icon,
 div.bx-tl-view-outline div.bx-tl-item-info .bx-tl-date,
