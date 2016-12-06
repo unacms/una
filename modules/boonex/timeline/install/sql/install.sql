@@ -254,7 +254,7 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
 ('bx_timeline_photos_preview', 'Resize', 'a:3:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";}', '0'),
-('bx_timeline_photos_view', 'Resize', 'a:3:{s:1:"w";s:3:"318";s:1:"h";s:3:"318";s:13:"square_resize";s:1:"1";}', '0'),
+('bx_timeline_photos_view', 'Resize', 'a:1:{s:1:"h";s:3:"318";}', '0'),
 
 ('bx_timeline_videos_poster', 'Poster', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_timeline_videos_mp4', 'Mp4', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"mp4";}', 0),
