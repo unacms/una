@@ -30,7 +30,10 @@ div.bx-market-unit-author-info {
 	margin-right: 32px;
 	margin-right: 2rem;
 }
-div.bx-market-unit-author-name a {
+div.bx-market-unit-author-name a.bx-base-text-author {
+	padding-right: 10px;
+	padding-right: 0.625rem;
+
     font-weight: 700;
 }
 
