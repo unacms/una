@@ -11,9 +11,13 @@
 
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
+    protected $_bShowTimelineDividers;
+
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
+
+        $this->_bShowTimelineDividers = false;
     }
 
     public function getCssJs()
@@ -204,13 +208,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getDivider(&$iDays, &$aEvent)
     {
-        if($iDays == $aEvent['days'])
-            return "";
+        if(!$this->_bShowTimelineDividers || $iDays == $aEvent['days'])
+            return '';
 
         $iDays = $aEvent['days'];
         $iDaysAgo = (int)$aEvent['ago_days'];
         if($aEvent['today'] == $aEvent['days'] || (($aEvent['today'] - $aEvent['days']) == 1 && $iDaysAgo == 0))
-            return "";
+            return '';
 
         return $this->parseHtmlByName('divider.html', array(
         	'style_prefix' => $this->_oConfig->getPrefix('style'),
@@ -225,6 +229,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getDividerToday($aEvent = array())
     {
+        if(!$this->_bShowTimelineDividers)
+            return '';
+
     	$bToday = !empty($aEvent) && ($aEvent['today'] == $aEvent['days'] || (($aEvent['today'] - $aEvent['days']) == 1 && (int)$aEvent['ago_days'] == 0));
 
         return $this->parseHtmlByName('divider.html', array(
