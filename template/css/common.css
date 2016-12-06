@@ -75,6 +75,17 @@ blockquote {
     overflow:hidden;
 }
 
+.bx-bullet:before {
+    content: "\00A0\00b7\00A0";
+
+    color: #999999;
+}
+.bx-bullet-narrow:before {
+    content: "\00b7";
+
+    color: #999999;
+}
+
 .sys-icon-a {
     width:1.5rem;
     height:1.5rem;
