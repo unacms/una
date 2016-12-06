@@ -38,7 +38,7 @@ BxTimelineView.prototype.init = function() {
 	this.bViewOutline = this.oViewOutline.length > 0;	
 
 	if(this.bViewTimeline) {
-		var oItems = $('.' + this.sClassItem);
+		var oItems = this.oViewTimeline.find('.' + this.sClassItem);
 
 		//--- Hide timeline Events which are outside the viewport
 		this.hideEvents(oItems, this._fOutsideOffset);

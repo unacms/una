@@ -42,11 +42,11 @@ div.bx-tl-divider-cnt {
 
     width: 100%;
 
-    border: 2px solid #cccccc;
+    border: 2px solid #dddddd;
     border-radius: 20px;
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
-    background-color: #cccccc;
+    background-color: #dddddd;
     
     text-align: center;
     text-transform: uppercase;
@@ -65,12 +65,12 @@ div.bx-tl-view-timeline div.bx-tl-item:before {
     content: '';
     position: absolute;
     top: 0px;
-    left: 24px;
-	left: 1.5rem;
-    width: 8px;
+    left: 18px;
+	left: 1.125rem;
+    width: 4px;
     height: 100%;
 
-    background: #cccccc;
+    background: #dddddd;
 }
 div.bx-tl-view-timeline div.bx-tl-item {
     position: relative;
@@ -78,7 +78,8 @@ div.bx-tl-view-timeline div.bx-tl-item {
 div.bx-tl-view-timeline div.bx-tl-item-cnt {
     position: relative;
 
-	margin: 0px 0px 0px 85px;
+	margin: 0px 0px 0px 56px;
+	margin: 0px 0px 0px 3.5rem;
 }
 div.bx-tl-view-timeline div.bx-tl-item-type {
 	position: absolute;
@@ -86,13 +87,22 @@ div.bx-tl-view-timeline div.bx-tl-item-type {
     left: 0px;
 }
 div.bx-tl-view-timeline div.bx-tl-item-circle {
+	width: 32px;
+    width: 2rem;
+    height: 32px;
+    height: 2rem;
+
 	background-color: #ffffff;
+	background-clip: padding-box;
 	border-color: #cccccc;
 	border-width: 4px;
 	border-width: 0.25rem;
+	border-radius: 5rem;
 
     text-align: center;
     color: #999999;
+	
+	overflow: hidden;
 }
 div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
 	display: block;
@@ -100,17 +110,17 @@ div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
 	margin-left: auto;
 	margin-right: auto;
 
-	width: 48px;
-	width: 3rem;
-	height: 48px;
-    height: 3rem;
+	width: 32px;
+	width: 2rem;
+	height: 32px;
+    height: 2rem;
 
 	text-align: center;
 
-	line-height: 46px;
-	line-height: 2.9rem;
-    font-size: 32px;
-	font-size: 2rem;
+	line-height: 30px;
+	line-height: 1.875rem;
+    font-size: 24px;
+	font-size: 1.5rem;
 }
 
 
