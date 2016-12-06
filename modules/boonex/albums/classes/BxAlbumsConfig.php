@@ -119,6 +119,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_albums_txt_sample_single',
+            	'txt_sample_single_with_article' => '_bx_albums_txt_sample_single_with_article',
             	'txt_sample_comment_single' => '_bx_albums_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_albums_txt_sample_vote_single',
                 'txt_media_single' => '_bx_albums_txt_media_single',

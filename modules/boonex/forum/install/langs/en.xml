@@ -248,6 +248,7 @@
 	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Pinned discussion]]></string>
     <string name="_bx_forum_txt_sample_comment_single"><![CDATA[discussion's comment]]></string>
     <string name="_bx_forum_txt_sample_single"><![CDATA[discussion]]></string>
+    <string name="_bx_forum_txt_sample_single_with_article"><![CDATA[a discussion]]></string>
     <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>
     <string name="_bx_forum_you_are_last_replier"><![CDATA[You are last replier]]></string>
     

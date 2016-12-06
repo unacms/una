@@ -319,6 +319,7 @@
     <string name="_bx_market_txt_category"><![CDATA[Категория:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[Самая новая версия]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>
+    <string name="_bx_market_txt_sample_single_with_article"><![CDATA[продукт]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[Обзоры к продукту]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[голос за продукт]]></string>
     <string name="_bx_market_txt_author_added_product"><![CDATA[{0} {1}]]></string>

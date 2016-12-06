@@ -935,7 +935,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aResult = array(
             'owner_id' => $aEvent['object_id'],
             'icon' => $CNF['ICON'],
-        	'sample' => '_bx_timeline_txt_sample',
+        	'sample' => '_bx_timeline_txt_sample_with_article',
         	'sample_action' => '_bx_timeline_txt_added_sample',
             'content_type' => $sType,
             'content' => array(

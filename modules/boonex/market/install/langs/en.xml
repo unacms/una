@@ -319,6 +319,7 @@
     <string name="_bx_market_txt_category"><![CDATA[Category:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[The most current version]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[product]]></string>
+    <string name="_bx_market_txt_sample_single_with_article"><![CDATA[a product]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[product's comment]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[product's vote]]></string>
     <string name="_bx_market_txt_author_added_product"><![CDATA[{0} {1}]]></string>

@@ -137,6 +137,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_events_txt_sample_single',
+            	'txt_sample_single_with_article' => '_bx_events_txt_sample_single_with_article',
                 'txt_sample_vote_single' => '_bx_events_txt_sample_vote_single',
                 'txt_private_group' => '_bx_events_txt_private_group',
                 'txt_N_fans' => '_bx_events_txt_N_fans',
