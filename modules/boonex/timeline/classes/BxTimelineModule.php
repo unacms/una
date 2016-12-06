@@ -786,6 +786,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     public function isAllowedDelete($aEvent, $bPerform = false)
     {
+        if(!isLogged())
+            return false;
+
         if(isAdmin())
             return true;
 
