@@ -126,8 +126,8 @@
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string>
 
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
-	<string name="_bx_timeline_txt_added_sample"><![CDATA[added {0}]]></string>
-	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
+	<string name="_bx_timeline_txt_added_sample"><![CDATA[added a {0}]]></string>
+	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added a {1}]]></string>
 	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} reposted {1}'s {2}]]></string>
 	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
