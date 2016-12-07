@@ -258,4 +258,22 @@ div.bx-tl-empty div.bx-msg-box-container {
 
 
 /*--- Comments Styles ---*/
-div.bx-tl-comments {}
+div.bx-tl-item-comments-holder .bx-def-thumb-size {
+	width: 32px;
+	width: 2rem;
+	height: 32px;
+	height: 2rem;
+
+	line-height: 32px;
+	line-height: 2rem;
+}
+div.bx-tl-item-comments-holder .bx-def-thumb-size-left-indent {
+	margin-left: 3.25rem;
+}
+div.bx-tl-item-comments-holder .bx-def-thumb-size-min-height {
+    min-height: 2rem;
+}
+div.bx-tl-item-comments-holder .cmts.cmts-margin {
+	font-size: 12px;
+	font-size: 0.75rem;
+}
