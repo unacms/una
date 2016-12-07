@@ -486,7 +486,7 @@
 	<string name="_adm_bp_err_page_title_system"><![CDATA[Необходимо указать название из как минимум 3 символов.]]></string>
 	<string name="_adm_bp_err_page_uri"><![CDATA[Необходимо указать уникальный URL из как минимум 3 символов.]]></string>
 	<string name="_adm_bp_err_page_visible_for_levels"><![CDATA[Настройки видимости определяются индивидуальным кодом или не применимы в данном случае.]]></string>
-	<string name="_adm_bp_err_save"><![CDATA[Невозможно сохранить]]></string>
+	<string name="_adm_bp_err_save"><![CDATA[Невозможно сохранить или ничего не изменилось.]]></string>
 	<string name="_adm_bp_mi_page_cache"><![CDATA[Кэш]]></string>
 	<string name="_adm_bp_mi_page_cover"><![CDATA[Обложка]]></string>
 	<string name="_adm_bp_mi_page_layout"><![CDATA[Отображение]]></string>

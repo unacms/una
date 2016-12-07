@@ -44,9 +44,10 @@ class BxDolStudioForm extends BxBaseFormView
         $this->processTranslationsKey($sAction);
 
         $mixedResult = parent::update($val, $aValsToAdd, $aTrackTextFieldsChanges);
-        if($mixedResult !== false)
-            $this->processTranslations($sAction);
+        if($mixedResult === false) 
+            return $mixedResult;
 
+        $mixedResult += (int)$this->processTranslations($sAction);
         return $mixedResult;
     }
 
@@ -105,36 +106,49 @@ class BxDolStudioForm extends BxBaseFormView
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
         $aLanguages = $oLanguage->getLanguagesInfo();
 
-        foreach($this->aInputs as $sName => $aInput)
-            if(in_array($aInput['type'], array('text_translatable', 'textarea_translatable'))) {
-                $sKey = $this->getCleanValue($sName);
-                foreach($aLanguages as $aLanguage) {
-                    $sString = BxDolForm::getSubmittedValue($sName . '-' . $aLanguage['name'], $this->aFormAttrs['method']);
-                    if($sString !== false)
-                        $oLanguage->{$aType2Method[$sType]}($sKey, $sString, $aLanguage['id']);
-                }
+        $bResult = false;
+        foreach($this->aInputs as $sName => $aInput) {
+            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable')))
+                continue; 
+
+            $sKey = $this->getCleanValue($sName);
+            foreach($aLanguages as $aLanguage) {
+                $sString = BxDolForm::getSubmittedValue($sName . '-' . $aLanguage['name'], $this->aFormAttrs['method']);
+                if($sString === false)
+                    continue;
+
+                if($oLanguage->{$aType2Method[$sType]}($sKey, $sString, $aLanguage['id']))
+                    $bResult = true;
             }
+        }
+
+        return $bResult;
     }
 
     protected function processTranslationsKey($sType = 'insert')
     {
         $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
-        foreach($this->aInputs as $sName => $aInput)
-            if(in_array($aInput['type'], array('text_translatable', 'textarea_translatable'))) {
-                $sKey = $this->getTranslationsKey($sType, $sName, $this->getCleanValue($sName));
-                BxDolForm::setSubmittedValue($sName, $sKey, $this->aFormAttrs['method']);
-            }
+        foreach($this->aInputs as $sName => $aInput) {
+            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable'))) 
+                continue;
+
+            $sKey = $this->getTranslationsKey($sType, $sName, $this->getCleanValue($sName));
+            BxDolForm::setSubmittedValue($sName, $sKey, $this->aFormAttrs['method']);
+        }
     }
 
     protected function processTranslationsValue ()
     {
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
-        foreach($this->aInputs as $sName => $aInput)
-            if(in_array($aInput['type'], array('text_translatable', 'textarea_translatable')))
-                foreach($aLanguages as $sLangName => $sLangTitle)
-                    $this->aInputs[$sName]['values'][$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
+        foreach($this->aInputs as $sName => $aInput) {
+            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable')))
+                continue;
+
+            foreach($aLanguages as $sLangName => $sLangTitle)
+                $this->aInputs[$sName]['values'][$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
+        }
     }
 
     protected function getTranslationsKey($sType, $sName, $sValue)
