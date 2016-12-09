@@ -59,13 +59,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getViewBlock($aParams)
     {
-        list($sContent, $sLoadMore, $sBack) = $this->getPosts($aParams);
+        list($sContent, $sLoadMore, $sBack, $sEmpty) = $this->getPosts($aParams);
 
         return $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_' . $aParams['view']),
             'view' => $aParams['view'],
             'back' => $sBack,
+            'empty' => $sEmpty, 
             'content' => $sContent,
             'load_more' =>  $sLoadMore,
         	'view_image_popup' => $this->_getImagePopup($aParams),
@@ -172,7 +173,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $iEvents = count($aEvents);
-        $sContent = $this->getEmpty($iEvents <= 0);
+        $sContent = '';
         if($bViewTimeline && $iEvents <= 0)
         	$sContent .= $this->getDividerToday();
 
@@ -194,7 +195,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sBack = $this->getBack($aParams);
         $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0);
-        return array($sContent, $sLoadMore, $sBack);
+        $sEmpty = $this->getEmpty($iEvents <= 0);
+        return array($sContent, $sLoadMore, $sBack, $sEmpty);
     }
 
     public function getEmpty($bVisible)

@@ -16,7 +16,11 @@ function BxTimelineView(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
-    this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+    this._oRequestParams = {
+    	timeline: null,
+    	outline: null,
+    	general: oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams
+    };
 
     this._fOutsideOffset = 0.8;
 
@@ -38,6 +42,8 @@ BxTimelineView.prototype.init = function() {
 	this.bViewOutline = this.oViewOutline.length > 0;	
 
 	if(this.bViewTimeline) {
+		this._oRequestParams['timeline'] = jQuery.extend({}, this._oRequestParams['general']);
+
 		var oItems = this.oViewTimeline.find('.' + this.sClassItem);
 
 		//--- Hide timeline Events which are outside the viewport
@@ -57,6 +63,8 @@ BxTimelineView.prototype.init = function() {
 	}
 
 	if(this.bViewOutline) {
+		this._oRequestParams['outline'] = jQuery.extend({}, this._oRequestParams['general']);
+
     	this.initMasonry();
 
     	this.oViewOutline.find('.' + this.sClassItem).resize(function() {
@@ -88,8 +96,8 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
 
 	this.loadingInButton(oLink, true);
 
-	this._oRequestParams.start = iStart;
-    this._oRequestParams.per_page = iPerPage;
+	this._oRequestParams[sView].start = iStart;
+    this._oRequestParams[sView].per_page = iPerPage;
     this._getPosts(oLink, function(oData) {
     	$this.loadingInButton(oLink, false);
 
@@ -107,7 +115,6 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
     			oView = $this.oViewOutline;
     			$this.appendMasonry($(sItems).bxTime());
     			break;
-    	
     	}
 
     	if(oView && oData && oData.load_more != undefined)
@@ -115,26 +122,35 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
 
     	if(oView && oData && oData.back != undefined)
     		oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
+
+    	if(oData && oData.empty != undefined)
+			oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
     });
 };
 
 BxTimelineView.prototype.changeFilter = function(oLink) {
+	var sView = this._getView(oLink);
+
     var sId = $(oLink).attr('id');
     sId = sId.substr(sId.lastIndexOf('-') + 1, sId.length);
 
     this.loadingInBlock(oLink, true);
 
-    this._oRequestParams.start = 0;
-    this._oRequestParams.filter = sId;
+    this._oRequestParams[sView].start = 0;
+    this._oRequestParams[sView].filter = sId;
     this._getPosts(oLink);
 };
 
 BxTimelineView.prototype.changeTimeline = function(oLink, iYear) {
+	var sView = this._getView(oLink);
+
 	this.loadingInBlock(oLink, true);
 
-	this._oRequestParams.start = 0;
-    this._oRequestParams.timeline = iYear;
+	this._oRequestParams[sView].start = 0;
+    this._oRequestParams[sView].timeline = iYear;
 	this._getPosts(oLink);
+	
+	console.log(this._oRequestParams);
 };
 
 BxTimelineView.prototype.showMoreContent = function(oLink) {
@@ -223,7 +239,7 @@ BxTimelineView.prototype.onPinPost = function(oData) {
 	if(this.bViewTimeline) {
 		var sItemTimeline = this.sIdItemTimeline + oData.id;
 
-		this._oRequestParams.start = 0;
+		this._oRequestParams['timeline'].start = 0;
         this._getPosts(this.oViewTimeline, function(oData) {
         	$(sItemTimeline).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
     	        $(this).remove();
@@ -237,7 +253,7 @@ BxTimelineView.prototype.onPinPost = function(oData) {
 	if(this.bViewOutline) {
 		var sItemOutline = this.sIdItemOutline + oData.id;
 
-		this._oRequestParams.start = 0;
+		this._oRequestParams['outline'].start = 0;
         this._getPosts(this.oViewOutline, function(oData) {
         	$this.removeMasonry(sItemOutline, function() {
         		$this.processResult(oData);
@@ -325,6 +341,17 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 	var $this = this;
 	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
 
+	var onComplete = function() {
+		if(oData && oData.load_more != undefined)
+			oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
+
+		if(oData && oData.back != undefined)
+			oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
+
+		if(oData && oData.empty != undefined)
+			oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
+	};
+
 	if(oData && oData.items != undefined) {
 		var sItems = $.trim(oData.items);
 
@@ -332,26 +359,26 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 			case 'timeline':
 				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
 					$(this).html(sItems).show().bxTime();
+
+					onComplete();
 			    });
 				break;
-	
+
 			case 'outline':
 				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
 			        $(this).html(sItems).show().bxTime();
 
-			        $this.destroyMasonry();
-			        if($this.isMasonryEmpty())
-			        	return;
+			        if($this.isMasonry())
+			        	$this.destroyMasonry();
 
-			        $this.initMasonry();
+			        if(!$this.isMasonryEmpty())
+			        	$this.initMasonry();
+
+			        onComplete();
 			    });
 				break;
 		}
 	}
 
-	if(oData && oData.load_more != undefined)
-		oView.find('.' + this.sSP + '-load-more-holder').html($.trim(oData.load_more));
-
-	if(oData && oData.back != undefined)
-		oView.find('.' + this.sSP + '-back-holder').html($.trim(oData.back));
+	
 };

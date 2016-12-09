@@ -211,8 +211,10 @@ BxTimelineMain.prototype._getView = function(oView) {
 
 BxTimelineMain.prototype._getDefaultData = function(oElement) {
 	var oDate = new Date();
-    return jQuery.extend({}, this._oRequestParams, {
-    	view: oElement != undefined ? this._getView(oElement) : '',
+	var sView = oElement != undefined ? this._getView(oElement) : '';
+
+    return jQuery.extend({}, this._oRequestParams[sView.length > 0 ? sView : 'general'], {
+    	view: sView,
 		_t:oDate.getTime()
     });
 };

@@ -59,6 +59,7 @@
 	<string name="_bx_timeline_page_title_account"><![CDATA[Лента]]></string>
 	<string name="_bx_timeline_page_block_title_post"><![CDATA[Разместить в Ленте]]></string>
 	<string name="_bx_timeline_page_block_title_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_block_title_view_outline"><![CDATA[Сводка]]></string>
 	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Разместить в Ленте]]></string>
 	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Лента]]></string>
 	<string name="_bx_timeline_page_block_title_view_profile_outline"><![CDATA[Сводка]]></string>

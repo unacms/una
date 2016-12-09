@@ -227,17 +227,25 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 	if(oEmpty.is(':visible'))
 		oEmpty.hide();
 
+	var oContent = $(oData.item).bxTime();
 	switch(oData.view) {
 		case 'timeline':
-			var oViewTimeline = $('#' + this._aHtmlIds['main_timeline']);
-			if(!oViewTimeline.find('.' + this.sClassDividerToday).is(':visible'))
-				oViewTimeline.find('.' + this.sClassDividerToday).show();
-		
-			oViewTimeline.find('.' + this.sClassDividerToday).after($(oData.item).bxTime().hide()).next('.' + this.sClassItem + ':hidden').bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
+			var oItem = null;
+			var oItems = $('#' + this._aHtmlIds['main_timeline'] + ' ' + '.' + this.sClassItems);
+			var oDivider  = oItems.find('.' + this.sClassDividerToday);
+			var bDivider = oDivider.length > 0;
+
+			if(bDivider && !oDivider.is(':visible'))
+				oDivider.show();
+
+			oContent.hide();
+
+			oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
+			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
 			break;
 
 		case 'outline':
-			this.prependMasonry($(oData.item).bxTime());
+			this.prependMasonry(oContent);
 			break;
 	}
 };
