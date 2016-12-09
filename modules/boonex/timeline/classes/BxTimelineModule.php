@@ -772,9 +772,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return true;
 
         $iUserId = $this->getUserId();
-        if($iUserId != 0 && $iUserId == $this->_iOwnerId)
-            return true;
-
         $aCheckResult = checkActionModule($iUserId, 'post', $this->getName(), $bPerform);
 
         $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
