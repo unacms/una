@@ -468,6 +468,9 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return array(
             'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
+        	'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+    	    'sample_action' => isset($CNF['T']['txt_sample_single_action']) ? $CNF['T']['txt_sample_single_action'] : '',
             'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'votes' => $aVotes,
@@ -747,7 +750,8 @@ class BxBaseModGeneralModule extends BxDolModule
         $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl);
 
     	return array(
-			'sample' => _t($CNF['T']['txt_sample_single']),
+    		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+    	    'sample_action' => isset($CNF['T']['txt_sample_single_action']) ? $CNF['T']['txt_sample_single_action'] : '',
 			'url' => $sUrl,
 			'title' => isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : 
 			(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : ''),

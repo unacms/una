@@ -70,6 +70,10 @@ div.bx-base-text-breadcrumb i {
     text-overflow:ellipsis;
 }
 
+.bx-base-text-unit-date {
+    white-space: nowrap;
+}
+
 .bx-base-text-unit-gallery .bx-base-text-unit-no-thumb,
 .bx-base-text-unit-gallery .bx-base-text-unit-thumb {
     float:none;

@@ -11,9 +11,13 @@
 
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
+    protected $_bShowTimelineDividers;
+
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
+
+        $this->_bShowTimelineDividers = false;
     }
 
     public function getCssJs()
@@ -32,6 +36,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'jquery.ba-resize.min.js',
         	'autosize.min.js',
             'masonry.pkgd.min.js',
+            'modernizr.js',
         	'flickity/flickity.pkgd.min.js',
             'post.js',
             'share.js',
@@ -54,15 +59,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getViewBlock($aParams)
     {
-        list($sContent, $sLoadMore, $sBack) = $this->getPosts($aParams);
+        list($sContent, $sLoadMore, $sBack, $sEmpty) = $this->getPosts($aParams);
 
         return $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main'),
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_' . $aParams['view']),
+            'view' => $aParams['view'],
             'back' => $sBack,
+            'empty' => $sEmpty, 
             'content' => $sContent,
             'load_more' =>  $sLoadMore,
-        	'view_image_popup' => $this->_getImagePopup(),
+        	'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
             	'oRequestParams' => array(
 	                'type' => $aParams['type'],
@@ -83,9 +90,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aEvent))
             return '';
 
+        $aParams = array(
+        	'view' => BX_TIMELINE_VIEW_DEFAULT, 
+        	'type' => BX_TIMELINE_TYPE_ITEM
+        );
+         
         $sContent = $this->getJsCode('view');
-        $sContent .= $this->getPost($aEvent, array('type' => BX_TIMELINE_TYPE_ITEM));
-        $sContent .= $this->_getImagePopup();
+        $sContent .= $this->getPost($aEvent, $aParams);
+        $sContent .= $this->_getImagePopup($aParams);
 
         return $sContent;
     }
@@ -98,12 +110,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         list($sUserName) = $this->getModule()->getUserInfo($aResult['owner_id']);
 
+        $sSample = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         if(empty($aEvent['title']) || empty($aEvent['description'])) {
-            $sTitle = !empty($aResult['title']) ? $aResult['title'] : '';
-            if($sTitle == '') {
-                $sSample = !empty($aResult['content']['sample']) ? $aResult['content']['sample'] : '_bx_timeline_txt_sample';
-                $sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
-            }
+            $sTitle = !empty($aResult['title']) ? $aResult['title'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
 
             $sDescription = !empty($aResult['description']) ? $aResult['description'] : '';
             if($sDescription == '' && !empty($aResult['content']['text']))
@@ -116,6 +125,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $aEvent['object_owner_id'] = $aResult['owner_id'];
+        $aEvent['icon'] = !empty($aResult['icon']) ? $aResult['icon'] : '';
+        $aEvent['sample'] = $sSample;
+        $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['reports'] = $aResult['reports'];
@@ -127,12 +139,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getPosts($aParams)
     {
+        $bViewTimeline = $aParams['view'] == BX_TIMELINE_VIEW_TIMELINE;
+
         $iStart = $aParams['start'];
         $iPerPage = $aParams['per_page'];
 
         $aParamsDb = $aParams;
 
         //--- Check for Previous
+        $iDays = -1;
         $bPrevious = false;
         if($iStart - 1 >= 0) {
             $aParamsDb['start'] -= 1;
@@ -145,8 +160,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvents = $this->_oDb->getEvents($aParamsDb);
 
         //--- Check for Previous
-        if($bPrevious)
+        if($bPrevious) {
             $aEvent = array_shift($aEvents);
+            $iDays = (int)$aEvent['days'];
+        }
 
         //--- Check for Next
         $bNext = false;
@@ -156,22 +173,30 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $iEvents = count($aEvents);
-        $sContent = $this->getEmpty($iEvents <= 0);
+        $sContent = '';
+        if($bViewTimeline && $iEvents <= 0)
+        	$sContent .= $this->getDividerToday();
 
+        $bFirst = true;
         foreach($aEvents as $aEvent) {
             $sEvent = $this->getPost($aEvent, $aParams);
-            if(empty($sEvent))
+            $bEvent = !empty($sEvent);
+            if(!$bEvent)
                 continue;
 
+            if($bViewTimeline && $bFirst) {
+                $sContent .= $this->getDividerToday($aEvent);
+                $bFirst = false;
+            }
+
+            $sContent .= $bViewTimeline && $bEvent ? $this->getDivider($iDays, $aEvent) : '';
             $sContent .= $sEvent;
         }
 
-        $iYearSel = (int)$aParams['timeline'];
-        $iYearMin = $this->_oDb->getMaxDuration($aParams);
-
-        $sBack = $this->getBack($iYearSel);
-        $sLoadMore = $this->getLoadMore($iStart, $iPerPage, $bNext, $iYearSel, $iYearMin, $iEvents > 0);
-        return array($sContent, $sLoadMore, $sBack);
+        $sBack = $this->getBack($aParams);
+        $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0);
+        $sEmpty = $this->getEmpty($iEvents <= 0);
+        return array($sContent, $sLoadMore, $sBack, $sEmpty);
     }
 
     public function getEmpty($bVisible)
@@ -183,8 +208,48 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getBack($iYearSel)
+    public function getDivider(&$iDays, &$aEvent)
     {
+        if(!$this->_bShowTimelineDividers || $iDays == $aEvent['days'])
+            return '';
+
+        $iDays = $aEvent['days'];
+        $iDaysAgo = (int)$aEvent['ago_days'];
+        if($aEvent['today'] == $aEvent['days'] || (($aEvent['today'] - $aEvent['days']) == 1 && $iDaysAgo == 0))
+            return '';
+
+        return $this->parseHtmlByName('divider.html', array(
+        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'type' => 'common',
+            'bx_if:show_hidden' => array(
+                'condition' => false,
+                'content' => array()
+            ),
+            'content' => bx_time_js($aEvent['date'])
+        ));
+    }
+
+    public function getDividerToday($aEvent = array())
+    {
+        if(!$this->_bShowTimelineDividers)
+            return '';
+
+    	$bToday = !empty($aEvent) && ($aEvent['today'] == $aEvent['days'] || (($aEvent['today'] - $aEvent['days']) == 1 && (int)$aEvent['ago_days'] == 0));
+
+        return $this->parseHtmlByName('divider.html', array(
+        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'type' => 'today',
+        	'bx_if:show_hidden' => array(
+                'condition' => !$bToday,
+                'content' => array()
+            ),
+            'content' => _t('_bx_timeline_txt_today')
+        ));
+    }
+
+    public function getBack($aParams)
+    {
+        $iYearSel = (int)$aParams['timeline'];
         if($iYearSel == 0)
             return '';
 
@@ -203,8 +268,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getLoadMore($iStart, $iPerPage, $bEnabled, $iYearSel, $iYearMin, $bVisible = true)
+    public function getLoadMore($aParams, $bEnabled, $bVisible = true)
     {
+        $iStart = $aParams['start'];
+        $iPerPage = $aParams['per_page'];
+        $iYearSel = (int)$aParams['timeline'];
+        $iYearMin = $this->_oDb->getMaxDuration($aParams);
+
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('view');
 
@@ -226,7 +296,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aTmplVars = array(
             'style_prefix' => $sStylePrefix,
-            'visible' => $bEnabled && $bVisible ? 'block' : 'none',
+            'visible' => ($aParams['view'] == BX_TIMELINE_VIEW_TIMELINE && $bVisible) || ($aParams['view'] == BX_TIMELINE_VIEW_OUTLINE && $bEnabled && $bVisible) ? 'block' : 'none',
             'bx_if:is_disabled' => array(
                 'condition' => !$bEnabled,
                 'content' => array()
@@ -491,6 +561,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('view');
@@ -505,6 +577,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
+        $bViewTimeline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_TIMELINE;
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  		$sLocation = $oMetatags->locationsString($aEvent['id']);
@@ -512,22 +585,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
-        	'html_id' => $this->_oConfig->getHtmlIds('view', 'item') . $aEvent['id'],
-            'class' => $bBrowseItem ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
+            'class' => $bBrowseItem || $bViewTimeline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
         	'class_content' => $bBrowseItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
-            'bx_if:show_icon' => array(
+            'id' => $aEvent['id'],
+            'bx_if:show_owner_icon' => array(
                 'condition' => $bAuthorIcon,
                 'content' => array(
-                    'author_icon' => $sAuthorIcon
+                    'owner_icon' => $sAuthorIcon
                 )
             ),
-            'bx_if:show_icon_empty' => array(
+            'bx_if:show_owner_icon_empty' => array(
                 'condition' => !$bAuthorIcon,
                 'content' => array()
             ),
+            'item_icon' => !empty($aEvent['icon']) ? $aEvent['icon'] : $CNF['ICON'],
             'item_owner_url' => $sAuthorUrl,
             'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName,
+            'item_owner_action' => _t($aEvent['sample_action'], _t($aEvent['sample'])),
             'bx_if:show_timeline_owner' => array(
                 'condition' => !empty($aTmplVarsTimelineOwner),
                 'content' => $aTmplVarsTimelineOwner
@@ -555,7 +631,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
         );
 
-        return $this->parseHtmlByName('item.html', $aTmplVars);
+        return $this->parseHtmlByName('item_' . $aBrowseParams['view'] . '.html', $aTmplVars);
     }
 
     protected function _getContent($sType, $aEvent, $aBrowseParams = array())
@@ -578,9 +654,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->getComments($sSystem, $iObjectId);
     }
 
-    protected function _getImagePopup()
+    protected function _getImagePopup($aParams)
     {
-        $sViewImagePopupId = $this->_oConfig->getHtmlIds('view', 'photo_popup');
+        $sViewImagePopupId = $this->_oConfig->getHtmlIds('view', 'photo_popup_' . $aParams['view']);
         $sViewImagePopupContent = $this->parseHtmlByName('popup_image.html', array(
     		'image_url' => ''
     	));
@@ -591,7 +667,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getTmplVarsMenuItemActions(&$aEvent, $aBrowseParams = array())
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
-        $oMenu->setEvent($aEvent);
+        $oMenu->setEvent($aBrowseParams['view'], $aEvent);
         $oMenu->setDynamicMode(isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true);
 
         $sMenu = $oMenu->getCode();
@@ -614,6 +690,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             list($sTimelineAuthorName, $sTimelineAuthorUrl) = $oModule->getUserInfo($aEvent['owner_id']);
 
             $aTmplVarsTimelineOwner = array(
+            	'style_prefix' => $this->_oConfig->getPrefix('style'),
                 'owner_url' => $sTimelineAuthorUrl,
                 'owner_username' => $sTimelineAuthorName,
             );
@@ -857,6 +934,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getCommonData(&$aEvent)
     {
+        $CNF = $this->_oConfig->CNF;
+
         $oModule = $this->getModule();
         $sJsObject = $this->_oConfig->getJsObject('view');
         $sPrefix = $this->_oConfig->getPrefix('common_post');
@@ -864,9 +943,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aResult = array(
             'owner_id' => $aEvent['object_id'],
+            'icon' => $CNF['ICON'],
+        	'sample' => '_bx_timeline_txt_sample_with_article',
+        	'sample_action' => '_bx_timeline_txt_added_sample',
             'content_type' => $sType,
             'content' => array(
                 'sample' => '_bx_timeline_txt_sample',
+        		'sample_action' => '_bx_timeline_txt_added_sample',
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
             'votes' => '',

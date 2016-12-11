@@ -332,7 +332,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             	list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
         }
 
-		$sSelectClause .= "YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`, ";
+		$sSelectClause .= "DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`, ";
 		if($aParams['browse'] == 'list')
 			$sOrderClause = "ORDER BY `{$this->_sTable}`.`pinned` DESC, `{$this->_sTable}`.`date` DESC";
 
@@ -401,7 +401,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 			case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
 				$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
-				$sWhereClause .= "AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "' ";
+				$sWhereClause .= $this->prepareAsString("AND (SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "' OR `{$this->_sTable}`.`owner_id`=?) ", 0);
 				break;
 		}
 

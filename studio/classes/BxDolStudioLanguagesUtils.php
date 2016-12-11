@@ -365,6 +365,7 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         $aLanguages = array();
         $iLanguages = $this->oDb->getLanguagesBy(($iLangId == 0 ? array('type' => 'all') : array('type' => 'all_by_id', 'value' => $iLangId)), $aLanguages);
 
+        $bResult = false;
         foreach($aLanguages as $aLanguage) {
             $sString = '';
             if(is_string($mixedString))
@@ -372,11 +373,16 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
             else if(is_array($mixedString))
                 $sString = $mixedString[$aLanguage['id']];
 
-            if($this->oDb->updateString($iKeyId, $aLanguage['id'], $sString) && $bRecompile)
+            if(!$this->oDb->updateString($iKeyId, $aLanguage['id'], $sString))
+                continue;
+
+            if($bRecompile)
                 $this->compileLanguage($aLanguage['id']);
+
+            $bResult = true;
         }
 
-        return true;
+        return $bResult;
     }
 
     function deleteLanguageString($sKey, $iLangId = 0, $bRecompile = true)
