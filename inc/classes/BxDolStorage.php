@@ -315,6 +315,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getErrorString()
     {
+        bx_import('BxDolLanguages');
         $a = array (
             1000 => '_sys_storage_err_no_input_method',
             1001 => '_sys_storage_err_no_file',
