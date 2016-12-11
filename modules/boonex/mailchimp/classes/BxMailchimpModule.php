@@ -54,7 +54,7 @@ class BxMailchimpModule extends BxDolModule
         if (!isAdmin())
             return false;
 
-        $s = $this->_request('/lists', 'GET', array(), $sErrorCurl);
+        $s = $this->_request('/lists?count=100', 'GET', array(), $sErrorCurl);
         if (!($a = $this->_checkForErrors($s, $sErrorCurl)) || isset($a['error']))
             return array();
         
