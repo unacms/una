@@ -86,11 +86,14 @@
     <string name="_bx_market_form_entry_input_added"><![CDATA[Created]]></string>
     <string name="_bx_market_form_entry_input_sys_changed"><![CDATA[Updated]]></string>
     <string name="_bx_market_form_entry_input_changed"><![CDATA[Updated]]></string>
+    <string name="_bx_market_form_entry_input_sys_warning_single"><![CDATA[Warning for single payments]]></string>
+    <string name="_bx_market_form_entry_input_sys_warning_recurring"><![CDATA[Warning for recurring payments]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Create Product]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Delete Product]]></string>
 	<string name="_bx_market_acl_action_download_entry"><![CDATA[Download Product]]></string>
 	<string name="_bx_market_acl_action_view_entry"><![CDATA[View Product]]></string>
+	<string name="_bx_market_acl_action_set_cover"><![CDATA[Set Product Cover]]></string>
 	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Set Product Thumbnail]]></string>
 	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Edit Any Product]]></string>
 
