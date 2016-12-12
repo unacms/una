@@ -39,6 +39,15 @@ class BxMarketModule extends BxBaseModTextModule
     	));
     }
 
+    public function serviceGetSearchableFields ()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetSearchableFields();
+        unset($aResult[$CNF['FIELD_PRICE_SINGLE']]);
+
+        return $aResult;
+    }
     public function serviceEntityCreate ()
     {
     	$oPayments = BxDolPayments::getInstance();
