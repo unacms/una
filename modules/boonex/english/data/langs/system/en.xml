@@ -486,7 +486,7 @@
 	<string name="_adm_bp_err_page_title_system"><![CDATA[A name with at least 3 characters is required.]]></string>
 	<string name="_adm_bp_err_page_uri"><![CDATA[A unique URL with at least 3 characters is required.]]></string>
 	<string name="_adm_bp_err_page_visible_for_levels"><![CDATA[Visibility setting are determined by custom code or not applicable here.]]></string>
-	<string name="_adm_bp_err_save"><![CDATA[Cannot save]]></string>
+	<string name="_adm_bp_err_save"><![CDATA[Cannot save or nothing was changed.]]></string>
 	<string name="_adm_bp_mi_page_cache"><![CDATA[Cache]]></string>
 	<string name="_adm_bp_mi_page_cover"><![CDATA[Cover]]></string>
 	<string name="_adm_bp_mi_page_layout"><![CDATA[Layout]]></string>

@@ -147,6 +147,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_market_txt_sample_single',
+            	'txt_sample_single_with_article' => '_bx_market_txt_sample_single_with_article',
             	'txt_sample_comment_single' => '_bx_market_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_market_txt_sample_vote_single',
             	'grid_action_err_delete' => '_bx_market_grid_action_err_delete',

@@ -244,6 +244,7 @@
 	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Закрепленное обсуждение]]></string>
 	<string name="_bx_forum_txt_sample_comment_single"><![CDATA[комментарий к обсуждению]]></string>
 	<string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
+	<string name="_bx_forum_txt_sample_single_with_article"><![CDATA[обсуждение]]></string>
     <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} {1}]]></string>
     <string name="_bx_forum_you_are_last_replier"><![CDATA[Вы - последний ответивший]]></string>
 

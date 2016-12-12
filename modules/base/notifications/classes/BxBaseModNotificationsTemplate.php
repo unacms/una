@@ -34,10 +34,6 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
     {
         $oModule = $this->getModule();
 
-        $sBaseUri = $this->_oConfig->getBaseUri();
-        $sJsClass = $this->_oConfig->getJsClass($sType);
-        $sJsObject = $this->_oConfig->getJsObject($sType);
-
         $aParams = array_merge(array(
         	'iOwnerId' => $oModule->_iOwnerId,
             'sAnimationEffect' => $this->_oConfig->getAnimationEffect(),

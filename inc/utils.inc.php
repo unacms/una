@@ -967,12 +967,22 @@ function genRndSalt()
     return genRndPwd(8, true);
 }
 
-// Encrypt User Password
+/**
+ * Encrypt user password.
+ * When BX_PWD_ALGO is 'custom', then bx_custom_pwd_encrypt function with custom algorythm must be defined in inc/header.inc.php file.
+ * @param $sPwd clear password
+ * @param $sSalt salt
+ * @return password hash
+ */ 
 function encryptUserPwd($sPwd, $sSalt)
 {
 	$sAlgo = defined('BX_PWD_ALGO') ? BX_PWD_ALGO : '';
 
     switch ($sAlgo) {
+        
+        case 'custom':
+            return bx_custom_pwd_encrypt($sPwd, $sSalt); 
+
     	case 'crypt':
             return crypt($sPwd, BX_PWD_ALGO_SALT);
 

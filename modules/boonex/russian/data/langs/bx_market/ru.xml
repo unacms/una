@@ -86,12 +86,15 @@
     <string name="_bx_market_form_entry_input_added"><![CDATA[Создано]]></string>
     <string name="_bx_market_form_entry_input_sys_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_market_form_entry_input_changed"><![CDATA[Обновлено]]></string>
+    <string name="_bx_market_form_entry_input_sys_warning_single"><![CDATA[Предупреждение: Разовые платежи]]></string>
+    <string name="_bx_market_form_entry_input_sys_warning_recurring"><![CDATA[Предупреждение: Подписки]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Создать продукт]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Удалить продукт]]></string>
 	<string name="_bx_market_acl_action_download_entry"><![CDATA[Скачать продукт]]></string>
 	<string name="_bx_market_acl_action_view_entry"><![CDATA[Просмотреть продукт]]></string>
-	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Назначить значок продукта]]></string>
+	<string name="_bx_market_acl_action_set_cover"><![CDATA[Установить обложку продукта]]></string>
+	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Установить значок продукта]]></string>
 	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Редактировать любой продукт]]></string>
 
 	<string name="_bx_market_privacy_group_customers"><![CDATA[Клиенты]]></string>
@@ -319,9 +322,10 @@
     <string name="_bx_market_txt_category"><![CDATA[Категория:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[Самая новая версия]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>
+    <string name="_bx_market_txt_sample_single_with_article"><![CDATA[продукт]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[Обзоры к продукту]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[голос за продукт]]></string>
-    <string name="_bx_market_txt_author_added_product"><![CDATA[{0} добавил продукт {1}]]></string>
+    <string name="_bx_market_txt_author_added_product"><![CDATA[{0} {1}]]></string>
     <string name="_bx_market_txt_joined"><![CDATA[Зарегистрирован:]]></string>
     <string name="_bx_market_txt_last_active"><![CDATA[Последняя активность:]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[Приобрести за {0}{1}]]></string>
