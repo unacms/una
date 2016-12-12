@@ -1,7 +1,7 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
  * @ingroup     UnaModules
@@ -133,4 +133,5 @@ class BxSEMigDb extends BxBaseModGeneralDb
 		return md5($this -> getParam('se_migration_salt') . $sPwd. $sSalt);
    }
 }
+
 /** @} */

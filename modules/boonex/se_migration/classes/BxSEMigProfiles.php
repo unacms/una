@@ -1,7 +1,7 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
  * @ingroup     UnaModules
@@ -29,22 +29,18 @@ class BxSEMigProfiles extends BxSEMigData
 	public function runMigration(){
 		if (!$this -> getTotalRecords()){
 			  $this -> setResultStatus(_t('_bx_se_migration_no_data_to_transfer'));
-	          return SUCCESSFUL;
+	          return BX_SEMIG_SUCCESSFUL;
 		}	
 		
 		$this -> setResultStatus(_t('_bx_se_migration_started_migration_profiles'));
         $sError = $this -> profilesMigrtion();
         if($sError) {
               $this -> setResultStatus($sError);
-              return FAILED;
+              return BX_SEMIG_FAILED;
         }
-
-		//Get Social Engine Secret Salt
-		$sSecret = $this -> _seDb -> getSEParam("{$this -> _sEnginePrefix}core_settings", 'core.secret');
-		if ($sSecret) $this -> _oDb -> setParam('se_migration_salt', $sSecret);
-		
+	
         $this -> setResultStatus(_t('_bx_se_migration_started_migration_profiles_finished', $this -> _iTransferred));
-		return SUCCESSFUL;
+		return BX_SEMIG_SUCCESSFUL;
     }
 	
 	function profilesMigrtion()

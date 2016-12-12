@@ -1,7 +1,7 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
  * @ingroup     UnaModules
@@ -44,7 +44,7 @@ class BxSEMigModule extends BxBaseModGeneralModule
 	                    {
 	                        $sTransferred = $this -> _oDb -> getTransferStatus($sDependenciesModule);							
 	                        if( $sTransferred != 'finished')
-								return _t('_bx_se_migration_install_before', $sDependenciesModule);                        
+								return _t('_bx_se_migration_install_before', _t("_bx_se_migration_data_{$sDependenciesModule}"));
 	                   }					   
 	             }
 				 
@@ -99,6 +99,10 @@ class BxSEMigModule extends BxBaseModGeneralModule
 							$this -> _oDb -> addToTransferList($sName, $iNumber);		
 			}	
 		}
+		
+		//Get Social Engine Secret Salt
+		$sSecret = $this -> _oSEDb -> getSEParam( $this -> _oConfig -> getEngineVersionPrefix() . "core_settings", 'core.secret');
+		if ($sSecret) $this -> _oDb -> setParam('se_migration_salt', $sSecret);
 	}
 	
 	/** 
@@ -116,7 +120,7 @@ class BxSEMigModule extends BxBaseModGeneralModule
 				'sock'	  => ''	
 			);
 					
-		$this -> _oSEDb = new SEDB($aConfig);		
+		$this -> _oSEDb = new BxSEDb($aConfig);		
 		return $this -> _oSEDb	-> connect(); 
 	}
 	

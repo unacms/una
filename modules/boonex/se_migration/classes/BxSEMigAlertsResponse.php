@@ -19,7 +19,9 @@ class BxSEMigAlertsResponse extends BxBaseModTextAlertsResponse
 
     public function response($oAlert)
     {
-        if ('system' == $oAlert->sUnit && 'encrypt_password_after' == $oAlert->sAction)
+        parent::response($oAlert);
+		
+		if ('system' == $oAlert->sUnit && 'encrypt_password_after' == $oAlert->sAction)
             BxDolService::call($this->MODULE, 'encrypt_password', array($oAlert));
 
         parent::response($oAlert);

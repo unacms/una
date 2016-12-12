@@ -1,7 +1,7 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
  * @ingroup     UnaModules
@@ -9,8 +9,8 @@
  * @{
  */
  
-define('SUCCESSFUL', 1);
-define('FAILED', 0);
+define('BX_SEMIG_SUCCESSFUL', 1);
+define('BX_SEMIG_FAILED', 0);
  
 class BxSEMigData
 {      
@@ -38,7 +38,7 @@ class BxSEMigData
 	*/
 	public function runMigration(){
 	    $this -> setResultStatus(_t('_bx_se_migration_define_migration_method'));
-	    return FAILED;
+	    return BX_SEMIG_FAILED;
 	}
 
 	/**
@@ -47,7 +47,7 @@ class BxSEMigData
 	*/
 	public function getTotalRecords(){
 	    $this -> setResultStatus(_t('_bx_se_migration_define_total_method'));
-	    return FAILED;		
+	    return BX_SEMIG_FAILED;		
 	}
 
 	/**
@@ -64,6 +64,7 @@ class BxSEMigData
 	* @param int $iSEId social engine's profile ID
 	* @return Integer
 	*/           
+	
 	protected function getProfileId($iSEId){
 	    return (int)$this -> _oDb -> getOne("SELECT `profile_id` FROM  `sys_accounts` WHERE  `se_id` =  '{$iSEId}' LIMIT 1");       
 	}
