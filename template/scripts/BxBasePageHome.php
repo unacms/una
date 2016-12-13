@@ -31,7 +31,7 @@ class BxBasePageHome extends BxTemplPage
                 'condition' => $bTmplVarsCover,
                 'content' => $aTmplVarsCover,
             ),
-        ));
+        ), 'cover_home.html');
     }
 
     public function getCode ()
