@@ -26,6 +26,8 @@ class BxAccntConfig extends BxBaseModGeneralConfig
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=accounts-administration',
 
 	        // objects
+	        'OBJECT_FORM_ACCOUNT' => 'bx_accounts_account',
+            'OBJECT_FORM_ACCOUNT_DISPLAY_SETTINGS_EMAIL' => 'bx_accounts_account_settings_email',
 	        'OBJECT_MENU_MANAGE_TOOLS' => 'bx_accounts_menu_manage_tools', //manage menu in content administration tools
         	'OBJECT_GRID_ADMINISTRATION' => 'bx_accounts_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_accounts_moderation',
@@ -46,10 +48,12 @@ class BxAccntConfig extends BxBaseModGeneralConfig
         );
 
         $this->_aJsClasses = array(
+        	'main' => 'BxAccntMain',
         	'manage_tools' => 'BxAccntManageTools'
         );
 
         $this->_aJsObjects = array(
+        	'main' => 'oBxAccntMain',
         	'manage_tools' => 'oBxAccntManageTools'
         );
 
@@ -63,6 +67,10 @@ class BxAccntConfig extends BxBaseModGeneralConfig
         $this->_aHtmlIds = array(
         	'profile' => $sHtmlPrefix . '-profile-',
         	'profile_more_popup' => $sHtmlPrefix . '-profile-more-popup-',
+
+        	'password_text' => $sHtmlPrefix . '-txt-password',
+            'password_button' => $sHtmlPrefix . '-btn-copy',
+        	'password_popup' => $sHtmlPrefix . '-password-popup',
         );
     }
 
