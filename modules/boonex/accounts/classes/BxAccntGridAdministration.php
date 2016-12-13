@@ -128,7 +128,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
         $aRes = array();
         if((int)BxDolAccountQuery::getInstance()->updatePassword($sPasswordHash, $sSalt, $iId) > 0) {
-            bx_alert('account', 'edit', $iId, BxDolAccount::getInstance()->id(), array('action' => 'reset_password'));
+            bx_alert('account', 'edited', $iId, BxDolAccount::getInstance()->id(), array('action' => 'reset_password'));
 
             $sPopupId = $this->_oModule->_oConfig->getHtmlIds('password_popup');
             $sPopupTitle = _t('_bx_accounts_form_display_account_settings_password_popup');
