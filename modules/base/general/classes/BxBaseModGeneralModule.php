@@ -246,6 +246,7 @@ class BxBaseModGeneralModule extends BxDolModule
         	'title' => !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
         	'object_storage' => !empty($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
             'object_transcoder' => false,
+        	'object_view' => !empty($CNF['OBJECT_VIEWS']) ? $CNF['OBJECT_VIEWS'] : '',
         	'object_vote' => !empty($CNF['OBJECT_VOTES']) ? $CNF['OBJECT_VOTES'] : '',
         	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
         	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
@@ -840,6 +841,12 @@ class BxBaseModGeneralModule extends BxDolModule
         }
 
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        //--- Views
+        $sViews = '';
+        $oViews = !empty($aParams['object_view']) ? BxDolView::getObjectInstance($aParams['object_view'], $iId) : false;
+        if ($oViews)
+            $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => true));
+
         //--- Votes
         $sVotes = '';
         $oVotes = !empty($aParams['object_vote']) ? BxDolVote::getObjectInstance($aParams['object_vote'], $iId) : false;
@@ -871,6 +878,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'comments' => $sComments,
+        	'view' => $sViews,
             'vote' => $sVotes,
             'favorite' => $sFavorites,
             'share' => $sShare,
