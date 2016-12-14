@@ -2369,6 +2369,9 @@
 	<string name="_top"><![CDATA[Топ]]></string>
 	<string name="_uknown"><![CDATA[неизвестно]]></string>
 	<string name="_undefined"><![CDATA[неопределено]]></string>
+	<string name="_view_counter"><![CDATA[{0}]]></string>
+	<string name="_view_do_view"><![CDATA[Посмотреть]]></string>
+	<string name="_view_do_view_by"><![CDATA[Просмотрено]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>

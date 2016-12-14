@@ -7,7 +7,11 @@
  * @{
  */
 
-define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
+define('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
+
+define('BX_DOL_VIEW_USAGE_BLOCK', 'block');
+define('BX_DOL_VIEW_USAGE_INLINE', 'inline');
+define('BX_DOL_VIEW_USAGE_DEFAULT', BX_DOL_VIEW_USAGE_BLOCK);
 
 /**
  * @page objects
@@ -132,7 +136,15 @@ class BxDolView extends BxDolObject
         return $iResult;
     }
 
-    function doView()
+    public function actionGetViewedBy()
+    {
+        if (!$this->isEnabled())
+           return '';
+
+        return $this->_getViewedBy();
+    }
+
+    public function doView()
     {
         if(!$this->isEnabled())
             return false;
@@ -151,6 +163,29 @@ class BxDolView extends BxDolObject
         }
 
         return false;
+    }
+
+	/**
+     * Permissions functions
+     * 
+     * Note. The 'view' action is performed automatically and therefore the manual action is not allowed.
+     */
+    public function isAllowedView($isPerformAction = false)
+    {
+        return false;
+    }
+
+	/**
+     * Internal functions
+     */
+    protected function _getIconDo()
+    {
+    	return 'eye';
+    }
+
+    protected function _getTitleDo()
+    {
+    	return '_view_do_view';
     }
 }
 
