@@ -727,6 +727,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $oCmts;
     }
 
+    public function getViewObject($sSystem, $iId)
+    {
+        if(empty($sSystem) || (int)$iId == 0)
+            return false;
+
+        $oView = BxDolView::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
+        if(!$oView->isEnabled())
+            return false;
+
+        return $oView;
+    }
+
     public function getVoteObject($sSystem, $iId)
     {
         if(empty($sSystem) || (int)$iId == 0)

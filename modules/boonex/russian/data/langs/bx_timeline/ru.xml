@@ -89,6 +89,7 @@
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Действия над Элементом]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Комментарий]]></string>
     <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Комментарий]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[Посмотреть]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Голосовать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Поделиться]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Пожаловаться]]></string>

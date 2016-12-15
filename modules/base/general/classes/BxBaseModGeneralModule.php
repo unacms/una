@@ -433,6 +433,17 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 
         $CNF = &$this->_oConfig->CNF;
+        
+        //--- Views
+        $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $aEvent['object_id']) : null;
+
+        $aViews = array();
+        if ($oViews && $oViews->isEnabled())
+            $aViews = array(
+                'system' => $CNF['OBJECT_VIEWS'],
+                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                'count' => $aContentInfo['views']
+            );
 
         //--- Votes
         $oVotes = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aEvent['object_id']) : null;
@@ -474,6 +485,7 @@ class BxBaseModGeneralModule extends BxDolModule
     	    'sample_action' => isset($CNF['T']['txt_sample_single_action']) ? $CNF['T']['txt_sample_single_action'] : '',
             'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
+            'views' => $aViews,
             'votes' => $aVotes,
             'reports' => $aReports,
             'comments' => $aComments,

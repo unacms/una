@@ -129,6 +129,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['sample'] = $sSample;
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
+        $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['reports'] = $aResult['reports'];
         $aEvent['comments'] = $aResult['comments'];
@@ -952,6 +953,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         		'sample_action' => '_bx_timeline_txt_added_sample',
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
+            'views' => '',
             'votes' => '',
             'reports' => '',
             'comments' => '',

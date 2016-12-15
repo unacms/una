@@ -68,6 +68,16 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     	return $bVisible;
     }
 
+    protected function _getMenuItemItemView($aItem)
+    {
+        if(!isset($this->_aEvent['views']) || !is_array($this->_aEvent['views']) || !isset($this->_aEvent['views']['system'])) 
+        	return false;
+
+		$sViewsSystem = $this->_aEvent['views']['system'];
+		$iViewsObject = $this->_aEvent['views']['object_id'];
+    	return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
+    }
+
     protected function _getMenuItemItemVote($aItem)
     {
         if(!isset($this->_aEvent['votes']) || !is_array($this->_aEvent['votes']) || !isset($this->_aEvent['votes']['system'])) 
