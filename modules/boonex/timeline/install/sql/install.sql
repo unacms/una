@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `content` text collate utf8_unicode_ci NOT NULL,
   `title` varchar(255) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
+  `views` int(11) unsigned NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) unsigned NOT NULL default '0',
   `comments` int(11) unsigned NOT NULL default '0',
@@ -170,6 +171,15 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_comments` (
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
   FULLTEXT KEY `search_fields` (`cmt_text`)
 );
+
+-- TABLE: views
+CREATE TABLE IF NOT EXISTS `bx_timeline_views_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `viewer_id` int(11) NOT NULL default '0',
+  `viewer_nip` int(11) unsigned NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLES: VOTES
 CREATE TABLE IF NOT EXISTS `bx_timeline_votes` (

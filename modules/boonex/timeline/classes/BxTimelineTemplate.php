@@ -94,11 +94,24 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'view' => BX_TIMELINE_VIEW_DEFAULT, 
         	'type' => BX_TIMELINE_TYPE_ITEM
         );
+        $sContent = $this->getPost($aEvent, $aParams);
+
+        $oModule = $this->getModule();
+        if($oModule->isAllowedView($aEvent) !== true)
+            return '';
+
+        if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
+            $mixedViews = $oModule->getViewsData($aEvent['views']);
+            if($mixedViews !== false) {
+                list($sSystem, $iObjectId) = $mixedViews;
+                $oModule->getViewObject($sSystem, $iObjectId)->doView();
+            }
+        }
 
         return $this->parseHtmlByName('block_item.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
-        	'content' => $this->getPost($aEvent, $aParams),
+        	'content' => $sContent,
         	'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view')
         ));
@@ -1042,6 +1055,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aResult['description'] = '';
                 break;
         }
+
+        $sSystem = $this->_oConfig->getObject('view');
+        if($oModule->getViewObject($sSystem, $aEvent['id']) !== false)
+            $aResult['views'] = array(
+                'system' => $sSystem,
+                'object_id' => $aEvent['id'],
+                'count' => $aEvent['views']
+            );
 
         $sSystem = $this->_oConfig->getObject('vote');
         if($oModule->getVoteObject($sSystem, $aEvent['id']) !== false)

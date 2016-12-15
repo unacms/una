@@ -81,7 +81,7 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
         return $aResults;
     }
 
-    public function isAllowedView($bPerform = false)
+    public function isAllowedView($aEvent, $bPerform = false)
     {
 		return true;
     }

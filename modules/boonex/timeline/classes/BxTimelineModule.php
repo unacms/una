@@ -832,6 +832,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $bResult;
     }
 
+    public function isAllowedView($aEvent, $bPerform = false)
+    {
+        $mixedViews = $this->getViewsData($aEvent['views']);
+        if($mixedViews === false)
+            return false;
+
+        list($sSystem, $iObjectId) = $mixedViews;
+        $oView = $this->getViewObject($sSystem, $iObjectId);
+
+        $bResult = true;
+
+        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
+    }
+
     public function isAllowedVote($aEvent, $bPerform = false)
     {
         $mixedVotes = $this->getVotesData($aEvent['votes']);
@@ -989,6 +1006,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $this->getUserId());
         $oAlert->alert();
         //--- Event -> Delete for Alerts Engine ---//
+    }
+
+    public function getViewsData(&$aViews)
+    {
+        if(empty($aViews) || !is_array($aViews))
+            return false;
+
+        $sSystem = isset($aViews['system']) ? $aViews['system'] : '';
+        $iObjectId = isset($aViews['object_id']) ? (int)$aViews['object_id'] : 0;
+        $iCount = isset($aViews['count']) ? (int)$aViews['count'] : 0;
+        if($sSystem == '' || $iObjectId == 0)
+            return false;
+
+        return array($sSystem, $iObjectId, $iCount);
     }
 
     public function getVotesData(&$aVotes)

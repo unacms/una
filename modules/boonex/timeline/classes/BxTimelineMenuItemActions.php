@@ -121,6 +121,10 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sCheckFuncName = '';
         $aCheckFuncParams = array($this->_aEvent);
         switch ($a['name']) {
+            case 'item-view':
+                $sCheckFuncName = 'isAllowedView';
+                break;
+
             case 'item-comment':
                 $sCheckFuncName = 'isAllowedComment';
                 break;
