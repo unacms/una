@@ -103,6 +103,7 @@ class BxBaseView extends BxDolView
 
         $bShowDoViewAsButtonSmall = isset($aParams['show_do_view_as_button_small']) && $aParams['show_do_view_as_button_small'] == true;
         $bShowDoViewAsButton = !$bShowDoViewAsButtonSmall && isset($aParams['show_do_view_as_button']) && $aParams['show_do_view_as_button'] == true;
+        $bAllowedViewViewViewers = $this->isAllowedViewViewViewers();
 
         $aView = $this->_oQuery->getView($this->getId());
         $sClass = $this->_sStylePrefix . '-counter';
@@ -111,15 +112,31 @@ class BxBaseView extends BxDolView
         if($bShowDoViewAsButton)
             $sClass .= ' bx-btn-height';
 
+        $sContent = (int)$aView['count'] > 0 ? $this->_getLabelCounter($aView['count']) : '';
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
-            'href' => 'javascript:void(0)',
-            'title' => _t('_view_do_view_by'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $sClass),
-                array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
+        	'bx_if:show_text' => array(
+                'condition' => !$bAllowedViewViewViewers,
+                'content' => array(
+                    'bx_repeat:attrs' => array(
+                        array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
+                        array('key' => 'class', 'value' => $sClass),
+                    ),
+                    'content' => $sContent
+                )
             ),
-            'content' => (int)$aView['count'] > 0 ? $this->_getLabelCounter($aView['count']) : ''
+            'bx_if:show_link' => array(
+                'condition' => $bAllowedViewViewViewers,
+                'content' => array(
+                    'bx_repeat:attrs' => array(
+                        array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
+                        array('key' => 'class', 'value' => $sClass),
+                        array('key' => 'href', 'value' => 'javascript:void(0)'),
+                        array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)'),
+                        array('key' => 'title', 'value' => _t('_view_do_view_by'))
+                    ),
+                    'content' => $sContent
+                )
+            )
         ));
     }
 
@@ -142,29 +159,33 @@ class BxBaseView extends BxDolView
     	$aParams = array_merge($this->_aElementDefaults, $aParams);
     	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
 
+    	$bAllowedView = $this->isAllowedView();
+    	$bAllowedViewView = $this->isAllowedViewView();
+
         $bShowDoView = !isset($aParams['show_do_view']) || $aParams['show_do_view'] == true;
         $bShowDoViewAsButtonSmall = isset($aParams['show_do_view_as_button_small']) && $aParams['show_do_view_as_button_small'] == true;
         $bShowDoViewAsButton = !$bShowDoViewAsButtonSmall && isset($aParams['show_do_view_as_button']) && $aParams['show_do_view_as_button'] == true;
-        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
+        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true && $bAllowedViewView;
 
 		$iObjectId = $this->getId();
 		$iAuthorId = $this->_getAuthorId();
 		$aView = $this->_oQuery->getView($iObjectId);
         $bCount = (int)$aView['count'] != 0;
 
-        $isAllowedView = $this->isAllowedView();
+        if(!$bAllowedView && (!$bAllowedViewView || !$bCount))
+            return '';
 
         //--- Do View
-        $bTmplVarsDoView = $bShowDoView && ($bCount || $isAllowedView);
+        $bTmplVarsDoView = $bShowDoView && ($bCount || $bAllowedView);
         $aTmplVarsDoView = array();
         if($bTmplVarsDoView)
         	$aTmplVarsDoView = array(
 				'style_prefix' => $this->_sStylePrefix,
-				'do_view' => $this->_getDoView($aParams, $isAllowedView),
+				'do_view' => $this->_getDoView($aParams, $bAllowedView),
 			);
 
         //--- Counter
-        $bTmplVarsCounter = $bShowCounter && ($bCount || $isAllowedView);
+        $bTmplVarsCounter = $bShowCounter && ($bCount || $bAllowedView);
         $aTmplVarsCounter = array();
         if($bTmplVarsCounter)
         	$aTmplVarsCounter = array(
@@ -197,11 +218,11 @@ class BxBaseView extends BxDolView
         ));
     }
 
-    protected function _getDoView($aParams = array(), $isAllowedView = true)
+    protected function _getDoView($aParams = array(), $bAllowedView = true)
     {
         $bShowDoViewAsButtonSmall = isset($aParams['show_do_view_as_button_small']) && $aParams['show_do_view_as_button_small'] == true;
         $bShowDoViewAsButton = !$bShowDoViewAsButtonSmall && isset($aParams['show_do_view_as_button']) && $aParams['show_do_view_as_button'] == true;
-		$bDisabled = !$isAllowedView;
+		$bDisabled = !$bAllowedView;
 
         $sClass = '';
 		if($bShowDoViewAsButton)

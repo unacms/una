@@ -175,6 +175,22 @@ class BxDolView extends BxDolObject
         return false;
     }
 
+    public function isAllowedViewView($isPerformAction = false)
+    {
+        if(isAdmin())
+            return true;
+
+        return $this->checkAction('view_view', $isPerformAction);
+    }
+
+    public function isAllowedViewViewViewers($isPerformAction = false)
+    {
+        if(isAdmin())
+            return true;
+
+        return $this->checkAction('view_view_viewers', $isPerformAction);
+    }
+
 	/**
      * Internal functions
      */

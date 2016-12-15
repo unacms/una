@@ -536,6 +536,14 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionFavoriteView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'view_view', NULL, '_sys_acl_action_view_view', '', 0, 0);
+SET @iIdActionViewView = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'view_view_viewers', NULL, '_sys_acl_action_view_view_viewers', '', 0, 0);
+SET @iIdActionViewViewViewers = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 3);
 SET @iIdActionCmtPost = LAST_INSERT_ID();
 
@@ -632,6 +640,20 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionFavoriteView),
 (@iAdministrator, @iIdActionFavoriteView),
 (@iPremium, @iIdActionFavoriteView),
+
+-- view view
+(@iUnauthenticated, @iIdActionViewView),
+(@iAccount, @iIdActionViewView),
+(@iStandard, @iIdActionViewView),
+(@iUnconfirmed, @iIdActionViewView),
+(@iPending, @iIdActionViewView),
+(@iModerator, @iIdActionViewView),
+(@iAdministrator, @iIdActionViewView),
+(@iPremium, @iIdActionViewView),
+
+-- view view viewers
+(@iModerator, @iIdActionViewViewViewers),
+(@iAdministrator, @iIdActionViewViewViewers),
 
 -- comments post
 (@iStandard, @iIdActionCmtPost),

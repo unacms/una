@@ -1492,6 +1492,8 @@
 	<string name="_sys_acl_action_every_period"><![CDATA[ каждые {4} часа]]></string>
 	<string name="_sys_acl_action_favorite"><![CDATA[Избранное - Добавлять]]></string>
 	<string name="_sys_acl_action_favorite_view"><![CDATA[Избранное - Просматривать]]></string>
+	<string name="_sys_acl_action_view_view"><![CDATA[Просмотры - Просматривать]]></string>
+	<string name="_sys_acl_action_view_view_viewers"><![CDATA[Просмотры - Просматривать смотревших]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[Вы достигли лимита. Ваше текущее членство ({2}) позволяет {1} не более {3} раз]]></string>
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Ваше текущее членство ({2}) не позволяет '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Ваше текущее членство ({2}) более не позволяет '{1}' {5}.]]></string>
