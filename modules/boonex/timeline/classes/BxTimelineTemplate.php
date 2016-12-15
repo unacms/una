@@ -94,12 +94,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'view' => BX_TIMELINE_VIEW_DEFAULT, 
         	'type' => BX_TIMELINE_TYPE_ITEM
         );
-         
-        $sContent = $this->getJsCode('view');
-        $sContent .= $this->getPost($aEvent, $aParams);
-        $sContent .= $this->_getImagePopup($aParams);
 
-        return $sContent;
+        return $this->parseHtmlByName('block_item.html', array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
+        	'content' => $this->getPost($aEvent, $aParams),
+        	'view_image_popup' => $this->_getImagePopup($aParams),
+            'js_content' => $this->getJsCode('view')
+        ));
     }
 
     public function getPost(&$aEvent, $aBrowseParams = array())

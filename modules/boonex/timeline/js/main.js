@@ -115,7 +115,7 @@ BxTimelineMain.prototype.reloadMasonry = function() {
 BxTimelineMain.prototype.initFlickity = function() {
 	var $this = this;
 
-	$('.' + this.sClassView + ' .' + this.sClassItemImages).each(function() {
+	$('.' + this.sClassItem + ' .' + this.sClassItemImages).each(function() {
 		if($(this).find('.' + $this.sClassItemImage).length <= 1)
 			return;
 

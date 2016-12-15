@@ -123,6 +123,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         		'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
                 'photo_popup_' . $sHpO => $sHp . '-photo-popup-' . $sHpO,
 
+        		'main_item' => $sHp . '-item',
 				'menu_popup' => $sHp . '-menu-popup-',
             ),
             'post' => array(

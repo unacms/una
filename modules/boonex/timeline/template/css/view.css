@@ -70,11 +70,13 @@ div.bx-tl-view-timeline div.bx-tl-items:before {
 
     background: rgba(0, 0, 0, 0.1);
 }
-div.bx-tl-view-timeline div.bx-tl-items {
+div.bx-tl-view-timeline div.bx-tl-items,
+div.bx-tl-view-item div.bx-tl-items {
 	margin-left: 0px;
 	margin-right: 0px;
 }
-div.bx-tl-view-timeline div.bx-tl-item {
+div.bx-tl-view-timeline div.bx-tl-item,
+div.bx-tl-view-item div.bx-tl-item {
     position: relative;
 }
 div.bx-tl-view-timeline div.bx-tl-item-type {
@@ -135,17 +137,20 @@ div.bx-tl-view-outline div.bx-tl-item-cnt {
 
 /*+++ Item Owner +++*/
 div.bx-tl-view-timeline div.bx-tl-item-owner, 
-div.bx-tl-view-outline div.bx-tl-item-owner {
+div.bx-tl-view-outline div.bx-tl-item-owner,
+div.bx-tl-view-item div.bx-tl-item-owner {
 	position: relative;
 }
 div.bx-tl-view-timeline div.bx-tl-owner-avatar, 
-div.bx-tl-view-outline div.bx-tl-owner-avatar {
+div.bx-tl-view-outline div.bx-tl-owner-avatar,
+div.bx-tl-view-item div.bx-tl-owner-avatar {
 	position: absolute;
 	top: 0px;
 	left: 0px;
 }
 div.bx-tl-view-timeline div.bx-tl-owner-info, 
-div.bx-tl-view-outline div.bx-tl-owner-info {
+div.bx-tl-view-outline div.bx-tl-owner-info,
+div.bx-tl-view-item div.bx-tl-owner-info {
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
@@ -154,25 +159,32 @@ div.bx-tl-view-outline div.bx-tl-owner-info {
 div.bx-tl-view-timeline div.bx-tl-owner-name,
 div.bx-tl-view-timeline div.bx-tl-item-info, 
 div.bx-tl-view-outline div.bx-tl-owner-name,
-div.bx-tl-view-outline div.bx-tl-item-info {
+div.bx-tl-view-outline div.bx-tl-item-info,
+div.bx-tl-view-item div.bx-tl-owner-name,
+div.bx-tl-view-item div.bx-tl-item-info {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
 div.bx-tl-view-timeline div.bx-tl-owner-name a.bx-tl-owner-name,
 div.bx-tl-view-outline div.bx-tl-owner-name a.bx-tl-owner-name,
 div.bx-tl-view-timeline div.bx-tl-owner-name a.bx-tl-timeline-owner-name,
-div.bx-tl-view-outline div.bx-tl-owner-name a.bx-tl-timeline-owner-name {
+div.bx-tl-view-outline div.bx-tl-owner-name a.bx-tl-timeline-owner-name,
+div.bx-tl-view-item div.bx-tl-owner-name a.bx-tl-timeline-owner-name,
+div.bx-tl-view-item div.bx-tl-owner-name a.bx-tl-timeline-owner-name {
 	font-weight: 700;
 }
 
 div.bx-tl-view-timeline div.bx-tl-item-info .bx-tl-date,
 div.bx-tl-view-timeline div.bx-tl-item-info .bx-tl-pinned .sys-icon,
 div.bx-tl-view-outline div.bx-tl-item-info .bx-tl-date,
-div.bx-tl-view-outline div.bx-tl-item-info .bx-tl-pinned .sys-icon {
+div.bx-tl-view-outline div.bx-tl-item-info .bx-tl-pinned .sys-icon,
+div.bx-tl-view-item div.bx-tl-item-info .bx-tl-date,
+div.bx-tl-view-item div.bx-tl-item-info .bx-tl-pinned .sys-icon {
 	color: rgba(40, 60, 80, 0.5);
 }
 div.bx-tl-view-timeline div.bx-tl-item-info .bx-tl-pinned .sys-icon,
-div.bx-tl-view-outline div.bx-tl-item-info .bx-tl-pinned .sys-icon {
+div.bx-tl-view-outline div.bx-tl-item-info .bx-tl-pinned .sys-icon,
+div.bx-tl-view-item div.bx-tl-item-info .bx-tl-pinned .sys-icon {
 	cursor: default;
 }
 
@@ -186,20 +198,24 @@ div.bx-tl-view-outline span.bx-tl-content-see-more a {
 
 /*+++ Item Image +++*/
 div.bx-tl-view-timeline div.bx-tl-item-images,
-div.bx-tl-view-outline div.bx-tl-item-images {
+div.bx-tl-view-outline div.bx-tl-item-images,
+div.bx-tl-view-item div.bx-tl-item-images {
 	position: relative;
 	white-space: nowrap;
 	overflow: hidden;
 }
-div.bx-tl-view-timeline div.bx-tl-item-images {
+div.bx-tl-view-timeline div.bx-tl-item-images,
+div.bx-tl-view-item div.bx-tl-item-images {
 	margin-left: 0px;
 	margin-right: 0px;
 }
 div.bx-tl-view-timeline div.bx-tl-item-image,
-div.bx-tl-view-outline div.bx-tl-item-image {
+div.bx-tl-view-outline div.bx-tl-item-image,
+div.bx-tl-view-item div.bx-tl-item-image {
 	display: inline-block;
 }
-div.bx-tl-view-timeline div.bx-tl-item-image {
+div.bx-tl-view-timeline div.bx-tl-item-image,
+div.bx-tl-view-item div.bx-tl-item-image {
 	margin-right: 2px;
 	margin-right: 0.125rem;
 }
@@ -208,7 +224,8 @@ div.bx-tl-view-outline div.bx-tl-item-image {
     text-align: center;
     overflow: hidden;
 }
-div.bx-tl-view-timeline div.bx-tl-item-image img {
+div.bx-tl-view-timeline div.bx-tl-item-image img,
+div.bx-tl-view-item div.bx-tl-item-image img {
 	height: 12.5rem;
 }
 div.bx-tl-view-outline div.bx-tl-item-image img {
