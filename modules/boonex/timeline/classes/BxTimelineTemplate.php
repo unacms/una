@@ -961,10 +961,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'owner_id' => $aEvent['object_id'],
             'icon' => $CNF['ICON'],
         	'sample' => '_bx_timeline_txt_sample_with_article',
+            'sample_wo_article' => '_bx_timeline_txt_sample',
         	'sample_action' => '_bx_timeline_txt_added_sample',
             'content_type' => $sType,
             'content' => array(
-                'sample' => '_bx_timeline_txt_sample',
+                'sample' => '_bx_timeline_txt_sample_with_article',
+        		'sample_wo_article' => '_bx_timeline_txt_sample',
         		'sample_action' => '_bx_timeline_txt_added_sample',
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
@@ -1048,10 +1050,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aResult['content']['owner_id'] = $aShared['owner_id'];
                 list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aShared['owner_id']);
 
-                list($sUserName) = $oModule->getUserInfo($aEvent['object_id']);
-                $sSample = !empty($aResult['content']['sample']) ? $aResult['content']['sample'] : '_bx_timeline_txt_sample';
+                if(!empty($aShared['sample']))
+                    $aResult['content']['sample'] = $aShared['sample'];
+                if(!empty($aShared['sample_wo_article']))
+                    $aResult['content']['sample'] = $aShared['sample_wo_article'];
 
-                $aResult['title'] = _t('_bx_timeline_txt_user_shared_sample', $sUserName, $aResult['content']['owner_name'], _t($sSample));
+                list($sUserName) = $oModule->getUserInfo($aEvent['object_id']);
+                $aResult['title'] = _t('_bx_timeline_txt_user_shared_sample', $sUserName, $aResult['content']['owner_name'], _t($aResult['content']['sample']));
                 $aResult['description'] = '';
                 break;
         }
