@@ -873,11 +873,11 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oFavorites)
             $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => true));
 
-        //--- Timeline Repost (Internal Share)
-        $sShare = '';
+        //--- Timeline Repost
+        $sRepost = '';
         $iIdTimeline = isset($aParams['id_timeline']) ? (int)$aParams['id_timeline'] : $iId;
-        if ($iIdTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-            $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_share_as_button' => true)));
+        if ($iIdTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
+            $sRepost = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_repost_as_button' => true)));
 
         //--- Report
 		$sReport = '';
@@ -887,7 +887,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $sSocial = $bSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
 
-        if(empty($sComments) && empty($sVotes) && empty($sFavorites) && empty($sShare) && empty($sReport) && empty($sSocial))
+        if(empty($sComments) && empty($sVotes) && empty($sFavorites) && empty($sRepost) && empty($sReport) && empty($sSocial))
             return '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
@@ -895,11 +895,11 @@ class BxBaseModGeneralModule extends BxDolModule
         	'view' => $sViews,
             'vote' => $sVotes,
             'favorite' => $sFavorites,
-            'share' => $sShare,
+            'repost' => $sRepost,
         	'report' => $sReport,
             'social' => $sSocial,
         ));
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Repost, etc.
     }
 }
 

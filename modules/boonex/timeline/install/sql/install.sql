@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `votes` int(11) unsigned NOT NULL default '0',
   `comments` int(11) unsigned NOT NULL default '0',
   `reports` int(11) unsigned NOT NULL default '0',
-  `shares` int(11) unsigned NOT NULL default '0',
+  `reposts` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   `hidden` tinyint(4) NOT NULL default '0',
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
 
 INSERT INTO `bx_timeline_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
 ('common_post', 'insert', 'timeline_common_post', '', ''),
-('common_share', 'insert', 'timeline_common_share', '', ''),
+('common_repost', 'insert', 'timeline_common_repost', '', ''),
 ('profile', 'delete', 'profile', 'delete', '');
 
 -- TABLES: STORAGES, TRANSCODERS, UPLOADERS
@@ -145,15 +145,15 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_links2events` (
   UNIQUE KEY `link` (`event_id`, `link_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
--- TABLES: SHARES
-CREATE TABLE IF NOT EXISTS `bx_timeline_shares_track` (
+-- TABLES: REPOSTS
+CREATE TABLE IF NOT EXISTS `bx_timeline_reposts_track` (
   `event_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `author_nip` int(11) unsigned NOT NULL default '0',
-  `shared_id` int(11) NOT NULL default '0',
+  `reposted_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   UNIQUE KEY `event_id` (`event_id`),
-  KEY `share` (`shared_id`, `author_nip`)
+  KEY `repost` (`reposted_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLES: COMMENTS

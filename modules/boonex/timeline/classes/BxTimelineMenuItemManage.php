@@ -14,9 +14,10 @@
  */
 class BxTimelineMenuItemManage extends BxTemplMenu
 {
-	protected $_iEvent;
     protected $_oModule;
 
+	protected $_iEvent;
+	protected $_aEvent;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -24,37 +25,20 @@ class BxTimelineMenuItemManage extends BxTemplMenu
 
         $this->_oModule = BxDolModule::getInstance('bx_timeline');
 
-        $this->_iEvent = 0;
         if(bx_get('content_id') !== false)
-        	$this->_iEvent = (int)bx_get('content_id');
-
-        $this->addMarkers(array(
-            'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
-
-        	'content_id' => $this->_iEvent,
-        ));
+            $this->setEventId((int)bx_get('content_id'));
     }
 
     public function setEventId($iEventId)
     {
     	$this->_iEvent = $iEventId;
-    }
+    	$this->_aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $this->_iEvent));
 
-    public function isVisible()
-    {
-    	if(!isset($this->_aObject['menu_items']))
-			$this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
+    	$this->addMarkers(array(
+            'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
 
-    	$bVisible = false;
-    	foreach ($this->_aObject['menu_items'] as $a) {
-    		if((isset($a['active']) && !$a['active']) || (isset($a['visible_for_levels']) && !$this->_isVisible($a)))
-				continue;
-			
-			$bVisible = true;
-			break;
-    	}
-
-    	return $bVisible;
+        	'content_id' => $this->_iEvent,
+        ));
     }
 
     /**
@@ -67,8 +51,7 @@ class BxTimelineMenuItemManage extends BxTemplMenu
         if(!parent::_isVisible($a))
             return false;
 
-		$aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $this->_iEvent));
-		if(empty($aEvent) || !is_array($aEvent))
+		if(empty($this->_aEvent) || !is_array($this->_aEvent))
 			return false;
 
         $sCheckFuncName = '';
@@ -76,17 +59,17 @@ class BxTimelineMenuItemManage extends BxTemplMenu
         switch ($a['name']) {
         	case 'item-pin':
                 $sCheckFuncName = 'isAllowedPin';
-				$aCheckFuncParams = array($aEvent);
+				$aCheckFuncParams = array($this->_aEvent);
                 break;
 
 			case 'item-unpin':
                 $sCheckFuncName = 'isAllowedUnpin';
-				$aCheckFuncParams = array($aEvent);
+				$aCheckFuncParams = array($this->_aEvent);
                 break;
 
             case 'item-delete':
                 $sCheckFuncName = 'isAllowedDelete';
-				$aCheckFuncParams = array($aEvent);
+				$aCheckFuncParams = array($this->_aEvent);
                 break;
         }
 

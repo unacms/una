@@ -247,21 +247,21 @@ div.bx-tl-view-outline div.bx-tl-il-thumbnail img {
 	max-height: 100px;
 }
 
-/*+++ Item Shared +++*/
-div.bx-tl-view-outline div.bx-tl-shared div.bx-tl-item-text {
+/*+++ Item Reposted +++*/
+div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-item-text {
 	padding-left: 5px;
 	padding-left: 0.3rem;
 
 	border-left: 1px solid #999999;
 	border-left: 0.07rem solid #999999;
 }
-div.bx-tl-view-outline div.bx-tl-shared div.bx-tl-title {
+div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-title {
 	font-size: 1.0rem;
 }
-div.bx-tl-view-outline div.bx-tl-shared div.bx-tl-title a {
+div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-title a {
 	color: #999999;
 }
-div.bx-tl-view-outline div.bx-tl-shared div.bx-tl-content {
+div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-content {
 	font-size: 0.875rem;
 	color: #999999;
 }

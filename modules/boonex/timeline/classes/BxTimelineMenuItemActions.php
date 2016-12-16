@@ -40,7 +40,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         }
 
         $this->addMarkers(array(
-        	'js_object_view' => $this->_oModule->_oConfig->getJsObject('view_' . $sView),
+        	'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
 
             'view' => $sView,
             'content_id' => $aEvent['id'],
@@ -96,16 +96,6 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 		$sReportsSystem = $this->_aEvent['reports']['system'];
 		$iReportsObject = $this->_aEvent['reports']['object_id'];
     	return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
-    }
-
-	protected function _getMenuItemItemShare($aItem)
-    {
-		$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
-        $sType = $this->_aEvent['type'];
-        $sAction = $this->_aEvent['action'];
-        $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
-
-        return $this->_oModule->serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId);
     }
 
     /**
