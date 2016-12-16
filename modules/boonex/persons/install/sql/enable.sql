@@ -369,7 +369,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_persons', 'timeline_comment', @iHandler),
 ('bx_persons', 'timeline_vote', @iHandler),
 ('bx_persons', 'timeline_report', @iHandler),
-('bx_persons', 'timeline_share', @iHandler);
+('bx_persons', 'timeline_repost', @iHandler);
 
 -- PRIVACY 
 

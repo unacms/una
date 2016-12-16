@@ -382,7 +382,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_organizations', 'timeline_comment', @iHandler),
 ('bx_organizations', 'timeline_vote', @iHandler),
 ('bx_organizations', 'timeline_report', @iHandler),
-('bx_organizations', 'timeline_share', @iHandler);
+('bx_organizations', 'timeline_repost', @iHandler);
 
 -- PRIVACY 
 
