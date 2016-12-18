@@ -247,7 +247,8 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     {
         $oQuery = BxDolAccountQuery::getInstance();
 
-        if (preg_match("/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i", $s)) {
+        bx_import('BxDolForm');
+        if (BxDolFormCheckerHelper::checkEmail($s)) {
             $iId = (int)$oQuery->getIdByEmail($s);
             return $iId ? $iId : false;
         }
