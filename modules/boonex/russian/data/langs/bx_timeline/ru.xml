@@ -52,8 +52,10 @@
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Послать]]></string>
 	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять]]></string>
 
-	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Лента профиля]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_title_sys_view_home"><![CDATA[Лента главной страницы]]></string>
+    <string name="_bx_timeline_page_title_view_home"><![CDATA[Лента]]></string>
 	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Элемент Ленты]]></string>
 	<string name="_bx_timeline_page_title_item"><![CDATA[Элемент Ленты]]></string>
 	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Лента]]></string>

@@ -52,8 +52,10 @@
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Send]]></string>
 	<string name="_bx_timeline_acl_action_pin"><![CDATA[Pin]]></string>
 
-	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Profile Timeline]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_title_sys_view_home"><![CDATA[Home page Timeline]]></string>
+    <string name="_bx_timeline_page_title_view_home"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Timeline Item]]></string>
 	<string name="_bx_timeline_page_title_item"><![CDATA[Timeline Item]]></string>
 	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Timeline]]></string>
