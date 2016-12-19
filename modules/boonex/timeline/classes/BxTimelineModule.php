@@ -721,7 +721,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oCmts->isEnabled())
+        if(!$oCmts || !$oCmts->isEnabled())
             return false;
 
         return $oCmts;
@@ -733,7 +733,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oView = BxDolView::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oView->isEnabled())
+        if(!$oView || !$oView->isEnabled())
             return false;
 
         return $oView;
@@ -745,7 +745,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oVote = BxDolVote::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oVote->isEnabled())
+        if(!$oVote || !$oVote->isEnabled())
             return false;
 
         return $oVote;
@@ -757,7 +757,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oReport = BxDolReport::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oReport->isEnabled())
+        if(!$oReport || !$oReport->isEnabled())
             return false;
 
         return $oReport;
