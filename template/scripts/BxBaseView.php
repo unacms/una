@@ -59,7 +59,7 @@ class BxBaseView extends BxDolView
     	if($bDynamicMode || $this->_bCssJsAdded)
     		return;
 
-    	$this->_oTemplate->addJs(array('BxDolView.js'));
+    	$this->_oTemplate->addJs(array('jquery.anim.js', 'BxDolView.js'));
         $this->_oTemplate->addCss(array('view.css'));
 
         $this->_bCssJsAdded = true;
