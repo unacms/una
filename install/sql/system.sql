@@ -1199,6 +1199,7 @@ CREATE TABLE `sys_objects_view` (
   `is_on` tinyint(4) NOT NULL default '1',
   `trigger_table` varchar(32) NOT NULL,
   `trigger_field_id` varchar(32) NOT NULL,
+  `trigger_field_author` varchar(32) NOT NULL,
   `trigger_field_count` varchar(32) NOT NULL,
   `class_name` varchar(32) NOT NULL default '',
   `class_file` varchar(256) NOT NULL default '',

@@ -104,36 +104,13 @@ class BxDolView extends BxDolObject
                     `is_on` AS `is_on`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,
+                    `trigger_field_author` AS `trigger_field_author`,
                     `trigger_field_count` AS `trigger_field_count`,
                     `class_name` AS `class_name`,
                     `class_file` AS `class_file`
                 FROM `sys_objects_view`', 'name');
 
         return $GLOBALS['bx_dol_view_systems'];
-    }
-
-    /**
-     * it is called on cron every day or similar period to clean old votes
-     */
-    public static function maintenance()
-    {
-        $iResult = 0;
-        $oDb = BxDolDb::getInstance();
-
-        $aSystems = self::getSystems();
-        foreach($aSystems as $aSystem) {
-            if(!$aSystem['is_on'])
-                continue;
-
-            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VIEW_OLD_VIEWS);
-            $iDeleted = (int)$oDb->query($sQuery);
-            if($iDeleted > 0)
-                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
-
-            $iResult += $iDeleted;
-        }
-
-        return $iResult;
     }
 
     public function actionGetViewedBy()
@@ -185,10 +162,12 @@ class BxDolView extends BxDolObject
 
     public function isAllowedViewViewViewers($isPerformAction = false)
     {
-        if(isAdmin())
+        $oAcl = BxDolAcl::getInstance();
+        if(isAdmin() || $oAcl->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR)))
             return true;
 
-        return $this->checkAction('view_view_viewers', $isPerformAction);
+        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($this->_iId);
+        return $iObjectAuthorId != 0 && $iObjectAuthorId == $this->_getAuthorId() && $this->checkAction('view_view_viewers', $isPerformAction);
     }
 
 	/**
