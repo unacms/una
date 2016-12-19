@@ -153,5 +153,13 @@
 	<string name="_bx_timeline_txt_err_already_reposted"><![CDATA[Вы уже сделали репост этого элемента.]]></string>
 	<string name="_bx_timeline_txt_msg_success_repost"><![CDATA[Репост данного элемента был сделан успешно.]]></string>
 
+    <!-- EMAIL TEMPLATES -->
+    <string name="_bx_timeline_et_txt_name_send"><![CDATA[Послать другу.]]></string>
+    <string name="_bx_timeline_et_txt_subject_send"><![CDATA[Это может быть интересно для вас.]]></string>
+    <string name="_bx_timeline_et_txt_body_send"><![CDATA[{email_header}
+<p>Привет.</p>
+<p>Взгляните на <a href="{ViewLink}">это сообщение</a>, оно может быть интересно для вас.</p>
+{email_footer}]]></string>
+
 	<string name="_bx_ntfs_alert_action_post_common"><![CDATA[добавить сообщение]]></string>
 </resources>

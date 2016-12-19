@@ -54,3 +54,7 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_timeline', 'bx_timel
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_timeline';
+
+
+-- EMAIL TEMPLATES
+DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_timeline';
