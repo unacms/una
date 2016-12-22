@@ -356,7 +356,7 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 -- VIEWS
 
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_albums', 'bx_albums_views_track', '86400', '1', 'bx_albums_albums', 'id', 'views', '', ''),
+('bx_albums', 'bx_albums_views_track', '86400', '1', 'bx_albums_albums', 'id', '', 'views', '', ''),
 ('bx_albums_media', 'bx_albums_views_media_track', '86400', '1', 'bx_albums_files2albums', 'id', 'author', 'views', '', '');
 
 -- FAFORITES
