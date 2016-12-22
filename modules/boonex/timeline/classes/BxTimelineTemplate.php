@@ -97,7 +97,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sContent = $this->getPost($aEvent, $aParams);
 
         $oModule = $this->getModule();
-        if($oModule->isAllowedView($aEvent) !== true)
+        if($oModule->isAllowedViewCounter($aEvent) !== true)
             return '';
 
         if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {

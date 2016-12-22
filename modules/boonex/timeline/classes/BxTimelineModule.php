@@ -834,7 +834,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $bResult;
     }
 
-    public function isAllowedView($aEvent, $bPerform = false)
+    public function isAllowedViewCounter($aEvent, $bPerform = false)
     {
         $mixedViews = $this->getViewsData($aEvent['views']);
         if($mixedViews === false)
@@ -847,7 +847,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
         if($oProfileOwner !== false)
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view_counter', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
