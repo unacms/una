@@ -190,6 +190,22 @@ BxTimelineMain.prototype.loadingInPopup = function(e, bShow) {
 	bx_loading(oParent, bShow);
 };
 
+BxTimelineMain.prototype.loadingIn = function(e, bShow) {
+	var oElement = $(e);
+	var bElement = oElement.length > 0;
+
+	if(bElement && oElement.hasClass('bx-btn'))
+		this.loadingInButton(e, bShow);
+	else if(bElement && (oElement.hasClass(this.sClassItem) || oElement.parents('.' + this.sClassItem + ':first').length > 0))
+		this.loadingInItem(e, bShow);
+	else if(bElement && oElement.parents('.bx-popup-content:first').length > 0)
+		this.loadingInPopup(e, bShow);
+	else if(bElement && oElement.parents('.bx-db-container:first').length > 0)
+		this.loadingInBlock(e, bShow);
+	else 
+		bx_loading($('body'), bShow);
+};
+
 BxTimelineMain.prototype._loading = function(e, bShow) {
 	var oParent = $(e).length ? $(e) : $('body'); 
 	bx_loading(oParent, bShow);

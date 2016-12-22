@@ -48,11 +48,14 @@
 	<string name="_bx_timeline_acl_action_post"><![CDATA[Сообщение]]></string>
 	<string name="_bx_timeline_acl_action_delete"><![CDATA[Удалить]]></string>
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Голосовать]]></string>
-	<string name="_bx_timeline_acl_action_share"><![CDATA[Поделиться]]></string>
+	<string name="_bx_timeline_acl_action_repost"><![CDATA[Сделать репост]]></string>
+	<string name="_bx_timeline_acl_action_send"><![CDATA[Послать]]></string>
 	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять]]></string>
 
-	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Лента профиля]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_page_title_sys_view_home"><![CDATA[Лента главной страницы]]></string>
+    <string name="_bx_timeline_page_title_view_home"><![CDATA[Лента]]></string>
 	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Элемент Ленты]]></string>
 	<string name="_bx_timeline_page_title_item"><![CDATA[Элемент Ленты]]></string>
 	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Лента]]></string>
@@ -75,6 +78,13 @@
     <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Сообщения от {0}]]></string>
     <string name="_bx_timeline_menu_item_view_other"><![CDATA[Сообщения от других]]></string>
     <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
+
+    <string name="_bx_timeline_menu_title_item_share"><![CDATA[Поделиться]]></string>
+    <string name="_bx_timeline_menu_set_title_item_share"><![CDATA[Поделиться]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_repost"><![CDATA[Сделать репост]]></string>
+    <string name="_bx_timeline_menu_item_title_item_repost"><![CDATA[Сделать репост]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Послать]]></string>
+    <string name="_bx_timeline_menu_item_title_item_send"><![CDATA[Послать другу]]></string>
 
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Управлять Элементом]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Управлять Элементом]]></string>
@@ -114,7 +124,7 @@
 	<string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Лента]]></string>
 
 	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
-	<string name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Лента (разместить снова)]]></string>
+	<string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Лента (сделать репост)]]></string>
 	<string name="_bx_timeline_alert_action_added"><![CDATA[добавить]]></string>
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Пусто]]></string>
@@ -130,7 +140,7 @@
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[добавил {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} добавил {1}]]></string>
-	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} снова разместил {1} {2}]]></string>
+	<string name="_bx_timeline_txt_user_reposted_sample"><![CDATA[{0} сделал репост {1} {2}]]></string>
 	<string name="_bx_timeline_txt_sample"><![CDATA[сообщение]]></string>
 	<string name="_bx_timeline_txt_sample_with_article"><![CDATA[сообщение]]></string>
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[сообщение в ленте]]></string>
@@ -138,12 +148,20 @@
 	<string name="_bx_timeline_txt_sample_vote_single"><![CDATA[голос за сообщение в ленте]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>
 
-	<string name="_bx_timeline_txt_do_share"><![CDATA[Поделиться]]></string>
-	<string name="_bx_timeline_txt_shared"><![CDATA[Поделился {0} {1}.]]></string>
-	<string name="_bx_timeline_txt_shared_by"><![CDATA[Поделился]]></string>
-	<string name="_bx_timeline_txt_err_cannot_share"><![CDATA[Невозможно поделиться. Пожалуйста, сообщите нам об этой проблеме.]]></string>
-	<string name="_bx_timeline_txt_err_already_shared"><![CDATA[Вы уже поделились этим элементом.]]></string>
-	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string>
+	<string name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string>
+	<string name="_bx_timeline_txt_reposted"><![CDATA[Сделал репост {0} {1}.]]></string>
+	<string name="_bx_timeline_txt_reposted_by"><![CDATA[Сделал репост]]></string>
+	<string name="_bx_timeline_txt_err_cannot_repost"><![CDATA[Невозможно сделать репост. Пожалуйста, сообщите нам об этой проблеме.]]></string>
+	<string name="_bx_timeline_txt_err_already_reposted"><![CDATA[Вы уже сделали репост этого элемента.]]></string>
+	<string name="_bx_timeline_txt_msg_success_repost"><![CDATA[Репост данного элемента был сделан успешно.]]></string>
+
+    <!-- EMAIL TEMPLATES -->
+    <string name="_bx_timeline_et_txt_name_send"><![CDATA[Послать другу.]]></string>
+    <string name="_bx_timeline_et_txt_subject_send"><![CDATA[Это может быть интересно для вас.]]></string>
+    <string name="_bx_timeline_et_txt_body_send"><![CDATA[{email_header}
+<p>Привет.</p>
+<p>Взгляните на <a href="{ViewLink}">это сообщение</a>, оно может быть интересно для вас.</p>
+{email_footer}]]></string>
 
 	<string name="_bx_ntfs_alert_action_post_common"><![CDATA[добавить сообщение]]></string>
 </resources>

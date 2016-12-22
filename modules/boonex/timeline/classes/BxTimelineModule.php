@@ -24,7 +24,7 @@ define('BX_TIMELINE_FILTER_OWNER', 'owner');
 define('BX_TIMELINE_FILTER_OTHER', 'other');
 
 define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
-define('BX_TIMELINE_PARSE_TYPE_SHARE', 'share');
+define('BX_TIMELINE_PARSE_TYPE_REPOST', 'repost');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
 define('BX_TIMELINE_MEDIA_PHOTO', 'photo');
@@ -117,7 +117,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         ));
     }
 
-    public function actionShare()
+    public function actionRepost()
     {
     	$iAuthorId = $this->getUserId();
 
@@ -128,27 +128,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             'object_id' => bx_process_input(bx_get('object_id'), BX_DATA_INT),
         );
 
-        $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
-        if(empty($aShared) || !is_array($aShared)) {
-            echoJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
+        $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
+        if(empty($aReposted) || !is_array($aReposted)) {
+            echoJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_repost')));
             return;
         }
 
-        $mixedAllowed = $this->isAllowedShare($aShared, true);
+        $mixedAllowed = $this->isAllowedRepost($aReposted, true);
         if($mixedAllowed !== true) {
             echoJson(array('code' => 2, 'msg' => strip_tags($mixedAllowed)));
             return;
         }
 
-        $bShared = $this->_oDb->isShared($aShared['id'], $iOwnerId, $iAuthorId);
-		if($bShared) {
-        	echoJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_shared')));
+        $bReposted = $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $iAuthorId);
+		if($bReposted) {
+        	echoJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_reposted')));
             return;
         }
 
         $iId = $this->_oDb->insertEvent(array(
             'owner_id' => $iOwnerId,
-            'type' => $this->_oConfig->getPrefix('common_post') . 'share',
+            'type' => $this->_oConfig->getPrefix('common_post') . 'repost',
             'action' => '',
             'object_id' => $iAuthorId,
             'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
@@ -158,21 +158,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         ));
 
         if(empty($iId)) {
-	        echoJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
+	        echoJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_repost')));        
 	        return;
         }
 
-        $this->onShare($iId, $aShared);
+        $this->onRepost($iId, $aReposted);
 
-        $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
-		$sCounter = $this->_oTemplate->getShareCounter($aShared);
+        $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
+		$sCounter = $this->_oTemplate->getRepostCounter($aReposted);
 
 		echoJson(array(
 			'code' => 0, 
-			'msg' => _t('_bx_timeline_txt_msg_success_share'), 
-			'count' => $aShared['shares'], 
+			'msg' => _t('_bx_timeline_txt_msg_success_repost'), 
+			'count' => $aReposted['reposts'], 
 			'counter' => $sCounter,
-			'disabled' => !$bShared
+			'disabled' => !$bReposted
 		));
     }
 
@@ -277,11 +277,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         echo $this->_oTemplate->getAttachLinkForm();
     }
 
-    public function actionGetSharedBy()
+    public function actionGetRepostedBy()
     {
-        $iSharedId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $iRepostedId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        echo $this->_oTemplate->getSharedBy($iSharedId);
+        echo $this->_oTemplate->getRepostedBy($iRepostedId);
     }
 
     function actionRss()
@@ -510,39 +510,39 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 		);
     }
 
-    public function serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
+    public function serviceGetRepostElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
     {
     	if(!$this->isEnabled())
     		return '';
 
-        $aParams = array_merge($this->_oConfig->getShareDefaults(), $aParams);
-        return $this->_oTemplate->getShareElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams);
+        $aParams = array_merge($this->_oConfig->getRepostDefaults(), $aParams);
+        return $this->_oTemplate->getRepostElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams);
     }
 
-    public function serviceGetShareCounter($sType, $sAction, $iObjectId)
+    public function serviceGetRepostCounter($sType, $sAction, $iObjectId)
     {
     	if(!$this->isEnabled())
     		return '';
 
-		$aShared = $this->_oDb->getShared($sType, $sAction, $iObjectId);
+		$aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
 
-        return $this->_oTemplate->getShareCounter($aShared);
+        return $this->_oTemplate->getRepostCounter($aReposted);
     }
 
-    public function serviceGetShareJsScript()
+    public function serviceGetRepostJsScript()
     {
     	if(!$this->isEnabled())
     		return '';
 
-        return $this->_oTemplate->getShareJsScript();
+        return $this->_oTemplate->getRepostJsScript();
     }
 
-    public function serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId)
+    public function serviceGetRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId)
     {
     	if(!$this->isEnabled())
     		return '';
 
-        return $this->_oTemplate->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+        return $this->_oTemplate->getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
     }
 
     public function serviceGetMenuItemAddonComment($sSystem, $iObjectId)
@@ -721,7 +721,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oCmts->isEnabled())
+        if(!$oCmts || !$oCmts->isEnabled())
             return false;
 
         return $oCmts;
@@ -733,7 +733,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oView = BxDolView::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oView->isEnabled())
+        if(!$oView || !$oView->isEnabled())
             return false;
 
         return $oView;
@@ -745,7 +745,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oVote = BxDolVote::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oVote->isEnabled())
+        if(!$oVote || !$oVote->isEnabled())
             return false;
 
         return $oVote;
@@ -757,7 +757,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         $oReport = BxDolReport::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oReport->isEnabled())
+        if(!$oReport || !$oReport->isEnabled())
             return false;
 
         return $oReport;
@@ -808,7 +808,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
 
-        if ($oProfileOwner = BxDolProfile::getInstance((int)$aEvent['owner_id']))
+        $oProfileOwner = BxDolProfile::getInstance((int)$aEvent['owner_id']);
+        if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -826,13 +827,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $bResult = true;
 
-        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_comment', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
 
-    public function isAllowedView($aEvent, $bPerform = false)
+    public function isAllowedViewCounter($aEvent, $bPerform = false)
     {
         $mixedViews = $this->getViewsData($aEvent['views']);
         if($mixedViews === false)
@@ -843,8 +845,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $bResult = true;
 
-        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view_counter', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
@@ -861,7 +864,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $bResult = true;
 
-        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
@@ -879,13 +883,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $bResult = true;
 
-        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_report', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
 
-    public function isAllowedShare($aEvent, $bPerform = false)
+    public function isAllowedRepost($aEvent, $bPerform = false)
     {
         if(isAdmin())
             return true;
@@ -894,10 +899,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if($iUserId == 0)
             return false;
 
-        $aCheckResult = checkActionModule($iUserId, 'share', $this->getName(), $bPerform);
+        $aCheckResult = checkActionModule($iUserId, 'repost', $this->getName(), $bPerform);
 
-        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_share', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_repost', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+    }
+
+    public function isAllowedSend($aEvent, $bPerform = false)
+    {
+        if(isAdmin())
+            return true;
+
+        $iUserId = (int)$this->getUserId();
+        if($iUserId == 0)
+            return false;
+
+        $aCheckResult = checkActionModule($iUserId, 'send', $this->getName(), $bPerform);
+
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_send', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
@@ -945,24 +969,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         //--- Event -> Post for Alerts Engine ---//
     }
 
-    public function onShare($iId, $aShared = array())
+    public function onRepost($iId, $aReposted = array())
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
 
-        if(empty($aShared)) {
+        if(empty($aReposted)) {
             $aContent = unserialize($aEvent['content']);
 
-            $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
-            if(empty($aShared) || !is_array($aShared))
+            $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
+            if(empty($aReposted) || !is_array($aReposted))
                 return;
         }
 
         $iUserId = $this->getUserId();
-        $this->_oDb->insertShareTrack($aEvent['id'], $iUserId, $this->getUserIp(), $aShared['id']);
-        $this->_oDb->updateShareCounter($aShared['id'], $aShared['shares']);
+        $this->_oDb->insertRepostTrack($aEvent['id'], $iUserId, $this->getUserIp(), $aReposted['id']);
+        $this->_oDb->updateRepostCounter($aReposted['id'], $aReposted['reposts']);
 
         //--- Timeline -> Update for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'share', $aShared['id'], $iUserId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId);
         $oAlert->alert();
         //--- Timeline -> Update for Alerts Engine ---//
     }
@@ -979,23 +1003,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 	        $this->_deleteLinks($aEvent['id']);
     	}
 
-    	//--- Update parent event when share event was deleted.
-        if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_SHARE) {
-            $this->_oDb->deleteShareTrack($aEvent['id']);
+    	//--- Update parent event when repost event was deleted.
+        if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_REPOST) {
+            $this->_oDb->deleteRepostTrack($aEvent['id']);
 
             $aContent = unserialize($aEvent['content']);
-            $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
-            if(!empty($aShared) && is_array($aShared))
-                $this->_oDb->updateShareCounter($aShared['id'], $aShared['shares'], -1);
+            $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
+            if(!empty($aReposted) && is_array($aReposted))
+                $this->_oDb->updateRepostCounter($aReposted['id'], $aReposted['reposts'], -1);
         }
 
-        //--- Find and delete share events when parent event was deleted.
+        //--- Find and delete repost events when parent event was deleted.
         $bSystem = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']);
-	    $aShareEvents = $this->_oDb->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aEvent['type']));
-		foreach($aShareEvents as $aShareEvent) {
-			$aContent = unserialize($aShareEvent['content']);
+	    $aRepostEvents = $this->_oDb->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aEvent['type']));
+		foreach($aRepostEvents as $aRepostEvent) {
+			$aContent = unserialize($aRepostEvent['content']);
 			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent['id'])))
-				$this->_oDb->deleteEvent(array('id' => (int)$aShareEvent['id']));
+				$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent['id']));
 		}
 
 		//--- Delete associated meta.
@@ -1168,7 +1192,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'pin', $this->getName(), $bPerform);
-        if ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']))
+
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_pin', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;

@@ -60,7 +60,7 @@ class BxBaseFavorite extends BxDolFavorite
     	if($bDynamicMode || $this->_bCssJsAdded)
     		return;
 
-    	$this->_oTemplate->addJs(array('BxDolFavorite.js'));
+    	$this->_oTemplate->addJs(array('jquery.anim.js', 'BxDolFavorite.js'));
         $this->_oTemplate->addCss(array('favorite.css'));
 
         $this->_bCssJsAdded = true;

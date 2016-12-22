@@ -235,6 +235,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_template_cache_image_max_size', '_adm_stg_cpt_option_sys_template_cache_image_max_size', '5', 'digit', '', '', '', 21),
 
 (@iCategoryId, 'sys_email_confirmation', '_adm_stg_cpt_option_sys_email_confirmation', 'on', 'checkbox', '', '', '', 30),
+(@iCategoryId, 'sys_email_attachable_email_templates', '_adm_stg_cpt_option_sys_email_attachable_email_templates', '', 'digit', '', '', '', 31),
 
 (@iCategoryId, 'sys_redirect_after_account_added', '_adm_stg_cpt_option_sys_redirect_after_account_added', 'page.php?i=account-profile-switcher', 'digit', '', '', '', 40),
 
@@ -1198,6 +1199,7 @@ CREATE TABLE `sys_objects_view` (
   `is_on` tinyint(4) NOT NULL default '1',
   `trigger_table` varchar(32) NOT NULL,
   `trigger_field_id` varchar(32) NOT NULL,
+  `trigger_field_author` varchar(32) NOT NULL,
   `trigger_field_count` varchar(32) NOT NULL,
   `class_name` varchar(32) NOT NULL default '',
   `class_file` varchar(256) NOT NULL default '',

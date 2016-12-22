@@ -1216,6 +1216,7 @@
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Объект CAPTCHA]]></string>
 	<string name="_adm_stg_cpt_option_sys_email_confirmation"><![CDATA[Задействовать подтверждение эл. адреса]]></string>
+	<string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Список присоединяемых имейл темплейтов]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[Кэш-движок для БД (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string>
@@ -2171,10 +2172,9 @@
         <ul>
             <li><b>{0}</b> удалено просроченных членств</li>
             <li><b>{1}</b> удалено просроченных сессий</li>
-            <li><b>{2}</b> удалено просроченных просмотров</li>
-            <li><b>{3}</b> удалено просроченных ключей</li>
-            <li><b>{4}</b> удалено просроченных токенов хранилища</li>
-            <li><b>{5}</b> удалено просроченных транскодированных изображений</li>
+            <li><b>{2}</b> удалено просроченных ключей</li>
+            <li><b>{3}</b> удалено просроченных токенов хранилища</li>
+            <li><b>{4}</b> удалено просроченных транскодированных изображений</li>
         </ul>]]></string>
     <string name="_sys_pruning_files"><![CDATA[<h3>Очистка Файлов:</h3>
         <ul>
