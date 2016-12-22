@@ -32,7 +32,7 @@ class BxBaseMenuSocialSharing extends BxTemplMenu
     {
         if(!empty($this->_aNeedEncode) && is_array($this->_aNeedEncode))
             foreach($this->_aNeedEncode as $sKey1 => $sKey2)
-                if(key_exists($sKey1, $a))
+                if(array_key_exists($sKey1, $a))
                     $a[$sKey2] = rawurlencode($a[$sKey1]);
 
         return parent::addMarkers($a); 

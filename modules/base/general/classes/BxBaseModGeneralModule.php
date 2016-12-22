@@ -837,7 +837,7 @@ class BxBaseModGeneralModule extends BxDolModule
             ));
         }
 
-        $aCustomParams = false;
+        $aCustomParams = array();
         $iIdThumb = isset($aParams['id_thumb']) ? (int)$aParams['id_thumb'] : 0;
         $bSocialSharing = isset($aParams['social_sharing']) ? (bool)$aParams['social_sharing'] : true;
         if ($iIdThumb && $bSocialSharing) {

@@ -132,7 +132,10 @@ class BxBaseMenu extends BxDolMenu
 		);
 		$a['bx_if:title'] = array (
 			'condition' => (bool)$a['title'],
-			'content' => array('title' => $a['title']),
+			'content' => array(
+				'title' => $a['title'],
+		        'title_attr' => $a['title_attr']
+		    ),
 		);
 		$a['bx_if:addon'] = array (
 			'condition' => (bool)$mixedAddon,
