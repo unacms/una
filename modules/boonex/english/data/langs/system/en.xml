@@ -1988,6 +1988,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Set membership]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Studio]]></string>
 	<string name="_sys_menu_item_title_subscriptions"><![CDATA[Subscriptions]]></string>
+	<string name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[]]></string>
+    <string name="_sys_menu_item_title_social_sharing_googleplus"><![CDATA[]]></string>
+    <string name="_sys_menu_item_title_social_sharing_twitter"><![CDATA[]]></string>
+    <string name="_sys_menu_item_title_social_sharing_pinterest"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Privacy]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Language]]></string>
@@ -2019,6 +2023,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Set membership]]></string>
 	<string name="_sys_menu_item_title_system_studio"><![CDATA[Studio]]></string>
 	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Subscriptions]]></string>
+	<string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Share in Facebook]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_googleplus"><![CDATA[Share in Google Plus]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Share in Twitter]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Share in Pinterest]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Account]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
@@ -2030,6 +2038,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
 	<string name="_sys_menu_set_title_switch_language"><![CDATA[Switch Language]]></string>
 	<string name="_sys_menu_set_title_switch_template"><![CDATA[Switch Template]]></string>
+	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Social Sharing]]></string>
 	<string name="_sys_menu_set_title_footer"><![CDATA[Footer]]></string>
 	<string name="_sys_menu_set_title_profile_create_links"><![CDATA[Create Profile Links]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Profile Stats]]></string>
@@ -2071,6 +2080,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Profile Stats]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[ACL Levels]]></string>
+	<string name="_sys_menu_title_social_sharing"><![CDATA[Social Sharing]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Site Submenu]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Member Toolbar]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Site Toolbar]]></string>

@@ -885,7 +885,17 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oReport)
             $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => true));
 
-        $sSocial = $bSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
+        $sSocial = '';
+        if($bSocialSharing) {
+            $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
+            $oSocial->addMarkers(array_merge(array(
+                'id' => $iId,
+            	'module' => $this->_aModule['name'],
+            	'url' => BX_DOL_URL_ROOT . $sUrl,
+            	'title' => $sTitle,
+            ), $aCustomParams));
+            $sSocial = $oSocial->getCode();
+        }
 
         if(empty($sComments) && empty($sVotes) && empty($sFavorites) && empty($sRepost) && empty($sReport) && empty($sSocial))
             return '';
