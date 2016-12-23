@@ -3243,8 +3243,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 -- GRID: Storage managers
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('sys_studio_strg_files', 'Sql', 'SELECT * FROM `sys_files` WHERE 1 ', 'sys_files', 'id', '', '', '', 20, NULL, 'start', '', 'file_name,mime_type', '', 'auto', '', '', 'BxTemplStudioStoragesFiles', ''),
-('sys_studio_strg_images', 'Sql', 'SELECT * FROM `sys_images` WHERE 1 ', 'sys_images', 'id', '', '', '', 20, NULL, 'start', '', 'file_name', '', 'auto', '', '', 'BxTemplStudioStoragesImages', '');
+('sys_studio_strg_files', 'Sql', 'SELECT * FROM `sys_files` WHERE 1 ', 'sys_files', 'id', '', '', '', 20, NULL, 'start', '', 'file_name,mime_type', '', 'auto', 'file_name,added', '', 'BxTemplStudioStoragesFiles', ''),
+('sys_studio_strg_images', 'Sql', 'SELECT * FROM `sys_images` WHERE 1 ', 'sys_images', 'id', '', '', '', 20, NULL, 'start', '', 'file_name', '', 'auto', 'file_name,added', '', 'BxTemplStudioStoragesImages', '');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 -- Storages: Files
