@@ -3,8 +3,8 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Protean Protean template
- * @ingroup     TridentModules
+ * @defgroup    Social Engine Migration
+ * @ingroup     UnaModules
  *
  * @{
  */
@@ -13,7 +13,7 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_se_migration',
     'title' => 'Social Engine Migration',
     'note' => 'Migration Tool',

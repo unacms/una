@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxSEMigConfig extends BxBaseModTemplateConfig {
+class BxSEMigConfig extends BxBaseModGeneralConfig {
 	/**
 	* @$_aMigrationModules modules's data for transferring array
 	* @section comments Comments
