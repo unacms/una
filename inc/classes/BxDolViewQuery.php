@@ -22,6 +22,23 @@ class BxDolViewQuery extends BxDolObjectQuery
         $this->_iPeriod = (int)$aSystem['period'];
     }
 
+    public function isPerformed($iObjectId, $iAuthorId)
+    {
+        $sQuery = $this->prepare("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `viewer_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
+        return (int)$this->getOne($sQuery) > 0;
+    }
+
+	public function getPerformedBy($iObjectId)
+    {
+        $sQuery = $this->prepare("SELECT `viewer_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC", $iObjectId);
+        return $this->getColumn($sQuery);
+    }
+
+	public function getView($iObjectId)
+    {
+        return array('count' => $this->getObjectCount($iObjectId));
+    }
+
     public function doView($iObjectId, $iAuthorId, $sAuthorIp)
     {
         $iAuthorNip = ip2long($sAuthorIp);

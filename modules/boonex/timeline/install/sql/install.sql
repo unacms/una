@@ -1,4 +1,5 @@
 SET @sName = 'bx_timeline';
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 -- TABLES
 CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
@@ -11,11 +12,12 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `content` text collate utf8_unicode_ci NOT NULL,
   `title` varchar(255) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
+  `views` int(11) unsigned NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) unsigned NOT NULL default '0',
   `comments` int(11) unsigned NOT NULL default '0',
   `reports` int(11) unsigned NOT NULL default '0',
-  `shares` int(11) unsigned NOT NULL default '0',
+  `reposts` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   `hidden` tinyint(4) NOT NULL default '0',
@@ -40,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
 
 INSERT INTO `bx_timeline_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
 ('common_post', 'insert', 'timeline_common_post', '', ''),
-('common_share', 'insert', 'timeline_common_share', '', ''),
+('common_repost', 'insert', 'timeline_common_repost', '', ''),
 ('profile', 'delete', 'profile', 'delete', '');
 
 -- TABLES: STORAGES, TRANSCODERS, UPLOADERS
@@ -144,15 +146,15 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_links2events` (
   UNIQUE KEY `link` (`event_id`, `link_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
--- TABLES: SHARES
-CREATE TABLE IF NOT EXISTS `bx_timeline_shares_track` (
+-- TABLES: REPOSTS
+CREATE TABLE IF NOT EXISTS `bx_timeline_reposts_track` (
   `event_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `author_nip` int(11) unsigned NOT NULL default '0',
-  `shared_id` int(11) NOT NULL default '0',
+  `reposted_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   UNIQUE KEY `event_id` (`event_id`),
-  KEY `share` (`shared_id`, `author_nip`)
+  KEY `repost` (`reposted_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLES: COMMENTS
@@ -170,6 +172,15 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_comments` (
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
   FULLTEXT KEY `search_fields` (`cmt_text`)
 );
+
+-- TABLE: views
+CREATE TABLE IF NOT EXISTS `bx_timeline_views_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `viewer_id` int(11) NOT NULL default '0',
+  `viewer_nip` int(11) unsigned NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLES: VOTES
 CREATE TABLE IF NOT EXISTS `bx_timeline_votes` (
@@ -238,11 +249,11 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_timeline_simple_video', 1, 'BxTimelineUploaderSimpleVideo', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleVideo.php');
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_timeline_photos', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('bx_timeline_photos_processed', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_processed', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_timeline_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_timeline_photos_processed', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos_processed', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 
-('bx_timeline_videos', 'Local', '', 360, 2592000, 3, 'bx_timeline_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0),
-('bx_timeline_videos_processed', 'Local', '', 360, 2592000, 3, 'bx_timeline_videos_processed', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0);
+('bx_timeline_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0),
+('bx_timeline_videos_processed', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_videos_processed', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline_photos_preview', 'bx_timeline_photos_processed', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0', '', ''),

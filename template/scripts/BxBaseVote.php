@@ -71,7 +71,7 @@ class BxBaseVote extends BxDolVote
     	if($bDynamicMode || $this->_bCssJsAdded)
     		return;
 
-    	$this->_oTemplate->addJs(array('BxDolVote.js'));
+    	$this->_oTemplate->addJs(array('jquery.anim.js', 'BxDolVote.js'));
         $this->_oTemplate->addCss(array('vote.css'));
 
         $this->_bCssJsAdded = true;

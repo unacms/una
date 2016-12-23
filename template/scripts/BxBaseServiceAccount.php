@@ -305,7 +305,7 @@ class BxBaseServiceAccount extends BxDol
 
         $this->_oAccountQuery->updatePassword($sPasswordHash, $sSalt, $iAccountId);
 
-        bx_alert('account', 'edit', $iAccountId, $iAccountId, array('action' => 'forgot_password'));
+        bx_alert('account', 'edited', $iAccountId, $iAccountId, array('action' => 'forgot_password'));
 
         return $sPwd;
     }

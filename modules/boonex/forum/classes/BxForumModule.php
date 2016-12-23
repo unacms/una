@@ -98,10 +98,30 @@ class BxForumModule extends BxBaseModTextModule
     {
     	$sType = 'top';
 
-    	if($sUnitView != 'table')   
+    	if($sUnitView != 'table')
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
 		return $this->_serviceBrowseTable(array('type' => $sType));
+    }
+
+    public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+        $sType = 'popular';
+
+        if($sUnitView != 'table')
+            $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+        return $this->_serviceBrowseTable(array('type' => $sType));
+    }
+
+    public function serviceBrowseUpdated ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+        $sType = 'updated';
+
+        if($sUnitView != 'table')
+            $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+        return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
 	public function serviceBrowseIndex($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)

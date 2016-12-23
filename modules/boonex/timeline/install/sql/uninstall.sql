@@ -14,7 +14,11 @@ DROP TABLE IF EXISTS `bx_timeline_videos2events`;
 DROP TABLE IF EXISTS `bx_timeline_links`;
 DROP TABLE IF EXISTS `bx_timeline_links2events`;
 
+DROP TABLE IF EXISTS `bx_timeline_reposts_track`;
+
 DROP TABLE IF EXISTS `bx_timeline_comments`;
+
+DROP TABLE IF EXISTS `bx_timeline_views_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_votes`;
 DROP TABLE IF EXISTS `bx_timeline_votes_track`;

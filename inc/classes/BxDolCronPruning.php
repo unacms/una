@@ -44,9 +44,6 @@ class BxDolCronPruning extends BxDolCron
         $oSession = BxDolSession::getInstance();
         $iSessions = $oSession ? $oSession->maintenance() : 0;
 
-        // clean old views
-        $iDeletedViews = BxDolView::maintenance ();
-
         // clean storage engine expired private file tokens
         $iDeletedExpiredTokens = BxDolStorage::pruning();
 
@@ -57,7 +54,7 @@ class BxDolCronPruning extends BxDolCron
         $oKey = BxDolKey::getInstance();
         $iDeletedKeys = $oKey ? $oKey->prune() : 0;
 
-        echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedViews, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages);
+        echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages);
     }
 
     /**

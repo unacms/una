@@ -140,7 +140,30 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             $a = array_unique(BxDolFormCheckerHelper::passInt($a));
             if ($a)
                 $aValues['recipients'] = array_merge(empty($aValues['recipients']) ? array() : $aValues['recipients'], $a);            
-        }        
+        }
+
+        $sEt = bx_get('et');
+        if($sEt !== false) { // if 'attachable email template' was specified, process it
+            $aEt = unserialize(base64_decode(urldecode($sEt)));
+
+            if(!empty($aEt) && is_array($aEt) && !empty($aEt['name'])) {
+                $sName = bx_process_input($aEt['name']);
+                $aParams = isset($aEt['params']) ? bx_process_input($aEt['params']) : array();
+
+                $sAet = getParam('sys_email_attachable_email_templates');
+                if(strpos($sAet, $sName) !== false) {
+                    $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sName, $aParams);
+                    if(!empty($aTemplate) && is_array($aTemplate)) {
+                        if(isset($this->aInputs[$CNF['FIELD_TITLE']]) && empty($this->aInputs[$CNF['FIELD_TITLE']]['value']))
+                            $this->aInputs[$CNF['FIELD_TITLE']]['value'] = $aTemplate['Subject'];
+
+                        if(isset($this->aInputs[$CNF['FIELD_TEXT']]) && empty($this->aInputs[$CNF['FIELD_TEXT']]['value']))
+                            $this->aInputs[$CNF['FIELD_TEXT']]['value'] = $aTemplate['Body'];
+                    }
+                }
+            }
+            
+        }
 
         return parent::initChecker ($aValues, $aSpecificValues);
     }

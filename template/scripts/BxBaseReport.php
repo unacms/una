@@ -62,7 +62,7 @@ class BxBaseReport extends BxDolReport
     	if($bDynamicMode || $this->_bCssJsAdded)
     		return;
 
-    	$this->_oTemplate->addJs(array('BxDolReport.js'));
+    	$this->_oTemplate->addJs(array('jquery.form.min.js', 'jquery.anim.js', 'BxDolReport.js'));
         $this->_oTemplate->addCss(array('report.css'));
 
         $this->_bCssJsAdded = true;

@@ -48,11 +48,14 @@
 	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>
-	<string name="_bx_timeline_acl_action_share"><![CDATA[Repost]]></string>
+	<string name="_bx_timeline_acl_action_repost"><![CDATA[Repost]]></string>
+	<string name="_bx_timeline_acl_action_send"><![CDATA[Send]]></string>
 	<string name="_bx_timeline_acl_action_pin"><![CDATA[Pin]]></string>
 
-	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Profile Timeline]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_title_sys_view_home"><![CDATA[Home page Timeline]]></string>
+    <string name="_bx_timeline_page_title_view_home"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Timeline Item]]></string>
 	<string name="_bx_timeline_page_title_item"><![CDATA[Timeline Item]]></string>
 	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Timeline]]></string>
@@ -76,6 +79,13 @@
     <string name="_bx_timeline_menu_item_view_other"><![CDATA[Posts by others]]></string>
     <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
 
+    <string name="_bx_timeline_menu_title_item_share"><![CDATA[Share Item]]></string>
+    <string name="_bx_timeline_menu_set_title_item_share"><![CDATA[Share Item]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_repost"><![CDATA[Repost]]></string>
+    <string name="_bx_timeline_menu_item_title_item_repost"><![CDATA[Repost]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Send]]></string>
+    <string name="_bx_timeline_menu_item_title_item_send"><![CDATA[Send to Friend]]></string>
+    
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
 	<string name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Pin]]></string>
@@ -89,8 +99,9 @@
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>
     <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Comment]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[View]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Repost]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Share]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Report]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[More]]></string>
 
@@ -113,7 +124,7 @@
 	<string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Timeline]]></string>
 
 	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Timeline (post)]]></string>
-	<string name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Timeline (repost)]]></string>
+	<string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Timeline (repost)]]></string>
 	<string name="_bx_timeline_alert_action_added"><![CDATA[add]]></string>
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Empty]]></string>
@@ -129,7 +140,7 @@
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[added {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
-	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} reposted {1}'s {2}]]></string>
+	<string name="_bx_timeline_txt_user_reposted_sample"><![CDATA[{0} reposted {1}'s {2}]]></string>
 	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
 	<string name="_bx_timeline_txt_sample_with_article"><![CDATA[a post]]></string>
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
@@ -137,12 +148,19 @@
     <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[timeline post's vote]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
 
-	<string name="_bx_timeline_txt_do_share"><![CDATA[Repost]]></string>
-	<string name="_bx_timeline_txt_shared"><![CDATA[Reposted {0}'s {1}.]]></string>
-	<string name="_bx_timeline_txt_shared_by"><![CDATA[Reposted by]]></string>
-	<string name="_bx_timeline_txt_err_cannot_share"><![CDATA[Cannot repost. Please report.]]></string>
-	<string name="_bx_timeline_txt_err_already_shared"><![CDATA[You already reposted the item.]]></string>
-	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string>
+	<string name="_bx_timeline_txt_do_repost"><![CDATA[Repost]]></string>
+	<string name="_bx_timeline_txt_reposted"><![CDATA[Reposted {0}'s {1}.]]></string>
+	<string name="_bx_timeline_txt_reposted_by"><![CDATA[Reposted by]]></string>
+	<string name="_bx_timeline_txt_err_cannot_repost"><![CDATA[Cannot repost. Please report.]]></string>
+	<string name="_bx_timeline_txt_err_already_reposted"><![CDATA[You already reposted the item.]]></string>
+	<string name="_bx_timeline_txt_msg_success_repost"><![CDATA[The item was successfully reposted.]]></string>
+
+    <!-- EMAIL TEMPLATES -->
+    <string name="_bx_timeline_et_txt_name_send"><![CDATA[Send to Friend.]]></string>
+    <string name="_bx_timeline_et_txt_subject_send"><![CDATA[It may be interesting for you.]]></string>
+    <string name="_bx_timeline_et_txt_body_send"><![CDATA[
+<p>Hello.</p>
+<p>Take a look at <a href="{ViewLink}">this post</a>, it may be interesting for you.</p>]]></string>
 
 	<string name="_bx_ntfs_alert_action_post_common"><![CDATA[add post]]></string>
 </resources>

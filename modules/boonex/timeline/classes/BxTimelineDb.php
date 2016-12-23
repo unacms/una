@@ -11,7 +11,7 @@
 
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
-    protected $_sTablesShareTrack;
+    protected $_sTablesRepostTrack;
 
     protected $_aTablesMedia;
     protected $_aTablesMedia2Events;
@@ -22,7 +22,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
-        $this->_sTableSharesTrack = $this->_sPrefix . 'shares_track';
+        $this->_sTableRepostsTrack = $this->_sPrefix . 'reposts_track';
 
         $this->_aTablesMedia = array(
         	BX_TIMELINE_MEDIA_PHOTO => $this->_sPrefix . 'photos',
@@ -40,8 +40,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     		//Delete system events.
             $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
 
-            //Delete shared events.
-    		$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+            //Delete reposted events.
+    		$aEvents = $this->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
 			foreach($aEvents as $aEvent) {
 				$aContent = unserialize($aEvent['content']);
 				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
@@ -58,8 +58,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     		//Activate (deactivate) system events.
             $this->updateEvent(array('active' => $iActivate), array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
 
-			//Activate (deactivate) shared events.
-			$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+			//Activate (deactivate) reposted events.
+			$aEvents = $this->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
 			foreach($aEvents as $aEvent) {
 				$aContent = unserialize($aEvent['content']);
 				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
@@ -82,27 +82,27 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return (int)$aEvent['year'] < $iNowYear ? (int)$aEvent['year'] : 0;
     }
 
-    //--- Share related methods ---//
-    public function insertShareTrack($iEventId, $iAuthorId, $sAuthorIp, $iSharedId)
+    //--- Repost related methods ---//
+    public function insertRepostTrack($iEventId, $iAuthorId, $sAuthorIp, $iRepostedId)
     {
         $iNow = time();
         $iAuthorNip = ip2long($sAuthorIp);
-        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableSharesTrack}` SET `event_id` = ?, `author_id` = ?, `author_nip` = ?, `shared_id` = ?, `date` = ?", $iEventId, $iAuthorId, $iAuthorNip, $iSharedId, $iNow);
+        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableRepostsTrack}` SET `event_id` = ?, `author_id` = ?, `author_nip` = ?, `reposted_id` = ?, `date` = ?", $iEventId, $iAuthorId, $iAuthorNip, $iRepostedId, $iNow);
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function deleteShareTrack($iEventId)
+    public function deleteRepostTrack($iEventId)
     {
-        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableSharesTrack}` WHERE `event_id` = ?", $iEventId);
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableRepostsTrack}` WHERE `event_id` = ?", $iEventId);
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function updateShareCounter($iId, $iCounter, $iIncrement = 1)
+    public function updateRepostCounter($iId, $iCounter, $iIncrement = 1)
     {
-        return (int)$this->updateEvent(array('shares' => (int)$iCounter + $iIncrement), array('id' => $iId)) > 0;
+        return (int)$this->updateEvent(array('reposts' => (int)$iCounter + $iIncrement), array('id' => $iId)) > 0;
     }
 
-    public function getShared($sType, $sAction, $iObjectId)
+    public function getReposted($sType, $sAction, $iObjectId)
     {
     	$bSystem = $this->_oConfig->isSystem($sType, $sAction);
 
@@ -111,8 +111,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         else
             $aParams = array('browse' => 'id', 'value' => $iObjectId);
 
-		$aShared = $this->getEvents($aParams);
-		if($bSystem && (empty($aShared) || !is_array($aShared))) {
+		$aReposted = $this->getEvents($aParams);
+		if($bSystem && (empty($aReposted) || !is_array($aReposted))) {
 			$iOwnerId = 0;
 			$iDate = 0;
 			$iHidden = 1;
@@ -138,25 +138,25 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				'hidden' => $iHidden
 			));
 
-			$aShared = $this->getEvents(array('browse' => 'id', 'value' => $iId));
+			$aReposted = $this->getEvents(array('browse' => 'id', 'value' => $iId));
 		}
 
-        return $aShared;
+        return $aReposted;
     }
 
-    function getSharedBy($iSharedId)
+    function getRepostedBy($iRepostedId)
     {
-        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableSharesTrack}` WHERE `shared_id`=?", $iSharedId);
+        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableRepostsTrack}` WHERE `reposted_id`=?", $iRepostedId);
         return $this->getColumn($sQuery);
     }
 
-    function isShared($iSharedId, $iOwnerId, $iAuthorId)
+    function isReposted($iRepostedId, $iOwnerId, $iAuthorId)
     {
     	$sQuery = $this->prepare("SELECT 
     			`te`.`id`
-    		FROM `{$this->_sTableSharesTrack}` AS `tst` 
+    		FROM `{$this->_sTableRepostsTrack}` AS `tst` 
     		LEFT JOIN `{$this->_sTable}` AS `te` ON `tst`.`event_id`=`te`.`id` 
-    		WHERE `tst`.`author_id`=? AND `tst`.`shared_id`=? AND `te`.`owner_id`=?", $iAuthorId, $iSharedId, $iOwnerId);
+    		WHERE `tst`.`author_id`=? AND `tst`.`reposted_id`=? AND `te`.`owner_id`=?", $iAuthorId, $iRepostedId, $iOwnerId);
 
     	return (int)$this->getOne($sQuery) > 0;
     }
@@ -318,7 +318,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$sLimitClause = "LIMIT 1";
                 break;
 
-            case 'shared_by_descriptor':
+            case 'reposted_by_descriptor':
             	$sWhereClause = "";
 
             	if(isset($aParams['type']))

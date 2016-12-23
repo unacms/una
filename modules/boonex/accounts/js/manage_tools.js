@@ -42,12 +42,28 @@ BxAccntManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {
 	});
 };
 
+BxAccntManageTools.prototype.onClickEditEmail = function(iContentId, oLink) {
+	$('.bx-popup-applied:visible').dolPopupHide();
+
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
+	oGrid.actionWithId(iContentId, 'edit_email', oData, '', false, 0);
+};
+
 BxAccntManageTools.prototype.onClickResendCemail = function(iContentId, oLink) {
 	$('.bx-popup-applied:visible').dolPopupHide();
 
 	var oGrid = glGrids[this._sObjNameGrid];
 	var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
 	oGrid.actionWithId(iContentId, 'resend_cemail', oData, '', false, 0);
+};
+
+BxAccntManageTools.prototype.onClickResetPassword = function(iContentId, oLink) {
+	$('.bx-popup-applied:visible').dolPopupHide();
+
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
+	oGrid.actionWithId(iContentId, 'reset_password', oData, '', false, 0);
 };
 
 BxAccntManageTools.prototype.onClickDelete = function(iContentId, oLink) {

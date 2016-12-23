@@ -299,8 +299,8 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_groups', 'bx_groups_views_track', '86400', '1', 'bx_groups_data', 'id', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_groups', 'bx_groups_views_track', '86400', '1', 'bx_groups_data', 'id', 'author', 'views', '', '');
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
@@ -395,7 +395,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_groups', 'timeline_comment', @iHandler),
 ('bx_groups', 'timeline_vote', @iHandler),
 ('bx_groups', 'timeline_report', @iHandler),
-('bx_groups', 'timeline_share', @iHandler);
+('bx_groups', 'timeline_repost', @iHandler);
 
 -- PRIVACY 
 

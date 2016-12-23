@@ -27,7 +27,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sMenuItemManage;
     protected $_sMenuItemActions;
 
-    protected $_aShareDefaults;
+    protected $_aRepostDefaults;
 
     protected $_iTimelineVisibilityThreshold;
     protected $_aPregPatterns;
@@ -48,6 +48,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         	// objects
             'OBJECT_COMMENTS' => $this->_sName,
+        	'OBJECT_VIEWS' => $this->_sName,
         	'OBJECT_VOTES' => $this->_sName,
         	'OBJECT_REPORTS' => $this->_sName,
 
@@ -69,6 +70,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_aObjects = array_merge($this->_aObjects, array(
         	'comment' => $this->CNF['OBJECT_COMMENTS'],
+        	'view' => $this->CNF['OBJECT_VIEWS'],
         	'vote' => $this->CNF['OBJECT_VOTES'],
         	'report' => $this->CNF['OBJECT_REPORTS'],
         	'metatags' => $this->_sName,
@@ -102,12 +104,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',
             'post' => 'BxTimelinePost',
-            'share' => 'BxTimelineShare'
+            'repost' => 'BxTimelineRepost'
         );
         $this->_aJsObjects = array(
             'view' => 'oTimelineView',
             'post' => 'oTimelinePost',
-            'share' => 'oTimelineShare'
+            'repost' => 'oTimelineRepost'
         );
 
         $sHp = str_replace('_', '-', $this->_sName);
@@ -123,6 +125,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         		'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
                 'photo_popup_' . $sHpO => $sHp . '-photo-popup-' . $sHpO,
 
+        		'main_item' => $sHp . '-item',
 				'menu_popup' => $sHp . '-menu-popup-',
             ),
             'post' => array(
@@ -133,18 +136,18 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             	'main_' . $sHpT => $sHp . '-' . $sHpT,
             	'main_' . $sHpO => $sHp . '-' . $sHpO,
             ),
-            'share' => array(
-                'main' => $sHp . '-share-',
-                'counter' => $sHp . '-share-counter-',
-                'by_popup' => $sHp . '-share-by-',
+            'repost' => array(
+                'main' => $sHp . '-repost-',
+                'counter' => $sHp . '-repost-counter-',
+                'by_popup' => $sHp . '-repost-by-',
             )
         );
 
-        $this->_aShareDefaults = array(
-            'show_do_share_as_button' => false,
-            'show_do_share_as_button_small' => false,
-            'show_do_share_icon' => true,
-            'show_do_share_label' => false,
+        $this->_aRepostDefaults = array(
+            'show_do_repost_as_button' => false,
+            'show_do_repost_as_button_small' => false,
+            'show_do_repost_icon' => true,
+            'show_do_repost_label' => false,
             'show_counter' => true
         );
 
@@ -206,9 +209,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_iCharsDisplayMax;
     }
 
-    public function getShareDefaults()
+    public function getRepostDefaults()
     {
-        return $this->_aShareDefaults;
+        return $this->_aRepostDefaults;
     }
 
     public function getPregPattern($sType)

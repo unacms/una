@@ -28,7 +28,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
             'jquery-ui/jquery-ui.css',
             'post.css',
-            'share.css',
+            'repost.css',
         ));
         $this->addJs(array(
             'jquery-ui/jquery-ui.custom.min.js',
@@ -39,7 +39,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'modernizr.js',
         	'flickity/flickity.pkgd.min.js',
             'post.js',
-            'share.js',
+            'repost.js',
         ));
     }
 
@@ -80,7 +80,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 	                'modules' => $aParams['modules'],
 	                'timeline' => $aParams['timeline'],
         		)
-            )) . $this->getJsCode('share')
+            )) . $this->getJsCode('repost')
         ));
     }
 
@@ -94,12 +94,27 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'view' => BX_TIMELINE_VIEW_DEFAULT, 
         	'type' => BX_TIMELINE_TYPE_ITEM
         );
-         
-        $sContent = $this->getJsCode('view');
-        $sContent .= $this->getPost($aEvent, $aParams);
-        $sContent .= $this->_getImagePopup($aParams);
+        $sContent = $this->getPost($aEvent, $aParams);
 
-        return $sContent;
+        $oModule = $this->getModule();
+        if($oModule->isAllowedViewCounter($aEvent) !== true)
+            return '';
+
+        if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
+            $mixedViews = $oModule->getViewsData($aEvent['views']);
+            if($mixedViews !== false) {
+                list($sSystem, $iObjectId) = $mixedViews;
+                $oModule->getViewObject($sSystem, $iObjectId)->doView();
+            }
+        }
+
+        return $this->parseHtmlByName('block_item.html', array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
+        	'content' => $sContent,
+        	'view_image_popup' => $this->_getImagePopup($aParams),
+            'js_content' => $this->getJsCode('view')
+        ));
     }
 
     public function getPost(&$aEvent, $aBrowseParams = array())
@@ -129,6 +144,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['sample'] = $sSample;
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
+        $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['reports'] = $aResult['reports'];
         $aEvent['comments'] = $aResult['comments'];
@@ -335,47 +351,47 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getShareElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
+    public function getRepostElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
     {
-        $aShared = $this->_oDb->getShared($sType, $sAction, $iObjectId);
-        if(empty($aShared) || !is_array($aShared))
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        if(empty($aReposted) || !is_array($aReposted))
             return '';
 
 		$oModule = $this->getModule();
-		$bDisabled = $oModule->isAllowedShare($aShared) !== true || $this->_oDb->isShared($aShared['id'], $iOwnerId, $oModule->getUserId());
-		if($bDisabled && (int)$aShared['shares'] == 0)
+		$bDisabled = $oModule->isAllowedRepost($aReposted) !== true || $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $oModule->getUserId());
+		if($bDisabled && (int)$aReposted['reposts'] == 0)
             return '';
 
 		$sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sStylePrefixShare = $sStylePrefix . '-share-';
+        $sStylePrefixRepost = $sStylePrefix . '-repost-';
 
-        $bShowDoShareAsButtonSmall = isset($aParams['show_do_share_as_button_small']) && $aParams['show_do_share_as_button_small'] == true;
-        $bShowDoShareAsButton = !$bShowDoShareAsButtonSmall && isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
+        $bShowDoRepostAsButtonSmall = isset($aParams['show_do_repost_as_button_small']) && $aParams['show_do_repost_as_button_small'] == true;
+        $bShowDoRepostAsButton = !$bShowDoRepostAsButtonSmall && isset($aParams['show_do_repost_as_button']) && $aParams['show_do_repost_as_button'] == true;
 
-        $bShowDoShareIcon = isset($aParams['show_do_share_icon']) && $aParams['show_do_share_icon'] == true;
-        $bShowDoShareLabel = isset($aParams['show_do_share_label']) && $aParams['show_do_share_label'] == true;
+        $bShowDoRepostIcon = isset($aParams['show_do_repost_icon']) && $aParams['show_do_repost_icon'] == true;
+        $bShowDoRepostLabel = isset($aParams['show_do_repost_label']) && $aParams['show_do_repost_label'] == true;
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
 
-        //--- Do share link ---//
-		$sClass = $sStylePrefixShare . 'do-share';
-		if($bShowDoShareAsButton)
+        //--- Do repost link ---//
+		$sClass = $sStylePrefixRepost . 'do-repost';
+		if($bShowDoRepostAsButton)
 			$sClass .= ' bx-btn';
-		else if($bShowDoShareAsButtonSmall)
+		else if($bShowDoRepostAsButtonSmall)
 			$sClass .= ' bx-btn bx-btn-small';
 
 		$sOnClick = '';
 		if(!$bDisabled) {
 			$sCommonPrefix = $this->_oConfig->getPrefix('common_post');
-			if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_SHARE) {
-				$aSharedData = $this->_getCommonData($aShared);
+			if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+				$aRepostedData = $this->_getCommonData($aReposted);
 	
-	            $sOnClick = $this->getShareJsClick($iOwnerId, $aSharedData['content']['type'], $aSharedData['content']['action'], $aSharedData['content']['object_id']);
+	            $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['content']['type'], $aRepostedData['content']['action'], $aRepostedData['content']['object_id']);
 			}
 			else
-				$sOnClick = $this->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+				$sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
 		}
 		else
-			$sClass .= $bShowDoShareAsButton || $bShowDoShareAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixShare . 'disabled';
+			$sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
 
 		$aOnClickAttrs = array();
 		if(!empty($sClass))
@@ -383,72 +399,72 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		if(!empty($sOnClick))
 			$aOnClickAttrs[] = array('key' => 'onclick', 'value' => $sOnClick);
 
-		$sDoShare = '';
-        if($bShowDoShareIcon)
-            $sDoShare .= $this->parseHtmlByName('bx_icon.html', array('name' => 'repeat'));
+		$sDoRepost = '';
+        if($bShowDoRepostIcon)
+            $sDoRepost .= $this->parseHtmlByName('bx_icon.html', array('name' => 'repeat'));
 
-        if($bShowDoShareLabel)
-            $sDoShare .= ($sDoShare != '' ? ' ' : '') . _t('_bx_timeline_txt_do_share');
+        if($bShowDoRepostLabel)
+            $sDoRepost .= ($sDoRepost != '' ? ' ' : '') . _t('_bx_timeline_txt_do_repost');
 
-        return $this->parseHtmlByName('share_element_block.html', array(
+        return $this->parseHtmlByName('repost_element_block.html', array(
             'style_prefix' => $sStylePrefix,
-            'html_id' => $this->_oConfig->getHtmlIds('share', 'main') . $aShared['id'],
-            'class' => ($bShowDoShareAsButton ? $sStylePrefixShare . 'button' : '') . ($bShowDoShareAsButtonSmall ? $sStylePrefixShare . 'button-small' : ''),
-            'count' => $aShared['shares'],
-            'do_share' => $this->parseHtmlByName('bx_a.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('repost', 'main') . $aReposted['id'],
+            'class' => ($bShowDoRepostAsButton ? $sStylePrefixRepost . 'button' : '') . ($bShowDoRepostAsButtonSmall ? $sStylePrefixRepost . 'button-small' : ''),
+            'count' => $aReposted['reposts'],
+            'do_repost' => $this->parseHtmlByName('bx_a.html', array(
 	            'href' => 'javascript:void(0)',
-	            'title' => _t('_bx_timeline_txt_do_share'),
+	            'title' => _t('_bx_timeline_txt_do_repost'),
 	            'bx_repeat:attrs' => $aOnClickAttrs,
-	            'content' => $sDoShare
+	            'content' => $sDoRepost
 	        )),
             'bx_if:show_counter' => array(
                 'condition' => $bShowCounter,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
         			'bx_if:show_hidden' => array(
-        				'condition' => (int)$aShared['shares'] == 0,
+        				'condition' => (int)$aReposted['reposts'] == 0,
         				'content' => array()
         			),
-                    'counter' => $this->getShareCounter($aShared, $aParams)
+                    'counter' => $this->getRepostCounter($aReposted, $aParams)
                 )
             ),
-            'script' => $this->getShareJsScript()
+            'script' => $this->getRepostJsScript()
         ));
     }
 
-    public function getShareCounter($aEvent, $aParams = array())
+    public function getRepostCounter($aEvent, $aParams = array())
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('share');
+        $sJsObject = $this->_oConfig->getJsObject('repost');
 
-        $bShowDoShareAsButtonSmall = isset($aParams['show_do_share_as_button_small']) && $aParams['show_do_share_as_button_small'] == true;
-        $bShowDoShareAsButton = !$bShowDoShareAsButtonSmall && isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
+        $bShowDoRepostAsButtonSmall = isset($aParams['show_do_repost_as_button_small']) && $aParams['show_do_repost_as_button_small'] == true;
+        $bShowDoRepostAsButton = !$bShowDoRepostAsButtonSmall && isset($aParams['show_do_repost_as_button']) && $aParams['show_do_repost_as_button'] == true;
 
-        $sClass = $sStylePrefix . '-share-counter';
-        if($bShowDoShareAsButtonSmall)
+        $sClass = $sStylePrefix . '-repost-counter';
+        if($bShowDoRepostAsButtonSmall)
             $sClass .= ' bx-btn-small-height';
-        if($bShowDoShareAsButton)
+        if($bShowDoRepostAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->parseHtmlByName('share_counter.html', array(
+        return $this->parseHtmlByName('repost_counter.html', array(
             'href' => 'javascript:void(0)',
-            'title' => _t('_bx_timeline_txt_shared_by'),
+            'title' => _t('_bx_timeline_txt_reposted_by'),
             'bx_repeat:attrs' => array(
-                array('key' => 'id', 'value' => $this->_oConfig->getHtmlIds('share', 'counter') . $aEvent['id']),
+                array('key' => 'id', 'value' => $this->_oConfig->getHtmlIds('repost', 'counter') . $aEvent['id']),
                 array('key' => 'class', 'value' => $sClass),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')')
             ),
-            'content' => !empty($aEvent['shares']) && (int)$aEvent['shares'] > 0 ? $aEvent['shares'] : ''
+            'content' => !empty($aEvent['reposts']) && (int)$aEvent['reposts'] > 0 ? $aEvent['reposts'] : ''
         ));
     }
 
-    public function getSharedBy($iId)
+    public function getRepostedBy($iId)
     {
         $aTmplUsers = array();
         $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
-        $aUserIds = $this->_oDb->getSharedBy($iId);
+        $aUserIds = $this->_oDb->getRepostedBy($iId);
         foreach($aUserIds as $iUserId) {
             list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $oModule->getUserInfo($iUserId);
             $aTmplUsers[] = array(
@@ -460,27 +476,37 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
 
-        return $this->parseHtmlByName('share_by_list.html', array(
+        return $this->parseHtmlByName('repost_by_list.html', array(
             'style_prefix' => $sStylePrefix,
             'bx_repeat:list' => $aTmplUsers
         ));
     }
 
-    public function getShareJsScript()
+    public function getRepostJsScript()
     {
-        $this->addCss(array('share.css'));
-        $this->addJs(array('main.js', 'share.js'));
+        $this->addCss(array('repost.css'));
+        $this->addJs(array('main.js', 'repost.js'));
 
-        return $this->getJsCode('share');
+        return $this->getJsCode('repost');
     }
 
-    public function getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId)
+    public function getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId)
     {
-        $sJsObject = $this->_oConfig->getJsObject('share');
-        $sFormat = "%s.shareItem(this, %d, '%s', '%s', %d);";
+        $aReposted = $this->_oDb->getReposted($sType, $sAction, $iObjectId);
+        if(empty($aReposted) || !is_array($aReposted))
+            return '';
 
-        $iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getModule()->getUserId(); //--- in whose timeline the content will be shared
-        return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
+        $sResult = '';
+        $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
+        if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+            $aRepostedData = $this->_getCommonData($aReposted);
+
+            $sResult = $this->_getRepostJsClick($iOwnerId, $aRepostedData['content']['type'], $aRepostedData['content']['action'], $aRepostedData['content']['object_id']);
+        }
+        else
+            $sResult = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+
+        return $sResult;
     }
 
     public function getAttachLinkForm()
@@ -662,6 +688,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     	));
 
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
+    }
+
+    protected function _getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('repost');
+        $sFormat = "%s.repostItem(this, %d, '%s', '%s', %d);";
+
+        $iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getModule()->getUserId(); //--- in whose timeline the content will be reposted
+        return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
     }
 
     protected function _getTmplVarsMenuItemActions(&$aEvent, $aBrowseParams = array())
@@ -878,7 +913,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getTmplVarsContentShare($aEvent, $aBrowseParams = array())
+    protected function _getTmplVarsContentRepost($aEvent, $aBrowseParams = array())
     {
     	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
@@ -898,7 +933,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'content' => $sSample
         ));
 
-        $sTitle = _t('_bx_timeline_txt_shared', $sOwnerLink, $sSampleLink);
+        $sTitle = _t('_bx_timeline_txt_reposted', $sOwnerLink, $sSampleLink);
         $sText = $this->_getContent($aContent['parse_type'], $aEvent);
 
         return array(
@@ -945,13 +980,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'owner_id' => $aEvent['object_id'],
             'icon' => $CNF['ICON'],
         	'sample' => '_bx_timeline_txt_sample_with_article',
+            'sample_wo_article' => '_bx_timeline_txt_sample',
         	'sample_action' => '_bx_timeline_txt_added_sample',
             'content_type' => $sType,
             'content' => array(
-                'sample' => '_bx_timeline_txt_sample',
+                'sample' => '_bx_timeline_txt_sample_with_article',
+        		'sample_wo_article' => '_bx_timeline_txt_sample',
         		'sample_action' => '_bx_timeline_txt_added_sample',
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
+            'views' => '',
             'votes' => '',
             'reports' => '',
             'comments' => '',
@@ -1010,34 +1048,45 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 }
                 break;
 
-            case BX_TIMELINE_PARSE_TYPE_SHARE:
+            case BX_TIMELINE_PARSE_TYPE_REPOST:
                 if(empty($aEvent['content']))
                     return array();
 
                 $aContent = unserialize($aEvent['content']);
 
                 if(!$this->_oConfig->isSystem($aContent['type'] , $aContent['action'])) {
-                    $aShared = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
-                    $aShared = $this->_getCommonData($aShared);
+                    $aReposted = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
+                    $aReposted = $this->_getCommonData($aReposted);
                 } 
                 else
-                	$aShared = $this->_getSystemData($aContent);
+                	$aReposted = $this->_getSystemData($aContent);
 
-				if(empty($aShared) || !is_array($aShared))
+				if(empty($aReposted) || !is_array($aReposted))
 					return array();
 
-                $aResult['content'] = array_merge($aContent, $aShared['content']);
-                $aResult['content']['parse_type'] = !empty($aShared['content_type']) ? $aShared['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
-                $aResult['content']['owner_id'] = $aShared['owner_id'];
-                list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aShared['owner_id']);
+                $aResult['content'] = array_merge($aContent, $aReposted['content']);
+                $aResult['content']['parse_type'] = !empty($aReposted['content_type']) ? $aReposted['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
+                $aResult['content']['owner_id'] = $aReposted['owner_id'];
+                list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aReposted['owner_id']);
+
+                if(!empty($aReposted['sample']))
+                    $aResult['content']['sample'] = $aReposted['sample'];
+                if(!empty($aReposted['sample_wo_article']))
+                    $aResult['content']['sample'] = $aReposted['sample_wo_article'];
 
                 list($sUserName) = $oModule->getUserInfo($aEvent['object_id']);
-                $sSample = !empty($aResult['content']['sample']) ? $aResult['content']['sample'] : '_bx_timeline_txt_sample';
-
-                $aResult['title'] = _t('_bx_timeline_txt_user_shared_sample', $sUserName, $aResult['content']['owner_name'], _t($sSample));
+                $aResult['title'] = _t('_bx_timeline_txt_user_reposted_sample', $sUserName, $aResult['content']['owner_name'], _t($aResult['content']['sample']));
                 $aResult['description'] = '';
                 break;
         }
+
+        $sSystem = $this->_oConfig->getObject('view');
+        if($oModule->getViewObject($sSystem, $aEvent['id']) !== false)
+            $aResult['views'] = array(
+                'system' => $sSystem,
+                'object_id' => $aEvent['id'],
+                'count' => $aEvent['views']
+            );
 
         $sSystem = $this->_oConfig->getObject('vote');
         if($oModule->getVoteObject($sSystem, $aEvent['id']) !== false)

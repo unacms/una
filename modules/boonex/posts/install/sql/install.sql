@@ -1,4 +1,6 @@
 
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
+
 -- TABLE: entries
 
 CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
@@ -163,8 +165,8 @@ CREATE TABLE `bx_posts_favorites_track` (
 -- STORAGES & TRANSCODERS
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_posts_files', 'Local', '', 360, 2592000, 3, 'bx_posts_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('bx_posts_photos_resized', 'Local', '', 360, 2592000, 3, 'bx_posts_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('bx_posts_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_posts_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_posts_preview', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_posts_files";}', 'no', '1', '2592000', '0'),
@@ -296,8 +298,8 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 
 -- VIEWS
 
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_posts', 'bx_posts_views_track', '86400', '1', 'bx_posts_posts', 'id', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_posts', 'bx_posts_views_track', '86400', '1', 'bx_posts_posts', 'id', 'author', 'views', '', '');
 
 -- FAFORITES
 

@@ -246,6 +246,7 @@ class BxBaseModGeneralModule extends BxDolModule
         	'title' => !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
         	'object_storage' => !empty($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
             'object_transcoder' => false,
+        	'object_view' => !empty($CNF['OBJECT_VIEWS']) ? $CNF['OBJECT_VIEWS'] : '',
         	'object_vote' => !empty($CNF['OBJECT_VOTES']) ? $CNF['OBJECT_VOTES'] : '',
         	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
         	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
@@ -432,6 +433,17 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 
         $CNF = &$this->_oConfig->CNF;
+        
+        //--- Views
+        $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $aEvent['object_id']) : null;
+
+        $aViews = array();
+        if ($oViews && $oViews->isEnabled())
+            $aViews = array(
+                'system' => $CNF['OBJECT_VIEWS'],
+                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                'count' => $aContentInfo['views']
+            );
 
         //--- Votes
         $oVotes = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aEvent['object_id']) : null;
@@ -470,9 +482,11 @@ class BxBaseModGeneralModule extends BxDolModule
             'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
         	'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+        	'sample_wo_article' => $CNF['T']['txt_sample_single'],
     	    'sample_action' => isset($CNF['T']['txt_sample_single_action']) ? $CNF['T']['txt_sample_single_action'] : '',
             'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
+            'views' => $aViews,
             'votes' => $aVotes,
             'reports' => $aReports,
             'comments' => $aComments,
@@ -751,6 +765,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     	return array(
     		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+    		'sample_wo_article' => $CNF['T']['txt_sample_single'],
     	    'sample_action' => isset($CNF['T']['txt_sample_single_action']) ? $CNF['T']['txt_sample_single_action'] : '',
 			'url' => $sUrl,
 			'title' => isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : 
@@ -822,7 +837,7 @@ class BxBaseModGeneralModule extends BxDolModule
             ));
         }
 
-        $aCustomParams = false;
+        $aCustomParams = array();
         $iIdThumb = isset($aParams['id_thumb']) ? (int)$aParams['id_thumb'] : 0;
         $bSocialSharing = isset($aParams['social_sharing']) ? (bool)$aParams['social_sharing'] : true;
         if ($iIdThumb && $bSocialSharing) {
@@ -840,6 +855,12 @@ class BxBaseModGeneralModule extends BxDolModule
         }
 
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        //--- Views
+        $sViews = '';
+        $oViews = !empty($aParams['object_view']) ? BxDolView::getObjectInstance($aParams['object_view'], $iId) : false;
+        if ($oViews)
+            $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => true));
+
         //--- Votes
         $sVotes = '';
         $oVotes = !empty($aParams['object_vote']) ? BxDolVote::getObjectInstance($aParams['object_vote'], $iId) : false;
@@ -852,11 +873,11 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oFavorites)
             $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => true));
 
-        //--- Timeline Repost (Internal Share)
-        $sShare = '';
+        //--- Timeline Repost
+        $sRepost = '';
         $iIdTimeline = isset($aParams['id_timeline']) ? (int)$aParams['id_timeline'] : $iId;
-        if ($iIdTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-            $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_share_as_button' => true)));
+        if ($iIdTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
+            $sRepost = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_repost_as_button' => true)));
 
         //--- Report
 		$sReport = '';
@@ -864,20 +885,31 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oReport)
             $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => true));
 
-        $sSocial = $bSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
+        $sSocial = '';
+        if($bSocialSharing) {
+            $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
+            $oSocial->addMarkers(array_merge(array(
+                'id' => $iId,
+            	'module' => $this->_aModule['name'],
+            	'url' => BX_DOL_URL_ROOT . $sUrl,
+            	'title' => $sTitle,
+            ), $aCustomParams));
+            $sSocial = $oSocial->getCode();
+        }
 
-        if(empty($sComments) && empty($sVotes) && empty($sFavorites) && empty($sShare) && empty($sReport) && empty($sSocial))
+        if(empty($sComments) && empty($sVotes) && empty($sFavorites) && empty($sRepost) && empty($sReport) && empty($sSocial))
             return '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'comments' => $sComments,
+        	'view' => $sViews,
             'vote' => $sVotes,
             'favorite' => $sFavorites,
-            'share' => $sShare,
+            'repost' => $sRepost,
         	'report' => $sReport,
             'social' => $sSocial,
         ));
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Repost, etc.
     }
 }
 

@@ -27,7 +27,7 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
             return false;
 
         $aInfo = $oAccount->getInfo();
-		$sPassCheck == encryptUserPwd($s, $aInfo['salt']);
+		$sPassCheck = encryptUserPwd($s, $aInfo['salt']);
 		
 		// regenerate password using another encrypt function if necessary
 		bx_alert('system', 'encrypt_password_after', 0, false, array(

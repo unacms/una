@@ -1216,6 +1216,7 @@
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Объект CAPTCHA]]></string>
 	<string name="_adm_stg_cpt_option_sys_email_confirmation"><![CDATA[Задействовать подтверждение эл. адреса]]></string>
+	<string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Список присоединяемых имейл темплейтов]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[Кэш-движок для БД (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string>
@@ -1492,6 +1493,8 @@
 	<string name="_sys_acl_action_every_period"><![CDATA[ каждые {4} часа]]></string>
 	<string name="_sys_acl_action_favorite"><![CDATA[Избранное - Добавлять]]></string>
 	<string name="_sys_acl_action_favorite_view"><![CDATA[Избранное - Просматривать]]></string>
+	<string name="_sys_acl_action_view_view"><![CDATA[Просмотры - Просматривать]]></string>
+	<string name="_sys_acl_action_view_view_viewers"><![CDATA[Просмотры - Просматривать смотревших]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[Вы достигли лимита. Ваше текущее членство ({2}) позволяет {1} не более {3} раз]]></string>
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Ваше текущее членство ({2}) не позволяет '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Ваше текущее членство ({2}) более не позволяет '{1}' {5}.]]></string>
@@ -1983,6 +1986,10 @@
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
 	<string name="_sys_menu_item_title_subscriptions"><![CDATA[Подписки]]></string>
+	<string name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
+    <string name="_sys_menu_item_title_social_sharing_googleplus"><![CDATA[Поделиться в Google Plus]]></string>
+    <string name="_sys_menu_item_title_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
+    <string name="_sys_menu_item_title_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Язык]]></string>
@@ -2014,6 +2021,10 @@
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_system_studio"><![CDATA[Студия]]></string>
 	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
+	<string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_googleplus"><![CDATA[Поделиться в Google Plus]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Инструменты управления Панелью Аккаунта]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Настройки Аккаунта]]></string>
@@ -2025,6 +2036,7 @@
 	<string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Управление Комментарием]]></string>
 	<string name="_sys_menu_set_title_switch_language"><![CDATA[Переключить Язык]]></string>
 	<string name="_sys_menu_set_title_switch_template"><![CDATA[Переключить Тему]]></string>
+	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальные сети]]></string>
 	<string name="_sys_menu_set_title_footer"><![CDATA[Футер]]></string>
 	<string name="_sys_menu_set_title_profile_create_links"><![CDATA[Создать Ссылки Профиля]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Статистика Профиля]]></string>
@@ -2038,6 +2050,7 @@
 	<string name="_sys_menu_template_title_floating_blocks_big"><![CDATA[Подвесные Блоки - Большие]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Футер - Ссылки]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Горизонтальные Ссылки]]></string>
+	<string name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Горизонтальные Кнопки с Иконками]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[В тексте]]></string>
 	<string name="_sys_menu_template_title_inline_sbtn"><![CDATA[В тексте ('спец' кнопки)]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные Вертикальные Ссылки]]></string>
@@ -2066,6 +2079,7 @@
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
+	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальные сети]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю Сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Пользователь - Панель Инструментов]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Сайт - Панель Инструментов]]></string>
@@ -2169,10 +2183,9 @@
         <ul>
             <li><b>{0}</b> удалено просроченных членств</li>
             <li><b>{1}</b> удалено просроченных сессий</li>
-            <li><b>{2}</b> удалено просроченных просмотров</li>
-            <li><b>{3}</b> удалено просроченных ключей</li>
-            <li><b>{4}</b> удалено просроченных токенов хранилища</li>
-            <li><b>{5}</b> удалено просроченных транскодированных изображений</li>
+            <li><b>{2}</b> удалено просроченных ключей</li>
+            <li><b>{3}</b> удалено просроченных токенов хранилища</li>
+            <li><b>{4}</b> удалено просроченных транскодированных изображений</li>
         </ul>]]></string>
     <string name="_sys_pruning_files"><![CDATA[<h3>Очистка Файлов:</h3>
         <ul>
@@ -2194,10 +2207,6 @@
 	<string name="_sys_select"><![CDATA[Выбрать]]></string>
 	<string name="_sys_send"><![CDATA[Послать]]></string>
     <string name="_sys_search_placeholder"><![CDATA[Поиск...]]></string>
-    <string name="_sys_social_sharing_title_facebook"><![CDATA[Поделиться в Facebook]]></string>
-    <string name="_sys_social_sharing_title_googleplus"><![CDATA[Поделиться в Google Plus]]></string>
-    <string name="_sys_social_sharing_title_twitter"><![CDATA[Поделиться в Twitter]]></string>
-    <string name="_sys_social_sharing_title_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
 	<string name="_sys_spam_detected"><![CDATA[Извините, кажется, Вы пытаетесь послать спам]]></string>
 	<string name="_sys_spam_detected_contact"><![CDATA[Извините, кажется, Вы пытаетесь послать спам. Если Вы уверены, что это не спам, пошлите нам уведомление: {0}]]></string>
 	<string name="_sys_splash_btn_start"><![CDATA[Начало]]></string>
@@ -2369,6 +2378,9 @@
 	<string name="_top"><![CDATA[Топ]]></string>
 	<string name="_uknown"><![CDATA[неизвестно]]></string>
 	<string name="_undefined"><![CDATA[неопределено]]></string>
+	<string name="_view_counter"><![CDATA[{0}]]></string>
+	<string name="_view_do_view"><![CDATA[Посмотреть]]></string>
+	<string name="_view_do_view_by"><![CDATA[Просмотрено]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>

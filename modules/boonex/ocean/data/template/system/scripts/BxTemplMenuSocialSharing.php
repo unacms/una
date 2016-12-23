@@ -8,13 +8,13 @@
  */
 
 /**
- * @see BxDolSocialSharing
+ * @see BxDolMenu
  */
-class BxTemplSocialSharing extends BxBaseSocialSharing
+class BxTemplMenuSocialSharing extends BxBaseMenuSocialSharing
 {
-    function __construct($oTemplate = false)
+    public function __construct ($aObject, $oTemplate = false)
     {
-        parent::__construct($oTemplate);
+        parent::__construct ($aObject, $oTemplate);
     }
 }
 

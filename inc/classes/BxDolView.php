@@ -7,7 +7,11 @@
  * @{
  */
 
-define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
+define('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
+
+define('BX_DOL_VIEW_USAGE_BLOCK', 'block');
+define('BX_DOL_VIEW_USAGE_INLINE', 'inline');
+define('BX_DOL_VIEW_USAGE_DEFAULT', BX_DOL_VIEW_USAGE_BLOCK);
 
 /**
  * @page objects
@@ -100,6 +104,7 @@ class BxDolView extends BxDolObject
                     `is_on` AS `is_on`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,
+                    `trigger_field_author` AS `trigger_field_author`,
                     `trigger_field_count` AS `trigger_field_count`,
                     `class_name` AS `class_name`,
                     `class_file` AS `class_file`
@@ -108,31 +113,15 @@ class BxDolView extends BxDolObject
         return $GLOBALS['bx_dol_view_systems'];
     }
 
-    /**
-     * it is called on cron every day or similar period to clean old votes
-     */
-    public static function maintenance()
+    public function actionGetViewedBy()
     {
-        $iResult = 0;
-        $oDb = BxDolDb::getInstance();
+        if (!$this->isEnabled())
+           return '';
 
-        $aSystems = self::getSystems();
-        foreach($aSystems as $aSystem) {
-            if(!$aSystem['is_on'])
-                continue;
-
-            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VIEW_OLD_VIEWS);
-            $iDeleted = (int)$oDb->query($sQuery);
-            if($iDeleted > 0)
-                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
-
-            $iResult += $iDeleted;
-        }
-
-        return $iResult;
+        return $this->_getViewedBy();
     }
 
-    function doView()
+    public function doView()
     {
         if(!$this->isEnabled())
             return false;
@@ -151,6 +140,47 @@ class BxDolView extends BxDolObject
         }
 
         return false;
+    }
+
+	/**
+     * Permissions functions
+     * 
+     * Note. The 'view' action is performed automatically and therefore the manual action is not allowed.
+     */
+    public function isAllowedView($isPerformAction = false)
+    {
+        return false;
+    }
+
+    public function isAllowedViewView($isPerformAction = false)
+    {
+        if(isAdmin())
+            return true;
+
+        return $this->checkAction('view_view', $isPerformAction);
+    }
+
+    public function isAllowedViewViewViewers($isPerformAction = false)
+    {
+        $oAcl = BxDolAcl::getInstance();
+        if(isAdmin() || $oAcl->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR)))
+            return true;
+
+        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($this->_iId);
+        return $iObjectAuthorId != 0 && $iObjectAuthorId == $this->_getAuthorId() && $this->checkAction('view_view_viewers', $isPerformAction);
+    }
+
+	/**
+     * Internal functions
+     */
+    protected function _getIconDo()
+    {
+    	return 'eye';
+    }
+
+    protected function _getTitleDo()
+    {
+    	return '_view_do_view';
     }
 }
 
