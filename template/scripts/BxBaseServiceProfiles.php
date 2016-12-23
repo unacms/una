@@ -19,8 +19,8 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceProfileStats ($iProfileId = 0)
     {
-        if (!$iProfileId)
-            $iProfileId = bx_get_logged_profile_id();
+        if (!$iProfileId && !($iProfileId = bx_get_logged_profile_id()))
+            return '';
 
         $oMenu = BxDolMenu::getObjectInstance('sys_profile_stats');
 

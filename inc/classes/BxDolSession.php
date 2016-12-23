@@ -7,7 +7,7 @@
  * @{
  */
 
-define('BX_DOL_SESSION_LIFETIME', 3600);
+define('BX_DOL_SESSION_LIFETIME', 24*60*60*30);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 
 class BxDolSession extends BxDolFactory implements iBxDolSingleton
@@ -62,8 +62,11 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
         if (defined('BX_DOL_CRON_EXECUTE'))
             return true;
 
-        if($this->exists($this->sId))
-            return true;
+        if ($this->exists($this->sId)) {
+            if ($this->iUserId == getLoggedId())
+                return true;
+            $this->destroy(false);
+        }
 
 		/**
 		 * Force logout a logged in user if his session wasn't found and required to be automatically recreated.
@@ -76,18 +79,20 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 
         $aUrl = parse_url(BX_DOL_URL_ROOT);
         $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-        setcookie(BX_DOL_SESSION_COOKIE, $this->sId, 0, $sPath, '', false, true);
+        setcookie(BX_DOL_SESSION_COOKIE, $this->sId, time() + BX_DOL_SESSION_LIFETIME, $sPath, '', false, true);
 
         $this->save();
         return true;
     }
 
-    function destroy()
+    function destroy($bDeleteCookies = true)
     {
-        $aUrl = parse_url(BX_DOL_URL_ROOT);
-        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-        setcookie(BX_DOL_SESSION_COOKIE, '', time() - 86400, $sPath, '', false, true);
-        unset($_COOKIE[BX_DOL_SESSION_COOKIE]);
+        if ($bDeleteCookies) {
+            $aUrl = parse_url(BX_DOL_URL_ROOT);
+            $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
+            setcookie(BX_DOL_SESSION_COOKIE, '', time() - 86400, $sPath, '', false, true);
+            unset($_COOKIE[BX_DOL_SESSION_COOKIE]);
+        }
 
         $this->oDb->delete($this->sId);
 
