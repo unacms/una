@@ -1168,6 +1168,14 @@ SET @iIdHandler = LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('sys_images_custom', 'file_deleted', @iIdHandler);
 
+
+INSERT INTO `sys_alerts_handlers` (`name`, `service_call`) VALUES 
+('sys_settings_storage_change', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:37:"alert_response_process_storage_change";s:5:"class";s:13:"TemplServices";}');
+SET @iHandler = LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'save_setting', @iHandler);
+
 -- --------------------------------------------------------
 
 

@@ -90,6 +90,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             return false;
         return $oAccount->$sFunc();
     }
+
+    public function serviceAlertResponseProcessStorageChange ($oAlert)
+    {
+
+    }
 }
 
 /** @} */
