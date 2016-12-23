@@ -2036,7 +2036,7 @@
 	<string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Управление Комментарием]]></string>
 	<string name="_sys_menu_set_title_switch_language"><![CDATA[Переключить Язык]]></string>
 	<string name="_sys_menu_set_title_switch_template"><![CDATA[Переключить Тему]]></string>
-	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальное распространение]]></string>
+	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальные сети]]></string>
 	<string name="_sys_menu_set_title_footer"><![CDATA[Футер]]></string>
 	<string name="_sys_menu_set_title_profile_create_links"><![CDATA[Создать Ссылки Профиля]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Статистика Профиля]]></string>
@@ -2079,7 +2079,7 @@
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
-	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальное распространение]]></string>
+	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальные сети]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю Сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Пользователь - Панель Инструментов]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Сайт - Панель Инструментов]]></string>
