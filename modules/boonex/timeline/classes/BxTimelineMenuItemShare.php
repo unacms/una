@@ -69,6 +69,21 @@ class BxTimelineMenuItemShare extends BxTemplMenu
     	));
     }
 
+    public function getMenuItems ()
+    {
+        $aItems = parent::getMenuItems();
+
+        $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
+        $oSocial->addMarkers(array(
+            'id' => $this->_iEvent,
+        	'module' => $this->_oModule->_oConfig->getName(),
+        	'url' => $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent),
+        	'title' => $this->_aEvent['title'],
+        ));
+
+        return array_merge($aItems, $oSocial->getMenuItems());
+    }
+
     /**
      * Check if menu items is visible.
      * @param $a menu item array

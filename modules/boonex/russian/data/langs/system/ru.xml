@@ -1986,6 +1986,10 @@
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
 	<string name="_sys_menu_item_title_subscriptions"><![CDATA[Подписки]]></string>
+	<string name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
+    <string name="_sys_menu_item_title_social_sharing_googleplus"><![CDATA[Поделиться в Google Plus]]></string>
+    <string name="_sys_menu_item_title_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
+    <string name="_sys_menu_item_title_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Язык]]></string>
@@ -2017,6 +2021,10 @@
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_system_studio"><![CDATA[Студия]]></string>
 	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
+	<string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_googleplus"><![CDATA[Поделиться в Google Plus]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
+    <string name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Инструменты управления Панелью Аккаунта]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Настройки Аккаунта]]></string>
@@ -2028,6 +2036,7 @@
 	<string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Управление Комментарием]]></string>
 	<string name="_sys_menu_set_title_switch_language"><![CDATA[Переключить Язык]]></string>
 	<string name="_sys_menu_set_title_switch_template"><![CDATA[Переключить Тему]]></string>
+	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальное распространение]]></string>
 	<string name="_sys_menu_set_title_footer"><![CDATA[Футер]]></string>
 	<string name="_sys_menu_set_title_profile_create_links"><![CDATA[Создать Ссылки Профиля]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Статистика Профиля]]></string>
@@ -2041,6 +2050,7 @@
 	<string name="_sys_menu_template_title_floating_blocks_big"><![CDATA[Подвесные Блоки - Большие]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Футер - Ссылки]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Горизонтальные Ссылки]]></string>
+	<string name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Горизонтальные Кнопки с Иконками]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[В тексте]]></string>
 	<string name="_sys_menu_template_title_inline_sbtn"><![CDATA[В тексте ('спец' кнопки)]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные Вертикальные Ссылки]]></string>
@@ -2069,6 +2079,7 @@
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
+	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальное распространение]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю Сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Пользователь - Панель Инструментов]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Сайт - Панель Инструментов]]></string>
