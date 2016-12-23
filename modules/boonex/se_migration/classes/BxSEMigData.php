@@ -66,7 +66,9 @@ class BxSEMigData
 	*/           
 	
 	protected function getProfileId($iSEId){
-	    return (int)$this -> _oDb -> getOne("SELECT `profile_id` FROM  `sys_accounts` WHERE  `se_id` =  '{$iSEId}' LIMIT 1");       
+		return (int)$this -> _oDb -> getOne("SELECT `p`.`content_id` FROM  `sys_accounts` AS  `a` 
+																	LEFT JOIN  `sys_profiles` AS  `p` ON `a`.`id` =  `p`.`account_id` 
+																	WHERE  `se_id` =  '{$iSEId}' AND  `p`.`type` =  'bx_persons' LIMIT 1");		
 	}
 }
    

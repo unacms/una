@@ -105,13 +105,7 @@ class BxSEMigProfilesFields extends BxSEMigData
 		private function isFieldTransfered($sName){
 			$sQuery = $this -> _oDb -> prepare("SELECT COUNT(*) FROM `sys_form_inputs` WHERE `object` = 'bx_person' AND `module` = 'custom' AND `name` = ? LIMIT 1", $sName);
 			return (int)$this -> _oDb -> getOne($sQuery) > 0;
-		}		
-
-		/*private function getProfileId($iSEId){
-			return (int)$this -> _oDb -> getOne("SELECT `p`.`content_id` FROM  `sys_accounts` AS  `a` 
-																	LEFT JOIN  `sys_profiles` AS  `p` ON `a`.`id` =  `p`.`account_id` 
-																	WHERE  `se_id` =  '{$iSEId}' AND  `p`.`type` =  'bx_persons' LIMIT 1");		
-		}*/
+		}			
         
 		/**
 		* Returns social engine profile fields list
