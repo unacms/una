@@ -2207,10 +2207,6 @@
 	<string name="_sys_select"><![CDATA[Выбрать]]></string>
 	<string name="_sys_send"><![CDATA[Послать]]></string>
     <string name="_sys_search_placeholder"><![CDATA[Поиск...]]></string>
-    <string name="_sys_social_sharing_title_facebook"><![CDATA[Поделиться в Facebook]]></string>
-    <string name="_sys_social_sharing_title_googleplus"><![CDATA[Поделиться в Google Plus]]></string>
-    <string name="_sys_social_sharing_title_twitter"><![CDATA[Поделиться в Twitter]]></string>
-    <string name="_sys_social_sharing_title_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
 	<string name="_sys_spam_detected"><![CDATA[Извините, кажется, Вы пытаетесь послать спам]]></string>
 	<string name="_sys_spam_detected_contact"><![CDATA[Извините, кажется, Вы пытаетесь послать спам. Если Вы уверены, что это не спам, пошлите нам уведомление: {0}]]></string>
 	<string name="_sys_splash_btn_start"><![CDATA[Начало]]></string>
