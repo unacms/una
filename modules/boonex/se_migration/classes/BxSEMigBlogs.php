@@ -1,7 +1,7 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
  * @ingroup     UnaModules
@@ -24,7 +24,7 @@ class BxSEMigBlogs extends BxSEMigData {
 	public function runMigration () {        
 		if (!$this -> getTotalRecords()){
 			  $this -> setResultStatus(_t('_bx_se_migration_no_data_to_transfer'));
-	          return SUCCESSFUL;
+	          return BX_SEMIG_SUCCESSFUL;
 		}	
 		
 		$this -> setResultStatus(_t('_bx_se_migration_started_migration_blogs'));
@@ -68,7 +68,7 @@ class BxSEMigBlogs extends BxSEMigData {
 			
 			if (!$iBlogId){
 				$this -> setResultStatus(_t('_bx_se_migration_started_migration_blogs_error', (int)$aValue['blog_id']));
-	            return FAILED;
+	            return BX_SEMIG_FAILED;
 			}	
 
 			$iComments += $this -> transferComments((int)$aValue['blog_id'], $iBlogId, $iProfileId);			
@@ -80,7 +80,7 @@ class BxSEMigBlogs extends BxSEMigData {
 
         // set as finished;
         $this -> setResultStatus(_t('_bx_se_migration_started_migration_blogs_finished', $this -> _iTransferred, $iComments, $iCategories));
-        return SUCCESSFUL;
+        return BX_SEMIG_SUCCESSFUL;
     }
 
    /**
@@ -191,4 +191,4 @@ class BxSEMigBlogs extends BxSEMigData {
 	}	
 }
 
-?>
+/** @} */

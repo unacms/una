@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-    <string name="_bx_se_migration_wgt_cpt"><![CDATA[SE Migration]]></string>
+    <string name="_bx_se_migration_wgt_cpt"><![CDATA[Social Engine Migration Tool]]></string>
     <string name="_bx_se_migration_stg_cpt_type"><![CDATA[SE Migration]]></string>
     <string name="_bx_se_migration_option_version"><![CDATA[By default, only Social Engine 4 is available]]></string>
     <string name="_bx_se_migration_cpt_settings"><![CDATA[Settings]]></string>

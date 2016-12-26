@@ -1,7 +1,7 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
  * @ingroup     TridentModules
@@ -46,7 +46,7 @@ class BxSEMigProfilesFields extends BxSEMigData
 	public function runMigration(){		 
 		if (!$this -> getTotalRecords()){
 			  $this -> setResultStatus(_t('_bx_se_migration_no_data_to_transfer'));
-	          return SUCCESSFUL;
+	          return BX_SEMIG_SUCCESSFUL;
 		}	 
 		 	 
 		 $this -> setResultStatus(_t('_bx_se_migration_started_migration_profile_fields'));		
@@ -59,7 +59,7 @@ class BxSEMigProfilesFields extends BxSEMigData
                
 				   if (!$this -> _oDb -> query($sQuery)){
 						 $this -> setResultStatus(_t('_bx_se_migration_started_migration_profile_field_can_not_be_transferred'));
-						 return FAILED;				
+						 return BX_SEMIG_FAILED;				
 				   }			   
 			}
 			   
@@ -79,7 +79,7 @@ class BxSEMigProfilesFields extends BxSEMigData
 						
 			if (!$this -> _oDb -> query($sQuery)){
 				$this -> setResultStatus(_t('_bx_se_migration_started_migration_profile_field_can_not_be_transferred'));
-				return FAILED;				
+				return BX_SEMIG_FAILED;				
 			}			   
 			
 			// create form fields	
@@ -99,19 +99,13 @@ class BxSEMigProfilesFields extends BxSEMigData
 			$this -> migrateProfileFieldsInfo(); 
 			
 	        $this -> setResultStatus(_t('_bx_se_migration_started_migration_profile_fields_finished', $this -> _iTransferred));
-	        return SUCCESSFUL;
+	        return BX_SEMIG_SUCCESSFUL;
 	    }
 
 		private function isFieldTransfered($sName){
-			$sQuery = $this -> _oDb -> prepare("SELECT COUNT(*) FROM `sys_form_inputs` WHERE `name` = ? LIMIT 1", $sName);
+			$sQuery = $this -> _oDb -> prepare("SELECT COUNT(*) FROM `sys_form_inputs` WHERE `object` = 'bx_person' AND `module` = 'custom' AND `name` = ? LIMIT 1", $sName);
 			return (int)$this -> _oDb -> getOne($sQuery) > 0;
-		}		
-
-		/*private function getProfileId($iSEId){
-			return (int)$this -> _oDb -> getOne("SELECT `p`.`content_id` FROM  `sys_accounts` AS  `a` 
-																	LEFT JOIN  `sys_profiles` AS  `p` ON `a`.`id` =  `p`.`account_id` 
-																	WHERE  `se_id` =  '{$iSEId}' AND  `p`.`type` =  'bx_persons' LIMIT 1");		
-		}*/
+		}			
         
 		/**
 		* Returns social engine profile fields list
@@ -173,4 +167,4 @@ class BxSEMigProfilesFields extends BxSEMigData
 	}            
 }
 
-/** @} */	
+/** @} */

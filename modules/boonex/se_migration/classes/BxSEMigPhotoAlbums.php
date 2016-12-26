@@ -1,7 +1,7 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
  * @ingroup     UnaModules
@@ -29,7 +29,7 @@ class BxSEMigPhotoAlbums extends BxSEMigData {
 	public function runMigration () {
 		if (!$this -> getTotalRecords()){
 			  $this -> setResultStatus(_t('_bx_se_migration_no_data_to_transfer'));
-	          return SUCCESSFUL;
+	          return BX_SEMIG_SUCCESSFUL;
 		}
 		
 		$this -> setResultStatus(_t('_bx_se_migration_started_migration_photos'));
@@ -68,7 +68,7 @@ class BxSEMigPhotoAlbums extends BxSEMigData {
 				$iAlbumId = $this -> _oDb -> lastId();					
 				if (!$iAlbumId){
 					$this -> setResultStatus(_t('_bx_se_migration_started_migration_photos_album_error'));
-		            return FAILED;
+		            return BX_SEMIG_FAILED;
 				}	
 			
 			$this -> migrateAlbumPhotos($aValue['owner_id'], $iProfileId, $iAlbumId);	
@@ -80,7 +80,7 @@ class BxSEMigPhotoAlbums extends BxSEMigData {
 
         // set as finished;
         $this -> setResultStatus(_t('_bx_se_migration_started_migration_photos_finished', $this -> _iTransferred));
-        return SUCCESSFUL;
+        return BX_SEMIG_SUCCESSFUL;
     }
    	
    /**
@@ -131,4 +131,4 @@ class BxSEMigPhotoAlbums extends BxSEMigData {
     }    
 }
 
-?>
+/** @} */
