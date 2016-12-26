@@ -227,6 +227,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view&id=' . $iOwnerId);
     }
 
+    public function getHomeViewUrl()
+    {
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view-home');
+    }
+
     public function getItemViewUrl(&$aEvent)
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-item&id=' . $aEvent['id']);
