@@ -33,36 +33,38 @@ class BxTimelineMenuItemShare extends BxTemplMenu
     {
     	$this->_iEvent = $iEventId;
     	$this->_aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $this->_iEvent));
-        $bEvent = !empty($this->_aEvent) && is_array($this->_aEvent);
-    	
-    	//--- Repost item
-    	$sRepostOnclick = '';
-    	if($bEvent) {
-        	$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be reposted
+
+        $sRepostOnclick = $sEtSend = '';
+        if(!empty($this->_aEvent) && is_array($this->_aEvent)) {
             $sType = $this->_aEvent['type'];
             $sAction = $this->_aEvent['action'];
+
+            $this->_aEvent['url'] = $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent);
+            if($this->_oModule->_oConfig->isSystem($sType, $sAction)) {
+                $aResult = $this->_oModule->_oConfig->getSystemData($this->_aEvent);
+                if(!empty($aResult['url']))
+                    $this->_aEvent['url'] = $aResult['url'];
+            }
+
+            //--- Repost item
+            $iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be reposted
             $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
-
             $sRepostOnclick = $this->_oModule->serviceGetRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
-    	}
 
-    	//--- Send item
-    	$sEtSend = '';
-    	if($bEvent) {
-    	    $aEt = array(
+            //--- Send item
+    	    $sAetSend = urlencode(base64_encode(serialize(array(
     	        'name' => 'bx_timeline_send',
     	        'params' => array(
-    	            'ViewLink' => $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent)
+    	            'ViewLink' => $this->_aEvent['url']
     	        )
-    	    );
-
-    	    $sAetSend = urlencode(base64_encode(serialize($aEt))); 
-    	}
+    	    )))); 
+        }
 
     	$this->addMarkers(array(
         	'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
 
         	'content_id' => $this->_iEvent,
+    	    'content_url' => $this->_aEvent['url'],
 
     	    'js_onclick_repost' => $sRepostOnclick,
     		'et_send' => $sAetSend
@@ -77,7 +79,7 @@ class BxTimelineMenuItemShare extends BxTemplMenu
         $oSocial->addMarkers(array(
             'id' => $this->_iEvent,
         	'module' => $this->_oModule->_oConfig->getName(),
-        	'url' => $this->_oModule->_oConfig->getItemViewUrl($this->_aEvent),
+        	'url' => $this->_aEvent['url'],
         	'title' => $this->_aEvent['title'],
         ));
 

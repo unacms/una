@@ -138,20 +138,3 @@
 #bx-footer-copyright {
     float:right;
 }
-
-/* --------------- social buttons */
-
-.bx-social-sharing-btn {
-    float:left;
-}
-
-.bx-social-sharing-btn a,
-.bx-social-sharing-btn .sys-icon {
-    text-decoration:none;
-    vertical-align:middle;
-}
-.bx-social-sharing-btn span {
-    font-size:1.5rem;
-    vertical-align:middle;
-    margin:0 0.2rem;
-}

@@ -149,6 +149,7 @@ class BxBaseStudioGridStorages extends BxDolStudioGridStorages
 					'type' => 'files',
 					'name' => $this->_sType,
 					'storage_object' => $this->_sStorage,
+                	'storage_private' => 0,
 					'images_transcoder' => $this->_sTranscoder,
 					'uploaders' => $this->_aUploaders,
 					'multiple' => true,

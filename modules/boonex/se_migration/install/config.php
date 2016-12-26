@@ -1,10 +1,10 @@
 <?php
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Protean Protean template
- * @ingroup     TridentModules
+ * @defgroup    Social Engine Migration
+ * @ingroup     UnaModules
  *
  * @{
  */
@@ -13,16 +13,16 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_se_migration',
     'title' => 'Social Engine Migration',
     'note' => 'Migration Tool',
-    'version' => '9.0.3',
+    'version' => '9.0.0',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.0-B3'
+        '9.0.x'
     ),
 
     /**
