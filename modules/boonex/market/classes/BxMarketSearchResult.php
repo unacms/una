@@ -73,20 +73,20 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
             case 'public':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_recent');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode;
                 break;
 
             case 'popular':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_popular');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'popular';
                 break;
 
             case 'updated':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_updated');
-                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'updated';
                 break;
 
