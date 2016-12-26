@@ -42,6 +42,7 @@
 
 	<!-- Grids -->
 	<string name="_bx_acl_grid_column_level_name"><![CDATA[Level]]></string>
+	<string name="_bx_acl_grid_column_name"><![CDATA[Name]]></string>
 	<string name="_bx_acl_grid_column_period"><![CDATA[Period]]></string>
 	<string name="_bx_acl_grid_column_period_unit"><![CDATA[Period Unit]]></string>
 	<string name="_bx_acl_grid_column_price"><![CDATA[Price]]></string>

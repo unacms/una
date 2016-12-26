@@ -73,10 +73,11 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_acl_administration', 'checkbox', '_sys_select', '1%', 0, '', '', 1),
 ('bx_acl_administration', 'order', '', '1%', 0, '', '', 2),
-('bx_acl_administration', 'period', '_bx_acl_grid_column_period', '26%', 0, 16, '', 3),
-('bx_acl_administration', 'period_unit', '_bx_acl_grid_column_period_unit', '26%', 0, 16, '', 4),
-('bx_acl_administration', 'price', '_bx_acl_grid_column_price', '26%', 0, 16, '', 5),
-('bx_acl_administration', 'actions', '', '20%', 0, '', '', 6),
+('bx_acl_administration', 'name', '_bx_acl_grid_column_name', '20%', 0, 16, '', 3),
+('bx_acl_administration', 'period', '_bx_acl_grid_column_period', '20%', 0, 16, '', 4),
+('bx_acl_administration', 'period_unit', '_bx_acl_grid_column_period_unit', '20%', 0, 16, '', 5),
+('bx_acl_administration', 'price', '_bx_acl_grid_column_price', '20%', 0, 16, '', 6),
+('bx_acl_administration', 'actions', '', '18%', 0, '', '', 7),
 
 ('bx_acl_view', 'level_name', '_bx_acl_grid_column_level_name', '35%', 1, 36, '', 1),
 ('bx_acl_view', 'period', '_bx_acl_grid_column_period', '15%', 0, 16, '', 2),
