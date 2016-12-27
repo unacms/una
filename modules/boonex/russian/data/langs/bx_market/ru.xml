@@ -42,7 +42,7 @@
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_sys_trial_recurring"><![CDATA[Пробный период]]></string>
     <string name="_bx_market_form_entry_input_trial_recurring"><![CDATA[Пробный период]]></string>
-    <string name="_bx_market_form_entry_input_trial_recurring_inf"><![CDATA[Количество пробных дней, которое новые пользователи получат бесплатно. Оставьте пустым для отключения Пробного Периода.]]></string>
+    <string name="_bx_market_form_entry_input_trial_recurring_inf"><![CDATA[Количество пробных дней, которое новые пользователи получат бесплатно. Оставьте пустым для отключения пробного периода.]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_single"><![CDATA[Разовая оплата: начало]]></string>
     <string name="_bx_market_form_entry_input_header_beg_single"><![CDATA[Разовая оплата]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_recurring"><![CDATA[Подписка: начало]]></string>

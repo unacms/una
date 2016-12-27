@@ -26,6 +26,9 @@
 	<string name="_bx_acl_form_price_input_sys_price"><![CDATA[Цена]]></string>
 	<string name="_bx_acl_form_price_input_price"><![CDATA[Цена]]></string>
 	<string name="_bx_acl_form_price_input_err_price"><![CDATA[Здесь Вам необходимо ввести цену.]]></string>
+	<string name="_bx_acl_form_price_input_sys_trial"><![CDATA[Пробный период]]></string>
+    <string name="_bx_acl_form_price_input_trial"><![CDATA[Пробный период]]></string>
+    <string name="_bx_acl_form_price_input_inf_trial"><![CDATA[Количество пробных дней, которое новые пользователи получат бесплатно. Оставьте пустым для отключения пробного периода.]]></string>
 	<string name="_bx_acl_form_price_input_sys_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_acl_form_price_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_acl_form_price_input_sys_do_cancel"><![CDATA[Отменить]]></string>
@@ -34,18 +37,18 @@
 
 	<!-- Pre Lists -->
 	<string name="_bx_acl_pre_lists_period_units"><![CDATA[Платежный интервал]]></string>
-	<string name="_bx_acl_pre_values_day"><![CDATA[День(и)]]></string>
-	<string name="_bx_acl_pre_values_week"><![CDATA[Неделя(и)]]></string>
-	<string name="_bx_acl_pre_values_month"><![CDATA[Месяц(ы)]]></string>
-	<string name="_bx_acl_pre_values_year"><![CDATA[Год(ы)]]></string>
+	<string name="_bx_acl_pre_values_day"><![CDATA[день]]></string>
+	<string name="_bx_acl_pre_values_week"><![CDATA[неделя]]></string>
+	<string name="_bx_acl_pre_values_month"><![CDATA[месяц]]></string>
+	<string name="_bx_acl_pre_values_year"><![CDATA[год]]></string>
 
 
 	<!-- Grids -->
 	<string name="_bx_acl_grid_column_level_name"><![CDATA[Уровень]]></string>
 	<string name="_bx_acl_grid_column_name"><![CDATA[Имя]]></string>
 	<string name="_bx_acl_grid_column_period"><![CDATA[Период]]></string>
-	<string name="_bx_acl_grid_column_period_unit"><![CDATA[Единица периода]]></string>
 	<string name="_bx_acl_grid_column_price"><![CDATA[Цена]]></string>
+	<string name="_bx_acl_grid_column_trial"><![CDATA[Пробный период]]></string>
 
 	<string name="_bx_acl_grid_action_add"><![CDATA[Добавить]]></string>
 	<string name="_bx_acl_grid_action_edit"><![CDATA[Редактировать]]></string>
@@ -71,4 +74,6 @@
 	<string name="_bx_acl_txt_cart_item_title"><![CDATA[{0} ({1} {2})]]></string>
 	<string name="_bx_acl_txt_upgrade"><![CDATA[Улучшить]]></string>
 	<string name="_bx_acl_txt_manage"><![CDATA[Изменить]]></string>
+	<string name="_bx_acl_txt_n_unit"><![CDATA[{0} ({1})]]></string>
+    <string name="_bx_acl_txt_none"><![CDATA[нет]]></string>
 </resources>

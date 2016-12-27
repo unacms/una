@@ -97,6 +97,7 @@ class BxAclDb extends BxDolModuleDb
 			`tap`.`period` AS `period`,
 			`tap`.`period_unit` AS `period_unit`,
 			`tap`.`price` AS `price`,
+			`tap`.`trial` AS `trial`,
 			`tap`.`order` AS `order`";
 
         if(!isset($aParams['order']) || empty($aParams['order']))

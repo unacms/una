@@ -214,8 +214,8 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_payment_grid_sbs_list', 'customer_id', '_bx_payment_grid_column_title_sbs_customer_id', '20%', 0, '24', '', 3),
 ('bx_payment_grid_sbs_list', 'subscription_id', '_bx_payment_grid_column_title_sbs_subscription_id', '20%', 0, '24', '', 4),
 ('bx_payment_grid_sbs_list', 'provider', '_bx_payment_grid_column_title_sbs_provider', '10%', 0, '16', '', 5),
-('bx_payment_grid_sbs_list', 'date', '_bx_payment_grid_column_title_sbs_date', '10%', 0, '10', '', 6),
-('bx_payment_grid_sbs_list', 'actions', '', '18%', 0, '', '', 7),
+('bx_payment_grid_sbs_list', 'date', '_bx_payment_grid_column_title_sbs_date', '14%', 0, '10', '', 6),
+('bx_payment_grid_sbs_list', 'actions', '', '14%', 0, '', '', 7),
 
 ('bx_payment_grid_sbs_history', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '24%', 0, '20', '', 1),
 ('bx_payment_grid_sbs_history', 'transaction', '_bx_payment_grid_column_title_sbs_transaction', '22%', 0, '18', '', 2),

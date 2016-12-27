@@ -42,7 +42,7 @@
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Billing period]]></string>
     <string name="_bx_market_form_entry_input_sys_trial_recurring"><![CDATA[Recurring trial]]></string>
     <string name="_bx_market_form_entry_input_trial_recurring"><![CDATA[Trial period]]></string>
-    <string name="_bx_market_form_entry_input_trial_recurring_inf"><![CDATA[The number of days new customers should receive a free trial. Leave empty to disable Trial Period.]]></string>
+    <string name="_bx_market_form_entry_input_trial_recurring_inf"><![CDATA[The number of days new customers should receive a free trial. Leave empty to disable trial period.]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_single"><![CDATA[One-time payment: begin]]></string>
     <string name="_bx_market_form_entry_input_header_beg_single"><![CDATA[One-time payment]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_recurring"><![CDATA[Recurring payment: begin]]></string>
