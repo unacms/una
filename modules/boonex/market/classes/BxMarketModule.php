@@ -275,6 +275,7 @@ class BxMarketModule extends BxBaseModTextModule
 			'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
 			'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
 			'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
+		    'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']]
         );
     }
 
@@ -299,6 +300,7 @@ class BxMarketModule extends BxBaseModTextModule
 				'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
 				'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
             	'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
+            	'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']]
            );
 
         return $aResult;
@@ -335,15 +337,17 @@ class BxMarketModule extends BxBaseModTextModule
         if(empty($aItem) || !is_array($aItem))
 			return array();
 
+        $iTrial = 0;
 		$sDuration = '';
 		if($sType == BX_MARKET_LICENSE_TYPE_RECURRING) {
 			$aProduct = $this->_oDb->getContentInfoById($iItemId);
 
+			$iTrial = $aProduct[$this->_oConfig->CNF['FIELD_TRIAL_RECURRING']];
 			$sDuration = $aProduct[$this->_oConfig->CNF['FIELD_DURATION_RECURRING']];
 		}
 
     	$sAction = $this->_oDb->hasLicenseByOrder($iClientId, $iItemId, $sOrder) ? 'prolong' : 'register';
-        if(!$this->_oDb->{$sAction . 'License'}($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType, $sDuration))
+        if(!$this->_oDb->{$sAction . 'License'}($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType, $sDuration, $iTrial))
             return array();
 
 		bx_alert($this->getName(), 'license_' . $sAction, 0, false, array(
@@ -353,7 +357,8 @@ class BxMarketModule extends BxBaseModTextModule
 			'license' => $sLicense,
 			'type' => $sType,
 			'count' => $iItemCount,
-			'duration' => $sDuration
+			'duration' => $sDuration,
+		    'trial' => $iTrial
 		));
 
         return $aItem;

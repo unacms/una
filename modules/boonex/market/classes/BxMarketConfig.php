@@ -55,6 +55,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'FIELD_WARNING_RECURRING' => 'warning_recurring',
         	'FIELD_PRICE_RECURRING' => 'price_recurring',
         	'FIELD_DURATION_RECURRING' => 'duration_recurring',
+        	'FIELD_TRIAL_RECURRING' => 'trial_recurring',
         	'FIELD_HEADER_END_RECURRING' => 'header_end_recurring',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
 			'FIELD_ALLOW_PURCHASE_TO' => 'allow_purchase_to',

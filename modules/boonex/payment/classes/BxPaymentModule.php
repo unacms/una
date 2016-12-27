@@ -428,7 +428,8 @@ class BxPaymentModule extends BxBaseModPaymentModule
         	return $this->_oTemplate->displayPageCodeError($aResult['message']);
 
 		$aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
-		if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
+		$bTypeRecurring = $aPending['type'] == BX_PAYMENT_TYPE_RECURRING;
+		if($bTypeRecurring)
 		    $this->registerSubscription($aPending, array(
 		        'customer_id' => $aResult['customer_id'], 
 		    	'subscription_id' => $aResult['subscription_id']
@@ -441,7 +442,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			$this->getObjectJoin()->performJoin((int)$aPending['id'], isset($aResult['client_name']) ? $aResult['client_name'] : '', isset($aResult['client_email']) ? $aResult['client_email'] : '');
 
 		//--- Register payment for purchased items in associated modules 
-		if(!empty($aResult['paid']))
+		if(!empty($aResult['paid']) || ($bTypeRecurring && !empty($aResult['trial'])))
 			$this->registerPayment($aPending);
 
 		if($oProvider->needRedirect()) {
@@ -598,6 +599,15 @@ class BxPaymentModule extends BxBaseModPaymentModule
 	    $this->onSubscriptionCreate($aPending);
 	}
 
+	public function updateSubscription($aPending, $aParams = array())
+	{
+	    $this->_oDb->updateSubscription($aParams, array(
+	        'pending_id' => $aPending['id']
+	    ));
+
+	    $this->onSubscriptionUpdate($aPending);
+	}
+
 	public function cancelSubscription($mixedPending)
 	{
 		$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
@@ -639,6 +649,13 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		//--- 'System' -> 'Create Subscription' for Alerts Engine ---//
 	}
 
+	public function onSubscriptionUpdate($aPending, $aResult = array())
+	{
+	    //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
+		bx_alert('system', 'update_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+		//--- 'System' -> 'Update Subscription' for Alerts Engine ---//
+	}
+	
 	public function onSubscriptionCancel($aPending, $aResult = array())
 	{
 		//--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//

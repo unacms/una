@@ -66,7 +66,8 @@ CREATE TABLE IF NOT EXISTS `bx_payment_subscriptions` (
   `subscription_id` varchar(32) NOT NULL default '',
   `paid` tinyint(4) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
-  PRIMARY KEY(`id`)
+  PRIMARY KEY(`id`),
+  UNIQUE KEY `pending_id` (`pending_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `bx_payment_transactions_pending` (
