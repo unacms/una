@@ -26,6 +26,9 @@
 	<string name="_bx_acl_form_price_input_sys_price"><![CDATA[Price]]></string>
 	<string name="_bx_acl_form_price_input_price"><![CDATA[Price]]></string>
 	<string name="_bx_acl_form_price_input_err_price"><![CDATA[You need to enter a price here.]]></string>
+	<string name="_bx_acl_form_price_input_sys_trial"><![CDATA[Trial]]></string>
+    <string name="_bx_acl_form_price_input_trial"><![CDATA[Trial]]></string>
+    <string name="_bx_acl_form_price_input_inf_trial"><![CDATA[The number of days new customers should receive a free trial. Leave empty to disable trial period.]]></string>
 	<string name="_bx_acl_form_price_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_acl_form_price_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_acl_form_price_input_sys_do_cancel"><![CDATA[Cancel]]></string>
@@ -34,18 +37,18 @@
 
 	<!-- Pre Lists -->
 	<string name="_bx_acl_pre_lists_period_units"><![CDATA[Billing Interval]]></string>
-	<string name="_bx_acl_pre_values_day"><![CDATA[Day(s)]]></string>
-	<string name="_bx_acl_pre_values_week"><![CDATA[Week(s)]]></string>
-	<string name="_bx_acl_pre_values_month"><![CDATA[Month(s)]]></string>
-	<string name="_bx_acl_pre_values_year"><![CDATA[Year(s)]]></string>
+	<string name="_bx_acl_pre_values_day"><![CDATA[day]]></string>
+	<string name="_bx_acl_pre_values_week"><![CDATA[week]]></string>
+	<string name="_bx_acl_pre_values_month"><![CDATA[month]]></string>
+	<string name="_bx_acl_pre_values_year"><![CDATA[year]]></string>
 
 
 	<!-- Grids -->
 	<string name="_bx_acl_grid_column_level_name"><![CDATA[Level]]></string>
 	<string name="_bx_acl_grid_column_name"><![CDATA[Name]]></string>
 	<string name="_bx_acl_grid_column_period"><![CDATA[Period]]></string>
-	<string name="_bx_acl_grid_column_period_unit"><![CDATA[Period Unit]]></string>
 	<string name="_bx_acl_grid_column_price"><![CDATA[Price]]></string>
+	<string name="_bx_acl_grid_column_trial"><![CDATA[Trial]]></string>
 
 	<string name="_bx_acl_grid_action_add"><![CDATA[Add]]></string>
 	<string name="_bx_acl_grid_action_edit"><![CDATA[Edit]]></string>
@@ -71,4 +74,6 @@
 	<string name="_bx_acl_txt_cart_item_title"><![CDATA[{0} ({1} {2})]]></string>
 	<string name="_bx_acl_txt_upgrade"><![CDATA[Upgrade]]></string>
 	<string name="_bx_acl_txt_manage"><![CDATA[Manage]]></string>
+	<string name="_bx_acl_txt_n_unit"><![CDATA[{0} ({1})]]></string>
+	<string name="_bx_acl_txt_none"><![CDATA[none]]></string>
 </resources>

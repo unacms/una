@@ -287,14 +287,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     function actionRss()
     {
         $aArgs = func_get_args();
-        $iOwnerId = array_shift($aArgs);
 
-        list($sUserName) = $this->getUserInfo($iOwnerId);
+        $sType = array_shift($aArgs);
+        $iOwnerId = 0;
 
-        $sRssCaption = _t('_bx_timeline_txt_rss_caption', $sUserName);
-        $sRssLink = $this->_oConfig->getViewUrl($iOwnerId);
+        switch($sType) {
+            case BX_BASE_MOD_NTFS_TYPE_OWNER:
+                $iOwnerId = array_shift($aArgs);
+                list($sUserName) = $this->getUserInfo($iOwnerId);
 
-        $aParams = $this->_prepareParams('owner', $iOwnerId, 0, $this->_oConfig->getRssLength(), '', array(), 0);
+                $sRssCaption = _t('_bx_timeline_txt_rss_caption', $sUserName);
+                $sRssLink = $this->_oConfig->getViewUrl($iOwnerId);
+                break;
+
+            case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+                $sRssCaption = _t('_bx_timeline_page_title_view_home');
+                $sRssLink = $this->_oConfig->getHomeViewUrl();
+                break;
+        }
+        
+
+        $aParams = $this->_prepareParams($sType, $iOwnerId, 0, $this->_oConfig->getRssLength(), '', array(), 0);
         $aEvents = $this->_oDb->getEvents($aParams);
 
         $aRssData = array();
@@ -385,12 +398,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     public function serviceGetBlockViewHome($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_TIMELINE, BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewHome($iProfileId, BX_TIMELINE_VIEW_TIMELINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
     }
 
 	public function serviceGetBlockViewHomeOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_OUTLINE, BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewHome($iProfileId, BX_TIMELINE_VIEW_OUTLINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
     }
 
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
@@ -1121,6 +1134,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $this->_getBlockView($oProfile->id(), $sView, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
     }
 
+    protected function _serviceGetBlockViewHome($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
+    {
+        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_PUBLIC . '/';
+        BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view_home'), $sRssUrl);
+
+        return $this->_serviceGetBlockViewByType($iProfileId, $sView, BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+    } 
+
     protected function _serviceGetBlockViewByType($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $sType = BX_TIMELINE_TYPE_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         $aParams = $this->_prepareParams($sType, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
@@ -1158,12 +1179,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $this->_iOwnerId = $aParams['owner_id'];
         list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
 
+        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_OWNER . '/' . $iProfileId . '/';
         $sJsObject = $this->_oConfig->getJsObject('view');
         $aMenu = array(
             array('id' => $sView . '-view-all', 'name' => $sView . '-view-all', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_all'), 'active' => 1),
             array('id' => $sView . '-view-owner', 'name' => $sView . '-view-owner', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_owner', $sUserName)),
             array('id' => $sView . '-view-other', 'name' => $sView . '-view-other', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_other')),
-            array('id' => $sView . '-get-rss', 'name' => $sView . '-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
+            array('id' => $sView . '-get-rss', 'name' => $sView . '-get-rss', 'class' => '', 'link' => $sRssUrl, 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
         );
 
         $sContent = '';
@@ -1175,6 +1197,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         if (!$sContent)
             $sContent = $this->_oTemplate->getViewBlock($aParams);
+
+        BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view'), $sRssUrl);
 
         return array('content' => $sContent, 'menu' => $oMenu);
     }

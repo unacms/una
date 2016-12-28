@@ -81,6 +81,7 @@ class BxAclModule extends BxDolModule
 			'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']),
 			'price_single' => $aItem['price'],
 			'price_recurring' => $aItem['price'],
+			'trial_recurring' => $aItem['trial']
         );
     }
 
@@ -103,6 +104,7 @@ class BxAclModule extends BxDolModule
 				'url' => $sUrl,
 				'price_single' => $aItem['price'],
             	'price_recurring' => $aItem['price'],
+            	'trial_recurring' => $aItem['trial']
            );
 
         return $aResult;
@@ -134,8 +136,16 @@ class BxAclModule extends BxDolModule
         if(empty($aItem) || !is_array($aItem))
 			return array();
 
-		$aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));
-        if(!BxDolAcl::getInstance()->setMembership($iClientId, $aItemInfo['level_id'], array('period' => $aItemInfo['period'], 'period_unit' => $aItemInfo['period_unit']), false, $sLicense))
+        $aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));
+
+        $iPeriod = (int)$aItemInfo['period'];
+        $sPeriodUnit = $aItemInfo['period_unit'];
+		if($sType == BX_ACL_LICENSE_TYPE_RECURRING && (int)$aItemInfo['trial'] > 0) {
+		    $iPeriod = (int)$aItemInfo['trial'];
+		    $sPeriodUnit = 'day';
+		}
+
+        if(!BxDolAcl::getInstance()->setMembership($iClientId, $aItemInfo['level_id'], array('period' => $iPeriod, 'period_unit' => $sPeriodUnit), false, $sLicense))
             return array();
 
         return $aItem;

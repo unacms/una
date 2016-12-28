@@ -144,7 +144,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		    'subscription_id' => '',
 			'client_name' => '',
 			'client_email' => '',
-			'paid' => false
+			'paid' => false,
+			'trial' => false,
 		);
 
 		switch($aPending['type']) {
@@ -181,7 +182,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 					'message' => $this->_sLangsPrefix . 'strp_msg_subscribed',
                     'customer_id' => $sCustomerId,
 				    'subscription_id' => $sOrderId,
-					'client_email' => $aCustomer['email']
+					'client_email' => $aCustomer['email'],
+				    'trial' => $aSubscription['status'] == 'trialing'
 				));
 				break;
 		}
@@ -478,8 +480,6 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
 	protected function _createSubscription($sToken, $iPendingId, &$aClient, &$aCartInfo)
 	{
-		$bTrial = false;
-
 		if(empty($this->_oCustomer))
 			$this->_createCustomer($sToken, $aClient);
 
@@ -491,9 +491,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 			if(empty($aItem) || !is_array($aItem))
 				return false;
 
-			//TODO: "Trial" wasn't finaly relized. It's just a draft.
-			if(isset($aItem['trial']) && $aItem['trial'] === true)
-				$bTrial = true;
+			$iTrial = $this->_oModule->_oConfig->getTrial(BX_PAYMENT_TYPE_RECURRING, $aItem);
+			$bTrial = !empty($iTrial);
 
 			$oSubscription = $this->_oCustomer->subscriptions->create(array(
 				'plan' => $aItem['name'],
@@ -634,6 +633,11 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		$sChargeCurrency = strtoupper($oCharge->currency);
 		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) !== 0))
 			return false;
+
+        if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
+            $this->_oModule->updateSubscription($aPending, array(
+                'paid' => 1
+            ));
 
 		return $this->_oModule->registerPayment($aPending);
 	}

@@ -33,6 +33,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
         	'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
         	'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
+        	'KEY_ARRAY_TRIAL_RECURRING' => 'trial_recurring',
         
 	        // some language keys
         	'T' => array(
@@ -144,6 +145,19 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 		}
 
 		return (float)$fPrice;
+    }
+
+    public function getTrial($sType, $aItem)
+    {
+        $iTrial = 0;
+
+		switch($sType) {
+			case BX_PAYMENT_TYPE_RECURRING:
+				$iTrial = $aItem[$this->getKey('KEY_ARRAY_TRIAL_RECURRING')];
+				break;
+		}
+
+		return (int)$iTrial;
     }
 
     public function getModuleId($mixedId)

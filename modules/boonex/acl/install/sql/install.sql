@@ -8,6 +8,7 @@ CREATE TABLE `bx_acl_level_prices` (
   `name` varchar(128) NOT NULL default '',
   `period` int(11) unsigned NOT NULL default '1',
   `period_unit` varchar(32) NOT NULL default '',
+  `trial` int(11) unsigned NOT NULL default '0',
   `price` float unsigned NOT NULL default '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -29,6 +30,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_acl_price', @sName, 'level_id', '', '', 0, 'hidden', '_bx_acl_form_price_input_sys_level_id', '', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'period', '', '', 0, 'text', '_bx_acl_form_price_input_sys_period', '_bx_acl_form_price_input_period', '_bx_acl_form_price_input_inf_period', 1, 0, 0, '', '', '', 'Avail', '', '_bx_acl_form_price_input_err_period', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'period_unit', '', '#!bx_acl_period_units', 0, 'select', '_bx_acl_form_price_input_sys_period_unit', '_bx_acl_form_price_input_period_unit', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_acl_form_price_input_err_period_unit', 'Xss', '', 1, 0),
+('bx_acl_price', @sName, 'trial', '', '', 0, 'text', '_bx_acl_form_price_input_sys_trial', '_bx_acl_form_price_input_trial', '_bx_acl_form_price_input_inf_trial', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'price', '', '', 0, 'text', '_bx_acl_form_price_input_sys_price', '_bx_acl_form_price_input_price', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_acl_form_price_input_err_price', 'Float', '', 1, 0),
 ('bx_acl_price', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_acl_price', @sName, 'do_submit', '_bx_acl_form_price_input_do_submit', '', 0, 'submit', '_bx_acl_form_price_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -37,20 +39,22 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_acl_price_add', 'id', 2147483647, 0, 1),
 ('bx_acl_price_add', 'level_id', 2147483647, 1, 2),
-('bx_acl_price_add', 'period', 2147483647, 1, 3),
-('bx_acl_price_add', 'period_unit', 2147483647, 1, 4),
-('bx_acl_price_add', 'price', 2147483647, 1, 5),
-('bx_acl_price_add', 'controls', 2147483647, 1, 6),
-('bx_acl_price_add', 'do_submit', 2147483647, 1, 7),
-('bx_acl_price_add', 'do_cancel', 2147483647, 1, 8),
+('bx_acl_price_add', 'price', 2147483647, 1, 3),
+('bx_acl_price_add', 'period', 2147483647, 1, 4),
+('bx_acl_price_add', 'period_unit', 2147483647, 1, 5),
+('bx_acl_price_add', 'trial', 2147483647, 1, 6),
+('bx_acl_price_add', 'controls', 2147483647, 1, 7),
+('bx_acl_price_add', 'do_submit', 2147483647, 1, 8),
+('bx_acl_price_add', 'do_cancel', 2147483647, 1, 9),
 
 ('bx_acl_price_edit', 'id', 2147483647, 1, 1),
 ('bx_acl_price_edit', 'level_id', 2147483647, 1, 2),
-('bx_acl_price_edit', 'period', 2147483647, 1, 3),
-('bx_acl_price_edit', 'price', 2147483647, 1, 4),
-('bx_acl_price_edit', 'controls', 2147483647, 1, 5),
-('bx_acl_price_edit', 'do_submit', 2147483647, 1, 6),
-('bx_acl_price_edit', 'do_cancel', 2147483647, 1, 7);
+('bx_acl_price_edit', 'price', 2147483647, 1, 3),
+('bx_acl_price_edit', 'period', 2147483647, 1, 4),
+('bx_acl_price_edit', 'trial', 2147483647, 1, 5),
+('bx_acl_price_edit', 'controls', 2147483647, 1, 6),
+('bx_acl_price_edit', 'do_submit', 2147483647, 1, 7),
+('bx_acl_price_edit', 'do_cancel', 2147483647, 1, 8);
 
 
 -- PRE-VALUES
@@ -73,16 +77,16 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_acl_administration', 'checkbox', '_sys_select', '1%', 0, '', '', 1),
 ('bx_acl_administration', 'order', '', '1%', 0, '', '', 2),
-('bx_acl_administration', 'name', '_bx_acl_grid_column_name', '20%', 0, 16, '', 3),
-('bx_acl_administration', 'period', '_bx_acl_grid_column_period', '20%', 0, 16, '', 4),
-('bx_acl_administration', 'period_unit', '_bx_acl_grid_column_period_unit', '20%', 0, 16, '', 5),
-('bx_acl_administration', 'price', '_bx_acl_grid_column_price', '20%', 0, 16, '', 6),
-('bx_acl_administration', 'actions', '', '18%', 0, '', '', 7),
+('bx_acl_administration', 'name', '_bx_acl_grid_column_name', '33%', 0, 32, '', 3),
+('bx_acl_administration', 'price', '_bx_acl_grid_column_price', '15%', 0, 16, '', 4),
+('bx_acl_administration', 'period', '_bx_acl_grid_column_period', '15%', 0, 16, '', 5),
+('bx_acl_administration', 'trial', '_bx_acl_grid_column_trial', '15%', 0, 16, '', 6),
+('bx_acl_administration', 'actions', '', '20%', 0, '', '', 7),
 
 ('bx_acl_view', 'level_name', '_bx_acl_grid_column_level_name', '35%', 1, 36, '', 1),
-('bx_acl_view', 'period', '_bx_acl_grid_column_period', '15%', 0, 16, '', 2),
-('bx_acl_view', 'period_unit', '_bx_acl_grid_column_period_unit', '15%', 0, 16, '', 3),
-('bx_acl_view', 'price', '_bx_acl_grid_column_price', '15%', 0, 16, '', 4),
+('bx_acl_view', 'price', '_bx_acl_grid_column_price', '15%', 0, 16, '', 2),
+('bx_acl_view', 'period', '_bx_acl_grid_column_period', '15%', 0, 16, '', 3),
+('bx_acl_view', 'trial', '_bx_acl_grid_column_trial', '15%', 0, 16, '', 4),
 ('bx_acl_view', 'actions', '', '20%', 0, '', '', 5);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES

@@ -38,6 +38,7 @@ class BxAclConfig extends BxBaseModGeneralConfig
         	'OBJECT_FORM_PRICE' => 'bx_acl_price',
             'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_acl_price_add',
         	'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_acl_price_edit',
+        	'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_acl_period_units',
         );
 
 		$this->_aGridObjects = array(

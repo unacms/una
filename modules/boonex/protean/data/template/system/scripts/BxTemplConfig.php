@@ -29,8 +29,8 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-image-bg-footer-repeat'] = $this->_setBgRepeat($sName . '_footer_bg_image_repeat', 'no-repeat');
         $this->_aConfig['aLessConfig']['bx-image-bg-footer-size'] = $this->_setBgSize($sName . '_footer_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-page'] = $this->_setBgUrl($sName . '_body_bg_image', $oStorage);
-        $this->_aConfig['aLessConfig']['bx-image-bg-page-repeat'] = $this->_setBgRepeat($sName . '_page_bg_image_repeat', 'no-repeat');
-        $this->_aConfig['aLessConfig']['bx-image-bg-page-size'] = $this->_setBgSize($sName . '_page_bg_image_size', 'cover');
+        $this->_aConfig['aLessConfig']['bx-image-bg-page-repeat'] = $this->_setBgRepeat($sName . '_body_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-page-size'] = $this->_setBgSize($sName . '_body_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-block'] = $this->_setBgUrl($sName . '_block_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-block-repeat'] = $this->_setBgRepeat($sName . '_block_bg_image_repeat', 'no-repeat');
         $this->_aConfig['aLessConfig']['bx-image-bg-block-size'] = $this->_setBgSize($sName . '_block_bg_image_size', 'cover');

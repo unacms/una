@@ -9,20 +9,15 @@
  * @{
  */
 
+require_once('BxAclGridLevels.php');
 
-class BxAclGridAdministration extends BxTemplGrid
+class BxAclGridAdministration extends BxAclGridLevels
 {
-	protected $MODULE;
-	protected $_oModule;
-
 	protected $_sParamsDivider = '#-#';
 	protected $_iLevelId = 0;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
-    	$this->MODULE = 'bx_acl';
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
-
         parent::__construct ($aOptions, $oTemplate);
 
         $iLevel = (int)bx_get('level');
@@ -169,19 +164,6 @@ class BxAclGridAdministration extends BxTemplGrid
 
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
-    }
-
-    protected function _getCellPeriodUnit($mixedValue, $sKey, $aField, $aRow)
-    {
-    	$mixedValue = _t('_bx_acl_pre_values_' . $mixedValue);
-    	return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
-    }
-
-	protected function _getCellPrice($mixedValue, $sKey, $aField, $aRow)
-    {
-    	$aCurrency = $this->_oModule->_oConfig->getCurrency();
-
-        return parent::_getCellDefault($aCurrency['sign'] . $mixedValue, $sKey, $aField, $aRow);
     }
 
 	protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
