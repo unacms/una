@@ -47,11 +47,11 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
      * @param $bRedirect boolean
      * @return void
      */
-    function setLogged($iProfileId, $sCallbackUrl = '', $bRedirect = true)
+    function setLogged($iProfileId, $sCallbackUrl = '', $bRedirect = true, $bRememberMe = false)
     {
         $oProfile = BxDolProfile::getInstance($iProfileId);
  
-        bx_login($oProfile->getAccountId());
+        bx_login($oProfile->getAccountId(), $bRememberMe);
 
         if ($bRedirect) {
             $sCallbackUrl = $sCallbackUrl
