@@ -172,6 +172,22 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	return !empty($aProviders) && !empty($aProviders[$sVendorProvider]) && is_array(($aProviders[$sVendorProvider])) ? $aProviders[$sVendorProvider] : false;
     }
 
+    public function serviceGetOptionsDefaultCurrencyCode()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aCurrencies = BxDolForm::getDataItems($CNF['OBJECT_FORM_PRELISTS_CURRENCIES']);
+
+        $aResult = array();
+        foreach($aCurrencies as $sKey => $sValue)
+            $aResult[] = array(
+                'key' => $sKey,
+                'value' => $sValue
+            );
+
+        return $aResult;
+    }
+
     public function serviceGetOptionsSiteAdmin()
     {
         $aResult = array(

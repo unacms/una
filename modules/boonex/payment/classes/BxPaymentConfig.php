@@ -34,7 +34,9 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
         	'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
         	'KEY_ARRAY_TRIAL_RECURRING' => 'trial_recurring',
-        
+
+            'OBJECT_FORM_PRELISTS_CURRENCIES' => 'bx_payment_currencies',
+
 	        // some language keys
         	'T' => array(
         		'MSG_ITEM_ADDED' => '_bx_payment_msg_item_added',
