@@ -48,13 +48,15 @@
 	<string name="_bx_acl_grid_column_name"><![CDATA[Имя]]></string>
 	<string name="_bx_acl_grid_column_period"><![CDATA[Период]]></string>
 	<string name="_bx_acl_grid_column_price"><![CDATA[Цена]]></string>
-	<string name="_bx_acl_grid_column_trial"><![CDATA[Пробный период]]></string>
+	<string name="_bx_acl_grid_column_trial"><![CDATA[Проба]]></string>
 
 	<string name="_bx_acl_grid_action_add"><![CDATA[Добавить]]></string>
 	<string name="_bx_acl_grid_action_edit"><![CDATA[Редактировать]]></string>
 	<string name="_bx_acl_grid_action_delete"><![CDATA[Удалить]]></string>
-	<string name="_bx_acl_grid_action_buy"><![CDATA[Единовременный платеж]]></string>
-	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Подписка на периодические платежи]]></string>
+	<string name="_bx_acl_grid_action_buy"><![CDATA[Купить]]></string>
+	<string name="_bx_acl_grid_action_buy_title"><![CDATA[Единовременный платеж]]></string>
+	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Арендовать]]></string>
+	<string name="_bx_acl_grid_action_subscribe_title"><![CDATA[Подписка на периодические платежи]]></string>
 
 	<string name="_bx_acl_popup_title_price_add"><![CDATA[Добавить ценовой план]]></string>
 	<string name="_bx_acl_popup_title_price_edit"><![CDATA[Редактировать ценовой план]]></string>

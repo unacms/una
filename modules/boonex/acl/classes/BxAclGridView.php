@@ -36,6 +36,7 @@ class BxAclGridView extends BxAclGridLevels
     		list($sJsCode, $sJsMethod) = $aJs;
 
     		$a['attr'] = array(
+    		    'title' => bx_html_attribute(_t('_bx_acl_grid_action_buy_title')),
     			'onclick' => $sJsMethod
     		);
     	}
@@ -50,6 +51,7 @@ class BxAclGridView extends BxAclGridLevels
 			list($sJsCode, $sJsMethod) = $aJs;
 
     		$a['attr'] = array(
+    			'title' => bx_html_attribute(_t('_bx_acl_grid_action_subscribe_title')),
     			'onclick' => $sJsMethod
     		);
 		}

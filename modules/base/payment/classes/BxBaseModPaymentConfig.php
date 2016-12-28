@@ -23,15 +23,13 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     protected $_sAnimationEffect;
     protected $_iAnimationSpeed;
 
-    protected static $_aCurrencies = array(
-    	'AUD' => 'A&#36;', 'CAD' => 'C&#36;', 'EUR' => '&#128;', 'GBP' => '&#163;', 'USD' => '&#36;', 'YEN' => '&#165;'
-    );
-
     function __construct($aModule)
     {
         parent::__construct($aModule);
 
         $this->CNF = array_merge($this->CNF, array(
+        	'OBJECT_FORM_PRELISTS_CURRENCIES' => '',
+
         	'KEY_SESSION_PENDING' => $this->_sName . '_pending_id',
         	'KEY_REQUEST_PENDING' => $this->_sName . '_pending_id',
         	
@@ -79,8 +77,9 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     	$sPrefix = $this->getPrefix('options');
         $this->_iSiteId = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
 
+        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
         $this->_sCurrencyCode = $this->_oDb->getParam($sPrefix . 'default_currency_code');
-        $this->_sCurrencySign = self::$_aCurrencies[$this->_sCurrencyCode];
+        $this->_sCurrencySign = $aCurrencies[$this->_sCurrencyCode];
     }
 
     public function getSiteId()

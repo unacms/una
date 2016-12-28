@@ -19,10 +19,15 @@ DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_payment_grid%';
 
 
 -- FORMS
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN  (SELECT `display_name` FROM `sys_form_displays` WHERE `module`=@sName);
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN (SELECT `display_name` FROM `sys_form_displays` WHERE `module`=@sName);
 DELETE FROM `sys_form_inputs` WHERE `module`=@sName;
 DELETE FROM `sys_form_displays` WHERE `module`=@sName;
 DELETE FROM `sys_objects_form` WHERE `module`=@sName;
+
+
+-- PRE-VALUES
+DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_payment';
+DELETE FROM `sys_form_pre_values` WHERE `Key` IN ('bx_payment_currencies');
 
 
 -- STUDIO PAGE & WIDGET

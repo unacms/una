@@ -386,6 +386,18 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_payment_form_strp_card_add', 'do_cancel', 2147483647, 1, 6);
 
 
+-- PRE-VALUES
+INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
+('bx_payment_currencies', '_bx_payment_pre_lists_currencies', 'bx_payment', '0');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
+('bx_payment_currencies', 'AUD', 1, 'AUD', 'A&#36;'),
+('bx_payment_currencies', 'CAD', 2, 'CAD', 'C&#36;'),
+('bx_payment_currencies', 'EUR', 3, 'EUR', '&#128;'),
+('bx_payment_currencies', 'GBP', 4, 'GBP', '&#163;'),
+('bx_payment_currencies', 'USD', 5, 'USD', '&#36;'),
+('bx_payment_currencies', 'YEN', 6, 'YEN', '&#165;');
+
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, @sName, '_bx_payment', '_bx_payment', 'bx_payment@modules/boonex/payment/|std-icon.svg');

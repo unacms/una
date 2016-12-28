@@ -160,6 +160,9 @@
 	<string name="_bx_payment_form_processed_input_cancel"><![CDATA[Cancel]]></string>
 	<string name="_bx_payment_form_processed_input_cancel_sys"><![CDATA[Cancel]]></string>
 
+    <!-- Predefined Values -->
+    <string name="_bx_payment_pre_lists_currencies"><![CDATA[Currencies]]></string>
+
 	<!-- ACL -->
 	<string name="_bx_payment_acl_action_purchase"><![CDATA[Purchase]]></string>
 	<string name="_bx_payment_acl_action_sell"><![CDATA[Sell]]></string>
