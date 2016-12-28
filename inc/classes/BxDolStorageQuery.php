@@ -37,6 +37,12 @@ class BxDolStorageQuery extends BxDolDb
         return $oDb->getAll($sQuery);
     }
 
+    public function changeStorageEngine ($sEngine)
+    {
+        $sQuery = $this->prepare("UPDATE `sys_objects_storage` SET `engine` = ? WHERE `object` = ?", $sEngine, $this->_aObject['object']);
+        return $this->query($sQuery);
+    }
+
     public function getMimeTypeByExt($sExt)
     {
         $sQuery = $this->prepare("SELECT `mime_type` FROM `sys_storage_mime_types` WHERE `ext` = ?", $sExt);

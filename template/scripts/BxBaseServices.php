@@ -93,6 +93,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceAlertResponseProcessStorageChange ($oAlert)
     {
+        if ('sys_storage_default' != $oAlert->aExtras['option'])
+            return;
+
+        $aStorages = BxDolStorageQuery::getStorageObjects();
+        foreach ($aStorages as $r) {
+            if (0 == $r['current_size'] && 0 == $r['current_number'] && ($oStorage = BxDolStorage::getObjectInstance($r['object'])))
+                $oStorage->changeStorageEngine($oAlert->aExtras['value']);
+        }
 
     }
 }

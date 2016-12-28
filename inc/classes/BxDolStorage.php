@@ -278,6 +278,18 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Change storage engine. It's possible to change it when there is no files in storage engine.
+     * @param $sEngine new storage engine
+     * @return true on success or false on error
+     */ 
+    public function changeStorageEngine ($sEngine)
+    {
+        if (0 == $this->_aObject['current_size'] && 0 == $this->_aObject['current_number'])
+            return $this->_oDb->changeStorageEngine($sEngine);
+        return false;
+    }
+
+    /**
      * Is storage engine available?
      * @return boolean
      */
