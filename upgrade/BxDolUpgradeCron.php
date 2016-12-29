@@ -8,6 +8,7 @@
  */
 
 $aPathInfo = pathinfo(__FILE__);
+$aPathInfo['dirname'] = str_replace("\\", "/", $aPathInfo['dirname']); // fix Windows path
 define ('BX_UPGRADE_DIR_UPGRADES', $aPathInfo['dirname'] . '/files/');
 
 require_once($aPathInfo['dirname'] . '/classes/BxDolUpgradeController.php');
