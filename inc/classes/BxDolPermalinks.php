@@ -183,7 +183,9 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
             if (!$this->_isEnabled($sKey))
                 return $sLink;
 
-            return bx_append_url_params($this->aLinksStandard[$sKey]['permalink'] . $sPage, $aParams);
+            $sUrl = $this->_fixUrlAmpersand($this->aLinksStandard[$sKey]['permalink'] . $sPage);
+
+            return bx_append_url_params($sUrl, $aParams);
 
         }
 
@@ -246,6 +248,16 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
         header ('Location:' . BX_DOL_URL_ROOT . $sPermalink . rtrim(trim(urldecode($m[2]), '/'), '&'));
 
         return true;
+    }
+
+    protected function _fixUrlAmpersand($sLink)
+    {
+        $iPosQuestion = strpos($sLink, '?');
+
+        if (false === $iPosQuestion && false !== ($iPosAmpersand = strpos($sLink, '&')))
+            $sLink = substr_replace($sLink, '?', $iPosAmpersand, 1);
+
+        return $sLink;
     }
 
     protected function _fixUrl($sLink)
