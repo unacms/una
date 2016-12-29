@@ -7,6 +7,9 @@
  * @{
  */
 
+if (!defined('CURL_SSLVERSION_TLSv1'))
+    define('CURL_SSLVERSION_TLSv1', 1);
+
 require_once(BX_DIRECTORY_PATH_PLUGINS . 'amazon-s3/S3.php');
 
 /**
