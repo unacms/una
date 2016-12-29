@@ -556,11 +556,11 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     			return;
         }
 
-        if(defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) {
+        if((defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) || defined('BX_DOL_INSTALL')) {
             $sOutput = '<div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">';
             $sOutput .= '<div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>';
             $sOutput .= '<div style="text-align:center;">' . $sErrorType . '</div>';
-            if(defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE)
+            if((defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE) || defined('BX_DOL_INSTALL'))
 				$sOutput .= $this->errorOutput($aError);
             $sOutput .= '</div>';
         } 
