@@ -24,7 +24,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         if ($iContentId)
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
-        if ($this->_aContentInfo) {
+        if ($this->_aContentInfo && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedView($this->_aContentInfo)) {
             $sTitle = isset($this->_aContentInfo[$CNF['FIELD_TITLE']]) ? $this->_aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
             $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]);
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker
