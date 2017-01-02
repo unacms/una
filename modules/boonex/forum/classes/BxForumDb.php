@@ -41,6 +41,13 @@ class BxForumDb extends BxBaseModTextDb
     	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = "";
 
     	switch($aParams['type']) {
+    	    case 'entries_author_search':
+    			$aMethod['name'] = 'getColumn';
+    			$sFieldsClause = "`te`.`cmt_object_id`"; 
+    			$sWhereClause = " AND `te`.`cmt_author_id` IN (" . $this->implode_escape($aParams['author']) . ")";
+    			$sGroupClause = "`te`.`cmt_object_id`";
+    			break;
+
     		case 'entries_keyword_search':
     			$aMethod['name'] = 'getColumn';
     			$sFieldsClause = "`te`.`cmt_object_id`"; 

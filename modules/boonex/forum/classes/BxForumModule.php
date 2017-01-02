@@ -250,7 +250,7 @@ class BxForumModule extends BxBaseModTextModule
 
         $aWhereGroupAnd = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
         if(!empty($aAutors) && is_array($aAutors))
-        	$aWhereGroupAnd['cnds'][] = array('fld' => 'author', 'val' => $aAutors, 'opr' => 'IN');
+        	$aWhereGroupAnd['cnds'][] = $this->_getSearchAuthorDescriptor($aAutors);
 
         if(!empty($iCategory))
         	$aWhereGroupAnd['cnds'][] = array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=');
@@ -477,6 +477,19 @@ class BxForumModule extends BxBaseModTextModule
 		$oGrid->setBrowseParams($aParams);
 
         return $oGrid->getCode($isDisplayHeader);
+    }
+
+    protected function _getSearchAuthorDescriptor($aAutor)
+    {
+        $aWhereGroupOr = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
+            array('fld' => 'author', 'val' => $aAutor, 'opr' => 'IN')
+        ));
+
+        $aEntriesIds = $this->_oDb->getComments(array('type' => 'entries_author_search', 'author' => $aAutor));
+		if(!empty($aEntriesIds) && is_array($aEntriesIds))
+			$aWhereGroupOr['cnds'][] = array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
+
+        return $aWhereGroupOr;
     }
 
     protected function _getSearchKeywordDescriptor($sKeyword)
