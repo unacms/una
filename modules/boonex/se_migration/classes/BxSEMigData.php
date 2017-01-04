@@ -67,9 +67,10 @@ class BxSEMigData
 	
 	protected function getContentId($iSEId){
 		$sQuery = $this -> _oDb -> prepare("SELECT `p`.`content_id` FROM  `sys_accounts` AS  `a` 
-																	LEFT JOIN  `sys_profiles` AS  `p` ON `a`.`id` =  `p`.`account_id` 
-																	WHERE  `se_id` =  ? AND  `p`.`type` =  'bx_persons' LIMIT 1", $iSEId);
-	    return $this -> _oDb -> getOne($sQuery);
+											LEFT JOIN  `sys_profiles` AS  `p` ON `a`.`id` =  `p`.`account_id` 
+											WHERE  `se_id` =  ? AND  `p`.`type` =  'bx_persons' LIMIT 1", $iSEId);
+											
+		return $this -> _oDb -> getOne($sQuery);
 	}
 }
    

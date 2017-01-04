@@ -19,10 +19,10 @@ class BxSEMigAlertsResponse extends BxBaseModTextAlertsResponse
 
     public function response($oAlert)
     {
-        parent::response($oAlert);
+        parent::response($oAlert);		
 		
-		if ('system' == $oAlert->sUnit && 'encrypt_password_after' == $oAlert->sAction)
-            BxDolService::call($this->MODULE, 'encrypt_password', array($oAlert));
+		if (('system' == $oAlert -> sUnit && 'encrypt_password_after' == $oAlert -> sAction) || ('account' == $oAlert -> sUnit && 'edited' == $oAlert -> sAction))
+						BxDolService::call($this -> MODULE, 'social_engine_response', array($oAlert));
     }
 }
 

@@ -132,6 +132,11 @@ class BxSEMigDb extends BxBaseModGeneralDb
 	public function encryptPassword($sPwd, $sSalt){
 		return md5($this -> getParam('se_migration_salt') . $sPwd. $sSalt);
    }
+   
+	public function updateSEId($iAccountId, $iVal = 0){
+		$sQuery = $this -> prepare("UPDATE `sys_accounts` SET `se_id` = ? WHERE `id` = ?", (int)$iVal, (int)$iAccountId);
+		return $this -> query($sQuery);
+	}	   
 }
 
 /** @} */
