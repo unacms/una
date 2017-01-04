@@ -59,12 +59,12 @@ class BxSEMigDb extends BxBaseModGeneralDb
 
                 // create new;
                 if( !$this -> getExtraParam($sName) ) {
-                    $sQuery = "INSERT INTO `{$this -> _sPrefix}config` SET `name` = '{$sName}', `value` = '{$mValue}'";
+                    $sQuery = $this -> prepare("INSERT INTO `{$this -> _sPrefix}config` SET `name` = ?, `value` = ?", $sName, $mValue);
                     $this -> query($sQuery);
                 }
                 else {
                 // update exsisting;
-                    $sQuery = "UPDATE `{$this -> _sPrefix}config` SET  `value` = '{$mValue}' WHERE `name` = '{$sName}'"; 
+                    $sQuery = $this -> prepare("UPDATE `{$this -> _sPrefix}config` SET  `value` = ? WHERE `name` = ?", $mValue, $sName);					
                     $this -> query($sQuery);
                 }
             }

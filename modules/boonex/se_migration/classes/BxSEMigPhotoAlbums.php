@@ -37,7 +37,7 @@ class BxSEMigPhotoAlbums extends BxSEMigData {
 		$aResult = $this -> _seDb -> getAll("SELECT * FROM `{$this -> _sEnginePrefix}album_albums` WHERE `type` = 'profile' ORDER BY `album_id`");
 		foreach($aResult as $iKey => $aValue){ 
 			
-			$iProfileId = $this -> getProfileId((int)$aValue['owner_id']);
+			$iProfileId = $this -> getContentId((int)$aValue['owner_id']);
 			if (!$iProfileId) continue;
 			
 			$sAlbumTitle = isset($aValue['title']) && $aValue['title'] ? $aValue['title'] : 'Profile Photos';

@@ -357,7 +357,9 @@ class BxSEDb {
     }
 		
 	public function isTableExists($sTable){
-		return !empty($this -> getRow("SHOW TABLES LIKE '" . $sTable . "'"));
+		$sQuery = $this -> prepare("SHOW TABLES LIKE ?", $sTable);
+		$aResult = $this -> getRow($sQuery);
+		return !empty($aResult);
    }
 
    public function getSEParam($sTable, $sName){
