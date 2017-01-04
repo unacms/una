@@ -135,7 +135,7 @@ class BxSEMigModule extends BxBaseModGeneralModule
 		}		
 		else if (isset($oAlert -> aExtras['action']) && $oAlert -> aExtras['action'] == 'forgot_password'){
 		// set 0 for se_id - it means now member's password is encrypted using standard algorithm
-			$this -> _oDb -> updateSEId($oAlert -> iObject, 0);
+			$this -> _oDb -> updateSEId($oAlert -> iObject);
 		}				
 	}
 }

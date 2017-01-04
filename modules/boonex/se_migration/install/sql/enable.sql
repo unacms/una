@@ -21,7 +21,7 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'encrypt_password_after', @iHandler),
-('account', 'edited', @iHandler);
+('account', 'edit', @iHandler);
 
 -- GRIDS:
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

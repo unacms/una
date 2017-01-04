@@ -21,7 +21,7 @@ class BxSEMigAlertsResponse extends BxBaseModTextAlertsResponse
     {
         parent::response($oAlert);		
 		
-		if (('system' == $oAlert -> sUnit && 'encrypt_password_after' == $oAlert -> sAction) || ('account' == $oAlert -> sUnit && 'edited' == $oAlert -> sAction))
+		if (('system' == $oAlert -> sUnit && 'encrypt_password_after' == $oAlert -> sAction) || ('account' == $oAlert -> sUnit && 'edit' == $oAlert -> sAction))
 						BxDolService::call($this -> MODULE, 'social_engine_response', array($oAlert));
     }
 }
