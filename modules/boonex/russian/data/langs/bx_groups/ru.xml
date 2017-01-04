@@ -191,7 +191,7 @@
 	<string name="_bx_groups_grid_filter_item_title_adm_pending"><![CDATA[В ожидании]]></string>
 	<string name="_bx_groups_grid_filter_item_title_adm_suspended"><![CDATA[Заблокированные]]></string>
 	<string name="_bx_groups_grid_column_title_adm_active"><![CDATA[Активные]]></string>
-    <string name="_bx_groups_grid_column_title_adm_group_name"><![CDATA[Название]]></string>
+    <string name="_bx_groups_grid_column_title_adm_name"><![CDATA[Название]]></string>
     <string name="_bx_groups_grid_column_title_adm_added"><![CDATA[Создание]]></string>
     <string name="_bx_groups_grid_column_title_adm_account"><![CDATA[Аккаунт]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
