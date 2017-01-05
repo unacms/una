@@ -3,16 +3,16 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Social Engine Migration
+ * @defgroup    SocialEngineMigration SocialEngine Migration
  * @ingroup     UnaModules
  *
  * @{
  */
 
 /** 
-* BxSEDb Class duplicate for connecting with Social Engine database
-* It allows to create two connections for different databases
-*/	
+ * BxSEDb Class duplicate for connecting with Social Engine database
+ * It allows to create two connections for different databases
+ */	
 class BxSEDb {
 	static $_rLink;
     static $_aDbCacheData;
