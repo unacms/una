@@ -3,8 +3,8 @@
 * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Developer Developer
- * @ingroup     TridentModules
+ * @defgroup    Social Engine Migration
+ * @ingroup     UnaModules
  *
  * @{
  */

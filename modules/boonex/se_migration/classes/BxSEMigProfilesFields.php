@@ -4,7 +4,7 @@
  * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    Social Engine Migration
- * @ingroup     TridentModules
+ * @ingroup     UnaModules
  *
  * @{
  */
