@@ -145,6 +145,24 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 		return BxDolService::call($this->_sActive, 'get_orders_count_new', $aSrvParams, 'Orders');
     }
 
+    public function getOrdersInfo($aConditions)
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_info', 'Orders'))
+    		return array();
+
+		$aSrvParams = array($aConditions);
+		return BxDolService::call($this->_sActive, 'get_orders_info', $aSrvParams, 'Orders');
+    }
+
+    public function getPendingOrdersInfo($aConditions)
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_pending_orders_info', 'Orders'))
+    		return array();
+
+		$aSrvParams = array($aConditions);
+		return BxDolService::call($this->_sActive, 'get_pending_orders_info', $aSrvParams, 'Orders');
+    }
+
     public function getCartUrl($iVendor = 0)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_url', 'Cart'))

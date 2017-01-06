@@ -1,5 +1,4 @@
-<?php use Symfony\Component\Finder\Tests\FakeAdapter\DummyAdapter;
-defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
@@ -150,7 +149,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
 		switch($aPending['type']) {
 			case BX_PAYMENT_TYPE_SINGLE:
-			    $oCustomer = $this->_retrieveCustomer($sCustomerId);
+			    $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_SINGLE, $sCustomerId);
 				$oCharge = $this->_retrieveCharge($sOrderId);
 				if($oCustomer === false || $oCharge === false)
 				    return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
@@ -168,7 +167,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 				break;
 
 			case BX_PAYMENT_TYPE_RECURRING:
-			    $oCustomer = $this->_retrieveCustomer($sCustomerId);
+			    $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
 				$oSubscription = $this->_retrieveSubscription($sCustomerId, $sOrderId);
 				if($oCustomer === false || $oSubscription === false)
 					return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
@@ -345,11 +344,11 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
             if(empty($aToken) || !is_array($aToken))
                 return $aResultError;
 
-            $aCard = $this->_createCard($sCustomerId, $aToken['id']);
+            $aCard = $this->_createCard(BX_PAYMENT_TYPE_RECURRING, $sCustomerId, $aToken['id']);
             if(empty($aCard) || !is_array($aCard))
                 return $aResultError;
 
-            $oCustomer = $this->_retrieveCustomer($sCustomerId);
+            $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
             if($oCustomer === false)
                 return $aResultError;
 
@@ -396,26 +395,42 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		return $oToken->jsonSerialize();
 	}
 
-	protected function _createCustomer($sToken, $aClient)
+	protected function _createCustomer($sType, $sToken, $aClient)
 	{
-		try {
-			$aClientParams = array(
-				'card'  => $sToken,
-				'email' => !empty($aClient['email']) ? $aClient['email'] : ''
-			);
+	    $oCustomer = null;
+	    $aCustomer = array(
+			'card' => $sToken,
+			'email' => !empty($aClient['email']) ? $aClient['email'] : ''
+		);
 
-			$this->_oCustomer = \Stripe\Customer::create($aClientParams);
+	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_customer', 0, $aClient['id'], array(
+	    	'type' => $sType,
+			'customer_object' => &$oCustomer, 
+			'customer_params' => &$aCustomer
+		));
+
+		try {
+			$this->_oCustomer = !empty($oCustomer) ? $oCustomer : \Stripe\Customer::create($aCustomer);
 		}
-		catch (Stripe\Error\Base $oException) {
+		catch (Exception $oException) {
 			return $this->_processException('Create Customer Error: ', $oException);
 		}
 
 		return $this->_oCustomer->jsonSerialize();
 	}
 
-	protected function _retrieveCustomer($sId) {
+	protected function _retrieveCustomer($sType, $sId)
+	{
+	    $oCustomer = null;
+	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, array(
+	    	'type' => $sType,
+	    	'customer_id' => &$sId,
+			'customer_object' => &$oCustomer
+		));
+
 		try {
-			$oCustomer = \Stripe\Customer::retrieve($sId);
+		    if(empty($oCustomer))
+			    $oCustomer = \Stripe\Customer::retrieve($sId);
 		}
 		catch (Exception $oException) {
 			return $this->_processException('Retrieve Customer Error: ', $oException);
@@ -426,26 +441,35 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
 	protected function _createCharge($sToken, $iPendingId, &$aClient, &$aCartInfo) {
 		if(empty($this->_oCustomer))
-			$this->_createCustomer($sToken, $aClient);
+			$this->_createCustomer(BX_PAYMENT_TYPE_SINGLE, $sToken, $aClient);
 
 		if(empty($this->_oCustomer))
 			return false;
 
 		$fAmount = 100 * (float)$aCartInfo['items_price'];
 
+		$oCharge = null;
+		$aCharge = array(
+			'customer' => $this->_oCustomer->id,
+			'amount' => $fAmount,
+			'currency' => $aCartInfo['vendor_currency_code'],
+			'description' => $aCartInfo['items_title'],
+			'metadata' => array(
+				'vendor' => $aCartInfo['vendor_id'],
+				'client' => $aClient['id'],
+				'product' => $iPendingId,
+				'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
+			)
+		);
+
+		bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_charge', $iPendingId, false, array(
+			'charge_object' => &$oCharge, 
+			'charge_params' => &$aCharge
+		));
+
 		try {
-			$oCharge = \Stripe\Charge::create(array(
-				'customer' => $this->_oCustomer->id,
-				'amount' => $fAmount,
-				'currency' => $aCartInfo['vendor_currency_code'],
-				'description' => $aCartInfo['items_title'],
-				'metadata' => array(
-					'vendor' => $aCartInfo['vendor_id'],
-					'client' => $aClient['id'],
-					'product' => $iPendingId,
-					'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
-				)
-			));
+		    if(empty($oCharge))
+			    $oCharge = \Stripe\Charge::create($aCharge);
 		}
 		catch (Exception $oException) {
 			return $this->_processException('Create Charge Error: ', $oException);
@@ -468,8 +492,15 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 	}
 
 	protected function _retrieveCharge($sId) {
+	    $oCharge = null;
+	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_charge', 0, false, array(
+	    	'charge_id' => &$sId,
+			'charge_object' => &$oCharge
+		));
+
 		try {
-			$oCharge = \Stripe\Charge::retrieve($sId);
+		    if(empty($oCharge))
+			    $oCharge = \Stripe\Charge::retrieve($sId);
 		}
 		catch (Exception $oException) {
 			return $this->_processException('Retrieve Charge Error: ', $oException);
@@ -481,28 +512,38 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 	protected function _createSubscription($sToken, $iPendingId, &$aClient, &$aCartInfo)
 	{
 		if(empty($this->_oCustomer))
-			$this->_createCustomer($sToken, $aClient);
+			$this->_createCustomer(BX_PAYMENT_TYPE_RECURRING, $sToken, $aClient);
 
 		if(empty($this->_oCustomer))
 			return false;
 
+		$aItem = array_shift($aCartInfo['items']);
+		if(empty($aItem) || !is_array($aItem))
+			return false;
+
+		$iTrial = $this->_oModule->_oConfig->getTrial(BX_PAYMENT_TYPE_RECURRING, $aItem);
+		$bTrial = !empty($iTrial);
+
+		$oSubscription = null;
+		$aSubscription = array(
+			'plan' => $aItem['name'],
+			'metadata' => array(
+				'vendor' => $aCartInfo['vendor_id'],
+				'client' => $aClient['id'],
+				'product' => $iPendingId,
+				'verification' => $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aItem['name'], $aCartInfo['vendor_currency_code'])
+			)
+		);
+
+		bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_subscription', $iPendingId, false, array(
+		    'customer' => &$this->_oCustomer,
+			'subscription_object' => &$oSubscription, 
+			'subscription_params' => &$aSubscription
+		));
+
 		try {
-			$aItem = array_shift($aCartInfo['items']);
-			if(empty($aItem) || !is_array($aItem))
-				return false;
-
-			$iTrial = $this->_oModule->_oConfig->getTrial(BX_PAYMENT_TYPE_RECURRING, $aItem);
-			$bTrial = !empty($iTrial);
-
-			$oSubscription = $this->_oCustomer->subscriptions->create(array(
-				'plan' => $aItem['name'],
-				'metadata' => array(
-					'vendor' => $aCartInfo['vendor_id'],
-					'client' => $aClient['id'],
-					'product' => $iPendingId,
-					'verification' => $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aItem['name'], $aCartInfo['vendor_currency_code'])
-				)
-			));
+             if(empty($oSubscription))
+    			$oSubscription = $this->_oCustomer->subscriptions->create($aSubscription);
 		}
 		catch (Exception $oException) {
 			return $this->_processException('Create Subscription Error: ', $oException);
@@ -528,7 +569,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 	protected function _retrieveSubscription($sCustomerId, $sSubscriptionId)
 	{
 		try {
-			$oCustomer = \Stripe\Customer::retrieve($sCustomerId);
+			$oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
 			$oSubscription = $oCustomer->subscriptions->retrieve($sSubscriptionId);
 		}
 		catch (Exception $oException) {
@@ -550,10 +591,10 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		return $oPlans;
 	}
 
-    protected function _createCard($sCustomerId, $sToken)
+    protected function _createCard($sType, $sCustomerId, $sToken)
 	{
 		try {
-			$oCard = $this->_retrieveCustomer($sCustomerId)->sources->create(array(
+			$oCard = $this->_retrieveCustomer($sType, $sCustomerId)->sources->create(array(
             	'source' => $sToken
             ));
 		}
@@ -765,13 +806,19 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     			$sClientEmail = $oClient->getAccountObject()->getEmail();
     	}
 
+    	$sPublicKey = '';
+    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
+			'type' => &$sType, 
+			'public_key' => &$sPublicKey
+		));
+
     	return $this->_oModule->_oTemplate->parseHtmlByName('strp_button_' . $sType . '.html', array(
     		'type' => $sType,
     		'caption' => _t($this->_sLangsPrefix . 'strp_txt_checkout_with_' . $sType, $this->_sCaption),
     		'js_object' => $this->_oModule->_oConfig->getJsObject($this->_sName),
     		'js_code' => $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
 	    		'sProvider' => $this->_sName,
-	    		'sPublicKey' => $this->_getPublicKey(),
+	    		'sPublicKey' => !empty($sPublicKey) ? $sPublicKey : $this->_getPublicKey(),
 	    		'sVendorName' => '',
 	    		'sVendorCurrency' => '',
 	    		'sVendorIcon' => '',

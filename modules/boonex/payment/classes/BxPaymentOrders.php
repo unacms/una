@@ -42,6 +42,50 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         );
     }
 
+    /**
+     * Check transaction(s) in database which satisty all conditions.
+     *
+     * @param array $aConditions an array of pears('key' => 'value'). Available keys are the following:
+     * a. license - internal license (string)
+     * b. client_id - client's ID (integer)
+     * c. seller_id - seller's ID (integer)
+     * d. module_id - modules's where the purchased product is located. (integer)
+     * e. item_id - item id in the database. (integer)
+     * f. date - the date when the payment was processed(UNIXTIME STAMP)
+     *
+     * @return array of transactions. Each transaction has full info(client ID, seller ID, external transaction ID, date and so on)
+     */
+    public function serviceGetOrdersInfo($aConditions)
+    {
+        if(empty($aConditions) || !is_array($aConditions))
+            return array();
+
+        return $this->_oModule->_oDb->getOrderProcessed(array('type' => 'mixed', 'conditions' => $aConditions));
+    }
+
+    /**
+     * Check pending transaction(s) in database which satisty all conditions.
+     *
+     * @param array $aConditions an array of pears('key' => 'value'). The most useful keys are the following:
+     * a. client_id - client's ID (integer)
+     * b. seller_id - seller's ID (integer)
+     * c. type - transaction type: single or recurring (string)
+     * d. amount - transaction amount (float)
+     * e. order - order ID received from payment provider (string)
+     * f. provider - payment provider name (string)
+     * g. date - the date when the payment was established(UNIXTIME STAMP)
+     * h. processed - whether the payment was processed or not (integer, 0 or 1)
+     *
+     * @return array of pending transactions. Each transaction has full info(client ID, seller ID, type, date and so on)
+     */
+    public function serviceGetPendingOrdersInfo($aConditions)
+    {
+        if(empty($aConditions) || !is_array($aConditions))
+            return array();
+
+        return $this->_oModule->_oDb->getOrderPending(array('type' => 'mixed', 'conditions' => $aConditions));
+    }
+
 	public function addOrder($aData)
     {
         $iSellerId = isset($aData['seller_id']) ? (int)$aData['seller_id'] : $this->_oModule->getProfileId();
