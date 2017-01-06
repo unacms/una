@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Social Engine Migration
+ * @defgroup    SocialEngineMigration SocialEngine Migration
  * @ingroup     UnaModules
  *
  * @{
@@ -128,11 +128,15 @@ class BxSEMigModule extends BxBaseModGeneralModule
 	* Returns Password Ecnrypted by Seocial Engine Rules
 	* @param object	
 	*/	
-	public function serviceEncryptPassword($oAlert){
+	public function serviceSocialEngineResponse($oAlert){
 		// if imported member tries to login set new hash for password
-		if (isset($oAlert -> aExtras['info']['se_id']) && (int)$oAlert -> aExtras['info']['se_id']){
+		if ($oAlert -> sAction == 'encrypt_password_after' && isset($oAlert -> aExtras['info']['se_id']) && (int)$oAlert -> aExtras['info']['se_id']){
 			$oAlert -> aExtras['password'] = $this -> _oDb -> encryptPassword($oAlert -> aExtras['pwd'], $oAlert -> aExtras['info']['salt']);
 		}		
+		else if (isset($oAlert -> aExtras['action']) && $oAlert -> aExtras['action'] == 'forgot_password'){
+		// set 0 for se_id - it means now member's password is encrypted using standard algorithm
+			$this -> _oDb -> updateSEId($oAlert -> iObject);
+		}				
 	}
 }
 

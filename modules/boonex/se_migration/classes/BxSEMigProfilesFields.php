@@ -3,8 +3,8 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Social Engine Migration
- * @ingroup     TridentModules
+ * @defgroup    SocialEngineMigration SocialEngine Migration
+ * @ingroup     UnaModules
  *
  * @{
  */
@@ -134,7 +134,7 @@ class BxSEMigProfilesFields extends BxSEMigData
             $aFields = $this -> _seDb -> getAll($sQuery);	
 		
 			foreach($aFields as $iKey => $aValue){
-               if (!($iProfileId =  $this -> getProfileId($aValue['user_id']))) continue;
+               if (!($iProfileId =  $this -> getContentId($aValue['user_id']))) continue;
 			   
 			   if (!empty($aValue['wp_data'])) $aValues = @unserialize($aValue['wp_data']);
 		       

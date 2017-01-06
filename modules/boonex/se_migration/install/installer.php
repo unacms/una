@@ -3,8 +3,8 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Protean Protean template
- * @ingroup     TridentModules
+ * @defgroup    SocialEngineMigration SocialEngine Migration
+ * @ingroup     UnaModules
  *
  * @{
  */

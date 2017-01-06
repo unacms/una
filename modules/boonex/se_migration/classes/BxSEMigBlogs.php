@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Social Engine Migration
+ * @defgroup    SocialEngineMigration SocialEngine Migration
  * @ingroup     UnaModules
  *
  * @{
@@ -33,7 +33,7 @@ class BxSEMigBlogs extends BxSEMigData {
 		
 		$iComments = 0;		
 		foreach($aResult as $iKey => $aValue){ 
-			$iProfileId = $this -> getProfileId((int)$aValue['owner_id']);			
+			$iProfileId = $this -> getContentId((int)$aValue['owner_id']);			
 			if (!$iProfileId || $this -> isBlogExisted($iProfileId, $aValue['title'])) continue;
 			
 			$sQuery = $this -> _oDb -> prepare( 
@@ -168,7 +168,7 @@ class BxSEMigBlogs extends BxSEMigData {
 		
 		$iComments = 0;
 		foreach($aComments as $iKey => $aComment){			
-			$iProfileId = $this -> getProfileId($aComment['poster_id']);
+			$iProfileId = $this -> getContentId($aComment['poster_id']);
 			$sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_posts_cmts` SET
 										`cmt_object_id`		= ?,
 										`cmt_author_id`		= ?,

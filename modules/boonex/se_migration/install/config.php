@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Social Engine Migration
+ * @defgroup    SocialEngineMigration SocialEngine Migration
  * @ingroup     UnaModules
  *
  * @{
@@ -15,7 +15,7 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_se_migration',
-    'title' => 'Social Engine Migration',
+    'title' => 'SocialEngine Migration',
     'note' => 'Migration Tool',
     'version' => '9.0.0',
     'vendor' => 'Boonex',

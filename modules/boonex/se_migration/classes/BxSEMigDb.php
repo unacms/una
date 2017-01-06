@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Social Engine Migration
+ * @defgroup    SocialEngineMigration SocialEngine Migration
  * @ingroup     UnaModules
  *
  * @{
@@ -59,12 +59,12 @@ class BxSEMigDb extends BxBaseModGeneralDb
 
                 // create new;
                 if( !$this -> getExtraParam($sName) ) {
-                    $sQuery = "INSERT INTO `{$this -> _sPrefix}config` SET `name` = '{$sName}', `value` = '{$mValue}'";
+                    $sQuery = $this -> prepare("INSERT INTO `{$this -> _sPrefix}config` SET `name` = ?, `value` = ?", $sName, $mValue);
                     $this -> query($sQuery);
                 }
                 else {
                 // update exsisting;
-                    $sQuery = "UPDATE `{$this -> _sPrefix}config` SET  `value` = '{$mValue}' WHERE `name` = '{$sName}'"; 
+                    $sQuery = $this -> prepare("UPDATE `{$this -> _sPrefix}config` SET  `value` = ? WHERE `name` = ?", $mValue, $sName);					
                     $this -> query($sQuery);
                 }
             }
@@ -132,6 +132,11 @@ class BxSEMigDb extends BxBaseModGeneralDb
 	public function encryptPassword($sPwd, $sSalt){
 		return md5($this -> getParam('se_migration_salt') . $sPwd. $sSalt);
    }
+   
+	public function updateSEId($iAccountId, $iVal = 0){
+		$sQuery = $this -> prepare("UPDATE `sys_accounts` SET `se_id` = ? WHERE `id` = ?", (int)$iVal, (int)$iAccountId);
+		return $this -> query($sQuery);
+	}	   
 }
 
 /** @} */
