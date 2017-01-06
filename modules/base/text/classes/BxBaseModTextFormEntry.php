@@ -14,6 +14,8 @@
  */
 class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 {
+    protected $_sGhostTemplate = 'form_ghost_template.html';
+
     public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
@@ -56,7 +58,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = $aValues['id'];
             }
 
-            $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $this->_getPhotoGhostTmplVars($aContentInfo));
+            $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getPhotoGhostTmplVars($aContentInfo));
         }
 
         return parent::initChecker($aValues, $aSpecificValues);
@@ -130,11 +132,11 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 			'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
 			'content_id' => $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
 			'editor_id' => $CNF['FIELD_TEXT_ID'],
-			'thumb_id' => isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
+			'thumb_id' => isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
 			'bx_if:set_thumb' => array (
 				'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),
 				'content' => array (
-					'name_thumb' => $CNF['FIELD_THUMB'],
+					'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
     				'txt_pict_use_as_thumb' => _t(!empty($CNF['T']['txt_pict_use_as_thumb']) ? $CNF['T']['txt_pict_use_as_thumb'] : '_sys_txt_form_entry_input_picture_use_as_thumb')
 				),
 			),

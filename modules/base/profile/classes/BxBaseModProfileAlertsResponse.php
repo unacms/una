@@ -79,7 +79,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
             $oAlert->aExtras['override_content'] = MsgBox(_t('_sys_access_denied_to_private_content'));
         }
 
-        if ($bDisableOwnerActions) {
+        if ($bDisableOwnerActions && isset($oAlert->aExtras['menu'])) {
             foreach ($oAlert->aExtras['menu'] as $i => $r) {
                 if ('timeline-view-owner' == $r['id'] || 'timeline-view-other'  == $r['id'])
                     unset($oAlert->aExtras['menu'][$i]);

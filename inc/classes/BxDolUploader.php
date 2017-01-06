@@ -327,7 +327,7 @@ abstract class BxDolUploader extends BxDolFactory
         foreach ($aGhosts as $aFile) {
             $sFileIcon = '';
 
-            if ($oImagesTranscoder && (0 === strncmp($aFile['mime_type'], 'image/', 6) || 0 === strncmp($aFile['mime_type'], 'video/', 6)))
+            if ($this->isUseTranscoderForPreview($oImagesTranscoder, $aFile))
                 $sFileIcon = $oImagesTranscoder->getFileUrl($aFile['id']);
 
             if (!$sFileIcon)
@@ -423,6 +423,20 @@ abstract class BxDolUploader extends BxDolFactory
     protected function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
     {
         return array();
+    }
+
+    protected function isUseTranscoderForPreview($oImagesTranscoder, $aFile)
+    {
+        if (!$oImagesTranscoder)
+            return false;
+        
+        if (0 === strncmp($aFile['mime_type'], 'image/', 6) && (is_a($oImagesTranscoder, 'BxDolTranscoderImage') || is_a($oImagesTranscoder, 'BxDolTranscoderProxy')))
+            return true;
+        
+        if (0 === strncmp($aFile['mime_type'], 'video/', 6) && (is_a($oImagesTranscoder, 'BxDolTranscoderVideo') || is_a($oImagesTranscoder, 'BxDolTranscoderProxy')))
+            return true;
+
+        return false;
     }
 }
 

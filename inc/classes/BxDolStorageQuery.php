@@ -55,14 +55,20 @@ class BxDolStorageQuery extends BxDolDb
         return $this->getOne($sQuery);
     }
 
+    public function getIconFontByExt($sExt)
+    {
+        $sQuery = $this->prepare("SELECT `icon_font` FROM `sys_storage_mime_types` WHERE `ext` = ?", $sExt);
+        return $this->getOne($sQuery);
+    }
+    
     public function clearAllMimeTypes()
     {
         return $this->query("TRUNCATE TABLE `sys_storage_mime_types`");
     }
 
-    public function addMimeType($sMimeType, $sExt, $sIcon = '')
+    public function addMimeType($sMimeType, $sExt, $sIcon = '', $sIconFont = '')
     {
-        $sQuery = $this->prepare("INSERT IGNORE INTO `sys_storage_mime_types` SET `ext` = ?, `mime_type` = ?, `icon` = ?", $sExt, $sMimeType, $sIcon);
+        $sQuery = $this->prepare("INSERT IGNORE INTO `sys_storage_mime_types` SET `ext` = ?, `mime_type` = ?, `icon` = ?, `icon_font` = ?", $sExt, $sMimeType, $sIcon, $sIconFont);
         return $this->query($sQuery);
     }
 

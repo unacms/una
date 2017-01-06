@@ -54,6 +54,7 @@ define('BX_DOL_STORAGE_ERR_ENGINE_GET', 5004); ///< some other error during file
 define('BX_DOL_STORAGE_DEFAULT_MIME_TYPE', 'octet/stream'); ///< default mime type if it is not find by extension
 
 define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.png'); ///< default icon if no other icon can be determined by file extension
+define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'file-o'); ///< default font icon if no other icon can be determined by file extension
 
 define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
 
@@ -813,6 +814,19 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     {
         $sResult = '';
 
+        $aIconsFont = array (
+            'file-pdf-o' => array('pdf'),
+            'file-word-o' => array('doc', 'docx'),
+            'file-excel-o' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
+            'file-powerpoint-o' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
+            'file-code-o' => array('1st', 'aspx', 'asp', 'json', 'js', 'jsp', 'java', 'php', 'xml', 'rdf', 'xsd', 'xsl', 'xslt', 'sax', 'rss', 'cfm', 'js', 'asm', 'pl', 'prl', 'bas', 'b', 'vbs', 'fs', 'src', 'cs', 'ws', 'cgi', 'bat', 'py', 'c', 'cpp', 'cc', 'cp', 'h', 'hh', 'cxx', 'hxx', 'c++', 'm', 'lua', 'swift', 'sh', 'as', 'cob', 'tpl', 'lsp', 'x', 'cmd', 'rb', 'cbl', 'pas', 'pp', 'vb', 'f', 'perl', 'jl', 'lol', 'bal', 'pli', 'css', 'less', 'sass', 'saas', 'bcc', 'coffee', 'jade', 'j', 'tea', 'c#', 'sas', 'diff', 'pro', 'for', 'sh', 'bsh', 'bash', 'twig', 'csh', 'lisp', 'lsp', 'cobol', 'pl', 'd', 'git', 'rb', 'hrl', 'cr', 'inp', 'a', 'go', 'as3', 'm', 'sql'),
+            'file-image-o' => 'image/',
+            'file-video-o' => 'video/',
+            'file-audio-o' => 'audio/',
+            'file-text-o' => 'text/',
+            'file-archive-o' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'),
+        );
+        
         $aIcons = array (
             'mime-type-psd.png' => array('psd'),
             'mime-type-png.png' => array('png'),
@@ -845,15 +859,10 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             $aExts = preg_split ("/[\s]+/", $a[1]);
 
             foreach ($aExts as $sExt) {
-                $sIcon = '';
-                foreach ($aIcons as $sIc => $if) {
-                    if (!(is_array($if) && in_array($sExt, $if)) && !(is_string($if) && 0 === strncmp($if, $sMimeType, strlen($if))))
-                        continue;
-                    $sIcon = $sIc;
-                    break;
-                }
+                $sIcon = $this->determineIcon($aIcons, $sExt, $sMimeType);
+                $sIconFont = $this->determineIcon($aIconsFont, $sExt, $sMimeType);
 
-                if (!$this->_oDb->addMimeType($sMimeType, $sExt, $sIcon))
+                if (!$this->_oDb->addMimeType($sMimeType, $sExt, $sIcon, $sIconFont))
                     $sResult .= _t('_Error') . ': ' . $sMimeType . "\t" . $sExt . "\n";
             }
         }
@@ -864,6 +873,16 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             $sResult = _t('_Success');
 
         return $sResult;
+    }
+
+    protected function determineIcon($aIcons, $sExt, $sMimeType)
+    {
+        foreach ($aIcons as $sIc => $if) {
+            if (!(is_array($if) && in_array($sExt, $if)) && !(is_string($if) && 0 === strncmp($if, $sMimeType, strlen($if))))
+                continue;
+            return $sIc;
+        }
+        return false;
     }
 
     /**
@@ -916,6 +935,21 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         return $sIcon;
     }
 
+    /**
+     * Get file font icon by file name.
+     * Actually just a class name of icon is returnted.
+     * @param $sFileName file name
+     * @return file icon string
+     */
+    public function getFontIconNameByFileName ($sFileName)
+    {
+        $sExt = $this->getFileExt($sFileName);
+        $sIcon = $this->_oDb->getIconFontByExt($sExt);
+        if (!$sIcon)
+            $sIcon = BX_DOL_STORAGE_DEFAULT_ICON_FONT;
+        return $sIcon;
+    }
+    
     // ------------ internal functions - events
 
     protected function onBeforeFileAdd ($aFileInfo)
