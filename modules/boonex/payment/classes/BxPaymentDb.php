@@ -217,6 +217,12 @@ class BxPaymentDb extends BxBaseModPaymentDb
             	$sWhereClause = " AND `order`=:order";
                 $sLimitClause = " LIMIT 1";
                 break;
+
+            case 'mixed':
+                $aMethod['name'] = 'getAll';
+
+                $sWhereClause = ' AND ' . $this->arrayToSQL($aParams['conditions'], ' AND ');
+                break;
         }
 
         $aMethod['params'][0] = "SELECT * FROM `" . $this->_sPrefix . "transactions_pending` WHERE 1 " . $sWhereClause . $sLimitClause;
@@ -301,10 +307,8 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
             case 'mixed':
                 $aMethod['name'] = 'getAll';
-                $aMethod['params'][1] = $aParams['conditions'];
 
-                foreach($aParams['conditions'] as $sKey => $sValue)
-                    $sWhereClause .= " AND `tt`.`" . $sKey . "`=:" . $sKey;
+                $sWhereClause = ' AND ' . $this->arrayToSQL($aParams['conditions'], ' AND ');
                 break;
 
         }

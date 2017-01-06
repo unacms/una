@@ -58,8 +58,8 @@ define('BX_PAYMENT_RESULT_SUCCESS', 0);
  * BxDolService::call('payment', 'get_add_to_cart_link', array($iSellerId, $mixedModuleId, $iItemId, $iItemCount));
  *
  * Check transaction(s) in database which satisty all conditions.
- * @see BxPmtModule::serviceGetTransactionsInfo
- * BxDolService::call('payment', 'get_transactions_info', array($aConditions));
+ * @see BxPmtModule::serviceGetOrdersInfo
+ * BxDolService::call('payment', 'get_orders_info', array($aConditions), 'Orders');
  *
  * Get total count of items in Shopping Cart.
  * @see BxPmtModule::serviceGetCartItemsCount
@@ -206,25 +206,6 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         return $aResult;
     }
-
-    /**
-     * Check transaction(s) in database which satisty all conditions.
-     *
-     * @param array $aConditions an array of pears('key' => 'value'). Available keys are the following:
-     * a. license - internal license (string)
-     * b. client_id - client's ID (integer)
-     * c. seller_id - seller's ID (integer)
-     * d. module_id - modules's where the purchased product is located. (integer)
-     * e. item_id - item id in the database. (integer)
-     * f. date - the date when the payment was processed(UNIXTIME STAMP)
-     *
-     * @return array of transactions. Each transaction has full info(client ID, seller ID, external transaction ID, date and so on)
-     */
-    public function serviceGetTransactionsInfo($aConditions)
-    {
-        return $this->_oDb->getOrderProcessed(array('type' => 'mixed', 'conditions' => $aConditions));
-    }
-
 
     /**
      * Cart Processing Methods
