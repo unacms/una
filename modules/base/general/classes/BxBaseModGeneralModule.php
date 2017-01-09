@@ -642,6 +642,8 @@ class BxBaseModGeneralModule extends BxDolModule
         	'email' => $oAccount->getEmail(),
             'link' => $oProfile->getUrl(),
             'icon' => $oProfile->getIcon(),
+        	'thumb' => $oProfile->getThumb(),
+        	'avatar' => $oProfile->getAvatar(),
             'unit' => $oProfile->getUnit(),
         	'active' => $oProfile->isActive(),
         );
