@@ -23,7 +23,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_stripe_connect_pmode_single', 'direct', @iCategId, '_bx_stripe_connect_option_pmode_single', 'select', '', '', 90, 'a:2:{s:6:"module";s:17:"bx_stripe_connect";s:6:"method";s:24:"get_options_pmode_single";}'),
 ('bx_stripe_connect_fee_single', '', @iCategId, '_bx_stripe_connect_option_fee_single', 'digit', '', '', 100, ''),
 ('bx_stripe_connect_pmode_recurring', 'direct', @iCategId, '_bx_stripe_connect_option_pmode_recurring', 'select', '', '', 110, 'a:2:{s:6:"module";s:17:"bx_stripe_connect";s:6:"method";s:27:"get_options_pmode_recurring";}'),
-('bx_stripe_connect_fee_recurring', '', @iCategId, '_bx_stripe_connect_option_fee_recurring', 'digit', '', '', 120, '');
+('bx_stripe_connect_fee_recurring', '', @iCategId, '_bx_stripe_connect_option_fee_recurring', 'digit', '', '', 120, ''),
+('bx_stripe_connect_redirect_url', '', @iCategId, '_bx_stripe_connect_option_redirect_url', 'value', '', '', 130, '');
 
 
 -- PAGE: result

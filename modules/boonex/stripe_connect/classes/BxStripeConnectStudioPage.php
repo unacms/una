@@ -1,13 +1,15 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    StripeConnect Stripe Connect
  * @ingroup     TridentModules
  *
  * @{
  */
+
+require_once('BxStripeConnectStudioSettings.php');
 
 define('BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS', 'accounts');
 
@@ -24,6 +26,15 @@ class BxStripeConnectStudioPage extends BxTemplStudioModule
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS, 'icon' => 'users', 'title' => '_bx_stripe_connect_menu_item_title_accounts');
+    }
+
+    protected function getSettings()
+    {
+        $oPage = new BxStripeConnectStudioSettings($this->sModule);
+
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', array(
+            'content' => $oPage->getPageCode(),
+        ));
     }
 
 	protected function getAccounts()

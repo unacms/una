@@ -21,7 +21,7 @@
     <string name="_bx_stripe_connect_option_pmode_direct"><![CDATA[Direct]]></string>
     <string name="_bx_stripe_connect_option_pmode_platform"><![CDATA[Platform]]></string>
     <string name="_bx_stripe_connect_option_fee_recurring"><![CDATA[Subscription fee (percent only)]]></string>
-    
+    <string name="_bx_stripe_connect_option_redirect_url"><![CDATA[Redirect URL]]></string>  
 
 	<!-- PAGES and BLOCKS -->
 	<string name="_bx_stripe_connect_page_title_sys_result"><![CDATA[Stripe Connect Results]]></string>

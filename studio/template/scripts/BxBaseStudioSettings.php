@@ -497,7 +497,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
     	$sMethod = 'getCustomValue' . bx_gen_method_name(trim(str_replace($this->sType, '', $aItem['name']), '_'));
     	if(method_exists($this, $sMethod))
-    	    $mixedValue = $this->$sMethod($aItem);
+    	    $mixedValue = $this->$sMethod($aItem, $mixedValue);
 
     	$aAttributes = array();
     	if($this->isReadOnly())
