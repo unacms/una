@@ -201,6 +201,29 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_menu_main_font_weight'), '_bx_protean_stg_cpt_option_menu_main_font_weight', '700', 'digit', '', '', '', 15);
 
 
+-- SETTINGS: Protean template Styles Account Menu
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
+(@iTypeId, CONCAT(@sName, '_styles_menu_account'), '_bx_protean_stg_cpt_category_styles_menu_account', 95);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, CONCAT(@sName, '_menu_account_bg_color'), '_bx_protean_stg_cpt_option_menu_account_bg_color', 'rgba(255, 255, 255, 0.9)', 'rgba', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_menu_account_bg_image'), '_bx_protean_stg_cpt_option_menu_account_bg_image', '', 'image', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_menu_account_bg_image_repeat'), '_bx_protean_stg_cpt_option_menu_account_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_menu_account_bg_image_size'), '_bx_protean_stg_cpt_option_menu_account_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_menu_account_content_padding'), '_bx_protean_stg_cpt_option_menu_account_content_padding', '0px', 'digit', '', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_menu_account_border_color'), '_bx_protean_stg_cpt_option_menu_account_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_menu_account_border_size'), '_bx_protean_stg_cpt_option_menu_account_border_size', '0px', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_menu_account_shadow'), '_bx_protean_stg_cpt_option_menu_account_shadow', 'none', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_menu_account_font_family'), '_bx_protean_stg_cpt_option_menu_account_font_family', 'Arial, sans-serif', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_menu_account_font_size'), '_bx_protean_stg_cpt_option_menu_account_font_size', '1rem', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_menu_account_font_color'), '_bx_protean_stg_cpt_option_menu_account_font_color', 'rgba(40, 50, 60, 0.8)', 'rgba', '', '', '', 11),
+(@iCategoryId, CONCAT(@sName, '_menu_account_font_color_hover'), '_bx_protean_stg_cpt_option_menu_account_font_color_hover', 'rgba(40, 50, 60, 0.9)', 'rgba', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_menu_account_font_color_active'), '_bx_protean_stg_cpt_option_menu_account_font_color_active', 'rgba(20, 30, 40, 1)', 'rgba', '', '', '', 13),
+(@iCategoryId, CONCAT(@sName, '_menu_account_font_shadow'), '_bx_protean_stg_cpt_option_menu_account_font_shadow', 'none', 'digit', '', '', '', 14),
+(@iCategoryId, CONCAT(@sName, '_menu_account_font_weight'), '_bx_protean_stg_cpt_option_menu_account_font_weight', '400', 'digit', '', '', '', 15);
+
+
 -- SETTINGS: Protean template Styles Page Menu
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
 (@iTypeId, CONCAT(@sName, '_styles_menu_page'), '_bx_protean_stg_cpt_category_styles_menu_page', 100);
@@ -540,6 +563,21 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_menu_main_font_color_active', @iMixId, 'rgba(0, 0, 0, 1)'),
 ('bx_protean_menu_main_font_shadow', @iMixId, 'none'),
 ('bx_protean_menu_main_font_weight', @iMixId, '400'),
+('bx_protean_menu_account_bg_color', @iMixId, 'rgba(255, 255, 255, 0.9)'),
+('bx_protean_menu_account_bg_image', @iMixId, '0'),
+('bx_protean_menu_account_bg_image_repeat', @iMixId, 'no-repeat'),
+('bx_protean_menu_account_bg_image_size', @iMixId, 'cover'),
+('bx_protean_menu_account_content_padding', @iMixId, '0px'),
+('bx_protean_menu_account_border_color', @iMixId, 'rgba(208, 208, 208, 1)'),
+('bx_protean_menu_account_border_size', @iMixId, '0px'),
+('bx_protean_menu_account_shadow', @iMixId, 'none'),
+('bx_protean_menu_account_font_family', @iMixId, '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif'),
+('bx_protean_menu_account_font_size', @iMixId, '1.0rem'),
+('bx_protean_menu_account_font_color', @iMixId, 'rgba(62, 134, 133, 1)'),
+('bx_protean_menu_account_font_color_hover', @iMixId, 'rgba(62, 134, 133, 1)'),
+('bx_protean_menu_account_font_color_active', @iMixId, 'rgba(0, 0, 0, 1)'),
+('bx_protean_menu_account_font_shadow', @iMixId, 'none'),
+('bx_protean_menu_account_font_weight', @iMixId, '400'),
 ('bx_protean_menu_page_font_family', @iMixId, '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif'),
 ('bx_protean_menu_page_font_size', @iMixId, '1.2rem'),
 ('bx_protean_menu_page_font_color', @iMixId, 'rgba(62, 134, 133, 1)'),

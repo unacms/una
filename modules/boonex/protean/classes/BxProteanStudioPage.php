@@ -42,6 +42,7 @@ class BxProteanStudioPage extends BxTemplStudioDesign
 			$sPrefix . '_styles_card',
 			$sPrefix . '_styles_popup',
 			$sPrefix . '_styles_menu_main',
+			$sPrefix . '_styles_menu_account',
 			$sPrefix . '_styles_menu_page',
 			$sPrefix . '_styles_menu_slide',
 			$sPrefix . '_styles_form',
