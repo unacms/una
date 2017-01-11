@@ -109,6 +109,7 @@
 	<string name="_bx_payment_grid_action_title_sbs_view_order"><![CDATA[View]]></string>
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Continue]]></string>
+	<string name="_bx_payment_grid_action_title_crt_checkout"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Delete]]></string>
 
     <string name="_bx_payment_popup_title_ods_order_subscription_view"><![CDATA[Subscription]]></string>

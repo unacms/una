@@ -53,7 +53,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	if(empty($iSellerId))
     		return MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']));
 
-		$aSeller = $this->_oModule->getProfileInfo();
+		$aSeller = $this->_oModule->getProfileInfo($iSellerId);
         return array(
         	'title' => _t($CNF['T']['BLOCK_TITLE_CART'], $aSeller['name']),
         	'content' => $this->_oModule->_oTemplate->displayBlockCart($iUserId, $iSellerId)
@@ -199,11 +199,23 @@ class BxPaymentCart extends BxBaseModPaymentCart
      */
     protected function _getInfo($sType, $iClientId, $iSellerId, $aItems)
     {
+        $bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
+
         $iItemsCount = 0;
         $fItemsPrice = 0;
         $aItemsInfo = array();
         foreach($aItems as $aItem) {
             $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id']));
+            if(empty($aItemInfo) || !is_array($aItemInfo)) {
+                if($bTypeSingle) {
+                    $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
+                    $sCartItems = trim(preg_replace("'" . $this->_oModule->_oConfig->descriptorA2S($aItem) . ":?'", "", $sCartItems), ":");
+                    $this->_oModule->_oDb->setCartItems($iClientId, $sCartItems);
+                }
+
+                continue;
+            }
+
             $aItemInfo['module_id'] = (int)$aItem['module_id'];
             $aItemInfo['quantity'] = (int)$aItem['item_count'];
 
