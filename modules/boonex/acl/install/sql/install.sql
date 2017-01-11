@@ -96,7 +96,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_acl_administration', 'bulk', 'delete', '_bx_acl_grid_action_delete', '', 0, 1, 1),
 
 ('bx_acl_view', 'single', 'buy', '_bx_acl_grid_action_buy', 'cart-plus', 0, 0, 1),
-('bx_acl_view', 'single', 'subscribe', '_bx_acl_grid_action_subscribe', 'money', 0, 0, 2);
+('bx_acl_view', 'single', 'subscribe', '_bx_acl_grid_action_subscribe', 'credit-card', 0, 0, 2);
 
 
 -- STUDIO PAGE & WIDGET
