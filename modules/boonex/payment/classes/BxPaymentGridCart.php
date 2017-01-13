@@ -61,6 +61,11 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
         return parent::_getCellDefault($this->_sCurrencySign . $mixedValue, $sKey, $aField, $aRow);
     }
 
+    protected function _getActionCheckout ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        return '';
+    }
+
     protected function _getActions ($sType, $sActionData = false, $isSmall = false, $isDisabled = false, $isPermanentState = false, $aRow = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -72,7 +77,7 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     		$aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($this->_aQueryAppend['seller_id']);
     		foreach($aProviders as $aProvider) {
 				$sAction = $this->_getActionDefault($sType, $sActionName, array(
-					'title'=> _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name']),
+					'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
 	    			'icon' => '',
 					'icon_only' => 0,
 	    			'confirm' => 0,

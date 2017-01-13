@@ -495,6 +495,10 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     {
     	$mixedValue = isset($aItems2Mixes[$aItem['name']]) ? $aItems2Mixes[$aItem['name']] : $aItem['value'];
 
+    	$sMethod = 'getCustomValue' . bx_gen_method_name(trim(str_replace($this->sType, '', $aItem['name']), '_'));
+    	if(method_exists($this, $sMethod))
+    	    $mixedValue = $this->$sMethod($aItem, $mixedValue);
+
     	$aAttributes = array();
     	if($this->isReadOnly())
 	    	$aAttributes = array_merge($aAttributes, array(
@@ -503,6 +507,20 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
         $aField = array();
         switch($aItem['type']) {
+            case 'value':
+                $aField = array(
+                    'type' => 'text',
+                    'name' => $aItem['name'],
+                    'caption' => _t($aItem['caption']),
+                    'value' => $mixedValue,
+                	'attrs' => array_merge($aAttributes, array(
+                    	'readonly' => 'readonly'
+                    )),
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                );
+                break;
             case 'digit':
                 $aField = array(
                     'type' => 'text',

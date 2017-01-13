@@ -380,31 +380,25 @@ body > .bx-popup-wrapper {
 }
 
 .bx-loading-ajax-btn {
+	position: relative;
     display: inline-block;
+
     vertical-align: top;
 
     margin-left: 5px;
 }
 
-.bx-btn .bx-loading-ajax-btn,
-.bx-btn .bx-loading-ajax-btn svg {
-	width: 30px;
-    height: 30px;
-}
-.bx-btn .bx-loading-ajax-btn {
-	margin-top: 5px;
-	margin-bottom: 5px;
+@-moz-document url-prefix() {
+	button.bx-btn .bx-loading-ajax-btn {
+		top: -1px;
+	}
 }
 
-.bx-btn.bx-btn-small .bx-loading-ajax-btn,
-.bx-btn.bx-btn-small .bx-loading-ajax-btn svg {
-	width: 20px;
-    height: 20px;
+button.bx-btn:focus,
+button.bx-btn:focus .bx-loading-ajax-btn {
+    outline: 0;	
 }
-.bx-btn.bx-btn-small .bx-loading-ajax-btn {
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
+
 
 /* --------------- SVG loading indicator */
 svg .outer, 

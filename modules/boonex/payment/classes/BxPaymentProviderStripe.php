@@ -205,13 +205,15 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
     public function getButtonSingle($iClientId, $iVendorId, $aParams = array())
     {
-    	$aItems = array();
-    	$aCartInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, (int)$iVendorId, $aItems);
+        $aItems = array();
+        $aCartInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, (int)$iVendorId, $aItems);
+        if(empty($aCartInfo) || !is_array($aCartInfo))
+            return '';
 
     	return $this->_getButton(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iVendorId, array_merge($aParams, array(
 			'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aCartInfo['vendor_name']),
 			'sVendorCurrency' => $aCartInfo['vendor_currency_code'],
-			'sVendorIcon' => $aCartInfo['vendor_icon'],
+			'sVendorIcon' => $aCartInfo['vendor_avatar'],
     	)));
     }
 

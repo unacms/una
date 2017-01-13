@@ -200,9 +200,11 @@ function showPopupAnyHtml(sUrl, sId) {
     );
 }
 
-function bx_loading_svg(sType) {
+function bx_loading_svg(sType, sClass) {
+	sClass = sClass != undefined && sClass.length > 0 ? sClass : '';
+
 	var s = '';
-	s += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 520 520" style="enable-background:new 0 0 520 520;" xml:space="preserve">';
+	s += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 520 520" class="' + sClass + '" style="enable-background:new 0 0 520 520;" xml:space="preserve">';
 	s += '<g class="' + sType + '">';
 	s += '<g class="inner">';
 	s += '<path class="p1" d="M152,260C152,260,152,260,152,260c0-59.8,48.4-108.4,108.1-108.4c43.3,0,80.9,25.6,97.9,62.4V107.3c-28-18.3-61.9-28.9-98.1-28.9C159.8,78.4,78.6,159.9,78.6,260c0,59.5,28.4,112.4,73.4,145.6V260z"/>';
@@ -237,7 +239,7 @@ function bx_loading_btn (oElement, bEnable) {
     if(!bEnable)
     	oButton.find('.bx-loading-ajax-btn').remove();
     else if (!oButton.find('.bx-loading-ajax-btn').length)
-    	oButton.append('<b class="bx-loading-ajax-btn">' + (bUseSvg ? bx_loading_svg('colored') : '') + '</b>');
+    	oButton.append('<b class="bx-loading-ajax-btn bx-btn-height">' + (bUseSvg ? bx_loading_svg('colored', 'bx-btn-height') : '') + '</b>');
 
     if(!bUseSvg)
     	bx_loading_animate(oButton.find('.bx-loading-ajax-btn'), aSpinnerSmallOpts);    
