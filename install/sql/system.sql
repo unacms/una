@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
@@ -38,6 +38,29 @@ CREATE TABLE `sys_objects_editor` (
 
 INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
 ('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', '');
+
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `sys_objects_file_handlers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object` varchar(64) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `preg_ext` text NOT NULL,
+  `active` tinyint(4) NOT NULL,
+  `order` int(11) NOT NULL,
+  `override_class_name` varchar(255) NOT NULL,
+  `override_class_file` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object` (`object`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+INSERT INTO `sys_objects_file_handlers` (`object`, `title`, `preg_ext`, `active`, `order`, `override_class_name`, `override_class_file`) VALUES
+('sys_ms_viewer', '_sys_file_handlers_ms_viewer', '/\\.(doc|docx|xls|xlsx|ppt|pptx)$/', 1, 1, 'BxTemplFileHandlerMsViewer', ''),
+('sys_google_viewer', '_sys_file_handlers_google_viewer', '/\\.(pdf|doc|docx|xls|xlsx|ppt|pptx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps|tif|tiff|zip|rar)$/', 1, 2, 'BxTemplFileHandlerGoogleViewer', ''),
+('sys_images_viewer', '_sys_file_handlers_images_viewer', '/\\.(jpg|jpeg|png|gif|webp)$/', 1, 3, 'BxTemplFileHandlerImagesViewer', ''),
+('sys_code_viewer', '_sys_file_handlers_code_viewer', '/\\.(1st|aspx|asp|json|js|jsp|java|php|xml|html|htm|rdf|xsd|xsl|xslt|sax|rss|cfm|js|asm|pl|prl|bas|b|vbs|fs|src|cs|ws|cgi|bat|py|c|cpp|cc|cp|h|hh|cxx|hxx|c++|m|lua|swift|sh|as|cob|tpl|lsp|x|cmd|rb|cbl|pas|pp|vb|f|perl|jl|lol|bal|pli|css|less|sass|saas|bcc|coffee|jade|j|tea|c#|sas|diff|pro|for|sh|bsh|bash|twig|csh|lisp|lsp|cobol|pl|d|git|rb|hrl|cr|inp|a|go|as3|m|sql)$/', 1, 4, 'BxTemplFileHandlerCodeViewer', '');
 
 
 -- --------------------------------------------------------
@@ -1357,6 +1380,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_mime_types` (
   PRIMARY KEY (`ext`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
 INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('ez', 'application/andrew-inset', '', ''),
 ('aw', 'application/applixware', '', ''),
@@ -1402,7 +1426,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('nb', 'application/mathematica', '', ''),
 ('mb', 'application/mathematica', '', ''),
 ('mathml', 'application/mathml+xml', '', ''),
-('mbox', 'application/mbox', '', ''),
+('mbox', 'application/mbox', '', 'file-code-o'),
 ('mscml', 'application/mediaservercontrol+xml', '', ''),
 ('metalink', 'application/metalink+xml', '', ''),
 ('meta4', 'application/metalink4+xml', '', ''),
@@ -1438,9 +1462,9 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('oxps', 'application/oxps', '', ''),
 ('xer', 'application/patch-ops-error+xml', '', ''),
 ('pdf', 'application/pdf', 'mime-type-document.png', 'file-pdf-o'),
-('pgp', 'application/pgp-encrypted', '', ''),
-('asc', 'application/pgp-signature', '', ''),
-('sig', 'application/pgp-signature', '', ''),
+('pgp', 'application/pgp-encrypted', '', 'file-code-o'),
+('asc', 'application/pgp-signature', '', 'file-code-o'),
+('sig', 'application/pgp-signature', '', 'file-code-o'),
 ('prf', 'application/pics-rules', '', ''),
 ('p10', 'application/pkcs10', 'mime-type-vector.png', ''),
 ('p7m', 'application/pkcs7-mime', '', ''),
@@ -1481,7 +1505,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('shf', 'application/shf+xml', '', ''),
 ('smi', 'application/smil+xml', '', ''),
 ('smil', 'application/smil+xml', '', ''),
-('rq', 'application/sparql-query', '', ''),
+('rq', 'application/sparql-query', '', 'file-code-o'),
 ('srx', 'application/sparql-results+xml', '', ''),
 ('gram', 'application/srgs', '', ''),
 ('grxml', 'application/srgs+xml', '', ''),
@@ -1570,7 +1594,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('dfac', 'application/vnd.dreamfactory', '', ''),
 ('kpxx', 'application/vnd.ds-keypoint', '', ''),
 ('ait', 'application/vnd.dvb.ait', 'mime-type-vector.png', ''),
-('svc', 'application/vnd.dvb.service', '', ''),
+('svc', 'application/vnd.dvb.service', '', '');
+INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('geo', 'application/vnd.dynageo', '', ''),
 ('mag', 'application/vnd.ecowin.chart', '', ''),
 ('nml', 'application/vnd.enliven', '', ''),
@@ -1769,7 +1794,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('otc', 'application/vnd.oasis.opendocument.chart-template', '', ''),
 ('odb', 'application/vnd.oasis.opendocument.database', '', ''),
 ('odf', 'application/vnd.oasis.opendocument.formula', '', ''),
-('odft', 'application/vnd.oasis.opendocument.formula-template', '', ''),
+('odft', 'application/vnd.oasis.opendocument.formula-template', '', '');
+INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('odg', 'application/vnd.oasis.opendocument.graphics', 'mime-type-vector.png', ''),
 ('otg', 'application/vnd.oasis.opendocument.graphics-template', '', ''),
 ('odi', 'application/vnd.oasis.opendocument.image', '', ''),
@@ -1952,7 +1978,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('dxr', 'application/x-director', '', ''),
 ('cst', 'application/x-director', '', ''),
 ('cct', 'application/x-director', '', ''),
-('cxt', 'application/x-director', '', ''),
+('cxt', 'application/x-director', '', '');
+INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('w3d', 'application/x-director', '', ''),
 ('fgd', 'application/x-director', '', ''),
 ('swa', 'application/x-director', '', ''),
@@ -2032,7 +2059,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('shar', 'application/x-shar', '', ''),
 ('swf', 'application/x-shockwave-flash', '', ''),
 ('xap', 'application/x-silverlight-app', '', ''),
-('sql', 'application/x-sql', '', 'file-code-o'),
+('sql', 'text/x-sql', '', 'file-code-o'),
 ('sit', 'application/x-stuffit', '', ''),
 ('sitx', 'application/x-stuffitx', '', ''),
 ('srt', 'application/x-subrip', '', ''),
@@ -2066,11 +2093,11 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('xaml', 'application/xaml+xml', '', ''),
 ('xdf', 'application/xcap-diff+xml', '', ''),
 ('xenc', 'application/xenc+xml', '', ''),
-('xhtml', 'application/xhtml+xml', '', ''),
+('xhtml', 'application/xhtml+xml', '', 'file-code-o'),
 ('xht', 'application/xhtml+xml', '', ''),
 ('xml', 'application/xml', '', 'file-code-o'),
 ('xsl', 'application/xml', '', 'file-code-o'),
-('dtd', 'application/xml-dtd', '', ''),
+('dtd', 'application/xml-dtd', '', 'file-code-o'),
 ('xop', 'application/xop+xml', '', ''),
 ('xpl', 'application/xproc+xml', '', ''),
 ('xslt', 'application/xslt+xml', '', 'file-code-o'),
@@ -2152,7 +2179,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('pct', 'image/pict', 'mime-type-image.png', 'file-image-o'),
 ('png', 'image/png', 'mime-type-png.png', 'file-image-o'),
 ('btif', 'image/prs.btif', 'mime-type-image.png', 'file-image-o'),
-('sgi', 'image/sgi', 'mime-type-image.png', 'file-image-o'),
+('sgi', 'image/sgi', 'mime-type-image.png', 'file-image-o');
+INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('svg', 'image/svg+xml', 'mime-type-image.png', 'file-image-o'),
 ('svgz', 'image/svg+xml', 'mime-type-image.png', 'file-image-o'),
 ('tiff', 'image/tiff', 'mime-type-image.png', 'file-image-o'),
@@ -2230,8 +2258,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('ifb', 'text/calendar', '', 'file-text-o'),
 ('css', 'text/css', '', 'file-code-o'),
 ('csv', 'text/csv', 'mime-type-spreadsheet.png', 'file-excel-o'),
-('html', 'text/html', '', 'file-text-o'),
-('htm', 'text/html', '', 'file-text-o'),
+('html', 'text/html', '', 'file-code-o'),
+('htm', 'text/html', '', 'file-code-o'),
 ('n3', 'text/n3', '', 'file-text-o'),
 ('txt', 'text/plain', 'mime-type-document.png', 'file-text-o'),
 ('text', 'text/plain', '', 'file-text-o'),
@@ -2251,7 +2279,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('man', 'text/troff', '', 'file-text-o'),
 ('me', 'text/troff', '', 'file-text-o'),
 ('ms', 'text/troff', '', 'file-text-o'),
-('ttl', 'text/turtle', '', 'file-text-o'),
+('ttl', 'text/turtle', '', 'file-code-o'),
 ('uri', 'text/uri-list', '', 'file-text-o'),
 ('uris', 'text/uri-list', '', 'file-text-o'),
 ('urls', 'text/uri-list', '', 'file-text-o'),
@@ -2285,6 +2313,32 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('opml', 'text/x-opml', '', 'file-text-o'),
 ('p', 'text/x-pascal', '', 'file-text-o'),
 ('pas', 'text/x-pascal', '', 'file-code-o'),
+('php', 'application/x-httpd-php', '', 'file-code-o'),
+('coffee', 'text/x-coffeescript', '', 'file-code-o'),
+('lsp', 'text/x-common-lisp', '', 'file-code-o'),
+('lisp', 'text/x-common-lisp', '', 'file-code-o'),
+('diff', 'text/x-diff', '', 'file-code-o'),
+('go', 'text/x-go', '', 'file-code-o'),
+('lua', 'text/x-lua', '', 'file-code-o'),
+('pl', 'text/x-perl', '', 'file-code-o'),
+('prl', 'text/x-perl', '', 'file-code-o'),
+('perl', 'text/x-perl', '', 'file-code-o'),
+('py', 'text/x-python', '', 'file-code-o'),
+('nginx', 'text/nginx', '', 'file-code-o'),
+('ini', 'text/x-ini', '', 'file-text-o'),
+('rb', 'text/x-ruby', '', 'file-code-o'),
+('sass', 'text/x-sass', '', 'file-code-o'),
+('bash', 'text/x-sh', '', 'file-code-o'),
+('swift', 'text/x-swift', '', 'file-code-o'),
+('vb', 'text/x-vb', '', 'file-code-o'),
+('vbs', 'text/vbscript', '', 'file-code-o'),
+('vue', 'text/x-vue', '', 'file-code-o'),
+('yaml', 'text/x-yaml', '', 'file-text-o'),
+('xq', 'application/xquery', '', 'file-code-o'),
+('xquery', 'application/xquery', '', 'file-code-o'),
+('ps1', 'application/x-powershell', '', 'file-code-o'),
+('aps', 'application/x-aspx', '', ''),
+('jsp', 'application/x-jsp', '', 'file-code-o'),
 ('nfo', 'text/x-nfo', '', 'file-text-o'),
 ('etx', 'text/x-setext', '', 'file-text-o'),
 ('sfv', 'text/x-sfv', '', 'file-text-o'),
@@ -2319,7 +2373,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('uvm', 'video/vnd.dece.mobile', 'mime-type-video.png', 'file-video-o'),
 ('uvvm', 'video/vnd.dece.mobile', 'mime-type-video.png', 'file-video-o'),
 ('uvp', 'video/vnd.dece.pd', 'mime-type-video.png', 'file-video-o'),
-('uvvp', 'video/vnd.dece.pd', 'mime-type-video.png', 'file-video-o'),
+('uvvp', 'video/vnd.dece.pd', 'mime-type-video.png', 'file-video-o');
+INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('uvs', 'video/vnd.dece.sd', 'mime-type-video.png', 'file-video-o'),
 ('uvvs', 'video/vnd.dece.sd', 'mime-type-video.png', 'file-video-o'),
 ('uvv', 'video/vnd.dece.video', 'mime-type-video.png', 'file-video-o'),
@@ -2343,8 +2398,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('mks', 'video/x-matroska', 'mime-type-video.png', 'file-video-o'),
 ('mng', 'video/x-mng', 'mime-type-video.png', 'file-video-o'),
 ('asf', 'video/x-ms-asf', 'mime-type-video.png', 'file-video-o'),
-('asx', 'video/x-ms-asf', 'mime-type-video.png', 'file-video-o');
-INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
+('asx', 'video/x-ms-asf', 'mime-type-video.png', 'file-video-o'),
 ('vob', 'video/x-ms-vob', 'mime-type-video.png', 'file-video-o'),
 ('wm', 'video/x-ms-wm', 'mime-type-video.png', 'file-video-o'),
 ('wmv', 'video/x-ms-wmv', 'mime-type-video.png', 'file-video-o'),

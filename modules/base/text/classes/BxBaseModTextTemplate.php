@@ -113,11 +113,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return '';
     }
 
-	protected function getUnit ($aData, $aParams = array())
+    protected function getUnitThumbAndGallery ($aData)
     {
         $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
-        // get thumb url
         $sPhotoThumb = '';
         $sPhotoGallery = '';
         if(!empty($CNF['FIELD_THUMB']) && $aData[$CNF['FIELD_THUMB']]) {
@@ -132,6 +131,16 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             else
                 $sPhotoGallery = $sPhotoThumb;
         }
+
+        return array($sPhotoThumb, $sPhotoGallery);
+    }
+
+	protected function getUnit ($aData, $aParams = array())
+    {
+        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+        // get thumb url
+        list($sPhotoThumb, $sPhotoGallery) = $this->getUnitThumbAndGallery($aData);
 
         // get entry url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);

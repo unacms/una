@@ -23,6 +23,29 @@ class BxFilesModule extends BxBaseModTextModule
     {
         return _t('_sys_txt_access_denied');
     }
+
+    public function getContentFile($aData) 
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        if (!isset($aData[$CNF['FIELD_AUTHOR']]) || !isset($aData[$CNF['FIELD_ID']]))
+            return false;
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        if (!$oStorage)
+            return false;
+
+        $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
+        if (!$aGhostFiles)
+            return false;
+
+        return array_pop($aGhostFiles);
+    }
+
+    public function serviceEntityFilePreview($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryFilePreview', $iContentId);
+    }
 }
 
 /** @} */

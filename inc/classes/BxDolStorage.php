@@ -814,13 +814,44 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     {
         $sResult = '';
 
+        /* 
+         * These mime types must be manually added/replaced if they aren't defined in the mime type file
+         *
+
+            text/x-php                  php
+            text/x-coffeescript         coffee
+            text/x-common-lisp          lsp lisp
+            text/x-diff                 diff
+            text/x-go                   go
+            text/x-java                 java
+            text/x-lua                  lua
+            text/x-perl                 pl prl perl
+            text/x-python               py
+            text/nginx                  nginx
+            text/x-ini                  ini
+            text/x-ruby                 rb
+            text/x-sass                 sass
+            text/x-sh                   bash sh
+            text/x-swift                swift
+            text/x-vb                   vb
+            text/vbscript               vbs
+            text/x-vue                  vue
+            text/x-yaml                 yaml
+            text/x-sql                  sql
+            application/xquery          xq xquery
+            application/x-powershell    ps1
+            application/x-aspx          aps
+            application/x-jsp           jsp
+
+        */
+
         $aIconsFont = array (
             'file-pdf-o' => array('pdf'),
             'file-word-o' => array('doc', 'docx'),
             'file-excel-o' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
             'file-powerpoint-o' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
-            'file-code-o' => array('1st', 'aspx', 'asp', 'json', 'js', 'jsp', 'java', 'php', 'xml', 'rdf', 'xsd', 'xsl', 'xslt', 'sax', 'rss', 'cfm', 'js', 'asm', 'pl', 'prl', 'bas', 'b', 'vbs', 'fs', 'src', 'cs', 'ws', 'cgi', 'bat', 'py', 'c', 'cpp', 'cc', 'cp', 'h', 'hh', 'cxx', 'hxx', 'c++', 'm', 'lua', 'swift', 'sh', 'as', 'cob', 'tpl', 'lsp', 'x', 'cmd', 'rb', 'cbl', 'pas', 'pp', 'vb', 'f', 'perl', 'jl', 'lol', 'bal', 'pli', 'css', 'less', 'sass', 'saas', 'bcc', 'coffee', 'jade', 'j', 'tea', 'c#', 'sas', 'diff', 'pro', 'for', 'sh', 'bsh', 'bash', 'twig', 'csh', 'lisp', 'lsp', 'cobol', 'pl', 'd', 'git', 'rb', 'hrl', 'cr', 'inp', 'a', 'go', 'as3', 'm', 'sql'),
-            'file-image-o' => 'image/',
+            'file-code-o' => array('1st', 'aspx', 'asp', 'json', 'js', 'jsp', 'java', 'php', 'xml', 'html', 'xhtml', 'htm', 'rdf', 'xsd', 'xsl', 'xslt', 'sax', 'rss', 'dtd', 'cfm', 'js', 'asm', 'pl', 'prl', 'bas', 'b', 'fs', 'src', 'cs', 'ws', 'cgi', 'bat', 'py', 'c', 'cpp', 'cc', 'cp', 'h', 'hh', 'cxx', 'hxx', 'c++', 'm', 'lua', 'swift', 'sh', 'as', 'cob', 'tpl', 'lsp', 'x', 'cmd', 'rb', 'cbl', 'pas', 'pp', 'vb', 'vbs', 'f', 'perl', 'jl', 'lol', 'bal', 'pli', 'css', 'less', 'sass', 'saas', 'scss', 'bcc', 'coffee', 'jade', 'j', 'tea', 'c#', 'sas', 'diff', 'pro', 'for', 'sh', 'bsh', 'bash', 'twig', 'csh', 'lisp', 'lsp', 'cobol', 'pl', 'd', 'git', 'rb', 'hrl', 'cr', 'inp', 'a', 'go', 'as3', 'm', 'sql', 'md', 'mbox', 'nginx', 'pgp', 'asc', 'sig', 'ps1', 'rq', 'ttl', 'vue', 'xquery', 'xq'),
+            'file-image-o' => 'image/', 
             'file-video-o' => 'video/',
             'file-audio-o' => 'audio/',
             'file-text-o' => 'text/',
@@ -836,7 +867,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             'mime-type-presentation.png' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
             'mime-type-spreadsheet.png' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
             'mime-type-document.png' => array('doc', 'docx', 'odt', 'ott', 'sxw', 'stw', 'rtf', 'sdw', 'txt', 'pdb', 'psw', 'pdf'),
-            'mime-type-vector.png' => array('ac5', 'ac6', 'aff', 'agd1', 'ai', 'ait', 'art', 'awg', 'b2f', 'cag', 'cbd', 'cdl', 'cdr', 'cdr3', 'cdr4', 'cdr5', 'cdr6', 'cdrw', 'cdx', 'cgm', 'cht', 'cil', 'cit', 'cnv', 'csl', 'ctn', 'cv5', 'cvg', 'cvi', 'cvl', 'cvs', 'cvx', 'dcs', 'ddoc', 'ddrw', 'ded', 'design', 'dmw', 'do', 'dpp', 'dpr', 'draw', 'drw', 'dsf', 'dsf', 'dsx', 'dvg', 'dxb', 'emb', 'evf', 'fcd', 'fh', 'fhd', 'fmv', 'fs', 'ft10', 'ft11', 'ft9', 'ft8', 'gem', 'gl2', 'graffle', 'gsd', 'gsd', 'hpg', 'hpgl', 'hpgl2', 'hpl', 'hplj', 'hpp', 'hppcl', 'idw', 'ima', 'macdraw', 'md', 'mgcb', 'mgs', 'mvg', 'nap', 'naplps', 'odg', 'p10', 'pat', 'pct', 'pd', 'pdw', 'pgs', 'pic', 'pif', 'pix', 'plo', 'plot', 'plt', 'ps', 'psid', 'pws', 'rdl', 's57', 'sdw', 'sif', 'sk2', 'slddwg', 'sp', 'spa', 'svf', 'svg', 'svgb', 'svgz', 'sxd', 'tdr', 'tlc', 'tng', 'vbr', 'vec', 'vect', 'veh', 'vml', 'vss', 'web', 'web', 'web', 'yal'),
+            'mime-type-vector.png' => array('ac5', 'ac6', 'aff', 'agd1', 'ai', 'ait', 'art', 'awg', 'b2f', 'cag', 'cbd', 'cdl', 'cdr', 'cdr3', 'cdr4', 'cdr5', 'cdr6', 'cdrw', 'cdx', 'cgm', 'cht', 'cil', 'cit', 'cnv', 'csl', 'ctn', 'cv5', 'cvg', 'cvi', 'cvl', 'cvs', 'cvx', 'dcs', 'ddoc', 'ddrw', 'ded', 'design', 'dmw', 'do', 'dpp', 'dpr', 'draw', 'drw', 'dsf', 'dsf', 'dsx', 'dvg', 'dxb', 'emb', 'evf', 'fcd', 'fh', 'fhd', 'fmv', 'fs', 'ft10', 'ft11', 'ft9', 'ft8', 'gem', 'gl2', 'graffle', 'gsd', 'gsd', 'hpg', 'hpgl', 'hpgl2', 'hpl', 'hplj', 'hpp', 'hppcl', 'idw', 'ima', 'macdraw', 'mgcb', 'mgs', 'mvg', 'nap', 'naplps', 'odg', 'p10', 'pat', 'pct', 'pd', 'pdw', 'pgs', 'pic', 'pif', 'pix', 'plo', 'plot', 'plt', 'ps', 'psid', 'pws', 'rdl', 's57', 'sdw', 'sif', 'sk2', 'slddwg', 'sp', 'spa', 'svf', 'svg', 'svgb', 'svgz', 'sxd', 'tdr', 'tlc', 'tng', 'vbr', 'vec', 'vect', 'veh', 'vml', 'vss', 'web', 'web', 'web', 'yal'),
             'mime-type-archive.png' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'),
         );
 

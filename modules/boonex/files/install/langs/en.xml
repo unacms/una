@@ -106,6 +106,7 @@
 	<string name="_bx_files_page_block_title_cats"><![CDATA[Files Categories]]></string>
 	<string name="_bx_files_page_block_title_entry_info"><![CDATA[Info]]></string>
 	<string name="_bx_files_page_block_title_my_entries"><![CDATA[My Files]]></string>
+	<string name="_bx_files_page_block_title_entry_file_preview"><![CDATA[File Preview]]></string>
 
     <string name="_bx_files_menu_set_title_view_entry"><![CDATA[File Actions]]></string>
     <string name="_bx_files_menu_title_view_entry"><![CDATA[File Actions]]></string>

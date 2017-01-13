@@ -7,6 +7,29 @@
  * @{
  */
 
+/*
+ 
+INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
+('sample', 'Local', '', 360, 2592000, 0, 'sample', 'allow-deny', 'jpg,jpeg,jpe,gif,png,svg', '', 0, 0, 0, 0, 0, 0);
+
+CREATE TABLE IF NOT EXISTS `sample` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+*/
+
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
@@ -36,7 +59,7 @@ function PageCompMainCode()
     BxDolStorage::pruning(); // pruning is needed to clear expired security tokens, you can call it on cron when your server is not busy
     $oStorage = BxDolStorage::getObjectInstance('sample');
 
-    //echo '<pre>reloadMimeTypesFromFile: [' . $oStorage->reloadMimeTypesFromFile(/*'/Users/alex/mime.types'*/'/etc/apache2/mime.types') . ']</pre>';
+    echo '<pre>reloadMimeTypesFromFile: [' . $oStorage->reloadMimeTypesFromFile(/*'/Users/alex/mime.types'*/'/etc/apache2/mime.types') . ']</pre>';
 
     if (isset($_POST['add'])) {
         $iId = $oStorage->storeFileFromForm($_FILES['file'], true, $iProfileId);

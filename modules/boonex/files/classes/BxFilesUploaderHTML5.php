@@ -28,6 +28,17 @@ class BxFilesUploaderHTML5 extends BxTemplUploaderHTML5
         $a['file_title_attr'] = bx_html_attribute($a['file_title']);
         return $a;
     }
+
+    protected function isUseTranscoderForPreview($oImagesTranscoder, $aFile)
+    {
+        if (!$oImagesTranscoder)
+            return false;
+
+        if (in_array($aFile['ext'], array('jpg', 'jpeg', 'png', 'gif', /* when ImageMagick is used - 'tif', 'tiff', 'bmp', 'ico', 'psd' */)) && (is_a($oImagesTranscoder, 'BxDolTranscoderImage') || is_a($oImagesTranscoder, 'BxDolTranscoderProxy')))
+            return true;
+        
+        return false;
+    }
 }
 
 /** @} */
