@@ -23,7 +23,7 @@ class BxBaseFileHandlerGoogleViewer extends BxBaseFileHandler
         $this->addCssJs();
         return $this->_oTemplate->parseHtmlByName('file_handler_iframe.html', array(
             'class' => 'bx_file_handler_google_viewer',
-            'src' => 'https://docs.google.com/gview?url=' . rawurlencode($sFileUrl),
+            'src' => 'https://docs.google.com/viewer?url=' . rawurlencode($sFileUrl) . '&embedded=true',
         ));
     }
 }
