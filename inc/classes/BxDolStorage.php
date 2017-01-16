@@ -838,6 +838,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             text/x-vue                  vue
             text/x-yaml                 yaml
             text/x-sql                  sql
+            text/x-markdown             md
             application/xquery          xq xquery
             application/x-powershell    ps1
             application/x-aspx          aps

@@ -50,6 +50,8 @@ class BxFilesFormUpload extends BxBaseModTextFormEntry
         if (!$aGhostFiles)
             return true;
 
+        bx_import('BxDolPrivacy');
+
         // get values form main form to pass it to each file later
         $aFormValues = array();
         foreach ($this->aInputs as $aInput) {
@@ -68,9 +70,9 @@ class BxFilesFormUpload extends BxBaseModTextFormEntry
             if (!$iContentId)
                 continue;
             $aContentIds[] = $iContentId;
-
-            if ($aFile['private'])
-                $oStorage->setFilePrivate ($aFile['id'], 0);
+            
+            if ($aFile['private'] || (isset($aFormValues[$CNF['FIELD_ALLOW_VIEW_TO']]) && BX_DOL_PG_ALL !== $aFormValues[$CNF['FIELD_ALLOW_VIEW_TO']]))
+                $oStorage->setFilePrivate ($aFile['id'], true);
             if ($iContentId)
                 $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
         }

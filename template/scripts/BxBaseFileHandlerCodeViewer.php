@@ -33,7 +33,7 @@ class BxBaseFileHandlerCodeViewer extends BxBaseFileHandler
     {   
         parent::addCssJs();
         if (!self::$_isCssJsAdded) {
-    		$this->_oTemplate->addJs(array('codemirror/codemirror.min.js', ''));
+    		$this->_oTemplate->addJs(array('codemirror/codemirror-ext.min.js', ''));
             $this->_oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
             self::$_isCssJsAdded = true;
         }

@@ -60,7 +60,7 @@ INSERT INTO `sys_objects_file_handlers` (`object`, `title`, `preg_ext`, `active`
 ('sys_ms_viewer', '_sys_file_handlers_ms_viewer', '/\\.(doc|docx|xls|xlsx|ppt|pptx)$/', 1, 1, 'BxTemplFileHandlerMsViewer', ''),
 ('sys_google_viewer', '_sys_file_handlers_google_viewer', '/\\.(pdf|doc|docx|xls|xlsx|ppt|pptx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps|tif|tiff|zip|rar)$/', 1, 2, 'BxTemplFileHandlerGoogleViewer', ''),
 ('sys_images_viewer', '_sys_file_handlers_images_viewer', '/\\.(jpg|jpeg|png|gif|webp)$/', 1, 3, 'BxTemplFileHandlerImagesViewer', ''),
-('sys_code_viewer', '_sys_file_handlers_code_viewer', '/\\.(1st|aspx|asp|json|js|jsp|java|php|xml|html|htm|rdf|xsd|xsl|xslt|sax|rss|cfm|js|asm|pl|prl|bas|b|vbs|fs|src|cs|ws|cgi|bat|py|c|cpp|cc|cp|h|hh|cxx|hxx|c++|m|lua|swift|sh|as|cob|tpl|lsp|x|cmd|rb|cbl|pas|pp|vb|f|perl|jl|lol|bal|pli|css|less|sass|saas|bcc|coffee|jade|j|tea|c#|sas|diff|pro|for|sh|bsh|bash|twig|csh|lisp|lsp|cobol|pl|d|git|rb|hrl|cr|inp|a|go|as3|m|sql)$/', 1, 4, 'BxTemplFileHandlerCodeViewer', '');
+('sys_code_viewer', '_sys_file_handlers_code_viewer', '/\\.(1st|aspx|asp|json|js|jsp|java|php|xml|html|htm|rdf|xsd|xsl|xslt|sax|rss|cfm|js|asm|pl|prl|bas|b|vbs|fs|src|cs|ws|cgi|bat|py|c|cpp|cc|cp|h|hh|cxx|hxx|c++|m|lua|swift|sh|as|cob|tpl|lsp|x|cmd|rb|cbl|pas|pp|vb|f|perl|jl|lol|bal|pli|css|less|sass|saas|bcc|coffee|jade|j|tea|c#|sas|diff|pro|for|sh|bsh|bash|twig|csh|lisp|lsp|cobol|pl|d|git|rb|hrl|cr|inp|a|go|as3|m|sql|md)$/', 1, 4, 'BxTemplFileHandlerCodeViewer', '');
 
 
 -- --------------------------------------------------------
@@ -2334,6 +2334,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('vbs', 'text/vbscript', '', 'file-code-o'),
 ('vue', 'text/x-vue', '', 'file-code-o'),
 ('yaml', 'text/x-yaml', '', 'file-text-o'),
+('md', 'text/x-markdown', '', 'file-text-o'),
 ('xq', 'application/xquery', '', 'file-code-o'),
 ('xquery', 'application/xquery', '', 'file-code-o'),
 ('ps1', 'application/x-powershell', '', 'file-code-o'),

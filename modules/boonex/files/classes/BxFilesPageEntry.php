@@ -19,14 +19,6 @@ class BxFilesPageEntry extends BxBaseModTextPageEntry
         $this->MODULE = 'bx_files';
         parent::__construct($aObject, $oTemplate);
     }
-
-    protected function _setSubmenu($aParams)
-    {
-    	parent::_setSubmenu(array_merge($aParams, array(
-    		'title' => '',
-    		'icon' => ''
-    	)));
-    }
 }
 
 /** @} */

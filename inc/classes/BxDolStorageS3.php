@@ -65,6 +65,30 @@ class BxDolStorageS3 extends BxDolStorage
     }
 
     /**
+     * Start file fownloading by remote id. If file is private then token is checked.
+     */
+    public function download ($sRemoteId, $sToken = false)
+    {
+        $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
+
+        $aFile = $this->_oDb->getFileByRemoteId($sRemoteId);
+        if (!$aFile) {
+            $this->setErrorCode(BX_DOL_STORAGE_ERR_FILE_NOT_FOUND);
+            return false;
+        }
+
+        if ($aFile['private'] && !$this->_oDb->isTokenValid($aFile['id'], $sToken)) {
+            $this->setErrorCode(BX_DOL_STORAGE_ERR_PERMISSION_DENIED);
+            return false;
+        }
+
+        $sUrl = $this->getFileUrlById($aFile['id']);
+        header("Location: " . $sUrl);
+
+        return parent::download($aFile);
+    }
+    
+    /**
      * Set file private or public.
      */
     public function setFilePrivate($iFileId, $isPrivate = true)

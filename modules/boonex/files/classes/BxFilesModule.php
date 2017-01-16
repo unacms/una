@@ -24,6 +24,41 @@ class BxFilesModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
+    public function actionDownload($iContentId, $sToken = '') 
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $aData = $this->_oDb->getContentInfoById((int)$iContentId);
+        if (!$aData) {
+            $this->_oTemplate->displayPageNotFound();
+            return;
+        }
+
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedView($aData)) {
+            $this->_oTemplate->displayAccessDenied();
+            return;
+        }
+
+        $aFile = $this->getContentFile($aData);
+        if (!$aFile) {
+            $this->_oTemplate->displayPageNotFound();
+            return;
+        }
+            
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        if (!$oStorage) {
+            $this->_oTemplate->displayErrorOccured();
+            return;
+        }
+
+        if (!$oStorage->download($aFile['remote_id'], $sToken)) {
+            $this->_oTemplate->displayErrorOccured();
+            return;
+        }
+        
+        exit;   
+    }
+    
     public function getContentFile($aData) 
     {
         $CNF = $this->_oConfig->CNF;
