@@ -19,6 +19,28 @@ class BxFilesMenuView extends BxBaseModTextMenuView
         $this->MODULE = 'bx_files';
         parent::__construct($aObject, $oTemplate);
     }
+
+    public function setContentId($iContentId)
+    {
+        parent::setContentId($iContentId);
+
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        $aFile = $this->_oModule->getContentFile($this->_aContentInfo);
+        if (!$aFile || !$aFile['private']) {
+            $this->addMarkers(array('file_download_token' => ''));
+            return;
+        }
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        if (!$oStorage) {
+            $this->addMarkers(array('file_download_token' => ''));
+            return;
+        }
+
+        $this->addMarkers(array('file_download_token' => $oStorage->genToken($aFile['id'])));
+    }
+
 }
 
 /** @} */

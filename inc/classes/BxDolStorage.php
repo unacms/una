@@ -279,6 +279,16 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get file token for private files.
+     * @param $iFileId file
+     * @return file token string
+     */
+    public function genToken($iFileId)
+    {
+        return $this->_oDb->genToken($iFileId);
+    }
+    
+    /**
      * Change storage engine. It's possible to change it when there is no files in storage engine.
      * @param $sEngine new storage engine
      * @return true on success or false on error
