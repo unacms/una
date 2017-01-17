@@ -246,6 +246,11 @@ div.bx-tl-view-outline div.bx-tl-il-thumbnail img {
 	height: 100%;
 	max-height: 100px;
 }
+div.bx-tl-view-outline div.bx-tl-il-embed iframe,
+div.bx-tl-view-timeline div.bx-tl-il-embed iframe {
+    width: 100%;
+    height: auto;
+}
 
 /*+++ Item Reposted +++*/
 div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-item-text {

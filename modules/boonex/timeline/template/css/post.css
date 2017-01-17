@@ -66,6 +66,10 @@ div.bx-tl-ali-thumbnail img {
 	width: 100px;
 	height: 100px;
 }
+div.bx-tl-ali-embed iframe {
+    width: 100%;
+	height: auto;
+}
 div.bx-tl-ali-actions .bx-btn {
 	display: inline-block;
 	float: none;

@@ -43,7 +43,7 @@ BxTimelineMain.prototype.isMasonryEmpty = function() {
 	return $(this.sIdViewOutline + ' .' + this.sClassItems + ' .' + this.sClassItem).length == 0;
 };
 
-BxTimelineMain.prototype.initMasonry = function() {
+BxTimelineMain.prototype.initMasonry = function(onComplete) {
 	var $this = this;
 	var oHolder = $(this.sIdViewOutline + ' .' + this.sClassItems);
 
@@ -58,6 +58,9 @@ BxTimelineMain.prototype.initMasonry = function() {
 	oHolder.addClass(this.sClassMasonry).masonry({
 	  itemSelector: '.' + this.sClassItem,
 	  columnWidth: '.' + this.sSP + '-grid-sizer'
+	}).masonry('once', 'layoutComplete', function() {
+		if(typeof onComplete === 'function')
+			onComplete(oItems);
 	});
 };
 
@@ -65,10 +68,12 @@ BxTimelineMain.prototype.destroyMasonry = function() {
 	$(this.sIdViewOutline + ' .' + this.sClassItems).removeClass(this.sClassMasonry).masonry('destroy');
 };
 
-BxTimelineMain.prototype.appendMasonry = function(oItems) {
+BxTimelineMain.prototype.appendMasonry = function(oItems, onComplete) {
 	var $this = this;
 	var oItems = $(oItems);
 	oItems.resize(function(){
+		$this.reloadMasonry();
+	}).find('iframe').load(function() {
 		$this.reloadMasonry();
 	}).find('img.' + this.sSP + '-item-image').load(function() {
 		$this.reloadMasonry();
@@ -76,15 +81,20 @@ BxTimelineMain.prototype.appendMasonry = function(oItems) {
 
 	var oHolder = $(this.sIdViewOutline + ' .' + this.sClassItems).masonry('layout').append(oItems);
 	if(!this.isMasonry())
-		this.initMasonry();
+		this.initMasonry(onComplete);
 	else
-		oHolder.masonry('appended', oItems).masonry('layout');
+		oHolder.masonry('appended', oItems).masonry('layout').masonry('once', 'layoutComplete', function() {
+			if(typeof onComplete === 'function')
+				onComplete(oItems);
+		});
 };
 
-BxTimelineMain.prototype.prependMasonry = function(oItems) {
+BxTimelineMain.prototype.prependMasonry = function(oItems, onComplete) {
 	var $this = this;
 	var oItems = $(oItems);
 	oItems.resize(function(){
+		$this.reloadMasonry();
+	}).find('iframe').load(function() {
 		$this.reloadMasonry();
 	}).find('img.' + this.sSP + '-item-image').load(function() {
 		$this.reloadMasonry();
@@ -92,9 +102,12 @@ BxTimelineMain.prototype.prependMasonry = function(oItems) {
 
 	var oHolder = $(this.sIdViewOutline + ' .' + this.sClassItems).masonry('layout').prepend(oItems);
 	if(!this.isMasonry())
-		this.initMasonry();
+		this.initMasonry(onComplete);
 	else
-		oHolder.masonry('prepended', oItems).masonry('layout');
+		oHolder.masonry('prepended', oItems).masonry('layout').masonry('once', 'layoutComplete', function() {
+			if(typeof onComplete === 'function')
+				onComplete(oItems);
+		});
 };
 
 BxTimelineMain.prototype.removeMasonry = function(oItems, onRemove) {

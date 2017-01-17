@@ -121,7 +121,9 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
 			return;
 
 		var oItem = $(oData.item).hide();
-		$('#' + this._aHtmlIds['attach_link_form_field']).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', this._sAnimationEffect, this._sAnimationSpeed);
+		$('#' + this._aHtmlIds['attach_link_form_field']).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', this._sAnimationEffect, this._sAnimationSpeed, function() {
+			$(this).find('a.bx-link-embed').dolEmbedly();
+		});
 
         return;
 	}
@@ -241,11 +243,15 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 			oContent.hide();
 
 			oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
-			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
+			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed, function() {
+				$(this).find('a.bx-link-embed').dolEmbedly();
+			});
 			break;
 
 		case 'outline':
-			this.prependMasonry(oContent);
+			this.prependMasonry(oContent, function(oItems) {
+				$(oItems).find('a.bx-link-embed').dolEmbedly();
+			});
 			break;
 	}
 };

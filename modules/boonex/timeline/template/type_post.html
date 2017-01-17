@@ -26,15 +26,20 @@
 	<div class="__style_prefix__-item-links bx-def-margin-top">
 		<bx_repeat:links>
 	   		<div class="__style_prefix__-item-link bx-def-margin-top-auto bx-def-padding-sec bx-def-border">
-	   			<bx_if:show_thumbnail>
-	   				<div class="__style_prefix__-il-thumbnail">
-	   					<img src="__thumbnail__" />
-	   				</div>
-	   			</bx_if:show_thumbnail>
-	   			<div class="__style_prefix__-il-title">__link__</div>
-	   			<bx_if:show_text>
-	   				<div class="__style_prefix__-il-text bx-def-font-small bx-def-font-grayed">__text__</div>
-	   			</bx_if:show_text>
+				<bx_if:show_embed_outer>
+				    <div class="__style_prefix__-il-embed">__embed__</div>
+				</bx_if:show_embed_outer>
+                <bx_if:show_embed_inner>
+		   			<bx_if:show_thumbnail>
+		   				<div class="__style_prefix__-il-thumbnail">
+		   					<img src="__thumbnail__" />
+		   				</div>
+		   			</bx_if:show_thumbnail>
+		   			<div class="__style_prefix__-il-title">__link__</div>
+		   			<bx_if:show_text>
+		   				<div class="__style_prefix__-il-text bx-def-font-small bx-def-font-grayed">__text__</div>
+		   			</bx_if:show_text>
+                </bx_if:show_embed_inner>
 	   		</div>
 	   	</bx_repeat:links>
 	</div>

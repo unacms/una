@@ -551,37 +551,69 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sJsObject = $this->_oConfig->getJsObject('post');
         $sLinkIdPrefix = $this->_oConfig->getHtmlIds('post', 'attach_link_item');
 
-        $aLinkAttrs = array();
-        if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
-            $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
-
-            if($this->_oDb->getParam('sys_add_nofollow') == 'on')
-        	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+        $bTmplVarsEmbed = false;
+        $aTmplVarsEmbed = array();
+        $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
+        $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
+        if(!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match($sEmbedlyPattern, $aLink['url'])) {
+            $bTmplVarsEmbed = true;
+            $aTmplVarsEmbed = array(
+                'style_prefix' => $sStylePrefix,
+            	'embed' => $this->parsePageByName('bx_a.html', array(
+            		'href' => $aLink['url'],
+            		'title' => bx_html_attribute($aLink['title']),
+            		'bx_repeat:attrs' => array(
+                        array('key' => 'class', 'value' => 'bx-link-embed')
+                    ),
+            		'content' => $aLink['title'],
+            	))
+            );
         }
+        else {
+            $aLinkAttrs = array();
+            if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
+                $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
+    
+                if($this->_oDb->getParam('sys_add_nofollow') == 'on')
+            	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+            }
 
-		$sThumbnail = '';
-		if((int)$aLink['media_id'] != 0)
-			$sThumbnail = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'))->getFileUrl($aLink['media_id']);		
+            $sThumbnail = "";
+            if((int)$aLink['media_id'] != 0)
+                $sThumbnail = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'))->getFileUrl($aLink['media_id']);
+
+            $aTmplVarsEmbed = array(
+                'style_prefix' => $sStylePrefix,
+            	'bx_if:show_thumbnail' => array(
+            		'condition' => !empty($sThumbnail),
+            		'content' => array(
+            			'style_prefix' => $sStylePrefix,
+            			'thumbnail' => $sThumbnail
+            		)
+            	),
+    			'url' => $aLink['url'],
+            	'link' => $this->parsePageByName('bx_a.html', array(
+            		'href' => $aLink['url'],
+            		'title' => bx_html_attribute($aLink['title']),
+            		'bx_repeat:attrs' => $aLinkAttrs,
+            		'content' => $aLink['title'],
+            	))
+            );
+        }
 
         return $this->parsePageByName('attach_link_item.html', array(
             'html_id' => $sLinkIdPrefix . $aLink['id'],
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
             'id' => $aLink['id'],
-            'url' => $aLink['url'],
-        	'link' => $this->parsePageByName('bx_a.html', array(
-        		'href' => $aLink['url'],
-        		'title' => $aLink['title'],
-        		'bx_repeat:attrs' => $aLinkAttrs,
-        		'content' => $aLink['title'],
-        	)),
-        	'bx_if:show_thumbnail' => array(
-        		'condition' => !empty($sThumbnail),
-        		'content' => array(
-        			'style_prefix' => $sStylePrefix,
-        			'thumbnail' => $sThumbnail
-        		)
-        	) 
+        	'bx_if:show_embed_outer' => array(
+        		'condition' => $bTmplVarsEmbed,
+        		'content' => $aTmplVarsEmbed
+        	),
+        	'bx_if:show_embed_inner' => array(
+        		'condition' => !$bTmplVarsEmbed,
+        		'content' => $aTmplVarsEmbed
+            ),
         ));
     }
 
@@ -789,35 +821,66 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsLinks = array();
         if(!empty($aContent['links']))
             foreach($aContent['links'] as $aLink) {
-                $aLinkAttrs = array();
-                if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
-                    $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
+                $bTmplVarsEmbed = false;
+                $aTmplVarsEmbed = array();
+                $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
+                $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
+                if(!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match($sEmbedlyPattern, $aLink['url'])) {
+                    $bTmplVarsEmbed = true;
+                    $aTmplVarsEmbed = array(
+                        'style_prefix' => $sStylePrefix,
+                    	'embed' => $this->parsePageByName('bx_a.html', array(
+                    		'href' => $aLink['url'],
+                    		'title' => bx_html_attribute($aLink['title']),
+                    		'bx_repeat:attrs' => array(
+                                array('key' => 'class', 'value' => 'bx-link-embed')
+                            ),
+                    		'content' => $aLink['title'],
+                    	))
+                    );
+                }
+                else {
+                    $aLinkAttrs = array();
+                    if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
+                        $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
+    
+                        if($bAddNofollow)
+                    	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+                    }
 
-                    if($bAddNofollow)
-                	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+                    $aTmplVarsEmbed = array(
+                        'bx_if:show_thumbnail' => array(
+                    		'condition' => !empty($aLink['thumbnail']),
+                    		'content' => array(
+                    			'style_prefix' => $sStylePrefix,
+                    			'thumbnail' => $aLink['thumbnail']
+                    		)
+                    	),
+                    	'link' => $this->parsePageByName('bx_a.html', array(
+    		        		'href' => $aLink['url'],
+    		        		'title' => $aLink['title'],
+    		        		'bx_repeat:attrs' => $aLinkAttrs,
+    		        		'content' => $aLink['title'],
+    		        	)),
+                        'bx_if:show_text' => array(
+                            'condition' => !empty($aLink['text']),
+                            'content' => array(
+                                'style_prefix' => $sStylePrefix,
+                                'text' => $aLink['text']
+                            )
+                        )
+                    );
                 }
 
                 $aTmplVarsLinks[] = array(
                     'style_prefix' => $sStylePrefix,
-                	'bx_if:show_thumbnail' => array(
-                		'condition' => !empty($aLink['thumbnail']),
-                		'content' => array(
-                			'style_prefix' => $sStylePrefix,
-                			'thumbnail' => $aLink['thumbnail']
-                		)
+                    'bx_if:show_embed_outer' => array(
+                		'condition' => $bTmplVarsEmbed,
+                		'content' => $aTmplVarsEmbed
                 	),
-                	'link' => $this->parsePageByName('bx_a.html', array(
-		        		'href' => $aLink['url'],
-		        		'title' => $aLink['title'],
-		        		'bx_repeat:attrs' => $aLinkAttrs,
-		        		'content' => $aLink['title'],
-		        	)),
-                    'bx_if:show_text' => array(
-                        'condition' => !empty($aLink['text']),
-                        'content' => array(
-                            'style_prefix' => $sStylePrefix,
-                            'text' => $aLink['text']
-                        )
+                	'bx_if:show_embed_inner' => array(
+                		'condition' => !$bTmplVarsEmbed,
+                		'content' => $aTmplVarsEmbed
                     )
                 );
             }
