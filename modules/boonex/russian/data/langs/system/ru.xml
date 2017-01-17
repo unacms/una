@@ -1231,6 +1231,8 @@
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Дата установки]]></string>
     <string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
     <string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Ключ Google Maps API]]></string>
+    <string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API]]></string>
+    <string name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Шаблон Embed.ly API]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA-аккаунт - Key (ключ)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[UNA-аккаунт - Secret (секретное слово)]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Задействовать кэш для Страниц]]></string>

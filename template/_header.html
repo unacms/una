@@ -73,6 +73,9 @@
                     bx_menu_slide_close_all_opened();
                 }
             }).init();
+
+            // init Embed.ly support
+            $('a.bx-link-embed').dolEmbedly();
         });
 
         (function(w) {

@@ -723,4 +723,11 @@ function bx_get_style(sUrl)
 	$("head").append($("<link rel='stylesheet' href='" + sUrl + "' type='text/css' />"));
 }
 
+function bx_get_param(s) {
+    if (!window.aDolOptions || !aDolOptions[s])
+        return false;
+
+    return aDolOptions[s];
+}
+
 /** @} */

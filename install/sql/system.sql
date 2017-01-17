@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
@@ -38,29 +38,6 @@ CREATE TABLE `sys_objects_editor` (
 
 INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
 ('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', '');
-
-
--- --------------------------------------------------------
-
-
-CREATE TABLE IF NOT EXISTS `sys_objects_file_handlers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(64) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `preg_ext` text NOT NULL,
-  `active` tinyint(4) NOT NULL,
-  `order` int(11) NOT NULL,
-  `override_class_name` varchar(255) NOT NULL,
-  `override_class_file` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
-INSERT INTO `sys_objects_file_handlers` (`object`, `title`, `preg_ext`, `active`, `order`, `override_class_name`, `override_class_file`) VALUES
-('sys_ms_viewer', '_sys_file_handlers_ms_viewer', '/\\.(doc|docx|xls|xlsx|ppt|pptx)$/', 1, 1, 'BxTemplFileHandlerMsViewer', ''),
-('sys_google_viewer', '_sys_file_handlers_google_viewer', '/\\.(pdf|doc|docx|xls|xlsx|ppt|pptx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps|tif|tiff|zip|rar)$/', 1, 2, 'BxTemplFileHandlerGoogleViewer', ''),
-('sys_images_viewer', '_sys_file_handlers_images_viewer', '/\\.(jpg|jpeg|png|gif|webp)$/', 1, 3, 'BxTemplFileHandlerImagesViewer', ''),
-('sys_code_viewer', '_sys_file_handlers_code_viewer', '/\\.(1st|aspx|asp|json|js|jsp|java|php|xml|html|htm|rdf|xsd|xsl|xslt|sax|rss|cfm|js|asm|pl|prl|bas|b|vbs|fs|src|cs|ws|cgi|bat|py|c|cpp|cc|cp|h|hh|cxx|hxx|c++|m|lua|swift|sh|as|cob|tpl|lsp|x|cmd|rb|cbl|pas|pp|vb|f|perl|jl|lol|bal|pli|css|less|sass|saas|bcc|coffee|jade|j|tea|c#|sas|diff|pro|for|sh|bsh|bash|twig|csh|lisp|lsp|cobol|pl|d|git|rb|hrl|cr|inp|a|go|as3|m|sql|md)$/', 1, 4, 'BxTemplFileHandlerCodeViewer', '');
 
 
 -- --------------------------------------------------------
@@ -343,7 +320,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_default_payment', '_adm_stg_cpt_option_sys_default_payment', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:12:"get_payments";s:5:"class";s:21:"TemplPaymentsServices";}', '', '', 60),
 
-(@iCategoryId, 'sys_maps_api_key', '_adm_stg_cpt_option_sys_maps_api_key', '', 'digit', '', '', '', 70);
+(@iCategoryId, 'sys_maps_api_key', '_adm_stg_cpt_option_sys_maps_api_key', '', 'digit', '', '', '', 70),
+
+(@iCategoryId, 'sys_embedly_api_key', '_adm_stg_cpt_option_sys_embedly_api_key', '', 'digit', '', '', '', 80),
+(@iCategoryId, 'sys_embedly_api_pattern', '_adm_stg_cpt_option_sys_embedly_api_pattern', '/((https?:\\/\\/(.*yfrog\\..*\\/.*|www\\.flickr\\.com\\/photos\\/.*|flic\\.kr\\/.*|twitpic\\.com\\/.*|www\\.twitpic\\.com\\/.*|twitpic\\.com\\/photos\\/.*|www\\.twitpic\\.com\\/photos\\/.*|.*imgur\\.com\\/.*|twitgoo\\.com\\/.*|i.*\\.photobucket\\.com\\/albums\\/.*|s.*\\.photobucket\\.com\\/albums\\/.*|media\\.photobucket\\.com\\/image\\/.*|www\\.mobypicture\\.com\\/user\\/.*\\/view\\/.*|moby\\.to\\/.*|xkcd\\.com\\/.*|www\\.xkcd\\.com\\/.*|imgs\\.xkcd\\.com\\/.*|www\\.asofterworld\\.com\\/index\\.php\\?id=.*|www\\.asofterworld\\.com\\/.*\\.jpg|asofterworld\\.com\\/.*\\.jpg|www\\.qwantz\\.com\\/index\\.php\\?comic=.*|23hq\\.com\\/.*\\/photo\\/.*|www\\.23hq\\.com\\/.*\\/photo\\/.*|.*dribbble\\.com\\/shots\\/.*|drbl\\.in\\/.*|.*\\.smugmug\\.com\\/.*|.*\\.smugmug\\.com\\/.*#.*|picasaweb\\.google\\.com.*\\/.*\\/.*#.*|picasaweb\\.google\\.com.*\\/lh\\/photo\\/.*|picasaweb\\.google\\.com.*\\/.*\\/.*|img\\.ly\\/.*|www\\.tinypic\\.com\\/view\\.php.*|tinypic\\.com\\/view\\.php.*|www\\.tinypic\\.com\\/player\\.php.*|tinypic\\.com\\/player\\.php.*|www\\.tinypic\\.com\\/r\\/.*\\/.*|tinypic\\.com\\/r\\/.*\\/.*|.*\\.tinypic\\.com\\/.*\\.jpg|.*\\.tinypic\\.com\\/.*\\.png|meadd\\.com\\/.*\\/.*|meadd\\.com\\/.*|.*\\.deviantart\\.com\\/art\\/.*|.*\\.deviantart\\.com\\/gallery\\/.*|.*\\.deviantart\\.com\\/#\\/.*|fav\\.me\\/.*|.*\\.deviantart\\.com|.*\\.deviantart\\.com\\/gallery|.*\\.deviantart\\.com\\/.*\\/.*\\.jpg|.*\\.deviantart\\.com\\/.*\\/.*\\.gif|.*\\.deviantart\\.net\\/.*\\/.*\\.jpg|.*\\.deviantart\\.net\\/.*\\/.*\\.gif|www\\.fotopedia\\.com\\/.*\\/.*|fotopedia\\.com\\/.*\\/.*|photozou\\.jp\\/photo\\/show\\/.*\\/.*|photozou\\.jp\\/photo\\/photo_only\\/.*\\/.*|instagr\\.am\\/p\\/.*|instagram\\.com\\/p\\/.*|skitch\\.com\\/.*\\/.*\\/.*|img\\.skitch\\.com\\/.*|www\\.questionablecontent\\.net\\/|questionablecontent\\.net\\/|www\\.questionablecontent\\.net\\/view\\.php.*|questionablecontent\\.net\\/view\\.php.*|questionablecontent\\.net\\/comics\\/.*\\.png|www\\.questionablecontent\\.net\\/comics\\/.*\\.png|twitrpix\\.com\\/.*|.*\\.twitrpix\\.com\\/.*|www\\.someecards\\.com\\/.*\\/.*|someecards\\.com\\/.*\\/.*|some\\.ly\\/.*|www\\.some\\.ly\\/.*|pikchur\\.com\\/.*|achewood\\.com\\/.*|www\\.achewood\\.com\\/.*|achewood\\.com\\/index\\.php.*|www\\.achewood\\.com\\/index\\.php.*|www\\.whosay\\.com\\/.*\\/content\\/.*|www\\.whosay\\.com\\/.*\\/photos\\/.*|www\\.whosay\\.com\\/.*\\/videos\\/.*|say\\.ly\\/.*|ow\\.ly\\/i\\/.*|mlkshk\\.com\\/p\\/.*|lockerz\\.com\\/s\\/.*|pics\\.lockerz\\.com\\/s\\/.*|d\\.pr\\/i\\/.*|www\\.eyeem\\.com\\/p\\/.*|www\\.eyeem\\.com\\/a\\/.*|www\\.eyeem\\.com\\/u\\/.*|giphy\\.com\\/gifs\\/.*|gph\\.is\\/.*|frontback\\.me\\/p\\/.*|www\\.fotokritik\\.com\\/.*\\/.*|fotokritik\\.com\\/.*\\/.*|vid\\.me\\/.*|galeri\\.uludagsozluk\\.com\\/.*|gfycat\\.com\\/.*|tochka\\.net\\/.*|.*\\.tochka\\.net\\/.*|4cook\\.net\\/recipe\\/.*|.*youtube\\.com\\/watch.*|.*\\.youtube\\.com\\/v\\/.*|youtu\\.be\\/.*|.*\\.youtube\\.com\\/user\\/.*|.*\\.youtube\\.com\\/.*#.*\\/.*|m\\.youtube\\.com\\/watch.*|m\\.youtube\\.com\\/index.*|.*\\.youtube\\.com\\/profile.*|.*\\.youtube\\.com\\/view_play_list.*|.*\\.youtube\\.com\\/playlist.*|www\\.youtube\\.com\\/embed\\/.*|youtube\\.com\\/gif.*|www\\.youtube\\.com\\/gif.*|.*twitch\\.tv\\/.*|.*twitch\\.tv\\/.*\\/b\\/.*|www\\.ustream\\.tv\\/recorded\\/.*|www\\.ustream\\.tv\\/channel\\/.*|www\\.ustream\\.tv\\/.*|ustre\\.am\\/.*|qik\\.com\\/video\\/.*|qik\\.com\\/.*|qik\\.ly\\/.*|.*revision3\\.com\\/.*|.*\\.dailymotion\\.com\\/video\\/.*|.*\\.dailymotion\\.com\\/.*\\/video\\/.*|collegehumor\\.com\\/video:.*|collegehumor\\.com\\/video\\/.*|www\\.collegehumor\\.com\\/video:.*|www\\.collegehumor\\.com\\/video\\/.*|telly\\.com\\/.*|www\\.telly\\.com\\/.*|break\\.com\\/.*\\/.*|www\\.break\\.com\\/.*\\/.*|vids\\.myspace\\.com\\/index\\.cfm\\?fuseaction=vids\\.individual&videoid.*|www\\.myspace\\.com\\/index\\.cfm\\?fuseaction=.*&videoid.*|www\\.metacafe\\.com\\/watch\\/.*|www\\.metacafe\\.com\\/w\\/.*|blip\\.tv\\/.*\\/.*|.*\\.blip\\.tv\\/.*\\/.*|video\\.google\\.com\\/videoplay\\?.*|.*viddler\\.com\\/v\\/.*|liveleak\\.com\\/view\\?.*|www\\.liveleak\\.com\\/view\\?.*|animoto\\.com\\/play\\/.*|video214\\.com\\/play\\/.*|dotsub\\.com\\/view\\/.*|www\\.overstream\\.net\\/view\\.php\\?oid=.*|www\\.livestream\\.com\\/.*|new\\.livestream\\.com\\/.*|www\\.worldstarhiphop\\.com\\/videos\\/video.*\\.php\\?v=.*|worldstarhiphop\\.com\\/videos\\/video.*\\.php\\?v=.*|bambuser\\.com\\/v\\/.*|bambuser\\.com\\/channel\\/.*|bambuser\\.com\\/channel\\/.*\\/broadcast\\/.*|www\\.schooltube\\.com\\/video\\/.*\\/.*|bigthink\\.com\\/ideas\\/.*|bigthink\\.com\\/series\\/.*|sendables\\.jibjab\\.com\\/view\\/.*|sendables\\.jibjab\\.com\\/originals\\/.*|jibjab\\.com\\/view\\/.*|www\\.xtranormal\\.com\\/watch\\/.*|socialcam\\.com\\/v\\/.*|www\\.socialcam\\.com\\/v\\/.*|v\\.youku\\.com\\/v_show\\/.*|v\\.youku\\.com\\/v_playlist\\/.*|www\\.snotr\\.com\\/video\\/.*|snotr\\.com\\/video\\/.*|www\\.clipfish\\.de\\/.*\\/.*\\/video\\/.*|www\\.myvideo\\.de\\/watch\\/.*|www\\.vzaar\\.com\\/videos\\/.*|vzaar\\.com\\/videos\\/.*|www\\.vzaar\\.tv\\/.*|vzaar\\.tv\\/.*|vzaar\\.me\\/.*|.*\\.vzaar\\.me\\/.*|coub\\.com\\/view\\/.*|coub\\.com\\/embed\\/.*|www\\.streamio\\.com\\/api\\/v1\\/.*|streamio\\.com\\/api\\/v1\\/.*|vine\\.co\\/v\\/.*|www\\.vine\\.co\\/v\\/.*|www\\.viddy\\.com\\/video\\/.*|www\\.viddy\\.com\\/.*\\/v\\/.*|www\\.tudou\\.com\\/programs\\/view\\/.*|tudou\\.com\\/programs\\/view\\/.*|sproutvideo\\.com\\/videos\\/.*|embed\\.minoto-video\\.com\\/.*|iframe\\.minoto-video\\.com\\/.*|play\\.minoto-video\\.com\\/.*|dashboard\\.minoto-video\\.com\\/main\\/video\\/details\\/.*|api\\.minoto-video\\.com\\/publishers\\/.*\\/videos\\/.*|www\\.brainshark\\.com\\/.*\\/.*|brainshark\\.com\\/.*\\/.*|23video\\.com\\/.*|.*\\.23video\\.com\\/.*|goanimate\\.com\\/videos\\/.*|brainsonic\\.com\\/.*|.*\\.brainsonic\\.com\\/.*|lustich\\.de\\/videos\\/.*|web\\.tv\\/.*|.*\\.web\\.tv\\/.*|mynet\\.com\\/video\\/.*|www\\.mynet\\.com\\/video\\/|izlesene\\.com\\/video\\/.*|www\\.izlesene\\.com\\/video\\/|alkislarlayasiyorum\\.com\\/.*|www\\.alkislarlayasiyorum\\.com\\/.*|59saniye\\.com\\/.*|www\\.59saniye\\.com\\/.*|zie\\.nl\\/video\\/.*|www\\.zie\\.nl\\/video\\/.*|app\\.ustudio\\.com\\/embed\\/.*\\/.*|bale\\.io\\/.*|www\\.allego\\.com\\/.*|clipter\\.com\\/c\\/.*|sendvid\\.com\\/.*|www\\.snappytv\\.com\\/.*|snappytv\\.com\\/.*|frankly\\.me\\/.*|streamable\\.com\\/.*|ticker\\.tv\\/v\\/.*|videobio\\.com\\/playerjs\\/.*|clippituser\\.tv\\/.*|www\\.clippituser\\.tv\\/.*|www\\.whitehouse\\.gov\\/photos-and-video\\/video\\/.*|www\\.whitehouse\\.gov\\/video\\/.*|wh\\.gov\\/photos-and-video\\/video\\/.*|wh\\.gov\\/video\\/.*|www\\.hulu\\.com\\/watch.*|www\\.hulu\\.com\\/w\\/.*|www\\.hulu\\.com\\/embed\\/.*|hulu\\.com\\/watch.*|hulu\\.com\\/w\\/.*|.*crackle\\.com\\/c\\/.*|www\\.funnyordie\\.com\\/videos\\/.*|www\\.funnyordie\\.com\\/m\\/.*|funnyordie\\.com\\/videos\\/.*|funnyordie\\.com\\/m\\/.*|www\\.vimeo\\.com\\/groups\\/.*\\/videos\\/.*|www\\.vimeo\\.com\\/.*|vimeo\\.com\\/groups\\/.*\\/videos\\/.*|vimeo\\.com\\/.*|vimeo\\.com\\/m\\/#\\/.*|player\\.vimeo\\.com\\/.*|www\\.ted\\.com\\/talks\\/.*\\.html.*|www\\.ted\\.com\\/talks\\/lang\\/.*\\/.*\\.html.*|www\\.ted\\.com\\/index\\.php\\/talks\\/.*\\.html.*|www\\.ted\\.com\\/index\\.php\\/talks\\/lang\\/.*\\/.*\\.html.*|www\\.ted\\.com\\/talks\\/|.*nfb\\.ca\\/film\\/.*|thedailyshow\\.cc\\.com\\/videos\\/.*|www\\.thedailyshow\\.com\\/watch\\/.*|www\\.thedailyshow\\.com\\/full-episodes\\/.*|www\\.thedailyshow\\.com\\/collection\\/.*\\/.*\\/.*|yahoo\\.com\\/movies\\/.*|.*\\.yahoo\\.com\\/movies\\/.*|thecolbertreport\\.cc\\.com\\/videos\\/.*|www\\.colbertnation\\.com\\/the-colbert-report-collections\\/.*|www\\.colbertnation\\.com\\/full-episodes\\/.*|www\\.colbertnation\\.com\\/the-colbert-report-videos\\/.*|www\\.comedycentral\\.com\\/videos\\/index\\.jhtml\\?.*|www\\.theonion\\.com\\/video\\/.*|theonion\\.com\\/video\\/.*|wordpress\\.tv\\/.*\\/.*\\/.*\\/.*\\/|www\\.traileraddict\\.com\\/trailer\\/.*|www\\.traileraddict\\.com\\/clip\\/.*|www\\.traileraddict\\.com\\/poster\\/.*|www\\.trailerspy\\.com\\/trailer\\/.*\\/.*|www\\.trailerspy\\.com\\/trailer\\/.*|www\\.trailerspy\\.com\\/view_video\\.php.*|fora\\.tv\\/.*\\/.*\\/.*\\/.*|www\\.spike\\.com\\/video\\/.*|www\\.gametrailers\\.com\\/video.*|gametrailers\\.com\\/video.*|www\\.koldcast\\.tv\\/video\\/.*|www\\.koldcast\\.tv\\/#video:.*|mixergy\\.com\\/.*|video\\.pbs\\.org\\/video\\/.*|www\\.zapiks\\.com\\/.*|www\\.trutv\\.com\\/video\\/.*|www\\.nzonscreen\\.com\\/title\\/.*|nzonscreen\\.com\\/title\\/.*|app\\.wistia\\.com\\/embed\\/medias\\/.*|wistia\\.com\\/.*|.*\\.wistia\\.com\\/.*|.*\\.wi\\.st\\/.*|wi\\.st\\/.*|confreaks\\.net\\/videos\\/.*|www\\.confreaks\\.net\\/videos\\/.*|confreaks\\.com\\/videos\\/.*|www\\.confreaks\\.com\\/videos\\/.*|video\\.allthingsd\\.com\\/video\\/.*|videos\\.nymag\\.com\\/.*|aniboom\\.com\\/animation-video\\/.*|www\\.aniboom\\.com\\/animation-video\\/.*|grindtv\\.com\\/.*\\/video\\/.*|www\\.grindtv\\.com\\/.*\\/video\\/.*|ifood\\.tv\\/recipe\\/.*|ifood\\.tv\\/video\\/.*|ifood\\.tv\\/channel\\/user\\/.*|www\\.ifood\\.tv\\/recipe\\/.*|www\\.ifood\\.tv\\/video\\/.*|www\\.ifood\\.tv\\/channel\\/user\\/.*|logotv\\.com\\/video\\/.*|www\\.logotv\\.com\\/video\\/.*|lonelyplanet\\.com\\/Clip\\.aspx\\?.*|www\\.lonelyplanet\\.com\\/Clip\\.aspx\\?.*|streetfire\\.net\\/video\\/.*\\.htm.*|www\\.streetfire\\.net\\/video\\/.*\\.htm.*|sciencestage\\.com\\/v\\/.*\\.html|sciencestage\\.com\\/a\\/.*\\.html|www\\.sciencestage\\.com\\/v\\/.*\\.html|www\\.sciencestage\\.com\\/a\\/.*\\.html|link\\.brightcove\\.com\\/services\\/player\\/bcpid.*|bcove\\.me\\/.*|wirewax\\.com\\/.*|www\\.wirewax\\.com\\/.*|canalplus\\.fr\\/.*|www\\.canalplus\\.fr\\/.*|www\\.vevo\\.com\\/watch\\/.*|www\\.vevo\\.com\\/video\\/.*|pixorial\\.com\\/watch\\/.*|www\\.pixorial\\.com\\/watch\\/.*|spreecast\\.com\\/events\\/.*|www\\.spreecast\\.com\\/events\\/.*|showme\\.com\\/sh\\/.*|www\\.showme\\.com\\/sh\\/.*|.*\\.looplogic\\.com\\/.*|on\\.aol\\.com\\/video\\/.*|on\\.aol\\.com\\/playlist\\/.*|videodetective\\.com\\/.*\\/.*|www\\.videodetective\\.com\\/.*\\/.*|khanacademy\\.org\\/.*|www\\.khanacademy\\.org\\/.*|.*vidyard\\.com\\/.*|www\\.veoh\\.com\\/watch\\/.*|veoh\\.com\\/watch\\/.*|.*\\.univision\\.com\\/.*\\/video\\/.*|.*\\.vidcaster\\.com\\/.*|muzu\\.tv\\/.*|www\\.muzu\\.tv\\/.*|vube\\.com\\/.*\\/.*|www\\.vube\\.com\\/.*\\/.*|.*boxofficebuz\\.com\\/video\\/.*|www\\.godtube\\.com\\/featured\\/video\\/.*|godtube\\.com\\/featured\\/video\\/.*|www\\.godtube\\.com\\/watch\\/.*|godtube\\.com\\/watch\\/.*|mediamatters\\.org\\/mmtv\\/.*|www\\.clikthrough\\.com\\/theater\\/video\\/.*|www\\.clipsyndicate\\.com\\/video\\/playlist\\/.*\\/.*|www\\.srf\\.ch\\/play\\/.*\\/.*\\/.*\\/.*\\?id=.*|www\\.mpora\\.com\\/videos\\/.*|mpora\\.com\\/videos\\/.*|vice\\.com\\/.*|www\\.vice\\.com\\/.*|videodonor\\.com\\/video\\/.*|api\\.lovelive\\.tv\\/v1\\/.*|www\\.hurriyettv\\.com\\/.*|www\\.hurriyettv\\.com\\/.*|video\\.uludagsozluk\\.com\\/.*|www\\.ign\\.com\\/videos\\/.*|ign\\.com\\/videos\\/.*|www\\.askmen\\.com\\/video\\/.*|askmen\\.com\\/video\\/.*|video\\.esri\\.com\\/.*|www\\.zapkolik\\.com\\/video\\/.*|.*\\.iplayerhd\\.com\\/playerframe\\/.*|.*\\.iplayerhd\\.com\\/player\\/video\\/.*|plays\\.tv\\/video\\/.*|espn\\.go\\.com\\/video\\/clip.*|espn\\.go\\.com\\/.*\\/story.*|abcnews\\.com\\/.*\\/video\\/.*|abcnews\\.com\\/video\\/playerIndex.*|abcnews\\.go\\.com\\/.*\\/video\\/.*|abcnews\\.go\\.com\\/video\\/playerIndex.*|washingtonpost\\.com\\/wp-dyn\\/.*\\/video\\/.*\\/.*\\/.*\\/.*|www\\.washingtonpost\\.com\\/wp-dyn\\/.*\\/video\\/.*\\/.*\\/.*\\/.*|www\\.boston\\.com\\/video.*|boston\\.com\\/video.*|www\\.boston\\.com\\/.*video.*|boston\\.com\\/.*video.*|www\\.facebook\\.com\\/photo\\.php.*|www\\.facebook\\.com\\/video\\.php.*|www\\.facebook\\.com\\/.*\\/posts\\/.*|fb\\.me\\/.*|www\\.facebook\\.com\\/.*\\/photos\\/.*|www\\.facebook\\.com\\/.*\\/videos\\/.*|cnbc\\.com\\/id\\/.*\\?.*video.*|www\\.cnbc\\.com\\/id\\/.*\\?.*video.*|cnbc\\.com\\/id\\/.*\\/play\\/1\\/video\\/.*|www\\.cnbc\\.com\\/id\\/.*\\/play\\/1\\/video\\/.*|cbsnews\\.com\\/video\\/watch\\/.*|plus\\.google\\.com\\/.*|www\\.google\\.com\\/profiles\\/.*|google\\.com\\/profiles\\/.*|www\\.cnn\\.com\\/video\\/.*|edition\\.cnn\\.com\\/video\\/.*|money\\.cnn\\.com\\/video\\/.*|today\\.msnbc\\.msn\\.com\\/id\\/.*\\/vp\\/.*|www\\.msnbc\\.msn\\.com\\/id\\/.*\\/vp\\/.*|www\\.msnbc\\.msn\\.com\\/id\\/.*\\/ns\\/.*|today\\.msnbc\\.msn\\.com\\/id\\/.*\\/ns\\/.*|msnbc\\.msn\\.com\\/.*\\/watch\\/.*|www\\.msnbc\\.msn\\.com\\/.*\\/watch\\/.*|nbcnews\\.com\\/.*|www\\.nbcnews\\.com\\/.*|multimedia\\.foxsports\\.com\\/m\\/video\\/.*\\/.*|msn\\.foxsports\\.com\\/video.*|www\\.globalpost\\.com\\/video\\/.*|www\\.globalpost\\.com\\/dispatch\\/.*|theguardian\\.com\\/.*\\/video\\/.*\\/.*\\/.*\\/.*|www\\.theguardian\\.com\\/.*\\/video\\/.*\\/.*\\/.*\\/.*|guardian\\.co\\.uk\\/.*\\/video\\/.*\\/.*\\/.*\\/.*|www\\.guardian\\.co\\.uk\\/.*\\/video\\/.*\\/.*\\/.*\\/.*|bravotv\\.com\\/.*\\/.*\\/videos\\/.*|www\\.bravotv\\.com\\/.*\\/.*\\/videos\\/.*|dsc\\.discovery\\.com\\/videos\\/.*|animal\\.discovery\\.com\\/videos\\/.*|health\\.discovery\\.com\\/videos\\/.*|investigation\\.discovery\\.com\\/videos\\/.*|military\\.discovery\\.com\\/videos\\/.*|planetgreen\\.discovery\\.com\\/videos\\/.*|science\\.discovery\\.com\\/videos\\/.*|tlc\\.discovery\\.com\\/videos\\/.*|video\\.forbes\\.com\\/fvn\\/.*|distrify\\.com\\/film\\/.*|muvi\\.es\\/.*|video\\.foxnews\\.com\\/v\\/.*|video\\.foxbusiness\\.com\\/v\\/.*|www\\.reuters\\.com\\/video\\/.*|reuters\\.com\\/video\\/.*|live\\.huffingtonpost\\.com\\/r\\/segment\\/.*\\/.*|video\\.nytimes\\.com\\/video\\/.*|www\\.nytimes\\.com\\/video\\/.*\\/.*|nyti\\.ms\\/.*|www\\.vol\\.at\\/video\\/.*|vol\\.at\\/video\\/.*|www\\.spiegel\\.de\\/video\\/.*|spiegel\\.de\\/video\\/.*|www\\.zeit\\.de\\/video\\/.*|zeit\\.de\\/video\\/.*|www\\.rts\\.ch\\/play\\/tv\\/.*|soundcloud\\.com\\/.*|soundcloud\\.com\\/.*\\/.*|soundcloud\\.com\\/.*\\/sets\\/.*|soundcloud\\.com\\/groups\\/.*|snd\\.sc\\/.*|open\\.spotify\\.com\\/.*|spoti\\.fi\\/.*|play\\.spotify\\.com\\/.*|www\\.last\\.fm\\/music\\/.*|www\\.last\\.fm\\/music\\/+videos\\/.*|www\\.last\\.fm\\/music\\/+images\\/.*|www\\.last\\.fm\\/music\\/.*\\/_\\/.*|www\\.last\\.fm\\/music\\/.*\\/.*|www\\.mixcloud\\.com\\/.*\\/.*\\/|www\\.radionomy\\.com\\/.*\\/radio\\/.*|radionomy\\.com\\/.*\\/radio\\/.*|www\\.hark\\.com\\/clips\\/.*|www\\.rdio\\.com\\/#\\/artist\\/.*\\/album\\/.*|www\\.rdio\\.com\\/artist\\/.*\\/album\\/.*|www\\.zero-inch\\.com\\/.*|.*\\.bandcamp\\.com\\/|.*\\.bandcamp\\.com\\/track\\/.*|.*\\.bandcamp\\.com\\/album\\/.*|freemusicarchive\\.org\\/music\\/.*|www\\.freemusicarchive\\.org\\/music\\/.*|freemusicarchive\\.org\\/curator\\/.*|www\\.freemusicarchive\\.org\\/curator\\/.*|www\\.npr\\.org\\/.*\\/.*\\/.*\\/.*\\/.*|www\\.npr\\.org\\/.*\\/.*\\/.*\\/.*\\/.*\\/.*|www\\.npr\\.org\\/.*\\/.*\\/.*\\/.*\\/.*\\/.*\\/.*|www\\.npr\\.org\\/templates\\/story\\/story\\.php.*|huffduffer\\.com\\/.*\\/.*|www\\.audioboom\\.com\\/boos\\/.*|audioboom\\.com\\/boos\\/.*|boo\\.fm\\/b.*|www\\.xiami\\.com\\/song\\/.*|xiami\\.com\\/song\\/.*|www\\.saynow\\.com\\/playMsg\\.html.*|www\\.saynow\\.com\\/playMsg\\.html.*|grooveshark\\.com\\/.*|radioreddit\\.com\\/songs.*|www\\.radioreddit\\.com\\/songs.*|radioreddit\\.com\\/\\?q=songs.*|www\\.radioreddit\\.com\\/\\?q=songs.*|www\\.gogoyoko\\.com\\/song\\/.*|hypem\\.com\\/premiere\\/.*|bop\\.fm\\/s\\/.*\\/.*|clyp\\.it\\/.*|www\\.dnbradio\\.com\\/.*|dnbradio\\.com\\/.*))|(https:\\/\\/(picasaweb\\.google\\.com.*\\/.*\\/.*#.*|picasaweb\\.google\\.com.*\\/lh\\/photo\\/.*|picasaweb\\.google\\.com.*\\/.*\\/.*|skitch\\.com\\/.*\\/.*\\/.*|img\\.skitch\\.com\\/.*|vidd\\.me\\/.*|vid\\.me\\/.*|gfycat\\.com\\/.*|.*youtube\\.com\\/watch.*|.*\\.youtube\\.com\\/v\\/.*|youtu\\.be\\/.*|.*\\.youtube\\.com\\/playlist.*|www\\.youtube\\.com\\/embed\\/.*|youtube\\.com\\/gif.*|www\\.youtube\\.com\\/gif.*|screen\\.yahoo\\.com\\/.*\\/.*|animoto\\.com\\/play\\/.*|video214\\.com\\/play\\/.*|www\\.streamio\\.com\\/api\\/v1\\/.*|streamio\\.com\\/api\\/v1\\/.*|vine\\.co\\/v\\/.*|www\\.vine\\.co\\/v\\/.*|mixbit\\.com\\/v\\/.*|www\\.brainshark\\.com\\/.*\\/.*|brainshark\\.com\\/.*\\/.*|23video\\.com\\/.*|.*\\.23video\\.com\\/.*|brainsonic\\.com\\/.*|.*\\.brainsonic\\.com\\/.*|www\\.reelhouse\\.org\\/.*|reelhouse\\.org\\/.*|www\\.allego\\.com\\/.*|clipter\\.com\\/c\\/.*|app\\.devhv\\.com\\/oembed\\/.*|sendvid\\.com\\/.*|clipmine\\.com\\/video\\/.*|clipmine\\.com\\/embed\\/.*|clippituser\\.tv\\/.*|www\\.clippituser\\.tv\\/.*|www\\.vimeo\\.com\\/.*|vimeo\\.com\\/.*|player\\.vimeo\\.com\\/.*|yahoo\\.com\\/movies\\/.*|.*\\.yahoo\\.com\\/movies\\/.*|app\\.wistia\\.com\\/embed\\/medias\\/.*|wistia\\.com\\/.*|.*\\.wistia\\.com\\/.*|.*\\.wi\\.st\\/.*|wi\\.st\\/.*|.*\\.looplogic\\.com\\/.*|khanacademy\\.org\\/.*|www\\.khanacademy\\.org\\/.*|.*vidyard\\.com\\/.*|.*\\.stream\\.co\\.jp\\/apiservice\\/.*|.*\\.stream\\.ne\\.jp\\/apiservice\\/.*|api\\.lovelive\\.tv\\/v1\\/.*|video\\.esri\\.com\\/.*|mix\\.office\\.com\\/watch\\/.*|mix\\.office\\.com\\/mix\\/.*|mix\\.office\\.com\\/embed\\/.*|mix\\.office\\.com\\/MyMixes\\/Details\\/.*|.*\\.iplayerhd\\.com\\/playerframe\\/.*|.*\\.iplayerhd\\.com\\/player\\/video\\/.*|plays\\.tv\\/video\\/.*|www\\.facebook\\.com\\/photo\\.php.*|www\\.facebook\\.com\\/video\\.php.*|www\\.facebook\\.com\\/.*\\/posts\\/.*|fb\\.me\\/.*|www\\.facebook\\.com\\/.*\\/photos\\/.*|www\\.facebook\\.com\\/.*\\/videos\\/.*|plus\\.google\\.com\\/.*|soundcloud\\.com\\/.*|soundcloud\\.com\\/.*\\/.*|soundcloud\\.com\\/.*\\/sets\\/.*|soundcloud\\.com\\/groups\\/.*|open\\.spotify\\.com\\/.*|play\\.spotify\\.com\\/.*|bop\\.fm\\/s\\/.*\\/.*|bop\\.fm\\/p\\/.*|bop\\.fm\\/a\\/.*|clyp\\.it\\/.*|sfx\\.io\\/.*)))/i', 'text', '', '', '', 81);
 
 
 --
@@ -1380,7 +1360,6 @@ CREATE TABLE IF NOT EXISTS `sys_storage_mime_types` (
   PRIMARY KEY (`ext`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('ez', 'application/andrew-inset', '', ''),
 ('aw', 'application/applixware', '', ''),
@@ -1426,7 +1405,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('nb', 'application/mathematica', '', ''),
 ('mb', 'application/mathematica', '', ''),
 ('mathml', 'application/mathml+xml', '', ''),
-('mbox', 'application/mbox', '', 'file-code-o'),
+('mbox', 'application/mbox', '', ''),
 ('mscml', 'application/mediaservercontrol+xml', '', ''),
 ('metalink', 'application/metalink+xml', '', ''),
 ('meta4', 'application/metalink4+xml', '', ''),
@@ -1462,9 +1441,9 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('oxps', 'application/oxps', '', ''),
 ('xer', 'application/patch-ops-error+xml', '', ''),
 ('pdf', 'application/pdf', 'mime-type-document.png', 'file-pdf-o'),
-('pgp', 'application/pgp-encrypted', '', 'file-code-o'),
-('asc', 'application/pgp-signature', '', 'file-code-o'),
-('sig', 'application/pgp-signature', '', 'file-code-o'),
+('pgp', 'application/pgp-encrypted', '', ''),
+('asc', 'application/pgp-signature', '', ''),
+('sig', 'application/pgp-signature', '', ''),
 ('prf', 'application/pics-rules', '', ''),
 ('p10', 'application/pkcs10', 'mime-type-vector.png', ''),
 ('p7m', 'application/pkcs7-mime', '', ''),
@@ -1505,7 +1484,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('shf', 'application/shf+xml', '', ''),
 ('smi', 'application/smil+xml', '', ''),
 ('smil', 'application/smil+xml', '', ''),
-('rq', 'application/sparql-query', '', 'file-code-o'),
+('rq', 'application/sparql-query', '', ''),
 ('srx', 'application/sparql-results+xml', '', ''),
 ('gram', 'application/srgs', '', ''),
 ('grxml', 'application/srgs+xml', '', ''),
@@ -1594,8 +1573,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('dfac', 'application/vnd.dreamfactory', '', ''),
 ('kpxx', 'application/vnd.ds-keypoint', '', ''),
 ('ait', 'application/vnd.dvb.ait', 'mime-type-vector.png', ''),
-('svc', 'application/vnd.dvb.service', '', '');
-INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
+('svc', 'application/vnd.dvb.service', '', ''),
 ('geo', 'application/vnd.dynageo', '', ''),
 ('mag', 'application/vnd.ecowin.chart', '', ''),
 ('nml', 'application/vnd.enliven', '', ''),
@@ -1794,8 +1772,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('otc', 'application/vnd.oasis.opendocument.chart-template', '', ''),
 ('odb', 'application/vnd.oasis.opendocument.database', '', ''),
 ('odf', 'application/vnd.oasis.opendocument.formula', '', ''),
-('odft', 'application/vnd.oasis.opendocument.formula-template', '', '');
-INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
+('odft', 'application/vnd.oasis.opendocument.formula-template', '', ''),
 ('odg', 'application/vnd.oasis.opendocument.graphics', 'mime-type-vector.png', ''),
 ('otg', 'application/vnd.oasis.opendocument.graphics-template', '', ''),
 ('odi', 'application/vnd.oasis.opendocument.image', '', ''),
@@ -1978,8 +1955,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('dxr', 'application/x-director', '', ''),
 ('cst', 'application/x-director', '', ''),
 ('cct', 'application/x-director', '', ''),
-('cxt', 'application/x-director', '', '');
-INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
+('cxt', 'application/x-director', '', ''),
 ('w3d', 'application/x-director', '', ''),
 ('fgd', 'application/x-director', '', ''),
 ('swa', 'application/x-director', '', ''),
@@ -2059,7 +2035,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('shar', 'application/x-shar', '', ''),
 ('swf', 'application/x-shockwave-flash', '', ''),
 ('xap', 'application/x-silverlight-app', '', ''),
-('sql', 'text/x-sql', '', 'file-code-o'),
+('sql', 'application/x-sql', '', 'file-code-o'),
 ('sit', 'application/x-stuffit', '', ''),
 ('sitx', 'application/x-stuffitx', '', ''),
 ('srt', 'application/x-subrip', '', ''),
@@ -2093,11 +2069,11 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('xaml', 'application/xaml+xml', '', ''),
 ('xdf', 'application/xcap-diff+xml', '', ''),
 ('xenc', 'application/xenc+xml', '', ''),
-('xhtml', 'application/xhtml+xml', '', 'file-code-o'),
+('xhtml', 'application/xhtml+xml', '', ''),
 ('xht', 'application/xhtml+xml', '', ''),
 ('xml', 'application/xml', '', 'file-code-o'),
 ('xsl', 'application/xml', '', 'file-code-o'),
-('dtd', 'application/xml-dtd', '', 'file-code-o'),
+('dtd', 'application/xml-dtd', '', ''),
 ('xop', 'application/xop+xml', '', ''),
 ('xpl', 'application/xproc+xml', '', ''),
 ('xslt', 'application/xslt+xml', '', 'file-code-o'),
@@ -2179,8 +2155,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('pct', 'image/pict', 'mime-type-image.png', 'file-image-o'),
 ('png', 'image/png', 'mime-type-png.png', 'file-image-o'),
 ('btif', 'image/prs.btif', 'mime-type-image.png', 'file-image-o'),
-('sgi', 'image/sgi', 'mime-type-image.png', 'file-image-o');
-INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
+('sgi', 'image/sgi', 'mime-type-image.png', 'file-image-o'),
 ('svg', 'image/svg+xml', 'mime-type-image.png', 'file-image-o'),
 ('svgz', 'image/svg+xml', 'mime-type-image.png', 'file-image-o'),
 ('tiff', 'image/tiff', 'mime-type-image.png', 'file-image-o'),
@@ -2258,8 +2233,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('ifb', 'text/calendar', '', 'file-text-o'),
 ('css', 'text/css', '', 'file-code-o'),
 ('csv', 'text/csv', 'mime-type-spreadsheet.png', 'file-excel-o'),
-('html', 'text/html', '', 'file-code-o'),
-('htm', 'text/html', '', 'file-code-o'),
+('html', 'text/html', '', 'file-text-o'),
+('htm', 'text/html', '', 'file-text-o'),
 ('n3', 'text/n3', '', 'file-text-o'),
 ('txt', 'text/plain', 'mime-type-document.png', 'file-text-o'),
 ('text', 'text/plain', '', 'file-text-o'),
@@ -2279,7 +2254,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('man', 'text/troff', '', 'file-text-o'),
 ('me', 'text/troff', '', 'file-text-o'),
 ('ms', 'text/troff', '', 'file-text-o'),
-('ttl', 'text/turtle', '', 'file-code-o'),
+('ttl', 'text/turtle', '', 'file-text-o'),
 ('uri', 'text/uri-list', '', 'file-text-o'),
 ('uris', 'text/uri-list', '', 'file-text-o'),
 ('urls', 'text/uri-list', '', 'file-text-o'),
@@ -2313,33 +2288,6 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('opml', 'text/x-opml', '', 'file-text-o'),
 ('p', 'text/x-pascal', '', 'file-text-o'),
 ('pas', 'text/x-pascal', '', 'file-code-o'),
-('php', 'application/x-httpd-php', '', 'file-code-o'),
-('coffee', 'text/x-coffeescript', '', 'file-code-o'),
-('lsp', 'text/x-common-lisp', '', 'file-code-o'),
-('lisp', 'text/x-common-lisp', '', 'file-code-o'),
-('diff', 'text/x-diff', '', 'file-code-o'),
-('go', 'text/x-go', '', 'file-code-o'),
-('lua', 'text/x-lua', '', 'file-code-o'),
-('pl', 'text/x-perl', '', 'file-code-o'),
-('prl', 'text/x-perl', '', 'file-code-o'),
-('perl', 'text/x-perl', '', 'file-code-o'),
-('py', 'text/x-python', '', 'file-code-o'),
-('nginx', 'text/nginx', '', 'file-code-o'),
-('ini', 'text/x-ini', '', 'file-text-o'),
-('rb', 'text/x-ruby', '', 'file-code-o'),
-('sass', 'text/x-sass', '', 'file-code-o'),
-('bash', 'text/x-sh', '', 'file-code-o'),
-('swift', 'text/x-swift', '', 'file-code-o'),
-('vb', 'text/x-vb', '', 'file-code-o'),
-('vbs', 'text/vbscript', '', 'file-code-o'),
-('vue', 'text/x-vue', '', 'file-code-o'),
-('yaml', 'text/x-yaml', '', 'file-text-o'),
-('md', 'text/x-markdown', '', 'file-text-o'),
-('xq', 'application/xquery', '', 'file-code-o'),
-('xquery', 'application/xquery', '', 'file-code-o'),
-('ps1', 'application/x-powershell', '', 'file-code-o'),
-('aps', 'application/x-aspx', '', ''),
-('jsp', 'application/x-jsp', '', 'file-code-o'),
 ('nfo', 'text/x-nfo', '', 'file-text-o'),
 ('etx', 'text/x-setext', '', 'file-text-o'),
 ('sfv', 'text/x-sfv', '', 'file-text-o'),
@@ -2374,8 +2322,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('uvm', 'video/vnd.dece.mobile', 'mime-type-video.png', 'file-video-o'),
 ('uvvm', 'video/vnd.dece.mobile', 'mime-type-video.png', 'file-video-o'),
 ('uvp', 'video/vnd.dece.pd', 'mime-type-video.png', 'file-video-o'),
-('uvvp', 'video/vnd.dece.pd', 'mime-type-video.png', 'file-video-o');
-INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
+('uvvp', 'video/vnd.dece.pd', 'mime-type-video.png', 'file-video-o'),
 ('uvs', 'video/vnd.dece.sd', 'mime-type-video.png', 'file-video-o'),
 ('uvvs', 'video/vnd.dece.sd', 'mime-type-video.png', 'file-video-o'),
 ('uvv', 'video/vnd.dece.video', 'mime-type-video.png', 'file-video-o'),
@@ -2399,7 +2346,8 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) V
 ('mks', 'video/x-matroska', 'mime-type-video.png', 'file-video-o'),
 ('mng', 'video/x-mng', 'mime-type-video.png', 'file-video-o'),
 ('asf', 'video/x-ms-asf', 'mime-type-video.png', 'file-video-o'),
-('asx', 'video/x-ms-asf', 'mime-type-video.png', 'file-video-o'),
+('asx', 'video/x-ms-asf', 'mime-type-video.png', 'file-video-o');
+INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
 ('vob', 'video/x-ms-vob', 'mime-type-video.png', 'file-video-o'),
 ('wm', 'video/x-ms-wm', 'mime-type-video.png', 'file-video-o'),
 ('wmv', 'video/x-ms-wmv', 'mime-type-video.png', 'file-video-o'),

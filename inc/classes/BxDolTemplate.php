@@ -343,20 +343,28 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'spin.min.js',
             'jquery.easing.js',
             'jquery.cookie.min.js',
+            'jquery.embedly.min.js',
             'moment-with-locales.min.js',
             'functions.js',
             'jquery.webForms.js',
             'jquery.dolPopup.js',
+        	'jquery.dolEmbedly.js',
             'marka/marka.min.js',
             'headroom.min.js',
         ));
 
-        //--- Load default JS ---//
+        //--- Load translations in JS ---//
         bx_import('BxDolLanguages');
         $this->addJsTranslation(array(
             '_are you sure?',
             '_error occured',
             '_sys_loading',
+        ));
+
+        //--- Load options in JS ---//
+        $this->addJsOption(array(
+        	'sys_embedly_api_key',
+        	'sys_embedly_api_pattern',
         ));
 
         //--- Load injection's cache ---//
