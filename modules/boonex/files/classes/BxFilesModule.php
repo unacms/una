@@ -34,7 +34,7 @@ class BxFilesModule extends BxBaseModTextModule
             return;
         }
 
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedView($aData)) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aData)) {
             $this->_oTemplate->displayAccessDenied();
             return;
         }
@@ -44,7 +44,7 @@ class BxFilesModule extends BxBaseModTextModule
             $this->_oTemplate->displayPageNotFound();
             return;
         }
-            
+
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         if (!$oStorage) {
             $this->_oTemplate->displayErrorOccured();
