@@ -436,6 +436,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             'handlers' => array(
                 array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
                 array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete'),
+                array('group' => $sModule . '_repost', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'repost', 'module_name' => $sModule, 'module_method' => 'get_notifications_repost', 'module_class' => 'Module'),
+                array('group' => $sModule . '_repost', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete_repost'),
                 array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module'),
                 array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
@@ -444,12 +446,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'post_common'),
                 array('unit' => $sModule, 'action' => 'delete'),
+                array('unit' => $sModule, 'action' => 'repost'),
+                array('unit' => $sModule, 'action' => 'delete_repost'),
                 array('unit' => $sModule, 'action' => 'commentPost'),
                 array('unit' => $sModule, 'action' => 'commentRemoved'),
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
             )
         );
+    }
+
+    public function serviceGetNotificationsRepost($aEvent)
+    {
+        $aResult = $this->serviceGetNotificationsPost($aEvent);
+        $aResult['lang_key'] = '_bx_timeline_txt_object_reposted';
+
+        return $aResult;
     }
 
     public function serviceGetNotificationsPost($aEvent)
@@ -999,13 +1011,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $this->_oDb->updateRepostCounter($aReposted['id'], $aReposted['reposts']);
 
         //--- Timeline -> Update for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId, array(
+        	'repost_id' => $iId,
+        	'object_author_id' => $aReposted['owner_id'],
+        ));
         $oAlert->alert();
         //--- Timeline -> Update for Alerts Engine ---//
     }
 
     public function onDelete($aEvent)
     {
+        $iUserId = $this->getUserId();
     	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
 
     	//--- Delete attached photos, videos and links when common event was deleted.
@@ -1017,7 +1033,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     	}
 
     	//--- Update parent event when repost event was deleted.
-        if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_REPOST) {
+    	$bRepost = $aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_REPOST;
+        if($bRepost) {
             $this->_oDb->deleteRepostTrack($aEvent['id']);
 
             $aContent = unserialize($aEvent['content']);
@@ -1031,8 +1048,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 	    $aRepostEvents = $this->_oDb->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aEvent['type']));
 		foreach($aRepostEvents as $aRepostEvent) {
 			$aContent = unserialize($aRepostEvent['content']);
-			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent['id'])))
-				$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent['id']));
+			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent['id'])) && (int)$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent['id'])) > 0) {
+                $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent['id'], $iUserId, array(
+                    'repost_id' => $aRepostEvent['id'],
+                ));
+                $oAlert->alert();
+            }
 		}
 
 		//--- Delete associated meta.
@@ -1040,7 +1061,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oMetatags->onDeleteContent($aEvent['id']);
 
         //--- Event -> Delete for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $this->getUserId());
+        if($bRepost)
+            $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted['id'], $iUserId, array(
+                'repost_id' => $aEvent['id'],
+            ));
+        else
+            $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $iUserId);
         $oAlert->alert();
         //--- Event -> Delete for Alerts Engine ---//
     }

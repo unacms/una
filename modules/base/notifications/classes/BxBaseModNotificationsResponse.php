@@ -36,6 +36,9 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
    		if(is_array($aExtras) && isset($aExtras['vote_id']))
     		return (int)$aExtras['vote_id'];
 
+        if(is_array($aExtras) && isset($aExtras['repost_id']))
+    		return (int)$aExtras['repost_id'];
+
         if(is_array($aExtras) && isset($aExtras['notification_subobject_id']))
             return (int)$aExtras['notification_subobject_id'];
                 
