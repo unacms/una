@@ -24,7 +24,7 @@ class BxPollsPageEntry extends BxBaseModTextPageEntry
     {
         parent::_addJsCss();
 
-        $this->_oModule->_oTemplate->addCss('entry.less');
+        $this->_oModule->_oTemplate->addCss('entry.css');
     }
 }
 
