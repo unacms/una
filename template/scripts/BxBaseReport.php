@@ -161,7 +161,7 @@ class BxBaseReport extends BxDolReport
         if(!$this->isAllowedReport() && (!$this->isAllowedReportView() || (int)$aReport['count'] == 0))
             return '';
 
-        $aParams['is_reported'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
+        $aParams['is_reported'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         $sTmplName = 'report_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_REPORT_USAGE_DEFAULT) . '.html';
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
@@ -266,7 +266,7 @@ class BxBaseReport extends BxDolReport
         	if(!$this->isAllowedReport(true))
         		return array('code' => 2, 'msg' => $this->msgErrAllowedReport());
 
-	        $bPerformed = $this->_oQuery->isPerformed($iObjectId, $iAuthorId);
+	        $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
 	        if($bPerformed)
 	        	return array('code' => 4, 'msg' => _t('_report_err_duplicate_report'));
 

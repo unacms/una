@@ -134,7 +134,7 @@ class BxBaseVote extends BxDolVote
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
             'href' => 'javascript:void(0)',
-            'title' => _t('_vote_do_like_by'),
+            'title' => _t($this->_getTitleDoBy()),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
                 array('key' => 'class', 'value' => $sClass),
@@ -222,7 +222,7 @@ class BxBaseVote extends BxDolVote
         $bCount = (int)$aVote['count'] != 0;
 
         $isAllowedVote = $this->isAllowedVote();
-        $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
+        $aParams['is_voted'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         //--- Do Vote
         $bTmplVarsDoVote = $bShowDoVote && (!$this->_bLike || $bCount || $isAllowedVote);
@@ -344,7 +344,7 @@ class BxBaseVote extends BxDolVote
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoVoteLikes, array(
             'style_prefix' => $this->_sStylePrefix,
             'class' => $sClass,
-            'title' => _t($bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like'),
+            'title' => bx_html_attribute(_t($this->_getTitleDoLike($bVoted))),
         	'bx_if:show_onclick' => array(
         		'condition' => !$bDisabled,
         		'content' => array(

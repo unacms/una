@@ -216,7 +216,7 @@ class BxDolVote extends BxDolObject
         $bUndo = $this->isUndo();
         $bLikeMode = $this->isLikeMode();
 
-        $bVoted = $this->_oQuery->isPerformed($iObjectId, $iAuthorId);
+        $bVoted = $this->isPerformed($iObjectId, $iAuthorId);
         $bPerformUndo = $bVoted && $bUndo ? true : false;
 
         if(!$bPerformUndo && !$this->isAllowedVote(true)) {
@@ -306,6 +306,11 @@ class BxDolVote extends BxDolObject
     protected function _getTitleDoLike($bVoted)
     {
     	return $bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like';
+    }
+
+    protected function _getTitleDoBy()
+    {
+    	return '_vote_do_by';
     }
 }
 

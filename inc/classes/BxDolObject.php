@@ -94,6 +94,11 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         return $this->_aSystem && (int)$this->_aSystem['is_on'] == 1;
     }
 
+    public function isPerformed($iObjectId, $iAuthorId)
+    {
+        return $this->_oQuery->isPerformed($iObjectId, $iAuthorId);        
+    }
+
 	/**
 	 * Interface functions for outer usage
 	 */

@@ -151,7 +151,7 @@ class BxBaseFavorite extends BxDolFavorite
         if(!$bAllowedFavorite && (!$this->isAllowedFavoriteView() || !$bCount))
             return '';
 
-        $aParams['is_favorited'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
+        $aParams['is_favorited'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         $sTmplName = 'favorite_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FAVORITE_USAGE_DEFAULT) . '.html';
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(

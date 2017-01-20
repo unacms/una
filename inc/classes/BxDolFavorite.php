@@ -194,7 +194,7 @@ class BxDolFavorite extends BxDolObject
         $iAuthorId = $this->_getAuthorId();
 
         $bUndo = $this->isUndo();
-        $bPerformed = $this->_oQuery->isPerformed($iObjectId, $iAuthorId);
+        $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
         $bPerformUndo = $bPerformed && $bUndo ? true : false;
 
         if(!$bPerformUndo && !$this->isAllowedFavorite())
