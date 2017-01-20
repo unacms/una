@@ -20,12 +20,11 @@ class BxPollsPageEntry extends BxBaseModTextPageEntry
         parent::__construct($aObject, $oTemplate);
     }
 
-    protected function _setSubmenu($aParams)
+    protected function _addJsCss()
     {
-    	parent::_setSubmenu(array_merge($aParams, array(
-    		'title' => '',
-    		'icon' => ''
-    	)));
+        parent::_addJsCss();
+
+        $this->_oModule->_oTemplate->addCss('entry.less');
     }
 }
 

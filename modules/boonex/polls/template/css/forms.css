@@ -1,1 +1,5 @@
 @import url(../../../../base/text/template/css/forms.css);
+
+#bx-form-element-subentries .bx-form-input-wrapper-custom .bx-btn {
+	float: right;
+}

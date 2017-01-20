@@ -18,6 +18,19 @@ class BxPollsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+
+    public function onDataDeleteAfter($iContentId, $aContentInfo, $oProfile)
+    {
+        $sResult = parent::onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile);
+        if(!empty($sResult))
+            return $sResult;
+
+        $this->_oModule->_oDb->deleteSubentry(array(
+            'entry_id' => $iContentId
+        ));
+
+        return '';
+    }
 }
 
 /** @} */

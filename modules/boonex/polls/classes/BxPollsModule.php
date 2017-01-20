@@ -18,6 +18,11 @@ class BxPollsModule extends BxBaseModTextModule
     {
         parent::__construct($aModule);
     }
+
+    public function serviceEntitySubentriesBlock($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entrySubentries', $iContentId);
+    }
 }
 
 /** @} */

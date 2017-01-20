@@ -20,7 +20,7 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
             'module_name' => 'bx_polls',
             'object_metatags' => 'bx_polls',
             'title' => _t('_bx_polls_page_title_browse'),
-            'table' => 'bx_polls_polls',
+            'table' => 'bx_polls_entries',
             'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
             'searchFields' => array(),
             'restriction' => array(
@@ -110,13 +110,13 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
         $aSql = array();
         switch ($this->aCurrent['sorting']) {
             case 'last':
-                $aSql['order'] = ' ORDER BY `bx_polls_polls`.`added` DESC';
+                $aSql['order'] = ' ORDER BY `bx_polls_entries`.`added` DESC';
                 break;
             case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_polls_polls`.`changed` DESC';
+                $aSql['order'] = ' ORDER BY `bx_polls_entries`.`changed` DESC';
                 break;
             case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_polls_polls`.`views` DESC';
+                $aSql['order'] = ' ORDER BY `bx_polls_entries`.`views` DESC';
                 break;
         }
         return $aSql;

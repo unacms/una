@@ -2,7 +2,7 @@
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 -- TABLE: entries
-CREATE TABLE IF NOT EXISTS `bx_polls_polls` (
+CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(10) unsigned NOT NULL,
   `added` int(11) NOT NULL,
@@ -22,6 +22,16 @@ CREATE TABLE IF NOT EXISTS `bx_polls_polls` (
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_polls_subentries` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `entry_id` int(11) unsigned NOT NULL default '0',
+  `title` varchar(255) NOT NULL,
+  `rate` float NOT NULL default '0',
+  `votes` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `title` (`title`)
 );
 
 -- TABLE: storages & transcoders
@@ -85,6 +95,24 @@ CREATE TABLE IF NOT EXISTS `bx_polls_votes` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `bx_polls_votes_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_polls_votes_subentries` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_polls_votes_subentries_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
@@ -170,7 +198,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_polls', 'bx_polls', '_bx_polls_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_polls_polls', 'id', '', '', 'do_submit', '', 0, 1, 'BxPollsFormEntry', 'modules/boonex/polls/classes/BxPollsFormEntry.php');
+('bx_polls', 'bx_polls', '_bx_polls_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_polls_entries', 'id', '', '', 'do_submit', '', 0, 1, 'BxPollsFormEntry', 'modules/boonex/polls/classes/BxPollsFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_polls', 'bx_polls_entry_add', 'bx_polls', 0, '_bx_polls_form_entry_display_add'),
@@ -185,49 +213,36 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_polls', 'bx_polls', 'do_submit', '_bx_polls_form_entry_input_do_submit', '', 0, 'submit', '_bx_polls_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'pictures', 'a:1:{i:0;s:9:"sys_html5";}', 'a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_polls_form_entry_input_sys_pictures', '_bx_polls_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_polls', 'bx_polls', 'text', '', '', 0, 'textarea', '_bx_polls_form_entry_input_sys_text', '_bx_polls_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_polls_form_entry_input_text_err', 'XssHtml', '', 1, 0),
+('bx_polls', 'bx_polls', 'text', '', '', 0, 'textarea', '_bx_polls_form_entry_input_sys_text', '_bx_polls_form_entry_input_text', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_polls', 'bx_polls', 'title', '', '', 0, 'text', '_bx_polls_form_entry_input_sys_title', '_bx_polls_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_polls_form_entry_input_title_err', 'Xss', '', 1, 0),
+('bx_polls', 'bx_polls', 'subentries', '', '', 0, 'custom', '_bx_polls_form_entry_input_sys_subentries', '_bx_polls_form_entry_input_subentries', '_bx_polls_form_entry_input_subentries_inf', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'cat', '', '#!bx_polls_cats', 0, 'select', '_bx_polls_form_entry_input_sys_cat', '_bx_polls_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_polls_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'added', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_added', '_bx_polls_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'changed', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_changed', '_bx_polls_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_polls_entry_add', 'delete_confirm', 2147483647, 0, 1),
+('bx_polls_entry_add', 'cat', 2147483647, 1, 1),
 ('bx_polls_entry_add', 'title', 2147483647, 1, 2),
-('bx_polls_entry_add', 'cat', 2147483647, 1, 3),
+('bx_polls_entry_add', 'subentries', 2147483647, 1, 3),
 ('bx_polls_entry_add', 'text', 2147483647, 1, 4),
 ('bx_polls_entry_add', 'pictures', 2147483647, 1, 5),
 ('bx_polls_entry_add', 'allow_view_to', 2147483647, 1, 6),
 ('bx_polls_entry_add', 'location', 2147483647, 1, 7),
-('bx_polls_entry_add', 'do_submit', 2147483647, 0, 8),
-('bx_polls_entry_add', 'do_publish', 2147483647, 1, 9),
-('bx_polls_entry_delete', 'location', 2147483647, 0, 0),
-('bx_polls_entry_delete', 'cat', 2147483647, 0, 0),
-('bx_polls_entry_delete', 'pictures', 2147483647, 0, 0),
-('bx_polls_entry_delete', 'text', 2147483647, 0, 0),
-('bx_polls_entry_delete', 'do_publish', 2147483647, 0, 0),
-('bx_polls_entry_delete', 'title', 2147483647, 0, 0),
-('bx_polls_entry_delete', 'allow_view_to', 2147483647, 0, 0),
+('bx_polls_entry_add', 'do_publish', 2147483647, 1, 8),
+
 ('bx_polls_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_polls_entry_delete', 'do_submit', 2147483647, 1, 2),
-('bx_polls_entry_edit', 'do_publish', 2147483647, 0, 1),
-('bx_polls_entry_edit', 'delete_confirm', 2147483647, 0, 2),
-('bx_polls_entry_edit', 'title', 2147483647, 1, 3),
-('bx_polls_entry_edit', 'cat', 2147483647, 1, 4),
-('bx_polls_entry_edit', 'text', 2147483647, 1, 5),
-('bx_polls_entry_edit', 'pictures', 2147483647, 1, 6),
-('bx_polls_entry_edit', 'allow_view_to', 2147483647, 1, 7),
-('bx_polls_entry_edit', 'location', 2147483647, 1, 8),
-('bx_polls_entry_edit', 'do_submit', 2147483647, 1, 9),
-('bx_polls_entry_view', 'location', 2147483647, 0, 0),
-('bx_polls_entry_view', 'pictures', 2147483647, 0, 0),
-('bx_polls_entry_view', 'delete_confirm', 2147483647, 0, 0),
-('bx_polls_entry_view', 'text', 2147483647, 0, 0),
-('bx_polls_entry_view', 'do_publish', 2147483647, 0, 0),
-('bx_polls_entry_view', 'title', 2147483647, 0, 0),
-('bx_polls_entry_view', 'do_submit', 2147483647, 0, 0),
-('bx_polls_entry_view', 'allow_view_to', 2147483647, 0, 0),
+
+('bx_polls_entry_edit', 'cat', 2147483647, 1, 1),
+('bx_polls_entry_edit', 'title', 2147483647, 1, 2),
+('bx_polls_entry_edit', 'subentries', 2147483647, 1, 3),
+('bx_polls_entry_edit', 'text', 2147483647, 1, 4),
+('bx_polls_entry_edit', 'pictures', 2147483647, 1, 5),
+('bx_polls_entry_edit', 'allow_view_to', 2147483647, 1, 6),
+('bx_polls_entry_edit', 'location', 2147483647, 1, 7),
+('bx_polls_entry_edit', 'do_submit', 2147483647, 1, 8),
+
 ('bx_polls_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_polls_entry_view', 'added', 2147483647, 1, 2),
 ('bx_polls_entry_view', 'changed', 2147483647, 1, 3);
@@ -275,27 +290,28 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_polls', 'bx_polls_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-poll&id={object_id}', '', 'bx_polls_polls', 'id', 'author', 'title', 'comments', '', '');
+('bx_polls', 'bx_polls_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-poll&id={object_id}', '', 'bx_polls_entries', 'id', 'author', 'title', 'comments', '', '');
 
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_polls', 'bx_polls_votes', 'bx_polls_votes_track', '604800', '1', '1', '0', '1', 'bx_polls_polls', 'id', 'author', 'rate', 'votes', '', '');
+('bx_polls', 'bx_polls_votes', 'bx_polls_votes_track', '604800', '1', '1', '0', '1', 'bx_polls_entries', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_polls_subentries', 'bx_polls_votes_subentries', 'bx_polls_votes_subentries_track', '604800', '1', '1', '0', '1', 'bx_polls_subentries', 'id', 'author', 'rate', 'votes', 'BxPollsVoteSubentries', 'modules/boonex/polls/classes/BxPollsVoteSubentries.php');
 
 
 -- REPORTS
 INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_polls', 'bx_polls_reports', 'bx_polls_reports_track', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_polls', 'id', 'author', 'reports', '', '');
+('bx_polls', 'bx_polls_reports', 'bx_polls_reports_track', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_entries', 'id', 'author', 'reports', '', '');
 
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_polls', 'bx_polls_views_track', '86400', '1', 'bx_polls_polls', 'id', 'author', 'views', '', '');
+('bx_polls', 'bx_polls_views_track', '86400', '1', 'bx_polls_entries', 'id', 'author', 'views', '', '');
 
 
 -- FAFORITES
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_polls', 'bx_polls_favorites_track', '1', '1', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_polls', 'id', 'author', 'favorites', '', '');
+('bx_polls', 'bx_polls_favorites_track', '1', '1', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_entries', 'id', 'author', 'favorites', '', '');
 
 
 -- STUDIO: page & widget

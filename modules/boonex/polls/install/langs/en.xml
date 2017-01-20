@@ -19,15 +19,19 @@
 	<string name="_bx_polls_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_polls_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
 	<string name="_bx_polls_form_entry_input_do_publish"><![CDATA[Publish]]></string>
-	<string name="_bx_polls_form_entry_input_sys_title"><![CDATA[Title]]></string>
-	<string name="_bx_polls_form_entry_input_title"><![CDATA[Title]]></string>
-	<string name="_bx_polls_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
+	<string name="_bx_polls_form_entry_input_sys_title"><![CDATA[Question]]></string>
+	<string name="_bx_polls_form_entry_input_title"><![CDATA[Question]]></string>
+	<string name="_bx_polls_form_entry_input_title_err"><![CDATA[Question is essential. Please, fill in this field]]></string>
 	<string name="_bx_polls_form_entry_input_sys_cat"><![CDATA[Category]]></string>
 	<string name="_bx_polls_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_polls_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
-	<string name="_bx_polls_form_entry_input_sys_text"><![CDATA[Text]]></string>
-	<string name="_bx_polls_form_entry_input_text"><![CDATA[Text]]></string>
-	<string name="_bx_polls_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+	<string name="_bx_polls_form_entry_input_sys_text"><![CDATA[Description]]></string>
+	<string name="_bx_polls_form_entry_input_text"><![CDATA[Description]]></string>
+	<string name="_bx_polls_form_entry_input_text_err"><![CDATA[Description field can't be empty]]></string>
+	<string name="_bx_polls_form_entry_input_sys_subentries"><![CDATA[Answers]]></string>
+    <string name="_bx_polls_form_entry_input_subentries"><![CDATA[Answers]]></string>
+    <string name="_bx_polls_form_entry_input_subentries_inf"><![CDATA[Leave text box empty to remove an answer.]]></string>
+    <string name="_bx_polls_form_entry_input_subentries_add"><![CDATA[Add More]]></string>
 	<string name="_bx_polls_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_polls_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this poll]]></string>
 	<string name="_bx_polls_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
@@ -59,7 +63,8 @@
     <string name="_bx_polls_page_block_title_delete_entry"><![CDATA[Delete]]></string>
 	<string name="_bx_polls_page_title_sys_view_entry"><![CDATA[View Poll]]></string>
 	<string name="_bx_polls_page_title_view_entry"><![CDATA[{title}]]></string>
-	<string name="_bx_polls_page_block_title_entry_text"><![CDATA[Poll Text]]></string>
+	<string name="_bx_polls_page_block_title_entry_subentries"><![CDATA[Answers]]></string>
+	<string name="_bx_polls_page_block_title_entry_text"><![CDATA[Description]]></string>
 	<string name="_bx_polls_page_title_browse"><![CDATA[Polls]]></string>
 	<string name="_bx_polls_page_title_search_results"><![CDATA[Polls matching "{0}"]]></string>
 	<string name="_bx_polls_page_title_browse_by_author"><![CDATA[Polls of {display_name}]]></string>
@@ -199,4 +204,5 @@
     <string name="_bx_polls_txt_sample_single_with_article"><![CDATA[a poll]]></string>
     <string name="_bx_polls_txt_sample_comment_single"><![CDATA[poll's comment]]></string>
     <string name="_bx_polls_txt_sample_vote_single"><![CDATA[poll's vote]]></string>
+    <string name="_bx_polls_txt_subentry_vote_do_by"><![CDATA[Voted for]]></string>
 </resources>

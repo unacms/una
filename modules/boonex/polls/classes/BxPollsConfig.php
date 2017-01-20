@@ -26,7 +26,8 @@ class BxPollsConfig extends BxBaseModTextConfig
             'ICON' => 'tasks col-green1',
 
             // database tables
-            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'polls',
+            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
+        	'TABLE_SUBENTRIES' => $aModule['db_prefix'] . 'subentries',
         	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
@@ -37,6 +38,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'poll-text',
+        	'FIELD_SUBENTRIES' => 'subentries',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
@@ -73,6 +75,7 @@ class BxPollsConfig extends BxBaseModTextConfig
         	'OBJECT_REPORTS' => 'bx_polls',
             'OBJECT_VIEWS' => 'bx_polls',
             'OBJECT_VOTES' => 'bx_polls',
+        	'OBJECT_VOTES_SUBENTRIES' => 'bx_polls_subentries',
         	'OBJECT_FAVORITES' => 'bx_polls',
             'OBJECT_METATAGS' => 'bx_polls',
             'OBJECT_COMMENTS' => 'bx_polls',
@@ -120,10 +123,12 @@ class BxPollsConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+            'form' => 'BxPollsForm',
         	'manage_tools' => 'BxPollsManageTools'
         );
 
         $this->_aJsObjects = array(
+        	'form' => 'oBxPollsForm',
         	'manage_tools' => 'oBxPollsManageTools'
         );
 

@@ -50,7 +50,8 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_polls_view_entry', '_bx_polls_page_title_sys_view_entry', '_bx_polls_page_title_view_entry', 'bx_polls', 10, 2147483647, 1, 'view-poll', '', '', '', '', 0, 1, 0, 'BxPollsPageEntry', 'modules/boonex/polls/classes/BxPollsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
+('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_subentries', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:23:\"entity_subentries_block\";}', 0, 0, 1, 1),
+('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2),
 ('bx_polls_view_entry', 2, 'bx_polls', '', '_bx_polls_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
 ('bx_polls_view_entry', 3, 'bx_polls', '', '_bx_polls_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 1),
 ('bx_polls_view_entry', 3, 'bx_polls', '', '_bx_polls_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 2),
@@ -242,7 +243,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- PRIVACY 
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_polls_allow_view_to', 'bx_polls', 'view', '_bx_polls_form_entry_input_allow_view_to', '3', 'bx_polls_polls', 'id', 'author', '', '');
+('bx_polls_allow_view_to', 'bx_polls', 'view', '_bx_polls_form_entry_input_allow_view_to', '3', 'bx_polls_entries', 'id', 'author', '', '');
 
 
 -- ACL
@@ -324,12 +325,12 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_polls_cats', 'bx_polls', 'bx_polls', 'bx_polls_cats', 'bx_polls_polls', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_polls_polls`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+('bx_polls_cats', 'bx_polls', 'bx_polls', 'bx_polls_cats', 'bx_polls_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_polls_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_polls_administration', 'Sql', 'SELECT * FROM `bx_polls_polls` WHERE 1 ', 'bx_polls_polls', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxPollsGridAdministration', 'modules/boonex/polls/classes/BxPollsGridAdministration.php'),
-('bx_polls_common', 'Sql', 'SELECT * FROM `bx_polls_polls` WHERE 1 ', 'bx_polls_polls', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxPollsGridCommon', 'modules/boonex/polls/classes/BxPollsGridCommon.php');
+('bx_polls_administration', 'Sql', 'SELECT * FROM `bx_polls_entries` WHERE 1 ', 'bx_polls_entries', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxPollsGridAdministration', 'modules/boonex/polls/classes/BxPollsGridAdministration.php'),
+('bx_polls_common', 'Sql', 'SELECT * FROM `bx_polls_entries` WHERE 1 ', 'bx_polls_entries', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxPollsGridCommon', 'modules/boonex/polls/classes/BxPollsGridCommon.php');
 
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES

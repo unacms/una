@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_polls_polls`, `bx_polls_files`, `bx_polls_photos_resized`, `bx_polls_cmts`, `bx_polls_votes`, `bx_polls_votes_track`, `bx_polls_views_track`, `bx_polls_meta_keywords`, `bx_polls_meta_locations`, `bx_polls_reports`, `bx_polls_reports_track`, `bx_polls_favorites_track`;
+DROP TABLE IF EXISTS `bx_polls_entries`, `bx_polls_subentries`, `bx_polls_files`, `bx_polls_photos_resized`, `bx_polls_cmts`, `bx_polls_votes`, `bx_polls_votes_track`, `bx_polls_votes_subentries`, `bx_polls_votes_subentries_track`, `bx_polls_views_track`, `bx_polls_meta_keywords`, `bx_polls_meta_locations`, `bx_polls_reports`, `bx_polls_reports_track`, `bx_polls_favorites_track`;
 
 
 -- STORAGES & TRANSCODERS
@@ -29,7 +29,7 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_polls';
 
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_polls';
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_polls', 'bx_polls_subentries');
 
 
 -- REPORTS
