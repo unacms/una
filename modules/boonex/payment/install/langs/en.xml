@@ -421,7 +421,7 @@
     <string name="_bx_payment_strp_err_details_changed"><![CDATA[Cannot change subscription details. Recheck provided data and try again.]]></string>
 	<string name="_bx_payment_strp_msg_billing_changed"><![CDATA[Billing information was changed.]]></string>
 	<string name="_bx_payment_strp_err_billing_changed"><![CDATA[Cannot change billing information. Recheck provided data and try again.]]></string>
-	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
+	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Details]]></string>
 	<string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Change]]></string>

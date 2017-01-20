@@ -421,8 +421,8 @@
     <string name="_bx_payment_strp_err_details_changed"><![CDATA[Не могу изменить детали подписки. Перепроверьте данные и попробуйте ещё раз.]]></string>
 	<string name="_bx_payment_strp_msg_billing_changed"><![CDATA[Платежная информация была изменена.]]></string>
     <string name="_bx_payment_strp_err_billing_changed"><![CDATA[Не могу изменить платежную информацию. Перепроверьте данные и попробуйте ещё раз.]]></string>
-	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[{0}]]></string>
-	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Заплатить используя {0}]]></string>
+	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[Оплатить через {0}]]></string>
+	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Оплатить через {0}]]></string>
 	<string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Детали]]></string>
 	<string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Изменить детали]]></string>
 	<string name="_bx_payment_strp_menu_item_title_billing"><![CDATA[Реквизиты]]></string>
