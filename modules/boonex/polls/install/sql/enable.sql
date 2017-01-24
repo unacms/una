@@ -50,8 +50,8 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_polls_view_entry', '_bx_polls_page_title_sys_view_entry', '_bx_polls_page_title_view_entry', 'bx_polls', 10, 2147483647, 1, 'view-poll', '', '', '', '', 0, 1, 0, 'BxPollsPageEntry', 'modules/boonex/polls/classes/BxPollsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_subentries', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:23:\"entity_subentries_block\";}', 0, 0, 1, 1),
-('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2),
+('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 1),
+('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_subentries', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:23:\"entity_subentries_block\";}', 0, 0, 1, 2),
 ('bx_polls_view_entry', 2, 'bx_polls', '', '_bx_polls_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
 ('bx_polls_view_entry', 3, 'bx_polls', '', '_bx_polls_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 1),
 ('bx_polls_view_entry', 3, 'bx_polls', '', '_bx_polls_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 2),

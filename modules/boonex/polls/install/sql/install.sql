@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
+  `anonymous` tinyint(4) NOT NULL DEFAULT '0',
+  `hidden_results` tinyint(4) NOT NULL DEFAULT '0',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
@@ -217,6 +219,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_polls', 'bx_polls', 'title', '', '', 0, 'text', '_bx_polls_form_entry_input_sys_title', '_bx_polls_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_polls_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'subentries', '', '', 0, 'custom', '_bx_polls_form_entry_input_sys_subentries', '_bx_polls_form_entry_input_subentries', '_bx_polls_form_entry_input_subentries_inf', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'cat', '', '#!bx_polls_cats', 0, 'select', '_bx_polls_form_entry_input_sys_cat', '_bx_polls_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_polls_form_entry_input_cat_err', 'Xss', '', 1, 0),
+('bx_polls', 'bx_polls', 'anonymous', 1, '', 0, 'switcher', '_bx_polls_form_profile_input_sys_anonymous', '_bx_polls_form_profile_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_polls', 'bx_polls', 'hidden_results', 1, '', 0, 'switcher', '_bx_polls_form_profile_input_sys_hidden_results', '_bx_polls_form_profile_input_hidden_results', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'added', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_added', '_bx_polls_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'changed', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_changed', '_bx_polls_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
@@ -228,8 +232,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_polls_entry_add', 'text', 2147483647, 1, 4),
 ('bx_polls_entry_add', 'pictures', 2147483647, 1, 5),
 ('bx_polls_entry_add', 'allow_view_to', 2147483647, 1, 6),
-('bx_polls_entry_add', 'location', 2147483647, 1, 7),
-('bx_polls_entry_add', 'do_publish', 2147483647, 1, 8),
+('bx_polls_entry_add', 'anonymous', 2147483647, 1, 7),
+('bx_polls_entry_add', 'hidden_results', 2147483647, 1, 8),
+('bx_polls_entry_add', 'location', 2147483647, 1, 9),
+('bx_polls_entry_add', 'do_publish', 2147483647, 1, 10),
 
 ('bx_polls_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_polls_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -240,8 +246,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_polls_entry_edit', 'text', 2147483647, 1, 4),
 ('bx_polls_entry_edit', 'pictures', 2147483647, 1, 5),
 ('bx_polls_entry_edit', 'allow_view_to', 2147483647, 1, 6),
-('bx_polls_entry_edit', 'location', 2147483647, 1, 7),
-('bx_polls_entry_edit', 'do_submit', 2147483647, 1, 8),
+('bx_polls_entry_edit', 'hidden_results', 2147483647, 1, 7),
+('bx_polls_entry_edit', 'location', 2147483647, 1, 8),
+('bx_polls_entry_edit', 'do_submit', 2147483647, 1, 9),
 
 ('bx_polls_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_polls_entry_view', 'added', 2147483647, 1, 2),

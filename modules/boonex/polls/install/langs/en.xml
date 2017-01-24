@@ -38,6 +38,10 @@
 	<string name="_bx_polls_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the poll]]></string>
 	<string name="_bx_polls_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_polls_form_entry_input_pictures"><![CDATA[Pictures]]></string>
+	<string name="_bx_polls_form_profile_input_sys_anonymous"><![CDATA[Anonymous]]></string>
+    <string name="_bx_polls_form_profile_input_anonymous"><![CDATA[Anonymous vote]]></string>
+    <string name="_bx_polls_form_profile_input_sys_hidden_results"><![CDATA[Hidden Results]]></string>
+    <string name="_bx_polls_form_profile_input_hidden_results"><![CDATA[Hide results until voted]]></string>
     <string name="_bx_polls_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_polls_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_polls_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>

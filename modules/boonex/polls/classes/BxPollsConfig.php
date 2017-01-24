@@ -40,6 +40,8 @@ class BxPollsConfig extends BxBaseModTextConfig
             'FIELD_TEXT_ID' => 'poll-text',
         	'FIELD_SUBENTRIES' => 'subentries',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+        	'FIELD_ANONYMOUS' => 'anonymous',
+        	'FIELD_HIDDEN_RESULTS' => 'hidden_results',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
             'FIELD_COMMENTS' => 'comments',

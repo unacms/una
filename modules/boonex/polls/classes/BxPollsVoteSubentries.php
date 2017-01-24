@@ -22,7 +22,9 @@ class BxPollsVoteSubentries extends BxTemplVote
     	$this->MODULE = 'bx_polls';
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
-        parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit, $this->_oModule->_oTemplate);
+
+        $CNF = $this->_oModule->_oConfig->CNF;
 
         $this->_aElementDefaults['likes'] = array_merge($this->_aElementDefaults['likes'], array(
             'show_do_vote_label' => true
@@ -34,6 +36,17 @@ class BxPollsVoteSubentries extends BxTemplVote
 
     public function getCounter($aParams = array())
     {
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        $iObjectId = $this->getId();
+		$iAuthorId = $this->_getAuthorId();
+        if((int)$this->_aContentInfo[$CNF['FIELD_HIDDEN_RESULTS']] == 1)
+            if(!$this->isPerformed($iObjectId, $iAuthorId))
+                return '';
+
+        if((int)$this->_aContentInfo[$CNF['FIELD_ANONYMOUS']] == 1)
+            $this->_sTmplNameCounter = 'subentries_vc_text.html';
+
         return '(' . parent::getCounter($aParams) . ')';
     }
 
