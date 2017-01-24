@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `author` int(10) unsigned NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `desc` text NOT NULL,
@@ -188,7 +189,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_files_upload', 'bx_files', 'attachments', 'a:1:{i:0;s:14:"bx_files_html5";}', 'a:2:{s:15:"bx_files_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_files_form_entry_input_sys_attachments', '_bx_files_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'cat', '', '#!bx_files_cats', 0, 'select', '_bx_files_form_entry_input_sys_cat', '_bx_files_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_files_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'allow_view_to', '', '', 0, 'custom', '_bx_files_form_entry_input_sys_allow_view_to', '_bx_files_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_files_upload', 'bx_files', 'do_submit', '_bx_files_form_entry_input_do_submit', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_files_upload', 'bx_files', 'do_submit', '_bx_files_form_entry_input_do_submit', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_files_upload', 'bx_files', 'profile_id', '0', '', 0, 'hidden', '_bx_files_form_entry_input_sys_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
@@ -219,10 +221,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_files_entry_view', 'added', 2147483647, 1, 2),
 ('bx_files_entry_view', 'changed', 2147483647, 1, 3),
 
-('bx_files_entry_upload', 'attachments', 2147483647, 1, 1),
-('bx_files_entry_upload', 'cat', 2147483647, 1, 2),
-('bx_files_entry_upload', 'allow_view_to', 2147483647, 1, 3),
-('bx_files_entry_upload', 'do_submit', 2147483647, 1, 4);
+('bx_files_entry_upload', 'profile_id', 2147483647, 1, 1),
+('bx_files_entry_upload', 'attachments', 2147483647, 1, 2),
+('bx_files_entry_upload', 'cat', 2147483647, 1, 3),
+('bx_files_entry_upload', 'allow_view_to', 2147483647, 1, 4),
+('bx_files_entry_upload', 'do_submit', 2147483647, 1, 5);
 
 -- PRE-VALUES
 

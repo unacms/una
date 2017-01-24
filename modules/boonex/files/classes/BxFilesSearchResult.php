@@ -21,7 +21,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_files',
             'title' => _t('_bx_files_page_title_browse'),
             'table' => 'bx_files_main',
-            'ownFields' => array('id', 'title', 'desc', 'author', 'added'),
+            'ownFields' => array('id', 'file_id', 'title', 'desc', 'author', 'added'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
@@ -54,6 +54,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
+            case 'group_author':
             case 'author':
                 if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor)) {
                     $this->isError = true;
@@ -102,7 +103,8 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         $this->processReplaceableMarkers($oProfileAuthor);
 
-        $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+        if ('group_author' != $sMode)
+            $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
 
     function getAlterOrder()

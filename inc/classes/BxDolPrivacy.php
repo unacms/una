@@ -128,14 +128,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if(empty($sValue))
             $sValue = $oPrivacy->_oDb->getDefaultGroup($sModule, $sAction);
 
-        $aValues = array();
-        $aGroups = $oPrivacy->_oDb->getGroupsBy(array('type' => 'active'));
-        foreach($aGroups as $aGroup) {
-            if((int)$aGroup['active'] == 0)
-               continue;
-
-            $aValues[] = array('key' => $aGroup['id'], 'value' => _t($aGroup['title']));
-        }
+        $aValues = $oPrivacy->getGroups();
 
         if(isset($aParams['dynamic_groups']) && is_array($aParams['dynamic_groups']))
             $aValues = array_merge($aValues, $aParams['dynamic_groups']);
@@ -333,6 +326,22 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     protected function isDynamicGroupMember($mixedGroupId, $iObjectOwnerId, $iViewerId, $iObjectId)
     {
         return false;
+    }
+
+    /**
+     * get privacy groups for getGroupChooser
+     */ 
+    protected function getGroups() 
+    {
+        $aValues = array();
+        $aGroups = $this->_oDb->getGroupsBy(array('type' => 'active'));
+        foreach($aGroups as $aGroup) {
+            if((int)$aGroup['active'] == 0)
+               continue;
+
+            $aValues[] = array('key' => $aGroup['id'], 'value' => _t($aGroup['title']));
+        }
+        return $aValues;
     }
 }
 

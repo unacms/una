@@ -21,7 +21,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule());
+    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
     	if($sResult)
             return $sResult;
 
@@ -101,13 +101,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         ));
     }
 
-    protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule)
+    protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule, $sTemplateName = '')
     {
         if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
             $aVars = array (
                 'summary' => $sMsg,
             );
-            return $this->parseHtmlByName('unit_private.html', $aVars);
+            return $this->parseHtmlByName($sTemplateName ? str_replace('.html', '_private.html', $sTemplateName) : 'unit_private.html', $aVars);
         }
 
         return '';

@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_files';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_files' OR `object` IN('bx_files_create_entry', 'bx_files_edit_entry', 'bx_files_delete_entry', 'bx_files_view_entry', 'bx_files_view_entry_comments', 'bx_files_home', 'bx_files_popular', 'bx_files_updated', 'bx_files_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_files' OR `object` IN('bx_files_create_entry', 'bx_files_edit_entry', 'bx_files_delete_entry', 'bx_files_view_entry', 'bx_files_view_entry_comments', 'bx_files_home', 'bx_files_popular', 'bx_files_updated', 'bx_files_author', 'bx_files_group');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_files';

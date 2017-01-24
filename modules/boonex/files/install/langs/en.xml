@@ -10,8 +10,9 @@
 	<string name="_bx_files_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_files_option_searchable_fields"><![CDATA[Searchable fields]]></string>
 
+	<string name="_bx_files_form_upload"><![CDATA[Files Upload]]></string>
 	<string name="_bx_files_form_entry"><![CDATA[Files]]></string>
-	<string name="_bx_files_form_entry_display_add"><![CDATA[Add File]]></string>
+	<string name="_bx_files_form_entry_display_add"><![CDATA[Add Files]]></string>
 	<string name="_bx_files_form_entry_display_edit"><![CDATA[Edit File]]></string>
 	<string name="_bx_files_form_entry_display_delete"><![CDATA[Delete File]]></string>
 	<string name="_bx_files_form_entry_display_view"><![CDATA[View File]]></string>
@@ -181,7 +182,7 @@
     <string name="_bx_files_cat_Holidays_Events"><![CDATA[Holidays & Events]]></string>
     <string name="_bx_files_cat_Home_Decor"><![CDATA[Home Decor]]></string>
     <string name="_bx_files_cat_Humor"><![CDATA[Humor]]></string>
-    <string name="_bx_files_cat_Illustrations_Fileers"><![CDATA[Illustrations & Fileers]]></string>
+    <string name="_bx_files_cat_Illustrations_Posters"><![CDATA[Illustrations & Posters]]></string>
     <string name="_bx_files_cat_Kids_Parenting"><![CDATA[Kids & Parenting]]></string>
     <string name="_bx_files_cat_Mens_Fashion"><![CDATA[Men's Fashion]]></string>
     <string name="_bx_files_cat_Outdoors"><![CDATA[Outdoors]]></string>
@@ -201,4 +202,7 @@
     <string name="_bx_files_txt_sample_single_with_article"><![CDATA[a file]]></string>
     <string name="_bx_files_txt_sample_comment_single"><![CDATA[file's comment]]></string>
     <string name="_bx_files_txt_sample_vote_single"><![CDATA[file's vote]]></string>
+
+    <string name="_bx_files_privacy_public"><![CDATA[Public]]></string>
+    <string name="_bx_files_privacy_participants"><![CDATA[Participants]]></string>
 </resources>

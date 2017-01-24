@@ -18,6 +18,10 @@ class BxFilesMenu extends BxBaseModTextMenu
     {
         $this->MODULE = 'bx_files';
         parent::__construct($aObject, $oTemplate);
+
+        $iProfileId = (int)bx_get('profile_id');
+        if ($iProfileId)
+            $this->addMarkers(array('profile_id' => $iProfileId));
     }
 }
 
