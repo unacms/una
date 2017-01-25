@@ -27,7 +27,9 @@
 	<string name="_bx_files_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_files_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
 	<string name="_bx_files_form_entry_input_sys_desc"><![CDATA[Description]]></string>
-	<string name="_bx_files_form_entry_input_desc"><![CDATA[Description]]></string>
+    <string name="_bx_files_form_entry_input_desc"><![CDATA[Description]]></string>
+	<string name="_bx_files_form_entry_input_sys_data"><![CDATA[File data]]></string>
+	<string name="_bx_files_form_entry_input_data"><![CDATA[File data]]></string>
 	<string name="_bx_files_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this file]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>

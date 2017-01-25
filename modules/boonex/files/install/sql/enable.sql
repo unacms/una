@@ -15,7 +15,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_files_plain_summary_chars', '240', @iCategId, '_bx_files_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_files_per_page_browse', '12', @iCategId, '_bx_files_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_files_rss_num', '10', @iCategId, '_bx_files_option_rss_num', 'digit', '', '', '', 20),
-('bx_files_searchable_fields', 'title,desc', @iCategId, '_bx_files_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_files";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_files_searchable_fields', 'title,desc,data', @iCategId, '_bx_files_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_files";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
 -- PAGE: create entry
 
@@ -380,4 +380,9 @@ SET @iHandler := LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
 ('profile', 'delete', @iHandler);
+
+-- CRON
+
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_files_process_data', '* * * * *', 'BxFilesCronProcessData', 'modules/boonex/files/classes/BxFilesCronProcessData.php', '');
 

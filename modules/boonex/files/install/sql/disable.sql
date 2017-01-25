@@ -43,3 +43,7 @@ DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_files_simple', 'bx_file
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_files' LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` = 'bx_files_process_data';
+

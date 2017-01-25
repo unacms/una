@@ -133,6 +133,45 @@ class BxFilesModule extends BxBaseModTextModule
     {
         return $this->_serviceTemplateFunc ('entryFilePreview', $iContentId);
     }
+
+    public function serviceProcessFilesData($iNumberOfFilesToProcessAtOnce = 3)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        if (!defined('BX_SYSTEM_JAVA') || !constant('BX_SYSTEM_JAVA'))
+            return;
+        
+        $a = $this->_oDb->getNotProcessedFiles($iNumberOfFilesToProcessAtOnce);
+        if (!$a)
+            return;
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        if (!$oStorage)
+            return false;
+        
+        foreach ($a as $aContentInfo) {
+            $aFile = $this->getContentFile($aContentInfo);
+            if (!$aFile) {
+                $this->_oDb->updateFileData ($aContentInfo[$CNF['FIELD_ID']], '');
+                continue;
+            }
+
+            $sFileUrl = $oStorage->getFileUrlById($aFile['id']);
+            $sFilePath = BX_DIRECTORY_PATH_TMP . $aFile['remote_id'] . '.' . $aFile['ext'];
+            @file_put_contents($sFilePath, file_get_contents($sFileUrl));
+            if (!file_exists($sFilePath)) {
+                $this->_oDb->updateFileData ($aContentInfo[$CNF['FIELD_ID']], '');
+                continue;
+            }
+            
+            $sCommand = '"' . constant('BX_SYSTEM_JAVA') . '" -jar "' . $this->_oConfig->getHomePath() . 'data/tika-app.jar" --encoding=UTF-8 --text "' . $sFilePath . '"';
+            $sData = `$sCommand`;
+
+            @unlink($sFilePath);
+
+            $this->_oDb->updateFileData ($aContentInfo[$CNF['FIELD_ID']], $sData);
+        }
+    }
 }
 
 /** @} */

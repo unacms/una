@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `desc` text NOT NULL,
+  `data` text NOT NULL,
+  `data_processed` tinyint(4) NOT NULL DEFAULT '0',
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
@@ -22,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `search_fields` (`title`,`desc`)
+  FULLTEXT KEY `search_fields` (`title`,`desc`,`data`)
 );
 
 -- TABLE: storages & transcoders
@@ -181,6 +183,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_files', 'bx_files', 'do_submit', '_bx_files_form_entry_input_do_submit', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files', 'bx_files', 'attachments', 'a:1:{i:0;s:14:"bx_files_html5";}', 'a:2:{s:15:"bx_files_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_files_form_entry_input_sys_attachments', '_bx_files_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files', 'bx_files', 'desc', '', '', 0, 'textarea', '_bx_files_form_entry_input_sys_desc', '_bx_files_form_entry_input_desc', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
+('bx_files', 'bx_files', 'data', '', '', 0, 'textarea', '_bx_files_form_entry_input_sys_data', '_bx_files_form_entry_input_data', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_files', 'bx_files', 'title', '', '', 0, 'text', '_bx_files_form_entry_input_sys_title', '_bx_files_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_files_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_files', 'bx_files', 'cat', '', '#!bx_files_cats', 0, 'select', '_bx_files_form_entry_input_sys_cat', '_bx_files_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_files_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_files', 'bx_files', 'added', '', '', 0, 'datetime', '_bx_files_form_entry_input_sys_date_added', '_bx_files_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -207,9 +210,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_files_entry_edit', 'title', 2147483647, 1, 3),
 ('bx_files_entry_edit', 'cat', 2147483647, 1, 4),
 ('bx_files_entry_edit', 'desc', 2147483647, 1, 5),
-('bx_files_entry_edit', 'attachments', 2147483647, 1, 6),
-('bx_files_entry_edit', 'allow_view_to', 2147483647, 1, 7),
-('bx_files_entry_edit', 'do_submit', 2147483647, 1, 8),
+('bx_files_entry_edit', 'data', 0, 1, 6),
+('bx_files_entry_edit', 'attachments', 2147483647, 1, 7),
+('bx_files_entry_edit', 'allow_view_to', 2147483647, 1, 8),
+('bx_files_entry_edit', 'do_submit', 2147483647, 1, 9),
 ('bx_files_entry_view', 'attachments', 2147483647, 0, 0),
 ('bx_files_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_files_entry_view', 'desc', 2147483647, 0, 0),

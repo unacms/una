@@ -38,6 +38,13 @@ class BxFilesFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], $aGroupChooser, $aSave);
 		}
     }
+
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
+    {
+        parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField);
+
+        $this->_oModule->_oDb->updateFileId($iContentId, $iFileId);
+    }
 }
 
 /** @} */
