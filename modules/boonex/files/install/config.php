@@ -45,6 +45,7 @@ $aConfig = array(
      */
     'page_triggers' => array (
     	'trigger_page_profile_view_entry',
+    	'trigger_page_group_view_entry',
     ),
     
     /**
@@ -59,7 +60,7 @@ $aConfig = array(
      * Storages.
      */
     'storages' => array(
-    	'bx_files_files'
+    	'bx_files_files',
     ),
 
     /**
@@ -117,7 +118,7 @@ $aConfig = array(
      */
     'relations' => array(
     	'bx_timeline',
-    	'bx_notifications'
+    	'bx_notifications',
     ),
 
 );
