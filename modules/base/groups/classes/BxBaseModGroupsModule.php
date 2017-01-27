@@ -41,6 +41,23 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     }
 
     /**
+     * Check if this module is group profile
+     */
+    public function serviceIsGroupProfile ()
+    {
+        return true;
+    }
+
+    /**
+     * check if provided profile is member if the group 
+     */ 
+    public function serviceIsFan ($iGroupProfileId, $iProfileId = false) 
+    {
+        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+        return $this->isFan($oGroupProfile->getContentId(), $iProfileId);
+    }
+
+    /**
      * Delete profile from fans and admins tables
      * @param $iProfileId profile id 
      */

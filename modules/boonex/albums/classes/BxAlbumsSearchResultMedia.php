@@ -179,12 +179,13 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $a['id']);
     }
-
+/*
     function displaySearchUnit ($aData)
     {
         $oMain = $this->getMain();
         return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bLiveSearch ? $this->sUnitTemplateLiveSearch : $this->sUnitTemplate, $this->aUnitParams);
     }
+*/
 }
 
 /** @} */

@@ -20,6 +20,23 @@ class BxFilesFormUpload extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
 
         $this->_sGhostTemplate = 'form_ghost_template_upload.html';
+
+        if (isset($this->aInputs['profile_id']))
+            $this->aInputs['profile_id']['value'] = bx_get('profile_id');
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
+
+            $aSave = array('db' => array('pass' => 'Xss'));
+            array_walk($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], function ($a, $k, $aSave) {
+                if (in_array($k, array('info', 'caption', 'value')))
+                    $aSave[0][$k] = $a;
+            }, array(&$aSave));
+            
+            $aGroupChooser = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
+            
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], $aGroupChooser, $aSave);
+		}
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)
@@ -55,7 +72,7 @@ class BxFilesFormUpload extends BxBaseModTextFormEntry
         // get values form main form to pass it to each file later
         $aFormValues = array();
         foreach ($this->aInputs as $aInput) {
-            if ($aInput['name'] && isset($aInput['value']) && $aInput['value'] && !is_array($aInput['value']) && $aInput['name'] != 'do_submit' && $aInput['name'] != $CNF['FIELD_PHOTO'])
+            if ($aInput['name'] && isset($aInput['value']) && $aInput['value'] && !is_array($aInput['value']) && $aInput['name'] != 'do_submit' && $aInput['name'] != $CNF['FIELD_PHOTO'] && $aInput['name'] != 'profile_id')
                 $aFormValues[$aInput['name']] = $aInput['value'];//$this->getCleanValue($aInput['name']);
         }
 
@@ -66,7 +83,11 @@ class BxFilesFormUpload extends BxBaseModTextFormEntry
 
             $iContentId = 0;
             if ($isAssociateWithContent)
-                $iContentId = BxBaseModGeneralFormEntry::insert (array_merge(array($CNF['FIELD_TITLE'] => $this->getCleanValue('title-' . $aFile['id'])), $aFormValues));
+                $iContentId = BxBaseModGeneralFormEntry::insert (array_merge(array(
+                    $CNF['FIELD_FILE_ID'] => $aFile['id'],
+                    $CNF['FIELD_TITLE'] => $this->getCleanValue('title-' . $aFile['id']),
+                    $CNF['FIELD_AUTHOR'] => bx_get('profile_id') && $this->_oModule->serviceIsAllowedAddContentToProfile(bx_get('profile_id')) ? bx_get('profile_id') : '',
+                ), $aFormValues));
             if (!$iContentId)
                 continue;
             $aContentIds[] = $iContentId;

@@ -107,7 +107,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->checkAllowedAdd(true);
 
         // redirect
-        $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        $this->redirectAfterAdd($aContentInfo);
+    }
+    
+    protected function redirectAfterAdd($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
     public function editDataForm ($iContentId, $sDisplay = false)
@@ -159,6 +166,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->checkAllowedEdit($aContentInfo, true);
 
         // redirect
+        $this->redirectAfterEdit($aContentInfo);
+    }
+
+    protected function redirectAfterEdit($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
@@ -195,6 +208,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->checkAllowedDelete($aContentInfo, true);
 
         // redirect
+        $this->redirectAfterDelete($aContentInfo);
+    }
+
+    protected function redirectAfterDelete($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
         $this->_redirectAndExit($CNF['URL_HOME'], true, array(
             'account_id' => getLoggedId(),
             'profile_id' => bx_get_logged_profile_id(),

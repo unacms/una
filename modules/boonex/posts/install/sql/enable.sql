@@ -14,6 +14,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_posts_summary_chars', '700', @iCategId, '_bx_posts_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_posts_plain_summary_chars', '240', @iCategId, '_bx_posts_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_posts_per_page_browse', '12', @iCategId, '_bx_posts_option_per_page_browse', 'digit', '', '', '', 10),
+('bx_posts_per_page_profile', '3', @iCategId, '_bx_posts_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_posts_rss_num', '10', @iCategId, '_bx_posts_option_rss_num', 'digit', '', '', '', 20),
 ('bx_posts_searchable_fields', 'title,text', @iCategId, '_bx_posts_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
@@ -132,7 +133,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 SET @iPBCellProfile = 3;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_posts', '_bx_posts_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_posts";s:6:"method";s:13:"browse_author";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0);
+('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_posts', '_bx_posts_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_posts";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:8:"per_page";s:25:"bx_posts_per_page_profile";}}}', 0, 0, 0);
 
 -- PAGE: service blocks
 

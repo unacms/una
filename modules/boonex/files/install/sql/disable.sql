@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_files';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_files' OR `object` IN('bx_files_create_entry', 'bx_files_edit_entry', 'bx_files_delete_entry', 'bx_files_view_entry', 'bx_files_view_entry_comments', 'bx_files_home', 'bx_files_popular', 'bx_files_updated', 'bx_files_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_files' OR `object` IN('bx_files_create_entry', 'bx_files_edit_entry', 'bx_files_delete_entry', 'bx_files_view_entry', 'bx_files_view_entry_comments', 'bx_files_home', 'bx_files_popular', 'bx_files_updated', 'bx_files_author', 'bx_files_group');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_files';
@@ -43,3 +43,7 @@ DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_files_simple', 'bx_file
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_files' LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` = 'bx_files_process_data';
+

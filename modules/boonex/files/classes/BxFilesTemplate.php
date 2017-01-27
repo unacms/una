@@ -36,7 +36,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
     
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule());
+    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
     	if($sResult)
             return $sResult;
 

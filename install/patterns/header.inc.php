@@ -13,6 +13,7 @@ define('BX_DATABASE_USER', '%DB_USER%'); ///< db user
 define('BX_DATABASE_PASS', '%DB_PASSWORD%'); ///< db password
 define('BX_DATABASE_NAME', '%DB_NAME%'); ///< db name
 
+define('BX_SYSTEM_JAVA', '%JAVA_PATH%'); ///< path to java binary
 define('BX_SYSTEM_FFMPEG', '%FFMPEG_PATH%'); ///< path to ffmpeg binary
 define('BX_DOL_SECRET', '%SECRET%'); ///< secret word
 

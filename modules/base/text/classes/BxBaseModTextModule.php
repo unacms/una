@@ -130,7 +130,10 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     {
         if (!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId || $iProfileId != $this->_iProfileId)
+        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+
+        if ($iProfileId != $this->_iProfileId)
             return false;
 
         $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);

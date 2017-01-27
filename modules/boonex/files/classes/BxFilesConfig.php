@@ -36,6 +36,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
+            'FIELD_FILE_ID' => 'file_id',
             'FIELD_TITLE' => 'title',
             'FIELD_CATEGORY' => 'cat',
             'FIELD_TEXT' => 'desc',
@@ -51,6 +52,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-file',
             'URI_AUTHOR_ENTRIES' => 'files-author',
+            'URI_GROUP_ENTRIES' => 'group-files',
             'URI_ADD_ENTRY' => 'create-file',
         	'URI_EDIT_ENTRY' => 'edit-file',
         	'URI_MANAGE_COMMON' => 'files-manage',
@@ -63,7 +65,7 @@ class BxFilesConfig extends BxBaseModTextConfig
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_files_summary_chars',
-            'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_files_plain_summary_chars',
+            'PARAM_CHARS_SUMMARY_PLAIN' => '',
             'PARAM_NUM_RSS' => 'bx_files_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_files_searchable_fields',
 

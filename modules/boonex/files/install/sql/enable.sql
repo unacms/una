@@ -12,10 +12,10 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_files_summary_chars', '700', @iCategId, '_bx_files_option_summary_chars', 'digit', '', '', '', 1),
-('bx_files_plain_summary_chars', '240', @iCategId, '_bx_files_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_files_per_page_browse', '12', @iCategId, '_bx_files_option_per_page_browse', 'digit', '', '', '', 10),
+('bx_files_per_page_profile', '3', @iCategId, '_bx_files_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_files_rss_num', '10', @iCategId, '_bx_files_option_rss_num', 'digit', '', '', '', 20),
-('bx_files_searchable_fields', 'title,desc', @iCategId, '_bx_files_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_files";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_files_searchable_fields', 'title,desc,data', @iCategId, '_bx_files_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_files";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
 -- PAGE: create entry
 
@@ -99,6 +99,15 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_files_author', 1, 'bx_files', '_bx_files_page_block_title_sys_favorites_of_author', '_bx_files_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:15:\"browse_favorite\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
 ('bx_files_author', 1, 'bx_files', '_bx_files_page_block_title_sys_entries_of_author', '_bx_files_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3);
 
+-- PAGE: entries of group
+
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_files_group', 'group-files', '_bx_files_page_title_sys_entries_of_author', '_bx_files_page_title_entries_of_author', 'bx_files', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxFilesPageAuthor', 'modules/boonex/files/classes/BxFilesPageAuthor.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_files_group', 1, 'bx_files', '', '_bx_files_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 1),
+('bx_files_group', 1, 'bx_files', '_bx_files_page_block_title_sys_entries_of_author', '_bx_files_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:19:\"browse_group_author\";}', 0, 0, 1, 3);
+
 -- PAGE: module home
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -131,8 +140,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 SET @iPBCellProfile = 3;
+SET @iPBCellGroup = 4;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_files', '_bx_files_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_author";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0);
+('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_files', '_bx_files_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:8:"per_page";s:25:"bx_files_per_page_profile";}}}', 0, 0, 0),
+('trigger_page_group_view_entry', @iPBCellGroup, 'bx_files', '_bx_files_page_block_title_group_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:19:"browse_group_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:8:"per_page";s:25:"bx_files_per_page_profile";}}}', 0, 0, 0);
 
 -- PAGE: service blocks
 
@@ -140,9 +151,8 @@ SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' A
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('', 0, 'bx_files', '_bx_files_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
 
-('', 0, 'bx_files', '_bx_files_page_block_title_recent_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
-('', 0, 'bx_files', '_bx_files_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
-('', 0, 'bx_files', '_bx_files_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4);
+('', 0, 'bx_files', '_bx_files_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2);
+
 
 -- MENU: add to site menu
 
@@ -186,7 +196,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_files_my', 'bx_files', '_bx_files_menu_set_title_entries_my', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_files_my', 'bx_files', 'create-file', '_bx_files_menu_item_title_system_create_entry', '_bx_files_menu_item_title_create_entry', 'page.php?i=create-file', '', '', 'plus', '', 2147483647, 1, 0, 0);
+('bx_files_my', 'bx_files', 'create-file', '_bx_files_menu_item_title_system_create_entry', '_bx_files_menu_item_title_create_entry', 'page.php?i=create-file&profile_id={profile_id}', '', '', 'plus', '', 2147483647, 1, 0, 0);
 
 
 -- MENU: module sub-menu
@@ -234,16 +244,17 @@ SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WH
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_account_dashboard_manage_tools', 'bx_files', 'files-administration', '_bx_files_menu_item_title_system_admt_files', '_bx_files_menu_item_title_admt_files', 'page.php?i=files-administration', '', '_self', '', 'a:2:{s:6:"module";s:8:"bx_files";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
--- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
+-- MENU: add menu item to profile & group based modules (trigger* menu sets are processed separately upon modules enable/disable)
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_files', 'files-author', '_bx_files_menu_item_title_system_view_entries_author', '_bx_files_menu_item_title_view_entries_author', 'page.php?i=files-author&profile_id={profile_id}', '', '', 'file-o col-red3', '', 2147483647, 1, 0, 0);
+('trigger_profile_view_submenu', 'bx_files', 'files-author', '_bx_files_menu_item_title_system_view_entries_author', '_bx_files_menu_item_title_view_entries_author', 'page.php?i=files-author&profile_id={profile_id}', '', '', 'file-o col-red3', '', 2147483647, 1, 0, 0),
+('trigger_group_view_submenu', 'bx_files', 'group-files', '_bx_files_menu_item_title_system_view_entries_author', '_bx_files_menu_item_title_view_entries_author', 'page.php?i=group-files&profile_id={profile_id}', '', '', 'file-o col-red3', '', 2147483647, 1, 0, 0);
 
 
 -- PRIVACY 
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_files_allow_view_to', 'bx_files', 'view', '_bx_files_form_entry_input_allow_view_to', '3', 'bx_files_main', 'id', 'author', '', '');
+('bx_files_allow_view_to', 'bx_files', 'view', '_bx_files_form_entry_input_allow_view_to', '3', 'bx_files_main', 'id', 'author', 'BxFilesPrivacy', 'modules/boonex/files/classes/BxFilesPrivacy.php');
 
 
 -- ACL
@@ -259,10 +270,6 @@ SET @iIdActionEntryDelete = LAST_INSERT_ID();
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_files', 'view entry', NULL, '_bx_files_acl_action_view_entry', '', 1, 0);
 SET @iIdActionEntryView = LAST_INSERT_ID();
-
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_files', 'set thumb', NULL, '_bx_files_acl_action_set_thumb', '', 1, 3);
-SET @iIdActionSetThumb = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_files', 'edit any entry', NULL, '_bx_files_acl_action_edit_any_entry', '', 1, 3);
@@ -301,12 +308,6 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionEntryView),
 (@iAdministrator, @iIdActionEntryView),
 (@iPremium, @iIdActionEntryView),
-
--- set entry thumb
-(@iStandard, @iIdActionSetThumb),
-(@iModerator, @iIdActionSetThumb),
-(@iAdministrator, @iIdActionSetThumb),
-(@iPremium, @iIdActionSetThumb),
 
 -- edit any entry
 (@iModerator, @iIdActionEntryEditAny),
@@ -370,4 +371,9 @@ SET @iHandler := LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
 ('profile', 'delete', @iHandler);
+
+-- CRON
+
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_files_process_data', '* * * * *', 'BxFilesCronProcessData', 'modules/boonex/files/classes/BxFilesCronProcessData.php', '');
 

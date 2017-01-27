@@ -8,9 +8,12 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `author` int(10) unsigned NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `desc` text NOT NULL,
+  `data` text NOT NULL,
+  `data_processed` tinyint(4) NOT NULL DEFAULT '0',
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
@@ -21,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `search_fields` (`title`,`desc`)
+  FULLTEXT KEY `search_fields` (`title`,`desc`,`data`)
 );
 
 -- TABLE: storages & transcoders
@@ -180,15 +183,17 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_files', 'bx_files', 'do_submit', '_bx_files_form_entry_input_do_submit', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files', 'bx_files', 'attachments', 'a:1:{i:0;s:14:"bx_files_html5";}', 'a:2:{s:15:"bx_files_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_files_form_entry_input_sys_attachments', '_bx_files_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files', 'bx_files', 'desc', '', '', 0, 'textarea', '_bx_files_form_entry_input_sys_desc', '_bx_files_form_entry_input_desc', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
+('bx_files', 'bx_files', 'data', '', '', 0, 'textarea', '_bx_files_form_entry_input_sys_data', '_bx_files_form_entry_input_data', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_files', 'bx_files', 'title', '', '', 0, 'text', '_bx_files_form_entry_input_sys_title', '_bx_files_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_files_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_files', 'bx_files', 'cat', '', '#!bx_files_cats', 0, 'select', '_bx_files_form_entry_input_sys_cat', '_bx_files_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_files_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_files', 'bx_files', 'added', '', '', 0, 'datetime', '_bx_files_form_entry_input_sys_date_added', '_bx_files_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files', 'bx_files', 'changed', '', '', 0, 'datetime', '_bx_files_form_entry_input_sys_date_changed', '_bx_files_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 
-('bx_files_upload', 'bx_files', 'attachments', 'a:1:{i:0;s:14:"bx_files_html5";}', 'a:2:{s:15:"bx_files_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_files_form_entry_input_sys_attachments', '_bx_files_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_files_upload', 'bx_files', 'attachments', 'a:1:{i:0;s:14:"bx_files_html5";}', 'a:2:{s:15:"bx_files_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_files_form_entry_input_sys_attachment', '_bx_files_form_entry_input_attachment', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'cat', '', '#!bx_files_cats', 0, 'select', '_bx_files_form_entry_input_sys_cat', '_bx_files_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_files_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_files_upload', 'bx_files', 'allow_view_to', '', '', 0, 'custom', '_bx_files_form_entry_input_sys_allow_view_to', '_bx_files_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_files_upload', 'bx_files', 'do_submit', '_bx_files_form_entry_input_do_submit', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_files_upload', 'bx_files', 'do_submit', '_bx_files_form_entry_input_do_submit', '', 0, 'submit', '_bx_files_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_files_upload', 'bx_files', 'profile_id', '0', '', 0, 'hidden', '_bx_files_form_entry_input_sys_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
@@ -205,9 +210,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_files_entry_edit', 'title', 2147483647, 1, 3),
 ('bx_files_entry_edit', 'cat', 2147483647, 1, 4),
 ('bx_files_entry_edit', 'desc', 2147483647, 1, 5),
-('bx_files_entry_edit', 'attachments', 2147483647, 1, 6),
-('bx_files_entry_edit', 'allow_view_to', 2147483647, 1, 7),
-('bx_files_entry_edit', 'do_submit', 2147483647, 1, 8),
+('bx_files_entry_edit', 'data', 0, 1, 6),
+('bx_files_entry_edit', 'attachments', 2147483647, 1, 7),
+('bx_files_entry_edit', 'allow_view_to', 2147483647, 1, 8),
+('bx_files_entry_edit', 'do_submit', 2147483647, 1, 9),
 ('bx_files_entry_view', 'attachments', 2147483647, 0, 0),
 ('bx_files_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_files_entry_view', 'desc', 2147483647, 0, 0),
@@ -219,10 +225,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_files_entry_view', 'added', 2147483647, 1, 2),
 ('bx_files_entry_view', 'changed', 2147483647, 1, 3),
 
-('bx_files_entry_upload', 'attachments', 2147483647, 1, 1),
-('bx_files_entry_upload', 'cat', 2147483647, 1, 2),
-('bx_files_entry_upload', 'allow_view_to', 2147483647, 1, 3),
-('bx_files_entry_upload', 'do_submit', 2147483647, 1, 4);
+('bx_files_entry_upload', 'profile_id', 2147483647, 1, 1),
+('bx_files_entry_upload', 'attachments', 2147483647, 1, 2),
+('bx_files_entry_upload', 'cat', 2147483647, 1, 3),
+('bx_files_entry_upload', 'allow_view_to', 2147483647, 1, 4),
+('bx_files_entry_upload', 'do_submit', 2147483647, 1, 5);
 
 -- PRE-VALUES
 
@@ -231,38 +238,17 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUE
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_files_cats', '', 0, '_sys_please_select', ''),
-('bx_files_cats', '1', 1, '_bx_files_cat_Animals_Pets', ''),
-('bx_files_cats', '2', 2, '_bx_files_cat_Architecture', ''),
-('bx_files_cats', '3', 3, '_bx_files_cat_Art', ''),
-('bx_files_cats', '4', 4, '_bx_files_cat_Cars_Motorcycles', ''),
-('bx_files_cats', '5', 5, '_bx_files_cat_Celebrities', ''),
-('bx_files_cats', '6', 6, '_bx_files_cat_Design', ''),
-('bx_files_cats', '7', 7, '_bx_files_cat_DIY_Crafts', ''),
-('bx_files_cats', '8', 8, '_bx_files_cat_Education', ''),
-('bx_files_cats', '9', 9, '_bx_files_cat_Film_Music_Books', ''),
-('bx_files_cats', '10', 10, '_bx_files_cat_Food_Drink', ''),
-('bx_files_cats', '11', 11, '_bx_files_cat_Gardening', ''),
-('bx_files_cats', '12', 12, '_bx_files_cat_Geek', ''),
-('bx_files_cats', '13', 13, '_bx_files_cat_Hair_Beauty', ''),
-('bx_files_cats', '14', 14, '_bx_files_cat_Health_Fitness', ''),
-('bx_files_cats', '15', 15, '_bx_files_cat_History', ''),
-('bx_files_cats', '16', 16, '_bx_files_cat_Holidays_Events', ''),
-('bx_files_cats', '17', 17, '_bx_files_cat_Home_Decor', ''),
-('bx_files_cats', '18', 18, '_bx_files_cat_Humor', ''),
-('bx_files_cats', '19', 19, '_bx_files_cat_Illustrations_Posters', ''),
-('bx_files_cats', '20', 20, '_bx_files_cat_Kids_Parenting', ''),
-('bx_files_cats', '21', 21, '_bx_files_cat_Mens_Fashion', ''),
-('bx_files_cats', '22', 22, '_bx_files_cat_Outdoors', ''),
-('bx_files_cats', '23', 23, '_bx_files_cat_Photography', ''),
-('bx_files_cats', '24', 24, '_bx_files_cat_Products', ''),
-('bx_files_cats', '25', 25, '_bx_files_cat_Quotes', ''),
-('bx_files_cats', '26', 26, '_bx_files_cat_Science_Nature', ''),
-('bx_files_cats', '27', 27, '_bx_files_cat_Sports', ''),
-('bx_files_cats', '28', 28, '_bx_files_cat_Tattoos', ''),
-('bx_files_cats', '29', 29, '_bx_files_cat_Technology', ''),
-('bx_files_cats', '30', 30, '_bx_files_cat_Travel', ''),
-('bx_files_cats', '31', 31, '_bx_files_cat_Weddings', ''),
-('bx_files_cats', '32', 32, '_bx_files_cat_Womens_Fashion', '');
+('bx_files_cats', '1', 1, '_bx_files_cat_documentation', ''),
+('bx_files_cats', '2', 2, '_bx_files_cat_presentation', ''),
+('bx_files_cats', '3', 3, '_bx_files_cat_report', ''),
+('bx_files_cats', '4', 4, '_bx_files_cat_proposal', ''),
+('bx_files_cats', '5', 5, '_bx_files_cat_list', ''),
+('bx_files_cats', '6', 6, '_bx_files_cat_record', ''),
+('bx_files_cats', '7', 7, '_bx_files_cat_screencast', ''),
+('bx_files_cats', '8', 8, '_bx_files_cat_screenshot', ''),
+('bx_files_cats', '9', 9, '_bx_files_cat_sketch', ''),
+('bx_files_cats', '10', 10, '_bx_files_cat_archive', ''),
+('bx_files_cats', '11', 11, '_bx_files_cat_backup', '');
 
 -- COMMENTS
 

@@ -45,20 +45,22 @@ $aConfig = array(
      */
     'page_triggers' => array (
     	'trigger_page_profile_view_entry',
+    	'trigger_page_group_view_entry',
     ),
     
     /**
      * Menu triggers.
      */
     'menu_triggers' => array(
-    	'trigger_profile_view_submenu'
+    	'trigger_profile_view_submenu',
+    	'trigger_group_view_submenu',
     ),
 
     /**
      * Storages.
      */
     'storages' => array(
-    	'bx_files_files'
+    	'bx_files_files',
     ),
 
     /**
@@ -116,7 +118,7 @@ $aConfig = array(
      */
     'relations' => array(
     	'bx_timeline',
-    	'bx_notifications'
+    	'bx_notifications',
     ),
 
 );

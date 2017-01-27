@@ -5,13 +5,14 @@
 	<string name="_bx_files_cmts"><![CDATA[Files' Comments]]></string>
 
 	<string name="_bx_files_option_summary_chars"><![CDATA[Number of characters in auto-cropped file summary]]></string>
-	<string name="_bx_files_option_plain_summary_chars"><![CDATA[Number of characters in plain file description when file hasn't thumb]]></string>
 	<string name="_bx_files_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_files_option_per_page_profile"><![CDATA[Number of items per page on profile/group page]]></string>
 	<string name="_bx_files_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_files_option_searchable_fields"><![CDATA[Searchable fields]]></string>
 
+	<string name="_bx_files_form_upload"><![CDATA[Files Upload]]></string>
 	<string name="_bx_files_form_entry"><![CDATA[Files]]></string>
-	<string name="_bx_files_form_entry_display_add"><![CDATA[Add File]]></string>
+	<string name="_bx_files_form_entry_display_add"><![CDATA[Add Files]]></string>
 	<string name="_bx_files_form_entry_display_edit"><![CDATA[Edit File]]></string>
 	<string name="_bx_files_form_entry_display_delete"><![CDATA[Delete File]]></string>
 	<string name="_bx_files_form_entry_display_view"><![CDATA[View File]]></string>
@@ -26,13 +27,17 @@
 	<string name="_bx_files_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_files_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
 	<string name="_bx_files_form_entry_input_sys_desc"><![CDATA[Description]]></string>
-	<string name="_bx_files_form_entry_input_desc"><![CDATA[Description]]></string>
+    <string name="_bx_files_form_entry_input_desc"><![CDATA[Description]]></string>
+	<string name="_bx_files_form_entry_input_sys_data"><![CDATA[File data]]></string>
+	<string name="_bx_files_form_entry_input_data"><![CDATA[File data]]></string>
 	<string name="_bx_files_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this file]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the file]]></string>
+	<string name="_bx_files_form_entry_input_sys_attachment"><![CDATA[File]]></string>
+    <string name="_bx_files_form_entry_input_attachment"><![CDATA[File]]></string>
 	<string name="_bx_files_form_entry_input_sys_attachments"><![CDATA[Files]]></string>
-	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Files]]></string>
+	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Files]]></string>    
     <string name="_bx_files_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_files_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_files_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>
@@ -44,7 +49,6 @@
 	<string name="_bx_files_acl_action_create_entry"><![CDATA[Create File]]></string>
 	<string name="_bx_files_acl_action_delete_entry"><![CDATA[Delete File]]></string>
 	<string name="_bx_files_acl_action_view_entry"><![CDATA[View File]]></string>
-	<string name="_bx_files_acl_action_set_thumb"><![CDATA[Set File Thumbnail]]></string>
 	<string name="_bx_files_acl_action_edit_any_entry"><![CDATA[Edit Any File]]></string>
 
 	<string name="_bx_files_page_title_sys_create_entry"><![CDATA[Upload Files]]></string>
@@ -69,7 +73,6 @@
     <string name="_bx_files_page_title_home"><![CDATA[Files]]></string>
     <string name="_bx_files_page_block_title_recent_entries"><![CDATA[Latest (Gallery View)]]></string>
     <string name="_bx_files_page_block_title_recent_entries_view_extended"><![CDATA[Latest]]></string>
-    <string name="_bx_files_page_block_title_recent_entries_view_full"><![CDATA[Latest (Full View)]]></string>
     <string name="_bx_files_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_files_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_files_page_block_title_entry_actions"><![CDATA[Actions]]></string>
@@ -84,7 +87,6 @@
     <string name="_bx_files_page_title_entries_updated"><![CDATA[Updated Files]]></string>
     <string name="_bx_files_page_block_title_popular_entries"><![CDATA[Popular]]></string>
     <string name="_bx_files_page_block_title_popular_entries_view_extended"><![CDATA[Popular (Extended View)]]></string>
-    <string name="_bx_files_page_block_title_popular_entries_view_full"><![CDATA[Popular (Full View)]]></string>
     <string name="_bx_files_page_block_title_updated_entries"><![CDATA[Updated Files]]></string>
     <string name="_bx_files_page_title_sys_view_entry_comments"><![CDATA[File Comments]]></string>
     <string name="_bx_files_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
@@ -107,6 +109,7 @@
 	<string name="_bx_files_page_block_title_entry_info"><![CDATA[Info]]></string>
 	<string name="_bx_files_page_block_title_my_entries"><![CDATA[My Files]]></string>
 	<string name="_bx_files_page_block_title_entry_file_preview"><![CDATA[File Preview]]></string>
+	<string name="_bx_files_page_block_title_group_entries"><![CDATA[Files]]></string>
 
     <string name="_bx_files_menu_set_title_view_entry"><![CDATA[File Actions]]></string>
     <string name="_bx_files_menu_title_view_entry"><![CDATA[File Actions]]></string>
@@ -163,42 +166,24 @@
     <string name="_bx_files_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
     <string name="_bx_files_pre_lists_cats"><![CDATA[File categories]]></string>
-    <string name="_bx_files_cat_Animals_Pets"><![CDATA[Animals & Pets]]></string>
-    <string name="_bx_files_cat_Architecture"><![CDATA[Architecture]]></string>
-    <string name="_bx_files_cat_Art"><![CDATA[Art]]></string>
-    <string name="_bx_files_cat_Cars_Motorcycles"><![CDATA[Cars & Motorcycles]]></string>
-    <string name="_bx_files_cat_Celebrities"><![CDATA[Celebrities]]></string>
-    <string name="_bx_files_cat_Design"><![CDATA[Design]]></string>
-    <string name="_bx_files_cat_DIY_Crafts"><![CDATA[DIY & Crafts]]></string>
-    <string name="_bx_files_cat_Education"><![CDATA[Education]]></string>
-    <string name="_bx_files_cat_Film_Music_Books"><![CDATA[Film, Music & Books]]></string>
-    <string name="_bx_files_cat_Food_Drink"><![CDATA[Food & Drink]]></string>
-    <string name="_bx_files_cat_Gardening"><![CDATA[Gardening]]></string>
-    <string name="_bx_files_cat_Geek"><![CDATA[Geek]]></string>
-    <string name="_bx_files_cat_Hair_Beauty"><![CDATA[Hair & Beauty]]></string>
-    <string name="_bx_files_cat_Health_Fitness"><![CDATA[Health & Fitness]]></string>
-    <string name="_bx_files_cat_History"><![CDATA[History]]></string>
-    <string name="_bx_files_cat_Holidays_Events"><![CDATA[Holidays & Events]]></string>
-    <string name="_bx_files_cat_Home_Decor"><![CDATA[Home Decor]]></string>
-    <string name="_bx_files_cat_Humor"><![CDATA[Humor]]></string>
-    <string name="_bx_files_cat_Illustrations_Fileers"><![CDATA[Illustrations & Fileers]]></string>
-    <string name="_bx_files_cat_Kids_Parenting"><![CDATA[Kids & Parenting]]></string>
-    <string name="_bx_files_cat_Mens_Fashion"><![CDATA[Men's Fashion]]></string>
-    <string name="_bx_files_cat_Outdoors"><![CDATA[Outdoors]]></string>
-    <string name="_bx_files_cat_Photography"><![CDATA[Photography]]></string>
-    <string name="_bx_files_cat_Products"><![CDATA[Products]]></string>
-    <string name="_bx_files_cat_Quotes"><![CDATA[Quotes]]></string>
-    <string name="_bx_files_cat_Science_Nature"><![CDATA[Science & Nature]]></string>
-    <string name="_bx_files_cat_Sports"><![CDATA[Sports]]></string>
-    <string name="_bx_files_cat_Tattoos"><![CDATA[Tattoos]]></string>
-    <string name="_bx_files_cat_Technology"><![CDATA[Technology]]></string>
-    <string name="_bx_files_cat_Travel"><![CDATA[Travel]]></string>
-    <string name="_bx_files_cat_Weddings"><![CDATA[Weddings]]></string>
-    <string name="_bx_files_cat_Womens_Fashion"><![CDATA[Women's Fashion]]></string>
+    <string name="_bx_files_cat_documentation"><![CDATA[Documentation]]></string>
+    <string name="_bx_files_cat_presentation"><![CDATA[Presentation]]></string>
+    <string name="_bx_files_cat_report"><![CDATA[Report]]></string>
+    <string name="_bx_files_cat_proposal"><![CDATA[Proposal]]></string>
+    <string name="_bx_files_cat_list"><![CDATA[List]]></string>
+    <string name="_bx_files_cat_record"><![CDATA[Audio record]]></string>
+    <string name="_bx_files_cat_screencast"><![CDATA[Screencast]]></string>
+    <string name="_bx_files_cat_screenshot"><![CDATA[Screenshot]]></string>
+    <string name="_bx_files_cat_sketch"><![CDATA[Sketch]]></string>
+    <string name="_bx_files_cat_archive"><![CDATA[Archive]]></string>
+    <string name="_bx_files_cat_backup"><![CDATA[Backup]]></string>
 
     <string name="_bx_files_txt_all_entries_by"><![CDATA[<a href="{0}">All Files by {1} ({2})</a>]]></string>
     <string name="_bx_files_txt_sample_single"><![CDATA[file]]></string>
     <string name="_bx_files_txt_sample_single_with_article"><![CDATA[a file]]></string>
     <string name="_bx_files_txt_sample_comment_single"><![CDATA[file's comment]]></string>
     <string name="_bx_files_txt_sample_vote_single"><![CDATA[file's vote]]></string>
+
+    <string name="_bx_files_privacy_public"><![CDATA[Public]]></string>
+    <string name="_bx_files_privacy_participants"><![CDATA[Participants]]></string>
 </resources>

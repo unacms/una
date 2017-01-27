@@ -21,7 +21,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule());
+    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
     	if($sResult)
             return $sResult;
 
@@ -101,13 +101,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         ));
     }
 
-    protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule)
+    protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule, $sTemplateName = '')
     {
         if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
             $aVars = array (
                 'summary' => $sMsg,
             );
-            return $this->parseHtmlByName('unit_private.html', $aVars);
+            return $this->parseHtmlByName($sTemplateName ? str_replace('.html', '_private.html', $sTemplateName) : 'unit_private.html', $aVars);
         }
 
         return '';
@@ -152,7 +152,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         // get summary
         $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
         $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
-        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
+        $sSummaryPlain = isset($CNF['PARAM_CHARS_SUMMARY_PLAIN']) && $CNF['PARAM_CHARS_SUMMARY_PLAIN'] ? BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN'])) : '';
 
         $sText = $aData[$CNF['FIELD_TEXT']];
         if (!empty($CNF['OBJECT_METATAGS'])) {

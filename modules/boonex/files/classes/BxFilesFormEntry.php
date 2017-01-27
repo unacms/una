@@ -21,9 +21,29 @@ class BxFilesFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
         
-        if (isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
+        if (isset($this->aInputs[$CNF['FIELD_PHOTO']]))
             $this->aInputs[$CNF['FIELD_PHOTO']]['multiple'] = false;
-        }
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
+
+            $aSave = array('db' => array('pass' => 'Xss'));
+            array_walk($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], function ($a, $k, $aSave) {
+                if (in_array($k, array('info', 'caption', 'value')))
+                    $aSave[0][$k] = $a;
+            }, array(&$aSave));
+            
+            $aGroupChooser = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
+            
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], $aGroupChooser, $aSave);
+		}
+    }
+
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
+    {
+        parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField);
+
+        $this->_oModule->_oDb->updateFileId($iContentId, $iFileId);
     }
 }
 

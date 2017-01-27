@@ -62,7 +62,24 @@ class BxFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         }
 
         // redirect
-        $this->_redirectAndExit('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . bx_get_logged_profile_id());
+        $iContentId = array_pop($aContentIds);
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        $oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
+        $sUri = BxDolService::call($oProfile->getModule(), 'is_group_profile') ? $CNF['URI_GROUP_ENTRIES'] . '&profile_id=' . $oProfile->id() : $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . bx_get_logged_profile_id();
+        $this->_redirectAndExit('page.php?i=' . $sUri);
+    }
+
+    protected function redirectAfterDelete($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
+        if (BxDolService::call($oProfile->getModule(), 'is_group_profile'))
+            $this->_redirectAndExit('page.php?i=' . $CNF['URI_GROUP_ENTRIES'] . '&profile_id=' . $oProfile->id());
+        else
+            $this->_redirectAndExit($CNF['URL_HOME'], true, array(
+                'account_id' => getLoggedId(),
+                'profile_id' => bx_get_logged_profile_id(),
+            ));
     }
 }
 
