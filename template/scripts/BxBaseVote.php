@@ -21,6 +21,8 @@ class BxBaseVote extends BxDolVote
 
     protected $_aElementDefaults;
 
+    protected $_sTmplNameElementBlock;
+    protected $_sTmplNameElementInline;
     protected $_sTmplNameCounter;
     protected $_sTmplNameLegend;
     protected $_sTmplNameDoVoteLikes;
@@ -60,6 +62,8 @@ class BxBaseVote extends BxDolVote
             )
         );
 
+        $this->_sTmplNameElementBlock = 'vote_element_block.html';
+        $this->_sTmplNameElementInline = 'vote_element_inline.html';
         $this->_sTmplNameCounter = 'vote_counter.html';
         $this->_sTmplNameLegend = 'vote_legend.html';
         $this->_sTmplNameDoVoteLikes = 'vote_do_vote_likes.html';
@@ -257,7 +261,7 @@ class BxBaseVote extends BxDolVote
 		if(!$bTmplVarsDoVote && !$bTmplVarsCounter && !$bTmplVarsLegend)
 			return '';
 
-        $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
+        $sTmplName = $this->{'_sTmplNameElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT)};
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main_' . $this->_sType],
@@ -348,8 +352,7 @@ class BxBaseVote extends BxDolVote
         	'bx_if:show_onclick' => array(
         		'condition' => !$bDisabled,
         		'content' => array(
-        			'js_object' => $this->getJsObjectName(),
-        			'value' => $this->getMinValue(),
+                    'onclick' => $this->getJsClick()
         		)
         	),
             'do_vote' => $this->_getLabelDoLike($aParams),

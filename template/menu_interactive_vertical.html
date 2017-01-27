@@ -14,7 +14,8 @@
     $(document).ready(function() {
     	$('#bx-menu-inter-__id__').find('a').bind('click', function() {
     		var sId = $(this).attr('id');
-			$(this).parent().siblings('.bx-menu-inter-act:visible').hide().siblings('.bx-menu-inter-pas:hidden').show().siblings('#' + sId + '-pas:visible').hide().siblings('#' + sId + '-act:hidden').show();
+    		var sClassHidden = 'bx-menu-inter-hidden';
+			$(this).parent().siblings('.bx-menu-inter-act:not(.' + sClassHidden + ')').addClass(sClassHidden).siblings('.bx-menu-inter-pas.' + sClassHidden).removeClass(sClassHidden).siblings('#' + sId + '-pas:not(.' + sClassHidden + ')').addClass(sClassHidden).siblings('#' + sId + '-act.' + sClassHidden).removeClass(sClassHidden);
     	});
     });
 </script>

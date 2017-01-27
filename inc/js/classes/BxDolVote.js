@@ -75,7 +75,7 @@ BxDolVote.prototype.out = function (oLink)
 	oSlider.width(this._iSaveWidth);
 };
 
-BxDolVote.prototype.vote = function (oLink, iValue)
+BxDolVote.prototype.vote = function (oLink, iValue, onComplete)
 {
     var $this = this;
     var oParams = this._getDefaultParams();
@@ -114,6 +114,9 @@ BxDolVote.prototype.vote = function (oLink, iValue)
 
             	oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
             }
+
+            if(typeof onComplete == 'function')
+            	onComplete(oLink, oData);
         },
         'json'
     );
