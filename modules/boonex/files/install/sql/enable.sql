@@ -151,9 +151,8 @@ SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' A
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('', 0, 'bx_files', '_bx_files_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
 
-('', 0, 'bx_files', '_bx_files_page_block_title_recent_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
-('', 0, 'bx_files', '_bx_files_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
-('', 0, 'bx_files', '_bx_files_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4);
+('', 0, 'bx_files', '_bx_files_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2);
+
 
 -- MENU: add to site menu
 
@@ -273,10 +272,6 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_files', 'set thumb', NULL, '_bx_files_acl_action_set_thumb', '', 1, 3);
-SET @iIdActionSetThumb = LAST_INSERT_ID();
-
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_files', 'edit any entry', NULL, '_bx_files_acl_action_edit_any_entry', '', 1, 3);
 SET @iIdActionEntryEditAny = LAST_INSERT_ID();
 
@@ -313,12 +308,6 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionEntryView),
 (@iAdministrator, @iIdActionEntryView),
 (@iPremium, @iIdActionEntryView),
-
--- set entry thumb
-(@iStandard, @iIdActionSetThumb),
-(@iModerator, @iIdActionSetThumb),
-(@iAdministrator, @iIdActionSetThumb),
-(@iPremium, @iIdActionSetThumb),
 
 -- edit any entry
 (@iModerator, @iIdActionEntryEditAny),

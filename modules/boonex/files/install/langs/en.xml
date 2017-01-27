@@ -34,8 +34,10 @@
 	<string name="_bx_files_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this file]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the file]]></string>
+	<string name="_bx_files_form_entry_input_sys_attachment"><![CDATA[File]]></string>
+    <string name="_bx_files_form_entry_input_attachment"><![CDATA[File]]></string>
 	<string name="_bx_files_form_entry_input_sys_attachments"><![CDATA[Files]]></string>
-	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Files]]></string>
+	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Files]]></string>    
     <string name="_bx_files_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_files_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_files_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>
@@ -47,7 +49,6 @@
 	<string name="_bx_files_acl_action_create_entry"><![CDATA[Create File]]></string>
 	<string name="_bx_files_acl_action_delete_entry"><![CDATA[Delete File]]></string>
 	<string name="_bx_files_acl_action_view_entry"><![CDATA[View File]]></string>
-	<string name="_bx_files_acl_action_set_thumb"><![CDATA[Set File Thumbnail]]></string>
 	<string name="_bx_files_acl_action_edit_any_entry"><![CDATA[Edit Any File]]></string>
 
 	<string name="_bx_files_page_title_sys_create_entry"><![CDATA[Upload Files]]></string>
@@ -72,7 +73,6 @@
     <string name="_bx_files_page_title_home"><![CDATA[Files]]></string>
     <string name="_bx_files_page_block_title_recent_entries"><![CDATA[Latest (Gallery View)]]></string>
     <string name="_bx_files_page_block_title_recent_entries_view_extended"><![CDATA[Latest]]></string>
-    <string name="_bx_files_page_block_title_recent_entries_view_full"><![CDATA[Latest (Full View)]]></string>
     <string name="_bx_files_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_files_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_files_page_block_title_entry_actions"><![CDATA[Actions]]></string>
@@ -87,7 +87,6 @@
     <string name="_bx_files_page_title_entries_updated"><![CDATA[Updated Files]]></string>
     <string name="_bx_files_page_block_title_popular_entries"><![CDATA[Popular]]></string>
     <string name="_bx_files_page_block_title_popular_entries_view_extended"><![CDATA[Popular (Extended View)]]></string>
-    <string name="_bx_files_page_block_title_popular_entries_view_full"><![CDATA[Popular (Full View)]]></string>
     <string name="_bx_files_page_block_title_updated_entries"><![CDATA[Updated Files]]></string>
     <string name="_bx_files_page_title_sys_view_entry_comments"><![CDATA[File Comments]]></string>
     <string name="_bx_files_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
@@ -172,7 +171,7 @@
     <string name="_bx_files_cat_report"><![CDATA[Report]]></string>
     <string name="_bx_files_cat_proposal"><![CDATA[Proposal]]></string>
     <string name="_bx_files_cat_list"><![CDATA[List]]></string>
-    <string name="_bx_files_cat_record"><![CDATA[Record]]></string>
+    <string name="_bx_files_cat_record"><![CDATA[Audio record]]></string>
     <string name="_bx_files_cat_screencast"><![CDATA[Screencast]]></string>
     <string name="_bx_files_cat_screenshot"><![CDATA[Screenshot]]></string>
     <string name="_bx_files_cat_sketch"><![CDATA[Sketch]]></string>
