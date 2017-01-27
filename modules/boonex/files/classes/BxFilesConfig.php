@@ -65,7 +65,7 @@ class BxFilesConfig extends BxBaseModTextConfig
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_files_summary_chars',
-            'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_files_plain_summary_chars',
+            'PARAM_CHARS_SUMMARY_PLAIN' => '',
             'PARAM_NUM_RSS' => 'bx_files_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_files_searchable_fields',
 
