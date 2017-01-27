@@ -28,6 +28,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
         	'TABLE_SUBENTRIES' => $aModule['db_prefix'] . 'subentries',
+            'TABLE_VOTES_SUBENTRIES_TRACK' => $aModule['db_prefix'] . 'votes_subentries_track',
         	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
@@ -126,11 +127,13 @@ class BxPollsConfig extends BxBaseModTextConfig
 
         $this->_aJsClasses = array(
             'form' => 'BxPollsForm',
+        	'entry' => 'BxPollsEntry',
         	'manage_tools' => 'BxPollsManageTools'
         );
 
         $this->_aJsObjects = array(
         	'form' => 'oBxPollsForm',
+        	'entry' => 'oBxPollsEntry',
         	'manage_tools' => 'oBxPollsManageTools'
         );
 
@@ -139,6 +142,21 @@ class BxPollsConfig extends BxBaseModTextConfig
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	
         );
+
+        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array(
+            'block_menu' => $sHtmlPrefix . '-block-menu',
+        	'block_link_subentries' => $sHtmlPrefix . '-block-subentries',
+        	'block_link_results' => $sHtmlPrefix . '-block-results',
+        );
+    }
+
+    public function getHtmlIds($sKey = '')
+    {
+        if(empty($sKey))
+            return $this->_aHtmlIds;
+
+        return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
 }
 

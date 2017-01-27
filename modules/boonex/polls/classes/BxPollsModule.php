@@ -19,10 +19,41 @@ class BxPollsModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
-    public function serviceEntitySubentriesBlock($iContentId = 0)
+    /**
+     * ACTION METHODS
+     */
+    public function actionGetBlock()
     {
-        return $this->_serviceTemplateFunc ('entrySubentries', $iContentId);
+        $iContentId = (int)bx_get('content_id');
+        $sBlock = bx_process_input(bx_get('block'));
+
+        $sMethod = 'serviceGetBlock' . bx_gen_method_name($sBlock);
+        if(!method_exists($this, $sMethod))
+            return echoJson(array());
+
+        $aBlock = $this->$sMethod($iContentId);
+        if(empty($aBlock) || !is_array($aBlock))
+            return echoJson(array());
+
+        return echoJson(array(
+        	'content' => $aBlock['content']
+        ));
     }
+
+    /**
+     * SERVICE METHODS
+     */
+    public function serviceGetBlockSubentries($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entrySubentries', $iContentId);
+    }
+
+    public function serviceGetBlockResults($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryResults', $iContentId);
+    }
+
+    
 }
 
 /** @} */

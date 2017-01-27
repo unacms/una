@@ -19,6 +19,16 @@ class BxPollsDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
+    public function isPerformed($iEntryId, $iAuthorId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aSubentries = $this->getSubentries(array('type' => 'entry_id_pairs', 'entry_id' => $iEntryId));
+        return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_VOTES_SUBENTRIES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aSubentries)) . ") AND `author_id`=:author_id LIMIT 1", array(
+            'author_id' => $iAuthorId
+        )) != 0;
+    }
+
     public function getContentInfoBySubentryId ($iSubentryId)
     {
         $CNF = &$this->_oConfig->CNF;

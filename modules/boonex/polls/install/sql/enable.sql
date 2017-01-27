@@ -17,8 +17,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_polls_rss_num', '10', @iCategId, '_bx_polls_option_rss_num', 'digit', '', '', '', 20),
 ('bx_polls_searchable_fields', 'title,text', @iCategId, '_bx_polls_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_polls";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
--- PAGE: create entry
 
+-- PAGE: create entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_create_entry', '_bx_polls_page_title_sys_create_entry', '_bx_polls_page_title_create_entry', 'bx_polls', 5, 2147483647, 1, 'create-poll', 'page.php?i=create-poll', '', '', '', 0, 1, 0, 'BxPollsPageBrowse', 'modules/boonex/polls/classes/BxPollsPageBrowse.php');
 
@@ -27,7 +27,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- PAGE: edit entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_edit_entry', '_bx_polls_page_title_sys_edit_entry', '_bx_polls_page_title_edit_entry', 'bx_polls', 5, 2147483647, 1, 'edit-poll', '', '', '', '', 0, 1, 0, 'BxPollsPageEntry', 'modules/boonex/polls/classes/BxPollsPageEntry.php');
 
@@ -36,7 +35,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- PAGE: delete entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_delete_entry', '_bx_polls_page_title_sys_delete_entry', '_bx_polls_page_title_delete_entry', 'bx_polls', 5, 2147483647, 1, 'delete-poll', '', '', '', '', 0, 1, 0, 'BxPollsPageEntry', 'modules/boonex/polls/classes/BxPollsPageEntry.php');
 
@@ -45,13 +43,12 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- PAGE: view entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_view_entry', '_bx_polls_page_title_sys_view_entry', '_bx_polls_page_title_view_entry', 'bx_polls', 10, 2147483647, 1, 'view-poll', '', '', '', '', 0, 1, 0, 'BxPollsPageEntry', 'modules/boonex/polls/classes/BxPollsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 1),
-('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_subentries', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:23:\"entity_subentries_block\";}', 0, 0, 1, 2),
+('bx_polls_view_entry', 1, 'bx_polls', '', '_bx_polls_page_block_title_entry_subentries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:20:\"get_block_subentries\";}', 0, 0, 1, 2),
 ('bx_polls_view_entry', 2, 'bx_polls', '', '_bx_polls_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
 ('bx_polls_view_entry', 3, 'bx_polls', '', '_bx_polls_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 1),
 ('bx_polls_view_entry', 3, 'bx_polls', '', '_bx_polls_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 2),
@@ -64,7 +61,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 
 -- PAGE: view entry comments
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_view_entry_comments', '_bx_polls_page_title_sys_view_entry_comments', '_bx_polls_page_title_view_entry_comments', 'bx_polls', 5, 2147483647, 1, 'view-poll-comments', '', '', '', '', 0, 1, 0, 'BxPollsPageEntry', 'modules/boonex/polls/classes/BxPollsPageEntry.php');
 
@@ -73,7 +69,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 
 -- PAGE: popular entries
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_popular', '_bx_polls_page_title_sys_entries_popular', '_bx_polls_page_title_entries_popular', 'bx_polls', 5, 2147483647, 1, 'polls-popular', 'page.php?i=polls-popular', '', '', '', 0, 1, 0, 'BxPollsPageBrowse', 'modules/boonex/polls/classes/BxPollsPageBrowse.php');
 
@@ -82,7 +77,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 
 -- PAGE: recently updated entries
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_updated', '_bx_polls_page_title_sys_entries_updated', '_bx_polls_page_title_entries_updated', 'bx_polls', 5, 2147483647, 1, 'polls-updated', 'page.php?i=polls-updated', '', '', '', 0, 1, 0, 'BxPollsPageBrowse', 'modules/boonex/polls/classes/BxPollsPageBrowse.php');
 
@@ -91,7 +85,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 
 -- PAGE: entries of author
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_author', 'polls-author', '_bx_polls_page_title_sys_entries_of_author', '_bx_polls_page_title_entries_of_author', 'bx_polls', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxPollsPageAuthor', 'modules/boonex/polls/classes/BxPollsPageAuthor.php');
 
@@ -100,8 +93,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_polls_author', 1, 'bx_polls', '_bx_polls_page_block_title_sys_favorites_of_author', '_bx_polls_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:15:\"browse_favorite\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
 ('bx_polls_author', 1, 'bx_polls', '_bx_polls_page_block_title_sys_entries_of_author', '_bx_polls_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3);
 
--- PAGE: module home
 
+-- PAGE: module home
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_home', 'polls-home', '_bx_polls_page_title_sys_home', '_bx_polls_page_title_home', 'bx_polls', 2, 2147483647, 1, 'page.php?i=polls-home', '', '', '', 0, 1, 0, 'BxPollsPageBrowse', 'modules/boonex/polls/classes/BxPollsPageBrowse.php');
 
@@ -110,12 +103,14 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_polls_home', 2, 'bx_polls', '', '_bx_polls_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:8:\"bx_polls\";i:1;s:8:\"bx_polls\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 1, 1, 0),
 ('bx_polls_home', 2, 'bx_polls', '', '_bx_polls_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:15:\"categories_list\";s:6:\"params\";a:2:{i:0;s:13:\"bx_polls_cats\";i:1;a:1:{s:10:\"show_empty\";b:1;}}s:5:\"class\";s:20:\"TemplServiceCategory\";}', 0, 1, 1, 1);
 
+
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_manage', '_bx_polls_page_title_sys_manage', '_bx_polls_page_title_manage', 'bx_polls', 5, 2147483647, 1, 'polls-manage', 'page.php?i=polls-manage', '', '', '', 0, 1, 0, 'BxPollsPageBrowse', 'modules/boonex/polls/classes/BxPollsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_polls_manage', 1, 'bx_polls', '_bx_polls_page_block_title_system_manage', '_bx_polls_page_block_title_manage', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:12:\"manage_tools\";}}', 0, 1, 0);
+
 
 -- PAGE: module manage all
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -124,19 +119,20 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_polls_administration', 1, 'bx_polls', '_bx_polls_page_block_title_system_manage_administration', '_bx_polls_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
 
--- PAGE: add block to homepage
 
+-- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('sys_home', 1, 'bx_polls', '_bx_polls_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:13:\"browse_public\";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
+
 
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 SET @iPBCellProfile = 3;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_polls', '_bx_polls_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_polls";s:6:"method";s:13:"browse_author";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0);
 
--- PAGE: service blocks
 
+-- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('', 0, 'bx_polls', '_bx_polls_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_polls\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
@@ -145,27 +141,23 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('', 0, 'bx_polls', '_bx_polls_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_polls";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
 ('', 0, 'bx_polls', '_bx_polls_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_polls";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4);
 
--- MENU: add to site menu
 
+-- MENU: add to site menu
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_site', 'bx_polls', 'polls-home', '_bx_polls_menu_item_title_system_entries_home', '_bx_polls_menu_item_title_entries_home', 'page.php?i=polls-home', '', '', 'tasks col-green1', 'bx_polls_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to homepage menu
-
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_homepage', 'bx_polls', 'polls-home', '_bx_polls_menu_item_title_system_entries_home', '_bx_polls_menu_item_title_entries_home', 'page.php?i=polls-home', '', '', 'tasks col-green1', 'bx_polls_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
 -- MENU: add to "add content" menu
-
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_add_content_links', 'bx_polls', 'create-poll', '_bx_polls_menu_item_title_system_create_entry', '_bx_polls_menu_item_title_create_entry', 'page.php?i=create-poll', '', '', 'tasks col-green1', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
-
 -- MENU: actions menu for view entry 
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_view', '_bx_polls_menu_title_view_entry', 'bx_polls_view', 'bx_polls', 9, 0, 1, 'BxPollsMenuView', 'modules/boonex/polls/classes/BxPollsMenuView.php');
 
@@ -176,9 +168,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_polls_view', 'bx_polls', 'edit-poll', '_bx_polls_menu_item_title_system_edit_entry', '_bx_polls_menu_item_title_edit_entry', 'page.php?i=edit-poll&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
 ('bx_polls_view', 'bx_polls', 'delete-poll', '_bx_polls_menu_item_title_system_delete_entry', '_bx_polls_menu_item_title_delete_entry', 'page.php?i=delete-poll&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
 
-
 -- MENU: actions menu for my entries
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_my', '_bx_polls_menu_title_entries_my', 'bx_polls_my', 'bx_polls', 9, 0, 1, 'BxPollsMenu', 'modules/boonex/polls/classes/BxPollsMenu.php');
 
@@ -188,9 +178,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_polls_my', 'bx_polls', 'create-poll', '_bx_polls_menu_item_title_system_create_entry', '_bx_polls_menu_item_title_create_entry', 'page.php?i=create-poll', '', '', 'plus', '', 2147483647, 1, 0, 0);
 
-
 -- MENU: module sub-menu
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_submenu', '_bx_polls_menu_title_submenu', 'bx_polls_submenu', 'bx_polls', 8, 0, 1, '', '');
 
@@ -203,7 +191,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_polls_submenu', 'bx_polls', 'polls-manage', '_bx_polls_menu_item_title_system_entries_manage', '_bx_polls_menu_item_title_entries_manage', 'page.php?i=polls-manage', '', '', '', '', 2147483646, 1, 1, 3);
 
 -- MENU: sub-menu for view entry
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_polls_view_submenu', '_bx_polls_menu_title_view_entry_submenu', 'bx_polls_view_submenu', 'bx_polls', 8, 0, 1, 'BxPollsMenuView', 'modules/boonex/polls/classes/BxPollsMenuView.php');
 

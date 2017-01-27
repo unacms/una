@@ -11,7 +11,7 @@
 
 class BxPollsVoteSubentries extends BxTemplVote
 {
-	protected $MODULE;
+	protected $_sModule;
 	protected $_oModule;
 
 	protected $_aObjectInfo;
@@ -19,8 +19,8 @@ class BxPollsVoteSubentries extends BxTemplVote
 
     function __construct($sSystem, $iId, $iInit = 1)
     {
-    	$this->MODULE = 'bx_polls';
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+    	$this->_sModule = 'bx_polls';
+    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($sSystem, $iId, $iInit, $this->_oModule->_oTemplate);
 
@@ -32,6 +32,21 @@ class BxPollsVoteSubentries extends BxTemplVote
 
         $this->_aObjectInfo = $this->_oModule->_oDb->getSubentries(array('type' => 'id', 'id' => $iId));
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoBySubentryId($iId);
+
+        $this->_sTmplNameElementBlock = 'subentries_ve_block.html';
+    }
+
+    public function getJsClick()
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        if(!$this->isLikeMode())
+            return false;
+
+        $sJsObjectVote = $this->getJsObjectName();
+        $sJsObjectEntry = $this->_oModule->_oConfig->getJsObject('entry');
+
+        return $sJsObjectVote . '.vote(this, ' . $this->getMaxValue() . ', function(oLink, oData) {' . $sJsObjectEntry . '.onVote(oLink, oData, ' . $this->_aContentInfo[$CNF['FIELD_ID']] . ');})';
     }
 
     public function getCounter($aParams = array())
@@ -61,12 +76,9 @@ class BxPollsVoteSubentries extends BxTemplVote
 
     public function isPerformed($iObjectId, $iAuthorId)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        $CNF = $this->_oModule->_oConfig->CNF;
 
-        $aSubentries = $this->_oModule->_oDb->getSubentries(array('type' => 'entry_id_pairs', 'entry_id' => $this->_aContentInfo[$CNF['FIELD_ID']]));
-        return (int)$this->_oModule->_oDb->getOne("SELECT `object_id` FROM `" . $this->_aSystem['table_track'] . "` WHERE `object_id` IN (" . $this->_oModule->_oDb->implode_escape(array_keys($aSubentries)) . ") AND `author_id`=:author_id LIMIT 1", array(
-            'author_id' => $iAuthorId
-        )) != 0;
+        return $this->_oModule->_oDb->isPerformed($this->_aContentInfo[$CNF['FIELD_ID']], $iAuthorId);
     }
 
 	/**
@@ -93,6 +105,11 @@ class BxPollsVoteSubentries extends BxTemplVote
     protected function _getTitleDoBy()
     {
     	return '_bx_polls_txt_subentry_vote_do_by';
+    }
+
+    protected function _getLabelCounter($iCount)
+    {
+        return _t('_bx_polls_txt_subentry_vote_counter', $iCount);
     }
 }
 

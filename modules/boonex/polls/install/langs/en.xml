@@ -155,6 +155,9 @@
 	<string name="_bx_polls_menu_item_title_admt_polls"><![CDATA[Polls - {addon} hidden]]></string>
 	<string name="_bx_polls_menu_item_title_manage_my"><![CDATA[My Polls]]></string>
 	<string name="_bx_polls_menu_item_title_manage_all"><![CDATA[All Polls]]></string>
+	<string name="_bx_polls_menu_item_view_subentries"><![CDATA[Poll]]></string>
+	<string name="_bx_polls_menu_item_view_results"><![CDATA[Results]]></string>
+	
 
 	<string name="_bx_polls_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_polls_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -209,4 +212,6 @@
     <string name="_bx_polls_txt_sample_comment_single"><![CDATA[poll's comment]]></string>
     <string name="_bx_polls_txt_sample_vote_single"><![CDATA[poll's vote]]></string>
     <string name="_bx_polls_txt_subentry_vote_do_by"><![CDATA[Voted for]]></string>
+    <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} votes]]></string>
+    <string name="_bx_polls_txt_subentry_n_votes_m_percent"><![CDATA[{0} votes ({1}%)]]></string>
 </resources>

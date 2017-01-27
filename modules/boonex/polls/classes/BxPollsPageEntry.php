@@ -20,11 +20,17 @@ class BxPollsPageEntry extends BxBaseModTextPageEntry
         parent::__construct($aObject, $oTemplate);
     }
 
+    public function getCode()
+    {
+        return $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode();
+    }
+
     protected function _addJsCss()
     {
         parent::_addJsCss();
 
-        $this->_oModule->_oTemplate->addCss('entry.css');
+        $this->_oModule->_oTemplate->addJs(array('entry.js'));
+        $this->_oModule->_oTemplate->addCss(array('entry.css'));
     }
 }
 
