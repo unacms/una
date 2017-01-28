@@ -27,13 +27,16 @@ class BxFilesFormUpload extends BxBaseModTextFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
         if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
 
+            $oProfile = bx_get('profile_id') ? BxDolProfile::getInstance(bx_get('profile_id')) : false;
+            $oPrivacy->setCustomPrivacy(bx_get('profile_id') && $oProfile && BxDolService::call($oProfile->getModule(), 'is_group_profile') ? true : false);
+
             $aSave = array('db' => array('pass' => 'Xss'));
             array_walk($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], function ($a, $k, $aSave) {
                 if (in_array($k, array('info', 'caption', 'value')))
                     $aSave[0][$k] = $a;
             }, array(&$aSave));
             
-            $aGroupChooser = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
+            $aGroupChooser = $oPrivacy->getGroupChooserCustom($CNF['OBJECT_PRIVACY_VIEW'], $oPrivacy->isCustomPrivacy());
             
             $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], $aGroupChooser, $aSave);
 		}
