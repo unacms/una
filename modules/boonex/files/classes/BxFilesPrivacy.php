@@ -12,12 +12,23 @@
 class BxFilesPrivacy extends BxTemplPrivacy
 {
     protected $_oModule;
+    protected $_bCustomPrivacy = false;
 
     public function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance('bx_files');
+    }
+
+    public function setCustomPrivacy($b)
+    {
+        $this->_bCustomPrivacy = $b;
+    }
+
+    public function isCustomPrivacy()
+    {
+        return $this->_bCustomPrivacy;
     }
 
 	/**
@@ -43,22 +54,23 @@ class BxFilesPrivacy extends BxTemplPrivacy
         return false;
     }
 
-    static function getGroupChooser ($sObject, $iOwnerId = 0, $aParams = array())
+    static function getGroupChooserCustom ($sObject, $bCustomPrivacy)
     {
-        if (!$iOwnerId)
-    		$iOwnerId = bx_get_logged_profile_id();
+    	$iOwnerId = bx_get_logged_profile_id();
 
-        $aParams['dynamic_groups'] = array(
-			array ('key' => 'a', 'value' => _t('_bx_files_privacy_public')),
-			array ('key' => 'm', 'value' => _t('_bx_files_privacy_participants')),
-		);
+        $aParams = array();
+        if ($bCustomPrivacy)
+            $aParams['dynamic_groups'] = array(
+                array ('key' => 'a', 'value' => _t('_bx_files_privacy_public')),
+                array ('key' => 'm', 'value' => _t('_bx_files_privacy_participants')),
+            );
 
         return parent::getGroupChooser($sObject, $iOwnerId, $aParams);
     }
 
     protected function getGroups() 
-    {
-        return array();
+    {        
+        return $this->_bCustomPrivacy ? array() : parent::getGroups();
     }
 }
 

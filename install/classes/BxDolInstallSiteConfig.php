@@ -454,7 +454,9 @@ EOF;
         $aMarkers['time'] = time();
         $aMarkers['secret'] = genRndPwd(11);
         $aMarkers['ffmpeg_path'] = $aMarkers['root_dir'] . 'plugins/ffmpeg/ffmpeg.exe';
-        $aMarkers['java_path'] = trim(`whereis java`);
+
+        $aJava = explode(' ', str_replace('java: ', '', trim(`whereis java`)));
+        $aMarkers['java_path'] = isset($aJava[0]) && $aJava[0] && !is_dir($aJava[0]) ? $aJava[0] : '';
 
         return $aMarkers;
     }
