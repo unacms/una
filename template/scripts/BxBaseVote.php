@@ -122,6 +122,11 @@ class BxBaseVote extends BxDolVote
         return $this->getJsObjectName() . '.vote(this, ' . $this->getMaxValue() . ')';
     }
 
+    public function getJsClickCounter()
+    {
+        return $this->getJsObjectName() . '.toggleByPopup(this)';
+    }
+
     public function getCounter($aParams = array())
     {
         $sJsObject = $this->getJsObjectName();
@@ -142,7 +147,7 @@ class BxBaseVote extends BxDolVote
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
                 array('key' => 'class', 'value' => $sClass),
-                array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
+                array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsClickCounter())
             ),
             'content' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
         ));

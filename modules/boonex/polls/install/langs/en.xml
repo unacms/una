@@ -213,5 +213,5 @@
     <string name="_bx_polls_txt_sample_vote_single"><![CDATA[poll's vote]]></string>
     <string name="_bx_polls_txt_subentry_vote_do_by"><![CDATA[Voted for]]></string>
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} votes]]></string>
-    <string name="_bx_polls_txt_subentry_n_votes_m_percent"><![CDATA[{0} votes ({1}%)]]></string>
+    <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>
 </resources>
