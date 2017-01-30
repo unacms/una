@@ -76,8 +76,9 @@
 	<string name="_bx_groups_page_title_sys_manage_administration"><![CDATA[Управление всеми группами]]></string>
 	<string name="_bx_groups_page_title_manage"><![CDATA[Управление группами]]></string>
 	<string name="_bx_groups_page_title_sys_top"><![CDATA[Популярные Группы]]></string>
-	<string name="_bx_groups_page_title_top"><![CDATA[Популярные Группы]]></string>
-    <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
+    <string name="_bx_groups_page_title_top"><![CDATA[Популярные Группы]]></string>
+    <string name="_bx_groups_page_title_sys_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
+    <string name="_bx_groups_page_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
 
 	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Избранные группы]]></string>   
     <string name="_bx_groups_page_block_title_sys_favorites_of_author"><![CDATA[Избранные группы]]></string>
@@ -104,6 +105,8 @@
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Управление группами]]></string>
     <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Популярные Группы]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
+    <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
+    <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>
@@ -142,7 +145,9 @@
     <string name="_bx_groups_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_view"><![CDATA[Группа]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_view"><![CDATA[Группа]]></string>
-
+    <string name="_bx_groups_menu_item_title_system_invite"><![CDATA[Пригласить]]></string>
+    <string name="_bx_groups_menu_item_title_invite"><![CDATA[Пригласить]]></string>
+    
     <string name="_bx_groups_menu_item_title_system_befriend"><![CDATA[Добавить друга]]></string>
     <string name="_bx_groups_menu_item_title_befriend"><![CDATA[Добавить друга]]></string>
     <string name="_bx_groups_menu_item_title_befriend_sent"><![CDATA[Добавить друга (запрошено)]]></string>
