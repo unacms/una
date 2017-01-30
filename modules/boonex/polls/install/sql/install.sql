@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `bx_polls_subentries` (
   `title` varchar(255) NOT NULL,
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `order` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title` (`title`)
 );

@@ -34,6 +34,9 @@ div.bx-polls-result-graph .bx-polls-rg-bar {
     background: linear-gradient(to right,#2196F3 0%,#1976D2 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2196F3',endColorstr='#1976D2',GradientType=1);
 }
+div.bx-polls-result-graph .bx-polls-rg-text {
+	white-space: nowrap;
+}
 
 /*--- Animation ---*/
 @-webkit-keyframes votes-bar {

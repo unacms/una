@@ -212,5 +212,5 @@
     <string name="_bx_polls_txt_sample_vote_single"><![CDATA[голос за голосование]]></string>
     <string name="_bx_polls_txt_subentry_vote_do_by"><![CDATA[Проголосовали за]]></string>
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} голосов]]></string>
-    <string name="_bx_polls_txt_subentry_n_votes_m_percent"><![CDATA[{0} голосов ({1}%)]]></string>
+    <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>
 </resources>

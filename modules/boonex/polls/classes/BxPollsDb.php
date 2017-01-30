@@ -74,11 +74,22 @@ class BxPollsDb extends BxBaseModTextDb
                 $sWhereClause .= " AND `entry_id`=:entry_id";
                 break;
 
+            case 'entry_id_max_order':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                	'entry_id' => $aParams['entry_id']
+                );
+
+                $sSelectClause = "MAX(`order`)";
+                $sWhereClause .= " AND `entry_id`=:entry_id";
+                break;
+
             case 'all':
             	break;
         }
 
-        $sOrderByClause = " ORDER BY " . (isset($aParams['order_by']) ? $aParams['order_by'] : '`title`');
+        $sOrderByClause = " ORDER BY " . (isset($aParams['order_by']) ? '`' . $aParams['order_by'] . '`' : '`order`');
+        $sOrderByClause .= " " . (isset($aParams['order_way']) ? strtoupper($aParams['order_way']) : 'ASC');
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_SUBENTRIES'] . "` WHERE 1 " . $sWhereClause . $sOrderByClause;
 

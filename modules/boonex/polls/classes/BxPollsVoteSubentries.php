@@ -53,6 +53,8 @@ class BxPollsVoteSubentries extends BxTemplVote
     {
         $CNF = $this->_oModule->_oConfig->CNF;
 
+        $bShowInBrackets = !isset($aParams['show_in_brackets']) || $aParams['show_in_brackets'] == true;
+
         $iObjectId = $this->getId();
 		$iAuthorId = $this->_getAuthorId();
         if((int)$this->_aContentInfo[$CNF['FIELD_HIDDEN_RESULTS']] == 1)
@@ -62,7 +64,11 @@ class BxPollsVoteSubentries extends BxTemplVote
         if((int)$this->_aContentInfo[$CNF['FIELD_ANONYMOUS']] == 1)
             $this->_sTmplNameCounter = 'subentries_vc_text.html';
 
-        return '(' . parent::getCounter($aParams) . ')';
+        $sResult = parent::getCounter($aParams);
+        if($bShowInBrackets)
+            $sResult = '(' . $sResult . ')';
+
+        return $sResult;
     }
 
     public function getObjectAuthorId($iObjectId = 0)

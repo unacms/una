@@ -73,11 +73,12 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
         if(empty($aSubentries) || !is_array($aSubentries))
             return true;
 
-        foreach($aSubentries as $sSubentry)
+        foreach($aSubentries as $iIndex => $sSubentry)
             if(!empty($sSubentry))
                 $this->_oModule->_oDb->insertSubentry(array(
                     'entry_id' => $iContentId,
-                    'title' => bx_process_input($sSubentry)
+                    'title' => bx_process_input($sSubentry),
+                    'order' => $iIndex
                 ));
 
         return true;
@@ -103,12 +104,15 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
         $iSubentriesIds = count($aSubentriesIds);
         $iSubentriesValues = count($aSubentriesValues);
         if($iSubentriesValues > $iSubentriesIds) {
+            $iMaxOrder = (int)$this->_oModule->_oDb->getSubentries(array('type' => 'entry_id_max_order', 'entry_id' => $iContentId));
+
             $aSubentriesValues = array_slice($aSubentriesValues, $iSubentriesIds);
             foreach($aSubentriesValues as $sSubentriesValue)
                 if(!empty($sSubentriesValue))
                     $this->_oModule->_oDb->insertSubentry(array(
                         'entry_id' => $iContentId,
-                        'title' => bx_process_input($sSubentriesValue)
+                        'title' => bx_process_input($sSubentriesValue),
+                        'order' => ++$iMaxOrder
                     ));
         }
 

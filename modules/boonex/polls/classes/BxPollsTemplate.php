@@ -60,6 +60,8 @@ class BxPollsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
+        $bAnonymous = (int)$aData[$CNF['FIELD_ANONYMOUS']] == 1;
+
         $aSubentries = $this->_oDb->getSubentries(array('type' => 'entry_id', 'entry_id' => $aData[$CNF['FIELD_ID']]));
         if(empty($aSubentries) || !is_array($aSubentries))
             return '';
@@ -70,11 +72,14 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
         $aTmplVarsSubentries = array();
         foreach($aSubentries as $aSubentry) {
+            $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_SUBENTRIES'], $aSubentry['id']);
+
             $fPercent = 100 * (float)$aSubentry['votes']/$iTotal;
             $aTmplVarsSubentries[] = array(
                 'title' => $aSubentry['title'],
                 'width' => (int)round($fPercent) . '%',
-                'results' => _t('_bx_polls_txt_subentry_n_votes_m_percent', $aSubentry['votes'], $iTotal > 0 ? round($fPercent, 2) : 0)
+                'votes' => $oVotes->getCounter(array('show_in_brackets' => false)),
+                'percent' => _t('_bx_polls_txt_subentry_vote_percent', $iTotal > 0 ? round($fPercent, 2) : 0),
             );
         }
 
