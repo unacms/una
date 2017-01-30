@@ -13,7 +13,8 @@
 	<string name="_bx_events_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
 	<string name="_bx_events_form_profile_display_delete"><![CDATA[Удаление события]]></string>
 	<string name="_bx_events_form_profile_display_view"><![CDATA[Просмотр события]]></string>
-	<string name="_bx_events_form_profile_display_view_full"><![CDATA[Полный просмотр события]]></string>
+    <string name="_bx_events_form_profile_display_view_full"><![CDATA[Полный просмотр события]]></string>
+    <string name="_bx_events_form_profile_display_invite"><![CDATA[Приглашение на событие]]></string>
 	<string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
@@ -96,7 +97,9 @@
 	<string name="_bx_events_page_title_sys_top"><![CDATA[Лучшие события]]></string>
     <string name="_bx_events_page_title_top"><![CDATA[Лучшие события]]></string>
 	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Календарь событий]]></string>
-	<string name="_bx_events_page_title_calendar"><![CDATA[Календарь событий]]></string>
+    <string name="_bx_events_page_title_calendar"><![CDATA[Календарь событий]]></string>
+    <string name="_bx_events_page_title_sys_invite_to_group"><![CDATA[Приглашение на событие]]></string>
+    <string name="_bx_events_page_title_invite_to_group"><![CDATA[Приглашение на событие]]></string>
 
 	<string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Избранные события]]></string>   
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Избранные события]]></string>
@@ -127,6 +130,8 @@
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Календарь событий]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Календарь]]></string>
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Местоположение]]></string>
+    <string name="_bx_events_page_block_title_categories"><![CDATA[Категории групп]]></string>
+    <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Приглашение на событие]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Под-меню событий]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Под-меню событий]]></string>
@@ -165,6 +170,8 @@
     <string name="_bx_events_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_view"><![CDATA[Событие]]></string>
     <string name="_bx_events_menu_item_title_view_profile_view"><![CDATA[Событие]]></string>
+    <string name="_bx_events_menu_item_title_system_invite"><![CDATA[Пригласить]]></string>
+    <string name="_bx_events_menu_item_title_invite"><![CDATA[Пригласить]]></string>
 
     <string name="_bx_events_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
     <string name="_bx_events_menu_item_title_befriend"><![CDATA[Add friend]]></string>

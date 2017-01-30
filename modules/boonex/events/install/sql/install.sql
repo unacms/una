@@ -204,7 +204,8 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_event', 'bx_event_edit', 'bx_events', 0, '_bx_events_form_profile_display_edit'),
 ('bx_event', 'bx_event_edit_cover', 'bx_events', 0, '_bx_events_form_profile_display_edit_cover'),
 ('bx_event', 'bx_event_view', 'bx_events', 1, '_bx_events_form_profile_display_view'),
-('bx_event', 'bx_event_view_full', 'bx_events', 1, '_bx_events_form_profile_display_view_full');
+('bx_event', 'bx_event_view_full', 'bx_events', 1, '_bx_events_form_profile_display_view_full'),
+('bx_event', 'bx_event_invite', 'bx_events', 0, '_bx_events_form_profile_display_invite');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_event', 'bx_events', 'allow_view_to', 3, '', 0, 'custom', '_bx_events_form_profile_input_sys_allow_view_to', '_bx_events_form_profile_input_allow_view_to', '_bx_events_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -241,6 +242,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_add', 'join_confirmation', 2147483647, 1, 14),
 ('bx_event_add', 'allow_view_to', 2147483647, 1, 15),
 ('bx_event_add', 'do_submit', 2147483647, 1, 16),
+
+('bx_event_invite', 'initial_members', 2147483647, 1, 1),
+('bx_event_invite', 'do_submit', 2147483647, 1, 2),
 
 ('bx_event_delete', 'cover', 2147483647, 0, 0),
 ('bx_event_delete', 'picture', 2147483647, 0, 0),

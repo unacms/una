@@ -13,7 +13,8 @@
 	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
 	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Удаление группы]]></string>
 	<string name="_bx_groups_form_profile_display_view"><![CDATA[Просмотр группы]]></string>
-	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Полный просмотр группы]]></string>
+    <string name="_bx_groups_form_profile_display_view_full"><![CDATA[Полный просмотр группы]]></string>
+    <string name="_bx_groups_form_profile_display_invite"><![CDATA[Приглашение в группу]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
@@ -70,12 +71,12 @@
 	<string name="_bx_groups_page_title_group_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Инфо группы]]></string>
 	<string name="_bx_groups_page_title_profile_info"><![CDATA[Инфо о {display_name}]]></string>
-	<string name="_bx_groups_page_title_sys_recent"><![CDATA[Последние Добавленные Группы]]></string>
+	<string name="_bx_groups_page_title_sys_recent"><![CDATA[Последние добавленные группы]]></string>
 	<string name="_bx_groups_page_title_recent"><![CDATA[Последние Добавленные Группы]]></string>
 	<string name="_bx_groups_page_title_sys_manage"><![CDATA[Управление собственными группами]]></string>
 	<string name="_bx_groups_page_title_sys_manage_administration"><![CDATA[Управление всеми группами]]></string>
 	<string name="_bx_groups_page_title_manage"><![CDATA[Управление группами]]></string>
-	<string name="_bx_groups_page_title_sys_top"><![CDATA[Популярные Группы]]></string>
+	<string name="_bx_groups_page_title_sys_top"><![CDATA[Популярные группы]]></string>
     <string name="_bx_groups_page_title_top"><![CDATA[Популярные Группы]]></string>
     <string name="_bx_groups_page_title_sys_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
     <string name="_bx_groups_page_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>

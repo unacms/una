@@ -13,7 +13,8 @@
 	<string name="_bx_events_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_events_form_profile_display_delete"><![CDATA[Delete Event]]></string>
 	<string name="_bx_events_form_profile_display_view"><![CDATA[View Event]]></string>
-	<string name="_bx_events_form_profile_display_view_full"><![CDATA[Full View Event]]></string>
+    <string name="_bx_events_form_profile_display_view_full"><![CDATA[Full View Event]]></string>
+    <string name="_bx_events_form_profile_display_invite"><![CDATA[Invite to Event]]></string>
 	<string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
@@ -98,7 +99,9 @@
 	<string name="_bx_events_page_title_sys_top"><![CDATA[Top Events]]></string>
     <string name="_bx_events_page_title_top"><![CDATA[Top Events]]></string>
 	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Events Calendar]]></string>
-	<string name="_bx_events_page_title_calendar"><![CDATA[Events Calendar]]></string>
+    <string name="_bx_events_page_title_calendar"><![CDATA[Events Calendar]]></string>
+    <string name="_bx_events_page_title_sys_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
+	<string name="_bx_events_page_title_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
 
 	<string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Favorite Events]]></string>
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Events]]></string>
@@ -129,6 +132,7 @@
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Events calendar]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Calendar]]></string>
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Location]]></string>
+    <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>
@@ -167,6 +171,8 @@
     <string name="_bx_events_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_view"><![CDATA[Event]]></string>
     <string name="_bx_events_menu_item_title_view_profile_view"><![CDATA[Event]]></string>
+    <string name="_bx_events_menu_item_title_system_invite"><![CDATA[Invite]]></string>
+    <string name="_bx_events_menu_item_title_invite"><![CDATA[Invite]]></string>
 
     <string name="_bx_events_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
     <string name="_bx_events_menu_item_title_befriend"><![CDATA[Add friend]]></string>

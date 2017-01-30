@@ -19,6 +19,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'view-event-profile' => 'checkAllowedView',
             'edit-event-profile' => 'checkAllowedEdit',
             'edit-event-cover' => 'checkAllowedChangeCover',
+            'invite-to-event' => 'checkAllowedInvite',
             'delete-event-profile' => 'checkAllowedDelete',
             'profile-fan-add' => 'checkAllowedFanAdd',
             'profile-fan-remove' => 'checkAllowedFanRemove',
@@ -87,6 +88,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_event_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_event_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_event_delete',
+            'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_event_invite',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_events_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_events_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_SUBMENU' => 'bx_events_submenu', // main module submenu
