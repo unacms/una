@@ -60,14 +60,15 @@ class BxFilesTemplate extends BxBaseModTextTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = $oModule->_oConfig->CNF;
 
+        $sNoPreview = MsgBox(_t('_bx_files_txt_preview_not_available'));
         if (!($aFile = $oModule->getContentFile($aData)))
-            return '';
+            return $sNoPreview;
         if (!($oFileHandler = BxDolFileHandler::getObjectInstanceByFile($aFile['file_name'])))
-            return '';
+            return $sNoPreview;
         if (!($oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])))
-            return '';
+            return $sNoPreview;
         if (!($sFileUrl = $oStorage->getFileUrlById($aFile['id'])))
-            return '';
+            return $sNoPreview;
 
         return $oFileHandler->display($sFileUrl, $aFile);
     }
