@@ -4,8 +4,7 @@
 	<string name="_bx_polls"><![CDATA[Голосования]]></string>
 	<string name="_bx_polls_cmts"><![CDATA[Голосования - Комментарии]]></string>
 
-	<string name="_bx_polls_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к голосованиям]]></string>
-	<string name="_bx_polls_option_plain_summary_chars"><![CDATA[Количество символов в описании голосования при отсутствующей картинке голосования]]></string>
+	<string name="_bx_polls_option_title_chars"><![CDATA[Количество символов в автогенерируемом заголовке голосования]]></string>
 	<string name="_bx_polls_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
 	<string name="_bx_polls_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 	<string name="_bx_polls_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
@@ -19,15 +18,12 @@
 	<string name="_bx_polls_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_polls_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_polls_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
-	<string name="_bx_polls_form_entry_input_sys_title"><![CDATA[Вопрос]]></string>
-	<string name="_bx_polls_form_entry_input_title"><![CDATA[Вопрос]]></string>
-	<string name="_bx_polls_form_entry_input_title_err"><![CDATA[Вопрос обязателен. Пожалуйста, заполните это поле]]></string>
 	<string name="_bx_polls_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
 	<string name="_bx_polls_form_entry_input_cat"><![CDATA[Категория]]></string>
 	<string name="_bx_polls_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
-	<string name="_bx_polls_form_entry_input_sys_text"><![CDATA[Описание]]></string>
-	<string name="_bx_polls_form_entry_input_text"><![CDATA[Описание]]></string>
-	<string name="_bx_polls_form_entry_input_text_err"><![CDATA[Поле для Описания не может быть пустым]]></string>
+	<string name="_bx_polls_form_entry_input_sys_text"><![CDATA[Вопрос]]></string>
+	<string name="_bx_polls_form_entry_input_text"><![CDATA[Вопрос]]></string>
+	<string name="_bx_polls_form_entry_input_text_err"><![CDATA[Вопрос обязателен. Пожалуйста, заполните это поле]]></string>
 	<string name="_bx_polls_form_entry_input_sys_subentries"><![CDATA[Ответы]]></string>
     <string name="_bx_polls_form_entry_input_subentries"><![CDATA[Ответы]]></string>
     <string name="_bx_polls_form_entry_input_subentries_inf"><![CDATA[Оставьте текстовое поле пустым, чтобы удалить ответ.]]></string>
@@ -40,6 +36,8 @@
 	<string name="_bx_polls_form_entry_input_pictures"><![CDATA[Картинки]]></string>
     <string name="_bx_polls_form_profile_input_sys_anonymous"><![CDATA[Анонимный]]></string>
     <string name="_bx_polls_form_profile_input_anonymous"><![CDATA[Анонимное голосование]]></string>
+    <string name="_bx_polls_form_profile_input_anonymous_info_author"><![CDATA[Список проголосовавших не будет доступен в режиме Анонимного голосования.]]></string>
+    <string name="_bx_polls_form_profile_input_anonymous_info_voter"><![CDATA[Анонимное голосование. Ваш голос будет конфиденциален.]]></string>
     <string name="_bx_polls_form_profile_input_sys_hidden_results"><![CDATA[Скрытые результаты]]></string>
     <string name="_bx_polls_form_profile_input_hidden_results"><![CDATA[Скрывать результаты до голосования]]></string>
     <string name="_bx_polls_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>

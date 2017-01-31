@@ -4,8 +4,7 @@
 	<string name="_bx_polls"><![CDATA[Polls]]></string>
 	<string name="_bx_polls_cmts"><![CDATA[Polls' Comments]]></string>
 
-	<string name="_bx_polls_option_summary_chars"><![CDATA[Number of characters in auto-cropped poll summary]]></string>
-	<string name="_bx_polls_option_plain_summary_chars"><![CDATA[Number of characters in plain poll description when poll hasn't thumb]]></string>
+	<string name="_bx_polls_option_title_chars"><![CDATA[Number of characters in auto-cropped poll title]]></string>
 	<string name="_bx_polls_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_polls_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_polls_option_searchable_fields"><![CDATA[Searchable fields]]></string>
@@ -19,15 +18,12 @@
 	<string name="_bx_polls_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_polls_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
 	<string name="_bx_polls_form_entry_input_do_publish"><![CDATA[Publish]]></string>
-	<string name="_bx_polls_form_entry_input_sys_title"><![CDATA[Question]]></string>
-	<string name="_bx_polls_form_entry_input_title"><![CDATA[Question]]></string>
-	<string name="_bx_polls_form_entry_input_title_err"><![CDATA[Question is essential. Please, fill in this field]]></string>
 	<string name="_bx_polls_form_entry_input_sys_cat"><![CDATA[Category]]></string>
 	<string name="_bx_polls_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_polls_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
-	<string name="_bx_polls_form_entry_input_sys_text"><![CDATA[Description]]></string>
-	<string name="_bx_polls_form_entry_input_text"><![CDATA[Description]]></string>
-	<string name="_bx_polls_form_entry_input_text_err"><![CDATA[Description field can't be empty]]></string>
+	<string name="_bx_polls_form_entry_input_sys_text"><![CDATA[Question]]></string>
+	<string name="_bx_polls_form_entry_input_text"><![CDATA[Question]]></string>
+	<string name="_bx_polls_form_entry_input_text_err"><![CDATA[Question is essential. Please, fill in this field]]></string>
 	<string name="_bx_polls_form_entry_input_sys_subentries"><![CDATA[Answers]]></string>
     <string name="_bx_polls_form_entry_input_subentries"><![CDATA[Answers]]></string>
     <string name="_bx_polls_form_entry_input_subentries_inf"><![CDATA[Leave text box empty to remove an answer.]]></string>
@@ -40,6 +36,8 @@
 	<string name="_bx_polls_form_entry_input_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_polls_form_profile_input_sys_anonymous"><![CDATA[Anonymous]]></string>
     <string name="_bx_polls_form_profile_input_anonymous"><![CDATA[Anonymous vote]]></string>
+    <string name="_bx_polls_form_profile_input_anonymous_info_author"><![CDATA[When Anonymous mode is enabled, a list of voters won't be available to anybody.]]></string>
+    <string name="_bx_polls_form_profile_input_anonymous_info_voter"><![CDATA[Anonymous mode. Your vote will be private.]]></string>
     <string name="_bx_polls_form_profile_input_sys_hidden_results"><![CDATA[Hidden Results]]></string>
     <string name="_bx_polls_form_profile_input_hidden_results"><![CDATA[Hide results until voted]]></string>
     <string name="_bx_polls_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>

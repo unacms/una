@@ -22,5 +22,5 @@ function BxPollsForm(oOptions) {
 BxPollsForm.prototype.addMore = function(oButton) {
 	var oButton = $(oButton);
 
-	oButton.before(oButton.siblings('.bx-form-input-text:first').clone());
+	oButton.before(oButton.siblings('.bx-form-input-text:first').clone().val(''));
 };

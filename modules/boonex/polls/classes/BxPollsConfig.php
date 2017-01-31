@@ -36,7 +36,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
-            'FIELD_TITLE' => 'title',
+            'FIELD_TITLE' => '',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'poll-text',
         	'FIELD_SUBENTRIES' => 'subentries',
@@ -65,8 +65,9 @@ class BxPollsConfig extends BxBaseModTextConfig
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=polls-administration',
 
             // some params
-            'PARAM_CHARS_SUMMARY' => 'bx_polls_summary_chars',
-            'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_polls_plain_summary_chars',
+            'PARAM_CHARS_TITLE' => 'bx_polls_title_chars',
+            'PARAM_CHARS_SUMMARY' => '',
+            'PARAM_CHARS_SUMMARY_PLAIN' => '',
             'PARAM_NUM_RSS' => 'bx_polls_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_polls_searchable_fields',
 
@@ -148,6 +149,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'block_menu' => $sHtmlPrefix . '-block-menu',
         	'block_link_subentries' => $sHtmlPrefix . '-block-subentries',
         	'block_link_results' => $sHtmlPrefix . '-block-results',
+            'content' => $sHtmlPrefix . '-content-',
         );
     }
 

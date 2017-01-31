@@ -40,6 +40,7 @@ class BxPollsModule extends BxBaseModTextModule
         ));
     }
 
+
     /**
      * SERVICE METHODS
      */
@@ -53,6 +54,20 @@ class BxPollsModule extends BxBaseModTextModule
         return $this->_serviceTemplateFunc('entryResults', $iContentId);
     }
 
+
+	/**
+     * INTERNAL METHODS
+     */
+    
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    {
+        return array();
+    }
+
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    {
+        return $this->_oTemplate->getContentForTimelinePost($aEvent, $aContentInfo);
+    }
     
 }
 

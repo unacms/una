@@ -8,9 +8,8 @@ CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `cat` int(11) NOT NULL,
   `text` text NOT NULL,
+  `cat` int(11) NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
@@ -23,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `title_text` (`title`,`text`)
+  FULLTEXT KEY `search_fields` (`text`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_polls_subentries` (
@@ -216,11 +215,10 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_polls', 'bx_polls', 'do_submit', '_bx_polls_form_entry_input_do_submit', '', 0, 'submit', '_bx_polls_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'pictures', 'a:1:{i:0;s:9:"sys_html5";}', 'a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_polls_form_entry_input_sys_pictures', '_bx_polls_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_polls', 'bx_polls', 'text', '', '', 0, 'textarea', '_bx_polls_form_entry_input_sys_text', '_bx_polls_form_entry_input_text', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
-('bx_polls', 'bx_polls', 'title', '', '', 0, 'text', '_bx_polls_form_entry_input_sys_title', '_bx_polls_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_polls_form_entry_input_title_err', 'Xss', '', 1, 0),
+('bx_polls', 'bx_polls', 'text', '', '', 0, 'textarea', '_bx_polls_form_entry_input_sys_text', '_bx_polls_form_entry_input_text', '', 1, 0, 3, '', '', '', 'Avail', '', '_bx_polls_form_entry_input_text_err', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'subentries', '', '', 0, 'custom', '_bx_polls_form_entry_input_sys_subentries', '_bx_polls_form_entry_input_subentries', '_bx_polls_form_entry_input_subentries_inf', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'cat', '', '#!bx_polls_cats', 0, 'select', '_bx_polls_form_entry_input_sys_cat', '_bx_polls_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_polls_form_entry_input_cat_err', 'Xss', '', 1, 0),
-('bx_polls', 'bx_polls', 'anonymous', 1, '', 0, 'switcher', '_bx_polls_form_profile_input_sys_anonymous', '_bx_polls_form_profile_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_polls', 'bx_polls', 'anonymous', 1, '', 1, 'switcher', '_bx_polls_form_profile_input_sys_anonymous', '_bx_polls_form_profile_input_anonymous', '_bx_polls_form_profile_input_anonymous_info_author', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'hidden_results', 1, '', 0, 'switcher', '_bx_polls_form_profile_input_sys_hidden_results', '_bx_polls_form_profile_input_hidden_results', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'added', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_added', '_bx_polls_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'changed', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_changed', '_bx_polls_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
@@ -228,28 +226,26 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_polls_entry_add', 'cat', 2147483647, 1, 1),
-('bx_polls_entry_add', 'title', 2147483647, 1, 2),
+('bx_polls_entry_add', 'text', 2147483647, 1, 2),
 ('bx_polls_entry_add', 'subentries', 2147483647, 1, 3),
-('bx_polls_entry_add', 'text', 2147483647, 1, 4),
-('bx_polls_entry_add', 'pictures', 2147483647, 1, 5),
-('bx_polls_entry_add', 'allow_view_to', 2147483647, 1, 6),
-('bx_polls_entry_add', 'anonymous', 2147483647, 1, 7),
-('bx_polls_entry_add', 'hidden_results', 2147483647, 1, 8),
-('bx_polls_entry_add', 'location', 2147483647, 1, 9),
-('bx_polls_entry_add', 'do_publish', 2147483647, 1, 10),
+('bx_polls_entry_add', 'pictures', 2147483647, 1, 4),
+('bx_polls_entry_add', 'allow_view_to', 2147483647, 1, 5),
+('bx_polls_entry_add', 'anonymous', 2147483647, 1, 6),
+('bx_polls_entry_add', 'hidden_results', 2147483647, 1, 7),
+('bx_polls_entry_add', 'location', 2147483647, 1, 8),
+('bx_polls_entry_add', 'do_publish', 2147483647, 1, 9),
 
 ('bx_polls_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_polls_entry_delete', 'do_submit', 2147483647, 1, 2),
 
 ('bx_polls_entry_edit', 'cat', 2147483647, 1, 1),
-('bx_polls_entry_edit', 'title', 2147483647, 1, 2),
+('bx_polls_entry_edit', 'text', 2147483647, 1, 2),
 ('bx_polls_entry_edit', 'subentries', 2147483647, 1, 3),
-('bx_polls_entry_edit', 'text', 2147483647, 1, 4),
-('bx_polls_entry_edit', 'pictures', 2147483647, 1, 5),
-('bx_polls_entry_edit', 'allow_view_to', 2147483647, 1, 6),
-('bx_polls_entry_edit', 'hidden_results', 2147483647, 1, 7),
-('bx_polls_entry_edit', 'location', 2147483647, 1, 8),
-('bx_polls_entry_edit', 'do_submit', 2147483647, 1, 9),
+('bx_polls_entry_edit', 'pictures', 2147483647, 1, 4),
+('bx_polls_entry_edit', 'allow_view_to', 2147483647, 1, 5),
+('bx_polls_entry_edit', 'hidden_results', 2147483647, 1, 6),
+('bx_polls_entry_edit', 'location', 2147483647, 1, 7),
+('bx_polls_entry_edit', 'do_submit', 2147483647, 1, 8),
 
 ('bx_polls_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_polls_entry_view', 'added', 2147483647, 1, 2),
