@@ -72,9 +72,8 @@ class BxFilesModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
-    public function actionDownload($iContentId) 
+    public function actionDownload($sToken, $iContentId) 
     {
-        $sToken = bx_get('token');
         $CNF = $this->_oConfig->CNF;
         
         $aData = $this->_oDb->getContentInfoById((int)$iContentId);
