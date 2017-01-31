@@ -50,7 +50,12 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     	return array(
             'content' => $this->parseHtmlByName('subentries.html', array(
+    			'html_id' => $this->_oConfig->getHtmlIds('content') . $aData[$CNF['FIELD_ID']],
                 'bx_repeat:subentries' => $aTmplVarsSubentries,
+    	        'bx_if:show_anonymous' => array(
+    	            'condition' => (int)$aData[$CNF['FIELD_ANONYMOUS']] == 1,
+    	            'content' => array()
+    	        )
             )),
             'menu' => $this->_getGetBlockMenu($aData, 'subentries')
         );
@@ -85,10 +90,59 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
         return array(
             'content' => $this->parseHtmlByName('subentries_results.html', array(
+            	'html_id' => $this->_oConfig->getHtmlIds('content') . $aData[$CNF['FIELD_ID']],
                 'bx_repeat:subentries' => $aTmplVarsSubentries,
             )),
             'menu' => $this->_getGetBlockMenu($aData, 'results')
         );
+    }
+
+    public function getContentForTimelinePost($aEvent, $aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $sTitle = $this->getTitle($aData);
+        $sTitleAttr = bx_html_attribute($sTitle);
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+
+        if(!empty($sUrl) && !empty($sTitle))
+            $sTitle = $this->parseHtmlByName('bx_a.html', array(
+                'href' => $sUrl,
+                'title' => $sTitleAttr,
+                'bx_repeat:attrs' => array(
+                    array('key' => 'class', 'value' => 'bx-tl-title')
+                ),
+                'content' => $sTitle
+            ));
+
+        $aBlock = $this->entrySubentries($aData);
+
+        $this->addJs(array('entry.js'));
+        $this->addCss(array('entry.css'));
+        return $this->parseHtmlByName('unit_timeline.html', array(
+            'title' => $sTitle,
+            'content' => $aBlock['content'],
+            'js_code' => $this->getJsCode('entry')
+        ));
+    }
+
+    protected function getTitle($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        return BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($aData[$CNF['FIELD_TEXT']]), (int)getParam($CNF['PARAM_CHARS_TITLE']));
+    }
+
+    protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')
+    {
+        $aBlock = $this->entrySubentries($aData);
+
+        return $aBlock['content'];
+    }
+
+    protected function getUnitThumbAndGallery ($aData)
+    {
+        return array('', '');
     }
 
     protected function _getGetBlockMenu($aData, $sSelected = '')

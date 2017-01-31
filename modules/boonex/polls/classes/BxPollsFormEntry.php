@@ -31,10 +31,13 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(isset($this->aInputs[$CNF['FIELD_SUBENTRIES']]) && !empty($aValues['id'])) {
-            $this->aInputs[$CNF['FIELD_SUBENTRIES']]['values'] = $this->_oModule->_oDb->getSubentries(array(
+            $aSubentries = $this->_oModule->_oDb->getSubentries(array(
                 'type' => 'entry_id_pairs',
                 'entry_id' => $aValues['id']
             ));
+
+            $this->aInputs[$CNF['FIELD_SUBENTRIES']]['value'] = array_values($aSubentries);
+            $this->aInputs[$CNF['FIELD_SUBENTRIES']]['value_ids'] = array_keys($aSubentries);
         }
 
         return parent::initChecker($aValues, $aSpecificValues);
@@ -123,12 +126,15 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
     {
         $sResult = '';
 
-        if(empty($aInput['values']) || !is_array($aInput['values']))
+        if(empty($aInput['value']) || !is_array($aInput['value'])) {
             $sResult .= $this->genCustomInputSubentriesText($aInput);
+            $sResult .= $this->genCustomInputSubentriesText($aInput);
+        }
         else
-            foreach($aInput['values'] as $iId => $sValue) {
+            foreach($aInput['value'] as $iKey => $sValue) {
                 $sResult .= $this->genCustomInputSubentriesText($aInput, $sValue);
-                $sResult .= $this->genCustomInputSubentriesHidden($aInput, $iId);
+                if(!empty($aInput['value_ids'][$iKey]))
+                    $sResult .= $this->genCustomInputSubentriesHidden($aInput, (int)$aInput['value_ids'][$iKey]);
             }
 
         $sResult .= $this->genCustomInputSubentriesButton($aInput);

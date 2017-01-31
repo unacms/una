@@ -11,8 +11,7 @@ VALUES (@iTypeId, 'bx_polls', '_bx_polls', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_polls_summary_chars', '700', @iCategId, '_bx_polls_option_summary_chars', 'digit', '', '', '', 1),
-('bx_polls_plain_summary_chars', '240', @iCategId, '_bx_polls_option_plain_summary_chars', 'digit', '', '', '', 2),
+('bx_polls_title_chars', '200', @iCategId, '_bx_polls_option_title_chars', 'digit', '', '', '', 1),
 ('bx_polls_per_page_browse', '12', @iCategId, '_bx_polls_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_polls_rss_num', '10', @iCategId, '_bx_polls_option_rss_num', 'digit', '', '', '', 20),
 ('bx_polls_searchable_fields', 'title,text', @iCategId, '_bx_polls_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_polls";s:6:"method";s:21:"get_searchable_fields";}', 30);

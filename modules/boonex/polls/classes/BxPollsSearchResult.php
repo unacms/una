@@ -21,7 +21,7 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_polls',
             'title' => _t('_bx_polls_page_title_browse'),
             'table' => 'bx_polls_entries',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
+            'ownFields' => array('id', 'text', 'thumb', 'author', 'anonymous', 'hidden_results', 'added'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
@@ -37,9 +37,9 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
                 'fields' => array (
                     'Guid' => 'link',
                     'Link' => 'link',
-                    'Title' => 'title',
+                    'Title' => 'text',
                     'DateTimeUTS' => 'added',
-                    'Desc' => 'text',
+                    'Desc' => '',
                 ),
             ),
             'ident' => 'id',
@@ -105,6 +105,16 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
 
+    function addCustomParts ()
+    {
+        $this->oModule->_oTemplate->addJs(array('entry.js'));
+        $this->oModule->_oTemplate->addCss(array('entry.css'));
+
+        return $this->oModule->_oTemplate->getJsCode('entry');
+    }
+    
+    
+        
     function getAlterOrder()
     {
         $aSql = array();

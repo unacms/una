@@ -149,13 +149,12 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
 
-        // get summary
-        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
-        $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
+        $sTitle = $this->getTitle($aData);
+        $sText = $this->getText($aData);
+        $sSummary = $this->getSummary($aData, $sTitle, $sText, $sUrl);
         $sSummaryPlain = isset($CNF['PARAM_CHARS_SUMMARY_PLAIN']) && $CNF['PARAM_CHARS_SUMMARY_PLAIN'] ? BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN'])) : '';
 
-        $sText = $aData[$CNF['FIELD_TEXT']];
-        if (!empty($CNF['OBJECT_METATAGS'])) {
+        if(!empty($CNF['OBJECT_METATAGS'])) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
     
             // keywords
@@ -163,7 +162,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 $sText = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $sText);
         }
 
-        $sTitle = bx_process_output($aData[$CNF['FIELD_TITLE']]);
+        $sTitle = bx_process_output($sTitle);
 
         // generate html
         return array (
@@ -198,6 +197,31 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 ),
             ),
         );
+    }
+
+    protected function getTitle($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        return $aData[$CNF['FIELD_TITLE']];
+    }
+
+    protected function getText($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        return $aData[$CNF['FIELD_TEXT']];
+    }
+
+    protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        if(empty($CNF['PARAM_CHARS_SUMMARY']))
+            return '';
+
+        // get summary
+        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $sTitle)) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
+        return  strmaxtextlen($sText, (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
     }
 
 	protected function getAttachments ($sStorage, $aData)

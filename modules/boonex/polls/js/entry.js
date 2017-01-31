@@ -37,8 +37,8 @@ BxPollsEntry.prototype.changeBlock = function(oLink, sBlock, iContentId) {
         	if(!oData.content)
         		return;
 
-        	$(oLink).parents('.bx-page-block-container:first').find('.bx-db-content').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-        		$(this).html(oData.content).show();
+        	$('#' + $this._aHtmlIds['content'] + iContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+        		$(this).replaceWith(oData.content);
         	});
         },
         'json'
