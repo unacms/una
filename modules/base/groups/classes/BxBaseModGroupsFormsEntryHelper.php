@@ -38,17 +38,24 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName())))
             return '';
 
-        // insert invited members, so they will join without confirmation
-        $aInitialProfiles = bx_get('initial_members');
-        foreach ($aInitialProfiles as $iProfileId) {
-            if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
-                continue;
-            $this->_oModule->serviceAddMutualConnection ($oGroupProfile->id(), $oProfile->id(), true);            
-        }
+        $this->inviteMembers ($oGroupProfile, bx_get('initial_members'));
         
         return '';
     }
 
+    public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
+    {
+        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm))
+            return $s;
+
+        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName())))
+            return '';
+
+        $this->inviteMembers ($oGroupProfile, bx_get('initial_members'));
+
+        return '';
+    }
+    
     public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -61,6 +68,16 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
             $oConnection->onDeleteInitiatorAndContent($oGroupProfile->id());
 
         return '';
+    }
+
+    protected function inviteMembers ($oGroupProfile, $aInitialProfiles)
+    {
+        // insert invited members, so they will join without confirmation
+        foreach ($aInitialProfiles as $iProfileId) {
+            if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
+                continue;
+            $this->_oModule->serviceAddMutualConnection ($oGroupProfile->id(), $oProfile->id(), true);            
+        }
     }
 }
 

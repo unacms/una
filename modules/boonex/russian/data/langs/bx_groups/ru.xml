@@ -13,7 +13,8 @@
 	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
 	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Удаление группы]]></string>
 	<string name="_bx_groups_form_profile_display_view"><![CDATA[Просмотр группы]]></string>
-	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Полный просмотр группы]]></string>
+    <string name="_bx_groups_form_profile_display_view_full"><![CDATA[Полный просмотр группы]]></string>
+    <string name="_bx_groups_form_profile_display_invite"><![CDATA[Приглашение в группу]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
@@ -70,14 +71,15 @@
 	<string name="_bx_groups_page_title_group_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Инфо группы]]></string>
 	<string name="_bx_groups_page_title_profile_info"><![CDATA[Инфо о {display_name}]]></string>
-	<string name="_bx_groups_page_title_sys_recent"><![CDATA[Последние Добавленные Группы]]></string>
+	<string name="_bx_groups_page_title_sys_recent"><![CDATA[Последние добавленные группы]]></string>
 	<string name="_bx_groups_page_title_recent"><![CDATA[Последние Добавленные Группы]]></string>
 	<string name="_bx_groups_page_title_sys_manage"><![CDATA[Управление собственными группами]]></string>
 	<string name="_bx_groups_page_title_sys_manage_administration"><![CDATA[Управление всеми группами]]></string>
 	<string name="_bx_groups_page_title_manage"><![CDATA[Управление группами]]></string>
-	<string name="_bx_groups_page_title_sys_top"><![CDATA[Популярные Группы]]></string>
-	<string name="_bx_groups_page_title_top"><![CDATA[Популярные Группы]]></string>
-    <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
+	<string name="_bx_groups_page_title_sys_top"><![CDATA[Популярные группы]]></string>
+    <string name="_bx_groups_page_title_top"><![CDATA[Популярные Группы]]></string>
+    <string name="_bx_groups_page_title_sys_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
+    <string name="_bx_groups_page_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
 
 	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Избранные группы]]></string>   
     <string name="_bx_groups_page_block_title_sys_favorites_of_author"><![CDATA[Избранные группы]]></string>
@@ -104,6 +106,8 @@
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Управление группами]]></string>
     <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Популярные Группы]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
+    <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
+    <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>
@@ -142,7 +146,9 @@
     <string name="_bx_groups_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_view"><![CDATA[Группа]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_view"><![CDATA[Группа]]></string>
-
+    <string name="_bx_groups_menu_item_title_system_invite"><![CDATA[Пригласить]]></string>
+    <string name="_bx_groups_menu_item_title_invite"><![CDATA[Пригласить]]></string>
+    
     <string name="_bx_groups_menu_item_title_system_befriend"><![CDATA[Добавить друга]]></string>
     <string name="_bx_groups_menu_item_title_befriend"><![CDATA[Добавить друга]]></string>
     <string name="_bx_groups_menu_item_title_befriend_sent"><![CDATA[Добавить друга (запрошено)]]></string>

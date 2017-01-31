@@ -61,6 +61,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_groups_edit_profile_cover', 1, 'bx_groups', '_bx_groups_page_block_title_edit_profile_cover', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:17:\"entity_edit_cover\";}', 0, 0, 0);
 
+-- PAGE: invite members
+
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_groups_invite', 'invite-to-group', '_bx_groups_page_title_sys_invite_to_group', '_bx_groups_page_title_invite_to_group', 'bx_groups', 5, 2147483647, 1, 'page.php?i=invite-to-group', '', '', '', 0, 1, 0, 'BxGroupsPageEntry', 'modules/boonex/groups/classes/BxGroupsPageEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_groups_invite', 1, 'bx_groups', '_bx_groups_page_block_title_invite_to_group', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:13:\"entity_invite\";}', 0, 0, 0);
+
 -- PAGE: delete profile
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -181,6 +189,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_groups_view_actions_more', 'bx_groups', 'profile-subscribe-remove', '_bx_groups_menu_item_title_system_unsubscribe', '_bx_groups_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
 ('bx_groups_view_actions_more', 'bx_groups', 'edit-group-cover', '_bx_groups_menu_item_title_system_edit_cover', '_bx_groups_menu_item_title_edit_cover', 'page.php?i=edit-group-cover&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 30),
 ('bx_groups_view_actions_more', 'bx_groups', 'edit-group-profile', '_bx_groups_menu_item_title_system_edit_profile', '_bx_groups_menu_item_title_edit_profile', 'page.php?i=edit-group-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 40),
+('bx_groups_view_actions_more', 'bx_groups', 'invite-to-group', '_bx_groups_menu_item_title_system_invite', '_bx_groups_menu_item_title_invite', 'page.php?i=invite-to-group&id={content_id}', '', '', 'user-plus', '', 2147483647, 1, 0, 42),
 ('bx_groups_view_actions_more', 'bx_groups', 'delete-group-profile', '_bx_groups_menu_item_title_system_delete_profile', '_bx_groups_menu_item_title_delete_profile', 'page.php?i=delete-group-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
 -- MENU: module sub-menu

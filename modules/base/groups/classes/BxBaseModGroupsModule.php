@@ -231,6 +231,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_serviceBrowse ('joined_entries', array('joined_profile' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
 
+    public function serviceEntityInvite ($iContentId = 0)
+    {
+        return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']);
+    }
+    
     /**
      * Entry social sharing block
      */
@@ -404,6 +409,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
     }
 
+    public function checkAllowedInvite ($aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowedEdit ($aDataEntry, $isPerformAction);
+    }
+    
     public function checkAllowedChangeCover ($aDataEntry, $isPerformAction = false)
     {
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());

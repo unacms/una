@@ -21,7 +21,7 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (isset($this->aInputs['initial_members']) && !isset($this->aInputs['initial_members']['value'])) {
-            $this->aInputs['initial_members']['value'] = array(bx_get_logged_profile_id());
+            $this->aInputs['initial_members']['value'] = isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']) && $CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'] == $this->aParams['display'] ? array() : array(bx_get_logged_profile_id());
         }
     }
 

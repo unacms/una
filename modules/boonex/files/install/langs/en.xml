@@ -179,6 +179,7 @@
     <string name="_bx_files_cat_backup"><![CDATA[Backup]]></string>
 
     <string name="_bx_files_txt_all_entries_by"><![CDATA[<a href="{0}">All Files by {1} ({2})</a>]]></string>
+    <string name="_bx_files_txt_preview_not_available"><![CDATA[Preview isn't available]]></string>
     <string name="_bx_files_txt_sample_single"><![CDATA[file]]></string>
     <string name="_bx_files_txt_sample_single_with_article"><![CDATA[a file]]></string>
     <string name="_bx_files_txt_sample_comment_single"><![CDATA[file's comment]]></string>

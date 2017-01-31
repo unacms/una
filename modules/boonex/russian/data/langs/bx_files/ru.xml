@@ -179,6 +179,7 @@
     <string name="_bx_files_cat_backup"><![CDATA[Резервная копия]]></string>
 
     <string name="_bx_files_txt_all_entries_by"><![CDATA[<a href="{0}">Все файлы от пользователя {1} ({2})</a>]]></string>
+    <string name="_bx_files_txt_preview_not_available"><![CDATA[Предварительный просмотр недоступен]]></string>
     <string name="_bx_files_txt_sample_single"><![CDATA[файл]]></string>
     <string name="_bx_files_txt_sample_single_with_article"><![CDATA[файл]]></string>
     <string name="_bx_files_txt_sample_comment_single"><![CDATA[комментарии к файлу]]></string>

@@ -19,6 +19,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'view-group-profile' => 'checkAllowedView',
             'edit-group-profile' => 'checkAllowedEdit',
             'edit-group-cover' => 'checkAllowedChangeCover',
+            'invite-to-group' => 'checkAllowedInvite',
             'delete-group-profile' => 'checkAllowedDelete',
             'profile-fan-add' => 'checkAllowedFanAdd',
             'profile-fan-remove' => 'checkAllowedFanRemove',
@@ -86,6 +87,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_group_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_group_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_group_delete',
+            'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_group_invite',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_groups_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_groups_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_SUBMENU' => 'bx_groups_submenu', // main module submenu
