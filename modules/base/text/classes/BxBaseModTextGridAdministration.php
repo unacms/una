@@ -68,17 +68,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
 	protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
-
-        $mixedValue = $this->_oTemplate->parseHtmlByName('title_link.html', array(
-            'href' => $sUrl,
-            'title' => $mixedValue,
-            'content' => $mixedValue
-        ));
-
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+        return parent::_getCellDefault($this->_getEntryLink($mixedValue, $aRow), $sKey, $aField, $aRow);
     }
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
@@ -140,6 +130,19 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
             $oProfile = BxDolProfileUndefined::getInstance();
 
         return $oProfile;
+    }
+
+    protected function _getEntryLink($mixedValue, $aRow)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
+
+        return $this->_oTemplate->parseHtmlByName('title_link.html', array(
+            'href' => $sUrl,
+            'title' => bx_html_attribute($mixedValue),
+            'content' => $mixedValue
+        ));
     }
 }
 

@@ -319,13 +319,13 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_polls_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_polls_administration', 'switcher', '_bx_polls_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_polls_administration', 'title', '_bx_polls_grid_column_title_adm_title', '25%', 0, '', '', 3),
+('bx_polls_administration', 'text', '_bx_polls_grid_column_title_adm_title', '25%', 0, '', '', 3),
 ('bx_polls_administration', 'added', '_bx_polls_grid_column_title_adm_added', '20%', 1, '25', '', 4),
 ('bx_polls_administration', 'author', '_bx_polls_grid_column_title_adm_author', '25%', 0, '25', '', 5),
 ('bx_polls_administration', 'actions', '', '20%', 0, '', '', 6),
 ('bx_polls_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_polls_common', 'switcher', '_bx_polls_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_polls_common', 'title', '_bx_polls_grid_column_title_adm_title', '40%', 0, '', '', 3),
+('bx_polls_common', 'text', '_bx_polls_grid_column_title_adm_title', '40%', 0, '', '', 3),
 ('bx_polls_common', 'added', '_bx_polls_grid_column_title_adm_added', '30%', 1, '25', '', 4),
 ('bx_polls_common', 'actions', '', '20%', 0, '', '', 5);
 

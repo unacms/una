@@ -16,6 +16,12 @@ class BxPollsGridAdministration extends BxBaseModTextGridAdministration
     	$this->MODULE = 'bx_polls';
         parent::__construct ($aOptions, $oTemplate);
     }
+
+    protected function _getCellText($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = $this->_getEntryLink($this->_oModule->_oConfig->getTitle($aRow), $aRow);
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
 }
 
 /** @} */
