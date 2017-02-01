@@ -58,7 +58,6 @@ class BxPollsModule extends BxBaseModTextModule
 	/**
      * INTERNAL METHODS
      */
-    
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
     {
         return array();
@@ -66,9 +65,18 @@ class BxPollsModule extends BxBaseModTextModule
 
     protected function _getContentForTimelinePost($aEvent, $aContentInfo)
     {
-        return $this->_oTemplate->getContentForTimelinePost($aEvent, $aContentInfo);
+        $aBlock = $this->_oTemplate->entrySubentries($aContentInfo);
+
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo);
+        $aResult['title'] = $this->_oConfig->getTitle($aContentInfo);
+        $aResult['text'] = '';
+        $aResult['raw'] = $this->_oTemplate->getJsCode('entry') . $aBlock['content'];
+
+        $this->_oTemplate->addJs(array('entry.js'));
+        $this->_oTemplate->addCss(array('entry.css'));
+
+        return $aResult;
     }
-    
 }
 
 /** @} */

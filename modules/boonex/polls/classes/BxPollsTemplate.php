@@ -52,8 +52,8 @@ class BxPollsTemplate extends BxBaseModTextTemplate
             'content' => $this->parseHtmlByName('subentries.html', array(
     			'html_id' => $this->_oConfig->getHtmlIds('content') . $aData[$CNF['FIELD_ID']],
                 'bx_repeat:subentries' => $aTmplVarsSubentries,
-    	        'bx_if:show_anonymous' => array(
-    	            'condition' => (int)$aData[$CNF['FIELD_ANONYMOUS']] == 1,
+    	        'bx_if:show_public' => array(
+    	            'condition' => (int)$aData[$CNF['FIELD_ANONYMOUS']] == 0,
     	            'content' => array()
     	        )
             )),
@@ -97,40 +97,33 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         );
     }
 
-    public function getContentForTimelinePost($aEvent, $aData)
+    //TODO: Continue from here with Full View
+    protected function getUnit ($aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
+        
+        $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aData[$CNF['FIELD_ID']]);
 
-        $sTitle = $this->getTitle($aData);
-        $sTitleAttr = bx_html_attribute($sTitle);
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+        $bTmplVarsComments = $oComments && $oComments->isEnabled();
+        $aTmplVarsComments = array();
+        if($bTmplVarsComments)
+            $aTmplVarsComments = array(
+            	'entry_comments' => _t('_bx_polls_txt_entry_comment_counter', $aData[$CNF['FIELD_COMMENTS']]),
+                'entry_comments_url' => $oComments->getListUrl()
+            );
 
-        if(!empty($sUrl) && !empty($sTitle))
-            $sTitle = $this->parseHtmlByName('bx_a.html', array(
-                'href' => $sUrl,
-                'title' => $sTitleAttr,
-                'bx_repeat:attrs' => array(
-                    array('key' => 'class', 'value' => 'bx-tl-title')
-                ),
-                'content' => $sTitle
-            ));
+        $aResult = parent::getUnit ($aData, $aParams);
+        $aResult['bx_if:show_comments'] = array(
+            'condition' => $bTmplVarsComments, 
+            'content' => $aTmplVarsComments
+        ); 
 
-        $aBlock = $this->entrySubentries($aData);
-
-        $this->addJs(array('entry.js'));
-        $this->addCss(array('entry.css'));
-        return $this->parseHtmlByName('unit_timeline.html', array(
-            'title' => $sTitle,
-            'content' => $aBlock['content'],
-            'js_code' => $this->getJsCode('entry')
-        ));
+        return $aResult;
     }
 
     protected function getTitle($aData)
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-
-        return BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($aData[$CNF['FIELD_TEXT']]), (int)getParam($CNF['PARAM_CHARS_TITLE']));
+        return $this->_oConfig->getTitle($aData);
     }
 
     protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')

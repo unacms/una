@@ -160,6 +160,11 @@ class BxPollsConfig extends BxBaseModTextConfig
 
         return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
+
+    public function getTitle($aData)
+    {
+        return BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($aData[$this->CNF['FIELD_TEXT']]), (int)getParam($this->CNF['PARAM_CHARS_TITLE']));
+    }
 }
 
 /** @} */

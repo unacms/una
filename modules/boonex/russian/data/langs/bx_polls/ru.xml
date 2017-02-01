@@ -36,8 +36,7 @@
 	<string name="_bx_polls_form_entry_input_pictures"><![CDATA[Картинки]]></string>
     <string name="_bx_polls_form_profile_input_sys_anonymous"><![CDATA[Анонимный]]></string>
     <string name="_bx_polls_form_profile_input_anonymous"><![CDATA[Анонимное голосование]]></string>
-    <string name="_bx_polls_form_profile_input_anonymous_info_author"><![CDATA[Список проголосовавших не будет доступен в режиме Анонимного голосования.]]></string>
-    <string name="_bx_polls_form_profile_input_anonymous_info_voter"><![CDATA[Анонимное голосование. Ваш голос будет конфиденциален.]]></string>
+    <string name="_bx_polls_form_profile_input_anonymous_info"><![CDATA[Список проголосовавших не будет доступен в режиме Анонимного голосования.]]></string>
     <string name="_bx_polls_form_profile_input_sys_hidden_results"><![CDATA[Скрытые результаты]]></string>
     <string name="_bx_polls_form_profile_input_hidden_results"><![CDATA[Скрывать результаты до голосования]]></string>
     <string name="_bx_polls_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
@@ -211,4 +210,5 @@
     <string name="_bx_polls_txt_subentry_vote_do_by"><![CDATA[Проголосовали за]]></string>
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} голосов]]></string>
     <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>
+    <string name="_bx_polls_msg_public_voting"><![CDATA[Это публичное голосование, ваш выбор будет виден другим.]]></string>
 </resources>

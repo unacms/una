@@ -774,6 +774,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
 
+        //--- Process Raw ---//
+        $sRaw = isset($aContent['raw']) ? $aContent['raw'] : '';
+
         //--- Process Text ---//
         $sUrl = isset($aContent['url']) ? bx_html_attribute($aContent['url']) : '';
         $sTitle = $sTitleAttr = '';
@@ -950,6 +953,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                             'item_content_more' => $sTextMore
                         )
                     ),
+                )
+            ),
+            'bx_if:show_content_raw' => array(
+                'condition' => !empty($sRaw),
+                'content' => array(
+                    'item_content_raw' => $sRaw
                 )
             ),
             'bx_if:show_links' => array(

@@ -21,7 +21,7 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_polls',
             'title' => _t('_bx_polls_page_title_browse'),
             'table' => 'bx_polls_entries',
-            'ownFields' => array('id', 'text', 'thumb', 'author', 'anonymous', 'hidden_results', 'added'),
+            'ownFields' => array('id', 'text', 'thumb', 'author', 'anonymous', 'hidden_results', 'comments', 'added'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),

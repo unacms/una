@@ -36,8 +36,7 @@
 	<string name="_bx_polls_form_entry_input_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_polls_form_profile_input_sys_anonymous"><![CDATA[Anonymous]]></string>
     <string name="_bx_polls_form_profile_input_anonymous"><![CDATA[Anonymous vote]]></string>
-    <string name="_bx_polls_form_profile_input_anonymous_info_author"><![CDATA[When Anonymous mode is enabled, a list of voters won't be available to anybody.]]></string>
-    <string name="_bx_polls_form_profile_input_anonymous_info_voter"><![CDATA[Anonymous mode. Your vote will be private.]]></string>
+    <string name="_bx_polls_form_profile_input_anonymous_info"><![CDATA[When Anonymous mode is enabled, a list of voters won't be available to anybody.]]></string>
     <string name="_bx_polls_form_profile_input_sys_hidden_results"><![CDATA[Hidden Results]]></string>
     <string name="_bx_polls_form_profile_input_hidden_results"><![CDATA[Hide results until voted]]></string>
     <string name="_bx_polls_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
@@ -209,7 +208,9 @@
     <string name="_bx_polls_txt_sample_single_with_article"><![CDATA[a poll]]></string>
     <string name="_bx_polls_txt_sample_comment_single"><![CDATA[poll's comment]]></string>
     <string name="_bx_polls_txt_sample_vote_single"><![CDATA[poll's vote]]></string>
+    <string name="_bx_polls_txt_entry_comment_counter"><![CDATA[{0} comments]]></string>
     <string name="_bx_polls_txt_subentry_vote_do_by"><![CDATA[Voted for]]></string>
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} votes]]></string>
     <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>
+    <string name="_bx_polls_msg_public_voting"><![CDATA[This voting is public, your choice will be displayed for others.]]></string>
 </resources>
