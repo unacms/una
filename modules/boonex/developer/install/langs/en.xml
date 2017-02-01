@@ -356,6 +356,8 @@
     <string name="_bx_dev_bp_txt_sys_block_visible_for_levels"><![CDATA[Select Levels]]></string>
     <string name="_bx_dev_bp_txt_block_visible_for_levels"><![CDATA[Select Levels]]></string>
     <string name="_bx_dev_bp_txt_block_content_service"><![CDATA[Code]]></string>
+    <string name="_bx_dev_bp_txt_block_content_lang"><![CDATA[Content]]></string>
+    <string name="_bx_dev_bp_dsc_block_content_lang"><![CDATA[Enter language key]]></string>
     <string name="_bx_dev_bp_txt_sys_block_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_bp_txt_block_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_bp_txt_sys_block_copyable"><![CDATA[Copyable]]></string>

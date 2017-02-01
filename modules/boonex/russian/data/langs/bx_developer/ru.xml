@@ -356,6 +356,8 @@
     <string name="_bx_dev_bp_txt_sys_block_visible_for_levels"><![CDATA[Выбранных уровней]]></string>
     <string name="_bx_dev_bp_txt_block_visible_for_levels"><![CDATA[Выбрать уровни]]></string>
     <string name="_bx_dev_bp_txt_block_content_service"><![CDATA[Код]]></string>
+    <string name="_bx_dev_bp_txt_block_content_lang"><![CDATA[Содержимое]]></string>
+    <string name="_bx_dev_bp_dsc_block_content_lang"><![CDATA[Введите языковой ключ]]></string>
     <string name="_bx_dev_bp_txt_sys_block_deletable"><![CDATA[Можно удалять]]></string>
     <string name="_bx_dev_bp_txt_block_deletable"><![CDATA[Можно удалять]]></string>
     <string name="_bx_dev_bp_txt_sys_block_copyable"><![CDATA[Можно копировать]]></string>

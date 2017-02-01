@@ -454,7 +454,7 @@
 	<string name="_adm_bp_cpt_type_modules"><![CDATA[Модули]]></string>
 	<string name="_adm_bp_cpt_type_system"><![CDATA[Система]]></string>
 	<string name="_adm_bp_dsc_block_content_image_file"><![CDATA[Картинка будет отображена в блоке]]></string>
-	<string name="_adm_bp_dsc_block_content_lang"><![CDATA[Введите здесь языковой ключ]]></string>
+	<string name="_adm_bp_dsc_block_content_lang"><![CDATA[Введите содержимое в соответствии с выбранным языком]]></string>
 	<string name="_adm_bp_dsc_block_content_raw"><![CDATA[Введите здесь HTML-содержимое]]></string>
 	<string name="_adm_bp_dsc_block_content_rss_length"><![CDATA[Введите здесь количество отображаемых элементов]]></string>
 	<string name="_adm_bp_dsc_block_content_rss_url"><![CDATA[Введите здесь URL RSS-ресурса]]></string>

@@ -99,47 +99,59 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
         unset($oForm->aInputs['visible_for']);
 
         //--- Process Lang fields
-        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_LANG && isset($oForm->aInputs['content'])) {
-            $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-
-            $sContentKey = '';
-            $sContentValue = $oForm->getCleanValue('content');
-            if($aBlock['content'] == '') {
-                $sContentKey = '_sys_bpb_content_' . $aBlock['id'];
-                $oLanguage->addLanguageString($sContentKey, $sContentValue);
-            } else {
-                $sContentKey = $aBlock['content'];
-                $oLanguage->updateLanguageString($sContentKey, $sContentValue);
-            }
-            BxDolForm::setSubmittedValue('content', $sContentKey, $oForm->aFormAttrs['method']);
-        }
+        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_LANG && isset($oForm->aInputs['content']))
+            $this->onSaveBlockLang($oForm, $aBlock);
 
         //--- Process Image fields
-        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_IMAGE && isset($oForm->aInputs['image_file'], $oForm->aInputs['image_align'])) {
-            $iImageId = 0;
-            if($aBlock['content'] != '')
-                list($iImageId) = explode($this->sParamsDivider, $aBlock['content']);
-
-            $iImageId = $oForm->processImageUploaderSave('image_file', $iImageId);
-            if(is_string($iImageId) && !is_numeric($iImageId))
-                return array('msg' => $iImageId);
-
-            $sImageAlign = $oForm->getCleanValue('image_align');
-
-            unset($oForm->aInputs['image_file'], $oForm->aInputs['image_align']);
-            BxDolForm::setSubmittedValue('content', implode($this->sParamsDivider, array($iImageId, $sImageAlign)), $oForm->aFormAttrs['method']);
-        }
+        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_IMAGE && isset($oForm->aInputs['image_file'], $oForm->aInputs['image_align']))
+            $this->onSaveBlockImage($oForm, $aBlock);
 
         //--- Process RSS fields
-        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_RSS && isset($oForm->aInputs['rss_url'], $oForm->aInputs['rss_length'])) {
-            $aRss = array(
-                trim($oForm->getCleanValue('rss_url')),
-                $oForm->getCleanValue('rss_length')
-            );
+        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_RSS && isset($oForm->aInputs['rss_url'], $oForm->aInputs['rss_length']))
+            $this->onSaveBlockRss($oForm, $aBlock);
+    }
 
-            unset($oForm->aInputs['rss_url'], $oForm->aInputs['rss_length']);
-            BxDolForm::setSubmittedValue('content', implode($this->sParamsDivider, $aRss), $oForm->aFormAttrs['method']);
+    protected function onSaveBlockLang(&$oForm, &$aBlock)
+    {
+        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+
+        $sContentKey = '';
+        $sContentValue = $oForm->getCleanValue('content');
+        if($aBlock['content'] == '') {
+            $sContentKey = '_sys_bpb_content_' . $aBlock['id'];
+            $oLanguage->addLanguageString($sContentKey, $sContentValue);
+        } else {
+            $sContentKey = $aBlock['content'];
+            $oLanguage->updateLanguageString($sContentKey, $sContentValue);
         }
+        BxDolForm::setSubmittedValue('content', $sContentKey, $oForm->aFormAttrs['method']);
+    }
+
+    protected function onSaveBlockImage(&$oForm, &$aBlock)
+    {
+        $iImageId = 0;
+        if($aBlock['content'] != '')
+            list($iImageId) = explode($this->sParamsDivider, $aBlock['content']);
+
+        $iImageId = $oForm->processImageUploaderSave('image_file', $iImageId);
+        if(is_string($iImageId) && !is_numeric($iImageId))
+            return array('msg' => $iImageId);
+
+        $sImageAlign = $oForm->getCleanValue('image_align');
+
+        unset($oForm->aInputs['image_file'], $oForm->aInputs['image_align']);
+        BxDolForm::setSubmittedValue('content', implode($this->sParamsDivider, array($iImageId, $sImageAlign)), $oForm->aFormAttrs['method']);
+    }
+    
+    protected function onSaveBlockRss(&$oForm, &$aBlock)
+    {
+        $aRss = array(
+            trim($oForm->getCleanValue('rss_url')),
+            $oForm->getCleanValue('rss_length')
+        );
+
+        unset($oForm->aInputs['rss_url'], $oForm->aInputs['rss_length']);
+        BxDolForm::setSubmittedValue('content', implode($this->sParamsDivider, $aRss), $oForm->aFormAttrs['method']);
     }
 
     protected function addInArray($aInput, $sKey, $aValues)

@@ -338,6 +338,22 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
                 );
                 break;
 
+            case BX_DOL_STUDIO_BP_BLOCK_LANG:
+                $aFields = array(
+                    'content' => array(
+                        'type' => 'text',
+                        'name' => 'content',
+                        'caption' => _t('_bx_dev_bp_txt_block_content_lang'),
+                        'info' => _t('_bx_dev_bp_dsc_block_content_lang'),
+                        'value' => $aBlock['content'],
+                        'required' => '0',
+                        'db' => array (
+                            'pass' => 'Xss',
+                        ),
+                    ),
+                );
+                break;
+
             default:
                 $aFields = parent::getBlockContent($aBlock);
                 break;
@@ -397,11 +413,21 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
     {
         parent::onSaveBlock($oForm, $aBlock);
 
-        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_SERVICE && isset($oForm->aInputs['content'])) {
-            $sValue = $oForm->getCleanValue('content');
-            $sValue = BxDevFunctions::serializeString($sValue);
-            BxDolForm::setSubmittedValue('content', $sValue, $oForm->aFormAttrs['method']);
-        }
+        if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_SERVICE && isset($oForm->aInputs['content']))
+            $this->onSaveBlockService($oForm, $aBlock);
+    }
+
+    protected function onSaveBlockLang(&$oForm, &$aBlock)
+    {
+        $sValue = $oForm->getCleanValue('content');
+        BxDolForm::setSubmittedValue('content', $sValue, $oForm->aFormAttrs['method']);
+    }
+
+    protected function onSaveBlockService(&$oForm, &$aBlock)
+    {
+        $sValue = $oForm->getCleanValue('content');
+        $sValue = BxDevFunctions::serializeString($sValue);
+        BxDolForm::setSubmittedValue('content', $sValue, $oForm->aFormAttrs['method']);
     }
 
     protected function _getTmplVarsBlockPanelTopActions()

@@ -1374,13 +1374,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             case BX_DOL_STUDIO_BP_BLOCK_LANG:
                 $aFields = array(
                     'content' => array(
-                        'type' => 'textarea',
+                        'type' => 'textarea_translatable',
                         'name' => 'content',
                         'caption' => _t('_adm_bp_txt_block_content_lang'),
                         'info' => _t('_adm_bp_dsc_block_content_lang'),
-                        'value' => $aBlock['content'] != '' ? _t($aBlock['content']) : '',
+                        'value' => $aBlock['content'],
                         'required' => '0',
-                        'html' => 1,
+                        'html' => 0,
                         'db' => array (
                             'pass' => 'XssHtml',
                         ),
