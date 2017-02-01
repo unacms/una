@@ -278,7 +278,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockRaw ($aBlock)
     {
-        return '<div class="bx-page-raw-container">' . $this->_replaceMarkers($aBlock['content']) . '</div>';
+        return '<div class="bx-page-raw-container">' . $this->_replaceMarkers(BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array())) . '</div>';
     }
 
     /**
