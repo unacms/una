@@ -74,8 +74,7 @@
     <string name="_bx_polls_page_title_browse_updated"><![CDATA[Обновлённые Голосования]]></string>
     <string name="_bx_polls_page_title_sys_home"><![CDATA[Голосования - Домой]]></string>
     <string name="_bx_polls_page_title_home"><![CDATA[Голосования]]></string>
-    <string name="_bx_polls_page_block_title_recent_entries"><![CDATA[Новые Голосования (Галерея)]]></string>
-    <string name="_bx_polls_page_block_title_recent_entries_view_extended"><![CDATA[Новые Голосования]]></string>
+    <string name="_bx_polls_page_block_title_recent_entries"><![CDATA[Новые Голосования]]></string>
     <string name="_bx_polls_page_block_title_recent_entries_view_full"><![CDATA[Недавние Голосования (Полный просмотр)]]></string>
     <string name="_bx_polls_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_polls_page_block_title_entry_author"><![CDATA[Автор]]></string>
@@ -90,7 +89,6 @@
     <string name="_bx_polls_page_title_sys_entries_updated"><![CDATA[Обновленные Голосования]]></string>
     <string name="_bx_polls_page_title_entries_updated"><![CDATA[Обновленные Голосования]]></string>
     <string name="_bx_polls_page_block_title_popular_entries"><![CDATA[Популярные Голосования]]></string>
-    <string name="_bx_polls_page_block_title_popular_entries_view_extended"><![CDATA[Популярные Голосования (Дополнительный просмотр)]]></string>
     <string name="_bx_polls_page_block_title_popular_entries_view_full"><![CDATA[Популярные Голосования (Полный просмотр)]]></string>
     <string name="_bx_polls_page_block_title_updated_entries"><![CDATA[Обновленные Голосования]]></string>
     <string name="_bx_polls_page_title_sys_view_entry_comments"><![CDATA[Комментарии к голосования]]></string>
