@@ -28,17 +28,26 @@ class BxFilesMenuView extends BxBaseModTextMenuView
 
         $aFile = $this->_oModule->getContentFile($this->_aContentInfo);
         if (!$aFile || !$aFile['private']) {
-            $this->addMarkers(array('file_download_token' => ''));
+            $this->addMarkers(array(
+                'file_download_token' => '0',
+                'file_ext' => $aFile['ext'] ? $aFile['ext'] : '',
+            ));
             return;
         }
 
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         if (!$oStorage) {
-            $this->addMarkers(array('file_download_token' => ''));
+            $this->addMarkers(array(
+                'file_download_token' => '0',
+                'file_ext' => $aFile['ext'],
+            ));
             return;
         }
 
-        $this->addMarkers(array('file_download_token' => $oStorage->genToken($aFile['id'])));
+        $this->addMarkers(array(
+            'file_download_token' => $oStorage->genToken($aFile['id']),
+            'file_ext' => $aFile['ext'],
+        ));
     }
 
 }

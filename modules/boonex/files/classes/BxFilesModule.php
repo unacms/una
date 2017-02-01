@@ -47,7 +47,9 @@ class BxFilesModule extends BxBaseModTextModule
             return true;
 
         $sProfileModule = $oProfile->getModule();
-        if (BxDolService::call($sProfileModule, 'is_group_profile') && BxDolService::call($sProfileModule, 'is_fan', array($iGroupProfileId)))
+
+        $aContentInfo = BxDolService::call($sProfileModule, 'get_content_info_by_id', array($oProfile->getContentId()));
+        if (BxDolService::call($sProfileModule, 'is_group_profile') && (BxDolService::call($sProfileModule, 'is_fan', array($iGroupProfileId)) || bx_get_logged_profile_id() == $aContentInfo['author']))
             return true;
 
         return false;
@@ -57,11 +59,8 @@ class BxFilesModule extends BxBaseModTextModule
     {
         if (!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
-            return false;
 
-        $sProfileModule = $oProfile->getModule();
-        if ($iProfileId != $this->_iProfileId && !(BxDolService::call($sProfileModule, 'is_group_profile') && BxDolService::call($sProfileModule, 'is_fan', array($iProfileId))))
+        if (!$this->serviceIsAllowedAddContentToProfile($iProfileId))
             return false;
 
         $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
@@ -73,7 +72,7 @@ class BxFilesModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
-    public function actionDownload($iContentId, $sToken = '') 
+    public function actionDownload($sToken, $iContentId) 
     {
         $CNF = $this->_oConfig->CNF;
         
