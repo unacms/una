@@ -11,6 +11,8 @@
 
 class BxPollsSearchResult extends BxBaseModTextSearchResult
 {
+    protected $sUnitViewDefault = 'extended';
+
     function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
