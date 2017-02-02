@@ -105,7 +105,7 @@
         return this.each(function() {
             var $el = $(this);
 
-            $el.addClass('bx-def-z-index-modal');
+            $el.addClass('bx-def-z-index-modal bx-popup-responsive');
 
             // element must have id
             if (!$el.attr('id'))

@@ -70,7 +70,7 @@ html {
 
 .bx-popup-responsive.bx-popup-trans-wrapper:not(.bx-popup-image-wrapper),
 .bx-popup-responsive:not(.bx-popup-image-wrapper) .bx-popup-trans,
-.bx-popup-responsive.bx-popup-box-wrapper,
+.bx-popup-responsive:not(.bx-popup-image-wrapper).bx-popup-applied,
 .bx-popup-responsive .bx-popup-box {
     position:fixed !important;
     top:0 !important;
