@@ -140,7 +140,7 @@ class BxDolGridConnections extends BxTemplGrid
 
     protected function _getActionAddFriend ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if ($this->_bOwner || $aRow['id'] == bx_get_logged_profile_id())
+        if (!isLogged() || $this->_bOwner || $aRow['id'] == bx_get_logged_profile_id())
             return '';
 
         if ($this->_oConnection->isConnected($aRow['id'], bx_get_logged_profile_id()) || $this->_oConnection->isConnected(bx_get_logged_profile_id(), $aRow['id']))
