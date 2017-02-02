@@ -374,6 +374,7 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
+('sys_profiles_friends', 'connection_added', @iHandler),
 ('bx_timeline', 'post_common', @iHandler),
 ('bx_organizations_pics', 'file_deleted', @iHandler),
 ('bx_organizations', 'timeline_view', @iHandler),
@@ -389,9 +390,11 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_organizations_allow_view_to', 'bx_organizations', 'view', '_bx_orgs_form_profile_input_allow_view_to', '3', 'bx_organizations_data', 'id', 'author', 'BxOrgsPrivacy', 'modules/boonex/organizations/classes/BxOrgsPrivacy.php');
 
--- UPLOADERS
+-- EMAIL TEMPLATES
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
+('bx_organizations', '_bx_organizations_email_friend_request', 'bx_organizations_friend_request', '_bx_organizations_email_friend_request_subject', '_bx_organizations_email_friend_request_body');
 
+-- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_organizations_cover_crop', 1, 'BxOrgsUploaderCoverCrop', 'modules/boonex/organizations/classes/BxOrgsUploaderCoverCrop.php'),
 ('bx_organizations_picture_crop', 1, 'BxOrgsUploaderPictureCrop', 'modules/boonex/organizations/classes/BxOrgsUploaderPictureCrop.php');
-

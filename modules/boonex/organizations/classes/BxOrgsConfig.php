@@ -54,6 +54,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-organization-profile',
+        	'URI_VIEW_FRIENDS' => 'organization-profile-friends',
         	'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',
@@ -105,6 +106,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_GRID_COMMON' => 'bx_organizations_common',
             'OBJECT_UPLOADERS_COVER' => array('bx_organizations_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_organizations_picture_crop'),
+
+            'EMAIL_FRIEND_REQUEST' => 'bx_organizations_friend_request',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',

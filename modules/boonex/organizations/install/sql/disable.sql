@@ -53,6 +53,8 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` IN('bx_organizations_allow_view_to');
 
+-- EMAIL TEMPLATES
+DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_organizations';
+
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_organizations_cover_crop', 'bx_organizations_picture_crop');
-

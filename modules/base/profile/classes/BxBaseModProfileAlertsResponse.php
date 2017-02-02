@@ -30,6 +30,12 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
             $this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_COVER']);
         }        
 
+        // connection events
+        if ($oAlert->sUnit == 'sys_profiles_friends' && $oAlert->sAction == 'connection_added') {
+            if((int)$oAlert->aExtras['mutual'] == 0)
+                $this->sendMailFriendRequest($oAlert);
+        }
+
         // re-translate timeline alert for timeline in this module for posts made by other profiles
         if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id'])) && $oGroupProfile->getModule() == $this->_oModule->getName() && $oGroupProfile->id() != $oAlert->iSender) {            
             $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
@@ -64,6 +70,26 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
             break;
         }
 
+    }
+
+    protected function sendMailFriendRequest ($oAlert)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(empty($CNF['EMAIL_FRIEND_REQUEST']) || empty($CNF['URI_VIEW_FRIENDS']))
+            return;
+
+        $iRecipient = $oAlert->aExtras['content'];
+        $oRecipient = BxDolProfile::getInstance($iRecipient);
+        if($oRecipient->getModule() != $this->MODULE)
+            return;
+
+        $iSender = $oAlert->aExtras['initiator'];
+        $oSender = BxDolProfile::getInstance($iSender);
+        sendMailTemplate($CNF['EMAIL_FRIEND_REQUEST'], 0, $iRecipient, array(
+            'SenderUrl' => $oSender->getUrl(),
+            'SenderDisplayName' => $oSender->getDisplayName(),
+            'FriendsLink' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $iRecipient),
+        ), BX_EMAIL_NOTIFY);
     }
 
     protected function processTimelineView ($oAlert, $iGroupProfileId, $bDisableOwnerActions = false)

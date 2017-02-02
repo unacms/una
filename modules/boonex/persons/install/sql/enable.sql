@@ -361,6 +361,7 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
+('sys_profiles_friends', 'connection_added', @iHandler),
 ('bx_timeline', 'post_common', @iHandler),
 ('bx_persons_pictures', 'file_deleted', @iHandler),
 ('bx_persons', 'timeline_view', @iHandler),
@@ -372,9 +373,12 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_persons', 'timeline_repost', @iHandler);
 
 -- PRIVACY 
-
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_persons_allow_view_to', 'bx_persons', 'view', '_bx_persons_form_profile_input_allow_view_to', '3', 'bx_persons_data', 'id', 'author', 'BxPersonsPrivacy', 'modules/boonex/persons/classes/BxPersonsPrivacy.php');
+
+-- EMAIL TEMPLATES
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
+('bx_persons', '_bx_persons_email_friend_request', 'bx_persons_friend_request', '_bx_persons_email_friend_request_subject', '_bx_persons_email_friend_request_body');
 
 -- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES

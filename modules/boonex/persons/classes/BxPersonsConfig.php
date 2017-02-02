@@ -54,6 +54,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-persons-profile',
+        	'URI_VIEW_FRIENDS' => 'persons-profile-friends',
         	'URI_VIEW_FAVORITES' => 'persons-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-persons-profile',
             'URI_EDIT_COVER' => 'edit-persons-cover',
@@ -105,6 +106,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_GRID_COMMON' => 'bx_persons_common',
             'OBJECT_UPLOADERS_COVER' => array('bx_persons_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_persons_picture_crop'),
+
+        	'EMAIL_FRIEND_REQUEST' => 'bx_persons_friend_request',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',
