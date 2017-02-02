@@ -22,6 +22,16 @@ class BxOAuthDb extends BxDolModuleDb
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause .= "AND `tc`.`id`=:id";
+                $sLimitClause .= "LIMIT 1";
+                break;
+
             case 'client_id':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(

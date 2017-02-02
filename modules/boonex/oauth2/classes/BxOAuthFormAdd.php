@@ -11,20 +11,24 @@
 
 class BxOAuthFormAdd extends BxTemplFormView
 {
-     protected static $LENGTH_ID = 10;
-     protected static $LENGTH_SECRET = 32;
+    protected static $LENGTH_ID = 10;
+    protected static $LENGTH_SECRET = 32;
 
-    function __construct ($oModule)
+    protected $_sModule;
+    protected $_oModule;
+
+    function __construct($aCustomForm = array())
     {
-        $aCustomForm = array(
+        $this->_sModule = 'bx_oauth';
+    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
+        $aCustomForm = array_replace_recursive(array(
             'form_attrs' => array(
                 'id' => 'bx-oauth-add',
                 'name' => 'bx-oauth-add',
                 'action' => BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r')),
                 'method' => 'post',
             ),
-
             'params' => array (
                 'db' => array(
                     'table' => 'bx_oauth_clients',
@@ -32,9 +36,7 @@ class BxOAuthFormAdd extends BxTemplFormView
                     'submit_name' => 'client_add',
                 ),
             ),
-
             'inputs' => array(
-
                 'title' => array(
                     'type' => 'text',
                     'name' => 'title',
@@ -48,7 +50,6 @@ class BxOAuthFormAdd extends BxTemplFormView
                         'pass' => 'Xss',
                     ),
                 ),
-
                 'redirect_uri' => array(
                     'type' => 'text',
                     'name' => 'redirect_uri',
@@ -63,7 +64,6 @@ class BxOAuthFormAdd extends BxTemplFormView
                         'pass' => 'Xss',
                     ),
                 ),
-
                 'Submit' => array (
                     'type' => 'input_set',
                     0 => array (
@@ -82,7 +82,7 @@ class BxOAuthFormAdd extends BxTemplFormView
                     ),
                 ),
             ),
-        );
+        ), $aCustomForm);
 
         parent::__construct ($aCustomForm);
     }

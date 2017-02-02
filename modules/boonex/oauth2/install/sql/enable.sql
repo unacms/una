@@ -8,12 +8,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `or
 ('bx_oauth', 'checkbox', 'Select', '2%', '', 10),
 ('bx_oauth', 'title', '_Title', '20%', '', 20),
 ('bx_oauth', 'client_id', '_bx_oauth_client_id', '15%', '', 30),
-('bx_oauth', 'client_secret', '_bx_oauth_client_secret', '30%', '', 40),
-('bx_oauth', 'redirect_uri', '_bx_oauth_url', '33%', '', 50);
+('bx_oauth', 'client_secret', '_bx_oauth_client_secret', '20%', '', 40),
+('bx_oauth', 'redirect_uri', '_bx_oauth_url', '25%', '', 50),
+('bx_oauth', 'actions', '', '18%', '', 60);
 
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `confirm`, `order`) VALUES
-('bx_oauth', 'bulk', 'delete', '_Delete', 1, 1),
-('bx_oauth', 'independent', 'add', '_bx_oauth_add', 0, 1);
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_oauth', 'bulk', 'delete', '_Delete', '', 0, 1, 1),
+('bx_oauth', 'single', 'edit', '_Edit', 'pencil', 1, 0, 1),
+('bx_oauth', 'independent', 'add', '_bx_oauth_add', '', 0, 0, 1);
 
 -- SETTINGS
 
