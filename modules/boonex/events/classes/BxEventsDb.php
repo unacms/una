@@ -96,7 +96,7 @@ class BxEventsDb extends BxBaseModGroupsDb
                 $aBindings['event'] = (int)$iEventId;
                 $sWhere .= " AND `bx_events_data`.`id` = :event ";
             }
-            $a = $this->getAll("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`
+            $a = $this->getAll("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`
                 FROM `bx_events_data`
                 LEFT JOIN `bx_events_intervals` AS `i` ON (
                     `bx_events_data`.`id` = `i`.`event_id`
@@ -138,6 +138,8 @@ class BxEventsDb extends BxBaseModGroupsDb
 
                 $a[$k]['start'] = $oStart ? $oStart->format('c') : 0;
                 $a[$k]['end'] = $oEnd ? $oEnd->format('c') : 0;
+                $a[$k]['start_utc'] = $oStart ? $oStart->getTimestamp() : 0;
+                $a[$k]['end_utc'] = $oEnd ? $oEnd->getTimestamp() : 0;
                 $a[$k]['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']);
             }
 

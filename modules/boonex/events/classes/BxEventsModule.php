@@ -60,6 +60,26 @@ class BxEventsModule extends BxBaseModGroupsModule
         return $o->display($sTemplate);
     }
 
+    /**
+     * Send remoiders to event's participants.
+     * It must be processed once every hour for the proper processing.
+     */ 
+    public function serviceProcessReminders()
+    {
+        $iNow = time();
+
+        // get all events for today and tomorrow, since the max reminder is 24 hours
+        $aEntries = $this->_oDb->getEntriesByDate('@' . time(), '@' . (time() + 86400));
+
+        foreach ($aEntries as $a) {
+            if (!$a['reminder'])
+                continue;
+            $iTimestamp = $a['start_utc'] - (3600 * $a['reminder']);
+            if ($iNow > ($iTimestamp - 3600) && $iNow < $iTimestamp)
+                $this->sendReminders($a);
+        }
+    }
+
     public function actionIntervals()
     {
         $sAction = bx_get('a');
@@ -117,6 +137,55 @@ class BxEventsModule extends BxBaseModGroupsModule
         else {
             echo 'ok';
         }
+    }
+
+    /**
+     * Send reminder to event's paritcipants
+     * @param $aContentInfo content info
+     * @return number of sent reminders
+     */ 
+    protected function sendReminders($aContentInfo)
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        if (!$oConnection)
+            return false;
+
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aContentInfo[$CNF['FIELD_ID']], $this->getName());
+        if (!$oGroupProfile)
+            return false;
+
+        $aParticipants = $oConnection->getConnectedInitiators($oGroupProfile->id(), true);
+        if (!$aParticipants)
+            return true;
+
+        $oDateBegin = new DateTime();
+        $oDateBegin->setTimestamp($aContentInfo['start_utc']);
+        $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone']));
+        $sEntryBegin = $oDateBegin->format('r');
+        $sEntryBeginShort = $oDateBegin->format('j M');
+        $oDateBegin->setTimezone(new DateTimeZone('UTC'));
+        $sEntryBeginUTC = $oDateBegin->format('c');
+
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $sLocationString = $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false);
+
+        $iCounter = 0;
+        foreach ($aParticipants as $iProfileId) {
+
+            $b = sendMailTemplate($CNF['EMAIL_REMINDER'], 0, $iProfileId, array(
+                'EntryUrl' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+                'EntryTitle' => $aContentInfo['title'],
+                'EntryBegin' => $sEntryBegin,
+                'EntryBeginShort' => $sEntryBeginShort,
+                'EntryBeginUTC' => $sEntryBeginUTC,
+                'EntryLocation' => $sLocationString,
+            ), BX_EMAIL_NOTIFY);
+
+            $iCounter += $b ? 1 : 0;
+        }
+        return $iCounter;
     }
 }
 

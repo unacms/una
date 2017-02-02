@@ -53,6 +53,8 @@
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Timezone]]></string>
     <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Time]]></string>
     <string name="_bx_events_form_profile_input_time"><![CDATA[Time]]></string>
+    <string name="_bx_events_form_profile_input_sys_reminder"><![CDATA[Reminder]]></string>
+    <string name="_bx_events_form_profile_input_reminder"><![CDATA[Reminder]]></string>
 
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Repeat year]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Repeat month]]></string>
@@ -253,6 +255,15 @@
     <string name="_bx_events_privacy_group_closed"><![CDATA[Closed]]></string>
     <string name="_bx_events_privacy_group_secret"><![CDATA[Secret]]></string>
 
+    <string name="_bx_events_pre_lists_reminder"><![CDATA[Event reminder]]></string>
+    <string name="_bx_events_reminder_none"><![CDATA[Reminder is off]]></string>
+    <string name="_bx_events_reminder_1h"><![CDATA[1 hour]]></string>
+    <string name="_bx_events_reminder_2h"><![CDATA[2 hours]]></string>
+    <string name="_bx_events_reminder_3h"><![CDATA[3 hours]]></string>
+    <string name="_bx_events_reminder_6h"><![CDATA[6 hours]]></string>
+    <string name="_bx_events_reminder_12h"><![CDATA[12 hours]]></string>
+    <string name="_bx_events_reminder_24h"><![CDATA[24 hours]]></string>
+
     <string name="_bx_events_pre_lists_cats"><![CDATA[Event categories]]></string>
     <string name="_bx_events_cat_General"><![CDATA[General]]></string>
     <string name="_bx_events_cat_Business"><![CDATA[Business]]></string>
@@ -345,4 +356,15 @@
     <string name="_bx_events_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} event</a>.</p>
 {email_footer}]]></string>
+
+    <string name="_bx_events_email_reminder"><![CDATA[Reminder for the event]]></string>
+    <string name="_bx_events_email_reminder_subject"><![CDATA["{EntryTitle}" event - {EntryBeginShort}]]></string>
+    <string name="_bx_events_email_reminder_body"><![CDATA[{email_header}
+<p class="vevent">
+    <a href="{EntryUrl}" class="summary">{EntryTitle}</a> event reminder:</a><br />
+    Date: <abbr class="dtstart" title="{EntryBeginUTC}">{EntryBegin}</abbr><br />
+    Location: <span class="location">{EntryLocation}</span>
+</p>
+{email_footer}]]></string>
+
 </resources>

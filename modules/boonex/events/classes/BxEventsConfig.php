@@ -114,6 +114,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'EMAIL_ADMIN_BECOME_FAN' => 'bx_events_admin_become_fan',
             'EMAIL_FAN_REMOVE' => 'bx_events_fan_remove',
             'EMAIL_JOIN_REJECT' => 'bx_events_join_reject',
+            'EMAIL_REMINDER' => 'bx_events_reminder',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',

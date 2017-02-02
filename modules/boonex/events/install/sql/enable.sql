@@ -434,11 +434,17 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('bx_events', '_bx_events_email_fan_remove', 'bx_events_fan_remove', '_bx_events_email_fan_remove_subject', '_bx_events_email_fan_remove_body'),
 ('bx_events', '_bx_events_email_fan_become_admin', 'bx_events_fan_become_admin', '_bx_events_email_fan_become_admin_subject', '_bx_events_email_fan_become_admin_body'),
 ('bx_events', '_bx_events_email_admin_become_fan', 'bx_events_admin_become_fan', '_bx_events_email_admin_become_fan_subject', '_bx_events_email_admin_become_fan_body'),
-('bx_events', '_bx_events_email_invitation', 'bx_events_invitation', '_bx_events_email_invitation_subject', '_bx_events_email_invitation_body');
+('bx_events', '_bx_events_email_invitation', 'bx_events_invitation', '_bx_events_email_invitation_subject', '_bx_events_email_invitation_body'),
+('bx_events', '_bx_events_email_reminder', 'bx_events_reminder', '_bx_events_email_reminder_subject', '_bx_events_email_reminder_body');
 
 -- UPLOADERS
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_events_cover_crop', 1, 'BxEventsUploaderCoverCrop', 'modules/boonex/events/classes/BxEventsUploaderCoverCrop.php'),
 ('bx_events_picture_crop', 1, 'BxEventsUploaderPictureCrop', 'modules/boonex/events/classes/BxEventsUploaderPictureCrop.php');
+
+-- CRON
+
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_events_process_reminders', '55 * * * *', 'BxEventsCronProcessReminders', 'modules/boonex/events/classes/BxEventsCronProcessReminders.php', '');
 
