@@ -51,7 +51,9 @@
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Часовой пояс]]></string>
     <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Время]]></string>
     <string name="_bx_events_form_profile_input_time"><![CDATA[Время]]></string>
-
+    <string name="_bx_events_form_profile_input_sys_reminder"><![CDATA[Напоминание]]></string>
+    <string name="_bx_events_form_profile_input_reminder"><![CDATA[Напоминание]]></string>
+    
     <string name="_bx_events_form_input_repeat_year"><![CDATA[Повторять: год]]></string>
     <string name="_bx_events_form_input_repeat_month"><![CDATA[Повторять: месяц]]></string>
     <string name="_bx_events_form_input_repeat_week_of_month"><![CDATA[Повторять: неделя в месяце]]></string>
@@ -252,6 +254,15 @@
     <string name="_bx_events_privacy_group_closed"><![CDATA[Закрытое событие]]></string>
     <string name="_bx_events_privacy_group_secret"><![CDATA[Секретное событие]]></string>
 
+    <string name="_bx_events_pre_lists_reminder"><![CDATA[Напоминание о событии]]></string>
+    <string name="_bx_events_reminder_none"><![CDATA[Выключено]]></string>
+    <string name="_bx_events_reminder_1h"><![CDATA[За 1 час]]></string>
+    <string name="_bx_events_reminder_2h"><![CDATA[За 2 часа]]></string>
+    <string name="_bx_events_reminder_3h"><![CDATA[За 3 часа]]></string>
+    <string name="_bx_events_reminder_6h"><![CDATA[За 6 часов]]></string>
+    <string name="_bx_events_reminder_12h"><![CDATA[За 12 часов]]></string>
+    <string name="_bx_events_reminder_24h"><![CDATA[За 24 часа]]></string>
+    
     <string name="_bx_events_pre_lists_cats"><![CDATA[Категории событий]]></string>
     <string name="_bx_events_cat_General"><![CDATA[Обобщение]]></string>
     <string name="_bx_events_cat_Business"><![CDATA[Бизнес]]></string>
@@ -344,4 +355,15 @@
     <string name="_bx_events_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас на событие <a href="{EntryUrl}">{EntryTitle}</a>.</p>
 {email_footer}]]></string>
+
+    <string name="_bx_events_email_reminder"><![CDATA[Напоминание о предстроящем событии]]></string>
+    <string name="_bx_events_email_reminder_subject"><![CDATA[Событие "{EntryTitle}" - {EntryBeginShort}]]></string>
+    <string name="_bx_events_email_reminder_body"><![CDATA[{email_header}
+<p class="vevent">
+    Напоминание о событии <a href="{EntryUrl}" class="summary">{EntryTitle}</a>:<br />
+    Дата: <abbr class="dtstart" title="{EntryBeginUTC}">{EntryBegin}</a><br />
+    Место: <span class="location">{EntryLocation}</span> 
+</p>
+{email_footer}]]></string>
+
 </resources>

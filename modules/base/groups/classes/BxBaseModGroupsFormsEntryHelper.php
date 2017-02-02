@@ -72,6 +72,9 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
     protected function inviteMembers ($oGroupProfile, $aInitialProfiles)
     {
+        if (!$aInitialProfiles)
+            return;
+
         // insert invited members, so they will join without confirmation
         foreach ($aInitialProfiles as $iProfileId) {
             if (!($oProfile = BxDolProfile::getInstance($iProfileId)))

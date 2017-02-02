@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `favorites` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
+  `reminder` int(11) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`event_name`, `event_desc`)
@@ -215,6 +216,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_event', 'bx_events', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_events_form_profile_input_sys_delete_confirm', '_bx_events_form_profile_input_delete_confirm', '_bx_events_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_events_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_event', 'bx_events', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_events_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'event_cat', '', '#!bx_events_cats', 0, 'select', '_bx_events_form_profile_input_sys_event_cat', '_bx_events_form_profile_input_event_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_events_form_profile_input_event_cat_err', 'Xss', '', 1, 1),
+('bx_event', 'bx_events', 'reminder', '', '#!bx_events_reminder', 0, 'select', '_bx_events_form_profile_input_sys_reminder', '_bx_events_form_profile_input_reminder', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 1),
 ('bx_event', 'bx_events', 'event_desc', '', '', 0, 'textarea', '_bx_events_form_profile_input_sys_event_desc', '_bx_events_form_profile_input_event_desc', '', 0, 0, 0, '', '', '', '', '', '', 'XssMultiline', '', 1, 1),
 ('bx_event', 'bx_events', 'event_name', '', '', 0, 'text', '_bx_events_form_profile_input_sys_event_name', '_bx_events_form_profile_input_event_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_events_form_profile_input_event_name_err', 'Xss', '', 1, 0),
 ('bx_event', 'bx_events', 'initial_members', '', '', 0, 'custom', '_bx_events_form_profile_input_sys_initial_members', '_bx_events_form_profile_input_initial_members', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
@@ -240,8 +242,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_add', 'timezone', 2147483647, 1, 12),
 ('bx_event_add', 'reoccurring', 2147483647, 1, 13),
 ('bx_event_add', 'join_confirmation', 2147483647, 1, 14),
-('bx_event_add', 'allow_view_to', 2147483647, 1, 15),
-('bx_event_add', 'do_submit', 2147483647, 1, 16),
+('bx_event_add', 'reminder', 2147483647, 1, 15),
+('bx_event_add', 'allow_view_to', 2147483647, 1, 16),
+('bx_event_add', 'do_submit', 2147483647, 1, 17),
 
 ('bx_event_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_event_invite', 'do_submit', 2147483647, 1, 2),
@@ -267,8 +270,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_edit', 'timezone', 2147483647, 1, 12),
 ('bx_event_edit', 'reoccurring', 2147483647, 1, 13),
 ('bx_event_edit', 'join_confirmation', 2147483647, 1, 14),
-('bx_event_edit', 'allow_view_to', 2147483647, 1, 15),
-('bx_event_edit', 'do_submit', 2147483647, 1, 16),
+('bx_event_edit', 'reminder', 2147483647, 1, 15),
+('bx_event_edit', 'allow_view_to', 2147483647, 1, 16),
+('bx_event_edit', 'do_submit', 2147483647, 1, 17),
 
 ('bx_event_edit_cover', 'allow_view_to', 2147483647, 0, 1),
 ('bx_event_edit_cover', 'time', 2147483647, 0, 2),
@@ -320,6 +324,18 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_view_full', 'event_desc', 2147483647, 0, 15);
 
 -- PRE-VALUES
+
+INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
+('bx_events_reminder', '_bx_events_pre_lists_reminder', 'bx_events', '0');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
+('bx_events_reminder', '0', 0, '_bx_events_reminder_none', ''),
+('bx_events_reminder', '1', 1, '_bx_events_reminder_1h', ''),
+('bx_events_reminder', '2', 2, '_bx_events_reminder_2h', ''),
+('bx_events_reminder', '3', 3, '_bx_events_reminder_3h', ''),
+('bx_events_reminder', '6', 4, '_bx_events_reminder_6h', ''),
+('bx_events_reminder', '12', 5, '_bx_events_reminder_12h', ''),
+('bx_events_reminder', '24', 6, '_bx_events_reminder_24h', '');
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_events_cats', '_bx_events_pre_lists_cats', 'bx_events', '0');
