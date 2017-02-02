@@ -26,7 +26,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'convos-compose' => 'checkAllowedSubscribeAdd',
+            'convos-compose' => 'checkAllowedCompose',
         );
 
         $this->CNF = array (

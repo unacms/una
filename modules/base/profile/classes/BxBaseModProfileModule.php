@@ -555,6 +555,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+	/**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
+    public function checkAllowedCompose (&$aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowedView ($aDataEntry, $isPerformAction);
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */

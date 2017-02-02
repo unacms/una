@@ -26,7 +26,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
             'profile-set-acl-level' => 'checkAllowedSetMembership',
-            'convos-compose' => 'checkAllowedSubscribeAdd',
+            'convos-compose' => 'checkAllowedCompose',
         );
 
         $this->CNF = array (
