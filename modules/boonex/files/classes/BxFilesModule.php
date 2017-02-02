@@ -119,13 +119,20 @@ class BxFilesModule extends BxBaseModTextModule
             return false;
 
         if (isset($aData[$CNF['FIELD_FILE_ID']]) && $aData[$CNF['FIELD_FILE_ID']]) 
-            return $oStorage->getFile($aData[$CNF['FIELD_FILE_ID']]);
+            return $this->_addFileFields($oStorage->getFile($aData[$CNF['FIELD_FILE_ID']]));
         
         $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
         if (!$aGhostFiles)
             return false;
 
-        return array_pop($aGhostFiles);
+        return $this->_addFileFields(array_pop($aGhostFiles));
+    }
+
+    protected function _addFileFields($aFile) 
+    {
+        if (is_array($aFile))
+            $aFile['is_image'] = in_array($aFile['ext'], array('jpg', 'jpeg', 'png', 'gif', /* when ImageMagick is used - 'tif', 'tiff', 'bmp', 'ico', 'psd' */));
+        return $aFile;
     }
 
     public function serviceEntityFilePreview($iContentId = 0)
@@ -170,6 +177,44 @@ class BxFilesModule extends BxBaseModTextModule
 
             $this->_oDb->updateFileData ($aContentInfo[$CNF['FIELD_ID']], $sData);
         }
+    }
+
+    public function serviceGetTimelinePost($aEvent)
+    {
+        $a = parent::serviceGetTimelinePost($aEvent);
+
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        $aFile = $this->getContentFile($aContentInfo);
+        if (!$aFile['is_image']) {
+            $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->CNF['OBJECT_STORAGE']);
+            $sIcon = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'file-o';
+            $a['content'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', array(
+                'title' => $a['content']['title'],
+                'title_attr' => bx_html_attribute($a['content']['title']),
+                'url' => $a['content']['url'],
+                'icon' => '<i class="sys-icon ' . $sIcon . '"></i>',
+            ));
+        }
+        
+        return $a;
+    }
+    
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    {
+        $aFile = $this->getContentFile($aContentInfo);
+        if (!$aFile)
+            return array();
+
+        if (!$aFile['is_image'])
+            return array();
+
+        $sPhotoThumb = '';
+        if ($oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
+            $sPhotoThumb = $oImagesTranscoder->getFileUrl($aFile['id']);
+
+        return array(
+		    array('url' => $sUrl, 'src' => $sPhotoThumb),
+		);
     }
 }
 

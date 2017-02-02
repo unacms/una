@@ -24,7 +24,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
     {
         $aFile = BxDolModule::getInstance($this->MODULE)->getContentFile($aData);
 
-        if (!in_array($aFile['ext'], array('jpg', 'jpeg', 'png', 'gif', /* when ImageMagick is used - 'tif', 'tiff', 'bmp', 'ico', 'psd' */)))
+        if (!$aFile['is_image'])
             return array('', '');
 
         $sPhotoThumb = '';
