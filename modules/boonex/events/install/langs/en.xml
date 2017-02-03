@@ -265,12 +265,17 @@
     <string name="_bx_events_reminder_24h"><![CDATA[24 hours]]></string>
 
     <string name="_bx_events_pre_lists_cats"><![CDATA[Event categories]]></string>
-    <string name="_bx_events_cat_General"><![CDATA[General]]></string>
-    <string name="_bx_events_cat_Business"><![CDATA[Business]]></string>
-    <string name="_bx_events_cat_Interests"><![CDATA[Interests]]></string>
-    <string name="_bx_events_cat_Causes"><![CDATA[Causes]]></string>
-    <string name="_bx_events_cat_Fun"><![CDATA[Fun]]></string>
-    <string name="_bx_events_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
+    <string name="_bx_events_cat_Conference"><![CDATA[Conference]]></string>
+    <string name="_bx_events_cat_Festival"><![CDATA[Festival]]></string>
+    <string name="_bx_events_cat_Fundraiser"><![CDATA[Fundraiser]]></string>
+    <string name="_bx_events_cat_Lecture"><![CDATA[Lecture]]></string>
+    <string name="_bx_events_cat_Market"><![CDATA[Market]]></string>
+    <string name="_bx_events_cat_Meal"><![CDATA[Meal]]></string>
+    <string name="_bx_events_cat_Social_Mixer"><![CDATA[Social Mixer]]></string>
+    <string name="_bx_events_cat_Tour"><![CDATA[Tour]]></string>
+    <string name="_bx_events_cat_Volunteering"><![CDATA[Volunteering]]></string>
+    <string name="_bx_events_cat_Workshop"><![CDATA[Workshop]]></string>
+    <string name="_bx_events_cat_Other"><![CDATA[Other]]></string>
 
     <string name="_bx_events_pre_lists_repeat_year"><![CDATA[Repeat year]]></string>
     <string name="_bx_events_cat_repeat_year_every_year"><![CDATA[Every year]]></string>

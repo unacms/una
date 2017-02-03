@@ -80,6 +80,38 @@ class BxEventsModule extends BxBaseModGroupsModule
         }
     }
 
+    public function serviceGetTimelinePost($aEvent)
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $a = parent::serviceGetTimelinePost($aEvent);
+
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+
+        $oDateStart = date_create('@' . $aContentInfo['date_start'], new DateTimeZone($aContentInfo['timezone']));
+        $oDateEnd = date_create('@' . ($aContentInfo['date_start'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_start'] : $aContentInfo['repeat_stop']), new DateTimeZone($aContentInfo['timezone']));
+
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $sLocationString = $oMetatags ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : false;
+
+        $a['content']['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', array(
+            'title' => $a['content']['title'],
+            'title_attr' => bx_html_attribute($a['content']['title']),
+            'url' => $a['content']['url'],
+            'date' => $oDateStart->format(getParam('bx_events_short_date_format')) . ($oDateStart->format('ymd') == $oDateEnd->format('ymd') ? '' : ' - ' . $oDateEnd->format(getParam('bx_events_short_date_format'))),
+            'date_c' => $oDateStart->format('c'),
+            'bx_if:location' => array(
+                'condition' => !!$sLocationString,
+                'content' => array('location' => $sLocationString),
+            ),
+        ));
+
+        $a['content']['title'] = '';
+        $a['content']['text'] = '';
+
+        return $a;
+    }
+    
     public function actionIntervals()
     {
         $sAction = bx_get('a');
@@ -164,7 +196,7 @@ class BxEventsModule extends BxBaseModGroupsModule
         $oDateBegin->setTimestamp($aContentInfo['start_utc']);
         $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone']));
         $sEntryBegin = $oDateBegin->format('r');
-        $sEntryBeginShort = $oDateBegin->format('j M');
+        $sEntryBeginShort = $oDateBegin->format(getParam('bx_events_short_date_format'));
         $oDateBegin->setTimezone(new DateTimeZone('UTC'));
         $sEntryBeginUTC = $oDateBegin->format('c');
 

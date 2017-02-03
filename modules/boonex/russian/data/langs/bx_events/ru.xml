@@ -264,12 +264,17 @@
     <string name="_bx_events_reminder_24h"><![CDATA[За 24 часа]]></string>
     
     <string name="_bx_events_pre_lists_cats"><![CDATA[Категории событий]]></string>
-    <string name="_bx_events_cat_General"><![CDATA[Обобщение]]></string>
-    <string name="_bx_events_cat_Business"><![CDATA[Бизнес]]></string>
-    <string name="_bx_events_cat_Interests"><![CDATA[Увлечение]]></string>
-    <string name="_bx_events_cat_Causes"><![CDATA[Движение]]></string>
-    <string name="_bx_events_cat_Fun"><![CDATA[Юмор]]></string>
-    <string name="_bx_events_cat_Uncategorised"><![CDATA[Без категории]]></string>
+    <string name="_bx_events_cat_Conference"><![CDATA[Конференция]]></string>
+    <string name="_bx_events_cat_Festival"><![CDATA[Фестиваль]]></string>
+    <string name="_bx_events_cat_Fundraiser"><![CDATA[Сбор средств]]></string>
+    <string name="_bx_events_cat_Lecture"><![CDATA[Лекция]]></string>
+    <string name="_bx_events_cat_Market"><![CDATA[Рынок]]></string>
+    <string name="_bx_events_cat_Meal"><![CDATA[Еда]]></string>
+    <string name="_bx_events_cat_Social_Mixer"><![CDATA[Знакомства]]></string>
+    <string name="_bx_events_cat_Tour"><![CDATA[Тур]]></string>
+    <string name="_bx_events_cat_Volunteering"><![CDATA[Добровольная работа]]></string>
+    <string name="_bx_events_cat_Workshop"><![CDATA[Умелые ручки]]></string>
+    <string name="_bx_events_cat_Other"><![CDATA[Другое]]></string>
 
     <string name="_bx_events_pre_lists_repeat_year"><![CDATA[Повторять: год]]></string>
     <string name="_bx_events_cat_repeat_year_every_year"><![CDATA[Каждый год]]></string>
