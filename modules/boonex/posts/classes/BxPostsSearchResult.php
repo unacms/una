@@ -25,6 +25,7 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_posts_per_page_browse'), 'start' => 0),
@@ -74,6 +75,14 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
                 break;
 
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_recent');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
+                break;
+
             case 'popular':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
                 $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_popular');
@@ -111,6 +120,9 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
         switch ($this->aCurrent['sorting']) {
             case 'last':
                 $aSql['order'] = ' ORDER BY `bx_posts_posts`.`added` DESC';
+                break;
+            case 'featured':
+                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`featured` DESC';
                 break;
             case 'updated':
                 $aSql['order'] = ' ORDER BY `bx_posts_posts`.`changed` DESC';
