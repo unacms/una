@@ -199,7 +199,7 @@ class BxBaseFavorite extends BxDolFavorite
         	'bx_if:show_onclick' => array(
         		'condition' => !$bDisabled,
         		'content' => array(
-        			'js_object' => $this->getJsObjectName()
+        			'onclick' => $this->getJsClick()
         		)
         	),
             'do_favorite' => $this->_getLabelDoFavorite($aParams),
