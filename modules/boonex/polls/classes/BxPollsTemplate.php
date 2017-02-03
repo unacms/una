@@ -97,7 +97,6 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         );
     }
 
-    //TODO: Continue from here with Full View
     protected function getUnit ($aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

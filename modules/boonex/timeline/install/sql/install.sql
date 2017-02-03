@@ -49,7 +49,7 @@ INSERT INTO `bx_timeline_handlers`(`group`, `type`, `alert_unit`, `alert_action`
 CREATE TABLE IF NOT EXISTS `bx_timeline_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_photos` (
 CREATE TABLE IF NOT EXISTS `bx_timeline_photos_processed` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_photos2events` (
 CREATE TABLE IF NOT EXISTS `bx_timeline_videos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_videos` (
 CREATE TABLE IF NOT EXISTS `bx_timeline_videos_processed` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,

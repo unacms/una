@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_albums` (
 CREATE TABLE IF NOT EXISTS `bx_albums_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files` (
 CREATE TABLE IF NOT EXISTS `bx_albums_photos_resized` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,

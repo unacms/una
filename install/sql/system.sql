@@ -943,7 +943,7 @@ CREATE TABLE `sys_modules_relations` (
 CREATE TABLE IF NOT EXISTS `sys_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -959,7 +959,7 @@ CREATE TABLE IF NOT EXISTS `sys_files` (
 CREATE TABLE `sys_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -975,7 +975,7 @@ CREATE TABLE `sys_images` (
 CREATE TABLE `sys_images_custom` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -991,7 +991,7 @@ CREATE TABLE `sys_images_custom` (
 CREATE TABLE `sys_images_resized` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -1010,7 +1010,7 @@ CREATE TABLE `sys_images_resized` (
 CREATE TABLE IF NOT EXISTS `sys_cmts_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -1026,7 +1026,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_images` (
 CREATE TABLE IF NOT EXISTS `sys_cmts_images_preview` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -3575,7 +3575,7 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_queue` (
 CREATE TABLE `sys_transcoder_queue_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,

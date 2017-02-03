@@ -49,7 +49,7 @@ INSERT INTO `bx_convos_folders` (`id`, `author`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `bx_convos_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `bx_convos_files` (
 CREATE TABLE IF NOT EXISTS `bx_convos_photos_resized` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
-  `remote_id` varchar(255) NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
   `path` varchar(255) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
