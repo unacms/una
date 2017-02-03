@@ -161,7 +161,6 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             else
                 $aInput['value'] = '';
         }
-
         return $this->genViewRowWrapped($aInput);
     }
  

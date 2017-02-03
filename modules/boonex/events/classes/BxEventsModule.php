@@ -164,7 +164,7 @@ class BxEventsModule extends BxBaseModGroupsModule
         $oDateBegin->setTimestamp($aContentInfo['start_utc']);
         $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone']));
         $sEntryBegin = $oDateBegin->format('r');
-        $sEntryBeginShort = $oDateBegin->format('j M');
+        $sEntryBeginShort = $oDateBegin->format(getParam('bx_events_short_date_format'));
         $oDateBegin->setTimezone(new DateTimeZone('UTC'));
         $sEntryBeginUTC = $oDateBegin->format('c');
 
