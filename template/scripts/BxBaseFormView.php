@@ -349,10 +349,6 @@ EOS;
                     $sValue = null;
             break;
 
-            case 'custom':
-                $sValue = isset($aInput['content']) && '' !== $aInput['content'] ? bx_process_output($aInput['content'], BX_DATA_HTML) : null;
-                break;
-
             default:
                 $sValue = isset($aInput['value']) && '' !== $aInput['value'] ? bx_process_output($aInput['value']) : null;
         }
