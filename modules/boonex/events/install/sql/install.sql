@@ -342,12 +342,17 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUE
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_events_cats', '', 0, '_sys_please_select', ''),
-('bx_events_cats', '1', 1, '_bx_events_cat_General', ''),
-('bx_events_cats', '2', 2, '_bx_events_cat_Business', ''),
-('bx_events_cats', '3', 3, '_bx_events_cat_Interests', ''),
-('bx_events_cats', '4', 4, '_bx_events_cat_Causes', ''),
-('bx_events_cats', '5', 5, '_bx_events_cat_Fun', ''),
-('bx_events_cats', '6', 6, '_bx_events_cat_Uncategorised', '');
+('bx_events_cats', '1', 1, '_bx_events_cat_Conference', ''),
+('bx_events_cats', '2', 2, '_bx_events_cat_Festival', ''),
+('bx_events_cats', '3', 3, '_bx_events_cat_Fundraiser', ''),
+('bx_events_cats', '4', 4, '_bx_events_cat_Lecture', ''),
+('bx_events_cats', '5', 5, '_bx_events_cat_Market', ''),
+('bx_events_cats', '6', 6, '_bx_events_cat_Meal', ''),
+('bx_events_cats', '7', 7, '_bx_events_cat_Social_Mixer', ''),
+('bx_events_cats', '8', 8, '_bx_events_cat_Tour', ''),
+('bx_events_cats', '9', 9, '_bx_events_cat_Volunteering', ''),
+('bx_events_cats', '10', 10, '_bx_events_cat_Workshop', ''),
+('bx_events_cats', '11', 11, '_bx_events_cat_Other', '');
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_events_repeat_year', '_bx_events_pre_lists_repeat_year', 'bx_events', '0');
