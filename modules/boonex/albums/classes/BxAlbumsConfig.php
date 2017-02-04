@@ -58,7 +58,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=albums-home',
             'URL_POPULAR' => 'page.php?i=albums-popular',
-            'URL_UPDATED' => 'page.php?i=albums-updated',
+            'URL_UPDATED' => 'page.php?i=albums-home',
             'URL_POPULAR_MEDIA' => 'page.php?i=albums-popular-media',
             'URL_RECENT_MEDIA' => 'page.php?i=albums-recent-media', // TODO: add page
         	'URL_MANAGE_COMMON' => 'page.php?i=albums-manage',
