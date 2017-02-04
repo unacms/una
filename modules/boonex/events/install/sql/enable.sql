@@ -12,6 +12,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_events_num_connections_quick', '4', @iCategId, '_bx_events_option_num_connections_quick', 'digit', '', '', '', 10),
+('bx_events_per_page_browse', '24', @iCategId, '_bx_events_option_per_page_browse', 'digit', '', '', '', 11),
 ('bx_events_num_rss', '10', @iCategId, '_bx_events_option_num_rss', 'digit', '', '', '', 12),
 ('bx_events_time_format', 'H:i', @iCategId, '_bx_events_option_time_format', 'digit', '', '', '', 20),
 ('bx_events_short_date_format', 'j M y', @iCategId, '_bx_events_option_short_date_format', 'digit', '', '', '', 22);

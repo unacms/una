@@ -4,8 +4,10 @@
 	<string name="_bx_events"><![CDATA[События]]></string>
 
 	<string name="_bx_events_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
+    <string name="_bx_events_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
 	<string name="_bx_events_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
-	<string name="_bx_events_option_time_format"><![CDATA[Формат времени]]></string>
+    <string name="_bx_events_option_time_format"><![CDATA[Формат времени]]></string>
+    <string name="_bx_events_option_short_date_format"><![CDATA[Короткий формат даты]]></string>
 
 	<string name="_bx_events_form_profile"><![CDATA[События]]></string>
 	<string name="_bx_events_form_profile_display_add"><![CDATA[Добавление события]]></string>
