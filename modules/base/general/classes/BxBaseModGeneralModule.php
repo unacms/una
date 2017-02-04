@@ -249,6 +249,7 @@ class BxBaseModGeneralModule extends BxDolModule
         	'object_view' => !empty($CNF['OBJECT_VIEWS']) ? $CNF['OBJECT_VIEWS'] : '',
         	'object_vote' => !empty($CNF['OBJECT_VOTES']) ? $CNF['OBJECT_VOTES'] : '',
         	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
+            'object_feature' => !empty($CNF['OBJECT_FEATURED']) ? $CNF['OBJECT_FEATURED'] : '',
         	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
         	'uri_view_entry' => !empty($CNF['URI_VIEW_ENTRY']) ? $CNF['URI_VIEW_ENTRY'] : '',
         ));
@@ -876,6 +877,12 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oFavorites)
             $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => true));
 
+        //--- Featured
+        $sFeatured = '';
+        $oFeatured = !empty($aParams['object_feature']) ? BxDolFeature::getObjectInstance($aParams['object_feature'], $iId) : false;
+        if ($oFeatured)
+            $sFeatured = $oFeatured->getElementBlock(array('show_do_feature_as_button' => true));
+
         //--- Timeline Repost
         $sRepost = '';
         $iIdTimeline = isset($aParams['id_timeline']) ? (int)$aParams['id_timeline'] : $iId;
@@ -908,6 +915,7 @@ class BxBaseModGeneralModule extends BxDolModule
         	'view' => $sViews,
             'vote' => $sVotes,
             'favorite' => $sFavorites,
+            'feature' => $sFeatured,
             'repost' => $sRepost,
         	'report' => $sReport,
             'social' => $sSocial,

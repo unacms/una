@@ -1,11 +1,3 @@
-/*--- Do Form ---*/
-div.bx-favorite-do-form {}
-div.bx-favorite-do-form-cnt {
-	min-width: 220px;
-	min-width: 13.75rem;
-	overflow: hidden;
-}
-
 /*--- Favorited By List ---*/
 div.bx-favorite-by-list {}
 div.bx-favorite-by-list-cnt {

@@ -45,6 +45,10 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_posts';
 
 DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_posts';
 
+-- FEATURED
+
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_posts';
+
 -- STUDIO: page & widget
 
 DELETE FROM `tp`, `tw`, `tpw`

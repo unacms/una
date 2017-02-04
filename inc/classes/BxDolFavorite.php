@@ -203,8 +203,7 @@ class BxDolFavorite extends BxDolObject
         if($bPerformed && !$bUndo)
         	return array('code' => 3, 'msg' => _t('_favorite_err_duplicate_favorite'));
 
-        $iId = (int)$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId);
-        if($iId == 0)
+        if(!$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId))
             return array('code' => 4, 'msg' => _t('_favorite_err_cannot_perform_action'));
 
         if(!$bPerformUndo)
@@ -212,14 +211,13 @@ class BxDolFavorite extends BxDolObject
 
         $this->_triggerValue($bPerformUndo ? -1 : 1);
 
-        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, array('favorite_id' => $iId, 'favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, array('favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+        bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
         $aFavorite = $this->_oQuery->getFavorite($iObjectId);
         return array(
         	'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
         	'code' => 0, 
-        	'id' => $iId,
         	'count' => $aFavorite['count'],
         	'countf' => (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : '',
             'label_icon' => $this->_getIconDoFavorite(!$bPerformed),
@@ -230,7 +228,7 @@ class BxDolFavorite extends BxDolObject
 
     protected function _getIconDoFavorite($bPerformed)
     {
-    	return $bPerformed && $this->isUndo() ?  'star-o' : 'star';
+    	return $bPerformed && $this->isUndo() ?  'heart-o' : 'heart';
     }
 
     protected function _getTitleDoFavorite($bPerformed)

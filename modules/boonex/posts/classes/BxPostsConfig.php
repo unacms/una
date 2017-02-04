@@ -74,6 +74,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_VIEWS' => 'bx_posts',
             'OBJECT_VOTES' => 'bx_posts',
         	'OBJECT_FAVORITES' => 'bx_posts',
+            'OBJECT_FEATURED' => 'bx_posts',
             'OBJECT_METATAGS' => 'bx_posts',
             'OBJECT_COMMENTS' => 'bx_posts',
             'OBJECT_PRIVACY_VIEW' => 'bx_posts_allow_view_to',

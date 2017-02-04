@@ -64,11 +64,13 @@
 	<string name="_bx_posts_page_title_browse"><![CDATA[Posts]]></string>
 	<string name="_bx_posts_page_title_search_results"><![CDATA[Posts matching "{0}"]]></string>
 	<string name="_bx_posts_page_title_browse_by_author"><![CDATA[Posts of {display_name}]]></string>
+	<string name="_bx_posts_page_title_browse_featured"><![CDATA[Featured]]></string>
     <string name="_bx_posts_page_title_browse_recent"><![CDATA[Latest]]></string>
     <string name="_bx_posts_page_title_browse_popular"><![CDATA[Popular]]></string>
     <string name="_bx_posts_page_title_browse_updated"><![CDATA[Updated Posts]]></string>
     <string name="_bx_posts_page_title_sys_home"><![CDATA[Posts Home]]></string>
     <string name="_bx_posts_page_title_home"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_page_block_title_featured_entries_view_extended"><![CDATA[Featured]]></string>
     <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Latest (Gallery View)]]></string>
     <string name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Latest]]></string>
     <string name="_bx_posts_page_block_title_recent_entries_view_full"><![CDATA[Latest (Full View)]]></string>

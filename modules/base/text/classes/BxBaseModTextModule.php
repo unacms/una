@@ -55,6 +55,15 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $this->_serviceBrowse ('public', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
+	/**
+     * Display featured entries
+     * @return HTML string
+     */
+    public function serviceBrowseFeatured ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {   
+        return $this->_serviceBrowse ('featured', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
+
     /**
      * Display popular entries
      * @return HTML string

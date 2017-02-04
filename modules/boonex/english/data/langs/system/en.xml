@@ -39,6 +39,11 @@
 	<string name="_favorite_err_cannot_perform_action"><![CDATA[Cannot perform the action.]]></string>
 	<string name="_favorite_err_duplicate_favorite"><![CDATA[You already favorited this item.]]></string>
 	<string name="_favorite_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
+	<string name="_feature_do_feature"><![CDATA[Feature]]></string>
+    <string name="_feature_do_unfeature"><![CDATA[Unfeature]]></string>
+    <string name="_feature_err_cannot_perform_action"><![CDATA[Cannot perform the action.]]></string>
+    <string name="_feature_err_duplicate_feature"><![CDATA[The item was already added in featured list.]]></string>
+    <string name="_feature_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
 	<string name="_Female"><![CDATA[Woman]]></string>
 	<string name="_From"><![CDATA[From]]></string>
 	<string name="_Header"><![CDATA[Header]]></string>
@@ -1497,6 +1502,7 @@
 	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours]]></string>
 	<string name="_sys_acl_action_favorite"><![CDATA[Favorite]]></string>
 	<string name="_sys_acl_action_favorite_view"><![CDATA[View favorites]]></string>
+	<string name="_sys_acl_action_feature"><![CDATA[Feature]]></string>
 	<string name="_sys_acl_action_view_view"><![CDATA[View views]]></string>
 	<string name="_sys_acl_action_view_view_viewers"><![CDATA[View viewers]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[You have reached your limit for now. Your current membership ({2}) allows you to {1} no more than {3} times]]></string>
