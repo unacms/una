@@ -45,13 +45,14 @@
 
 	<string name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Create a Profile - Organization]]></string>
 	<string name="_bx_orgs_page_title_create_profile"><![CDATA[Create a Profile - Organization]]></string>
-	<string name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Edit Organization's Profile]]></string>
+	<string name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Edit Profile]]></string>
 	<string name="_bx_orgs_page_title_edit_profile"><![CDATA[Edit Profile]]></string>
 	<string name="_bx_orgs_page_title_sys_edit_profile_cover"><![CDATA[Edit Profile Cover]]></string>
 	<string name="_bx_orgs_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
-	<string name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[Delete Organization's Profile]]></string>
+	<string name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[Delete Profile]]></string>
 	<string name="_bx_orgs_page_title_delete_profile"><![CDATA[Delete Profile]]></string>
-	<string name="_bx_orgs_page_title_sys_view_profile"><![CDATA[View Organization's Profile]]></string>
+	<string name="_bx_orgs_page_title_sys_view_profile"><![CDATA[View Profile]]></string>
+	<string name="_bx_orgs_page_title_sys_view_profile_closed"><![CDATA[View Profile with Limited Visibility]]></string>
 	<string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_orgs_page_title_browse"><![CDATA[Organizations]]></string>
 	<string name="_bx_orgs_page_title_browse_active"><![CDATA[Active Organizations]]></string>
