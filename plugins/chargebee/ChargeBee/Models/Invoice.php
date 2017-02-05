@@ -4,7 +4,7 @@ class ChargeBee_Invoice extends ChargeBee_Model
 {
 
   protected $allowed = array('id', 'poNumber', 'customerId', 'subscriptionId', 'recurring', 'status', 'vatNumber',
-'priceType', 'date', 'total', 'amountPaid', 'amountAdjusted', 'writeOffAmount', 'creditsApplied','amountDue', 'paidAt', 'dunningStatus', 'nextRetryAt', 'subTotal', 'tax', 'firstInvoice', 'currencyCode','lineItems', 'discounts', 'taxes', 'lineItemTaxes', 'linkedPayments', 'appliedCredits', 'adjustmentCreditNotes','issuedCreditNotes', 'linkedOrders', 'notes', 'shippingAddress', 'billingAddress');
+'priceType', 'date', 'dueDate', 'netTermDays', 'currencyCode', 'total', 'amountPaid', 'amountAdjusted','writeOffAmount', 'creditsApplied', 'amountDue', 'paidAt', 'dunningStatus', 'nextRetryAt', 'voidedAt','resourceVersion', 'updatedAt', 'subTotal', 'tax', 'firstInvoice', 'lineItems', 'discounts','taxes', 'lineItemTaxes', 'linkedPayments', 'appliedCredits', 'adjustmentCreditNotes', 'issuedCreditNotes','linkedOrders', 'notes', 'shippingAddress', 'billingAddress', 'deleted');
 
 
 
@@ -29,6 +29,11 @@ class ChargeBee_Invoice extends ChargeBee_Model
   public static function stopDunning($id, $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"stop_dunning"), array(), $env, $headers);
+  }
+
+  public static function importInvoice($params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices","import_invoice"), $params, $env, $headers);
   }
 
   public static function all($params = array(), $env = null, $headers = array())
@@ -94,6 +99,11 @@ class ChargeBee_Invoice extends ChargeBee_Model
   public static function voidInvoice($id, $params = array(), $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"void"), $params, $env, $headers);
+  }
+
+  public static function writeOff($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"write_off"), $params, $env, $headers);
   }
 
   public static function delete($id, $params = array(), $env = null, $headers = array())

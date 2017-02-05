@@ -16,6 +16,11 @@ class ChargeBee_Estimate extends ChargeBee_Model
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("estimates","create_subscription"), $params, $env, $headers);
   }
 
+  public static function createSubForCustomerEstimate($id, $params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("customers",$id,"create_subscription_estimate"), $params, $env, $headers);
+  }
+
   public static function updateSubscription($params, $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("estimates","update_subscription"), $params, $env, $headers);

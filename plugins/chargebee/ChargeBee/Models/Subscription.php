@@ -3,8 +3,8 @@
 class ChargeBee_Subscription extends ChargeBee_Model
 {
 
-  protected $allowed = array('id', 'customerId', 'planId', 'planQuantity', 'status', 'startDate', 'trialStart',
-'trialEnd', 'currentTermStart', 'currentTermEnd', 'remainingBillingCycles', 'poNumber', 'createdAt','startedAt', 'activatedAt', 'cancelledAt', 'cancelReason', 'affiliateToken', 'createdFromIp','hasScheduledChanges', 'dueInvoicesCount', 'dueSince', 'totalDues', 'addons', 'coupon', 'coupons','shippingAddress', 'invoiceNotes', 'metaData');
+  protected $allowed = array('id', 'customerId', 'currencyCode', 'planId', 'planQuantity', 'planUnitPrice',
+'setupFee', 'billingPeriod', 'billingPeriodUnit', 'planFreeQuantity', 'status', 'startDate','trialStart', 'trialEnd', 'currentTermStart', 'currentTermEnd', 'nextBillingAt', 'remainingBillingCycles','poNumber', 'createdAt', 'startedAt', 'activatedAt', 'cancelledAt', 'cancelReason', 'affiliateToken','createdFromIp', 'resourceVersion', 'updatedAt', 'hasScheduledChanges', 'dueInvoicesCount','dueSince', 'totalDues', 'mrr', 'exchangeRate', 'baseCurrencyCode', 'addons', 'coupon', 'coupons','shippingAddress', 'invoiceNotes', 'metaData', 'deleted');
 
 
 
@@ -51,6 +51,11 @@ class ChargeBee_Subscription extends ChargeBee_Model
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"remove_scheduled_cancellation"), $params, $env, $headers);
   }
 
+  public static function removeCoupons($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"remove_coupons"), $params, $env, $headers);
+  }
+
   public static function update($id, $params = array(), $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id), $params, $env, $headers);
@@ -79,6 +84,21 @@ class ChargeBee_Subscription extends ChargeBee_Model
   public static function chargeAddonAtTermEnd($id, $params, $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"charge_addon_at_term_end"), $params, $env, $headers);
+  }
+
+  public static function chargeFutureRenewals($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"charge_future_renewals"), $params, $env, $headers);
+  }
+
+  public static function importSubscription($params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions","import_subscription"), $params, $env, $headers);
+  }
+
+  public static function importForCustomer($id, $params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"import_subscription"), $params, $env, $headers);
   }
 
   public static function delete($id, $env = null, $headers = array())

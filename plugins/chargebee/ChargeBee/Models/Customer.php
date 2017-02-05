@@ -4,7 +4,7 @@ class ChargeBee_Customer extends ChargeBee_Model
 {
 
   protected $allowed = array('id', 'firstName', 'lastName', 'email', 'phone', 'company', 'vatNumber', 'autoCollection',
-'allowDirectDebit', 'createdAt', 'createdFromIp', 'taxability', 'entityCode', 'exemptNumber','cardStatus', 'billingAddress', 'contacts', 'paymentMethod', 'invoiceNotes', 'promotionalCredits','refundableCredits', 'excessPayments', 'metaData');
+'netTermDays', 'allowDirectDebit', 'createdAt', 'createdFromIp', 'taxability', 'entityCode','exemptNumber', 'resourceVersion', 'updatedAt', 'locale', 'cardStatus', 'fraudFlag', 'billingAddress','contacts', 'paymentMethod', 'invoiceNotes', 'preferredCurrencyCode', 'promotionalCredits','refundableCredits', 'excessPayments', 'metaData', 'deleted');
 
 
 
@@ -69,6 +69,11 @@ class ChargeBee_Customer extends ChargeBee_Model
   public static function setPromotionalCredits($id, $params, $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"set_promotional_credits"), $params, $env, $headers);
+  }
+
+  public static function recordExcessPayment($id, $params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"record_excess_payment"), $params, $env, $headers);
   }
 
   public static function delete($id, $params = array(), $env = null, $headers = array())
