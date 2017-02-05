@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Facebook, Inc.
+ * Copyright 2017 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -168,8 +168,6 @@ class FacebookBatchRequest extends FacebookRequest implements IteratorAggregate,
 
     /**
      * Prepares the requests to be sent as a batch request.
-     *
-     * @return string
      */
     public function prepareRequestsForBatch()
     {

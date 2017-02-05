@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Facebook, Inc.
+ * Copyright 2017 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -213,7 +213,7 @@ class FacebookResponse
     /**
      * Returns the exception that was thrown for this request.
      *
-     * @return FacebookSDKException|null
+     * @return FacebookResponseException|null
      */
     public function getThrownException()
     {

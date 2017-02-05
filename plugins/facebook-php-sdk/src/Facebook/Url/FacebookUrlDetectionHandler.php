@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Facebook, Inc.
+ * Copyright 2017 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -95,7 +95,8 @@ class FacebookUrlDetectionHandler implements UrlDetectionInterface
     protected function getHostName()
     {
         // Check for proxy first
-        if ($header = $this->getHeader('X_FORWARDED_HOST') && $this->isValidForwardedHost($header)) {
+        $header = $this->getHeader('X_FORWARDED_HOST');
+        if ($header && $this->isValidForwardedHost($header)) {
             $elements = explode(',', $header);
             $host = $elements[count($elements) - 1];
         } elseif (!$host = $this->getHeader('HOST')) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Facebook, Inc.
+ * Copyright 2017 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -53,12 +53,12 @@ class Facebook
     /**
      * @const string Version number of the Facebook PHP SDK.
      */
-    const VERSION = '5.2.0';
+    const VERSION = '5.4.4';
 
     /**
      * @const string Default Graph API version for requests.
      */
-    const DEFAULT_GRAPH_VERSION = 'v2.6';
+    const DEFAULT_GRAPH_VERSION = 'v2.8';
 
     /**
      * @const string The name of the environment variable that contains the app ID.
