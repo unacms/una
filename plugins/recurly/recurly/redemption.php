@@ -2,13 +2,7 @@
 
 class Recurly_CouponRedemption extends Recurly_Resource
 {
-  protected static $_writeableAttributes;
   protected static $_redeemUrl;
-
-  public static function init()
-  {
-    Recurly_CouponRedemption::$_writeableAttributes = array('account_code','currency','subscription_uuid');
-  }
 
   public static function get($accountCode, $client = null) {
     return Recurly_Base::_get(Recurly_CouponRedemption::uriForAccount($accountCode), $client);
@@ -35,11 +29,6 @@ class Recurly_CouponRedemption extends Recurly_Resource
     return 'redemption';
   }
   protected function getWriteableAttributes() {
-    return Recurly_CouponRedemption::$_writeableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array('account_code', 'currency', 'subscription_uuid');
   }
 }
-
-Recurly_CouponRedemption::init();

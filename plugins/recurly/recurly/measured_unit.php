@@ -2,15 +2,6 @@
 
 class Recurly_MeasuredUnit extends Recurly_Resource
 {
-  protected static $_writeableAttributes;
-
-  public static function init()
-  {
-    Recurly_MeasuredUnit::$_writeableAttributes = array(
-      'name','display_name','description'
-    );
-  }
-
   public function create() {
     $this->_save(Recurly_Client::POST, Recurly_Client::PATH_MEASURED_UNITS);
   }
@@ -33,11 +24,8 @@ class Recurly_MeasuredUnit extends Recurly_Resource
     return 'measured_unit';
   }
   protected function getWriteableAttributes() {
-    return Recurly_MeasuredUnit::$_writeableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array(
+      'name', 'display_name', 'description'
+    );
   }
 }
-
-Recurly_MeasuredUnit::init();

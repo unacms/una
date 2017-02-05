@@ -2,20 +2,9 @@
 
 class Recurly_Addon extends Recurly_Resource
 {
-  protected static $_writeableAttributes;
-
   function __construct() {
     parent::__construct();
     $this->unit_amount_in_cents = new Recurly_CurrencyList('unit_amount_in_cents');
-  }
-
-  public static function init()
-  {
-    Recurly_Addon::$_writeableAttributes = array(
-      'add_on_code','name','display_quantity','default_quantity',
-      'unit_amount_in_cents','accounting_code','tax_code',
-      'measured_unit_id','usage_type','add_on_type'
-    );
   }
 
   public static function get($planCode, $addonCode, $client = null) {
@@ -49,11 +38,10 @@ class Recurly_Addon extends Recurly_Resource
     return 'add_on';
   }
   protected function getWriteableAttributes() {
-    return Recurly_Addon::$_writeableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array(
+      'add_on_code', 'name', 'display_quantity', 'default_quantity',
+      'unit_amount_in_cents', 'accounting_code', 'tax_code',
+      'measured_unit_id', 'usage_type', 'add_on_type', 'revenue_schedule_type'
+    );
   }
 }
-
-Recurly_Addon::init();

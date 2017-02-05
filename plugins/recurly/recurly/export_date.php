@@ -1,9 +1,9 @@
 <?php
 
-class Recurly_Note extends Recurly_Resource
+class Recurly_ExportDate extends Recurly_Resource
 {
   protected function getNodeName() {
-    return 'note';
+    return 'export_date';
   }
 
   protected function getWriteableAttributes() {

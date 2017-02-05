@@ -16,6 +16,8 @@ require_once(dirname(__FILE__) . '/recurly/stub.php');
 
 require_once(dirname(__FILE__) . '/recurly/address.php');
 require_once(dirname(__FILE__) . '/recurly/account.php');
+require_once(dirname(__FILE__) . '/recurly/account_acquisition.php');
+require_once(dirname(__FILE__) . '/recurly/account_balance.php');
 require_once(dirname(__FILE__) . '/recurly/account_list.php');
 require_once(dirname(__FILE__) . '/recurly/addon.php');
 require_once(dirname(__FILE__) . '/recurly/addon_list.php');
@@ -35,6 +37,8 @@ require_once(dirname(__FILE__) . '/recurly/plan.php');
 require_once(dirname(__FILE__) . '/recurly/plan_list.php');
 require_once(dirname(__FILE__) . '/recurly/redemption.php');
 require_once(dirname(__FILE__) . '/recurly/redemption_list.php');
+require_once(dirname(__FILE__) . '/recurly/shipping_address.php');
+require_once(dirname(__FILE__) . '/recurly/shipping_address_list.php');
 require_once(dirname(__FILE__) . '/recurly/subscription.php');
 require_once(dirname(__FILE__) . '/recurly/subscription_list.php');
 require_once(dirname(__FILE__) . '/recurly/subscription_addon.php');
@@ -44,6 +48,9 @@ require_once(dirname(__FILE__) . '/recurly/transaction_error.php');
 require_once(dirname(__FILE__) . '/recurly/transaction_list.php');
 require_once(dirname(__FILE__) . '/recurly/usage.php');
 require_once(dirname(__FILE__) . '/recurly/usage_list.php');
+require_once(dirname(__FILE__) . '/recurly/gift_card.php');
+require_once(dirname(__FILE__) . '/recurly/gift_card_list.php');
+require_once(dirname(__FILE__) . '/recurly/delivery.php');
 
 require_once(dirname(__FILE__) . '/recurly/push_notification.php');
 require_once(dirname(__FILE__) . '/recurly/recurly_js.php');

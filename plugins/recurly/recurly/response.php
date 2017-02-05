@@ -33,6 +33,10 @@ class Recurly_ClientResponse
 
   public function assertValidResponse()
   {
+    if (!empty($this->headers['Recurly-Deprecated'])) {
+      error_log("WARNING: API version {$this->headers['X-Api-Version']} is deprecated and will only be available until {$this->headers['Recurly-Sunset-Date']}. Please upgrade the Recurly PHP client.");
+    }
+
     // Successful response code
     if ($this->statusCode >= 200 && $this->statusCode < 400)
       return;
@@ -45,7 +49,8 @@ class Recurly_ClientResponse
         throw new Recurly_ConnectionError('An error occurred while connecting to Recurly.');
       case 400:
         $message = (is_null($error) ? 'Bad API Request' : $error->description);
-        throw new Recurly_Error($message);
+        $recurlyCode = (is_null($error) ? null : $error->symbol);
+        throw new Recurly_Error($message, 0, null, $recurlyCode);
       case 401:
         throw new Recurly_UnauthorizedError('Your API Key is not authorized to connect to Recurly.');
       case 403:

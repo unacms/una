@@ -2,13 +2,6 @@
 
 class Recurly_Invoice extends Recurly_Resource
 {
-  protected static $_writeableAttributes;
-
-  public static function init()
-  {
-    Recurly_Invoice::$_writeableAttributes = array('terms_and_conditions', 'customer_notes', 'vat_reverse_charge_notes', 'collection_method', 'net_terms', 'po_number');
-  }
-
   /**
    * Lookup an invoice by its ID
    * @param string Invoice number
@@ -121,10 +114,10 @@ class Recurly_Invoice extends Recurly_Resource
     return 'invoice';
   }
   protected function getWriteableAttributes() {
-    return Recurly_Invoice::$_writeableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array(
+      'terms_and_conditions', 'customer_notes', 'vat_reverse_charge_notes',
+      'collection_method', 'net_terms', 'po_number'
+    );
   }
   protected function uri() {
     $invoiceNumberWithPrefix = $this->invoiceNumberWithPrefix();
@@ -139,5 +132,3 @@ class Recurly_Invoice extends Recurly_Resource
     return Recurly_Client::PATH_INVOICES . '/' . rawurlencode($invoiceNumber);
   }
 }
-
-Recurly_Invoice::init();

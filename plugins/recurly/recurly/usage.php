@@ -5,16 +5,6 @@ class Recurly_Usage extends Recurly_Resource
   var $subUuid;
   var $addOnCode;
 
-  protected static $_writeableAttributes;
-
-  public static function init()
-  {
-    Recurly_Usage::$_writeableAttributes = array(
-      'amount','merchant_tag','usage_type','unit_amount_in_cents',
-      'billed_at','recording_timestamp','usage_timestamp','measured_unit'
-    );
-  }
-
   public static function build($subUuid, $addOnCode, $client = null) {
     $usage = new self(null, $client);
     $usage->subUuid = $subUuid;
@@ -50,11 +40,9 @@ class Recurly_Usage extends Recurly_Resource
     return 'usage';
   }
   protected function getWriteableAttributes() {
-    return Recurly_Usage::$_writeableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array(
+      'amount', 'merchant_tag', 'usage_type', 'unit_amount_in_cents',
+      'billed_at', 'recording_timestamp', 'usage_timestamp', 'measured_unit'
+    );
   }
 }
-
-Recurly_Usage::init();

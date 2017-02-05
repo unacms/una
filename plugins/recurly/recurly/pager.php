@@ -49,10 +49,13 @@ abstract class Recurly_Pager extends Recurly_Base implements Iterator
       return null;
     }
 
-    while ($this->_position >= sizeof($this->_objects)) {
+    if ($this->_position >= sizeof($this->_objects)) {
       if (isset($this->_links['next'])) {
         $this->_loadFrom($this->_links['next']);
         $this->_position = 0;
+      }
+      else {
+        throw new Recurly_Error("Pager is not in a valid state");
       }
     }
 
@@ -83,12 +86,11 @@ abstract class Recurly_Pager extends Recurly_Base implements Iterator
   /**
    * Load another page of results into this pager.
    */
-  protected function _loadFrom($uri, $params = null) {
+  protected function _loadFrom($uri) {
     if (empty($uri)) {
       return;
     }
 
-    $uri = Recurly_Base::_uriWithParams($uri, $params);
     $response = $this->_client->request(Recurly_Client::GET, $uri);
     $response->assertValidResponse();
 
@@ -98,9 +100,9 @@ abstract class Recurly_Pager extends Recurly_Base implements Iterator
   }
 
   protected function _afterParseResponse($response, $uri) {
-    $this->_href = $uri;
     $this->_loadRecordCount($response);
     $this->_loadLinks($response);
+    $this->_href = isset($this->_links['start']) ? $this->_links['start'] : $uri;
   }
 
   protected static function _setState($params, $state) {
