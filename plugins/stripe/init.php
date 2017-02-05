@@ -20,6 +20,7 @@ require(dirname(__FILE__) . '/lib/Error/ApiConnection.php');
 require(dirname(__FILE__) . '/lib/Error/Authentication.php');
 require(dirname(__FILE__) . '/lib/Error/Card.php');
 require(dirname(__FILE__) . '/lib/Error/InvalidRequest.php');
+require(dirname(__FILE__) . '/lib/Error/Permission.php');
 require(dirname(__FILE__) . '/lib/Error/RateLimit.php');
 
 // Plumbing
@@ -63,6 +64,7 @@ require(dirname(__FILE__) . '/lib/Refund.php');
 require(dirname(__FILE__) . '/lib/SKU.php');
 require(dirname(__FILE__) . '/lib/Source.php');
 require(dirname(__FILE__) . '/lib/Subscription.php');
+require(dirname(__FILE__) . '/lib/SubscriptionItem.php');
 require(dirname(__FILE__) . '/lib/ThreeDSecure.php');
 require(dirname(__FILE__) . '/lib/Token.php');
 require(dirname(__FILE__) . '/lib/Transfer.php');

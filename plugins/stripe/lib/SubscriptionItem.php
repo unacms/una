@@ -3,17 +3,28 @@
 namespace Stripe;
 
 /**
- * Class Source
+ * Class SubscriptionItem
  *
  * @package Stripe
  */
-class Source extends ApiResource
+class SubscriptionItem extends ApiResource
 {
     /**
-     * @param string $id The ID of the Source to retrieve.
+     * This is a special case because the subscription items endpoint has an
+     *    underscore in it. The parent `className` function strips underscores.
+     *
+     * @return string The name of the class.
+     */
+    public static function className()
+    {
+        return 'subscription_item';
+    }
+
+    /**
+     * @param string $id The ID of the subscription item to retrieve.
      * @param array|string|null $opts
      *
-     * @return Source
+     * @return SubscriptionItem
      */
     public static function retrieve($id, $opts = null)
     {
@@ -24,7 +35,7 @@ class Source extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Collection of Sources
+     * @return Collection of SubscriptionItems
      */
     public static function all($params = null, $opts = null)
     {
@@ -35,7 +46,7 @@ class Source extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Source The created Source.
+     * @return SubscriptionItem The created subscription item.
      */
     public static function create($params = null, $opts = null)
     {
@@ -43,11 +54,11 @@ class Source extends ApiResource
     }
 
     /**
-     * @param string $id The ID of the source to update.
+     * @param string $id The ID of the subscription item to update.
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @return Source The updated source.
+     * @return SubscriptionItem The updated subscription item.
      */
     public static function update($id, $params = null, $options = null)
     {
@@ -57,7 +68,7 @@ class Source extends ApiResource
     /**
      * @param array|string|null $opts
      *
-     * @return Source The saved source.
+     * @return SubscriptionItem The saved subscription item.
      */
     public function save($opts = null)
     {
@@ -66,15 +77,12 @@ class Source extends ApiResource
 
     /**
      * @param array|null $params
-     * @param array|string|null $options
+     * @param array|string|null $opts
      *
-     * @return BankAccount The verified bank account.
+     * @return SubscriptionItem The deleted subscription item.
      */
-    public function verify($params = null, $options = null)
+    public function delete($params = null, $opts = null)
     {
-        $url = $this->instanceUrl() . '/verify';
-        list($response, $opts) = $this->_request('post', $url, $params, $options);
-        $this->refreshFrom($response, $opts);
-        return $this;
+        return $this->_delete($params, $opts);
     }
 }
