@@ -9,9 +9,6 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . "firephp/fb.php");
-define('FIREPHP_TABLE', FirePHP::TABLE);
-
 class BxProfilerTemplate extends BxDolModuleTemplate
 {
     protected $_isAjaxOutput = false;
@@ -26,10 +23,12 @@ class BxProfilerTemplate extends BxDolModuleTemplate
     function plank($sTitle, $sContent = '')
     {
         if ($this->_isAjaxOutput) {
-            if ($sContent && is_array($sContent))
-                fb($sContent, $sTitle, FIREPHP_TABLE);
-            else
-                fb($sTitle . $sContent);
+            if (function_exists('fb')) {
+                if ($sContent && is_array($sContent))
+                    fb($sContent, $sTitle, FirePHP::TABLE);
+                else
+                    fb($sTitle . $sContent);
+            }
             return '';
         }
         if ($sContent)

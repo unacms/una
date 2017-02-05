@@ -97,17 +97,15 @@ class BxProfiler extends BxDol
             'jush/jush.js',
         );
 
-        foreach ($aCss as $sCssPath) {
-            $this->oTemplate->addCss($sCssPath);
-            $this->oTemplateAdmin->addCss($sCssPath);
-        }
-        foreach ($aJs as $sJsPath) {
-            $this->oTemplate->addJs($sJsPath);
-            $this->oTemplateAdmin->addJs($sJsPath);
-        }
+        $sJsCss = '';
+        foreach ($aCss as $sCssPath)
+            $sJsCss .= $this->oTemplate->addCss($sCssPath, 1);
+        foreach ($aJs as $sJsPath)
+            $sJsCss .= $this->oTemplate->addJs($sJsPath, 1);
 
         $sContentType = $this->_getHeaderContentType();
         if ('text/html' == $sContentType) {
+            echo $sJsCss;
             echo $this->_plankMain ();
             echo $this->_plankMenus ();
             echo $this->_plankTemplates ();
