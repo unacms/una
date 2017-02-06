@@ -52,6 +52,7 @@
 	<string name="_bx_persons_page_title_sys_view_profile"><![CDATA[View Person's Profile]]></string>
 	<string name="_bx_persons_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_persons_page_title_browse"><![CDATA[People]]></string>
+	<string name="_bx_persons_page_title_browse_featured"><![CDATA[Featured People]]></string>
 	<string name="_bx_persons_page_title_browse_active"><![CDATA[Active People]]></string>
 	<string name="_bx_persons_page_title_browse_online"><![CDATA[Online People]]></string>
 	<string name="_bx_persons_page_title_browse_recent"><![CDATA[New People]]></string>
@@ -92,6 +93,7 @@
 	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
+	<string name="_bx_persons_page_block_title_featured_profiles"><![CDATA[Featured People]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[New People]]></string>
 	<string name="_bx_persons_page_block_title_system_manage"><![CDATA[Manage Own People]]></string>

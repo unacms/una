@@ -83,6 +83,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_persons_cover_thumb',
             'OBJECT_VIEWS' => 'bx_persons',
         	'OBJECT_FAVORITES' => 'bx_persons',
+        	'OBJECT_FEATURED' => 'bx_persons',
         	'OBJECT_REPORTS' => 'bx_persons',
             'OBJECT_METATAGS' => 'bx_persons',
             'OBJECT_FORM_ENTRY' => 'bx_person',

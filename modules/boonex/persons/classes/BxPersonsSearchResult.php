@@ -31,6 +31,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_persons', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_persons_data'),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_persons_data'),
         		'online' => array('value' => '', 'field' => 'date', 'operator' => '>', 'table' => 'sys_sessions'),
             ),
             'join' => array (
@@ -72,6 +73,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
         $this->oModule = $this->getMain();
         $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
+        $CNF = &$this->oModule->_oConfig->CNF;
+
         switch ($sMode) {
 
             case 'connections':
@@ -108,6 +111,14 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_recent');
                 $this->aCurrent['sorting'] = 'last';
                 $this->sBrowseUrl = 'page.php?i=persons-home';
+                break;
+
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_featured');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
                 break;
 
             case 'active':
@@ -150,6 +161,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
     function getAlterOrder()
     {
         switch ($this->aCurrent['sorting']) {
+            case 'featured':
+                return array('order' => ' ORDER BY `bx_persons_data`.`featured` DESC ');
 	        case 'none':
 	            return array();
 	        case 'active':

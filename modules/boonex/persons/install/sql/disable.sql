@@ -28,6 +28,9 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_persons';
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_persons';
 
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_persons';
+
 -- REPORTS
 DELETE FROM `sys_objects_report` WHERE `name` = 'bx_persons';
 

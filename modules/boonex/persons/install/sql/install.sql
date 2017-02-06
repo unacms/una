@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `views` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
+  `featured` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`fullname`,`description`)
