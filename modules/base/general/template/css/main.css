@@ -12,7 +12,9 @@
 .bx-base-general-entity-share .bx-tl-repost,
 .bx-base-general-entity-share .bx-menu-btns-hor.bx-menu-object-sys_social_sharing {
 	position: relative;
-	float: left;
+	float: none;
+	display: inline-block;
+	vertical-align: top;
 }
 
 
