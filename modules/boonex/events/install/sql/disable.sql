@@ -34,6 +34,9 @@ DELETE FROM `sys_objects_report` WHERE `name` = 'bx_events';
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_events';
 
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_events';
+
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_events';
 

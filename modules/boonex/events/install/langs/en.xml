@@ -83,6 +83,7 @@
 	<string name="_bx_events_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_events_page_title_browse"><![CDATA[Events]]></string>
 	<string name="_bx_events_page_title_browse_by_author"><![CDATA[Events of {display_name}]]></string>
+	<string name="_bx_events_page_title_browse_featured"><![CDATA[Featured]]></string>
 	<string name="_bx_events_page_title_browse_top"><![CDATA[Top Events]]></string>
 	<string name="_bx_events_page_title_browse_recent"><![CDATA[New Events]]></string>
 	<string name="_bx_events_page_title_browse_connections"><![CDATA[{0} connections]]></string>
@@ -124,6 +125,7 @@
     <string name="_bx_events_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_events_page_block_title_system_fans"><![CDATA[Members]]></string>
 	<string name="_bx_events_page_block_title_profile_actions"><![CDATA[Actions]]></string>
+	<string name="_bx_events_page_block_title_featured_profiles"><![CDATA[Featured Events]]></string>
 	<string name="_bx_events_page_block_title_latest_profiles"><![CDATA[New Events]]></string>
 	<string name="_bx_events_page_block_title_system_manage"><![CDATA[Manage Own Events]]></string>
 	<string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Manage All Events]]></string>

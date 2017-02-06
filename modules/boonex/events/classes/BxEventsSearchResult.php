@@ -29,6 +29,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_events', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_events_data'),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_events_data'),
             ),
             'join' => array (
                 'profile' => array(
@@ -128,6 +129,14 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 $this->sBrowseUrl = 'page.php?i=events-home';
                 break;
 
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_events_page_title_browse_featured');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
+                break;
+
             case 'top':
                 $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_events_page_title_browse_top');
@@ -168,6 +177,8 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
     function getAlterOrder()
     {
         switch ($this->aCurrent['sorting']) {
+        case 'featured':
+            return array('order' => ' ORDER BY `bx_events_data`.`featured` DESC ');
         case 'none':
             return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
         case 'top':
