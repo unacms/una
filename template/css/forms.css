@@ -491,8 +491,12 @@
     cursor:pointer;
     display:block;
     float:left;
-    padding:0.55em 1.5em 0.55em 0.5em;
-    margin:0.1em;
+    line-height: 40px;
+    line-height: 2.5rem;
+    padding-right: 1.5em; 
+    padding-left: 0.5em;
+    margin-left:0.1em;
+    margin-right:0.1em;
     font-weight:normal;
 }
 .bx-form-value .bx-form-input-autotoken b:hover {
@@ -502,7 +506,7 @@
     position:absolute;
     content:"x";
     padding:0 0.5em;
-    margin:0.2em 0 0.7em 0.5em;
+    margin-left: 0.5em;
     font-size:0.7em;
     font-weight:bold;
 }
