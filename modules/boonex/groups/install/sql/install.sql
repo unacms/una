@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `bx_groups_data` (
   `votes` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
+  `featured` int(11) NOT NULL default '0',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
