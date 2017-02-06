@@ -26,6 +26,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
         		'category' => array('value' => '', 'field' => 'cat', 'operator' => '='),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_forum_per_page_browse'), 'start' => 0),
@@ -108,6 +109,14 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'latest';
                 break;
 
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_featured');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
+                break;
+
             case 'top':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_top');
@@ -152,6 +161,9 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
         switch ($this->aCurrent['sorting']) {
             case 'last':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`added` DESC';
+                break;
+            case 'featured':
+                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`featured` DESC';
                 break;
 			case 'updated':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`changed` DESC';

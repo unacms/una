@@ -84,6 +84,7 @@ class BxForumConfig extends BxBaseModTextConfig
             // objects
             'OBJECT_GRID' => 'bx_forum',
         	'OBJECT_GRID_FAVORITE' => 'bx_forum_favorite',
+            'OBJECT_GRID_FEATURE' => 'bx_forum_feature',
         	'OBJECT_GRID_ADMINISTRATION' => 'bx_forum_administration',
         	'OBJECT_GRID_COMMON' => 'bx_forum_common',
         	'OBJECT_GRID_CATEGORIES' => 'bx_forum_categories',
@@ -96,6 +97,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => 'bx_forum',
         	'OBJECT_FAVORITES' => 'bx_forum',
+        	'OBJECT_FEATURED' => 'bx_forum',
         	'OBJECT_CATEGORY' => 'bx_forum_cats',
             'OBJECT_COMMENTS' => 'bx_forum',
         	'OBJECT_METATAGS' => 'bx_forum',

@@ -15,6 +15,7 @@ class BxForumGrid extends BxTemplGrid
 {
     protected $_oModule;
     protected $_aParams;
+    protected $_sDefaultSource; 
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -23,7 +24,9 @@ class BxForumGrid extends BxTemplGrid
         $this->_oModule = BxDolModule::getInstance('bx_forum');
 
         $this->_aOptions['paginate_per_page'] = (int)$this->_oModule->_oDb->getParam('bx_forum_per_page_browse');
+
         $this->_sDefaultSortingOrder = 'DESC';
+        $this->_sDefaultSource = $this->_aOptions['source'];
 
 	    $sParams = bx_get('params');
         if(!empty($sParams)) {
@@ -46,6 +49,10 @@ class BxForumGrid extends BxTemplGrid
                 case 'favorite':
 	    		case 'category':
 	                $sField = 'added';
+	                break;
+
+                case 'featured':
+					$sField = 'featured';
 	                break;
 	
 				case 'updated':
@@ -158,7 +165,7 @@ class BxForumGrid extends BxTemplGrid
 				$sWhereClause .= " AND " . $sWhereClauseBrowse;
 		}
 
-		$this->_aOptions['source'] = sprintf($this->_aOptions['source'], $sJoinClause, $sWhereClause);
+		$this->_aOptions['source'] = sprintf($this->_sDefaultSource, $sJoinClause, $sWhereClause);
 		return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 
@@ -238,10 +245,6 @@ class BxForumGrid extends BxTemplGrid
             $sField = "`" . $aCnd['tbl'] . "`." . $sField;
 
 		switch($aCnd['opr']) {
-			case '=':
-				$sResult .= $sField . " = " . $this->_oModule->_oDb->escape($aCnd['val']);
-				break;
-
 			case 'IN':
 				if(empty($aCnd['val']) || !is_array($aCnd['val']))
 					break;
@@ -252,6 +255,9 @@ class BxForumGrid extends BxTemplGrid
 			case 'LIKE':
 				$sResult .= $sField . " LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
 				break;
+
+			default:
+			    $sResult .= $sField . " " . $aCnd['opr'] . " " . $this->_oModule->_oDb->escape($aCnd['val']);
 		}
 
 		return $sResult;

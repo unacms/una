@@ -81,6 +81,7 @@
     <string name="_bx_forum_page_title_browse"><![CDATA[Форум]]></string>
 	<string name="_bx_forum_page_title_search_results"><![CDATA[Обсуждения, соответствующие "{0}"]]></string>
 	<string name="_bx_forum_page_title_browse_by_author"><![CDATA[Обсуждения {display_name}]]></string>
+	<string name="_bx_forum_page_title_browse_featured"><![CDATA[Продвинутые]]></string>
 	<string name="_bx_forum_page_title_browse_by_category"><![CDATA[Обсуждения в {category_name}]]></string>
 	<string name="_bx_forum_page_title_browse_new"><![CDATA[Новые]]></string>
     <string name="_bx_forum_page_title_browse_latest"><![CDATA[Недавние]]></string>
@@ -89,6 +90,7 @@
     <string name="_bx_forum_page_title_browse_updated"><![CDATA[Обновлённые]]></string>
     <string name="_bx_forum_page_title_sys_home"><![CDATA[Обсуждения - Домой]]></string>
     <string name="_bx_forum_page_title_home"><![CDATA[Обсуждения]]></string>
+    <string name="_bx_forum_page_block_title_featured_entries_view_extended"><![CDATA[Продвинутые Обсуждения]]></string>
     <string name="_bx_forum_page_title_sys_entries_new"><![CDATA[Новые Обсуждения]]></string>
     <string name="_bx_forum_page_title_entries_new"><![CDATA[Новые Обсуждения]]></string>
     <string name="_bx_forum_page_title_sys_entries_top"><![CDATA[ТОП Обсуждений]]></string>

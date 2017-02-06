@@ -21,9 +21,9 @@ DELETE FROM `sys_menu_items` WHERE `module` = @sName OR `set_name` IN('bx_forum_
 
 
 -- GRID
-DELETE FROM `sys_objects_grid` WHERE `object` IN (@sName, 'bx_forum_favorite', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
-DELETE FROM `sys_grid_fields` WHERE `object` IN (@sName, 'bx_forum_favorite', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
-DELETE FROM `sys_grid_actions` WHERE `object` IN (@sName, 'bx_forum_favorite', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
+DELETE FROM `sys_objects_grid` WHERE `object` IN (@sName, 'bx_forum_favorite', 'bx_forum_feature', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
+DELETE FROM `sys_grid_fields` WHERE `object` IN (@sName, 'bx_forum_favorite', 'bx_forum_feature', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
+DELETE FROM `sys_grid_actions` WHERE `object` IN (@sName, 'bx_forum_favorite', 'bx_forum_feature', 'bx_forum_administration', 'bx_forum_common', 'bx_forum_categories');
 
 
 -- ACL
@@ -65,6 +65,10 @@ DELETE FROM `sys_objects_vote` WHERE `Name` = @sName;
 
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `Name` = @sName;
+
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = @sName;
 
 
 -- ALERTS

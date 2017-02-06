@@ -81,6 +81,7 @@
     <string name="_bx_forum_page_title_browse"><![CDATA[Forum]]></string>
 	<string name="_bx_forum_page_title_search_results"><![CDATA[Discussions matching "{0}"]]></string>
 	<string name="_bx_forum_page_title_browse_by_author"><![CDATA[Discussions of {display_name}]]></string>
+	<string name="_bx_forum_page_title_browse_featured"><![CDATA[Featured]]></string>
 	<string name="_bx_forum_page_title_browse_by_category"><![CDATA[Discussions by {category_name}]]></string>
 	<string name="_bx_forum_page_title_browse_new"><![CDATA[New]]></string>
     <string name="_bx_forum_page_title_browse_latest"><![CDATA[Latest]]></string>
@@ -89,6 +90,7 @@
     <string name="_bx_forum_page_title_browse_updated"><![CDATA[Latest]]></string>
     <string name="_bx_forum_page_title_sys_home"><![CDATA[Discussions Home]]></string>
     <string name="_bx_forum_page_title_home"><![CDATA[Discussions]]></string>
+    <string name="_bx_forum_page_block_title_featured_entries_view_extended"><![CDATA[Featured]]></string>
     <string name="_bx_forum_page_title_sys_entries_new"><![CDATA[New]]></string>
     <string name="_bx_forum_page_title_entries_new"><![CDATA[New]]></string>
     <string name="_bx_forum_page_title_sys_entries_top"><![CDATA[Top]]></string>

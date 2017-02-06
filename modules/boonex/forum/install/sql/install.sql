@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
+  `featured` int(11) NOT NULL default '0',
   `stick` tinyint(4) NOT NULL DEFAULT '0',
   `lock` tinyint(4) NOT NULL DEFAULT '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
