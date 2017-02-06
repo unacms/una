@@ -31,6 +31,9 @@ DELETE FROM `sys_objects_report` WHERE `name` = 'bx_organizations';
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_organizations';
 
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_organizations';
+
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_organizations';
 

@@ -31,6 +31,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_organizations', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_organizations_data'),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_organizations_data'),
         		'online' => array('value' => '', 'field' => 'date', 'operator' => '>', 'table' => 'sys_sessions'),
             ),
             'join' => array (
@@ -71,7 +72,9 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
         $this->sFilterName = 'bx_organizations_data_filter';
         $this->oModule = $this->getMain();
         $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
-            
+
+        $CNF = &$this->oModule->_oConfig->CNF;
+
         switch ($sMode) {
 
             case 'connections':
@@ -108,6 +111,14 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_recent');
                 $this->aCurrent['sorting'] = 'last';
                 $this->sBrowseUrl = 'page.php?i=organizations-home';
+                break;
+
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_featured');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
                 break;
 
             case 'active':
@@ -150,6 +161,8 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
     function getAlterOrder()
     {
         switch ($this->aCurrent['sorting']) {
+            case 'featured':
+                return array('order' => ' ORDER BY `bx_organizations_data`.`featured` DESC ');
 	        case 'none':
 	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
 			case 'active':

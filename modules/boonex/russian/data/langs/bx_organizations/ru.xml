@@ -54,6 +54,7 @@
 	<string name="_bx_orgs_page_title_sys_view_profile"><![CDATA[Просмотреть профиль организации]]></string>
 	<string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_orgs_page_title_browse"><![CDATA[Организации]]></string>
+	<string name="_bx_orgs_page_title_browse_featured"><![CDATA[Продвинутые Организации]]></string>
     <string name="_bx_orgs_page_title_browse_active"><![CDATA[Последние Активные Организации]]></string>
     <string name="_bx_orgs_page_title_browse_online"><![CDATA[Онлайн Организации]]></string>
 	<string name="_bx_orgs_page_title_browse_recent"><![CDATA[Последние Добавленные Организации]]></string>
@@ -95,6 +96,7 @@
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Действия]]></string>
+	<string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Продвинутые организации]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Последние добавленные организации]]></string>
 	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Управление собственными организациями]]></string>
 	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Управление всеми организациями]]></string>
