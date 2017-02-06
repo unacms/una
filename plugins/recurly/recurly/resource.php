@@ -8,7 +8,10 @@ abstract class Recurly_Resource extends Recurly_Base
 
   abstract protected function getNodeName();
   abstract protected function getWriteableAttributes();
-  abstract protected function getRequiredAttributes();
+  protected function getRequiredAttributes()
+  {
+    return array();
+  }
 
   public function __construct($href = null, $client = null)
   {
@@ -89,7 +92,6 @@ abstract class Recurly_Resource extends Recurly_Base
     }
     $response->assertSuccessResponse($this);
   }
-
 
   public function xml()
   {

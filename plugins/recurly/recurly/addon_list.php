@@ -2,9 +2,9 @@
 
 class Recurly_AddonList extends Recurly_Pager
 {
-  public static function get($planCode, $client = null)
+  public static function get($planCode, $params = null, $client = null)
   {
-    $uri = Recurly_Client::PATH_PLANS . '/' . rawurlencode($planCode) . Recurly_Client::PATH_ADDONS;
+    $uri = self::_uriWithParams(Recurly_Client::PATH_PLANS . '/' . rawurlencode($planCode) . Recurly_Client::PATH_ADDONS, $params);
     return new self($uri, $client);
   }
 

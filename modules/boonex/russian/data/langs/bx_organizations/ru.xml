@@ -45,13 +45,14 @@
 
 	<string name="_bx_orgs_page_title_sys_create_profile"><![CDATA[Создать профиль - организация]]></string>
 	<string name="_bx_orgs_page_title_create_profile"><![CDATA[Создать профиль - организация]]></string>
-	<string name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Редактировать профиль организации]]></string>
+	<string name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_orgs_page_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_orgs_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку профиля]]></string>
 	<string name="_bx_orgs_page_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
-	<string name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[Удалить профиль организации]]></string>
+	<string name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[Удалить профиль]]></string>
 	<string name="_bx_orgs_page_title_delete_profile"><![CDATA[Удалить профиль]]></string>
-	<string name="_bx_orgs_page_title_sys_view_profile"><![CDATA[Просмотреть профиль организации]]></string>
+    <string name="_bx_orgs_page_title_sys_view_profile"><![CDATA[Просмотр профиля]]></string>
+    <string name="_bx_orgs_page_title_sys_view_profile_closed"><![CDATA[Просмотр профиля с ограничением доступа]]></string>
 	<string name="_bx_orgs_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_orgs_page_title_browse"><![CDATA[Организации]]></string>
 	<string name="_bx_orgs_page_title_browse_featured"><![CDATA[Продвинутые Организации]]></string>

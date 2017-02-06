@@ -749,7 +749,7 @@ INSERT INTO `sys_acl_levels` (`ID`, `Name`, `Icon`, `Description`, `Active`, `Pu
 CREATE TABLE IF NOT EXISTS `sys_sessions` (
   `id` varchar(32) NOT NULL default '',
   `user_id` int(10) unsigned NOT NULL default '0',
-  `data` text collate utf8_unicode_ci,
+  `data` text,
   `date` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),

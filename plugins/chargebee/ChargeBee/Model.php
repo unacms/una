@@ -31,6 +31,15 @@ class ChargeBee_Model
 	    throw new Exception("Unknown param $k in " . get_class($this));
 	  }
 	}
+
+	public function getValues()
+  	{
+    	return $this->_values;
+  	}
+
+  	public function toJson() { 
+  		return json_encode($this->_values); 
+  	}
 	
 	public function __set($k, $v)
 	{

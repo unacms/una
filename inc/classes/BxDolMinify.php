@@ -9,6 +9,7 @@
 
 use MatthiasMullie\Minify;
 
+require_once(BX_DIRECTORY_PATH_PLUGINS . 'matthiasmullie/path-converter/ConverterInterface.php');
 require_once(BX_DIRECTORY_PATH_PLUGINS . 'matthiasmullie/path-converter/Converter.php');
 require_once(BX_DIRECTORY_PATH_PLUGINS . 'matthiasmullie/minify/Minify.php');
 require_once(BX_DIRECTORY_PATH_PLUGINS . 'matthiasmullie/minify/CSS.php');

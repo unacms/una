@@ -32,6 +32,12 @@ class ChargeBee_Result
         return $card;
     }
 
+    function thirdPartyPaymentMethod() 
+    {
+        $third_party_payment_method = $this->_get('third_party_payment_method', 'ChargeBee_ThirdPartyPaymentMethod');
+        return $third_party_payment_method;
+    }
+
     function invoice() 
     {
         $invoice = $this->_get('invoice', 'ChargeBee_Invoice', 
@@ -70,7 +76,7 @@ class ChargeBee_Result
         $estimate = $this->_get('estimate', 'ChargeBee_Estimate', array(),
         array('subscription_estimate' => 'ChargeBee_SubscriptionEstimate', 'invoice_estimate' => 'ChargeBee_InvoiceEstimate', 'next_invoice_estimate' => 'ChargeBee_InvoiceEstimate', 'credit_note_estimates' => 'ChargeBee_CreditNoteEstimate'));
         $estimate->_initDependant($this->_response['estimate'], 'subscription_estimate', 
-        array());
+        array('shipping_address' => 'ChargeBee_SubscriptionEstimateShippingAddress'));
         $estimate->_initDependant($this->_response['estimate'], 'invoice_estimate', 
         array('line_items' => 'ChargeBee_InvoiceEstimateLineItem', 'discounts' => 'ChargeBee_InvoiceEstimateDiscount', 'taxes' => 'ChargeBee_InvoiceEstimateTax', 'line_item_taxes' => 'ChargeBee_InvoiceEstimateLineItemTax'));
         $estimate->_initDependant($this->_response['estimate'], 'next_invoice_estimate', 

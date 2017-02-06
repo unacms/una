@@ -2,28 +2,20 @@
 
 class Recurly_SubscriptionAddOn extends Recurly_Resource {
 
-  protected static $_writeableAttributes;
-
-  public static function init() {
-    Recurly_SubscriptionAddOn::$_writeableAttributes = array(
-      'add_on_code',
-      'quantity',
-      'unit_amount_in_cents',
-      'add_on_type',
-      'usage_type',
-      'usage_percentage'
-    );
-  }
-
   protected function getNodeName() {
     return 'subscription_add_on';
   }
 
   protected function getWriteableAttributes() {
-    return Recurly_SubscriptionAddOn::$_writeableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array(
+      'add_on_code',
+      'quantity',
+      'unit_amount_in_cents',
+      'add_on_type',
+      'usage_type',
+      'usage_percentage',
+      'revenue_schedule_type',
+    );
   }
 
   protected function populateXmlDoc(&$doc, &$node, &$obj, $nested = false) {
@@ -32,8 +24,15 @@ class Recurly_SubscriptionAddOn extends Recurly_Resource {
   }
 
   protected function getChangedAttributes($nested = false) {
-    // Ignore the name, it can't be changed.
-    return array_diff_key($this->_values, array('name' => 0));
+    // Ignore attributes that can't be updated
+    $immutable = array(
+      'name' => 0,
+      'add_on_type' => 0,
+      'usage_type' => 0,
+      'usage' => 0,
+      'measured_unit' => 0,
+    );
+    return array_diff_key($this->_values, $immutable);
   }
 
   /**
@@ -46,6 +45,3 @@ class Recurly_SubscriptionAddOn extends Recurly_Resource {
     return "<$class $values>";
   }
 }
-
-Recurly_SubscriptionAddOn::init();
-

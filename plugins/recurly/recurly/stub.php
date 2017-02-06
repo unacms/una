@@ -19,12 +19,13 @@ class Recurly_Stub extends Recurly_Base
   /**
    * Retrieve the stubbed resource.
    */
-  function get() {
-    $stub = self::_get($this->_href, $this->_client);
-    if ($this->_href && !$stub->getHref()) {
-      $stub->setHref($this->_href);
+  function get($params = null) {
+    $uri = self::_uriWithParams($this->_href, $params);
+    $object = self::_get($uri, $this->_client);
+    if ($this->_href && !$object->getHref()) {
+      $object->setHref($this->_href);
     }
-    return $stub;
+    return $object;
   }
 
   public function __toString()

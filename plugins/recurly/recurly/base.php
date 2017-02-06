@@ -165,21 +165,32 @@ abstract class Recurly_Base
    */
   static $class_map = array(
     'account' => 'Recurly_Account',
+    'account_acquisition' => 'Recurly_AccountAcquisition',
     'accounts' => 'Recurly_AccountList',
+    'account_balance' => 'Recurly_AccountBalance',
     'address' => 'Recurly_Address',
     'add_on' => 'Recurly_Addon',
     'add_ons' => 'Recurly_AddonList',
-    'billing_info' => 'Recurly_BillingInfo',
     'adjustment' => 'Recurly_Adjustment',
     'adjustments' => 'Recurly_AdjustmentList',
+    'balance_in_cents' => 'Recurly_CurrencyList',
+    'billing_info' => 'Recurly_BillingInfo',
     'coupon' => 'Recurly_Coupon',
     'unique_coupon_codes' => 'Recurly_UniqueCouponCodeList',
     'currency' => 'Recurly_Currency',
     'details' => 'array',
     'discount_in_cents' => 'Recurly_CurrencyList',
+    'delivery' => 'Recurly_Delivery',
     'error' => 'Recurly_FieldError',
     'errors' => 'Recurly_ErrorList',
+    'export_date' => 'Recurly_ExportDate',
+    'export_dates' => 'Recurly_ExportDateList',
+    'export_file' => 'Recurly_ExportFile',
+    'export_files' => 'Recurly_ExportFileList',
     'fraud' => 'Recurly_FraudInfo',
+    'gift_card' => 'Recurly_GiftCard',
+    'gift_cards' => 'Recurly_GiftCardList',
+    'gifter_account' => 'Recurly_Account',
     'invoice' => 'Recurly_Invoice',
     'invoices' => 'Recurly_InvoiceList',
     'line_items' => 'array',
@@ -195,6 +206,8 @@ abstract class Recurly_Base
     'redemption' => 'Recurly_CouponRedemption',
     'redemptions' => 'Recurly_CouponRedemptionList',
     'setup_fee_in_cents' => 'Recurly_CurrencyList',
+    'shipping_address' => 'Recurly_ShippingAddress',
+    'shipping_addresses' => 'Recurly_ShippingAddressList',
     'subscription' => 'Recurly_Subscription',
     'subscriptions' => 'Recurly_SubscriptionList',
     'subscription_add_ons' => 'array',
@@ -265,6 +278,7 @@ abstract class Recurly_Base
 
         if ($object instanceof Recurly_Pager) {
           $new_obj = Recurly_Resource::__createNodeObject($node);
+          $new_obj->_client = $object->_client;
           if (!is_null($new_obj)) {
             Recurly_Resource::__parseXmlToObject($node->firstChild, $new_obj);
             $object->_objects[] = $new_obj;

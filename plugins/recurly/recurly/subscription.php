@@ -2,19 +2,6 @@
 
 class Recurly_Subscription extends Recurly_Resource
 {
-  protected static $_writeableAttributes;
-
-  public static function init()
-  {
-    Recurly_Subscription::$_writeableAttributes = array(
-      'account','plan_code','coupon_code','coupon_codes','unit_amount_in_cents','quantity',
-      'currency','starts_at','trial_ends_at','total_billing_cycles', 'first_renewal_date',
-      'timeframe', 'subscription_add_ons', 'net_terms', 'po_number', 'collection_method',
-      'cost_in_cents', 'remaining_billing_cycles', 'bulk', 'terms_and_conditions', 'customer_notes',
-      'vat_reverse_charge_notes', 'bank_account_authorized_at'
-    );
-  }
-
   public function __construct($href = null, $client = null) {
     parent::__construct($href, $client);
     $this->subscription_add_ons = array();
@@ -28,6 +15,12 @@ class Recurly_Subscription extends Recurly_Resource
     $this->_save(Recurly_Client::POST, Recurly_Client::PATH_SUBSCRIPTIONS);
   }
 
+  /**
+   * Preview the creation and check for errors.
+   *
+   * Note: once preview() has been called you will not be able to call create()
+   * or save() without reassiging all the attributes.
+   */
   public function preview() {
     if ($this->uuid) {
       $this->_save(Recurly_Client::POST, $this->uri() . '/preview');
@@ -132,11 +125,15 @@ class Recurly_Subscription extends Recurly_Resource
     return 'subscription';
   }
   protected function getWriteableAttributes() {
-    return Recurly_Subscription::$_writeableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array(
+      'account', 'plan_code', 'coupon_code', 'coupon_codes',
+      'unit_amount_in_cents', 'quantity', 'currency', 'starts_at',
+      'trial_ends_at', 'total_billing_cycles', 'first_renewal_date',
+      'timeframe', 'subscription_add_ons', 'net_terms', 'po_number',
+      'collection_method', 'cost_in_cents', 'remaining_billing_cycles', 'bulk',
+      'terms_and_conditions', 'customer_notes', 'vat_reverse_charge_notes',
+      'bank_account_authorized_at', 'revenue_schedule_type', 'gift_card',
+      'shipping_address', 'shipping_address_id'
+    );
   }
 }
-
-Recurly_Subscription::init();

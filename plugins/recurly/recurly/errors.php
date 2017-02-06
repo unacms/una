@@ -7,7 +7,22 @@
  * @package    Recurly_Client_PHP
  * @copyright  Copyright (c) 2011 {@link http://recurly.com Recurly, Inc.}
  */
-class Recurly_Error extends Exception {}
+class Recurly_Error extends Exception {
+
+	private $recurlyCode;
+
+	public function __construct($message, $code = 0, Exception $previous = null, $recurlyCode = null)
+	{
+		$this->recurlyCode = $recurlyCode;
+
+		parent::__construct($message, $code, $previous);
+	}
+
+	public function getRecurlyCode()
+	{
+		return $this->recurlyCode;
+	}
+}
 
 class Recurly_NotFoundError extends Recurly_Error {}
 

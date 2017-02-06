@@ -2,27 +2,11 @@
 
 class Recurly_Coupon extends Recurly_Resource
 {
-  protected static $_writeableAttributes;
-  protected static $_updatableAttributes;
   protected $_redeemUrl;
 
   function __construct($href = null, $client = null) {
     parent::__construct($href, $client);
     $this->discount_in_cents = new Recurly_CurrencyList('discount_in_cents');
-  }
-
-  public static function init()
-  {
-    Recurly_Coupon::$_writeableAttributes = array(
-      'coupon_code','name','discount_type','redeem_by_date','single_use','applies_for_months',
-      'duration', 'temporal_unit', 'temporal_amount',
-      'max_redemptions','applies_to_all_plans','discount_percent','discount_in_cents','plan_codes',
-      'hosted_description','invoice_description', 'applies_to_non_plan_charges', 'redemption_resource',
-      'max_redemptions_per_account', 'coupon_type', 'unique_code_template', 'unique_coupon_codes'
-    );
-    Recurly_Coupon::$_updatableAttributes = array('name', 'max_redemptions',
-      'max_redemptions_per_account', 'hosted_description', 'invoice_description', 'redeem_by_date'
-    );
   }
 
   public static function get($couponCode, $client = null) {
@@ -118,14 +102,21 @@ class Recurly_Coupon extends Recurly_Resource
     return 'coupon';
   }
   protected function getWriteableAttributes() {
-    return Recurly_Coupon::$_writeableAttributes;
+    return array(
+      'coupon_code', 'name', 'discount_type', 'redeem_by_date', 'single_use',
+      'applies_for_months', 'duration', 'temporal_unit', 'temporal_amount',
+      'max_redemptions', 'applies_to_all_plans', 'discount_percent',
+      'discount_in_cents', 'plan_codes', 'hosted_description',
+      'invoice_description', 'applies_to_non_plan_charges', 'redemption_resource',
+      'max_redemptions_per_account', 'coupon_type', 'unique_code_template',
+      'unique_coupon_codes', 'discount_type', 'free_trial_amount',
+      'free_trial_unit'
+    );
   }
   protected function getUpdatableAttributes() {
-    return Recurly_Coupon::$_updatableAttributes;
-  }
-  protected function getRequiredAttributes() {
-    return array();
+    return array(
+      'name', 'max_redemptions', 'max_redemptions_per_account',
+      'hosted_description', 'invoice_description', 'redeem_by_date'
+    );
   }
 }
-
-Recurly_Coupon::init();

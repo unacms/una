@@ -7,7 +7,4 @@ class Recurly_Tax_Detail extends Recurly_Resource {
   protected function getWriteableAttributes() {
     return array();
   }
-  protected function getRequiredAttributes() {
-    return array();
-  }
 }

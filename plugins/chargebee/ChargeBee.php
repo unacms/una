@@ -57,6 +57,7 @@ require(dirname(__FILE__) . '/ChargeBee/Models/CustomerContact.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/CustomerBillingAddress.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/CustomerPaymentMethod.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Card.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/ThirdPartyPaymentMethod.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Address.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Invoice.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceLineItem.php');
@@ -108,3 +109,5 @@ require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceLineItemTax.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceEstimateLineItemTax.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/TransactionLinkedCreditNote.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/SubscriptionEstimate.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/SubscriptionEstimateShippingAddress.php');
+

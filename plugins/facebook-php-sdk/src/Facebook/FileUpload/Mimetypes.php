@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Facebook, Inc.
+ * Copyright 2017 Facebook, Inc.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -724,6 +724,7 @@ class Mimetypes
         'spq' => 'application/scvp-vp-request',
         'spx' => 'audio/ogg',
         'src' => 'application/x-wais-source',
+        'srt' => 'application/octet-stream',
         'sru' => 'application/sru+xml',
         'srx' => 'application/sparql-results+xml',
         'sse' => 'application/vnd.kodak-descriptor',
