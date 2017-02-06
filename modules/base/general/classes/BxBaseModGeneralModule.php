@@ -108,6 +108,15 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
 	/**
+     * Display featured entries
+     * @return HTML string
+     */
+    public function serviceBrowseFeatured ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('featured', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
+
+	/**
      * Display entries favored by a member
      * @return HTML string
      */
