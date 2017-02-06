@@ -66,11 +66,13 @@
 	<string name="_bx_files_page_title_browse"><![CDATA[Files]]></string>
 	<string name="_bx_files_page_title_search_results"><![CDATA[Files matching "{0}"]]></string>
 	<string name="_bx_files_page_title_browse_by_author"><![CDATA[Files of {display_name}]]></string>
+	<string name="_bx_files_page_title_browse_featured"><![CDATA[Featured]]></string>
     <string name="_bx_files_page_title_browse_recent"><![CDATA[Latest]]></string>
     <string name="_bx_files_page_title_browse_popular"><![CDATA[Popular]]></string>
     <string name="_bx_files_page_title_browse_updated"><![CDATA[Updated Files]]></string>
     <string name="_bx_files_page_title_sys_home"><![CDATA[Files Home]]></string>
     <string name="_bx_files_page_title_home"><![CDATA[Files]]></string>
+    <string name="_bx_files_page_block_title_featured_entries_view_extended"><![CDATA[Featured]]></string>
     <string name="_bx_files_page_block_title_recent_entries"><![CDATA[Latest (Gallery View)]]></string>
     <string name="_bx_files_page_block_title_recent_entries_view_extended"><![CDATA[Latest]]></string>
     <string name="_bx_files_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>

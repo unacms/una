@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
+  `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
@@ -274,6 +275,11 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_files', 'bx_files_favorites_track', '1', '1', '1', 'page.php?i=view-file&id={object_id}', 'bx_files_main', 'id', 'author', 'favorites', '', '');
+
+-- FEATURED
+
+INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
+('bx_files', '1', '1', 'page.php?i=view-file&id={object_id}', 'bx_files_main', 'id', 'author', 'featured', '', '');
 
 -- STUDIO: page & widget
 

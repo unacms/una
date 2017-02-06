@@ -45,6 +45,10 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_files';
 
 DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_files';
 
+-- FEATURED
+
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_files';
+
 -- STUDIO: page & widget
 
 DELETE FROM `tp`, `tw`, `tpw`

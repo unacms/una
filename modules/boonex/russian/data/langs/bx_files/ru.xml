@@ -66,11 +66,13 @@
 	<string name="_bx_files_page_title_browse"><![CDATA[Файлы]]></string>
 	<string name="_bx_files_page_title_search_results"><![CDATA[Поиск по "{0}"]]></string>
 	<string name="_bx_files_page_title_browse_by_author"><![CDATA[{display_name} - файлы]]></string>
+	<string name="_bx_files_page_title_browse_featured"><![CDATA[Продвинутые]]></string>
     <string name="_bx_files_page_title_browse_recent"><![CDATA[Последние]]></string>
     <string name="_bx_files_page_title_browse_popular"><![CDATA[Популярные]]></string>
     <string name="_bx_files_page_title_browse_updated"><![CDATA[Обновлённые]]></string>
     <string name="_bx_files_page_title_sys_home"><![CDATA[Главная страница]]></string>
     <string name="_bx_files_page_title_home"><![CDATA[Файлы]]></string>
+    <string name="_bx_files_page_block_title_featured_entries_view_extended"><![CDATA[Продвинутые]]></string>
     <string name="_bx_files_page_block_title_recent_entries"><![CDATA[Последние (галерея)]]></string>
     <string name="_bx_files_page_block_title_recent_entries_view_extended"><![CDATA[Последние]]></string>
     <string name="_bx_files_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>

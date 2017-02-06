@@ -25,6 +25,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_files_per_page_browse'), 'start' => 0),
@@ -75,6 +76,14 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=files/rss/' . $sMode;
                 break;
 
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_files_page_title_browse_featured');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=files/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
+                break;
+
             case 'popular':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
                 $this->aCurrent['title'] = _t('_bx_files_page_title_browse_popular');
@@ -113,6 +122,9 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         switch ($this->aCurrent['sorting']) {
             case 'last':
                 $aSql['order'] = ' ORDER BY `bx_files_main`.`added` DESC';
+                break;
+            case 'featured':
+                $aSql['order'] = ' ORDER BY `bx_files_main`.`featured` DESC';
                 break;
             case 'updated':
                 $aSql['order'] = ' ORDER BY `bx_files_main`.`changed` DESC';
