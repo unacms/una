@@ -329,6 +329,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             'object_transcoder' => false,
         	'object_vote' => '',
         	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
+        	'object_feature' => !empty($CNF['OBJECT_FEATURED']) ? $CNF['OBJECT_FEATURED'] : '',
         	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
         	'uri_view_entry' => !empty($CNF['URI_VIEW_ENTRY']) ? $CNF['URI_VIEW_ENTRY'] : '',
         	'social_sharing' => false
