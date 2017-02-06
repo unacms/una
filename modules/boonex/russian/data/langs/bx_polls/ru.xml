@@ -69,11 +69,13 @@
 	<string name="_bx_polls_page_title_browse"><![CDATA[Голосования]]></string>
 	<string name="_bx_polls_page_title_search_results"><![CDATA[Голосования, соответствующие "{0}"]]></string>
 	<string name="_bx_polls_page_title_browse_by_author"><![CDATA[Голосования {display_name}]]></string>
+	<string name="_bx_polls_page_title_browse_featured"><![CDATA[Продвинутые Голосования]]></string>
     <string name="_bx_polls_page_title_browse_recent"><![CDATA[Недавние Голосования]]></string>
     <string name="_bx_polls_page_title_browse_popular"><![CDATA[Популярные Голосования]]></string>
     <string name="_bx_polls_page_title_browse_updated"><![CDATA[Обновлённые Голосования]]></string>
     <string name="_bx_polls_page_title_sys_home"><![CDATA[Голосования - Домой]]></string>
     <string name="_bx_polls_page_title_home"><![CDATA[Голосования]]></string>
+    <string name="_bx_polls_page_block_title_featured_entries_view_extended"><![CDATA[Продвинутые]]></string>
     <string name="_bx_polls_page_block_title_recent_entries"><![CDATA[Новые Голосования]]></string>
     <string name="_bx_polls_page_block_title_recent_entries_view_full"><![CDATA[Недавние Голосования (Полный просмотр)]]></string>
     <string name="_bx_polls_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>

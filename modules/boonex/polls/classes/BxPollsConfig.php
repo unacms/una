@@ -81,6 +81,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'OBJECT_VOTES' => 'bx_polls',
         	'OBJECT_VOTES_SUBENTRIES' => 'bx_polls_subentries',
         	'OBJECT_FAVORITES' => 'bx_polls',
+        	'OBJECT_FEATURED' => 'bx_polls',
             'OBJECT_METATAGS' => 'bx_polls',
             'OBJECT_COMMENTS' => 'bx_polls',
             'OBJECT_PRIVACY_VIEW' => 'bx_polls_allow_view_to',

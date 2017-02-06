@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
+  `featured` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   `anonymous` tinyint(4) NOT NULL DEFAULT '0',
   `hidden_results` tinyint(4) NOT NULL DEFAULT '0',
@@ -316,6 +317,11 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 -- FAFORITES
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_polls', 'bx_polls_favorites_track', '1', '1', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_entries', 'id', 'author', 'favorites', '', '');
+
+
+-- FEATURED
+INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
+('bx_polls', '1', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_entries', 'id', 'author', 'featured', '', '');
 
 
 -- STUDIO: page & widget
