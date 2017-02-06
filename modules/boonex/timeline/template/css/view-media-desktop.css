@@ -45,26 +45,26 @@
 	}
 
 	/*--- Animation ---*/
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-type.is-hidden {
+	.mdrnzr_cssanimations div.bx-tl-view-timeline .bx-tl-item-type.is-hidden {
 	    visibility: hidden;
 	}
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-type.bounce-in {
+	.mdrnzr_cssanimations div.bx-tl-view-timeline .bx-tl-item-type.bounce-in {
 		visibility: visible;
 		-webkit-animation: cd-bounce-1 0.6s;
 		-moz-animation: cd-bounce-1 0.6s;
 		animation: cd-bounce-1 0.6s;
 	}
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.is-hidden {
+	.mdrnzr_cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.is-hidden {
 	    visibility: hidden;
 	}
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.bounce-in {
+	.mdrnzr_cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.bounce-in {
 		visibility: visible;
 		-webkit-animation: cd-bounce-2 0.6s;
 		-moz-animation: cd-bounce-2 0.6s;
 		animation: cd-bounce-2 0.6s;
 	}
 	/* inverse bounce effect on even content blocks */
-	.cssanimations .bx-layout-column-fullwidth div.bx-tl-view-timeline .bx-tl-item:nth-child(even) .bx-tl-item-cnt.bounce-in {
+	.mdrnzr_cssanimations .bx-layout-column-fullwidth div.bx-tl-view-timeline .bx-tl-item:nth-child(even) .bx-tl-item-cnt.bounce-in {
 		-webkit-animation: cd-bounce-2-inverse 0.6s;
 		-moz-animation: cd-bounce-2-inverse 0.6s;
 		animation: cd-bounce-2-inverse 0.6s;
