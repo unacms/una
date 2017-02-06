@@ -4,19 +4,19 @@ SET @sName = 'bx_invites';
 -- TABLES
 CREATE TABLE IF NOT EXISTS `bx_inv_invites` (
   `id` int(11) NOT NULL auto_increment,
-  `account_id` int(11) collate utf8_unicode_ci NOT NULL,
-  `profile_id` int(11) collate utf8_unicode_ci NOT NULL,
-  `key` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `email` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
+  `key` varchar(128) NOT NULL,
+  `email` varchar(128) NOT NULL,
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_inv_requests` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `email` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `text` text collate utf8_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `text` text NOT NULL,
   `nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)

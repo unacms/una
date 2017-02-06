@@ -4,11 +4,11 @@ SET @sName = 'bx_contact';
 -- TABLES
 CREATE TABLE IF NOT EXISTS `bx_contact_entries` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `email` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `subject` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `body` text collate utf8_unicode_ci NOT NULL,
-  `uri` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `subject` varchar(128) NOT NULL,
+  `body` text NOT NULL,
+  `uri` varchar(255) NOT NULL,
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 );
