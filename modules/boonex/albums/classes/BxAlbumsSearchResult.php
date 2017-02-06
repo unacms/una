@@ -30,6 +30,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_albums_per_page_browse'), 'start' => 0),
@@ -80,6 +81,14 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode;
                 break;
 
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_featured');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
+                break;
+
             case 'popular':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_popular');
@@ -124,6 +133,9 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
         switch ($this->aCurrent['sorting']) {
             case 'last':
                 $aSql['order'] = ' ORDER BY `bx_albums_albums`.`added` DESC';
+                break;
+            case 'featured':
+                $aSql['order'] = ' ORDER BY `bx_albums_albums`.`featured` DESC';
                 break;
             case 'updated':
                 $aSql['order'] = ' ORDER BY `bx_albums_albums`.`changed` DESC';

@@ -77,7 +77,7 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
 
             case 'featured':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
-                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_recent');
+                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_featured');
                 $this->aCurrent['restriction']['featured']['value'] = '0';
                 $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'featured';

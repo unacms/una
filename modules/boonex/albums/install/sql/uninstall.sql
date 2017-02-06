@@ -34,6 +34,9 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_albums' OR `Name` = 'bx_albums
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `name` IN ('bx_albums', 'bx_albums_media');
 
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_albums';
+
 
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`
