@@ -120,11 +120,13 @@
 	<string name="_bx_market_page_title_browse"><![CDATA[Рынок]]></string>
 	<string name="_bx_market_page_title_search_results"><![CDATA[Продукты, соответствующие "{0}"]]></string>
 	<string name="_bx_market_page_title_browse_by_author"><![CDATA[Продукты {display_name}]]></string>
+	<string name="_bx_market_page_title_browse_featured"><![CDATA[Продвинутые Продукты]]></string>
     <string name="_bx_market_page_title_browse_recent"><![CDATA[Недавние Продукты]]></string>
     <string name="_bx_market_page_title_browse_popular"><![CDATA[Популярные Продукты]]></string>
     <string name="_bx_market_page_title_browse_updated"><![CDATA[Обновлённые Продукты]]></string>
     <string name="_bx_market_page_title_sys_home"><![CDATA[Рынок - Домой]]></string>
     <string name="_bx_market_page_title_home"><![CDATA[Рынок]]></string>
+    <string name="_bx_market_page_block_title_featured_entries_view_extended"><![CDATA[Продвинутые]]></string>
     <string name="_bx_market_page_block_title_recent_entries"><![CDATA[Новые Продукты (Галерея)]]></string>
     <string name="_bx_market_page_block_title_recent_entries_view_extended"><![CDATA[Новые Продукты]]></string>
     <string name="_bx_market_page_block_title_recent_entries_view_full"><![CDATA[Недавние Продукты (Полный просмотр)]]></string>

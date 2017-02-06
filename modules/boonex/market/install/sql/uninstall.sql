@@ -36,6 +36,9 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_market';
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_market';
 
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_market';
+
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`
 USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`

@@ -25,6 +25,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'except' => array('value' => '', 'field' => 'id', 'operator' => 'not in'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
@@ -76,6 +77,14 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode;
                 break;
 
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_market_page_title_browse_recent');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
+                break;
+
             case 'popular':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_popular');
@@ -118,6 +127,9 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
         switch ($this->aCurrent['sorting']) {
             case 'last':
                 $aSql['order'] = ' ORDER BY `bx_market_products`.`added` DESC';
+                break;
+            case 'featured':
+                $aSql['order'] = ' ORDER BY `bx_market_products`.`featured` DESC';
                 break;
             case 'updated':
                 $aSql['order'] = ' ORDER BY `bx_market_products`.`changed` DESC';
