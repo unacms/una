@@ -103,7 +103,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_cover_icon_border_size'), '_bx_protean_stg_cpt_option_cover_icon_border_size', '1px', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_cover_icon_border_radius'), '_bx_protean_stg_cpt_option_cover_icon_border_radius', '3px', 'digit', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_cover_icon_shadow'), '_bx_protean_stg_cpt_option_cover_icon_shadow', 'none', 'digit', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_cover_text_align'), '_bx_protean_stg_cpt_option_cover_text_align', 'left', 'select', 'left,center,right', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_cover_text_align'), '_bx_protean_stg_cpt_option_cover_text_align', 'center', 'select', 'left,center,right', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_cover_text_shadow'), '_bx_protean_stg_cpt_option_cover_text_shadow', '0px 1px 3px rgba(0, 0, 0, .3)', 'digit', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_cover_font_family'), '_bx_protean_stg_cpt_option_cover_font_family', 'Arial, sans-serif', 'digit', '', '', '', 14),
 (@iCategoryId, CONCAT(@sName, '_cover_font_size'), '_bx_protean_stg_cpt_option_cover_font_size', '2.0rem', 'digit', '', '', '', 15),
