@@ -410,7 +410,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_button_lg_border_color_hover', @iMixId, 'rgba(20, 40, 60, 0.9)'),
 ('bx_protean_popup_menu_shadow', @iMixId, 'none'),
 ('bx_protean_button_lg_border_color', @iMixId, 'rgba(20, 40, 60, 0.8)'),
-('bx_protean_popup_title_font_color', @iMixId, 'rgba(0, 0, 20, 1)'),
+('bx_protean_popup_title_font_color', @iMixId, 'rgba(255, 255, 255, 1)'),
 ('bx_protean_popup_title_font_size', @iMixId, '1.5rem'),
 ('bx_protean_popup_title_padding', @iMixId, '1.25rem'),
 ('bx_protean_popup_title_font_family', @iMixId, 'Helvetica, Arial, sans-serif'),
