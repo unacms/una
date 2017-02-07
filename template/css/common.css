@@ -344,7 +344,6 @@ body > .bx-popup-wrapper {
     margin-left:auto;
 
     text-align:center;
-    font-weight:bold;
     font-size:1rem;
     padding:10px;
     text-transform:uppercase;
@@ -523,6 +522,9 @@ input.bx-btn {
 .bx-btn u {
     margin-left: 10px;
     text-decoration: none;
+}
+.bx-btn u:first-child {
+	margin-left: 0px;
 }
 .bx-btn .sys-icon {
     font-size:1.2em;
