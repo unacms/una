@@ -38,6 +38,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
                 'album' => array('value' => '', 'field' => 'content_id', 'operator' => '='),
+        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
             ),
             'join' => array(
                 'albums' => array(
@@ -105,6 +106,14 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'last';
                 break;
 
+            case 'featured':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_RECENT_MEDIA']);
+                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_featured_media');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode;
+                $this->aCurrent['sorting'] = 'featured';
+                break;
+
             case 'popular':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR_MEDIA']);
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_popular_media');
@@ -139,6 +148,9 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
             case 'last':
                 $aSql['order'] = " ORDER BY `f`.`added` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection} ";
                 break;
+            case 'featured':
+                $aSql['order'] = " ORDER BY `{$this->aCurrent['table']}`.`featured` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection}";
+                break;
             case 'popular':
                 $aSql['order'] = " ORDER BY `{$this->aCurrent['table']}`.`views` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection}";
                 break;
@@ -162,6 +174,9 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 break;
             case 'last':
                 $this->aCurrent['restriction_sql'] = " AND (`f`.`added` {$sOper} {$aMediaInfo['added']} OR (`f`.`added` = {$aMediaInfo['added']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
+                break;
+            case 'featured':
+                $this->aCurrent['restriction_sql'] = " AND (`{$this->aCurrent['table']}`.`featured` {$sOper} {$aMediaInfo['featured']} OR (`{$this->aCurrent['table']}`.`featured` = {$aMediaInfo['featured']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
                 break;
             case 'popular':
                 $this->aCurrent['restriction_sql'] = " AND (`{$this->aCurrent['table']}`.`views` {$sOper} {$aMediaInfo['views']} OR (`{$this->aCurrent['table']}`.`views` = {$aMediaInfo['views']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";

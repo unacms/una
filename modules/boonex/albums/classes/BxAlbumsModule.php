@@ -102,6 +102,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         	'object_favorite' => $CNF['OBJECT_FAVORITES_MEDIA'],
         	'object_report' => '',
         	'object_comments' => $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '',
+        	'object_feature' => $CNF['OBJECT_FEATURED_MEDIA'],
         	'uri_view_entry' => $CNF['URI_VIEW_MEDIA'],
             'social_sharing' => $bEnableSocialSharing
         ));
@@ -131,6 +132,11 @@ class BxAlbumsModule extends BxBaseModTextModule
     public function serviceBrowseRecentMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('recent', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
+    }
+
+    public function serviceBrowseFeaturedMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('featured', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
     }
 
     public function serviceBrowsePopularMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)

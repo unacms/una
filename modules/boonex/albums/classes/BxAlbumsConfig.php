@@ -87,6 +87,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
         	'OBJECT_FAVORITES' => 'bx_albums',
             'OBJECT_FAVORITES_MEDIA' => 'bx_albums_media',
         	'OBJECT_FEATURED' => 'bx_albums',
+        	'OBJECT_FEATURED_MEDIA' => 'bx_albums_media',
             'OBJECT_METATAGS' => 'bx_albums',
             'OBJECT_METATAGS_MEDIA' => 'bx_albums_media',
             'OBJECT_METATAGS_MEDIA_CAMERA' => 'bx_albums_media_camera',

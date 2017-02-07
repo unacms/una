@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
   `votes` int(11) NOT NULL,
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL,
+  `featured` int(11) NOT NULL default '0',
   `data` text NOT NULL,
   `exif` text NOT NULL,
   `order` int(11) NOT NULL,
@@ -369,7 +370,8 @@ INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `
 
 -- FEATURED
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
-('bx_albums', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'featured', '', '');
+('bx_albums', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'featured', '', ''),
+('bx_albums_media', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', '', 'featured', '', '');
 
 
 -- STUDIO: page & widget
