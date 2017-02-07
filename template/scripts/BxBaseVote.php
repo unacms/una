@@ -50,6 +50,7 @@ class BxBaseVote extends BxDolVote
             'stars' => array(
                 'show_do_vote_legend' => false,
                 'show_counter' => true,
+        		'show_counter_empty' => false,
         		'show_legend' => false
             ),
             'likes' => array(
@@ -58,6 +59,7 @@ class BxBaseVote extends BxDolVote
                 'show_do_vote_icon' => true,
                 'show_do_vote_label' => false,
                 'show_counter' => true,
+            	'show_counter_empty' => false,
             	'show_legend' => false
             )
         );
@@ -131,6 +133,7 @@ class BxBaseVote extends BxDolVote
     {
         $sJsObject = $this->getJsObjectName();
 
+        $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
         $bShowDoVoteAsButtonSmall = $this->_bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = $this->_bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
 
@@ -149,7 +152,7 @@ class BxBaseVote extends BxDolVote
                 array('key' => 'class', 'value' => $sClass),
                 array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsClickCounter())
             ),
-            'content' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
+            'content' => $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
         ));
     }
 
