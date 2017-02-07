@@ -79,11 +79,11 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         foreach($aSubentries as $aSubentry) {
             $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_SUBENTRIES'], $aSubentry['id']);
 
-            $fPercent = 100 * (float)$aSubentry['votes']/$iTotal;
+            $fPercent = $iTotal > 0 ? 100 * (float)$aSubentry['votes']/$iTotal : 0;
             $aTmplVarsSubentries[] = array(
                 'title' => $aSubentry['title'],
                 'width' => (int)round($fPercent) . '%',
-                'votes' => $oVotes->getCounter(array('show_in_brackets' => false)),
+                'votes' => $oVotes->getCounter(array('show_counter_empty' => true, 'show_counter_in_brackets' => false)),
                 'percent' => _t('_bx_polls_txt_subentry_vote_percent', $iTotal > 0 ? round($fPercent, 2) : 0),
             );
         }

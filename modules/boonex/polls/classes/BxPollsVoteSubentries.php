@@ -53,7 +53,7 @@ class BxPollsVoteSubentries extends BxTemplVote
     {
         $CNF = $this->_oModule->_oConfig->CNF;
 
-        $bShowInBrackets = !isset($aParams['show_in_brackets']) || $aParams['show_in_brackets'] == true;
+        $bShowInBrackets = !isset($aParams['show_counter_in_brackets']) || $aParams['show_counter_in_brackets'] == true;
 
         $iObjectId = $this->getId();
 		$iAuthorId = $this->_getAuthorId();
