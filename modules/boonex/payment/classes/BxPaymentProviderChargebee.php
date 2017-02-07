@@ -244,6 +244,11 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fTransactionAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sTransactionCurrency) !== 0))
 			return false;
 
+        if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
+            $this->_oModule->updateSubscription($aPending, array(
+                'paid' => 1
+            ));
+
 		return $this->_oModule->registerPayment($aPending);
 	}
 
