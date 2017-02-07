@@ -115,7 +115,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
 	            $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 	            $sInputCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
-	
+	            if(empty($sInputCaption))
+	                $sInputCaption = BxDolForm::getSubmittedValue('caption_system-' . $sLanguage, $aForm['form_attrs']['method']);
+
 	            $sInputName = $this->getFieldName($sInputObject, $sInputCaption);
 	            BxDolForm::setSubmittedValue('name', $sInputName, $oForm->aFormAttrs['method']);
             }

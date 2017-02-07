@@ -141,14 +141,14 @@ class BxBaseStudioFormView extends BxDolStudioForm
         $sLanguage = $oLanguage->getCurrentLangName(false);
         $aLanguages = $oLanguage->getLanguagesInfo();
 
-        $aStrings = $oLanguage->getLanguageString($aInput['value']);
-
         $aInput['type'] = 'hidden';
         $aInput['attrs'] = array_merge($aInputAttrs, array(
             'id' => $sInputIdPrefix . $aInput['name']
         ));
         $sInput .= $this->genInputStandard($aInput);
 
+        $aStrings = !empty($aInput['value']) ? $oLanguage->getLanguageString($aInput['value']) : array();
+        
         $aTmplVars = array();
         foreach($aLanguages as $aLanguage) {
             $bLanguage = $aLanguage['name'] == $sLanguage;

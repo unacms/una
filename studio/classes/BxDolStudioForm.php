@@ -23,7 +23,7 @@ class BxDolStudioForm extends BxBaseFormView
         parent::initChecker($aValues, $aSpecificValues);
 
         if($this->isSubmitted() && !$this->_isValid)
-            $this->processTranslationsValue();
+            $this->processTranslationsValues();
     }
 
     function insert($aValsToAdd = array(), $isIgnore = false)
@@ -104,7 +104,6 @@ class BxDolStudioForm extends BxBaseFormView
         );
 
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-        $aLanguages = $oLanguage->getLanguagesInfo();
 
         $bResult = false;
         foreach($this->aInputs as $sName => $aInput) {
@@ -112,14 +111,13 @@ class BxDolStudioForm extends BxBaseFormView
                 continue; 
 
             $sKey = $this->getCleanValue($sName);
-            foreach($aLanguages as $aLanguage) {
-                $sString = BxDolForm::getSubmittedValue($sName . '-' . $aLanguage['name'], $this->aFormAttrs['method']);
-                if($sString === false)
-                    continue;
+            if(empty($sKey))
+                continue;
 
-                if($oLanguage->{$aType2Method[$sType]}($sKey, $sString, $aLanguage['id']))
+            $aValues = $this->getTranslationsValues($sType, $sName);
+            foreach($aValues as $iLanguageId => $sString)
+                if($oLanguage->{$aType2Method[$sType]}($sKey, $sString, $iLanguageId))
                     $bResult = true;
-            }
         }
 
         return $bResult;
@@ -127,18 +125,29 @@ class BxDolStudioForm extends BxBaseFormView
 
     protected function processTranslationsKey($sType = 'insert')
     {
-        $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
+        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
 
         foreach($this->aInputs as $sName => $aInput) {
             if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable'))) 
                 continue;
 
-            $sKey = $this->getTranslationsKey($sType, $sName, $this->getCleanValue($sName));
+            //--- Fill in the Key if some values are available only. 
+            $sKey = '';
+            $sKeyDefault = $this->getCleanValue($sName);
+
+            $aValues = $this->getTranslationsValues($sType, $sName, true);
+            if(!empty($aValues) && is_array($aValues))
+                $sKey = $this->getTranslationsKey($sType, $sName, $sKeyDefault);
+
+            //--- Remove Key if it exists but no values for him
+            if(empty($sKey) && !empty($sKeyDefault)) 
+                $oLanguage->deleteLanguageString($sKeyDefault);
+
             BxDolForm::setSubmittedValue($sName, $sKey, $this->aFormAttrs['method']);
         }
     }
 
-    protected function processTranslationsValue ()
+    protected function processTranslationsValues ()
     {
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
@@ -171,6 +180,22 @@ class BxDolStudioForm extends BxBaseFormView
         }
 
         return $sResult;
+    }
+
+    protected function getTranslationsValues($sType, $sName, $bCheckEmpty = false)
+    {
+        $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguagesInfo();
+
+        $aResults = array();
+        foreach($aLanguages as $aLanguage) {
+            $sString = BxDolForm::getSubmittedValue($sName . '-' . $aLanguage['name'], $this->aFormAttrs['method']);
+            if(($bCheckEmpty && empty($sString)) || (!$bCheckEmpty &&  $sString === false))
+                continue;
+
+            $aResults[$aLanguage['id']] = $sString;
+        }
+
+        return $aResults;
     }
 }
 
