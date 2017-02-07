@@ -553,7 +553,7 @@ class BxBaseGrid extends BxDolGrid
             elseif ($sIconUrl = $this->_oTemplate->getIconUrl($a['icon']))
                 $sImage = '<i style="background-image:url(' . $sIconUrl . ');"></i>';
         }
-        return '<button ' . $sAttr . '>' . $sIcon . $sImage . ($a['icon_only'] ? '' : '<u>' . $a['title'] . '</u>') . '</button>';
+        return '<button ' . $sAttr . '>' . $sIcon . $sImage . ($a['icon_only'] || empty($a['title']) ? '' : '<u>' . $a['title'] . '</u>') . '</button>';
     }
 
     protected function _getActionDivider ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
