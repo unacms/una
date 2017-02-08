@@ -110,10 +110,10 @@ class BxAlbumsPageMedia extends BxTemplPage
 
         $aMedia = array_shift($aMediaList);
         
-        if (!$aMedia['file_id'] || empty($CNF['OBJECT_IMAGES_TRANSCODER_BIG']))
+        if (!$aMedia['file_id'] || empty($CNF['OBJECT_TRANSCODER_COVER']))
             return false;
 
-        return array('id' => $aMedia['file_id'], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
+        return array('id' => $aMedia['file_id'], 'transcoder' => $CNF['OBJECT_TRANSCODER_COVER']);
     }
     
     protected function _addJsCss()
