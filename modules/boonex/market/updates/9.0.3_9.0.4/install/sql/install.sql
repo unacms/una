@@ -1,6 +1,3 @@
-SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
-
-
 -- TABLE
 ALTER TABLE `bx_market_files` CHANGE `remote_id` `remote_id` VARCHAR(128) NOT NULL;
 ALTER TABLE `bx_market_photos` CHANGE `remote_id` `remote_id` VARCHAR(128) NOT NULL;
@@ -8,10 +5,6 @@ ALTER TABLE `bx_market_photos_resized` CHANGE `remote_id` `remote_id` VARCHAR(12
 
 
 -- STORAGES & TRANSCODERS
-UPDATE `sys_objects_storage` SET `engine`=@sStorageEngine WHERE `object`='bx_market_files';
-UPDATE `sys_objects_storage` SET `engine`=@sStorageEngine WHERE `object`='bx_market_photos';
-UPDATE `sys_objects_storage` SET `engine`=@sStorageEngine WHERE `object`='bx_market_photos_resized';
-
 DELETE FROM `sys_objects_transcoder` WHERE `object` IN ('bx_market_icon', 'bx_market_thumb');
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_market_icon', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),

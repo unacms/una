@@ -1,0 +1,19 @@
+@media (min-width:720px) and (max-width:1024px) {
+	/*--- View Block Style ---*/
+	.bx-tl-grid-sizer { 
+		width: 50%;
+	}
+	.bx-layout-column-half .bx-tl-grid-sizer, 
+	.bx-layout-column-thin .bx-tl-grid-sizer {
+		width: 100%;
+	}
+
+    /*--- Timeline Item Style ---*/
+    div.bx-tl-view-timeline div.bx-tl-item-cnt {
+        position: relative;
+    
+        margin: 0px 0px 0px 56px;
+        margin: 0px 0px 0px 3.5rem;
+    }
+    
+}

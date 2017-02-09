@@ -1,0 +1,48 @@
+/*--- Reposted By ---*/
+div.bx-tl-by-list {}
+div.bx-tl-by-list-cnt {
+	max-height: 200px;
+	max-height: 12.5rem;
+	min-width: 220px;
+	min-width: 13.75rem;
+	overflow: auto;
+}
+div.bx-tl-by-list div.bx-base-pofile-unit {
+	float: none;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+/*--- Repost Element Styles ---*/
+.bx-tl-repost .bx-tl-repost-element-holder .bx-tl-repost-do-repost.bx-tl-repost-disabled,
+.bx-tl-repost .bx-tl-repost-element-holder .bx-tl-repost-do-repost.bx-tl-repost-disabled .sys-icon {
+	color: #ddd;
+}
+.bx-tl-repost .bx-tl-repost-counter-holder {
+	margin-left: 5px;
+	margin-left: 0.3125rem;
+}
+.bx-tl-repost-button .bx-tl-repost-element-holder,
+.bx-tl-repost-button .bx-tl-repost-counter-holder {
+	line-height: 36px;
+	line-height: 2.25rem;
+}
+.bx-tl-repost.bx-tl-repost-button .bx-tl-repost-counter-holder {
+	margin-left: 10px;
+	margin-left: 0.625rem;
+}
+.bx-tl-repost-button-small .bx-tl-repost-element-holder,
+.bx-tl-repost-button-small .bx-tl-repost-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+.bx-tl-repost-button .bx-tl-repost-counter-holder,
+.bx-tl-repost-button-small .bx-tl-repost-counter-holder {
+	font-size: 1.5rem;
+}
+
+div.bx-tl-repost div.bx-tl-repost-element-holder,
+div.bx-tl-repost div.bx-tl-repost-counter-holder {
+	position: relative;
+	float: left;
+}
