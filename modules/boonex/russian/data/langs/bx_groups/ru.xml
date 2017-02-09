@@ -61,7 +61,7 @@
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_groups_page_title_browse"><![CDATA[Группы]]></string>
 	<string name="_bx_groups_page_title_browse_by_author"><![CDATA[Группы {display_name}]]></string>
-	<string name="_bx_events_page_title_browse_featured"><![CDATA[Продвинутые Группы]]></string>
+	<string name="_bx_groups_page_title_browse_featured"><![CDATA[Продвинутые Группы]]></string>
     <string name="_bx_groups_page_title_browse_top"><![CDATA[Популярные Группы]]></string>
 	<string name="_bx_groups_page_title_browse_recent"><![CDATA[Последние Добавленные Группы]]></string>
 	<string name="_bx_groups_page_title_browse_connections"><![CDATA[{0} связей]]></string>

@@ -1,3 +1,4 @@
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 -- TABLE: PROFILES
 CREATE TABLE IF NOT EXISTS `bx_groups_data` (
