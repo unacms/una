@@ -1,0 +1,21 @@
+<ul id="bx-menu-inter-__id__" class="bx-menu-inter-vert bx-menu-object-__object__">
+	<bx_repeat:menu_items>
+	    <li id="__name__-act" class="bx-menu-inter-act __class_wrp_act__">
+	        <div class="bx-def-padding-right bx-def-padding-sec-left bx-def-padding-sec-topbottom __class__">__title__</div>
+	    </li>
+	    <li id="__name__-pas" class="bx-menu-inter-pas bx-def-round-corners bx-def-color-bg-hl-hover __class_wrp_pas__">
+	        <a id="__name__" class="__class__" href="__link__" target="__target__" onclick="__onclick__">
+	        	<div class="bx-def-padding-right bx-def-padding-sec-left bx-def-padding-sec-topbottom">__title__</div>
+	        </a>
+	    </li>
+	</bx_repeat:menu_items>
+</ul>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function() {
+    	$('#bx-menu-inter-__id__').find('a').bind('click', function() {
+    		var sId = $(this).attr('id');
+    		var sClassHidden = 'bx-menu-inter-hidden';
+			$(this).parent().siblings('.bx-menu-inter-act:not(.' + sClassHidden + ')').addClass(sClassHidden).siblings('.bx-menu-inter-pas.' + sClassHidden).removeClass(sClassHidden).siblings('#' + sId + '-pas:not(.' + sClassHidden + ')').addClass(sClassHidden).siblings('#' + sId + '-act.' + sClassHidden).removeClass(sClassHidden);
+    	});
+    });
+</script>
