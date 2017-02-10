@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_timeline_acl_action_repost"><![CDATA[Сделать репост]]></string_add>
-	<string_add name="_bx_timeline_acl_action_send"><![CDATA[Послать]]></string_add>
-	<string_add name="_bx_timeline_page_title_sys_view_home"><![CDATA[Лента главной страницы]]></string_add>
-	<string_add name="_bx_timeline_page_title_view_home"><![CDATA[Лента]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_view_outline"><![CDATA[Сводка]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_post_profile"><![CDATA[Разместить в Ленте]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_view_profile"><![CDATA[Лента]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_view_profile_outline"><![CDATA[Сводка]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_view_account_outline"><![CDATA[Сводка Подписки]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_post_home"><![CDATA[Разместить в Ленте]]></string_add>
-	<string_add name="_bx_timeline_page_block_title_view_home_outline"><![CDATA[Сводка]]></string_add>
-	<string_add name="_bx_timeline_menu_title_item_share"><![CDATA[Поделиться]]></string_add>
-	<string_add name="_bx_timeline_menu_set_title_item_share"><![CDATA[Поделиться]]></string_add>
-	<string_add name="_bx_timeline_menu_item_title_system_item_repost"><![CDATA[Сделать репост]]></string_add>
-	<string_add name="_bx_timeline_menu_item_title_item_repost"><![CDATA[Сделать репост]]></string_add>
-	<string_add name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Послать]]></string_add>
-	<string_add name="_bx_timeline_menu_item_title_item_send"><![CDATA[Послать другу]]></string_add>
-	<string_add name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[Посмотреть]]></string_add>
-	<string_add name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Лента (сделать репост)]]></string_add>
-	<string_add name="_bx_timeline_txt_added_sample"><![CDATA[добавил {0}]]></string_add>
-	<string_add name="_bx_timeline_txt_user_reposted_sample"><![CDATA[{0} сделал репост {1} {2}]]></string_add>
-	<string_add name="_bx_timeline_txt_sample_with_article"><![CDATA[сообщение]]></string_add>
-	<string_add name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string_add>
-	<string_add name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string_add>
-	<string_add name="_bx_timeline_txt_reposted"><![CDATA[Сделал репост {0} {1}.]]></string_add>
-	<string_add name="_bx_timeline_txt_reposted_by"><![CDATA[Сделал репост]]></string_add>
-	<string_add name="_bx_timeline_txt_err_cannot_repost"><![CDATA[Невозможно сделать репост. Пожалуйста, сообщите нам об этой проблеме.]]></string_add>
-	<string_add name="_bx_timeline_txt_err_already_reposted"><![CDATA[Вы уже сделали репост этого элемента.]]></string_add>
-	<string_add name="_bx_timeline_txt_msg_success_repost"><![CDATA[Репост данного элемента был сделан успешно.]]></string_add>
-	<string_add name="_bx_timeline_txt_object_reposted"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> сделал репост {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string_add>
-	<string_add name="_bx_timeline_et_txt_name_send"><![CDATA[Послать другу.]]></string_add>
-	<string_add name="_bx_timeline_et_txt_subject_send"><![CDATA[Это может быть интересно для вас.]]></string_add>
+	<string_add name="_bx_timeline_acl_action_repost"><![CDATA[РЎРґРµР»Р°С‚СЊ СЂРµРїРѕСЃС‚]]></string_add>
+	<string_add name="_bx_timeline_acl_action_send"><![CDATA[РџРѕСЃР»Р°С‚СЊ]]></string_add>
+	<string_add name="_bx_timeline_page_title_sys_view_home"><![CDATA[Р›РµРЅС‚Р° РіР»Р°РІРЅРѕР№ СЃС‚СЂР°РЅРёС†С‹]]></string_add>
+	<string_add name="_bx_timeline_page_title_view_home"><![CDATA[Р›РµРЅС‚Р°]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_view_outline"><![CDATA[РЎРІРѕРґРєР°]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_post_profile"><![CDATA[Р Р°Р·РјРµСЃС‚РёС‚СЊ РІ Р›РµРЅС‚Рµ]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_view_profile"><![CDATA[Р›РµРЅС‚Р°]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_view_profile_outline"><![CDATA[РЎРІРѕРґРєР°]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_view_account_outline"><![CDATA[РЎРІРѕРґРєР° РџРѕРґРїРёСЃРєРё]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_post_home"><![CDATA[Р Р°Р·РјРµСЃС‚РёС‚СЊ РІ Р›РµРЅС‚Рµ]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_view_home_outline"><![CDATA[РЎРІРѕРґРєР°]]></string_add>
+	<string_add name="_bx_timeline_menu_title_item_share"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ]]></string_add>
+	<string_add name="_bx_timeline_menu_set_title_item_share"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_repost"><![CDATA[РЎРґРµР»Р°С‚СЊ СЂРµРїРѕСЃС‚]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_item_repost"><![CDATA[РЎРґРµР»Р°С‚СЊ СЂРµРїРѕСЃС‚]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[РџРѕСЃР»Р°С‚СЊ]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_item_send"><![CDATA[РџРѕСЃР»Р°С‚СЊ РґСЂСѓРіСѓ]]></string_add>
+	<string_add name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[РџРѕСЃРјРѕС‚СЂРµС‚СЊ]]></string_add>
+	<string_add name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Р›РµРЅС‚Р° (СЃРґРµР»Р°С‚СЊ СЂРµРїРѕСЃС‚)]]></string_add>
+	<string_add name="_bx_timeline_txt_added_sample"><![CDATA[РґРѕР±Р°РІРёР» {0}]]></string_add>
+	<string_add name="_bx_timeline_txt_user_reposted_sample"><![CDATA[{0} СЃРґРµР»Р°Р» СЂРµРїРѕСЃС‚ {1} {2}]]></string_add>
+	<string_add name="_bx_timeline_txt_sample_with_article"><![CDATA[СЃРѕРѕР±С‰РµРЅРёРµ]]></string_add>
+	<string_add name="_bx_timeline_txt_today"><![CDATA[РЎРµРіРѕРґРЅСЏ]]></string_add>
+	<string_add name="_bx_timeline_txt_do_repost"><![CDATA[РЎРґРµР»Р°С‚СЊ СЂРµРїРѕСЃС‚]]></string_add>
+	<string_add name="_bx_timeline_txt_reposted"><![CDATA[РЎРґРµР»Р°Р» СЂРµРїРѕСЃС‚ {0} {1}.]]></string_add>
+	<string_add name="_bx_timeline_txt_reposted_by"><![CDATA[РЎРґРµР»Р°Р» СЂРµРїРѕСЃС‚]]></string_add>
+	<string_add name="_bx_timeline_txt_err_cannot_repost"><![CDATA[РќРµРІРѕР·РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ СЂРµРїРѕСЃС‚. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, СЃРѕРѕР±С‰РёС‚Рµ РЅР°Рј РѕР± СЌС‚РѕР№ РїСЂРѕР±Р»РµРјРµ.]]></string_add>
+	<string_add name="_bx_timeline_txt_err_already_reposted"><![CDATA[Р’С‹ СѓР¶Рµ СЃРґРµР»Р°Р»Рё СЂРµРїРѕСЃС‚ СЌС‚РѕРіРѕ СЌР»РµРјРµРЅС‚Р°.]]></string_add>
+	<string_add name="_bx_timeline_txt_msg_success_repost"><![CDATA[Р РµРїРѕСЃС‚ РґР°РЅРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° Р±С‹Р» СЃРґРµР»Р°РЅ СѓСЃРїРµС€РЅРѕ.]]></string_add>
+	<string_add name="_bx_timeline_txt_object_reposted"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> СЃРґРµР»Р°Р» СЂРµРїРѕСЃС‚ {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string_add>
+	<string_add name="_bx_timeline_et_txt_name_send"><![CDATA[РџРѕСЃР»Р°С‚СЊ РґСЂСѓРіСѓ.]]></string_add>
+	<string_add name="_bx_timeline_et_txt_subject_send"><![CDATA[Р­С‚Рѕ РјРѕР¶РµС‚ Р±С‹С‚СЊ РёРЅС‚РµСЂРµСЃРЅРѕ РґР»СЏ РІР°СЃ.]]></string_add>
 	<string_add name="_bx_timeline_et_txt_body_send"><![CDATA[{email_header}
-<p>Привет.</p>
-<p>Взгляните на <a href="{ViewLink}">это сообщение</a>, оно может быть интересно для вас.</p>
+<p>РџСЂРёРІРµС‚.</p>
+<p>Р’Р·РіР»СЏРЅРёС‚Рµ РЅР° <a href="{ViewLink}">СЌС‚Рѕ СЃРѕРѕР±С‰РµРЅРёРµ</a>, РѕРЅРѕ РјРѕР¶РµС‚ Р±С‹С‚СЊ РёРЅС‚РµСЂРµСЃРЅРѕ РґР»СЏ РІР°СЃ.</p>
 {email_footer}]]></string_add>
 
-	<string_upd name="_bx_timeline_page_title_sys_view"><![CDATA[Лента профиля]]></string_upd>
-	<string_upd name="_bx_timeline_page_block_title_view_home"><![CDATA[Лента]]></string_upd>
+	<string_upd name="_bx_timeline_page_title_sys_view"><![CDATA[Р›РµРЅС‚Р° РїСЂРѕС„РёР»СЏ]]></string_upd>
+	<string_upd name="_bx_timeline_page_block_title_view_home"><![CDATA[Р›РµРЅС‚Р°]]></string_upd>
 
-	<string_del name="_bx_timeline_acl_action_share"><![CDATA[Поделиться]]></string_del>
-	<string_del name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Разместить в Ленте]]></string_del>
-	<string_del name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Разместить в Ленте]]></string_del>
-	<string_del name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Лента]]></string_del>
-	<string_del name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Лента]]></string_del>
-	<string_del name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Лента (разместить снова)]]></string_del>
-	<string_del name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} снова разместил {1} {2}]]></string_del>
-	<string_del name="_bx_timeline_txt_do_share"><![CDATA[Поделиться]]></string_del>
-	<string_del name="_bx_timeline_txt_shared"><![CDATA[Поделился {0} {1}.]]></string_del>
-	<string_del name="_bx_timeline_txt_shared_by"><![CDATA[Поделился]]></string_del>
-	<string_del name="_bx_timeline_txt_err_cannot_share"><![CDATA[Невозможно поделиться. Пожалуйста, сообщите нам об этой проблеме.]]></string_del>
-	<string_del name="_bx_timeline_txt_err_already_shared"><![CDATA[Вы уже поделились этим элементом.]]></string_del>
+	<string_del name="_bx_timeline_acl_action_share"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ]]></string_del>
+	<string_del name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Р Р°Р·РјРµСЃС‚РёС‚СЊ РІ Р›РµРЅС‚Рµ]]></string_del>
+	<string_del name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Р Р°Р·РјРµСЃС‚РёС‚СЊ РІ Р›РµРЅС‚Рµ]]></string_del>
+	<string_del name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Р›РµРЅС‚Р°]]></string_del>
+	<string_del name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Р›РµРЅС‚Р°]]></string_del>
+	<string_del name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Р›РµРЅС‚Р° (СЂР°Р·РјРµСЃС‚РёС‚СЊ СЃРЅРѕРІР°)]]></string_del>
+	<string_del name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} СЃРЅРѕРІР° СЂР°Р·РјРµСЃС‚РёР» {1} {2}]]></string_del>
+	<string_del name="_bx_timeline_txt_do_share"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ]]></string_del>
+	<string_del name="_bx_timeline_txt_shared"><![CDATA[РџРѕРґРµР»РёР»СЃСЏ {0} {1}.]]></string_del>
+	<string_del name="_bx_timeline_txt_shared_by"><![CDATA[РџРѕРґРµР»РёР»СЃСЏ]]></string_del>
+	<string_del name="_bx_timeline_txt_err_cannot_share"><![CDATA[РќРµРІРѕР·РјРѕР¶РЅРѕ РїРѕРґРµР»РёС‚СЊСЃСЏ. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, СЃРѕРѕР±С‰РёС‚Рµ РЅР°Рј РѕР± СЌС‚РѕР№ РїСЂРѕР±Р»РµРјРµ.]]></string_del>
+	<string_del name="_bx_timeline_txt_err_already_shared"><![CDATA[Р’С‹ СѓР¶Рµ РїРѕРґРµР»РёР»РёСЃСЊ СЌС‚РёРј СЌР»РµРјРµРЅС‚РѕРј.]]></string_del>
 	<string_del name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string_del>
 </resources>

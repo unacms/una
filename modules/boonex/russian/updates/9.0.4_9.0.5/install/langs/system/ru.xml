@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string_add name="_feature_do_feature"><![CDATA[В продвинутые]]></string_add>
-	<string_add name="_feature_do_unfeature"><![CDATA[Из продвинутых]]></string_add>
-	<string_add name="_feature_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string_add>
-	<string_add name="_feature_err_duplicate_feature"><![CDATA[Данный объект уже добавлен в список продвинутых.]]></string_add>
-	<string_add name="_feature_err_not_enabled"><![CDATA[Действие не доступно в данный момент. Пожалуйста, попробуйте позднее.]]></string_add>
-	<string_add name="_adm_nav_dsc_items_onclick"><![CDATA[Введите корректный JavaScript код для ссылки]]></string_add>
-	<string_add name="_adm_nav_err_items_onclick"><![CDATA[Нужно ввести OnClick элемента]]></string_add>
+	<string_add name="_feature_do_feature"><![CDATA[Р’ РїСЂРѕРґРІРёРЅСѓС‚С‹Рµ]]></string_add>
+	<string_add name="_feature_do_unfeature"><![CDATA[РР· РїСЂРѕРґРІРёРЅСѓС‚С‹С…]]></string_add>
+	<string_add name="_feature_err_cannot_perform_action"><![CDATA[РќРµРІРѕР·РјРѕР¶РЅРѕ РІС‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ.]]></string_add>
+	<string_add name="_feature_err_duplicate_feature"><![CDATA[Р”Р°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ СѓР¶Рµ РґРѕР±Р°РІР»РµРЅ РІ СЃРїРёСЃРѕРє РїСЂРѕРґРІРёРЅСѓС‚С‹С….]]></string_add>
+	<string_add name="_feature_err_not_enabled"><![CDATA[Р”РµР№СЃС‚РІРёРµ РЅРµ РґРѕСЃС‚СѓРїРЅРѕ РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕР·РґРЅРµРµ.]]></string_add>
+	<string_add name="_adm_nav_dsc_items_onclick"><![CDATA[Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅС‹Р№ JavaScript РєРѕРґ РґР»СЏ СЃСЃС‹Р»РєРё]]></string_add>
+	<string_add name="_adm_nav_err_items_onclick"><![CDATA[РќСѓР¶РЅРѕ РІРІРµСЃС‚Рё OnClick СЌР»РµРјРµРЅС‚Р°]]></string_add>
 	<string_add name="_adm_nav_txt_items_onclick"><![CDATA[OnClick]]></string_add>
-	<string_add name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Список присоединяемых имейл темплейтов]]></string_add>
-	<string_add name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API]]></string_add>
-	<string_add name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Шаблон Embed.ly API]]></string_add>
-	<string_add name="_sys_acl_action_feature"><![CDATA[Продвинутое - Добавлять]]></string_add>
-	<string_add name="_sys_acl_action_view_view"><![CDATA[Просмотры - Просматривать]]></string_add>
-	<string_add name="_sys_acl_action_view_view_viewers"><![CDATA[Просмотры - Просматривать смотревших]]></string_add>
-	<string_add name="_sys_file_handlers_ms_viewer"><![CDATA[Microsoft Office просмотрщик]]></string_add>
-	<string_add name="_sys_file_handlers_google_viewer"><![CDATA[Google просмотрщик]]></string_add>
-	<string_add name="_sys_file_handlers_images_viewer"><![CDATA[Просмотр изображений]]></string_add>
-	<string_add name="_sys_file_handlers_code_viewer"><![CDATA[Просмотр програмного кода]]></string_add>
-	<string_add name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string_add>
-	<string_add name="_sys_menu_item_title_social_sharing_googleplus"><![CDATA[Поделиться в Google Plus]]></string_add>
-	<string_add name="_sys_menu_item_title_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string_add>
-	<string_add name="_sys_menu_item_title_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string_add>
-	<string_add name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string_add>
-	<string_add name="_sys_menu_item_title_system_social_sharing_googleplus"><![CDATA[Поделиться в Google Plus]]></string_add>
-	<string_add name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string_add>
-	<string_add name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string_add>
-	<string_add name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальные сети]]></string_add>
-	<string_add name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Горизонтальные Кнопки с Иконками]]></string_add>
-	<string_add name="_sys_menu_template_title_inline_sbtn"><![CDATA[В тексте ('спец' кнопки)]]></string_add>
-	<string_add name="_sys_menu_title_social_sharing"><![CDATA[Социальные сети]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[РЎРїРёСЃРѕРє РїСЂРёСЃРѕРµРґРёРЅСЏРµРјС‹С… РёРјРµР№Р» С‚РµРјРїР»РµР№С‚РѕРІ]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[РљР»СЋС‡ Embed.ly API]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[РЁР°Р±Р»РѕРЅ Embed.ly API]]></string_add>
+	<string_add name="_sys_acl_action_feature"><![CDATA[РџСЂРѕРґРІРёРЅСѓС‚РѕРµ - Р”РѕР±Р°РІР»СЏС‚СЊ]]></string_add>
+	<string_add name="_sys_acl_action_view_view"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂС‹ - РџСЂРѕСЃРјР°С‚СЂРёРІР°С‚СЊ]]></string_add>
+	<string_add name="_sys_acl_action_view_view_viewers"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂС‹ - РџСЂРѕСЃРјР°С‚СЂРёРІР°С‚СЊ СЃРјРѕС‚СЂРµРІС€РёС…]]></string_add>
+	<string_add name="_sys_file_handlers_ms_viewer"><![CDATA[Microsoft Office РїСЂРѕСЃРјРѕС‚СЂС‰РёРє]]></string_add>
+	<string_add name="_sys_file_handlers_google_viewer"><![CDATA[Google РїСЂРѕСЃРјРѕС‚СЂС‰РёРє]]></string_add>
+	<string_add name="_sys_file_handlers_images_viewer"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂ РёР·РѕР±СЂР°Р¶РµРЅРёР№]]></string_add>
+	<string_add name="_sys_file_handlers_code_viewer"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂ РїСЂРѕРіСЂР°РјРЅРѕРіРѕ РєРѕРґР°]]></string_add>
+	<string_add name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Facebook]]></string_add>
+	<string_add name="_sys_menu_item_title_social_sharing_googleplus"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Google Plus]]></string_add>
+	<string_add name="_sys_menu_item_title_social_sharing_twitter"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Twitter]]></string_add>
+	<string_add name="_sys_menu_item_title_social_sharing_pinterest"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Pinterest]]></string_add>
+	<string_add name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Facebook]]></string_add>
+	<string_add name="_sys_menu_item_title_system_social_sharing_googleplus"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Google Plus]]></string_add>
+	<string_add name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Twitter]]></string_add>
+	<string_add name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Pinterest]]></string_add>
+	<string_add name="_sys_menu_set_title_sys_social_sharing"><![CDATA[РЎРѕС†РёР°Р»СЊРЅС‹Рµ СЃРµС‚Рё]]></string_add>
+	<string_add name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Р“РѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹Рµ РљРЅРѕРїРєРё СЃ РРєРѕРЅРєР°РјРё]]></string_add>
+	<string_add name="_sys_menu_template_title_inline_sbtn"><![CDATA[Р’ С‚РµРєСЃС‚Рµ ('СЃРїРµС†' РєРЅРѕРїРєРё)]]></string_add>
+	<string_add name="_sys_menu_title_social_sharing"><![CDATA[РЎРѕС†РёР°Р»СЊРЅС‹Рµ СЃРµС‚Рё]]></string_add>
 	<string_add name="_view_counter"><![CDATA[{0}]]></string_add>
-	<string_add name="_view_do_view"><![CDATA[Посмотреть]]></string_add>
-	<string_add name="_view_do_view_by"><![CDATA[Просмотрено]]></string_add>
-	<string_add name="_vote_do_by"><![CDATA[Поблагодарил]]></string_add>
+	<string_add name="_view_do_view"><![CDATA[РџРѕСЃРјРѕС‚СЂРµС‚СЊ]]></string_add>
+	<string_add name="_view_do_view_by"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂРµРЅРѕ]]></string_add>
+	<string_add name="_vote_do_by"><![CDATA[РџРѕР±Р»Р°РіРѕРґР°СЂРёР»]]></string_add>
 
-	<string_upd name="_adm_bp_dsc_block_content_lang"><![CDATA[Введите содержимое в соответствии с выбранным языком]]></string_upd>
-	<string_upd name="_adm_bp_err_save"><![CDATA[Невозможно сохранить или ничего не изменилось.]]></string_upd>
-	<string_upd name="_sys_block_type_raw"><![CDATA[без обработки]]></string_upd>
-	<string_upd name="_sys_pruning_db"><![CDATA[<h3>Очистка Базы Данных:</h3>
+	<string_upd name="_adm_bp_dsc_block_content_lang"><![CDATA[Р’РІРµРґРёС‚Рµ СЃРѕРґРµСЂР¶РёРјРѕРµ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ РІС‹Р±СЂР°РЅРЅС‹Рј СЏР·С‹РєРѕРј]]></string_upd>
+	<string_upd name="_adm_bp_err_save"><![CDATA[РќРµРІРѕР·РјРѕР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ РёР»Рё РЅРёС‡РµРіРѕ РЅРµ РёР·РјРµРЅРёР»РѕСЃСЊ.]]></string_upd>
+	<string_upd name="_sys_block_type_raw"><![CDATA[Р±РµР· РѕР±СЂР°Р±РѕС‚РєРё]]></string_upd>
+	<string_upd name="_sys_pruning_db"><![CDATA[<h3>РћС‡РёСЃС‚РєР° Р‘Р°Р·С‹ Р”Р°РЅРЅС‹С…:</h3>
 	<ul>
-		<li><b>{0}</b> удалено просроченных членств</li>
-		<li><b>{1}</b> удалено просроченных сессий</li>
-		<li><b>{2}</b> удалено просроченных ключей</li>
-		<li><b>{3}</b> удалено просроченных токенов хранилища</li>
-		<li><b>{4}</b> удалено просроченных транскодированных изображений</li>
+		<li><b>{0}</b> СѓРґР°Р»РµРЅРѕ РїСЂРѕСЃСЂРѕС‡РµРЅРЅС‹С… С‡Р»РµРЅСЃС‚РІ</li>
+		<li><b>{1}</b> СѓРґР°Р»РµРЅРѕ РїСЂРѕСЃСЂРѕС‡РµРЅРЅС‹С… СЃРµСЃСЃРёР№</li>
+		<li><b>{2}</b> СѓРґР°Р»РµРЅРѕ РїСЂРѕСЃСЂРѕС‡РµРЅРЅС‹С… РєР»СЋС‡РµР№</li>
+		<li><b>{3}</b> СѓРґР°Р»РµРЅРѕ РїСЂРѕСЃСЂРѕС‡РµРЅРЅС‹С… С‚РѕРєРµРЅРѕРІ С…СЂР°РЅРёР»РёС‰Р°</li>
+		<li><b>{4}</b> СѓРґР°Р»РµРЅРѕ РїСЂРѕСЃСЂРѕС‡РµРЅРЅС‹С… С‚СЂР°РЅСЃРєРѕРґРёСЂРѕРІР°РЅРЅС‹С… РёР·РѕР±СЂР°Р¶РµРЅРёР№</li>
 	</ul>]]></string_upd>
 
-	<string_del name="_sys_social_sharing_title_facebook"><![CDATA[Поделиться в Facebook]]></string_del>
-	<string_del name="_sys_social_sharing_title_googleplus"><![CDATA[Поделиться в Google Plus]]></string_del>
-	<string_del name="_sys_social_sharing_title_twitter"><![CDATA[Поделиться в Twitter]]></string_del>
-	<string_del name="_sys_social_sharing_title_pinterest"><![CDATA[Поделиться в Pinterest]]></string_del>
-	<string_del name="_vote_do_like_by"><![CDATA[Поблагодарил]]></string_del>
+	<string_del name="_sys_social_sharing_title_facebook"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Facebook]]></string_del>
+	<string_del name="_sys_social_sharing_title_googleplus"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Google Plus]]></string_del>
+	<string_del name="_sys_social_sharing_title_twitter"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Twitter]]></string_del>
+	<string_del name="_sys_social_sharing_title_pinterest"><![CDATA[РџРѕРґРµР»РёС‚СЊСЃСЏ РІ Pinterest]]></string_del>
+	<string_del name="_vote_do_like_by"><![CDATA[РџРѕР±Р»Р°РіРѕРґР°СЂРёР»]]></string_del>
 </resources>

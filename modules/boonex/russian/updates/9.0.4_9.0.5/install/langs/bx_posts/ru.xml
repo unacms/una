@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_posts_option_per_page_profile"><![CDATA[Êîëè÷åñòâî ýëåìåíòîâ íà ñòðàíèöå ïðîôàéëà]]></string_add>
-	<string_add name="_bx_posts_page_title_browse_featured"><![CDATA[Ïðîäâèíóòûå Ïóáëèêàöèè]]></string_add>
-	<string_add name="_bx_posts_page_block_title_featured_entries_view_extended"><![CDATA[Ïðîäâèíóòûå]]></string_add>
-	<string_add name="_bx_posts_txt_sample_single_with_article"><![CDATA[ïóáëèêàöèÿ]]></string_add>
+	<string_add name="_bx_posts_option_per_page_profile"><![CDATA[ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² Ð½Ð° ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ðµ Ð¿Ñ€Ð¾Ñ„Ð°Ð¹Ð»Ð°]]></string_add>
+	<string_add name="_bx_posts_page_title_browse_featured"><![CDATA[ÐŸÑ€Ð¾Ð´Ð²Ð¸Ð½ÑƒÑ‚Ñ‹Ðµ ÐŸÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ð¸]]></string_add>
+	<string_add name="_bx_posts_page_block_title_featured_entries_view_extended"><![CDATA[ÐŸÑ€Ð¾Ð´Ð²Ð¸Ð½ÑƒÑ‚Ñ‹Ðµ]]></string_add>
+	<string_add name="_bx_posts_txt_sample_single_with_article"><![CDATA[Ð¿ÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ]]></string_add>
 </resources>

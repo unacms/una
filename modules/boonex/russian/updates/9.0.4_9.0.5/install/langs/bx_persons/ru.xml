@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_persons_page_title_sys_view_profile_closed"><![CDATA[Просмотр профиля с ограничением доступа]]></string_add>
-	<string_add name="_bx_persons_page_title_browse_featured"><![CDATA[Продвинутые Пользователи]]></string_add>
-	<string_add name="_bx_persons_page_block_title_featured_profiles"><![CDATA[Продвинутые Пользователи]]></string_add>
-	<string_add name="_bx_persons_email_friend_request"><![CDATA[Запрос на добавление в друзья]]></string_add>
-	<string_add name="_bx_persons_email_friend_request_subject"><![CDATA[Подружиться]]></string_add>
+	<string_add name="_bx_persons_page_title_sys_view_profile_closed"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂ РїСЂРѕС„РёР»СЏ СЃ РѕРіСЂР°РЅРёС‡РµРЅРёРµРј РґРѕСЃС‚СѓРїР°]]></string_add>
+	<string_add name="_bx_persons_page_title_browse_featured"><![CDATA[РџСЂРѕРґРІРёРЅСѓС‚С‹Рµ РџРѕР»СЊР·РѕРІР°С‚РµР»Рё]]></string_add>
+	<string_add name="_bx_persons_page_block_title_featured_profiles"><![CDATA[РџСЂРѕРґРІРёРЅСѓС‚С‹Рµ РџРѕР»СЊР·РѕРІР°С‚РµР»Рё]]></string_add>
+	<string_add name="_bx_persons_email_friend_request"><![CDATA[Р—Р°РїСЂРѕСЃ РЅР° РґРѕР±Р°РІР»РµРЅРёРµ РІ РґСЂСѓР·СЊСЏ]]></string_add>
+	<string_add name="_bx_persons_email_friend_request_subject"><![CDATA[РџРѕРґСЂСѓР¶РёС‚СЊСЃСЏ]]></string_add>
 	<string_add name="_bx_persons_email_friend_request_body"><![CDATA[{email_header}
-<p><a href="{SenderUrl}">{SenderDisplayName}</a> хочет подружиться с вами. <a href="{FriendsLink}">Ответить</a>.</p>
+<p><a href="{SenderUrl}">{SenderDisplayName}</a> С…РѕС‡РµС‚ РїРѕРґСЂСѓР¶РёС‚СЊСЃСЏ СЃ РІР°РјРё. <a href="{FriendsLink}">РћС‚РІРµС‚РёС‚СЊ</a>.</p>
 {email_footer}]]></string_add>
 
-	<string_upd name="_bx_persons_page_title_sys_edit_profile"><![CDATA[Редактировать профиль]]></string_upd>
-	<string_upd name="_bx_persons_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку]]></string_upd>
-	<string_upd name="_bx_persons_page_title_sys_delete_profile"><![CDATA[Удалить профиль]]></string_upd>
-	<string_upd name="_bx_persons_page_title_sys_view_profile"><![CDATA[Просмотр профиля]]></string_upd>
+	<string_upd name="_bx_persons_page_title_sys_edit_profile"><![CDATA[Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РїСЂРѕС„РёР»СЊ]]></string_upd>
+	<string_upd name="_bx_persons_page_title_sys_edit_profile_cover"><![CDATA[Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РѕР±Р»РѕР¶РєСѓ]]></string_upd>
+	<string_upd name="_bx_persons_page_title_sys_delete_profile"><![CDATA[РЈРґР°Р»РёС‚СЊ РїСЂРѕС„РёР»СЊ]]></string_upd>
+	<string_upd name="_bx_persons_page_title_sys_view_profile"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂ РїСЂРѕС„РёР»СЏ]]></string_upd>
 </resources>

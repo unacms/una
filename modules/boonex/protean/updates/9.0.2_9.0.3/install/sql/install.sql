@@ -215,6 +215,8 @@ DELETE FROM `sys_options_mixes2options` WHERE `option` IN ('bx_protean_popup_men
 UPDATE `sys_options_mixes2options` SET `value`='rgba(255, 255, 255, 1)' WHERE `option`='bx_protean_popup_title_font_color';
 UPDATE `sys_options_mixes2options` SET `value`='15px' WHERE `option`='bx_protean_font_size_default';
 
+SET @iMixId = (SELECT `id` FROM `sys_options_mixes` WHERE `name`='Neat-Mix' LIMIT 1);
+
 DELETE FROM `sys_options_mixes2options` WHERE `option` IN ('bx_protean_menu_account_bg_color', 'bx_protean_menu_account_bg_image', 'bx_protean_menu_account_bg_image_repeat', 'bx_protean_menu_account_bg_image_size', 'bx_protean_menu_account_content_padding', 'bx_protean_menu_account_border_color', 'bx_protean_menu_account_border_size', 'bx_protean_menu_account_shadow', 'bx_protean_menu_account_font_family', 'bx_protean_menu_account_font_size', 'bx_protean_menu_account_font_color', 'bx_protean_menu_account_font_color_hover', 'bx_protean_menu_account_font_color_active', 'bx_protean_menu_account_font_shadow', 'bx_protean_menu_account_font_weight', 'bx_protean_styles_custom');
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_menu_account_bg_color', @iMixId, 'rgba(255, 255, 255, 0.9)'),

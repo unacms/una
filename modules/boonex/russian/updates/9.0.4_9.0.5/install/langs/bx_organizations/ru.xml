@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string_add name="_bx_orgs_page_title_sys_view_profile_closed"><![CDATA[Просмотр профиля с ограничением доступа]]></string_add>
-	<string_add name="_bx_orgs_page_title_browse_featured"><![CDATA[Продвинутые Организации]]></string_add>
-	<string_add name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Продвинутые организации]]></string_add>
-	<string_add name="_bx_orgs_grid_column_title_adm_fullname"><![CDATA[Название]]></string_add>
-	<string_add name="_bx_organizations_email_friend_request"><![CDATA[Запрос на добавление в друзья]]></string_add>
-	<string_add name="_bx_organizations_email_friend_request_subject"><![CDATA[Подружиться]]></string_add>
+	<string_add name="_bx_orgs_page_title_sys_view_profile_closed"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂ РїСЂРѕС„РёР»СЏ СЃ РѕРіСЂР°РЅРёС‡РµРЅРёРµРј РґРѕСЃС‚СѓРїР°]]></string_add>
+	<string_add name="_bx_orgs_page_title_browse_featured"><![CDATA[РџСЂРѕРґРІРёРЅСѓС‚С‹Рµ РћСЂРіР°РЅРёР·Р°С†РёРё]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[РџСЂРѕРґРІРёРЅСѓС‚С‹Рµ РѕСЂРіР°РЅРёР·Р°С†РёРё]]></string_add>
+	<string_add name="_bx_orgs_grid_column_title_adm_fullname"><![CDATA[РќР°Р·РІР°РЅРёРµ]]></string_add>
+	<string_add name="_bx_organizations_email_friend_request"><![CDATA[Р—Р°РїСЂРѕСЃ РЅР° РґРѕР±Р°РІР»РµРЅРёРµ РІ РґСЂСѓР·СЊСЏ]]></string_add>
+	<string_add name="_bx_organizations_email_friend_request_subject"><![CDATA[РџРѕРґСЂСѓР¶РёС‚СЊСЃСЏ]]></string_add>
 	<string_add name="_bx_organizations_email_friend_request_body"><![CDATA[{email_header}
-<p><a href="{SenderUrl}">{SenderDisplayName}</a> хочет подружиться с вами. <a href="{FriendsLink}">Ответить</a>.</p>
+<p><a href="{SenderUrl}">{SenderDisplayName}</a> С…РѕС‡РµС‚ РїРѕРґСЂСѓР¶РёС‚СЊСЃСЏ СЃ РІР°РјРё. <a href="{FriendsLink}">РћС‚РІРµС‚РёС‚СЊ</a>.</p>
 {email_footer}]]></string_add>
 
-	<string_upd name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Редактировать профиль]]></string_upd>
-	<string_upd name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[Удалить профиль]]></string_upd>
-	<string_upd name="_bx_orgs_page_title_sys_view_profile"><![CDATA[Просмотр профиля]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_sys_edit_profile"><![CDATA[Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РїСЂРѕС„РёР»СЊ]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_sys_delete_profile"><![CDATA[РЈРґР°Р»РёС‚СЊ РїСЂРѕС„РёР»СЊ]]></string_upd>
+	<string_upd name="_bx_orgs_page_title_sys_view_profile"><![CDATA[РџСЂРѕСЃРјРѕС‚СЂ РїСЂРѕС„РёР»СЏ]]></string_upd>
 
-	<string_del name="_bx_orgs_grid_column_title_adm_org_name"><![CDATA[Название]]></string_del>
+	<string_del name="_bx_orgs_grid_column_title_adm_org_name"><![CDATA[РќР°Р·РІР°РЅРёРµ]]></string_del>
 </resources>
