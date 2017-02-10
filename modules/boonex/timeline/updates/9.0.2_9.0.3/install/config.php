@@ -29,6 +29,14 @@ $aConfig = array(
     'db_prefix' => 'bx_timeline_',
     'class_prefix' => 'BxTimeline',
 
+	/**
+     * List of page triggers.
+     */
+    'page_triggers' => array (
+    	'trigger_page_profile_view_entry', 
+    	'trigger_page_group_view_entry'
+    ),
+
     /**
      * Installation/Uninstallation Section.
      */
@@ -36,6 +44,7 @@ $aConfig = array(
 		'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
+		'process_page_triggers' => 1,
 		'clear_db_cache' => 1,
     ),
 
