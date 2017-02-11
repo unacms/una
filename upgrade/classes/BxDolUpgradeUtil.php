@@ -328,8 +328,12 @@ class BxDolUpgradeUtil
         if (!$aFilesDelete && !is_array($aFilesDelete))
             return true;
 
-        foreach ($aFilesDelete as $sFile)
-            @unlink(BX_DIRECTORY_PATH_ROOT . $sFile);
+        foreach ($aFilesDelete as $sFile) {
+            if (is_dir(BX_DIRECTORY_PATH_ROOT . $sFile))
+                $this->rrmdir(BX_DIRECTORY_PATH_ROOT . $sFile);
+            else
+                @unlink(BX_DIRECTORY_PATH_ROOT . $sFile);
+        }
 
         return true;
     }
@@ -356,6 +360,38 @@ class BxDolUpgradeUtil
 
         return true;
     }
+
+    function rrmdir($directory)
+    {
+        if (substr($directory,-1) == "/")
+            $directory = substr($directory,0,-1);
+
+        if (!file_exists($directory) || !is_dir($directory))
+            return false;
+        elseif (!is_readable($directory))
+            return false;
+
+        if (!($directoryHandle = opendir($directory)))
+            return false;
+
+        while ($contents = readdir($directoryHandle)) {
+            if ($contents != '.' && $contents != '..') {
+                $path = $directory . "/" . $contents;
+
+                if (is_dir($path))
+                    bx_rrmdir($path);
+                else
+                    @unlink($path);
+            }
+        }
+
+        closedir($directoryHandle);
+
+        if (!@rmdir($directory))
+            return false;
+
+        return true;
+    }    
 }
 
 /** @} */

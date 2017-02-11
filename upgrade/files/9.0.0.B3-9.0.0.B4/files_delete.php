@@ -10,6 +10,5 @@ $aFilesDelete = array(
     'plugins_public/tinymce/langs/ru_RU.js',
     'plugins_public/tinymce/plugins/media/moxieplayer.swf',
     'plugins_public/tinymce/plugins/layer',
-    'plugins/firephp',
 );
 
