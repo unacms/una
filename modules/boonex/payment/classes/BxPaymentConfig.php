@@ -110,6 +110,17 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         );
     }
 
+    public function init(&$oDb)
+    {
+        parent::init($oDb);
+
+        $sPrefix = $this->getPrefix('options');
+
+        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
+        $this->_sCurrencyCode = $this->_oDb->getParam($sPrefix . 'default_currency_code');
+        $this->_sCurrencySign = $aCurrencies[$this->_sCurrencyCode];
+    }
+
 	public function getLicense()
     {
         list($fMilliSec, $iSec) = explode(' ', microtime());
