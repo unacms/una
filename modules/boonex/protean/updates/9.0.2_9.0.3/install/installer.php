@@ -10,4 +10,17 @@ class BxProteanUpdater extends BxDolStudioUpdater
 	{
         parent::__construct($aConfig);
     }
+
+    public function update($aParams)
+    {
+        $aResult = parent::update($aParams);
+		if(!$aResult['result'])
+			return $aResult;
+
+        $oCacheUtilities = BxDolCacheUtilities::getInstance();
+        $oCacheUtilities->clear('css');
+        $oCacheUtilities->clear('template');
+
+        return $aResult;
+    }
 }
