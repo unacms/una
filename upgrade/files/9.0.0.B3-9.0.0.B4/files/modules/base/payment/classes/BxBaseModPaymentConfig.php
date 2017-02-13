@@ -76,10 +76,6 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     	
     	$sPrefix = $this->getPrefix('options');
         $this->_iSiteId = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
-
-        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
-        $this->_sCurrencyCode = $this->_oDb->getParam($sPrefix . 'default_currency_code');
-        $this->_sCurrencySign = $aCurrencies[$this->_sCurrencyCode];
     }
 
     public function getSiteId()
