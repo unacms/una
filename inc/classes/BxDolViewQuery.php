@@ -30,8 +30,8 @@ class BxDolViewQuery extends BxDolObjectQuery
 
 	public function getPerformedBy($iObjectId)
     {
-        $sQuery = $this->prepare("SELECT `viewer_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC", $iObjectId);
-        return $this->getColumn($sQuery);
+        $sQuery = $this->prepare("SELECT `viewer_id` AS `id`, COUNT(`viewer_id`) AS `count` FROM `{$this->_sTableTrack}` WHERE `object_id`=? GROUP BY `viewer_id` ORDER BY `date` DESC", $iObjectId);
+        return $this->getAll($sQuery);
     }
 
 	public function getView($iObjectId)
