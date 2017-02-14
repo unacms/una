@@ -218,11 +218,9 @@ class BxBaseVote extends BxDolVote
     	$aParams = array_merge($this->_aElementDefaults[$this->_sType], $aParams);
     	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
 
-        $bShowDoVote = !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
+        
         $bShowDoVoteAsButtonSmall = $this->_bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = $this->_bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
-        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
-        $bShowLegend = !$this->_bLike && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
 
         $sMethodDoVote = '_getDoVote' . ucfirst($this->_sType);
         if(!method_exists($this, $sMethodDoVote))
@@ -237,7 +235,7 @@ class BxBaseVote extends BxDolVote
         $aParams['is_voted'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         //--- Do Vote
-        $bTmplVarsDoVote = $bShowDoVote && (!$this->_bLike || $bCount || $isAllowedVote);
+        $bTmplVarsDoVote = $this->_isShowDoVote($aParams, $isAllowedVote, $bCount);
         $aTmplVarsDoVote = array();
         if($bTmplVarsDoVote)
         	$aTmplVarsDoVote = array(
@@ -246,7 +244,7 @@ class BxBaseVote extends BxDolVote
 			);
 
         //--- Counter
-        $bTmplVarsCounter = $bShowCounter && ($bCount || $isAllowedVote);
+        $bTmplVarsCounter = $this->_isShowCounter($aParams, $isAllowedVote, $bCount);
         $aTmplVarsCounter = array();
         if($bTmplVarsCounter)
         	$aTmplVarsCounter = array(
@@ -259,7 +257,7 @@ class BxBaseVote extends BxDolVote
         	);
 
 		//--- Legend
-		$bTmplVarsLegend = $bShowLegend;
+		$bTmplVarsLegend = $this->_isShowLegend($aParams, $isAllowedVote, $bCount);
 		$aTmplVarsLegend = array();
 		if($bTmplVarsLegend)
 			$aTmplVarsLegend = array(
@@ -411,6 +409,25 @@ class BxBaseVote extends BxDolVote
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:list' => $aTmplUsers
         ));
+    }
+
+    protected function _isShowDoVote($aParams, $isAllowedVote, $bCount)
+    {
+        $bShowDoVote = !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
+
+        return $bShowDoVote && (!$this->_bLike || $isAllowedVote || $bCount);
+    }
+
+    protected function _isShowCounter($aParams, $isAllowedVote, $bCount)
+    {
+        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
+
+        return $bShowCounter && ($isAllowedVote || $bCount);
+    }
+
+    protected function _isShowLegend($aParams, $isAllowedVote, $bCount)
+    {
+        return !$this->_bLike && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
     }
 }
 

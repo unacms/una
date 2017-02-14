@@ -245,6 +245,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_polls', 'vote entry', NULL, '_bx_polls_acl_action_vote_entry', '', 1, 0);
+SET @iIdActionEntryVote = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_polls', 'set thumb', NULL, '_bx_polls_acl_action_set_thumb', '', 1, 3);
 SET @iIdActionSetThumb = LAST_INSERT_ID();
 
@@ -285,6 +289,16 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionEntryView),
 (@iAdministrator, @iIdActionEntryView),
 (@iPremium, @iIdActionEntryView),
+
+-- entry vote
+(@iUnauthenticated, @iIdActionEntryVote),
+(@iAccount, @iIdActionEntryVote),
+(@iStandard, @iIdActionEntryVote),
+(@iUnconfirmed, @iIdActionEntryVote),
+(@iPending, @iIdActionEntryVote),
+(@iModerator, @iIdActionEntryVote),
+(@iAdministrator, @iIdActionEntryVote),
+(@iPremium, @iIdActionEntryVote),
 
 -- set entry thumb
 (@iStandard, @iIdActionSetThumb),

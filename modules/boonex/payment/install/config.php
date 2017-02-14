@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_payment',
     'title' => 'Payment',
     'note' => 'Payment module.',
-    'version' => '9.0.3.DEV',
+    'version' => '9.0.4.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

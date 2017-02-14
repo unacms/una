@@ -92,7 +92,7 @@ class BxPollsVoteSubentries extends BxTemplVote
      */
     public function isAllowedVote($isPerformAction = false)
     {
-        return true;    //--- Everybody who can see the poll should be able to vote.
+        return $this->_oModule->isAllowedVote($isPerformAction)  === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     /**
@@ -116,6 +116,11 @@ class BxPollsVoteSubentries extends BxTemplVote
     protected function _getLabelCounter($iCount)
     {
         return _t('_bx_polls_txt_subentry_vote_counter', $iCount);
+    }
+
+    protected function _isShowDoVote($aParams, $isAllowedVote, $bCount)
+    {
+        return !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
     }
 }
 

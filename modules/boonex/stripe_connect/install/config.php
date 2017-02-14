@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_stripe_connect',
     'title' => 'Stripe Connect',
     'note' => 'Organize eCommerce platform using Stripe Connect.',
-    'version' => '9.0.0.DEV',
+    'version' => '9.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

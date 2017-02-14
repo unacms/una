@@ -54,6 +54,18 @@ class BxPollsModule extends BxBaseModTextModule
         return $this->_serviceTemplateFunc('entryResults', $iContentId);
     }
 
+    /**
+     * PERMISSION METHODS
+     */
+    public function isAllowedVote($isPerformAction = false)
+    {
+        $aCheck = checkActionModule($this->_iProfileId, 'vote entry', $this->getName(), false);
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
 
 	/**
      * INTERNAL METHODS

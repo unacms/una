@@ -67,6 +67,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'FIELD_FILE' => 'files',
         	'FIELD_PACKAGE' => 'package',
             'FIELD_COMMENTS' => 'comments',
+        	'FIELD_FEATURED' => 'featured',
         	'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
