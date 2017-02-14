@@ -41,10 +41,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $aMenu = array();
         $aMenuItems = array(
 	        'goodies' => array('icon' => 'home'),
-        	/*
-        	//TODO: Uncomment 'featured' when "Mark As Featured" functionality will be ready. 
 	        'featured' => array('icon' => 'thumbs-up'),
-	        */
 	        'purchases' => array('icon' => 'shopping-cart'), 
 	        'updates' => array('icon' => 'refresh'), 
 	        'checkout' => array('icon' => 'credit-card'), 
