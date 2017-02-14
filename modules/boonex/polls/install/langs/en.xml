@@ -50,6 +50,7 @@
 	<string name="_bx_polls_acl_action_create_entry"><![CDATA[Create Poll]]></string>
 	<string name="_bx_polls_acl_action_delete_entry"><![CDATA[Delete Poll]]></string>
 	<string name="_bx_polls_acl_action_view_entry"><![CDATA[View Poll]]></string>
+	<string name="_bx_polls_acl_action_vote_entry"><![CDATA[Vote Poll]]></string>
 	<string name="_bx_polls_acl_action_set_thumb"><![CDATA[Set Poll Thumbnail]]></string>
 	<string name="_bx_polls_acl_action_edit_any_entry"><![CDATA[Edit Any Poll]]></string>
 
