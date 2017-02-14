@@ -506,7 +506,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
      */
     public function listTables()
     {
-    	$oStatement = $this->pdoQuery("SHOW TABLES FROM " . BX_DATABASE_NAME);
+    	$oStatement = $this->pdoQuery("SHOW TABLES FROM `" . BX_DATABASE_NAME . "`");
 
         return $this->getColumn($oStatement);
     }
