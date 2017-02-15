@@ -117,6 +117,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getUnit(&$aEvent, $aBrowseParams = array())
+    {
+        $oModule = $this->getModule();
+
+        if(empty($aBrowseParams) || !is_array($aBrowseParams))
+            $aBrowseParams = $oModule->getParams(BX_TIMELINE_VIEW_SEARCH);
+
+        return $this->getPost($aEvent, $aBrowseParams);
+    }
+
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
         $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent) : $this->_getCommonData($aEvent);
@@ -635,7 +645,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
-        $bViewTimeline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_TIMELINE;
+        $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  		$sLocation = $oMetatags->locationsString($aEvent['id']);
@@ -644,7 +654,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
-            'class' => $bBrowseItem || $bViewTimeline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
+            'class' => $bBrowseItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
         	'class_content' => $bBrowseItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
             'id' => $aEvent['id'],
             'bx_if:show_owner_icon' => array(

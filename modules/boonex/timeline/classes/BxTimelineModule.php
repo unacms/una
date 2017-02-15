@@ -17,6 +17,7 @@ define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
 
 define('BX_TIMELINE_VIEW_TIMELINE', 'timeline');
 define('BX_TIMELINE_VIEW_OUTLINE', 'outline');
+define('BX_TIMELINE_VIEW_SEARCH', 'search');
 define('BX_TIMELINE_VIEW_DEFAULT', BX_TIMELINE_VIEW_OUTLINE);
 
 define('BX_TIMELINE_FILTER_ALL', 'all');
@@ -307,7 +308,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         }
         
 
-        $aParams = $this->_prepareParams($sType, $iOwnerId, 0, $this->_oConfig->getRssLength(), '', array(), 0);
+        $aParams = $this->_prepareParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, 0, $this->_oConfig->getRssLength(), '', array(), 0);
         $aEvents = $this->_oDb->getEvents($aParams);
 
         $aRssData = array();
@@ -1071,6 +1072,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         //--- Event -> Delete for Alerts Engine ---//
     }
 
+    public function getParams($sView = '', $sType = '', $iOwnerId = 0, $iStart = 0, $iPerPage = 0, $sFilter = '', $aModules = array(), $iTimeline = 0)
+    {
+        return $this->_prepareParams($sView, $sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+    }
+
     public function getViewsData(&$aViews)
     {
         if(empty($aViews) || !is_array($aViews))
@@ -1170,7 +1176,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     protected function _serviceGetBlockViewByType($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $sType = BX_TIMELINE_TYPE_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        $aParams = $this->_prepareParams($sType, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams = $this->_prepareParams($sView, $sType, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
 
         $aParams['view'] = $sView;
         $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : ((int)$iPerPageDefault > 0 ? $iPerPageDefault : $this->_oConfig->getPerPage());
@@ -1197,7 +1203,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(!$iProfileId)
 			return array();
 
-        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams = $this->_prepareParams($sView, BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
 
         $aParams['view'] = $sView;
         $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
@@ -1290,10 +1296,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 		$this->_oDb->deleteMedia($sType, $iId);
     }
 
-    protected function _prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline)
+    protected function _prepareParams($sView, $sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline)
     {
         return array(
-            'view' => BX_TIMELINE_VIEW_DEFAULT,
+            'view' => !empty($sView) ? $sView : BX_TIMELINE_VIEW_DEFAULT,
 
             'browse' => 'list',
             'type' => !empty($sType) ? $sType : BX_TIMELINE_TYPE_DEFAULT,
