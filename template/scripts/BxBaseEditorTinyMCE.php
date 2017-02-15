@@ -25,7 +25,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         language_url: '{bx_url_tinymce}langs/{bx_var_lang}.js',
                         content_css: '{bx_var_css_path}',
                         entity_encoding: 'raw',
-                        browser_spellcheck: true
+                        browser_spellcheck: true,
+                        body_class: 'bx-def-color-bg-block'
                     });
     ";
 
