@@ -274,12 +274,33 @@ class BxBaseView extends BxDolView
     {
         $aTmplUsers = array();
 
-        $aUserIds = $this->_oQuery->getPerformedBy($this->getId());
-        foreach($aUserIds as $iUserId) {
-            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($iUserId);
+        $aUsers = $this->_oQuery->getPerformedBy($this->getId());
+        foreach($aUsers as $aUser) {
+            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($aUser['id']);
+            $bUserIcon = !empty($sUserIcon);
+
             $aTmplUsers[] = array(
                 'style_prefix' => $this->_sStylePrefix,
-                'user_unit' => $sUserUnit
+                'bx_if:show_user_icon' => array(
+                    'condition' => $bUserIcon,
+                    'content' => array(
+                        'user_icon' => $sUserIcon
+                    )
+                ),
+                'bx_if:show_user_icon_empty' => array(
+                    'condition' => !$bUserIcon,
+                    'content' => array()
+                ),
+                'user_url' => $sUserUrl,
+            	'user_title' => bx_html_attribute($sUserName),
+            	'user_name' => $sUserName,
+                'bx_if:show_user_info' => array(
+                    'condition' => (int)$aUser['id'] == 0 && (int)$aUser['count'] > 0,
+                    'content' => array(
+                		'style_prefix' => $this->_sStylePrefix,
+                        'user_info' => _t('_view_do_view_by_counter', $aUser['count'])
+                    )
+                )
             );
         }
 
