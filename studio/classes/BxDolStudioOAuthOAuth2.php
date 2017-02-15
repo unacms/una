@@ -113,9 +113,14 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         if(!$this->isAuthorized())
             return array();
 
+        $iTimeout = 120;
+        if(ini_get('safe_mode') == 0)
+            ini_set('max_execution_time', $iTimeout);
+
+        $sHttpCode = null;
 		$sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', $aParams, 'get', array(
             'Authorization: Bearer ' . $this->oSession->getValue('sys_oauth_token'),
-        ));
+        ), $sHttpCode, array(), $iTimeout);
 
         //echo $sResponse; exit;		//--- Uncomment to debug
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error'])) {
@@ -130,7 +135,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 
     protected function isReloginRequired($sError)
     {
-    	if(in_array($sError, array('expired_token')))
+    	if(in_array($sError, array('invalid_token', 'expired_token')))
     		return true;
 
     	return false;
