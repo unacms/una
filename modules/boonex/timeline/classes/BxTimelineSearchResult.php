@@ -51,6 +51,15 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
         $this->setProcessPrivateContent(false);
     }
 
+    function displayResultBlock ()
+    {
+        $sResult = parent::displayResultBlock();
+        if(empty($sResult))
+            return $sResult;
+
+        return $this->oModule->_oTemplate->getSearchBlock($sResult);
+    }
+
     function getAlterOrder()
     {
         $aSql = array();

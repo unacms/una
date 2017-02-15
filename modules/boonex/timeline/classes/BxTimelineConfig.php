@@ -115,6 +115,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sHp = str_replace('_', '-', $this->_sName);
         $sHpT = BX_TIMELINE_VIEW_TIMELINE;
         $sHpO = BX_TIMELINE_VIEW_OUTLINE;
+        $sHpS = BX_TIMELINE_VIEW_SEARCH;
         $this->_aHtmlIds = array(
         	'view' => array(
                 'main_' . $sHpT => $sHp . '-' . $sHpT,
@@ -124,6 +125,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         		'main_' . $sHpO => $sHp . '-' . $sHpO,
         		'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
                 'photo_popup_' . $sHpO => $sHp . '-photo-popup-' . $sHpO,
+
+        		'main_' . $sHpS => $sHp . '-' . $sHpS,
+        		'photo_popup_' . $sHpS => $sHp . '-photo-popup-' . $sHpS,
 
         		'main_item' => $sHp . '-item',
 				'menu_popup' => $sHp . '-menu-popup-',

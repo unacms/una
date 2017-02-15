@@ -90,9 +90,20 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-date,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
     color: rgba(40, 60, 80, 0.5);
 }
-div.bx-tl-item  div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
+div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
     cursor: default;
 }
+
+/*--- Item Images Style ---*/
+div.bx-tl-item div.bx-tl-item-images {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+}
+div.bx-tl-item div.bx-tl-item-image {
+    display: inline-block;
+}
+
 
 /*--- Item Style: Timeline ---*/
 div.bx-tl-view-timeline div.bx-tl-items:before {
@@ -107,11 +118,13 @@ div.bx-tl-view-timeline div.bx-tl-items:before {
     background: rgba(0, 0, 0, 0.1);
 }
 div.bx-tl-view-timeline div.bx-tl-items,
+div.bx-tl-view-search div.bx-tl-items,
 div.bx-tl-view-item div.bx-tl-items {
 	margin-left: 0px;
 	margin-right: 0px;
 }
 div.bx-tl-view-timeline div.bx-tl-item,
+div.bx-tl-view-search div.bx-tl-item,
 div.bx-tl-view-item div.bx-tl-item {
     position: relative;
 }
@@ -177,23 +190,13 @@ div.bx-tl-view-outline span.bx-tl-content-see-more a {
 
 /*+++ Item Image +++*/
 div.bx-tl-view-timeline div.bx-tl-item-images,
-div.bx-tl-view-outline div.bx-tl-item-images,
-div.bx-tl-view-item div.bx-tl-item-images {
-	position: relative;
-	white-space: nowrap;
-	overflow: hidden;
-}
-div.bx-tl-view-timeline div.bx-tl-item-images,
+div.bx-tl-view-search div.bx-tl-item-images,
 div.bx-tl-view-item div.bx-tl-item-images {
 	margin-left: 0px;
 	margin-right: 0px;
 }
 div.bx-tl-view-timeline div.bx-tl-item-image,
-div.bx-tl-view-outline div.bx-tl-item-image,
-div.bx-tl-view-item div.bx-tl-item-image {
-	display: inline-block;
-}
-div.bx-tl-view-timeline div.bx-tl-item-image,
+div.bx-tl-view-search div.bx-tl-item-image,
 div.bx-tl-view-item div.bx-tl-item-image {
 	margin-right: 2px;
 	margin-right: 0.125rem;
@@ -204,6 +207,7 @@ div.bx-tl-view-outline div.bx-tl-item-image {
     overflow: hidden;
 }
 div.bx-tl-view-timeline div.bx-tl-item-image img,
+div.bx-tl-view-search div.bx-tl-item-image img,
 div.bx-tl-view-item div.bx-tl-item-image img {
 	height: 12.5rem;
 }

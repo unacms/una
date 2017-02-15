@@ -84,6 +84,31 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getSearchBlock($sContent)
+    {
+        $oModule = $this->getModule();
+        $aParams = $oModule->getParams(BX_TIMELINE_VIEW_SEARCH);
+
+        return $this->parseHtmlByName('block_search.html', array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_' . $aParams['view']),
+            'view' => $aParams['view'],
+            'content' => $sContent,
+        	'view_image_popup' => $this->_getImagePopup($aParams),
+            'js_content' => $this->getJsCode('view', array(
+            	'oRequestParams' => array(
+	                'type' => $aParams['type'],
+	                'owner_id' => $aParams['owner_id'],
+	                'start' => $aParams['start'],
+	                'per_page' => $aParams['per_page'],
+	                'filter' => $aParams['filter'],
+	                'modules' => $aParams['modules'],
+	                'timeline' => $aParams['timeline'],
+        		)
+            ))
+        ));
+    }
+
     public function getItemBlock($iId)
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
