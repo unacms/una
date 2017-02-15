@@ -1393,7 +1393,7 @@ function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/oc
     header('Cache-Control: ' . $sCachePrivacy . ', must-revalidate, max-age=' . $iCacheAge);
     header("Accept-Ranges: 0-$length");
     if ($sFilename)
-        header('Content-Disposition: inline; filename=' . $sFilename);
+        header('Content-Disposition: inline; filename="' . $sFilename . '"');
 
     if (isset($_SERVER['HTTP_RANGE'])) {
 

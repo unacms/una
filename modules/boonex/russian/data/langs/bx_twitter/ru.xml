@@ -4,7 +4,7 @@
 	<string name="_bx_twitter"><![CDATA[Twitter соединение]]></string>
 	<string name="_bx_twitter_settings"><![CDATA[Twitter соединение]]></string>
 	<string name="_bx_twitter_information_block"><![CDATA[
-        <pЭтот модуль может использоваться для входа на сайт используя Twitter профиль.</p>
+        <p>Этот модуль может использоваться для входа на сайт используя Twitter профиль.</p>
         <p>Чтобы он заработал, нужно <a target="_blank" href="https://apps.twitter.com">создать Twitter приложение</a> и указать всю необходимую информацию, в частности:
             <ul>
                 <li>Callback URL: <strong>{0}</strong></li>
