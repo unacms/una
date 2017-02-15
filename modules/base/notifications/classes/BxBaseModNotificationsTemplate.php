@@ -45,7 +45,7 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
         return parent::getJsCode($sType, $aParams, $bWrap);
     }
     
-    public function getPost(&$aEvent, $aBrowseParams = array())
+    public function getUnit(&$aEvent, $aBrowseParams = array())
     {
     	return '';
     }
@@ -55,7 +55,7 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
     	$this->getCssJs();
 
     	if($sTemplateName == 'unit.html')
-    		return $this->getPost($aData);
+    		return $this->getUnit($aData);
 
         $oModule = $this->getModule();
         $CNF = &$this->_oConfig->CNF;

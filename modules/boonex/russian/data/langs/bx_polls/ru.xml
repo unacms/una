@@ -54,9 +54,9 @@
 	<string name="_bx_polls_acl_action_set_thumb"><![CDATA[Назначить значок голосования]]></string>
 	<string name="_bx_polls_acl_action_edit_any_entry"><![CDATA[Редактировать любое голосование]]></string>
 
-	<string name="_bx_polls_page_title_sys_create_entry"><![CDATA[Новая голосование]]></string>
-	<string name="_bx_polls_page_title_create_entry"><![CDATA[Новая голосование]]></string>
-	<string name="_bx_polls_page_block_title_create_entry"><![CDATA[Новая голосование]]></string>
+	<string name="_bx_polls_page_title_sys_create_entry"><![CDATA[Новое голосование]]></string>
+	<string name="_bx_polls_page_title_create_entry"><![CDATA[Новое голосование]]></string>
+	<string name="_bx_polls_page_block_title_create_entry"><![CDATA[Новое голосование]]></string>
 	<string name="_bx_polls_page_title_sys_edit_entry"><![CDATA[Редактировать голосование]]></string>
 	<string name="_bx_polls_page_title_edit_entry"><![CDATA[Редактировать голосование]]></string>
 	<string name="_bx_polls_page_block_title_edit_entry"><![CDATA[Редактировать голосование]]></string>
@@ -119,8 +119,8 @@
     <string name="_bx_polls_menu_title_view_entry"><![CDATA[Действия для голосования]]></string>
     <string name="_bx_polls_menu_title_submenu"><![CDATA[Голосования - Подменю]]></string>
     <string name="_bx_polls_menu_set_title_submenu"><![CDATA[Голосования - Подменю]]></string>
-    <string name="_bx_polls_menu_item_title_system_create_entry"><![CDATA[Новая голосование]]></string>
-    <string name="_bx_polls_menu_item_title_create_entry"><![CDATA[Новая голосование]]></string>
+    <string name="_bx_polls_menu_item_title_system_create_entry"><![CDATA[Новое голосование]]></string>
+    <string name="_bx_polls_menu_item_title_create_entry"><![CDATA[Новое голосование]]></string>
     <string name="_bx_polls_menu_item_title_system_edit_entry"><![CDATA[Редактировать голосование]]></string>
     <string name="_bx_polls_menu_item_title_edit_entry"><![CDATA[Редактировать голосование]]></string>
     <string name="_bx_polls_menu_item_title_system_delete_entry"><![CDATA[Удалить голосование]]></string>

@@ -84,6 +84,31 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getSearchBlock($sContent)
+    {
+        $oModule = $this->getModule();
+        $aParams = $oModule->getParams(BX_TIMELINE_VIEW_SEARCH);
+
+        return $this->parseHtmlByName('block_search.html', array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_' . $aParams['view']),
+            'view' => $aParams['view'],
+            'content' => $sContent,
+        	'view_image_popup' => $this->_getImagePopup($aParams),
+            'js_content' => $this->getJsCode('view', array(
+            	'oRequestParams' => array(
+	                'type' => $aParams['type'],
+	                'owner_id' => $aParams['owner_id'],
+	                'start' => $aParams['start'],
+	                'per_page' => $aParams['per_page'],
+	                'filter' => $aParams['filter'],
+	                'modules' => $aParams['modules'],
+	                'timeline' => $aParams['timeline'],
+        		)
+            ))
+        ));
+    }
+
     public function getItemBlock($iId)
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
@@ -115,6 +140,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view')
         ));
+    }
+
+    public function getUnit(&$aEvent, $aBrowseParams = array())
+    {
+        $oModule = $this->getModule();
+
+        if(empty($aBrowseParams) || !is_array($aBrowseParams))
+            $aBrowseParams = $oModule->getParams(BX_TIMELINE_VIEW_SEARCH);
+
+        return $this->getPost($aEvent, $aBrowseParams);
     }
 
     public function getPost(&$aEvent, $aBrowseParams = array())
@@ -635,7 +670,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
-        $bViewTimeline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_TIMELINE;
+        $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  		$sLocation = $oMetatags->locationsString($aEvent['id']);
@@ -644,7 +679,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
-            'class' => $bBrowseItem || $bViewTimeline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
+            'class' => $bBrowseItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
         	'class_content' => $bBrowseItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
             'id' => $aEvent['id'],
             'bx_if:show_owner_icon' => array(

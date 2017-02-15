@@ -1381,6 +1381,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'value' => $aBlock['content'],
                         'required' => '0',
                         'html' => 0,
+                		'code' => 1,
                         'db' => array (
                             'pass' => 'XssHtml',
                         ),

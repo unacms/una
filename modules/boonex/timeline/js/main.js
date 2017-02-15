@@ -235,6 +235,9 @@ BxTimelineMain.prototype._getView = function(oView) {
 	if(oView.hasClass(this.sClassView + '-outline'))
 		return 'outline';
 
+	if(oView.hasClass(this.sClassView + '-search'))
+		return 'search';
+
 	return '';
 };
 
