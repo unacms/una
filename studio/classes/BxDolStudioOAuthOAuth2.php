@@ -119,7 +119,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 
         //echo $sResponse; exit;		//--- Uncomment to debug
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error'])) {
-        	if($this->isReloginRequired($aResponse['error']))
+        	if(isset($aResponse['error']) && $this->isReloginRequired($aResponse['error']))
         		$this->unsetAuthorizedUser();
 
 			return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
