@@ -800,10 +800,8 @@ function bx_php_string_quot ($mixedInput)
  * @param array $aBasicAuth - array with 'user' and 'password' for Basic HTTP Auth
  * @return string the file's contents.
  */
-function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array())
+function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array(), $iTimeout = 0)
 {
-    $bChangeTimeout = false;
-
     if ('post' != $sMethod)
     	$sFileUrl = bx_append_url_params($sFileUrl, $aParams);
 
@@ -817,9 +815,9 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         curl_setopt($rConnect, CURLOPT_HEADER, NULL === $sHttpCode ? false : true);
         curl_setopt($rConnect, CURLOPT_RETURNTRANSFER, 1);
 
-        if ($bChangeTimeout) {
-            curl_setopt($rConnect, CURLOPT_CONNECTTIMEOUT, 3);
-            curl_setopt($rConnect, CURLOPT_TIMEOUT, 3);
+        if (0 !== $iTimeout) {
+            curl_setopt($rConnect, CURLOPT_CONNECTTIMEOUT, $iTimeout);
+            curl_setopt($rConnect, CURLOPT_TIMEOUT, $iTimeout);
         }
 
         if (!ini_get('open_basedir'))
@@ -857,14 +855,14 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
     else {
 
         $iSaveTimeout = false;
-        if ($bChangeTimeout) {
+        if (0 !== $iTimeout) {
             $iSaveTimeout = ini_get('default_socket_timeout');
-            ini_set('default_socket_timeout', 3);
+            ini_set('default_socket_timeout', $iTimeout);
         }
 
         $sResult = @file_get_contents($sFileUrl);
 
-        if ($bChangeTimeout && false !== $iSaveTimeout) {
+        if (0 !== $iTimeout && false !== $iSaveTimeout) {
             ini_set('default_socket_timeout', $iSaveTimeout);
         }
     }
