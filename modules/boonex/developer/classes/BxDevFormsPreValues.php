@@ -103,6 +103,11 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
         }
     }
 
+    protected function canAdd()
+    {
+        return $this->sList != '';
+    }
+
     private function onLoad(&$aInputs)
     {
         $aLists = array();

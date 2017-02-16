@@ -387,8 +387,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 
 -- PRE-VALUES
-INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
-('bx_payment_currencies', '_bx_payment_pre_lists_currencies', 'bx_payment', '0');
+INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `extendable`) VALUES
+('bx_payment_currencies', '_bx_payment_pre_lists_currencies', 'bx_payment', '0', '0');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_payment_currencies', 'AUD', 1, 'AUD', 'A&#36;'),

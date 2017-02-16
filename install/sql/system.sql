@@ -2702,16 +2702,17 @@ CREATE TABLE `sys_form_pre_lists` (
   `key` varchar(255) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
   `use_for_sets` tinyint(4) unsigned NOT NULL default '1',
+  `extendable` tinyint(4) unsigned NOT NULL default '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`),
   FULLTEXT KEY `ModuleAndKey` (`module`, `key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
-('Country', '_adm_form_txt_pre_lists_country', 'system', '0'),
-('Sex', '_adm_form_txt_pre_lists_sex', 'system', '1'),
-('Language', '_adm_form_txt_pre_lists_language', 'system', '0'),
-('sys_report_types', '_sys_pre_lists_report_types', 'system', '0');
+INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `extendable`) VALUES
+('Country', '_adm_form_txt_pre_lists_country', 'system', '0', '0'),
+('Sex', '_adm_form_txt_pre_lists_sex', 'system', '1', '1'),
+('Language', '_adm_form_txt_pre_lists_language', 'system', '0', '1'),
+('sys_report_types', '_sys_pre_lists_report_types', 'system', '0', '0');
 
 
 CREATE TABLE `sys_form_pre_values` (

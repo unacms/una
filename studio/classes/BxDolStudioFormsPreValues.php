@@ -12,7 +12,9 @@ define('BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX', round(log(BX_DOL_INT_MAX, 2)));
 class BxDolStudioFormsPreValues extends BxTemplStudioGrid
 {
     protected $sModule;
+
     protected $sList;
+    protected $aList;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -30,6 +32,9 @@ class BxDolStudioFormsPreValues extends BxTemplStudioGrid
         if(!empty($sList)) {
             $this->sList = bx_process_input($sList);
             $this->_aQueryAppend['list'] = $this->sList;
+
+            $this->aList = array();
+            $this->oDb->getLists(array('type' => 'by_key', 'value' => $this->sList), $this->aList, false);
         }
     }
 
