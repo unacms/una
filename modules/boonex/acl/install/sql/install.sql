@@ -72,7 +72,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_acl_administration', 'Sql', 'SELECT * FROM `bx_acl_level_prices` WHERE 1 ', 'bx_acl_level_prices', 'id', 'order', '', '', 100, NULL, 'start', '', 'period,period_unit,price', '', 'like', '', '', 192, 'BxAclGridAdministration', 'modules/boonex/acl/classes/BxAclGridAdministration.php'),
-('bx_acl_view', 'Sql', 'SELECT `tlp`.*, `tl`.`Name` AS `level_name` FROM `bx_acl_level_prices` AS `tlp` LEFT JOIN `sys_acl_levels` AS `tl` ON `tlp`.`level_id`=`tl`.`ID` WHERE `tl`.`Active`=''yes'' AND `tl`.`Purchasable`=''yes'' ', 'bx_acl_level_prices', 'id', 'order', '', '', 100, NULL, 'start', '', 'period,period_unit,price', 'tl`.`Name', 'like', '', '', 2147483647, 'BxAclGridView', 'modules/boonex/acl/classes/BxAclGridView.php');
+('bx_acl_view', 'Sql', 'SELECT `tlp`.*, `tl`.`Name` AS `level_name`, `tl`.`Icon` AS `level_icon` FROM `bx_acl_level_prices` AS `tlp` LEFT JOIN `sys_acl_levels` AS `tl` ON `tlp`.`level_id`=`tl`.`ID` WHERE `tl`.`Active`=''yes'' AND `tl`.`Purchasable`=''yes'' ', 'bx_acl_level_prices', 'id', 'order', '', '', 100, NULL, 'start', '', 'period,period_unit,price', 'tl`.`Name', 'like', '', '', 2147483647, 'BxAclGridView', 'modules/boonex/acl/classes/BxAclGridView.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_acl_administration', 'checkbox', '_sys_select', '1%', 0, '', '', 1),
@@ -83,11 +83,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_acl_administration', 'trial', '_bx_acl_grid_column_trial', '15%', 0, 16, '', 6),
 ('bx_acl_administration', 'actions', '', '20%', 0, '', '', 7),
 
-('bx_acl_view', 'level_name', '_bx_acl_grid_column_level_name', '25%', 1, 32, '', 1),
-('bx_acl_view', 'price', '_bx_acl_grid_column_price', '15%', 0, 16, '', 2),
-('bx_acl_view', 'period', '_bx_acl_grid_column_period', '15%', 0, 16, '', 3),
-('bx_acl_view', 'trial', '_bx_acl_grid_column_trial', '15%', 0, 16, '', 4),
-('bx_acl_view', 'actions', '', '30%', 0, '', '', 5);
+('bx_acl_view', 'level_icon', '_bx_acl_grid_column_level_icon', '5%', 0, 0, '', 1),
+('bx_acl_view', 'level_name', '_bx_acl_grid_column_level_name', '25%', 1, 32, '', 2),
+('bx_acl_view', 'price', '_bx_acl_grid_column_price', '10%', 0, 16, '', 3),
+('bx_acl_view', 'period', '_bx_acl_grid_column_period', '15%', 0, 16, '', 4),
+('bx_acl_view', 'trial', '_bx_acl_grid_column_trial', '15%', 0, 16, '', 5),
+('bx_acl_view', 'actions', '', '30%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_acl_administration', 'independent', 'add', '_bx_acl_grid_action_add', '', 0, 0, 1),

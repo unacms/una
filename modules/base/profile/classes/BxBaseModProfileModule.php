@@ -561,6 +561,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
      */
     public function checkAllowedCompose (&$aDataEntry, $isPerformAction = false)
     {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
+        if($oProfile && $oProfile->id() == $this->_iProfileId)
+            return _t('_sys_txt_access_denied');
+
         return $this->checkAllowedView ($aDataEntry, $isPerformAction);
     }
 

@@ -440,7 +440,8 @@ class BxDolStudioFormsQuery extends BxDolDb
                 `tl`.`module` AS `module`,
                 `tl`.`key` AS `key`,
                 `tl`.`title` AS `title`,
-                `tl`.`use_for_sets` AS `use_for_sets`" . $sSelectClause . "
+                `tl`.`use_for_sets` AS `use_for_sets`,
+                `tl`.`extendable` AS `extendable`" . $sSelectClause . "
             FROM `sys_form_pre_lists` AS `tl` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);

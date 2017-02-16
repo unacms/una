@@ -8,7 +8,7 @@
  * @{
  */
 
-class BxBaseStudioConfig extends BxTemplConfig
+class BxBaseStudioConfig extends BxBaseConfig
 {
     function __construct()
     {

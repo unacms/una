@@ -26,10 +26,12 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
     {
         $sAction = 'add';
 
-        $aList = array();
-        $this->oDb->getLists(array('type' => 'by_key', 'value' => $this->sList), $aList, false);
+        if(!$this->canAdd()) {
+            echoJson(array());
+            exit;
+        }
 
-        $bUseInSets = (int)$aList['use_for_sets'] == 1;
+        $bUseInSets = (int)$this->aList['use_for_sets'] == 1;
 
         bx_import('BxTemplStudioFormView');
 
@@ -77,7 +79,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                     ),
                     'checker' => array (
                         'func' => 'LengthTranslatable',
-                        'params' => array(3,100, 'LKey'),
+                        'params' => array(1,100, 'LKey'),
                         'error' => _t('_adm_form_err_pre_values_lkey'),
                     ),
                 ),
@@ -125,7 +127,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                         return;
                     }
 
-                    $this->oDb->updateList($aList['id'], array('use_for_sets' => '0'));
+                    $this->oDb->updateList($this->aList['id'], array('use_for_sets' => '0'));
                 }
             }
 
@@ -159,9 +161,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
             exit;
         }
 
-        $aList = array();
-        $this->oDb->getLists(array('type' => 'by_key', 'value' => $this->sList), $aList, false);
-        $bUseInSets = (int)$aList['use_for_sets'] == 1;
+        $bUseInSets = (int)$this->aList['use_for_sets'] == 1;
 
         bx_import('BxTemplStudioFormView');
 
@@ -255,7 +255,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                         return;
                     }
 
-                    $this->oDb->updateList($aList['id'], array('use_for_sets' => '0'));
+                    $this->oDb->updateList($this->aList['id'], array('use_for_sets' => '0'));
                 }
             }
 
@@ -291,9 +291,6 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
 
-        $aList = array();
-        $this->oDb->getLists(array('type' => 'by_key', 'value' => $this->sList), $aList, false);
-
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
             $aValue = array();
@@ -307,7 +304,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
             $oLanguage->deleteLanguageString($aValue['lkey']);
             $oLanguage->deleteLanguageString($aValue['lkey2']);
 
-            if((int)$aList['use_for_sets'] != 1) {
+            if((int)$this->aList['use_for_sets'] != 1) {
                 $bUseInSets = 1;
                 $aValues = BxDolForm::getDataItems($this->sList);
                 foreach($aValues as $mixedValue => $sTitle)
@@ -317,7 +314,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                     }
 
                 if($bUseInSets == 1)
-                    $this->oDb->updateList($aList['id'], array('use_for_sets' => $bUseInSets));
+                    $this->oDb->updateList($this->aList['id'], array('use_for_sets' => $bUseInSets));
             }
 
             $aIdsAffected[] = $iId;
@@ -389,7 +386,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 
     protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if($this->sList == '')
+        if(!$this->canAdd())
             $isDisabled = true;
 
         return parent::_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
@@ -436,6 +433,11 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
         }
 
         return $iValue;
+    }
+
+    protected function canAdd()
+    {
+        return $this->sList != '' && (int)$this->aList['extendable'] != 0;
     }
 
     protected function canUseForSet($mixedValue)

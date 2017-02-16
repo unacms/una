@@ -40,6 +40,7 @@ class BxAclModule extends BxDolModule
         if(!$oGrid)
             return '';
 
+        $this->_oTemplate->addCss(array('view.css'));
 		return array(
             'content' => $oGrid->getCode()
         );

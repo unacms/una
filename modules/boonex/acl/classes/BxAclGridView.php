@@ -33,6 +33,13 @@ class BxAclGridView extends BxAclGridLevels
     	return $this->_oPayment->getCartJs() . parent::getCode($isDisplayHeader);
     }
 
+    //TODO: Show Icon
+    protected function _getCellLevelIcon($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = $this->_oModule->_oTemplate->displayLevelIcon($mixedValue);
+    	return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
 	protected function _getActionBuy ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if(!$this->_bTypeSingle || $this->_bTypeRecurring)
