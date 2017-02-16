@@ -916,7 +916,7 @@ class BxBaseModGeneralModule extends BxDolModule
             $sSocial = $oSocial->getCode();
         }
 
-        if(empty($sComments) && empty($sVotes) && empty($sFavorites) && empty($sRepost) && empty($sReport) && empty($sSocial))
+        if(empty($sComments)  && empty($sViews) && empty($sVotes) && empty($sFavorites)  && empty($sFeatured) && empty($sRepost) && empty($sReport) && empty($sSocial))
             return '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
