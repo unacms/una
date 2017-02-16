@@ -44,6 +44,7 @@
 
 
 	<!-- Grids -->
+    <string name="_bx_acl_grid_column_level_icon"><![CDATA[]]></string>
 	<string name="_bx_acl_grid_column_level_name"><![CDATA[Уровень]]></string>
 	<string name="_bx_acl_grid_column_name"><![CDATA[Имя]]></string>
 	<string name="_bx_acl_grid_column_period"><![CDATA[Период]]></string>
