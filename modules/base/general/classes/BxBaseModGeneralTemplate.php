@@ -75,6 +75,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if (empty($aVars['entry_text']))
             return false;
 
+        unset($aVars['recipients']);
+        
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
