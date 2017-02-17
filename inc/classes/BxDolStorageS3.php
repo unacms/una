@@ -37,7 +37,7 @@ class BxDolStorageS3 extends BxDolStorage
         $this->_sBucket = getParam('sys_storage_s3_bucket');
         $this->_sDomain = getParam('sys_storage_s3_domain');
 
-        $this->_bSSL = isset($this->_aParams['ssl']) && $this->_aParams['ssl'] ? true : false;
+        $this->_bSSL = (isset($this->_aParams['ssl']) && $this->_aParams['ssl']) || (!isset($this->_aParams['ssl']) && strncmp(BX_DOL_URL_ROOT, 'https://', 8) === 0) ? true : false;
         $this->_bReducedRedundancy = isset($this->_aParams['reduced_redundancy']) && $this->_aParams['reduced_redundancy'] ? true : false;
     }
 
