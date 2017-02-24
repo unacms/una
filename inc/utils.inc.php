@@ -1499,7 +1499,7 @@ function bx_linkify_html($sHtmlOrig, $sAttrs = '')
 
     foreach ($xpath->query('//text()') as $text) {
         $frag = $dom->createDocumentFragment();
-        $frag->appendXML(bx_linkify($text->nodeValue, $sAttrs, true));
+        @$frag->appendXML(bx_linkify($text->nodeValue, $sAttrs, true));
         $text->parentNode->replaceChild($frag, $text);
     }
 
