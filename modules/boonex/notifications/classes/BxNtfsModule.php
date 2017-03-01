@@ -92,10 +92,10 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
     public function serviceGetEventById($iId)
     {
-        $aParams = [
+        $aParams = array(
             'browse' => 'id',
             'value' => $iId,
-        ];
+        );
     	return $this->_oDb->getEvents($aParams);
     }
 

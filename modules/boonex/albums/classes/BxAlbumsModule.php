@@ -159,6 +159,55 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, true, true, 'SearchResultMedia');
     }
 
+    public function serviceGetNotificationsData()
+    {
+        $sModule = $this->_aModule['name'];
+
+        $sEventPrivacy = $sModule . '_allow_view_event_to';
+		if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+			$sEventPrivacy = '';
+
+        $aResult = parent::serviceGetNotificationsData();
+        $aResult['handlers'] = array_merge($aResult['handlers'], array(
+            array('group' => $sModule . '_comment_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_comment_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'commentRemoved'),
+        ));
+
+        $aResult['alerts'] = array_merge($aResult['alerts'], array(
+            array('unit' => $sModule . '_media', 'action' => 'commentPost'),
+            array('unit' => $sModule . '_media', 'action' => 'commentRemoved'),
+        ));
+
+        return $aResult; 
+    }
+
+    public function serviceGetNotificationsCommentMedia($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iMediaId = (int)$aEvent['object_id'];
+    	$aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        if(empty($aMediaInfo) || !is_array($aMediaInfo))
+            return array();
+
+		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $iMediaId);
+        if(!$oComment || !$oComment->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+        $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_media_single'],
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aMediaInfo['author'],
+			'subentry_sample' => $CNF['T']['txt_media_comment_single'],
+			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
     public function actionGetSiblingMedia($iMediaId, $mixedContext)
     {
         $aSiblings = false;

@@ -47,7 +47,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             }
         }
         
-        if (false === $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId), $sData, $sExif))
+        if (false === $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $iProfileId, $this->getCleanValue('title-' . $iFileId), $sData, $sExif))
             return;
 
         $aMediaInfo = $this->_oModule->_oDb->getMediaInfoSimpleByFileId($iFileId);
