@@ -1205,7 +1205,8 @@
     <string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Основание имейл HTML шаблона]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Название сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Экскурсия по главной странице сайта]]></string>
-	<string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по главной странице Студии]]></string>
+    <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по главной странице Студии]]></string>
+    <string name="_adm_stg_cpt_option_add_to_mobile_homepage"><![CDATA[Компонент для добавления сайта на мобильное устройство]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Включить сообщение об активации аккаунта]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Автоматическая активация аккаунта после создания]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Временные рамки статуса "онлайн" (минуты)]]></string>
@@ -2120,7 +2121,7 @@
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Редактировать Аккаунт]]></string>
 	<string name="_sys_page_block_title_account_settings_menu"><![CDATA[Аккаунт - Настройки]]></string>
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Изменить Пароль]]></string>
-	<string name="_sys_page_block_title_add_content"><![CDATA[Добавить Содержимое]]></string>
+    <string name="_sys_page_block_title_add_content"><![CDATA[Добавить Содержимое]]></string>    
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>

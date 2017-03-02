@@ -1207,7 +1207,8 @@
 	<string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Email template footer]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site title]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Site home page tour]]></string>
-	<string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Studio home page tour]]></string>
+    <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Studio home page tour]]></string>
+    <string name="_adm_stg_cpt_option_add_to_mobile_homepage"><![CDATA[Add to mobile homepage widget]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Enable account activation letter]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Online status timeframe (minutes)]]></string>
