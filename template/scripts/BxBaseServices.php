@@ -103,6 +103,17 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         }
 
     }
+
+    /**
+     * This service adds notification for users which open your site on mobile devices
+     * and suggest to add your site to their mobile homepage.
+     */ 
+    public function serviceAddToMobileHomepage ()
+    {
+        BxDolTemplate::getInstance()->addJs('cubiq-add-to-homescreen/addtohomescreen.min.js');
+        BxDolTemplate::getInstance()->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'cubiq-add-to-homescreen/style/|addtohomescreen.css');
+        return "<script>addToHomescreen();</script>";
+    }
 }
 
 /** @} */

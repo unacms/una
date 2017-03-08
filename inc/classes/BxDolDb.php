@@ -149,7 +149,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
 	    	$this->pdoExec("SET NAMES 'utf8'");
 	        $this->pdoExec("SET sql_mode = ''");
-			$this->pdoExec("SET storage_engine=" . $this->_sStorageEngine);
+			$this->pdoExec("SET default_storage_engine=" . $this->_sStorageEngine);
 
 			self::$_aDbCacheData = array();
     	}

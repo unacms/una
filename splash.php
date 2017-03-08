@@ -21,10 +21,15 @@ function getPageMainCode()
     	$oTemplate->displayPageNotFound();
 
     $oTemplate->addJs(array('skrollr/skrollr.min.js'));
-    return $oTemplate->parseHtmlByContent(getParam('sys_site_splash_code'), array(
+    $s = $oTemplate->parseHtmlByContent(getParam('sys_site_splash_code'), array(
     	'join_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'),
     	'login_form' => BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin')
     )); 
+
+    if (getParam('add_to_mobile_homepage') == 'on')
+        $s .= BxDolService::call('system', 'add_to_mobile_homepage', array(), 'TemplServices');
+        
+    return $s;
 }
 
 check_logged();

@@ -40,6 +40,12 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
+    public function getOperators ()
+    {
+        $sSql = $this->prepare("SELECT `id` FROM `sys_accounts` WHERE `role`&" . BX_DOL_ROLE_ADMIN);
+        return $this->getColumn($sSql);
+    }
+    
     /**
      * Get account by specified field name and value.
      * It is for internal usage only.
