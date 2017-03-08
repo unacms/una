@@ -100,8 +100,12 @@ class BxPollsTemplate extends BxBaseModTextTemplate
     protected function getUnit ($aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
-        
-        $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aData[$CNF['FIELD_ID']]);
+        $sJsObject = $this->_oConfig->getJsObject('entry');
+
+        $iContentId = $aData[$CNF['FIELD_ID']];
+        $bPerformed = $this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id());
+
+        $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
 
         $bTmplVarsComments = $oComments && $oComments->isEnabled();
         $aTmplVarsComments = array();
@@ -111,11 +115,33 @@ class BxPollsTemplate extends BxBaseModTextTemplate
                 'entry_comments_url' => $oComments->getListUrl()
             );
 
+        $bTmplVarsSwitcher = (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 0 || $bPerformed;
+        $aTmplVarsSwitcher = array();
+        if($bTmplVarsSwitcher)
+            $aTmplVarsSwitcher = array(
+                'js_object' => $sJsObject,
+                'id' => $iContentId,
+                'bx_if:hide_subentries' => array(
+                    'condition' => !$bPerformed,
+                    'content' => array()
+                ),
+                'bx_if:hide_results' => array(
+                    'condition' => $bPerformed,
+                    'content' => array()
+                ),
+            );
+
         $aResult = parent::getUnit ($aData, $aParams);
-        $aResult['bx_if:show_comments'] = array(
-            'condition' => $bTmplVarsComments, 
-            'content' => $aTmplVarsComments
-        ); 
+        $aResult = array_merge($aResult, array(
+            'bx_if:show_comments' => array(
+                'condition' => $bTmplVarsComments, 
+                'content' => $aTmplVarsComments
+            ),
+            'bx_if:show_switcher' => array(
+                'condition' => $bTmplVarsSwitcher, 
+                'content' => $aTmplVarsSwitcher
+            ),
+        )); 
 
         return $aResult;
     }
@@ -127,7 +153,9 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')
     {
-        $aBlock = $this->entrySubentries($aData);
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aBlock = $this->{$this->_oDb->isPerformed($aData[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aData);
 
         return $aBlock['content'];
     }

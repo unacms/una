@@ -153,8 +153,8 @@
 	<string name="_bx_polls_menu_item_title_admt_polls"><![CDATA[Голосования - {addon} спрятано]]></string>
 	<string name="_bx_polls_menu_item_title_manage_my"><![CDATA[Мои Голосования]]></string>
 	<string name="_bx_polls_menu_item_title_manage_all"><![CDATA[Все Голосования]]></string>
-	<string name="_bx_polls_menu_item_view_subentries"><![CDATA[Голосование]]></string>
-    <string name="_bx_polls_menu_item_view_results"><![CDATA[Результаты]]></string>
+	<string name="_bx_polls_menu_item_view_subentries"><![CDATA[Показать голосование]]></string>
+    <string name="_bx_polls_menu_item_view_results"><![CDATA[Показать результаты]]></string>
 
 	<string name="_bx_polls_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_polls_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>

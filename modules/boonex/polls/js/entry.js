@@ -19,10 +19,29 @@ function BxPollsEntry(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxPollsEntry.prototype.changeBlock = function(oLink, sBlock, iContentId) {
+BxPollsEntry.prototype.changeBlockSnippet = function(oLink, sBlock, iContentId) {
+	var $this = this;
+
+	this.changeBlock(oLink, sBlock, iContentId, function(iContentId, oData) {
+		$(oLink).hide().siblings('.bx-base-text-unit-switcher:hidden').show();
+
+		$(oLink).parents('.bx-base-text-unit:first').find('#' + $this._aHtmlIds['content'] + iContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+    		$(this).replaceWith(oData.content);
+    	});
+	});
+};
+
+BxPollsEntry.prototype.changeBlock = function(oLink, sBlock, iContentId, onComplete) {
 	var $this = this;
 
     this.loadingInBlock(oLink, true);
+
+    if(typeof onComplete !== 'function')
+    	onComplete = function(iContentId, oData) {
+			$('#' + $this._aHtmlIds['content'] + iContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+	    		$(this).replaceWith(oData.content);
+	    	});
+		};
 
     jQuery.get (
         this._sActionsUrl + 'get_block',
@@ -37,9 +56,8 @@ BxPollsEntry.prototype.changeBlock = function(oLink, sBlock, iContentId) {
         	if(!oData.content)
         		return;
 
-        	$('#' + $this._aHtmlIds['content'] + iContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-        		$(this).replaceWith(oData.content);
-        	});
+        	if(typeof onComplete === 'function')
+    			onComplete(iContentId, oData);
         },
         'json'
     );

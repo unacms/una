@@ -153,8 +153,8 @@
 	<string name="_bx_polls_menu_item_title_admt_polls"><![CDATA[Polls - {addon} hidden]]></string>
 	<string name="_bx_polls_menu_item_title_manage_my"><![CDATA[My Polls]]></string>
 	<string name="_bx_polls_menu_item_title_manage_all"><![CDATA[All Polls]]></string>
-	<string name="_bx_polls_menu_item_view_subentries"><![CDATA[Poll]]></string>
-	<string name="_bx_polls_menu_item_view_results"><![CDATA[Results]]></string>
+	<string name="_bx_polls_menu_item_view_subentries"><![CDATA[View Poll]]></string>
+	<string name="_bx_polls_menu_item_view_results"><![CDATA[View Results]]></string>
 	
 
 	<string name="_bx_polls_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>

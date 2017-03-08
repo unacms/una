@@ -27,7 +27,8 @@ class BxPollsVoteSubentries extends BxTemplVote
         $CNF = $this->_oModule->_oConfig->CNF;
 
         $this->_aElementDefaults['likes'] = array_merge($this->_aElementDefaults['likes'], array(
-            'show_do_vote_label' => true
+            'show_do_vote_label' => true,
+        	'show_counter' => false
         ));
 
         $this->_aObjectInfo = $this->_oModule->_oDb->getSubentries(array('type' => 'id', 'id' => $iId));
