@@ -225,6 +225,7 @@
 	<string name="_bx_payment_txt_products"><![CDATA[Продукты]]></string>
 	<string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
 	<string name="_bx_payment_txt_none"><![CDATA[нет]]></string>
+	<string name="_bx_payment_txt_name_manual"><![CDATA[Вручную]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>
