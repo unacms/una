@@ -24,11 +24,14 @@ class BxBaseServiceLogin extends BxDol
 
     public function serviceMemberAuthCode($aAuthTypes)
     {
+        $bCompact = getParam('site_login_social_compact') == 'on';
+
         $aTmplButtons = array();
         foreach($aAuthTypes as $iKey => $aItems) {
             $sTitle = _t($aItems['Title']);
 
             $aTmplButtons[] = array(
+            	'class' => $bCompact ? 'sys-auth-compact bx-def-margin-sec-left-auto' : '',
                 'href' => !empty($aItems['Link']) ? BX_DOL_URL_ROOT . $aItems['Link'] : 'javascript:void(0)',
                 'bx_if:show_onclick' => array(
                     'condition' => !empty($aItems['OnClick']),
@@ -42,7 +45,12 @@ class BxBaseServiceLogin extends BxDol
                         'icon' => $aItems['Icon']
                     )
                 ),
-                'title' => !empty($sTitleKey) ? _t($sTitleKey, $sTitle) : $sTitle
+                'bx_if:show_title' => array(
+                    'condition' => !$bCompact || empty($aItems['Icon']),
+                    'content' => array(
+                		'title' => $sTitle
+                    )
+                )
             );
         }
 

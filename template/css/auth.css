@@ -6,3 +6,12 @@
     font-weight: bold;
     white-space: nowrap;
 }
+
+.sys-auth-compact {
+	position: relative;
+	display: inline-block;
+}
+
+.sys-auth-compact .bx-btn {
+	width: auto;
+}

@@ -387,6 +387,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'site_tour_home', '_adm_stg_cpt_option_site_tour_home', 'on', 'checkbox', '', '', '', 6),
 (@iCategoryId, 'site_tour_studio', '_adm_stg_cpt_option_site_tour_studio', 'on', 'checkbox', '', '', '', 7),
 (@iCategoryId, 'add_to_mobile_homepage', '_adm_stg_cpt_option_add_to_mobile_homepage', 'on', 'checkbox', '', '', '', 8),
+(@iCategoryId, 'site_login_social_compact', '_adm_stg_cpt_option_site_login_social_compact', '', 'checkbox', '', '', '', 9),
 
 (@iCategoryId, 'sys_autoupdate_system', '_adm_stg_cpt_option_sys_autoupdate_system', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_autoupdate_modules', '_adm_stg_cpt_option_sys_autoupdate_modules', 'on', 'checkbox', '', '', '', 11),

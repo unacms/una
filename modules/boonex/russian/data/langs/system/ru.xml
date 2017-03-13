@@ -1203,6 +1203,7 @@
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Имейл, с которого будут посылаться сообщения от сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Заголовок имейл HTML шаблона]]></string>
     <string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Основание имейл HTML шаблона]]></string>
+    <string name="_adm_stg_cpt_option_site_login_social_compact"><![CDATA[Задействовать компактный вид входа через соц. сети]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Название сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Экскурсия по главной странице сайта]]></string>
     <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по главной странице Студии]]></string>
