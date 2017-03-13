@@ -19,13 +19,13 @@
 	<string name="_bx_acl_form_price_input_sys_period"><![CDATA[Период]]></string>
 	<string name="_bx_acl_form_price_input_period"><![CDATA[Период]]></string>
 	<string name="_bx_acl_form_price_input_inf_period"><![CDATA[Используйте 0 для пожизненного]]></string>
-	<string name="_bx_acl_form_price_input_err_period"><![CDATA[Здесь Вам необходимо ввести количество периодов.]]></string>
 	<string name="_bx_acl_form_price_input_sys_period_unit"><![CDATA[Единица измерения периода]]></string>
 	<string name="_bx_acl_form_price_input_period_unit"><![CDATA[Единица измерения периода]]></string>
+	<string name="_bx_acl_form_price_input_inf_period_unit"><![CDATA[Оставьте пустым для пожизненного уровня.]]></string>
 	<string name="_bx_acl_form_price_input_err_period_unit"><![CDATA[Здесь Вам необходимо выбрать единицу измерения периода.]]></string>
 	<string name="_bx_acl_form_price_input_sys_price"><![CDATA[Цена]]></string>
 	<string name="_bx_acl_form_price_input_price"><![CDATA[Цена]]></string>
-	<string name="_bx_acl_form_price_input_err_price"><![CDATA[Здесь Вам необходимо ввести цену.]]></string>
+	<string name="_bx_acl_form_price_input_inf_price"><![CDATA[Введите 0 или оставьте пустым для создания бесплатного уровня.]]></string>
 	<string name="_bx_acl_form_price_input_sys_trial"><![CDATA[Пробный период]]></string>
     <string name="_bx_acl_form_price_input_trial"><![CDATA[Пробный период]]></string>
     <string name="_bx_acl_form_price_input_inf_trial"><![CDATA[Количество пробных дней, которое новые пользователи получат бесплатно. Оставьте пустым для отключения пробного периода.]]></string>
@@ -58,6 +58,8 @@
 	<string name="_bx_acl_grid_action_buy_title"><![CDATA[Единовременный платеж]]></string>
 	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Арендовать]]></string>
 	<string name="_bx_acl_grid_action_subscribe_title"><![CDATA[Подписка на периодические платежи]]></string>
+	<string name="_bx_acl_grid_action_choose"><![CDATA[Выбирать]]></string>
+    <string name="_bx_acl_grid_action_choose_title"><![CDATA[Бесплатно переключиться на уровень]]></string>
 
 	<string name="_bx_acl_popup_title_price_add"><![CDATA[Добавить ценовой план]]></string>
 	<string name="_bx_acl_popup_title_price_edit"><![CDATA[Редактировать ценовой план]]></string>
@@ -70,6 +72,7 @@
 
 	<!-- Common Texts -->
 	<string name="_bx_acl_msg_empty_owner"><![CDATA['Администратор сайта' не задан. Вам необходимо пометить какой-либо профайл как 'Администратор сайта' в настройках активного на данный момент платежного модуля.]]></string>
+	<string name="_bx_acl_msg_performed"><![CDATA[Действие было успешно выполнено.]]></string>
 	<string name="_bx_acl_err_price_duplicate"><![CDATA[Аналогичный ценовой план уже существует.]]></string>
 	<string name="_bx_acl_err_cannot_perform"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 
@@ -79,4 +82,6 @@
 	<string name="_bx_acl_txt_manage"><![CDATA[Изменить]]></string>
 	<string name="_bx_acl_txt_n_unit"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_acl_txt_none"><![CDATA[нет]]></string>
+    <string name="_bx_acl_txt_free"><![CDATA[бесплатно]]></string>
+    <string name="_bx_acl_txt_lifetime"><![CDATA[пожизненно]]></string>
 </resources>

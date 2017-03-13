@@ -19,13 +19,13 @@
 	<string name="_bx_acl_form_price_input_sys_period"><![CDATA[Period]]></string>
 	<string name="_bx_acl_form_price_input_period"><![CDATA[Period]]></string>
 	<string name="_bx_acl_form_price_input_inf_period"><![CDATA[Use 0 for lifetime]]></string>
-	<string name="_bx_acl_form_price_input_err_period"><![CDATA[You need to enter a number of periods here.]]></string>
 	<string name="_bx_acl_form_price_input_sys_period_unit"><![CDATA[Period unit]]></string>
 	<string name="_bx_acl_form_price_input_period_unit"><![CDATA[Period unit]]></string>
+	<string name="_bx_acl_form_price_input_inf_period_unit"><![CDATA[Leave empty for lifetime level.]]></string>
 	<string name="_bx_acl_form_price_input_err_period_unit"><![CDATA[You need to select a period unit here.]]></string>
 	<string name="_bx_acl_form_price_input_sys_price"><![CDATA[Price]]></string>
 	<string name="_bx_acl_form_price_input_price"><![CDATA[Price]]></string>
-	<string name="_bx_acl_form_price_input_err_price"><![CDATA[You need to enter a price here.]]></string>
+	<string name="_bx_acl_form_price_input_inf_price"><![CDATA[Use 0 or leave empty to create free level.]]></string>
 	<string name="_bx_acl_form_price_input_sys_trial"><![CDATA[Trial]]></string>
     <string name="_bx_acl_form_price_input_trial"><![CDATA[Trial]]></string>
     <string name="_bx_acl_form_price_input_inf_trial"><![CDATA[The number of days new customers should receive a free trial. Leave empty to disable trial period.]]></string>
@@ -58,6 +58,8 @@
 	<string name="_bx_acl_grid_action_buy_title"><![CDATA[One-time payment]]></string>
 	<string name="_bx_acl_grid_action_subscribe"><![CDATA[Rent]]></string>
 	<string name="_bx_acl_grid_action_subscribe_title"><![CDATA[Subscribe on recurring payments]]></string>
+	<string name="_bx_acl_grid_action_choose"><![CDATA[Choose]]></string>
+    <string name="_bx_acl_grid_action_choose_title"><![CDATA[Switch to the level for free]]></string>
 
 	<string name="_bx_acl_popup_title_price_add"><![CDATA[Add Pricing Plan]]></string>
 	<string name="_bx_acl_popup_title_price_edit"><![CDATA[Edit Pricing Plan]]></string>
@@ -70,6 +72,7 @@
 
 	<!-- Common Texts -->
 	<string name="_bx_acl_msg_empty_owner"><![CDATA['Site administrator' is empty. You need to mark some profile as 'Site administrator' in Settings of currently active Payment module.]]></string>
+	<string name="_bx_acl_msg_performed"><![CDATA[The action was successfully performed.]]></string>
 	<string name="_bx_acl_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>
 	<string name="_bx_acl_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
 
@@ -79,4 +82,6 @@
 	<string name="_bx_acl_txt_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_acl_txt_n_unit"><![CDATA[{0} ({1})]]></string>
 	<string name="_bx_acl_txt_none"><![CDATA[none]]></string>
+	<string name="_bx_acl_txt_free"><![CDATA[free]]></string>
+	<string name="_bx_acl_txt_lifetime"><![CDATA[lifetime]]></string>
 </resources>

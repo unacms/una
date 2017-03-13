@@ -50,11 +50,12 @@ class BxAclGridAdministration extends BxAclGridLevels
         	$iPeriod = $oForm->getCleanValue('period');
         	$sPeriodUnit = $oForm->getCleanValue('period_unit');
 
+        	if(!empty($iPeriod) && empty($sPeriodUnit)) 
+        	    return echoJson(array('msg' => _t('_bx_acl_form_price_input_err_period_unit')));
+        	
             $aPrice = $this->_oModule->_oDb->getPrices(array('type' => 'by_level_id_duration', 'level_id' => $iLevel, 'period' => $iPeriod, 'period_unit' => $sPeriodUnit));
-            if(!empty($aPrice) && is_array($aPrice)) {
-                echoJson(array('msg' => _t('_bx_acl_err_price_duplicate')));
-                return;
-            }
+            if(!empty($aPrice) && is_array($aPrice))
+                return echoJson(array('msg' => _t('_bx_acl_err_price_duplicate')));
 
             $aLevel = $this->_oModule->_oDb->getLevels(array('type' => 'by_id', 'value' => $iLevel));
             $sName = uriGenerate(strtolower(_t($aLevel['name'])) . ' ' . $iPeriod . ' ' . $sPeriodUnit, $CNF['TABLE_PRICES'], 'name');
@@ -89,16 +90,9 @@ class BxAclGridAdministration extends BxAclGridLevels
 
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-	            echoJson(array());
-	            exit;
-	        }
-
-            $aIds = array($iId);
-        }
+        $aIds = $this->_getIds();
+        if($aIds === false)
+            return echoJson(array());
 
         $iId = $aIds[0];
 

@@ -28,10 +28,10 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_acl_price', @sName, 'id', '', '', 0, 'hidden', '_bx_acl_form_price_input_sys_id', '', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'level_id', '', '', 0, 'hidden', '_bx_acl_form_price_input_sys_level_id', '', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
-('bx_acl_price', @sName, 'period', '', '', 0, 'text', '_bx_acl_form_price_input_sys_period', '_bx_acl_form_price_input_period', '_bx_acl_form_price_input_inf_period', 1, 0, 0, '', '', '', 'Avail', '', '_bx_acl_form_price_input_err_period', 'Int', '', 1, 0),
-('bx_acl_price', @sName, 'period_unit', '', '#!bx_acl_period_units', 0, 'select', '_bx_acl_form_price_input_sys_period_unit', '_bx_acl_form_price_input_period_unit', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_acl_form_price_input_err_period_unit', 'Xss', '', 1, 0),
+('bx_acl_price', @sName, 'period', '', '', 0, 'text', '_bx_acl_form_price_input_sys_period', '_bx_acl_form_price_input_period', '_bx_acl_form_price_input_inf_period', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_acl_price', @sName, 'period_unit', '', '#!bx_acl_period_units', 0, 'select', '_bx_acl_form_price_input_sys_period_unit', '_bx_acl_form_price_input_period_unit', '_bx_acl_form_price_input_inf_period_unit', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_acl_price', @sName, 'trial', '', '', 0, 'text', '_bx_acl_form_price_input_sys_trial', '_bx_acl_form_price_input_trial', '_bx_acl_form_price_input_inf_trial', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
-('bx_acl_price', @sName, 'price', '', '', 0, 'text', '_bx_acl_form_price_input_sys_price', '_bx_acl_form_price_input_price', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_acl_form_price_input_err_price', 'Float', '', 1, 0),
+('bx_acl_price', @sName, 'price', '', '', 0, 'text', '_bx_acl_form_price_input_sys_price', '_bx_acl_form_price_input_price', '_bx_acl_form_price_input_inf_price', 1, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
 ('bx_acl_price', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_acl_price', @sName, 'do_submit', '_bx_acl_form_price_input_do_submit', '', 0, 'submit', '_bx_acl_form_price_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_acl_price', @sName, 'do_cancel', '_bx_acl_form_price_input_do_cancel', '', 0, 'button', '_bx_acl_form_price_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
@@ -97,7 +97,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_acl_administration', 'bulk', 'delete', '_bx_acl_grid_action_delete', '', 0, 1, 1),
 
 ('bx_acl_view', 'single', 'buy', '_bx_acl_grid_action_buy', 'cart-plus', 0, 0, 1),
-('bx_acl_view', 'single', 'subscribe', '_bx_acl_grid_action_subscribe', 'credit-card', 0, 0, 2);
+('bx_acl_view', 'single', 'subscribe', '_bx_acl_grid_action_subscribe', 'credit-card', 0, 0, 2),
+('bx_acl_view', 'single', 'choose', '_bx_acl_grid_action_choose', 'check-square-o', 0, 0, 3);
 
 
 -- STUDIO PAGE & WIDGET

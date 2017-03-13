@@ -31,16 +31,25 @@ class BxAclGridLevels extends BxTemplGrid
 
 	protected function _getCellPeriod($mixedValue, $sKey, $aField, $aRow)
     {
-    	$mixedValue = _t('_bx_acl_txt_n_unit', $mixedValue, _t($this->_aPeriodUnits[$aRow['period_unit']]));
+        if((int)$mixedValue == 0)
+            $mixedValue = _t('_bx_acl_txt_lifetime');
+        else
+            $mixedValue = _t('_bx_acl_txt_n_unit', $mixedValue, _t($this->_aPeriodUnits[$aRow['period_unit']]));
 
     	return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
 	protected function _getCellPrice($mixedValue, $sKey, $aField, $aRow)
     {
-    	$aCurrency = $this->_oModule->_oConfig->getCurrency();
+        if((float)$mixedValue != 0) {
+            $aCurrency = $this->_oModule->_oConfig->getCurrency();
 
-        return parent::_getCellDefault($aCurrency['sign'] . $mixedValue, $sKey, $aField, $aRow);
+            $mixedValue = $aCurrency['sign'] . $mixedValue;
+        }
+        else 
+            $mixedValue = _t('_bx_acl_txt_free');
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
 	protected function _getCellTrial($mixedValue, $sKey, $aField, $aRow)
@@ -48,6 +57,20 @@ class BxAclGridLevels extends BxTemplGrid
         $mixedValue = (int)$mixedValue != 0 ? _t('_bx_acl_txt_n_unit', $mixedValue, _t($this->_aPeriodUnits['day'])) : _t('_bx_acl_txt_none');
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getIds()
+    {
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            $iId = (int)bx_get('id');
+            if(!$iId) 
+                return false;
+
+            $aIds = array($iId);
+        }
+
+        return $aIds;
     }
 }
 
