@@ -116,7 +116,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         $iTimeout = 120;
         if(ini_get('safe_mode') == 0) {
             ini_set('max_execution_time', $iTimeout);
-            ini_set('memory_limit', '512');
+            ini_set('memory_limit', '512M');
         }
 
         $sHttpCode = null;
