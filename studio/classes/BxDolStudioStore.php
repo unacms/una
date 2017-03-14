@@ -176,8 +176,6 @@ class BxDolStudioStore extends BxTemplStudioPage
 
         $oJson = BxDolStudioJson::getInstance();
 
-        /*
-		//TODO: Uncomment 'featured loading' when "Mark As Featured" functionality will be ready.
         // Load featured
         $aProducts[] = array(
             'caption' => '_adm_block_cpt_last_featured',
@@ -186,7 +184,6 @@ class BxDolStudioStore extends BxTemplStudioPage
             ),
             'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_featured', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
         );
-        */
 
         // Load modules
         $aProducts[] = array(
@@ -231,6 +228,11 @@ class BxDolStudioStore extends BxTemplStudioPage
     protected function loadTag($sTag, $iStart, $iPerPage)
     {
         return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_tag', array('value' => $sTag, 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
+    }
+
+    protected function loadSearch($sKeyword, $iStart, $iPerPage)
+    {
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_keyword', array('value' => $sKeyword, 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
     }
 
     protected function loadPurchases()

@@ -42,6 +42,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $aMenuItems = array(
 	        'goodies' => array('icon' => 'home'),
 	        'featured' => array('icon' => 'thumbs-up'),
+        	'search' => array('icon' => 'search'),
 	        'purchases' => array('icon' => 'shopping-cart'), 
 	        'updates' => array('icon' => 'refresh'), 
 	        'checkout' => array('icon' => 'credit-card'), 
@@ -147,7 +148,10 @@ class BxBaseStudioStore extends BxDolStudioStore
 	        ));
         }
         else 
-        	$sContent = MsgBox($mixedResult);
+            $sContent = $this->getBlockCode(array(
+                'caption' => '_adm_block_cpt_featured',
+                'items' => MsgBox($mixedResult),
+            ));
 
 		if(!$bWrapInBlock)
 			return $sContent;
@@ -174,6 +178,99 @@ class BxBaseStudioStore extends BxDolStudioStore
     protected function getTranslationsList($bWrapInBlock = true)
     {
         return $this->getCategory('translations', $bWrapInBlock);
+    }
+
+    protected function getSearchList($bWrapInBlock = true)
+    {
+        $sJsObject = $this->getPageJsObject();
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        if($mixedResult === true) {
+            //--- Search form
+            $aForm = array(
+                'form_attrs' => array(
+                    'id' => 'adm-str-search-form',
+                    'name' => 'adm-str-search-form',
+                    'action' => '',
+                    'method' => 'post'
+                ),
+                'params' => array(
+                    'db' => array(
+                        'table' => '',
+                        'key' => '',
+                        'uri' => '',
+                        'uri_title' => '',
+                        'submit_name' => 'search'
+                    ),
+                ),
+                'inputs' => array(
+                    'page' => array(
+                        'type' => 'hidden',
+                        'name' => 'page',
+                        'value' => $this->sPage
+                    ),
+                    'keyword' => array(
+                        'type' => 'text',
+                        'name' => 'keyword',
+                        'caption' => '',
+                        'value' => '',
+                        'attrs' => array(
+                            'placeholder' => bx_html_attribute(_t('_sys_search_placeholder'))
+                        ),
+                        'db' => array (
+                            'pass' => 'Xss',
+                        )
+                    ),
+                    'search' => array(
+                        'type' => 'submit',
+                        'name' => 'search',
+                        'value' => _t('_adm_btn_store_search'),
+                    )
+                )
+            );
+    
+            $oForm = new BxTemplStudioFormView($aForm);
+            $oForm->initChecker();
+    
+            $sResults = '';
+            if($oForm->isSubmittedAndValid()) {
+                $sKeyword = $oForm->getCleanValue('keyword');
+
+                $iStart = (int)bx_get('str_start');
+    	        $iPerPage = (int)bx_get('str_per_page');
+    	        if(empty($iPerPage))
+    	            $iPerPage = 999;
+    
+    	        $aProducts = $this->loadSearch($sKeyword, $iStart, $iPerPage + 1);
+	            $sResults = empty($aProducts) || !is_array($aProducts) ? MsgBox(_t('_Empty')) : $oTemplate->parseHtmlByName('str_products.html', array(
+    	            'list' => $this->displayProducts($aProducts),
+    	            'paginate' => ''
+    	        ));
+            }
+    
+            $sContent = '';
+            $sContent .= $this->getBlockCode(array(
+    			'caption' => '_adm_block_cpt_search',
+    			'items' => $oForm->getCode()
+    		));
+    
+    		if(!empty($sResults))
+    		    $sContent .= $this->getBlockCode(array(
+    				'caption' => '_adm_block_cpt_search_results',
+    				'items' => $sResults
+    			));
+        }
+        else 
+            $sContent = $this->getBlockCode(array(
+                'caption' => '_adm_block_cpt_search',
+                'items' => MsgBox($mixedResult),
+            ));
+
+        return $oTemplate->parseHtmlByName('store.html', array(
+            'js_object' => $sJsObject,
+            'content' => $sContent
+        ));
     }
 
     protected function getTag($sLabel, $bWrapInBlock = true)

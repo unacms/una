@@ -439,6 +439,8 @@
 	<string name="_adm_block_cpt_extensions"><![CDATA[Модули]]></string>
 	<string name="_adm_block_cpt_modules_upload"><![CDATA[Добавить новый Модуль]]></string>
 	<string name="_adm_block_cpt_purchases"><![CDATA[Покупки]]></string>
+	<string name="_adm_block_cpt_search"><![CDATA[Поиск]]></string>
+	<string name="_adm_block_cpt_search_results"><![CDATA[Результаты поиска]]></string>
 	<string name="_adm_block_cpt_space"><![CDATA[Использовано места]]></string>
 	<string name="_adm_block_cpt_templates"><![CDATA[Темы]]></string>
 	<string name="_adm_block_cpt_updates"><![CDATA[Обновления]]></string>
@@ -562,6 +564,7 @@
 	<string name="_adm_btn_settings_save"><![CDATA[Сохранить]]></string>
 	<string name="_adm_btn_settings_mix_create"><![CDATA[Создать набор]]></string>
 	<string name="_adm_btn_settings_mix_delete"><![CDATA[Удалить набор]]></string>
+	<string name="_adm_btn_store_search"><![CDATA[Поиск]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Обновить]]></string>
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Новая версия UNA {0}!]]></string>
 	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA на]]></string>
@@ -866,6 +869,7 @@
 	<string name="_adm_lmi_cpt_actions"><![CDATA[Действия]]></string>
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Оплата {checkout_counter}]]></string>
 	<string name="_adm_lmi_cpt_cover"><![CDATA[Обложка]]></string>
+	<string name="_adm_lmi_cpt_search"><![CDATA[Поиск]]></string>
 	<string name="_adm_lmi_cpt_splash"><![CDATA[Заставка]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Дисплеи]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>

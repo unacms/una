@@ -439,6 +439,8 @@
 	<string name="_adm_block_cpt_extensions"><![CDATA[Modules]]></string>
 	<string name="_adm_block_cpt_modules_upload"><![CDATA[Add New Module]]></string>
 	<string name="_adm_block_cpt_purchases"><![CDATA[Purchases]]></string>
+	<string name="_adm_block_cpt_search"><![CDATA[Search]]></string>
+	<string name="_adm_block_cpt_search_results"><![CDATA[Search Results]]></string>
 	<string name="_adm_block_cpt_space"><![CDATA[Space Usage]]></string>
 	<string name="_adm_block_cpt_templates"><![CDATA[Templates]]></string>
 	<string name="_adm_block_cpt_updates"><![CDATA[Updates]]></string>
@@ -564,6 +566,7 @@
 	<string name="_adm_btn_settings_mix_import"><![CDATA[Import Mix]]></string>
 	<string name="_adm_btn_settings_mix_export"><![CDATA[Export Mix]]></string>
 	<string name="_adm_btn_settings_mix_delete"><![CDATA[Delete Mix]]></string>
+	<string name="_adm_btn_store_search"><![CDATA[Search]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[UNA {0} is available!]]></string>
 	<string name="_adm_dbd_txt_script_on"><![CDATA[UNA on]]></string>
@@ -868,6 +871,7 @@
 	<string name="_adm_lmi_cpt_actions"><![CDATA[Actions]]></string>
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
 	<string name="_adm_lmi_cpt_cover"><![CDATA[Cover]]></string>
+	<string name="_adm_lmi_cpt_search"><![CDATA[Search]]></string>
 	<string name="_adm_lmi_cpt_splash"><![CDATA[Splash]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Displays]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Downloaded]]></string>
