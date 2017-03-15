@@ -53,6 +53,78 @@ class BxBaseServiceConnections extends BxDol
         return $i;
     }
 
+    /**
+     * get number of initiated connections (like "my subscriptions")
+     * @param $sConnectionsObject connections object to get connections from
+     * @param $mixedId id to get connections for, if omitted then logged-in profile id is used
+     * @return number
+     */
+    public function serviceGetConnectedContentNum ($sConnectionsObject, $mixedId = 0)
+    {
+        $oConnection = BxDolConnection::getObjectInstance($sConnectionsObject);
+        if (!$oConnection)
+            return 0;
+
+        if (!$mixedId)
+            $mixedId = bx_get_logged_profile_id();
+
+        $i = 0;
+        $a = $oConnection->getConnectedContent($mixedId); // get received friend requests
+        foreach ($a as $iId)
+            if (BxDolProfile::getInstance($iId))
+                ++$i;
+
+        return $i;
+    }
+
+    /**
+     * get number of received connections (like "subscribed me")
+     * @param $sConnectionsObject connections object to get connections from
+     * @param $mixedId id to get connections for, if omitted then logged-in profile id is used
+     * @return number
+     */
+    public function serviceGetConnectedInitiatorsNum ($sConnectionsObject, $mixedId = 0)
+    {
+        $oConnection = BxDolConnection::getObjectInstance($sConnectionsObject);
+        if (!$oConnection)
+            return 0;
+
+        if (!$mixedId)
+            $mixedId = bx_get_logged_profile_id();
+
+        $i = 0;
+        $a = $oConnection->getConnectedInitiators($mixedId); // get received friend requests
+        foreach ($a as $iId)
+            if (BxDolProfile::getInstance($iId))
+                ++$i;
+
+        return $i;
+    }
+
+	/**
+     * get grid with subscriptions connections
+     */
+    public function serviceSubscriptionsTable ()
+    {
+        $oGrid = BxDolGrid::getObjectInstance('sys_grid_subscriptions');
+        if (!$oGrid)
+            return false;
+
+        return $oGrid->getCode();
+    }
+
+	/**
+     * get grid with subscribed me connections
+     */
+    public function serviceSubscribedMeTable ()
+    {
+        $oGrid = BxDolGrid::getObjectInstance('sys_grid_subscribed_me');
+        if (!$oGrid)
+            return false;
+
+        return $oGrid->getCode();
+    }
+
     /*
      * Get notification data for Notifications module. 
      */

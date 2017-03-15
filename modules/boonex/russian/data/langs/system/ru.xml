@@ -2256,6 +2256,7 @@
 	<string name="_sys_storage_restriction_size"><![CDATA[Максимальный разрешённый размер файла {0}]]></string>
 	<string name="_sys_switch_profile"><![CDATA[Переключить профиль]]></string>
 	<string name="_sys_submit"><![CDATA[Выполнить]]></string>
+	<string name="_sys_subscribe"><![CDATA[Подписаться]]></string>
 
 
 	<string name="_sys_tour_launcher_welcome_title"><![CDATA[Добро пожаловать в UNA Студию!]]></string>
