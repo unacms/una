@@ -10,7 +10,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_persons';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` IN('bx_persons_create_profile', 'bx_persons_delete_profile', 'bx_persons_edit_profile', 'bx_persons_edit_profile_cover', 'bx_persons_view_profile', 'bx_persons_view_profile_closed', 'bx_persons_profile_info', 'bx_persons_profile_friends', 'bx_persons_profile_favorites', 'bx_persons_home');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` IN('bx_persons_create_profile', 'bx_persons_delete_profile', 'bx_persons_edit_profile', 'bx_persons_edit_profile_cover', 'bx_persons_view_profile', 'bx_persons_view_profile_closed', 'bx_persons_profile_info', 'bx_persons_profile_friends', 'bx_persons_profile_favorites', 'bx_persons_profile_subscriptions', 'bx_persons_profile_subscribed_me', 'bx_persons_home');
 
 -- MENU
 
