@@ -51,6 +51,8 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
 			// show only friends for currently active profile for friend request notification
         	case 'notifications-friend-requests':
         	case 'profile-stats-friend-requests':
+        	case 'profile-stats-subscriptions':
+            case 'profile-stats-subscribed-me':
 	            $aInfo = BxDolProfile::getInstance()->getInfo();
 	            if($a['module'] != $aInfo['type'])
 	                return false;
