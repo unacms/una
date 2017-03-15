@@ -27,6 +27,10 @@
     <string name="_bx_payment_page_title_sbs_history"><![CDATA[История выплат]]></string>
     <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[История выплат]]></string>
 
+    <string name="_bx_payment_page_title_sys_sbs_administration"><![CDATA[Управление подписками]]></string>
+    <string name="_bx_payment_page_title_sbs_administration"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_page_block_title_sbs_administration"><![CDATA[Подписки]]></string>
+
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[История покупок]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[История покупок]]></string>
 	<string name="_bx_payment_page_block_title_history"><![CDATA[История покупок]]></string>
@@ -70,6 +74,8 @@
     <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Подменю подписок]]></string>
     <string name="_bx_payment_menu_item_title_system_sbs_list"><![CDATA[Лист подписок]]></string>
     <string name="_bx_payment_menu_item_title_sbs_list"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list_my"><![CDATA[Мои подписки]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list_administration"><![CDATA[Все подписки]]></string>
     <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[История подписок]]></string>
     <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[История выплат]]></string>
 
@@ -86,7 +92,8 @@
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Сумма]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Продавец]]></string>
-	<string name="_bx_payment_grid_column_title_sbs_customer_id"><![CDATA[Покупатель]]></string>
+	<string name="_bx_payment_grid_column_title_sbs_client_id"><![CDATA[Покупатель]]></string>
+	<string name="_bx_payment_grid_column_title_sbs_customer_id"><![CDATA[ID Покупателя]]></string>
     <string name="_bx_payment_grid_column_title_sbs_subscription_id"><![CDATA[Подписка]]></string>
     <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Транзакция]]></string>
     <string name="_bx_payment_grid_column_title_sbs_license"><![CDATA[Лицензия]]></string>

@@ -27,6 +27,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 ('bx_payment_sbs_list', '_bx_payment_page_title_sys_sbs_list', '_bx_payment_page_title_sbs_list', @sName, 5, 2147483647, 1, 'payment-sbs-list', 'page.php?i=payment-sbs-list', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
 ('bx_payment_sbs_history', '_bx_payment_page_title_sys_sbs_history', '_bx_payment_page_title_sbs_history', @sName, 5, 2147483647, 1, 'payment-sbs-history', 'page.php?i=payment-sbs-history', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
+('bx_payment_sbs_administration', '_bx_payment_page_title_sys_sbs_administration', '_bx_payment_page_title_sbs_administration', @sName, 5, 192, 1, 'payment-sbs-administration', 'page.php?i=payment-sbs-administration', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
 
 ('bx_payment_orders', '_bx_payment_page_title_sys_orders', '_bx_payment_page_title_orders', @sName, 5, 2147483647, 1, 'payment-orders', 'page.php?i=payment-orders', '', '', '', 0, 1, 0, 'BxPaymentPageOrders', 'modules/boonex/payment/classes/BxPaymentPageOrders.php'),
 ('bx_payment_details', '_bx_payment_page_title_sys_details', '_bx_payment_page_title_details', @sName, 5, 2147483647, 1, 'payment-details', 'page.php?i=payment-details', '', '', '', 0, 1, 0, 'BxPaymentPageDetails', 'modules/boonex/payment/classes/BxPaymentPageDetails.php');
@@ -41,6 +42,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 ('bx_payment_sbs_list', 1, @sName, '_bx_payment_page_block_title_sbs_list', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:14:"get_block_list";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 ('bx_payment_sbs_history', 1, @sName, '_bx_payment_page_block_title_sbs_history', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_history";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
+('bx_payment_sbs_administration', 1, @sName, '_bx_payment_page_block_title_sbs_administration', 11, 192, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:24:"get_block_administration";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 
 ('bx_payment_orders', 1, @sName, '_bx_payment_page_block_title_orders', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:16:"get_block_orders";s:6:"params";a:0:{}s:5:"class";s:6:"Orders";}', 0, 0, 1),
 ('bx_payment_details', 1, @sName, '_bx_payment_page_block_title_details', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_details";s:6:"params";a:0:{}s:5:"class";s:7:"Details";}', 0, 0, 1);

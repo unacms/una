@@ -61,6 +61,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 			'grid_cart' => $this->_sName . '_grid_cart',
 			'grid_sbs_list' => $this->_sName . '_grid_sbs_list',
 			'grid_sbs_history' => $this->_sName . '_grid_sbs_history',
+		    'grid_sbs_administration' => $this->_sName . '_grid_sbs_administration',
 		));
 
 		$this->_aPerPage = array();

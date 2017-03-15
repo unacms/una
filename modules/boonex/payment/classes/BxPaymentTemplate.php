@@ -189,6 +189,16 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return $this->_displayBlockHistory('grid_sbs_history', $iClientId);
     }
 
+    public function displayBlockSbsAdministration()
+    {
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_sbs_administration'), $this->getModule()->_oTemplate);
+        if(!$oGrid)
+            return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+
+		$this->addJsCssSubscriptions();
+        return $this->displayJsCode(BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION) . $oGrid->getCode();
+    }
+
     public function displayBlockSbsDetails($iClientId)
     {
         return 'Details would be here';

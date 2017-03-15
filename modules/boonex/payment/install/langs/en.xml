@@ -27,6 +27,10 @@
     <string name="_bx_payment_page_title_sbs_history"><![CDATA[Payment History]]></string>
     <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[Payment History]]></string>
 
+    <string name="_bx_payment_page_title_sys_sbs_administration"><![CDATA[Subscriptions Administration]]></string>
+    <string name="_bx_payment_page_title_sbs_administration"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_payment_page_block_title_sbs_administration"><![CDATA[Subscriptions]]></string>
+
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[Shopping History]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[Shopping History]]></string>
 	<string name="_bx_payment_page_block_title_history"><![CDATA[Shopping History]]></string>
@@ -70,6 +74,8 @@
     <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Subscriptions Submenu]]></string>
     <string name="_bx_payment_menu_item_title_system_sbs_list"><![CDATA[Subscriptions List]]></string>
     <string name="_bx_payment_menu_item_title_sbs_list"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list_my"><![CDATA[My Subscriptions]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list_administration"><![CDATA[All Subscriptions]]></string>
     <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[Subscriptions History]]></string>
     <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[Payments]]></string>
 
@@ -86,7 +92,8 @@
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Amount]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Seller]]></string>
-	<string name="_bx_payment_grid_column_title_sbs_customer_id"><![CDATA[Customer]]></string>
+	<string name="_bx_payment_grid_column_title_sbs_client_id"><![CDATA[Client]]></string>
+	<string name="_bx_payment_grid_column_title_sbs_customer_id"><![CDATA[Customer ID]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_subscription_id"><![CDATA[Subscription]]></string>
     <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Transaction]]></string>
     <string name="_bx_payment_grid_column_title_sbs_license"><![CDATA[License]]></string>

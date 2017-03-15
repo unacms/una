@@ -190,6 +190,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 ('bx_payment_grid_sbs_list', 'Sql', 'SELECT `ttp`.`id` AS `id`, `ttp`.`seller_id` AS `seller_id`, `ts`.`customer_id` AS `customer_id`, `ts`.`subscription_id` AS `subscription_id`, `ttp`.`provider` AS `provider`, `ts`.`date` AS `date` FROM `bx_payment_subscriptions` AS `ts` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_subscriptions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ts`.`customer_id,ts`.`subscription_id,ts`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridSbsList', 'modules/boonex/payment/classes/BxPaymentGridSbsList.php'),
 ('bx_payment_grid_sbs_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `ttp`.`order` AS `transaction`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridSbsHistory', 'modules/boonex/payment/classes/BxPaymentGridSbsHistory.php'),
+('bx_payment_grid_sbs_administration', 'Sql', 'SELECT `ttp`.`id` AS `id`, `ttp`.`client_id` AS `client_id`, `ttp`.`seller_id` AS `seller_id`, `ts`.`customer_id` AS `customer_id`, `ts`.`subscription_id` AS `subscription_id`, `ttp`.`provider` AS `provider`, `ts`.`date` AS `date` FROM `bx_payment_subscriptions` AS `ts` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_subscriptions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ts`.`customer_id,ts`.`subscription_id,ts`.`date', '', 'auto', '', '', 192, 'BxPaymentGridSbsAdministration', 'modules/boonex/payment/classes/BxPaymentGridSbsAdministration.php'),
 
 ('bx_payment_grid_orders_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `ttp`.`order` AS `transaction`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''single'' ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridHistory', 'modules/boonex/payment/classes/BxPaymentGridHistory.php'),
 ('bx_payment_grid_orders_processed', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`module_id` AS `module_id`, `tt`.`item_id` AS `item_id`, `tt`.`item_count` AS `item_count`, `ttp`.`order` AS `transaction`, `ttp`.`error_msg` AS `error_msg`, `ttp`.`provider` AS `provider`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridProcessed', 'modules/boonex/payment/classes/BxPaymentGridProcessed.php'),
@@ -223,6 +224,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_payment_grid_sbs_history', 'amount', '_bx_payment_grid_column_title_sbs_amount', '10%', 1, '10', '', 4),
 ('bx_payment_grid_sbs_history', 'date', '_bx_payment_grid_column_title_sbs_date', '10%', 0, '10', '', 5),
 ('bx_payment_grid_sbs_history', 'actions', '', '12%', 0, '', '', 6),
+
+('bx_payment_grid_sbs_administration', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '15%', 0, '24', '', 1),
+('bx_payment_grid_sbs_administration', 'client_id', '_bx_payment_grid_column_title_sbs_client_id', '15%', 0, '24', '', 2),
+('bx_payment_grid_sbs_administration', 'customer_id', '_bx_payment_grid_column_title_sbs_customer_id', '20%', 0, '24', '', 3),
+('bx_payment_grid_sbs_administration', 'subscription_id', '_bx_payment_grid_column_title_sbs_subscription_id', '20%', 0, '24', '', 4),
+('bx_payment_grid_sbs_administration', 'provider', '_bx_payment_grid_column_title_sbs_provider', '10%', 0, '16', '', 5),
+('bx_payment_grid_sbs_administration', 'date', '_bx_payment_grid_column_title_sbs_date', '10%', 0, '10', '', 6),
+('bx_payment_grid_sbs_administration', 'actions', '', '10%', 0, '', '', 7),
 
 ('bx_payment_grid_orders_history', 'seller_id', '_bx_payment_grid_column_title_ods_seller_id', '24%', 0, '20', '', 1),
 ('bx_payment_grid_orders_history', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '22%', 0, '18', '', 2),
@@ -258,6 +267,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_payment_grid_sbs_list', 'single', 'actions', '_bx_payment_grid_action_title_sbs_actions', 'cog', 1, 0, 2),
 
 ('bx_payment_grid_sbs_history', 'single', 'view_order', '_bx_payment_grid_action_title_sbs_view_order', 'ellipsis-h', 1, 0, 1),
+
+('bx_payment_grid_sbs_administration', 'single', 'view_order', '_bx_payment_grid_action_title_sbs_view_order', 'ellipsis-h', 1, 0, 1),
 
 ('bx_payment_grid_orders_history', 'single', 'view_order', '_bx_payment_grid_action_title_ods_view_order', 'ellipsis-h', 1, 0, 1),
 
