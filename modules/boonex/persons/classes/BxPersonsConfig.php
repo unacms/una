@@ -15,7 +15,11 @@ class BxPersonsConfig extends BxBaseModProfileConfig
     {
         parent::__construct($aModule);
 
-        $aMenuItems2Methods = array (
+        $aMenuItems2MethodsSubmenu = array (
+        	'persons-profile-subscriptions' => 'checkAllowedSubscriptionsView'
+        );
+
+        $aMenuItems2MethodsActions = array (
             'view-persons-profile' => 'checkAllowedView',
             'edit-persons-profile' => 'checkAllowedEdit',
             'edit-persons-cover' => 'checkAllowedChangeCover',
@@ -49,6 +53,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+        	'FIELD_PUB_SBSN' => 'public_subscriptions',
+        	'FIELD_PUB_SBSD' => 'public_subscribed_me',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
@@ -116,8 +122,9 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-                'bx_persons_view_actions' => $aMenuItems2Methods,
-                'bx_persons_view_actions_more' => $aMenuItems2Methods,
+                'bx_persons_view_submenu' => $aMenuItems2MethodsSubmenu,
+                'bx_persons_view_actions' => $aMenuItems2MethodsActions,
+                'bx_persons_view_actions_more' => $aMenuItems2MethodsActions,
             ),
 
             // informer messages

@@ -21,6 +21,10 @@
     <string name="_bx_persons_form_profile_input_submit"><![CDATA[Submit]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
+    <string name="_bx_persons_form_profile_input_sys_public_subscriptions"><![CDATA[Public subscriptions list]]></string>
+    <string name="_bx_persons_form_profile_input_public_subscriptions"><![CDATA[Public subscriptions list]]></string>
+    <string name="_bx_persons_form_profile_input_sys_public_subscribed_me"><![CDATA[Public subscribers list]]></string>
+    <string name="_bx_persons_form_profile_input_public_subscribed_me"><![CDATA[Public subscribers list]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
@@ -66,9 +70,7 @@
 	<string name="_bx_persons_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_title_sys_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_persons_page_title_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_persons_page_title_sys_profile_subscribed_me"><![CDATA[Subscribed Me]]></string>
-    <string name="_bx_persons_page_title_profile_subscribed_me"><![CDATA[Subscribed Me]]></string>
+    <string name="_bx_persons_page_title_profile_subscriptions"><![CDATA[Subscriptions & Subscribers]]></string>
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
 	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_persons_page_title_sys_recent"><![CDATA[New People]]></string>
@@ -98,10 +100,10 @@
 	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-	<string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-	<string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[Subscribed Me]]></string>
-    <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[Subscribed Me]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[My Subscriptions]]></string>
+	<string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[My Subscriptions]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[My Subscribers]]></string>
+    <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[My Subscribers]]></string>
 	<string name="_bx_persons_page_block_title_featured_profiles"><![CDATA[Featured People]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[New People]]></string>

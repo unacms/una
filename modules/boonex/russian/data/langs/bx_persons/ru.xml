@@ -21,6 +21,10 @@
     <string name="_bx_persons_form_profile_input_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>
     <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string>
+    <string name="_bx_persons_form_profile_input_sys_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
+    <string name="_bx_persons_form_profile_input_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
+    <string name="_bx_persons_form_profile_input_sys_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
+    <string name="_bx_persons_form_profile_input_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
@@ -66,9 +70,7 @@
 	<string name="_bx_persons_page_title_sys_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_title_sys_profile_subscriptions"><![CDATA[Подписки]]></string>
-    <string name="_bx_persons_page_title_profile_subscriptions"><![CDATA[Подписки]]></string>
-    <string name="_bx_persons_page_title_sys_profile_subscribed_me"><![CDATA[Мои подписчики]]></string>
-    <string name="_bx_persons_page_title_profile_subscribed_me"><![CDATA[Мои подписчики]]></string>
+    <string name="_bx_persons_page_title_profile_subscriptions"><![CDATA[Подписки и подписчики]]></string>
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Инфо профиля]]></string>
 	<string name="_bx_persons_page_title_profile_info"><![CDATA[Инфо о {display_name}]]></string>
 	<string name="_bx_persons_page_title_sys_recent"><![CDATA[Последние Присоединившиеся Пользователи]]></string>
@@ -98,8 +100,8 @@
 	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
-	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[Подписки]]></string>
-    <string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Подписки]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[Мои подписки]]></string>
+    <string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Мои подписки]]></string>
     <string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[Мои подписчики]]></string>
     <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[Мои подписчики]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Действия]]></string>
