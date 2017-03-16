@@ -12,7 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseModNotificationsModule');
 
-define('BX_NTFS_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_CONNECTIONS);
+define('BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS', 'obj_own_and_con');
+define('BX_NTFS_TYPE_DEFAULT', BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS);
 
 class BxNtfsModule extends BxBaseModNotificationsModule
 {
@@ -44,11 +45,12 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      */
     public function serviceGetBlockView($sType = '', $iStart = -1, $iPerPage = -1, $aModules = array())
     {
-    	$aBrowseTypes = array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER);
+    	$aBrowseTypes = array(BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER);
+
     	if(empty($sType)) {
-    		$mType = bx_get('type');
-    		if($mType !== false && in_array($mType, $aBrowseTypes))
-    			$sType = $mType;
+    		$mixedType = bx_get('type');
+    		if($mixedType !== false && in_array($mixedType, $aBrowseTypes))
+    			$sType = $mixedType;
 
 	    	if(empty($sType))
     			$sType = BX_NTFS_TYPE_DEFAULT;
@@ -69,25 +71,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 		$sModule = $this->_oConfig->getName();
 		$sJsObject = $this->_oConfig->getJsObject('view');
 
-		$aMenu = array();
-		foreach($aBrowseTypes as $sBrowseType)
-			$aMenu[] = array(
-				'id' => $sModule . '-' . $sBrowseType,
-				'name' => $sModule . '-' . $sBrowseType,
-				'class' => '',
-				'title' => '_bx_ntfs_menu_item_title_' . $sBrowseType,
-				'target' => '_self',
-				'onclick' => 'javascript:' . $sJsObject . '.changeType(this, \'' . $sBrowseType . '\');'
-			);
-
-		$oMenu = new BxTemplMenuInteractive(array(
-        	'template' => 'menu_interactive_vertical.html',
-			'menu_id' => $sModule . '-browse-types',
-        	'menu_items' => $aMenu
-        ), $this->_oTemplate);
-        $oMenu->setSelected($sModule, $sModule . '-' . $sType);
-
-        return array('content' => $sContent, 'menu' => $oMenu); 
+        return array('content' => $sContent); 
     }
 
     public function serviceGetEventById($iId)

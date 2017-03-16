@@ -11,6 +11,10 @@ function BxNtfsView(oOptions) {
 
 BxNtfsView.prototype = new BxNtfsMain();
 
+/**
+ * Is needed to switch between different browsing types dynamically.
+ * NOTE. The function isn't used for now.
+ */
 BxNtfsView.prototype.changeType = function(oElement, sType) {
 	this._oRequestParams.start = 0;
 	this._oRequestParams.type = sType;

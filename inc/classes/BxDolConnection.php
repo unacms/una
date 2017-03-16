@@ -243,7 +243,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if (!$this->_oQuery->addConnection((int)$iInitiator, (int)$iContent, $iMutual))
             return false;
 
-        bx_alert($this->_sObject, 'connection_added', 0, getLoggedId(), array(
+        bx_alert($this->_sObject, 'connection_added', 0, bx_get_logged_profile_id(), array(
             'initiator' => (int)$iInitiator,
             'content' => (int)$iContent,
             'mutual' => (int)$iMutual,
@@ -267,7 +267,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         if (!$this->_oQuery->removeConnection((int)$iInitiator, (int)$iContent))
             return false;
 
-        bx_alert($this->_sObject, 'connection_removed', 0, getLoggedId(), array(
+        bx_alert($this->_sObject, 'connection_removed', 0, bx_get_logged_profile_id(), array(
             'initiator' => (int)$iInitiator,
             'content' => (int)$iContent,
             'mutual' => isset($aConnection['mutual']) ? $aConnection['mutual'] : 0,
