@@ -22,8 +22,11 @@ class BxBaseServiceLogin extends BxDol
         return $n*2;
     }
 
-    public function serviceMemberAuthCode($aAuthTypes)
+    public function serviceMemberAuthCode($aAuthTypes = array())
     {
+        if(empty($aAuthTypes) || !is_array($aAuthTypes))
+            $aAuthTypes = BxDolDb::getInstance()->fromCache('sys_objects_auths', 'getAll', 'SELECT * FROM `sys_objects_auths`');
+
         $bCompact = getParam('site_login_social_compact') == 'on';
 
         $aTmplButtons = array();
@@ -33,6 +36,7 @@ class BxBaseServiceLogin extends BxDol
             $aTmplButtons[] = array(
             	'class' => $bCompact ? 'sys-auth-compact bx-def-margin-sec-left-auto' : '',
                 'href' => !empty($aItems['Link']) ? BX_DOL_URL_ROOT . $aItems['Link'] : 'javascript:void(0)',
+                'title_alt' => bx_html_attribute($sTitle),
                 'bx_if:show_onclick' => array(
                     'condition' => !empty($aItems['OnClick']),
                     'content' => array(
@@ -71,11 +75,8 @@ class BxBaseServiceLogin extends BxDol
 
     public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
-        if (isLogged()) {
+        if(isLogged())
             return false;
-        }
-        // get all auth types
-        $aAuthTypes = BxDolDb::getInstance()->fromCache('sys_objects_auths', 'getAll', 'SELECT * FROM `sys_objects_auths`');
 
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
 
@@ -97,7 +98,7 @@ class BxBaseServiceLogin extends BxDol
 
         BxDolTemplate::getInstance()->addJs(array('jquery.form.min.js'));
 
-        $sAuth = $this->serviceMemberAuthCode($aAuthTypes);
+        $sAuth = $this->serviceMemberAuthCode();
 
         return $sCustomHtmlBefore . $sAuth . $sFormCode . $sCustomHtmlAfter . $sJoinText;
 
