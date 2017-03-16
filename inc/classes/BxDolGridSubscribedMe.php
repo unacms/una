@@ -12,8 +12,10 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 class BxDolGridSubscribedMe extends BxTemplGrid
 {
     protected $_bOwner = false;
+
     protected $_sObjectConnections = 'sys_profiles_subscriptions';
     protected $_oConnection;
+    protected $_sConnectionMethod = 'getConnectedInitiatorsAsSQLParts';
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -35,7 +37,7 @@ class BxDolGridSubscribedMe extends BxTemplGrid
         if ($oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
-        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $oProfile->id());
+        $aSQLParts = $this->_oConnection->{$this->_sConnectionMethod}('p', 'id', $oProfile->id());
 
         $this->addMarkers(array(
             'profile_id' => $oProfile->id(),
@@ -70,7 +72,8 @@ class BxDolGridSubscribedMe extends BxTemplGrid
 
     protected function _getActionSubscribe ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if(!isLogged() || $this->_oConnection->isConnected(bx_get_logged_profile_id(), $aRow['id']))
+        $iViewerId = bx_get_logged_profile_id();
+        if(!isLogged() || $iViewerId == $aRow['id'] || $this->_oConnection->isConnected($iViewerId, $aRow['id']))
             return '';
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);

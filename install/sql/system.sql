@@ -3475,7 +3475,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_grid_connections', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_grid_connections', 'single', 'add_friend', '_sys_add_friend', 'plus', 0, 3),
 
-('sys_grid_subscriptions', 'single', 'delete', '', 'remove', 1, 1),
+('sys_grid_subscriptions', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 1),
+('sys_grid_subscriptions', 'single', 'delete', '', 'remove', 1, 2),
 
 ('sys_grid_subscribed_me', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 1);
 
