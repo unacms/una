@@ -606,6 +606,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, true);
     }
 
+    public function checkAllowedSubscriptionsView (&$aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->_aModule['name']);
+        if(!$oProfile || ($oProfile->id() != $this->_iProfileId && (int)$aDataEntry[$CNF['FIELD_PUB_SBSN']] == 0 && (int)$aDataEntry[$CNF['FIELD_PUB_SBSD']] == 0))
+            return _t('_sys_txt_access_denied');
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     public function checkMyself($iContentId)
     {
 		$iLogged = (int)bx_get_logged_profile_id();

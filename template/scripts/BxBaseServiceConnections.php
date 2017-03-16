@@ -106,6 +106,17 @@ class BxBaseServiceConnections extends BxDol
      */
     public function serviceSubscriptionsTable ()
     {
+        $aProfile = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getInfo();
+        if(empty($aProfile) || !is_array($aProfile))
+            return false;
+
+        $aProfileInfo = BxDolService::call($aProfile['type'], 'get_content_info_by_id', array($aProfile['content_id']));
+        if(empty($aProfileInfo) || !is_array($aProfileInfo))
+            return false;
+
+        if((int)$aProfileInfo['public_subscriptions'] == 0 && $aProfile['id'] != bx_get_logged_profile_id())
+            return false;
+
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_subscriptions');
         if (!$oGrid)
             return false;
@@ -118,6 +129,17 @@ class BxBaseServiceConnections extends BxDol
      */
     public function serviceSubscribedMeTable ()
     {
+        $aProfile = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getInfo();
+        if(empty($aProfile) || !is_array($aProfile))
+            return false;
+
+        $aProfileInfo = BxDolService::call($aProfile['type'], 'get_content_info_by_id', array($aProfile['content_id']));
+        if(empty($aProfileInfo) || !is_array($aProfileInfo))
+            return false;
+
+        if((int)$aProfileInfo['public_subscribed_me'] == 0 && $aProfile['id'] != bx_get_logged_profile_id())
+            return false;
+
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_subscribed_me');
         if (!$oGrid)
             return false;
