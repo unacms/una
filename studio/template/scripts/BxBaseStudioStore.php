@@ -247,19 +247,20 @@ class BxBaseStudioStore extends BxDolStudioStore
     	            'list' => $this->displayProducts($aProducts),
     	            'paginate' => ''
     	        ));
-            }
-    
-            $sContent = '';
-            $sContent .= $this->getBlockCode(array(
+            }         
+
+            $sContent = $this->getBlockCode(array(
     			'caption' => '_adm_block_cpt_search',
-    			'items' => $oForm->getCode()
+    			'items' => $oTemplate->parseHtmlByName('str_search.html', array(
+                    'form' => $oForm->getCode(),
+                    'bx_if:show_results' => array(
+                        'condition' => !empty($sResults),
+                        'content' => array(
+                            'results' => $sResults
+                        )
+                    )
+                ))
     		));
-    
-    		if(!empty($sResults))
-    		    $sContent .= $this->getBlockCode(array(
-    				'caption' => '_adm_block_cpt_search_results',
-    				'items' => $sResults
-    			));
         }
         else 
             $sContent = $this->getBlockCode(array(
