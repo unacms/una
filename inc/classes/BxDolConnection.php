@@ -172,7 +172,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Remove connection.
+     * Remove connection. This method is wrapper for @see removeConnection to be called from @see conn.php upon AJAX request to this file.
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
      * @return array
      */
@@ -191,7 +191,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Reject connection request.
+     * Reject connection request. This method is wrapper for @see removeConnection to be called from @see conn.php upon AJAX request to this file.
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
      * @return array
      */
