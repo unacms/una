@@ -833,6 +833,17 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         }
     }
 
+    function getKeyValuesPair ()
+    {
+        $aRet = array ();
+        foreach ($this->aInputs as $k => $a) {
+            if (!isset($a['value']) || isset(self::$TYPES_CHECKBOX[$a['type']]) || isset(self::$TYPES_SKIP[$a['type']]))
+                continue;
+            $aRet[$k] = $a['value'];
+        }
+        return $aRet;
+    }
+
     function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
