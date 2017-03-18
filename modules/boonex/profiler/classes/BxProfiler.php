@@ -139,7 +139,7 @@ class BxProfiler extends BxDol
         fclose($f);
     }
 
-    function logSqlQuery ($iTime, $aSqlQuery, &$res)
+    function logSqlQuery ($iTime, $aSqlQuery, &$oStmt)
     {
         $s  = $this->_logBegin ('LONG SQL QUERY: ' . $aSqlQuery['time']);
         $s .= "Rows: " . $aSqlQuery['rows'] . "\n";
@@ -307,7 +307,7 @@ class BxProfiler extends BxDol
         $this->_aQueries[$this->_sQueryIndex]['begin'] = microtime ();
     }
 
-    function endQuery (&$res)
+    function endQuery (&$oStmt)
     {
         if (!$this->_sQueryIndex)
             return;
@@ -315,10 +315,10 @@ class BxProfiler extends BxDol
         unset ($this->_aQueries[$this->_sQueryIndex]['begin']);
         $this->_aQueries[$this->_sQueryIndex]['time'] = $this->_formatTime($iTime, 5);
         $this->_aQueries[$this->_sQueryIndex]['raw_time'] = $iTime;
-        $this->_aQueries[$this->_sQueryIndex]['rows'] = $res ? BxDolDb::getInstance()->getNumRows($res) : '';
-        $this->_aQueries[$this->_sQueryIndex]['affected'] = $res ? BxDolDb::getInstance()->getAffectedRows($res) : '';
+        $this->_aQueries[$this->_sQueryIndex]['rows'] = $oStmt ? BxDolDb::getInstance()->getNumRows($oStmt) : '';
+        $this->_aQueries[$this->_sQueryIndex]['affected'] = $oStmt ? BxDolDb::getInstance()->getAffectedRows($oStmt) : '';
         if (isset($this->aConf['long_query']) && $iTime > $this->aConf['long_query'])
-            $this->logSqlQuery ($iTime, $this->_aQueries[$this->_sQueryIndex], $res);
+            $this->logSqlQuery ($iTime, $this->_aQueries[$this->_sQueryIndex], $oStmt);
     }
 
     function beginMenu ($sName)
