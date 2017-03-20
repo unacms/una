@@ -186,6 +186,7 @@
     <string name="_bx_albums_txt_sample_vote_single"><![CDATA[album's vote]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[image]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[image's comment]]></string>
+    <string name="_bx_albums_txt_media_vote_single"><![CDATA[image's vote]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[{0}'s media]]></string>
 	<string name="_bx_albums_txt_media_album_link"><![CDATA[<a href="{0}">{1}</a> album by <a href="{2}">{3}</a>]]></string>
 	<string name="_bx_albums_txt_media_album_camera"><![CDATA[Camera]]></string>

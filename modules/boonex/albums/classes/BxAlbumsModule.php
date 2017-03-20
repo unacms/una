@@ -171,11 +171,17 @@ class BxAlbumsModule extends BxBaseModTextModule
         $aResult['handlers'] = array_merge($aResult['handlers'], array(
             array('group' => $sModule . '_comment_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             array('group' => $sModule . '_comment_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'commentRemoved'),
+
+            array('group' => $sModule . '_vote_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_vote_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'undoVote'),
         ));
 
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
             array('unit' => $sModule . '_media', 'action' => 'commentPost'),
             array('unit' => $sModule . '_media', 'action' => 'commentRemoved'),
+
+            array('unit' => $sModule . '_media', 'action' => 'doVote'),
+            array('unit' => $sModule . '_media', 'action' => 'undoVote'),
         ));
 
         return $aResult; 
@@ -204,6 +210,33 @@ class BxAlbumsModule extends BxBaseModTextModule
 			'entry_author' => $aMediaInfo['author'],
 			'subentry_sample' => $CNF['T']['txt_media_comment_single'],
 			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+    public function serviceGetNotificationsVoteMedia($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iMediaId = (int)$aEvent['object_id'];
+    	$aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        if(empty($aMediaInfo) || !is_array($aMediaInfo))
+            return array();
+
+		$oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], $iMediaId);
+        if(!$oVote || !$oVote->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+        $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_media_single'],
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aMediaInfo['author'],
+			'subentry_sample' => $CNF['T']['txt_media_vote_single'],
+			'subentry_url' => '',
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);
     }

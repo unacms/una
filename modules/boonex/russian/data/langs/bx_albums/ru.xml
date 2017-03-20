@@ -186,6 +186,7 @@
     <string name="_bx_albums_txt_sample_vote_single"><![CDATA[голос за альбом]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[изображение]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[комментарий к изображению]]></string>
+    <string name="_bx_albums_txt_media_vote_single"><![CDATA[голос за изображение]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[медиа-файлы автора {0}]]></string>
 	<string name="_bx_albums_txt_media_album_link"><![CDATA[<a href="{0}">{1}</a> альбом от <a href="{2}">{3}</a>]]></string>
 	<string name="_bx_albums_txt_media_album_camera"><![CDATA[Камера]]></string>
