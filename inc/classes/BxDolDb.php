@@ -484,7 +484,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         }
 
         if(isset($GLOBALS['bx_profiler']))
-        	$GLOBALS['bx_profiler']->endQuery($bResult);
+        	$GLOBALS['bx_profiler']->endQuery($oStatement);
 
 		//is needed for SILENT mode
 		if(!$bResult && !empty($this->_aError))
