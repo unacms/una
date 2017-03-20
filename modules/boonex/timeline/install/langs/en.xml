@@ -146,6 +146,8 @@
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[timeline post's comment]]></string>
     <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[timeline post's vote]]></string>
+    <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added <a href="{entry_url}">a new {entry_sample}{entry_caption}</a>]]></string>
+    <string name="_bx_timeline_ntfs_txt_object_caption"> '{0}'</string>
     <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
 
 	<string name="_bx_timeline_txt_do_repost"><![CDATA[Repost]]></string>

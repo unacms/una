@@ -1100,8 +1100,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'votes' => '',
             'reports' => '',
             'comments' => '',
-            'title' => '', //may be empty.
-            'description' => '' //may be empty.
+            'title' => $aEvent['title'], //may be empty.
+            'description' => $aEvent['description'] //may be empty.
         );
 
         switch($sType) {

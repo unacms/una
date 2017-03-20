@@ -474,14 +474,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(empty($aContent) || !is_array($aContent))
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+        $sEntryCaption = !empty($aContent['description']) ? strmaxtextlen($aContent['description'], $this->_oConfig->getCharsDisplayMaxSnippet(), '...') : '';
+        if(!empty($sEntryCaption))
+            $sEntryCaption = _t('_bx_timeline_ntfs_txt_object_caption', $sEntryCaption);
 
 		return array(
 			'entry_sample' => $CNF['T']['txt_sample_single_ext'],
 			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
 			'entry_caption' => $sEntryCaption,
 			'entry_author' => $aContent['owner_id'],
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+			'lang_key' => '_bx_timeline_ntfs_txt_object_added', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);
     }
 
@@ -700,7 +702,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds)
             	return array('msg' => _t('_bx_timeline_txt_err_empty_post'));
 
-            $sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample'));
+            $sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample_with_article'));
             $sDescription = $bText ? $sText : '';
 
             $iId = $oForm->insert(array(

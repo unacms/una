@@ -17,6 +17,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_iRssLength;
     protected $_iCharsDisplayMax;
+    protected $_iCharsDisplayMaxSnippet;
 
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
@@ -180,6 +181,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iCharsDisplayMax = (int)getParam($sOptionPrefix . 'chars_display_max');
+        $this->_iCharsDisplayMaxSnippet = 20;
     }
 
     public function isAllowDelete()
@@ -211,6 +213,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCharsDisplayMax()
     {
         return $this->_iCharsDisplayMax;
+    }
+
+    public function getCharsDisplayMaxSnippet()
+    {
+        return $this->_iCharsDisplayMaxSnippet;
     }
 
     public function getRepostDefaults()

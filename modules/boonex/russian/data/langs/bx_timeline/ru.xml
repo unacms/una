@@ -146,6 +146,8 @@
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[сообщение в ленте]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[комментарий к сообщению в ленте]]></string>
 	<string name="_bx_timeline_txt_sample_vote_single"><![CDATA[голос за сообщение в ленте]]></string>
+	<string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> добавил <a href="{entry_url}">новое {entry_sample}{entry_caption}</a>]]></string>
+	<string name="_bx_timeline_ntfs_txt_object_caption"> '{0}'</string>
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>
 
 	<string name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string>
