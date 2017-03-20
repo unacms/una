@@ -9,6 +9,8 @@
 	<string name="_bx_persons_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_persons_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_persons_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+    <string name="_bx_persons_option_public_subscriptions"><![CDATA[Public subscriptions list]]></string>
+    <string name="_bx_persons_option_public_subscribed_me"><![CDATA[Public subscribers list]]></string>
 
 	<string name="_bx_persons_form_profile"><![CDATA[Persons]]></string>
 	<string name="_bx_persons_form_profile_display_add"><![CDATA[Add Person]]></string>
@@ -21,10 +23,6 @@
     <string name="_bx_persons_form_profile_input_submit"><![CDATA[Submit]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
-    <string name="_bx_persons_form_profile_input_sys_public_subscriptions"><![CDATA[Public subscriptions list]]></string>
-    <string name="_bx_persons_form_profile_input_public_subscriptions"><![CDATA[Public subscriptions list]]></string>
-    <string name="_bx_persons_form_profile_input_sys_public_subscribed_me"><![CDATA[Public subscribers list]]></string>
-    <string name="_bx_persons_form_profile_input_public_subscribed_me"><![CDATA[Public subscribers list]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>

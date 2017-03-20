@@ -11,8 +11,6 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `cover` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `public_subscriptions` tinyint(4) NOT NULL DEFAULT '0',
-  `public_subscribed_me` tinyint(4) NOT NULL DEFAULT '0',
   `views` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
@@ -141,9 +139,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'description', '', '', 0, 'textarea', '_bx_persons_form_profile_input_sys_desc', '_bx_persons_form_profile_input_desc', '', 0, 0, 0, '', '', '', '', '', '', 'XssMultiline', '', 1, 1),
 ('bx_person', 'bx_persons', 'fullname', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_fullname', '_bx_persons_form_profile_input_fullname', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_fullname_err', 'Xss', '', 1, 0),
 ('bx_person', 'bx_persons', 'cover', 'a:1:{i:0;s:21:"bx_persons_cover_crop";}', 'a:1:{s:21:"bx_persons_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_persons_form_profile_input_sys_cover', '_bx_persons_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_person', 'bx_persons', 'picture', 'a:1:{i:0;s:23:"bx_persons_picture_crop";}', 'a:1:{s:23:"bx_persons_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_persons_form_profile_input_picture_err', '', '', 1, 0),
-('bx_person', 'bx_persons', 'public_subscriptions', 1, '', 0, 'checkbox', '_bx_persons_form_profile_input_sys_public_subscriptions', '_bx_persons_form_profile_input_public_subscriptions', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
-('bx_person', 'bx_persons', 'public_subscribed_me', 1, '', 0, 'checkbox', '_bx_persons_form_profile_input_sys_public_subscribed_me', '_bx_persons_form_profile_input_public_subscribed_me', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
+('bx_person', 'bx_persons', 'picture', 'a:1:{i:0;s:23:"bx_persons_picture_crop";}', 'a:1:{s:23:"bx_persons_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_persons_form_profile_input_picture_err', '', '', 1, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
@@ -151,9 +147,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_add', 'fullname', 2147483647, 1, 2),
 ('bx_person_add', 'description', 2147483647, 1, 3),
 ('bx_person_add', 'allow_view_to', 2147483647, 1, 4),
-('bx_person_add', 'public_subscriptions', 2147483647, 1, 5),
-('bx_person_add', 'public_subscribed_me', 2147483647, 1, 6),
-('bx_person_add', 'do_submit', 2147483647, 1, 7),
+('bx_person_add', 'do_submit', 2147483647, 1, 5),
 
 ('bx_person_delete', 'cover', 2147483647, 0, 0),
 ('bx_person_delete', 'picture', 2147483647, 0, 0),
@@ -165,9 +159,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_edit', 'fullname', 2147483647, 1, 2),
 ('bx_person_edit', 'description', 2147483647, 1, 3),
 ('bx_person_edit', 'allow_view_to', 2147483647, 1, 4),
-('bx_person_edit', 'public_subscriptions', 2147483647, 1, 5),
-('bx_person_edit', 'public_subscribed_me', 2147483647, 1, 6),
-('bx_person_edit', 'do_submit', 2147483647, 1, 7),
+('bx_person_edit', 'do_submit', 2147483647, 1, 5),
 
 ('bx_person_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_edit_cover', 'fullname', 2147483647, 0, 2),

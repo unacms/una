@@ -16,7 +16,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_persons_num_connections_quick', '4', @iCategId, '_bx_persons_option_num_connections_quick', 'digit', '', '', '', 10),
 ('bx_persons_per_page_browse', '20', @iCategId, '_bx_persons_option_per_page_browse', 'digit', '', '', '', 11),
 ('bx_persons_num_rss', '10', @iCategId, '_bx_persons_option_num_rss', 'digit', '', '', '', 12),
-('bx_persons_searchable_fields', 'fullname,description', @iCategId, '_bx_persons_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:10:"bx_persons";s:6:"method";s:21:"get_searchable_fields";}', '', '', 20);
+('bx_persons_searchable_fields', 'fullname,description', @iCategId, '_bx_persons_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:10:"bx_persons";s:6:"method";s:21:"get_searchable_fields";}', '', '', 20),
+('bx_persons_public_subscriptions', '', @iCategId, '_bx_persons_option_public_subscriptions', 'checkbox', '', '', '', 30),
+('bx_persons_public_subscribed_me', '', @iCategId, '_bx_persons_option_public_subscribed_me', 'checkbox', '', '', '', 31);
 
 -- PAGES
 

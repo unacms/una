@@ -53,8 +53,6 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
-        	'FIELD_PUB_SBSN' => 'public_subscriptions',
-        	'FIELD_PUB_SBSD' => 'public_subscribed_me',
             'FIELDS_QUICK_SEARCH' => array('org_name'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
@@ -77,6 +75,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'PARAM_NUM_RSS' => 'bx_organizations_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_organizations_num_connections_quick',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_organizations_searchable_fields',
+        	'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
+            'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
 
             // objects
             'OBJECT_STORAGE' => 'bx_organizations_pics',

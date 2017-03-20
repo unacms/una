@@ -53,8 +53,6 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
-        	'FIELD_PUB_SBSN' => 'public_subscriptions',
-        	'FIELD_PUB_SBSD' => 'public_subscribed_me',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
@@ -77,6 +75,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'PARAM_NUM_RSS' => 'bx_persons_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_persons_num_connections_quick',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_persons_searchable_fields',
+            'PARAM_PUBLIC_SBSN' => 'bx_persons_public_subscriptions',
+            'PARAM_PUBLIC_SBSD' => 'bx_persons_public_subscribed_me',
 
             // objects
             'OBJECT_STORAGE' => 'bx_persons_pictures',

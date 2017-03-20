@@ -9,6 +9,8 @@
 	<string name="_bx_persons_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
     <string name="_bx_persons_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
     <string name="_bx_persons_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+    <string name="_bx_persons_option_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
+    <string name="_bx_persons_option_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
 
 	<string name="_bx_persons_form_profile"><![CDATA[Персоны]]></string>
 	<string name="_bx_persons_form_profile_display_add"><![CDATA[Добавление персоны]]></string>
@@ -21,10 +23,6 @@
     <string name="_bx_persons_form_profile_input_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>
     <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string>
-    <string name="_bx_persons_form_profile_input_sys_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
-    <string name="_bx_persons_form_profile_input_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
-    <string name="_bx_persons_form_profile_input_sys_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
-    <string name="_bx_persons_form_profile_input_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
