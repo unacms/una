@@ -100,10 +100,10 @@
 	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[My Subscriptions]]></string>
-	<string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[My Subscriptions]]></string>
-	<string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[My Subscribers]]></string>
-    <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[My Subscribers]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[Subscriptions]]></string>
+	<string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Subscriptions]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[Subscribers]]></string>
+    <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[Subscribers]]></string>
 	<string name="_bx_persons_page_block_title_featured_profiles"><![CDATA[Featured People]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[New People]]></string>
@@ -170,10 +170,10 @@
     <string name="_bx_persons_menu_item_title_manage_my_profiles"><![CDATA[{addon} profiles]]></string>
     <string name="_bx_persons_menu_item_title_system_favorites"><![CDATA[Favorite Persons]]></string>
     <string name="_bx_persons_menu_item_title_favorites"><![CDATA[{addon} favorite persons]]></string>    
-    <string name="_bx_persons_menu_item_title_system_subscriptions"><![CDATA[My subscriptions]]></string>
+    <string name="_bx_persons_menu_item_title_system_subscriptions"><![CDATA[Subscriptions]]></string>
     <string name="_bx_persons_menu_item_title_subscriptions"><![CDATA[{addon} subscriptions]]></string>
-    <string name="_bx_persons_menu_item_title_system_subscribed_me"><![CDATA[Subscribed Me]]></string>
-    <string name="_bx_persons_menu_item_title_subscribed_me"><![CDATA[{addon} subscribed me]]></string>
+    <string name="_bx_persons_menu_item_title_system_subscribed_me"><![CDATA[Subscribers]]></string>
+    <string name="_bx_persons_menu_item_title_subscribed_me"><![CDATA[{addon} subscribers]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>

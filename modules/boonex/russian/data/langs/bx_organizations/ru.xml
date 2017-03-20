@@ -102,10 +102,10 @@
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
-	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Наши подписки]]></string>
-    <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Наши подписки]]></string>
-    <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Наши подписчики]]></string>
-    <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Наши подписчики]]></string>
+	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Подписки]]></string>
+    <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Подписки]]></string>
+    <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Подписчики]]></string>
+    <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Подписчики]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Продвинутые организации]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Последние добавленные организации]]></string>
@@ -174,9 +174,9 @@
     <string name="_bx_orgs_menu_item_title_manage_my_organizations"><![CDATA[{addon} организаций]]></string>
     <string name="_bx_orgs_menu_item_title_system_favorites"><![CDATA[Избранные организации]]></string>
     <string name="_bx_orgs_menu_item_title_favorites"><![CDATA[{addon} избранные организации]]></string>
-    <string name="_bx_orgs_menu_item_title_system_subscriptions"><![CDATA[Наши подписки]]></string>
+    <string name="_bx_orgs_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_orgs_menu_item_title_subscriptions"><![CDATA[{addon} подписки]]></string>
-    <string name="_bx_orgs_menu_item_title_system_subscribed_me"><![CDATA[Наши подписчики]]></string>
+    <string name="_bx_orgs_menu_item_title_system_subscribed_me"><![CDATA[Подписчики]]></string>
     <string name="_bx_orgs_menu_item_title_subscribed_me"><![CDATA[{addon} подписчика]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[Новые Организации]]></string>
     <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[Новые Организации]]></string>

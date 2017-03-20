@@ -102,10 +102,10 @@
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Our Subscriptions]]></string>
-    <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Our Subscriptions]]></string>
-    <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Our Subscribers]]></string>
-    <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Our Subscribers]]></string>
+	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Subscribers]]></string>
+    <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Subscribers]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Featured Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[New Organizations]]></string>
@@ -174,10 +174,10 @@
     <string name="_bx_orgs_menu_item_title_manage_my_organizations"><![CDATA[{addon} organizations]]></string>
     <string name="_bx_orgs_menu_item_title_system_favorites"><![CDATA[Favorite Organizations]]></string>
     <string name="_bx_orgs_menu_item_title_favorites"><![CDATA[{addon} favorite organizations]]></string>
-    <string name="_bx_orgs_menu_item_title_system_subscriptions"><![CDATA[Our subscriptions]]></string>
+    <string name="_bx_orgs_menu_item_title_system_subscriptions"><![CDATA[Subscriptions]]></string>
     <string name="_bx_orgs_menu_item_title_subscriptions"><![CDATA[{addon} subscriptions]]></string>
-    <string name="_bx_orgs_menu_item_title_system_subscribed_me"><![CDATA[Subscribed Us]]></string>
-    <string name="_bx_orgs_menu_item_title_subscribed_me"><![CDATA[{addon} subscribed us]]></string>
+    <string name="_bx_orgs_menu_item_title_system_subscribed_me"><![CDATA[Subscribers]]></string>
+    <string name="_bx_orgs_menu_item_title_subscribed_me"><![CDATA[{addon} subscribers]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>

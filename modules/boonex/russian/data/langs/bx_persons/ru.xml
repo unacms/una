@@ -100,10 +100,10 @@
 	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
-	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[Мои подписки]]></string>
-    <string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Мои подписки]]></string>
-    <string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[Мои подписчики]]></string>
-    <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[Мои подписчики]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_subscriptions"><![CDATA[Подписки]]></string>
+    <string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Подписки]]></string>
+    <string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[Подписчики]]></string>
+    <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[Подписчики]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_persons_page_block_title_featured_profiles"><![CDATA[Продвинутые Пользователи]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[Последние Присоединившиеся Пользователи]]></string>
@@ -170,9 +170,9 @@
     <string name="_bx_persons_menu_item_title_manage_my_profiles"><![CDATA[{addon} профили]]></string>
     <string name="_bx_persons_menu_item_title_system_favorites"><![CDATA[Избранные персоны]]></string>
     <string name="_bx_persons_menu_item_title_favorites"><![CDATA[{addon} избранные персоны]]></string>
-    <string name="_bx_persons_menu_item_title_system_subscriptions"><![CDATA[Мои подписки]]></string>
+    <string name="_bx_persons_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_persons_menu_item_title_subscriptions"><![CDATA[{addon} подписки]]></string>
-    <string name="_bx_persons_menu_item_title_system_subscribed_me"><![CDATA[Мои подписчики]]></string>
+    <string name="_bx_persons_menu_item_title_system_subscribed_me"><![CDATA[Подписчики]]></string>
     <string name="_bx_persons_menu_item_title_subscribed_me"><![CDATA[{addon} подписчика]]></string>    
     <string name="_bx_persons_menu_item_title_system_entries_public"><![CDATA[Публичные]]></string>
     <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[Новые профили]]></string>

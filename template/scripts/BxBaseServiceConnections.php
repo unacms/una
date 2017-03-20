@@ -121,7 +121,10 @@ class BxBaseServiceConnections extends BxDol
         if (!$oGrid)
             return false;
 
-        return $oGrid->getCode();
+        return BxDolTemplate::getInstance()->parseHtmlByName('connections_list.html', array(
+            'name' => 'subscriptions',
+            'content' => $oGrid->getCode()
+        ));
     }
 
 	/**
@@ -144,7 +147,10 @@ class BxBaseServiceConnections extends BxDol
         if (!$oGrid)
             return false;
 
-        return $oGrid->getCode();
+        return BxDolTemplate::getInstance()->parseHtmlByName('connections_list.html', array(
+            'name' => 'subscribers',
+            'content' => $oGrid->getCode()
+        ));
     }
 
     /*
