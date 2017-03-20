@@ -148,7 +148,7 @@ class BxBaseServiceConnections extends BxDol
     }
 
     /*
-     * Get notification data for Notifications module. 
+     * Get notification data for Notifications module - action Subscribe. 
      */
 	public function serviceGetNotificationsPost($aEvent)
     {
@@ -163,6 +163,25 @@ class BxBaseServiceConnections extends BxDol
 			'entry_caption' => $oProfile->getDisplayName(),
 			'entry_author' => $oProfile->id(),
 			'lang_key' => '_sys_profile_subscription_added',
+		);
+    }
+
+    /*
+     * Get notification data for Notifications module - action Friend. 
+     */
+	public function serviceGetNotificationsPostFriendship($aEvent)
+    {
+    	$iProfile = (int)$aEvent['object_id'];
+    	$oProfile = BxDolProfile::getInstance($iProfile);
+        if(!$oProfile)
+			return array();
+
+		return array(
+			'entry_sample' => '_sys_profile_sample_single',
+			'entry_url' => $oProfile->getUrl(),
+			'entry_caption' => $oProfile->getDisplayName(),
+			'entry_author' => $oProfile->id(),
+			'lang_key' => '_sys_profile_friendship_added',
 		);
     }
 }

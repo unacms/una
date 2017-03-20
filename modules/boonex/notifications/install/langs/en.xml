@@ -24,6 +24,7 @@
 	<string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[post to timeline]]></string> 
 
 	<string name="_bx_ntfs_alert_module_sys_profiles_subscriptions"><![CDATA[Profiles Subscriptions]]></string>
+	<string name="_bx_ntfs_alert_module_sys_profiles_friends"><![CDATA[Profiles Friends]]></string>
 	<string name="_bx_ntfs_alert_action_connection_added"><![CDATA[add connection]]></string>
 
 	<string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Empty]]></string>
