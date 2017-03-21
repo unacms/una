@@ -142,13 +142,14 @@
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[added {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
-	<string name="_bx_timeline_txt_user_reposted_sample"><![CDATA[{0} reposted {1}'s {2}]]></string>
+	<string name="_bx_timeline_txt_user_repost"><![CDATA[{0}'s repost]]></string>
+	<string name="_bx_timeline_txt_user_reposted_user_sample"><![CDATA[{0} reposted {1}'s {2}]]></string>
 	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
 	<string name="_bx_timeline_txt_sample_with_article"><![CDATA[a post]]></string>
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
-	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[timeline post's comment]]></string>
-    <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[timeline post's vote]]></string>
-    <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added <a href="{entry_url}">a new {entry_sample}{entry_caption}</a>]]></string>
+	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[comment]]></string>
+    <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[vote]]></string>
+    <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
     <string name="_bx_timeline_ntfs_txt_object_caption"> '{0}'</string>
     <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
 

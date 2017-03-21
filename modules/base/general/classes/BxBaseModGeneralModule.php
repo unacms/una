@@ -488,6 +488,11 @@ class BxBaseModGeneralModule extends BxDolModule
                 'count' => $aContentInfo['comments']
             );
 
+        //--- Title & Description
+        $sTitle = !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '';
+        if(empty($sTitle) && !empty($aContentInfo[$CNF['FIELD_TEXT']]))
+            $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
+
         return array(
             'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
@@ -501,7 +506,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'votes' => $aVotes,
             'reports' => $aReports,
             'comments' => $aComments,
-            'title' => '', //may be empty.
+            'title' => $sTitle, //may be empty.
             'description' => '' //may be empty.
         );
     }

@@ -162,9 +162,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sSample = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         if(empty($aEvent['title']) || empty($aEvent['description'])) {
-            $sTitle = !empty($aResult['title']) ? $aResult['title'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
+            $sTitle = !empty($aResult['title']) ? $this->_oConfig->getTitle($aResult['title']) : _t($sSample);
 
-            $sDescription = !empty($aResult['description']) ? $aResult['description'] : '';
+            $sDescription = !empty($aResult['description']) ? $aResult['description'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
             if($sDescription == '' && !empty($aResult['content']['text']))
                 $sDescription = $aResult['content']['text'];
 
@@ -1182,8 +1182,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     $aResult['content']['sample'] = $aReposted['sample_wo_article'];
 
                 list($sUserName) = $oModule->getUserInfo($aEvent['object_id']);
-                $aResult['title'] = _t('_bx_timeline_txt_user_reposted_sample', $sUserName, $aResult['content']['owner_name'], _t($aResult['content']['sample']));
-                $aResult['description'] = '';
+                $aResult['title'] = _t('_bx_timeline_txt_user_repost', $sUserName, _t($aResult['content']['sample']));
+                $aResult['description'] = _t('_bx_timeline_txt_user_reposted_user_sample', $sUserName, $aResult['content']['owner_name'], _t($aResult['content']['sample']));
                 break;
         }
 

@@ -142,13 +142,14 @@
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[добавил {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} добавил {1}]]></string>
-	<string name="_bx_timeline_txt_user_reposted_sample"><![CDATA[{0} сделал репост {1} {2}]]></string>
+	<string name="_bx_timeline_txt_user_repost"><![CDATA[Репост от {0}]]></string>
+	<string name="_bx_timeline_txt_user_reposted_user_sample"><![CDATA[{0} сделал репост {1} {2}]]></string>
 	<string name="_bx_timeline_txt_sample"><![CDATA[сообщение]]></string>
 	<string name="_bx_timeline_txt_sample_with_article"><![CDATA[сообщение]]></string>
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[сообщение в ленте]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[комментарий к сообщению в ленте]]></string>
 	<string name="_bx_timeline_txt_sample_vote_single"><![CDATA[голос за сообщение в ленте]]></string>
-	<string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> добавил <a href="{entry_url}">новое {entry_sample}{entry_caption}</a>]]></string>
+	<string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> добавил новое {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
 	<string name="_bx_timeline_ntfs_txt_object_caption"> '{0}'</string>
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>
 

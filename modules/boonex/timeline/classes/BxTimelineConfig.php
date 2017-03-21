@@ -17,7 +17,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_iRssLength;
     protected $_iCharsDisplayMax;
-    protected $_iCharsDisplayMaxSnippet;
+    protected $_iCharsDisplayMaxTitle;
 
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
@@ -181,7 +181,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iCharsDisplayMax = (int)getParam($sOptionPrefix . 'chars_display_max');
-        $this->_iCharsDisplayMaxSnippet = 20;
+        $this->_iCharsDisplayMaxTitle = 20;
     }
 
     public function isAllowDelete()
@@ -215,9 +215,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_iCharsDisplayMax;
     }
 
-    public function getCharsDisplayMaxSnippet()
+    public function getCharsDisplayMaxTitle()
     {
-        return $this->_iCharsDisplayMaxSnippet;
+        return $this->_iCharsDisplayMaxTitle;
     }
 
     public function getRepostDefaults()
@@ -233,6 +233,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     /**
      * Ancillary functions
      */
+    public function getTitle($s)
+    {
+        return strmaxtextlen($s, $this->getCharsDisplayMaxTitle(), '...');
+    }
+
     public function getViewUrl($iOwnerId)
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view&id=' . $iOwnerId);

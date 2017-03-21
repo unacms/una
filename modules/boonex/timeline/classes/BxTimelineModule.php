@@ -474,7 +474,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(empty($aContent) || !is_array($aContent))
             return array();
 
-        $sEntryCaption = !empty($aContent['description']) ? strmaxtextlen($aContent['description'], $this->_oConfig->getCharsDisplayMaxSnippet(), '...') : '';
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description']);
         if(!empty($sEntryCaption))
             $sEntryCaption = _t('_bx_timeline_ntfs_txt_object_caption', $sEntryCaption);
 
@@ -500,7 +500,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(!$oComment || !$oComment->isEnabled())
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description']);
 
 		return array(
 			'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -526,7 +526,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(!$oVote || !$oVote->isEnabled())
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description']);
 
 		return array(
 			'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -702,8 +702,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds)
             	return array('msg' => _t('_bx_timeline_txt_err_empty_post'));
 
-            $sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample_with_article'));
-            $sDescription = $bText ? $sText : '';
+            $sSample = _t('_bx_timeline_txt_sample_with_article');
+            $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $sSample;
+            $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, $sSample);
 
             $iId = $oForm->insert(array(
                 'object_id' => $iUserId,
