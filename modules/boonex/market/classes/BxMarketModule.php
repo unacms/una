@@ -481,8 +481,7 @@ class BxMarketModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
         return parent::_entitySocialSharing($iId, array_merge($aParams, array(
-        	'object_vote' => '',
-            'social_sharing' => false
+        	'object_vote' => ''
         )));
     }
 }
