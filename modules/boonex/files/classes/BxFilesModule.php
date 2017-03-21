@@ -179,26 +179,27 @@ class BxFilesModule extends BxBaseModTextModule
         }
     }
 
-    public function serviceGetTimelinePost($aEvent)
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
     {
-        $a = parent::serviceGetTimelinePost($aEvent);
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo);
 
-        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         $aFile = $this->getContentFile($aContentInfo);
         if (!$aFile['is_image']) {
             $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->CNF['OBJECT_STORAGE']);
             $sIcon = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'file-o';
-            $a['content'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', array(
-                'title' => $a['content']['title'],
-                'title_attr' => bx_html_attribute($a['content']['title']),
-                'url' => $a['content']['url'],
-                'icon' => '<i class="sys-icon ' . $sIcon . '"></i>',
+
+            $aResult['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', array(
+                'title' => $aResult['title'],
+                'title_attr' => bx_html_attribute($aResult['title']),
+                'url' => $aResult['url'],
+                'icon' => $sIcon,
             ));
+            $aResult['title'] = '';
         }
-        
-        return $a;
+
+        return $aResult;
     }
-    
+
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
     {
         $aFile = $this->getContentFile($aContentInfo);
