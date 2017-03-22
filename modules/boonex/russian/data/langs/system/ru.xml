@@ -2194,7 +2194,7 @@
 	<string name="_sys_pre_lists_report_types_nude"><![CDATA[обнаженность]]></string>
 	<string name="_sys_pre_lists_report_types_other"><![CDATA[другое]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
-	<string name="_sys_profile_friendship_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> подружился с <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_sys_profile_friendship_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> и <a href="{entry_url}">{entry_caption}</a>]]> стали друзьями</string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> подписался на <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
 	<string name="_sys_private"><![CDATA[Приватные]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Очистка Базы Данных:</h3>

@@ -158,7 +158,7 @@
 	<string name="_bx_timeline_txt_err_cannot_repost"><![CDATA[Невозможно сделать репост. Пожалуйста, сообщите нам об этой проблеме.]]></string>
 	<string name="_bx_timeline_txt_err_already_reposted"><![CDATA[Вы уже сделали репост этого элемента.]]></string>
 	<string name="_bx_timeline_txt_msg_success_repost"><![CDATA[Репост данного элемента был сделан успешно.]]></string>
-	<string name="_bx_timeline_txt_object_reposted"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> - репост {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_bx_timeline_txt_object_reposted"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> - {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]> (репост)</string>
 
     <!-- EMAIL TEMPLATES -->
     <string name="_bx_timeline_et_txt_name_send"><![CDATA[Послать другу.]]></string>
