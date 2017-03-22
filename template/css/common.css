@@ -516,8 +516,11 @@ input.bx-btn {
 }
 
 .bx-btn img {
-    width:16px;
-    height:16px;
+    width:1.2em;
+    height:1.2em;
+    vertical-align:middle;
+    background-size:1.2em 1.2em;
+    background-position:center center;
 }
 .bx-btn u {
     margin-left: 10px;

@@ -100,7 +100,10 @@ ul.bx-menu-ver {
     text-align:center;
 }
 
+.bx-menu-notif li img,
+.bx-menu-verlit li img,
 .bx-menu-ver li img {
+    background-size:1.25rem 1.25rem;
     background-position:center center;
     background-repeat:no-repeat;
 }

@@ -551,7 +551,7 @@ class BxBaseGrid extends BxDolGrid
             if (false === strpos($a['icon'], '.'))
                 $sIcon = '<i class="sys-icon ' . $a['icon'] . '"></i>';
             elseif ($sIconUrl = $this->_oTemplate->getIconUrl($a['icon']))
-                $sImage = '<i style="background-image:url(' . $sIconUrl . ');"></i>';
+                $sImage = '<img style="background-image:url(' . $sIconUrl . ');" src="' . $this->_oTemplate->getIconUrl('spacer.gif') .'" />';
         }
         return '<button ' . $sAttr . '>' . $sIcon . $sImage . ($a['icon_only'] || empty($a['title']) ? '' : '<u>' . $a['title'] . '</u>') . '</button>';
     }
