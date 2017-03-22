@@ -475,8 +475,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return array();
 
         $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description']);
-        if(!empty($sEntryCaption))
-            $sEntryCaption = _t('_bx_timeline_ntfs_txt_object_caption', $sEntryCaption);
 
 		return array(
 			'entry_sample' => $CNF['T']['txt_sample_single_ext'],
