@@ -42,7 +42,7 @@ class BxAclGridView extends BxAclGridLevels
 
         $aResult = array();
         $iUserId = bx_get_logged_profile_id();
-        if(BxDolAcl::getInstance()->setMembership($iUserId, $aItem['level_id'], 0, true))
+        if(BxDolAcl::getInstance()->setMembership($iUserId, $aItem['level_id'], array('period' => $aItem['period'], 'period_unit' => $aItem['period_unit']), true))
             $aResult = array('grid' => $this->getCode(false), 'blink' => $aItem['id'], 'msg' => _t('_bx_acl_msg_performed'));
         else
             $aResult = array('msg' => _t('_bx_acl_err_cannot_perform'));
