@@ -981,6 +981,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
 
         if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
+            //--- Request event's data from content module and update it in the Timeline DB.
+            $this->_oTemplate->getData($aEvent);
+
             $sPostType = 'system';
             $iSenderId = $aEvent['owner_id'];
         } else {

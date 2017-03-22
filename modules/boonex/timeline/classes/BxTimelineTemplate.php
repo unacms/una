@@ -154,29 +154,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
-        $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent) : $this->_getCommonData($aEvent);
-        if(empty($aResult) || empty($aResult['owner_id']) || empty($aResult['content']))
+        $aResult = $this->getData($aEvent);
+        if($aResult === false)
             return '';
-
-        list($sUserName) = $this->getModule()->getUserInfo($aResult['owner_id']);
-
-        $sSample = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
-        if(empty($aEvent['title']) || empty($aEvent['description'])) {
-            $sTitle = !empty($aResult['title']) ? $this->_oConfig->getTitle($aResult['title']) : _t($sSample);
-
-            $sDescription = !empty($aResult['description']) ? $aResult['description'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
-            if($sDescription == '' && !empty($aResult['content']['text']))
-                $sDescription = $aResult['content']['text'];
-
-            $this->_oDb->updateEvent(array(
-                'title' => bx_process_input(strip_tags($sTitle)),
-                'description' => bx_process_input(strip_tags($sDescription))
-            ), array('id' => $aEvent['id']));
-        }
 
         $aEvent['object_owner_id'] = $aResult['owner_id'];
         $aEvent['icon'] = !empty($aResult['icon']) ? $aResult['icon'] : '';
-        $aEvent['sample'] = $sSample;
+        $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
         $aEvent['views'] = $aResult['views'];
@@ -650,6 +634,31 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         		'content' => $aTmplVarsEmbed
             ),
         ));
+    }
+
+    public function getData(&$aEvent)
+    {
+        $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent) : $this->_getCommonData($aEvent);
+        if(empty($aResult) || empty($aResult['owner_id']) || empty($aResult['content']))
+            return false;
+
+        list($sUserName) = $this->getModule()->getUserInfo($aResult['owner_id']);
+
+        $sSample = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
+        if(empty($aEvent['title']) || empty($aEvent['description'])) {
+            $sTitle = !empty($aResult['title']) ? $this->_oConfig->getTitle($aResult['title']) : _t($sSample);
+
+            $sDescription = !empty($aResult['description']) ? $aResult['description'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
+            if($sDescription == '' && !empty($aResult['content']['text']))
+                $sDescription = $aResult['content']['text'];
+
+            $this->_oDb->updateEvent(array(
+                'title' => bx_process_input(strip_tags($sTitle)),
+                'description' => bx_process_input(strip_tags($sDescription))
+            ), array('id' => $aEvent['id']));
+        }
+
+        return $aResult;
     }
 
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())
