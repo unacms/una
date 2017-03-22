@@ -106,6 +106,16 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
+    protected function _isEditable(&$aRow)
+    {
+    	return true;
+    }
+
+	protected function _isDeletable(&$aRow)
+    {
+    	return true;
+    }
+
     private function fillInSelects(&$aInputs)
     {
         $aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_nav_txt_select_module')), BxDolStudioUtils::getModules());

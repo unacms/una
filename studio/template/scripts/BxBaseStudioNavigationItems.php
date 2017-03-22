@@ -394,6 +394,14 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         $oForm->addCssJs();
     }
 
+    protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
+    {
+        if(!$this->_isEditable($aRow))
+            return parent::_getCellDefault('', $sKey, $aField, $aRow);
+
+        return parent::_getCellSwitcher($mixedValue, $sKey, $aField, $aRow);
+    }
+
     protected function _getCellIcon ($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-nav-item-icon bx-def-border'));
@@ -433,6 +441,9 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
     protected function _getCellVisibleForLevels ($mixedValue, $sKey, $aField, $aRow)
     {
+        if(!$this->_isEditable($aRow))
+            return parent::_getCellDefault('', $sKey, $aField, $aRow);
+
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
             'href' => 'javascript:void(0)',
             'title' => _t('_adm_nav_txt_manage_visibility'),
@@ -464,7 +475,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
 	protected function _getActionEdit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if($sType == 'single' && (int)$aRow['editable'] == 0)
+        if($sType == 'single' && !$this->_isEditable($aRow))
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
@@ -472,7 +483,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if ($sType == 'single' && $aRow['module'] == BX_DOL_STUDIO_MODULE_SYSTEM)
+        if ($sType == 'single'  && !$this->_isDeletable($aRow))
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
@@ -787,6 +798,16 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 )
             )
         ));
+    }
+
+    protected function _isEditable(&$aRow)
+    {
+    	return (int)$aRow['editable'] != 0;
+    }
+
+	protected function _isDeletable(&$aRow)
+    {
+    	return $aRow['module'] != BX_DOL_STUDIO_MODULE_SYSTEM;
     }
 }
 
