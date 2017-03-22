@@ -700,7 +700,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds)
             	return array('msg' => _t('_bx_timeline_txt_err_empty_post'));
 
-            $sSample = _t('_bx_timeline_txt_sample_with_article');
+            $sSample = '<i class="sys-icon picture-o"></i>';
             $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $sSample;
             $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, $sSample);
 

@@ -16,7 +16,11 @@ function BxTimelinePost(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
-    this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+    this._oRequestParams = {
+    	timeline: null,
+    	outline: null,
+    	general: oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams
+    };
 
     var $this = this;
     $(document).ready(function () {
