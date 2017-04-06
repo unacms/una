@@ -88,7 +88,7 @@ class BxDolFileHandler extends BxDolFactory implements iBxDolFactoryObject
 
     /**
      * Get file handler object instance by file name
-     * @param $sObject object name
+     * @param $sFileName file name
      * @return object instance or false on error
      */
     static public function getObjectInstanceByFile($sFileName)
