@@ -3227,10 +3227,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- social sharing menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_social_sharing', 'system', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '_sys_menu_item_title_social_sharing_facebook', 'https://www.facebook.com/sharer/sharer.php?u={url_encoded}', '', '_blank', 'facebook', '', 2147483646, 1, 1, 1),
-('sys_social_sharing', 'system', 'social-sharing-googleplus', '_sys_menu_item_title_system_social_sharing_googleplus', '_sys_menu_item_title_social_sharing_googleplus', 'https://plus.google.com/share?url={url_encoded}', '', '_blank', 'google-plus', '', 2147483646, 1, 1, 2),
-('sys_social_sharing', 'system', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '_sys_menu_item_title_social_sharing_twitter', 'https://twitter.com/share?url={url_encoded}', '', '_blank', 'twitter', '', 2147483646, 1, 1, 3),
-('sys_social_sharing', 'system', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '_sys_menu_item_title_social_sharing_pinterest', 'http://pinterest.com/pin/create/button/?url={url_encoded}&media={img_url_encoded}&description={title_encoded}', '', '_blank', 'pinterest', '', 2147483646, 1, 1, 4);
+('sys_social_sharing', 'system', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '_sys_menu_item_title_social_sharing_facebook', 'https://www.facebook.com/sharer/sharer.php?u={url_encoded}', '', '_blank', 'facebook', '', 2147483647, 1, 1, 1),
+('sys_social_sharing', 'system', 'social-sharing-googleplus', '_sys_menu_item_title_system_social_sharing_googleplus', '_sys_menu_item_title_social_sharing_googleplus', 'https://plus.google.com/share?url={url_encoded}', '', '_blank', 'google-plus', '', 2147483647, 1, 1, 2),
+('sys_social_sharing', 'system', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '_sys_menu_item_title_social_sharing_twitter', 'https://twitter.com/share?url={url_encoded}', '', '_blank', 'twitter', '', 2147483647, 1, 1, 3),
+('sys_social_sharing', 'system', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '_sys_menu_item_title_social_sharing_pinterest', 'http://pinterest.com/pin/create/button/?url={url_encoded}&media={img_url_encoded}&description={title_encoded}', '', '_blank', 'pinterest', '', 2147483647, 1, 1, 4);
 
 -- --------------------------------------------------------
 
