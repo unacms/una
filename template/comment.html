@@ -36,22 +36,7 @@
 						__text__<bx_if:show_more><span class="__style_prefix__-body-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.showMore(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __text_more__</span></bx_if:show_more>
 					</div>
 					<bx_if:show_attached>
-						<div class="__style_prefix__-attached bx-def-margin-thd-leftright-neg bx-clearfix">
-							<bx_repeat:attached>
-								<div class="__style_prefix__-attached-preview bx-def-round-corners bx-def-margin-thd">
-									<bx_if:show_image>
-										<a href="javascript:void(0)" onclick="__js_object__.showImage(this, '__file__'); return false;" title="<bx_text_attribute:_cmt_view_attached_image />">
-											<img src="<bx_image_url:spacer.gif />" style="background-image:url(__preview__)" />
-										</a>
-									</bx_if:show_image>
-									<bx_if:show_file>
-										<a href="__file__" title="<bx_text_attribute:_cmt_download_attached_file />">
-											<img src="<bx_image_url:spacer.gif />" style="background-image:url(__preview__)" />
-										</a>
-									</bx_if:show_file>
-								</div>
-							</bx_repeat:attached>
-						</div>
+						<div class="__style_prefix__-attached bx-def-margin-thd-leftright-neg bx-clearfix">__attached__</div>
 					</bx_if:show_attached>
 				</div>
 			</div>

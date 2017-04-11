@@ -23,7 +23,30 @@
 /*-- Replies --*/
 .cmt.bx-def-box .cmts.cmts-margin {
 	margin-top: 0px;
-} 
+}
+.cmt-attached-preview.bx-forum-attached-preview {
+	display: block;
+	float: none;
+
+	width: auto;
+	height: 2rem;
+	line-height: 2rem;
+}
+.cmt-attached-preview.bx-forum-attached-preview a,
+.cmt-attached-preview.bx-forum-attached-preview img,
+.cmt-attached-preview.bx-forum-attached-preview .sys-icon {
+	display: inline-block;
+	vertical-align: middle;
+}
+.cmt-attached-preview.bx-forum-attached-preview img,
+.cmt-attached-preview.bx-forum-attached-preview .sys-icon {
+	width: 2rem;
+	height: 2rem;
+}
+.cmt-attached-preview.bx-forum-attached-preview .sys-icon {
+	text-align: center;
+	font-size: 1.25rem;
+}
 
 /*-- Preview --*/
 .bx-forum-preview {

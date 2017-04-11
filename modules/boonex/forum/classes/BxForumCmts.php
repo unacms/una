@@ -19,7 +19,7 @@ class BxForumCmts extends BxTemplCmts
     	$this->MODULE = 'bx_forum';
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
-        parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit, $this->_oModule->_oTemplate);
 
         $this->setTableNameFiles('bx_forum_files');
     }

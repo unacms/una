@@ -302,7 +302,7 @@ BxDolCmts.prototype.showMore = function(oLink)
 };
 
 BxDolCmts.prototype.showImage = function(oLink, sUrl) {
-	$(this._sRootId + '-view-image-popup').dolPopupImage(sUrl, $(oLink).parent());
+	$(this._sRootId + '-view-image-popup').dolPopupImage(sUrl, $(oLink).parents('.cmt-attached:first'));
 };
 
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)

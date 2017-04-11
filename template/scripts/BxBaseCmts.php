@@ -214,47 +214,7 @@ class BxBaseCmts extends BxDolCmts
             );
         }
 
-        $aTmplImages = array();
-        if($this->isAttachImageEnabled()) {
-            $aFiles = $this->_oQuery->getFiles($this->_aSystem['system_id'], $aCmt['cmt_id']);
-            if(!empty($aFiles) && is_array($aFiles)) {
-        		$oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
-                $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
-
-                foreach($aFiles as $aFile) {
-                	$bImage = strncmp($aFile['mime_type'], 'image/', 6) === 0;
-                	$bVideo = strncmp($aFile['mime_type'], 'video/', 6) === 0;
-
-                	$sPreview = '';
-                	if($oTranscoder && ($bImage || $bVideo))
-                		$sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
-
-            		if(!$sPreview)
-                		$sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
-
-					$sFile = $oStorage->getFileUrlById($aFile['image_id']);
-
-                    $aTmplImages[] = array(
-                        'style_prefix' => $this->_sStylePrefix,
-                    	'bx_if:show_image' => array(
-                    		'condition' => $bImage,
-                    		'content' => array(
-								'js_object' => $this->_sJsObjName,
-								'preview' => $sPreview,
-								'file' => $sFile
-                    		)
-                    	),
-                        'bx_if:show_file' => array(
-                    		'condition' => !$bImage,
-                    		'content' => array(
-								'preview' => $sPreview,
-								'file' => $sFile
-                    		)
-                    	),
-                    );
-                }
-            }
-        }
+        $sAttachments = $this->_getAttachments($aCmt);
 
         $sReplies = '';
         if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED) {
@@ -290,10 +250,10 @@ class BxBaseCmts extends BxDolCmts
                 )
             ),
             'bx_if:show_attached' => array(
-                'condition' => !empty($aTmplImages),
+                'condition' => !empty($sAttachments),
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'bx_repeat:attached' => $aTmplImages
+                    'attached' => $sAttachments
                 )
             ),
             'actions' => $sActions,
@@ -757,6 +717,55 @@ class BxBaseCmts extends BxDolCmts
     	));
 
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
+    }
+
+    protected function _getAttachments($aCmt)
+    {
+        $aTmplImages = array();
+        if(!$this->isAttachImageEnabled())
+            return ''; 
+
+        $aFiles = $this->_oQuery->getFiles($this->_aSystem['system_id'], $aCmt['cmt_id']);
+        if(!empty($aFiles) && is_array($aFiles)) {
+    		$oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
+
+            foreach($aFiles as $aFile) {
+            	$bImage = strncmp($aFile['mime_type'], 'image/', 6) === 0;
+
+            	$sPreview = '';
+            	if($oTranscoder && $bImage)
+            		$sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
+
+        		if(!$sPreview)
+            		$sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
+
+				$aTmplVarsFile = array(
+				    'js_object' => $this->_sJsObjName,
+					'preview' => $sPreview,
+					'file' => $oStorage->getFileUrlById($aFile['image_id']),
+        			'file_name' => $aFile['file_name'],
+                    'file_icon' => $oStorage->getFontIconNameByFileName($aFile['file_name']),
+				    'file_size' => _t_format_size($aFile['size']),
+				);
+
+                $aTmplImages[] = array(
+                    'style_prefix' => $this->_sStylePrefix,
+                	'bx_if:show_image' => array(
+                		'condition' => $bImage,
+                		'content' => $aTmplVarsFile
+                	),
+                    'bx_if:show_file' => array(
+                		'condition' => !$bImage,
+                		'content' => $aTmplVarsFile
+                	),
+                );
+            }
+        }
+
+        return $this->_oTemplate->parseHtmlByName('comment_attachments.html', array(
+            'bx_repeat:attached' => $aTmplImages
+        ));
     }
 
     protected function _getTmplVarsAuthor($aCmt)

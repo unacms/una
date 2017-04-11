@@ -288,7 +288,8 @@ class BxDolCmtsQuery extends BxDolDb
         $sQuery = "SELECT 
         		`tf2e`.*,
         		`tf`.`file_name` AS `file_name`,
-        		`tf`.`mime_type` AS `mime_type` 
+        		`tf`.`mime_type` AS `mime_type`,
+        		`tf`.`size` AS `size` 
         	FROM `{$this->_sTableFiles2Entries}` AS `tf2e` 
         	LEFT JOIN `{$this->_sTableFiles}` AS `tf` ON (`tf2e`.`image_id` = `tf`.`id`) " . $sJoin . " 
         	WHERE 1 " . $sWhere;
