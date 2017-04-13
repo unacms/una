@@ -203,6 +203,9 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     public function isVisible()
     {
+        if((int)$this->_aObject['active'] == 0)
+            return false;
+
     	if(!isset($this->_aObject['menu_items']))
 			$this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
 
