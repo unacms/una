@@ -31,9 +31,11 @@
 	<string name="_bx_snipcart_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_price"><![CDATA[Price]]></string>
     <string name="_bx_snipcart_form_entry_input_price"><![CDATA[Price]]></string>
+    <string name="_bx_snipcart_form_entry_input_price_inf"><![CDATA[The value is indicated in %s.]]></string>
     <string name="_bx_snipcart_form_entry_input_price_err"><![CDATA[Price field can't be empty]]></string>
     <string name="_bx_snipcart_form_entry_input_sys_weight"><![CDATA[Weight]]></string>
     <string name="_bx_snipcart_form_entry_input_weight"><![CDATA[Weight]]></string>
+    <string name="_bx_snipcart_form_entry_input_weight_inf"><![CDATA[The value is indicated in Kg.]]></string>
     <string name="_bx_snipcart_form_entry_input_weight_err"><![CDATA[Weight field can't be empty]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_snipcart_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this product]]></string>
@@ -53,11 +55,15 @@
     <string name="_bx_snipcart_form_settings_display_edit"><![CDATA[Edit Settings]]></string>
     <string name="_bx_snipcart_form_settings_input_sys_mode"><![CDATA[Mode]]></string>
     <string name="_bx_snipcart_form_settings_input_mode"><![CDATA[Mode]]></string>
-    <string name="_bx_snipcart_form_settings_input_mode_err"><![CDATA[Mode is essential. Please, fill in this field]]></string>
+    <string name="_bx_snipcart_form_settings_input_mode_err"><![CDATA[Mode is essential. Please, fill in this field.]]></string>
     <string name="_bx_snipcart_form_settings_input_sys_api_key_test"><![CDATA[API Key (test)]]></string>
     <string name="_bx_snipcart_form_settings_input_api_key_test"><![CDATA[API Key (test)]]></string>
     <string name="_bx_snipcart_form_settings_input_sys_api_key_live"><![CDATA[API Key (live)]]></string>
     <string name="_bx_snipcart_form_settings_input_api_key_live"><![CDATA[API Key (live)]]></string>
+    <string name="_bx_snipcart_form_settings_input_sys_currency"><![CDATA[Currency]]></string>
+    <string name="_bx_snipcart_form_settings_input_currency"><![CDATA[Currency]]></string>
+    <string name="_bx_snipcart_form_settings_input_currency_inf"><![CDATA[Select the default Currency from your Snipcart account.]]></string>
+    <string name="_bx_snipcart_form_settings_input_currency_err"><![CDATA[Currency is essential. Please, fill in this field.]]></string>    
     <string name="_bx_snipcart_form_settings_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_snipcart_form_settings_input_do_submit"><![CDATA[Submit]]></string>
 
@@ -175,7 +181,7 @@
 	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Goods - {addon} hidden]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[My Goods]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[All Goods]]></string>
-	<string name="_bx_snipcart_menu_item_title_buy"><![CDATA[Buy]]></string>
+	<string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Buy for {1}{0}]]></string>
 
 	<string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_snipcart_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -191,23 +197,22 @@
     <string name="_bx_snipcart_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
     <string name="_bx_snipcart_pre_lists_cats"><![CDATA[Goods categories]]></string>
-    <string name="_bx_snipcart_cat_adult"><![CDATA[Adult]]></string>
-    <string name="_bx_snipcart_cat_communication"><![CDATA[Communication]]></string>
-    <string name="_bx_snipcart_cat_conversion"><![CDATA[Conversion]]></string>
-    <string name="_bx_snipcart_cat_documentation"><![CDATA[Documentation]]></string>
-    <string name="_bx_snipcart_cat_games"><![CDATA[Games]]></string>
-    <string name="_bx_snipcart_cat_mobile"><![CDATA[Mobile]]></string>
-    <string name="_bx_snipcart_cat_multimedia"><![CDATA[Multimedia]]></string>
-    <string name="_bx_snipcart_cat_music"><![CDATA[Music]]></string>
-    <string name="_bx_snipcart_cat_navigation"><![CDATA[Navigation]]></string>
-    <string name="_bx_snipcart_cat_other"><![CDATA[Other]]></string>
-    <string name="_bx_snipcart_cat_photography"><![CDATA[Photography]]></string>
-    <string name="_bx_snipcart_cat_security"><![CDATA[Security]]></string>
-    <string name="_bx_snipcart_cat_tools"><![CDATA[Tools]]></string>
+    <string name="_bx_snipcart_cat_automotive_and_industrial"><![CDATA[Automotive & Industrial]]></string>
+    <string name="_bx_snipcart_cat_beauty_health_food"><![CDATA[Beauty, Health & Food]]></string>
+    <string name="_bx_snipcart_cat_books"><![CDATA[Books]]></string>
+    <string name="_bx_snipcart_cat_clothing_shoes_jewelry"><![CDATA[Clothing, Shoes & Jewelry]]></string>
+    <string name="_bx_snipcart_cat_electronics_and_computers"><![CDATA[Electronics & Computers]]></string>
+    <string name="_bx_snipcart_cat_handmade"><![CDATA[Handmade]]></string>
+    <string name="_bx_snipcart_cat_home_garden_tools"><![CDATA[Home, Garden & Tools]]></string>
+    <string name="_bx_snipcart_cat_movies_music_games"><![CDATA[Movies, Music & Games]]></string>
+    <string name="_bx_snipcart_cat_sports_and_outdoors"><![CDATA[Sports & Outdoors]]></string>
+    <string name="_bx_snipcart_cat_toys_kids_baby"><![CDATA[Toys, Kids & Baby]]></string>
 
     <string name="_bx_snipcart_pre_lists_modes"><![CDATA[Modes]]></string>
     <string name="_bx_snipcart_mode_test"><![CDATA[test]]></string>
     <string name="_bx_snipcart_mode_live"><![CDATA[live]]></string>
+
+    <string name="_bx_snipcart_pre_lists_currencies"><![CDATA[Currencies]]></string>
 
     <string name="_bx_snipcart_err_not_configured"><![CDATA[You need to configure shop settings first. <a href="{0}">Click here</a>.]]></string>
 

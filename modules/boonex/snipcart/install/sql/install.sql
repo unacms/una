@@ -32,8 +32,9 @@ CREATE TABLE IF NOT EXISTS `bx_snipcart_settings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(10) unsigned NOT NULL,
   `mode` varchar(8) NOT NULL DEFAULT '',
-  `api_key_test` varchar(255) NOT NULL,
-  `api_key_live` varchar(255) NOT NULL,
+  `api_key_test` varchar(255) NOT NULL DEFAULT '',
+  `api_key_live` varchar(255) NOT NULL DEFAULT '',
+  `currency` varchar(4) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `author` (`author`)
 );
@@ -110,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `bx_snipcart_votes_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: views
-CREATE TABLE `bx_snipcart_views_track` (
+CREATE TABLE IF NOT EXISTS `bx_snipcart_views_track` (
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
   `viewer_nip` int(11) unsigned NOT NULL default '0',
@@ -119,14 +120,14 @@ CREATE TABLE `bx_snipcart_views_track` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: metas
-CREATE TABLE `bx_snipcart_meta_keywords` (
+CREATE TABLE IF NOT EXISTS `bx_snipcart_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `bx_snipcart_meta_locations` (
+CREATE TABLE IF NOT EXISTS `bx_snipcart_meta_locations` (
   `object_id` int(10) unsigned NOT NULL,
   `lat` double NOT NULL,
   `lng` double NOT NULL,
@@ -160,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `bx_snipcart_reports_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: favorites
-CREATE TABLE `bx_snipcart_favorites_track` (
+CREATE TABLE IF NOT EXISTS `bx_snipcart_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
@@ -204,14 +205,15 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_snipcart', 'bx_snipcart', 'text', '', '', 0, 'textarea', '_bx_snipcart_form_entry_input_sys_text', '_bx_snipcart_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_snipcart_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_snipcart', 'bx_snipcart', 'title', '', '', 0, 'text', '_bx_snipcart_form_entry_input_sys_title', '_bx_snipcart_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_snipcart', 'bx_snipcart', 'cat', '', '#!bx_snipcart_cats', 0, 'select', '_bx_snipcart_form_entry_input_sys_cat', '_bx_snipcart_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_entry_input_cat_err', 'Xss', '', 1, 0),
-('bx_snipcart', 'bx_snipcart', 'price', '', '', 0, 'text', '_bx_snipcart_form_entry_input_sys_price', '_bx_snipcart_form_entry_input_price', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_entry_input_price_err', 'Float', '', 1, 0),
-('bx_snipcart', 'bx_snipcart', 'weight', '', '', 0, 'text', '_bx_snipcart_form_entry_input_sys_weight', '_bx_snipcart_form_entry_input_weight', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_entry_input_weight_err', 'Float', '', 1, 0),
+('bx_snipcart', 'bx_snipcart', 'price', '', '', 0, 'text', '_bx_snipcart_form_entry_input_sys_price', '_bx_snipcart_form_entry_input_price', '_bx_snipcart_form_entry_input_price_inf', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_entry_input_price_err', 'Float', '', 1, 0),
+('bx_snipcart', 'bx_snipcart', 'weight', '', '', 0, 'text', '_bx_snipcart_form_entry_input_sys_weight', '_bx_snipcart_form_entry_input_weight', '_bx_snipcart_form_entry_input_weight_inf', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_entry_input_weight_err', 'Float', '', 1, 0),
 ('bx_snipcart', 'bx_snipcart', 'added', '', '', 0, 'datetime', '_bx_snipcart_form_entry_input_sys_date_added', '_bx_snipcart_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_snipcart', 'bx_snipcart', 'changed', '', '', 0, 'datetime', '_bx_snipcart_form_entry_input_sys_date_changed', '_bx_snipcart_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 
 ('bx_snipcart_settings', 'bx_snipcart', 'mode', '', '#!bx_snipcart_modes', 0, 'select', '_bx_snipcart_form_settings_input_sys_mode', '_bx_snipcart_form_settings_input_mode', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_settings_input_mode_err', 'Xss', '', 0, 0),
 ('bx_snipcart_settings', 'bx_snipcart', 'api_key_test', '', '', 0, 'text', '_bx_snipcart_form_settings_input_sys_api_key_test', '_bx_snipcart_form_settings_input_api_key_test', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_snipcart_settings', 'bx_snipcart', 'api_key_live', '', '', 0, 'text', '_bx_snipcart_form_settings_input_sys_api_key_live', '_bx_snipcart_form_settings_input_api_key_live', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_snipcart_settings', 'bx_snipcart', 'currency', '', '#!bx_snipcart_currencies', 0, 'select', '_bx_snipcart_form_settings_input_sys_currency', '_bx_snipcart_form_settings_input_currency', '_bx_snipcart_form_settings_input_currency_inf', 1, 0, 0, '', '', '', 'Avail', '', '_bx_snipcart_form_settings_input_currency_err', 'Xss', '', 1, 0),
 ('bx_snipcart_settings', 'bx_snipcart', 'do_submit', '_bx_snipcart_form_settings_input_do_submit', '', 0, 'submit', '_bx_snipcart_form_settings_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
@@ -252,33 +254,37 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_snipcart_settings_edit', 'mode', 2147483647, 1, 1),
 ('bx_snipcart_settings_edit', 'api_key_test', 2147483647, 1, 2),
 ('bx_snipcart_settings_edit', 'api_key_live', 2147483647, 1, 3),
-('bx_snipcart_settings_edit', 'do_submit', 2147483647, 1, 4);
+('bx_snipcart_settings_edit', 'currency', 2147483647, 1, 4),
+('bx_snipcart_settings_edit', 'do_submit', 2147483647, 1, 5);
 
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `extendable`) VALUES
 ('bx_snipcart_cats', '_bx_snipcart_pre_lists_cats', 'bx_snipcart', '0', '1'),
-('bx_snipcart_modes', '_bx_snipcart_pre_lists_modes', 'bx_snipcart', '0', '0');
+('bx_snipcart_modes', '_bx_snipcart_pre_lists_modes', 'bx_snipcart', '0', '0'),
+('bx_snipcart_currencies', '_bx_snipcart_pre_lists_currencies', 'bx_snipcart', '0', '0');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_snipcart_cats', '', 0, '_sys_please_select', ''),
-('bx_snipcart_cats', '1', 1, '_bx_snipcart_cat_adult', ''),
-('bx_snipcart_cats', '2', 2, '_bx_snipcart_cat_communication', ''),
-('bx_snipcart_cats', '3', 3, '_bx_snipcart_cat_conversion', ''),
-('bx_snipcart_cats', '4', 4, '_bx_snipcart_cat_documentation', ''),
-('bx_snipcart_cats', '5', 5, '_bx_snipcart_cat_games', ''),
-('bx_snipcart_cats', '7', 6, '_bx_snipcart_cat_mobile', ''),
-('bx_snipcart_cats', '8', 7, '_bx_snipcart_cat_multimedia', ''),
-('bx_snipcart_cats', '9', 8, '_bx_snipcart_cat_music', ''),
-('bx_snipcart_cats', '9', 9, '_bx_snipcart_cat_navigation', ''),
-('bx_snipcart_cats', '10', 10, '_bx_snipcart_cat_other', ''),
-('bx_snipcart_cats', '11', 11, '_bx_snipcart_cat_photography', ''),
-('bx_snipcart_cats', '12', 12, '_bx_snipcart_cat_security', ''),
-('bx_snipcart_cats', '13', 13, '_bx_snipcart_cat_tools', ''),
+('bx_snipcart_cats', '1', 1, '_bx_snipcart_cat_automotive_and_industrial', ''),
+('bx_snipcart_cats', '2', 2, '_bx_snipcart_cat_beauty_health_food', ''),
+('bx_snipcart_cats', '3', 3, '_bx_snipcart_cat_books', ''),
+('bx_snipcart_cats', '4', 4, '_bx_snipcart_cat_clothing_shoes_jewelry', ''),
+('bx_snipcart_cats', '5', 5, '_bx_snipcart_cat_electronics_and_computers', ''),
+('bx_snipcart_cats', '6', 6, '_bx_snipcart_cat_handmade', ''),
+('bx_snipcart_cats', '7', 7, '_bx_snipcart_cat_home_garden_tools', ''),
+('bx_snipcart_cats', '8', 8, '_bx_snipcart_cat_movies_music_games', ''),
+('bx_snipcart_cats', '9', 9, '_bx_snipcart_cat_sports_and_outdoors', ''),
+('bx_snipcart_cats', '10', 10, '_bx_snipcart_cat_toys_kids_baby', ''),
 
 ('bx_snipcart_modes', '', 0, '_sys_please_select', ''),
 ('bx_snipcart_modes', 'test', 1, '_bx_snipcart_mode_test', ''),
-('bx_snipcart_modes', 'live', 2, '_bx_snipcart_mode_live', '');
+('bx_snipcart_modes', 'live', 2, '_bx_snipcart_mode_live', ''),
+
+('bx_snipcart_currencies', '', 0, '_sys_please_select', ''),
+('bx_snipcart_currencies', 'CAD', 1, 'CAD', 'C&#36;'),
+('bx_snipcart_currencies', 'EUR', 2, 'EUR', '&#128;'),
+('bx_snipcart_currencies', 'USD', 3, 'USD', '&#36;');
 
 
 -- COMMENTS

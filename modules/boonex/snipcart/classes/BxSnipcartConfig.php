@@ -89,6 +89,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_snipcart_entry_delete',
         	'OBJECT_FORM_SETTINGS' => 'bx_snipcart_settings',
         	'OBJECT_FORM_SETTINGS_DISPLAY_EDIT' => 'bx_snipcart_settings_edit',
+            'OBJECT_FORM_PRELISTS_CURRENCIES' => 'bx_snipcart_currencies',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_snipcart_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_snipcart_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_snipcart_submenu', // main module submenu
@@ -141,12 +142,30 @@ class BxSnipcartConfig extends BxBaseModTextConfig
         );
     }
 
+    public function getViewUrl($iContentId)
+    {
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+    }
+
     public function getApiKey($aSettings)
     {
         if(empty($aSettings['mode']) || !in_array($aSettings['mode'], array(BX_SNIPCART_MODE_TEST, BX_SNIPCART_MODE_LIVE)))
             return '';
 
         return $aSettings['api_key_' . $aSettings['mode']]; 
+    }
+
+    public function getCurrency($aSettings)
+    {
+        $sCurrency = !empty($aSettings['currency']) ? $aSettings['currency'] : 'USD';
+
+        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES']);
+        $sCurrencyCode = $aCurrencies[$sCurrency];
+
+        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
+        $sCurrencySign = $aCurrencies[$sCurrency];
+
+        return array('code' => $sCurrencyCode, 'sign' => $sCurrencySign);
     }
 }
 

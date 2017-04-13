@@ -31,9 +31,11 @@
 	<string name="_bx_snipcart_form_entry_input_text_err"><![CDATA[Поле для Текста не может быть пустым]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_price"><![CDATA[Цена]]></string>
     <string name="_bx_snipcart_form_entry_input_price"><![CDATA[Цена]]></string>
+    <string name="_bx_snipcart_form_entry_input_price_inf"><![CDATA[Цена указывается в %s.]]></string>
     <string name="_bx_snipcart_form_entry_input_price_err"><![CDATA[Поле Цена не может быть пустым]]></string>
     <string name="_bx_snipcart_form_entry_input_sys_weight"><![CDATA[Вес]]></string>
     <string name="_bx_snipcart_form_entry_input_weight"><![CDATA[Вес]]></string>
+    <string name="_bx_snipcart_form_entry_input_weight_inf"><![CDATA[Значение указывается в Кг.]]></string>
     <string name="_bx_snipcart_form_entry_input_weight_err"><![CDATA[Поле Вес не может быть пустым]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
 	<string name="_bx_snipcart_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить этот товар]]></string>
@@ -53,11 +55,15 @@
     <string name="_bx_snipcart_form_settings_display_edit"><![CDATA[Редактировать настройки]]></string>
     <string name="_bx_snipcart_form_settings_input_sys_mode"><![CDATA[Режим]]></string>
     <string name="_bx_snipcart_form_settings_input_mode"><![CDATA[Режим]]></string>
-    <string name="_bx_snipcart_form_settings_input_mode_err"><![CDATA[Режим обязателен. Пожалуйста, заполните это поле]]></string>
+    <string name="_bx_snipcart_form_settings_input_mode_err"><![CDATA[Режим - обязателеное поле. Пожалуйста, заполните это поле.]]></string>
     <string name="_bx_snipcart_form_settings_input_sys_api_key_test"><![CDATA[API Ключ (тестовый)]]></string>
     <string name="_bx_snipcart_form_settings_input_api_key_test"><![CDATA[API Ключ (тестовый)]]></string>
     <string name="_bx_snipcart_form_settings_input_sys_api_key_live"><![CDATA[API Ключ (рабочий)]]></string>
     <string name="_bx_snipcart_form_settings_input_api_key_live"><![CDATA[API Ключ (рабочий)]]></string>
+    <string name="_bx_snipcart_form_settings_input_sys_currency"><![CDATA[Валюта]]></string>
+    <string name="_bx_snipcart_form_settings_input_currency"><![CDATA[Валюта]]></string>
+    <string name="_bx_snipcart_form_settings_input_currency_inf"><![CDATA[Выберите валюту, которая используется в вашем Snipcart аккаунте по умолчанию.]]></string>
+    <string name="_bx_snipcart_form_settings_input_currency_err"><![CDATA[Валюта - обязателеное поле. Пожалуйста, заполните это поле.]]></string>    
     <string name="_bx_snipcart_form_settings_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_snipcart_form_settings_input_do_submit"><![CDATA[Выполнить]]></string>
 
@@ -175,7 +181,7 @@
 	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Товары - {addon} спрятано]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[Мои Товары]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[Все Товары]]></string>
-	<string name="_bx_snipcart_menu_item_title_buy"><![CDATA[Купить]]></string>
+	<string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Купить за {1}{0}]]></string>
 
 	<string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_snipcart_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
@@ -191,23 +197,22 @@
     <string name="_bx_snipcart_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
     <string name="_bx_snipcart_pre_lists_cats"><![CDATA[Категории товаров]]></string>
-    <string name="_bx_snipcart_cat_adult"><![CDATA[Для взрослых]]></string>
-    <string name="_bx_snipcart_cat_communication"><![CDATA[Коммуникация]]></string>
-    <string name="_bx_snipcart_cat_conversion"><![CDATA[Преобразование]]></string>
-    <string name="_bx_snipcart_cat_documentation"><![CDATA[Документация]]></string>
-    <string name="_bx_snipcart_cat_games"><![CDATA[Игры]]></string>
-    <string name="_bx_snipcart_cat_mobile"><![CDATA[Мобильные устройства]]></string>
-    <string name="_bx_snipcart_cat_multimedia"><![CDATA[Мультимедиа]]></string>
-    <string name="_bx_snipcart_cat_music"><![CDATA[Музыка]]></string>
-    <string name="_bx_snipcart_cat_navigation"><![CDATA[Навигация]]></string>
-    <string name="_bx_snipcart_cat_other"><![CDATA[Другое]]></string>
-    <string name="_bx_snipcart_cat_photography"><![CDATA[Фотография]]></string>
-    <string name="_bx_snipcart_cat_security"><![CDATA[Безопасность]]></string>
-    <string name="_bx_snipcart_cat_tools"><![CDATA[Инструменты]]></string>
+    <string name="_bx_snipcart_cat_automotive_and_industrial"><![CDATA[Автомобили и Техника]]></string>
+    <string name="_bx_snipcart_cat_beauty_health_food"><![CDATA[Красота, Здоровье и Еда]]></string>
+    <string name="_bx_snipcart_cat_books"><![CDATA[Книги]]></string>
+    <string name="_bx_snipcart_cat_clothing_shoes_jewelry"><![CDATA[Одежда, Обувь и Украшения]]></string>
+    <string name="_bx_snipcart_cat_electronics_and_computers"><![CDATA[Электроника и Компьютеры]]></string>
+    <string name="_bx_snipcart_cat_handmade"><![CDATA[Ручная Работа]]></string>
+    <string name="_bx_snipcart_cat_home_garden_tools"><![CDATA[Дом, Сад и Инструменты]]></string>
+    <string name="_bx_snipcart_cat_movies_music_games"><![CDATA[Фильмы, Музыка и Игры]]></string>
+    <string name="_bx_snipcart_cat_sports_and_outdoors"><![CDATA[Спорт и Активный Отдых]]></string>
+    <string name="_bx_snipcart_cat_toys_kids_baby"><![CDATA[Игрушки, Дети и Младенцы]]></string>
 
     <string name="_bx_snipcart_pre_lists_modes"><![CDATA[Режимы]]></string>
     <string name="_bx_snipcart_mode_test"><![CDATA[тестовый]]></string>
     <string name="_bx_snipcart_mode_live"><![CDATA[рабочий]]></string>
+
+    <string name="_bx_snipcart_pre_lists_currencies"><![CDATA[Валюта]]></string>
 
     <string name="_bx_snipcart_err_not_configured"><![CDATA[Сначала вам необходимо настроить магазин. <a href="{0}">Нажмите здесь</a>.]]></string>
 

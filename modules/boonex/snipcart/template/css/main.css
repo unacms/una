@@ -7,3 +7,8 @@
 	float: none;
 	vertical-align: top;
 }
+
+.bx-snipcart-unit-actions .bx-btn {
+	display: inline-block;
+	float:none;
+}

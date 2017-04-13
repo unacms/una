@@ -21,7 +21,7 @@ class BxSnipcartSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_snipcart',
             'title' => _t('_bx_snipcart_page_title_browse'),
             'table' => 'bx_snipcart_entries',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
+            'ownFields' => array('id', 'title', 'text', 'price', 'thumb', 'author', 'added'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
