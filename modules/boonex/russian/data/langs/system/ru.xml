@@ -1742,7 +1742,7 @@
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Профиль активирован]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Профиль в ожидании одобрения]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Профиль заблокирован]]></string>
-	<string name="_sys_et_txt_subject_account"><![CDATA[Новые пользователи на {site_name} сайте]]></string>
+	<string name="_sys_et_txt_subject_account"><![CDATA[{site_name} - {account_count} аккаунтов, созданных вчера]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} - результат очистки]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} - обновление не удалось]]></string>
 	<string name="_sys_et_txt_subject_upgrade_modules_failed"><![CDATA[Не удалось обновить модули на сайте {site_name}]]></string>
@@ -2113,7 +2113,7 @@
 	<string name="_sys_mobile_status"><![CDATA[Статус]]></string>
     <string name="_sys_name"><![CDATA[Имя]]></string>
     <string name="_sys_next"><![CDATA[Ещё]]></string>
-    <string name="_sys_notification_account"><![CDATA[<h3>Недавно присоединившиеся пользователи:</h3><ul>{0}</ul>]]></string>
+    <string name="_sys_notification_account"><![CDATA[<h3>Аккаунты, созданные за последние 24 часа:</h3><ul>{0}</ul>]]></string>
 	<string name="_sys_notification_account_link"><![CDATA[<li><a href="{0}">{1}</a> ({2})</li>]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>

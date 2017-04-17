@@ -9,23 +9,31 @@
 
 class BxDolCronAccount extends BxDolCron
 {
-    protected function start()
+    protected $_aParseParams;
+
+    public function __construct()
     {
-        set_time_limit(0);
-        ignore_user_abort();
-        ob_start();
+        parent::__construct();
+
+        $this->_aParseParams = array(
+            'site_title' => getParam('site_title')
+        );
     }
 
-    protected function finish()
+    public function processing()
     {
-        $sOutput = ob_get_clean();
-		if(!$sOutput || getParam('enable_notification_account') != 'on')
+        if(getParam('enable_notification_account') != 'on')
+            return;
+
+        set_time_limit(0);
+        ignore_user_abort();
+
+        $this->processNewlyJoined();
+
+        if(empty($this->_aParseParams['account_count']) || empty($this->_aParseParams['account_output']))
 			return;
 
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Account', array(
-        	'site_title' => getParam('site_title'),
-        	'account_output' => $sOutput
-        ));
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Account', $this->_aParseParams);
         if(empty($aTemplate))
         	return;
 
@@ -58,6 +66,7 @@ class BxDolCronAccount extends BxDolCron
         if(empty($aAccounts) || !is_array($aAccounts))
             return;
 
+        $iAccounts = 0;
         $sAccounts = "";
         foreach($aAccounts as $aAccount) {
         	$oProfile = BxDolProfile::getInstance($aAccount['profile_id']);
@@ -65,21 +74,14 @@ class BxDolCronAccount extends BxDolCron
         	    continue;
 
         	$sAccounts .= _t('_sys_notification_account_link', $oProfile->getUrl(), $oProfile->getDisplayName(), $aAccount['email']);
+        	$iAccounts += 1;
         }
 
         if(!$sAccounts)
             return;
 
-        echo _t('_sys_notification_account', $sAccounts);
-    }
-
-    public function processing()
-    {
-        $this->start();
-
-        $this->processNewlyJoined();
-
-        $this->finish();
+        $this->_aParseParams['account_count'] = $iAccounts;
+        $this->_aParseParams['account_output'] = _t('_sys_notification_account', $sAccounts);
     }
 }
 
