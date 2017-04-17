@@ -203,14 +203,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        return $aData[$CNF['FIELD_TITLE']];
+        return isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : '';
     }
 
     protected function getText($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        return $aData[$CNF['FIELD_TEXT']];
+        return isset($aData[$CNF['FIELD_TEXT']]) ? $aData[$CNF['FIELD_TEXT']] : '';
     }
 
     protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')
