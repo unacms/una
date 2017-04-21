@@ -31,11 +31,6 @@
     position: relative;
     right: 100%;
 }
-.cd-main-content .content-wrapper h1 {
-  text-align: center;
-  padding: 3em 0;
-  font-size: 2rem;
-}
 .cd-main-content::before {
   /* never visible - used to check MQ in jQuery */
   display: none;
@@ -44,11 +39,6 @@
 @media only screen and (min-width: 720px) {
   .cd-main-content .content-wrapper {
     margin-left: 110px;
-  }
-  .cd-main-content .content-wrapper h1 {
-    padding: 4em 0;
-    font-size: 3.2rem;
-    font-weight: 300;
   }
   .cd-main-content::before {
     content: 'tablet';
