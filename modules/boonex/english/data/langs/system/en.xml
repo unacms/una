@@ -1991,7 +1991,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Account]]></string>
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
-	<string name="_sys_menu_item_title_cart"><![CDATA[Cart]]></string>
+	<string name="_sys_menu_item_title_cart"><![CDATA[Shopping Cart]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[Reply]]></string>
@@ -2023,7 +2023,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Account]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
-	<string name="_sys_menu_item_title_system_cart"><![CDATA[Cart]]></string>
+	<string name="_sys_menu_item_title_system_cart"><![CDATA[Shopping Cart]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>

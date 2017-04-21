@@ -49,7 +49,7 @@ BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iIte
                 */
 
             	if(iNeedRedirect == 1)
-            		window.location.href = sUrlRoot + 'cart.php';
+            		window.location.href = sUrlRoot + 'cart.php?seller_id=' + iSellerId;
             }
         },
         'json'

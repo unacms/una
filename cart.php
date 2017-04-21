@@ -14,7 +14,11 @@ bx_import('BxDolLanguages');
 
 check_logged();
 
-$sUrl = BxDolPayments::getInstance()->getCartUrl();
+$iSellerId = 0;
+if(bx_get('seller_id') !== false)
+    $iSellerId = (int)bx_get('seller_id');
+
+$sUrl = BxDolPayments::getInstance()->getCartUrl($iSellerId);
 if(empty($sUrl))
 	BxDolTemplate::getInstance()->displayPageNotFound();
 
