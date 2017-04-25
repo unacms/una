@@ -115,7 +115,7 @@
 	<string name="_bx_payment_grid_action_title_sbs_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_payment_grid_action_title_sbs_view_order"><![CDATA[Детали выплаты]]></string>
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Удалить]]></string>
-	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Продолжить]]></string>
+	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Продолжить оплату]]></string>
 	<string name="_bx_payment_grid_action_title_crt_checkout"><![CDATA[Оплатить через {0}]]></string>
 	<string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Удалить]]></string>
 

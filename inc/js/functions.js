@@ -300,6 +300,7 @@ function bx_loading (elem, b) {
             if (!block.data('css-save-min-height'))
                 block.data('css-save-min-height', block.css('min-height'));
             block.css('min-height', he);
+            e.css('top', 0);
         }
 
     } else {

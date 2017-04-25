@@ -82,7 +82,8 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
         $this->_addJsCss();
 
-        if ($oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu))
+        $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
+        if ($oMenuSubmenu && $oMenuSubmenu->isVisible())
             return $oMenuSubmenu->getCode();
 
         return '';

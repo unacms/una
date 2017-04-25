@@ -248,7 +248,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	$bTmplVarsSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
     	$aTmplVarsSingle = array();
     	if($bTmplVarsSingle) {
-    		$aJsSingle = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+    		$aJsSingle = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1, true);
     		if(!empty($aJsSingle) && is_array($aJsSingle)) {
     			list($sJsCode, $sSingleOnclick) = $aJsSingle;
     			

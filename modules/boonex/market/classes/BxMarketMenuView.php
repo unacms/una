@@ -47,7 +47,7 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 				if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] == 0) 
 					break;
 
-				$aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
+				$aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1, true);
 				if(empty($aJs) || !is_array($aJs))
 					break;
 

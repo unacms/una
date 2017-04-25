@@ -1,0 +1,140 @@
+@import url(../../../../../../../template/css/menu.css);
+
+.bx-menu-toolbar-padding {
+    padding-top: 0;
+}
+
+
+/*--- Main (Side) Menu ---*/
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-floating-blocks-big {
+	display: block;
+    white-space: normal;
+}
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li {
+	display: block;
+	width: auto;
+	height: auto;
+
+	padding: 0.3rem 0.625rem;
+}
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-icon, 
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title {
+    display: inline-block;
+    vertical-align: top;
+}
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title {
+    line-height: 2rem;
+}
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .sys-icon {
+    width: 2rem;
+    height: 2rem;
+
+    margin: 0px;
+
+    line-height: 2rem;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media (min-width: 720px) and (max-width:1170px) {
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li {
+       padding-left: 0px;
+    }
+
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-icon, 
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title {
+        display: block;
+        text-align: center;
+    }
+
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title {
+        padding-left: 0px;
+    }
+
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-floating-blocks-big li .sys-icon {
+        width: 100%;
+        font-size: 1.5rem;
+    }
+}
+
+
+/*--- Account Popup ---*/
+@media (min-width:720px) {
+	#bx-sliding-menu-account.bx-sliding-menu-main {
+		left: auto !important;
+		right: 0px !important;
+		width: auto !important;
+	}
+}
+#bx-sliding-menu-account.bx-sliding-menu-main.bx-sliding-menu-fullheight {
+    height: calc(100% - 4rem);
+}
+.bx-menu-account-popup .bx-menu-account-popup-profile {
+	margin-right: 4rem;
+}
+
+
+/*--- Account Popup Submenu & Add Content Menu ---*/
+.bx-menu-account-popup-profile,
+.bx-menu-account-popup-menu {
+	text-align: left;
+}
+.bx-menu-floating-blocks.bx-menu-object-sys_account li,
+.bx-menu-floating-blocks-big.bx-menu-object-sys_add_content li {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.bx-menu-floating-blocks.bx-menu-object-sys_account li .bx-menu-floating-blocks-icon,
+.bx-menu-floating-blocks.bx-menu-object-sys_account li .bx-menu-floating-blocks-title,
+.bx-menu-floating-blocks-big.bx-menu-object-sys_add_content li .bx-menu-floating-blocks-icon,
+.bx-menu-floating-blocks-big.bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
+	display: inline-block;
+	vertical-align: top;
+}
+.bx-menu-notif.bx-menu-object-sys_account_notifications li a,
+.bx-menu-floating-blocks.bx-menu-object-sys_account li .bx-menu-floating-blocks-title,
+.bx-menu-floating-blocks-big.bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
+	line-height: 2rem;
+}
+.bx-menu-floating-blocks.bx-menu-object-sys_account li .bx-menu-floating-blocks-title,
+.bx-menu-floating-blocks-big.bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
+	padding-right: 0.5rem;
+}
+.bx-menu-notif.bx-menu-object-sys_account_notifications li img,
+.bx-menu-notif.bx-menu-object-sys_account_notifications li .sys-icon,
+.bx-menu-floating-blocks.bx-menu-object-sys_account li .bx-menu-floating-blocks-icon img,
+.bx-menu-floating-blocks.bx-menu-object-sys_account li .bx-menu-floating-blocks-icon .sys-icon,
+.bx-menu-floating-blocks-big.bx-menu-object-sys_add_content li .bx-menu-floating-blocks-icon img,
+.bx-menu-floating-blocks-big.bx-menu-object-sys_add_content li .bx-menu-floating-blocks-icon .sys-icon {
+	height: 2rem;
+    width: 2rem;
+	margin: 0px;
+
+	background-size: 2rem 2rem;
+
+	line-height: 2rem;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.bx-menu-notif.bx-menu-object-sys_account_notifications li .bx-def-unit-alert-middle {
+	top: 4px;
+	right: 4px;
+}
+.bx-menu-notif.bx-menu-object-sys_account_notifications li:hover {
+    opacity:0.8;
+}
+
+/*--- Add Content Menu ---*/
+@media (min-width:720px) {
+	#bx-sliding-menu-sys_add_content.bx-sliding-menu-main {
+	    left: auto !important;
+	    right: 0px !important;
+	    width: auto !important;
+	}
+}
+#bx-sliding-menu-sys_add_content.bx-sliding-menu-main .bx-menu-floating-blocks-big.bx-menu-object-sys_add_content {
+	display: block;
+    width: 100%;
+}

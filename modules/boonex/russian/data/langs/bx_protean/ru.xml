@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string name="_bx_protean_wgt_cpt"><![CDATA[Protean Template]]></string>
+	<string name="_bx_protean_wgt_cpt"><![CDATA[Protean]]></string>
 
-	<string name="_bx_protean_stg_cpt_type"><![CDATA[Protean Template]]></string>
+	<string name="_bx_protean_stg_cpt_type"><![CDATA[Protean]]></string>
 	<string name="_bx_protean_stg_cpt_category_system"><![CDATA[Общие]]></string>
 	<string name="_bx_protean_stg_cpt_option_switcher_name"><![CDATA[Название в переключателе тем]]></string>
 
@@ -15,8 +15,8 @@
 	<string name="_bx_protean_stg_cpt_option_header_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_header_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_header_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_header_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_header_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_header_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_header_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_site_logo"><![CDATA[Эмблема]]></string>
 	<string name="_bx_protean_stg_cpt_option_site_logo_alt"><![CDATA[Эмблема ALT]]></string>
 	<string name="_bx_protean_stg_cpt_option_site_logo_width"><![CDATA[Ширина эмблемы]]></string>
@@ -32,8 +32,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_footer"><![CDATA[Основание]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_footer_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_footer_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_footer_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_footer_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_border_size"><![CDATA[Размер границы]]></string>
@@ -47,8 +47,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_body"><![CDATA[Тело]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_body_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_body_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_body_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_body_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_page_width"><![CDATA[Ширина страницы]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_icon_color"><![CDATA[Цвет иконок]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_icon_color_hover"><![CDATA[Цвет иконок при наведении курсора]]></string>
@@ -77,8 +77,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_block"><![CDATA[Блоки]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_block_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_block_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_block_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_block_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_border_size"><![CDATA[Размер границы]]></string>
@@ -99,8 +99,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_card"><![CDATA[Карточки]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_card_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_card_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_card_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_card_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_border_size"><![CDATA[Размер границы]]></string>
@@ -110,8 +110,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_popup"><![CDATA[Всплывающие окна]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_popup_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_popup_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_popup_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_popup_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_border_size"><![CDATA[Размер границы]]></string>
@@ -126,8 +126,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_menu_main"><![CDATA[Главное меню]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_border_size"><![CDATA[Размер границы]]></string>
@@ -143,8 +143,8 @@
     <string name="_bx_protean_stg_cpt_category_styles_menu_account"><![CDATA[Аккаунт меню]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_bg_color"><![CDATA[Цвет фона]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_bg_image"><![CDATA[Изображение фона]]></string>
-    <string name="_bx_protean_stg_cpt_option_menu_account_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-    <string name="_bx_protean_stg_cpt_option_menu_account_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+    <string name="_bx_protean_stg_cpt_option_menu_account_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+    <string name="_bx_protean_stg_cpt_option_menu_account_bg_image_size"><![CDATA[Размер изображения фона]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_content_padding"><![CDATA[Контентные отступы]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_border_color"><![CDATA[Цвет границы]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_border_size"><![CDATA[Размер границы]]></string>
@@ -160,8 +160,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_menu_page"><![CDATA[Страничное меню]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_border_size"><![CDATA[Размер границы]]></string>
@@ -177,8 +177,8 @@
 	<string name="_bx_protean_stg_cpt_category_styles_menu_slide"><![CDATA[Ниспадающее меню]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image"><![CDATA[Изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image_repeat"><![CDATA[Повтор изображение фона]]></string>
-	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image_size"><![CDATA[Размер изображение фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image_repeat"><![CDATA[Повтор изображения фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image_size"><![CDATA[Размер изображения фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_content_padding"><![CDATA[Контентные отступы]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_border_size"><![CDATA[Размер границы]]></string>
@@ -191,7 +191,7 @@
 	<string name="_bx_protean_stg_cpt_option_menu_slide_font_shadow"><![CDATA[Тень шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_font_weight"><![CDATA[Насыщенность шрифта]]></string>
 
-	<string name="_bx_protean_stg_cpt_category_styles_form"><![CDATA[Forms]]></string>
+	<string name="_bx_protean_stg_cpt_category_styles_form"><![CDATA[Формы]]></string>
 	<string name="_bx_protean_stg_cpt_option_form_input_height"><![CDATA[Высота поля]]></string>
 	<string name="_bx_protean_stg_cpt_option_form_input_bg_color"><![CDATA[Цвет фона поля]]></string>
 	<string name="_bx_protean_stg_cpt_option_form_input_bg_color_active"><![CDATA[Цвет фона активного поля]]></string>

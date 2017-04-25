@@ -1521,4 +1521,12 @@ function bx_linkify_html($sHtmlOrig, $sAttrs = '')
     return mb_substr($s, 54, -6); // strip added tags
 }
 
+/**
+ * Returns current site protocol http:// or https://
+ */
+function bx_proto()
+{
+    return 0 === strncmp('https', BX_DOL_URL_ROOT, 5) ? 'https' : 'http';
+}
+
 /** @} */

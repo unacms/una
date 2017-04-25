@@ -138,6 +138,9 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
         $aPending = array();
         $aResult = $this->_validateCheckout($aData, $aPending);
 
+        if(empty($aPending) || !is_array($aPending))
+            return $aResult;
+
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return array('code' => 11, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
@@ -176,7 +179,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
             $sRequest = 'cmd=_notify-validate';
             foreach($aData as $sKey => $sValue) {
-                if(in_array($sKey, array('cmd')))
+                if(in_array($sKey, array('cmd', 'r')))
                     continue;
 
                 $sRequest .= '&' . urlencode($sKey) . '=' . urlencode(bx_process_pass($sValue));
@@ -241,6 +244,9 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
     protected function _readValidationData($sConnectionUrl, $sRequest)
     {
+        $this->log('Validation Request: ');
+        $this->log($sRequest);
+
 		$rConnect = curl_init('https://' . $sConnectionUrl . '/cgi-bin/webscr');
 		curl_setopt($rConnect, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 		curl_setopt($rConnect, CURLOPT_POST, 1);
@@ -266,7 +272,12 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 		}
 
 		curl_close($rConnect);
-		return array('code' => 0, 'content' => explode("\n", $sResponse));
+
+		$aResponse = explode("\n", $sResponse);
+
+		$this->log('Validation Response: ');
+        $this->log($aResponse);
+		return array('code' => 0, 'content' => $aResponse);
     }
 
     protected function _getReceivedAmount($sCurrencyCode, &$aResultData)

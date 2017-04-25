@@ -22,17 +22,25 @@ class BxSnipcartModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
+    public function getSettings($iProfileId = 0)
+    {
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        $aSettings = $this->_oDb->getSettings(array('type' => 'author', 'author' => $iProfileId));
+        if(empty($aSettings) || !is_array($aSettings))
+            return array();
+
+        return $aSettings;
+    }
+
     public function serviceIncludeCssJs($iProfileId = 0)
     {
         $iProfileId = !empty($iProfileId) ? $iProfileId : $this->_iProfileId;
         if(empty($iProfileId))
             return '';
 
-        $aSettings = $this->_oDb->getSettings(array('type' => 'author', 'author' => $iProfileId));
-        if(empty($aSettings) || !is_array($aSettings))
-            return '';
-
-        return $this->_oTemplate->getSctInclude($aSettings);
+        return $this->_oTemplate->getSctInclude($iProfileId);
     }
 
     public function serviceEntityCreate ()
@@ -43,8 +51,7 @@ class BxSnipcartModule extends BxBaseModTextModule
         if(empty($aSettings) || !is_array($aSettings))
     		return MsgBox(_t('_bx_snipcart_err_not_configured', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_SETTINGS'])));
 
-    	$this->_oTemplate->addJs(array('entry.js'));
-    	return $this->_oTemplate->getJsCode('entry') . parent::serviceEntityCreate();
+    	return parent::serviceEntityCreate();
     }
 
     public function serviceSettings()
@@ -87,6 +94,14 @@ class BxSnipcartModule extends BxBaseModTextModule
         return array(
         	'content' => $oForm->getCode()
         );
+    }
+
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    {
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo);
+        $aResult['raw'] = $this->_oTemplate->getBuyButton($aContentInfo);
+
+        return $aResult;
     }
 }
 

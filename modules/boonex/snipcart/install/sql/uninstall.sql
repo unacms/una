@@ -21,7 +21,7 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_snipcart_entr
 
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_snipcart';
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_snipcart_cats', 'bx_snipcart_modes');
+DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_snipcart_cats', 'bx_snipcart_modes', 'bx_snipcart_currencies');
 
 
 -- COMMENTS
