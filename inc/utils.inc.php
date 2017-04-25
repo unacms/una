@@ -800,7 +800,7 @@ function bx_php_string_quot ($mixedInput)
  * @param array $aBasicAuth - array with 'user' and 'password' for Basic HTTP Auth
  * @return string the file's contents.
  */
-function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array(), $iTimeout = 0)
+function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array(), $iTimeout = 0, $aCustomCurlParams = array())
 {
     if ('post' != $sMethod)
     	$sFileUrl = bx_append_url_params($sFileUrl, $aParams);
@@ -839,6 +839,10 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             $sAllCookies .= $sKey . '=' . $sValue . ';';
         }
         curl_setopt($rConnect, CURLOPT_COOKIE, $sAllCookies);
+
+        if ($aCustomCurlParams)
+            foreach ($aCustomCurlParams as $sName => $mixedValue)
+                curl_setopt($rConnect, constant($sName), $mixedValue);
 
         $sResult = curl_exec($rConnect);
 

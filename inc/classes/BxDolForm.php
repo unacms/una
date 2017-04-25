@@ -1246,7 +1246,7 @@ class BxDolFormChecker
     }
 
     // db functions
-    function serializeDbValues (&$aInputs, &$aValsToAdd, &$aTrackTextFieldsChanges = null)
+    function serializeDbValues (&$aInputs, &$aValsToAdd, &$aTrackTextFieldsChanges = null, $aUnset = null)
     {
         $aValsToUpdate = array();
 
@@ -1268,6 +1268,14 @@ class BxDolFormChecker
         // get values which are provided manually
         foreach ($aValsToAdd as $k => $val) {
             $aValsToUpdate[$k] = $val;
+        }
+
+        // don't update id field for update statement
+        if ($aUnset) {
+            foreach ($aUnset as $sKey) {
+                if (isset($aValsToUpdate[$sKey]))
+                    unset($aValsToUpdate[$sKey]);
+            }
         }
 
         // build SQL query part
@@ -1299,7 +1307,7 @@ class BxDolFormChecker
             $aTrackTextFieldsChanges['data'] = $oDb->getRow($sQuery);
         }
 
-        $sFields = $this->serializeDbValues ($aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
+        $sFields = $this->serializeDbValues ($aInputs, $aValsToAdd, $aTrackTextFieldsChanges, array($aDb['key']));
         if (!$sFields)
             return '';
 
