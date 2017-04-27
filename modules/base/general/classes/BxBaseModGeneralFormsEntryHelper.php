@@ -71,6 +71,45 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return $this->_oModule->_oTemplate->entryText($aContentInfo);
     }
 
+    public function addData ($iProfile, $aValues)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        // check and display form
+        $oForm = $this->getObjectFormAdd();
+        if (!$oForm)
+            return array('code' => 1, 'message' => '_sys_txt_error_occured');
+
+        $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+        $oForm->aParams['csrf']['disable'] = true;
+        if(!empty($oForm->aParams['db']['submit_name']))
+            $aValues[$oForm->aParams['db']['submit_name']] = $oForm->aInputs[$oForm->aParams['db']['submit_name']]['value'];
+
+        $oForm->initChecker(array(), $aValues);
+        if (!$oForm->isSubmittedAndValid())
+            return array('code' => 2, 'message' => '_sys_txt_error_occured');
+
+        // insert data into database
+        $aValsToAdd = array ();
+        if(isset($CNF['FIELD_AUTHOR']))
+            $aValsToAdd[$CNF['FIELD_AUTHOR']] = $iProfile;
+
+        $iContentId = $oForm->insert($aValsToAdd);
+        if (!$iContentId) {
+            if (!$oForm->isValid())
+                return array('code' => 2, 'message' => '_sys_txt_error_occured');
+            else
+                return array('code' => 3, 'message' => '_sys_txt_error_entry_creation');
+        }
+
+        $sResult = $this->onDataAddAfter(BxDolProfile::getInstance($iProfile)->getAccountId(), $iContentId);
+        if($sResult)
+            return array('code' => 4, 'message' => $sResult);
+
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
+    }
+
     public function addDataForm ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
