@@ -99,6 +99,7 @@
     <string name="_bx_payment_grid_column_title_sbs_license"><![CDATA[License]]></string>
     <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Amount]]></string>
     <string name="_bx_payment_grid_column_title_sbs_provider"><![CDATA[Provider]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_paid"><![CDATA[Paid]]></string>
     <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Vendor]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Count]]></string>
@@ -114,6 +115,7 @@
 	<string name="_bx_payment_grid_action_title_ods_view_order"><![CDATA[View]]></string>
 	<string name="_bx_payment_grid_action_title_sbs_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_payment_grid_action_title_sbs_view_order"><![CDATA[View]]></string>
+	<string name="_bx_payment_grid_action_title_sbs_cancel"><![CDATA[Cancel]]></string>
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Continue to checkout]]></string>
 	<string name="_bx_payment_grid_action_title_crt_checkout"><![CDATA[Checkout with {0}]]></string>
@@ -233,6 +235,8 @@
 	<string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
 	<string name="_bx_payment_txt_none"><![CDATA[none]]></string>
 	<string name="_bx_payment_txt_name_manual"><![CDATA[Manually]]></string>
+	<string name="_bx_payment_txt_yes"><![CDATA[Yes]]></string>
+	<string name="_bx_payment_txt_no"><![CDATA[No]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>
@@ -432,7 +436,7 @@
 	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Details]]></string>
-	<string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Change]]></string>
+	<string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Change Details]]></string>
 	<string name="_bx_payment_strp_menu_item_title_billing"><![CDATA[Billing Info]]></string>
 	<string name="_bx_payment_strp_menu_item_title_billing_change"><![CDATA[Change Billing Info]]></string>	
 	<string name="_bx_payment_strp_txt_plan"><![CDATA[Plan]]></string>

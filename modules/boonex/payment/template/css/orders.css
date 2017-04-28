@@ -63,6 +63,11 @@ div.bx-payment-vo-items {
 div.bx-payment-vo-caption {
     width: 30%;
 }
-div.bx-payment-vo-content {
+div.bx-payment-vo-content,
+div.bx-payment-vo-items {
     width: 70%;
+	
+	TEXT-OVERFLOW: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
 }

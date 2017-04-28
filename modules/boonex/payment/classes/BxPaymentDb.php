@@ -403,6 +403,20 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return (int)$this->query("UPDATE `" . $this->_sPrefix . "subscriptions` SET " . $this->arrayToSQL($aValues) . " WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
     }
 
+    public function deleteSubscription($mixedId, $sReason)
+    {
+    	if(!is_array($mixedId))
+    		$mixedId = array($mixedId);
+
+        //--- Move to deleted subscriptions table.   
+    	$sQuery = "INSERT IGNORE INTO `" . $this->_sPrefix . "subscriptions_deleted` SELECT *, :reason AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_sPrefix . "subscriptions` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")";
+		$this->query($sQuery, array(
+		    'reason' => $sReason
+		));
+
+        return (int)$this->query("DELETE FROM `" . $this->_sPrefix . "subscriptions` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
+    }
+
     //--- Order Administration ---//
     public function onProfileDelete($iId)
     {

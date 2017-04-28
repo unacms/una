@@ -131,6 +131,12 @@ class BxAclModule extends BxDolModule
     	return $this->_serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_ACL_LICENSE_TYPE_RECURRING); 
     }
 
+    public function serviceCancelSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+    	//TODO: Do something if it's necessary.
+    	return true;
+    }
+
     protected function _serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
     {
     	$aItem = $this->serviceGetCartItem($iItemId);

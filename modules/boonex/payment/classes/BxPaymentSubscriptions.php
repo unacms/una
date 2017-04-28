@@ -73,6 +73,34 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 		return $mixedResult;
     }
 
+    public function cancel($iPendingId)
+    {
+    	$aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iPendingId));
+		if(empty($aSubscription) || !is_array($aSubscription))
+	    	return true;
+
+        $aOrder = $this->_oModule->_oDb->getOrderSubscription(array('type' => 'id', 'id' => $iPendingId));
+        if(empty($aOrder) || !is_array($aOrder))
+	    	return false;
+
+        $iSellerId = (int)$aOrder['seller_id'];
+        $oProvider = $this->_oModule->getObjectProvider($aOrder['provider'], $iSellerId);
+        if($oProvider === false || !$oProvider->isActive())
+        	return false;
+
+        if(!$oProvider->cancelRecurring($iPendingId, $aSubscription['customer_id'], $aSubscription['subscription_id']))
+            return false;
+
+        list($iSellerId, $iModuleId, $iItemId, $iItemCount) = $this->_oModule->_oConfig->descriptorS2A($aOrder['items']);
+		if(!$this->_oModule->callCancelSubscriptionItem((int)$iModuleId, array($aOrder['client_id'], $iSellerId, $iItemId, $iItemCount, $aOrder['order'])))
+			return false;
+
+		if(!$this->_oModule->_oDb->deleteSubscription($aSubscription['id'], 'cancel'))
+			return false;
+
+        return true;
+    }
+
     protected function _getBlock($sType)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

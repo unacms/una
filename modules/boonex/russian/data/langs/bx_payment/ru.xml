@@ -100,6 +100,7 @@
     <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Сумма]]></string>
     <string name="_bx_payment_grid_column_title_sbs_provider"><![CDATA[Поставщик]]></string>
     <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Дата]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_paid"><![CDATA[Оплачено]]></string>
 	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Количество]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_price"><![CDATA[Цена]]></string>
@@ -109,11 +110,12 @@
 	<string name="_bx_payment_grid_column_title_crt_price"><![CDATA[Цена]]></string>
 
 	<string name="_bx_payment_grid_action_title_ods_add"><![CDATA[Добавить вручную]]></string>
-	<string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Отмена]]></string>
+	<string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Отменить]]></string>
 	<string name="_bx_payment_grid_action_title_ods_process"><![CDATA[Обработать]]></string>
 	<string name="_bx_payment_grid_action_title_ods_view_order"><![CDATA[Детали заказа]]></string>
 	<string name="_bx_payment_grid_action_title_sbs_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_payment_grid_action_title_sbs_view_order"><![CDATA[Детали выплаты]]></string>
+	<string name="_bx_payment_grid_action_title_sbs_cancel"><![CDATA[Отменить]]></string>
 	<string name="_bx_payment_grid_action_title_crts_delete"><![CDATA[Удалить]]></string>
 	<string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Продолжить оплату]]></string>
 	<string name="_bx_payment_grid_action_title_crt_checkout"><![CDATA[Оплатить через {0}]]></string>
@@ -233,6 +235,8 @@
 	<string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
 	<string name="_bx_payment_txt_none"><![CDATA[нет]]></string>
 	<string name="_bx_payment_txt_name_manual"><![CDATA[Вручную]]></string>
+	<string name="_bx_payment_txt_yes"><![CDATA[Да]]></string>
+    <string name="_bx_payment_txt_no"><![CDATA[Нет]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>

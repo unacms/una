@@ -367,6 +367,15 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         ));
     }
 
+    public function cancelRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        $oSubscription = $this->_cancelSubscription($sCustomerId, $sSubscriptionId);
+        if($oSubscription === false)
+            return false;
+
+        return true;
+    }
+
     public function getCheckoutParamsSingle($aParams, &$oGrid)
     {
     	if(bx_get('token') !== false)
@@ -577,6 +586,24 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		catch (Exception $oException) {
 			return $this->_processException('Retrieve Subscription Error: ', $oException);
 		}
+
+		return $oSubscription;
+	}
+//TODO: Continue from here!
+	protected function _cancelSubscription($sCustomerId, $sSubscriptionId)
+	{
+	    try {
+	        $oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId);
+	        $oSubscription = $oSubscription->cancel();
+	    }
+	    catch (Exception $oException) {
+			return $this->_processException('Cancel Subscription Error: ', $oException);
+		}
+
+		bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
+		    'subscription_id' => $sSubscriptionId,
+			'subscription_object' => &$oSubscription
+		));
 
 		return $oSubscription;
 	}
