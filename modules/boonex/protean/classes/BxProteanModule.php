@@ -20,6 +20,9 @@ class BxProteanModule extends BxBaseModTemplateModule
 
 	function serviceIncludeCssJs()
     {
+        if(BxDolTemplate::getInstance()->getCode() != $this->_oConfig->getUri())
+            return '';
+
     	$sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
         return !empty($sCss) ? $this->_oTemplate->_wrapInTagCssCode($sCss) : '';
     }
