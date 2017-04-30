@@ -633,17 +633,24 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 	    if($sProfileType == 'system') {
         	$aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_ACCOUNT);
         	if (!$aMemLevel)
-                trigger_error ('Standard member level is missing: ' . MEMBERSHIP_ID_ACCOUNT, E_USER_ERROR);
+                trigger_error ('Standard member level is missing: MEMBERSHIP_ID_ACCOUNT', E_USER_ERROR);
 
         	return $aMemLevel;
         }
 
-        // profile is not active, so return standard memberships according to profile status
-        if (BX_PROFILE_STATUS_ACTIVE != $sProfileStatus) {
-            $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;
-            if ($oAccount && !$oAccount->isConfirmed())
-                $iLevelId = MEMBERSHIP_ID_UNCONFIRMED; // every account's profile is unconfirmed if account is unconfirmed
-            elseif (!isset($this->_aProfileStatus2LevelMap[$sProfileStatus]))
+        // check if account is unconfirmed, every account's profile is unconfirmed if account is unconfirmed
+        $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;
+        if ($oAccount && !$oAccount->isConfirmed()) {
+            $aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_UNCONFIRMED);
+            if (!$aMemLevel)
+                trigger_error ('Standard member level is missing: MEMBERSHIP_ID_UNCONFIRMED', E_USER_ERROR);
+
+            return $aMemLevel;
+        }
+        
+        // profile is not active, so return standard memberships according to profile status        
+        if (false === $sProfileStatus || BX_PROFILE_STATUS_ACTIVE != $sProfileStatus) {                
+            if (!isset($this->_aProfileStatus2LevelMap[$sProfileStatus]))
                 $iLevelId = MEMBERSHIP_ID_NON_MEMBER; // if there is no profile status - then it isn't member
             else
                 $iLevelId = $this->_aProfileStatus2LevelMap[$sProfileStatus]; // get member level id which associated with every non-active status
