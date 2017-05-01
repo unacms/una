@@ -122,6 +122,17 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         return $GLOBALS['bxDolClasses'][$sClassName];
     }
 
+    public function getObjectSubscriptions()
+    {
+    	$sClassName = $this->_oConfig->getClassPrefix() . 'Subscriptions';
+        if(!isset($GLOBALS['bxDolClasses'][$sClassName])) {
+        	bx_import('Subscriptions', $this->_aModule);
+            $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName();
+        }
+
+        return $GLOBALS['bxDolClasses'][$sClassName];
+    }
+
 	public function getObjectProvider($sProvider, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
 	{
 		$aProvider = $this->_oDb->getProviders(array('type' => 'by_name', 'name' => $sProvider));
