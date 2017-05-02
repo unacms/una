@@ -183,6 +183,12 @@ div.bx-base-text-breadcrumb i {
 }
 
 /* view page */
+.bx-base-text-entity-content,
+.bx-base-text-entity-content p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .bx-base-text-entity-content p:first-child,
 .bx-base-text-entity-content h2:first-child,
 .bx-base-text-entity-content h1:first-child {
