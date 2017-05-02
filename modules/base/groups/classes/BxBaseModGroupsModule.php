@@ -221,6 +221,31 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $s;
     }
 
+    public function serviceAdmins ($iContentId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(!$iContentId)
+            return false;
+
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+        if(!$oGroupProfile)
+            return false;
+
+        $aProfiles = $this->_oDb->getAdmins($oGroupProfile->id());
+        if(empty($aProfiles) || !is_array($aProfiles))
+            return false;
+
+        $iStart = (int)bx_get('start');
+        $iLimit = !empty($CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? getParam($CNF['PARAM_NUM_CONNECTIONS_QUICK']) : 4;
+        if(!$iLimit)
+            $iLimit = 4;
+
+        return $this->_serviceBrowseQuick($aProfiles, $iStart, $iLimit);
+    }
+
     public function serviceBrowseJoinedEntries ($iProfileId = 0, $bDisplayEmptyMsg = false)
     {
         if (!$iProfileId)

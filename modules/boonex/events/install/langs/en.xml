@@ -123,6 +123,7 @@
 	<string name="_bx_events_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_events_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_events_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
+	<string name="_bx_events_page_block_title_admins"><![CDATA[Administrators]]></string>
 	<string name="_bx_events_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_events_page_block_title_system_fans"><![CDATA[Members]]></string>

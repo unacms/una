@@ -265,29 +265,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if (!$a)
             return '';
 
-        // get paginate object
-        $oPaginate = new BxTemplPaginate(array(
-            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}');",
-            'num' => count($a),
-            'per_page' => $iLimit,
-            'start' => $iStart,
-        ));
-
-        // remove last item from connection array, because we've got one more item for pagination calculations only
-        if (count($a) > $iLimit)
-            array_pop($a);
-
-        // get profiles HTML
-        $s = '';
-        foreach ($a as $iProfileId) {
-            if (!($o = BxDolProfile::getInstance($iProfileId))) {
-                continue;
-            }
-            $s .= $o->getUnit();
-        }
-
-        // return profiles + paginate
-        return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
+        return $this->_serviceBrowseQuick($a, $iStart, $iLimit);
     }
 
 	public function serviceBrowseByAcl ($mixedLevelId, $iDesignBox = BX_DB_PADDING_DEF)
@@ -672,6 +650,34 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         }
 
         return $aParams;
+    }
+
+    protected function _serviceBrowseQuick($aProfiles, $iStart = 0, $iLimit = 4)
+    {
+        // get paginate object
+        $oPaginate = new BxTemplPaginate(array(
+            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}');",
+            'num' => count($aProfiles),
+            'per_page' => $iLimit,
+            'start' => $iStart,
+        ));
+
+        // remove last item from connection array, because we've got one more item for pagination calculations only
+        if (count($aProfiles) > $iLimit)
+            array_pop($aProfiles);
+
+        // get profiles HTML
+        $s = '';
+        foreach ($aProfiles as $iProfileId) {
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            if(!$oProfile)
+                continue;
+
+            $s .= $oProfile->getUnit();
+        }
+
+        // return profiles + paginate
+        return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
     }
 }
 

@@ -34,6 +34,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_groups_view_profile', 1, 'bx_groups', '', '_bx_groups_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 2, 'bx_groups', '', '_bx_groups_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 0),
+('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:6:\"admins\";}', 0, 0, 1, 1),
 ('bx_groups_view_profile', 4, 'bx_groups', '', '_bx_groups_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0);
 
 -- PAGE: view closed profile 
