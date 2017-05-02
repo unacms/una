@@ -22,6 +22,7 @@
 
 /*---------------- main menu */
 #bx-menu-main-bar {
+	text-align: center;
 	overflow-x: auto;
 }
 
