@@ -16,7 +16,7 @@ $oSearch->setMetaType(bx_process_input(bx_get('type')));
 $oSearch->setCategoryObject(bx_process_input(bx_get('cat')));
 
 $sCode = '';
-if (bx_get('keyword')) {
+if (bx_get('keyword') !== false) {
     $sCode = $oSearch->response();
     if (!$sCode)
         $sCode = $oSearch->getEmptyResult();

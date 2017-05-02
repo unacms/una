@@ -74,7 +74,7 @@ class BxBaseCategory extends BxDolCategory
 
         $aVars = array('bx_repeat:cats' => array());
         foreach ($a as $sValue => $sName) {
-            if (!$sValue)
+            if (!is_numeric($sValue) && !$sValue)
                 continue;
             $iNum = $this->getItemsNum($sValue);
             if (!$bDisplayEmptyCats && !$iNum)
