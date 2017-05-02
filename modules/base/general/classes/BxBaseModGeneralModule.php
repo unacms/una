@@ -661,12 +661,16 @@ class BxBaseModGeneralModule extends BxDolModule
 	public function getProfileInfo($iUserId = 0)
     {
         $oProfile = $this->getObjectUser($iUserId);
-        $oAccount = $oProfile->getAccountObject();
+
+        $oAccount = null;
+        if($oProfile && !($oProfile instanceof BxDolProfileUndefined))
+            $oAccount = $oProfile->getAccountObject();
+        $bAccount = !empty($oAccount);
 
         return array(
         	'id' => $oProfile->id(),
             'name' => $oProfile->getDisplayName(),
-        	'email' => $oAccount->getEmail(),
+        	'email' => $bAccount ? $oAccount->getEmail() : '',
             'link' => $oProfile->getUrl(),
             'icon' => $oProfile->getIcon(),
         	'thumb' => $oProfile->getThumb(),
