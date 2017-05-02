@@ -20,6 +20,11 @@
     line-height: 4rem;
 }
 
+/*---------------- main menu */
+#bx-menu-main-bar {
+	overflow-x: auto;
+}
+
 /* --------------- content */
 #bx-content-wrapper {
 	padding-bottom: 120px;
