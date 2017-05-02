@@ -147,3 +147,10 @@ a.bx-base-pofile-cover-image:hover,
     top:0;
     right:0;
 }
+
+/* view page */
+.bx-base-profile-entity-content,
+.bx-base-profile-entity-content p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
