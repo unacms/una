@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `bx_market_licenses` (
   `added` int(11) unsigned NOT NULL default '0',
   `expired` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`,`profile_id`)
+  KEY `product_id` (`product_id`, `profile_id`),
+  KEY `license` (`license`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `bx_market_licenses_deleted` (
@@ -67,7 +68,8 @@ CREATE TABLE IF NOT EXISTS `bx_market_licenses_deleted` (
   `reason` varchar(16) NOT NULL default '',
   `deleted` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`,`profile_id`)
+  KEY `product_id` (`product_id`,`profile_id`),
+  KEY `license` (`license`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: storages & transcoders
