@@ -457,6 +457,9 @@ class BxMarketModule extends BxBaseModTextModule
         if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
 			return $aCheck[CHECK_ACTION_MESSAGE];
 
+        if((float)$aDataEntry[$CNF['FIELD_PRICE_SINGLE']] == 0 && (float)$aDataEntry[$CNF['FIELD_PRICE_RECURRING']] == 0)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
 		if(!$this->_oDb->hasLicense($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']]))
             return CHECK_ACTION_RESULT_NOT_ALLOWED;
 
