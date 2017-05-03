@@ -192,7 +192,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_forum_search', 'bx_forum_search_full', @sName, 0, '_bx_forum_form_search_display_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-(@sName, @sName, 'allow_view_to', '', '', 0, 'custom', '_bx_forum_form_entry_input_sys_allow_view_to', '_bx_forum_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+(@sName, @sName, 'allow_view_to', '', '', 0, 'custom', '_bx_forum_form_entry_input_sys_allow_view_to', '_bx_forum_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 (@sName, @sName, 'delete_confirm', 1, '', 0, 'checkbox', '_bx_forum_form_entry_input_sys_delete_confirm', '_bx_forum_form_entry_input_delete_confirm', '_bx_forum_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_forum_form_entry_input_delete_confirm_error', '', '', 1, 0),
 (@sName, @sName, 'do_submit', '_bx_forum_form_entry_input_do_submit', '', 0, 'submit', '_bx_forum_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 (@sName, @sName, 'submit_text', '', '', 0, 'custom', '_bx_forum_form_entry_input_sys_submit_text', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),

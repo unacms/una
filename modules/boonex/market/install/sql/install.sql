@@ -286,10 +286,10 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_market', 'bx_market_entry_view_full', 'bx_market', 1, '_bx_market_form_entry_display_view_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_market', 'bx_market', 'allow_view_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_view_to', '_bx_market_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_market', 'bx_market', 'allow_purchase_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_purchase_to', '_bx_market_form_entry_input_allow_purchase_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_market', 'bx_market', 'allow_comment_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_comment_to', '_bx_market_form_entry_input_allow_comment_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_market', 'bx_market', 'allow_vote_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_vote_to', '_bx_market_form_entry_input_allow_vote_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_market', 'bx_market', 'allow_view_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_view_to', '_bx_market_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_market', 'bx_market', 'allow_purchase_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_purchase_to', '_bx_market_form_entry_input_allow_purchase_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_market', 'bx_market', 'allow_comment_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_comment_to', '_bx_market_form_entry_input_allow_comment_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_market', 'bx_market', 'allow_vote_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_vote_to', '_bx_market_form_entry_input_allow_vote_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_market_form_entry_input_sys_delete_confirm', '_bx_market_form_entry_input_delete_confirm', '_bx_market_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_market_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_market', 'bx_market', 'do_publish', '_bx_market_form_entry_input_do_publish', '', 0, 'submit', '_bx_market_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'do_submit', '_bx_market_form_entry_input_do_submit', '', 0, 'submit', '_bx_market_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),

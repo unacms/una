@@ -146,7 +146,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_shopify_settings', 'bx_shopify_settings_edit', 'bx_shopify', 0, '_bx_shopify_form_settings_display_edit');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_shopify', 'bx_shopify', 'allow_view_to', '', '', 0, 'custom', '_bx_shopify_form_entry_input_sys_allow_view_to', '_bx_shopify_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_shopify', 'bx_shopify', 'allow_view_to', '', '', 0, 'custom', '_bx_shopify_form_entry_input_sys_allow_view_to', '_bx_shopify_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_shopify', 'bx_shopify', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_shopify_form_entry_input_sys_delete_confirm', '_bx_shopify_form_entry_input_delete_confirm', '_bx_shopify_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_shopify_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_shopify', 'bx_shopify', 'do_publish', '_bx_shopify_form_entry_input_do_publish', '', 0, 'submit', '_bx_shopify_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_shopify', 'bx_shopify', 'do_submit', '_bx_shopify_form_entry_input_do_submit', '', 0, 'submit', '_bx_shopify_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),

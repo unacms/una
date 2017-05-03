@@ -177,7 +177,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_group', 'bx_group_invite', 'bx_groups', 0, '_bx_groups_form_profile_display_invite');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_group', 'bx_groups', 'allow_view_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_view_to', '_bx_groups_form_profile_input_allow_view_to', '_bx_groups_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_group', 'bx_groups', 'allow_view_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_view_to', '_bx_groups_form_profile_input_allow_view_to', '_bx_groups_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_groups_form_profile_input_sys_delete_confirm', '_bx_groups_form_profile_input_delete_confirm', '_bx_groups_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_groups_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'group_desc', '', '', 0, 'textarea', '_bx_groups_form_profile_input_sys_group_desc', '_bx_groups_form_profile_input_group_desc', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 1),
