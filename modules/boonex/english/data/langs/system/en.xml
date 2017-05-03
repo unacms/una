@@ -1217,6 +1217,7 @@
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Online status timeframe (minutes)]]></string>
     <string name="_adm_stg_err_option_sys_account_online_time"><![CDATA[You need to enter a value greater than zero.]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_default_profile_type"><![CDATA[Default profile type]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_limit_profiles_number"><![CDATA[Limit number of profiles (0 - no limit)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members (-1 = after expiration)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
@@ -2089,6 +2090,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_account_settings_more"><![CDATA[Account Settings More Menu]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
 	<string name="_sys_menu_title_add_profile"><![CDATA[Add Profile Menu]]></string>
+	<string name="_sys_menu_title_add_profile_vertical"><![CDATA[Add Profile Menu (vertical)]]></string>
 	<string name="_sys_menu_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
 	<string name="_sys_menu_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
 	<string name="_sys_menu_title_footer"><![CDATA[Footer Links]]></string>

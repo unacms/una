@@ -82,6 +82,7 @@
 	<string name="_bx_persons_page_title_online"><![CDATA[Online People]]></string>
 
 	<string name="_bx_persons_page_block_title_profile_private"><![CDATA[Private Profile]]></string>
+	<string name="_bx_persons_page_block_title_choose_type"><![CDATA[Choose Profile Type]]></string>
 	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create a Profile - Person]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>

@@ -17,6 +17,26 @@ class BxBaseServiceProfiles extends BxDol
         parent::__construct();
     }
 
+    public function serviceGetProfileTypes()
+    {
+        $aTypes = array(
+			'' => _t('_Select_one')
+        );
+
+        $aModules = $this->_getProfilesModules();
+        foreach($aModules as $aModule) {
+			if(empty($aModule) || !is_array($aModule))
+				continue;
+
+            $sTitleKey = '_' . $aModule['name'];
+            $sTitle = _t($sTitleKey);
+
+            $aTypes[$aModule['name']] = !empty($sTitle) && $sTitle != $sTitleKey ? $sTitle : $aModule['title'];
+		}
+
+        return $aTypes;
+    }
+
     public function serviceProfileStats ($iProfileId = 0)
     {
         if (!$iProfileId && !($iProfileId = bx_get_logged_profile_id()))

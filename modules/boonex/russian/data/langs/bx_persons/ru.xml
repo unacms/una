@@ -82,6 +82,7 @@
 	<string name="_bx_persons_page_title_online"><![CDATA[Онлайн Пользователи]]></string>
 
     <string name="_bx_persons_page_block_title_profile_private"><![CDATA[Приватный профиль]]></string>
+    <string name="_bx_persons_page_block_title_choose_type"><![CDATA[Выбрать тип профиля]]></string>
 	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Создать профиль - человек]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>

@@ -416,7 +416,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_account_online_time', '_adm_stg_cpt_option_sys_account_online_time', '5', 'digit', '', 'Avail', '_adm_stg_err_option_sys_account_online_time', 1),
 (@iCategoryId, 'sys_account_autoapproval', '_adm_stg_cpt_option_sys_account_autoapproval', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_account_activation_letter', '_adm_stg_cpt_option_sys_account_activation_letter', '', 'checkbox', '', '', '', 11),
-(@iCategoryId, 'sys_account_limit_profiles_number', '_adm_stg_cpt_option_sys_account_limit_profiles_number', '0', 'digit', '', '', '', 20);
+(@iCategoryId, 'sys_account_default_profile_type', '_adm_stg_cpt_option_sys_account_default_profile_type', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_profile_types";s:5:"class";s:20:"TemplServiceProfiles";}', '', '', 20),
+(@iCategoryId, 'sys_account_limit_profiles_number', '_adm_stg_cpt_option_sys_account_limit_profiles_number', '0', 'digit', '', '', '', 21);
 
 --
 -- CATEGORY: ACL
@@ -3097,6 +3098,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 7, 0, 1, 'BxTemplMenuAccount', ''),
 ('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 14, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 14, 0, 1, 'BxTemplMenuProfileAdd', ''),
+('sys_add_profile_vertical', '_sys_menu_title_add_profile_vertical', 'sys_add_profile_links', 'system', 6, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_account_dashboard_manage_tools', '_sys_menu_title_account_dashboard_manage_tools', 'sys_account_dashboard_manage_tools', 'system', 4, 0, 1, '', ''),
 ('sys_account_settings_submenu', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 8, 0, 1, '', ''),
 ('sys_account_settings_more', '_sys_menu_title_account_settings_more', 'sys_account_settings_more', 'system', 4, 0, 1, '', ''),

@@ -1215,6 +1215,7 @@
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Автоматическая активация аккаунта после создания]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Временные рамки статуса "онлайн" (минуты)]]></string>
     <string name="_adm_stg_err_option_sys_account_online_time"><![CDATA[Вам необходимо ввести значение больше нуля.]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_default_profile_type"><![CDATA[Тип профиля по умолчанию]]></string>
     <string name="_adm_stg_cpt_option_sys_account_limit_profiles_number"><![CDATA[Ограничить число профилей (0 - без ограничений)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[За сколько дней до окончания членства оповестить пользователя об окончании (-1 = после окончания)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Оповещать пользователей об окончании членства только одинажды (каждый день в противном случае)]]></string>
@@ -2085,8 +2086,9 @@
     <string name="_sys_menu_title_account_popup"><![CDATA[Аккаунт - Всплывающее Меню]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Аккаунт - Меню Настроек]]></string>
 	<string name="_sys_menu_title_account_settings_more"><![CDATA[Аккаунт - Меню Дополнительных Настроек]]></string>
-	<string name="_sys_menu_title_add_content"><![CDATA[Добавить Меню Содержимого]]></string>
-	<string name="_sys_menu_title_add_profile"><![CDATA[Добавить Меню Профиля]]></string>
+	<string name="_sys_menu_title_add_content"><![CDATA[Добавить содержимое - Меню]]></string>
+	<string name="_sys_menu_title_add_profile"><![CDATA[Добавить профиль - Меню]]></string>
+	<string name="_sys_menu_title_add_profile_vertical"><![CDATA[Добавить профиль - Меню вертикальное]]></string>
 	<string name="_sys_menu_title_cmts_item_actions"><![CDATA[Комментировать Действия]]></string>
 	<string name="_sys_menu_title_cmts_item_manage"><![CDATA[Управление Комментарием]]></string>
 	<string name="_sys_menu_title_footer"><![CDATA[Футер - Ссылки]]></string>

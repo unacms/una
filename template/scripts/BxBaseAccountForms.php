@@ -92,8 +92,11 @@ class BxBaseAccountForms extends BxDolProfileForms
         }
 
         $sRedirectUrl = '';
+        $sDefaultProfileType = getParam('sys_account_default_profile_type');
         if(count($aModulesProfile) == 1)
         	$sRedirectUrl = BxDolService::call($aModulesProfile[0]['name'], 'profile_create_url', array(false));
+        else if(!empty($sDefaultProfileType)) 
+            $sRedirectUrl = BxDolService::call($sDefaultProfileType, 'profile_create_url', array(false));
 
         $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
             'account_id' => $iAccountId,

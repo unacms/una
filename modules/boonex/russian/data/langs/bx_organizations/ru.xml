@@ -84,6 +84,7 @@
 	<string name="_bx_orgs_page_title_online"><![CDATA[Онлайн Организации]]></string>
 
     <string name="_bx_orgs_page_block_title_profile_private"><![CDATA[Приватный профиль]]></string>
+    <string name="_bx_orgs_page_block_title_choose_type"><![CDATA[Выбрать тип профиля]]></string>
 	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Создать профиль - организация]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
