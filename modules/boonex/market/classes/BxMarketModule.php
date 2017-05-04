@@ -121,6 +121,10 @@ class BxMarketModule extends BxBaseModTextModule
         	'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
         );
 	}
+	public function serviceBlockLicensesNote()
+	{
+	    return MsgBox(_t('_bx_market_page_block_content_licenses_note'));
+	}
     /**
      * Get number of unused licenses for some profile
      * @param $iProfileId - profile to get unused licenses for, if omitted then currently logged in profile is used

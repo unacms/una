@@ -127,7 +127,8 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_licenses', '_bx_market_page_title_sys_licenses', '_bx_market_page_title_licenses', 'bx_market', 5, 2147483647, 1, 'products-licenses', '', '', '', '', 0, 1, 0, 'BxMarketPageLicenses', 'modules/boonex/market/classes/BxMarketPageLicenses.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"block_licenses\";}', 0, 0, 1, 0);
+('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses_note', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:19:\"block_licenses_note\";}', 0, 0, 1, 0),
+('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"block_licenses\";}', 0, 0, 1, 1);
 
 -- PAGE: module home
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
