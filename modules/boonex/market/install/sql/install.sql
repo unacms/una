@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_licenses` (
   `domain` varchar(128) NOT NULL default '',
   `added` int(11) unsigned NOT NULL default '0',
   `expired` int(11) unsigned NOT NULL default '0',
+  `new` tinyint(1) NOT NULL default '1',
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`, `profile_id`),
   KEY `license` (`license`)
@@ -65,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_licenses_deleted` (
   `domain` varchar(128) NOT NULL default '',
   `added` int(11) unsigned NOT NULL default '0',
   `expired` int(11) unsigned NOT NULL default '0',
+  `new` tinyint(1) NOT NULL default '1',
   `reason` varchar(16) NOT NULL default '',
   `deleted` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),

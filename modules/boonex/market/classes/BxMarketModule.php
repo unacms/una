@@ -114,6 +114,8 @@ class BxMarketModule extends BxBaseModTextModule
         if(!$oGrid)
 			return '';
 
+        $this->_oDb->updateLicense(array('new' => 0), array('profile_id' => bx_get_logged_profile_id(), 'new' => 1));
+
 		$this->_oTemplate->addJs(array('licenses.js'));
 		return array(
         	'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
@@ -129,7 +131,7 @@ class BxMarketModule extends BxBaseModTextModule
         if(!$iProfileId)
 			$iProfileId = bx_get_logged_profile_id();
 
-        $aLicenses = $this->_oDb->getLicense(array('type' => 'unused', 'profile_id' => (int)$iProfileId));
+        $aLicenses = $this->_oDb->getLicense(array('type' => 'new', 'profile_id' => (int)$iProfileId));
         return !empty($aLicenses) && is_array($aLicenses) ? count($aLicenses) : 0;
     }
 

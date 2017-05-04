@@ -253,6 +253,14 @@ class BxMarketDb extends BxBaseModTextDb
                 $sWhereClause = " AND `tl`.`id`=:id";
                 break;
 
+            case 'new':
+				$aMethod['params'][1] = array(
+                	'profile_id' => $aParams['profile_id']
+                );
+
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`new`='1'";
+                break;
+
 			case 'unused':
 				$aMethod['params'][1] = array(
                 	'profile_id' => $aParams['profile_id']
