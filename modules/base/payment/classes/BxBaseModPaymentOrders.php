@@ -28,6 +28,22 @@ class BxBaseModPaymentOrders extends BxDol
 
     	return $this->_oModule->_oConfig->getUrl('URL_ORDERS');
     }
+
+    public function serviceGetOrdersCount($sType, $iProfileId = 0)
+    {
+        if(!in_array($sType, array('new')))
+            return 0;
+
+    	$iProfileId = !empty($iProfileId) ? $iProfileId : $this->_oModule->getProfileId();
+        if(empty($iProfileId))
+            return 0;
+
+        $aOrders = $this->_oModule->_oDb->getOrderProcessed(array('type' => $sType, 'seller_id' => $iProfileId));
+        if(empty($aOrders) || !is_array($aOrders))
+            return 0;
+
+        return count($aOrders);
+    }
 }
 
 /** @} */

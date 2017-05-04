@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_transactions` (
   `amount` float NOT NULL default '0',
   `license` varchar(16) NOT NULL default '',
   `date` int(11) NOT NULL default '0',
+  `new` tinyint(1) NOT NULL default '1',
   PRIMARY KEY(`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

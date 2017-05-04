@@ -138,11 +138,11 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 
     public function getOrdersCount($sType)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_count_new', 'Orders'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_count', 'Orders'))
     		return array();
 
 		$aSrvParams = array($sType);
-		return BxDolService::call($this->_sActive, 'get_orders_count_new', $aSrvParams, 'Orders');
+		return BxDolService::call($this->_sActive, 'get_orders_count', $aSrvParams, 'Orders');
     }
 
     public function getOrdersInfo($aConditions)

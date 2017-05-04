@@ -278,6 +278,15 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 $sWhereClause = " AND `tt`.`id`=:id";
                 break;
 
+            case 'new':
+                $aMethod['name'] = 'getAll';
+                $aMethod['params'][1] = array(
+                	'seller_id' => $aParams['seller_id']
+                );
+
+                $sWhereClause = " AND `tt`.`seller_id`=:seller_id AND `tt`.`new`='1'";
+                break;
+
 			case 'pending_id':
                 if(empty($aParams['with_key'])) {
                 	$aMethod['name'] = 'getAll';
@@ -340,9 +349,16 @@ class BxPaymentDb extends BxBaseModPaymentDb
     }
 
 	public function updateOrderProcessed($iId, $aValues)
+    {        
+        return $this->updateOrdersProcessed($aValues, array('id' => $iId));
+    }
+
+    public function updateOrdersProcessed($aValues, $aWhere)
     {
-        $sQuery = $this->prepare("UPDATE `" . $this->_sPrefix . "transactions` SET " . $this->arrayToSQL($aValues) . " WHERE `id`=?", $iId);
-        return (int)$this->query($sQuery) > 0;
+        if(empty($aValues) || !is_array($aValues) || empty($aWhere) || !is_array($aWhere))
+            return false;
+
+        return (int)$this->query("UPDATE `" . $this->_sPrefix . "transactions` SET " . $this->arrayToSQL($aValues) . " WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
     }
 
     public function deleteOrderProcessed($mixedId)
