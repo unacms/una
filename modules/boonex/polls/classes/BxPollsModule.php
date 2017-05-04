@@ -46,6 +46,14 @@ class BxPollsModule extends BxBaseModTextModule
      */
     public function serviceGetBlockSubentries($iContentId = 0)
     {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        if($this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id()))
+            return $this->serviceGetBlockResults($iContentId);
+
         return $this->_serviceTemplateFunc('entrySubentries', $iContentId);
     }
 
