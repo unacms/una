@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+    <string name="_bx_mlc"><![CDATA[MLC]]></string>
+
+    <string name="_bx_mlc_option_summary_chars"><![CDATA[Number of characters in auto-cropped discussion summary]]></string>
+
+    <string name="_bx_mlc_lmi_cpt_keys"><![CDATA[Keys]]></string>
+
+    <string name="_bx_mlc_form_strings_input_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_mlc_form_strings_input_close"><![CDATA[Close]]></string>
+    <string name="_bx_mlc_form_strings_popup_edit"><![CDATA[Edit Key]]></string>
+
+    <string name="_bx_mlc_grid_column_title_key"><![CDATA[Key]]></string>
+    <string name="_bx_mlc_grid_column_title_string"><![CDATA[Text]]></string>
+    <string name="_bx_mlc_grid_column_title_languages"><![CDATA[Languages]]></string>
+    <string name="_bx_mlc_grid_action_title_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_mlc_grid_action_alt_edit"><![CDATA[Edit key]]></string>
+    <string name="_bx_mlc_grid_action_alt_delete"><![CDATA[Delete key]]></string>
+    <string name="_bx_mlc_grid_action_err_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
+
+    
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+</resources>

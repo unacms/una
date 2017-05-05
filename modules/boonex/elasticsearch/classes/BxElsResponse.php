@@ -1,0 +1,31 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    ElasticSearch ElasticSearch
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
+class BxElsResponse extends BxDolAlertsResponse
+{
+    protected $_sModule;
+    protected $_oModule;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->_sModule = 'bx_elasticsearch';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
+    }
+
+    public function response($oAlert)
+    {
+        
+    }
+}
+
+/** @} */
