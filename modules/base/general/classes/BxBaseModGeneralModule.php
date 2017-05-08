@@ -33,6 +33,73 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== SERVICE METHODS
+    public function serviceGetAuthor ($iContentId)
+    {
+        return $this->_getFieldValue('FIELD_AUTHOR', $iContentId);
+    }
+
+    public function serviceGetDateAdded ($iContentId)
+    {
+        return $this->_getFieldValue('FIELD_ADDED', $iContentId);
+    }
+
+    public function serviceGetDateChanged ($iContentId)
+    {
+        return $this->_getFieldValue('FIELD_CHANGED', $iContentId);
+    }
+
+    public function serviceGetLink ($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['URI_VIEW_ENTRY']))
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo))
+            return false;
+
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+    }
+
+    public function serviceGetTitle ($iContentId)
+    {
+        return $this->_getFieldValue('FIELD_TITLE', $iContentId);
+    }
+
+    public function serviceGetText ($iContentId)
+    {
+        return $this->_getFieldValue('FIELD_TEXT', $iContentId);
+    }
+
+    public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo))
+            return false;
+
+        if(!$bSearchableFieldsOnly)
+            return $aContentInfo;
+
+        if(empty($CNF['PARAM_SEARCHABLE_FIELDS']))
+            return false;
+
+        $aFields = explode(',', getParam($CNF['PARAM_SEARCHABLE_FIELDS']));
+        if(empty($aFields))
+            return false;
+
+        return array_flip(array_intersect(array_flip($aContentInfo), $aFields));
+    }
+
+    public function serviceGetSearchResultUnit ($iContentId)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo))
+            return '';
+
+        return $this->_oTemplate->unit($aContentInfo);
+    }
 
     public function serviceModuleIcon ()
     {
@@ -951,6 +1018,37 @@ class BxBaseModGeneralModule extends BxDolModule
             'social' => $sSocial,
         ));
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Repost, etc.
+    }
+
+    protected function _getFieldValue($sField, $iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF[$sField]))
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || empty($aContentInfo[$CNF[$sField]]))
+            return false;
+
+        return $aContentInfo[$CNF[$sField]];
+    }
+
+    protected function _getFieldValueThumb($sField, $iContentId, $sTranscoder = '') 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($sTranscoder) || empty($CNF[$sField]))
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || empty($aContentInfo[$CNF[$sField]]))
+            return false;
+
+        $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
+        if(!$oImagesTranscoder)
+            return false;
+
+        return $oImagesTranscoder->getFileUrl($aContentInfo[$CNF[$sField]]);
     }
 }
 
