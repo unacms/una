@@ -24,7 +24,6 @@ class BxBaseMenuSocialSharing extends BxTemplMenu
         $sLang = BxDolLanguages::getInstance()->getCurrentLanguage();
         $this->addMarkers(array (
             'lang' => $sLang,
-            'locale' => $this->_getLocaleFacebook($sLang),
         ));
     }
 
@@ -61,45 +60,6 @@ class BxBaseMenuSocialSharing extends BxTemplMenu
             return '';
 
         return parent::getCode();
-    }
-    
-	/**
-     * Get most facebook locale for provided language code.
-     * @param $sLang lang code
-     * @return locale string or empty string if no lacale is found
-     */
-    protected function _getLocaleFacebook ($sLang)
-    {
-        $aLocales = $this->_getLocalesFacebook();
-        if (!$aLocales || !isset($aLocales[$sLang]))
-            return '';
-        return $aLocales[$sLang];
-    }
-
-    /**
-     * Get facebook locales
-     * @return locales array, lang is array key and locale is array value
-     */
-    protected function _getLocalesFacebook ()
-    {
-        $oCache = $this->_oQuery->getDbCacheObject();
-        $sCacheKey = $this->_oQuery->genDbCacheKey('sys_social_sharing_locales_fb');
-        $aData = $oCache->getData($sCacheKey);
-        if (null === $aData) {
-            $sXML = bx_file_get_contents ('http://www.facebook.com/translations/FacebookLocales.xml');
-            if (!$sXML)
-                return false;
-            $xmlLocates = new SimpleXMLElement($sXML);
-            $aData = array ();
-            foreach ($xmlLocates->locale as $xmlLocale) {
-                $sLocale = (string)($xmlLocale->codes->code->standard->representation);
-                list ($sLang,) = explode('_', $sLocale);
-                if (!isset($aData[$sLang]))
-                    $aData[$sLang] = $sLocale;
-            }
-            $oCache->setData ($sCacheKey, $aData);
-        }
-        return $aData;
     }
 }
 
