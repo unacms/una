@@ -1273,6 +1273,25 @@ CREATE TABLE `sys_objects_feature` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE `sys_objects_content_info` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(64) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `alert_unit` varchar(32) NOT NULL,
+  `alert_action_add` varchar(32) NOT NULL,
+  `alert_action_update` varchar(32) NOT NULL,
+  `alert_action_delete` varchar(32) NOT NULL,
+  `class_name` varchar(32) NOT NULL default '',
+  `class_file` varchar(256) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `alert_add` (`alert_unit` ,`alert_action_add`),
+  UNIQUE KEY `alert_update` (`alert_unit` ,`alert_action_update`),
+  UNIQUE KEY `alert_delete` (`alert_unit` ,`alert_action_delete`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
 
 CREATE TABLE `sys_objects_privacy` (
   `id` int(11) NOT NULL auto_increment,

@@ -86,4 +86,19 @@ interface iBxDolProfileService
     public function servicePrepareFields ($aFieldsProfile);
 }
 
+/**
+ * Content info services module interface, module class must implement basic content info services to be compliant with ContentInfo interface
+ */
+interface iBxDolContentInfoService
+{
+    public function serviceGetAuthor ($iContentId);
+    public function serviceGetDateAdded ($iContentId);
+    public function serviceGetDateChanged ($iContentId);
+    public function serviceGetLink ($iContentId);
+    public function serviceGetTitle ($iContentId);
+    public function serviceGetText ($iContentId);
+    public function serviceGetThumb ($iContentId);
+    public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true);
+    public function serviceGetSearchResultUnit ($iContentId);
+}
 /** @} */
