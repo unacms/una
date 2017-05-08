@@ -392,6 +392,11 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
 ('bx_market_cats', 'bx_market', 'bx_market', 'bx_market_cats', 'bx_market_products', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_market_products`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_market', '_bx_market', 'bx_market', 'added', 'edited', 'deleted', '', '');
+
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_market_administration', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxMarketGridAdministration', 'modules/boonex/market/classes/BxMarketGridAdministration.php'),

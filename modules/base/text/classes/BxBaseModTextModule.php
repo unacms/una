@@ -12,7 +12,7 @@
 /**
  * Base module class for text based modules
  */
-class BxBaseModTextModule extends BxBaseModGeneralModule
+class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolContentInfoService
 {
     function __construct(&$aModule)
     {
@@ -20,6 +20,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
     // ====== SERVICE METHODS
+    public function serviceGetThumb ($iContentId, $sTranscoder = '') 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
+            $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'];
+
+        return $this->_getFieldValueThumb('FIELD_THUMB', $iContentId, $sTranscoder);
+    }
+
 	public function serviceGetMenuAddonManageTools()
 	{
 		bx_import('SearchResult', $this->_aModule);
