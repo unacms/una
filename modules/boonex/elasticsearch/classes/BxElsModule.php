@@ -102,7 +102,7 @@ class BxElsModule extends BxBaseModGeneralModule
             $CNF['FIELD_CHANGED'] => $mixedContenInfo->getContentDateChanged($iContentId),
             $CNF['FIELD_LINK'] => $mixedContenInfo->getContentLink($iContentId),
             $CNF['FIELD_TITLE'] => $mixedContenInfo->getContentTitle($iContentId),
-            $CNF['FIELD_TEXT'] => $mixedContenInfo->getContentDesc($iContentId),
+            $CNF['FIELD_TEXT'] => $mixedContenInfo->getContentText($iContentId),
         );
         $aInfo = array_merge($aInfo, $mixedContenInfo->getContentInfo($iContentId));
 
