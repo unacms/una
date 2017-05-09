@@ -27,7 +27,8 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
             $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'];
 
-        return $this->_getFieldValueThumb('FIELD_THUMB', $iContentId, $sTranscoder);
+        $mixedResult = $this->_getFieldValueThumb('FIELD_THUMB', $iContentId, $sTranscoder);
+        return $mixedResult !== false ? $mixedResult : '';
     }
 
 	public function serviceGetMenuAddonManageTools()

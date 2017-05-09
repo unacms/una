@@ -57,7 +57,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']))
             $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'];
 
-        return $this->_getFieldValueThumb('FIELD_PICTURE', $iContentId, $sTranscoder);
+        $mixedResult = $this->_getFieldValueThumb('FIELD_PICTURE', $iContentId, $sTranscoder);
+        return $mixedResult !== false ? $mixedResult : '';
     }
 
 	public function servicePrivateProfileMsg()

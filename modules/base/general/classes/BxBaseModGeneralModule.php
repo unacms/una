@@ -35,40 +35,45 @@ class BxBaseModGeneralModule extends BxDolModule
     // ====== SERVICE METHODS
     public function serviceGetAuthor ($iContentId)
     {
-        return $this->_getFieldValue('FIELD_AUTHOR', $iContentId);
+        $mixedResult = $this->_getFieldValue('FIELD_AUTHOR', $iContentId);
+        return $mixedResult !== false ? (int)$mixedResult : 0; 
     }
 
     public function serviceGetDateAdded ($iContentId)
     {
-        return $this->_getFieldValue('FIELD_ADDED', $iContentId);
+        $mixedResult = $this->_getFieldValue('FIELD_ADDED', $iContentId);
+        return $mixedResult !== false ? (int)$mixedResult : 0; 
     }
 
     public function serviceGetDateChanged ($iContentId)
     {
-        return $this->_getFieldValue('FIELD_CHANGED', $iContentId);
+        $mixedResult = $this->_getFieldValue('FIELD_CHANGED', $iContentId);
+        return $mixedResult !== false ? (int)$mixedResult : 0;
     }
 
     public function serviceGetLink ($iContentId)
     {
         $CNF = &$this->_oConfig->CNF;
         if(empty($CNF['URI_VIEW_ENTRY']))
-            return false;
+            return '';
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo))
-            return false;
+            return '';
 
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
     public function serviceGetTitle ($iContentId)
     {
-        return $this->_getFieldValue('FIELD_TITLE', $iContentId);
+        $mixedResult = $this->_getFieldValue('FIELD_TITLE', $iContentId);
+        return $mixedResult !== false ? $mixedResult : '';
     }
 
     public function serviceGetText ($iContentId)
     {
-        return $this->_getFieldValue('FIELD_TEXT', $iContentId);
+        $mixedResult = $this->_getFieldValue('FIELD_TEXT', $iContentId);
+        return $mixedResult !== false ? $mixedResult : '';
     }
 
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
@@ -77,17 +82,17 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo))
-            return false;
+            return array();
 
         if(!$bSearchableFieldsOnly)
             return $aContentInfo;
 
         if(empty($CNF['PARAM_SEARCHABLE_FIELDS']))
-            return false;
+            return array();
 
         $aFields = explode(',', getParam($CNF['PARAM_SEARCHABLE_FIELDS']));
         if(empty($aFields))
-            return false;
+            return array();
 
         return array_flip(array_intersect(array_flip($aContentInfo), $aFields));
     }

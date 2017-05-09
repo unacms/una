@@ -202,9 +202,9 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $this->_call('get_link', $iContentId);
     }
 
-    public function getContentDesc ($iContentId)
+    public function getContentText ($iContentId)
     {
-        return $this->_call('get_desc', $iContentId);
+        return $this->_call('get_text', $iContentId);
     }
 
     public function getContentInfo ($iContentId, $bSearchableFieldsOnly = true)
