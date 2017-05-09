@@ -28,7 +28,21 @@ class BxBaseServiceAccount extends BxDol
 	    $sLoginText = '';
         if (!isset($aParams['no_login_text']) || (int)$aParams['no_login_text'] == 1)
             $sLoginText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_join_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login')) . '</div>';
-
+        
+        if (isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) { // remember referrer
+            
+            $sJoinReferrer = $_SERVER['HTTP_REFERER'];
+            $aNoRelocatePages = array('forgot-password', 'login', 'create-account', 'logout');
+            foreach ($aNoRelocatePages as $s) {
+                if (false !== mb_stripos($sJoinReferrer, $s)) {
+                    $sJoinReferrer = '';
+                    break;
+                }
+            }   
+            if ($sJoinReferrer)
+                BxDolSession::getInstance()->setValue('join-referrer', $sJoinReferrer);
+        }
+        
         $sAuth = BxDolService::call('system', 'MemberAuthCode', array(), 'TemplServiceLogin');
 
         return $sAuth . $this->_oAccountForms->createAccountForm($aParams) . $sLoginText;
