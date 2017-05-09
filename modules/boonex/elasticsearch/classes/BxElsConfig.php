@@ -19,7 +19,21 @@ class BxElsConfig extends BxBaseModGeneralConfig
 
             // module icon
             'ICON' => 'search col-blue2',
+
+            // database fields
+            'FIELD_AUTHOR' => 'author',
+            'FIELD_ADDED' => 'added',
+            'FIELD_CHANGED' => 'changed',
+        	'FIELD_LINK' => 'link',
+            'FIELD_TITLE' => 'title',
+            'FIELD_TEXT' => 'text',
         );
+    }
+
+    public function getIndex()
+    {
+        $aUrl = parse_url(BX_DOL_URL_ROOT);
+        return $aUrl['host'];
     }
 }
 

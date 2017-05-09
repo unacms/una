@@ -307,6 +307,11 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 ('bx_shopify_cats', 'bx_shopify', 'bx_shopify', 'bx_shopify_cats', 'bx_shopify_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_shopify_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_shopify', '_bx_shopify', 'bx_shopify', 'added', 'edited', 'deleted', '', '');
+
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_shopify_administration', 'Sql', 'SELECT * FROM `bx_shopify_entries` WHERE 1 ', 'bx_shopify_entries', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxShopifyGridAdministration', 'modules/boonex/shopify/classes/BxShopifyGridAdministration.php'),

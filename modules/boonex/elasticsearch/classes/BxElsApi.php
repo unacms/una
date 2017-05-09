@@ -22,12 +22,32 @@ class BxElsApi extends BxDol
 
     public function __construct()
     {
-        $this->_sApiUrl = 'http://45.56.80.210:9200'; // TODO: use $this->_sApiUrl = getParam(''); 
+        $this->_sApiUrl = getParam('bx_elasticsearch_api_url');
+    }
+
+    public function searchData($sIndex, $sTerm) 
+    {
+        return $this->api("/$sIndex/_search?q=" . $sTerm);
+    }
+
+    public function getData($sIndex, $sType, $iContentId) 
+    {
+        return $this->api("/$sIndex/$sType/$iContentId");
     }
 
     public function indexData($sIndex, $sType, $iContentId, $aData) 
     {
         return $this->api("/$sIndex/$sType/$iContentId", $aData, 'put');
+    }
+
+    public function updateData($sIndex, $sType, $iContentId, $aData)
+    {
+        return $this->api("/$sIndex/$sType/$iContentId", $aData, 'post');
+    }
+
+    public function deleteData($sIndex, $sType, $iContentId)
+    {
+        return $this->api("/$sIndex/$sType/$iContentId", array(), 'delete');
     }
 
     public function getErrorMsg() 
@@ -102,7 +122,7 @@ class BxElsApi extends BxDol
 
         if ($aData) {
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, json_encode($aData));
-            curl_setopt($rConnect, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+            curl_setopt($rConnect, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         }
 
         $sResult = curl_exec($rConnect);
@@ -115,7 +135,7 @@ class BxElsApi extends BxDol
         return $sResult;
     }
 
-    public function log ($mixed, $sProvider = '')
+    protected function log ($mixed, $sProvider = '')
     {
         if (!defined('BX_ELASTICSEARCH_LOG') || !constant('BX_ELASTICSEARCH_LOG'))
             return;

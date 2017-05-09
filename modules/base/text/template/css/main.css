@@ -37,8 +37,10 @@ div.bx-base-text-breadcrumb i {
     overflow:hidden;    
 }
 
+.bx-base-text-unit-title,
 .bx-base-text-unit-summary {
-    overflow:hidden;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .bx-base-text-unit-summary p {
@@ -50,6 +52,8 @@ div.bx-base-text-breadcrumb i {
 }
 .bx-base-text-unit-text {
 	width: 100%;
+	overflow: hidden;
+    text-overflow: ellipsis;
 }
 .bx-base-text-unit-ext .bx-base-text-unit-text {
 	text-align: left;
@@ -184,7 +188,10 @@ div.bx-base-text-breadcrumb i {
 
 /* view page */
 .bx-base-text-entity-content,
-.bx-base-text-entity-content p {
+.bx-base-text-entity-content p,
+.bx-base-text-entity-content h1,
+.bx-base-text-entity-content h2,
+.bx-base-text-entity-content h3 {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }

@@ -12,7 +12,7 @@
 /**
  * Base class for profile modules.
  */
-class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolProfileService
+class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolContentInfoService, iBxDolProfileService
 {
     protected $_iAccountId;
 
@@ -50,6 +50,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 
     // ====== SERVICE METHODS
+    public function serviceGetThumb ($iContentId, $sTranscoder = '') 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($sTranscoder) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']))
+            $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'];
+
+        $mixedResult = $this->_getFieldValueThumb('FIELD_PICTURE', $iContentId, $sTranscoder);
+        return $mixedResult !== false ? $mixedResult : '';
+    }
 
 	public function servicePrivateProfileMsg()
     {

@@ -329,6 +329,10 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
 ('bx_files_cats', 'bx_files', 'bx_files', 'bx_files_cats', 'bx_files_main', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_files_main`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_files', '_bx_files', 'bx_files', 'added', 'edited', 'deleted', '', '');
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_files_administration', 'Sql', 'SELECT * FROM `bx_files_main` WHERE 1 ', 'bx_files_main', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,desc', '', 'like', '', '', 192, 'BxFilesGridAdministration', 'modules/boonex/files/classes/BxFilesGridAdministration.php'),

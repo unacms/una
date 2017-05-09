@@ -325,6 +325,10 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
 ('bx_polls_cats', 'bx_polls', 'bx_polls', 'bx_polls_cats', 'bx_polls_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_polls_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_polls', '_bx_polls', 'bx_polls', 'added', 'edited', 'deleted', '', '');
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_polls_administration', 'Sql', 'SELECT * FROM `bx_polls_entries` WHERE 1 ', 'bx_polls_entries', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 192, 'BxPollsGridAdministration', 'modules/boonex/polls/classes/BxPollsGridAdministration.php'),

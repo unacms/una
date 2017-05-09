@@ -43,6 +43,9 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_organizations_cats';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
 
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_organizations';
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_organizations_administration', 'bx_organizations_moderation', 'bx_organizations_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_organizations_administration', 'bx_organizations_moderation', 'bx_organizations_common');

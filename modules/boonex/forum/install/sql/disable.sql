@@ -71,6 +71,10 @@ DELETE FROM `sys_objects_favorite` WHERE `Name` = @sName;
 DELETE FROM `sys_objects_feature` WHERE `name` = @sName;
 
 
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` = @sName;
+
+
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;

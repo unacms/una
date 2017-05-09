@@ -24,7 +24,18 @@ class BxElsResponse extends BxDolAlertsResponse
 
     public function response($oAlert)
     {
-        
+        $aAlertTypes = array('add', 'update', 'delete');
+        foreach($aAlertTypes as $sAlertType) {
+            $sMethodType = bx_gen_method_name($sAlertType);
+
+            $sMethod = 'getObjectInstanceByAlert' . $sMethodType;
+            $oContentInfo = BxDolContentInfo::$sMethod($oAlert->sUnit, $oAlert->sAction);
+            if(!$oContentInfo)
+                continue;
+
+            $sMethod = 'service' . $sMethodType;
+            $this->_oModule->$sMethod($oAlert->iObject, $oContentInfo);
+        }       
     }
 }
 
