@@ -39,6 +39,10 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_shopify';
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_shopify_cats';
 
 
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_shopify';
+
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_shopify_administration', 'bx_shopify_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_shopify_administration', 'bx_shopify_common');
