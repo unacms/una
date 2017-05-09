@@ -35,8 +35,7 @@ class BxElsResponse extends BxDolAlertsResponse
 
             $sMethod = 'service' . $sMethodType;
             $this->_oModule->$sMethod($oAlert->iObject, $oContentInfo);
-        }
-        
+        }       
     }
 }
 
