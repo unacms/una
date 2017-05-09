@@ -54,11 +54,10 @@ $aConfig = array(
     ),
     'enable' => array(
         'execute_sql' => 1,
-    	'process_form_check_functions' => 1,    //Note. It's essential to make this action AFTER 'execute_sql' one.
+    	'process_content_alerts' => 1,    //Note. It's essential to make this action AFTER 'execute_sql' one.
         'clear_db_cache' => 1,
     ),
     'disable' => array (
-    	'process_form_check_functions' => 1,    //Note. It's essential to make this action BEFORE 'execute_sql' one.
         'execute_sql' => 1,
         'clear_db_cache' => 1,
     ),
