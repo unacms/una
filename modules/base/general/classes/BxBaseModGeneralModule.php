@@ -97,13 +97,16 @@ class BxBaseModGeneralModule extends BxDolModule
         return array_flip(array_intersect(array_flip($aContentInfo), $aFields));
     }
 
-    public function serviceGetSearchResultUnit ($iContentId)
+    public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo))
             return '';
 
-        return $this->_oTemplate->unit($aContentInfo);
+        if(empty($sUnitTemplate))
+            $sUnitTemplate = 'unit.html';
+
+        return $this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate);
     }
 
     public function serviceModuleIcon ()

@@ -939,9 +939,12 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $aComment;
     }
 
-    public function serviceGetSearchResultUnit ($iContentId)
+    public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
-        return $this->getComment($iContentId, array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
+        $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
+        $this->setId($aComment['cmt_object_id']);
+
+        return $this->getComment($aComment, array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
     }
 
     /**

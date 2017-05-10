@@ -64,12 +64,12 @@ class BxElsModule extends BxBaseModGeneralModule
         echo '</pre>';
     }
 
-    public function serviceSearch($sTerm, $sIndex = '')
+    public function serviceSearch($sTerm, $sType = '', $sIndex = '')
     {
         if(empty($sIndex))
             $sIndex = $this->_oConfig->getIndex();
 
-        $mixedResult = $this->_oApi->searchData($sIndex, $sTerm);
+        $mixedResult = $this->_oApi->searchData($sIndex, $sType, $sTerm);
         if(!$mixedResult || !is_array($mixedResult))
             return false;
 

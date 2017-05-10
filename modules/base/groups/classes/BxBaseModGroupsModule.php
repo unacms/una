@@ -32,6 +32,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         echo(json_encode($a));
     }
 
+    public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
+    {
+        if(empty($sUnitTemplate))
+            $sUnitTemplate = 'unit.html';
+
+        return parent::serviceGetSearchResultUnit($iContentId, $sUnitTemplate);
+    }
+
     /**
      * Check if this module entry can be used as profile
      */

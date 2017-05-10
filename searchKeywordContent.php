@@ -12,7 +12,15 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');
 
-$o = new BxDolSearch(bx_get('section'));
+$sClass = 'BxDolSearch';
+if(BxDolModuleQuery::getInstance()->isEnabledByName('bx_elasticsearch')) {
+     $oModule = BxDolModule::getInstance('bx_elasticsearch');
+
+     bx_import('Search', $oModule->_aModule);
+     $sClass = 'BxElsSearch';
+}
+
+$o = new $sClass(bx_get('section'));
 $o->setLiveSearch(bx_get('live_search') ? 1 : 0);
 $o->setMetaType(bx_process_input(bx_get('type')));
 $o->setCategoryObject(bx_process_input(bx_get('cat')));

@@ -25,9 +25,14 @@ class BxElsApi extends BxDol
         $this->_sApiUrl = getParam('bx_elasticsearch_api_url');
     }
 
-    public function searchData($sIndex, $sTerm) 
+    public function searchData($sIndex, $sType, $sTerm) 
     {
-        return $this->api("/$sIndex/_search?q=" . $sTerm);
+        $sQuery = "/$sIndex";
+        if(!empty($sType))
+            $sQuery .= "/$sType";
+        $sQuery .= "/_search?q=" . $sTerm;
+
+        return $this->api($sQuery);
     }
 
     public function getData($sIndex, $sType, $iContentId) 

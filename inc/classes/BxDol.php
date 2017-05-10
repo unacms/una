@@ -99,6 +99,6 @@ interface iBxDolContentInfoService
     public function serviceGetText ($iContentId);
     public function serviceGetThumb ($iContentId);
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true);
-    public function serviceGetSearchResultUnit ($iContentId);
+    public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '');
 }
 /** @} */

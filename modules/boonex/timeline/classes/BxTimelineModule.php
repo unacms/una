@@ -366,13 +366,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
     }
 
-    public function serviceGetSearchResultUnit ($iContentId)
+    public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
         if(empty($aEvent) || !is_array($aEvent))
             return '';
 
-        return $this->_oTemplate->unit($aEvent);
+        if(empty($sUnitTemplate))
+            $sUnitTemplate = 'unit.html';
+
+        return $this->_oTemplate->unit($aEvent, true, $sUnitTemplate);
     }
 
     /**

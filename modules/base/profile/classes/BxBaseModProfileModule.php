@@ -61,6 +61,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $mixedResult !== false ? $mixedResult : '';
     }
 
+    public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
+    {
+        if(empty($sUnitTemplate))
+            $sUnitTemplate = 'unit_with_cover.html';
+
+        return parent::serviceGetSearchResultUnit($iContentId, $sUnitTemplate);
+    }
+
 	public function servicePrivateProfileMsg()
     {
         return MsgBox(_t('_sys_access_denied_to_private_content'));
