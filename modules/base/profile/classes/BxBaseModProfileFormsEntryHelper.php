@@ -143,6 +143,17 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return '';
     }
 
+    protected function redirectAfterAdd($aContentInfo)
+    {
+        // if user just joined the redirect to the page where user comes from. 
+        // TODO: add an options to profile based modules: redirect to created profile, redirect to the last page, custom redirect
+        if ($sJoinReferrer = BxDolSession::getInstance()->getValue('join-referrer')) {
+            BxDolSession::getInstance()->unsetValue('join-referrer');
+            header('Location: ' . $sJoinReferrer);
+            exit;
+        }
+        parent::redirectAfterAdd($aContentInfo);
+    }
 }
 
 /** @} */
