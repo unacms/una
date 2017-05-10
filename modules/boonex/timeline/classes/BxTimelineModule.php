@@ -31,7 +31,7 @@ define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 define('BX_TIMELINE_MEDIA_PHOTO', 'photo');
 define('BX_TIMELINE_MEDIA_VIDEO', 'video');
 
-class BxTimelineModule extends BxBaseModNotificationsModule
+class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolContentInfoService
 {
     protected $_sJsPostObject;
     protected $_sJsViewObject;
@@ -332,7 +332,50 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     /**
      * SERVICE METHODS
-     * 
+     */
+    public function serviceGetAuthor ($iContentId)
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return 0;
+
+        return $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? (int)$aEvent['owner_id'] : (int)$aEvent['object_id'];
+    }
+
+    public function serviceGetDateChanged ($iContentId)
+    {
+        return 0;
+    }
+
+    public function serviceGetLink ($iContentId)
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return '';
+
+        return $this->_oConfig->getItemViewUrl($aEvent);
+    }
+
+    public function serviceGetThumb ($iContentId, $sTranscoder = '') 
+    {
+        return '';
+    }
+
+    public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
+    {
+        return $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+    }
+
+    public function serviceGetSearchResultUnit ($iContentId)
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return '';
+
+        return $this->_oTemplate->unit($aEvent);
+    }
+
+    /**
      * Get Post block for a separate page.
      */
     public function serviceGetBlockPost($iProfileId = 0)
@@ -1359,6 +1402,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     protected function _prepareTextForSave($s)
     {
         return bx_process_input($s, BX_DATA_TEXT_MULTILINE);
+    }
+
+    protected function _getFieldValue($sField, $iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF[$sField]))
+            return false;
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+        if(empty($aEvent) || empty($aEvent[$CNF[$sField]]))
+            return false;
+
+        return $aEvent[$CNF[$sField]];
     }
 }
 

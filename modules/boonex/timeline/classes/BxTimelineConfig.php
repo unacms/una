@@ -45,6 +45,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         
 	        // database fields
         	'FIELD_ID' => 'id',
+        	'FIELD_ADDED' => 'date',
+        	'FIELD_TITLE' => 'title',
+        	'FIELD_TEXT' => 'description',
         	'FIELD_LOCATION_PREFIX' => 'location',
 
         	// objects
