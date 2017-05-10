@@ -128,7 +128,7 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  *      - $aExtra['rate'] - comment rate 1 or -1
  *
  */
-class BxDolCmts extends BxDolFactory implements iBxDolReplaceable
+class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContentInfoService
 {
     protected $_oQuery = null;
     protected $_oTemplate = null;
@@ -883,6 +883,65 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable
         $oZ->alert();
 
         return true;
+    }
+
+    public function serviceGetAuthor ($iContentId)
+    {
+        $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
+        $this->setId($aComment['cmt_object_id']);
+
+        return $aComment['cmt_author_id'];
+    }
+
+    public function serviceGetDateAdded ($iContentId)
+    {
+        $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
+        $this->setId($aComment['cmt_object_id']);
+
+        return $aComment['cmt_time'];
+    }
+
+    public function serviceGetDateChanged ($iContentId)
+    {
+        return 0;
+    }
+    public function serviceGetLink ($iContentId)
+    {
+        $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
+        $this->setId($aComment['cmt_object_id']);
+
+        return $this->getViewUrl($iContentId);
+    }
+
+    public function serviceGetTitle ($iContentId)
+    {
+        return '';
+    }
+
+    public function serviceGetText ($iContentId)
+    {
+        $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
+        $this->setId($aComment['cmt_object_id']);
+
+        return $aComment['cmt_text'];
+    }
+
+    public function serviceGetThumb ($iContentId)
+    {
+        return '';
+    }
+
+    public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
+    {
+        $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
+        $this->setId($aComment['cmt_object_id']);
+
+        return $aComment;
+    }
+
+    public function serviceGetSearchResultUnit ($iContentId)
+    {
+        return $this->getComment($iContentId, array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
     }
 
     /**
