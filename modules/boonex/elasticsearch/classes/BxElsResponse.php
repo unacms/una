@@ -34,7 +34,11 @@ class BxElsResponse extends BxDolAlertsResponse
                 continue;
 
             $sMethod = 'service' . $sMethodType;
-            $this->_oModule->$sMethod($oAlert->iObject, $oContentInfo);
+            $iContentId = $oAlert->iObject;
+            if(in_array($oAlert->sAction, array('commentPost', 'commentUpdated', 'commentRemoved')))
+                $iContentId = $oAlert->aExtras['comment_id'];
+            
+            $this->_oModule->$sMethod($iContentId, $oContentInfo);
         }       
     }
 }

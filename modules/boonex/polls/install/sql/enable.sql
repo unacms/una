@@ -327,7 +327,8 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_polls', '_bx_polls', 'bx_polls', 'added', 'edited', 'deleted', '', '');
+('bx_polls', '_bx_polls', 'bx_polls', 'added', 'edited', 'deleted', '', ''),
+('bx_polls_cmts', '_bx_polls_cmts', 'bx_polls', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

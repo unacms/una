@@ -32,7 +32,7 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_files';
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_files_cats';
 
 -- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_files';
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_files', 'bx_files_cmts');
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_files_administration', 'bx_files_common');

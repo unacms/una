@@ -72,7 +72,7 @@ DELETE FROM `sys_objects_feature` WHERE `name` = @sName;
 
 
 -- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` = @sName;
+DELETE FROM `sys_objects_content_info` WHERE `name` IN (@sName, 'bx_forum_cmts');
 
 
 -- ALERTS

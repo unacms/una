@@ -40,7 +40,7 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_snipcart_cats';
 
 
 -- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_snipcart';
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_snipcart', 'bx_snipcart_cmts');
 
 
 -- GRIDS

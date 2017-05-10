@@ -188,6 +188,13 @@ class BxDolCmtsQuery extends BxDolDb
         }
 
         switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['id'] = (int)$aParams['id'];
+
+                $sWhereClause .= " AND `{$this->_sTable}`.`cmt_id` = :id";
+                break;
+
             case 'latest':
             	if(!empty($aParams['author'])) {
             		$aMethod['params'][1]['cmt_author_id'] = (int)$aParams['author'];

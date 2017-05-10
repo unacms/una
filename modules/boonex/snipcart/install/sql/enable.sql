@@ -311,7 +311,8 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_snipcart', '_bx_snipcart', 'bx_snipcart', 'added', 'edited', 'deleted', '', '');
+('bx_snipcart', '_bx_snipcart', 'bx_snipcart', 'added', 'edited', 'deleted', '', ''),
+('bx_snipcart_cmts', '_bx_snipcart_cmts', 'bx_snipcart', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
 
 -- GRIDS: moderation tools

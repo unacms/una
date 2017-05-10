@@ -32,7 +32,7 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_polls';
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_polls_cats';
 
 -- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_polls';
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_polls', 'bx_polls_cmts');
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_polls_administration', 'bx_polls_common');
