@@ -447,6 +447,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			exit;
 		}
 
+        bx_alert($this->getName(), 'finalize_checkout', 0, bx_get_logged_profile_id(), array(
+            'transactions' => $this->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => (int)$aPending['id'])),
+            'provider' => $oProvider,
+            'message' => &$aResult['message'],
+        ));
+
 		$this->_oTemplate->displayPageCodeResponse($aResult['message']);
     }
 
