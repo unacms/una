@@ -936,7 +936,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aComment = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iContentId));
         $this->setId($aComment['cmt_object_id']);
 
-        return $aComment;
+        return BxDolContentInfo::formatFields($aComment);
     }
 
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')

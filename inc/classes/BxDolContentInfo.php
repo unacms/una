@@ -41,10 +41,14 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
 
     protected $_sSystem;
     protected $_aSystem;
+    protected $_aGrid;
 
     protected function __construct($sSystem)
     {
         parent::__construct();
+
+        if(empty($sSystem))
+            return;
 
         $aSystems = $this->getSystems();
         if(!isset($aSystems[$sSystem]))
@@ -52,9 +56,7 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_sSystem = $sSystem;
         $this->_aSystem = $aSystems[$sSystem];
-
-        if(empty($this->_sSystem))
-            return;
+        $this->_aGrid = array();
     }
 
    /**
@@ -130,10 +132,32 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return self::getObjectInstanceByAlertCommon('delete', $sUnit, $sAction);
     }
 
+	/**
+     * get content info object instance (for internal usage). 
+     * @see self::getObjectInstanceByAlertAdd, self::getObjectInstanceByAlertUpdate and self::getObjectInstanceByAlertDelete
+     * @param $sAlertType alert type (add, update, delete)
+     * @param $sUnit alert unit
+     * @param $sAction alert action
+     * @return null on error, or ready to use class instance
+     */
+    public static function getObjectInstanceByGrid($sGrid)
+    {
+        $aGrids = self::getGrids();
+        if(!isset($aGrids[$sGrid]))
+            return null;
+
+        $oObject = self::getObjectInstance($aGrids[$sGrid]['object']);
+        $oObject->setGrid($aGrids[$sGrid]);
+
+        return $oObject;
+    }
+
     public static function &getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_content_info_systems']))
-            $GLOBALS['bx_dol_content_info_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_content_info', 'getAllWithKey', '
+        $sKey = 'bx_dol_content_info_systems';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_content_info', 'getAllWithKey', '
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
@@ -146,7 +170,25 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
                     `class_file` AS `class_file`
                 FROM `sys_objects_content_info`', 'name');
 
-        return $GLOBALS['bx_dol_content_info_systems'];
+        return $GLOBALS[$sKey];
+    }
+
+    public static function &getGrids()
+    {
+        $sKey = 'bx_dol_content_info_grids';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_content_info_grids', 'getAllWithKey', '
+                SELECT
+                    `id` as `id`,
+                    `object` AS `object`,
+                    `grid_object` AS `grid_object`,
+                    `grid_field_id` AS `grid_field_id`,
+                    `condition` AS `condition`,
+                    `selection` AS `selection`
+                FROM `sys_content_info_grids`', 'grid_object');
+
+        return $GLOBALS[$sKey];
     }
 
     public static function &getSystemsByAlertType($sAlertType)
@@ -162,6 +204,24 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $GLOBALS[$sKey];
     }
 
+    public static function formatFields($aContentInfo)
+    {
+        foreach ($aContentInfo as $sKey => $mixedValue)
+            if(is_numeric($mixedValue)) {
+                if(strpos($mixedValue, '.') !== false)
+                    $aContentInfo[$sKey] = (float)$mixedValue;
+                else 
+                    $aContentInfo[$sKey] = (int)$mixedValue;
+            }
+
+        return $aContentInfo;
+    }
+
+    public function setGrid($aGrid)
+    {
+        $this->_aGrid = $aGrid;
+    }
+
     public function getName()
     {
         return $this->_sSystem;
@@ -170,6 +230,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
     public function getTitle()
     {
         return $this->_aSystem['title'];
+    }
+
+    public function getGrid()
+    {
+        return $this->_aGrid;
     }
 
     public function getContentAuthor ($iContentId)

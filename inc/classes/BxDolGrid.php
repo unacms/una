@@ -392,6 +392,13 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if (false === stripos($sQuery, ' WHERE '))
             $sQuery .= " WHERE 1 ";
 
+        $aResults = false;
+        $oZ = new BxDolAlerts('grid', 'get_data', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'results' => &$aResults));
+    	$oZ->alert();
+
+    	if($aResults !== false)
+    	    return $aResults;
+
         // add filter condition
         $sOrderByFilter = '';
         if ($sFilter && (!empty($this->_aOptions['filter_fields']) || !empty($this->_aOptions['filter_fields_translatable']))) {
@@ -456,13 +463,15 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 $sCond = rtrim($sCond, ' OR ');
             }
 
+            $oZ = new BxDolAlerts('grid', 'get_data_by_filter', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'conditions' => &$sCond));
+        	$oZ->alert();
+
             if ($sCond)
                 $sQuery .= ' AND (' . $sCond . ')';
         }
 
         // add order
         $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
-
 
         $sQuery = $sQuery . $oDb->prepareAsString(' LIMIT ?, ?', $iStart, $iPerPage);
         return $oDb->getAll($sQuery);

@@ -363,7 +363,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
     {
-        return $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+        $aContentInfo = $this->_oDb->getEvents(array(
+        	'browse' => 'id', 
+        	'value' => $iContentId)
+        );
+
+        return BxDolContentInfo::formatFields($aContentInfo);
     }
 
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')

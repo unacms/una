@@ -74,6 +74,15 @@ class BxForumModule extends BxBaseModTextModule
     /**
      * Service methods
      */
+    public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
+    {
+        $aContentInfo = $this->_getFields($iContentId);
+        if(empty($aContentInfo))
+            return array();
+
+        return $aContentInfo;
+    }
+
 	public function serviceBrowseNew ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'new';

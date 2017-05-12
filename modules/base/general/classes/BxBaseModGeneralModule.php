@@ -80,7 +80,7 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        $aContentInfo = $this->_getFields($iContentId);
         if(empty($aContentInfo))
             return array();
 
@@ -1026,6 +1026,15 @@ class BxBaseModGeneralModule extends BxDolModule
             'social' => $sSocial,
         ));
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Repost, etc.
+    }
+
+    protected function _getFields($iContentId)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo))
+            return array();
+
+        return BxDolContentInfo::formatFields($aContentInfo);
     }
 
     protected function _getFieldValue($sField, $iContentId)
