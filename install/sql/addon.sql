@@ -14,5 +14,7 @@ UPDATE `sys_options` SET `VALUE` = {oauth_key} WHERE `Name` = 'sys_oauth_key';
 UPDATE `sys_options` SET `VALUE` = {oauth_secret} WHERE `Name` = 'sys_oauth_secret';
 UPDATE `sys_options` SET `VALUE` = {language} WHERE `Name` = 'lang_default';
 UPDATE `sys_options` SET `VALUE` = {time} WHERE `Name` = 'sys_install_time';
+UPDATE `sys_options` SET `VALUE` = {oauth_key} WHERE `Name` = 'sys_oauth_key';
+UPDATE `sys_options` SET `VALUE` = {oauth_secret} WHERE `Name` = 'sys_oauth_secret';
 
 UPDATE `sys_modules` SET `version` = {version} WHERE `name` = 'system';

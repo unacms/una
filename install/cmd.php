@@ -44,6 +44,8 @@ class BxDolInstallCmd
             'admin_username' => 'admin',
             'admin_password' => 'unauna',
             'language' => 'en',
+            'oauth_key' => '',
+            'oauth_secret' => '',
         );
 
         $this->_sHeaderPath = $this->_aSiteConfig['server_doc_root'] . 'inc/header.inc.php';
