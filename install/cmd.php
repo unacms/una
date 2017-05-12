@@ -75,6 +75,7 @@ class BxDolInstallCmd
         $this->checkRequirements();
         $this->checkPermissions();
         $this->createSiteConfig();
+        $this->hashSystemFiles();
 
         $this->finish($this->_aReturnCodes['success']['code'], $this->_aReturnCodes['success']['msg']);
     }
@@ -170,6 +171,14 @@ class BxDolInstallCmd
             }
         }
     }
+
+    public function hashSystemFiles()
+    {
+        require_once(BX_INSTALL_PATH_HEADER);
+        
+        $oHasher = bx_instance('BxDolInstallerHasher');
+        $oHasher->hashSystemFiles();
+    }    
 }
 
 $o = new BxDolInstallCmd();
