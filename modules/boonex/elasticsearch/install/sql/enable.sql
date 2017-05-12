@@ -18,5 +18,6 @@ INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUE
 ('bx_elasticsearch', 'BxElsResponse', 'modules/boonex/elasticsearch/classes/BxElsResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();
 
---INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
---('profile', 'delete', @iHandler);
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('grid', 'get_data_by_filter', @iHandler),
+('grid', 'get_data_by_conditions', @iHandler);

@@ -20,19 +20,88 @@ class BxElsApi extends BxDol
     protected $_iTimeout = 30;
     protected $_sApiUrl = 'http://localhost:9200';
 
+    protected $_aOprs = array('AND' => array('AG' => 'bool', 'FN' => 'filter'), 'OR' => array('AG' => 'dis_max', 'FN' => 'queries'));
+
     public function __construct()
     {
         $this->_sApiUrl = getParam('bx_elasticsearch_api_url');
     }
 
-    public function searchData($sIndex, $sType, $sTerm) 
+    public function searchSimple($sIndex, $sType, $sTerm) 
     {
-        $sQuery = "/$sIndex";
-        if(!empty($sType))
-            $sQuery .= "/$sType";
-        $sQuery .= "/_search?q=" . $sTerm;
+        $sQuery = "/$sIndex" . (!empty($sType) ? "/$sType" : "") . "/_search";
+        return $this->api($sQuery, array('query' => array('simple_query_string' => array('query' => $sTerm))));
+    }
 
-        return $this->api($sQuery);
+    public function searchExtended($sIndex, $sType, $aCondition, $aSelection = array()) 
+    {
+        $sQuery = "/$sIndex" . (!empty($sType) ? "/$sType" : "") . "/_search";
+
+        $aQuery = array('query' => $this->_prepareConditionsGroup($aCondition));
+        if(!empty($aSelection))
+            $aQuery = array_merge($aQuery, $aSelection);
+
+        return $this->api($sQuery, $aQuery);
+    }
+
+    protected function _prepareConditionsGroup($aGrp)
+    {
+        if(!isset($aGrp['grp']) || !(bool)$aGrp['grp'])
+			return $this->_prepareConditionsSingle($aGrp);
+
+        $aResult = array();
+    	if(!isset($aGrp['opr'], $aGrp['cnds']) || empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
+    		return $aResult;
+
+        $aOpr = $this->_aOprs[$aGrp['opr']];
+        $aResult[$aOpr['AG']] = array($aOpr['FN'] => array());
+
+        foreach($aGrp['cnds'] as $aCnd) {
+    		$sMethod = '_prepareConditions' . (isset($aCnd['grp']) && (bool)$aCnd['grp'] ? 'Group' : 'Single');
+    		$aResultCnd = $this->$sMethod($aCnd);
+    		if(!empty($aResultCnd))
+    		    $aResult[$aOpr['AG']][$aOpr['FN']][] = $aResultCnd;
+    	}
+
+        return $aResult;
+    }
+
+    protected function _prepareConditionsSingle($aCnd)
+    {
+        if(!isset($aCnd['val']) && !(isset($aCnd['val1']) || isset($aCnd['val2'])))
+            return array();
+
+        $bTp = !empty($aCnd['tp']);
+        $bFld = !empty($aCnd['fld']);
+
+        $sType = 'simple_query_string';
+        if($bTp)
+            $sType = $aCnd['tp'];
+        else if($bFld)
+            $sType = 'term';
+
+        $aQuery = array();
+        switch ($sType) {
+            case 'term':
+                $aQuery = array($aCnd['fld'] => $aCnd['val']);
+                break;
+
+            case 'range':
+                $aOpr = array();
+                if(!empty($aCnd['opr1']) && isset($aCnd['val1']))
+                    $aOpr[$aCnd['opr1']] = $aCnd['val1'];
+                if(!empty($aCnd['opr2']) && isset($aCnd['val2']))
+                    $aOpr[$aCnd['opr2']] = $aCnd['val2'];
+
+                $aQuery = array($aCnd['fld'] => $aOpr);
+                break;
+
+            case 'simple_query_string':
+                $aQuery = array('query' => $aCnd['val']);
+                break;
+        }
+
+        return array($sType => $aQuery);
     }
 
     public function getData($sIndex, $sType, $iContentId) 

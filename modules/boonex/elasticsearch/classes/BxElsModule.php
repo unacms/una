@@ -21,7 +21,7 @@ class BxElsModule extends BxBaseModGeneralModule
         $this->_oApi = new BxElsApi();
     }
 
-    public function actionDebug()
+    public function actionDebug($sType)
     {
         bx_import('Api', $this->_aModule);
         $o = new BxElsApi();
@@ -37,8 +37,51 @@ class BxElsModule extends BxBaseModGeneralModule
         // search in a field
         // $mixed = $o->api('/testdata/_search', ['query' => ['simple_query_string' => ['query' => 'palm', 'fields' => ['name']]]]);
 
+        // compound searchs
+        /*
+        $mixed = $o->api('/testdata/_search', array(
+        	'query' => array(
+            	'bool' => array(
+            		'filter' => array(
+                        array('term' => array('featured' => '0')),
+                        array('term' => array('allow_view_to' => '3')),
+                        array(
+                            'dis_max' => array(
+                                'queries' => array(
+                                    array('term' => array('title' => 'uupdd')),
+                                    array('term' => array('text' => 'uupdd'))
+                                )
+                            ),
+                        )
+                    ),
+                ))
+            ));
+
+		$mixed = $this->api('/testdata/_search', array(
+        	'query' => array(
+            	'dis_max' => array(
+            		'queries' => array(
+            			array('simple_query_string' => array('query' => 'uupd')),
+                        array('term' => array('title' => 'uupdd')),
+                        array('term' => array('text' => 'uupdd')),
+                        array(
+                            'bool' => array(
+                                'filter' => array(
+                                    array('term' => array('featured' => '0')),
+                                    array('term' => array('allow_view_to' => '3')),   
+                                )
+                            ),
+                        )
+                    ),
+                ))
+            ));
+		*/
+
+        // delete index
+        //$mixed = $o->api('/' . $this->_oConfig->getIndex(), array(), 'delete'); 
+
         // delete indexed doc
-        // $mixed = $o->api('/testdata/trees/23', [], 'delete'); 
+        //$mixed = $o->api('/' . $this->_oConfig->getIndex() . '/trees/23', [], 'delete'); 
 
         // get indexed doc
         // $mixed = $o->api('/testdata/trees/23'); 
@@ -54,7 +97,13 @@ class BxElsModule extends BxBaseModGeneralModule
         // $mixed = $o->api('/testdata', [], 'PUT'); 
 
         // test
-        $mixed = $o->api('/_cat/health'); 
+        //$mixed = $o->api('/_cat/health'); 
+        
+        // mapping put
+        //$mixed = $o->api('/' . $this->_oConfig->getIndex() . '/_mapping/bx_forum', array('properties' => array('featured' => array('type' => 'long'))));
+
+        // mapping get
+        $mixed = $o->api('/' . $this->_oConfig->getIndex() . '/_mapping' . (!empty($sType) ? '/' . $sType : ''));
 
         echo '<pre>';
         if (null === $mixed)
@@ -64,12 +113,53 @@ class BxElsModule extends BxBaseModGeneralModule
         echo '</pre>';
     }
 
-    public function serviceSearch($sTerm, $sType = '', $sIndex = '')
+    public function serviceSearchSimple($sTerm, $sType = '', $sIndex = '')
     {
         if(empty($sIndex))
             $sIndex = $this->_oConfig->getIndex();
 
-        $mixedResult = $this->_oApi->searchData($sIndex, $sType, $sTerm);
+        $mixedResult = $this->_oApi->searchSimple($sIndex, $sType, $sTerm);
+        if(!$mixedResult || !is_array($mixedResult))
+            return false;
+
+        return $mixedResult['hits'];
+    }
+
+    /*
+     * Condition #1: keyword search
+     * $aCondition = array('val' => 'test');
+     * 
+     * Condition #2: `featured`='1'
+     * $aCondition = array('fld' => 'featured', 'val' => 0);
+     * 
+     * Condition #3: (`title`='test' OR `text`='test' OR (`featured`='1' AND `allow_view_to`='3'))
+     * $aCondition = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
+     * 		array('fld' => 'title', 'val' => 'test'),
+     * 		array('fld' => 'text', 'val' => 'test'),
+     * 		array('grp' => true, 'opr' => 'AND', 'cnds' => array(
+     * 			array('fld' => 'featured', 'val' => 1),
+     * 			array('fld' => 'allow_view_to', 'val' => 3)
+     * 		)),
+     * 		array('simple_query_string' => array('query' => 'test')),
+     * ));
+     * 
+     * Condition #4: ((`title`='test' OR `text`='test') AND `featured`='1' AND `allow_view_to`='3')
+     * $aCondition = array('grp' => true, 'opr' => 'AND', 'cnds' => array(
+     * 		array('grp' => true, 'opr' => 'OR', 'cnds' => array(
+     * 			array('fld' => 'title', 'val' => 'test'),
+     * 			array('fld' => 'text', 'val' => 'test'),
+     * 		)),
+     * 		array('fld' => 'featured', 'val' => 0),
+     * 		array('fld' => 'allow_view_to', 'val' => 3)
+     * ));
+     * 
+     */
+    public function serviceSearchExtended($aCondition, $aSelection = array(), $sType = '', $sIndex = '')
+    {
+        if(empty($sIndex))
+            $sIndex = $this->_oConfig->getIndex();
+
+        $mixedResult = $this->_oApi->searchExtended($sIndex, $sType, $aCondition, $aSelection);
         if(!$mixedResult || !is_array($mixedResult))
             return false;
 
