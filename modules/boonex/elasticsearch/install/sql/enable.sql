@@ -19,5 +19,5 @@ INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUE
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('grid', 'get_data_by_filter', @iHandler),
-('grid', 'get_data_by_conditions', @iHandler);
+('grid', 'get_data', @iHandler),
+('grid', 'get_data_by_filter', @iHandler);

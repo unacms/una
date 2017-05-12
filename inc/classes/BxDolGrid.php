@@ -251,6 +251,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     protected $_sObject;
     protected $_aOptions;
+
+    protected $_aBrowseParams;
     protected $_sDefaultSortingOrder = 'ASC';
 
     /**
@@ -263,6 +265,13 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         $this->_sObject = $aOptions['object'];
         $this->_aOptions = $aOptions;
+
+        $sBrowseParams = bx_get('bp');
+        if(!empty($sBrowseParams)) {
+        	$aBrowseParams = bx_process_input(unserialize(urldecode($sBrowseParams)));
+        	if(!empty($aBrowseParams) && is_array($aBrowseParams))
+            	$this->setBrowseParams($aBrowseParams);
+        }
     }
 
     /**
@@ -310,6 +319,12 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             return false;
         $this->_aMarkers = array_merge ($this->_aMarkers, $a);
         return true;
+    }
+
+    public function setBrowseParams($aBrowseParams)
+    {
+    	$this->_aBrowseParams = $aBrowseParams;
+    	$this->_aQueryAppend['bp'] = urlencode(serialize($this->_aBrowseParams));
     }
 
     /**
@@ -393,9 +408,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             $sQuery .= " WHERE 1 ";
 
         $aResults = false;
-        $oZ = new BxDolAlerts('grid', 'get_data', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'results' => &$aResults));
-    	$oZ->alert();
-
+        bx_alert('grid', 'get_data', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'browse_params' => $this->_aBrowseParams, 'results' => &$aResults));
     	if($aResults !== false)
     	    return $aResults;
 
@@ -463,8 +476,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 $sCond = rtrim($sCond, ' OR ');
             }
 
-            $oZ = new BxDolAlerts('grid', 'get_data_by_filter', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'conditions' => &$sCond));
-        	$oZ->alert();
+            bx_alert('grid', 'get_data_by_filter', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'browse_params' => $this->_aBrowseParams, 'conditions' => &$sCond));
 
             if ($sCond)
                 $sQuery .= ' AND (' . $sCond . ')';

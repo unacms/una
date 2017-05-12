@@ -24,12 +24,12 @@ class BxElsResponse extends BxDolAlertsResponse
 
     public function response($oAlert)
     {
+        if($oAlert->sUnit == 'grid' && $oAlert->sAction == 'get_data')
+            return $this->_processGridSearch($oAlert);
+
         if($oAlert->sUnit == 'grid' && $oAlert->sAction == 'get_data_by_filter')
             return $this->_processGridSearchFilter($oAlert);
-/*
-        if($oAlert->sUnit == 'grid' && $oAlert->sAction == 'get_data_by_conditions')
-            return $this->_processGridSearchConditions($oAlert);
-*/
+
         return $this->_processManageActions($oAlert);
     }
 
@@ -53,30 +53,50 @@ class BxElsResponse extends BxDolAlertsResponse
         }
     }
 
+    protected function _processGridSearch(&$oAlert)
+    {
+        $oContentInfo = BxDolContentInfo::getObjectInstanceByGrid($oAlert->aExtras['object']);
+        if(!$oContentInfo)
+            return;
+
+        $aCondition = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
+        $aSelection = array();
+
+        if(!empty($oAlert->aExtras['filter']))
+            $aCondition['cnds'][] = array('val' => $oAlert->aExtras['filter']);
+
+        if(!empty($oAlert->aExtras['browse_params']['where']))
+            $aCondition['cnds'] = array_merge($aCondition['cnds'], $oAlert->aExtras['browse_params']['where']['cnds']);
+
+        $this->_updateSearchParamsByGrid($oContentInfo->getGrid(), $aCondition, $aSelection);
+
+        $aResults = $this->_oModule->serviceSearchExtended($aCondition, $aSelection, $oContentInfo->getName());
+        if(empty($aResults) || !is_array($aResults) || (int)$aResults['total'] == 0)
+            return;
+
+        $aItems = array();
+        foreach($aResults['hits'] as $aResult)
+            $aItems[] = $aResult['_source'];
+
+        $oAlert->aExtras['results'] = $aItems;
+    }
+
     protected function _processGridSearchFilter(&$oAlert)
     {
         $oContentInfo = BxDolContentInfo::getObjectInstanceByGrid($oAlert->aExtras['object']);
-        $sContentInfo = $oContentInfo->getName();
+        if(!$oContentInfo)
+            return;
+
+        $aCondition = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
+        $aSelection = array();
+
+        if(!empty($oAlert->aExtras['filter']))
+            $aCondition['cnds'][] = array('val' => $oAlert->aExtras['filter']);
 
         $aGrid = $oContentInfo->getGrid();
+        $this->_updateSearchParamsByGrid($aGrid, $aCondition, $aSelection);
 
-        if(!empty($aGrid['condition']) || !empty($aGrid['order'])) {
-            $aFilter = array('grp' => true, 'opr' => 'AND', 'cnds' => array(
-                array('val' => $oAlert->aExtras['filter'])
-            ));
-
-            $aCondition = unserialize($aGrid['condition']);
-            if(!empty($aCondition) && is_array($aCondition))
-                $aFilter['cnds'][] = $aCondition;
-
-            $aSelection = unserialize($aGrid['selection']);
-            if(empty($aSelection) || !is_array($aSelection))
-                $aSelection = array();
-
-            $aResults = $this->_oModule->serviceSearchExtended($aFilter, $aSelection, $sContentInfo);
-        }
-        else
-            $aResults = $this->_oModule->serviceSearchSimple($oAlert->aExtras['filter'], $sContentInfo);
+        $aResults = $this->_oModule->serviceSearchExtended($aCondition, $aSelection, $oContentInfo->getName());
 
         $aIds = array();
         if((int)$aResults['total'] > 0 && !empty($aResults['hits']))
@@ -86,23 +106,21 @@ class BxElsResponse extends BxDolAlertsResponse
         $oAlert->aExtras['conditions'] = "`" . $aGrid['grid_field_id'] . "` IN (" . $this->_oModule->_oDb->implode_escape($aIds) . ")";
     }
 
-    /*
-    protected function _processGridSearchConditions(&$oAlert)
+    protected function _updateSearchParamsByGrid($aGrid, &$aCondition, &$aSelection)
     {
-        $oContentInfo = BxDolContentInfo::getObjectInstanceByGrid($oAlert->aExtras['object']);
-        $aGrid = $oContentInfo->getGrid();
-
-        $aResults = $this->_oModule->serviceSearchSimple($oAlert->aExtras['filter'], $oContentInfo->getName());
-        if((int)$aResults['total'] == 0)
+        if(empty($aGrid['condition']) && empty($aGrid['selection']))
             return;
 
-        $aIds = array();
-        foreach($aResults['hits'] as $aResult)
-            $aIds[] = $aResult['_id'];
+        //--- Update Condition params
+        $aGridCondition = unserialize($aGrid['condition']);
+        if(!empty($aGridCondition) && is_array($aGridCondition))
+            $aCondition['cnds'] = array_merge($aCondition['cnds'], $aGridCondition);
 
-        $oAlert->aExtras['conditions'] = "`" . $aGrid['grid_field_id'] . "` IN (" . $this->_oModule->_oDb->implode_escape($aIds) . ")";
-    }
-    */
+        //--- Update Selection params: from, size and sort 
+        $aGridSelection = unserialize($aGrid['selection']);
+        if(empty($aGridSelection) || !is_array($aGridSelection))
+            $aSelection = array_merge($aSelection, $aGridSelection);
+    } 
 }
 
 /** @} */

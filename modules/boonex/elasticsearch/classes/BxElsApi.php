@@ -73,16 +73,23 @@ class BxElsApi extends BxDol
 
         $bTp = !empty($aCnd['tp']);
         $bFld = !empty($aCnd['fld']);
+        $bOprIn = !empty($aCnd['opr']) && $aCnd['opr'] == 'IN';
 
-        $sType = 'simple_query_string';
         if($bTp)
             $sType = $aCnd['tp'];
-        else if($bFld)
-            $sType = 'term';
+        else if($bFld) {
+            if($bOprIn)
+                $sType = 'terms';
+            else 
+                $sType = 'term';
+        }
+        else 
+            $sType = 'simple_query_string';
 
         $aQuery = array();
         switch ($sType) {
             case 'term':
+            case 'terms':
                 $aQuery = array($aCnd['fld'] => $aCnd['val']);
                 break;
 

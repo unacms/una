@@ -14,36 +14,27 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 class BxForumGrid extends BxTemplGrid
 {
     protected $_oModule;
-    protected $_aParams;
     protected $_sDefaultSource; 
 
     public function __construct ($aOptions, $oTemplate = false)
     {
-        parent::__construct ($aOptions, $oTemplate);
-
         $this->_oModule = BxDolModule::getInstance('bx_forum');
+
+        parent::__construct ($aOptions, $oTemplate);
 
         $this->_aOptions['paginate_per_page'] = (int)$this->_oModule->_oDb->getParam('bx_forum_per_page_browse');
 
         $this->_sDefaultSortingOrder = 'DESC';
         $this->_sDefaultSource = $this->_aOptions['source'];
-
-	    $sParams = bx_get('params');
-        if(!empty($sParams)) {
-        	$aParams = unserialize(urldecode($sParams));
-        	if(!empty($aParams) && is_array($aParams))
-            	$this->setBrowseParams($aParams);
-        }
     }
 
     public function setBrowseParams($aParams)
     {
-    	$this->_aParams = $aParams;
-    	$this->_aQueryAppend['params'] = urlencode(serialize($this->_aParams));
+        parent::setBrowseParams($aParams);
 
     	$sField = 'added';
-    	if(!empty($this->_aParams['type']))
-	    	switch($this->_aParams['type']) {
+    	if(!empty($this->_aBrowseParams['type']))
+	    	switch($this->_aBrowseParams['type']) {
 	    		case 'new':
 	    		case 'author':
                 case 'favorite':
@@ -73,8 +64,7 @@ class BxForumGrid extends BxTemplGrid
 	    	}
 
 		$this->_aOptions['field_order'] = $sField;
-
-		$this->_aOptions['paginate_per_page'] = !empty($this->_aParams['per_page']) ? (int)$this->_aParams['per_page'] : (int)$this->_oModule->_oDb->getParam('bx_forum_per_page_browse');
+		$this->_aOptions['paginate_per_page'] = !empty($this->_aBrowseParams['per_page']) ? (int)$this->_aBrowseParams['per_page'] : (int)$this->_oModule->_oDb->getParam('bx_forum_per_page_browse');
     }
 
     public function getCode ($isDisplayHeader = true)
@@ -138,8 +128,8 @@ class BxForumGrid extends BxTemplGrid
 
     	//--- Check privacy
     	$iAuthorId = 0;
-    	if(!empty($this->_aParams['author'])) {
-    		$oProfileAuthor = BxDolProfile::getInstance((int)$this->_aParams['author']);
+    	if(!empty($this->_aBrowseParams['author'])) {
+    		$oProfileAuthor = BxDolProfile::getInstance((int)$this->_aBrowseParams['author']);
     		if($oProfileAuthor)
     			$iAuthorId = $oProfileAuthor->id();
     	}
@@ -153,14 +143,14 @@ class BxForumGrid extends BxTemplGrid
 			$sWhereClause .= $aCondition['where'];
 
 		//--- Check browse params
-        if(!empty($this->_aParams['join']) && is_array($this->_aParams['join'])) {
-			$sJoinClauseBrowse = $this->_getSqlJoinGroup($this->_aParams['join']);
+        if(!empty($this->_aBrowseParams['join']) && is_array($this->_aBrowseParams['join'])) {
+			$sJoinClauseBrowse = $this->_getSqlJoinGroup($this->_aBrowseParams['join']);
 			if(!empty($sJoinClauseBrowse))
 				$sJoinClause .= " " . $sJoinClauseBrowse;
 		}
 
-		if(!empty($this->_aParams['where']) && is_array($this->_aParams['where'])) {
-			$sWhereClauseBrowse = $this->_getSqlWhereFromGroup($this->_aParams['where']);
+		if(!empty($this->_aBrowseParams['where']) && is_array($this->_aBrowseParams['where'])) {
+			$sWhereClauseBrowse = $this->_getSqlWhereFromGroup($this->_aBrowseParams['where']);
 			if(!empty($sWhereClauseBrowse))
 				$sWhereClause .= " AND " . $sWhereClauseBrowse;
 		}
