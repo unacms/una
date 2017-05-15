@@ -34,6 +34,8 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_polls_cats';
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_polls', 'bx_polls_cmts');
 
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_polls');
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_polls_administration', 'bx_polls_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_polls_administration', 'bx_polls_common');

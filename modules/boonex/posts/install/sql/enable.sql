@@ -333,6 +333,10 @@ INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_ac
 ('bx_posts', '_bx_posts', 'bx_posts', 'added', 'edited', 'deleted', '', ''),
 ('bx_posts_cmts', '_bx_posts_cmts', 'bx_posts', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_posts', 'bx_posts_administration', 'id', '', ''),
+('bx_posts', 'bx_posts_common', 'id', '', '');
+
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -343,13 +347,13 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_posts_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_posts_administration', 'switcher', '_bx_posts_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_posts_administration', 'title', '_bx_posts_grid_column_title_adm_title', '25%', 0, '', '', 3),
+('bx_posts_administration', 'title', '_bx_posts_grid_column_title_adm_title', '25%', 0, '25', '', 3),
 ('bx_posts_administration', 'added', '_bx_posts_grid_column_title_adm_added', '20%', 1, '25', '', 4),
 ('bx_posts_administration', 'author', '_bx_posts_grid_column_title_adm_author', '25%', 0, '25', '', 5),
 ('bx_posts_administration', 'actions', '', '20%', 0, '', '', 6),
 ('bx_posts_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_posts_common', 'switcher', '_bx_posts_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_posts_common', 'title', '_bx_posts_grid_column_title_adm_title', '40%', 0, '', '', 3),
+('bx_posts_common', 'title', '_bx_posts_grid_column_title_adm_title', '40%', 0, '35', '', 3),
 ('bx_posts_common', 'added', '_bx_posts_grid_column_title_adm_added', '30%', 1, '25', '', 4),
 ('bx_posts_common', 'actions', '', '20%', 0, '', '', 5);
 

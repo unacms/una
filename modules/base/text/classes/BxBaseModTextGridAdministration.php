@@ -68,7 +68,11 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
 	protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault($this->_getEntryLink($mixedValue, $aRow), $sKey, $aField, $aRow);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $mixedValue = $this->_getEntryLink(strmaxtextlen($aRow[$CNF['FIELD_TITLE']], $aField['chars_limit']), $aRow);
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)

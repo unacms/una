@@ -34,6 +34,8 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_posts_cats';
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_posts', 'bx_posts_cmts');
 
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_posts');
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');

@@ -19,7 +19,9 @@ class BxPollsGridAdministration extends BxBaseModTextGridAdministration
 
     protected function _getCellText($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_getEntryLink($this->_oModule->_oConfig->getTitle($aRow), $aRow);
+        $mixedValue = $this->_oModule->_oConfig->getTitle($aRow);
+        $mixedValue = $this->_getEntryLink(strmaxtextlen($mixedValue, $aField['chars_limit']), $aRow);
+
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 }

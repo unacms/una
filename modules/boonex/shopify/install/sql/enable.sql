@@ -312,6 +312,10 @@ INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_ac
 ('bx_shopify', '_bx_shopify', 'bx_shopify', 'added', 'edited', 'deleted', '', ''),
 ('bx_shopify_cmts', '_bx_shopify_cmts', 'bx_shopify', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_shopify', 'bx_shopify_administration', 'id', '', ''),
+('bx_shopify', 'bx_shopify_common', 'id', '', '');
+
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -321,14 +325,14 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_shopify_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_shopify_administration', 'switcher', '_bx_shopify_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_shopify_administration', 'title', '_bx_shopify_grid_column_title_adm_title', '25%', 0, '', '', 3),
+('bx_shopify_administration', 'title', '_bx_shopify_grid_column_title_adm_title', '25%', 0, '25', '', 3),
 ('bx_shopify_administration', 'added', '_bx_shopify_grid_column_title_adm_added', '20%', 1, '25', '', 4),
 ('bx_shopify_administration', 'author', '_bx_shopify_grid_column_title_adm_author', '25%', 0, '25', '', 5),
 ('bx_shopify_administration', 'actions', '', '20%', 0, '', '', 6),
 
 ('bx_shopify_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_shopify_common', 'switcher', '_bx_shopify_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_shopify_common', 'title', '_bx_shopify_grid_column_title_adm_title', '40%', 0, '', '', 3),
+('bx_shopify_common', 'title', '_bx_shopify_grid_column_title_adm_title', '40%', 0, '35', '', 3),
 ('bx_shopify_common', 'added', '_bx_shopify_grid_column_title_adm_added', '30%', 1, '25', '', 4),
 ('bx_shopify_common', 'actions', '', '20%', 0, '', '', 5);
 

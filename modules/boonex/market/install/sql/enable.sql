@@ -397,6 +397,9 @@ INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_ac
 ('bx_market', '_bx_market', 'bx_market', 'added', 'edited', 'deleted', '', ''),
 ('bx_market_cmts', '_bx_market_cmts', 'bx_market', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_market', 'bx_market_administration', 'id', '', ''),
+('bx_market', 'bx_market_common', 'id', '', '');
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

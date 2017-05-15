@@ -31,6 +31,8 @@ DELETE FROM `sys_objects_metatags` WHERE `object` IN('bx_albums', 'bx_albums_med
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_albums', 'bx_albums_cmts', 'bx_albums_media_cmts');
 
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_albums');
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_albums_administration', 'bx_albums_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_albums_administration', 'bx_albums_common');

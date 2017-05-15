@@ -464,7 +464,9 @@ INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_ac
 ('bx_forum_cmts', '_bx_forum_cmts', @sName, 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
 INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-(@sName, @sName, 'id', '', 'a:1:{s:4:"sort";a:2:{s:5:"stick";s:4:"desc";s:12:"lr_timestamp";s:4:"desc";}}');
+(@sName, @sName, 'id', '', 'a:1:{s:4:"sort";a:2:{s:5:"stick";s:4:"desc";s:12:"lr_timestamp";s:4:"desc";}}'),
+(@sName, 'bx_forum_administration', 'id', '', ''),
+(@sName, 'bx_forum_common', 'id', '', '');
 
 
 -- ALERTS

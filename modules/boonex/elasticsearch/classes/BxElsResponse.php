@@ -53,20 +53,28 @@ class BxElsResponse extends BxDolAlertsResponse
         }
     }
 
+    /**
+     * Note. This custom search is currently used in Forum Search only. 
+     */
     protected function _processGridSearch(&$oAlert)
     {
+        if(empty($oAlert->aExtras['browse_params']['where']))
+            return;
+
+        $aWhere = $oAlert->aExtras['browse_params']['where'];
         $oContentInfo = BxDolContentInfo::getObjectInstanceByGrid($oAlert->aExtras['object']);
         if(!$oContentInfo)
             return;
 
-        $aCondition = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
         $aSelection = array();
+        $aCondition = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
+        if(isset($aWhere['grp']) && $aWhere['grp']) 
+            $aCondition['cnds'] = $aWhere['cnds'];
+        else
+            $aCondition['cnds'][] = $aWhere;
 
         if(!empty($oAlert->aExtras['filter']))
             $aCondition['cnds'][] = array('val' => $oAlert->aExtras['filter']);
-
-        if(!empty($oAlert->aExtras['browse_params']['where']))
-            $aCondition['cnds'] = array_merge($aCondition['cnds'], $oAlert->aExtras['browse_params']['where']['cnds']);
 
         $this->_updateSearchParamsByGrid($oContentInfo->getGrid(), $aCondition, $aSelection);
 

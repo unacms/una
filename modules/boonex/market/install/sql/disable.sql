@@ -34,6 +34,9 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_market_cats';
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_market', 'bx_market_cmts');
 
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_market');
+
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
