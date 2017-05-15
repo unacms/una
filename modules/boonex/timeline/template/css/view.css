@@ -94,6 +94,12 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
     cursor: default;
 }
 
+/*--- Item Content Style ---*/
+div.bx-tl-item-content div.bx-tl-title {
+	text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 /*--- Item Images Style ---*/
 div.bx-tl-item div.bx-tl-item-images {
     position: relative;

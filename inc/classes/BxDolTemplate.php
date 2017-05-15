@@ -1872,7 +1872,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                     else if(is_string($aValues[$i]))
                         $sValue = $aValues[$i];
                 }
-            } else if (strncmp($aKeys[$i], 'bx_if:', 6) === 0) {
+            } 
+            else if (strncmp($aKeys[$i], 'bx_if:', 6) === 0) {
                 $sKey = "'<" . $aKeys[$i] . ">(.*)<\/" . $aKeys[$i] . ">'s";
 
                 $aMatches = array();
@@ -1882,13 +1883,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 if(isset($aMatches[1]) && !empty($aMatches[1]))
                     if(is_array($aValues[$i]) && isset($aValues[$i]['content']) && isset($aValues[$i]['condition']) && $aValues[$i]['condition'])
                         $sValue .= $this->parseHtmlByContent($aMatches[1], $aValues[$i]['content'], $mixedKeyWrapperHtml);
-            } else {
+            } 
+            else {
                 $sKey = "'" . $aKeyWrappers['left'] . $aKeys[$i] . $aKeyWrappers['right'] . "'s";
-                $sValue = str_replace('$', '\\$', $aValues[$i]);
+                $sValue = $aValues[$i];
             }
 
             $aKeys[$i] = $sKey;
-            $aValues[$i] = $sValue;
+            $aValues[$i] = str_replace('$', '\\$', $sValue);
         }
 
         try {
