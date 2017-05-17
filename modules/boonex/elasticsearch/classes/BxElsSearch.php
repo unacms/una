@@ -54,7 +54,7 @@ class BxElsSearch extends BxTemplSearch
             if (!$this->_sMetaType && !$aValue['GlobalSearch'])
                 continue;
 
-            $aResults = $this->_oModule->serviceSearch($sKeyword, $sKey);
+            $aResults = $this->_oModule->serviceSearchSimple($sKeyword, $sKey);
             if((int)$aResults['total'] == 0 || empty($aResults['hits']))
                 continue;
 

@@ -33,6 +33,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
             ),
             'paginate' => array('start' => 0, 'perPage' => 3),
             'sorting' => 'last',
+			'ident' => 'cmt_id'
         );
 
         $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
