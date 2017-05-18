@@ -199,7 +199,7 @@ class BxElsModule extends BxBaseModGeneralModule
         );
         $aInfo = array_merge($aInfo, $mixedContentInfo->getContentInfo($iContentId));
 
-        $mixedResult = $this->_oApi->indexData($sIndex, $mixedContentInfo->getName(), $iContentId, $aInfo);
+        $mixedResult = $this->_oApi->indexData($sIndex, $mixedContentInfo->getName(), $iContentId, $this->_prepareToIndex($aInfo));
         if($mixedResult === null)
             return false;
 
@@ -231,7 +231,7 @@ class BxElsModule extends BxBaseModGeneralModule
         );
         $aInfo = array_merge($aInfo, $mixedContentInfo->getContentInfo($iContentId));
 
-        $mixedResult = $this->_oApi->updateData($sIndex, $mixedContentInfo->getName(), $iContentId, $aInfo);
+        $mixedResult = $this->_oApi->updateData($sIndex, $mixedContentInfo->getName(), $iContentId, $this->_prepareToIndex($aInfo));
         if($mixedResult === null)
             return false;
 
@@ -287,6 +287,17 @@ class BxElsModule extends BxBaseModGeneralModule
             foreach($aIds as $iId)
                 $this->serviceAdd($iId, $oContentInfo);
         }
+    }
+
+    protected function _prepareToIndex($mixed)
+    {
+        if(!is_array($mixed))
+            return strip_tags($mixed);
+
+        foreach($mixed as $mixedKey => $mixedValue)
+            $mixed[$mixedKey] = strip_tags($mixedValue);
+
+        return $mixed;
     }
 }
 
