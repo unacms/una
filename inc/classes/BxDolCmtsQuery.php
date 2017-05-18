@@ -202,13 +202,26 @@ class BxDolCmtsQuery extends BxDolDb
             		$sWhereClause .= " AND `{$this->_sTable}`.`cmt_author_id` " . (isset($aParams['others']) && (int)$aParams['others'] == 1 ? "<>" : "=") . " :cmt_author_id";
             	}
 
-                $sOrderClause = "ORDER BY `{$this->_sTable}`.`cmt_time` DESC";
+                $sOrderClause = "`{$this->_sTable}`.`cmt_time` DESC";
                 $sLimitClause = "";
                 if(isset($aParams['per_page']))
-                	$sLimitClause = $this->prepareAsString("LIMIT ?, ?", $aParams['start'], $aParams['per_page']);
+                	$sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);
 
                 break;
+
+            case 'all_ids':
+                $aMethod['name'] = 'getColumn';
+
+                $sSelectClause = "`{$this->_sTable}`.`cmt_id`";
+                $sOrderClause =  "`{$this->_sTable}`.`cmt_time` ASC";
+                break;
         }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `{$this->_sTable}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);

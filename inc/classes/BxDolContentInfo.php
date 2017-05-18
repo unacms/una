@@ -282,6 +282,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $this->_call('get_search_result_unit', $iContentId, $sUnitTemplate);
     }
 
+    public function getAll ($aParams = array())
+    {
+        return $this->_call('get_all', $aParams);
+    }
+
     protected function _call($sMethod)
     {
         if(!BxDolRequest::serviceExists($this->_sSystem, $sMethod))

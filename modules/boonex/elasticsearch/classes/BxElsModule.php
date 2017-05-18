@@ -174,84 +174,119 @@ class BxElsModule extends BxBaseModGeneralModule
         return $this->_oApi->getData($sIndex, $sType, $iContentId);
     }
 
-    public function serviceAdd($iContentId, $mixedContenInfo)
+    public function serviceAdd($iContentId, $mixedContentInfo, $sIndex = '')
     {
-        if(is_array($mixedContenInfo)) {
-            $sMethod = 'getObjectInstanceByAlert' . bx_gen_method_name($mixedContenInfo['alert_type']);
-            $mixedContenInfo = BxDolContentInfo::$sMethod($mixedContenInfo['unit'], $mixedContenInfo['action']);
+        if(is_array($mixedContentInfo)) {
+            $sMethod = 'getObjectInstanceByAlert' . bx_gen_method_name($mixedContentInfo['alert_type']);
+            $mixedContentInfo = BxDolContentInfo::$sMethod($mixedContentInfo['unit'], $mixedContentInfo['action']);
         }
 
-        if(!($mixedContenInfo instanceof BxDolContentInfo))
+        if(!($mixedContentInfo instanceof BxDolContentInfo))
             return false;
 
         $CNF = &$this->_oConfig->CNF;
 
-        $aInfo = array(
-            $CNF['FIELD_AUTHOR'] => $mixedContenInfo->getContentAuthor($iContentId),
-            $CNF['FIELD_ADDED'] => $mixedContenInfo->getContentDateAdded($iContentId),
-            $CNF['FIELD_CHANGED'] => $mixedContenInfo->getContentDateChanged($iContentId),
-            $CNF['FIELD_LINK'] => $mixedContenInfo->getContentLink($iContentId),
-            $CNF['FIELD_TITLE'] => $mixedContenInfo->getContentTitle($iContentId),
-            $CNF['FIELD_TEXT'] => $mixedContenInfo->getContentText($iContentId),
-        );
-        $aInfo = array_merge($aInfo, $mixedContenInfo->getContentInfo($iContentId));
+        if(empty($sIndex))
+            $sIndex = $this->_oConfig->getIndex();
 
-        $mixedResult = $this->_oApi->indexData($this->_oConfig->getIndex(), $mixedContenInfo->getName(), $iContentId, $aInfo);
+        $aInfo = array(
+            $CNF['FIELD_AUTHOR'] => $mixedContentInfo->getContentAuthor($iContentId),
+            $CNF['FIELD_ADDED'] => $mixedContentInfo->getContentDateAdded($iContentId),
+            $CNF['FIELD_CHANGED'] => $mixedContentInfo->getContentDateChanged($iContentId),
+            $CNF['FIELD_LINK'] => $mixedContentInfo->getContentLink($iContentId),
+            $CNF['FIELD_TITLE'] => $mixedContentInfo->getContentTitle($iContentId),
+            $CNF['FIELD_TEXT'] => $mixedContentInfo->getContentText($iContentId),
+        );
+        $aInfo = array_merge($aInfo, $mixedContentInfo->getContentInfo($iContentId));
+
+        $mixedResult = $this->_oApi->indexData($sIndex, $mixedContentInfo->getName(), $iContentId, $aInfo);
         if($mixedResult === null)
             return false;
 
         return $mixedResult['result'] == 'created';
     }
 
-    public function serviceUpdate($iContentId, $mixedContenInfo)
+    public function serviceUpdate($iContentId, $mixedContentInfo, $sIndex = '')
     {
-        if(is_array($mixedContenInfo)) {
-            $sMethod = 'getObjectInstanceByAlert' . bx_gen_method_name($mixedContenInfo['alert_type']);
-            $mixedContenInfo = BxDolContentInfo::$sMethod($mixedContenInfo['unit'], $mixedContenInfo['action']);
+        if(is_array($mixedContentInfo)) {
+            $sMethod = 'getObjectInstanceByAlert' . bx_gen_method_name($mixedContentInfo['alert_type']);
+            $mixedContentInfo = BxDolContentInfo::$sMethod($mixedContentInfo['unit'], $mixedContentInfo['action']);
         }
 
-        if(!($mixedContenInfo instanceof BxDolContentInfo))
+        if(!($mixedContentInfo instanceof BxDolContentInfo))
             return false;
 
         $CNF = &$this->_oConfig->CNF;
 
-        $aInfo = array(
-            $CNF['FIELD_AUTHOR'] => $mixedContenInfo->getContentAuthor($iContentId),
-            $CNF['FIELD_ADDED'] => $mixedContenInfo->getContentDateAdded($iContentId),
-            $CNF['FIELD_CHANGED'] => $mixedContenInfo->getContentDateChanged($iContentId),
-            $CNF['FIELD_LINK'] => $mixedContenInfo->getContentLink($iContentId),
-            $CNF['FIELD_TITLE'] => $mixedContenInfo->getContentTitle($iContentId),
-            $CNF['FIELD_TEXT'] => $mixedContenInfo->getContentText($iContentId),
-        );
-        $aInfo = array_merge($aInfo, $mixedContenInfo->getContentInfo($iContentId));
+        if(empty($sIndex))
+            $sIndex = $this->_oConfig->getIndex();
 
-        $mixedResult = $this->_oApi->updateData($this->_oConfig->getIndex(), $mixedContenInfo->getName(), $iContentId, $aInfo);
+        $aInfo = array(
+            $CNF['FIELD_AUTHOR'] => $mixedContentInfo->getContentAuthor($iContentId),
+            $CNF['FIELD_ADDED'] => $mixedContentInfo->getContentDateAdded($iContentId),
+            $CNF['FIELD_CHANGED'] => $mixedContentInfo->getContentDateChanged($iContentId),
+            $CNF['FIELD_LINK'] => $mixedContentInfo->getContentLink($iContentId),
+            $CNF['FIELD_TITLE'] => $mixedContentInfo->getContentTitle($iContentId),
+            $CNF['FIELD_TEXT'] => $mixedContentInfo->getContentText($iContentId),
+        );
+        $aInfo = array_merge($aInfo, $mixedContentInfo->getContentInfo($iContentId));
+
+        $mixedResult = $this->_oApi->updateData($sIndex, $mixedContentInfo->getName(), $iContentId, $aInfo);
         if($mixedResult === null)
             return false;
 
         return $mixedResult['result'] == 'updated';
     }
 
-    public function serviceDelete($iContentId, $mixedContenInfo)
+    public function serviceDelete($iContentId, $mixedContentInfo, $sIndex = '')
     {
-        if(is_array($mixedContenInfo)) {
-            $sMethod = 'getObjectInstanceByAlert' . bx_gen_method_name($mixedContenInfo['alert_type']);
-            $mixedContenInfo = BxDolContentInfo::$sMethod($mixedContenInfo['unit'], $mixedContenInfo['action']);
+        if(is_array($mixedContentInfo)) {
+            $sMethod = 'getObjectInstanceByAlert' . bx_gen_method_name($mixedContentInfo['alert_type']);
+            $mixedContentInfo = BxDolContentInfo::$sMethod($mixedContentInfo['unit'], $mixedContentInfo['action']);
         }
 
-        if(!($mixedContenInfo instanceof BxDolContentInfo))
+        if(!($mixedContentInfo instanceof BxDolContentInfo))
             return false;
 
         $CNF = &$this->_oConfig->CNF;
 
+        if(empty($sIndex))
+            $sIndex = $this->_oConfig->getIndex();
+
         bx_import('Api', $this->_aModule);
         $oApi = new BxElsApi();
 
-        $mixedResult = $oApi->deleteData($this->_oConfig->getIndex(), $mixedContenInfo->getName(), $iContentId);
+        $mixedResult = $oApi->deleteData($sIndex, $mixedContentInfo->getName(), $iContentId);
         if($mixedResult === null)
             return false;
 
         return $mixedResult['result'] == 'deleted';
+    }
+
+    public function serviceIndex($sIndex, $sType = '')
+    {
+        if(empty($sIndex))
+            $sIndex = $this->_oConfig->getIndex();
+
+        $aTypes = !empty($sType) ? array($sType) : array_keys(BxDolContentInfo::getSystems());
+        if(empty($aTypes) || !is_array($aTypes))
+            return false;
+
+        bx_import('Api', $this->_aModule);
+        $oApi = new BxElsApi();
+
+        foreach($aTypes as $sType) {
+            $oContentInfo = BxDolContentInfo::getObjectInstance($sType);
+            if(!$oContentInfo)
+                continue;
+
+            $aIds = $oContentInfo->getAll(array('type' => 'all_ids'));
+            if(empty($aIds) || !is_array($aIds))
+                continue;
+
+            foreach($aIds as $iId)
+                $this->serviceAdd($iId, $oContentInfo);
+        }
     }
 }
 

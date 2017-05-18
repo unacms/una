@@ -69,6 +69,11 @@ class BxDolContentInfoCmts extends BxDolContentInfo
         $this->_oCmts->addCssJs();
         return '<ul class="cmts">' . $this->_oCmts->serviceGetSearchResultUnit($iContentId, $sUnitTemplate) . '</ul>';
     }
+
+    public function getAll ($aParams = array())
+    {
+        return $this->_oCmts->serviceGetAll($aParams);
+    }
 }
 
 /** @} */

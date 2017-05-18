@@ -27,6 +27,18 @@ class BxElsConfig extends BxBaseModGeneralConfig
         	'FIELD_LINK' => 'link',
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
+
+            // objects
+        	'OBJECT_FORM_MANAGE' => 'bx_elasticsearch_manage',
+            'OBJECT_FORM_MANAGE_DISPLAY_INDEX' => 'bx_elasticsearch_manage_index',
+        );
+
+        $this->_aJsClasses = array(
+            'manage' => 'BxElsManage'
+        );
+
+        $this->_aJsObjects = array(
+            'manage' => 'oBxElsManage'
         );
     }
 

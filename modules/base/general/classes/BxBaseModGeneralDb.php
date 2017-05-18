@@ -22,6 +22,52 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         $this->_oConfig = $oConfig;
     }
 
+    function getEntriesBy($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "`{$CNF['TABLE_ENTRIES']}`.*";
+
+        switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['id'] = (int)$aParams['id'];
+
+                $sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ID'] . "` = :id";
+                break;
+
+            case 'author':
+            	$aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['author'] = (int)$aParams['author'];
+
+                $sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_AUTHOR'] . "` = :author";
+                break;
+
+            case 'all_ids':
+                $aMethod['name'] = 'getColumn';
+
+                $sSelectClause = "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ID'] . "`";
+                $sOrderClause .=  "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+                break;
+
+            case 'all':
+                $sOrderClause .=  "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `{$CNF['TABLE_ENTRIES']}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
     public function getEntriesByAuthor ($iProfileId)
     {
         $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_AUTHOR'] . "` = ?", $iProfileId);

@@ -94,7 +94,12 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($aFields))
             return array();
 
-        return array_flip(array_intersect(array_flip($aContentInfo), $aFields));
+        $aResult = array();
+        foreach($aFields as $sField)
+            if(isset($aContentInfo[$sField]))
+                $aResult[$sField] = $aContentInfo[$sField];
+
+        return $aResult;
     }
 
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
@@ -107,6 +112,14 @@ class BxBaseModGeneralModule extends BxDolModule
             $sUnitTemplate = 'unit.html';
 
         return $this->_oTemplate->unit($aContentInfo, true, $sUnitTemplate);
+    }
+
+    public function serviceGetAll ($aParams = array())
+    {
+        if(empty($aParams) || !is_array($aParams))
+            $aParams = array('type' => 'all');
+
+        return $this->_oDb->getEntriesBy($aParams);
     }
 
     public function serviceModuleIcon ()

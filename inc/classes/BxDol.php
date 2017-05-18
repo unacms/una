@@ -100,5 +100,6 @@ interface iBxDolContentInfoService
     public function serviceGetThumb ($iContentId);
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true);
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '');
+    public function serviceGetAll ($aParams = array());
 }
 /** @} */

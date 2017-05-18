@@ -947,6 +947,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->getComment($aComment, array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
     }
 
+    public function serviceGetAll ($aParams = array())
+    {
+        if(empty($aParams) || !is_array($aParams))
+            $aParams = array('type' => 'all');
+
+        return $this->_oQuery->getCommentsBy($aParams);
+    }
+
     /**
      * Internal functions
      */
