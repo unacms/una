@@ -1131,6 +1131,14 @@ function bx_rtrim_str ($sString, $sPrefix, $sReplace = '')
     return $sString;
 }
 
+function bx_trim_nl_duplicates($s)
+{
+    $sStrip = implode('', array_keys(get_html_translation_table(HTML_ENTITIES)));
+    return implode('', array_filter(explode("\r\n", $s), function($s) use ($sStrip) {
+        return trim(strip_tags($s), $sStrip) !== '';
+    }));
+}
+
 /**
  * Convert array to attributes string
  *
