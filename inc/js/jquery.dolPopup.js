@@ -190,6 +190,12 @@
                     }, 10);
                 }
 
+                // Don't should popup with pointer if there is no parent. Checking before showing. 
+                if($(o.pointer.el).length > 0 && !$.contains(document, o.pointer.el[0])) {
+            		$el.remove();
+            		return;
+                }
+
                 // show popup
                 $el.css({display: 'block', visibility: 'visible'});
                 if (o.fog) {
@@ -198,8 +204,14 @@
                     else
                         $('#bx-popup-fog').show();
                 }
-                
+
                 setTimeout(function () {
+                	// Don't should popup with pointer if there is no parent. Checking after showing.
+                	if($(o.pointer.el).length > 0 && !$.contains(document, o.pointer.el[0])) {
+                		$el.remove();
+                		return;
+                	}
+
                 	if(typeof(o.onShow) == 'function')
                 		o.onShow($el);
                     else if(typeof(o.onShow) == 'string')
