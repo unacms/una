@@ -349,6 +349,13 @@ EOS;
                     $sValue = null;
             break;
 
+            case 'text':
+                if(isset($aInput['value']) && '' !== $aInput['value'])
+                    $sValue = bx_linkify(bx_process_output($aInput['value']));
+                else 
+                    $sValue = null;
+                break;
+
             default:
                 $sValue = isset($aInput['value']) && '' !== $aInput['value'] ? bx_process_output($aInput['value']) : null;
         }
