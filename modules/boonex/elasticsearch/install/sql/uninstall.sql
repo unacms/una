@@ -3,7 +3,7 @@
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_elasticsearch';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_elasticsearch';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_elasticsearch';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_forum_entry_add');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_elasticsearch_manage_index');
 
 
 -- Studio page and widget
