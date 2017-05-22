@@ -53,6 +53,30 @@ class BxBaseServiceConnections extends BxDol
         return $i;
     }
 
+    public function serviceGetLiveUpdatesUnconfirmedConnections($sModule, $sConnectionsObject, $aMenuItemParent, $aMenuItemChild, $iCount = 0)
+    {
+        $iProfile = bx_get_logged_profile_id();
+        $oProfile = BxDolProfile::getInstance($iProfile);
+        if(!$oProfile || $oProfile->getModule() != $sModule)
+            return false;
+
+        $iCountNew = $this->serviceGetUnconfirmedConnectionsNum($sConnectionsObject, $iProfile);
+        if($iCountNew <= $iCount)
+			return false;
+
+        return array(
+    		'count' => $iCountNew, // required
+    		'method' => 'bx_menu_show_live_update(oData)', // required
+    		'data' => array(
+    			'code' => BxDolTemplate::getInstance()->parseHtmlByName('menu_item_addon.html', array(
+    				'content' => '{count}'
+                )),
+                'mi_parent' => $aMenuItemParent,
+                'mi_child' => $aMenuItemChild
+    		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+    	);
+    }
+
     /**
      * get number of initiated connections (like "my subscriptions")
      * @param $sConnectionsObject connections object to get connections from
