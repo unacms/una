@@ -185,12 +185,18 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_convos', 'bx_convos_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-convo&id={object_id}', '', 'bx_convos_conversations', 'id', 'author', '', 'comments', 'BxCnvCmts', 'modules/boonex/convos/classes/BxCnvCmts.php');
 
+
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_convos', 'bx_convos_views_track', '86400', '1', 'bx_convos_conversations', 'id', 'author', 'views', '', '');
 
--- ALERTS
 
+-- LIVE UPDATES
+INSERT INTO `sys_objects_live_updates`(`name`, `frequency`, `service_call`, `active`) VALUES
+('bx_convos', 1, 'a:3:{s:6:"module";s:9:"bx_convos";s:6:"method";s:16:"get_live_updates";s:6:"params";a:3:{i:0;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:1;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:20:"notifications-convos";}i:2;s:7:"{count}";}}', 1);
+
+
+-- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_convos', 'BxCnvAlertsResponse', 'modules/boonex/convos/classes/BxCnvAlertsResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();
@@ -200,9 +206,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_convos', 'commentRemoved', @iHandler),
 ('profile', 'delete', @iHandler);
 
--- EMAIL TEMPLATES
 
+-- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
 ('bx_convos', '_bx_cnv_email_new_message', 'bx_cnv_new_message', '_bx_cnv_email_new_message_subject', '_bx_cnv_email_new_message_body'),
 ('bx_convos', '_bx_cnv_email_new_reply', 'bx_cnv_new_reply', '_bx_cnv_email_new_reply_subject', '_bx_cnv_email_new_reply_body');
-
