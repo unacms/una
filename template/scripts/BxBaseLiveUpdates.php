@@ -19,6 +19,9 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
 
 	public function init($aParams = array())
     {
+        if(!$this->_iProfileId)
+            return '';
+
         $aParams = array_merge(array(
         	'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
         	'sObjName' => $this->_sJsObject,

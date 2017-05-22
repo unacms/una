@@ -139,7 +139,7 @@ class BxBaseMenu extends BxDolMenu
 		);
 		$a['bx_if:addon'] = array (
 			'condition' => (bool)$mixedAddon,
-			'content' => array('addon' => $mixedAddon),
+			'content' => $this->_getTmplVarsAddon($mixedAddon, $a)
 		);
 
 		foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
@@ -188,6 +188,13 @@ class BxBaseMenu extends BxDolMenu
         $this->_oTemplate->addCss('menu.css');
     }
 
+	protected function _getTmplVarsAddon($mixedAddon, $aMenuItem) 
+	{
+	    return array(
+	    	'addon' => $mixedAddon,
+	        'addonf' => ''
+	    );
+	}
 }
 
 /** @} */

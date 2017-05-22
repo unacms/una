@@ -19,6 +19,8 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     protected $_aSystems;
     protected $_aSystemsActive;
 
+    protected $_iProfileId;
+
     protected $_iInterval;
 
 	protected $_iCacheTTL;  
@@ -31,18 +33,27 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     {
         parent::__construct();
 
+        /**
+         * Note. Currently Live Updates are associated with profiles (Profile ID) and therefore they are used for logged in members only.
+         * If it's needed Session ID can be used instead of Profile ID. In this case Live Updates can be used for visitors too. Don't forget
+         * to update BxBaseLiveUpdates::init if Session ID will be used.
+         */
+        $this->_iProfileId = (int)bx_get_logged_profile_id();
+        if(!$this->_iProfileId)
+            return;
+
         $this->_oQuery = new BxDolLiveUpdatesQuery();
 
         $this->_iInterval = (int)$this->_oQuery->getParam('sys_live_updates_interval');
 
         $this->_iCacheTTL = 86400;
-        $this->_sCacheKey = 'sys_live_updates_' . bx_get_logged_profile_id();
+        $this->_sCacheKey = 'sys_live_updates_' . $this->_iProfileId;
 
         $this->_sJsClass = 'BxDolLiveUpdates';
     	$this->_sJsObject = 'oLiveUpdates';
 
-    	$this->_aSystemsActive = array();
     	$this->_aSystems = $this->_getCachedSystems();
+    	$this->_aSystemsActive = array_keys($this->_aSystems);
     }
 
     /**
