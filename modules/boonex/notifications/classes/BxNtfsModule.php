@@ -98,6 +98,26 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 		return $iCount;
     }
 
+    public function serviceGetLiveUpdates($aMenuItemParent, $aMenuItemChild, $iCount = 0)
+    {
+        $iOwnerId = $this->getUserId();
+        $iCountNew = $this->serviceGetUnreadNotificationsNum($iOwnerId);
+        if($iCountNew <= $iCount)
+			return false;
+
+        return array(
+    		'count' => $iCountNew, // required
+    		'method' => 'bx_menu_show_live_update(oData)', // required
+    		'data' => array(
+    			'code' => BxDolTemplate::getInstance()->parseHtmlByName('menu_item_addon.html', array(
+    				'content' => '{count}'
+                )),
+                'mi_parent' => $aMenuItemParent,
+                'mi_child' => $aMenuItemChild
+    		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+    	);
+    }
+
     /*
      * COMMON METHODS
      */

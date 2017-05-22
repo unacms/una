@@ -45,6 +45,11 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_notifications_privacy_view', @sName, 'view', '_bx_notifications_privacy_view', '3', 'bx_notifications_events', 'id', 'owner_id', 'BxNtfsPrivacy', 'modules/boonex/notifications/classes/BxNtfsPrivacy.php');
 
 
+-- LIVE UPDATES
+INSERT INTO `sys_objects_live_updates`(`name`, `frequency`, `service_call`, `active`) VALUES
+(@sName, 1, 'a:3:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:16:"get_live_updates";s:6:"params";a:3:{i:0;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:1;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:27:"notifications-notifications";}i:2;s:7:"{count}";}}', 1);
+
+
 -- ALERTS
 INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUES 
 (@sName, 'BxNtfsResponse', 'modules/boonex/notifications/classes/BxNtfsResponse.php', '');

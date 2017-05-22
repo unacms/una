@@ -24,6 +24,10 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 DELETE FROM `sys_objects_privacy` WHERE `module` = @sName;
 
 
+-- LIVE UPDATES
+DELETE FROM `sys_objects_live_updates` WHERE `name` = @sName;
+
+
 -- ALERTS
 SET @iHandlerId = (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandlerId;
