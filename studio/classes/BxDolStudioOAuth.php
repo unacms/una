@@ -47,7 +47,7 @@ class BxDolStudioOAuth extends BxDolFactory
 
         $mixedResult = $this->authorize();
         if($mixedResult !== true)
-            return $mixedResult;
+            return $this->onAuthorizeFailed($mixedResult);
 
         $aItems = $this->fetch($aParams);
         if(is_null($aItems))
@@ -64,10 +64,26 @@ class BxDolStudioOAuth extends BxDolFactory
             return _t('_adm_err_oauth_empty_key_secret');
 
 		$mixedResult = $this->authorize();
-		if($mixedResult === true)
-			BxDolStudioInstallerUtils::getInstance()->checkModules(true);
+		if($mixedResult !== true)
+		    return $this->onAuthorizeFailed($mixedResult);
 
+        BxDolStudioInstallerUtils::getInstance()->checkModules(true);
         return $mixedResult;
+    }
+
+    protected function onAuthorizeFailed($mixedResult)
+    {
+        if(is_string($mixedResult))
+            return MsgBox($mixedResult);
+
+        $bArray = is_array($mixedResult);
+        if($bArray && !empty($mixedResult['redirect'])) {
+            header('Location: ' . $mixedResult['redirect']);
+            exit;
+        }
+
+        if($bArray && !empty($mixedResult['message']))
+            return MsgBox($mixedResult['message']);
     }
 
     protected function isAuthorized()

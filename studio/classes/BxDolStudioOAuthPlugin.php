@@ -106,7 +106,12 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuthOAuth1 implements iBxDolSin
 		$this->oSession->setValue('sys_oauth_secret', $oToken->getRequestTokenSecret());
 
 		$oUrl = $oService->getAuthorizationUri(array('oauth_token' => $oToken->getRequestToken()));
-		return _t('_adm_msg_oauth_need_authorize', bx_append_url_params($oUrl, array('sid' => bx_site_hash())));
+		$sUrl = bx_append_url_params($oUrl, array('sid' => bx_site_hash()));
+
+		return array(
+		    'redirect' => $sUrl, 
+		    'message' => _t('_adm_msg_oauth_need_authorize', $sUrl)
+		);
     }
 
     protected function getAccessToken($sToken, $sVerifier, $iUser,  $oService)

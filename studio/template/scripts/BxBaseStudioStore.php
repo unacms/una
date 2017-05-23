@@ -109,10 +109,10 @@ class BxBaseStudioStore extends BxDolStudioStore
 	            $sContent .= $this->getBlockCode($aBlock);
 	        }
         }
-        else 
+        else
         	$sContent = $this->getBlockCode(array(
                 'caption' => '_adm_block_cpt_goodies',
-                'items' => MsgBox($mixedResult),
+                'items' => $mixedResult,
             ));
 
         return $oTemplate->parseHtmlByName('store.html', array(
@@ -148,10 +148,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 	        ));
         }
         else 
-            $sContent = $this->getBlockCode(array(
-                'caption' => '_adm_block_cpt_featured',
-                'items' => MsgBox($mixedResult),
-            ));
+            $sContent = $mixedResult;
 
 		if(!$bWrapInBlock)
 			return $sContent;
@@ -249,28 +246,28 @@ class BxBaseStudioStore extends BxDolStudioStore
     	        ));
             }         
 
-            $sContent = $this->getBlockCode(array(
-    			'caption' => '_adm_block_cpt_search',
-    			'items' => $oTemplate->parseHtmlByName('str_search.html', array(
-                    'form' => $oForm->getCode(),
-                    'bx_if:show_results' => array(
-                        'condition' => !empty($sResults),
-                        'content' => array(
-                            'results' => $sResults
-                        )
+            $sContent = $oTemplate->parseHtmlByName('str_search.html', array(
+                'form' => $oForm->getCode(),
+                'bx_if:show_results' => array(
+                    'condition' => !empty($sResults),
+                    'content' => array(
+                        'results' => $sResults
                     )
-                ))
-    		));
+                )
+            ));
         }
         else 
-            $sContent = $this->getBlockCode(array(
-                'caption' => '_adm_block_cpt_search',
-                'items' => MsgBox($mixedResult),
-            ));
+            $sContent = $mixedResult;
+
+        if(!$bWrapInBlock)
+			return $sContent;
 
         return $oTemplate->parseHtmlByName('store.html', array(
             'js_object' => $sJsObject,
-            'content' => $sContent
+            'content' => $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_search',
+				'items' => $sContent
+			))
         ));
     }
 

@@ -72,7 +72,10 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 			'state' => $this->_genCsrfToken(),
 		));
 
-		return _t('_adm_msg_oauth_need_authorize', $sUrl);
+		return array(
+		    'redirect' => $sUrl, 
+		    'message' => _t('_adm_msg_oauth_need_authorize', $sUrl)
+		);
     }
 
     protected function getAccessToken($sCode)

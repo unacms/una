@@ -80,7 +80,12 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuthOAuth1 implements iBxDolSingle
 			throw new OAuthException();
 
 		$this->oSession->setValue('sys_oauth_secret', $aRequestToken['oauth_token_secret']);
-		return _t('_adm_msg_oauth_need_authorize', bx_append_url_params(BX_DOL_OAUTH_URL_AUTHORIZE, array('oauth_token' => $aRequestToken['oauth_token'], 'sid' => bx_site_hash())));
+
+		$sUrl = bx_append_url_params(BX_DOL_OAUTH_URL_AUTHORIZE, array('oauth_token' => $aRequestToken['oauth_token'], 'sid' => bx_site_hash()));
+		return array(
+		    'redirect' => $sUrl, 
+		    'message' => _t('_adm_msg_oauth_need_authorize', $sRedirect)
+		);
     }
 
     protected function getAccessToken($sToken, $mixedSecret, $sVerifier, $iUser,  $oConsumer)
