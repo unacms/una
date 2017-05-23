@@ -778,7 +778,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if (!empty($this->aPage['keywords']) && is_array($this->aPage['keywords']))
             $sRet .= '<meta name="keywords" content="' . bx_html_attribute(implode(',', $this->aPage['keywords'])) . '" />';
 
-        if (!empty($this->aPage['description']) && is_string($this->aPage['description']))
+        $bDescription = !empty($this->aPage['description']) && is_string($this->aPage['description']);
+        if ($bDescription)
             $sRet .= '<meta name="description" content="' . bx_html_attribute($this->aPage['description']) . '" />';
 
         if (!empty($this->aPage['location']) && isset($this->aPage['location']['lat']) && isset($this->aPage['location']['lng']) && isset($this->aPage['location']['country']))
@@ -787,8 +788,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
-        if (!empty($this->aPage['image']))
+        if (!empty($this->aPage['image'])) {
             $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
+
+            $sRet .= '
+            	<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content="' . (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . '" />
+				<meta name="twitter:description" content="' . ($bDescription ? bx_html_attribute($this->aPage['description']) : '') . '" />
+				<meta name="twitter:image" content="' . $this->aPage['image'] . '" />';
+        }
 
         $sRet .= BxTemplFunctions::getInstance()->getMetaIcons();
 
