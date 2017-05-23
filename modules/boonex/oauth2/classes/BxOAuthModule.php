@@ -103,6 +103,12 @@ class BxOAuthModule extends BxDolModule
         }
 
         $aProfiles = BxDolAccount::getInstance()->getProfiles();
+
+        if (1 == count($aProfiles)) { // in case of one profile, don't display dialog with profiles choice
+            $aProfile = array_pop($aProfiles);
+            $_POST['profile_id'] = $aProfile['id'];
+        }
+
         if (!($iProfileId = $this->_oDb->getSavedProfile($aProfiles)) && empty($_POST)) {
             $oPage = BxDolPage::getObjectInstanceByURI('oauth-authorization');
             $this->_oTemplate->getPage(false, $oPage->getCode());

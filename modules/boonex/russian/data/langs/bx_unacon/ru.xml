@@ -17,7 +17,7 @@
     <string name="_bx_unacon_option_app_secret"><![CDATA[UNA App Secret]]></string>
     <string name="_bx_unacon_option_app_url"><![CDATA[URL главного UNA сайта]]></string>
     <string name="_bx_unacon_option_auto_friends"><![CDATA[Автоматически делать друзьями тех, что уже друг на другом UNA сайте]]></string>
-    <string name="_bx_unacon_option_rewrite"><![CDATA[Использовать преобразованные ссылки на главном UNA сайта]]></string>
+    <string name="_bx_unacon_option_rewrite"><![CDATA[Использовать преобразованные ссылки на главном UNA сайте]]></string>
 
 	<string name="_bx_unacon_et_password_generated"><![CDATA[UNA-соединение: временный пароль]]></string>
 	<string name="_bx_unacon_et_password_generated_subject"><![CDATA[Временный пароль]]></string>
