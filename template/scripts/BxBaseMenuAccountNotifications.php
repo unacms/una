@@ -61,6 +61,17 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
 
         return true;
     }
+
+    protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
+    {
+        return array(
+            'addon' => $mixedAddon,
+            'addonf' => $this->_oTemplate->parseHtmlByName('menu_item_addon.html', array(
+		        'content' => $mixedAddon
+		    ))
+			
+        );
+    }
 }
 
 /** @} */

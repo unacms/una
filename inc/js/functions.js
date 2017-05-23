@@ -492,6 +492,32 @@ function bx_menu_slide_close_all_opened () {
     });
 }
 
+/*
+ * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
+ */
+function bx_menu_show_live_update(oData) {
+	//--- Update Child Menu Item
+	if(oData.mi_child) {
+		var oMenuItem = $('.bx-menu-object-' + oData.mi_child.menu_object + ' .bx-menu-item-' + oData.mi_child.menu_item);
+		var oMenuItemAddon = oMenuItem.find('.bx-menu-item-addon');
+
+		if(oMenuItemAddon.length > 0)
+			oMenuItemAddon.html(oData.count_new);
+		else
+			oMenuItem.append(oData.code.replace('{count}', oData.count_new));
+	}
+
+	//--- Update Parent Menu Item
+	if(oData.mi_parent) {
+		var oMenuItem = $('.bx-menu-object-' + oData.mi_parent.menu_object + ' #bx-menu-toolbar-item-' + oData.mi_parent.menu_item);
+		var oMenuItemAddon = oMenuItem.find('.bx-menu-item-addon');
+
+		if(oMenuItemAddon.length > 0)
+			oMenuItemAddon.html(parseInt(oMenuItemAddon.html()) + (oData.count_new - oData.count_old));
+		else
+			oMenuItem.append(oData.code.replace('{count}', oData.count_new));
+	}
+}
 /**
  * Set ACL level for specified profile
  * @param iProfileId - profile id to set acl level for

@@ -50,6 +50,9 @@ DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_persons_administration', '
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_persons_administration', 'bx_persons_common');
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_persons_administration', 'bx_persons_common');
 
+-- LIVE UPDATES
+DELETE FROM `sys_objects_live_updates` WHERE `name` = 'bx_persons_friend_requests';
+
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_persons' LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
