@@ -192,11 +192,13 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_polls_preview', 'bx_polls_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_polls_files";}', 'no', '1', '2592000', '0'),
-('bx_polls_gallery', 'bx_polls_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_polls_files";}', 'no', '1', '2592000', '0');
+('bx_polls_gallery', 'bx_polls_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_polls_files";}', 'no', '1', '2592000', '0'),
+('bx_polls_cover', 'bx_polls_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_polls_files";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_polls_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
-('bx_polls_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
+('bx_polls_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0'),
+('bx_polls_cover', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0');
 
 
 -- FORMS

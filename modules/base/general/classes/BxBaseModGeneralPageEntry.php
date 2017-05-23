@@ -48,15 +48,27 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         $oCover->setCoverClass($this->_oModule->getName() . '_cover');
 
         // set cover image
-        if ($aThumb = $this->_getThumbForMetaObject()) {            
-            $oCover->setCoverImageUrl($aThumb);
+        $mixedThumb = $this->_getThumbForMetaObject();
+        if($mixedThumb !== false) {
+            $aCover = array(
+                'id' => $mixedThumb['id']
+            );
+
+            if(!empty($mixedThumb['transcoder']))
+                $aCover['transcoder'] = $mixedThumb['transcoder'];
+            else if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])) 
+                $aCover['transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_COVER'];
+            else if(!empty($mixedThumb['object']))
+                $aCover['object'] = $mixedThumb['object'];
+
+            $oCover->setCoverImageUrl($aCover);
         }
 
         // add content metatags
-        if (!empty($CNF['OBJECT_METATAGS']) && $aThumb) {
+        if (!empty($CNF['OBJECT_METATAGS']) && $mixedThumb) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($o)
-                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $aThumb);
+                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $mixedThumb);
         }
 
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');

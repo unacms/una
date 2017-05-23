@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS `bx_snipcart_entries`, `bx_snipcart_settings`, `bx_snipcart
 DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_snipcart_files' OR `object` = 'bx_snipcart_photos_resized';
 DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_snipcart_files' OR `object` = 'bx_snipcart_photos_resized';
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_snipcart_preview', 'bx_snipcart_gallery');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_snipcart_preview', 'bx_snipcart_gallery');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_snipcart_preview', 'bx_snipcart_gallery');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_snipcart_preview', 'bx_snipcart_gallery', 'bx_snipcart_cover');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_snipcart_preview', 'bx_snipcart_gallery', 'bx_snipcart_cover');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_snipcart_preview', 'bx_snipcart_gallery', 'bx_snipcart_cover');
 
 
 -- FORMS

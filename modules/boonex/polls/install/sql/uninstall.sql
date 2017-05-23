@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS `bx_polls_entries`, `bx_polls_subentries`, `bx_polls_files`
 DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_polls_files' OR `object` = 'bx_polls_photos_resized';
 DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_polls_files' OR `object` = 'bx_polls_photos_resized';
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_polls_preview', 'bx_polls_gallery');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_polls_preview', 'bx_polls_gallery');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_polls_preview', 'bx_polls_gallery');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_polls_preview', 'bx_polls_gallery', 'bx_polls_cover');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_polls_preview', 'bx_polls_gallery', 'bx_polls_cover');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_polls_preview', 'bx_polls_gallery', 'bx_polls_cover');
 
 
 -- FORMS

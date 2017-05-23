@@ -73,6 +73,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE' => 'bx_snipcart_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_snipcart_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_snipcart_gallery',
+        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_snipcart_cover',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
         	'OBJECT_REPORTS' => 'bx_snipcart',
             'OBJECT_VIEWS' => 'bx_snipcart',

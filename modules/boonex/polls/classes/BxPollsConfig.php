@@ -75,6 +75,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE' => 'bx_polls_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_polls_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_polls_gallery',
+        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_polls_cover',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
         	'OBJECT_REPORTS' => 'bx_polls',
             'OBJECT_VIEWS' => 'bx_polls',

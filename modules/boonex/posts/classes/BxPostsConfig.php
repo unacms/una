@@ -69,6 +69,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE' => 'bx_posts_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_posts_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_posts_gallery',
+        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_posts_cover',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
         	'OBJECT_REPORTS' => 'bx_posts',
             'OBJECT_VIEWS' => 'bx_posts',
