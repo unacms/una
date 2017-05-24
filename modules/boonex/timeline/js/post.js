@@ -126,7 +126,7 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
 
 		var oItem = $(oData.item).hide();
 		$('#' + this._aHtmlIds['attach_link_form_field']).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', this._sAnimationEffect, this._sAnimationSpeed, function() {
-			$(this).find('a.bx-link-embed').dolEmbedly();
+			$(this).find('a.bx-link-embed').dolConverLinks();
 		});
 
         return;
@@ -248,13 +248,13 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 
 			oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
 			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed, function() {
-				$(this).find('a.bx-link-embed').dolEmbedly();
+				$(this).find('a.bx-link-embed').dolConverLinks();
 			});
 			break;
 
 		case 'outline':
 			this.prependMasonry(oContent, function(oItems) {
-				$(oItems).find('a.bx-link-embed').dolEmbedly();
+				$(oItems).find('a.bx-link-embed').dolConverLinks();
 			});
 			break;
 	}

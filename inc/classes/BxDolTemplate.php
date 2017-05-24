@@ -343,12 +343,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'spin.min.js',
             'jquery.easing.js',
             'jquery.cookie.min.js',
-            'jquery.embedly.min.js',
             'moment-with-locales.min.js',
             'functions.js',
             'jquery.webForms.js',
             'jquery.dolPopup.js',
-        	'jquery.dolEmbedly.js',
+        	'jquery.dolConverLinks.js',
             'marka/marka.min.js',
             'headroom.min.js',
         ));
@@ -361,11 +360,31 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             '_sys_loading',
         ));
 
-        //--- Load options in JS ---//
-        $this->addJsOption(array(
-        	'sys_embedly_api_key',
-        	'sys_embedly_api_pattern',
-        ));
+        //--- Load Embed.ly if Key and Pattern are available ---//
+        $bEmbedly = !empty(getParam('sys_embedly_api_key')) && !empty(getParam('sys_embedly_api_pattern'));
+        if($bEmbedly) {
+            $this->addJsSystem(array(
+            	'jquery.embedly.min.js',
+            ));
+
+            $this->addJsOption(array(
+            	'sys_embedly_api_key',
+            	'sys_embedly_api_pattern',
+            ));
+        }
+
+        //--- Load Iframely if Key is available and Embed.ly is disabled ---//
+        $sIframely = getParam('sys_iframely_api_key');
+        $bIframely = !$bEmbedly && !empty($sIframely);
+        if($bIframely) {
+            $this->addJsSystem(array(
+                bx_proto() . '://cdn.iframe.ly/embed.js?key=' . md5($sIframely)
+            ));
+
+            $this->addJsOption(array(
+            	'sys_iframely_api_key'
+            ));
+        }
 
         //--- Load injection's cache ---//
         if (getParam('sys_db_cache_enable')) {
@@ -378,9 +397,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 $aInjections = $this->getInjectionsData();
                 $oCache->setData ($sCacheKey, $aInjections);
             }
-        } else {
+        } 
+        else
             $aInjections = $this->getInjectionsData();
-        }
 
         $this->aPage['injections'] = $aInjections;
 

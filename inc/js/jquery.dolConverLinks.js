@@ -1,4 +1,18 @@
 (function( $ ){
+	$.fn.dolConverLinks = function(options) {
+		console.log(this);
+		if(bx_get_param('sys_embedly_api_key') != '' && bx_get_param('sys_embedly_api_pattern') != '')
+			return this.dolEmbedly(options);
+		else if(bx_get_param('sys_iframely_api_key') != '')
+			return this.dolIframely(options);
+	};
+
+	$.fn.dolIframely = function(options) {        
+		return this.each(function() {
+			iframely.load($(this).get(0));
+		});
+	};
+
 	$.fn.dolEmbedly = function(options) {
         var o = $.extend({}, {'max-width':900}, options);
 		var sEmbedlyKey = bx_get_param('sys_embedly_api_key');
