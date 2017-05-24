@@ -74,7 +74,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		$this->_oModule->_oTemplate->addCss($this->_aIncludeCss);
     }
 
-    public function initializeCheckout($iPendingId, $aCartInfo)
+    public function initializeCheckout($iPendingId, $aCartInfo, $sRedirect = '')
     {
     	$sToken = bx_process_input(bx_get('token'));
 
@@ -102,7 +102,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 				header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
 					'order_id' => $mixedResult['order'],
 					'customer_id' => $mixedResult['customer'], 
-					'pending_id' => $aPending['id']
+					'pending_id' => $aPending['id'],
+				    'redirect' => $sRedirect
 				)));
 				exit;
 
@@ -117,7 +118,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 					'redirect' => $this->getReturnDataUrl($aVendor['id'], array(
 						'order_id' => $mixedResult['order'],
 						'customer_id' => $mixedResult['customer'],
-						'pending_id' => $aPending['id']
+						'pending_id' => $aPending['id'],
+						'redirect' => $sRedirect
 					))
 				);
 		}
@@ -130,6 +132,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		$iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
         if(empty($iPendingId))
         	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
+
+        $sRedirect = bx_process_input($aData['redirect']);
 
 		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
@@ -145,6 +149,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 			'client_email' => '',
 			'paid' => false,
 			'trial' => false,
+		    'redirect' => $sRedirect
 		);
 
 		switch($aPending['type']) {

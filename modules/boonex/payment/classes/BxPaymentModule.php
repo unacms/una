@@ -265,8 +265,9 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	$iItemCount = bx_process_input(bx_get('item_count'), BX_DATA_INT);
     	if(empty($iItemCount))
     		$iItemCount = 1;
+        $sRedirect = bx_process_input(bx_get('redirect'));
 
-        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount);
+        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
 		echoJson($aResult);
     }
 
@@ -345,7 +346,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         exit;
     }
 
-	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array())
+	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array(), $sRedirect = '')
 	{
 		if(!is_array($aItems))
 			$aItems = array($aItems);
@@ -409,7 +410,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			}
 		}
 
-		return $oProvider->initializeCheckout($iPendingId, $aInfo);
+		return $oProvider->initializeCheckout($iPendingId, $aInfo, $sRedirect);
 	}
 
     public function actionFinalizeCheckout($sProvider, $mixedVendorId = "")
@@ -442,16 +443,21 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		if(!empty($aResult['paid']) || ($bTypeRecurring && !empty($aResult['trial'])))
 			$this->registerPayment($aPending);
 
-		if($oProvider->needRedirect()) {
-			header('Location: ' . $oProvider->getReturnUrl());
-			exit;
-		}
-
         bx_alert($this->getName(), 'finalize_checkout', 0, bx_get_logged_profile_id(), array(
             'transactions' => $this->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => (int)$aPending['id'])),
             'provider' => $oProvider,
             'message' => &$aResult['message'],
         ));
+
+        if($oProvider->needRedirect()) {
+			header('Location: ' . $oProvider->getReturnUrl());
+			exit;
+		}
+
+		if(!empty($aResult['redirect'])) {
+			header('Location: ' . base64_decode(urldecode($aResult['redirect'])));
+			exit;
+		}
 
 		$this->_oTemplate->displayPageCodeResponse($aResult['message']);
     }

@@ -24,13 +24,13 @@ BxPaymentCart.prototype.init = function(oOptions) {
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 };
 
-BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iItemCount, iNeedRedirect) {
+BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iItemCount, iRedirect, sRedirect) {
 	var $this = this;
     var oDate = new Date();
 
-    iNeedRedirect = parseInt(iNeedRedirect);
-    if(!iNeedRedirect)
-    	iNeedRedirect = 0;
+    iRedirect = parseInt(iRedirect);
+    if(!iRedirect)
+    	iRedirect = 0;
 
     $.post(
         this._sActionsUrl + 'add_to_cart/' + iSellerId + '/' + iModuleId + '/' + iItemId + '/' + iItemCount + '/',
@@ -48,8 +48,8 @@ BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iIte
                 $('#bx-payment-tbar-content').replaceWith(oData.content);
                 */
 
-            	if(iNeedRedirect == 1)
-            		window.location.href = sUrlRoot + 'cart.php?seller_id=' + iSellerId;
+            	if(iRedirect == 1)
+            		window.location.href = sRedirect && sRedirect.length > 0 ? sRedirect : sUrlRoot + 'cart.php?seller_id=' + iSellerId;
             }
         },
         'json'
@@ -70,7 +70,7 @@ BxPaymentCart.prototype.onCartCheckout = function(oData) {
 	location.href = oData.link;
 };
 
-BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount) {
+BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sRedirect) {
     var $this = this;
     var oDate = new Date();
 
@@ -80,6 +80,7 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
     	module_id: iModuleId,
     	item_id: iItemId,
     	item_count: 1,
+    	redirect: sRedirect ? sRedirect : '',
     	_t: oDate.getTime()
     };
 

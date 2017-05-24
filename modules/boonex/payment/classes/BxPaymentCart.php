@@ -141,7 +141,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         return array('code' => 0, 'message' => _t($CNF['T']['MSG_ITEM_DELETED']));
     }
 
-	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount)
+	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '')
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -161,11 +161,11 @@ class BxPaymentCart extends BxBaseModPaymentCart
 		if(empty($sSellerProvider)) {
 			$sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
 			$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
-			return array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders)));
+			return array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect)));
 		}
 
 		$aProvider = $aSellerProviders[$sSellerProvider];
-        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem));
+        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem), $sRedirect);
         if(is_string($mixedResult))
         	return array('code' => 6, 'message' => _t($mixedResult));
 

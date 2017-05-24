@@ -92,7 +92,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         ));
     }
 
-	public function displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1)
+	public function displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
     {
         $sJsCode = $this->displayCartJs(BX_PAYMENT_TYPE_RECURRING, $iVendorId);
         $sJsMethod = $this->parseHtmlByName('subscribe_js.html', array(
@@ -101,13 +101,19 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         	'vendor_provider' => $sVendorProvider,
             'module_id' => $iModuleId,
             'item_id' => $iItemId,
-            'item_count' => $iItemCount
+            'item_count' => $iItemCount,
+            'bx_if:show_redirect' => array(
+                'condition' => !empty($sRedirect),
+                'content' => array(
+                    'redirect' => $sRedirect
+                )
+            )
         ));
 
         return array($sJsCode, $sJsMethod);
     }
 
-    public function displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1)
+    public function displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
     {
         $this->addJsCssCart(BX_PAYMENT_TYPE_RECURRING, $iVendorId);
         return $this->parseHtmlByName('subscribe.html', array(
@@ -119,6 +125,12 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             'module_id' => $iModuleId,
             'item_id' => $iItemId,
             'item_count' => $iItemCount,
+            'bx_if:show_redirect' => array(
+                'condition' => !empty($sRedirect),
+                'content' => array(
+                    'redirect' => $sRedirect
+                )
+            )
         ));
     }
 
@@ -319,7 +331,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         ));
     }
 
-    public function displayProvidersSelector($aCartItem, $aProviders)
+    public function displayProvidersSelector($aCartItem, $aProviders, $sRedirect = '')
     {
     	$oModule = $this->getModule();
 
@@ -335,10 +347,11 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 					'iSellerId' => $iSellerId,
 					'iModuleId' => $iModuleId,
 					'iItemId' => $iItemId,
-					'iItemCount' => $iItemCount
+					'iItemCount' => $iItemCount,
+				    'sRedirect' => $sRedirect
 				));
 			else {
-				list($sJsCode, $sJsOnclick) = $oCart->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount);
+				list($sJsCode, $sJsOnclick) = $oCart->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount, $sRedirect);
 
 				$sButton = $this->parsePageByName('providers_select_button.html', array(
 					'onclick' => $sJsOnclick,
