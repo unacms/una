@@ -79,7 +79,8 @@ $aConfig = array(
     	'bx_persons_avatar',
     	'bx_persons_picture',
     	'bx_persons_cover',
-    	'bx_persons_cover_thumb'
+    	'bx_persons_cover_thumb',
+        'bx_persons_gallery'
     ),
 
     /**

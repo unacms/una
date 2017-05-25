@@ -80,7 +80,8 @@ $aConfig = array(
     	'bx_groups_avatar', 
     	'bx_groups_picture', 
     	'bx_groups_cover', 
-    	'bx_groups_cover_thumb'
+    	'bx_groups_cover_thumb',
+        'bx_groups_gallery'
     ),
 
     /**

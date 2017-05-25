@@ -76,6 +76,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_events_picture',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_events_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_events_cover_thumb',
+        	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_events_gallery',
             'OBJECT_VIEWS' => 'bx_events',
             'OBJECT_VOTES' => 'bx_events',
         	'OBJECT_FAVORITES' => 'bx_events',

@@ -67,6 +67,7 @@ $aConfig = array(
     'transcoders' => array(
 		'bx_snipcart_preview',
         'bx_snipcart_gallery',
+        'bx_snipcart_cover'
     ),
 
     /**

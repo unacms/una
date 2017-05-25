@@ -62,6 +62,31 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     {
 		return isset($this->_aGridObjects[$sType]) ? $this->_aGridObjects[$sType] : '';
     }
+
+    /*
+     * Note. The first Transcoder in the array $aTranscoders has the highest priority. 
+     */
+    public function getImageUrl($iId, $aTranscoders)
+    {
+        $sResult = '';
+        if(empty($iId) || empty($aTranscoders) || !is_array($aTranscoders))
+            return $sResult;
+
+        foreach($aTranscoders as $sTranscoder) {
+            if(empty($this->CNF[$sTranscoder])) 
+                continue;
+
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->CNF[$sTranscoder]);
+        	if(!$oTranscoder)
+        	    continue;
+
+            $sResult = $oTranscoder->getFileUrl($iId);
+            if(!empty($sResult))
+                break;
+        }
+
+        return $sResult;
+    }
 }
 
 /** @} */

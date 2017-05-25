@@ -12,9 +12,9 @@ DELETE FROM sys_profiles WHERE `type` = 'bx_groups';
 DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_groups_pics', 'bx_groups_pics_resized');
 DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_groups_pics', 'bx_groups_pics_resized');
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_groups_icon', 'bx_groups_thumb', 'bx_groups_avatar', 'bx_groups_picture', 'bx_groups_cover', 'bx_groups_cover_thumb');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_groups_icon', 'bx_groups_thumb', 'bx_groups_avatar', 'bx_groups_picture', 'bx_groups_cover', 'bx_groups_cover_thumb');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_groups_icon', 'bx_groups_thumb', 'bx_groups_avatar', 'bx_groups_picture', 'bx_groups_cover', 'bx_groups_cover_thumb');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_groups_icon', 'bx_groups_thumb', 'bx_groups_avatar', 'bx_groups_picture', 'bx_groups_cover', 'bx_groups_cover_thumb', 'bx_groups_gallery');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_groups_icon', 'bx_groups_thumb', 'bx_groups_avatar', 'bx_groups_picture', 'bx_groups_cover', 'bx_groups_cover_thumb', 'bx_groups_gallery');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_groups_icon', 'bx_groups_thumb', 'bx_groups_avatar', 'bx_groups_picture', 'bx_groups_cover', 'bx_groups_cover_thumb', 'bx_groups_gallery');
 
 -- FORMS
 

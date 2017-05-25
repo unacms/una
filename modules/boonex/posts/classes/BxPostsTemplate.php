@@ -22,6 +22,16 @@ class BxPostsTemplate extends BxBaseModTextTemplate
         $this->MODULE = 'bx_posts';
         parent::__construct($oConfig, $oDb);
     }
+
+    /**
+     * Use Gallery image for both because currently there is no Unit types with small thumbnails.
+     */
+    protected function getUnitThumbAndGallery ($aData)
+    {
+        list($sPhotoThumb, $sPhotoGallery) = parent::getUnitThumbAndGallery($aData);
+
+        return array($sPhotoGallery, $sPhotoGallery);
+    }
 }
 
 /** @} */

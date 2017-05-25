@@ -185,15 +185,17 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('bx_events_avatar', 'bx_events_pics_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_events_pics";}', 'no', '1', '2592000', '0'),
 ('bx_events_picture', 'bx_events_pics_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_events_pics";}', 'no', '1', '2592000', '0'),
 ('bx_events_cover', 'bx_events_pics_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_events_pics";}', 'no', '1', '2592000', '0'),
-('bx_events_cover_thumb', 'bx_events_pics_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_events_pics";}', 'no', '1', '2592000', '0');
+('bx_events_cover_thumb', 'bx_events_pics_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_events_pics";}', 'no', '1', '2592000', '0'),
+('bx_events_gallery', 'bx_events_pics_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_events_pics";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_events_icon', 'Resize', 'a:3:{s:1:"w";s:2:"32";s:1:"h";s:2:"32";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_events_thumb', 'Resize', 'a:3:{s:1:"w";s:2:"48";s:1:"h";s:2:"48";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_events_avatar', 'Resize', 'a:3:{s:1:"w";s:2:"96";s:1:"h";s:2:"96";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_events_picture', 'Resize', 'a:3:{s:1:"w";s:4:"1024";s:1:"h";s:4:"1024";s:13:"square_resize";s:1:"0";}', '0'),
-('bx_events_cover', 'Resize', 'a:1:{s:1:"w";s:4:"1024";}', '0'),
-('bx_events_cover_thumb', 'Resize', 'a:3:{s:1:"w";s:2:"48";s:1:"h";s:2:"48";s:13:"square_resize";s:1:"1";}', '0');
+('bx_events_cover', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0'),
+('bx_events_cover_thumb', 'Resize', 'a:3:{s:1:"w";s:2:"48";s:1:"h";s:2:"48";s:13:"square_resize";s:1:"1";}', '0'),
+('bx_events_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
 -- FORMS
 

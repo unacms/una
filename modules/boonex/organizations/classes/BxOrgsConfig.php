@@ -87,6 +87,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_organizations_picture',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_organizations_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_organizations_cover_thumb',
+        	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_organizations_gallery',
             'OBJECT_VIEWS' => 'bx_organizations',
         	'OBJECT_FAVORITES' => 'bx_organizations',
         	'OBJECT_FEATURED' => 'bx_organizations',

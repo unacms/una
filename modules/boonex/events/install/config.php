@@ -80,7 +80,8 @@ $aConfig = array(
     	'bx_events_avatar', 
     	'bx_events_picture', 
     	'bx_events_cover', 
-    	'bx_events_cover_thumb'
+    	'bx_events_cover_thumb',
+    	'bx_events_gallery'
     ),
 
     /**

@@ -67,6 +67,7 @@ $aConfig = array(
     'transcoders' => array(
 		'bx_polls_preview',
         'bx_polls_gallery',
+        'bx_polls_cover'
     ),
 
     /**

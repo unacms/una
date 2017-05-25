@@ -233,12 +233,12 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         //--- Cover Info
         $sCoverUrl = '';
         if(!empty($CNF['FIELD_COVER']) && $aData[$CNF['FIELD_COVER']]) {
-            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
-            if($oImagesTranscoder)
-                $sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+                if($oImagesTranscoder)
+                    $sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
 
             if(empty($sCoverUrl)) {
-                $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+                $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
                 if($oImagesTranscoder)
                     $sCoverUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_COVER']]);
             }
