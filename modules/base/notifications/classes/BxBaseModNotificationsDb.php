@@ -12,7 +12,7 @@
 /*
  * Module database queries
  */
-class BxBaseModNotificationsDb extends BxDolModuleDb
+class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 {
     protected $_oConfig;
 

@@ -42,7 +42,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->CNF = array (
             'ICON' => 'clock-o col-green1',
-        
+
+            // database tables
+            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'events',
+
 	        // database fields
         	'FIELD_ID' => 'id',
         	'FIELD_ADDED' => 'date',
