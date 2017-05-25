@@ -1,6 +1,5 @@
 (function( $ ){
 	$.fn.dolConverLinks = function(options) {
-		console.log(this);
 		if(bx_get_param('sys_embedly_api_key') != '' && bx_get_param('sys_embedly_api_pattern') != '')
 			return this.dolEmbedly(options);
 		else if(bx_get_param('sys_iframely_api_key') != '')
