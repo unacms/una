@@ -619,7 +619,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function addDynamicLocation($sLocationPath, $sLocationUrl)
     {
-        $sLocationKey = time();
+        $sLocationKey = time() . mt_rand();
         $this->addLocation($sLocationKey, $sLocationPath, $sLocationUrl);
 
         return $sLocationKey;
@@ -659,7 +659,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function addDynamicLocationJs($sLocationPath, $sLocationUrl)
     {
-        $sLocationKey = time();
+        $sLocationKey = time() . mt_rand();
         $this->addLocationJs($sLocationKey, $sLocationPath, $sLocationUrl);
 
         return $sLocationKey;
