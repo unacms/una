@@ -170,7 +170,12 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
                 $sRedirectCustom = getParam($CNF['PARAM_REDIRECT_AADD_CUSTOM_URL']);
                 if($sRedirectCustom) 
                     $sRedirectUrl = $sRedirectCustom;
-                break;
+        }
+
+        $sCustomReferrer = $oSession->getValue('custom-referrer');
+        if($sCustomReferrer) {
+            $sRedirectUrl = $sCustomReferrer;
+            $oSession->unsetValue('custom-referrer');
         }
 
         if($sRedirectUrl) {
