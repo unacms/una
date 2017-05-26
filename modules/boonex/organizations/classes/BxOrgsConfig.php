@@ -77,6 +77,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_organizations_searchable_fields',
         	'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
+        	'PARAM_REDIRECT_AADD' => 'bx_persons_redirect_aadd',
+            'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_persons_redirect_aadd_custom_url',
 
             // objects
             'OBJECT_STORAGE' => 'bx_organizations_pics',
@@ -158,6 +160,9 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             	'menu_item_manage_my' => '_bx_orgs_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_orgs_menu_item_title_manage_all',
             	'txt_browse_favorites' => '_bx_orgs_page_title_browse_favorites',
+            	'option_redirect_aadd_profile' => '_bx_persons_option_redirect_aadd_profile',
+            	'option_redirect_aadd_last' => '_bx_persons_option_redirect_aadd_last',
+            	'option_redirect_aadd_custom' => '_bx_persons_option_redirect_aadd_custom'
             ),
 
         );

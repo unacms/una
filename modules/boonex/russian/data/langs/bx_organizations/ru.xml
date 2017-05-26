@@ -5,6 +5,11 @@
 
 	<string name="_bx_orgs_option_autoapproval"><![CDATA[Автоматически активировать все организации после создания]]></string>
 	<string name="_bx_orgs_option_default_acl_level"><![CDATA[Уровень, назначаемый созданному профилю организации по умолчанию]]></string>
+	<string name="_bx_orgs_option_redirect_aadd"><![CDATA[После создания организации перенаправить на]]></string>
+    <string name="_bx_orgs_option_redirect_aadd_profile"><![CDATA[Страница организации]]></string>
+    <string name="_bx_orgs_option_redirect_aadd_last"><![CDATA[Предыдущая страница]]></string>
+    <string name="_bx_orgs_option_redirect_aadd_custom"><![CDATA[Пользовательская страница]]></string>
+    <string name="_bx_orgs_option_redirect_aadd_custom_url"><![CDATA[URL для перенаправления 'Пользовательская страница']]></string>
 	<string name="_bx_orgs_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
 	<string name="_bx_orgs_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
     <string name="_bx_orgs_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
