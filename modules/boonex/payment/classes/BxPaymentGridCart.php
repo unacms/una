@@ -69,12 +69,16 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     protected function _getActions ($sType, $sActionData = false, $isSmall = false, $isDisabled = false, $isPermanentState = false, $aRow = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
-    	
+
     	$sActions = '';
     	if($sType == 'bulk' && !empty($this->_aQueryAppend['seller_id'])) {
     		$sActionName = 'checkout';
 
-    		$aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($this->_aQueryAppend['seller_id']);
+    		$iClientId = (int)$this->_aQueryAppend['client_id'];
+            $iSellerId = (int)$this->_aQueryAppend['seller_id'];
+
+            $oCart = $this->_oModule->getObjectCart();
+    		$aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($iSellerId);
     		foreach($aProviders as $aProvider) {
 				$sAction = $this->_getActionDefault($sType, $sActionName, array(
 					'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
@@ -89,11 +93,26 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 					)
 				), $isSmall, $isDisabled, $aRow);
 
-    			$oProvider = $this->_oModule->getObjectProvider($aProvider['name'], $this->_aQueryAppend['seller_id']);
-    			if($oProvider !== false && method_exists($oProvider, 'getButtonSingle'))
-    				$sAction = $oProvider->getButtonSingle($this->_aQueryAppend['client_id'], $this->_aQueryAppend['seller_id'], array(
+    			$oProvider = $this->_oModule->getObjectProvider($aProvider['name'], $iSellerId);
+    			if($oProvider !== false && method_exists($oProvider, 'getButtonSingle')) {
+    			    $aParams = array(
     					'sObjNameGrid' => $this->getObject()
-    				));
+    				);
+
+    			    $aCartInfo = $oCart->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iSellerId);
+    			    if(!empty($aCartInfo['items_price']) && !empty($aCartInfo['items']) && is_array($aCartInfo['items'])) {
+    			        $aTitles = array();
+    			        foreach ($aCartInfo['items'] as $aItem)
+    			            $aTitles[] = $aItem['title'];
+    
+    			        $aParams = array_merge($aParams, array(
+    			            'iAmount' => (int)round(100 * (float)$aCartInfo['items_price']),
+    			        	'sItemTitle' => implode(', ', $aTitles)
+    			        ));
+    			    }
+
+    				$sAction = $oProvider->getButtonSingle($iClientId, $iSellerId, $aParams);
+    			}
 
     			$sActions .= $sAction;
     		}

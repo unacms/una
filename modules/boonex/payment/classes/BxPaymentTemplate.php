@@ -334,6 +334,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     public function displayProvidersSelector($aCartItem, $aProviders, $sRedirect = '')
     {
     	$oModule = $this->getModule();
+    	$iClientId = $oModule->getProfileId();
 
 		$oCart = $oModule->getObjectCart();
 		list($iSellerId, $iModuleId, $iItemId, $iItemCount) = $aCartItem;
@@ -341,15 +342,30 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 		$aTmplVarsProviders = array();
 		foreach($aProviders as $sProvider => $aProvider) {
 			$oProvider = $oModule->getObjectProvider($sProvider, $iSellerId);
-			if($oProvider !== false && method_exists($oProvider, 'getButtonRecurring'))
-				$sButton = $oProvider->getButtonRecurring($oModule->getProfileId(), $iSellerId, array(
+			if($oProvider !== false && method_exists($oProvider, 'getButtonRecurring')) {
+			    $aParams = array(
 					'sObjNameCart' => $oModule->_oConfig->getJsObject('cart'),
 					'iSellerId' => $iSellerId,
 					'iModuleId' => $iModuleId,
 					'iItemId' => $iItemId,
 					'iItemCount' => $iItemCount,
 				    'sRedirect' => $sRedirect
-				));
+				);
+
+			    $aCartInfo = $oCart->getInfo(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iSellerId, $this->_oConfig->descriptorA2S($aCartItem));
+			    if(!empty($aCartInfo['items_price']) && !empty($aCartInfo['items']) && is_array($aCartInfo['items'])) {
+			        $aTitles = array();
+			        foreach ($aCartInfo['items'] as $aItem)
+			            $aTitles[] = $aItem['title'];
+
+			        $aParams = array_merge($aParams, array(
+			            'iAmount' => (int)round(100 * (float)$aCartInfo['items_price']),
+			        	'sItemTitle' => implode(', ', $aTitles)
+			        ));
+			    }
+
+				$sButton = $oProvider->getButtonRecurring($iClientId, $iSellerId, $aParams);
+			}
 			else {
 				list($sJsCode, $sJsOnclick) = $oCart->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount, $sRedirect);
 

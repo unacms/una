@@ -70,8 +70,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     	if(!$this->isActive())
     		return;
 
-		$this->_oModule->_oTemplate->addJs($this->_aIncludeJs);
-		$this->_oModule->_oTemplate->addCss($this->_aIncludeCss);
+        $this->_oModule->_oTemplate->addJs($this->_aIncludeJs);
+        $this->_oModule->_oTemplate->addCss($this->_aIncludeCss);
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $sRedirect = '')
@@ -229,7 +229,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		return $this->_getButton(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, array_merge($aParams, array(
 			'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aVendor['name']),
 			'sVendorCurrency' => $aVendor['currency_code'],
-			'sVendorIcon' => $aVendor['icon'],
+			'sVendorIcon' => $aVendor['avatar'],
 		)));
     }
 

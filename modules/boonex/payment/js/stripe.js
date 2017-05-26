@@ -24,10 +24,12 @@ BxPaymentProviderStripe.prototype.init = function(oOptions) {
     this._rHandler = StripeCheckout.configure({
 	  key: oOptions.sPublicKey,
 	  name: oOptions.sVendorName,
+	  amount: oOptions.iAmount == undefined ? '' : oOptions.iAmount,
 	  currency: oOptions.sVendorCurrency,
 	  image: oOptions.sVendorIcon,
 	  locale: 'auto',
-	  email: oOptions.sClientEmail
+	  email: oOptions.sClientEmail,
+	  description: oOptions.sItemTitle == undefined ? '' : oOptions.sItemTitle
 	});
 
     //--- For Single payment
