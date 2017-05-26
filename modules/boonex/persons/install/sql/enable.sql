@@ -13,6 +13,8 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_persons_autoapproval', 'on', @iCategId, '_bx_persons_option_autoapproval', 'checkbox', '', '', '', 1),
 ('bx_persons_default_acl_level', '3', @iCategId, '_bx_persons_option_default_acl_level', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:2:{i:0;b:0;i:1;b:1;}s:5:"class";s:16:"TemplAclServices";}', '', '', 2),
+('bx_persons_redirect_aadd', 'profile', @iCategId, '_bx_persons_option_redirect_aadd', 'select', 'a:2:{s:6:"module";s:10:"bx_persons";s:6:"method";s:30:"get_options_redirect_after_add";}', '', '', 3),
+('bx_persons_redirect_aadd_custom_url', '', @iCategId, '_bx_persons_option_redirect_aadd_custom_url', 'digit', '', '', '', 4),
 ('bx_persons_num_connections_quick', '4', @iCategId, '_bx_persons_option_num_connections_quick', 'digit', '', '', '', 10),
 ('bx_persons_per_page_browse', '20', @iCategId, '_bx_persons_option_per_page_browse', 'digit', '', '', '', 11),
 ('bx_persons_num_rss', '10', @iCategId, '_bx_persons_option_num_rss', 'digit', '', '', '', 12),

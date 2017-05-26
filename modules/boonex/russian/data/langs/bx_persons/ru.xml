@@ -5,6 +5,11 @@
 
 	<string name="_bx_persons_option_autoapproval"><![CDATA[Автоматически активировать всех персон после создания]]></string>
 	<string name="_bx_persons_option_default_acl_level"><![CDATA[Уровень, по умолчанию назначаемый созданному персональному профилю]]></string>
+	<string name="_bx_persons_option_redirect_aadd"><![CDATA[После создания персонального профиля перенаправить на]]></string>
+	<string name="_bx_persons_option_redirect_aadd_profile"><![CDATA[Страница профиля]]></string>
+    <string name="_bx_persons_option_redirect_aadd_last"><![CDATA[Предыдущая страница]]></string>
+    <string name="_bx_persons_option_redirect_aadd_custom"><![CDATA[Пользовательская страница]]></string>
+    <string name="_bx_persons_option_redirect_aadd_custom_url"><![CDATA[URL для перенаправления 'Пользовательская страница']]></string>
 	<string name="_bx_persons_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
 	<string name="_bx_persons_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
     <string name="_bx_persons_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
