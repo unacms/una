@@ -145,13 +145,39 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
     protected function redirectAfterAdd($aContentInfo)
     {
-        // if user just joined the redirect to the page where user comes from. 
-        // TODO: add an options to profile based modules: redirect to created profile, redirect to the last page, custom redirect
-        if ($sJoinReferrer = BxDolSession::getInstance()->getValue('join-referrer')) {
-            BxDolSession::getInstance()->unsetValue('join-referrer');
-            header('Location: ' . $sJoinReferrer);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sRedirectType = getParam($CNF['PARAM_REDIRECT_AADD']);
+        $sRedirectDefault = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+
+        $sRedirectUrl = $sRedirectDefault;
+        switch ($sRedirectType) {
+            case BX_DOL_PROFILE_REDIRECT_PROFILE:
+                break;
+
+            // if user just joined the redirect to the page where user comes from. 
+            case BX_DOL_PROFILE_REDIRECT_LAST:
+                $oSession = BxDolSession::getInstance();
+
+                $sJoinReferrer = $oSession->getValue('join-referrer');
+                if($sJoinReferrer) {
+                    $sRedirectUrl = $sJoinReferrer;
+                    $oSession->unsetValue('join-referrer');
+                }
+                break;
+
+            case BX_DOL_PROFILE_REDIRECT_CUSTOM:
+                $sRedirectCustom = getParam($CNF['PARAM_REDIRECT_AADD_CUSTOM_URL']);
+                if($sRedirectCustom) 
+                    $sRedirectUrl = $sRedirectCustom;
+                break;
+        }
+
+        if($sRedirectUrl) {
+            header('Location: ' . $sRedirectUrl);
             exit;
         }
+
         parent::redirectAfterAdd($aContentInfo);
     }
 }

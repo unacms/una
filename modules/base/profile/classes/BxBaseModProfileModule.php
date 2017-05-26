@@ -9,6 +9,10 @@
  * @{
  */
 
+define('BX_DOL_PROFILE_REDIRECT_PROFILE', 'profile');
+define('BX_DOL_PROFILE_REDIRECT_LAST', 'last');
+define('BX_DOL_PROFILE_REDIRECT_CUSTOM', 'custom');
+
 /**
  * Base class for profile modules.
  */
@@ -50,6 +54,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     // ====== SERVICE METHODS
+    public function serviceGetOptionsRedirectAfterAdd()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = array();
+        $aChoices = array(BX_DOL_PROFILE_REDIRECT_PROFILE, BX_DOL_PROFILE_REDIRECT_LAST, BX_DOL_PROFILE_REDIRECT_CUSTOM);
+        foreach($aChoices as $sChoice) 
+            $aResult[] = array('key' => $sChoice, 'value' => _t($CNF['T']['option_redirect_aadd_' . $sChoice]));
+
+        return $aResult;
+    }
+
     public function serviceGetThumb ($iContentId, $sTranscoder = '') 
     {
         $CNF = &$this->_oConfig->CNF;
