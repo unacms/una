@@ -726,7 +726,7 @@
 	<string name="_adm_form_err_pre_values_create_forbidden"><![CDATA[Этот список уже используется. Невозможно добавить элемент, не являющийся числом, а также менее 1 или более {0} элементов.]]></string>
 	<string name="_adm_form_err_pre_values_delete"><![CDATA[Невозможно удалить элемент]]></string>
 	<string name="_adm_form_err_pre_values_edit"><![CDATA[Невозможно обновить элемент]]></string>
-	<string name="_adm_form_err_pre_values_lkey"><![CDATA[Введите заголовок, более 3 символов]]></string>
+	<string name="_adm_form_err_pre_values_lkey"><![CDATA[Введите заголовок, более 1 символа]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[Все Модули]]></string>
 	<string name="_adm_form_txt_confirm_delete"><![CDATA[Вы уверены, что хотите удалить это поле? Оно будет удалено со всех Дисплеев! Вместо этого можно просто отключить его.]]></string>
 	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Редактировать "{0}" Дисплей]]></string>
