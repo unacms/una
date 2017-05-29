@@ -41,12 +41,16 @@ class BxElsInstaller extends BxDolStudioInstaller
 
         $aActions = array('add', 'update', 'delete');
         foreach($aCiObjects as $aCiObject)
-            foreach($aActions as $sAction)
+            foreach($aActions as $sAction) {
+                if(empty($aCiObject['alert_action_' . $sAction]))
+                    continue;
+
                 $this->_oDb->query("INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES (:unit, :action, :handler);", array(
                     'unit' => $aCiObject['alert_unit'],
                 	'action' => $aCiObject['alert_action_' . $sAction],
                     'handler' => $iHandlerId
                 ));
+            }
 
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }

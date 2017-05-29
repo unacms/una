@@ -21,13 +21,16 @@ class BxElsModule extends BxBaseModGeneralModule
         $this->_oApi = new BxElsApi();
     }
 
-    public function actionDebug($sType)
+    public function actionDebug($sType = '', $sIndex = '')
     {
         bx_import('Api', $this->_aModule);
         $o = new BxElsApi();
 
+        if(empty($sIndex))
+            $sIndex = $this->_oConfig->getIndex();
+
         // search all
-        // $mixed = $o->api('/testdata/_search?q=*'); 
+        $mixed = $o->api('/' . $sIndex . (!empty($sType) ? '/' . $sType : '') . '/_search?q=*');
         // $mixed = $o->api('/testdata/_search', ['query' => ['match_all' => (object)[]]]);
 
         // search for the term
@@ -100,10 +103,10 @@ class BxElsModule extends BxBaseModGeneralModule
         //$mixed = $o->api('/_cat/health'); 
         
         // mapping put
-        //$mixed = $o->api('/' . $this->_oConfig->getIndex() . '/_mapping/bx_forum', array('properties' => array('featured' => array('type' => 'long'))));
+        //$mixed = $o->api('/' . $sIndex . '/_mapping/bx_forum', array('properties' => array('featured' => array('type' => 'long'))));
 
         // mapping get
-        $mixed = $o->api('/' . $this->_oConfig->getIndex() . '/_mapping' . (!empty($sType) ? '/' . $sType : ''));
+        //$mixed = $o->api('/' . $sIndex . '/_mapping' . (!empty($sType) ? '/' . $sType : ''));
 
         echo '<pre>';
         if (null === $mixed)
