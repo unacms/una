@@ -73,6 +73,37 @@ class BxAlbumsDb extends BxBaseModTextDb
         return $this->getAll($sQuery);
     }
 
+    function getMediaBy($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "`{$CNF['TABLE_FILES2ENTRIES']}`.*";
+
+        switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['id'] = (int)$aParams['id'];
+
+                $sWhereClause .= " AND `{$CNF['TABLE_FILES2ENTRIES']}`.`id` = :id";
+                break;
+
+            case 'all':
+                $sOrderClause .=  "`{$CNF['TABLE_FILES2ENTRIES']}`.`id` ASC";
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `{$CNF['TABLE_FILES2ENTRIES']}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
 }
 
 /** @} */

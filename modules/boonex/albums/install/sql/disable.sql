@@ -29,7 +29,7 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_albums', 'bx_albums_
 DELETE FROM `sys_objects_metatags` WHERE `object` IN('bx_albums', 'bx_albums_media', 'bx_albums_media_camera');
 
 -- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_albums', 'bx_albums_cmts', 'bx_albums_media_cmts');
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_albums', 'bx_albums_media', 'bx_albums_cmts', 'bx_albums_media_cmts');
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_albums');
 
