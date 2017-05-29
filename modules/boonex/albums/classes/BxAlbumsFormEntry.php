@@ -64,7 +64,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
                 $oMetatags->keywordsAddOne($aMediaInfo['id'], $oMetatags->keywordsCameraModel($aExif));
         }
 
-        bx_alert($this->_oModule->getName(), 'media_add', $aMediaInfo['id'], $iProfileId, array('media_info' => $aMediaInfo));
+        bx_alert($this->_oModule->getName(), 'media_added', $aMediaInfo['id'], $iProfileId, array('media_info' => $aMediaInfo));
     }
 
     function _deleteFile ($iFileId, $sStorage = '')
@@ -77,7 +77,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         $this->_oModule->serviceDeleteFileAssociations ($iFileId);
 
         if ($aMediaInfo)
-            bx_alert($this->_oModule->getName(), 'media_delete', $aMediaInfo['id'], $aMediaInfo['author'], array('media_info' => $aMediaInfo));
+            bx_alert($this->_oModule->getName(), 'media_deleted', $aMediaInfo['id'], $aMediaInfo['author'], array('media_info' => $aMediaInfo));
         
         return true;
     }
@@ -92,7 +92,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
         foreach ($aMediaList as $aMediaInfo) {
             $this->_oModule->serviceDeleteFileAssociations($aMediaInfo['file_id']);
-            bx_alert($this->_oModule->getName(), 'media_delete', $aMediaInfo['id'], $aMediaInfo['author'], array('media_info' => $aMediaInfo));
+            bx_alert($this->_oModule->getName(), 'media_deleted', $aMediaInfo['id'], $aMediaInfo['author'], array('media_info' => $aMediaInfo));
         }
         
         return $bRet;
