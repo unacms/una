@@ -427,6 +427,7 @@
 	<string name="_bx_payment_strp_ssl_cpt"><![CDATA[Активировать SSL]]></string>
 	<string name="_bx_payment_strp_ssl_dsc"><![CDATA[Активировать SSL соединение для связи с Stripe. Внимание. Нижеприведенная Webhooks ссылка будет обновлена после сохранения.]]></string>
 	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
+	<string name="_bx_payment_strp_cancellation_email_cpt"><![CDATA[Email для запросов отмены подписки]]></string>
 	<string name="_bx_payment_strp_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
 	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
 	<string name="_bx_payment_strp_msg_details_changed"><![CDATA[Детали подписки были изменены.]]></string>

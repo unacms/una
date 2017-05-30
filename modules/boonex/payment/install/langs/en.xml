@@ -427,6 +427,7 @@
 	<string name="_bx_payment_strp_ssl_cpt"><![CDATA[Enable SSL]]></string>
 	<string name="_bx_payment_strp_ssl_dsc"><![CDATA[Enable SSL connection to communicate with Stripe. Note. URLs below will be updated after saving.]]></string>
 	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
+	<string name="_bx_payment_strp_cancellation_email_cpt"><![CDATA[Cancellation Email]]></string>
 	<string name="_bx_payment_strp_msg_charged"><![CDATA[Payment was successfully processed.]]></string>
 	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Thank you! Subscription created. Please, check your email for further instructions.]]></string>
 	<string name="_bx_payment_strp_msg_details_changed"><![CDATA[Subscription details were changed.]]></string>

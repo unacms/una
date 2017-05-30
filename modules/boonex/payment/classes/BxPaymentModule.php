@@ -317,7 +317,15 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		    'sibscription_date' => bx_time_js($aSubscription['date'], BX_FORMAT_DATE, true)
 		), 0, (int)$aPending['client_id']);
 
-		if(!sendMail($oRecipient->getAccountObject()->getEmail(), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM))
+		$sEmail = '';
+		$oProvider = $this->getObjectProvider($aPending['provider'], $aPending['seller_id']);
+		if($oProvider !== false && $oProvider->isActive())
+		    $sEmail = $oProvider->getOption('cancellation_email');
+
+		if(empty($sEmail))
+		    $sEmail = $oRecipient->getAccountObject()->getEmail();
+
+		if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM))
 		    return echoJson($aResult);
 
         echoJson(array('code' => 0, 'message' => _t('_bx_payment_msg_cancelation_request_sent')));
