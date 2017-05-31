@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `text` text NOT NULL,
+  `text_comments` text NOT NULL,
   `lr_timestamp` int(11) NOT NULL,
   `lr_profile_id` int(10) unsigned NOT NULL,
   `lr_comment_id` int(11) NOT NULL,
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `status` enum('active','draft','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `title_text` (`title`,`text`),
+  FULLTEXT KEY `title_text` (`title`,`text`,`text_comments`),
   KEY `lr_timestamp` (`lr_timestamp`)
 );
 

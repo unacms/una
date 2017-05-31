@@ -45,6 +45,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'discussion-text',
+            'FIELD_TEXT_COMMENTS' => 'text_comments',
         	'FIELD_CATEGORY' => 'cat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'attachments',
