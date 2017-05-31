@@ -294,23 +294,49 @@ class BxMarketDb extends BxBaseModTextDb
 				$aMethod['name'] = "getRow";
 				$aMethod['params'][1] = array(
                 	'profile_id' => $aParams['profile_id'],
-					'file_id' => $aParams['file_id'],
 					'key' => $aParams['key']
                 );
 
-				$sJoinClause .= " LEFT JOIN `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te` ON `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "`";
-				$sWhereClause .= " AND `tl`.`profile_id`=:profile_id AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=:file_id AND (`tl`.`domain`='' OR `tl`.`domain`=:key)";
+				$iProductId = $this->getOne("SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_PACKAGE'] . "`=:file_id LIMIT 1", array(
+				    'file_id' => $aParams['file_id']
+				));
+
+				if(isset($aParams['parent']) && (int)$aParams['parent'] == 1) {
+				    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
+                    $aConnectionSql = $oConnnection->getConnectedInitiatorsAsSQLParts('tl', 'product_id', $iProductId);
+
+                    $sJoinClause .= $aConnectionSql['join'];
+				}
+				else {
+                    $aMethod['params'][1]['product_id'] = $iProductId;
+
+                    $sWhereClause .= " AND `tl`.`product_id`=:product_id";
+				}
+
+				$sWhereClause .= " AND `tl`.`profile_id`=:profile_id AND (`tl`.`domain`='' OR `tl`.`domain`=:key)";
+				$sLimitClause = "1";
 				break;
 
 			case 'has_by':
 				$aMethod['name'] = "getOne";
 				$aMethod['params'][1] = array(
-                	'profile_id' => $aParams['profile_id'],
-    				'product_id' => $aParams['product_id'],
+                	'profile_id' => $aParams['profile_id']
                 );
 
                 $sSelectClause = "`tl`.`id`";
-                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND `tl`.`product_id`=:product_id";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id";
+
+                if(isset($aParams['parent']) && (int)$aParams['parent'] == 1) {
+                    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
+                    $aConnectionSql = $oConnnection->getConnectedInitiatorsAsSQLParts('tl', 'product_id', $aParams['product_id']);
+
+                    $sJoinClause .= $aConnectionSql['join'];
+                }
+                else {
+                    $aMethod['params'][1]['product_id'] = $aParams['product_id'];
+
+                    $sWhereClause .= " AND `tl`.`product_id`=:product_id";
+                }
 
                 if(!empty($aParams['domain'])) {
                 	$aMethod['params'][1]['domain'] = $aParams['domain'];
@@ -351,24 +377,47 @@ class BxMarketDb extends BxBaseModTextDb
         return (int)$this->query($sQuery) > 0;
     }
 
+    //TODO: Check both "direct" and "by_parent" here. Do the same for getLicense service. 
     public function hasLicense ($iProfileId, $iProductId, $sDomain = '')
     {
-    	return (int)$this->getLicense(array(
+        $aParams = array(
     		'type' => 'has_by', 
     		'profile_id' => $iProfileId, 
     		'product_id' => $iProductId, 
     		'domain' => !empty($sDomain) ? $sDomain : ''
-    	)) > 0;
+    	);
+ 
+        $iLicenseId = (int)$this->getLicense($aParams);
+    	if($iLicenseId > 0)
+    	    return true;
+
+        $aParams['parent'] = 1;
+        $iLicenseId = (int)$this->getLicense($aParams);
+    	if($iLicenseId > 0)
+    	    return true;
+
+    	return false;
     }
 
 	public function hasLicenseByOrder ($iProfileId, $iProductId, $sOrder = '')
     {
-    	return (int)$this->getLicense(array(
+        $aParams = array(
     		'type' => 'has_by', 
     		'profile_id' => $iProfileId, 
     		'product_id' => $iProductId, 
     		'order' => !empty($sOrder) ? $sOrder : ''
-    	)) > 0;
+    	);
+
+        $iLicenseId = (int)$this->getLicense($aParams);
+        if($iLicenseId > 0)
+    	    return true;
+
+        $aParams['parent'] = 1;
+        $iLicenseId = (int)$this->getLicense($aParams);
+    	if($iLicenseId > 0)
+    	    return true;
+
+    	return false;
     }
 
 	public function registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '', $iTrial = 0)
@@ -465,7 +514,7 @@ class BxMarketDb extends BxBaseModTextDb
         }
 
         $sQuery = "DELETE FROM `" . $sTable . "` WHERE 1 " . $sWhere;
-        return $this->query($sQuery, $aBindings);
+        return $this->query($sQuery, $aBindings) !== false;
     }
 
 	protected function _getAttachment($sTable, $aParams = array())

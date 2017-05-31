@@ -91,12 +91,17 @@
     <string name="_bx_market_form_entry_input_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_market_form_entry_input_sys_warning_single"><![CDATA[Предупреждение: Разовые платежи]]></string>
     <string name="_bx_market_form_entry_input_sys_warning_recurring"><![CDATA[Предупреждение: Подписки]]></string>
+    <string name="_bx_market_form_entry_input_sys_subentries"><![CDATA[Подпродукты]]></string>
+    <string name="_bx_market_form_entry_input_subentries"><![CDATA[Подпродукты]]></string>
+    <string name="_bx_market_form_entry_input_subentries_inf"><![CDATA[Оставьте поле пустым, если не хотите создавать ассоциацию.]]></string>
+    <string name="_bx_market_form_entry_input_subentries_placeholder"><![CDATA[Введите название продукта...]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Создать продукт]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Удалить продукт]]></string>
 	<string name="_bx_market_acl_action_download_entry"><![CDATA[Скачать продукт]]></string>
 	<string name="_bx_market_acl_action_view_entry"><![CDATA[Просмотреть продукт]]></string>
 	<string name="_bx_market_acl_action_set_cover"><![CDATA[Установить обложку продукта]]></string>
+	<string name="_bx_market_acl_action_set_subentries"><![CDATA[Установить подпродукты продукта]]></string>
 	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Установить значок продукта]]></string>
 	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Редактировать любой продукт]]></string>
 

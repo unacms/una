@@ -318,6 +318,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionSetCover = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_market', 'set subentries', NULL, '_bx_market_acl_action_set_subentries', '', 1, 3);
+SET @iIdActionSetSubentries = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_market', 'edit any entry', NULL, '_bx_market_acl_action_edit_any_entry', '', 1, 3);
 SET @iIdActionEntryEditAny = LAST_INSERT_ID();
 
@@ -373,6 +377,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionSetCover),
 (@iPremium, @iIdActionSetCover),
 
+-- set entry subentries
+(@iStandard, @iIdActionSetSubentries),
+(@iModerator, @iIdActionSetSubentries),
+(@iAdministrator, @iIdActionSetSubentries),
+(@iPremium, @iIdActionSetSubentries),
+
 -- edit any entry
 (@iModerator, @iIdActionEntryEditAny),
 (@iAdministrator, @iIdActionEntryEditAny);
@@ -383,6 +393,10 @@ SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_market', '_bx_market', @iSearchOrder + 1, 'BxMarketSearchResult', 'modules/boonex/market/classes/BxMarketSearchResult.php'),
 ('bx_market_cmts', '_bx_market_cmts', @iSearchOrder + 2, 'BxMarketCmtsSearchResult', 'modules/boonex/market/classes/BxMarketCmtsSearchResult.php');
+
+-- CONNECTIONS
+INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
+('bx_market_subentries', 'bx_market_subproducts', 'one-way', '', '');
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES

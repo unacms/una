@@ -82,6 +82,9 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 			$this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VOTE'], $iProfileId, array('dynamic_groups' => $aDynamicGroups));
 			$this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']]['db']['pass'] = 'Xss';
 		}
+
+		if(isset($this->aInputs[$CNF['FIELD_SUBENTRIES']]) && $this->_oModule->checkAllowedSetSubentries() !== CHECK_ACTION_RESULT_ALLOWED)
+		    unset($this->aInputs[$CNF['FIELD_SUBENTRIES']]);
     }
 
 	function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -98,6 +101,12 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
             $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->getGhostTemplateFile($this, $aContentInfo);
         }
+
+        if(isset($this->aInputs[$CNF['FIELD_SUBENTRIES']]) && !empty($aValues[$CNF['FIELD_ID']])) {
+            $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
+            if($oConnection)
+		        $this->aInputs[$CNF['FIELD_SUBENTRIES']]['value'] = $oConnection->getConnectedContent((int)$aValues[$CNF['FIELD_ID']]);
+		}
 
         return parent::initChecker($aValues, $aSpecificValues);
     }
@@ -214,6 +223,44 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
     	return $aResult;
 	}
+
+    protected function genCustomInputSubentries($aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sGetSubentriesUrl = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'get_subentries';
+        $sPlaceholder = bx_html_attribute(_t('_bx_market_form_entry_input_subentries_placeholder'), BX_ESCAPE_STR_QUOTE);
+
+        $this->addJsJQueryUI();
+
+        $this->oTemplate->addJs(array(
+            'jquery.form.min.js',
+        ));
+
+        $sVals = '';
+        if (!empty($aInput['value']) && is_array($aInput['value'])) {
+            foreach ($aInput['value'] as $iValue) {
+                $iValue = (int)$iValue;
+                if(!$iValue)
+                    continue;
+
+                $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iValue);
+                if(empty($aContentInfo) || !is_array($aContentInfo))
+                    continue;
+                
+               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $aContentInfo[$CNF['FIELD_TITLE']] . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $iValue . '" /></b>';
+            }
+            $sVals = trim($sVals, ',');
+        }
+
+        return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
+            'id' => $aInput['name'] . time(),
+            'url_get_recipients' => $sGetSubentriesUrl,
+            'name' => $aInput['name'],
+            'placeholder' => $sPlaceholder,
+            'vals' => $sVals,
+        ));
+    }
 }
 
 /** @} */

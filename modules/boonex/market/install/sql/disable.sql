@@ -25,6 +25,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_market';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_market', 'bx_market_cmts');
 
+-- CONNECTIONS
+DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_market_subentries';
+
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_market';
 

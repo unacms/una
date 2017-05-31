@@ -39,6 +39,28 @@ class BxMarketModule extends BxBaseModTextModule
     	));
     }
 
+    public function actionGetSubentries()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sTerm = bx_get('term');
+        $iLimit = (int)bx_get('limit');
+        if(empty($iLimit))
+            $iLimit = 10;
+
+        $aResult = array();
+        $aEntries = $this->_oDb->searchByAuthorTerm($this->_iProfileId, $sTerm, $iLimit);
+        foreach ($aEntries as $aEntry)
+            $aResult[] = array('value' => $aEntry[$CNF['FIELD_ID']], 'label' => $aEntry[$CNF['FIELD_TITLE']]);
+
+        // sort result
+        usort($aResult, function($r1, $r2) {
+            return strcmp($r1['label'], $r2['label']);
+        });
+
+        echoJson(array_slice($aResult, 0, $iLimit));
+    }
+
     public function serviceGetSearchableFields ()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -444,6 +466,15 @@ class BxMarketModule extends BxBaseModTextModule
     public function checkAllowedSetCover ()
     {
         $aCheck = checkActionModule($this->_iProfileId, 'set cover', $this->getName(), false);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedSetSubentries ()
+    {
+        $aCheck = checkActionModule($this->_iProfileId, 'set subentries', $this->getName(), false);
         if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 

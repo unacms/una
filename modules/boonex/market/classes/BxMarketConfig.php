@@ -61,6 +61,7 @@ class BxMarketConfig extends BxBaseModTextConfig
 			'FIELD_ALLOW_PURCHASE_TO' => 'allow_purchase_to',
 			'FIELD_ALLOW_COMMENT_TO' => 'allow_comment_to',
 			'FIELD_ALLOW_VOTE_TO' => 'allow_vote_to',
+            'FIELD_SUBENTRIES' => 'subentries',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
         	'FIELD_COVER' => 'cover',
@@ -71,6 +72,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
+        	'FIELDS_QUICK_SEARCH' => array('title'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -133,6 +135,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'OBJECT_GRID_COMMON' => 'bx_market_common',
         	'OBJECT_GRID_LICENSES' => 'bx_market_licenses',
             'OBJECT_UPLOADERS' => array('bx_market_simple', 'bx_market_html5'),
+        	'OBJECT_CONNECTION_SUBENTRIES' => 'bx_market_subentries',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
