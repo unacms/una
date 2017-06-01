@@ -558,22 +558,22 @@
 
             } else if (o.position == 'centered') {
 
-                $el.position({
-                    of: window,                    
-                    my: 'center center+' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0'),
-                    at: 'center center',
-                    collision: 'none none'
-                });
-
-                // attach window resize event
-                $(window).on('resize.popupWindow', function() {
-
-                    $el.position({
-                        of: window,
-                        my: 'center center+' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0'),
+            	var oPosition = function(oElement) {
+            		oElement.position({
+                        of: window,                    
+                        my: 'center center+' + (oElement.outerHeight() > $(window).height() ? parseInt((oElement.outerHeight() - $(window).height()) / 2) : '0'),
                         at: 'center center',
                         collision: 'none none'
                     });
+            	};
+
+            	oPosition($el);
+
+                // attach window resize event
+                $(window).on('resize.popupWindow', function() {
+                	oPosition($el);
+                }).on('scroll', function() {
+                	oPosition($el);
                 });
 
             } else if (typeof o.position == 'object') {
