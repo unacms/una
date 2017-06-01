@@ -161,7 +161,10 @@ class BxPaymentCart extends BxBaseModPaymentCart
 		if(empty($sSellerProvider)) {
 			$sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
 			$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
-			return array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect)));
+			return array('popup' => array(
+				'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect)), 
+				'options' => array('closeOnOuterClick' => true)
+			));
 		}
 
 		$aProvider = $aSellerProviders[$sSellerProvider];

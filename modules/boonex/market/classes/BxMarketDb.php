@@ -377,7 +377,6 @@ class BxMarketDb extends BxBaseModTextDb
         return (int)$this->query($sQuery) > 0;
     }
 
-    //TODO: Check both "direct" and "by_parent" here. Do the same for getLicense service. 
     public function hasLicense ($iProfileId, $iProductId, $sDomain = '')
     {
         $aParams = array(
