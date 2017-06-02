@@ -36,6 +36,14 @@ CREATE TABLE `bx_antispam_dnsbluri_zones` (
   `zone` varchar(64) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `bx_antispam_dnsbluri_zones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `domain` varchar(255) NOT NULL,
+  `list` enum('blacklist','custom_blacklist','whitelist','custom_whitelist') NOT NULL DEFAULT 'custom_blacklist',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain` (`domain`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `bx_antispam_block_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` int(10) unsigned NOT NULL,
