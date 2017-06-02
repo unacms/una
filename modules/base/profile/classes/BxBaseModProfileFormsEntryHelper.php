@@ -179,9 +179,8 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         }
 
         if($sRedirectUrl) {
-            $sRedirectUrl = BxDolPermalinks::getInstance()->permalink($sRedirectUrl);
             if(!bx_has_proto($sRedirectUrl))
-                $sRedirectUrl = BX_DOL_URL_ROOT . $sRedirectUrl;
+                $sRedirectUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sRedirectUrl);
 
             header('Location: ' . $sRedirectUrl);
             exit;
