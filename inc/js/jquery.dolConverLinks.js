@@ -2,8 +2,11 @@
 	$.fn.dolConverLinks = function(options) {
 		if(bx_get_param('sys_embedly_api_key') != '' && bx_get_param('sys_embedly_api_pattern') != '')
 			return this.dolEmbedly(options);
-		else if(bx_get_param('sys_iframely_api_key') != '')
+
+		if(bx_get_param('sys_iframely_api_key') != '')
 			return this.dolIframely(options);
+
+		return this;
 	};
 
 	$.fn.dolIframely = function(options) {        
