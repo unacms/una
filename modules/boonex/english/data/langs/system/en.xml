@@ -728,7 +728,7 @@
 	<string name="_adm_form_err_pre_values_create_forbidden"><![CDATA[This list is already used. It's impossible to add non-numeric, or less than 1, or more than {0} values in it.]]></string>
 	<string name="_adm_form_err_pre_values_delete"><![CDATA[Cannot delete item]]></string>
 	<string name="_adm_form_err_pre_values_edit"><![CDATA[Cannot update item]]></string>
-	<string name="_adm_form_err_pre_values_lkey"><![CDATA[Enter title, more then 1 characters]]></string>
+	<string name="_adm_form_err_pre_values_lkey"><![CDATA[Enter title, more than one character]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[All Modules]]></string>
 	<string name="_adm_form_txt_confirm_delete"><![CDATA[Are you sure you want to delete this field? It will be deleted from all Displays! You may just turn it off instead.]]></string>
 	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
