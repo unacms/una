@@ -1537,4 +1537,12 @@ function bx_proto()
     return 0 === strncmp('https', BX_DOL_URL_ROOT, 5) ? 'https' : 'http';
 }
 
+/**
+ * Checks protocol in the link
+ */
+function bx_has_proto($sLink)
+{
+    return preg_match('@^https?://@', $sLink);    
+}
+
 /** @} */

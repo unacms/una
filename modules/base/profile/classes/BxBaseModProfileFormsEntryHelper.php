@@ -147,6 +147,8 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $oSession = BxDolSession::getInstance();
+
         $sRedirectType = getParam($CNF['PARAM_REDIRECT_AADD']);
         $sRedirectDefault = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
 
@@ -157,8 +159,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
             // if user just joined the redirect to the page where user comes from. 
             case BX_DOL_PROFILE_REDIRECT_LAST:
-                $oSession = BxDolSession::getInstance();
-
                 $sJoinReferrer = $oSession->getValue('join-referrer');
                 if($sJoinReferrer) {
                     $sRedirectUrl = $sJoinReferrer;
@@ -179,6 +179,10 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         }
 
         if($sRedirectUrl) {
+            $sRedirectUrl = BxDolPermalinks::getInstance()->permalink($sRedirectUrl);
+            if(!bx_has_proto($sRedirectUrl))
+                $sRedirectUrl = BX_DOL_URL_ROOT . $sRedirectUrl;
+
             header('Location: ' . $sRedirectUrl);
             exit;
         }
