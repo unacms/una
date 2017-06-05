@@ -22,6 +22,8 @@ class BxAntispamConfig extends BxDolModuleConfig
         'dnsbl_behaviour_login' => 'bx_antispam_dnsbl_behaviour_login',
         'dnsbl_behaviour_join' => 'bx_antispam_dnsbl_behaviour_join',
         'akismet_enable' => 'bx_antispam_akismet_enable',
+        'disposable_email_domains_mode' => 'bx_antispam_disposable_email_domains_mode',
+        'disposable_email_domains_behaviour_join' => 'bx_antispam_disposable_email_domains_behaviour_join',
     );
     /**
      * default local options, it is filled in with real system options in class contructor, @see restoreAntispamOptions

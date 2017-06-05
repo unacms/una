@@ -153,9 +153,11 @@ class BxAntispamModule extends BxDolModule
         if (!$sIp)
             $sIp = getVisitorIP();
 
+        // check if IP is blocked
         if (!$sErrorMsg && $this->serviceIsIpBlocked($sIp))
             $sErrorMsg = $this->getErrorMessageIpBlocked();
 
+        // check in DNSBL lists
         if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && $this->serviceIsIpDnsBlacklisted($sIp, $sNote)) {
             if ('approval' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_join'))
                 $bApproval = true;
@@ -163,10 +165,32 @@ class BxAntispamModule extends BxDolModule
                 $sErrorMsg = $this->getErrorMessageSpam();
         }
 
+        // check in StopForumSpam service
         if (!$sErrorMsg) {
             $oStopForumSpam = bx_instance('BxAntispamStopForumSpam', array(), $this->_aModule);
             if ($oStopForumSpam->isSpammer(array('email' => $sEmail, 'ip' => $sIp), $sNote))
                 $sErrorMsg = $this->getErrorMessageSpam();
+        }
+
+        // check for disposable email domains
+        if (!$sErrorMsg && 'disable' != ($sMode = $this->_oConfig->getAntispamOption('disposable_email_domains_mode'))) {
+
+            $bDisposableEmailDomainsBehaviour = $this->_oConfig->getAntispamOption('disposable_email_domains_behaviour_join');
+            $oDisposableEmailDomains = bx_instance('BxAntispamDisposableEmailDomains', array(), 'bx_antispam');
+            
+            if ('blacklist' == $sMode && $oDisposableEmailDomains->isBlacklisted($sEmail)) {
+                if ('approval' == $bDisposableEmailDomainsBehaviour)
+                    $bApproval = true;
+                else
+                    $sErrorMsg = $oDisposableEmailDomains->getErrorMessageBlacklisted();
+            }
+            elseif ('whitelist' == $sMode && !$oDisposableEmailDomains->isWhitelisted($sEmail)) {
+                if ('approval' == $bDisposableEmailDomainsBehaviour)
+                    $bApproval = true;
+                else
+                    $sErrorMsg = $oDisposableEmailDomains->getErrorMessageNotWhitelisted();
+            }
+
         }
 
         return $sErrorMsg;
@@ -251,6 +275,12 @@ class BxAntispamModule extends BxDolModule
             case 'dnsbl_join';
                 $o = bx_instance('BxAntispamDNSURIBlacklists', array(), $this->_aModule);
                 return $o->getURIDNSBLConfigValues();
+            case 'disposable_email_domains_join';
+                $o = bx_instance('BxAntispamDisposableEmailDomains', array(), $this->_aModule);
+                return $o->getJoinBehaviourValues();                
+            case 'disposable_email_domains_mode';
+                $o = bx_instance('BxAntispamDisposableEmailDomains', array(), $this->_aModule);
+                return $o->getJoinBehaviourModes();                
         }
     }
 
