@@ -57,6 +57,22 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $this->_serviceProfileFunc('getUrl', $iContentId);
     }
 
+    /**
+     * @see iBxDolProfileService::serviceCheckAllowedProfileView
+     */ 
+    public function serviceCheckAllowedProfileView($iContentId)
+    {
+        return _t('_Access denied');
+    }
+
+    /**
+     * @see iBxDolProfileService::serviceCheckAllowedPostInProfile
+     */ 
+    public function serviceCheckAllowedPostInProfile($iContentId)
+    {
+        return _t('_Access denied');
+    }
+
     public function serviceFormsHelper ()
     {
         return new BxTemplAccountForms();

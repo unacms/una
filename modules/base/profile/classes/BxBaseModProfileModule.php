@@ -223,7 +223,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $CNF = $this->_oConfig->CNF;
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
+    
+    /**
+     * @see iBxDolProfileService::serviceCheckAllowedProfileView
+     */ 
+    public function serviceCheckAllowedProfileView($iContentId)
+    {        
+        return $this->serviceCheckAllowedWithContent('View', $iContentId);
+    }
 
+    /**
+     * @see iBxDolProfileService::serviceCheckAllowedPostInProfile
+     */ 
+    public function serviceCheckAllowedPostInProfile($iContentId)
+    {
+        return $this->serviceIsAllowedProfileView($iContentId);
+    }
+    
     public function servicePrepareFields ($aFieldsProfile)
     {
         return $aFieldsProfile;

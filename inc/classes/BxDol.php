@@ -65,6 +65,18 @@ interface iBxDolProfile
     public function getIconModule();
     public function getEditUrl();
     public function isActive();
+
+    /**
+     * Check profile visibility
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */    
+    public function checkAllowedProfileView();
+    
+    /**
+     * Check if posting in profile is allowed
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */    
+    public function checkAllowedPostInProfile();
 }
 
 /**
@@ -80,10 +92,25 @@ interface iBxDolProfileService
     public function serviceProfileName ($iContentId);
     public function serviceProfileUrl ($iContentId);
     public function serviceProfileEditUrl ($iContentId);
+
+    /**
+     * Check profile visibility
+     * @param $iContentId content ID
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */     
+    public function serviceCheckAllowedProfileView($iContentId);
+
+    /**
+     * Check if posting in profile is allowed, for example posting in profile's timeline
+     * @param $iContentId content ID
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */    
+    public function serviceCheckAllowedPostInProfile($iContentId);
+    
     public function serviceProfilesSearch ($sTerm, $iLimit);
     public function serviceFormsHelper ();
     public function serviceActAsProfile ();
-    public function servicePrepareFields ($aFieldsProfile);
+    public function servicePrepareFields ($aFieldsProfile);    
 }
 
 /**
