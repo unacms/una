@@ -574,7 +574,7 @@ input.bx-btn {
 .bx-btn.bx-btn-primary.bx-btn-disabled:active,
 .bx-btn.bx-btn-primary.bx-btn-disabled:hover,
 .bx-btn.bx-btn-primary.bx-btn-disabled {
-    background-color: #ddd;
+    background-color: #0f7960;
 }
 
 .bx-btn.bx-btn-symbol {
