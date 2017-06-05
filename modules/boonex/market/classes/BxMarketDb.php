@@ -42,8 +42,18 @@ class BxMarketDb extends BxBaseModTextDb
     	$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_FILES2ENTRIES'] . "` AS `tfe` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tfe`.`content_id` AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=`tfe`.`file_id` LEFT JOIN `" . $CNF['TABLE_FILES'] . "` AS `tf` ON `te`.`" . $CNF['FIELD_PACKAGE'] . "`=`tf`.`id` ";
 
     	//--- Add license checking for Public listings if Client is specified.
-    	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0)
-    		$sFieldsClause .= $this->prepareAsString(" (SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` WHERE `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1) AS `purchased_on`, ", (int)$aParams['client'], $aParams['key']);
+    	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0) {
+    	    //--- Direct license purchase for a product
+    	    $sLicDir = $this->prepareAsString("SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` WHERE `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1", (int)$aParams['client'], $aParams['key']);
+
+    	    //--- License got with package purchase
+    	    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
+            $aConnectionSql = $oConnnection->getConnectedInitiatorsAsSQLPartsMultiple('tl', 'product_id', 'te', $CNF['FIELD_ID']);
+
+    	    $sLicPack = $this->prepareAsString("SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` " . $aConnectionSql['join'] . " WHERE 1 " . $aConnectionSql['where'] . " AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1", (int)$aParams['client'], $aParams['key']);
+
+    		$sFieldsClause .= " ((" . $sLicDir . ") OR (" . $sLicPack . ")) AS `purchased_on`, ";
+    	}
 
     	//--- Exclude content by ids or names
 		if(!empty($aParams['exclude_by']) && in_array($aParams['exclude_by'], array('id', 'name')) && !empty($aParams['exclude_values']))
@@ -142,9 +152,18 @@ class BxMarketDb extends BxBaseModTextDb
 
 			case 'purchased':
 				$sFieldsClause .= " `tl`.`license` AS `license`, `tl`.`profile_id` AS `purchased_by`, `tl`.`domain` AS `purchased_for`, `tl`.`added` AS `purchased_on`, ";
-				$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
+
+				if(isset($aParams['package']) && (int)$aParams['package'] == 1) {
+				    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
+                    $aConnectionSql = $oConnnection->getConnectedContentAsSQLPartsMultiple('te', $CNF['FIELD_ID'], 'tl', 'product_id');
+
+                    $sJoinClause .= " " . $aConnectionSql['join'] . " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON " . trim($aConnectionSql['where'], " AND ") . " ";
+				}
+				else
+    				$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
+
 				$sWhereClause .= $this->prepareAsString(" AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
-				$sGroupClause .= "`tl`.`product_id`";
+				$sGroupClause .= "`te`.`" . $CNF['FIELD_ID'] . "`";
 				$sOrderClause = "`tl`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 		}
@@ -301,7 +320,7 @@ class BxMarketDb extends BxBaseModTextDb
 				    'file_id' => $aParams['file_id']
 				));
 
-				if(isset($aParams['parent']) && (int)$aParams['parent'] == 1) {
+				if(isset($aParams['package']) && (int)$aParams['package'] == 1) {
 				    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
                     $aConnectionSql = $oConnnection->getConnectedInitiatorsAsSQLParts('tl', 'product_id', $iProductId);
 
@@ -326,7 +345,7 @@ class BxMarketDb extends BxBaseModTextDb
                 $sSelectClause = "`tl`.`id`";
                 $sWhereClause = " AND `tl`.`profile_id`=:profile_id";
 
-                if(isset($aParams['parent']) && (int)$aParams['parent'] == 1) {
+                if(isset($aParams['package']) && (int)$aParams['package'] == 1) {
                     $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
                     $aConnectionSql = $oConnnection->getConnectedInitiatorsAsSQLParts('tl', 'product_id', $aParams['product_id']);
 
@@ -390,7 +409,7 @@ class BxMarketDb extends BxBaseModTextDb
     	if($iLicenseId > 0)
     	    return true;
 
-        $aParams['parent'] = 1;
+        $aParams['package'] = 1;
         $iLicenseId = (int)$this->getLicense($aParams);
     	if($iLicenseId > 0)
     	    return true;
@@ -411,7 +430,7 @@ class BxMarketDb extends BxBaseModTextDb
         if($iLicenseId > 0)
     	    return true;
 
-        $aParams['parent'] = 1;
+        $aParams['package'] = 1;
         $iLicenseId = (int)$this->getLicense($aParams);
     	if($iLicenseId > 0)
     	    return true;

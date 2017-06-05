@@ -397,17 +397,46 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         return $this->_oQuery->getConnectedContentSQLParts($sContentTable, $sContentField, $iInitiator, $isMutual);
     }
 
-    /**
+	/**
      * Get necessary parts of SQL query to use connections in other queries
      * @param $sContentTable content table or alias
      * @param $sContentField content table field or field alias
+     * @param $sInitiatorTable initiator table or alias
+     * @param $sInitiatorField initiator table field or field alias
+     * @param $iInitiator initiator of the connection
+     * @param $isMutual get mutual connections only
+     * @return array of SQL string parts, for now 'join' part only is returned
+     */
+    public function getConnectedContentAsSQLPartsMultiple ($sContentTable, $sContentField, $sInitiatorTable, $sInitiatorField, $isMutual = false)
+    {
+        return $this->_oQuery->getConnectedContentSQLPartsMultiple($sContentTable, $sContentField, $sInitiatorTable, $sInitiatorField, $isMutual);
+    }
+
+    /**
+     * Get necessary parts of SQL query to use connections in other queries
+     * @param $sInitiatorTable initiator table or alias
+     * @param $sInitiatorField initiator table field or field alias
      * @param $iContent content of the connection
      * @param $isMutual get mutual connections only
      * @return array of SQL string parts, for now 'join' part only is returned
      */
-    public function getConnectedInitiatorsAsSQLParts ($sContentTable, $sContentField, $iContent, $isMutual = false)
+    public function getConnectedInitiatorsAsSQLParts ($sInitiatorTable, $sInitiatorField, $iContent, $isMutual = false)
     {
-        return $this->_oQuery->getConnectedInitiatorsSQLParts($sContentTable, $sContentField, $iContent, $isMutual);
+        return $this->_oQuery->getConnectedInitiatorsSQLParts($sInitiatorTable, $sInitiatorField, $iContent, $isMutual);
+    }
+
+	/**
+     * Get necessary parts of SQL query to use connections in other queries
+     * @param $sInitiatorTable initiator table or alias
+     * @param $sInitiatorField initiator table field or field alias
+     * @param $sContentTable content table or alias
+     * @param $sContentField content table field or field alias
+     * @param $isMutual get mutual connections only
+     * @return array of SQL string parts, for now 'join' part only is returned
+     */
+    public function getConnectedInitiatorsAsSQLPartsMultiple ($sInitiatorTable, $sInitiatorField, $sContentTable, $sContentField, $isMutual = false)
+    {
+        return $this->_oQuery->getConnectedInitiatorsSQLPartsMultiple ($sInitiatorTable, $sInitiatorField, $sContentTable, $sContentField, $isMutual);
     }
 
     /**

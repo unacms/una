@@ -61,13 +61,36 @@ class BxDolConnectionQuery extends BxDolDb
         );
     }
 
-    public function getConnectedInitiatorsSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false)
+    public function getConnectedContentSQLPartsMultiple ($sContentTable, $sContentField, $sInitiatorTable, $sInitiatorField, $isMutual = false)
     {
-        $sWhere = $this->prepareAsString(" AND `c`.`content` = ?", $iInitiator);
+        $sOn = "";
+        if (false !== $isMutual)
+            $sOn .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
+        return array(
+            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`content` = `$sContentTable`.`$sContentField` $sOn)",
+        	'where' => " AND `c`.`initiator` = `$sInitiatorTable`.`$sInitiatorField`"
+        );
+    }
+
+    public function getConnectedInitiatorsSQLParts ($sInitiatorTable, $sInitiatorField, $iContent, $isMutual = false)
+    {
+        $sWhere = $this->prepareAsString(" AND `c`.`content` = ?", $iContent);
         if (false !== $isMutual)
             $sWhere .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
         return array(
-            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`initiator` = `$sContentTable`.`$sContentField` $sWhere)",
+            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`initiator` = `$sInitiatorTable`.`$sInitiatorField` $sWhere)",
+        );
+    }
+
+    public function getConnectedInitiatorsSQLPartsMultiple ($sInitiatorTable, $sInitiatorField, $sContentTable, $sContentField, $isMutual = false)
+    {
+        $sOn = "";
+        if(false !== $isMutual)
+            $sOn .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
+
+        return array(
+            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`initiator` = `$sInitiatorTable`.`$sInitiatorField` $sOn)",
+            'where' => " AND `c`.`content` = `$sContentTable`.`$sContentField`"
         );
     }
 
