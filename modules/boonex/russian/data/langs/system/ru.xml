@@ -1491,10 +1491,13 @@
 	<string name="_see_more"><![CDATA[смотреть ещё]]></string>
 	<string name="_show_replacement"><![CDATA[Показать]]></string>
 	<string name="_sys_accept"><![CDATA[Принять]]></string>
+	<string name="_sys_accounts"><![CDATA[Учётные записи]]></string>
 	<string name="_sys_access_denied_to_private_content"><![CDATA[Доступ запрещён. Это приватное содержимое.]]></string>
 	<string name="_sys_actions"><![CDATA[Действия]]></string>
 	<string name="_sys_active"><![CDATA[Активный]]></string>
 	<string name="_sys_acl_action_account"><![CDATA[Вы не создали ни одного профиля, поэтому Вы не можете '{1}'.]]></string>
+	<string name="_sys_acl_action_chart_view"><![CDATA[Диаграммы - Просматривать]]></string>
+    <string name="_sys_acl_action_chart_view_desc"><![CDATA[Просматривать статистические диаграммы]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Комментарии - Редактировать Все]]></string>
 	<string name="_sys_acl_action_comments_edit_own"><![CDATA[Комментарии - Редактировать Свои]]></string>
 	<string name="_sys_acl_action_comments_post"><![CDATA[Комментарии - Размещать]]></string>
@@ -1590,6 +1593,9 @@
 	<string name="_sys_block_types_custom"><![CDATA[Индивидуальный]]></string>
 	<string name="_sys_block_types_skeletons"><![CDATA[Скелеты]]></string>
 	<string name="_sys_block_types_system"><![CDATA[Система]]></string>
+	<string name="_sys_chart_growth_object"><![CDATA[Вывести]]></string>
+    <string name="_sys_chart_growth_date_from"><![CDATA[С]]></string>
+    <string name="_sys_chart_growth_date_to"><![CDATA[По]]></string>
 	<string name="_sys_close"><![CDATA[Закрыть]]></string>
 	<string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>
 	<string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Связь не существует]]></string>
@@ -2128,7 +2134,9 @@
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Редактировать Аккаунт]]></string>
 	<string name="_sys_page_block_title_account_settings_menu"><![CDATA[Аккаунт - Настройки]]></string>
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Изменить Пароль]]></string>
-    <string name="_sys_page_block_title_add_content"><![CDATA[Добавить Содержимое]]></string>    
+    <string name="_sys_page_block_title_add_content"><![CDATA[Добавить Содержимое]]></string>
+    <string name="_sys_page_block_title_chart_growth"><![CDATA[Диаграммы развития]]></string>
+    <string name="_sys_page_block_title_chart_stats"><![CDATA[Содержимое]]></string>    
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>

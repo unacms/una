@@ -1493,10 +1493,13 @@
 	<string name="_see_more"><![CDATA[see more]]></string>
 	<string name="_show_replacement"><![CDATA[Show]]></string>
 	<string name="_sys_accept"><![CDATA[Accept]]></string>
+	<string name="_sys_accounts"><![CDATA[Accounts]]></string>
 	<string name="_sys_access_denied_to_private_content"><![CDATA[Access denied. This is private content.]]></string>
 	<string name="_sys_actions"><![CDATA[Actions]]></string>
 	<string name="_sys_active"><![CDATA[Active]]></string>
 	<string name="_sys_acl_action_account"><![CDATA[You didn't created any profiles, so you can't '{1}'.]]></string>
+	<string name="_sys_acl_action_chart_view"><![CDATA[View charts]]></string>
+	<string name="_sys_acl_action_chart_view_desc"><![CDATA[View statistical charts]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Comments Edit All]]></string>
 	<string name="_sys_acl_action_comments_edit_own"><![CDATA[Comments Edit Own]]></string>
 	<string name="_sys_acl_action_comments_post"><![CDATA[Comments Post]]></string>
@@ -1592,6 +1595,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_block_types_custom"><![CDATA[Custom]]></string>
 	<string name="_sys_block_types_skeletons"><![CDATA[Skeletons]]></string>
 	<string name="_sys_block_types_system"><![CDATA[System]]></string>
+	<string name="_sys_chart_growth_object"><![CDATA[Display]]></string>
+	<string name="_sys_chart_growth_date_from"><![CDATA[From]]></string>
+	<string name="_sys_chart_growth_date_to"><![CDATA[To]]></string>
 	<string name="_sys_close"><![CDATA[Close]]></string>
 	<string name="_sys_conn_err_connection_already_exists"><![CDATA[Connection already exists]]></string>
 	<string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Connection doesn't exist]]></string>
@@ -2131,6 +2137,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_account_settings_menu"><![CDATA[Account Settings]]></string>
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Change Password]]></string>
 	<string name="_sys_page_block_title_add_content"><![CDATA[Add Content]]></string>
+	<string name="_sys_page_block_title_chart_growth"><![CDATA[Growth Charts]]></string>
+	<string name="_sys_page_block_title_chart_stats"><![CDATA[Content]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Sign up]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Dashboard]]></string>

@@ -1,0 +1,28 @@
+/*--- Chart Growth: Controls ---*/
+.bx-chart-growth-controls .bx-form-input-datepicker {
+	width: 100%;
+}
+
+/*--- Chart Growth: Graph ---*/
+.bx-chart-growth-graph {
+	height: 15rem;
+	background-color: #ffffff;
+}
+
+
+/*--- Chart Stats: Info ---*/
+.bx-chart-stats-items {
+	position: relative;
+}
+.bx-chart-stats-items .bx-cs-item {
+	display: inline-block;
+	vertical-align: top;
+	width: 30%;
+} 
+
+/*--- Chart Stats: Graph ---*/
+.bx-chart-stats-graph {
+	max-width: 100%;
+	height: 15rem;
+    background-color: #ffffff;
+}

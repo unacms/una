@@ -1,0 +1,19 @@
+<div class="bx-chart-stats">
+    <div class="bx-chart-stats-items bx-def-margin-bottom">
+        <bx_repeat:items>
+            <div class="bx-cs-item">
+                <span class="bx-def-font-h3">__value__</span> __title__
+            </div>
+        </bx_repeat:items>
+    </div>
+
+    <canvas id="bx_chart_stats_graph" class="bx-chart-stats-graph bx-def-border"></canvas>
+    <script type="text/javascript">
+    	var oHolder = $("#bx_chart_stats_graph").get(0).getContext("2d");
+    	var oChart = new Chart(oHolder).PolarArea(__chart_data__, {
+			scaleBackdropColor : "transparent",
+			segmentStrokeColor : "transparent",
+			segmentStrokeWidth : 0,
+		});
+    </script>
+</div>
