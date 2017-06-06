@@ -88,7 +88,7 @@ class BxBaseChartServices extends BxDol
         $oForm = new BxTemplFormView($aForm);
 
         $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->addJs(array('BxDolChartGrowth.js'));
+        $oTemplate->addJs(array('chart.min.js', 'BxDolChartGrowth.js'));
         $oTemplate->addCss(array('chart.css'));
 
         return $oTemplate->parseHtmlByName('chart_growth.html', array(
@@ -99,28 +99,29 @@ class BxBaseChartServices extends BxDol
         ));
     }
 
-    //TODO: Continue from here.
     public function serviceGetChartStats()
     {
+        $mixedResult = BxDolService::call('system', 'check_allowed_view', array(), 'TemplChartServices');
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
         $aTmplVarsItems = array();
-        $aTmplVarsData = array();
+        $aTmplVarsDataLabels = $aTmplVarsDataSet = array();
 
         $aObjects = BxDolChartQuery::getChartObjects();
         foreach($aObjects as $aObject) {
             $sTitle = _t($aObject['title']);
-            $sValie = BxDolChart::getObjectInstance($aObject['object'])->getDataByStatus();
+            $sValue = BxDolChart::getObjectInstance($aObject['object'])->getDataByStatus();
 
             $aTmplVarsItems[] = array(
                 'title' => $sTitle,
-            	'value' => $sValie,
+            	'value' => $sValue,
             );
 
-            $aTmplVarsData[] = array(
-            	'value' => $sValie,
-	            'color' => '#' . dechex(rand(0x000000, 0xFFFFFF)),
-	            'highlight' => '',
-	            'label' => bx_js_string($sTitle, BX_ESCAPE_STR_APOS),
-            );
+            $aTmplVarsDataLabels[] = $sTitle;
+
+            $aTmplVarsDataSet['data'][] = $sValue;
+            $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
         }
 
         $oTemplate = BxDolTemplate::getInstance();
@@ -129,7 +130,10 @@ class BxBaseChartServices extends BxDol
 
         return $oTemplate->parseHtmlByName('chart_stats.html', array(
         	'bx_repeat:items' => $aTmplVarsItems,
-            'chart_data' => json_encode($aTmplVarsData)
+            'chart_data' => json_encode(array(
+                'labels' => $aTmplVarsDataLabels,
+                'datasets' => array($aTmplVarsDataSet)
+            ))
         ));
     }
 }

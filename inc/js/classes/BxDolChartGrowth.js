@@ -19,22 +19,22 @@ function BxDolChartGrowth (oOptions) {
     this._sKeyGraph = 'bx_chart_growth_graph';
 
     this._sDateFormat = 'yy-mm-dd';
+    this._oChart = null;
 
     var $this = this;
     $(document).ready(function() {
-        google.setOnLoadCallback($this.loadData());
+    	$this.loadData();
     });
 }
 
 BxDolChartGrowth.prototype.loadData = function()
 {
 	var $this = this;
-	
+	var oGraphWrp = $('#' + this._sKeyGraph).parents('div:first');
 
-	$('#' + this._sKeyGraph).html('');
     $('#' + this._sKeyObjects).attr('disabled', true);
 
-    bx_loading(this._sKeyGraph, true);
+    bx_loading(oGraphWrp, true);
 
     $.get(
     	this._sActionsUrl,
@@ -47,10 +47,10 @@ BxDolChartGrowth.prototype.loadData = function()
     	function(oData) {
     		$('#' + $this._sKeyObjects).attr('disabled', false);
 
-            bx_loading($this._sKeyGraph, false);
+            bx_loading(oGraphWrp, false);
 
             if(oData.error != undefined) {
-                $('#' + $this._sKeyGraph).html('<div class="bx-def-padding bx-def-font-large bx-def-font-align-center">' + oData.error + '</div>');
+                alert(oData.error);
                 return;
             } 
 
@@ -64,43 +64,35 @@ BxDolChartGrowth.prototype.loadData = function()
             	$('#' + $this._sKeyDateTo).parents('.bx-form-element-wrapper:first').fadeIn();
             }
 
-            // convert dates
-            if(oData.column_date !== false) {
-                for (var i in oData.data) {    
+            var oChartLabels = new Array();
+            var oChartData = new Array();
+
+            // create chart arrays
+            if(oData.column_date !== false && oData.column_count !== false)
+                for (var i in oData.data) {
                     var sDate = oData.data[i][oData.column_date];
-                    var m = sDate.match(/(\d{4})-(\d{2})-(\d{2})/);
-                    if(!m || !m[1] || !m[2] || !m[3])
+                    var aDate = sDate.match(/(\d{4})-(\d{2})-(\d{2})/);
+                    if(!aDate || !aDate[1] || !aDate[2] || !aDate[3])
                         continue;
 
-                    var oDate = new Date(m[1],m[2]-1,m[3]);
-                    oData.data[i][oData.column_date] = oDate;
+                    oChartLabels[i] = sDate;
+                    oChartData[i] = oData.data[i][oData.column_count];
                 }
-            } 
 
-            // add data
-            var oDataTable = new google.visualization.DataTable();                
-            for (var i = 0 ; i < oData.data[0].length ; ++i) {
-                var sType = 0 == i ? 'string' : 'number';
-                var sLabel = '';
-                if (false !== oData.column_date && i == oData.column_date)
-                    sType = 'datetime'; 
-                else if (false !== oData.column_count && i == oData.column_count)
-                    sLabel = oData.title;
-                oDataTable.addColumn(sType, sLabel);
-            }
-            oDataTable.addRows(oData.data);
+            if($this._oChart)
+            	$this._oChart.destroy();
 
-            // define options
-            var oOptions = {
-              title: oData.title
-            };
-
-            if (oData.options != undefined)
-                oOptions = jQuery.extend(oOptions, oData.options);
-
-            // draw chart
-            var chart = new google.visualization[oData.type]($('#' + $this._sKeyGraph)[0]);
-            chart.draw(oDataTable, oOptions);
+	    	$this._oChart = new Chart($('#' + $this._sKeyGraph), {
+	    		type: 'line',
+	    		data: {
+	            	labels: oChartLabels,
+	            	datasets: [{
+	            		label: oData.title,
+	            		data: oChartData
+	            	}]
+	            },
+	    		options: {}
+	    	});
     	},
     	'json'
     );
