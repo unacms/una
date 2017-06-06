@@ -22,11 +22,14 @@ div.bx-chart-stats-items {
 	position: relative;
 }
 div.bx-chart-stats-items div.bx-cs-item {
-	display: table-cell;
+	display: inline-block;
 	vertical-align: top;
 	width: 30%;
+
 	text-align: left;
+	text-overflow: ellipsis;
 	white-space: nowrap;
+	overflow: hidden;
 } 
 
 /*+++ Chart Stats: Graph +++*/
