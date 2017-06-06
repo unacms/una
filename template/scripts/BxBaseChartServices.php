@@ -92,7 +92,6 @@ class BxBaseChartServices extends BxDol
         $oTemplate->addCss(array('chart.css'));
 
         return $oTemplate->parseHtmlByName('chart_growth.html', array(
-        	'proto' => bx_proto(),
             'date_from' => $sDateFrom,
             'date_to' => $sDateTo,
             'controls' => $oForm->getCode()
