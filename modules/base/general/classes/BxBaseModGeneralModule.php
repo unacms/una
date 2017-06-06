@@ -644,6 +644,15 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->$sMethod($aContentInfo, $isPerformAction);
     }
     
+    public function serviceCheckAllowedCommentsView($iContentId, $sObjectComments) 
+    {
+        return $this->serviceCheckAllowedWithContent('comments_view', $iContentId);
+    }
+    
+    public function serviceCheckAllowedCommentsPost($iContentId, $sObjectComments) 
+    {
+        return $this->serviceCheckAllowedWithContent('comments_post', $iContentId);
+    }
     // ====== PERMISSION METHODS
 
     /**

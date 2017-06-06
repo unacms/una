@@ -139,7 +139,7 @@ class BxBaseCmts extends BxDolCmts
      */
     function getCommentBlock($iCmtId = 0, $aBp = array(), $aDp = array())
     {
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_with_content', array('comments_view', $this->getId()));
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
 
@@ -503,7 +503,7 @@ class BxBaseCmts extends BxDolCmts
         if(!empty($sPosition) && $sPositionSystem != $sPosition)
             return '';
 
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_with_content', array('comments_post', $this->getId()));
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
