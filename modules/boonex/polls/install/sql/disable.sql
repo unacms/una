@@ -36,6 +36,9 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_polls', 'bx_polls_cm
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_polls');
 
+-- CHARTS
+DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_polls';
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_polls_administration', 'bx_polls_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_polls_administration', 'bx_polls_common');

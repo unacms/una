@@ -415,6 +415,11 @@ INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, 
 ('bx_market', 'bx_market_administration', 'id', '', ''),
 ('bx_market', 'bx_market_common', 'id', '', '');
 
+-- CHARTS
+SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
+INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `query`, `query_status`, `active`, `order`, `class_name`, `class_file`) VALUES
+('bx_market', '_bx_market', 'bx_market_products', 'added', '', '', ' AND {table}.`status` = ''active'' AND {table}.`status_admin` = ''active''', 1, @iMaxOrderCharts + 1, '', '');
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_market_administration', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxMarketGridAdministration', 'modules/boonex/market/classes/BxMarketGridAdministration.php'),

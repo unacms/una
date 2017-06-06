@@ -48,6 +48,9 @@ DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_organizations';
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_organizations');
 
+-- CHARTS
+DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_organizations';
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_organizations_administration', 'bx_organizations_moderation', 'bx_organizations_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_organizations_administration', 'bx_organizations_moderation', 'bx_organizations_common');

@@ -77,6 +77,10 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN (@sName, 'bx_forum_cmts')
 DELETE FROM `sys_content_info_grids` WHERE `object` IN (@sName);
 
 
+-- CHARTS
+DELETE FROM `sys_objects_chart` WHERE `object` = @sName;
+
+
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;

@@ -54,6 +54,9 @@ DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_events';
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_events');
 
+-- CHARTS
+DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_events';
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_events_administration', 'bx_events_moderation', 'bx_events_common', 'bx_events_fans');

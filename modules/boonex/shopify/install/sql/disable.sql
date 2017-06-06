@@ -45,6 +45,10 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_shopify', 'bx_shopif
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_shopify');
 
 
+-- CHARTS
+DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_shopify';
+
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_shopify_administration', 'bx_shopify_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_shopify_administration', 'bx_shopify_common');

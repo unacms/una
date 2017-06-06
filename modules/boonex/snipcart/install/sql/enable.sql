@@ -318,6 +318,11 @@ INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, 
 ('bx_snipcart', 'bx_snipcart_administration', 'id', '', ''),
 ('bx_snipcart', 'bx_snipcart_common', 'id', '', '');
 
+-- CHARTS
+SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
+INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `query`, `query_status`, `active`, `order`, `class_name`, `class_file`) VALUES
+('bx_snipcart', '_bx_snipcart', 'bx_snipcart_entries', 'added', '', '', ' AND {table}.`status` = ''active'' AND {table}.`status_admin` = ''active''', 1, @iMaxOrderCharts + 1, '', '');
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_snipcart_administration', 'Sql', 'SELECT * FROM `bx_snipcart_entries` WHERE 1 ', 'bx_snipcart_entries', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxSnipcartGridAdministration', 'modules/boonex/snipcart/classes/BxSnipcartGridAdministration.php'),
