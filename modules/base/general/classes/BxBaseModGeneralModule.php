@@ -611,6 +611,39 @@ class BxBaseModGeneralModule extends BxDolModule
         );
     }
 
+    /**
+     * Check particular action permission without content
+     * @param $sAction action to check, for example: Browse, Add
+     * @param $iContentId content ID
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */ 
+    public function serviceCheckAllowed($sAction, $isPerformAction = false)
+    {
+        $sMethod = 'checkAllowed' . $sAction;
+        if (!method_exists($this, $sMethod))
+            return _t('_sys_request_method_not_found_cpt');
+
+        return $this->$sMethod($isPerformAction);
+    }
+    
+    /**
+     * Check particular action permission with content
+     * @param $sAction action to check, for example: View, Edit
+     * @param $iContentId content ID
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */ 
+    public function serviceCheckAllowedWithContent($sAction, $iContentId, $isPerformAction = false)
+    {
+        if (!$iContentId || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)))
+            return _t('_sys_request_page_not_found_cpt');
+
+        $sMethod = 'checkAllowed' . $sAction;
+        if (!method_exists($this, $sMethod))
+            return _t('_sys_request_method_not_found_cpt');
+
+        return $this->$sMethod($aContentInfo, $isPerformAction);
+    }
+    
     // ====== PERMISSION METHODS
 
     /**

@@ -12,6 +12,25 @@
 require_once (BX_DIRECTORY_PATH_PLUGINS . 'OAuth2/Autoloader.php');
 OAuth2\Autoloader::register();
 
+class BxOAuthUserCredentialsStorage implements OAuth2\Storage\UserCredentialsInterface
+{
+    public function checkUserCredentials($sLogin, $sPassword)
+    {
+        return ($sErrorMsg = bx_check_password($sLogin, $sPassword)) ? false : true;
+    }
+
+    public function getUserDetails($sLogin)
+    {
+        if (!($oAccount = BxDolAccount::getInstance($sLogin)))
+            return false;
+
+        if (!($oProfile = BxDolProfile::getInstanceByAccount($oAccount->id())))
+            return false;
+
+        return array('user_id' => $oProfile->id());
+    }
+}
+
 class BxOAuthModule extends BxDolModule
 {
     protected $_oStorage;
@@ -46,6 +65,11 @@ class BxOAuthModule extends BxDolModule
 
         // Add the "Authorization Code" grant type (this is where the oauth magic happens)
         $this->_oServer->addGrantType(new OAuth2\GrantType\AuthorizationCode($this->_oStorage));
+
+        // Add the "Password" grant type (generate client_id with empty client_secret)
+        // Example: curl http://example.com/path-to-una/m/oauth2/token -d 'grant_type=password&username=user@example.com&password=pwd&client_id=aefygahcgw'
+        $oStorage = new BxOAuthUserCredentialsStorage();
+        $this->_oServer->addGrantType(new OAuth2\GrantType\UserCredentials($oStorage));
     }
 
     function actionToken ()

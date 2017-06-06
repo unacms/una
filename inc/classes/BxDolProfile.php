@@ -285,6 +285,24 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     }
 
     /**
+     * @see iBxDolProfile::checkAllowedProfileView
+     */
+    public function checkAllowedProfileView($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'check_allowed_profile_view', array($aInfo['content_id']));
+    }
+
+    /**
+     * @see iBxDolProfile::checkAllowedPostInProfile
+     */
+    public function checkAllowedPostInProfile($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'check_allowed_post_in_profile', array($aInfo['content_id']));
+    }
+    
+    /**
      * Delete profile.
      * @param $ID - optional profile id to delete
      * @param $bDeleteWithContent - delete profile with all its contents
