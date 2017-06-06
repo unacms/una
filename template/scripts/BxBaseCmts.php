@@ -139,6 +139,10 @@ class BxBaseCmts extends BxDolCmts
      */
     function getCommentBlock($iCmtId = 0, $aBp = array(), $aDp = array())
     {
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_with_content', array('comments_view', $this->getId()));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
         $sComment = $this->getComment(
         	$iCmtId, 
         	array_merge(array('type' => $this->_sBrowseType), $aBp), 
@@ -146,6 +150,7 @@ class BxBaseCmts extends BxDolCmts
         );
         if (!$sComment)
             return '';
+
         return BxDolTemplate::getInstance()->parseHtmlByName('comment_block.html', array(
             'system' => $this->_sSystem,
             'id' => $this->getId(),
@@ -494,11 +499,15 @@ class BxBaseCmts extends BxDolCmts
         $iCmtParentId = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
         $sPosition = isset($aDp['position']) ? $aDp['position'] : '';
 
-        if(!$this->isPostReplyAllowed())
-            return '';
-
         $sPositionSystem = $this->_aSystem['post_form_position'];
         if(!empty($sPosition) && $sPositionSystem != $sPosition)
+            return '';
+
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_with_content', array('comments_post', $this->getId()));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
+        if(!$this->isPostReplyAllowed())
             return '';
 
         $sMethod = '_getForm' . ucfirst($sType);

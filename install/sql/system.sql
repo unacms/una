@@ -103,6 +103,7 @@ CREATE TABLE `sys_objects_auths` (
 CREATE TABLE `sys_objects_cmts` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `Name` varchar(64) NOT NULL,
+  `Module` varchar(32) NOT NULL,
   `Table` varchar(50) NOT NULL,
   `CharsPostMin` int(10) NOT NULL,
   `CharsPostMax` int(10) NOT NULL,

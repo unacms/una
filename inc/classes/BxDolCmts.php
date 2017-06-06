@@ -280,6 +280,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 SELECT
                     `ID` as `system_id`,
                     `Name` AS `name`,
+                    `Module` AS `module`,
                     `Table` AS `table`,
                     `CharsPostMin` AS `chars_post_min`,
                     `CharsPostMax` AS `chars_post_max`,

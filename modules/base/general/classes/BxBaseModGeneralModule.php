@@ -619,7 +619,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */ 
     public function serviceCheckAllowed($sAction, $isPerformAction = false)
     {
-        $sMethod = 'checkAllowed' . $sAction;
+        $sMethod = 'checkAllowed' . bx_gen_method_name($sAction);
         if (!method_exists($this, $sMethod))
             return _t('_sys_request_method_not_found_cpt');
 
@@ -637,7 +637,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!$iContentId || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)))
             return _t('_sys_request_page_not_found_cpt');
 
-        $sMethod = 'checkAllowed' . $sAction;
+        $sMethod = 'checkAllowed' . bx_gen_method_name($sAction);
         if (!method_exists($this, $sMethod))
             return _t('_sys_request_method_not_found_cpt');
 
@@ -747,6 +747,22 @@ class BxBaseModGeneralModule extends BxDolModule
     		return CHECK_ACTION_RESULT_ALLOWED;
 
     	return _t('_sys_txt_access_denied');
+    }
+
+	/**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
+     */
+    public function checkAllowedCommentsView ($aContentInfo, $isPerformAction = false)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+	/**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
+     */
+    public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
