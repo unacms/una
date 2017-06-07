@@ -89,8 +89,8 @@ class BxEventsModule extends BxBaseModGroupsModule
 
         $CNF = $this->_oConfig->CNF;
         
-        $oDateStart = date_create('@' . $aContentInfo['date_start'], new DateTimeZone($aContentInfo['timezone']));
-        $oDateEnd = date_create('@' . ($aContentInfo['date_start'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_start'] : $aContentInfo['repeat_stop']), new DateTimeZone($aContentInfo['timezone']));
+        $oDateStart = date_create('@' . $aContentInfo['date_start'], new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
+        $oDateEnd = date_create('@' . ($aContentInfo['date_start'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_start'] : $aContentInfo['repeat_stop']), new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $sLocationString = $oMetatags ? $oMetatags->locationsString($aContentInfo[$CNF['FIELD_ID']], false) : false;
@@ -195,7 +195,7 @@ class BxEventsModule extends BxBaseModGroupsModule
 
         $oDateBegin = new DateTime();
         $oDateBegin->setTimestamp($aContentInfo['start_utc']);
-        $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone']));
+        $oDateBegin->setTimezone(new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
         $sEntryBegin = $oDateBegin->format('r');
         $sEntryBeginShort = $oDateBegin->format(getParam('bx_events_short_date_format'));
         $oDateBegin->setTimezone(new DateTimeZone('UTC'));
