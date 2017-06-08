@@ -6,7 +6,7 @@
 /*+++ Chart Growth: Graph +++*/
 .bx-chart-growth-graph {
 	position: relative;
-	height: 15rem;
+	min-height: 9rem;
 	background-color: #ffffff;
 }
 
@@ -30,7 +30,7 @@ div.bx-chart-stats-graph {
 /*+++ Chart Stats: Info +++*/
 div.bx-chart-stats-items {
 	position: relative;
-	min-width: 25rem;
+	min-width: 18rem;
 }
 div.bx-chart-stats-items div.bx-cs-item {
 	display: inline-block;
@@ -45,7 +45,8 @@ div.bx-chart-stats-items div.bx-cs-item {
 
 /*+++ Chart Stats: Graph +++*/
 div.bx-chart-stats-graph {
-	min-width: 25rem;
+	width: 100%;
+	min-width: 18rem;
 	max-width: 28rem;
     background-color: #ffffff;
 }

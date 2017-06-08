@@ -114,6 +114,7 @@ class BxBaseChartServices extends BxDol
 
         foreach($aItems as $aItem) {
             $sTitle = _t($aItem['title']);
+            $sTitleAttr = bx_html_attribute(_t($aItem['title']));
 
             $iValue = 0;
             if(!empty($aItem['query']))
@@ -128,12 +129,14 @@ class BxBaseChartServices extends BxDol
 
             $aTmplVarsItems[] = array(
             	'title' => $sTitle,
+            	'title_attr' => $sTitleAttr,
                 'value' => $iValue,
                 'bx_if:show_link' => array(
                     'condition' => $bLink,
                     'content' => array(
                         'link' => $sLink,
                         'title' => $sTitle,
+            			'title_attr' => $sTitleAttr,
                 		'value' => $iValue,
                     )
                 ),
@@ -141,6 +144,7 @@ class BxBaseChartServices extends BxDol
                     'condition' => !$bLink,
                     'content' => array(
                         'title' => $sTitle,
+                		'title_attr' => $sTitleAttr,
                 		'value' => $iValue,
                     )
                 )
