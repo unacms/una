@@ -141,8 +141,8 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
         $iTimeStart = bx_process_input ($this->aInputs['date_start']['value'], isset($this->aInputs['date_start']['date_filter']) ? $this->aInputs['date_start']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
         $iTimeEnd = bx_process_input ($this->aInputs['date_end']['value'], isset($this->aInputs['date_end']['date_filter']) ? $this->aInputs['date_end']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
-        $oDateStart = date_create(date('Y-m-d H:i:s', $iTimeStart), new DateTimeZone($this->aInputs['timezone']['value']));
-        $oDateEnd = date_create(date('Y-m-d H:i:s', $iTimeEnd), new DateTimeZone($this->aInputs['timezone']['value']));
+        $oDateStart = date_create(date('Y-m-d H:i:s', $iTimeStart), new DateTimeZone($this->aInputs['timezone']['value'] ? $this->aInputs['timezone']['value'] : 'UTC'));
+        $oDateEnd = date_create(date('Y-m-d H:i:s', $iTimeEnd), new DateTimeZone($this->aInputs['timezone']['value'] ? $this->aInputs['timezone']['value'] : 'UTC'));
 
         return array('start' => $oDateStart, 'end' => $oDateEnd);
     }

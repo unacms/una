@@ -132,7 +132,7 @@ class BxEventsDb extends BxBaseModGroupsDb
 
                 $sHoursStart = $oDateStart->format('H:i:s');
 
-                $oStart = date_create($sCurrentDay . ' ' . $sHoursStart, new DateTimeZone($r['timezone']));
+                $oStart = date_create($sCurrentDay . ' ' . $sHoursStart, new DateTimeZone($r['timezone'] ? $r['timezone'] : 'UTC'));
                 $oEnd = $oStart ? clone($oStart) : null;
                 $oEnd = $oEnd ? $oEnd->add($oDuration) : null;
 
