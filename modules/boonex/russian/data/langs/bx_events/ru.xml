@@ -239,6 +239,9 @@
 	<string name="_bx_events_grid_action_err_delete"><![CDATA[Невозможно удалить выбранные события.]]></string>
 	<string name="_bx_events_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_events_chart_growth"><![CDATA[События: Развитие]]></string>
+    <string name="_bx_events_chart_growth_speed"><![CDATA[События: Скорость развития]]></string>
+
     <string name="_bx_events_txt_account_pending"><![CDATA[Это событие ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[Это событие заблокировано.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} участников]]></string>

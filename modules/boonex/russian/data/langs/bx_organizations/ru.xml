@@ -212,6 +212,9 @@
 	<string name="_bx_orgs_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) организацию(ции).]]></string>
 	<string name="_bx_orgs_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_orgs_chart_growth"><![CDATA[Организации: Развитие]]></string>
+    <string name="_bx_orgs_chart_growth_speed"><![CDATA[Организации: Скорость развития]]></string>
+
     <string name="_bx_orgs_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_orgs_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>
 

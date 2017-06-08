@@ -163,6 +163,9 @@
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_posts_chart_growth"><![CDATA[Posts: Growth]]></string>
+    <string name="_bx_posts_chart_growth_speed"><![CDATA[Posts: Growth Speed]]></string>
+
     <string name="_bx_posts_pre_lists_cats"><![CDATA[Post categories]]></string>
     <string name="_bx_posts_cat_Animals_Pets"><![CDATA[Animals & Pets]]></string>
     <string name="_bx_posts_cat_Architecture"><![CDATA[Architecture]]></string>

@@ -5,10 +5,20 @@
 
 /*+++ Chart Growth: Graph +++*/
 .bx-chart-growth-graph {
+	position: relative;
 	height: 15rem;
 	background-color: #ffffff;
 }
 
+.bx-chart-growth-graph-error {
+	position: absolute;
+	display: none;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+    line-height: 15rem;
+}
 
 /*--- Chart Stats ---*/
 div.bx-chart-stats-items,
@@ -20,6 +30,7 @@ div.bx-chart-stats-graph {
 /*+++ Chart Stats: Info +++*/
 div.bx-chart-stats-items {
 	position: relative;
+	min-width: 25rem;
 }
 div.bx-chart-stats-items div.bx-cs-item {
 	display: inline-block;

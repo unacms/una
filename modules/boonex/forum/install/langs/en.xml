@@ -231,14 +231,13 @@
 	<string name="_bx_forum_grid_err_show_to"><![CDATA[Cannot update category.]]></string>
 	<string name="_bx_forum_grid_btn_save"><![CDATA[Save]]></string>
 	<string name="_bx_forum_grid_btn_cancel"><![CDATA[Cancel]]></string>
-	
-    <string name="_bx_forum_grid_txt_"><![CDATA[]]></string>
-    <string name="_bx_forum_grid_txt_"><![CDATA[]]></string>
-    <string name="_bx_forum_grid_txt_"><![CDATA[]]></string>
 
 	<string name="_bx_forum_pre_lists_cats"><![CDATA[Forum categories]]></string>
     <string name="_bx_forum_cat_General"><![CDATA[General]]></string>
 
+    <string name="_bx_forum_chart_growth"><![CDATA[Discussions: Growth]]></string>
+    <string name="_bx_forum_chart_growth_speed"><![CDATA[Discussions: Growth Speed]]></string>
+    
     <string name="_bx_forum_draft_saving_error"><![CDATA[Draft saving error!]]></string>
     <string name="_bx_forum_draft_saved_success"><![CDATA[Draft saved.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Discussion wasn't found.]]></string>

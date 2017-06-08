@@ -212,6 +212,9 @@
 	<string name="_bx_orgs_grid_action_err_delete"><![CDATA[Cannot delete the selected organization(s).]]></string>
 	<string name="_bx_orgs_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_orgs_chart_growth"><![CDATA[Organizations: Growth]]></string>
+    <string name="_bx_orgs_chart_growth_speed"><![CDATA[Organizations: Growth Speed]]></string>
+    
     <string name="_bx_orgs_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_orgs_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
 

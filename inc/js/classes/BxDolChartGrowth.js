@@ -20,6 +20,9 @@ function BxDolChartGrowth (oOptions) {
 
     this._sDateFormat = 'yy-mm-dd';
     this._oChart = null;
+    this._oChartOptionsDefault = {};
+    this._sChartColorBorder = undefined == oOptions.sChartColorBorder ? 'rgba(74, 144, 226, 1.0)' : oOptions.sChartColorBorder;
+    this._sChartColorBackground = undefined == oOptions.sChartColorBackground ? 'rgba(74, 144, 226, 0.4)' : oOptions.sChartColorBackground;
 
     var $this = this;
     $(document).ready(function() {
@@ -30,7 +33,9 @@ function BxDolChartGrowth (oOptions) {
 BxDolChartGrowth.prototype.loadData = function()
 {
 	var $this = this;
-	var oGraphWrp = $('#' + this._sKeyGraph).parents('div:first');
+	var oGraph = $('#' + this._sKeyGraph);
+	var oGraphWrp = oGraph.parents('div:first');
+	var oGraphErr = oGraphWrp.find('.bx-chart-growth-graph-error').hide();
 
     $('#' + this._sKeyObjects).attr('disabled', true);
 
@@ -50,7 +55,10 @@ BxDolChartGrowth.prototype.loadData = function()
             bx_loading(oGraphWrp, false);
 
             if(oData.error != undefined) {
-                alert(oData.error);
+            	if($this._oChart)
+                	$this._oChart.destroy();
+
+            	oGraphErr.html(oData.error).show();
                 return;
             } 
 
@@ -64,6 +72,7 @@ BxDolChartGrowth.prototype.loadData = function()
             	$('#' + $this._sKeyDateTo).parents('.bx-form-element-wrapper:first').fadeIn();
             }
 
+            var oChartOptions = oData.options || {};
             var oChartLabels = new Array();
             var oChartData = new Array();
 
@@ -82,16 +91,18 @@ BxDolChartGrowth.prototype.loadData = function()
             if($this._oChart)
             	$this._oChart.destroy();
 
-	    	$this._oChart = new Chart($('#' + $this._sKeyGraph), {
-	    		type: 'line',
+	    	$this._oChart = new Chart(oGraph, {
+	    		type: oData.type != undefined ? oData.type : 'line',
 	    		data: {
 	            	labels: oChartLabels,
 	            	datasets: [{
 	            		label: oData.title,
-	            		data: oChartData
+	            		data: oChartData,
+	            		borderColor: $this._sChartColorBorder,
+	            		backgroundColor: $this._sChartColorBackground
 	            	}]
 	            },
-	    		options: {}
+	    		options: $.extend({}, $this._oChartOptionsDefault, oChartOptions)
 	    	});
     	},
     	'json'

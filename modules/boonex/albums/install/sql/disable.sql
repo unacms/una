@@ -33,8 +33,11 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_albums', 'bx_albums_
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_albums');
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_albums%';
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` IN ('bx_albums', 'bx_albums_media');
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_albums%';
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_albums_administration', 'bx_albums_common');

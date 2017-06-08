@@ -209,6 +209,9 @@
     <string name="_bx_persons_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) персону(ны).]]></string>
     <string name="_bx_persons_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_persons_chart_growth"><![CDATA[Персоны: Развитие]]></string>
+    <string name="_bx_persons_chart_growth_speed"><![CDATA[Персоны: Скорость развития]]></string>
+
     <string name="_bx_persons_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>
     <string name="_bx_persons_txt_N_friends"><![CDATA[Друзья: {0}]]></string>

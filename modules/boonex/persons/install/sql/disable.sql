@@ -45,8 +45,11 @@ DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_persons';
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_persons');
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_persons%';
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_persons';
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_persons%';
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_persons_administration', 'bx_persons_common');

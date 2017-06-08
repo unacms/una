@@ -1596,6 +1596,8 @@
 	<string name="_sys_chart_growth_object"><![CDATA[Вывести]]></string>
     <string name="_sys_chart_growth_date_from"><![CDATA[С]]></string>
     <string name="_sys_chart_growth_date_to"><![CDATA[По]]></string>
+    <string name="_sys_chart_accounts_growth"><![CDATA[Аккаунты: Развитие]]></string>
+    <string name="_sys_chart_accounts_growth_speed"><![CDATA[Аккаунты: Скорость развития]]></string>
 	<string name="_sys_close"><![CDATA[Закрыть]]></string>
 	<string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>
 	<string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Связь не существует]]></string>

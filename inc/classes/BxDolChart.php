@@ -11,8 +11,11 @@
 class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_oDb;
+
     protected $_sObject;
     protected $_aObject;
+
+    protected $_sStatusActive;
 
     /**
      * Constructor
@@ -26,6 +29,8 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_sObject = $aObject['object'];
         $this->_aObject = $aObject;
+
+        $this->_sStatusActive = 'active';
     }
 
     /**
@@ -42,7 +47,7 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
         if(!$aObject || !is_array($aObject))
             return false;
 
-        $sClass = 'BxTemplChart';
+        $sClass = 'BxDolChart';
         if(!empty($aObject['class_name'])) {
             $sClass = $aObject['class_name'];
             if(!empty($aObject['class_file']))
@@ -64,7 +69,7 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
         if(!$iFrom || !$iTo)
             return echoJson(array('error' => _t('_Error Occured')));
 
-        $aData = $this->getDataByInterval($iFrom, $iTo);
+        $aData = $this->_getDataByInterval($iFrom, $iTo);
         if(empty($aData) || !is_array($aData))
             return echoJson(array('error' => _t('_Empty')));
 
@@ -74,7 +79,7 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
             'hide_date_range' => $this->_aObject['field_date_dt'] || $this->_aObject['field_date_ts'] ? false : true,
             'column_date' => $this->_aObject['column_date'] >= 0 ? $this->_aObject['column_date'] : false,
             'column_count' => $this->_aObject['column_count'] >= 0 ? $this->_aObject['column_count'] : false,
-            'type' => $this->_aObject['type'] ? $this->_aObject['type'] : 'AreaChart',
+            'type' => $this->_aObject['type'] ? $this->_aObject['type'] : 'line',
             'options' => $this->_aObject['options'] ? unserialize($this->_aObject['options']) : false,
         ));
     }
@@ -84,66 +89,19 @@ class BxDolChart extends BxDolFactory implements iBxDolFactoryObject
         return BxDolService::call('system', 'check_allowed_view', array($isPerformAction), 'TemplChartServices');
     }
 
-    public function getDataByInterval($iFrom, $iTo)
+    protected function _getQuery()
     {
-        // build query
-        $sQuery = $this->_aObject['query'] ? $this->_aObject['query'] : "SELECT {field_date_formatted} AS `period`, COUNT(*) AS {object} FROM {table} WHERE {field_date} >= :from AND {field_date} <= :to GROUP BY `period` ORDER BY {field_date} ASC";
-        $sQuery = bx_replace_markers($sQuery, array (
-            'field_date_formatted' => "DATE_FORMAT(" . ($this->_aObject['field_date_dt'] ? "`{$this->_aObject['field_date_dt']}`" : "FROM_UNIXTIME(`{$this->_aObject['field_date_ts']}`)") . ", '%Y-%m-%d')",
-            'object' => $this->_aObject['object'],
-            'table' => "`{$this->_aObject['table']}`",
-            'field_date' => "`" . ($this->_aObject['field_date_dt'] ? $this->_aObject['field_date_dt'] : $this->_aObject['field_date_ts']) . "`",
-        ));
+        if(!empty($this->_aObject['query'])) 
+            return $this->_aObject['query'];
 
-        $aBindings = array(
-            'from' => $this->_aObject['field_date_dt'] ? $this->_getDate($iFrom) . ' 00:00:00' : $iFrom,
-            'to' => $this->_aObject['field_date_dt'] ? $this->_getDate($iTo) . ' 23:59:59' : $iTo + 24*3600 - 1,
-        );
-        
-        // get data
-        if ($this->_aObject['column_date'] >= 0)
-            $aData = $this->_oDb->getAllWithKey($sQuery, $this->_aObject['column_date'], $aBindings, PDO::FETCH_NUM);
-        else
-            $aData = $this->_oDb->getAll($sQuery, array(), $aBindings, PDO::FETCH_NUM);
+        $sWhereClause = "";
+        if(!empty($this->_aObject['field_status'])) {
+            $aStatusFields = explode(',', $this->_aObject['field_status']);
+            foreach($aStatusFields as $sStatusField)
+                $sWhereClause .= " AND `" . $sStatusField . "`='" . $this->_sStatusActive . "'";
+        }
 
-        if (!$aData)
-            return false;
-    
-        // fill in missed days and convert values to numbers
-        if ($this->_aObject['column_date'] >= 0) {
-            $aDataSlice = array_slice($aData, 0, 1);
-            $iColumnsNum = count(array_pop($aDataSlice));
-            for ($i = $iFrom ; $i <= ($iTo + 24*3600 - 1); $i += 24*60*60) {
-                $sDate = $this->_getDate($i);
-                $aRow = array ();
-                for ($j = 0 ; $j < $iColumnsNum ; ++$j) {
-                    $v = isset($aData[$sDate]) ? (int)$aData[$sDate][$j] : 0;
-                    $aRow[$j] = ($j == $this->_aObject['column_date'] ? $sDate : $v);
-                }
-                $aData[$sDate] = $aRow;
-            }
-        } 
-        else
-            foreach ($aData as $k => $v)
-                foreach ($aData[$k] as $kk => $vv)
-                    if ($kk > 0)
-                        $aData[$k][$kk] = (int)$aData[$k][$kk];
-
-        // return values only
-        ksort($aData);
-        return array_values($aData);
-    }
-
-    public function getDataByStatus()
-    {
-        // build query
-        $sQuery = $this->_aObject['query'] ? $this->_aObject['query'] : "SELECT COUNT(*) AS {object} FROM {table} WHERE 1" . (!empty($this->_aObject['query_status']) ? $this->_aObject['query_status'] : '');
-        $sQuery = bx_replace_markers($sQuery, array (
-            'object' => $this->_aObject['object'],
-            'table' => "`{$this->_aObject['table']}`",
-        ));
-
-        return $this->_oDb->getOne($sQuery);
+        return "SELECT {field_date_formatted} AS `period`, COUNT(*) AS {object} FROM {table} WHERE 1 " . $sWhereClause . " {where_inteval} GROUP BY `period` ORDER BY {field_date} ASC";
     }
 
     protected function _getTimestamp($sDate, $isNowIfError = false)

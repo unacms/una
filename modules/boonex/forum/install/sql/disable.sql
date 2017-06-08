@@ -77,8 +77,12 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN (@sName, 'bx_forum_cmts')
 DELETE FROM `sys_content_info_grids` WHERE `object` IN (@sName);
 
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_forum%';
+
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` = @sName;
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_forum%';
 
 
 -- ALERTS

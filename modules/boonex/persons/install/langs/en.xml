@@ -208,6 +208,9 @@
     <string name="_bx_persons_grid_action_err_delete"><![CDATA[Cannot delete the selected person(s).]]></string>
     <string name="_bx_persons_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_persons_chart_growth"><![CDATA[Persons: Growth]]></string>
+    <string name="_bx_persons_chart_growth_speed"><![CDATA[Persons: Growth Speed]]></string>
+
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
     <string name="_bx_persons_txt_N_friends"><![CDATA[{0} friends]]></string>

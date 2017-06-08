@@ -54,8 +54,11 @@ DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_groups';
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_groups');
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_groups%';
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_groups';
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_groups%';
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans');

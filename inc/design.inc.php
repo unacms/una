@@ -116,9 +116,9 @@ function getVersionComment()
 
 function getSiteStatUser()
 {
-    $sqlQuery = "SELECT `Name` as `name`, `Title` as `capt`, `UserQuery` as `query`, `UserLink` as `link`, `IconName` as `icon`, `AdminQuery` as `adm_query`, `AdminLink` as `adm_link` FROM `sys_stat_site` ORDER BY `StatOrder`";
+    $sqlQuery = "SELECT * FROM `sys_statistics` ORDER BY `order`";
 
-    $aStat = BxDolDb::getInstance()->fromCache('sys_stat_site', 'getAllWithKey', $sqlQuery, 'name');
+    $aStat = BxDolDb::getInstance()->fromCache('sys_statistics', 'getAllWithKey', $sqlQuery, 'name');
 
     return "<pre>TODO: nice output\n" . print_r($aStat, true) . '</pre>';
 }

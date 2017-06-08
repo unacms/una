@@ -196,6 +196,9 @@
     <string name="_bx_snipcart_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) товар(ы).]]></string>
     <string name="_bx_snipcart_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_snipcart_chart_growth"><![CDATA[Snipcart: Развитие]]></string>
+    <string name="_bx_snipcart_chart_growth_speed"><![CDATA[Snipcart: Скорость развития]]></string>
+
     <string name="_bx_snipcart_pre_lists_cats"><![CDATA[Категории товаров]]></string>
     <string name="_bx_snipcart_cat_automotive_and_industrial"><![CDATA[Автомобили и Техника]]></string>
     <string name="_bx_snipcart_cat_beauty_health_food"><![CDATA[Красота, Здоровье и Еда]]></string>

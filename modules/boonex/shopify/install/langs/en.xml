@@ -183,6 +183,9 @@
     <string name="_bx_shopify_grid_action_err_delete"><![CDATA[Cannot delete the selected product(s).]]></string>
     <string name="_bx_shopify_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_shopify_chart_growth"><![CDATA[Shopify: Growth]]></string>
+    <string name="_bx_shopify_chart_growth_speed"><![CDATA[Shopify: Growth Speed]]></string>
+
     <string name="_bx_shopify_pre_lists_cats"><![CDATA[Goods categories]]></string>
     <string name="_bx_shopify_cat_automotive_and_industrial"><![CDATA[Automotive & Industrial]]></string>
     <string name="_bx_shopify_cat_beauty_health_food"><![CDATA[Beauty, Health & Food]]></string>

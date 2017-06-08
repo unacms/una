@@ -209,6 +209,9 @@
 	<string name="_bx_groups_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) группу(ы).]]></string>
 	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_groups_chart_growth"><![CDATA[Группы: Развитие]]></string>
+    <string name="_bx_groups_chart_growth_speed"><![CDATA[Группы: Скорость развития]]></string>
+
     <string name="_bx_groups_txt_account_pending"><![CDATA[Эта группа ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} участников]]></string>

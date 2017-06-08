@@ -334,10 +334,16 @@ INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, 
 ('bx_polls', 'bx_polls_administration', 'id', '', ''),
 ('bx_polls', 'bx_polls_common', 'id', '', '');
 
+-- STATS
+SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
+INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
+('bx_polls', 'bx_polls', '_bx_polls', 'page.php?i=polls-home', 'tasks col-green1', 'SELECT COUNT(*) FROM `bx_polls_entries` WHERE 1 AND `status` = ''active'' AND `status_admin` = ''active''', @iMaxOrderStats + 1);
+
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
-INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `query`, `query_status`, `active`, `order`, `class_name`, `class_file`) VALUES
-('bx_polls', '_bx_polls', 'bx_polls_entries', 'added', '', '', ' AND {table}.`status` = ''active'' AND {table}.`status_admin` = ''active''', 1, @iMaxOrderCharts + 1, '', '');
+INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
+('bx_polls_growth', '_bx_polls_chart_growth', 'bx_polls_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
+('bx_polls_growth_speed', '_bx_polls_chart_growth_speed', 'bx_polls_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

@@ -179,6 +179,11 @@
     <string name="_bx_albums_grid_action_err_delete"><![CDATA[Cannot delete the selected album(s).]]></string>
     <string name="_bx_albums_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_albums_chart_growth"><![CDATA[Albums: Growth]]></string>
+    <string name="_bx_albums_chart_growth_speed"><![CDATA[Albums: Growth Speed]]></string>
+    <string name="_bx_albums_chart_growth_media"><![CDATA[Images: Growth]]></string>
+    <string name="_bx_albums_chart_growth_speed_media"><![CDATA[Images: Growth Speed]]></string>
+
     <string name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">All Albums by {1} ({2})</a>]]></string>
     <string name="_bx_albums_txt_sample_single"><![CDATA[album]]></string>
     <string name="_bx_albums_txt_sample_single_with_article"><![CDATA[an album]]></string>

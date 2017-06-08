@@ -36,8 +36,11 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_posts', 'bx_posts_cm
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_posts');
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_posts%';
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_posts';
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_posts%';
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');

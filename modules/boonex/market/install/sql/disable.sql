@@ -39,8 +39,11 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_market', 'bx_market_
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_market');
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_market%';
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_market';
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_market%';
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');

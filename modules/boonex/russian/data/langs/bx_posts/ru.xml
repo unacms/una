@@ -163,6 +163,9 @@
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) публикацию(ции).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_posts_chart_growth"><![CDATA[Публикации: Развитие]]></string>
+    <string name="_bx_posts_chart_growth_speed"><![CDATA[Публикации: Скорость развития]]></string>
+
     <string name="_bx_posts_pre_lists_cats"><![CDATA[Категории публикаций]]></string>
     <string name="_bx_posts_cat_Animals_Pets"><![CDATA[Животные]]></string>
     <string name="_bx_posts_cat_Architecture"><![CDATA[Архитектура]]></string>

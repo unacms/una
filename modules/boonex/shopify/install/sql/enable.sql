@@ -317,10 +317,17 @@ INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, 
 ('bx_shopify', 'bx_shopify_common', 'id', '', '');
 
 
+-- STATS
+SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
+INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
+('bx_shopify', 'bx_shopify', '_bx_shopify', 'page.php?i=shopify-home', 'shopping-cart col-green1', 'SELECT COUNT(*) FROM `bx_shopify_entries` WHERE 1 AND `status` = ''active'' AND `status_admin` = ''active''', @iMaxOrderStats + 1);
+
+
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
-INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `query`, `query_status`, `active`, `order`, `class_name`, `class_file`) VALUES
-('bx_shopify', '_bx_shopify', 'bx_shopify_entries', 'added', '', '', ' AND {table}.`status` = ''active'' AND {table}.`status_admin` = ''active''', 1, @iMaxOrderCharts + 1, '', '');
+INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
+('bx_shopify_growth', '_bx_shopify_chart_growth', 'bx_shopify_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
+('bx_shopify_growth_speed', '_bx_shopify_chart_growth_speed', 'bx_shopify_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
 
 
 -- GRIDS: moderation tools

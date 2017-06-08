@@ -36,8 +36,11 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_files', 'bx_files_cm
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_files');
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_files%';
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_files';
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_files%';
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_files_administration', 'bx_files_common');

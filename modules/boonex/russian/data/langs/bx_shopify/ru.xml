@@ -183,6 +183,9 @@
     <string name="_bx_shopify_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) товар(ы).]]></string>
     <string name="_bx_shopify_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_shopify_chart_growth"><![CDATA[Shopify: Развитие]]></string>
+    <string name="_bx_shopify_chart_growth_speed"><![CDATA[Shopify: Скорость развития]]></string>
+
     <string name="_bx_shopify_pre_lists_cats"><![CDATA[Категории товаров]]></string>
     <string name="_bx_shopify_cat_automotive_and_industrial"><![CDATA[Автомобили и Техника]]></string>
     <string name="_bx_shopify_cat_beauty_health_food"><![CDATA[Красота, Здоровье и Еда]]></string>

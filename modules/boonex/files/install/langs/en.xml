@@ -167,6 +167,9 @@
     <string name="_bx_files_grid_action_err_delete"><![CDATA[Cannot delete the selected file(s).]]></string>
     <string name="_bx_files_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_files_chart_growth"><![CDATA[Files: Growth]]></string>
+    <string name="_bx_files_chart_growth_speed"><![CDATA[Files: Growth Speed]]></string>
+
     <string name="_bx_files_pre_lists_cats"><![CDATA[File categories]]></string>
     <string name="_bx_files_cat_documentation"><![CDATA[Documentation]]></string>
     <string name="_bx_files_cat_presentation"><![CDATA[Presentation]]></string>

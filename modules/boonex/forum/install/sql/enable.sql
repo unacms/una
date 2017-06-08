@@ -469,10 +469,17 @@ INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, 
 (@sName, 'bx_forum_common', 'id', '', '');
 
 
+-- STATS
+SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
+INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
+(@sName, @sName, '_bx_forum', 'page.php?i=discussions-home', 'comments-o col-blue2', 'SELECT COUNT(*) FROM `bx_forum_discussions` WHERE 1 AND `status` = ''active'' AND `status_admin` = ''active''', @iMaxOrderStats + 1);
+
+
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
-INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `query`, `query_status`, `active`, `order`, `class_name`, `class_file`) VALUES
-(@sName, '_bx_forum', 'bx_forum_discussions', 'added', '', '', ' AND {table}.`status` = ''active'' AND {table}.`status_admin` = ''active''', 1, @iMaxOrderCharts + 1, '', '');
+INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
+('bx_forum_growth', '_bx_forum_chart_growth', 'bx_forum_discussions', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
+('bx_forum_growth_speed', '_bx_forum_chart_growth_speed', 'bx_forum_discussions', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
 
 
 -- ALERTS

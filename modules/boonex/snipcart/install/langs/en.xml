@@ -196,6 +196,9 @@
     <string name="_bx_snipcart_grid_action_err_delete"><![CDATA[Cannot delete the selected product(s).]]></string>
     <string name="_bx_snipcart_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_snipcart_chart_growth"><![CDATA[Snipcart: Growth]]></string>
+    <string name="_bx_snipcart_chart_growth_speed"><![CDATA[Snipcart: Growth Speed]]></string>
+
     <string name="_bx_snipcart_pre_lists_cats"><![CDATA[Goods categories]]></string>
     <string name="_bx_snipcart_cat_automotive_and_industrial"><![CDATA[Automotive & Industrial]]></string>
     <string name="_bx_snipcart_cat_beauty_health_food"><![CDATA[Beauty, Health & Food]]></string>

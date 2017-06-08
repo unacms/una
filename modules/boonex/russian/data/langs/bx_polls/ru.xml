@@ -169,6 +169,9 @@
     <string name="_bx_polls_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) голосование(ния).]]></string>
     <string name="_bx_polls_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_polls_chart_growth"><![CDATA[Голосования: Развитие]]></string>
+    <string name="_bx_polls_chart_growth_speed"><![CDATA[Голосования: Скорость развития]]></string>
+
     <string name="_bx_polls_pre_lists_cats"><![CDATA[Категории голосований]]></string>
     <string name="_bx_polls_cat_beauty_and_style"><![CDATA[Красота и стиль]]></string>
     <string name="_bx_polls_cat_business_and_money"><![CDATA[Бизнес и деньги]]></string>

@@ -107,19 +107,48 @@ class BxBaseChartServices extends BxDol
         $aTmplVarsItems = array();
         $aTmplVarsDataLabels = $aTmplVarsDataSet = array();
 
-        $aObjects = BxDolChartQuery::getChartObjects();
-        foreach($aObjects as $aObject) {
-            $sTitle = _t($aObject['title']);
-            $sValue = BxDolChart::getObjectInstance($aObject['object'])->getDataByStatus();
+        $oDb = BxDolDb::getInstance();
+
+        $sQuery = "SELECT * FROM `sys_statistics` WHERE 1 ORDER BY `order`";
+        $aItems = $oDb->getAll($sQuery);
+
+        foreach($aItems as $aItem) {
+            $sTitle = _t($aItem['title']);
+
+            $iValue = 0;
+            if(!empty($aItem['query']))
+                $iValue = (int)$oDb->getOne($aItem['query']);
+            else if(BxDolRequest::serviceExists($aItem['module'], 'get_query_statistics'))
+                $iValue = (int)BxDolService::call($aItem['module'], 'get_query_statistics', array($aItem));
+
+            $sLink = '';
+            if(!empty($aItem['link']))
+                $sLink = BxDolPermalinks::getInstance()->permalink($aItem['link']);
+            $bLink = !empty($sLink);
 
             $aTmplVarsItems[] = array(
-                'title' => $sTitle,
-            	'value' => $sValue,
+            	'title' => $sTitle,
+                'value' => $iValue,
+                'bx_if:show_link' => array(
+                    'condition' => $bLink,
+                    'content' => array(
+                        'link' => $sLink,
+                        'title' => $sTitle,
+                		'value' => $iValue,
+                    )
+                ),
+                'bx_if:show_text' => array(
+                    'condition' => !$bLink,
+                    'content' => array(
+                        'title' => $sTitle,
+                		'value' => $iValue,
+                    )
+                )
             );
 
             $aTmplVarsDataLabels[] = $sTitle;
 
-            $aTmplVarsDataSet['data'][] = $sValue;
+            $aTmplVarsDataSet['data'][] = $iValue;
             $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
         }
 

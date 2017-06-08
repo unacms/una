@@ -170,6 +170,9 @@
     <string name="_bx_polls_grid_action_err_delete"><![CDATA[Cannot delete the selected poll(s).]]></string>
     <string name="_bx_polls_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_polls_chart_growth"><![CDATA[Polls: Growth]]></string>
+    <string name="_bx_polls_chart_growth_speed"><![CDATA[Polls: Growth Speed]]></string>
+
     <string name="_bx_polls_pre_lists_cats"><![CDATA[Poll categories]]></string>
     <string name="_bx_polls_cat_beauty_and_style"><![CDATA[Beauty & Style]]></string>
     <string name="_bx_polls_cat_business_and_money"><![CDATA[Business & Money]]></string>

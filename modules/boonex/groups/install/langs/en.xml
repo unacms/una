@@ -209,6 +209,9 @@
 	<string name="_bx_groups_grid_action_err_delete"><![CDATA[Cannot delete the selected group(s).]]></string>
 	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_groups_chart_growth"><![CDATA[Groups: Growth]]></string>
+    <string name="_bx_groups_chart_growth_speed"><![CDATA[Groups: Growth Speed]]></string>
+
     <string name="_bx_groups_txt_account_pending"><![CDATA[This group is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>

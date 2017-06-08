@@ -240,6 +240,9 @@
 	<string name="_bx_events_grid_action_err_delete"><![CDATA[Cannot delete the selected event(s).]]></string>
 	<string name="_bx_events_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_events_chart_growth"><![CDATA[Events: Growth]]></string>
+    <string name="_bx_events_chart_growth_speed"><![CDATA[Events: Growth Speed]]></string>
+
     <string name="_bx_events_txt_account_pending"><![CDATA[This event is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[This event is suspended.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} members]]></string>

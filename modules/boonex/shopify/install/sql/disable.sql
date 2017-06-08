@@ -45,8 +45,12 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_shopify', 'bx_shopif
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_shopify');
 
 
+-- STATS
+DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_shopify%';
+
+
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` = 'bx_shopify';
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_shopify%';
 
 
 -- GRIDS

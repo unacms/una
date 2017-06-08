@@ -235,6 +235,9 @@
     <string name="_bx_forum_pre_lists_cats"><![CDATA[Категории обсуждений]]></string>
     <string name="_bx_forum_cat_General"><![CDATA[Общие]]></string>
 
+    <string name="_bx_forum_chart_growth"><![CDATA[Обсуждения: Развитие]]></string>
+    <string name="_bx_forum_chart_growth_speed"><![CDATA[Обсуждения: Скорость развития]]></string>
+
     <string name="_bx_forum_draft_saving_error"><![CDATA[Ошибка сохранения черновика!]]></string>
     <string name="_bx_forum_draft_saved_success"><![CDATA[Черновик сохранён.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Обсуждение не найдено.]]></string>

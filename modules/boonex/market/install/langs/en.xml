@@ -267,6 +267,9 @@
 	<string name="_bx_market_grid_txt_lcs_type_recurring"><![CDATA[recurring]]></string>
 	<string name="_bx_market_grid_txt_lcs_never"><![CDATA[never]]></string>
 
+    <string name="_bx_market_chart_growth"><![CDATA[Market: Growth]]></string>
+    <string name="_bx_market_chart_growth_speed"><![CDATA[Market: Growth Speed]]></string>
+    
     <string name="_bx_market_pre_lists_cats"><![CDATA[Product categories]]></string>
     <string name="_bx_market_cat_administration"><![CDATA[Administration]]></string>
     <string name="_bx_market_cat_adult"><![CDATA[Adult]]></string>

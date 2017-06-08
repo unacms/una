@@ -179,6 +179,11 @@
     <string name="_bx_albums_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) альбом(ы).]]></string>
     <string name="_bx_albums_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_albums_chart_growth"><![CDATA[Альбомы: Развитие]]></string>
+    <string name="_bx_albums_chart_growth_speed"><![CDATA[Альбомы: Скорость развития]]></string>
+    <string name="_bx_albums_chart_growth_media"><![CDATA[Изображения: Развитие]]></string>
+    <string name="_bx_albums_chart_growth_speed_media"><![CDATA[Изображения: Скорость развития]]></string>
+
     <string name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">Все альбомы от {1} ({2})</a>]]></string>
     <string name="_bx_albums_txt_sample_single"><![CDATA[альбом]]></string>
     <string name="_bx_albums_txt_sample_single_with_article"><![CDATA[альбом]]></string>
