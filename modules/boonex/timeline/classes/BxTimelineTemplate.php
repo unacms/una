@@ -111,9 +111,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getItemBlock($iId)
     {
+        $CNF = $this->_oConfig->CNF;
+
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent))
             return '';
+
+        $mixedResult = BxDolProfile::getInstance($aEvent[$CNF['FIELD_OWNER_ID']])->checkAllowedProfileView();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox($mixedResult);
 
         $aParams = array(
         	'view' => BX_TIMELINE_VIEW_DEFAULT, 

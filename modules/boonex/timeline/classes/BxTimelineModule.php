@@ -866,8 +866,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aCheckResult = checkActionModule($iUserId, 'post', $this->getName(), $bPerform);
 
         $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
-        if($oProfileOwner !== false)
+        if($oProfileOwner !== false) {
+            if($oProfileOwner->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
+                return _t('_sys_txt_access_denied');
+
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_post', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+        }
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
@@ -906,8 +910,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $bResult = true;
 
         $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if($oProfileOwner !== false) {
+            if($oProfileOwner->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
+                return false;
+
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_comment', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+        }
 
         return $bResult;
     }
@@ -1025,6 +1033,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	$oMoreMenu = $this->getManageMenuObject();
     	$oMoreMenu->setEventId($aEvent['id']);
     	return $oMoreMenu->isVisible();
+    }
+
+    public function checkAllowedCommentsView ($aContentInfo, $isPerformAction = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $mixedResult = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_OWNER_ID']])->checkAllowedProfileView();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
+    {
+        if(!$this->isAllowedComment($aContentInfo, $isPerformAction))
+            return _t('_sys_txt_access_denied');
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function onPost($iId)
@@ -1259,11 +1286,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 			return array();
 
         $aParams = $this->_prepareParams($sView, BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
-
         $aParams['view'] = $sView;
         $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
 
         $this->_iOwnerId = $aParams['owner_id'];
+        $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
+
+        $mixedResult = $oProfileOwner->checkAllowedProfileView();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return array('content' => MsgBox($mixedResult));
+
         list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
 
         $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_OWNER . '/' . $iProfileId . '/';
@@ -1276,7 +1308,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         );
 
         $sContent = '';
-        $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
         bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $this->_iOwnerId, $this->getUserId(), array('override_content' => &$sContent, 'params' => &$aParams, 'menu' => &$aMenu));
 
         $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $sView . '-view-all', 'menu_items' => $aMenu));

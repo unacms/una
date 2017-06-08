@@ -19,12 +19,6 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
         parent::__construct($oConfig);
     }
 
-    public function getContentInfoById ($iContentId)
-    {
-        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_ID'] . "` = ?", $iContentId);
-        return $this->getRow($sQuery);
-    }
-
     public function searchByAuthorTerm($iAuthor, $sTerm, $iLimit)
     {
         $CNF = &$this->_oConfig->CNF;

@@ -22,6 +22,17 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         $this->_oConfig = $oConfig;
     }
 
+    public function getContentInfoById ($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['TABLE_ENTRIES']) || empty($CNF['FIELD_ID']))
+            return array();
+
+        $sQuery = $this->prepare ("SELECT * FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_ID'] . "` = ?", $iContentId);
+        return $this->getRow($sQuery);
+    }
+
     function getEntriesBy($aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;

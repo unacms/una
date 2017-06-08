@@ -237,7 +237,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */ 
     public function serviceCheckAllowedPostInProfile($iContentId)
     {
-        return $this->serviceIsAllowedProfileView($iContentId);
+        return $this->serviceCheckAllowedProfileView($iContentId);
     }
     
     public function servicePrepareFields ($aFieldsProfile)
