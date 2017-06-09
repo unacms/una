@@ -368,13 +368,13 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
      */
     public function fillArray($oStatement, $aBindings = array(), $iFetchType = PDO::FETCH_ASSOC)
     {
-    	return $this->getAll($oStatement, $aBindings);
+    	return $this->getAll($oStatement, $aBindings, $iFetchType);
     }
 
 	/**
      * execute sql query and return table of records as result
      */
-    public function getAllWithKey($oStatement, $sFieldKey, $aBindings = array())
+    public function getAllWithKey($oStatement, $sFieldKey, $aBindings = array(), $iFetchType = PDO::FETCH_ASSOC)
     {
     	$aResult = array();
         if(!$oStatement)
@@ -382,11 +382,11 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 		else if(!($oStatement instanceof PDOStatement) && is_string($oStatement))
 			$oStatement = $this->prepare($oStatement);
 
-        $aRow = $this->getFirstRow($oStatement, $aBindings, PDO::FETCH_ASSOC);
+        $aRow = $this->getFirstRow($oStatement, $aBindings, $iFetchType);
         while(!empty($aRow)) {
         	$aResult[$aRow[$sFieldKey]] = $aRow;
 
-        	$aRow = $this->getNextRow(PDO::FETCH_ASSOC);
+        	$aRow = $this->getNextRow($iFetchType);
         }
 
         return $aResult;
@@ -395,7 +395,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     /**
      * execute sql query and return table of records as result
      */
-    public function getPairs($oStatement, $sFieldKey, $sFieldValue, $aBindings = array())
+    public function getPairs($oStatement, $sFieldKey, $sFieldValue, $aBindings = array(), $iFetchType = PDO::FETCH_ASSOC)
     {
     	$aResult = array();
         if(!$oStatement)
@@ -403,11 +403,11 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 		else if(!($oStatement instanceof PDOStatement) && is_string($oStatement))
 			$oStatement = $this->prepare($oStatement);
 
-        $aRow = $this->getFirstRow($oStatement, $aBindings, PDO::FETCH_ASSOC);
+        $aRow = $this->getFirstRow($oStatement, $aBindings, $iFetchType);
         while(!empty($aRow)) {
         	$aResult[$aRow[$sFieldKey]] = $aRow[$sFieldValue];
 
-        	$aRow = $this->getNextRow(PDO::FETCH_ASSOC);
+        	$aRow = $this->getNextRow($iFetchType);
         }
 
         return $aResult;
