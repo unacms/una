@@ -258,6 +258,10 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                             unset($aForm['inputs']['checker_func']['tr_attrs']['style'], $aForm['inputs']['checker_error']['tr_attrs']['style']);
                         break;
 
+                    case 'unique':
+                        $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
+                        break;
+
                     case 'checker_func':
                         $aForm['inputs'][$sKey]['value'] = strtolower($this->aField[$sKey]);
                         switch($aForm['inputs'][$sKey]['value']) {
@@ -884,6 +888,21 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
                 'db' => array (
                     'pass' => 'Int',
                 )
+            ),
+            'unique' => array(
+                'type' => 'switcher',
+                'name' => 'unique',
+                'caption' => _t('_adm_form_txt_field_unique'),
+                'info' => _t('_adm_form_dsc_field_unique'),
+                'value' => '1',
+                'required' => '0',
+                'attrs' => array(
+                    'id' => 'bx-form-field-unique',
+                    //'onchange' => $this->getJsObject() . ".onCheckRequired(this)"
+                ),
+                'db' => array (
+                    'pass' => 'Int',
+                )
             )
         );
 
@@ -1249,6 +1268,7 @@ class BxBaseStudioFormsFieldHidden extends BxBaseStudioFormsFieldText
             $this->aForm['inputs']['caption'],
             $this->aForm['inputs']['info'],
             $this->aForm['inputs']['required'],
+            $this->aForm['inputs']['unique'],
             $this->aForm['inputs']['checker_func'],
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],
@@ -1279,6 +1299,7 @@ class BxBaseStudioFormsFieldButton extends BxBaseStudioFormsFieldText
             $this->aForm['inputs']['caption'],
             $this->aForm['inputs']['info'],
             $this->aForm['inputs']['required'],
+            $this->aForm['inputs']['unique'],
             $this->aForm['inputs']['checker_func'],
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],
@@ -1451,6 +1472,7 @@ class BxBaseStudioFormsFieldCustom extends BxBaseStudioFormsFieldText
 
         unset(
             $this->aForm['inputs']['required'],
+            $this->aForm['inputs']['unique'],
             $this->aForm['inputs']['checker_func'],
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],
@@ -1514,6 +1536,7 @@ class BxBaseStudioFormsFieldCaptcha extends BxBaseStudioFormsFieldText
 
         unset(
             $this->aForm['inputs']['value'],
+            $this->aForm['inputs']['unique'],
             $this->aForm['inputs']['checker_func']['tr_attrs']['style'],
             $this->aForm['inputs']['checker_error']['tr_attrs']['style']
         );
@@ -1534,6 +1557,7 @@ class BxBaseStudioFormsFieldLocation extends BxBaseStudioFormsFieldText
 
         unset(
             $this->aForm['inputs']['required'],
+            $this->aForm['inputs']['unique'],
             $this->aForm['inputs']['checker_func'],
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],

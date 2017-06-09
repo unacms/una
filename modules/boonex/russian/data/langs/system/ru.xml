@@ -690,6 +690,7 @@
 	<string name="_adm_form_dsc_field_html"><![CDATA[Выбрать тип HTML-редактора]]></string>
 	<string name="_adm_form_dsc_field_info"><![CDATA[Введите описание поля (необязательно)]]></string>
 	<string name="_adm_form_dsc_field_required"><![CDATA[Отметьте, если поле должно иметь значение]]></string>
+	<string name="_adm_form_dsc_field_unique"><![CDATA[Отметьте, если поле должно иметь уникальное значение]]></string>
 	<string name="_adm_form_dsc_field_value_button"><![CDATA[Введите заголовок для кнопки]]></string>
 	<string name="_adm_form_dsc_field_value_checkbox"><![CDATA[Послать эти данные, если фладок отмечен и форма отослана]]></string>
 	<string name="_adm_form_dsc_field_value_reset"><![CDATA[Заголовок для кнопки (этот тип кнопки используется для сброса формы в исходное состояние)]]></string>
@@ -770,7 +771,7 @@
 	<string name="_adm_form_txt_field_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_form_txt_field_name"><![CDATA[Имя]]></string>
 	<string name="_adm_form_txt_field_object"><![CDATA[Форма]]></string>
-	<string name="_adm_form_txt_field_required"><![CDATA[Необходимый]]></string>
+	<string name="_adm_form_txt_field_required"><![CDATA[Необходимое]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Показывать "{0}" поле формы для: ]]></string>
 	<string name="_adm_form_txt_field_type_block_header"><![CDATA[заголовок блока]]></string>
 	<string name="_adm_form_txt_field_type_button"><![CDATA[кнопка]]></string>
@@ -800,6 +801,7 @@
 	<string name="_adm_form_txt_field_type_text"><![CDATA[текст]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[текстовое поле]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[инфо]]></string>
+	<string name="_adm_form_txt_field_unique"><![CDATA[Уникальное]]></string>
 	<string name="_adm_form_txt_field_value_button"><![CDATA[Заголовок]]></string>
 	<string name="_adm_form_txt_field_value_checkbox"><![CDATA[Значение]]></string>
 	<string name="_adm_form_txt_field_value_custom_text"><![CDATA[Индивидуальный текст]]></string>

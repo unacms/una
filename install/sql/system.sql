@@ -2618,6 +2618,7 @@ CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
   `caption` varchar(255) NOT NULL,
   `info` varchar(255) NOT NULL,
   `required` tinyint(4) NOT NULL DEFAULT '0',
+  `unique` tinyint(4) NOT NULL DEFAULT '0',
   `collapsed` tinyint(4) NOT NULL DEFAULT '0',
   `html` tinyint(4) NOT NULL DEFAULT '0',
   `attrs` text NOT NULL,

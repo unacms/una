@@ -692,6 +692,7 @@
 	<string name="_adm_form_dsc_field_html"><![CDATA[Select type of HTML editor]]></string>
 	<string name="_adm_form_dsc_field_info"><![CDATA[Enter field description (optional)]]></string>
 	<string name="_adm_form_dsc_field_required"><![CDATA[Check it if the field should have value]]></string>
+	<string name="_adm_form_dsc_field_unique"><![CDATA[Check it if the field should have unique value]]></string>
 	<string name="_adm_form_dsc_field_value_button"><![CDATA[Enter button title here]]></string>
 	<string name="_adm_form_dsc_field_value_checkbox"><![CDATA[Send this data if checkbox is checked and form is submitted]]></string>
 	<string name="_adm_form_dsc_field_value_reset"><![CDATA[Button title (this button type is used to reset the form to its default state)]]></string>
@@ -802,6 +803,7 @@
 	<string name="_adm_form_txt_field_type_text"><![CDATA[text]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[textarea]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[info]]></string>
+	<string name="_adm_form_txt_field_unique"><![CDATA[Unique]]></string>
 	<string name="_adm_form_txt_field_value_button"><![CDATA[Title]]></string>
 	<string name="_adm_form_txt_field_value_checkbox"><![CDATA[Value]]></string>
 	<string name="_adm_form_txt_field_value_custom_text"><![CDATA[Custom text]]></string>
