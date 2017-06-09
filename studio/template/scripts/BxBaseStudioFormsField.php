@@ -1417,7 +1417,7 @@ class BxBaseStudioFormsFieldSelectMultiple extends BxBaseStudioFormsFieldSelect
 	{
 		parent::init();
 
-        $this->aParams['table_field_type'] = 'int(11)';
+        $this->aParams['table_field_type'] = 'bigint(20)';
 
         $this->aForm['inputs']['value']['type'] = 'select_multiple';
         $this->aForm['inputs']['value']['values'] = array();
