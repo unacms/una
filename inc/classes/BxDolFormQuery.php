@@ -97,6 +97,7 @@ class BxDolFormQuery extends BxDolDb
                 'caption' => _t($a['caption']),
                 'info' => $a['info'] ? _t($a['info']) : '',
                 'required' => $a['required'] ? true : false,
+            	'unique' => $a['unique'] ? true : false,
                 'collapsed' => $a['collapsed'] ? true : false,
                 'html' => $a['html'],
                 'attrs' => $a['attrs'] ? unserialize($a['attrs']) : false,
@@ -185,6 +186,18 @@ class BxDolFormQuery extends BxDolDb
         }
 
         return $aRet;
+    }
+
+    static public function fieldCheckUnique($sTable, $sField, $sValue)
+    {
+        return uriCheckUniq($sValue, $sTable, $sField);
+    } 
+
+    static public function fieldGetValue($sTable, $sField, $sFieldKey, $sFieldKeyValue)
+    {
+        return BxDolDb::getInstance()->getOne("SELECT `" . $sField . "` FROM `" . $sTable . "` WHERE `" . $sFieldKey . "`=:field_key LIMIT 1", array(
+            'field_key' => $sFieldKeyValue
+        ));
     }
 
     public function getFormInputs()

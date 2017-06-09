@@ -801,6 +801,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $aSpecificValues);
+        $oChecker->setFormParams($this->aParams);
 
         // init form with default values
 
@@ -825,7 +826,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
             $oChecker->enableFormCsrfChecking(isset($this->aParams['csrf']['disable']) && $this->aParams['csrf']['disable'] === true ? false : true);
 
-            $this->_isValid = $oChecker->check($this->aInputs);
+            $this->_isValid = $oChecker->check($this->aInputs, $aValues);
 
             if (!$this->_initCheckerNestedForms ())
                 $this->_isValid = false;
@@ -1108,6 +1109,7 @@ class BxDolFormChecker
 {
     protected $_oChecker;
     protected $_sFormMethod;
+    protected $_aFormParams;
     protected $_bFormCsrfChecking;
     protected $_aSpecificValues;
 
@@ -1126,13 +1128,18 @@ class BxDolFormChecker
         $this->_aSpecificValues = $aSpecificValues;
     }
 
+    function setFormParams($aParams)
+    {
+        $this->_aFormParams = $aParams;
+    }
+    
     function enableFormCsrfChecking($bFormCsrfChecking)
     {
         $this->_bFormCsrfChecking = $bFormCsrfChecking;
     }
 
     // check function
-    function check (&$aInputs)
+    function check (&$aInputs, $aValues = array())
     {
         $oChecker = $this->_oChecker;
         $iErrors = 0;
@@ -1167,6 +1174,25 @@ class BxDolFormChecker
             $val = BxDolForm::getSubmittedValue($a['name'], $this->_sFormMethod, $this->_aSpecificValues);
             if (isset(BxDolForm::$TYPES_FILE[$a['type']]))
                 $val = isset($_FILES[$a['name']]['name']) ? $_FILES[$a['name']]['name'] : '';
+
+            // check for unique
+            if(isset($aInputs[$k]['unique']) && $aInputs[$k]['unique'] && !empty($this->_aFormParams['db']['key']) && !empty($this->_aFormParams['db']['table'])) {
+                $sKey = $this->_aFormParams['db']['key'];
+                $sTable = $this->_aFormParams['db']['table'];
+                $sError = _t('_sys_form_err_not_unique_value');
+
+                if(!empty($aValues[$sKey])) {
+                    $sValDb = BxDolFormQuery::fieldGetValue($sTable, $aInputs[$k]['name'], $sKey, $aValues[$sKey]);
+                    if($val != $sValDb && !BxDolFormQuery::fieldCheckUnique($sTable, $aInputs[$k]['name'], $val)) {
+                        ++$iErrors;
+                        $aInputs[$k]['error'] = $sError;
+                    }
+                }
+                else if(!BxDolFormQuery::fieldCheckUnique($sTable, $aInputs[$k]['name'], $val)) {
+                    ++$iErrors;
+                    $aInputs[$k]['error'] = $sError;
+                }
+            }
 
             if (!isset ($a['checker']))  {
                 if (isset(BxDolForm::$TYPES_CHECKBOX[$a['type']]))

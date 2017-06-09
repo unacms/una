@@ -1881,6 +1881,7 @@
 	<string name="_sys_form_unsubscribe_input_receive_news"><![CDATA[Получать Новости]]></string>
 	<string name="_sys_form_unsubscribe_input_receive_updates"><![CDATA[Получать Обновления Сайта]]></string>
 	<string name="_sys_form_unsubscribe_input_submit"><![CDATA[Выполнить]]></string>
+	<string name="_sys_form_err_not_unique_value"><![CDATA[Поле должно иметь уникальное значение]]></string>
 	<string name="_sys_form_txt_select_file"><![CDATA[Выбрать файл]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} байт]]></string>
 	<string name="_sys_format_size_gb"><![CDATA[{0} ГБ]]></string>
