@@ -35,7 +35,8 @@ define('BX_DOL_FILE_RIGHTS', 0666);
 
 define('BX_DOL_STORAGE_OBJ_IMAGES', 'sys_images');
 
-define('BX_DOL_INT_MAX', 2147483647);
+if (!defined('BX_DOL_INT_MAX'))
+    define('BX_DOL_INT_MAX', 2147483647);
 
 define('BX_DOL_TRANSCODER_OBJ_ICON_APPLE', 'sys_icon_apple');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK', 'sys_icon_facebook');
