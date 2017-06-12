@@ -1048,8 +1048,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
     {
+        $sError = '_sys_txt_access_denied';
+
+        $aContentInfo = $this->_oTemplate->getData($aContentInfo);
+        if($aContentInfo === false)
+            return _t($sError);
+
         if(!$this->isAllowedComment($aContentInfo, $isPerformAction))
-            return _t('_sys_txt_access_denied');
+            return _t($sError);
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
