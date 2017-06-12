@@ -359,7 +359,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
     }
 
-    public function getComments($sSystem, $iId)
+    public function getComments($sSystem, $iId, $bDynamic = false)
     {
         $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
@@ -368,7 +368,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($oCmts === false)
             return '';
 
-        $aComments = $oCmts->getCommentsBlock(0, 0, false);
+        $aComments = $oCmts->getCommentsBlock(0, 0, false, $bDynamic);
         return $this->parseHtmlByName('comments.html', array(
             'style_prefix' => $sStylePrefix,
             'id' => $iId,

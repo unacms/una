@@ -712,7 +712,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
-        return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
+        return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true));
     }
 
     public function actionGetFormEdit ()
@@ -723,7 +723,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         }
 
         $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
-        echoJson($this->getFormEdit($iCmtId));
+        echoJson($this->getFormEdit($iCmtId, array('dynamic_mode' => true)));
     }
 
     public function actionGetCmt ()
@@ -774,7 +774,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(bx_get('cmt_parent_id') !== false)
             $iCmtParentId = bx_process_input(bx_get('cmt_parent_id'), BX_DATA_INT);
 
-        echoJson($this->getFormPost($iCmtParentId));
+        echoJson($this->getFormPost($iCmtParentId, array('dynamic_mode' => true)));
     }
 
     public function actionSubmitEditForm()
@@ -788,7 +788,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(bx_get('cmt_id') !== false)
             $iCmtId = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
 
-        echoJson($this->getFormEdit($iCmtId));
+        echoJson($this->getFormEdit($iCmtId, array('dynamic_mode' => true)));
     }
 
     public function actionRemove()

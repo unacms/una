@@ -70,13 +70,14 @@ class BxBaseCmts extends BxDolCmts
     /**
      * get full comments block with initializations
      */
-    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
+    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true, $bDynamic = false)
     {
     	$aBp = $aDp = array();
 		$this->_getParams($aBp, $aDp);
 
         $aBp['parent_id'] = $iParentId;
         $aBp['vparent_id'] = $iVParentId;
+        $aDp['dynamic_mode'] = $bDynamic;
         $aDp['show_empty'] = false;
 
 		//add live update
@@ -92,8 +93,8 @@ class BxBaseCmts extends BxDolCmts
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
             'comments' => $this->getComments($aBp, $aDp),
-            'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
-            'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
+            'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP, 'dynamic_mode' => $bDynamic)),
+            'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM, 'dynamic_mode' => $bDynamic)),
         	'view_image_popup' => $this->_getViewImagePopup(),
             'script' => $this->getJsScript()
         ));
@@ -314,14 +315,14 @@ class BxBaseCmts extends BxDolCmts
         return $this->_getFormBox(BX_CMT_ACTION_EDIT, $aBp, $aDp);
     }
 
-    function getFormPost($iCmtParentId = 0)
+    function getFormPost($iCmtParentId = 0, $aDp = array())
     {
-        return $this->_getFormPost($iCmtParentId);
+        return $this->_getFormPost($iCmtParentId, $aDp);
     }
 
-    function getFormEdit($aCmt)
+    function getFormEdit($iCmtId, $aDp = array())
     {
-        return $this->_getFormEdit($aCmt);
+        return $this->_getFormEdit($iCmtId, $aDp);
     }
 
     function getNotification($iCountOld = 0, $iCountNew = 0)
@@ -507,7 +508,7 @@ class BxBaseCmts extends BxDolCmts
             return '';
 
         $sMethod = '_getForm' . ucfirst($sType);
-        $aForm = $this->$sMethod($iCmtParentId);
+        $aForm = $this->$sMethod($iCmtParentId, $aDp);
 
         return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
             'js_object' => $this->_sJsObjName,
@@ -523,8 +524,10 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
-    protected function _getFormPost($iCmtParentId = 0)
+    protected function _getFormPost($iCmtParentId = 0, $aDp = array())
     {
+        $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
+
         $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
         $oForm->initChecker();
@@ -581,11 +584,13 @@ class BxBaseCmts extends BxDolCmts
             return array('msg' => _t('_cmt_err_cannot_perform_action'));
         }
 
-        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+        return array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
     }
 
-    protected function _getFormEdit($iCmtId)
+    protected function _getFormEdit($iCmtId, $aDp = array())
     {
+        $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
+
         $aCmt = $this->_oQuery->getCommentSimple ((int)$this->getId(), $iCmtId);
         if(!$aCmt)
             return array('msg' => _t('_No such comment'));
@@ -620,7 +625,7 @@ class BxBaseCmts extends BxDolCmts
             return array('msg' => _t('_cmt_err_cannot_perform_action'));
         }
 
-        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+        return array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
     }
 
     protected function _getForm($sAction, $iId)

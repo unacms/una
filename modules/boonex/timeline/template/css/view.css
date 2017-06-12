@@ -269,6 +269,9 @@ div.bx-tl-empty div.bx-msg-box-container {
 
 
 /*--- Comments Styles ---*/
+div.bx-tl-item-comments-holder .cmt.bx-def-box {
+	border-width: 0px;
+}
 div.bx-tl-item-comments-holder .bx-def-thumb-size {
 	width: 32px;
 	width: 2rem;

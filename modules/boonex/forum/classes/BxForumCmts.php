@@ -44,9 +44,9 @@ class BxForumCmts extends BxTemplCmts
             BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBSCRIBERS'])->actionAdd((int)$this->getId(), (int)$this->_getAuthorId());
     }
 
-    public function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
+    public function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true, $bDynamic = false)
     {
-        $mixedBlock = parent::getCommentsBlock($iParentId, $iVParentId, $bInDesignbox);
+        $mixedBlock = parent::getCommentsBlock($iParentId, $iVParentId, $bInDesignbox, $bDynamic);
         if (is_array($mixedBlock) && isset($mixedBlock['title']))
             $mixedBlock['title'] = _t('_bx_forum_page_block_title_entry_comments', $this->getCommentsCount());
         return $mixedBlock;
