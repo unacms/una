@@ -125,6 +125,9 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
      */
     public function add($sName, $iFrequency, $sServiceCall, $bActive = true)
     {
+        if(!$this->_iProfileId)
+            return false;
+
     	if(!in_array($sName, $this->_aSystemsActive))
     		$this->_aSystemsActive[] = $sName;
 
