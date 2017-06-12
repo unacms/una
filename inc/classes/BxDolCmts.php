@@ -652,6 +652,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function isPostReplyAllowed ($isPerformAction = false)
     {
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+
         return $this->checkAction ('comments post', $isPerformAction);
     }
 
@@ -665,10 +669,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(isAdmin())
             return true;
 
-        if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments edit own', $isPerformAction))
+        if($this->checkAction('comments edit all', $isPerformAction))
             return true;
+            
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
 
-        return $this->checkAction('comments edit all', $isPerformAction);
+        return $aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments edit own', $isPerformAction);
     }
 
     public function msgErrEditAllowed ()
@@ -723,6 +731,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if (!$this->isEnabled())
             return '';
 
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
         $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
@@ -738,6 +750,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function actionGetCmts ()
     {
         if (!$this->isEnabled())
+            return '';
+
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
         $aBp = $aDp = array();

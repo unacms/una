@@ -303,6 +303,9 @@ class BxBaseCmts extends BxDolCmts
 
     function getFormBoxPost($aBp = array(), $aDp = array())
     {
+        if(!$this->isPostReplyAllowed())
+            return '';
+
         return $this->_getFormBox(BX_CMT_ACTION_POST, $aBp, $aDp);
     }
 
@@ -501,13 +504,6 @@ class BxBaseCmts extends BxDolCmts
 
         $sPositionSystem = $this->_aSystem['post_form_position'];
         if(!empty($sPosition) && $sPositionSystem != $sPosition)
-            return '';
-
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-            return '';
-
-        if(!$this->isPostReplyAllowed())
             return '';
 
         $sMethod = '_getForm' . ucfirst($sType);
