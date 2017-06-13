@@ -208,6 +208,35 @@ class BxBaseServiceConnections extends BxDol
 			'lang_key' => '_sys_profile_friendship_added',
 		);
     }
+    
+    public function serviceAlertResponseConnections($oAlert)
+    {
+        $sMethod = 'process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
+        if(!method_exists($this, $sMethod))
+            return;
+            
+        $this->$sMethod($oAlert);
+    }
+
+    protected function processSysProfilesFriendsConnectionAdded(&$oAlert)
+    {
+        if((int)$oAlert->aExtras['mutual'] != 1)
+            return;
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        $oConnection->addConnection((int)$oAlert->aExtras['initiator'], (int)$oAlert->aExtras['content']);
+        $oConnection->addConnection((int)$oAlert->aExtras['content'], (int)$oAlert->aExtras['initiator']);
+    }
+
+    protected function processSysProfilesFriendsConnectionRemoved(&$oAlert)
+    {
+        if((int)$oAlert->aExtras['mutual'] != 1)
+            return;
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        $oConnection->removeConnection((int)$oAlert->aExtras['initiator'], (int)$oAlert->aExtras['content']);
+        $oConnection->removeConnection((int)$oAlert->aExtras['content'], (int)$oAlert->aExtras['initiator']);
+    }
 }
 
 /** @} */

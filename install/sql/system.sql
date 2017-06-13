@@ -1209,6 +1209,15 @@ SET @iHandler = LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler);
 
+
+INSERT INTO `sys_alerts_handlers` (`name`, `service_call`) VALUES 
+('sys_connections', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:26:"alert_response_connections";s:5:"class";s:23:"TemplServiceConnections";}');
+SET @iHandler = LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('sys_profiles_friends', 'connection_added', @iHandler),
+('sys_profiles_friends', 'connection_removed', @iHandler);
+
 -- --------------------------------------------------------
 
 
