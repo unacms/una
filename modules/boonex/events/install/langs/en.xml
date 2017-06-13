@@ -199,10 +199,10 @@
     <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel Request]]></string>
     <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Reject Request]]></string>
 
-    <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string>
-    <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Subscribe]]></string>
-    <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Unsubscribe]]></string>
-    <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Unsubscribe]]></string>
+    <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
+    <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Follow]]></string>
+    <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
+    <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Unfollow]]></string>
     <string name="_bx_events_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_events_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_events_menu_item_title_system_friends"><![CDATA[Friends]]></string>

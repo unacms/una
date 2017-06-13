@@ -2274,7 +2274,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_storage_restriction_size"><![CDATA[Maximum file size limit is {0}]]></string>
 	<string name="_sys_switch_profile"><![CDATA[Switch profile]]></string>
 	<string name="_sys_submit"><![CDATA[Submit]]></string>
-	<string name="_sys_subscribe"><![CDATA[Subscribe]]></string>
+	<string name="_sys_subscribe"><![CDATA[Follow]]></string>
 
 	<string name="_sys_tour_launcher_welcome_title"><![CDATA[Welcome to UNA Studio!]]></string>
 	<string name="_sys_tour_launcher_welcome_txt"><![CDATA[Studio is where you customise your site; add and manage apps; control languages and design; set membership levels and permissions; build pages and navigation, and a lot more. You are now in Studio Launcher.]]></string>

@@ -170,10 +170,10 @@
     <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить присоединение]]></string>
     <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
 
-    <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string>
-    <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Подписаться]]></string>
-    <string name="_bx_groups_menu_item_title_system_unsubscribe"><![CDATA[Отписаться]]></string>
-    <string name="_bx_groups_menu_item_title_unsubscribe"><![CDATA[Отписаться]]></string>
+    <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
+    <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Получать уведомления]]></string>
+    <string name="_bx_groups_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>
+    <string name="_bx_groups_menu_item_title_unsubscribe"><![CDATA[Отключить уведомления]]></string>
     <string name="_bx_groups_menu_item_title_system_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_groups_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_groups_menu_item_title_system_friends"><![CDATA[Друзья]]></string>

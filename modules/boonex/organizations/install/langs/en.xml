@@ -14,8 +14,8 @@
 	<string name="_bx_orgs_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_orgs_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_orgs_option_searchable_fields"><![CDATA[Searchable fields]]></string>
-    <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Public subscriptions list]]></string>
-    <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Public subscribers list]]></string>
+    <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Public following list]]></string>
+    <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Public followers list]]></string>
 
 	<string name="_bx_orgs_form_profile"><![CDATA[Organizations]]></string>
 	<string name="_bx_orgs_form_profile_display_add"><![CDATA[Add Organization]]></string>
@@ -74,8 +74,8 @@
 	<string name="_bx_orgs_page_title_profile_favorites"><![CDATA[Favorite Organizations]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_title_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_orgs_page_title_sys_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_orgs_page_title_profile_subscriptions"><![CDATA[Subscriptions & Subscribers]]></string>
+	<string name="_bx_orgs_page_title_sys_profile_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_orgs_page_title_profile_subscriptions"><![CDATA[Following & Followers]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
 	<string name="_bx_orgs_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_orgs_page_title_sys_recent"><![CDATA[New Organizations]]></string>
@@ -106,10 +106,10 @@
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Subscribers]]></string>
-    <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Subscribers]]></string>
+	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Followers]]></string>
+    <string name="_bx_orgs_page_block_title_profile_subscribed_me"><![CDATA[Followers]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Featured Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[New Organizations]]></string>
@@ -150,8 +150,8 @@
     <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
-    <string name="_bx_orgs_menu_item_title_system_view_profile_subscriptions"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_orgs_menu_item_title_view_profile_subscriptions"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_orgs_menu_item_title_system_view_profile_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_orgs_menu_item_title_view_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_view"><![CDATA[Organization]]></string>
@@ -164,10 +164,10 @@
     <string name="_bx_orgs_menu_item_title_unfriend"><![CDATA[Unfriend]]></string>
     <string name="_bx_orgs_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
     <string name="_bx_orgs_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
-    <string name="_bx_orgs_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string>
-    <string name="_bx_orgs_menu_item_title_subscribe"><![CDATA[Subscribe]]></string>
-    <string name="_bx_orgs_menu_item_title_system_unsubscribe"><![CDATA[Unsubscribe]]></string>
-    <string name="_bx_orgs_menu_item_title_unsubscribe"><![CDATA[Unsubscribe]]></string>
+    <string name="_bx_orgs_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
+    <string name="_bx_orgs_menu_item_title_subscribe"><![CDATA[Follow]]></string>
+    <string name="_bx_orgs_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
+    <string name="_bx_orgs_menu_item_title_unsubscribe"><![CDATA[Unfollow]]></string>
     <string name="_bx_orgs_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_orgs_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_orgs_menu_item_title_system_friends"><![CDATA[Friends]]></string>
@@ -178,10 +178,10 @@
     <string name="_bx_orgs_menu_item_title_manage_my_organizations"><![CDATA[{addon} organizations]]></string>
     <string name="_bx_orgs_menu_item_title_system_favorites"><![CDATA[Favorite Organizations]]></string>
     <string name="_bx_orgs_menu_item_title_favorites"><![CDATA[{addon} favorite organizations]]></string>
-    <string name="_bx_orgs_menu_item_title_system_subscriptions"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_orgs_menu_item_title_subscriptions"><![CDATA[{addon} subscriptions]]></string>
-    <string name="_bx_orgs_menu_item_title_system_subscribed_me"><![CDATA[Subscribers]]></string>
-    <string name="_bx_orgs_menu_item_title_subscribed_me"><![CDATA[{addon} subscribers]]></string>
+    <string name="_bx_orgs_menu_item_title_system_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_orgs_menu_item_title_subscriptions"><![CDATA[{addon} following]]></string>
+    <string name="_bx_orgs_menu_item_title_system_subscribed_me"><![CDATA[Followers]]></string>
+    <string name="_bx_orgs_menu_item_title_subscribed_me"><![CDATA[{addon} followers]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>

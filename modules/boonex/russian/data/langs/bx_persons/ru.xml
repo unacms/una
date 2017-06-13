@@ -160,10 +160,10 @@
     <string name="_bx_persons_menu_item_title_unfriend"><![CDATA[Перестать дружить]]></string>
     <string name="_bx_persons_menu_item_title_unfriend_cancel_request"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_bx_persons_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
-    <string name="_bx_persons_menu_item_title_system_subscribe"><![CDATA[Подписаться]]></string>
-    <string name="_bx_persons_menu_item_title_subscribe"><![CDATA[Подписаться]]></string>
-    <string name="_bx_persons_menu_item_title_system_unsubscribe"><![CDATA[Отписаться]]></string>
-    <string name="_bx_persons_menu_item_title_unsubscribe"><![CDATA[Отписаться]]></string>
+    <string name="_bx_persons_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
+    <string name="_bx_persons_menu_item_title_subscribe"><![CDATA[Получать уведомления]]></string>
+    <string name="_bx_persons_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>
+    <string name="_bx_persons_menu_item_title_unsubscribe"><![CDATA[Отключить уведомления]]></string>
     <string name="_bx_persons_menu_item_title_system_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_persons_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_persons_menu_item_title_system_friends"><![CDATA[Друзья]]></string>
