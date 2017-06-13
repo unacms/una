@@ -106,6 +106,7 @@
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
+	<string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Расположение]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_orgs_page_block_title_system_profile_subscribed_me"><![CDATA[Подписчики]]></string>

@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_views_track`, `bx_organizations_favorites_track`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`;
+DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_views_track`, `bx_organizations_favorites_track`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`, `bx_organizations_meta_locations`;
 
 -- PROFILES
 

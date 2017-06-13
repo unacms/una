@@ -98,6 +98,20 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_meta_keywords` (
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `bx_organizations_meta_locations` (
+  `object_id` int(10) unsigned NOT NULL,
+  `lat` double NOT NULL,
+  `lng` double NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `zip` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `street_number` varchar(255) NOT NULL,
+  PRIMARY KEY (`object_id`),
+  KEY `country_state_city` (`country`,`state`(8),`city`(8))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- STORAGES & TRANSCODERS
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
@@ -143,7 +157,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_organization', 'bx_organizations', 'org_cat', '', '#!bx_organizations_cats', 0, 'select', '_bx_orgs_form_profile_input_sys_org_cat', '_bx_orgs_form_profile_input_org_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_cat_err', 'Xss', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_name', '', '', 0, 'text', '_bx_orgs_form_profile_input_sys_org_name', '_bx_orgs_form_profile_input_org_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_name_err', 'Xss', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'cover', 'a:1:{i:0;s:27:"bx_organizations_cover_crop";}', 'a:1:{s:27:"bx_organizations_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_orgs_form_profile_input_sys_cover', '_bx_orgs_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_organization', 'bx_organizations', 'picture', 'a:1:{i:0;s:29:"bx_organizations_picture_crop";}', 'a:1:{s:29:"bx_organizations_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_orgs_form_profile_input_sys_picture', '_bx_orgs_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_orgs_form_profile_input_picture_err', '', '', 1, 0);
+('bx_organization', 'bx_organizations', 'picture', 'a:1:{i:0;s:29:"bx_organizations_picture_crop";}', 'a:1:{s:29:"bx_organizations_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_orgs_form_profile_input_sys_picture', '_bx_orgs_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_orgs_form_profile_input_picture_err', '', '', 1, 0),
+('bx_organization', 'bx_organizations', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
@@ -151,8 +166,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_add', 'org_name', 2147483647, 1, 2),
 ('bx_organization_add', 'org_cat', 2147483647, 1, 3),
 ('bx_organization_add', 'org_desc', 2147483647, 1, 4),
-('bx_organization_add', 'allow_view_to', 2147483647, 1, 5),
-('bx_organization_add', 'do_submit', 2147483647, 1, 6),
+('bx_organization_add', 'location', 2147483647, 1, 5),
+('bx_organization_add', 'allow_view_to', 2147483647, 1, 6),
+('bx_organization_add', 'do_submit', 2147483647, 1, 7),
 
 ('bx_organization_delete', 'picture', 2147483647, 0, 0),
 ('bx_organization_delete', 'delete_confirm', 2147483647, 1, 0),
@@ -165,8 +181,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_edit', 'org_name', 2147483647, 1, 2),
 ('bx_organization_edit', 'org_cat', 2147483647, 1, 3),
 ('bx_organization_edit', 'org_desc', 2147483647, 1, 4),
-('bx_organization_edit', 'allow_view_to', 2147483647, 1, 5),
-('bx_organization_edit', 'do_submit', 2147483647, 1, 6),
+('bx_organization_edit', 'location', 2147483647, 1, 5),
+('bx_organization_edit', 'allow_view_to', 2147483647, 1, 6),
+('bx_organization_edit', 'do_submit', 2147483647, 1, 7),
 
 ('bx_organization_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_organization_edit_cover', 'org_name', 2147483647, 0, 2),
