@@ -1021,14 +1021,42 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _getParams(&$aBp, &$aDp)
     {
-    	$aBp['vparent_id'] = isset($_REQUEST['CmtParent'])? bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT) : 0;
-    	$aBp['type'] = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
-    	$aBp['filter'] = isset($_REQUEST['CmtFilter']) ? bx_process_input($_REQUEST['CmtFilter'], BX_DATA_TEXT) : '';
-        $aBp['start'] = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : -1;
-        $aBp['per_view'] = isset($_REQUEST['CmtPerView']) ? bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT) : -1;
+        //--- Process 'Browse' params. 
+        $aBp['parent_id'] = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
 
-        $aDp['type'] = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
-        $aDp['blink'] = isset($_REQUEST['CmtBlink']) ? bx_process_input($_REQUEST['CmtBlink'], BX_DATA_TEXT) : '';
+        $aBp['vparent_id'] = isset($aBp['vparent_id']) ? (int)$aBp['vparent_id'] : 0;
+        if(bx_get('CmtParent') !== false)
+            $aBp['vparent_id'] = bx_process_input(bx_get('CmtParent'), BX_DATA_INT);
+
+    	$aBp['type'] = isset($aBp['type']) ? $aBp['type'] : '';
+    	if(bx_get('CmtBrowse') !== false) 
+        	$aBp['type'] = bx_process_input(bx_get('CmtBrowse'), BX_DATA_TEXT);
+
+    	$aBp['filter'] = isset($aBp['filter']) ? $aBp['filter'] : '';
+    	if(bx_get('CmtFilter') !== false) 
+    	    $aBp['filter'] = bx_process_input(bx_get('CmtFilter'), BX_DATA_TEXT);
+
+        $aBp['start'] = isset($aBp['start']) ? (int)$aBp['start'] : -1;
+        if(bx_get('CmtStart') !== false) 
+            $aBp['start'] = bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT);
+
+        $aBp['per_view'] = isset($aBp['per_view']) ? (int)$aBp['per_view'] : -1;
+        if(bx_get('CmtPerView') !== false) 
+            $aBp['per_view'] = bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT);
+
+        //--- Process 'Display' params.
+        $aDp['type'] = isset($aDp['type']) ? $aDp['type'] : '';
+        if(bx_get('CmtDisplay') !== false) 
+            $aDp['type'] = bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT);
+
+        $aDp['blink'] = isset($aDp['blink']) ? $aDp['blink'] : '';
+        if(bx_get('CmtBlink') !== false) 
+            $aDp['blink'] = bx_process_input($_REQUEST['CmtBlink'], BX_DATA_TEXT);
+
+        $aDp['in_designbox'] = isset($aDp['in_designbox']) ? (bool)$aDp['in_designbox'] : true;
+        $aDp['dynamic_mode'] = isset($aDp['dynamic_mode']) ? (bool)$aDp['dynamic_mode'] : false;
+        $aDp['show_empty'] = isset($aDp['show_empty']) ? (bool)$aDp['show_empty'] : false;
+            
     }
 
     protected function _prepareTextForEdit ($s)

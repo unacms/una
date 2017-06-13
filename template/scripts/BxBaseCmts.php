@@ -70,15 +70,9 @@ class BxBaseCmts extends BxDolCmts
     /**
      * get full comments block with initializations
      */
-    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true, $bDynamic = false)
+    function getCommentsBlock($aBp = array(), $aDp = array())
     {
-    	$aBp = $aDp = array();
 		$this->_getParams($aBp, $aDp);
-
-        $aBp['parent_id'] = $iParentId;
-        $aBp['vparent_id'] = $iVParentId;
-        $aDp['dynamic_mode'] = $bDynamic;
-        $aDp['show_empty'] = false;
 
 		//add live update
 		$this->actionResumeLiveUpdate();
@@ -93,13 +87,13 @@ class BxBaseCmts extends BxDolCmts
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
             'comments' => $this->getComments($aBp, $aDp),
-            'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP, 'dynamic_mode' => $bDynamic)),
-            'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM, 'dynamic_mode' => $bDynamic)),
+            'post_form_top' => $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP))),
+            'post_form_bottom'  => $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM))),
         	'view_image_popup' => $this->_getViewImagePopup(),
             'script' => $this->getJsScript()
         ));
 
-        return $bInDesignbox ? DesignBoxContent($sCaption, $sContent, BX_DB_DEF, $this->_getControlsBox()) : array(
+        return $aDp['in_designbox'] ? DesignBoxContent($sCaption, $sContent, BX_DB_DEF, $this->_getControlsBox()) : array(
             'title' => $sCaption,
             'content' => $sContent,
             'menu' => $this->_getControlsBox(),

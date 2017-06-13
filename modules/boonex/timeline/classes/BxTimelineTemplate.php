@@ -368,7 +368,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($oCmts === false)
             return '';
 
-        $aComments = $oCmts->getCommentsBlock(0, 0, false, $bDynamic);
+        $aComments = $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'dynamic_mode' => $bDynamic));
         return $this->parseHtmlByName('comments.html', array(
             'style_prefix' => $sStylePrefix,
             'id' => $iId,

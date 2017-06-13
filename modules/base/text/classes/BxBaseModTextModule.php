@@ -209,7 +209,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
 
-        return $oCmts->getCommentsBlock(0, 0, false);
+        return $oCmts->getCommentsBlock(array(), array('in_designbox' => false));
     }
 }
 
