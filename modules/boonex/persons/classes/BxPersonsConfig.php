@@ -54,6 +54,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_COVER' => 'cover',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
+        	'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
