@@ -67,8 +67,10 @@
 	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Лента]]></string>
 	<string name="_bx_timeline_page_block_title_view_profile_outline"><![CDATA[Сводка]]></string>
 	<string name="_bx_timeline_page_block_title_item"><![CDATA[Элемент]]></string>
-	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Лента Подписки]]></string>
-	<string name="_bx_timeline_page_block_title_view_account_outline"><![CDATA[Сводка Подписки]]></string>
+	<string name="_bx_timeline_page_block_title_system_view_account"><![CDATA[Фид (Лента)]]></string>
+	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Фид]]></string>
+	<string name="_bx_timeline_page_block_title_system_view_account_outline"><![CDATA[Фид (Сводка)]]></string>
+	<string name="_bx_timeline_page_block_title_view_account_outline"><![CDATA[Фид]]></string>
 	<string name="_bx_timeline_page_block_title_post_home"><![CDATA[Разместить в Ленте]]></string>
 	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Лента]]></string>
 	<string name="_bx_timeline_page_block_title_view_home_outline"><![CDATA[Сводка]]></string>
