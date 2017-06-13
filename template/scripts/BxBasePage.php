@@ -166,7 +166,9 @@ class BxBasePage extends BxDolPage
 			pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide'
 		);
 
-        $aVars = array ();
+        $aVars = array (
+            'page_id' => 'bx-page-' . $this->_aObject['uri'],
+        );
         $aBlocks = $this->_oQuery->getPageBlocks();
         foreach ($aBlocks as $sKey => $aCell) {
             $sCell = '';
