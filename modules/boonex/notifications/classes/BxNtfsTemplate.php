@@ -83,6 +83,10 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     	if($oPrivacy !== false && !$oPrivacy->check($aEvent['id'])) 
     		return '';
 
+        $sService = 'check_allowed_with_content';
+        if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $aEvent['object_id'])) !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
         list($sOwnerName, $sOwnerUrl, $sOwnerIcon) = $oModule->getUserInfo($aEvent['owner_id']);
         $bAuthorIcon = !empty($sOwnerIcon);
 

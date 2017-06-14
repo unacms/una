@@ -876,6 +876,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
+    public function isAllowedView($aEvent, $bPerform = false)
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $mixedResult = BxDolProfile::getInstance($aEvent[$CNF['FIELD_OWNER_ID']])->checkAllowedProfileView();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+
+		return true;
+    }
+
     public function isAllowedDelete($aEvent, $bPerform = false)
     {
         if(!isLogged())
@@ -1033,6 +1044,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	$oMoreMenu = $this->getManageMenuObject();
     	$oMoreMenu->setEventId($aEvent['id']);
     	return $oMoreMenu->isVisible();
+    }
+
+    public function checkAllowedView ($aContentInfo, $isPerformAction = false)
+    {
+        if(!$this->isAllowedView($aContentInfo, $isPerformAction))
+            return _t('_sys_txt_access_denied');
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function checkAllowedCommentsView ($aContentInfo, $isPerformAction = false)
