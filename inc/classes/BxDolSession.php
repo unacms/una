@@ -7,7 +7,7 @@
  * @{
  */
 
-define('BX_DOL_SESSION_LIFETIME', 24*60*60*30);
+define('BX_DOL_SESSION_LIFETIME', 3600);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 
 class BxDolSession extends BxDolFactory implements iBxDolSingleton
@@ -31,7 +31,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
         $this->iUserId = 0;
         $this->aData = array();
 
-        $this->bAutoLogout = true;
+        $this->bAutoLogout = false; // when changing to 'true', it's better to increase BX_DOL_SESSION_LIFETIME to 1 month or so
     }
 
     /**

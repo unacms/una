@@ -32,12 +32,6 @@ class BxDolSessionQuery extends BxDolDb
     }
     function save($sId, $aSet)
     {
-    	if(isset($aSet['user_id']) && (int)$aSet['user_id'] > 0)
-			$this->query("DELETE FROM `" . $this->sTable . "` WHERE `id`<>:id AND `user_id`=:user_id", array(
-				'id' => $sId,
-				'user_id' => (int)$aSet['user_id']
-			));
-
     	$aSet['id'] = $sId;
         return (int)$this->query("REPLACE INTO `" . $this->sTable . "` SET " . $this->arrayToSQL($aSet) . ", `date`=UNIX_TIMESTAMP()") > 0;
     }
