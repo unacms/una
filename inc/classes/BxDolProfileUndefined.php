@@ -134,6 +134,22 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
     }
 
     /**
+     * @see iBxDolProfile::checkAllowedProfileView
+     */
+    public function checkAllowedProfileView($iProfileId = 0)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    /**
+     * @see iBxDolProfile::checkAllowedPostInProfile
+     */
+    public function checkAllowedPostInProfile($iProfileId = 0)
+    {
+        return _t('_sys_txt_access_denied');
+    }
+
+    /**
      * Check if profile is active
      */
     public function isActive()

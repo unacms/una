@@ -115,8 +115,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedAdd()))
-            return MsgBox($sMsg);
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedAdd())) {
+            $oProfile = BxDolProfile::getInstance();
+            $aProfileInfo = $oProfile->getInfo();
+            if ($aProfileInfo['type'] == 'system' && is_subclass_of($this->_oModule, 'BxBaseModProfileModule') && $this->_oModule->serviceActAsProfile()) // special check for system profile is needed, because of incorrect error message
+                return MsgBox(_t('_sys_txt_access_denied'));
+            else
+                return MsgBox($sMsg);
+        }
 
         // check and display form
         $oForm = $this->getObjectFormAdd();
