@@ -439,7 +439,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'enable_notification_pruning', '_adm_stg_cpt_option_enable_notification_pruning', 'on', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'enable_notification_pruning', '_adm_stg_cpt_option_enable_notification_pruning', '', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'enable_notification_account', '_adm_stg_cpt_option_enable_notification_account', 'on', 'checkbox', '', '', '', 2);
 
 
