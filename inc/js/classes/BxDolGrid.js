@@ -7,6 +7,7 @@
  */
 
 function BxDolGrid (sObject, oOptions) {
+    this._iSearchTimeoutId = false;
     this._sObject = sObject;
     this._sIdWrapper = 'bx-grid-wrap-' + sObject;
     this._sIdContainer = 'bx-grid-cont-' + sObject;
@@ -381,14 +382,21 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
             $this.action (sAction, oData, '', false, sActionConfirm);
         });    
 
+        var callbackSearch = function (sTerm) {
+            clearTimeout($this._iSearchTimeoutId);
+            $this._iSearchTimeoutId = setTimeout(function () {
+                glGrids[$this._sObject].setFilter(sTerm, true);
+            }, 500);
+        }
+        
         jQuery('#bx-grid-search-' + this._sObject).bind({
             keyup: function (e) {
-                glGrids[$this._sObject].setFilter(this.value, true);
+                callbackSearch(this.value);
             },
             focusout: function (e) {
                 if (0 == this.value.length)
                     this.value = $this._sSearchInputText;
-                glGrids[$this._sObject].setFilter(this.value == $this._sSearchInputText ? '' : this.value, true);
+                callbackSearch(this.value == $this._sSearchInputText ? '' : this.value);
             },
             focusin: function (e) {
                 if (this.value == $this._sSearchInputText)

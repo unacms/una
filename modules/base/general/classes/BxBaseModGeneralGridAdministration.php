@@ -128,7 +128,8 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             'name' => 'search',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $sJsObject . '.onChangeFilter(this)'
+                'onKeyup' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeFilter(this)',
+                'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter(this)',
             )
         );
 
