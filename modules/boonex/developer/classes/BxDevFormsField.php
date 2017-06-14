@@ -72,6 +72,10 @@ class BxDevFormsFieldTextarea extends BxTemplStudioFormsFieldTextarea
 		parent::init();
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', array(
+            'unique' => $this->aFieldUnique
+        ));
     }
 }
 
@@ -156,6 +160,10 @@ class BxDevFormsFieldSlider extends BxTemplStudioFormsFieldSlider
 		parent::init();
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', array(
+            'unique' => $this->aFieldUnique
+        ));
     }
 }
 
@@ -166,6 +174,10 @@ class BxDevFormsFieldDoublerange extends BxTemplStudioFormsFieldDoublerange
 		parent::init();
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', array(
+            'unique' => $this->aFieldUnique
+        ));
     }
 }
 
@@ -226,6 +238,10 @@ class BxDevFormsFieldSelect extends BxTemplStudioFormsFieldSelect
 		parent::init();
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', array(
+            'unique' => $this->aFieldUnique
+        ));
     }
 }
 
@@ -236,6 +252,10 @@ class BxDevFormsFieldSelectMultiple extends BxTemplStudioFormsFieldSelectMultipl
 		parent::init();
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', array(
+            'unique' => $this->aFieldUnique
+        ));
     }
 }
 
@@ -246,6 +266,10 @@ class BxDevFormsFieldCheckboxSet extends BxTemplStudioFormsFieldCheckboxSet
 		parent::init();
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', array(
+            'unique' => $this->aFieldUnique
+        ));
     }
 }
 
@@ -256,6 +280,10 @@ class BxDevFormsFieldRadioSet extends BxTemplStudioFormsFieldRadioSet
 		parent::init();
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+
+        $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', array(
+            'unique' => $this->aFieldUnique
+        ));
     }
 }
 

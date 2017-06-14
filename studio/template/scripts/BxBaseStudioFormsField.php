@@ -842,6 +842,8 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
     protected $aCheckFunctions = array('avail', 'length', 'preg', 'email');
     protected $sDbPass = 'Xss';
 
+    protected $aFieldUnique;
+
     public function init()
 	{
 		parent::init();
@@ -850,6 +852,21 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
         $this->aParams['table_field_type'] = 'varchar(255)';
 
         $this->aForm['inputs']['caption']['info'] = _t('_adm_form_dsc_field_caption');
+
+        $this->aFieldUnique = array(
+            'type' => 'switcher',
+            'name' => 'unique',
+            'caption' => _t('_adm_form_txt_field_unique'),
+            'info' => _t('_adm_form_dsc_field_unique'),
+            'value' => '1',
+            'required' => '0',
+            'attrs' => array(
+                'id' => 'bx-form-field-unique'
+            ),
+            'db' => array (
+                'pass' => 'Int',
+            )
+        );
 
         $aFields = array(
             'value' => array(
@@ -889,21 +906,7 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader
                     'pass' => 'Int',
                 )
             ),
-            'unique' => array(
-                'type' => 'switcher',
-                'name' => 'unique',
-                'caption' => _t('_adm_form_txt_field_unique'),
-                'info' => _t('_adm_form_dsc_field_unique'),
-                'value' => '1',
-                'required' => '0',
-                'attrs' => array(
-                    'id' => 'bx-form-field-unique',
-                    //'onchange' => $this->getJsObject() . ".onCheckRequired(this)"
-                ),
-                'db' => array (
-                    'pass' => 'Int',
-                )
-            )
+            'unique' => $this->aFieldUnique
         );
 
         $aFields = array_merge($aFields, $this->getCheckerFields());
@@ -917,6 +920,13 @@ class BxBaseStudioFormsFieldPassword extends BxBaseStudioFormsFieldText
 {
     protected $sType = 'password';
     protected $aCheckFunctions = array('avail', 'length', 'preg');
+    
+    public function init()
+	{
+		parent::init();
+
+		unset($this->aForm['inputs']['unique']);
+	}
 }
 
 class BxBaseStudioFormsFieldTextarea extends BxBaseStudioFormsFieldText
@@ -953,6 +963,7 @@ class BxBaseStudioFormsFieldTextarea extends BxBaseStudioFormsFieldText
         );
 
         $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'info', $aFields);
+        unset($this->aForm['inputs']['unique']);
     }
 }
 
@@ -1052,6 +1063,7 @@ class BxBaseStudioFormsFieldCheckbox extends BxBaseStudioFormsFieldText
             )
         );
         $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'value', $aFields);
+        unset($this->aForm['inputs']['unique']);
     }
 }
 
@@ -1077,7 +1089,10 @@ class BxBaseStudioFormsFieldFile extends BxBaseStudioFormsFieldText
 	{
 		parent::init();
 
-        unset($this->aForm['inputs']['value']);
+        unset(
+            $this->aForm['inputs']['value'],
+            $this->aForm['inputs']['unique']
+        );
     }
 }
 
@@ -1230,6 +1245,7 @@ class BxBaseStudioFormsFieldSlider extends BxBaseStudioFormsFieldNumber
             ),
         );
         $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'value', $aFields);
+        unset($this->aForm['inputs']['unique']);
     }
 }
 
@@ -1419,6 +1435,7 @@ class BxBaseStudioFormsFieldSelect extends BxBaseStudioFormsFieldText
             $aFields['values']['values'][] = array('key' => BX_DATA_LISTS_KEY_PREFIX . $aList['key'], 'value' => _t($aList['title']));
 
         $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'caption', $aFields);
+        unset($this->aForm['inputs']['unique']);
     }
 }
 
