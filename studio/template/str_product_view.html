@@ -1,18 +1,15 @@
 <div class="bx-std-product-view">
 	<bx_if:show_screenshots>
-		<div class="bx-std-pv-screenshots">
+		<div class="bx-std-pv-screenshots bx-def-margin-bottom">
 			<div class="bx-std-pvs-left">
 				<i class="sys-icon caret-left"></i>
 			</div>
 			<div class="bx-std-pvs-cnt" style="width:__width__px">
 				<bx_repeat:screenshots>
 					<div class="bx-std-pvs-item bx-def-margin-left-auto" style="background-image:url('__image_url__');">
-						<a href="__view_url__" rel="group">
-			        		<img src="<bx_image_url:spacer.gif />" />
-			        	</a>
+						<a href="__view_url__" rel="group" tsrget="_blank"><img src="<bx_image_url:spacer.gif />" /></a>
 			        </div>
 				</bx_repeat:screenshots>
-				<div class="clear">&#160;</div>
 			</div>
 			<div class="bx-std-pvs-right">
 				<i class="sys-icon caret-right"></i>

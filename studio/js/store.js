@@ -261,7 +261,7 @@ BxDolStudioStore.prototype.initScreenshots = function(iCount) {
 		speedIn: 600,
 		speedOut: 200
 	});
-	if(iCount <= 4)
+	if(iCount <= 2)
 		return;
 
 	$(".bx-std-pvs-left").bind('click', function() {
