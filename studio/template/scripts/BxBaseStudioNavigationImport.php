@@ -119,6 +119,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
     {
         parent::_getFilterControls();
 
+        $sJsObject = $this->getJsObject();
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputSets = array(
@@ -126,7 +127,8 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
             'name' => 'set',
             'attrs' => array(
                 'id' => 'bx-grid-set-' . $this->_sObject,
-                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:$(this).off(\'keyup focusout\'); javascript:' . $sJsObject . '.onChangeFilter()',
+                'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter()',
             ),
             'value' => '',
             'values' => array()

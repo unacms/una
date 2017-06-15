@@ -6,6 +6,7 @@
  * @{
  */
 function BxDolStudioPolyglotKeys(oOptions) {
+	this._iSearchTimeoutId = false;
 	this.sActionsUrl = oOptions.sActionUrl;
 	this.sObjNameGrid = oOptions.sObjNameGrid;
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioPolyglotKeys' : oOptions.sObjName;
@@ -16,12 +17,17 @@ function BxDolStudioPolyglotKeys(oOptions) {
 }
 
 BxDolStudioPolyglotKeys.prototype.onChangeFilter = function() {
+	var $this = this;
+
 	var sValueModule = $('#bx-grid-module-' + this.sObjNameGrid).val().replace('id-', '');
 
 	var sValueSearch = $('#bx-grid-search-' + this.sObjNameGrid).val();
 	if(sValueSearch == this.sTextSearchInput)
 		sValueSearch = '';
 
-	glGrids[this.sObjNameGrid].setFilter(sValueModule + '#-#' + sValueSearch, true);
+	clearTimeout($this._iSearchTimeoutId);
+    $this._iSearchTimeoutId = setTimeout(function () {
+    	glGrids[$this.sObjNameGrid].setFilter(sValueModule + '#-#' + sValueSearch, true);
+    }, 500);
 };
 /** @} */

@@ -6,6 +6,7 @@
  * @{
  */
 function BxDolStudioNavigationImport(oOptions) {
+	this._iSearchTimeoutId = false;
 	this.sActionsUrl = oOptions.sActionUrl;
 	this.sPageUrl = oOptions.sPageUrl;
 	this.sObjNameGrid = oOptions.sObjNameGrid;
@@ -18,6 +19,8 @@ function BxDolStudioNavigationImport(oOptions) {
 }
 
 BxDolStudioNavigationImport.prototype.onChangeFilter = function() {
+	var $this = this;
+
 	var sValueSet = $('#bx-grid-set-' + this.sObjNameGrid).val();
 
 	var sValueModule = $('#bx-grid-module-' + this.sObjNameGrid).val();
@@ -26,7 +29,10 @@ BxDolStudioNavigationImport.prototype.onChangeFilter = function() {
 	if(sValueSearch == this.sTextSearchInput)
 		sValueSearch = '';
 
-	glGrids[this.sObjNameGrid].setFilter(sValueSet + this.sParamsDivider + sValueModule + this.sParamsDivider + sValueSearch, true);
+	clearTimeout($this._iSearchTimeoutId);
+    $this._iSearchTimeoutId = setTimeout(function () {
+    	glGrids[$this.sObjNameGrid].setFilter(sValueSet + $this.sParamsDivider + sValueModule + $this.sParamsDivider + sValueSearch, true);
+    }, 500);
 };
 
 BxDolStudioNavigationImport.prototype.onImport = function(oData) {

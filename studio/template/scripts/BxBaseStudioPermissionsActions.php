@@ -259,6 +259,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
 
         $sContent = "";
 
+        $sJsObject = $this->getJsObject();
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputLevels = array(
@@ -290,7 +291,8 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeFilter()',
+        		'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter()',
             ),
             'value' => '',
             'values' => $this->getModules(false)

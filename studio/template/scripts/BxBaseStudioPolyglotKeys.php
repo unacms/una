@@ -299,6 +299,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
 
         $sContent = "";
 
+        $sJsObject = $this->getJsObject();
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(
@@ -329,7 +330,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
             'name' => 'keyword',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(); ' . $this->getJsObject() . '.onChangeFilter()'
+                'onKeyup' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeFilter()',
+                'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter()',
             )
         );
 

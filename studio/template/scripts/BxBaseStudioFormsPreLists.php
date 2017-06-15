@@ -320,6 +320,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
     {
         $sContent = parent::_getFilterControls();
 
+        $sJsObject = $this->getJsObject();
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(
@@ -327,7 +328,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeFilter()',
+        		'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter()',
             ),
             'value' => '',
             'values' => $this->getModules()

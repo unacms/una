@@ -182,6 +182,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
 
         $sContent = "";
 
+        $sJsObject = $this->getJsObject();
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(
@@ -209,7 +210,8 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
             'name' => 'keyword',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()'
+                'onKeyup' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeFilter()',
+            	'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter()',
             )
         );
         $sContent .= $oForm->genRow($aInputSearch);

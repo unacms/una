@@ -6,6 +6,7 @@
  * @{
  */
 function BxDolStudioFormsForms(oOptions) {
+	this._iSearchTimeoutId = false;
 	this.sActionsUrl = oOptions.sActionUrl;
 	this.sPageUrl = oOptions.sPageUrl;
 	this.sObjNameGrid = oOptions.sObjNameGrid;
@@ -18,12 +19,16 @@ function BxDolStudioFormsForms(oOptions) {
 }
 
 BxDolStudioFormsForms.prototype.onChangeFilter = function() {
+	var $this = this;
 	var sValueModule = $('#bx-grid-module-' + this.sObjNameGrid).val();
 
 	var sValueSearch = $('#bx-grid-search-' + this.sObjNameGrid).val();
 	if(sValueSearch == this.sTextSearchInput)
 		sValueSearch = '';
 
-	glGrids[this.sObjNameGrid].setFilter(sValueModule + this.sParamsDivider + sValueSearch, true);
+	clearTimeout($this._iSearchTimeoutId);
+    $this._iSearchTimeoutId = setTimeout(function () {
+    	glGrids[$this.sObjNameGrid].setFilter(sValueModule + $this.sParamsDivider + sValueSearch, true);
+    }, 500);
 };
 /** @} */

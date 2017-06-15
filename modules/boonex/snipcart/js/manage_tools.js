@@ -9,6 +9,7 @@
  */
 
 function BxSnipcartManageTools(oOptions) {
+	this._iSearchTimeoutId = false;
 	this._sActionsUrl = oOptions.sActionUrl;
 	this._sObjNameGrid = oOptions.sObjNameGrid;
     this._sObjName = oOptions.sObjName == undefined ? 'oBxSnipcartManageTools' : oOptions.sObjName;
@@ -22,6 +23,7 @@ function BxSnipcartManageTools(oOptions) {
 }
 
 BxSnipcartManageTools.prototype.onChangeFilter = function(oFilter) {
+	var $this = this;
 	var oFilter1 = $('#bx-grid-filter1-' + this._sObjNameGrid);
 	var sValueFilter1 = oFilter1.length > 0 ? oFilter1.val() : '';
 
@@ -30,7 +32,10 @@ BxSnipcartManageTools.prototype.onChangeFilter = function(oFilter) {
 	if(sValueSearch == _t('_sys_grid_search'))
 		sValueSearch = '';
 
-	glGrids[this._sObjNameGrid].setFilter(sValueFilter1 + this._sParamsDivider + sValueSearch, true);
+	clearTimeout($this._iSearchTimeoutId);
+    $this._iSearchTimeoutId = setTimeout(function () {
+        glGrids[$this._sObjNameGrid].setFilter(sValueFilter1 + $this._sParamsDivider + sValueSearch, true);
+    }, 500);
 };
 
 BxSnipcartManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {

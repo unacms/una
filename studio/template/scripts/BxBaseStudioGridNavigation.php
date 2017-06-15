@@ -20,6 +20,7 @@ class BxBaseStudioGridNavigation extends BxTemplStudioGrid
         if(empty($sGetItemsMethod))
             return '';
 
+        $sJsObject = $this->getJsObject();
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(
@@ -27,7 +28,8 @@ class BxBaseStudioGridNavigation extends BxTemplStudioGrid
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:$(this).off(\'keyup focusout\'); ' . $sJsObject . '.onChangeFilter()',
+        		'onBlur' => 'javascript:' . $sJsObject . '.onChangeFilter()',
             ),
             'value' => '',
             'values' => $this->getModules($bShowCustom, $bShowSystem)
