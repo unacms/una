@@ -57,7 +57,8 @@
 	box-shadow: @bx-shadow-card;
 }
 .bx-popup-applied {
-	.radius(@bx-border-radius-popup);
+	border-radius: @bx-border-radius-popup;
+	background-clip: padding-box;    
 
 	-webkit-box-shadow: @bx-shadow-popup;
 	-moz-box-shadow: @bx-shadow-popup;
@@ -337,7 +338,8 @@ a.bx-def-font-h3:hover {
     border-style: @bx-border-type;
     border-color: @bx-color-border-cover;
 
-    .radius(@bx-border-radius-cover);
+	border-radius: @bx-border-radius-cover;
+	background-clip: padding-box;
 
     -webkit-box-shadow: @bx-shadow-cover;
     -moz-box-shadow: @bx-shadow-cover;
@@ -358,8 +360,9 @@ a.bx-def-font-h3:hover {
     border-style: @bx-border-type;
     border-color: @bx-color-border-cover-icon;
 
-    .radius(@bx-border-radius-cover-icon);
-
+	border-radius: @bx-border-radius-cover-icon;
+	background-clip: padding-box;
+    
     -webkit-box-shadow: @bx-shadow-cover-icon;
     -moz-box-shadow: @bx-shadow-cover-icon;
     box-shadow: @bx-shadow-cover-icon;
@@ -387,7 +390,8 @@ a.bx-def-font-h3:hover {
 	border-style: @bx-border-type;
 	border-color: @bx-color-border-block;
 
-	.radius(@bx-border-radius-block);
+	border-radius: @bx-border-radius-block;
+	background-clip: padding-box;    
 }
 .bx-db-header {
 	padding: @bx-title-padding-block;
@@ -396,8 +400,9 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-block-title;
 
-	.radius(@bx-border-radius-block-title);
-
+	border-radius: @bx-border-radius-block-title;
+	background-clip: padding-box;
+    
 	background-color: @bx-color-block-title;
 }
 .bx-db-header .bx-db-title {
@@ -426,7 +431,8 @@ a.bx-def-font-h3:hover {
 	.background-color (@bx-color-box);
 }
 .bx-def-box.bx-def-round-corners {
-	.radius(@bx-border-radius-box);
+	border-radius: @bx-border-radius-box;
+	background-clip: padding-box;
 }
 
 /* popup */
@@ -435,7 +441,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-popup;
 
-	.radius(@bx-border-radius-popup);
+	border-radius: @bx-border-radius-popup;
+	background-clip: padding-box;
 }
 .bx-popup-color-bg {
 	background-color: @bx-color-popup;
@@ -671,8 +678,9 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button;
 
-	.radius(@bx-border-radius-button);
-
+	border-radius: @bx-border-radius-button;
+	background-clip: padding-box;
+    
 	text-shadow: @bx-shadow-font-button;
 
 	font-family: @bx-font-family-button;
@@ -724,7 +732,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button-small;
 
-	.radius(@bx-border-radius-button-small);
+	border-radius: @bx-border-radius-button-small;
+	background-clip: padding-box;
 
 	text-shadow: @bx-shadow-font-button-small;
 

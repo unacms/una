@@ -3,11 +3,6 @@
 .radius(@val) {
     @rem-val: (unit(@val) / @base-font-size-px);
 	border-radius:~"@{rem-val}rem";
-	-moz-border-radius:~"@{rem-val}rem";
-	-webkit-border-radius:~"@{rem-val}rem";
-
-	-moz-background-clip: padding;
-	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
 }
 
