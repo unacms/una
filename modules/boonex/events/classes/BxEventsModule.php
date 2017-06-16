@@ -44,7 +44,13 @@ class BxEventsModule extends BxBaseModGroupsModule
     }
 
     /**
+     * @page service Service Calls
+     * @section Events Events
+     * @subsection calendar
+     * @ref BxEventsModule::serviceCalendar
+     * 
      * Shows event or events calendar
+     * 
      * @param $aData additional data to point which events to show, leave empty to show all events, specify event's ID in 'event' array key to show calendar for one event only. If only one event is specified then it will show calendar only if it's repeating event.
      * @param $sTemplate template to use to show calendar, or leave empty for default template, possible options: calendar.html, calendar_compact.html
      * @return HTML string with calendar to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error empty string is returned.
@@ -67,7 +73,13 @@ class BxEventsModule extends BxBaseModGroupsModule
     }
 
     /**
+     * @page service Service Calls
+     * @section Events Events
+     * @subsection process_reminders
+     * @ref BxEventsModule::serviceProcessReminders
+     * 
      * Send remiders to event's participants.
+     *
      * It must be processed once every hour for the proper processing.
      * @return nothing
      */ 
@@ -88,7 +100,13 @@ class BxEventsModule extends BxBaseModGroupsModule
     }
 
     /**
+     * @page service Service Calls
+     * @section Events Events
+     * @subsection get_timeline_post
+     * @ref BxEventsModule::serviceGetTimelinePost
+     *
      * Get Timeline post. It's needed for Timeline module.
+     * 
      * @param $aEvent timeline event array from Timeline module
      * @return array in special format which is needed specifically for Timeline module to display the data.
      */

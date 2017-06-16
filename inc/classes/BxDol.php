@@ -113,6 +113,11 @@
  */ 
 
 /**
+ * @page service Service Calls
+ * Service calls
+ */
+
+/**
  * @defgroup    UnaCore UNA Core
  * @{
  */
