@@ -230,7 +230,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
      */
     function getOption($sName)
     {
-    	//TODO: test
+    	$oStatement = $this->pdoQuery("SELECT @@{$sName}");
     	return $this->getOne($oStatement);
     }
 
