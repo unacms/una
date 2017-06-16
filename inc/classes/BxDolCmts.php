@@ -4,6 +4,8 @@
  * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    UnaCore UNA Core
+ * @ingroup     UnaCore
+ *
  * @{
  */
 
