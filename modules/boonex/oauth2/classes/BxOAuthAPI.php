@@ -30,12 +30,14 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page API
+     * @page api_private API Private
      * @section api_me /m/oauth2/api/me
      * 
      * Provides information about current profile.  
-     * Can be used in 'basic', 'service' and 'market' grant types.  
      *
+     * **Grant types:** 
+     * `basic`, `service`, `market`
+     * 
      * **HTTP Method:** 
      * `GET`
      *
@@ -66,7 +68,7 @@ class BxOAuthAPI extends BxDol
      * }
      * @endcode
      * 
-     */ 
+     */
     function me($aToken)
     {        
         if (!($oProfile = BxDolProfile::getInstance($aToken['user_id']))) {
@@ -78,7 +80,7 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page API
+     * @page api_private API Private
      * @section api_user /m/oauth2/api/user
      * 
      * Provides information about particular profile profile.
@@ -103,6 +105,47 @@ class BxOAuthAPI extends BxDol
         $this->output($this->_prepareProfileArray($oProfile, !isAdmin($aToken['user_id'])));
     }
 
+    /**
+     * @page api_private API Private
+     * @section api_me /m/oauth2/api/friends
+     * 
+     * Get list of friends.
+     *
+     * **Grant types:** 
+     * `basic`, `service`, `market`
+     * 
+     * **HTTP Method:** 
+     * `GET`
+     *
+     * **Parameters:**
+     * - `id` - profile ID
+     * 
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "user_id":30,
+     *     "friends":[  
+     *         "24",
+     *         "29",
+     *         "51"
+     *     ]
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     * 
+     */     
     function friends($aToken)
     {
         $iProfileId = (int)bx_get('id');
@@ -110,9 +153,14 @@ class BxOAuthAPI extends BxDol
         if (!($oProfile = $this->_getProfileWithAccessChecking($iProfileId)))
             return;
 
+        if (!($oConn = BxDolConnection::getObjectInstance('sys_profiles_friends'))) {
+            $this->errorOutput(405, 'not_supported', 'Friends lists aren\'t supported');
+            return false;
+        }
+        
         $this->output(array(
             'user_id' => $iProfileId,
-            'friends' => getMyFriendsEx($iProfileId),
+            'friends' => $oConn->getConnectedContent($iProfileId, true),
         ));
     }
 
