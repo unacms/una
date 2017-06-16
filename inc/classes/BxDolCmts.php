@@ -3,9 +3,12 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
+ * @group Objects
+ * @{
  * @page objects Objects
  * @section comments Comments
  * @ref BxDolCmts
+ * @}
  *
  * @defgroup    UnaCore UNA Core
  * @{
