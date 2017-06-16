@@ -30,6 +30,9 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
+     * @page API
+     * @section api_me /m/oauth2/api/me
+     * 
      * Provides information about current profile.  
      * Can be used in 'basic', 'service' and 'market' grant types.  
      *
@@ -74,6 +77,17 @@ class BxOAuthAPI extends BxDol
         $this->output($this->_prepareProfileArray($oProfile, false));
     }
 
+    /**
+     * @page API
+     * @section api_user /m/oauth2/api/user
+     * 
+     * Provides information about particular profile profile.
+     *
+     * **Parameters:**
+     * - `id` - profile ID
+     *
+     * Everything else is equivalent to @ref api_me
+     */     
     function user($aToken)
     {
         $iProfileId = (int)bx_get('id');
