@@ -73,10 +73,10 @@ class BxOAuthModule extends BxDolModule
     }
 
     /**
-     * @page api_public API Public
-     * @section token /m/oauth2/token
+     * @page public_api API Public
+     * @section public_api_token /m/oauth2/token
      * 
-     * Get the token for future communication with @ref api_private.
+     * Get the token for the future communication with @ref private_api
      * 
      * **HTTP Method:** 
      * `POST`

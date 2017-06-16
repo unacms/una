@@ -30,8 +30,8 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page api_private API Private
-     * @section api_me /m/oauth2/api/me
+     * @page private_api API Private
+     * @section private_api_me /m/oauth2/api/me
      * 
      * Provides information about current profile.  
      *
@@ -80,15 +80,15 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page api_private API Private
-     * @section api_user /m/oauth2/api/user
+     * @page private_api API Private
+     * @section private_api_user /m/oauth2/api/user
      * 
      * Provides information about particular profile profile.
      *
      * **Parameters:**
      * - `id` - profile ID
      *
-     * Everything else is equivalent to @ref api_me
+     * Everything else is equivalent to @ref private_api_me
      */     
     function user($aToken)
     {
@@ -106,8 +106,8 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page api_private API Private
-     * @section api_me /m/oauth2/api/friends
+     * @page private_api API Private
+     * @section private_api_friends /m/oauth2/api/friends
      * 
      * Get list of friends.
      *

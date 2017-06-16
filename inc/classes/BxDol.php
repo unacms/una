@@ -103,6 +103,16 @@
  */
 
 /**
+ * @page public_api API Public
+ * Public API for getting secure token for @ref private_api calls and other calls which don't require user authentication
+ */
+
+/**
+ * @page private_api API Private
+ * Private API, which uses secure token for communication, token can be retrived via @ref public_api_token
+ */ 
+
+/**
  * @defgroup    UnaCore UNA Core
  * @{
  */
