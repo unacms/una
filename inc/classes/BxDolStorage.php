@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @group Objects
+ * @defgroup Objects
  * @{
  * @page objects Objects
  * @section storage Storage
