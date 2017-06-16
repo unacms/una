@@ -47,7 +47,7 @@ class BxEventsModule extends BxBaseModGroupsModule
      * @page service Service Calls
      * @section Events Events
      * @subsection calendar
-     * @ref BxEventsModule::serviceCalendar
+     * @see BxEventsModule::serviceCalendar
      * 
      * Shows event or events calendar
      * 
@@ -76,7 +76,7 @@ class BxEventsModule extends BxBaseModGroupsModule
      * @page service Service Calls
      * @section Events Events
      * @subsection process_reminders
-     * @ref BxEventsModule::serviceProcessReminders
+     * @see BxEventsModule::serviceProcessReminders
      * 
      * Send remiders to event's participants.
      *
@@ -103,7 +103,7 @@ class BxEventsModule extends BxBaseModGroupsModule
      * @page service Service Calls
      * @section Events Events
      * @subsection get_timeline_post
-     * @ref BxEventsModule::serviceGetTimelinePost
+     * @see BxEventsModule::serviceGetTimelinePost
      *
      * Get Timeline post. It's needed for Timeline module.
      * 
