@@ -3,13 +3,6 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup Objects
- * @{
- * @page objects Objects
- * @section storage Storage
- * @ref BxDolStorage
- * @}
- *
  * @defgroup    UnaCore UNA Core
  * @{
  */
@@ -64,6 +57,12 @@ define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.png'); ///< default icon if
 define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'file-o'); ///< default font icon if no other icon can be determined by file extension
 
 define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
+
+/**
+ * @page objects
+ * @section storage Storage
+ * @ref BxDolStorage
+ */
 
 /**
  * This class unify storage.

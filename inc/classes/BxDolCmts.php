@@ -3,13 +3,6 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup Objects
- * @{
- * @page objects Objects
- * @section comments Comments
- * @ref BxDolCmts
- * @}
- *
  * @defgroup    UnaCore UNA Core
  * @{
  */
@@ -45,6 +38,12 @@ define('BX_CMT_PFP_BOTTOM', 'bottom');
 
 define('BX_CMT_RATE_VALUE_PLUS', 1);
 define('BX_CMT_RATE_VALUE_MINUS', -1);
+
+/**
+ * @page objects
+ * @section comments Comments
+ * @ref BxDolCmts
+ */
 
 /**
  * Comments for any content
