@@ -59,14 +59,11 @@ define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'file-o'); ///< default font icon if 
 define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
 
 /**
- * @page obj Objects
+ * @page OBJ Objects
  * @section obj_storage Storage
  *
- * Storage engine object.
  * @ref BxDolStorage
- */
-
-/**
+ *
  * This class unify storage.
  * As the result there are many advantages:
  * - files can be stored as on localhost as on remote storage, for example Amazon s3
