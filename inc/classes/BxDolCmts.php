@@ -3,9 +3,11 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    UnaCore UNA Core
- * @ingroup     UnaCore
+ * @page objects Objects
+ * @section comments Comments
+ * @ref BxDolCmts
  *
+ * @defgroup    UnaCore UNA Core
  * @{
  */
 
@@ -42,11 +44,6 @@ define('BX_CMT_RATE_VALUE_PLUS', 1);
 define('BX_CMT_RATE_VALUE_MINUS', -1);
 
 /**
- * @page OBJ Objects
- * @section obj_comments Comments
- *
- * @ref BxDolCmts
- * 
  * Comments for any content
  *
  * Related classes:
