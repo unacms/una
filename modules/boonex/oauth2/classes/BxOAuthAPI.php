@@ -16,9 +16,9 @@ class BxOAuthAPI extends BxDol
     protected $_oModule;
     protected $_oDb;
     public $aAction2Scope = array (
-        'me' => 'basic,market',
-        'user' => 'basic',
-        'friends' => 'basic',
+        'me' => 'basic,market,service',
+        'user' => 'basic,market,service',
+        'friends' => 'basic,market,service',
         'service' => 'service',
         'market' => 'market',
     );
@@ -28,7 +28,42 @@ class BxOAuthAPI extends BxDol
         $this->_oModule = $oModule;
         $this->_oDb = $oModule->_oDb;
     }
-    
+
+    /**
+     * Provides information about current profile.  
+     * Can be used in 'basic', 'service' and 'market' grant types.  
+     *
+     * **HTTP Method:** 
+     * `GET`
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "id":"123",
+     *     "type":"bx_organizations",
+     *     "email":"test@example.com",
+     *     "role":"1",
+     *     "name":"Test",
+     *     "profile_display_name":"Test",
+     *     "profile_link":"http:\/\/example.com\/path-to-una\/page\/view-organization-profile?id=12",
+     *     "picture":"http:\/\/example.com\/path-to-una\/image_transcoder.php?o=bx_organizations_picture&h=36&dpx=1&t=1496247306"
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     * 
+     */ 
     function me($aToken)
     {        
         if (!($oProfile = BxDolProfile::getInstance($aToken['user_id']))) {
