@@ -2,14 +2,109 @@
 /**
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
- *
- * @defgroup    UnaCore UNA Core
- * @{
  */
 
 /**
  * @page objects Objects
  * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms.
+ *
+ * @section captcha CAPTCHA
+ * @ref BxDolCaptcha
+ *
+ * @section category Category
+ * @ref BxDolCategory
+ *
+ * @section comments Comments
+ * @ref BxDolCmts
+ *
+ * @section connection Connection
+ * @ref BxDolConnection
+ *
+ * @section content_info Content Info
+ * @ref BxDolContentInfo
+ *
+ * @section cover Cover
+ * @ref BxDolCover
+ *
+ * @section editor Editor
+ * @ref BxDolEditor
+ *
+ * @section email_templates Email Templates
+ * @ref BxDolEmailTemplates
+ *
+ * @section favorites Favorites
+ * @ref BxDolFavorite
+ *
+ * @section feature Feature
+ * @ref BxDolFeature
+ *
+ * @section file_handler File View Handlers
+ * @ref BxDolFileHandler
+ *
+ * @section forms Forms
+ * @ref BxDolForm
+ * 
+ * @section grid Grid
+ * @ref BxDolGrid
+ *
+ * @section informer Informer
+ * @ref BxDolInformer
+ *
+ * @section key Keys
+ * @ref BxDolKey
+ * 
+ * @section live_updates Live Updates
+ * @ref BxDolLiveUpdates
+ * 
+ * @section menu Menu
+ * @ref BxDolMenu
+ *
+ * @section metatags Meta Tags
+ * @ref BxDolMetatags
+ * 
+ * @section page Page
+ * @ref BxDolPage
+ *
+ * @section permalinks Permalinks
+ * @ref BxDolPermalinks
+ * 
+ * @section privacy Privacy
+ * @ref BxDolPrivacy
+ *
+ * @section reports Reports
+ * @ref BxDolReport
+ * 
+ * @section rss RSS
+ * @ref BxDolRss
+ *
+ * @section search Search
+ * @ref BxDolSearch
+ *
+ * @section storage Storage
+ * @ref BxDolStorage
+ * 
+ * @section transcoder_images Transcoder: Images 
+ * @ref BxDolTranscoderImage
+ *
+ * @section transcoder_proxy Transcoder: Proxy
+ * @ref BxDolTranscoderProxy
+ *
+ * @section transcoder_videos Transcoder: Videos
+ * @ref BxDolTranscoderVideo
+ * 
+ * @section uploader Uploader
+ * @ref BxDolUploader
+ * 
+ * @section views Views
+ * @ref BxDolView
+ *
+ * @section votes Votes
+ * @ref BxDolVote
+ */
+
+/**
+ * @defgroup    UnaCore UNA Core
+ * @{
  */
 
 /**

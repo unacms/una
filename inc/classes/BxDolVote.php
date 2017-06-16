@@ -17,12 +17,6 @@ define('BX_DOL_VOTE_USAGE_INLINE', 'inline');
 define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
 /**
- * @page objects
- * @section votes Votes
- * @ref BxDolVote
- */
-
-/**
  * Vote for any content
  *
  * Related classes:

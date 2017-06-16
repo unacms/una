@@ -53,12 +53,6 @@ define('BX_CONNECTIONS_CONTENT_TYPE_INITIATORS', 'initiators');
 define('BX_CONNECTIONS_CONTENT_TYPE_COMMON', 'common');
 
 /**
- * @page objects
- * @section connection Connection
- * @ref BxDolConnection
- */
-
-/**
  * Connection is usefull when you need to organize some sorts of connections between different content,
  * for example: friends, contacts, favorites, block lists, subscriptions, etc.
  *

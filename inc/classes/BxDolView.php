@@ -14,12 +14,6 @@ define('BX_DOL_VIEW_USAGE_INLINE', 'inline');
 define('BX_DOL_VIEW_USAGE_DEFAULT', BX_DOL_VIEW_USAGE_BLOCK);
 
 /**
- * @page objects
- * @section views Views
- * @ref BxDolView
- */
-
-/**
  * Track any object views automatically
  *
  * Add record to sys_object_view table to track object views,

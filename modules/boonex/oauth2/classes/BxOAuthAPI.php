@@ -30,7 +30,7 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page API API
+     * @page API
      * @section api_me /m/oauth2/api/me
      * 
      * Provides information about current profile.  
@@ -78,7 +78,7 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page API API
+     * @page API
      * @section api_user /m/oauth2/api/user
      * 
      * Provides information about particular profile profile.

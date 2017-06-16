@@ -7,12 +7,6 @@
  * @{
  */
 
-/**
- * @page objects
- * @section content info ContentInfo
- * @ref BxDolContentInfo
- */
-
 class BxDolContentInfoCmts extends BxDolContentInfo
 {
     protected $_oCmts;

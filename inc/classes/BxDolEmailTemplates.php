@@ -10,12 +10,6 @@
 bx_import('BxDolPermalinks');
 
 /**
- * @page objects
- * @section email_templates Email Templates
- * @ref BxDolEmailTemplates
- */
-
-/**
  * Email templates are used to send preformated messages.
  *
  * Email templates are multilingual.

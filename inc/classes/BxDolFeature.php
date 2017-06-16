@@ -12,12 +12,6 @@ define('BX_DOL_FEATURED_USAGE_INLINE', 'inline');
 define('BX_DOL_FEATURED_USAGE_DEFAULT', BX_DOL_FEATURED_USAGE_BLOCK);
 
 /**
- * @page objects
- * @section feature Feature
- * @ref BxDolFeature
- */
-
-/**
  * Track any object feature automatically
  *
  * Add record to sys_object_feature table to track object feature,
