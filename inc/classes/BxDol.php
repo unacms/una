@@ -109,7 +109,7 @@
 
 /**
  * @page private_api API Private
- * Private API, which uses secure token for communication, token can be retrived via @ref public_api_token
+ * Private API, which uses secure token for communication, token can be retrived via @ref public_api
  */ 
 
 /**

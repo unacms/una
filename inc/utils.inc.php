@@ -100,7 +100,7 @@ function html2txt($content, $tags = "")
  *          BX_DATA_DATETIME_TS - date/time data type stored as unixtimestamp
  *          BX_DATA_DATE_TS_UTC - date data type stored as unixtimestamp from UTC time
  *          BX_DATA_DATETIME_TS_UTC - date/time data type stored as unixtimestamp from UTC time
- *      @encode
+ *      @endcode
  * @param $mixedParams optional parameters to pass for validation
  * @param $isCheckMagicQuotes deprecated
  * @return the filtered data, or FALSE if the filter fails.

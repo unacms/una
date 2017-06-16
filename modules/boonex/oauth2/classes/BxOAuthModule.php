@@ -96,7 +96,7 @@ class BxOAuthModule extends BxDolModule
      *    "scope":"basic",
      *    "refresh_token":"c3d7f6f4b7cc640214ae0cba2b194872c3089f1c"
      * }
-     * @encode
+     * @endcode
      *
      * **Response (error):**
      * @code
@@ -104,7 +104,7 @@ class BxOAuthModule extends BxDolModule
      *    "error":"short error description here",
      *    "error_description":"long error description here"
      * }
-     * @encode
+     * @endcode
      */     
     function actionToken ()
     {
