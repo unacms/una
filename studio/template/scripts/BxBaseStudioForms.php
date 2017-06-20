@@ -24,21 +24,27 @@ class BxBaseStudioForms extends BxDolStudioForms
 	        'displays' => 'sys_studio_forms_displays',
 	        'fields' => 'sys_studio_forms_fields',
 	        'pre_lists' => 'sys_studio_forms_pre_lists',
-	        'pre_values' => 'sys_studio_forms_pre_values'
+	        'pre_values' => 'sys_studio_forms_pre_values',
+        	'search_forms' => 'sys_studio_search_forms',
+        	'search_fields' => 'sys_studio_search_forms_fields',
     	);
     }
+
     function getPageCss()
     {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'builder_forms.css'));
     }
+
     function getPageJs()
     {
         return array_merge(parent::getPageJs(), array());
     }
+
     function getPageJsObject()
     {
         return '';
     }
+
     function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $sJsObject = $this->getPageJsObject();
@@ -50,6 +56,8 @@ class BxBaseStudioForms extends BxDolStudioForms
             BX_DOL_STUDIO_FORM_TYPE_FIELDS => array('icon' => 'check-square'),
             BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS => array('icon' => 'align-justify'),
             BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => array('icon' => 'indent'),
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => array('icon' => 'search'),
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
         );
         foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
@@ -62,6 +70,7 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         return parent::getPageMenu($aMenu);
     }
+
     function getPageCode($bHidden = false)
     {
         $sMethod = 'get' .  $this->getClassName($this->sPage);
@@ -96,6 +105,15 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         $sModule = bx_process_input($sModule);
         return array('code' => 0, 'message' => '', 'content' => $this->getPreValuesObject()->getListsSelector($sModule));
+    }
+
+    function actionGetSearchForms()
+    {
+        if(($sModule = bx_get('form_module')) === false)
+            return array('code' => 2, 'message' => _t('_adm_form_err_missing_params'));
+
+        $sModule = bx_process_input($sModule);
+        return array('code' => 0, 'message' => '', 'content' => $this->getSearchFieldsObject()->getFormsSelector($sModule));
     }
 
     protected function getForms()
@@ -141,6 +159,26 @@ class BxBaseStudioForms extends BxDolStudioForms
     protected function getPreValuesObject()
     {
         return $this->getGridObject($this->aGridObjects['pre_values']);
+    }
+
+    protected function getSearchForms()
+    {
+        return $this->getGrid($this->aGridObjects['search_forms']);
+    }
+
+    protected function getSearchFormsObject()
+    {
+        return $this->getGridObject($this->aGridObjects['search_forms']);
+    }
+
+    protected function getSearchFields()
+    {
+        return $this->getGrid($this->aGridObjects['search_fields']);
+    }
+
+    protected function getSearchFieldsObject()
+    {
+        return $this->getGridObject($this->aGridObjects['search_fields']);
     }
 
     protected function getGridObject($sObjectName)

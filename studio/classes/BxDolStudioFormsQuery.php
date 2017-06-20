@@ -576,6 +576,106 @@ class BxDolStudioFormsQuery extends BxDolDb
         return (int)$this->getOne($sSql);
     }
 
+    function getSearchForms($aParams, &$aItems, $bReturnCount = true)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+
+        if(!isset($aParams['order']) || empty($aParams['order']))
+           $sOrderClause = "ORDER BY `tf`.`title` ASC";
+
+        switch($aParams['type']) {
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tf`.`id`=:id ";
+                break;
+
+            case 'by_module':
+            	$aMethod['params'][1] = array(
+                	'module' => $aParams['module']
+                );
+
+                $sWhereClause = "AND `tf`.`module`=:module";
+                break;
+
+            case 'counter_by_modules':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'module';
+                $aMethod['params'][2] = 'counter';
+                $sSelectClause = ", COUNT(*) AS `counter`";
+                $sGroupClause = "GROUP BY `tf`.`module`";
+
+            case 'all':
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
+                `tf`.*" . $sSelectClause . "
+            FROM `sys_objects_search_extended` AS `tf` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
+        if(!$bReturnCount)
+            return !empty($aItems);
+
+        return (int)$this->getOne("SELECT FOUND_ROWS()");
+    }
+
+    function getSearchFields($aParams, &$aItems, $bReturnCount = true)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sFromClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+
+        if(!isset($aParams['order']) || empty($aParams['order']))
+           $sOrderClause = "ORDER BY `tfld`.`order` ASC";
+
+        switch($aParams['type']) {
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tfld`.`id`=:id ";
+                break;
+
+            case 'by_object':
+            	$aMethod['params'][1] = array(
+                	'object' => $aParams['object']
+                );
+
+                $sWhereClause = "AND `tfld`.`object`=:object";
+                break;
+
+            case 'counter_by_modules':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'module';
+                $aMethod['params'][2] = 'counter';
+                $sSelectClause = ", COUNT(*) AS `counter`";
+                $sGroupClause = "GROUP BY `tfld`.`module`";
+                $sOrderClause = "";
+                break;
+
+            case 'all':
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+            	`tfld`.*" . $sSelectClause . "
+            FROM `sys_search_extended_fields` AS `tfld` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
+        if(!$bReturnCount)
+            return !empty($aItems);
+
+        return (int)$this->getOne("SELECT FOUND_ROWS()");
+    }
+
     function alterAdd($sTable, $sField, $sType)
     {
         $sSql = "ALTER TABLE `" . $sTable . "` ADD `" . $sField . "` " . $sType;

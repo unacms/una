@@ -12,6 +12,9 @@ define('BX_DOL_STUDIO_FORM_TYPE_DISPLAYS', 'displays');
 define('BX_DOL_STUDIO_FORM_TYPE_FIELDS', 'fields');
 define('BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS', 'pre_lists');
 define('BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES', 'pre_values');
+define('BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS', 'search_forms');
+define('BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS', 'search_fields');
+
 
 define('BX_DOL_STUDIO_FORM_TYPE_DEFAULT', BX_DOL_STUDIO_FORM_TYPE_FORMS);
 
