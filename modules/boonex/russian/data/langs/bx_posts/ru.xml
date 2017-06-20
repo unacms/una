@@ -9,13 +9,14 @@
     <string name="_bx_posts_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_posts_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
 	<string name="_bx_posts_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_posts_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+	<string name="_bx_posts_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
 	<string name="_bx_posts_form_entry"><![CDATA[Публикации]]></string>
 	<string name="_bx_posts_form_entry_display_add"><![CDATA[Добавить публикацию]]></string>
 	<string name="_bx_posts_form_entry_display_edit"><![CDATA[Редактировать публикацию]]></string>
 	<string name="_bx_posts_form_entry_display_delete"><![CDATA[Удалить публикацию]]></string>
 	<string name="_bx_posts_form_entry_display_view"><![CDATA[Просмотреть публикацию]]></string>
+	<string name="_bx_posts_form_entry_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_posts_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_posts_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_posts_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
@@ -86,6 +87,12 @@
     <string name="_bx_posts_page_title_entries_popular"><![CDATA[Популярные Публикации]]></string>
     <string name="_bx_posts_page_title_sys_entries_updated"><![CDATA[Обновленные Публикации]]></string>
     <string name="_bx_posts_page_title_entries_updated"><![CDATA[Обновленные Публикации]]></string>
+    <string name="_bx_posts_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_posts_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_posts_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_posts_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_posts_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_posts_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
     <string name="_bx_posts_page_block_title_popular_entries"><![CDATA[Популярные Публикации]]></string>
     <string name="_bx_posts_page_block_title_popular_entries_view_extended"><![CDATA[Популярные Публикации (Дополнительный просмотр)]]></string>
     <string name="_bx_posts_page_block_title_popular_entries_view_full"><![CDATA[Популярные Публикации (Полный просмотр)]]></string>
@@ -130,6 +137,8 @@
     <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Управление публикациями]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Популярные публикации]]></string>
     <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Популярные публикации]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_posts_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_posts_menu_title_view_entry_submenu"><![CDATA[Просмотреть публикацию - Подменю]]></string>
     <string name="_bx_posts_menu_set_title_view_entry_submenu"><![CDATA[Просмотреть публикацию - Подменю]]></string>
     <string name="_bx_posts_menu_item_title_view_entry_submenu_entry"><![CDATA[Публикация]]></string>
@@ -165,6 +174,9 @@
 
     <string name="_bx_posts_chart_growth"><![CDATA[Публикации: Развитие]]></string>
     <string name="_bx_posts_chart_growth_speed"><![CDATA[Публикации: Скорость развития]]></string>
+
+    <string name="_bx_posts_search_extended"><![CDATA[Поиск публикаций]]></string>
+    <string name="_bx_posts_search_extended_cmts"><![CDATA[Поиск комментариев к публикациям]]></string>
 
     <string name="_bx_posts_pre_lists_cats"><![CDATA[Категории публикаций]]></string>
     <string name="_bx_posts_cat_Animals_Pets"><![CDATA[Животные]]></string>

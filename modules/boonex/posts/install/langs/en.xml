@@ -9,13 +9,14 @@
 	<string name="_bx_posts_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_posts_option_per_page_profile"><![CDATA[Number of items per page on profile/group page]]></string>
 	<string name="_bx_posts_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_posts_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+	<string name="_bx_posts_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 
 	<string name="_bx_posts_form_entry"><![CDATA[Posts]]></string>
 	<string name="_bx_posts_form_entry_display_add"><![CDATA[Add Post]]></string>
 	<string name="_bx_posts_form_entry_display_edit"><![CDATA[Edit Post]]></string>
 	<string name="_bx_posts_form_entry_display_delete"><![CDATA[Delete Post]]></string>
 	<string name="_bx_posts_form_entry_display_view"><![CDATA[View Post]]></string>
+	<string name="_bx_posts_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_posts_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_posts_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_posts_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
@@ -86,6 +87,12 @@
     <string name="_bx_posts_page_title_entries_popular"><![CDATA[Popular]]></string>
     <string name="_bx_posts_page_title_sys_entries_updated"><![CDATA[Updated Posts]]></string>
     <string name="_bx_posts_page_title_entries_updated"><![CDATA[Updated Posts]]></string>
+    <string name="_bx_posts_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_posts_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_posts_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_posts_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_posts_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_posts_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
     <string name="_bx_posts_page_block_title_popular_entries"><![CDATA[Popular]]></string>
     <string name="_bx_posts_page_block_title_popular_entries_view_extended"><![CDATA[Popular (Extended View)]]></string>
     <string name="_bx_posts_page_block_title_popular_entries_view_full"><![CDATA[Popular (Full View)]]></string>
@@ -130,6 +137,8 @@
     <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string>
     <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Popular]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_posts_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_posts_menu_title_view_entry_submenu"><![CDATA[View Post Submenu]]></string>
     <string name="_bx_posts_menu_set_title_view_entry_submenu"><![CDATA[View Post Submenu]]></string>
     <string name="_bx_posts_menu_item_title_view_entry_submenu_entry"><![CDATA[Post]]></string>
@@ -165,6 +174,9 @@
 
     <string name="_bx_posts_chart_growth"><![CDATA[Posts: Growth]]></string>
     <string name="_bx_posts_chart_growth_speed"><![CDATA[Posts: Growth Speed]]></string>
+
+    <string name="_bx_posts_search_extended"><![CDATA[Posts Search]]></string>
+    <string name="_bx_posts_search_extended_cmts"><![CDATA[Posts Comments Search]]></string>
 
     <string name="_bx_posts_pre_lists_cats"><![CDATA[Post categories]]></string>
     <string name="_bx_posts_cat_Animals_Pets"><![CDATA[Animals & Pets]]></string>
