@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section uploader Uploader
- * @ref BxDolUploader
- */
-
-/**
  * Uploaders are disigned to work as form field in forms. @see BxDolForm.
  *
  *

@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section permalinks Permalinks
- * @ref BxDolPermalinks
- */
-
-/**
  * Permalinks for any content.
  *
  * An object of the class allows to check whether permalink is enabled

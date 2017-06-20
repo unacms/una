@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section file_handler File view handlers
- * @ref BxDolFileHandler
- */
-
-/**
  * File preview object, it's used to preview different files in browser which browse usually doesn't support.
  * 
  *

@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section transcoder_proxy Proxy Transcoder 
- * @ref BxDolTranscoderProxy
- */
-
-/**
  * This transcoder can be used as universal transcoder for videos and images.
  * Depending on original file MIME type it calls the appropriate transcoder.
  * Proxied transcoders names are specified in 'source_params' array:

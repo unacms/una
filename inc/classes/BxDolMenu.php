@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section menu Menu
- * @ref BxDolMenu
- */
-
-/**
  * Menus.
  *
  * Menu uses some set of items and the template to display it,

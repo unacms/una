@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section page Page
- * @ref BxDolPage
- */
-
-/**
  * Pages.
  *
  * It allows to display pages which are built from studio.

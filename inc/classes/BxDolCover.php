@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section cover Cover
- * @ref BxDolCover
- */
-
-/**
  * Cover.
  *
  * It displays cover area for different pages, usually it have background image, text and some buttons on it.

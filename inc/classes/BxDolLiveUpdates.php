@@ -7,12 +7,6 @@
  * @{
  */
 
-/**
- * @page objects
- * @section live_updates Live Updates
- * @ref BxDolLiveUpdates
- */
-
 class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 {
 	protected $_oQuery;

@@ -40,12 +40,6 @@ define('BX_CMT_RATE_VALUE_PLUS', 1);
 define('BX_CMT_RATE_VALUE_MINUS', -1);
 
 /**
- * @page objects
- * @section comments Comments
- * @ref BxDolCmts
- */
-
-/**
  * Comments for any content
  *
  * Related classes:

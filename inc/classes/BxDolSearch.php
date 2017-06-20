@@ -11,12 +11,6 @@ define('BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT', 10);
 define('BX_DOL_SEARCH_KEYWORD_PAGE', 'site-search-page');
 
 /**
- * @page objects
- * @section search Search
- * @ref BxDolSearch
- */
-
-/**
  * Search class for different content.
  *
  * Allows present content in main search area for all modules.

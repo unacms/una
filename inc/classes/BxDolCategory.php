@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section category Category
- * @ref BxDolCategory
- */
-
-/**
  * Category object, it can make regular form lists to act as categories by making it clickable and display search results with all contents with the same category.
  * Also it provides services to list all categories with number if items in each category.
  *

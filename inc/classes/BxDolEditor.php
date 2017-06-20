@@ -26,12 +26,6 @@ define('BX_EDITOR_FULL', 2);
 define('BX_EDITOR_MINI', 3);
 
 /**
- * @page objects
- * @section editor Editor
- * @ref BxDolEditor
- */
-
-/**
  * WYSIWYG editors.
  *
  * Site owner can choose which visual editor can be user on the site.

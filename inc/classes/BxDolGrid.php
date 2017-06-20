@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section grid Grid
- * @ref BxDolGrid
- */
-
-/**
  * Grid for any content.
  *
  * It allows to display some data as grid with ready to use features:

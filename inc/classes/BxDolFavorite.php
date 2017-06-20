@@ -12,12 +12,6 @@ define('BX_DOL_FAVORITE_USAGE_INLINE', 'inline');
 define('BX_DOL_FAVORITE_USAGE_DEFAULT', BX_DOL_FAVORITE_USAGE_BLOCK);
 
 /**
- * @page objects
- * @section favorites Favorites
- * @ref BxDolFavorite
- */
-
-/**
  * Track any object favorites automatically
  *
  * Add record to sys_object_favorite table to track object favorites,

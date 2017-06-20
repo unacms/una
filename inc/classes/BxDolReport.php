@@ -14,12 +14,6 @@ define('BX_DOL_REPORT_USAGE_INLINE', 'inline');
 define('BX_DOL_REPORT_USAGE_DEFAULT', BX_DOL_REPORT_USAGE_BLOCK);
 
 /**
- * @page objects
- * @section reports Reports
- * @ref BxDolReport
- */
-
-/**
  * Report any content
  *
  * Related classes:

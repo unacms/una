@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section rss Rss
- * @ref BxDolRss
- */
-
-/**
  * This class unifies the usage of RSS feeds in the script.
  *
  *

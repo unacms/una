@@ -9,12 +9,6 @@
 
 define('BX_METATAGS_KEYWORDS_MAX', 9);
 
-/**
- * @page objects
- * @section metatags Meta-tags
- * @ref BxDolMetatags
- */
-
 // TODO: client side controls: some js to help to enter \@mentions and \#keywords(optional)
 // TODO: integrate to comments, try to integrate to one metatags object - maybe specify metatags object in comments object and make appropriate changes in comments, 
 //       comments content should be treated as main conetent and main content should be shown in search results

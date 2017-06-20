@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section content info ContentInfo
- * @ref BxDolContentInfo
- */
-
-/**
  * Get content info from Content modules
  *
  * Add record to sys_objects_content_info table to provide unified access to module's content,

@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section transcoder_videos Videos Transcoder
- * @ref BxDolTranscoderVideo
- */
-
-/**
  * This class transcodes videos and generates video thumbnails.
  *
  * To generate video which plays in all moders browsers along with video poster, 

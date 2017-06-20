@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section transcoder_images Images Transcoder
- * @ref BxDolTranscoderImage
- */
-
-/**
  * This class transcodes images on the fly.
  * Transcoded image is saved in the specified storage engine and next time ready image is served.
  *

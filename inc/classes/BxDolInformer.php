@@ -12,12 +12,6 @@ define('BX_INFORMER_INFO', 2);
 define('BX_INFORMER_ERROR', 3);
 
 /**
- * @page objects
- * @section informer Informer
- * @ref BxDolInformer
- */
-
-/**
  * Informer.
  *
  * It displays alerts or information messages in clearly visible area on the page to let user know important information.

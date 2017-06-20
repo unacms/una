@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section captcha CAPTCHA
- * @ref BxDolCaptcha
- */
-
-/**
  * CAPTCHA objects.
  *
  * Default captcha is stored in 'sys_captcha_default' setting option.

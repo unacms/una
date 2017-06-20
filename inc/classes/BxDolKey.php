@@ -8,12 +8,6 @@
  */
 
 /**
- * @page objects
- * @section key Keys
- * @ref BxDolKey
- */
-
-/**
  * Key objects - automatically generate hashed keys.
  *
  * @section example Example of usage

@@ -72,6 +72,40 @@ class BxOAuthModule extends BxDolModule
         $this->_oServer->addGrantType(new OAuth2\GrantType\UserCredentials($oStorage));
     }
 
+    /**
+     * @page public_api API Public
+     * @section public_api_token /m/oauth2/token
+     * 
+     * Get the token for the future communication with @ref private_api
+     * 
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `grant_type` - for API it's better to use 'password' grant type
+     * - `username` - login email
+     * - `password` - login password
+     * - `client_id` - client ID from bx_oauth_clients table
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *    "access_token":"cdd7056d0adafa9ead87526ca22367c6b0df8273",
+     *    "expires_in":3600,
+     *    "token_type":"Bearer",
+     *    "scope":"basic",
+     *    "refresh_token":"c3d7f6f4b7cc640214ae0cba2b194872c3089f1c"
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */     
     function actionToken ()
     {
         // Handle a request for an OAuth2.0 Access Token and send the response to the client

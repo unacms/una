@@ -16,12 +16,6 @@ define('BX_DOL_PG_FRIENDS', '5');
 define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
 
 /**
- * @page objects
- * @section privacy Privacy
- * @ref BxDolPrivacy
- */
-
-/**
  * Privacy settings for any content.
  *
  * Integration of the content with privacy engine allows site member
