@@ -132,6 +132,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             else
                 $aMenuItems[$sName] = $aModuleDb;
 
+            $aMenuItems[$sName]['title'] = BxDolStudioUtils::getModuleTitle($sName);
+
 			if(empty($aMenuItems[$sName]['icon']))
 				$aMenuItems[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModuleDb, 'menu', false); 
         }

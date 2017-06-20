@@ -2,6 +2,7 @@
 <resources name="ru" flag="ru" title="Russian">
 
 	<string name="_bx_cnv"><![CDATA[Переписка]]></string>
+	<string name="_bx_convos"><![CDATA[Переписка]]></string>
 
 	<string name="_bx_cnv_option_preview_messages_num"><![CDATA[Количество сообщений для предпросмотра]]></string>
 

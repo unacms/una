@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 	<string name="_bx_accnt"><![CDATA[Аккаунты]]></string>
+	<string name="_bx_accounts"><![CDATA[Аккаунты]]></string>
 
     <string name="_bx_accounts_form_display_account_settings_email_popup"><![CDATA[Изменить имейл]]></string>
     <string name="_bx_accounts_form_display_account_settings_password_popup"><![CDATA[Сбросить пароль]]></string>

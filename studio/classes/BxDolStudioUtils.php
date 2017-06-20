@@ -105,16 +105,21 @@ class BxDolStudioUtils extends BxDol
 
     public static function getModuleTitle($sName)
     {
-        $sPrefix = '_adm_txt_module_';
+        $sTitle = '_adm_txt_module_' . strtolower($sName);
 
         if(in_array($sName, array(BX_DOL_STUDIO_MODULE_SYSTEM, BX_DOL_STUDIO_MODULE_CUSTOM)))
-            return _t($sPrefix . $sName);
+            return _t($sTitle);
 
         $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sName);
-        if(!empty($aModule))
-            return $aModule['title'];
+        if(empty($aModule) || !is_array($aModule))
+            return _t($sTitle);
+        
+        $sTitle = '_' . $aModule['name'];
+        $$sTitle = _t($sTitle);
+        if(strcmp($sTitle, $$sTitle) !== 0)
+            return $$sTitle;
 
-        return _t($sPrefix . strtolower($sName));
+        return $aModule['title'];
     }
 
     public static function getModules($bShowCustom = true, $bShowSystem = true)

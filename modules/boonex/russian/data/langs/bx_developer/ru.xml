@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
+    <string name="_bx_developer"><![CDATA[Разработчик]]></string>
+
     <string name="_bx_dev_adm_wgt_cpt"><![CDATA[Разработчик]]></string>
     <string name="_bx_dev_adm_page_cpt"><![CDATA[Разработчик]]></string>
     
