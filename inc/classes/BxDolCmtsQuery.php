@@ -221,6 +221,36 @@ class BxDolCmtsQuery extends BxDolDb
 
                 break;
 
+            case 'search_ids':
+                $aMethod['name'] = 'getColumn';
+
+                $sSelectClause = "`{$this->_sTable}`.`cmt_id`";
+
+                $sWhereConditions = "1";
+                foreach($aParams['search_params'] as $sSearchParam => $aSearchParam) {
+                    $sSearchValue = "";
+                    switch ($aSearchParam['operator']) {
+                        case 'like':
+                            $sSearchValue = " LIKE " . $this->escape("%" . $aSearchParam['value'] . "%");
+                            break;
+
+                        case 'in':
+                            $sSearchValue = " IN (" . $this->implode_escape($aSearchParam['value']) . ")";
+                            break;
+
+                        default:
+                             $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
+                             $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];                             
+                    }
+
+                    $sWhereConditions .= " AND `{$this->_sTable}`.`" . $sSearchParam . "`" . $sSearchValue;
+                }
+
+                $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
+
+                $sOrderClause .=  "`{$this->_sTable}`.`cmt_time` ASC";
+                break;
+
             case 'all_ids':
                 $aMethod['name'] = 'getColumn';
 

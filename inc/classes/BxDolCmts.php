@@ -972,6 +972,45 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_oQuery->getCommentsBy($aParams);
     }
 
+    public function serviceGetSearchableFieldsExtended()
+    {
+        $oForm = BxDolForm::getObjectInstance('sys_comment', 'sys_comment_post', $this->_oTemplate);
+        if(!$oForm)
+            return array();
+
+        $aSrchNamesExcept = array();
+        $aSrchCaptions = array(
+            'cmt_author_id' => '_sys_form_comment_input_caption_cmt_author_id',
+            'cmt_text' => '_sys_form_comment_input_caption_cmt_text'
+        );
+
+        $aResult = array(
+            'cmt_author_id' => array(
+            	'type' => 'text_auto', 
+            	'caption' => $aSrchCaptions['cmt_author_id'],
+            	'values' => '' 
+            )
+        );
+
+        foreach ($oForm->aInputs as $aInput)
+            if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $aSrchNamesExcept))
+                $aResult[$aInput['name']] = array(
+                	'type' => $aInput['type'], 
+                	'caption' => !empty($aInput['caption_src']) ? $aInput['caption_src'] : (!empty($aSrchCaptions[$aInput['name']]) ? $aSrchCaptions[$aInput['name']] : ''),
+                    'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
+                );
+
+        return $aResult;
+    }
+
+    public function serviceGetSearchResultExtended($aParams)
+    {
+        if(empty($aParams) || !is_array($aParams))
+            return array();
+
+        return $this->_oQuery->getCommentsBy(array('type' => 'search_ids', 'search_params' => $aParams));
+    }
+
     /**
      * Internal functions
      */

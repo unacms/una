@@ -128,5 +128,8 @@ interface iBxDolContentInfoService
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true);
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '');
     public function serviceGetAll ($aParams = array());
+
+    public function serviceGetSearchableFieldsExtended();
+    public function serviceGetSearchResultExtended($aParams);
 }
 /** @} */

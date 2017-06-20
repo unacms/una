@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_statistics`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_statistics`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
@@ -883,6 +883,46 @@ CREATE TABLE `sys_objects_search` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table 'sys_objects_search_extended'
+--
+
+CREATE TABLE `sys_objects_search_extended` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `object` varchar(64) NOT NULL  default '',
+  `object_content_info` varchar(64) NOT NULL  default '',
+  `module` varchar(32) NOT NULL  default '',
+  `title` varchar(255) NOT NULL default '',
+  `active` tinyint(4) NOT NULL DEFAULT '0',
+  `class_name` varchar(32) NOT NULL  default '',
+  `class_file` varchar(255) NOT NULL  default '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object` (`object`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table 'sys_search_extended_fields'
+--
+
+CREATE TABLE `sys_search_extended_fields` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `object` varchar(64) NOT NULL  default '',
+  `name` varchar(255) NOT NULL  default '',
+  `type` varchar(32) NOT NULL default '',
+  `caption` varchar(255) NOT NULL default '',
+  `values` text NOT NULL default '',
+  `search_type` varchar(32) NOT NULL  default '',
+  `search_value` varchar(255) NOT NULL default '',
+  `search_operator` varchar(32) NOT NULL  default '',
+  `active` tinyint(4) NOT NULL DEFAULT '0',
+  `order` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `field` (`object`, `name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -3355,17 +3395,23 @@ CREATE TABLE IF NOT EXISTS `sys_objects_grid` (
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
 ('sys_studio_lang_keys', 'Sql', 'SELECT `tlk`.`ID` AS `id`, `tlk`.`Key` AS `key`, `tlc`.`Name` AS `module`, `tls`.`String` AS `string` FROM `sys_localization_keys` AS `tlk` LEFT JOIN `sys_localization_categories` AS `tlc` ON `tlk`.`IDCategory`=`tlc`.`ID` LEFT JOIN `sys_localization_strings` AS `tls` ON `tlk`.`ID`=`tls`.`IDKey` WHERE `tls`.`IDLanguage`=\'%d\'', 'sys_localization_keys', 'id', '', '', '', 20, NULL, 'start', '', 'key,string', '', 'like', 'key,module,string', '', 'BxTemplStudioPolyglotKeys', ''),
 ('sys_studio_lang_etemplates', 'Sql', 'SELECT * FROM `sys_email_templates` WHERE 1 ', 'sys_email_templates', 'ID', '', '', '', 20, NULL, 'start', '', 'Module', 'NameSystem,Subject,Body', 'auto', 'Module', 'NameSystem', 'BxTemplStudioPolyglotEtemplates', ''),
+
 ('sys_studio_acl', 'Sql', 'SELECT * FROM `sys_acl_levels` WHERE 1 ', 'sys_acl_levels', 'ID', 'Order', 'Active', '', 100, NULL, 'start', '', 'Description', 'Name', 'auto', '', '', 'BxTemplStudioPermissionsLevels', ''),
 ('sys_studio_acl_actions', 'Sql', 'SELECT *, ''0'' AS `Active` FROM `sys_acl_actions` WHERE 1 ', 'sys_acl_actions', 'ID', '', 'Active', '', 20, NULL, 'start', '', 'Module,Name', 'Title,Desc', 'auto', 'Module,Name', 'Title,Desc', 'BxTemplStudioPermissionsActions', ''),
+
 ('sys_studio_nav_menus', 'Sql', 'SELECT `tm`.*, `tms`.`title` AS `set_title`, `tmt`.`title` AS `template_title` FROM `sys_objects_menu` AS `tm` LEFT JOIN `sys_menu_sets` AS `tms` ON `tm`.`set_name`=`tms`.`set_name` LEFT JOIN `sys_menu_templates` AS `tmt` ON `tm`.`template_id`=`tmt`.`id` WHERE 1 ', 'sys_objects_menu', 'id', '', 'active', '', 100, NULL, 'start', '', '', 'tm`.`title,tms`.`title,tmt`.`title', 'auto', '', '', 'BxTemplStudioNavigationMenus', ''),
 ('sys_studio_nav_sets', 'Sql', 'SELECT * FROM `sys_menu_sets` WHERE 1 ', 'sys_menu_sets', 'set_name', '', '', '', 100, NULL, 'start', '', '', 'title', 'auto', '', '', 'BxTemplStudioNavigationSets', ''),
 ('sys_studio_nav_items', 'Sql', 'SELECT * FROM `sys_menu_items` WHERE 1 ', 'sys_menu_items', 'id', 'order', 'active', '', 100, NULL, 'start_it', '', 'link', 'title_system', 'like', '', '', 'BxTemplStudioNavigationItems', ''),
 ('sys_studio_nav_import', 'Sql', 'SELECT * FROM `sys_menu_items` WHERE 1 AND `copyable`=\'1\' ', 'sys_menu_items', 'id', '', '', '', 5, NULL, 'start_im', '', 'link', 'title_system', 'like', '', '', 'BxTemplStudioNavigationImport', ''),
+
 ('sys_studio_forms', 'Sql', 'SELECT * FROM `sys_objects_form` WHERE 1 ', 'sys_objects_form', 'id', 'module,title', 'active', '', 100, NULL, 'start', '', 'module', 'title', 'like', 'module', 'title', 'BxTemplStudioFormsForms', ''),
 ('sys_studio_forms_displays', 'Sql', 'SELECT `td`.`id` AS `id`, `td`.`object` AS `object`, `td`.`display_name` AS `display_name`, `td`.`title` AS `display_title`, `td`.`module` AS `module`, `tf`.`title` AS `form_title` FROM `sys_form_displays` AS `td` LEFT JOIN `sys_objects_form` AS `tf` ON `td`.`object`=`tf`.`object` WHERE 1 ', 'sys_form_displays', 'id', 'module,object,display_title', '', '', 100, NULL, 'start', '', 'td`.`module', 'td`.`title', 'like', 'module', 'display_title,form_title', 'BxTemplStudioFormsDisplays', ''),
 ('sys_studio_forms_fields', 'Sql', 'SELECT `tdi`.`id` AS `id`, `ti`.`caption_system` AS `caption_system`, `ti`.`type` AS `type`, `ti`.`module` AS `module`, `tdi`.`visible_for_levels` AS `visible_for_levels`, `tdi`.`active` AS `active`, `ti`.`editable` AS `editable`, `ti`.`deletable` AS `deletable`, `tdi`.`order` AS `order` FROM `sys_form_display_inputs` AS `tdi` LEFT JOIN `sys_form_inputs` AS `ti` ON `tdi`.`input_name`=`ti`.`name` AND `ti`.`object`=? WHERE 1 AND `tdi`.`display_name`=?', 'sys_form_display_inputs', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'ti`.`type', 'ti`.`caption_system', 'like', '', '', 'BxTemplStudioFormsFields', ''),
 ('sys_studio_forms_pre_lists', 'Sql', 'SELECT * FROM `sys_form_pre_lists` WHERE 1 ', 'sys_form_pre_lists', 'id', '', '', '', 100, NULL, 'start', '', 'module,key', 'title', 'auto', 'module', 'title', 'BxTemplStudioFormsPreLists', ''),
-('sys_studio_forms_pre_values', 'Sql', 'SELECT * FROM `sys_form_pre_values` WHERE 1 ', 'sys_form_pre_values', 'id', 'Order', '', '', 1000, NULL, 'start', '', 'Key,Value', 'LKey,LKey2', 'auto', '', '', 'BxTemplStudioFormsPreValues', '');
+('sys_studio_forms_pre_values', 'Sql', 'SELECT * FROM `sys_form_pre_values` WHERE 1 ', 'sys_form_pre_values', 'id', 'Order', '', '', 1000, NULL, 'start', '', 'Key,Value', 'LKey,LKey2', 'auto', '', '', 'BxTemplStudioFormsPreValues', ''),
+
+('sys_studio_search_forms', 'Sql', 'SELECT * FROM `sys_objects_search_extended` WHERE 1 ', 'sys_objects_search_extended', 'id', 'module,title', 'active', '', 100, NULL, 'start', '', 'module', 'title', 'like', 'module', 'title', 'BxTemplStudioFormsSearchForms', ''),
+('sys_studio_search_forms_fields', 'Sql', 'SELECT * FROM `sys_search_extended_fields` WHERE 1 AND `object`=?', 'sys_search_extended_fields', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'type', 'caption', 'like', '', '', 'BxTemplStudioFormsSearchFields', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `object` varchar(64) NOT NULL,
@@ -3386,9 +3432,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_lang_keys', 'string', '_adm_pgt_txt_text', '30%', 0, '30', '', 4),
 ('sys_studio_lang_keys', 'languages', '_adm_pgt_txt_languages', '10%', 0, '', '', 5),
 ('sys_studio_lang_keys', 'actions', '', '20%', 0, '', '', 6),
+
 ('sys_studio_lang_etemplates', 'NameSystem', '_adm_pgt_txt_etemplates_gl_name_system', '60%', 1, '58', '', 1),
 ('sys_studio_lang_etemplates', 'Module', '_adm_pgt_txt_etemplates_gl_module', '20%', 0, '18', '', 2),
 ('sys_studio_lang_etemplates', 'actions', '', '20%', 0, '', '', 3),
+
 ('sys_studio_acl', 'Order', '', '1%', 0, '', '', 1),
 ('sys_studio_acl', 'switcher', '_adm_prm_txt_enable', '5%', 0, '', '', 2),
 ('sys_studio_acl', 'Icon', '_adm_prm_txt_icon', '5%', 0, '', '', 3),
@@ -3398,11 +3446,13 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_acl', 'QuotaMaxFileSize', '_adm_prm_txt_max_file_size', '10%', 0, '', '', 7),
 ('sys_studio_acl', 'QuotaNumber', '_adm_prm_txt_max_files', '10%', 0, '', '', 8),
 ('sys_studio_acl', 'actions', '', '20%', 0, '', '', 9),
+
 ('sys_studio_acl_actions', 'switcher', '_adm_prm_txt_enable', '10%', 0, '', '', 1),
 ('sys_studio_acl_actions', 'Title', '_adm_prm_txt_title', '25%', 1, '25', '', 2),
 ('sys_studio_acl_actions', 'Module', '_adm_prm_txt_module', '20%', 0, '18', '', 3),
 ('sys_studio_acl_actions', 'Desc', '_adm_prm_txt_description', '25%', 0, '25', '', 4),
 ('sys_studio_acl_actions', 'actions', '', '20%', 0, '', '', 5),
+
 ('sys_studio_nav_menus', 'switcher', '', '10%', 0, '', '', 1),
 ('sys_studio_nav_menus', 'title', '_adm_nav_txt_menus_gl_title', '17%', 0, '15', '', 2),
 ('sys_studio_nav_menus', 'set_title', '_adm_nav_txt_menus_gl_set_title', '17%', 1, '15', '', 3),
@@ -3410,10 +3460,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_nav_menus', 'template_title', '_adm_nav_txt_menus_gl_template_title', '17%', 1, '15', '', 5),
 ('sys_studio_nav_menus', 'module', '_adm_nav_txt_menus_gl_module', '12%', 0, '10', '', 6),
 ('sys_studio_nav_menus', 'actions', '', '17%', 0, '', '', 7),
+
 ('sys_studio_nav_sets', 'title', '_adm_nav_txt_sets_gl_title', '50%', 1, '48', '', 1),
 ('sys_studio_nav_sets', 'module', '_adm_nav_txt_sets_gl_module', '15%', 0, '13', '', 2),
 ('sys_studio_nav_sets', 'items', '_adm_nav_txt_sets_gl_items', '15%', 0, '13', '', 3),
 ('sys_studio_nav_sets', 'actions', '', '20%', 0, '', '', 4),
+
 ('sys_studio_nav_items', 'order', '', '1%', 0, '', '', 1),
 ('sys_studio_nav_items', 'switcher', '', '9%', 0, '', '', 2),
 ('sys_studio_nav_items', 'icon', '_adm_nav_txt_items_gl_icon', '5%', 0, '', '', 3),
@@ -3422,21 +3474,25 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_nav_items', 'module', '_adm_nav_txt_items_gl_module', '12%', 0, '12', '', 6),
 ('sys_studio_nav_items', 'visible_for_levels', '_adm_nav_txt_items_gl_visible', '10%', 0, '10', '', 7),
 ('sys_studio_nav_items', 'actions', '', '17%', 0, '', '', 8),
+
 ('sys_studio_nav_import', 'icon', '_adm_nav_txt_items_gl_icon', '10%', 0, '', '', 1),
 ('sys_studio_nav_import', 'title_system', '_adm_nav_txt_items_gl_title_system', '30%', 1, '28', '', 2),
 ('sys_studio_nav_import', 'link', '_adm_nav_txt_items_gl_link', '25%', 0, '23', '', 3),
 ('sys_studio_nav_import', 'module', '_adm_nav_txt_items_gl_module', '15%', 0, '13', '', 4),
 ('sys_studio_nav_import', 'actions', '', '20%', 0, '', '', 5),
+
 ('sys_studio_forms', 'switcher', '', '10%', 0, '', '', 1),
 ('sys_studio_forms', 'title', '_adm_form_txt_forms_gl_title', '40%', 1, '38', '', 2),
 ('sys_studio_forms', 'module', '_adm_form_txt_forms_gl_module', '15%', 0, '13', '', 3),
 ('sys_studio_forms', 'displays', '_adm_form_txt_forms_gl_displays', '15%', 0, '13', '', 4),
 ('sys_studio_forms', 'actions', '', '20%', 0, '', '', 5),
+
 ('sys_studio_forms_displays', 'display_title', '_adm_form_txt_displays_gl_title', '30%', 1, '48', '', 1),
 ('sys_studio_forms_displays', 'module', '_adm_form_txt_displays_gl_module', '13%', 0, '11', '', 2),
 ('sys_studio_forms_displays', 'form_title', '_adm_form_txt_displays_gl_form', '24%', 1, '22', '', 3),
 ('sys_studio_forms_displays', 'fields', '_adm_form_txt_displays_gl_fields', '13%', 0, '11', '', 4),
 ('sys_studio_forms_displays', 'actions', '', '20%', 0, '', '', 5),
+
 ('sys_studio_forms_fields', 'order', '', '1%', 0, '', '', 1),
 ('sys_studio_forms_fields', 'switcher', '', '9%', 0, '', '', 2),
 ('sys_studio_forms_fields', 'type', '_adm_form_txt_fields_type', '5%', 0, '', '', 3),
@@ -3444,6 +3500,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_forms_fields', 'module', '_adm_form_txt_fields_module', '15%', 0, '13', '', 5),
 ('sys_studio_forms_fields', 'visible_for_levels', '_adm_form_txt_fields_visible', '10%', 0, '10', '', 6),
 ('sys_studio_forms_fields', 'actions', '', '20%', 0, '', '', 7),
+
 ('sys_studio_forms_pre_lists', 'title', '_adm_form_txt_pre_lists_gl_title', '45%', 1, '50', '', 1),
 ('sys_studio_forms_pre_lists', 'values', '_adm_form_txt_pre_lists_gl_values', '12%', 0, '10', '', 2),
 ('sys_studio_forms_pre_lists', 'module', '_adm_form_txt_pre_lists_gl_module', '13%', 0, '11', '', 3),
@@ -3452,7 +3509,21 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_forms_pre_values', 'checkbox', '', '1%', 0, '', '', 1),
 ('sys_studio_forms_pre_values', 'order', '', '1%', 0, '', '', 2),
 ('sys_studio_forms_pre_values', 'LKey', '_adm_form_txt_pre_values_gl_lkey', '78%', 1, '75', '', 3),
-('sys_studio_forms_pre_values', 'actions', '', '20%', 0, '', '', 4);
+('sys_studio_forms_pre_values', 'actions', '', '20%', 0, '', '', 4),
+
+('sys_studio_search_forms', 'switcher', '', '10%', 0, '', '', 1),
+('sys_studio_search_forms', 'title', '_adm_form_txt_search_forms_title', '40%', 1, '38', '', 2),
+('sys_studio_search_forms', 'module', '_adm_form_txt_search_forms_module', '15%', 0, '13', '', 3),
+('sys_studio_search_forms', 'fields', '_adm_form_txt_search_forms_fields', '15%', 0, '13', '', 4),
+('sys_studio_search_forms', 'actions', '', '20%', 0, '', '', 5),
+
+('sys_studio_search_forms_fields', 'order', '', '1%', 0, '', '', 1),
+('sys_studio_search_forms_fields', 'switcher', '', '9%', 0, '', '', 2),
+('sys_studio_search_forms_fields', 'type', '_adm_form_txt_search_forms_fields_type', '10%', 0, '', '', 3),
+('sys_studio_search_forms_fields', 'caption', '_adm_form_txt_search_forms_fields_caption', '40%', 1, '38', '', 4),
+('sys_studio_search_forms_fields', 'search_type', '_adm_form_txt_search_forms_fields_search_type', '10%', 0, '', '', 5),
+('sys_studio_search_forms_fields', 'search_operator', '_adm_form_txt_search_forms_fields_search_operator', '10%', 0, '', '', 6),
+('sys_studio_search_forms_fields', 'actions', '', '20%', 0, '', '', 7);
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
@@ -3472,37 +3543,54 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_lang_keys', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_lang_keys', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_lang_keys', 'independent', 'add', '_adm_pgt_btn_add_new_key', '', 0, 1),
+
 ('sys_studio_lang_etemplates', 'single', 'edit', '', 'pencil', 0, 1),
+
 ('sys_studio_acl', 'independent', 'add', '_adm_prm_btn_add_level', '', 0, 1),
 ('sys_studio_acl', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_acl', 'single', 'delete', '', 'remove', 1, 2),
+
 ('sys_studio_acl_actions', 'single', 'options', '', 'cog', 0, 1),
+
 ('sys_studio_nav_menus', 'independent', 'add', '_adm_nav_btn_menus_create', '', 0, 1),
 ('sys_studio_nav_menus', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_nav_menus', 'single', 'delete', '', 'remove', 1, 2),
+
 ('sys_studio_nav_sets', 'independent', 'add', '_adm_nav_btn_sets_create', '', 0, 1),
 ('sys_studio_nav_sets', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_nav_sets', 'single', 'delete', '', 'remove', 1, 2),
+
 ('sys_studio_nav_items', 'independent', 'import', '_adm_nav_btn_items_gl_import', '', 0, 1),
 ('sys_studio_nav_items', 'independent', 'add', '_adm_nav_btn_items_gl_create', '', 0, 2),
 ('sys_studio_nav_items', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_nav_items', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_nav_items', 'single', 'show_to', '_adm_nav_btn_items_gl_visible', '', 0, 3),
+
 ('sys_studio_nav_import', 'single', 'import', '', 'plus', 0, 1),
 ('sys_studio_nav_import', 'bulk', 'done', '_adm_nav_btn_items_done', '', 0, 1),
+
 ('sys_studio_forms', 'single', 'edit', '', 'pencil', 0, 1),
+
 ('sys_studio_forms_displays', 'single', 'edit', '', 'pencil', 0, 1),
+
 ('sys_studio_forms_fields', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_forms_fields', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_forms_fields', 'single', 'show_to', '_adm_form_btn_fields_visible', '', 0, 3),
 ('sys_studio_forms_fields', 'independent', 'add', '_adm_form_btn_fields_create', '', 0, 1),
+
 ('sys_studio_forms_pre_lists', 'independent', 'add', '_adm_form_btn_pre_lists_create', '', 0, 1),
 ('sys_studio_forms_pre_lists', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_forms_pre_lists', 'single', 'delete', '', 'remove', 1, 2),
+
 ('sys_studio_forms_pre_values', 'independent', 'add', '_adm_form_btn_pre_values_create', '', 0, 1),
 ('sys_studio_forms_pre_values', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_forms_pre_values', 'single', 'delete', '', 'remove', 1, 2),
-('sys_studio_forms_pre_values', 'bulk', 'delete', '_adm_form_btn_pre_values_delete', '', 1, 1);
+('sys_studio_forms_pre_values', 'bulk', 'delete', '_adm_form_btn_pre_values_delete', '', 1, 1),
+
+('sys_studio_search_forms', 'single', 'edit', '', 'pencil', 0, 1),
+
+('sys_studio_search_forms_fields', 'single', 'edit', '', 'pencil', 0, 1),
+('sys_studio_search_forms_fields', 'independent', 'reset', '_adm_form_btn_search_forms_fields_reset', '', 0, 1);
 
 
 -- GRID: Storage managers

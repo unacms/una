@@ -678,6 +678,11 @@
 	<string name="_adm_form_btn_pre_values_create"><![CDATA[Add New Item]]></string>
 	<string name="_adm_form_btn_pre_values_delete_item"><![CDATA[Delete Item]]></string>
 	<string name="_adm_form_btn_pre_values_edit_item"><![CDATA[Edit Item]]></string>
+	<string name="_adm_form_btn_search_forms_edit"><![CDATA[Edit search form]]></string>
+    <string name="_adm_form_btn_search_forms_fields_edit"><![CDATA[Edit search field]]></string>
+    <string name="_adm_form_btn_search_forms_fields_reset"><![CDATA[Reset]]></string>
+    <string name="_adm_form_btn_search_forms_save"><![CDATA[Save]]></string>
+    <string name="_adm_form_btn_search_forms_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_dsc_displays_title"><![CDATA[Name of the form display mode. Displayed in Studio only.]]></string>
 	<string name="_adm_form_dsc_field_attrs_max"><![CDATA[Enter numeric value]]></string>
 	<string name="_adm_form_dsc_field_attrs_min"><![CDATA[Enter numeric value]]></string>
@@ -703,6 +708,8 @@
 	<string name="_adm_form_dsc_pre_lists_title"><![CDATA[List Name for Studio use only]]></string>
 	<string name="_adm_form_dsc_pre_values_empty"><![CDATA[You can use it for items like "Please select..." which can't be submitted.]]></string>
 	<string name="_adm_form_dsc_pre_values_lkey"><![CDATA[Item name displayed on site]]></string>
+	<string name="_adm_form_dsc_search_forms_fields_search_type"><![CDATA[The type of control element in search form]]></string>
+    <string name="_adm_form_dsc_search_forms_title"><![CDATA[Name of the search form. Displayed in Studio only.]]></string>
 	<string name="_adm_form_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
 	<string name="_adm_form_err_displays_edit"><![CDATA[Cannot update display]]></string>
 	<string name="_adm_form_err_displays_title"><![CDATA[Enter title, more then 3 characters]]></string>
@@ -730,6 +737,11 @@
 	<string name="_adm_form_err_pre_values_delete"><![CDATA[Cannot delete item]]></string>
 	<string name="_adm_form_err_pre_values_edit"><![CDATA[Cannot update item]]></string>
 	<string name="_adm_form_err_pre_values_lkey"><![CDATA[Enter title, more than one character]]></string>
+	<string name="_adm_form_err_search_forms_essential"><![CDATA[The field is essential. Please fill in.]]></string>
+    <string name="_adm_form_err_search_forms_fields_edit"><![CDATA[Cannot update the search form field.]]></string>
+    <string name="_adm_from_err_search_forms_fields_reset"><![CDATA[Cannot reset the search form.]]></string>
+    <string name="_adm_form_err_search_forms_edit"><![CDATA[Cannot update the selected search form.]]></string>
+    <string name="_adm_form_err_search_forms_title"><![CDATA[Enter name, more then 3 characters]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[All Modules]]></string>
 	<string name="_adm_form_txt_confirm_delete"><![CDATA[Are you sure you want to delete this field? It will be deleted from all Displays! You may just turn it off instead.]]></string>
 	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
@@ -801,6 +813,7 @@
 	<string name="_adm_form_txt_field_type_submit"><![CDATA[submit]]></string>
 	<string name="_adm_form_txt_field_type_switcher"><![CDATA[switcher]]></string>
 	<string name="_adm_form_txt_field_type_text"><![CDATA[text]]></string>
+	<string name="_adm_form_txt_field_type_text_auto"><![CDATA[auto text]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[textarea]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[info]]></string>
 	<string name="_adm_form_txt_field_unique"><![CDATA[Unique]]></string>
@@ -856,6 +869,18 @@
 	<string name="_adm_form_txt_pre_values_empty"><![CDATA[Use empty value for this item]]></string>
 	<string name="_adm_form_txt_pre_values_gl_lkey"><![CDATA[Title]]></string>
 	<string name="_adm_form_txt_pre_values_lkey"><![CDATA[Title]]></string>
+    <string name="_adm_form_txt_search_forms_edit_popup"><![CDATA[Edit "{0}" Search Form]]></string>
+    <string name="_adm_form_txt_search_forms_fields"><![CDATA[Fields]]></string>
+    <string name="_adm_form_txt_search_forms_fields_type"><![CDATA[Type]]></string>
+    <string name="_adm_form_txt_search_forms_fields_caption"><![CDATA[Caption]]></string>
+    <string name="_adm_form_txt_search_forms_fields_search_type"><![CDATA[Search Type]]></string>
+    <string name="_adm_form_txt_search_forms_fields_search_operator"><![CDATA[Search Operator]]></string>
+    <string name="_adm_form_txt_search_forms_fields_select_object"><![CDATA[Select Form...]]></string>
+    <string name="_adm_form_txt_search_forms_fields_edit_popup"><![CDATA[Edit "{0}" Search Field]]></string>
+    <string name="_adm_form_txt_search_forms_manage_fields"><![CDATA[Manage fields]]></string>
+    <string name="_adm_form_txt_search_forms_module"><![CDATA[Module]]></string>
+    <string name="_adm_form_txt_search_forms_n_fields"><![CDATA[{0} fields]]></string>
+    <string name="_adm_form_txt_search_forms_title"><![CDATA[System Name]]></string>
 	<string name="_adm_form_txt_select_display"><![CDATA[Select Display...]]></string>
 	<string name="_adm_form_txt_select_form"><![CDATA[Select Form...]]></string>
 	<string name="_adm_form_txt_select_list"><![CDATA[Select List...]]></string>
@@ -873,6 +898,8 @@
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
 	<string name="_adm_lmi_cpt_cover"><![CDATA[Cover]]></string>
 	<string name="_adm_lmi_cpt_search"><![CDATA[Search]]></string>
+	<string name="_adm_lmi_cpt_search_forms"><![CDATA[Search Forms]]></string>
+	<string name="_adm_lmi_cpt_search_fields"><![CDATA[Search Fields]]></string>
 	<string name="_adm_lmi_cpt_splash"><![CDATA[Splash]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Displays]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Downloaded]]></string>
@@ -1804,6 +1831,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_checkbox_value_off"><![CDATA[No]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Yes]]></string>
 	<string name="_sys_form_comment"><![CDATA[Comment]]></string>
+	<string name="_sys_form_comment_input_caption_cmt_author_id"><![CDATA[Author]]></string>
+	<string name="_sys_form_comment_input_caption_cmt_text"><![CDATA[Text]]></string>
 	<string name="_sys_form_comment_input_caption_system_action"><![CDATA[Action]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_id"><![CDATA[Comment ID]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_image"><![CDATA[Image]]></string>

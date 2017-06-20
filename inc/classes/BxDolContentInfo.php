@@ -287,6 +287,16 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         return $this->_call('get_all', $aParams);
     }
 
+    public function getSearchableFieldsExtended ()
+    {
+        return $this->_call('get_searchable_fields_extended');
+    }
+
+    public function getSearchResultExtended ($aParams)
+    {
+        return $this->_call('get_search_result_extended', $aParams);
+    }
+
     protected function _call($sMethod)
     {
         if(!BxDolRequest::serviceExists($this->_sSystem, $sMethod))

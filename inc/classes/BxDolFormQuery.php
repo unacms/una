@@ -94,7 +94,9 @@ class BxDolFormQuery extends BxDolDb
             $aInput = array (
                 'type' => $a['type'],
                 'name' => $a['name'],
+            	'caption_src' => $a['caption'],
                 'caption' => _t($a['caption']),
+            	'info_src' => $a['info'] ? $a['info'] : '',
                 'info' => $a['info'] ? _t($a['info']) : '',
                 'required' => $a['required'] ? true : false,
             	'unique' => $a['unique'] ? true : false,
@@ -118,6 +120,8 @@ class BxDolFormQuery extends BxDolDb
                 $aInput['value'] = isset(self::$TYPES_TRANSLATABLE[$aInput['type']]) ? _t($a['value']) : $a['value'];
 
             if (!empty($a['values'])) {
+                $aInput['values_src'] = $a['values'];
+
                 if (0 === strncmp(BX_DATA_LISTS_KEY_PREFIX, $a['values'], 2)) {
                     $aInput['values_list_name'] = trim($a['values'], BX_DATA_LISTS_KEY_PREFIX . ' ');
                     $aInput['values'] = self::getDataItems(trim($a['values'], BX_DATA_LISTS_KEY_PREFIX . ' '), isset(self::$TYPES_SET[$aInput['type']]));

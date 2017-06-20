@@ -122,6 +122,47 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oDb->getEntriesBy($aParams);
     }
 
+    public function serviceGetSearchableFieldsExtended()
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aSearchableNamesExcept = array(
+            'allow_view_to'
+        );
+
+        if(empty($CNF['OBJECT_FORM_ENTRY']) || empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']))
+            return array();
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
+        if(!$oForm)
+            return array();
+
+        $aResult = array();
+        if(!empty($CNF['FIELD_AUTHOR']))
+            $aResult[$CNF['FIELD_AUTHOR']] = array(
+            	'type' => 'text_auto', 
+            	'caption' => $CNF['T']['form_field_author'],
+            	'values' => '' 
+            );
+
+        foreach ($oForm->aInputs as $aInput)
+            if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $aSearchableNamesExcept))
+                $aResult[$aInput['name']] = array(
+                	'type' => $aInput['type'], 
+                	'caption' => $aInput['caption_src'],
+                    'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
+                );
+
+        return $aResult;
+    }
+
+    public function serviceGetSearchResultExtended($aParams)
+    {
+        if(empty($aParams) || !is_array($aParams))
+            return array();
+
+        return $this->_oDb->getEntriesBy(array('type' => 'search_ids', 'search_params' => $aParams));
+    }
+
     public function serviceModuleIcon ()
     {
         return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';

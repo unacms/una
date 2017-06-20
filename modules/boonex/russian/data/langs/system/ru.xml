@@ -676,6 +676,11 @@
 	<string name="_adm_form_btn_pre_values_create"><![CDATA[Добавить новый Элемент]]></string>
 	<string name="_adm_form_btn_pre_values_delete_item"><![CDATA[Удалить Элемент]]></string>
 	<string name="_adm_form_btn_pre_values_edit_item"><![CDATA[Редактировать Элемент]]></string>
+	<string name="_adm_form_btn_search_forms_edit"><![CDATA[Редактировать форму поиска]]></string>
+    <string name="_adm_form_btn_search_forms_fields_edit"><![CDATA[Редактировать поле формы поиска]]></string>
+    <string name="_adm_form_btn_search_forms_fields_reset"><![CDATA[Сбросить]]></string>
+    <string name="_adm_form_btn_search_forms_save"><![CDATA[Сохранить]]></string>
+    <string name="_adm_form_btn_search_forms_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_form_dsc_displays_title"><![CDATA[Название режима отображения Формы. Видимо только в Студии.]]></string>
 	<string name="_adm_form_dsc_field_attrs_max"><![CDATA[Введите числовое значение]]></string>
 	<string name="_adm_form_dsc_field_attrs_min"><![CDATA[Введите числовое значение]]></string>
@@ -701,6 +706,8 @@
 	<string name="_adm_form_dsc_pre_lists_title"><![CDATA[Название Списка для использования только в Студии]]></string>
 	<string name="_adm_form_dsc_pre_values_empty"><![CDATA[Вы можете использовать его для элементов, таких как "Пожалуйста, выберите...", которые не могут быть отправлены.]]></string>
 	<string name="_adm_form_dsc_pre_values_lkey"><![CDATA[Название Элемента, отображаемое на сайте]]></string>
+	<string name="_adm_form_dsc_search_forms_fields_search_type"><![CDATA[Тип элемента управления в форме поиска]]></string>
+    <string name="_adm_form_dsc_search_forms_title"><![CDATA[Название Формы поиска. Отображается только в Студии.]]></string>
 	<string name="_adm_form_err_cannot_process_action"><![CDATA[Невозможно выполнить действие. Отсутствует связанный обработчик.]]></string>
 	<string name="_adm_form_err_displays_edit"><![CDATA[Невозможно обновить дисплей]]></string>
 	<string name="_adm_form_err_displays_title"><![CDATA[Введите заголовок, более 3 символов]]></string>
@@ -728,6 +735,11 @@
 	<string name="_adm_form_err_pre_values_delete"><![CDATA[Невозможно удалить элемент]]></string>
 	<string name="_adm_form_err_pre_values_edit"><![CDATA[Невозможно обновить элемент]]></string>
 	<string name="_adm_form_err_pre_values_lkey"><![CDATA[Введите заголовок, более 1 символа]]></string>
+	<string name="_adm_form_err_search_forms_essential"><![CDATA[Это важное поле. Заполните его, пожалуйста.]]></string>
+    <string name="_adm_form_err_search_forms_fields_edit"><![CDATA[Не могу обновить поле формы поиска.]]></string>
+    <string name="_adm_from_err_search_forms_fields_reset"><![CDATA[Не могу сбросить форму поиска.]]></string>
+    <string name="_adm_form_err_search_forms_edit"><![CDATA[Не могу обновить выбранную форму поиска.]]></string>
+    <string name="_adm_form_err_search_forms_title"><![CDATA[Введите имя, более 3 символов]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[Все Модули]]></string>
 	<string name="_adm_form_txt_confirm_delete"><![CDATA[Вы уверены, что хотите удалить это поле? Оно будет удалено со всех Дисплеев! Вместо этого можно просто отключить его.]]></string>
 	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Редактировать "{0}" Дисплей]]></string>
@@ -799,6 +811,7 @@
 	<string name="_adm_form_txt_field_type_submit"><![CDATA[отправка]]></string>
 	<string name="_adm_form_txt_field_type_switcher"><![CDATA[переключатель]]></string>
 	<string name="_adm_form_txt_field_type_text"><![CDATA[текст]]></string>
+	<string name="_adm_form_txt_field_type_text_auto"><![CDATA[авто текст]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[текстовое поле]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[инфо]]></string>
 	<string name="_adm_form_txt_field_unique"><![CDATA[Уникальное]]></string>
@@ -854,6 +867,18 @@
 	<string name="_adm_form_txt_pre_values_empty"><![CDATA[Использовать пустое значение для данного элемента]]></string>
 	<string name="_adm_form_txt_pre_values_gl_lkey"><![CDATA[Заголовок]]></string>
 	<string name="_adm_form_txt_pre_values_lkey"><![CDATA[Заголовок]]></string>
+	<string name="_adm_form_txt_search_forms_edit_popup"><![CDATA[Редактировать "{0}" форму поиска]]></string>
+    <string name="_adm_form_txt_search_forms_fields"><![CDATA[Поля]]></string>
+    <string name="_adm_form_txt_search_forms_fields_type"><![CDATA[Тип]]></string>
+    <string name="_adm_form_txt_search_forms_fields_caption"><![CDATA[Заголовок]]></string>
+    <string name="_adm_form_txt_search_forms_fields_search_type"><![CDATA[Тип поиска]]></string>
+    <string name="_adm_form_txt_search_forms_fields_search_operator"><![CDATA[Оператор поиска]]></string>
+    <string name="_adm_form_txt_search_forms_fields_select_object"><![CDATA[Выбрать форму...]]></string>
+    <string name="_adm_form_txt_search_forms_fields_edit_popup"><![CDATA[Редактировать "{0}" поле формы поиска]]></string>
+    <string name="_adm_form_txt_search_forms_manage_fields"><![CDATA[Управление полями]]></string>
+    <string name="_adm_form_txt_search_forms_module"><![CDATA[Модуль]]></string>
+    <string name="_adm_form_txt_search_forms_n_fields"><![CDATA[{0} полей]]></string>
+    <string name="_adm_form_txt_search_forms_title"><![CDATA[Системное имя]]></string>
 	<string name="_adm_form_txt_select_display"><![CDATA[Выбрать Дисплей...]]></string>
 	<string name="_adm_form_txt_select_form"><![CDATA[Выбрать Форму...]]></string>
 	<string name="_adm_form_txt_select_list"><![CDATA[Выбрать Список...]]></string>
@@ -871,6 +896,8 @@
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Оплата {checkout_counter}]]></string>
 	<string name="_adm_lmi_cpt_cover"><![CDATA[Обложка]]></string>
 	<string name="_adm_lmi_cpt_search"><![CDATA[Поиск]]></string>
+	<string name="_adm_lmi_cpt_search_forms"><![CDATA[Формы поиска]]></string>
+    <string name="_adm_lmi_cpt_search_fields"><![CDATA[Поля поиска]]></string>
 	<string name="_adm_lmi_cpt_splash"><![CDATA[Заставка]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Дисплеи]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>
@@ -1802,6 +1829,8 @@
 	<string name="_sys_form_checkbox_value_off"><![CDATA[Нет]]></string>
 	<string name="_sys_form_checkbox_value_on"><![CDATA[Да]]></string>
 	<string name="_sys_form_comment"><![CDATA[Комментарий]]></string>
+	<string name="_sys_form_comment_input_caption_cmt_author_id"><![CDATA[Автор]]></string>
+	<string name="_sys_form_comment_input_caption_cmt_text"><![CDATA[Текст]]></string>
 	<string name="_sys_form_comment_input_caption_system_action"><![CDATA[Действие]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_id"><![CDATA[Комментировать ID]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_image"><![CDATA[Изображение]]></string>
