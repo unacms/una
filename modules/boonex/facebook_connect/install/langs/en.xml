@@ -14,7 +14,6 @@
     <string name="_bx_facebook_option_app_secret"><![CDATA[Facebook App Secret]]></string>
     <string name="_bx_facebook_option_auto_friends"><![CDATA[Auto-friend members if they are already friends on Facebook]]></string>
     <string name="_bx_facebook_option_fetch_extended_info"><![CDATA[Fetch extended profile info (facebook app review is required)]]></string>
-    <string name="_bx_facebook_option_privacy"><![CDATA[Default privacy for created profiles]]></string>
 
 	<string name="_bx_facebook_conect_et_password_generated"><![CDATA[Facebook connect temporary password]]></string>
 	<string name="_bx_facebook_conect_et_password_generated_subject"><![CDATA[Temporary password]]></string>

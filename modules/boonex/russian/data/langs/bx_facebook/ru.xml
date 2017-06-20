@@ -14,7 +14,6 @@
     <string name="_bx_facebook_option_app_secret"><![CDATA[Facebook App Secret]]></string>
     <string name="_bx_facebook_option_auto_friends"><![CDATA[Автоматически делать друзьями тех, что уже друг на Facebook'е]]></string>
     <string name="_bx_facebook_option_fetch_extended_info"><![CDATA[Получить расширенную информацию о профиле (приложение должно быть одобрено Facebook'ом)]]></string>
-    <string name="_bx_facebook_option_privacy"><![CDATA[Настройки конфиденциальности для созданных профилей]]></string>
 
 	<string name="_bx_facebook_conect_et_password_generated"><![CDATA[Facebook-соединение: временный пароль]]></string>
 	<string name="_bx_facebook_conect_et_password_generated_subject"><![CDATA[Временный пароль]]></string>

@@ -131,6 +131,7 @@ class BxLinkedinModule extends BxBaseModConnectModule
         $aProfileFields['fullname'] = $aProfileInfo['firstName'] . ' ' . (isset($aProfileInfo['lastName']) ? $aProfileInfo['lastName'] : '');
         $aProfileFields['email'] = isset($aProfileInfo['emailAddress']) ? $aProfileInfo['emailAddress'] : '';
         $aProfileFields['picture'] = isset($aProfileInfo['pictureUrl']) ? $aProfileInfo['pictureUrl'] : '';
+        $aProfileFields['allow_view_to'] = getParam('bx_linkedin_privacy');
         
         return $aProfileFields;
     }

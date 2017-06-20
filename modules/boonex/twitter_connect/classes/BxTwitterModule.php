@@ -113,6 +113,7 @@ class BxTwitterModule extends BxBaseModConnectModule
         $aProfileFields['fullname'] = $aProfileInfo['name'];
         $aProfileFields['email'] = isset($aProfileInfo['email']) ? $aProfileInfo['email'] : '';
         $aProfileFields['picture'] = isset($aProfileInfo['profile_image_url']) ? str_replace('_normal', '', $aProfileInfo['profile_image_url']) : '';
+        $aProfileFields['allow_view_to'] = getParam('bx_twitter_privacy');
         
         return $aProfileFields;
     }

@@ -131,6 +131,7 @@ class BxGoogleConModule extends BxBaseModConnectModule
         $aProfileFields['fullname'] = $aProfileInfo['name'];
         $aProfileFields['email'] = isset($aProfileInfo['email']) ? $aProfileInfo['email'] : '';
         $aProfileFields['picture'] = isset($aProfileInfo['picture']) ? $aProfileInfo['picture'] : '';
+        $aProfileFields['allow_view_to'] = getParam('bx_googlecon_privacy');
         
         return $aProfileFields;
     }

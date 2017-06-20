@@ -36,6 +36,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_twitter_secret', '', @iCategId, '_bx_twitter_option_app_secret', 'digit', '', '', 20, ''),
 ('bx_twitter_redirect_page', 'dashboard', @iCategId, '_sys_connect_option_redirect', 'select', '', '', 40, 'join,settings,dashboard,index'),
 ('bx_twitter_module', 'bx_persons', @iCategId, '_sys_connect_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:10:"bx_twitter";s:6:"method";s:20:"get_profiles_modules";}'),
+('bx_twitter_privacy', '3', @iCategId, '_sys_connect_option_privacy', 'select', '', '', 54, 'a:2:{s:6:"module";s:10:"bx_twitter";s:6:"method";s:18:"get_privacy_groups";}'),
 ('bx_twitter_confirm_email', 'on', @iCategId, '_sys_connect_option_confirm_email', 'checkbox', '', '', 70, ''),
 ('bx_twitter_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, '');
 
