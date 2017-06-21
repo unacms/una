@@ -58,30 +58,14 @@ class BxBaseModPaymentTemplate extends BxBaseModGeneralTemplate
 		$oTemplate->getPageCode();
     }
 
-	public function displayPageCodeResponse($sMessage, $bWrap = true)
+	public function displayPageCodeResponse($sMessage, $bWrap = true, $bCenter = false)
     {
-		$aParams = array(
-            'title' => array(
-                'page' => _t($this->_sLangsPrefix . 'page_title_response')
-            ),
-            'content' => array(
-                'page_main_code' => $bWrap ? MsgBox(_t($sMessage)) : $sMessage
-            )
-        );
-        $this->displayPageCode($aParams);
+        $this->displayPageCodeText($this->_sLangsPrefix . 'page_title_response', $sMessage, $bWrap, $bCenter);
     }
 
-    public function displayPageCodeError($sMessage, $bWrap = true)
+    public function displayPageCodeError($sMessage, $bWrap = true, $bCenter = false)
     {
-		$aParams = array(
-            'title' => array(
-                'page' => _t($this->_sLangsPrefix . 'page_title_error')
-            ),
-            'content' => array(
-                'page_main_code' => $bWrap ? MsgBox(_t($sMessage)) : $sMessage
-            )
-        );
-        $this->displayPageCode($aParams);
+        $this->displayPageCodeText($this->_sLangsPrefix . 'page_title_error', $sMessage, $bWrap, $bCenter);
     }
 
     public function displayPageCodeRedirect($sUrl, $aData = array(), $sMethod = 'post', $sMessage = '', $bWrap = true)
@@ -127,6 +111,27 @@ class BxBaseModPaymentTemplate extends BxBaseModGeneralTemplate
             'title' => $aParams['title'],
             'content' => $aParams['content']
         ));
+    }
+
+    protected function displayPageCodeText($sTitle, $sText, $bWrap = true, $bCenter = false)
+    {
+        if($bWrap)
+            $sText = MsgBox(_t($sText));
+
+        if($bCenter)
+            $sText = $this->parsePageByName('center.html', array(
+                'content' => $sText
+            ));
+
+		$aParams = array(
+            'title' => array(
+                'page' => _t($sTitle)
+            ),
+            'content' => array(
+                'page_main_code' => $sText
+            )
+        );
+        $this->displayPageCode($aParams);
     }
 }
 

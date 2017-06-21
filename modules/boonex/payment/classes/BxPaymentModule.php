@@ -245,15 +245,23 @@ class BxPaymentModule extends BxBaseModPaymentModule
     		$iItemCount = 1;
 
         $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount);
+        $bRedirect = !empty($aResult['redirect']);
 
-		if($aResult['code'] != 0)
+        if(!empty($aResult['popup'])) {
+            $this->_oTemplate->addJsCssCart(BX_PAYMENT_TYPE_RECURRING, $iSellerId);
+			return $this->_oTemplate->displayPageCodeResponse(!empty($aResult['popup']['html']) ? $aResult['popup']['html'] : $aResult['popup'], false, true);
+        }
+
+		if(!empty($aResult['code']))
 			return $this->_oTemplate->displayPageCodeError($aResult['message']);
 
-		if(empty($aResult['redirect']) && !empty($aResult['message']))
+		if(!empty($aResult['message']) && !$bRedirect)
 			return $this->_oTemplate->displayPageCodeResponse($aResult['message']);
 
-		header('Location: ' . $aResult['redirect']);
-        exit;
+        if($bRedirect) {
+    		header('Location: ' . $aResult['redirect']);
+            exit;
+        }
     }
 
     public function actionSubscribeJson()
