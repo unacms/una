@@ -328,6 +328,7 @@ class BxBaseCmts extends BxDolCmts
 			return '';
 
 		$sJsObject = $this->getJsObjectName();
+		$oTemplate = BxDolTemplate::getInstance();
 
 		$aComments = array_reverse($aComments);
 		$iComments = count($aComments);
@@ -339,29 +340,29 @@ class BxBaseCmts extends BxDolCmts
 			$sShowOnClick = "javascript:" . $sJsObject . ".goTo(this, '" . $this->_sSystem . $iCommentId . "', '" . $iCommentId . "');";
 			$sReplyOnClick = "javascript:" . $sJsObject . ".goToAndReply(this, '" . $this->_sSystem . $iCommentId . "', '" . $iCommentId . "');";
 
-	    	$aTmplVarsNotifs[] = array_merge(array(
-	    		'style_prefix' => $this->_sStylePrefix,
-	    		'js_object' => $sJsObject,
+	    	$aTmplVarsNotifs[] = array(
 	    		'bx_if:show_as_hidden' => array(
 	    			'condition' => $iIndex < ($iComments - 1),
 	    			'content' => array(),
 	    		),
-				'show_onclick' => $sShowOnClick,
-	    		'reply_onclick' => $sReplyOnClick,
+	    		'item' => $oTemplate->parseHtmlByName('comments_notification.html', array_merge(array(
+	    			'style_prefix' => $this->_sStylePrefix,
+	    			'onclick_show' => $sShowOnClick,
+	    			'onclick_reply' => $sReplyOnClick,
+	    		), $this->_getTmplVarsAuthor($aComment), $this->_getTmplVarsText($aComment))),
 	    		'bx_if:show_previous' => array(
 	    			'condition' => $iIndex > 0,
 	    			'content' => array(
-	    				'style_prefix' => $this->_sStylePrefix,
-	    				'js_object' => $sJsObject
+	    				'onclick_previous' => $sJsObject . '.previousLiveUpdate(this)'
 	    			)
-	    		)
-			), $this->_getTmplVarsAuthor($aComment), $this->_getTmplVarsText($aComment));
+	    		),
+	    		'onclick_close' => $sJsObject . '.hideLiveUpdate(this)'
+			);
 		}
 
-		return BxDolTemplate::getInstance()->parseHtmlByName('comments_notification.html', array(
+		return $oTemplate->parseHtmlByName('popup_chain.html', array(
 			'html_id' => $this->getNotificationId(),
-			'style_prefix' => $this->_sStylePrefix,
-			'bx_repeat:notifs' => $aTmplVarsNotifs
+			'bx_repeat:items' => $aTmplVarsNotifs
 		));
     }
 

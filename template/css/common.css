@@ -331,8 +331,48 @@ body > .bx-popup-wrapper {
 	font-size: 1.75rem;
 	color: #9c9c9c;
 }
-/* --------------- message box */
 
+/* --------------- chain notifications */
+div.bx-popup-chain {
+    position: relative;
+    max-width: 22.5rem;
+}
+div.bx-popup-chain-item {
+    position: relative;
+
+    width: 100%;
+
+    border-color: rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+}
+div.bx-popup-chain-item-cnt {
+	padding: 1.25rem;
+}
+div.bx-popup-chain-item-actions {
+    position: absolute;
+    top: 0px;
+}
+div.bx-popup-cia-left {
+    left: 0px;
+}
+div.bx-popup-cia-right {
+    right: 0px;
+}
+div.bx-popup-chain-item-actions a {
+    line-height: initial;
+    text-decoration: none;
+}
+div.bx-popup-chain-item-actions .sys-icon {
+	display: inline-block;
+	width: 1.5rem;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	text-align: center;
+}
+
+/* --------------- message box */
 .bx-msg-box-container {
     padding:0px 5px;
     text-align:center;

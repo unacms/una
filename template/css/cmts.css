@@ -203,38 +203,7 @@
     div.cmts-uploader-file-preview img {
 		background-position: center center;
 		background-repeat: no-repeat;
-    }
-
-    /*--- Live Update Notification Styles ---*/
-    div.cmt-notifs {
-		position: relative;
-    	max-width: 22.5rem;
-    }
-    div.cmt-notif {
-    	position: relative;
-
-    	width: 100%;
-
-    	border-color: rgba(0, 0, 0, 0.2);
-    	background-color: #ffffff;
-
-    	box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
-    }
-    div.cmt-notif-cnt {}
-    div.cmt-notif-actions {
-		position: absolute;
-    	top: 0px;
-    }
-	div.cmt-na-left {
-    	left: 0px;
-	}
-    div.cmt-na-right {
-    	right: 0px;
-	}
-    div.cmt-notif-actions a {
-    	line-height: initial;
-    	text-decoration: none;
-    }
+    }  
 
     /*--- Comment Styles in Live Update Notification ---*/
 	div.cmt-notif-comment {

@@ -421,7 +421,7 @@ BxDolCmts.prototype.showLiveUpdate = function(oData)
 BxDolCmts.prototype.previousLiveUpdate = function(oLink)
 {
 	var fPrevious = function() {
-		var sClass = 'cmt-notif';
+		var sClass = 'bx-popup-chain-item';
 		$(oLink).parents('.' + sClass + ':first').hide().prev('.' + sClass).show();
 	};
 
