@@ -16,6 +16,7 @@
         pointer: false, // {el:(string_id|jquery_object), align: (left|right|center)},
         left: 0, // only for fixed or absolute
         top: 0, // only for fixed
+        bottom: 'auto', // only for fixed or absolute
         moveToDocRoot: true,
         onBeforeShow: function () {},
         onShow: function () {},
@@ -553,7 +554,8 @@
                 $el.css({
                     position: o.position,
                     left: o.left,
-                    top: o.top
+                    top: o.top,
+                    bottom: o.bottom
                 });
 
             } else if (o.position == 'centered') {

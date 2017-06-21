@@ -404,13 +404,13 @@ BxDolCmts.prototype.showLiveUpdate = function(oData)
 
 	oNotifs.prependTo('body').dolPopup({
     	position: 'fixed',
-    	top: '0px',
+    	left: '1rem',
+    	top: 'auto',
+    	bottom: '1rem',
     	fog: false,
     	onBeforeShow: function() {
-    		$('body').addClass('cmt-notif-holder');
     	},
     	onBeforeHide: function() {
-    		$('body').removeClass('cmt-notif-holder');
     	},
     	onHide: function() {
     		$this.resumeLiveUpdates();

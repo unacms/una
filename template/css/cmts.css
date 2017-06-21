@@ -206,39 +206,24 @@
     }
 
     /*--- Live Update Notification Styles ---*/
-	.cmt-notif-holder {
-		padding-top: 70px;
-    	padding-top: 4.375rem;
-    }
     div.cmt-notifs {
 		position: relative;
-
-    	width: 100%;
+    	max-width: 22.5rem;
     }
     div.cmt-notif {
     	position: relative;
 
     	width: 100%;
-    	height: 68px;
-    	height: 4.25rem;
 
-    	border-color: #000000;
-    	background-color: rgba(85, 85, 85, .9);
+    	border-color: rgba(0, 0, 0, 0.2);
+    	background-color: #ffffff;
 
-    	color: #ffffff;
+    	box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
     }
-    div.cmt-notif-cnt {
-		position: relative;
-    	padding: 0px 50px;
-    	padding: 0px 3.125rem;
-    }
+    div.cmt-notif-cnt {}
     div.cmt-notif-actions {
 		position: absolute;
-    	height: 100%;
     	top: 0px;
-
-    	line-height: 68px;
-    	line-height: 4.25rem;
     }
 	div.cmt-na-left {
     	left: 0px;
@@ -249,17 +234,11 @@
     div.cmt-notif-actions a {
     	line-height: initial;
     	text-decoration: none;
-    	font-size: 28px;
-    	font-size: 1.75rem;
-    	color: #9c9c9c;
     }
 
     /*--- Comment Styles in Live Update Notification ---*/
 	div.cmt-notif-comment {
 		position: relative;
-		width: 80%;
-		margin-left: auto;
-		margin-right: auto;
 	}
 	div.cmt-notif-avatar {
 		position: absolute;
@@ -282,16 +261,3 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
-	div.cmt-notifi-username,
-	div.cmt-notifi-username a {
-		color: #cccccc;
-	}
-	div.cmt-notifi-actions a {
-		text-decoration: underline;
-		color: #ffffff;
-	}
-	div.cmt-notifi-actions a:hover,
-    div.cmt-notifi-actions a:active {
-    	text-decoration: none;
-		color: #ffffff;
-    }
