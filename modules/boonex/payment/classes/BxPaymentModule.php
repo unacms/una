@@ -248,8 +248,11 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $bRedirect = !empty($aResult['redirect']);
 
         if(!empty($aResult['popup'])) {
-            $this->_oTemplate->addJsCssCart(BX_PAYMENT_TYPE_RECURRING, $iSellerId);
-			return $this->_oTemplate->displayPageCodeResponse(!empty($aResult['popup']['html']) ? $aResult['popup']['html'] : $aResult['popup'], false, true);
+            $sContent = '';
+            $sContent .= $this->_oTemplate->displayCartJs(BX_PAYMENT_TYPE_RECURRING, $iSellerId);
+            $sContent .= !empty($aResult['popup']['html']) ? $aResult['popup']['html'] : $aResult['popup'];
+
+			return $this->_oTemplate->displayPageCodeResponse($sContent, false, true);
         }
 
 		if(!empty($aResult['code']))
