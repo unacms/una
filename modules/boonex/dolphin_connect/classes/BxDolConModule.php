@@ -137,7 +137,8 @@ class BxDolConModule extends BxBaseModConnectModule
         $aProfileFields['name'] = $aProfileInfo['NickName'];
         $aProfileFields['fullname'] = $sFullname;
         $aProfileFields['picture'] = $aProfileInfo['picture'];
-        
+        $aProfileFields['allow_view_to'] = getParam('bx_dolcon_privacy');
+            
         return $aProfileFields;
     }
 

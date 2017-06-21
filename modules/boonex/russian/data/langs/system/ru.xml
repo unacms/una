@@ -1643,6 +1643,7 @@
     <string name="_sys_connect_option_module"><![CDATA[Модуль в котором создавать профили]]></string>
     <string name="_sys_connect_option_confirm_email"><![CDATA[Всегда подтверждать емейл, когда заходят через это соединение]]></string>
     <string name="_sys_connect_option_approve"><![CDATA[Всегда одобрять профиль, когда заходят через это соединение]]></string>
+    <string name="_sys_connect_option_privacy"><![CDATA[Настройки конфиденциальности для созданных профилей]]></string>
 
 	<string name="_sys_currency"><![CDATA[{0}{1}]]></string>
 	<string name="_sys_designbox_0"><![CDATA[Содержимое]]></string>
