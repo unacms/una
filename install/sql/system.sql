@@ -3519,11 +3519,10 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 ('sys_studio_search_forms_fields', 'order', '', '1%', 0, '', '', 1),
 ('sys_studio_search_forms_fields', 'switcher', '', '9%', 0, '', '', 2),
-('sys_studio_search_forms_fields', 'type', '_adm_form_txt_search_forms_fields_type', '10%', 0, '', '', 3),
+('sys_studio_search_forms_fields', 'type', '_adm_form_txt_search_forms_fields_type', '15%', 0, '', '', 3),
 ('sys_studio_search_forms_fields', 'caption', '_adm_form_txt_search_forms_fields_caption', '40%', 1, '38', '', 4),
-('sys_studio_search_forms_fields', 'search_type', '_adm_form_txt_search_forms_fields_search_type', '10%', 0, '', '', 5),
-('sys_studio_search_forms_fields', 'search_operator', '_adm_form_txt_search_forms_fields_search_operator', '10%', 0, '', '', 6),
-('sys_studio_search_forms_fields', 'actions', '', '20%', 0, '', '', 7);
+('sys_studio_search_forms_fields', 'search_type', '_adm_form_txt_search_forms_fields_search_type', '15%', 0, '', '', 5),
+('sys_studio_search_forms_fields', 'actions', '', '20%', 0, '', '', 6);
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (

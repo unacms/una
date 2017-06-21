@@ -235,6 +235,10 @@ class BxBaseStudioFormsSearchFields extends BxDolStudioFormsSearchFields
         if($sType == 'single' && !$this->_isEditable($aRow))
             return '';
 
+        $aSearchTypes = BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aRow['type']];
+        if(!is_array($aSearchTypes) || count($aSearchTypes) < 2)
+    	    return '';
+
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
