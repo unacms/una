@@ -15,6 +15,7 @@
 	<string name="_bx_groups_form_profile_display_view"><![CDATA[View Group]]></string>
 	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Full View Group]]></string>
 	<string name="_bx_groups_form_profile_display_invite"><![CDATA[Invite to Group]]></string>
+	<string name="_bx_groups_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
@@ -81,6 +82,8 @@
 	<string name="_bx_groups_page_title_top"><![CDATA[Top Groups]]></string>
 	<string name="_bx_groups_page_title_sys_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
 	<string name="_bx_groups_page_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
+	<string name="_bx_groups_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_groups_page_title_entries_search"><![CDATA[Search]]></string>
 
 	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Favorite Groups]]></string>
     <string name="_bx_groups_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Groups]]></string>
@@ -111,6 +114,8 @@
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Group categories]]></string>
     <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
+    <string name="_bx_groups_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_groups_page_block_title_search_results"><![CDATA[Search Results]]></string>
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Groups Submenu]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Groups Submenu]]></string>
@@ -184,6 +189,8 @@
     <string name="_bx_groups_menu_item_title_manage_my_groups"><![CDATA[{addon} groups]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_groups_menu_item_title_entries_recent"><![CDATA[New]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_groups_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_groups_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_groups_menu_item_title_system_entries_home"><![CDATA[Groups]]></string>
@@ -211,6 +218,8 @@
 
     <string name="_bx_groups_chart_growth"><![CDATA[Groups: Growth]]></string>
     <string name="_bx_groups_chart_growth_speed"><![CDATA[Groups: Growth Speed]]></string>
+
+    <string name="_bx_groups_search_extended"><![CDATA[Groups Search]]></string>
 
     <string name="_bx_groups_txt_account_pending"><![CDATA[This group is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>

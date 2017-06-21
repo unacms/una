@@ -48,6 +48,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'FIELD_TEXT' => 'group_desc',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+            'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELDS_QUICK_SEARCH' => array('group_name'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -146,6 +147,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
                 'txt_N_fans' => '_bx_groups_txt_N_fans',
                 'txt_ntfs_join_request' => '_bx_groups_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_groups_txt_ntfs_fan_added',
+            	'form_field_author' => '_bx_groups_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_groups_menu_item_title_befriend_confirm',

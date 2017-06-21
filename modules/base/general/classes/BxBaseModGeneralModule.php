@@ -17,11 +17,16 @@ bx_import('BxDolAcl');
 class BxBaseModGeneralModule extends BxDolModule
 {
     protected $_iProfileId;
+    protected $_aSearchableNamesExcept;
 
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
         $this->_iProfileId = bx_get_logged_profile_id();
+        $this->_aSearchableNamesExcept = array(
+            'allow_view_to'
+        );
     }
 
     // ====== ACTIONS METHODS
@@ -125,10 +130,6 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetSearchableFieldsExtended()
     {
         $CNF = &$this->_oConfig->CNF;
-        $aSearchableNamesExcept = array(
-            'allow_view_to'
-        );
-
         if(empty($CNF['OBJECT_FORM_ENTRY']) || empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']))
             return array();
 
@@ -145,7 +146,7 @@ class BxBaseModGeneralModule extends BxDolModule
             );
 
         foreach ($oForm->aInputs as $aInput)
-            if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $aSearchableNamesExcept))
+            if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept))
                 $aResult[$aInput['name']] = array(
                 	'type' => $aInput['type'], 
                 	'caption' => $aInput['caption_src'],

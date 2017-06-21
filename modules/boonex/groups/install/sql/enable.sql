@@ -112,6 +112,14 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_groups_top', 1, 'bx_groups', '_bx_groups_page_block_title_top_profiles', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:19:\"browse_top_profiles\";s:6:"params";a:1:{i:0;b:1;}}', 0, 1, 0);
 
+-- PAGE: search for entries
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_groups_search', '_bx_groups_page_title_sys_entries_search', '_bx_groups_page_title_entries_search', 'bx_groups', 5, 2147483647, 1, 'groups-search', 'page.php?i=groups-search', '', '', '', 0, 1, 0, 'BxGroupsPageBrowse', 'modules/boonex/groups/classes/BxGroupsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_groups_search', 1, 'bx_groups', '_bx_groups_page_block_title_search_form', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:9:"bx_groups";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 1),
+('bx_groups_search', 1, 'bx_groups', '_bx_groups_page_block_title_search_results', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:9:"bx_groups";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 2);
+
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_groups_manage', '_bx_groups_page_title_sys_manage', '_bx_groups_page_title_manage', 'bx_groups', 5, 2147483647, 1, 'groups-manage', 'page.php?i=groups-manage', '', '', '', 0, 1, 0, 'BxGroupsPageBrowse', 'modules/boonex/groups/classes/BxGroupsPageBrowse.php');
@@ -205,7 +213,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_groups_submenu', 'bx_groups', 'groups-home', '_bx_groups_menu_item_title_system_entries_recent', '_bx_groups_menu_item_title_entries_recent', 'page.php?i=groups-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_groups_submenu', 'bx_groups', 'groups-top', '_bx_groups_menu_item_title_system_entries_top', '_bx_groups_menu_item_title_entries_top', 'page.php?i=groups-top', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_groups_submenu', 'bx_groups', 'groups-manage', '_bx_groups_menu_item_title_system_entries_manage', '_bx_groups_menu_item_title_entries_manage', 'page.php?i=groups-manage', '', '', '', '', 2147483646, 1, 1, 3);
+('bx_groups_submenu', 'bx_groups', 'groups-search', '_bx_groups_menu_item_title_system_entries_search', '_bx_groups_menu_item_title_entries_search', 'page.php?i=groups-search', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_groups_submenu', 'bx_groups', 'groups-manage', '_bx_groups_menu_item_title_system_entries_manage', '_bx_groups_menu_item_title_entries_manage', 'page.php?i=groups-manage', '', '', '', '', 2147483646, 1, 1, 4);
 
 -- MENU: view submenu
 
@@ -341,6 +350,10 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_groups', '_bx_groups', @iSearchOrder + 1, 'BxGroupsSearchResult', 'modules/boonex/groups/classes/BxGroupsSearchResult.php');
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_groups', 'bx_groups', 'bx_groups', '_bx_groups_search_extended', 1, '', '');
 
 -- CONNECTIONS
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
