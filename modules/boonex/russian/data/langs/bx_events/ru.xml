@@ -17,6 +17,7 @@
 	<string name="_bx_events_form_profile_display_view"><![CDATA[Просмотр события]]></string>
     <string name="_bx_events_form_profile_display_view_full"><![CDATA[Полный просмотр события]]></string>
     <string name="_bx_events_form_profile_display_invite"><![CDATA[Приглашение на событие]]></string>
+    <string name="_bx_events_form_entry_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
@@ -105,6 +106,8 @@
     <string name="_bx_events_page_title_calendar"><![CDATA[Календарь событий]]></string>
     <string name="_bx_events_page_title_sys_invite_to_group"><![CDATA[Приглашение на событие]]></string>
     <string name="_bx_events_page_title_invite_to_group"><![CDATA[Приглашение на событие]]></string>
+    <string name="_bx_events_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_events_page_title_entries_search"><![CDATA[Поиск]]></string>
 
 	<string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Избранные события]]></string>   
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Избранные события]]></string>
@@ -139,6 +142,8 @@
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Местоположение]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории групп]]></string>
     <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Приглашение на событие]]></string>
+    <string name="_bx_events_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_events_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Под-меню событий]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Под-меню событий]]></string>
@@ -212,6 +217,8 @@
     <string name="_bx_events_menu_item_title_manage_my_groups"><![CDATA[{addon} событий]]></string>
     <string name="_bx_events_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_events_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
+    <string name="_bx_events_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_events_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_events_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_menu_item_title_system_entries_home"><![CDATA[События]]></string>
@@ -241,6 +248,8 @@
 
     <string name="_bx_events_chart_growth"><![CDATA[События: Развитие]]></string>
     <string name="_bx_events_chart_growth_speed"><![CDATA[События: Скорость развития]]></string>
+
+    <string name="_bx_events_search_extended"><![CDATA[Поиск событий]]></string>
 
     <string name="_bx_events_txt_account_pending"><![CDATA[Это событие ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[Это событие заблокировано.]]></string>

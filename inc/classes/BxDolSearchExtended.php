@@ -11,7 +11,6 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 {
     public static $SEARCHABLE_TYPES = array(
         'text', 'textarea', 'number', 
-    	'datepicker', 'date_time', 'datetime', 
     	'select', 'radio_set', 
     	'checkbox', 'switcher'
     );

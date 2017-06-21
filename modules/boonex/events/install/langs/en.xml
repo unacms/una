@@ -17,6 +17,7 @@
 	<string name="_bx_events_form_profile_display_view"><![CDATA[View Event]]></string>
     <string name="_bx_events_form_profile_display_view_full"><![CDATA[Full View Event]]></string>
     <string name="_bx_events_form_profile_display_invite"><![CDATA[Invite to Event]]></string>
+    <string name="_bx_events_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
@@ -107,6 +108,8 @@
     <string name="_bx_events_page_title_calendar"><![CDATA[Events Calendar]]></string>
     <string name="_bx_events_page_title_sys_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
 	<string name="_bx_events_page_title_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
+	<string name="_bx_events_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_events_page_title_entries_search"><![CDATA[Search]]></string>
 
 	<string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Favorite Events]]></string>
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Events]]></string>
@@ -140,7 +143,9 @@
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Calendar]]></string>
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
-
+    <string name="_bx_events_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_events_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_view_profile_actions"><![CDATA[Event Actions]]></string>
@@ -213,6 +218,8 @@
     <string name="_bx_events_menu_item_title_manage_my_groups"><![CDATA[{addon} events]]></string>
     <string name="_bx_events_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_events_menu_item_title_entries_recent"><![CDATA[New]]></string>
+    <string name="_bx_events_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_events_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_events_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_menu_item_title_system_entries_home"><![CDATA[Events]]></string>
@@ -242,6 +249,8 @@
 
     <string name="_bx_events_chart_growth"><![CDATA[Events: Growth]]></string>
     <string name="_bx_events_chart_growth_speed"><![CDATA[Events: Growth Speed]]></string>
+
+    <string name="_bx_events_search_extended"><![CDATA[Events Search]]></string>
 
     <string name="_bx_events_txt_account_pending"><![CDATA[This event is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[This event is suspended.]]></string>

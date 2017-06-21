@@ -126,6 +126,14 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_events_calendar', 1, 'bx_events', '_bx_events_page_block_title_calendar', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:8:"calendar";}', 0, 1, 0);
 
+-- PAGE: search for entries
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_events_search', '_bx_events_page_title_sys_entries_search', '_bx_events_page_title_entries_search', 'bx_events', 5, 2147483647, 1, 'events-search', 'page.php?i=events-search', '', '', '', 0, 1, 0, 'BxEventsPageBrowse', 'modules/boonex/events/classes/BxEventsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_form', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:9:"bx_events";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 1),
+('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_results', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:9:"bx_events";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 2);
+
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_events_manage', '_bx_events_page_title_sys_manage', '_bx_events_page_title_manage', 'bx_events', 5, 2147483647, 1, 'events-manage', 'page.php?i=events-manage', '', '', '', 0, 1, 0, 'BxEventsPageBrowse', 'modules/boonex/events/classes/BxEventsPageBrowse.php');
@@ -220,7 +228,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_events_submenu', 'bx_events', 'events-home', '_bx_events_menu_item_title_system_entries_recent', '_bx_events_menu_item_title_entries_recent', 'page.php?i=events-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_events_submenu', 'bx_events', 'events-top', '_bx_events_menu_item_title_system_entries_top', '_bx_events_menu_item_title_entries_top', 'page.php?i=events-top', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_events_submenu', 'bx_events', 'events-calendar', '_bx_events_menu_item_title_system_calendar', '_bx_events_menu_item_title_calendar', 'page.php?i=events-calendar', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_events_submenu', 'bx_events', 'events-manage', '_bx_events_menu_item_title_system_entries_manage', '_bx_events_menu_item_title_entries_manage', 'page.php?i=events-manage', '', '', '', '', 2147483646, 1, 1, 4);
+('bx_events_submenu', 'bx_events', 'events-search', '_bx_events_menu_item_title_system_entries_search', '_bx_events_menu_item_title_entries_search', 'page.php?i=events-search', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_events_submenu', 'bx_events', 'events-manage', '_bx_events_menu_item_title_system_entries_manage', '_bx_events_menu_item_title_entries_manage', 'page.php?i=events-manage', '', '', '', '', 2147483646, 1, 1, 5);
 
 -- MENU: view submenu
 
@@ -356,6 +365,10 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_events', '_bx_events', @iSearchOrder + 1, 'BxEventsSearchResult', 'modules/boonex/events/classes/BxEventsSearchResult.php');
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_events', 'bx_events', 'bx_events', '_bx_events_search_extended', 1, '', '');
 
 -- CONNECTIONS
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES

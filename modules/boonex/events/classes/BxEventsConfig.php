@@ -148,6 +148,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
                 'txt_N_fans' => '_bx_events_txt_N_fans',
                 'txt_ntfs_join_request' => '_bx_events_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_events_txt_ntfs_fan_added',
+            	'form_field_author' => '_bx_events_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_events_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_events_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_events_menu_item_title_befriend_confirm',

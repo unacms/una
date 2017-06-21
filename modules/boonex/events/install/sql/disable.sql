@@ -10,7 +10,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_events';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_events' OR `object` IN('bx_events_create_profile', 'bx_events_delete_profile', 'bx_events_edit_profile', 'bx_events_edit_profile_cover', 'bx_events_invite', 'bx_events_view_profile', 'bx_events_view_profile_closed', 'bx_events_profile_info', 'bx_events_home', 'bx_events_fans', 'bx_events_joined', 'bx_events_top', 'bx_events_manage', 'bx_events_administration');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_events' OR `object` IN('bx_events_create_profile', 'bx_events_delete_profile', 'bx_events_edit_profile', 'bx_events_edit_profile_cover', 'bx_events_invite', 'bx_events_view_profile', 'bx_events_view_profile_closed', 'bx_events_profile_info', 'bx_events_home', 'bx_events_fans', 'bx_events_joined', 'bx_events_top', 'bx_events_search', 'bx_events_manage', 'bx_events_administration');
 
 -- MENU
 
@@ -45,6 +45,9 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_events_cats';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_events';
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_events';
 
 -- CONNECTIONS
 DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_events_fans';
