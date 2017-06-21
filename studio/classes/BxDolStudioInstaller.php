@@ -573,7 +573,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     	if(is_int($mixedResult))
     		return $this->actionOperationFailed($mixedResult);
 
-        $sResult = '<br />' . _t('_adm_err_modules_wrong_mysql_query') . '<br />';
+        $sResult = _t('_adm_err_modules_wrong_mysql_query') . '<br />';
         foreach($mixedResult['content'] as $aQuery) {
             $sResult .= _t('_adm_err_modules_wrong_mysql_query_msg', $aQuery['error']) . '<br />';
             $sResult .= '<pre>' . $aQuery['query'] . '</pre>';

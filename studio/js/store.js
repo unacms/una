@@ -424,9 +424,14 @@ BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, iStart,
 };
 
 BxDolStudioStore.prototype.showNotification = function(sContent) {
-	$(sContent).appendTo('body').dolPopupInline({
-		removeOnClose: true
-	});   
+	$(sContent).appendTo('body').dolPopup({
+    	position: 'fixed',
+    	left: '1rem',
+    	top: 'auto',
+    	bottom: '1rem',
+    	fog: false,
+    	removeOnClose: true
+    }); 
 };
 
 /**

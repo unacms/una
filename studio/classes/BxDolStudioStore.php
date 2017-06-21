@@ -161,7 +161,23 @@ class BxDolStudioStore extends BxTemplStudioPage
             }
 
             if(!empty($aResult['message']))
-				$aResult['message'] = BxTemplStudioFunctions::getInstance()->inlineBox('', BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result_inline.html', array('content' => $aResult['message'])), true);
+				$aResult['message'] = BxDolStudioTemplate::getInstance()->parseHtmlByName('popup_chain.html', array(
+					'html_id' => 'mod_action_result',
+				    'bx_repeat:items' => array(array(
+				        'bx_if:show_as_hidden' => array(
+        	    			'condition' => false,
+        	    			'content' => array(),
+        	    		),
+        	    		'item' => $aResult['message'],
+        	    		'bx_if:show_previous' => array(
+        	    			'condition' => false,
+        	    			'content' => array(
+        	    		        'onclick_previous' => ''
+        	    		    )
+        	    		),
+        	    		'onclick_close' => '$(this).parents(\'.bx-popup-applied:visible:first\').dolPopupHide();'
+				    ))
+				));
 
             echo json_encode($aResult);
             exit;
