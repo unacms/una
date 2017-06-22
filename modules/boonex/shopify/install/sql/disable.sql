@@ -9,7 +9,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_shopify';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_shopify' OR `object` IN('bx_shopify_create_entry', 'bx_shopify_edit_entry', 'bx_shopify_delete_entry', 'bx_shopify_view_entry', 'bx_shopify_view_entry_comments', 'bx_shopify_home', 'bx_shopify_popular', 'bx_shopify_updated', 'bx_shopify_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_shopify' OR `object` IN('bx_shopify_create_entry', 'bx_shopify_edit_entry', 'bx_shopify_delete_entry', 'bx_shopify_view_entry', 'bx_shopify_view_entry_comments', 'bx_shopify_home', 'bx_shopify_popular', 'bx_shopify_updated', 'bx_shopify_author', 'bx_shopify_search', 'bx_shopify_manage');
 
 
 -- MENU
@@ -29,6 +29,10 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_shopify';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_shopify', 'bx_shopify_cmts');
+
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_shopify';
 
 
 -- METATAGS

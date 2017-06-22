@@ -20,6 +20,8 @@ class BxShopifyModule extends BxBaseModTextModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $this->_aSearchableNamesExcept[] = $this->_oConfig->CNF['FIELD_CODE'];
     }
 
     public function getSettings($iProfileId = 0)
@@ -57,7 +59,12 @@ class BxShopifyModule extends BxBaseModTextModule
 
         return $this->_oTemplate->getIncludeCode($iProfileId, $aSettings);
     }
-    
+
+    public function serviceGetResultsSearchExtended($aParams)
+    {
+        $this->serviceIncludeCssJs();
+        return BxDolService::call('system', 'get_results', array($aParams), 'TemplSearchExtendedServices');
+    }
 
     public function serviceEntityCreate ()
     {

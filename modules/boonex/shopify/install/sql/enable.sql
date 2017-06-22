@@ -92,6 +92,16 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_shopify_home', 2, 'bx_shopify', '', '_bx_shopify_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:10:"bx_shopify";i:1;s:10:"bx_shopify";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 0),
 ('bx_shopify_home', 2, 'bx_shopify', '', '_bx_shopify_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:15:"bx_shopify_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1, 1);
 
+-- PAGE: search for entries
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_shopify_search', '_bx_shopify_page_title_sys_entries_search', '_bx_shopify_page_title_entries_search', 'bx_shopify', 5, 2147483647, 1, 'shopify-search', 'page.php?i=shopify-search', '', '', '', 0, 1, 0, 'BxShopifyPageBrowse', 'modules/boonex/shopify/classes/BxShopifyPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_shopify_search', 1, 'bx_shopify', '_bx_shopify_page_block_title_search_form', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:10:"bx_shopify";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 1),
+('bx_shopify_search', 1, 'bx_shopify', '_bx_shopify_page_block_title_search_results', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:27:"get_results_search_extended";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:10:"bx_shopify";s:10:"show_empty";b:1;}}}', 0, 1, 1, 2),
+('bx_shopify_search', 1, 'bx_shopify', '_bx_shopify_page_block_title_search_form_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:15:"bx_shopify_cmts";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 3),
+('bx_shopify_search', 1, 'bx_shopify', '_bx_shopify_page_block_title_search_results_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:15:"bx_shopify_cmts";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 4);
+
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_shopify_manage', '_bx_shopify_page_title_sys_manage', '_bx_shopify_page_title_manage', 'bx_shopify', 5, 2147483647, 1, 'shopify-manage', 'page.php?i=shopify-manage', '', '', '', 0, 1, 0, 'BxShopifyPageBrowse', 'modules/boonex/shopify/classes/BxShopifyPageBrowse.php');
@@ -179,9 +189,10 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_shopify_submenu', 'bx_shopify', 'shopify-home', '_bx_shopify_menu_item_title_system_entries_public', '_bx_shopify_menu_item_title_entries_public', 'page.php?i=shopify-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_shopify_submenu', 'bx_shopify', 'shopify-popular', '_bx_shopify_menu_item_title_system_entries_popular', '_bx_shopify_menu_item_title_entries_popular', 'page.php?i=shopify-popular', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_shopify_submenu', 'bx_shopify', 'shopify-manage', '_bx_shopify_menu_item_title_system_entries_manage', '_bx_shopify_menu_item_title_entries_manage', 'page.php?i=shopify-manage', '', '', '', '', 2147483646, 1, 1, 3),
-('bx_shopify_submenu', 'bx_shopify', 'shopify-settings', '_bx_shopify_menu_item_title_system_settings', '_bx_shopify_menu_item_title_settings', 'page.php?i=shopify-settings', '', '', '', '', 2147483646, 1, 1, 4),
-('bx_shopify_submenu', 'bx_shopify', 'shopify-dashboard', '_bx_shopify_menu_item_title_system_dashboard', '_bx_shopify_menu_item_title_dashboard', 'https://{domain}/admin', '', '_blank', '', '', 2147483646, 1, 1, 5);
+('bx_shopify_submenu', 'bx_shopify', 'shopify-search', '_bx_shopify_menu_item_title_system_entries_search', '_bx_shopify_menu_item_title_entries_search', 'page.php?i=shopify-search', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_shopify_submenu', 'bx_shopify', 'shopify-manage', '_bx_shopify_menu_item_title_system_entries_manage', '_bx_shopify_menu_item_title_entries_manage', 'page.php?i=shopify-manage', '', '', '', '', 2147483646, 1, 1, 4),
+('bx_shopify_submenu', 'bx_shopify', 'shopify-settings', '_bx_shopify_menu_item_title_system_settings', '_bx_shopify_menu_item_title_settings', 'page.php?i=shopify-settings', '', '', '', '', 2147483646, 1, 1, 5),
+('bx_shopify_submenu', 'bx_shopify', 'shopify-dashboard', '_bx_shopify_menu_item_title_system_dashboard', '_bx_shopify_menu_item_title_dashboard', 'https://{domain}/admin', '', '_blank', '', '', 2147483646, 1, 1, 6);
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -295,6 +306,12 @@ SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_shopify', '_bx_shopify', @iSearchOrder + 1, 'BxShopifySearchResult', 'modules/boonex/shopify/classes/BxShopifySearchResult.php'),
 ('bx_shopify_cmts', '_bx_shopify_cmts', @iSearchOrder + 2, 'BxShopifyCmtsSearchResult', 'modules/boonex/shopify/classes/BxShopifyCmtsSearchResult.php');
+
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_shopify', 'bx_shopify', 'bx_shopify', '_bx_shopify_search_extended', 1, '', ''),
+('bx_shopify_cmts', 'bx_shopify_cmts', 'bx_shopify', '_bx_shopify_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 
 -- METATAGS

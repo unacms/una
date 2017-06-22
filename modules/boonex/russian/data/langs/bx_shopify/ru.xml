@@ -7,13 +7,14 @@
     <string name="_bx_shopify_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_shopify_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
 	<string name="_bx_shopify_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_shopify_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+	<string name="_bx_shopify_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
 	<string name="_bx_shopify_form_entry"><![CDATA[Товары]]></string>
 	<string name="_bx_shopify_form_entry_display_add"><![CDATA[Добавить товар]]></string>
 	<string name="_bx_shopify_form_entry_display_edit"><![CDATA[Редактировать товар]]></string>
 	<string name="_bx_shopify_form_entry_display_delete"><![CDATA[Удалить товар]]></string>
 	<string name="_bx_shopify_form_entry_display_view"><![CDATA[Просмотреть товар]]></string>
+	<string name="_bx_shopify_form_entry_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_shopify_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_shopify_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_shopify_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
@@ -125,6 +126,12 @@
     <string name="_bx_shopify_page_title_settings"><![CDATA[Настройки]]></string>
     <string name="_bx_shopify_page_block_title_system_settings"><![CDATA[Настройки]]></string>
     <string name="_bx_shopify_page_block_title_settings"><![CDATA[Настройки]]></string>
+    <string name="_bx_shopify_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_shopify_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_shopify_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_shopify_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_shopify_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_shopify_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
 
     <string name="_bx_shopify_menu_set_title_view_entry"><![CDATA[Действия с товаром]]></string>
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Действия с товаром]]></string>
@@ -141,6 +148,8 @@
     <string name="_bx_shopify_menu_item_title_entries_home"><![CDATA[Магазин]]></string>
     <string name="_bx_shopify_menu_item_title_system_entries_public"><![CDATA[Новые товары]]></string>
     <string name="_bx_shopify_menu_item_title_entries_public"><![CDATA[Новые товары]]></string>
+    <string name="_bx_shopify_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_shopify_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_shopify_menu_item_title_system_entries_manage"><![CDATA[Управление товарами]]></string>
     <string name="_bx_shopify_menu_item_title_entries_manage"><![CDATA[Управление товарами]]></string>
     <string name="_bx_shopify_menu_item_title_system_settings"><![CDATA[Настройки]]></string>
@@ -185,6 +194,9 @@
 
     <string name="_bx_shopify_chart_growth"><![CDATA[Shopify: Развитие]]></string>
     <string name="_bx_shopify_chart_growth_speed"><![CDATA[Shopify: Скорость развития]]></string>
+
+    <string name="_bx_shopify_search_extended"><![CDATA[Поиск товаров]]></string>
+    <string name="_bx_shopify_search_extended_cmts"><![CDATA[Поиск комментариев к товарам]]></string>
 
     <string name="_bx_shopify_pre_lists_cats"><![CDATA[Категории товаров]]></string>
     <string name="_bx_shopify_cat_automotive_and_industrial"><![CDATA[Автомобили и Техника]]></string>
