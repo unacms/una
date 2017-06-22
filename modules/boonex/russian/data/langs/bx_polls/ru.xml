@@ -7,13 +7,14 @@
 	<string name="_bx_polls_option_title_chars"><![CDATA[Количество символов в автогенерируемом заголовке голосования]]></string>
 	<string name="_bx_polls_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
 	<string name="_bx_polls_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_polls_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+	<string name="_bx_polls_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
 	<string name="_bx_polls_form_entry"><![CDATA[Голосования]]></string>
 	<string name="_bx_polls_form_entry_display_add"><![CDATA[Добавить голосование]]></string>
 	<string name="_bx_polls_form_entry_display_edit"><![CDATA[Редактировать голосование]]></string>
 	<string name="_bx_polls_form_entry_display_delete"><![CDATA[Удалить голосование]]></string>
 	<string name="_bx_polls_form_entry_display_view"><![CDATA[Просмотреть голосование]]></string>
+	<string name="_bx_polls_form_entry_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_polls_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_polls_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_polls_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
@@ -114,6 +115,12 @@
     <string name="_bx_polls_page_block_title_cats"><![CDATA[Категории Голосований]]></string>
     <string name="_bx_polls_page_block_title_entry_info"><![CDATA[Инфо]]></string>
     <string name="_bx_polls_page_block_title_my_entries"><![CDATA[Мои голосования]]></string>
+    <string name="_bx_polls_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_polls_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_polls_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_polls_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_polls_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_polls_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
 
     <string name="_bx_polls_menu_set_title_view_entry"><![CDATA[Действия для голосования]]></string>
     <string name="_bx_polls_menu_title_view_entry"><![CDATA[Действия для голосования]]></string>
@@ -130,6 +137,8 @@
     <string name="_bx_polls_menu_item_title_entries_home"><![CDATA[Голосования]]></string>
     <string name="_bx_polls_menu_item_title_system_entries_public"><![CDATA[Новые голосования]]></string>
     <string name="_bx_polls_menu_item_title_entries_public"><![CDATA[Новые голосования]]></string>
+    <string name="_bx_polls_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_polls_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_polls_menu_item_title_system_entries_manage"><![CDATA[Управление голосованиями]]></string>
     <string name="_bx_polls_menu_item_title_entries_manage"><![CDATA[Управление голосованиями]]></string>
     <string name="_bx_polls_menu_item_title_system_entries_popular"><![CDATA[Популярные голосования]]></string>
@@ -171,6 +180,9 @@
 
     <string name="_bx_polls_chart_growth"><![CDATA[Голосования: Развитие]]></string>
     <string name="_bx_polls_chart_growth_speed"><![CDATA[Голосования: Скорость развития]]></string>
+
+    <string name="_bx_polls_search_extended"><![CDATA[Поиск голосований]]></string>
+    <string name="_bx_polls_search_extended_cmts"><![CDATA[Поиск комментариев к голосованиям]]></string>
 
     <string name="_bx_polls_pre_lists_cats"><![CDATA[Категории голосований]]></string>
     <string name="_bx_polls_cat_beauty_and_style"><![CDATA[Красота и стиль]]></string>

@@ -7,13 +7,14 @@
 	<string name="_bx_polls_option_title_chars"><![CDATA[Number of characters in auto-cropped poll title]]></string>
 	<string name="_bx_polls_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_polls_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_polls_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+	<string name="_bx_polls_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 
 	<string name="_bx_polls_form_entry"><![CDATA[Polls]]></string>
 	<string name="_bx_polls_form_entry_display_add"><![CDATA[Add Poll]]></string>
 	<string name="_bx_polls_form_entry_display_edit"><![CDATA[Edit Poll]]></string>
 	<string name="_bx_polls_form_entry_display_delete"><![CDATA[Delete Poll]]></string>
 	<string name="_bx_polls_form_entry_display_view"><![CDATA[View Poll]]></string>
+	<string name="_bx_polls_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_polls_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_polls_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_polls_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
@@ -114,6 +115,12 @@
 	<string name="_bx_polls_page_block_title_cats"><![CDATA[Polls Categories]]></string>
 	<string name="_bx_polls_page_block_title_entry_info"><![CDATA[Info]]></string>
 	<string name="_bx_polls_page_block_title_my_entries"><![CDATA[My Polls]]></string>
+	<string name="_bx_polls_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_polls_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_polls_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_polls_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_polls_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_polls_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
 
     <string name="_bx_polls_menu_set_title_view_entry"><![CDATA[Poll Actions]]></string>
     <string name="_bx_polls_menu_title_view_entry"><![CDATA[Poll Actions]]></string>
@@ -130,6 +137,8 @@
     <string name="_bx_polls_menu_item_title_entries_home"><![CDATA[Polls]]></string>
     <string name="_bx_polls_menu_item_title_system_entries_public"><![CDATA[Latest]]></string>
     <string name="_bx_polls_menu_item_title_entries_public"><![CDATA[Latest]]></string>
+    <string name="_bx_polls_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_polls_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_polls_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_polls_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_polls_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string>
@@ -172,6 +181,9 @@
 
     <string name="_bx_polls_chart_growth"><![CDATA[Polls: Growth]]></string>
     <string name="_bx_polls_chart_growth_speed"><![CDATA[Polls: Growth Speed]]></string>
+
+    <string name="_bx_polls_search_extended"><![CDATA[Polls Search]]></string>
+    <string name="_bx_polls_search_extended_cmts"><![CDATA[Polls Comments Search]]></string>
 
     <string name="_bx_polls_pre_lists_cats"><![CDATA[Poll categories]]></string>
     <string name="_bx_polls_cat_beauty_and_style"><![CDATA[Beauty & Style]]></string>

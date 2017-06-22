@@ -17,6 +17,12 @@ class BxPollsModule extends BxBaseModTextModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $CNF = &$this->_oConfig->CNF;
+        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+             $CNF['FIELD_ANONYMOUS'],
+             $CNF['FIELD_HIDDEN_RESULTS']
+        ));
     }
 
     /**
@@ -44,6 +50,13 @@ class BxPollsModule extends BxBaseModTextModule
     /**
      * SERVICE METHODS
      */
+    public function serviceGetResultsSearchExtended($aParams)
+    {
+        $this->_oTemplate->addJs(array('entry.js'));
+        $this->_oTemplate->addCss(array('entry.css'));
+        return $this->_oTemplate->getJsCode('entry') . BxDolService::call('system', 'get_results', array($aParams), 'TemplSearchExtendedServices');
+    }
+
     public function serviceGetBlockSubentries($iContentId = 0)
     {
         if (!$iContentId)

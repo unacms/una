@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_polls';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_polls' OR `object` IN('bx_polls_create_entry', 'bx_polls_edit_entry', 'bx_polls_delete_entry', 'bx_polls_view_entry', 'bx_polls_view_entry_comments', 'bx_polls_home', 'bx_polls_popular', 'bx_polls_updated', 'bx_polls_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_polls' OR `object` IN('bx_polls_create_entry', 'bx_polls_edit_entry', 'bx_polls_delete_entry', 'bx_polls_view_entry', 'bx_polls_view_entry_comments', 'bx_polls_home', 'bx_polls_popular', 'bx_polls_updated', 'bx_polls_author', 'bx_polls_search', 'bx_polls_manage');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_polls';
@@ -24,6 +24,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_polls';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_polls', 'bx_polls_cmts');
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_polls';
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_polls';
