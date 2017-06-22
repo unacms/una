@@ -10,7 +10,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_organizations';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_organizations' OR `object` IN('bx_organizations_create_profile', 'bx_organizations_delete_profile', 'bx_organizations_edit_profile', 'bx_organizations_edit_profile_cover', 'bx_organizations_view_profile', 'bx_organizations_view_profile_closed', 'bx_organizations_profile_info', 'bx_organizations_profile_friends', 'bx_organizations_profile_favorites', 'bx_organizations_profile_subscriptions', 'bx_organizations_home');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_organizations' OR `object` IN('bx_organizations_create_profile', 'bx_organizations_delete_profile', 'bx_organizations_edit_profile', 'bx_organizations_edit_profile_cover', 'bx_organizations_view_profile', 'bx_organizations_view_profile_closed', 'bx_organizations_profile_info', 'bx_organizations_profile_friends', 'bx_organizations_profile_favorites', 'bx_organizations_profile_subscriptions', 'bx_organizations_home', 'bx_organizations_search', 'bx_organizations_manage');
 
 -- MENU
 
@@ -42,6 +42,9 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_organizations_cats';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_organizations';
 
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_organizations';

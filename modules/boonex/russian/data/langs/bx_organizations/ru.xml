@@ -13,7 +13,7 @@
 	<string name="_bx_orgs_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
 	<string name="_bx_orgs_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
     <string name="_bx_orgs_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
-    <string name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+    <string name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
     <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
 
@@ -87,6 +87,8 @@
 	<string name="_bx_orgs_page_title_active"><![CDATA[Последние Активные Организации]]></string>
 	<string name="_bx_orgs_page_title_sys_online"><![CDATA[Онлайн Организации]]></string>
 	<string name="_bx_orgs_page_title_online"><![CDATA[Онлайн Организации]]></string>
+	<string name="_bx_posts_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_posts_page_title_entries_search"><![CDATA[Поиск]]></string>
 
     <string name="_bx_orgs_page_block_title_profile_private"><![CDATA[Приватный профиль]]></string>
     <string name="_bx_orgs_page_block_title_choose_type"><![CDATA[Выбрать тип профиля]]></string>
@@ -119,8 +121,9 @@
 	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Управление организациями]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Последние Активные Организации]]></string>
     <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Онлайн Организации]]></string>
-
 	<string name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string>
+	<string name="_bx_posts_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_posts_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Организации - Подменю]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Организации - Подменю]]></string>
@@ -185,6 +188,8 @@
     <string name="_bx_orgs_menu_item_title_subscribed_me"><![CDATA[{addon} подписчика]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[Новые Организации]]></string>
     <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[Новые Организации]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_posts_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Управление Организациями]]></string>
     <string name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Управление Организациями]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_home"><![CDATA[Организации]]></string>
@@ -215,6 +220,8 @@
 
     <string name="_bx_orgs_chart_growth"><![CDATA[Организации: Развитие]]></string>
     <string name="_bx_orgs_chart_growth_speed"><![CDATA[Организации: Скорость развития]]></string>
+
+    <string name="_bx_posts_search_extended"><![CDATA[Поиск организаций]]></string>
 
     <string name="_bx_orgs_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_orgs_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>

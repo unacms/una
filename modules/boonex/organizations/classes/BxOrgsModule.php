@@ -17,6 +17,8 @@ class BxOrgsModule extends BxBaseModProfileModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $this->_aSearchableNamesExcept[] = $this->_oConfig->CNF['FIELD_AUTHOR'];
     }
 
     public function servicePrepareFields ($aFieldsProfile)
