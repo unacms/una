@@ -121,6 +121,20 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_albums_home', 2, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_media', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:15:\"bx_albums_media\";i:1;s:15:\"bx_albums_media\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 1, 0, 1, 1),
 ('bx_albums_home', 2, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_media_camera', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:22:\"bx_albums_media_camera\";i:1;s:22:\"bx_albums_media_camera\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 1, 0, 1, 2);
 
+-- PAGE: search for entries
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_albums_search', '_bx_albums_page_title_sys_entries_search', '_bx_albums_page_title_entries_search', 'bx_albums', 11, 2147483647, 1, 'albums-search', 'page.php?i=albums-search', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_albums_search', 2, 'bx_albums', '_bx_albums_page_block_title_search_form', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:9:"bx_albums";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 1),
+('bx_albums_search', 1, 'bx_albums', '_bx_albums_page_block_title_search_results', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:9:"bx_albums";s:10:"show_empty";b:0;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 1),
+('bx_albums_search', 3, 'bx_albums', '_bx_albums_page_block_title_search_form_media', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:15:"bx_albums_media";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 1),
+('bx_albums_search', 1, 'bx_albums', '_bx_albums_page_block_title_search_results_media', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:15:"bx_albums_media";s:10:"show_empty";b:0;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 2),
+('bx_albums_search', 2, 'bx_albums', '_bx_albums_page_block_title_search_form_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:14:"bx_albums_cmts";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 2),
+('bx_albums_search', 1, 'bx_albums', '_bx_albums_page_block_title_search_results_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:14:"bx_albums_cmts";s:10:"show_empty";b:0;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 3),
+('bx_albums_search', 3, 'bx_albums', '_bx_albums_page_block_title_search_form_media_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:20:"bx_albums_media_cmts";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 2),
+('bx_albums_search', 1, 'bx_albums', '_bx_albums_page_block_title_search_results_media_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:20:"bx_albums_media_cmts";s:10:"show_empty";b:0;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 4);
+
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_manage', '_bx_albums_page_title_sys_manage', '_bx_albums_page_title_manage', 'bx_albums', 5, 2147483647, 1, 'albums-manage', 'page.php?i=albums-manage', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
@@ -224,7 +238,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_albums_submenu', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_recent', '_bx_albums_menu_item_title_entries_recent', 'page.php?i=albums-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_albums_submenu', 'bx_albums', 'albums-popular', '_bx_albums_menu_item_title_system_entries_popular', '_bx_albums_menu_item_title_entries_popular', 'page.php?i=albums-popular', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_albums_submenu', 'bx_albums', 'albums-popular-media', '_bx_albums_menu_item_title_system_entries_popular_media', '_bx_albums_menu_item_title_entries_popular_media', 'page.php?i=albums-popular-media', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_albums_submenu', 'bx_albums', 'albums-manage', '_bx_albums_menu_item_title_system_entries_manage', '_bx_albums_menu_item_title_entries_manage', 'page.php?i=albums-manage', '', '', '', '', 2147483646, 1, 1, 4);
+('bx_albums_submenu', 'bx_albums', 'albums-search', '_bx_albums_menu_item_title_system_entries_search', '_bx_albums_menu_item_title_entries_search', 'page.php?i=albums-search', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_albums_submenu', 'bx_albums', 'albums-manage', '_bx_albums_menu_item_title_system_entries_manage', '_bx_albums_menu_item_title_entries_manage', 'page.php?i=albums-manage', '', '', '', '', 2147483646, 1, 1, 5);
 
 -- MENU: sub-menu for view entry
 
@@ -345,6 +360,13 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `GlobalSearch`
 ('bx_albums_media', '_bx_albums_media', @iSearchOrder + 3, 1, 'BxAlbumsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsSearchResultMedia.php'),
 ('bx_albums_media_cmts', '_bx_albums_media_cmts', @iSearchOrder + 4, 1, 'BxAlbumsCmtsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResultMedia.php'),
 ('bx_albums_media_camera', '_bx_albums_media', @iSearchOrder + 5, 0, 'BxAlbumsSearchResultMediaCamera', 'modules/boonex/albums/classes/BxAlbumsSearchResultMediaCamera.php');
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_albums', 'bx_albums', 'bx_albums', '_bx_albums_search_extended', 1, '', ''),
+('bx_albums_media', 'bx_albums_media', 'bx_albums', '_bx_albums_search_extended_media', 1, '', ''),
+('bx_albums_cmts', 'bx_albums_cmts', 'bx_albums', '_bx_albums_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', ''),
+('bx_albums_media_cmts', 'bx_albums_media_cmts', 'bx_albums', '_bx_albums_search_extended_media_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES

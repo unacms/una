@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_albums';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_albums' OR `object` IN('bx_albums_create_entry', 'bx_albums_edit_entry', 'bx_albums_add_images', 'bx_albums_delete_entry', 'bx_albums_view_entry', 'bx_albums_view_entry_comments', 'bx_albums_home', 'bx_albums_popular', 'bx_albums_updated', 'bx_albums_author', 'bx_albums_view_media', 'bx_albums_popular_media');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_albums' OR `object` IN('bx_albums_create_entry', 'bx_albums_edit_entry', 'bx_albums_add_images', 'bx_albums_delete_entry', 'bx_albums_view_entry', 'bx_albums_view_entry_comments', 'bx_albums_home', 'bx_albums_popular', 'bx_albums_updated', 'bx_albums_author', 'bx_albums_view_media', 'bx_albums_popular_media', 'bx_albums_search', 'bx_albums_manage');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_albums';
@@ -24,6 +24,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_albums';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_albums', 'bx_albums_cmts', 'bx_albums_media', 'bx_albums_media_camera', 'bx_albums_media_cmts');
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_albums';
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` IN('bx_albums', 'bx_albums_media', 'bx_albums_media_camera');

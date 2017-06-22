@@ -11,7 +11,7 @@
 	<string name="_bx_albums_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_albums_option_per_page_profile"><![CDATA[Number of items per page on profile page]]></string>
 	<string name="_bx_albums_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_albums_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+	<string name="_bx_albums_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 
 	<string name="_bx_albums_form_entry"><![CDATA[Albums]]></string>
 	<string name="_bx_albums_form_entry_display_add"><![CDATA[Add Album]]></string>
@@ -19,6 +19,7 @@
 	<string name="_bx_albums_form_entry_display_add_images"><![CDATA[Add Images To Album]]></string>
 	<string name="_bx_albums_form_entry_display_delete"><![CDATA[Delete Album]]></string>
 	<string name="_bx_albums_form_entry_display_view"><![CDATA[View Album]]></string>
+	<string name="_bx_albums_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_albums_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_albums_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_albums_form_entry_input_sys_title"><![CDATA[Caption]]></string>
@@ -120,6 +121,16 @@
 	<string name="_bx_albums_page_block_title_popular_keywords_media"><![CDATA[Popular Media Hashtags]]></string>
 	<string name="_bx_albums_page_block_title_popular_keywords_media_camera"><![CDATA[Popular Cameras]]></string>
 	<string name="_bx_albums_page_block_title_my_entries"><![CDATA[My Albums]]></string>
+	<string name="_bx_albums_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_albums_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_albums_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_albums_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_albums_page_block_title_search_form_media"><![CDATA[Images Search Form]]></string>
+    <string name="_bx_albums_page_block_title_search_results_media"><![CDATA[Images Search Results]]></string>
+    <string name="_bx_albums_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_albums_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
+    <string name="_bx_albums_page_block_title_search_form_media_cmts"><![CDATA[Images Comments Search Form]]></string>
+    <string name="_bx_albums_page_block_title_search_results_media_cmts"><![CDATA[Images Comments Search Results]]></string>
 
     <string name="_bx_albums_menu_set_title_view_entry"><![CDATA[Album Actions]]></string>
     <string name="_bx_albums_menu_title_view_entry"><![CDATA[Album Actions]]></string>
@@ -142,6 +153,8 @@
     <string name="_bx_albums_menu_item_title_entries_home"><![CDATA[Albums]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_recent"><![CDATA[Latest]]></string>
     <string name="_bx_albums_menu_item_title_entries_recent"><![CDATA[Latest]]></string>
+    <string name="_bx_albums_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_albums_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_albums_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string>
@@ -183,6 +196,11 @@
     <string name="_bx_albums_chart_growth_speed"><![CDATA[Albums: Growth Speed]]></string>
     <string name="_bx_albums_chart_growth_media"><![CDATA[Images: Growth]]></string>
     <string name="_bx_albums_chart_growth_speed_media"><![CDATA[Images: Growth Speed]]></string>
+
+    <string name="_bx_albums_search_extended"><![CDATA[Albums Search]]></string>
+    <string name="_bx_albums_search_extended_media"><![CDATA[Images Search]]></string>
+    <string name="_bx_albums_search_extended_cmts"><![CDATA[Albums Comments Search]]></string>
+    <string name="_bx_albums_search_extended_media_cmts"><![CDATA[Images Comments Search]]></string>
 
     <string name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">All Albums by {1} ({2})</a>]]></string>
     <string name="_bx_albums_txt_sample_single"><![CDATA[album]]></string>

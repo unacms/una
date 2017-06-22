@@ -102,7 +102,7 @@ class BxAlbumsContentInfoMedia extends BxDolContentInfo
         if(empty($sUnitTemplate))
             $sUnitTemplate = 'unit_media.html';
 
-        return $this->_oTemplate->unitMedia($aMedia, true, $sUnitTemplate);
+        return $this->_oModule->_oTemplate->unitMedia($aMedia, true, $sUnitTemplate);
     }
 
     public function getAll ($aParams = array())
@@ -110,7 +110,31 @@ class BxAlbumsContentInfoMedia extends BxDolContentInfo
         if(empty($aParams) || !is_array($aParams))
             $aParams = array('type' => 'all');
 
-        return $this->_oDb->getMediaBy($aParams);
+        return $this->_oModule->_oDb->getMediaBy($aParams);
+    }
+
+    public function getSearchableFieldsExtended ()
+    {
+        return array(
+            'author' => array(
+            	'type' => 'text_auto', 
+            	'caption' => '_bx_albums_form_entry_input_author',
+            	'values' => '' 
+            ),
+            'title' => array(
+            	'type' => 'text', 
+            	'caption' => '_bx_albums_form_entry_file_title',
+            	'values' => '' 
+            )
+        );
+    }
+
+    public function getSearchResultExtended ($aParams)
+    {
+        if(empty($aParams) || !is_array($aParams))
+            return array();
+
+        return $this->_oModule->_oDb->getMediaBy(array('type' => 'search_ids', 'search_params' => $aParams));
     }
 }
 

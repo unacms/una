@@ -94,6 +94,8 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             return $this->_oForm;
 
         $sForm = 'sys_search_extended_' . $this->_sObject;
+        $sFormSubmit = 'search' . $this->_sObject;
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => $sForm,
@@ -107,7 +109,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                     'key' => '',
                     'uri' => '',
                     'uri_title' => '',
-                    'submit_name' => 'search'
+                    'submit_name' => $sFormSubmit
                 ),
             ),
             'inputs' => array()
@@ -131,7 +133,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         $aForm['inputs']['search'] = array(
             'type' => 'submit',
-            'name' => 'search',
+            'name' => $sFormSubmit,
             'value' => _t('_Search')
         );
 

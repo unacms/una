@@ -954,7 +954,7 @@ BLAH;
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
-            'id' => $aInput['name'] . time(),
+            'id' => $aInput['name'] . time() . mt_rand(0, 100),
             'url_get_recipients' => $aInput['ajax_get_suggestions'],
             'name' => $aInput['name'],
             'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
