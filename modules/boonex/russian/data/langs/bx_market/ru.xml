@@ -11,7 +11,7 @@
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
 	<string name="_bx_market_option_per_page_profile"><![CDATA[Количество элементов на странице при просмотре Профиля]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_market_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+	<string name="_bx_market_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
 	<string name="_bx_market_form_entry"><![CDATA[Рынок]]></string>
 	<string name="_bx_market_form_entry_display_add"><![CDATA[Добавление продукта]]></string>
@@ -19,6 +19,7 @@
 	<string name="_bx_market_form_entry_display_delete"><![CDATA[Удаление продукта]]></string>
 	<string name="_bx_market_form_entry_display_view"><![CDATA[Просмотр продукта]]></string>
 	<string name="_bx_market_form_entry_display_view_full"><![CDATA[Полный просмотр продукта]]></string>
+	<string name="_bx_market_form_entry_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_market_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_market_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_market_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
@@ -185,6 +186,12 @@
     <string name="_bx_market_page_block_title_licenses_note"><![CDATA[Внимание]]></string>
     <string name="_bx_market_page_block_content_licenses_note"><![CDATA[Лицензии приведены только для справки. Нет необходимочти "регистрировыть" их, так как Вы просто можете скачать и установить лицензионные UNA приложения напрямую в Магазине приложений в Студии вашего сайта.]]></string>
     <string name="_bx_market_page_block_title_view_profile"><![CDATA[Мои Продукты]]></string>
+    <string name="_bx_market_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_market_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_market_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_market_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_market_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_market_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Действия с продуктом]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Действия с продуктом]]></string>
@@ -241,6 +248,8 @@
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Действия с отрывоком]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[Ещё действия]]></string>
     <string name="_bx_market_menu_item_title_snippet_more"><![CDATA[Ещё действия]]></string>
+    <string name="_bx_market_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_market_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
@@ -269,6 +278,9 @@
 
     <string name="_bx_market_chart_growth"><![CDATA[Рынок: Развитие]]></string>
     <string name="_bx_market_chart_growth_speed"><![CDATA[Рынок: Скорость развития]]></string>
+
+    <string name="_bx_market_search_extended"><![CDATA[Поиск продуктов]]></string>
+    <string name="_bx_market_search_extended_cmts"><![CDATA[Поиск комментариев к продуктам]]></string>
 
     <string name="_bx_market_pre_lists_cats"><![CDATA[Категории продуктов]]></string>
     <string name="_bx_market_cat_administration"><![CDATA[Администрирование]]></string>

@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_market';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_market' OR `object` IN('bx_market_create_entry', 'bx_market_edit_entry', 'bx_market_delete_entry', 'bx_market_download_entry', 'bx_market_view_entry', 'bx_market_view_entry_comments', 'bx_market_home', 'bx_market_categories', 'bx_market_popular', 'bx_market_updated', 'bx_market_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_market' OR `object` IN('bx_market_create_entry', 'bx_market_edit_entry', 'bx_market_delete_entry', 'bx_market_download_entry', 'bx_market_view_entry', 'bx_market_view_entry_comments', 'bx_market_home', 'bx_market_categories', 'bx_market_popular', 'bx_market_updated', 'bx_market_author', 'bx_market_search', 'bx_market_manage');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_market';
@@ -24,6 +24,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_market';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_market', 'bx_market_cmts');
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_market';
 
 -- CONNECTIONS
 DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_market_subentries';

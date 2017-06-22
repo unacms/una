@@ -9,11 +9,6 @@
 
 class BxDolSearchExtendedQuery extends BxDolDb
 {
-    protected static $TYPES_SET = array (
-        'select_multiple' => 1,
-        'checkbox_set' => 1,
-    );
-
     public function __construct($aObject = array())
     {
         parent::__construct();
@@ -70,7 +65,7 @@ class BxDolSearchExtendedQuery extends BxDolDb
                 if(strncmp(BX_DATA_LISTS_KEY_PREFIX, $aField['values'], 2) === 0) {
                     $sList = trim($aField['values'], BX_DATA_LISTS_KEY_PREFIX . ' ');
                     $aFields[$iIndex] = array_merge($aField, array(
-                    	'values' => BxDolFormQuery::getDataItems($sList, isset(self::$TYPES_SET[$aField['search_type']])),
+                    	'values' => BxDolFormQuery::getDataItems($sList),
                     	'values_list_name' => $sList,
                     ));
                 }
