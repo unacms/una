@@ -10,7 +10,7 @@
 	<string name="_bx_forum_option_per_page_index"><![CDATA[Количество элементов на главной странице сайта]]></string>
 	<string name="_bx_forum_option_per_page_profile"><![CDATA[Количество элементов на странице профиля]]></string>
 	<string name="_bx_forum_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_forum_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+	<string name="_bx_forum_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 	<string name="_bx_forum_option_autosubscribe_created"><![CDATA[Автоподписка на новые обсуждения]]></string>
 	<string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Автоподписка на отвеченные обсуждения]]></string>
 
@@ -19,6 +19,7 @@
 	<string name="_bx_forum_form_entry_display_delete"><![CDATA[Удаление обсуждения]]></string>
 	<string name="_bx_forum_form_entry_display_edit"><![CDATA[Редактирование обсуждения]]></string>
 	<string name="_bx_forum_form_entry_display_view"><![CDATA[Просмотр обсуждения]]></string>
+	<string name="_bx_forum_form_entry_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Текст]]></string>
@@ -144,6 +145,10 @@
 	<string name="_bx_forum_page_title_entries_search"><![CDATA[Поиск]]></string>
 	<string name="_bx_forum_page_block_title_entries_search_form"><![CDATA[Поиск]]></string>
 	<string name="_bx_forum_page_block_title_entries_search_results"><![CDATA[Результаты поиска]]></string>
+	<string name="_bx_forum_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_forum_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_forum_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_forum_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
 
 	<string name="_bx_forum_menu_title_submenu"><![CDATA[Форум - Подменю]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Форум - Подменю]]></string>
@@ -237,6 +242,9 @@
 
     <string name="_bx_forum_chart_growth"><![CDATA[Обсуждения: Развитие]]></string>
     <string name="_bx_forum_chart_growth_speed"><![CDATA[Обсуждения: Скорость развития]]></string>
+
+    <string name="_bx_forum_search_extended"><![CDATA[Поиск обсуждений]]></string>
+    <string name="_bx_forum_search_extended_cmts"><![CDATA[Поиск комментариев к обсуждениям]]></string>
 
     <string name="_bx_forum_draft_saving_error"><![CDATA[Ошибка сохранения черновика!]]></string>
     <string name="_bx_forum_draft_saved_success"><![CDATA[Черновик сохранён.]]></string>

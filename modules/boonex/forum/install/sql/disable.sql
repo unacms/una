@@ -39,6 +39,10 @@ DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_forum_allow_view_to');
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_forum', 'bx_forum_cmts');
 
 
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_forum';
+
+
 -- CONNECTIONS
 DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_forum_subscribers';
 

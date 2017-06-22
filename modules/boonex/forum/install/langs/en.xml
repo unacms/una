@@ -10,7 +10,7 @@
 	<string name="_bx_forum_option_per_page_index"><![CDATA[Number of items per page on site home page]]></string>
 	<string name="_bx_forum_option_per_page_profile"><![CDATA[Number of items per page on profile page]]></string>
 	<string name="_bx_forum_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_forum_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+	<string name="_bx_forum_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 	<string name="_bx_forum_option_autosubscribe_created"><![CDATA[Autosubscribe to newly created discussions]]></string>
 	<string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Autosubscribe to replied discussions]]></string>
 
@@ -19,6 +19,7 @@
 	<string name="_bx_forum_form_entry_display_delete"><![CDATA[Delete discussion]]></string>
 	<string name="_bx_forum_form_entry_display_edit"><![CDATA[Edit discussion]]></string>
 	<string name="_bx_forum_form_entry_display_view"><![CDATA[View discussion]]></string>
+	<string name="_bx_forum_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Text]]></string>
@@ -144,6 +145,10 @@
 	<string name="_bx_forum_page_title_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_forum_page_block_title_entries_search_form"><![CDATA[Search]]></string>
 	<string name="_bx_forum_page_block_title_entries_search_results"><![CDATA[Search Results]]></string>
+	<string name="_bx_forum_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_forum_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_forum_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_forum_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
 
     <string name="_bx_forum_menu_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Forum Submenu]]></string>
@@ -237,7 +242,10 @@
 
     <string name="_bx_forum_chart_growth"><![CDATA[Discussions: Growth]]></string>
     <string name="_bx_forum_chart_growth_speed"><![CDATA[Discussions: Growth Speed]]></string>
-    
+
+    <string name="_bx_forum_search_extended"><![CDATA[Discussions Search]]></string>
+    <string name="_bx_forum_search_extended_cmts"><![CDATA[Discussions Comments Search]]></string>
+
     <string name="_bx_forum_draft_saving_error"><![CDATA[Draft saving error!]]></string>
     <string name="_bx_forum_draft_saved_success"><![CDATA[Draft saved.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Discussion wasn't found.]]></string>

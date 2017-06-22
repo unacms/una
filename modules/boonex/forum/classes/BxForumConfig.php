@@ -132,6 +132,7 @@ class BxForumConfig extends BxBaseModTextConfig
             	'txt_sample_single_with_article' => '_bx_forum_txt_sample_single_with_article',
             	'txt_sample_comment_single' => '_bx_forum_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_forum_txt_sample_vote_single',
+            	'form_field_author' => '_bx_forum_form_entry_input_author',
             	'grid_action_err_delete' => '_bx_forum_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_forum_grid_txt_account_manager',
             	'filter_item_active' => '_bx_forum_grid_filter_item_title_adm_active',
