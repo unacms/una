@@ -20,6 +20,12 @@ class BxSnipcartModule extends BxBaseModTextModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $CNF = &$this->_oConfig->CNF;
+        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+             $CNF['FIELD_PRICE'],
+             $CNF['FIELD_WEIGHT']
+        ));
     }
 
     public function getSettings($iProfileId = 0)

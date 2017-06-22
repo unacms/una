@@ -9,7 +9,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_snipcart';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_snipcart' OR `object` IN('bx_snipcart_create_entry', 'bx_snipcart_edit_entry', 'bx_snipcart_delete_entry', 'bx_snipcart_view_entry', 'bx_snipcart_view_entry_comments', 'bx_snipcart_home', 'bx_snipcart_popular', 'bx_snipcart_updated', 'bx_snipcart_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_snipcart' OR `object` IN('bx_snipcart_create_entry', 'bx_snipcart_edit_entry', 'bx_snipcart_delete_entry', 'bx_snipcart_view_entry', 'bx_snipcart_view_entry_comments', 'bx_snipcart_home', 'bx_snipcart_popular', 'bx_snipcart_updated', 'bx_snipcart_author', 'bx_snipcart_search', 'bx_snipcart_manage');
 
 
 -- MENU
@@ -30,6 +30,8 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_snipcart';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_snipcart', 'bx_snipcart_cmts');
 
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_snipcart';
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_snipcart';

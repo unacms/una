@@ -9,13 +9,14 @@
 	<string name="_bx_snipcart_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_snipcart_option_per_page_profile"><![CDATA[Number of items per page on profile/group page]]></string>
 	<string name="_bx_snipcart_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_snipcart_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+	<string name="_bx_snipcart_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 
 	<string name="_bx_snipcart_form_entry"><![CDATA[Goods]]></string>
 	<string name="_bx_snipcart_form_entry_display_add"><![CDATA[Add Goods]]></string>
 	<string name="_bx_snipcart_form_entry_display_edit"><![CDATA[Edit Goods]]></string>
 	<string name="_bx_snipcart_form_entry_display_delete"><![CDATA[Delete Goods]]></string>
 	<string name="_bx_snipcart_form_entry_display_view"><![CDATA[View Goods]]></string>
+	<string name="_bx_snipcart_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_snipcart_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
@@ -138,6 +139,12 @@
     <string name="_bx_snipcart_page_title_settings"><![CDATA[Settings]]></string>
     <string name="_bx_snipcart_page_block_title_system_settings"><![CDATA[Settings]]></string>
     <string name="_bx_snipcart_page_block_title_settings"><![CDATA[Settings]]></string>
+    <string name="_bx_snipcart_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_snipcart_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_snipcart_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_snipcart_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_snipcart_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_snipcart_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
 
     <string name="_bx_snipcart_menu_set_title_view_entry"><![CDATA[Goods Actions]]></string>
     <string name="_bx_snipcart_menu_title_view_entry"><![CDATA[Goods Actions]]></string>
@@ -154,6 +161,8 @@
     <string name="_bx_snipcart_menu_item_title_entries_home"><![CDATA[Shop]]></string>
     <string name="_bx_snipcart_menu_item_title_system_entries_public"><![CDATA[Latest]]></string>
     <string name="_bx_snipcart_menu_item_title_entries_public"><![CDATA[Latest]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_snipcart_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_snipcart_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_snipcart_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_snipcart_menu_item_title_system_settings"><![CDATA[Settings]]></string>
@@ -198,6 +207,9 @@
 
     <string name="_bx_snipcart_chart_growth"><![CDATA[Snipcart: Growth]]></string>
     <string name="_bx_snipcart_chart_growth_speed"><![CDATA[Snipcart: Growth Speed]]></string>
+
+    <string name="_bx_snipcart_search_extended"><![CDATA[Snipcart Search]]></string>
+    <string name="_bx_snipcart_search_extended_cmts"><![CDATA[Snipcart Comments Search]]></string>
 
     <string name="_bx_snipcart_pre_lists_cats"><![CDATA[Goods categories]]></string>
     <string name="_bx_snipcart_cat_automotive_and_industrial"><![CDATA[Automotive & Industrial]]></string>
