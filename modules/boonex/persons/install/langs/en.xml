@@ -13,7 +13,7 @@
 	<string name="_bx_persons_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
 	<string name="_bx_persons_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_persons_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_persons_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+	<string name="_bx_persons_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_persons_option_public_subscriptions"><![CDATA[Public following list]]></string>
     <string name="_bx_persons_option_public_subscribed_me"><![CDATA[Public followers list]]></string>
 
@@ -85,6 +85,8 @@
 	<string name="_bx_persons_page_title_active"><![CDATA[Active People]]></string>
 	<string name="_bx_persons_page_title_sys_online"><![CDATA[Online People]]></string>
 	<string name="_bx_persons_page_title_online"><![CDATA[Online People]]></string>
+	<string name="_bx_persons_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_persons_page_title_entries_search"><![CDATA[Search]]></string>
 
 	<string name="_bx_persons_page_block_title_profile_private"><![CDATA[Private Profile]]></string>
 	<string name="_bx_persons_page_block_title_choose_type"><![CDATA[Choose Profile Type]]></string>
@@ -117,6 +119,8 @@
 	<string name="_bx_persons_page_block_title_manage"><![CDATA[Manage People]]></string>
 	<string name="_bx_persons_page_block_title_active_profiles"><![CDATA[Active People]]></string>
 	<string name="_bx_persons_page_block_title_online_profiles"><![CDATA[Online People]]></string>
+	<string name="_bx_persons_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_persons_page_block_title_search_results"><![CDATA[Search Results]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Persons Submenu]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Persons Submenu]]></string>
@@ -181,6 +185,8 @@
     <string name="_bx_persons_menu_item_title_subscribed_me"><![CDATA[{addon} followers]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[New]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_persons_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Persons]]></string>
@@ -211,6 +217,8 @@
 
     <string name="_bx_persons_chart_growth"><![CDATA[Persons: Growth]]></string>
     <string name="_bx_persons_chart_growth_speed"><![CDATA[Persons: Growth Speed]]></string>
+
+    <string name="_bx_persons_search_extended"><![CDATA[Persons Search]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>

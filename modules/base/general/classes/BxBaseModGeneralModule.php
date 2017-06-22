@@ -138,7 +138,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return array();
 
         $aResult = array();
-        if(!empty($CNF['FIELD_AUTHOR']))
+        if(!empty($CNF['FIELD_AUTHOR']) && !in_array($CNF['FIELD_AUTHOR'], $this->_aSearchableNamesExcept))
             $aResult[$CNF['FIELD_AUTHOR']] = array(
             	'type' => 'text_auto', 
             	'caption' => $CNF['T']['form_field_author'],
