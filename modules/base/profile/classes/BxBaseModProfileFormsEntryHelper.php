@@ -149,7 +149,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         $oSession = BxDolSession::getInstance();
 
-        $sRedirectType = getParam($CNF['PARAM_REDIRECT_AADD']);
+        $sRedirectType = empty($CNF['PARAM_REDIRECT_AADD']) ? BX_DOL_PROFILE_REDIRECT_PROFILE : getParam($CNF['PARAM_REDIRECT_AADD']);
         $sRedirectDefault = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
 
         $sRedirectUrl = $sRedirectDefault;
