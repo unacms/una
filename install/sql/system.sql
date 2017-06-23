@@ -2700,6 +2700,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_account', 'system', 'name', '', '', 0, 'text', '_sys_form_login_input_caption_system_name', '_sys_form_account_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_sys_form_account_input_name_error', 'Xss', '', 0, 0),
 ('sys_account', 'system', 'captcha', '', '', 0, 'captcha', '_sys_form_login_input_caption_system_captcha', '_sys_form_account_input_captcha', '', 1, 0, 0, '', '', '', 'Captcha', '', '_sys_form_account_input_captcha_error', '', '', 1, 0),
 ('sys_account', 'system', 'password_current', '', '', 0, 'password', '_sys_form_login_input_caption_system_password_current', '_sys_form_account_input_password_current', '', 1, 0, 0, '', '', '', 'PasswordCurrent', '', '_sys_form_account_input_password_current_error', '', '', 0, 0),
+('sys_account', 'system', 'delete_content', '0', '', 0, 'hidden', '_sys_form_login_input_caption_system_delete_content', '', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_account', 'system', 'delete_confirm', '1', '', 0, 'checkbox', '_sys_form_login_input_caption_system_delete_confirm', '_sys_form_account_input_delete_confirm', '_sys_form_account_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_sys_form_account_input_delete_confirm_error', '', '', 0, 0),
 ('sys_account', 'system', 'receive_updates', '1', '', 1, 'switcher', '_sys_form_login_input_caption_system_receive_updates', '_sys_form_account_input_receive_updates', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_account', 'system', 'receive_news', '1', '', 1, 'switcher', '_sys_form_login_input_caption_system_receive_news', '_sys_form_account_input_receive_news', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
@@ -2775,6 +2776,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_account_settings_pwd', 'password_confirm', 2147483647, 1, 3),
 ('sys_account_settings_pwd', 'do_submit', 2147483647, 1, 4),
 
+('sys_account_settings_del_account', 'delete_content', 2147483647, 1, 0),
 ('sys_account_settings_del_account', 'delete_confirm', 2147483647, 1, 1),
 ('sys_account_settings_del_account', 'password_current', 2147483647, 1, 2),
 ('sys_account_settings_del_account', 'do_submit', 2147483647, 1, 3),

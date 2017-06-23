@@ -216,7 +216,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_organizations_view_actions_more', 'bx_organizations', 'edit-organization-cover', '_bx_orgs_menu_item_title_system_edit_cover', '_bx_orgs_menu_item_title_edit_cover', 'page.php?i=edit-organization-cover&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 25),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'edit-organization-profile', '_bx_orgs_menu_item_title_system_edit_profile', '_bx_orgs_menu_item_title_edit_profile', 'page.php?i=edit-organization-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 30),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-profile', '_bx_orgs_menu_item_title_system_delete_profile', '_bx_orgs_menu_item_title_delete_profile', 'page.php?i=delete-organization-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 40),
-('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-account', '_bx_orgs_menu_item_title_system_delete_account', '_bx_orgs_menu_item_title_delete_account', 'page.php?i=account-settings-delete&id={account_id}', '', '', 'remove', '', 128, 1, 0, 50);
+('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-account', '_bx_orgs_menu_item_title_system_delete_account', '_bx_orgs_menu_item_title_delete_account', 'page.php?i=account-settings-delete&id={account_id}', '', '', 'remove', '', 128, 1, 0, 50),
+('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-account-content', '_bx_orgs_menu_item_title_system_delete_account_content', '_bx_orgs_menu_item_title_delete_account_content', 'page.php?i=account-settings-delete&id={account_id}&content=1', '', '', 'remove', '', 128, 1, 0, 60);
 
 -- MENU: module sub-menu
 

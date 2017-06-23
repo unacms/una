@@ -1871,6 +1871,7 @@
 	<string name="_sys_form_login_input_caption_system_agreement"><![CDATA[Соглашение]]></string>
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Подтвердить Удаление]]></string>
+	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Удалить с контентом]]></string>
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>

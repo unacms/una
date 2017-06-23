@@ -1873,6 +1873,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_agreement"><![CDATA[Agreement]]></string>
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Captcha]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Confirm Delete]]></string>
+	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Delete with Content]]></string>
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Sign up]]></string>
 	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>

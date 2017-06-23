@@ -145,6 +145,8 @@
     <string name="_bx_persons_menu_item_title_delete_profile"><![CDATA[Удалить профиль]]></string>
     <string name="_bx_persons_menu_item_title_system_delete_account"><![CDATA[Удалить аккаунт]]></string>
     <string name="_bx_persons_menu_item_title_delete_account"><![CDATA[Удалить аккаунт]]></string>
+    <string name="_bx_persons_menu_item_title_system_delete_account_content"><![CDATA[Удалить аккаунт и контент]]></string>
+    <string name="_bx_persons_menu_item_title_delete_account_content"><![CDATA[Удалить аккаунт и контент]]></string>
     <string name="_bx_persons_menu_item_title_system_profile_type"><![CDATA[Персона]]></string>
     <string name="_bx_persons_menu_item_title_profile_type"><![CDATA[Персона]]></string>
     <string name="_bx_persons_menu_item_title_system_create_profile"><![CDATA[Персона]]></string>

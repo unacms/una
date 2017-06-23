@@ -161,6 +161,9 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         // check and display form
         $oForm = $this->getObjectFormDelete();
+        if(bx_get('content') !== false)
+            $oForm->aInputs['delete_content']['value'] = (int)bx_get('content');
+
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
@@ -174,7 +177,7 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         // delete account
         $oAccount = BxDolAccount::getInstance($aAccountInfo['id']);
-        if (!$oAccount->delete())
+        if (!$oAccount->delete((int)$oForm->getCleanValue('delete_content') != 0))
             return MsgBox(_t('_sys_txt_error_account_delete'));
 
         // logout from deleted account

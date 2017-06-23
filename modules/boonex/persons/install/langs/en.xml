@@ -145,6 +145,8 @@
     <string name="_bx_persons_menu_item_title_delete_profile"><![CDATA[Delete Profile]]></string>
     <string name="_bx_persons_menu_item_title_system_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_persons_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
+    <string name="_bx_persons_menu_item_title_system_delete_account_content"><![CDATA[Delete Account with Content]]></string>
+    <string name="_bx_persons_menu_item_title_delete_account_content"><![CDATA[Delete Account with Content]]></string>
     <string name="_bx_persons_menu_item_title_system_profile_type"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_profile_type"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_system_create_profile"><![CDATA[Person]]></string>
