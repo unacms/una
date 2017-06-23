@@ -8,6 +8,7 @@
 	<string name="_bx_events_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_events_option_time_format"><![CDATA[Time format]]></string>
     <string name="_bx_events_option_short_date_format"><![CDATA[Short date format]]></string>
+    <string name="_bx_events_option_searchable_fields"><![CDATA[Searchable fields]]></string>
 
 	<string name="_bx_events_form_profile"><![CDATA[Events]]></string>
 	<string name="_bx_events_form_profile_display_add"><![CDATA[Add Event]]></string>
