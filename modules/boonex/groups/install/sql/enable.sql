@@ -14,6 +14,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_groups_num_connections_quick', '4', @iCategId, '_bx_groups_option_num_connections_quick', 'digit', '', '', '', 10),
 ('bx_groups_per_page_browse', '20', @iCategId, '_bx_groups_option_per_page_browse', 'digit', '', '', '', 11),
 ('bx_groups_num_rss', '10', @iCategId, '_bx_groups_option_num_rss', 'digit', '', '', '', 12);
+('bx_groups_searchable_fields', 'group_name,group_desc', @iCategId, '_bx_groups_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30);
+
 
 -- PAGES
 
@@ -426,6 +428,7 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALU
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'save_setting', @iHandlerId),
 ('bx_timeline', 'post_common', @iHandler),
 ('bx_groups_pics', 'file_deleted', @iHandler),
 ('bx_groups_fans', 'connection_added', @iHandler),
