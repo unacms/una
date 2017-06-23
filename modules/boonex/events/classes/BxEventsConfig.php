@@ -36,6 +36,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
+            'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
 
             // database fields
@@ -66,6 +67,8 @@ class BxEventsConfig extends BxBaseModProfileConfig
 
             'PARAM_NUM_RSS' => 'bx_events_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_events_num_connections_quick',
+            
+            'PARAM_SEARCHABLE_FIELDS' => 'bx_events_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => 'bx_events_pics',

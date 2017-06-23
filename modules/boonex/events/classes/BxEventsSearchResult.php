@@ -23,7 +23,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
             'table' => 'sys_profiles',
             'tableSearch' => 'bx_events_data',
             'ownFields' => array(),
-            'searchFields' => array('event_name', 'event_desc'),
+            'searchFields' => array(),
             'restriction' => array(
         		'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
@@ -68,6 +68,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
 
         $this->sFilterName = 'bx_events_data_filter';
         $this->oModule = $this->getMain();
+        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
         $oJoinedProfile = null;
         $bProcessConditionsForPrivateContent = true;
