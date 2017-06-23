@@ -27,8 +27,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
     );
 
     public static $TYPE_TO_OPERATOR = array(
-    	'text' => array('like'),
-        'textarea' => array('like'),
+    	'text' => array('like', '='),
+        'textarea' => array('like', '='),
         'number' => array('='),
         'text_auto' => array('in'),
         'select' => array('in'),

@@ -27,6 +27,8 @@ class BxDevConfig extends BxBaseModGeneralConfig
         	'grid_forms_fields' => $this->_sName . '_forms_fields',
 	        'grid_forms_pre_lists' => $this->_sName . '_forms_pre_lists',
 	        'grid_forms_pre_values' => $this->_sName . '_forms_pre_values',
+            'grid_search_forms' => $this->_sName . '_search_forms',
+        	'grid_search_forms_fields' => $this->_sName . '_search_forms_fields',
 
         	//--- Forms builder forms.
         	'form_forms_form' => $this->_sName . '_forms_form',
@@ -41,6 +43,11 @@ class BxDevConfig extends BxBaseModGeneralConfig
         	'form_forms_prevalue' => $this->_sName . '_forms_prevalue',
         	'form_display_forms_prevalue_add' => $this->_sName . '_forms_prevalue_add',
         	'form_display_forms_prevalue_edit' => $this->_sName . '_forms_prevalue_edit',
+        	'form_forms_search_form' => $this->_sName . '_forms_search_form',
+        	'form_display_forms_search_form_add' => $this->_sName . '_forms_search_form_add',
+        	'form_display_forms_search_form_edit' => $this->_sName . '_forms_search_form_edit',
+        	'form_forms_search_fields' => $this->_sName . '_forms_search_fields',
+        	'form_display_forms_search_fields_edit' => $this->_sName . '_forms_search_fields_edit',
 
 	        //--- Navigation builder grids.
 			'grid_nav_menus' => $this->_sName . '_nav_menus',

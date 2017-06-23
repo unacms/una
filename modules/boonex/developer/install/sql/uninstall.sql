@@ -11,9 +11,9 @@ WHERE `tp`.`name`=@sName;
 --
 -- Forms Builder
 --
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values', 'bx_developer_search_forms', 'bx_developer_search_forms_fields');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values', 'bx_developer_search_forms', 'bx_developer_search_forms_fields');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values', 'bx_developer_search_forms', 'bx_developer_search_forms_fields');
 
 
 --

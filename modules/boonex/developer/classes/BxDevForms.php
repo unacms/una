@@ -28,8 +28,12 @@ class BxDevForms extends BxTemplStudioForms
         	'forms' => $this->oModule->_oConfig->getObject('grid_forms'),
 	        'displays' => $this->oModule->_oConfig->getObject('grid_forms_displays'),
 	        'fields' => $this->oModule->_oConfig->getObject('grid_forms_fields'),
+
 	        'pre_lists' => $this->oModule->_oConfig->getObject('grid_forms_pre_lists'),
 	        'pre_values' => $this->oModule->_oConfig->getObject('grid_forms_pre_values'),
+
+        	'search_forms' => $this->oModule->_oConfig->getObject('grid_search_forms'),
+	        'search_fields' => $this->oModule->_oConfig->getObject('grid_search_forms_fields'),
         );
 
         $this->oModule->_oTemplate->addStudioCss(array('forms.css'));

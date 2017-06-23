@@ -92,6 +92,12 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         $oForm->initChecker($aForm);
 
         if($oForm->isSubmittedAndValid()) {
+            $sObject = $oForm->getCleanValue('object');
+            if(strcmp($sObject, $aForm['object']) != 0) {
+                $sObject = uriGenerate($sObject, 'sys_objects_form', 'object', 'object');
+                BxDolForm::setSubmittedValue('object', $sObject, $oForm->aFormAttrs['method']);
+            }
+
             $sValue = BxDolForm::getSubmittedValue('form_attrs', $oForm->aFormAttrs['method']);
             $sValue = BxDevFunctions::serializeString($sValue);
             BxDolForm::setSubmittedValue('form_attrs', $sValue, $oForm->aFormAttrs['method']);
