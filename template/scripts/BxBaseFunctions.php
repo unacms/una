@@ -391,9 +391,17 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     function timeForJs ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false)
     {
         $sDateUTC = bx_time_utc ($iUnixTimestamp);
-        return '<time datetime="' . $sDateUTC . '" data-bx-format="' . getParam($sFormatIdentifier) . '" data-bx-autoformat="' . ($bForceFormat ? 0 : getParam('sys_format_timeago')) . '">' . $sDateUTC . '</time>';
+        return $this->timeForJsFullDate ($sDateUTC, $sFormatIdentifier, $bForceFormat);
     }
 
+    /**
+     * Same as @see timeForJs but instead of unxtimestamp full date format is used (ex: 2005-08-15T15:52:01) as passec date param
+     */ 
+    function timeForJsFullDate ($sDateUTC, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false)
+    {
+        return '<time datetime="' . $sDateUTC . '" data-bx-format="' . getParam($sFormatIdentifier) . '" data-bx-autoformat="' . ($bForceFormat ? 0 : getParam('sys_format_timeago')) . '">' . $sDateUTC . '</time>';
+    }
+    
     function statusOnOff ($mixed, $isMsg = false)
     {
         if ((is_bool($mixed) && !$mixed) || (is_string($mixed) && 'fail' == $mixed))
