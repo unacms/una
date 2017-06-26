@@ -98,14 +98,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     /**
-     * Entry comments
-     */
-    public function serviceEntityComments ($iContentId = 0)
-    {
-        return $this->_entityComments($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId);
-    }
-
-    /**
      * Entry author block
      */
     public function serviceEntityAuthor ($iContentId = 0)
@@ -196,20 +188,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         }
 
         return $aParams;
-    }
-
-    protected function _entityComments ($sObject, $iId = 0)
-    {
-        if (!$iId)
-            $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iId)
-            return false;
-
-        $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
-        if (!$oCmts || !$oCmts->isEnabled())
-            return false;
-
-        return $oCmts->getCommentsBlock(array(), array('in_designbox' => false));
     }
 }
 

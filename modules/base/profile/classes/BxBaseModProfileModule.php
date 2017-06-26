@@ -336,6 +336,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
 	/**
+     * Entry comments
+     */
+    public function serviceEntityCommentsByProfile ($iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_COMMENTS']))
+            return '';
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return '';
+
+        return $this->_entityComments($CNF['OBJECT_COMMENTS'], $oProfile->getContentId());
+    }
+
+	/**
      * Entry social sharing block
      */
     public function serviceEntitySocialSharing ($iContentId = 0)
@@ -731,6 +747,24 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         // return profiles + paginate
         return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
+    }
+
+    protected function _entityComments($sObject, $iId = 0)
+    {
+        if(!$iId)
+            $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$iId)
+            $iId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        if(!$iId)
+            return false;
+
+        $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
+        if(!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+        return $oCmts->getCommentsBlock(array(), array('in_designbox' => false));
     }
 }
 

@@ -341,7 +341,19 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $this->_oTemplate->entryLocation ($iContentId);
     }
-    
+
+    /**
+     * Entry comments
+     */
+    public function serviceEntityComments ($iContentId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_COMMENTS']))
+            return '';
+
+        return $this->_entityComments($CNF['OBJECT_COMMENTS'], $iContentId);
+    }
+
     /**
      * Delete content entry
      * @param $iContentId content id 
@@ -1014,6 +1026,21 @@ class BxBaseModGeneralModule extends BxDolModule
         return array(
 		    array('url' => $sUrl, 'src' => $sImage),
 		);
+    }
+
+    protected function _entityComments ($sObject, $iId = 0)
+    {
+        if (!$iId)
+            $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if (!$iId)
+            return false;
+
+        $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
+        if (!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+        return $oCmts->getCommentsBlock(array(), array('in_designbox' => false));
     }
 
     protected function _entitySocialSharing ($iId, $aParams = array())
