@@ -94,6 +94,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_VIEWS' => 'bx_organizations',
         	'OBJECT_FAVORITES' => 'bx_organizations',
         	'OBJECT_FEATURED' => 'bx_organizations',
+            'OBJECT_COMMENTS' => 'bx_organizations',
         	'OBJECT_REPORTS' => 'bx_organizations',
             'OBJECT_METATAGS' => 'bx_organizations',
             'OBJECT_FORM_ENTRY' => 'bx_organization',

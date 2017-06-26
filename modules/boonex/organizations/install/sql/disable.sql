@@ -10,7 +10,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_organizations';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_organizations' OR `object` IN('bx_organizations_create_profile', 'bx_organizations_delete_profile', 'bx_organizations_edit_profile', 'bx_organizations_edit_profile_cover', 'bx_organizations_view_profile', 'bx_organizations_view_profile_closed', 'bx_organizations_profile_info', 'bx_organizations_profile_friends', 'bx_organizations_profile_favorites', 'bx_organizations_profile_subscriptions', 'bx_organizations_home', 'bx_organizations_search', 'bx_organizations_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_organizations' OR `object` IN('bx_organizations_create_profile', 'bx_organizations_delete_profile', 'bx_organizations_edit_profile', 'bx_organizations_edit_profile_cover', 'bx_organizations_view_profile', 'bx_organizations_view_profile_closed', 'bx_organizations_profile_info', 'bx_organizations_profile_friends', 'bx_organizations_profile_favorites', 'bx_organizations_profile_subscriptions', 'bx_organizations_profile_comments', 'bx_organizations_home', 'bx_organizations_search', 'bx_organizations_manage');
 
 -- MENU
 
@@ -21,6 +21,9 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_organizations' OR `set_name` I
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_organizations';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_organizations';
+
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_organizations';
 
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_organizations';
@@ -47,7 +50,7 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
 DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_organizations';
 
 -- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_organizations';
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_organizations', 'bx_organizations_cmts');
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_organizations');
 
