@@ -2,6 +2,7 @@
 <resources name="en" flag="gb" title="English">
 
 	<string name="_bx_events"><![CDATA[Events]]></string>
+	<string name="_bx_events_cmts"><![CDATA[Events' Comments]]></string>
 
 	<string name="_bx_events_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
     <string name="_bx_events_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -18,7 +19,7 @@
 	<string name="_bx_events_form_profile_display_view"><![CDATA[View Event]]></string>
     <string name="_bx_events_form_profile_display_view_full"><![CDATA[Full View Event]]></string>
     <string name="_bx_events_form_profile_display_invite"><![CDATA[Invite to Event]]></string>
-    <string name="_bx_events_form_entry_input_author"><![CDATA[Author]]></string>
+    <string name="_bx_events_form_profile_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
@@ -96,6 +97,8 @@
 	<string name="_bx_events_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_events_page_title_sys_group_fans"><![CDATA[Members]]></string>
 	<string name="_bx_events_page_title_group_fans"><![CDATA[Members]]></string>
+	<string name="_bx_events_page_title_sys_profile_comments"><![CDATA[Сomments]]></string>
+    <string name="_bx_events_page_title_profile_comments"><![CDATA[Сomments]]></string>
 	<string name="_bx_events_page_title_sys_profile_info"><![CDATA[Event Info]]></string>
 	<string name="_bx_events_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_events_page_title_sys_recent"><![CDATA[New Events]]></string>
@@ -131,6 +134,8 @@
 	<string name="_bx_events_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_events_page_block_title_system_fans"><![CDATA[Members]]></string>
+	<string name="_bx_events_page_block_title_profile_comments"><![CDATA[Сomments]]></string>
+    <string name="_bx_events_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_events_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_events_page_block_title_featured_profiles"><![CDATA[Featured Events]]></string>
 	<string name="_bx_events_page_block_title_latest_profiles"><![CDATA[New Events]]></string>
@@ -146,6 +151,8 @@
     <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
     <string name="_bx_events_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_events_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_events_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_events_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
     
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>
@@ -180,6 +187,8 @@
     <string name="_bx_events_menu_item_title_view_joined_groups"><![CDATA[Events]]></string>
     <string name="_bx_events_menu_item_title_system_view_fans"><![CDATA[Members]]></string>
     <string name="_bx_events_menu_item_title_view_fans"><![CDATA[Members]]></string>
+    <string name="_bx_events_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_events_menu_item_title_view_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_events_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_view"><![CDATA[Event]]></string>
@@ -252,6 +261,7 @@
     <string name="_bx_events_chart_growth_speed"><![CDATA[Events: Growth Speed]]></string>
 
     <string name="_bx_events_search_extended"><![CDATA[Events Search]]></string>
+    <string name="_bx_events_search_extended_cmts"><![CDATA[Events Comments Search]]></string>
 
     <string name="_bx_events_txt_account_pending"><![CDATA[This event is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[This event is suspended.]]></string>

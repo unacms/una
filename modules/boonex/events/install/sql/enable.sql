@@ -33,7 +33,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_events_view_profile', 'view-event-profile', '_bx_events_page_title_sys_view_profile', '_bx_events_page_title_view_profile', 'bx_events', 10, 2147483647, 1, 'page.php?i=view-event-profile', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `hidden_on`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `hidden_on`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_events_view_profile', 4, 'bx_events', '', '_bx_events_page_block_title_profile_comments', 11, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 0),
 ('bx_events_view_profile', 4, 'bx_events', '', '_bx_events_page_block_title_profile_description', 13, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_events_view_profile', 2, 'bx_events', '', '_bx_events_page_block_title_profile_info', 11, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
 ('bx_events_view_profile', 1, 'bx_events', '', '_bx_events_page_block_title_entry_social_sharing', 13, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
@@ -102,6 +103,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_events_fans', 1, 'bx_events', '_bx_events_page_block_title_system_fans', '_bx_events_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1);
 
+-- PAGE: view entry comments
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_events_profile_comments', '_bx_events_page_title_sys_profile_comments', '_bx_events_page_title_profile_comments', 'bx_events', 5, 2147483647, 1, 'event-profile-comments', '', '', '', '', 0, 1, 0, 'BxEventsPageEntry', 'modules/boonex/events/classes/BxEventsPageEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_events_profile_comments', 1, 'bx_events', '_bx_events_page_block_title_profile_comments', '_bx_events_page_block_title_profile_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1);
+
 -- PAGE: module home
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -133,7 +142,9 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_form', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:9:"bx_events";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 1),
-('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_results', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:9:"bx_events";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 2);
+('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_results', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:9:"bx_events";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 2),
+('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_form_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:14:"bx_events_cmts";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 3),
+('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_results_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:14:"bx_events_cmts";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 4);
 
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -244,7 +255,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_events_view_submenu', 'bx_events', 'view-event-profile', '_bx_events_menu_item_title_system_view_profile_view', '_bx_events_menu_item_title_view_profile_view', 'page.php?i=view-event-profile&id={content_id}', '', '', 'calendar col-red2', '', 2147483647, 1, 0, 1),
 ('bx_events_view_submenu', 'bx_events', 'event-profile-info', '_bx_events_menu_item_title_system_view_profile_info', '_bx_events_menu_item_title_view_profile_info', 'page.php?i=event-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', 2147483647, 1, 0, 2),
-('bx_events_view_submenu', 'bx_events', 'event-fans', '_bx_events_menu_item_title_system_view_fans', '_bx_events_menu_item_title_view_fans', 'page.php?i=event-fans&profile_id={profile_id}', '', '', 'calendar col-blue3', '', 2147483647, 1, 0, 3);
+('bx_events_view_submenu', 'bx_events', 'event-profile-comments', '_bx_events_menu_item_title_system_view_profile_comments', '_bx_events_menu_item_title_view_profile_comments', 'page.php?i=event-profile-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 3),
+('bx_events_view_submenu', 'bx_events', 'event-fans', '_bx_events_menu_item_title_system_view_fans', '_bx_events_menu_item_title_view_fans', 'page.php?i=event-fans&profile_id={profile_id}', '', '', 'calendar col-blue3', '', 2147483647, 1, 0, 4);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
@@ -334,6 +346,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionProfileEditAny);
 
 
+-- COMMENTS
+INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
+('bx_events', 'bx_events', 'bx_events_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-event-profile&id={object_id}', '', 'bx_events_data', 'id', 'author', 'event_name', 'comments', '', '');
+
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_events', 'bx_events_views_track', '86400', '1', 'bx_events_data', 'id', 'author', 'views', '', '');
@@ -369,7 +385,8 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 -- SEARCH EXTENDED
 INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
-('bx_events', 'bx_events', 'bx_events', '_bx_events_search_extended', 1, '', '');
+('bx_events', 'bx_events', 'bx_events', '_bx_events_search_extended', 1, '', ''),
+('bx_events_cmts', 'bx_events_cmts', 'bx_events', '_bx_events_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 -- CONNECTIONS
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
@@ -377,7 +394,8 @@ INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class
 
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_events', '_bx_events', 'bx_events', 'added', 'edited', 'deleted', '', '');
+('bx_events', '_bx_events', 'bx_events', 'added', 'edited', 'deleted', '', ''),
+('bx_events_cmts', '_bx_events_cmts', 'bx_events', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
 INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
 ('bx_events', 'bx_events_administration', 'td`.`id', '', ''),

@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
+  `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
@@ -73,6 +74,25 @@ CREATE TABLE `bx_events_pics_resized` (
   `private` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+-- TABLE: comments
+CREATE TABLE IF NOT EXISTS `bx_events_cmts` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_object_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cmt_level` int(11) NOT NULL DEFAULT '0',
+  `cmt_text` text NOT NULL,
+  `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
+  `cmt_rate` int(11) NOT NULL DEFAULT '0',
+  `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
+  `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cmt_id`),
+  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
+  FULLTEXT KEY `search_fields` (`cmt_text`)
 );
 
 -- TABLE: VIEWS

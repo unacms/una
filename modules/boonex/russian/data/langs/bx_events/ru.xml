@@ -2,6 +2,7 @@
 <resources name="ru" flag="ru" title="Russian">
 
 	<string name="_bx_events"><![CDATA[События]]></string>
+	<string name="_bx_events_cmts"><![CDATA[События - Комментарии]]></string>
 
 	<string name="_bx_events_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
     <string name="_bx_events_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
@@ -18,7 +19,7 @@
 	<string name="_bx_events_form_profile_display_view"><![CDATA[Просмотр события]]></string>
     <string name="_bx_events_form_profile_display_view_full"><![CDATA[Полный просмотр события]]></string>
     <string name="_bx_events_form_profile_display_invite"><![CDATA[Приглашение на событие]]></string>
-    <string name="_bx_events_form_entry_input_author"><![CDATA[Автор]]></string>
+    <string name="_bx_events_form_profile_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
@@ -49,8 +50,10 @@
     <string name="_bx_events_form_profile_input_reoccurring_add_interval"><![CDATA[Добавить повторяющийся интервал]]></string>
     <string name="_bx_events_form_profile_input_sys_date_start"><![CDATA[Начало]]></string>
     <string name="_bx_events_form_profile_input_date_start"><![CDATA[Начало]]></string>
+    <string name="_bx_events_form_profile_input_date_start_err"><![CDATA[Дата начала обязательна.]]></string>
     <string name="_bx_events_form_profile_input_sys_date_end"><![CDATA[Конец]]></string>
     <string name="_bx_events_form_profile_input_date_end"><![CDATA[Конец]]></string>
+    <string name="_bx_events_form_profile_input_date_end_err"><![CDATA[Дата конца обязательна.]]></string>
     <string name="_bx_events_form_profile_input_sys_timezone"><![CDATA[Часовой пояс]]></string>
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Часовой пояс]]></string>
     <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Время]]></string>
@@ -94,6 +97,8 @@
 	<string name="_bx_events_page_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_events_page_title_sys_group_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_events_page_title_group_fans"><![CDATA[Участники]]></string>
+	<string name="_bx_events_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_events_page_title_profile_comments"><![CDATA[Комментарии]]></string>
 	<string name="_bx_events_page_title_sys_profile_info"><![CDATA[Инфо события]]></string>
 	<string name="_bx_events_page_title_profile_info"><![CDATA[Информация о событии "{display_name}"]]></string>
 	<string name="_bx_events_page_title_sys_recent"><![CDATA[Новые события]]></string>
@@ -129,6 +134,8 @@
 	<string name="_bx_events_page_block_title_fans_link"><![CDATA[Участники группы: <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_events_page_block_title_system_fans"><![CDATA[Участники]]></string>
+	<string name="_bx_events_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_events_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_events_page_block_title_profile_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_events_page_block_title_featured_profiles"><![CDATA[Продвинутые события]]></string>
 	<string name="_bx_events_page_block_title_latest_profiles"><![CDATA[Новые события]]></string>
@@ -145,6 +152,8 @@
     <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Приглашение на событие]]></string>
     <string name="_bx_events_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_events_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_events_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_events_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
 
     <string name="_bx_events_menu_title_submenu"><![CDATA[Под-меню событий]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Под-меню событий]]></string>
@@ -179,6 +188,8 @@
     <string name="_bx_events_menu_item_title_view_joined_groups"><![CDATA[События]]></string>
     <string name="_bx_events_menu_item_title_system_view_fans"><![CDATA[Участники]]></string>
     <string name="_bx_events_menu_item_title_view_fans"><![CDATA[Участники]]></string>
+    <string name="_bx_events_menu_item_title_system_view_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_events_menu_item_title_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_events_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_view"><![CDATA[Событие]]></string>
@@ -251,6 +262,7 @@
     <string name="_bx_events_chart_growth_speed"><![CDATA[События: Скорость развития]]></string>
 
     <string name="_bx_events_search_extended"><![CDATA[Поиск событий]]></string>
+    <string name="_bx_events_search_extended_cmts"><![CDATA[Поиск комментариев к событиям]]></string>
 
     <string name="_bx_events_txt_account_pending"><![CDATA[Это событие ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[Это событие заблокировано.]]></string>

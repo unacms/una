@@ -17,6 +17,13 @@ class BxEventsModule extends BxBaseModGroupsModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+        
+        $CNF = &$this->_oConfig->CNF;
+        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+            $CNF['FIELD_TIMEZONE'],
+            $CNF['FIELD_JOIN_CONFIRMATION'],
+            $CNF['FIELD_REMINDER']
+        ));
     }
 
     public function actionCalendarData()
