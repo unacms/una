@@ -2,6 +2,7 @@
 <resources name="ru" flag="ru" title="Russian">
 
 	<string name="_bx_groups"><![CDATA[Группы]]></string>
+	<string name="_bx_groups_cmts"><![CDATA[Группы - Комментарии]]></string>
 
 	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
 	<string name="_bx_groups_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
@@ -72,6 +73,8 @@
 	<string name="_bx_groups_page_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_groups_page_title_sys_group_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_groups_page_title_group_fans"><![CDATA[Участники]]></string>
+	<string name="_bx_groups_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_groups_page_title_profile_comments"><![CDATA[Комментарии]]></string>
 	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Инфо группы]]></string>
 	<string name="_bx_groups_page_title_profile_info"><![CDATA[Инфо о {display_name}]]></string>
 	<string name="_bx_groups_page_title_sys_recent"><![CDATA[Последние добавленные группы]]></string>
@@ -105,6 +108,8 @@
 	<string name="_bx_groups_page_block_title_fans_link"><![CDATA[Участники группы: <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_groups_page_block_title_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_groups_page_block_title_system_fans"><![CDATA[Участники]]></string>
+	<string name="_bx_groups_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_groups_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_groups_page_block_title_profile_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_groups_page_block_title_featured_profiles"><![CDATA[Продвинутые группы]]></string>
 	<string name="_bx_groups_page_block_title_latest_profiles"><![CDATA[Последние добавленные группы]]></string>
@@ -117,6 +122,8 @@
     <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
     <string name="_bx_groups_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_groups_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_groups_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_groups_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>
@@ -151,6 +158,8 @@
     <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Участники]]></string>
     <string name="_bx_groups_menu_item_title_view_fans"><![CDATA[Участники]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_groups_menu_item_title_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_view"><![CDATA[Группа]]></string>
@@ -221,6 +230,7 @@
     <string name="_bx_groups_chart_growth_speed"><![CDATA[Группы: Скорость развития]]></string>
 
     <string name="_bx_groups_search_extended"><![CDATA[Поиск групп]]></string>
+    <string name="_bx_groups_search_extended_cmts"><![CDATA[Поиск комментариев к группам]]></string>
 
     <string name="_bx_groups_txt_account_pending"><![CDATA[Эта группа ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>

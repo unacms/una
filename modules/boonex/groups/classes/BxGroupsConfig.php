@@ -84,6 +84,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_VOTES' => 'bx_groups',
         	'OBJECT_FAVORITES' => 'bx_groups',
         	'OBJECT_FEATURED' => 'bx_groups',
+        	'OBJECT_COMMENTS' => 'bx_groups',
             'OBJECT_REPORTS' => 'bx_groups',
             'OBJECT_METATAGS' => 'bx_groups',
             'OBJECT_FORM_ENTRY' => 'bx_group',
