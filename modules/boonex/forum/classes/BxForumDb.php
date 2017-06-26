@@ -38,9 +38,17 @@ class BxForumDb extends BxBaseModTextDb
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
     	$sFieldsClause = "`te`.*"; 
-    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = "";
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
     	switch($aParams['type']) {
+    	    case 'entry_last':
+    	        $aMethod['name'] = 'getRow';
+    	        $aMethod['params'][1]['cmt_object_id'] = $aParams['entry_id'];
+    	        $sWhereClause = " AND `te`.`cmt_object_id` = :cmt_object_id";
+    	        $sOrderClause = "`te`.`cmt_time` DESC";
+    	        $sLimitClause = "1";
+    	        break;
+
     	    case 'entries_author_search':
     			$aMethod['name'] = 'getColumn';
     			$sFieldsClause = "`te`.`cmt_object_id`"; 
@@ -67,11 +75,12 @@ class BxForumDb extends BxBaseModTextDb
 
     	$sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
 		$sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
+		$sLimitClause = $sLimitClause ? "LIMIT " . $sLimitClause : "";
 
 		$aMethod['params'][0] = "SELECT
 				" . $sFieldsClause . "
             FROM `" . $this->getPrefix() . "cmts` AS `te`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }

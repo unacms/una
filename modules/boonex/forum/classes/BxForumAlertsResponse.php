@@ -40,9 +40,29 @@ class BxForumAlertsResponse extends BxBaseModTextAlertsResponse
 
     protected function processBxForumCommentRemoved($oAlert)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $this->updateCommentsSummary($oAlert->iObject);
+
+        $aEntry = $this->_oModule->_oDb->getContentInfoById($oAlert->iObject);
+        if((int)$aEntry['lr_comment_id'] == (int)$oAlert->aExtras['comment_id']) {
+            $iLrCommentId = $iLrTimestamp = $iLrProfileId = 0;
+
+            $aComment = $this->_oModule->_oDb->getComments(array('type' => 'entry_last', 'entry_id' => $oAlert->iObject));
+            if(!empty($aComment) && is_array($aComment)) {
+                $iLrCommentId = $aComment['cmt_id'];
+                $iLrTimestamp = $aComment['cmt_time'];
+                $iLrProfileId = $aComment['cmt_author_id'];
+            }
+
+            $this->_oModule->_oDb->updateEntries(array(
+                'lr_timestamp' => $iLrTimestamp,
+                'lr_profile_id' => $iLrProfileId,
+                'lr_comment_id' => $iLrCommentId
+            ), array($CNF['FIELD_ID'] => $oAlert->iObject));
+        }
     }
-    
+
     protected function updateCommentsSummary($iContentId)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
