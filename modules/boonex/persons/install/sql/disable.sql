@@ -10,7 +10,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_persons';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` IN('bx_persons_create_profile', 'bx_persons_delete_profile', 'bx_persons_edit_profile', 'bx_persons_edit_profile_cover', 'bx_persons_view_profile', 'bx_persons_view_profile_closed', 'bx_persons_profile_info', 'bx_persons_profile_friends', 'bx_persons_profile_favorites', 'bx_persons_profile_subscriptions', 'bx_persons_home', 'bx_persons_search', 'bx_persons_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` IN('bx_persons_create_profile', 'bx_persons_delete_profile', 'bx_persons_edit_profile', 'bx_persons_edit_profile_cover', 'bx_persons_view_profile', 'bx_persons_view_profile_closed', 'bx_persons_profile_info', 'bx_persons_profile_friends', 'bx_persons_profile_favorites', 'bx_persons_profile_subscriptions', 'bx_persons_profile_comments', 'bx_persons_home', 'bx_persons_search', 'bx_persons_manage');
 
 -- MENU
 
@@ -21,6 +21,9 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_persons' OR `set_name` IN('bx_
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_persons';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_persons';
+
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_persons';
 
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_persons';
@@ -44,7 +47,7 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_persons';
 DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_persons';
 
 -- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` = 'bx_persons';
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_persons', 'bx_persons_cmts');
 
 DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_persons');
 

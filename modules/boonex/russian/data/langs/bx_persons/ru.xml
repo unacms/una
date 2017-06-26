@@ -2,6 +2,7 @@
 <resources name="ru" flag="ru" title="Russian">
 
 	<string name="_bx_persons"><![CDATA[Персоны]]></string>
+	<string name="_bx_persons_cmts"><![CDATA[Персоны - Комментарии]]></string>
 
 	<string name="_bx_persons_option_autoapproval"><![CDATA[Автоматически активировать всех персон после создания]]></string>
 	<string name="_bx_persons_option_default_acl_level"><![CDATA[Уровень, по умолчанию назначаемый созданному персональному профилю]]></string>
@@ -74,6 +75,8 @@
 	<string name="_bx_persons_page_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_title_sys_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_persons_page_title_profile_subscriptions"><![CDATA[Подписки и подписчики]]></string>
+    <string name="_bx_persons_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_persons_page_title_profile_comments"><![CDATA[Комментарии]]></string>
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Инфо профиля]]></string>
 	<string name="_bx_persons_page_title_profile_info"><![CDATA[Инфо о {display_name}]]></string>
 	<string name="_bx_persons_page_title_sys_recent"><![CDATA[Последние Присоединившиеся Пользователи]]></string>
@@ -111,6 +114,8 @@
     <string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[Подписчики]]></string>
     <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[Подписчики]]></string>
+    <string name="_bx_persons_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_persons_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_persons_page_block_title_featured_profiles"><![CDATA[Продвинутые Пользователи]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[Последние Присоединившиеся Пользователи]]></string>
@@ -121,6 +126,8 @@
     <string name="_bx_persons_page_block_title_online_profiles"><![CDATA[Онлайн Пользователи]]></string>
     <string name="_bx_persons_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_persons_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+    <string name="_bx_persons_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
+    <string name="_bx_persons_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Персоны - Подменю]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Персоны - Подменю]]></string>
@@ -155,6 +162,8 @@
     <string name="_bx_persons_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_persons_menu_item_title_view_profile_subscriptions"><![CDATA[Подписки]]></string>
+    <string name="_bx_persons_menu_item_title_system_view_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_persons_menu_item_title_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_persons_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_view"><![CDATA[Профиль]]></string>
@@ -222,6 +231,7 @@
     <string name="_bx_persons_chart_growth_speed"><![CDATA[Персоны: Скорость развития]]></string>
 
     <string name="_bx_persons_search_extended"><![CDATA[Поиск персональных профилей]]></string>
+    <string name="_bx_persons_search_extended_cmts"><![CDATA[Поиск комментариев к персональным профилям]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>

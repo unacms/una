@@ -2,6 +2,7 @@
 <resources name="en" flag="gb" title="English">
 
 	<string name="_bx_persons"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_cmts"><![CDATA[Persons' Comments]]></string>
 
 	<string name="_bx_persons_option_autoapproval"><![CDATA[Activate all persons after creation automatically]]></string>
 	<string name="_bx_persons_option_default_acl_level"><![CDATA[Default member's level to assign after person's profile creation]]></string>
@@ -74,6 +75,8 @@
 	<string name="_bx_persons_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_title_sys_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_persons_page_title_profile_subscriptions"><![CDATA[Following & Followers]]></string>
+    <string name="_bx_persons_page_title_sys_profile_comments"><![CDATA[Сomments]]></string>
+    <string name="_bx_persons_page_title_profile_comments"><![CDATA[Сomments]]></string>
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
 	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_persons_page_title_sys_recent"><![CDATA[New People]]></string>
@@ -111,6 +114,8 @@
 	<string name="_bx_persons_page_block_title_profile_subscriptions"><![CDATA[Following]]></string>
 	<string name="_bx_persons_page_block_title_system_profile_subscribed_me"><![CDATA[Followers]]></string>
     <string name="_bx_persons_page_block_title_profile_subscribed_me"><![CDATA[Followers]]></string>
+    <string name="_bx_persons_page_block_title_profile_comments"><![CDATA[Сomments]]></string>
+    <string name="_bx_persons_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_persons_page_block_title_featured_profiles"><![CDATA[Featured People]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[New People]]></string>
@@ -121,6 +126,8 @@
 	<string name="_bx_persons_page_block_title_online_profiles"><![CDATA[Online People]]></string>
 	<string name="_bx_persons_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_persons_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_persons_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_persons_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Persons Submenu]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Persons Submenu]]></string>
@@ -155,6 +162,8 @@
     <string name="_bx_persons_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_persons_menu_item_title_view_profile_subscriptions"><![CDATA[Following]]></string>
+    <string name="_bx_persons_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_persons_menu_item_title_view_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_persons_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_view"><![CDATA[Profile]]></string>
@@ -221,6 +230,7 @@
     <string name="_bx_persons_chart_growth_speed"><![CDATA[Persons: Growth Speed]]></string>
 
     <string name="_bx_persons_search_extended"><![CDATA[Persons Search]]></string>
+    <string name="_bx_persons_search_extended_cmts"><![CDATA[Persons Comments Search]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
