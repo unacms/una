@@ -237,6 +237,7 @@
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>
     <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
     <string name="_bx_groups_txt_sample_single_with_article"><![CDATA[a group]]></string>
+    <string name="_bx_groups_txt_sample_comment_single"><![CDATA[group's comment]]></string>
     <string name="_bx_groups_txt_sample_vote_single"><![CDATA[group's vote]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[From Admins]]></string>

@@ -237,6 +237,7 @@
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} участников]]></string>
     <string name="_bx_groups_txt_sample_single"><![CDATA[группа]]></string>
     <string name="_bx_groups_txt_sample_single_with_article"><![CDATA[группа]]></string>
+    <string name="_bx_groups_txt_sample_comment_single"><![CDATA[комментарий к группе]]></string>
     <string name="_bx_groups_txt_sample_vote_single"><![CDATA[голос за группу]]></string>
     <string name="_bx_groups_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[Из админов]]></string>

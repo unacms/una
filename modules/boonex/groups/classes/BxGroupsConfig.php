@@ -146,6 +146,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'T' => array (
                 'txt_sample_single' => '_bx_groups_txt_sample_single',
             	'txt_sample_single_with_article' => '_bx_groups_txt_sample_single_with_article',
+            	'txt_sample_comment_single' => '_bx_groups_txt_sample_comment_single',
                 'txt_sample_vote_single' => '_bx_groups_txt_sample_vote_single',
                 'txt_private_group' => '_bx_groups_txt_private_group',
                 'txt_N_fans' => '_bx_groups_txt_N_fans',

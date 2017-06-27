@@ -269,6 +269,7 @@
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} участников]]></string>
     <string name="_bx_events_txt_sample_single"><![CDATA[событие]]></string>
     <string name="_bx_events_txt_sample_single_with_article"><![CDATA[событие]]></string>
+    <string name="_bx_events_txt_sample_comment_single"><![CDATA[комментарий к событию]]></string>
     <string name="_bx_events_txt_sample_vote_single"><![CDATA[голос за событие]]></string>
     <string name="_bx_events_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_events_txt_from_admins"><![CDATA[Из админов]]></string>

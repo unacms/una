@@ -277,6 +277,7 @@
 
     <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[В организации <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_orgs_txt_sample_single"><![CDATA[Организация]]></string>
+    <string name="_bx_orgs_txt_sample_comment_single"><![CDATA[комментарий к организации]]></string>
     <string name="_bx_orgs_txt_N_friends"><![CDATA[Друзья: {0}]]></string>
 
     <string name="_bx_organizations_email_friend_request"><![CDATA[Запрос на добавление в друзья]]></string>
