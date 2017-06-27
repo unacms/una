@@ -159,8 +159,10 @@ class BxMarketModule extends BxBaseModTextModule
 	{
 	    return MsgBox(_t('_bx_market_page_block_content_licenses_note'));
 	}
+
     /**
-     * Get number of unused licenses for some profile
+     * Get number of unused licenses for some profile. It can be used in menus with "alert" counters.
+     * 
      * @param $iProfileId - profile to get unused licenses for, if omitted then currently logged in profile is used
      * @return integer
      */

@@ -242,8 +242,8 @@
 	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Продукты - {addon} спрятано]]></string>
 	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[Мои Продукты]]></string>
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[Все Продукты]]></string>
-	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Лицензии]]></string>
-	<string name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Лицензии]]></string>
+	<string name="_bx_market_menu_item_title_system_licenses"><![CDATA[Лицензии]]></string>
+	<string name="_bx_market_menu_item_title_licenses"><![CDATA[Лицензии]]></string>
     <string name="_bx_market_menu_title_snippet"><![CDATA[Действия с отрывоком]]></string>
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Действия с отрывоком]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[Ещё действия]]></string>

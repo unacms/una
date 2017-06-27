@@ -691,7 +691,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		//--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
 	}
 
-    public function setSiteSubmenu($sSubmenu, $sSelected)
+    public function setSiteSubmenu($sSubmenu, $sSelModule, $sSelName)
     {
         $oSiteSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if(!$oSiteSubmenu)
@@ -702,8 +702,8 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if(!$oModuleSubmenu) 
             return;
 
-        $oSiteSubmenu->setObjectSubmenu($sModuleSubmenu, array('title' => _t('_bx_payment'), 'link' => '','icon' => ''));
-        $oModuleSubmenu->setSelected($this->_aModule['name'], $sSelected);
+        $oSiteSubmenu->setObjectSubmenu($sModuleSubmenu);
+        $oModuleSubmenu->setSelected($sSelModule, $sSelName);
     }
 }
 

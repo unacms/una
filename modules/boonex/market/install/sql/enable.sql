@@ -288,10 +288,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('trigger_profile_view_submenu', 'bx_market', 'products-author', '_bx_market_menu_item_title_system_view_entries_author', '_bx_market_menu_item_title_view_entries_author', 'page.php?i=products-author&profile_id={profile_id}', '', '', 'shopping-cart col-green3', '', 2147483647, 1, 0, 0);
 
--- MENU: Notifications
-SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications');
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_notifications', 'bx_market', 'notifications-licenses', '_bx_market_menu_item_title_system_notifications_licenses', '_bx_market_menu_item_title_notifications_licenses', 'page.php?i=products-licenses', '', '', 'certificate col-green2', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:23:"get_unused_licenses_num";}', '', 2147483646, 1, 0, @iMIOrder + 1);
+-- MENU: account dashboard
+SET @iMoAccountDashboard = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('sys_account_dashboard', 'bx_market', 'dashboard-licenses', '_bx_market_menu_item_title_system_licenses', '_bx_market_menu_item_title_licenses', 'page.php?i=products-licenses', '', '', 'certificate col-green2', '', '', 2147483646, 1, 0, 1, @iMoAccountDashboard + 1);
 
 
 -- PRIVACY 

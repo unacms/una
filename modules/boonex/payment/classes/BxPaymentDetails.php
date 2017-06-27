@@ -45,8 +45,6 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
 		if(empty($sContent))
 			$sContent = MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
-        $this->_oModule->setSiteSubmenu('menu_orders_submenu', 'details');
-
         return array(
         	'content' => $sContent
         );

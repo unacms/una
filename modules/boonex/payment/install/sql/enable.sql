@@ -25,9 +25,9 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_payment_cart_thank_you', '_bx_payment_page_title_sys_cart_thank_you', '_bx_payment_page_title_cart_thank_you', @sName, 5, 2147483647, 1, 'payment-cart-thank-you', 'page.php?i=payment-cart-thank-you', '', '', '', 0, 1, 0, 'BxPaymentPageCart', 'modules/boonex/payment/classes/BxPaymentPageCart.php'),
 ('bx_payment_history', '_bx_payment_page_title_sys_history', '_bx_payment_page_title_history', @sName, 5, 2147483647, 1, 'payment-history', 'page.php?i=payment-history', '', '', '', 0, 1, 0, 'BxPaymentPageHistory', 'modules/boonex/payment/classes/BxPaymentPageHistory.php'),
 
-('bx_payment_sbs_list', '_bx_payment_page_title_sys_sbs_list', '_bx_payment_page_title_sbs_list', @sName, 5, 2147483647, 1, 'payment-sbs-list', 'page.php?i=payment-sbs-list', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
+('bx_payment_sbs_list_my', '_bx_payment_page_title_sys_sbs_list_my', '_bx_payment_page_title_sbs_list_my', @sName, 5, 2147483647, 1, 'payment-sbs-list-my', 'page.php?i=payment-sbs-list-my', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
+('bx_payment_sbs_list_all', '_bx_payment_page_title_sys_sbs_list_all', '_bx_payment_page_title_sbs_list_all', @sName, 5, 192, 1, 'payment-sbs-list-all', 'page.php?i=payment-sbs-list-all', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
 ('bx_payment_sbs_history', '_bx_payment_page_title_sys_sbs_history', '_bx_payment_page_title_sbs_history', @sName, 5, 2147483647, 1, 'payment-sbs-history', 'page.php?i=payment-sbs-history', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
-('bx_payment_sbs_administration', '_bx_payment_page_title_sys_sbs_administration', '_bx_payment_page_title_sbs_administration', @sName, 5, 192, 1, 'payment-sbs-administration', 'page.php?i=payment-sbs-administration', '', '', '', 0, 1, 0, 'BxPaymentPageSubscriptions', 'modules/boonex/payment/classes/BxPaymentPageSubscriptions.php'),
 
 ('bx_payment_orders', '_bx_payment_page_title_sys_orders', '_bx_payment_page_title_orders', @sName, 5, 2147483647, 1, 'payment-orders', 'page.php?i=payment-orders', '', '', '', 0, 1, 0, 'BxPaymentPageOrders', 'modules/boonex/payment/classes/BxPaymentPageOrders.php'),
 ('bx_payment_details', '_bx_payment_page_title_sys_details', '_bx_payment_page_title_details', @sName, 5, 2147483647, 1, 'payment-details', 'page.php?i=payment-details', '', '', '', 0, 1, 0, 'BxPaymentPageDetails', 'modules/boonex/payment/classes/BxPaymentPageDetails.php');
@@ -40,9 +40,9 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('bx_payment_cart_thank_you', 1, @sName, '_bx_payment_page_block_title_cart_thank_you', 11, 2147483647, 'lang', '_bx_payment_page_block_content_cart_thank_you', 0, 0, 1),
 ('bx_payment_history', 1, @sName, '_bx_payment_page_block_title_history', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:22:"get_block_cart_history";s:6:"params";a:0:{}s:5:"class";s:4:"Cart";}', 0, 0, 1),
 
-('bx_payment_sbs_list', 1, @sName, '_bx_payment_page_block_title_sbs_list', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:14:"get_block_list";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
+('bx_payment_sbs_list_my', 1, @sName, '_bx_payment_page_block_title_sbs_list_my', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_list_my";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
+('bx_payment_sbs_list_all', 1, @sName, '_bx_payment_page_block_title_sbs_list_all', 11, 192, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:18:"get_block_list_all";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 ('bx_payment_sbs_history', 1, @sName, '_bx_payment_page_block_title_sbs_history', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_history";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
-('bx_payment_sbs_administration', 1, @sName, '_bx_payment_page_block_title_sbs_administration', 11, 192, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:24:"get_block_administration";s:6:"params";a:0:{}s:5:"class";s:13:"Subscriptions";}', 0, 0, 1),
 
 ('bx_payment_orders', 1, @sName, '_bx_payment_page_block_title_orders', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:16:"get_block_orders";s:6:"params";a:0:{}s:5:"class";s:6:"Orders";}', 0, 0, 1),
 ('bx_payment_details', 1, @sName, '_bx_payment_page_block_title_details', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:17:"get_block_details";s:6:"params";a:0:{}s:5:"class";s:7:"Details";}', 0, 0, 1);
@@ -61,14 +61,15 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: subscriptions submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_payment_menu_sbs_submenu', '_bx_payment_menu_title_sbs_submenu', 'bx_payment_menu_sbs_submenu', 'bx_payment', 8, 0, 1, '', '');
+('bx_payment_menu_sbs_submenu', '_bx_payment_menu_title_sbs_submenu', 'bx_payment_menu_sbs_submenu', 'bx_payment', 6, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_payment_menu_sbs_submenu', 'bx_payment', '_bx_payment_menu_set_title_sbs_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-list', '_bx_payment_menu_item_title_system_sbs_list', '_bx_payment_menu_item_title_sbs_list', 'page.php?i=payment-sbs-list', '', '_self', '', '', '', 2147483647, 1, 0, 1, 1),
-('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-history', '_bx_payment_menu_item_title_system_sbs_history', '_bx_payment_menu_item_title_sbs_history', 'page.php?i=payment-sbs-history', '', '_self', '', '', '', 2147483647, 1, 0, 1, 2);
+('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-list-all', '_bx_payment_menu_item_title_system_sbs_list_all', '_bx_payment_menu_item_title_sbs_list_all', 'page.php?i=payment-sbs-list-all', '', '_self', '', '', '', 192, 1, 0, 1, 1),
+('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-list-my', '_bx_payment_menu_item_title_system_sbs_list_my', '_bx_payment_menu_item_title_sbs_list_my', 'page.php?i=payment-sbs-list-my', '', '_self', '', '', '', 2147483646, 1, 0, 1, 2),
+('bx_payment_menu_sbs_submenu', 'bx_payment', 'sbs-history', '_bx_payment_menu_item_title_system_sbs_history', '_bx_payment_menu_item_title_sbs_history', 'page.php?i=payment-sbs-history', '', '_self', '', '', '', 2147483646, 1, 0, 1, 3);
 
 -- MENU: subscription actions
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -82,15 +83,19 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: orders submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_payment_menu_orders_submenu', '_bx_payment_menu_title_orders_submenu', 'bx_payment_menu_orders_submenu', 'bx_payment', 8, 0, 1, '', '');
+('bx_payment_menu_orders_submenu', '_bx_payment_menu_title_orders_submenu', 'bx_payment_menu_orders_submenu', 'bx_payment', 6, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_payment_menu_orders_submenu', 'bx_payment', '_bx_payment_menu_set_title_orders_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_payment_menu_orders_submenu', 'bx_payment', 'orders-processed', '_bx_payment_menu_item_title_system_orders_processed', '_bx_payment_menu_item_title_orders_processed', 'page.php?i=payment-orders&type=processed', '', '_self', '', '', '', 2147483647, 1, 0, 1, 1),
-('bx_payment_menu_orders_submenu', 'bx_payment', 'orders-pending', '_bx_payment_menu_item_title_system_orders_pending', '_bx_payment_menu_item_title_orders_pending', 'page.php?i=payment-orders&type=pending', '', '_self', '', '', '', 2147483647, 1, 0, 1, 2),
-('bx_payment_menu_orders_submenu', 'bx_payment', 'details', '_bx_payment_menu_item_title_system_details', '_bx_payment_menu_item_title_details', 'page.php?i=payment-details', '', '_self', '', '', '', 2147483647, 1, 0, 1, 3);
+('bx_payment_menu_orders_submenu', 'bx_payment', 'orders-pending', '_bx_payment_menu_item_title_system_orders_pending', '_bx_payment_menu_item_title_orders_pending', 'page.php?i=payment-orders&type=pending', '', '_self', '', '', '', 2147483647, 1, 0, 1, 2);
+
+-- MENU: account settings menu
+SET @iMoAccountSettings = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_settings' AND `name` <> 'account-settings-more' LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('sys_account_settings', 'bx_payment', 'payment-details', '_bx_payment_menu_item_title_system_details', '_bx_payment_menu_item_title_details', 'page.php?i=payment-details', '', '_self', '', '', '', 2147483646, 1, 0, 1, @iMoAccountSettings + 1);
 
 
 -- ALERTS

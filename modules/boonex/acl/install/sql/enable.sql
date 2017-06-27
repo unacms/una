@@ -3,16 +3,16 @@ SET @sName = 'bx_acl';
 
 -- PAGE: view levels
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_acl_view', '_bx_acl_page_title_sys_view', '_bx_acl_page_title_view', @sName, 5, 2147483647, 1, 'acl-view', 'page.php?i=acl-view', '', '', '', 0, 1, 0, '', '');
+('bx_acl_view', '_bx_acl_page_title_sys_view', '_bx_acl_page_title_view', @sName, 5, 2147483647, 1, 'acl-view', 'page.php?i=acl-view', '', '', '', 0, 1, 0, 'BxAclPageView', 'modules/boonex/acl/classes/BxAclPageView.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_acl_view', 1, @sName, '_bx_acl_page_block_title_system_view', '_bx_acl_page_block_title_view', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:6:\"bx_acl\";s:6:\"method\";s:14:\"get_block_view\";}', 0, 1, 0);
 
 
--- MENU: Account links
-SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications');
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_notifications', 'bx_acl', 'acl-view', '_bx_acl_menu_item_title_system_acl_view', '_bx_acl_menu_item_title_acl_view', 'page.php?i=acl-view', '', '', 'shield col-red2', '', '', 2147483646, 1, 0, @iMIOrder + 1);
+-- MENU: account settings menu
+SET @iMoAccountSettings = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_settings' AND `name` <> 'account-settings-more' LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('sys_account_settings', 'bx_acl', 'acl-view', '_bx_acl_menu_item_title_system_acl_view', '_bx_acl_menu_item_title_acl_view', 'page.php?i=acl-view', '', '', 'shield col-red2', '', '', 2147483646, 1, 0, 1, @iMoAccountSettings + 1);
 
 
 -- SETTINGS

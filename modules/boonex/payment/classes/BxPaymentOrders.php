@@ -27,6 +27,8 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
      */
 	public function serviceGetBlockOrders($sType = '', $iUserId = BX_PAYMENT_EMPTY_ID)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
     	if(empty($sType))
     		$sType = bx_get('type') !== false ? bx_process_input(bx_get('type')) : BX_PAYMENT_ORDERS_TYPE_PROCESSED;
 
@@ -37,10 +39,17 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED)
             $this->_oModule->_oDb->updateOrdersProcessed(array('new' => 0), array('seller_id' => $iUserId, 'new' => 1));
 
-        $this->_oModule->setSiteSubmenu('menu_orders_submenu', 'orders-' . $sType);
+        $this->_oModule->setSiteSubmenu('menu_dashboard', 'system', 'dashboard-orders');
+
+        $sBlockSubmenu = $this->_oModule->_oConfig->getObject('menu_orders_submenu');
+        $oBlockSubmenu = BxDolMenu::getObjectInstance($sBlockSubmenu);
+        if($oBlockSubmenu)
+            $oBlockSubmenu->setSelected($this->MODULE, 'orders-' . $sType);
+
         return array(
         	'title' => _t($this->_sLangsPrefix . 'page_block_title_orders_' . $sType),
-        	'content' => $this->_oModule->_oTemplate->displayBlockOrders($sType, $iUserId)
+        	'content' => $this->_oModule->_oTemplate->displayBlockOrders($sType, $iUserId),
+            'menu' => $oBlockSubmenu
         );
     }
 

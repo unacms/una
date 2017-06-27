@@ -19,17 +19,17 @@
     <string name="_bx_payment_page_block_title_cart_thank_you"><![CDATA[Thank you!]]></string>
     <string name="_bx_payment_page_block_content_cart_thank_you"><![CDATA[Thank you! Payment was successfully performed. The data will be processed shortly. Please wait.]]></string>
 
-    <string name="_bx_payment_page_title_sys_sbs_list"><![CDATA[Subscriptions List]]></string>
-    <string name="_bx_payment_page_title_sbs_list"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_payment_page_block_title_sbs_list"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_payment_page_title_sys_sbs_list_my"><![CDATA[My Subscriptions]]></string>
+    <string name="_bx_payment_page_title_sbs_list_my"><![CDATA[My Subscriptions]]></string>
+    <string name="_bx_payment_page_block_title_sbs_list_my"><![CDATA[My Subscriptions]]></string>
 
-    <string name="_bx_payment_page_title_sys_sbs_history"><![CDATA[Subscriptions History]]></string>
-    <string name="_bx_payment_page_title_sbs_history"><![CDATA[Payment History]]></string>
-    <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[Payment History]]></string>
+    <string name="_bx_payment_page_title_sys_sbs_list_all"><![CDATA[All Subscriptions]]></string>
+    <string name="_bx_payment_page_title_sbs_list_all"><![CDATA[All Subscriptions]]></string>
+    <string name="_bx_payment_page_block_title_sbs_list_all"><![CDATA[All Subscriptions]]></string>
 
-    <string name="_bx_payment_page_title_sys_sbs_administration"><![CDATA[Subscriptions Administration]]></string>
-    <string name="_bx_payment_page_title_sbs_administration"><![CDATA[Subscriptions]]></string>
-    <string name="_bx_payment_page_block_title_sbs_administration"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_payment_page_title_sys_sbs_history"><![CDATA[My Payments]]></string>
+    <string name="_bx_payment_page_title_sbs_history"><![CDATA[My Payments]]></string>
+    <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[My Payments]]></string>
 
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[Shopping History]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[Shopping History]]></string>
@@ -61,7 +61,7 @@
     <string name="_bx_payment_menu_item_title_system_orders_pending"><![CDATA[Pending Orders]]></string>
     <string name="_bx_payment_menu_item_title_orders_pending"><![CDATA[Pending]]></string>
     <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Payments Details]]></string>
-    <string name="_bx_payment_menu_item_title_details"><![CDATA[Settings]]></string>
+    <string name="_bx_payment_menu_item_title_details"><![CDATA[Payments]]></string>
 
 	<string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
@@ -72,12 +72,12 @@
 
     <string name="_bx_payment_menu_title_sbs_submenu"><![CDATA[Subscriptions Submenu]]></string>
     <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Subscriptions Submenu]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_list"><![CDATA[Subscriptions List]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_list"><![CDATA[Subscriptions]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_list_my"><![CDATA[My Subscriptions List]]></string>
     <string name="_bx_payment_menu_item_title_sbs_list_my"><![CDATA[My Subscriptions]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_list_administration"><![CDATA[All Subscriptions]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[Subscriptions History]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[Payments]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_list_all"><![CDATA[All Subscriptions List]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list_all"><![CDATA[All Subscriptions]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[My Payments History]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[My Payments]]></string>
 
     <string name="_bx_payment_menu_title_sbs_actions"><![CDATA[Subscription Actions]]></string>
     <string name="_bx_payment_menu_set_title_sbs_actions"><![CDATA[Subscription Actions]]></string>

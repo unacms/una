@@ -19,17 +19,17 @@
     <string name="_bx_payment_page_block_title_cart_thank_you"><![CDATA[Спасибо!]]></string>
     <string name="_bx_payment_page_block_content_cart_thank_you"><![CDATA[Спасибо! Оплата успешно завершена. Данные будут обработаны в ближайшее время. Пожалуйста, подождите.]]></string>
 
-    <string name="_bx_payment_page_title_sys_sbs_list"><![CDATA[Лист подписок]]></string>
-    <string name="_bx_payment_page_title_sbs_list"><![CDATA[Подписки]]></string>
-    <string name="_bx_payment_page_block_title_sbs_list"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_page_title_sys_sbs_list_my"><![CDATA[Мои подписки]]></string>
+    <string name="_bx_payment_page_title_sbs_list_my"><![CDATA[Мои подписки]]></string>
+    <string name="_bx_payment_page_block_title_sbs_list_my"><![CDATA[Мои подписки]]></string>
 
-    <string name="_bx_payment_page_title_sys_sbs_history"><![CDATA[История подписок]]></string>
-    <string name="_bx_payment_page_title_sbs_history"><![CDATA[История выплат]]></string>
-    <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[История выплат]]></string>
+    <string name="_bx_payment_page_title_sys_sbs_list_all"><![CDATA[Все подписки]]></string>
+    <string name="_bx_payment_page_title_sbs_list_all"><![CDATA[Все подписки]]></string>
+    <string name="_bx_payment_page_block_title_sbs_list_all"><![CDATA[Все подписки]]></string>
 
-    <string name="_bx_payment_page_title_sys_sbs_administration"><![CDATA[Управление подписками]]></string>
-    <string name="_bx_payment_page_title_sbs_administration"><![CDATA[Подписки]]></string>
-    <string name="_bx_payment_page_block_title_sbs_administration"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_page_title_sys_sbs_history"><![CDATA[Мои выплаты]]></string>
+    <string name="_bx_payment_page_title_sbs_history"><![CDATA[Мои выплаты]]></string>
+    <string name="_bx_payment_page_block_title_sbs_history"><![CDATA[Мои выплаты]]></string>
 
 	<string name="_bx_payment_page_title_sys_history"><![CDATA[История покупок]]></string>
 	<string name="_bx_payment_page_title_history"><![CDATA[История покупок]]></string>
@@ -61,7 +61,7 @@
     <string name="_bx_payment_menu_item_title_system_orders_pending"><![CDATA[Обрабатываемые заказы]]></string>
     <string name="_bx_payment_menu_item_title_orders_pending"><![CDATA[Обрабатываемые]]></string>
     <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Детали платежных систем]]></string>
-    <string name="_bx_payment_menu_item_title_details"><![CDATA[Настройки]]></string>
+    <string name="_bx_payment_menu_item_title_details"><![CDATA[Платежные системы]]></string>
 
 	<string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
@@ -72,12 +72,12 @@
 
     <string name="_bx_payment_menu_title_sbs_submenu"><![CDATA[Подменю подписок]]></string>
     <string name="_bx_payment_menu_set_title_sbs_submenu"><![CDATA[Подменю подписок]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_list"><![CDATA[Лист подписок]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_list"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_list_my"><![CDATA[Лист моих подписок]]></string>
     <string name="_bx_payment_menu_item_title_sbs_list_my"><![CDATA[Мои подписки]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_list_administration"><![CDATA[Все подписки]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[История подписок]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[История выплат]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_list_all"><![CDATA[Лист всех подписок]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_list_all"><![CDATA[Все подписки]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_history"><![CDATA[История моих выплат]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_history"><![CDATA[Мои выплаты]]></string>
 
     <string name="_bx_payment_menu_title_sbs_actions"><![CDATA[Действия с подпиской]]></string>
     <string name="_bx_payment_menu_set_title_sbs_actions"><![CDATA[Действия с подпиской]]></string>

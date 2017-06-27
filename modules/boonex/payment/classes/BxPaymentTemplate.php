@@ -184,9 +184,9 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return $this->_displayBlockHistory('grid_history', $iClientId, $iSellerId);
     }
 
-    public function displayBlockSbsList($iClientId)
+    public function displayBlockSbsListMy($iClientId)
     {
-        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_sbs_list'), $this->getModule()->_oTemplate);
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_sbs_list_my'), $this->getModule()->_oTemplate);
         if(!$oGrid || empty($iClientId))
             return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
@@ -196,19 +196,19 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return $this->displayJsCode(BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION) . $oGrid->getCode();
     }
 
-    public function displayBlockSbsHistory($iClientId)
+    public function displayBlockSbsListAll()
     {
-        return $this->_displayBlockHistory('grid_sbs_history', $iClientId);
-    }
-
-    public function displayBlockSbsAdministration()
-    {
-        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_sbs_administration'), $this->getModule()->_oTemplate);
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_sbs_list_all'), $this->getModule()->_oTemplate);
         if(!$oGrid)
             return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
 		$this->addJsCssSubscriptions();
         return $this->displayJsCode(BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION) . $oGrid->getCode();
+    }
+
+    public function displayBlockSbsHistory($iClientId)
+    {
+        return $this->_displayBlockHistory('grid_sbs_history', $iClientId);
     }
 
     public function displayBlockSbsDetails($iClientId)

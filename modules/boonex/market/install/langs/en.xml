@@ -244,8 +244,8 @@
 	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Products - {addon} hidden]]></string>
 	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[My Products]]></string>
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[All Products]]></string>
-	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Licenses]]></string>
-	<string name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Licenses]]></string>
+	<string name="_bx_market_menu_item_title_system_licenses"><![CDATA[Licenses]]></string>
+	<string name="_bx_market_menu_item_title_licenses"><![CDATA[Licenses]]></string>
 	<string name="_bx_market_menu_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[More Actions]]></string>

@@ -11,7 +11,7 @@
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenuAccountNotifications extends BxTemplMenu
+class BxBaseMenuAccountDashboard extends BxTemplMenu
 {
     public function __construct ($aObject, $oTemplate)
     {
@@ -30,41 +30,20 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
             return false;
 
         switch ($a['name']) {
-        	case 'notifications-cart':
+            case 'dashboard-subscriptions':
         		$oPayments = BxDolPayments::getInstance();
         		if(!$oPayments->isActive())
         			return false;
         		break;
 
-        	case 'notifications-orders':
+        	case 'dashboard-orders':
         		$oPayments = BxDolPayments::getInstance();
         		if(!$oPayments->isActive())
         			return false;
         		break;
-
-			// show only friends for currently active profile for friend request notification
-        	case 'notifications-friend-requests':
-        	case 'profile-stats-friend-requests':
-        	case 'profile-stats-subscriptions':
-            case 'profile-stats-subscribed-me':
-	            $aInfo = BxDolProfile::getInstance()->getInfo();
-	            if($a['module'] != $aInfo['type'])
-	                return false;
-				break;
         }
 
         return true;
-    }
-
-    protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
-    {
-        return array(
-            'addon' => $mixedAddon,
-            'addonf' => $this->_oTemplate->parseHtmlByName('menu_item_addon.html', array(
-		        'content' => $mixedAddon
-		    ))
-			
-        );
     }
 }
 

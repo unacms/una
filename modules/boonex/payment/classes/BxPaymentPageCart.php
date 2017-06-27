@@ -17,7 +17,7 @@ class BxPaymentPageCart extends BxBaseModPaymentPage
 
         parent::__construct($aObject, $oTemplate);
         
-        $this->_oModule->setSiteSubmenu('menu_cart_submenu', 'cart');
+        $this->_oModule->setSiteSubmenu('menu_cart_submenu', $this->MODULE, 'cart');
     }
 }
 

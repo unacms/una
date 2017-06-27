@@ -21,25 +21,19 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
     /*
      * Service methods
      */
-    public function serviceGetBlockList()
+    public function serviceGetBlockListMy()
     {
-        $this->_oModule->setSiteSubmenu('menu_sbs_submenu', 'sbs-list');
+        return $this->_getBlock('list_my');
+    }
 
-        return $this->_getBlockSubscriptions('list');
+    public function serviceGetBlockListAll()
+    {
+        return $this->_getBlock('list_all');
     }
 
     public function serviceGetBlockHistory()
     {
-        $this->_oModule->setSiteSubmenu('menu_sbs_submenu', 'sbs-history');
-
         return $this->_getBlock('history');
-    }
-
-    public function serviceGetBlockAdministration()
-    {
-        $this->_oModule->setSiteSubmenu('menu_sbs_submenu', 'sbs-list');
-
-        return $this->_getBlockSubscriptions('administration');
     }
 
 	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount)
@@ -113,36 +107,17 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         if(empty($iUserId))
             return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
 
+        $this->_oModule->setSiteSubmenu('menu_dashboard', 'system', 'dashboard-subscriptions');
+
+        $sBlockSubmenu = $this->_oModule->_oConfig->getObject('menu_sbs_submenu');
+        $oBlockSubmenu = BxDolMenu::getObjectInstance($sBlockSubmenu);
+        if($oBlockSubmenu) 
+            $oBlockSubmenu->setSelected($this->MODULE, 'sbs-' . str_replace('_', '-', $sType));     
+
         return array(
-        	'content' => $this->_oModule->_oTemplate->$sMethod($iUserId)
+        	'content' => $this->_oModule->_oTemplate->$sMethod($iUserId),
+        	'menu' => $this->_oModule->_oConfig->getObject('menu_sbs_submenu')
         );
-    }
-
-    protected function _getBlockSubscriptions($sType)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $aResult = $this->_getBlock($sType);
-        if(!is_array($aResult))
-            return $aResult;
-
-        $sMenu = '';
-		if(BxDolAcl::getInstance()->isMemberLevelInSet(192)) {
-			$oPermalink = BxDolPermalinks::getInstance();
-
-            $oMenu = new BxTemplMenu(array(
-            	'template' => 'menu_vertical.html', 
-            	'menu_items' => array(
-    			    array('id' => 'sbs-list', 'name' => 'sbs-list', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_SUBSCRIPTIONS']), 'target' => '_self', 'title' => _t('_bx_payment_menu_item_title_sbs_list_my'), 'active' => 1),
-    			    array('id' => 'sbs-administration', 'name' => 'sbs-administration', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_SUBSCRIPTIONS_ADM']), 'target' => '_self', 'title' => _t('_bx_payment_menu_item_title_sbs_list_administration'), 'active' => 1)
-    			)
-            ), $this->_oModule->_oTemplate);
-            $oMenu->setSelected($this->_oModule->getName(), 'sbs-' . $sType);
-
-            $aResult['menu'] = $oMenu->getCode();
-		}
-
-		return $aResult;
     }
 }
 

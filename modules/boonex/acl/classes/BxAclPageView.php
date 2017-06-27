@@ -3,19 +3,19 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Payment Payment
+ * @defgroup    PaidLevels Paid Levels
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxPaymentPageDetails extends BxTemplPage
+class BxAclPageView extends BxTemplPage
 {
     protected $MODULE;
 
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_payment';
+        $this->MODULE = 'bx_acl';
 
         parent::__construct($aObject, $oTemplate);
 
@@ -24,7 +24,7 @@ class BxPaymentPageDetails extends BxTemplPage
             $sSubmenu = 'sys_account_settings_submenu';
             $oMenuSubmenu->setObjectSubmenu($sSubmenu, array('title' => _t('_sys_menu_item_title_account_settings'), 'link' => '', 'icon' => ''));
 
-            BxDolMenu::getObjectInstance($sSubmenu)->setSelected($this->MODULE, 'payment-details');
+            BxDolMenu::getObjectInstance($sSubmenu)->setSelected($this->MODULE, 'acl-view');
         }
     }
 }
