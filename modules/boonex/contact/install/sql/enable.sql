@@ -10,7 +10,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- MENU: FOOTER
-SET @iMIOrder = (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name`='sys_footer' AND `order` < 99999 LIMIT 1);
+SET @iMIOrder = (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name`='sys_footer' AND `order` < 9999 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_footer', @sName, 'contact', '_bx_contact_menu_item_title_system_contact', '_bx_contact_menu_item_title_contact', 'page.php?i=contact', '', '', '', '', 2147483647, 1, 1, @iMIOrder + 1);
 
