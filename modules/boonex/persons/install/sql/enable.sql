@@ -109,8 +109,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_persons_profile_comments', '_bx_persons_page_title_sys_profile_comments', '_bx_persons_page_title_profile_comments', 'bx_persons', 5, 2147483647, 1, 'persons-profile-comments', '', '', '', '', 0, 1, 0, 'BxPersonsPageEntry', 'modules/boonex/persons/classes/BxPersonsPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_persons_profile_comments', 1, 'bx_persons', '_bx_persons_page_block_title_profile_comments', '_bx_persons_page_block_title_profile_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_persons_profile_comments', 1, 'bx_persons', '_bx_persons_page_block_title_profile_comments', '_bx_persons_page_block_title_profile_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 1);
 
 
 -- PAGE: module home
