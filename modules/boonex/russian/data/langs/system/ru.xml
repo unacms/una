@@ -2403,7 +2403,8 @@
 	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, видео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
 	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Присядь на стул. Попробуй.<br />Зарегистрируйся. Жизнь такая<br />сладкая."]]></string>
 	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
-	<string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>
+    <string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>
+    <string name="_sys_txt_switch_profile_context"><![CDATA[Переключиться]]></string>
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши имейл-установки были удачно обновлены.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, Пожалуйста, зайдите в свой аккаунт и обновите имейл-установки там или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить имейл-установки для <b>{0}</b>]]></string>
