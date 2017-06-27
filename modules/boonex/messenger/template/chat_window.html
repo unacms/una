@@ -1,0 +1,42 @@
+<div class="bx-messenger-table-wrapper">
+	<div class="bx-messenger-table-wrapper-rows">
+		<div class="cell">
+			<div class="bx-messenger-conversation-block-wrapper">
+				<div class="bx-messenger-conversation-block">
+					<div class="bx-messenger-conversations">
+						__content__
+					</div>
+				</div>
+				<div id="bx-messenger-typing">
+					<div class="bx-messenger-conversations-typing bx-def-font-light bx-def-font-small"><span></span><bx_text:_bx_messenger_typing_message /></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bx-messenger-table-wrapper-rows">
+		<div class="cell">
+			<div class="bx-def-hr"></div>
+			  <div class="bx-messenger-post-box"> <!-- bx-clearfix-->
+					<div class="bx-form-input-wrapper bx-form-input-wrapper-text">		
+						<div class="bx-messenger-post-box-send-area">
+							<div id="bx-messenger-message-box" contenteditable="true" placeholder="<bx_text:_bx_messenger_post_area_message />" class="bx-def-font-inputs bx-form-input-text bx-messenger-text-box" data-emojiable="true" data-type="__type__"></div>
+					</div>
+					<div class="bx-messenger-post-box-send-button">
+						<button type="button" value="<bx_text:_bx_messenger_post_button_title />" name="send" class="bx-def-font-inputs bx-form-input-submit bx-btn">
+							<bx_text:_bx_messenger_post_button_title />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	oMessenger.initJotSettings({
+		'type'	:__type__,
+		'url'	:'__url__',
+		'lot'	:__id__,
+		'name'	:'__name__',
+		'user_id':__user_id__ 
+	});
+</script>

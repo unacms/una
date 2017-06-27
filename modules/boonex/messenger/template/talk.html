@@ -1,0 +1,44 @@
+<div class="bx-messenger-block jots bx-db-container bx-def-image-bg-block bx-def-color-bg-block bx-shadow-block">
+	<div class="bx-db-header">
+		<div class="bx-messenger-hide-mobile bx-db-menu left">
+			<a href="javascript:void(0);" onclick="$('.bx-layout-row .bx-layout-col').first().fadeIn().end().last().hide();">	
+				<i class="sys-icon angle-left">
+					<bx_text:_bx_messenger_menu_home />
+				</i>
+			</a>
+		</div>
+		<div class="bx-db-title bx-def-font-h4">
+			__title__
+		</div>
+			<div id="bx-menu-db-menu-settings" class="bx-popup-wrapper bx-popup-slide-wrapper bx-def-z-index-front bx-def-border-bottom bx-def-border-top bx-def-padding bx-def-box-sizing" style="position: absolute; top: 45px; left: 0px; display: none;">
+					<ul class="bx-menu-inter-vert">
+						<bx_repeat:settings>
+							<li class="bx-menu-inter-pas bx-def-round-corners bx-def-color-bg-hl-hover">
+								<a class="" href="javascript:void(0)" onclick="__action__" title="__title__">
+									<div class="bx-def-padding-left bx-def-padding-sec-right bx-def-padding-sec-topbottom">__name__</div>
+								</a>
+							</li>
+						</bx_repeat:settings>						
+					</ul>
+			</div>
+		<div class="bx-db-menu right">			
+			<div class="bx-db-menu-tab bx-db-menu-tab-btn">
+				<a href="javascript:void(0);" onclick="bx_menu_slide('#bx-menu-db-menu-settings', this)" class="bx-def-margin-sec-left">
+						<i class="sys-icon cog"></i>					
+				</a>
+			</div>			
+		</div>
+	</div> 
+	<div class="bx-def-hr"></div>
+	<div class="bx-messenger-block-info bx-def-font-small bx-def-font">
+		<i class="sys-icon user-o bx-def-margin-sec-left bx-def-margin-sec-right"><span class="bx-def-margin-sec-right">__users_count__</span></i><b>&bull;</b>
+		<i class="sys-icon __mute_info__ bx-def-margin-sec-left bx-def-margin-sec-right"></i>
+			<bx_if:show_private_info>	
+				<b>&bull;</b><span class="bx-def-margin-sec-left">__info__</span>
+			</bx_if:show_private_info>
+	</div>
+	<div class="bx-def-hr"></div>
+	<div class="bx-messenger-main-block">	
+		__post_area__
+	</div>
+</div>

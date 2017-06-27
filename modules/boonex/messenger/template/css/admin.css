@@ -1,0 +1,327 @@
+.bx-messenger-border{
+	padding:20px;
+	padding-top:10px;
+	padding-bottom:10px;	
+	background-color:rgba(0, 0, 0, 0);
+}
+
+.bx-messanger-tags {
+	position:relative;
+	overflow:hidden;
+	display:table-row;
+}
+
+.bx-messanger-tags div{
+	position:relative;
+	overflow:hidden;
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+}
+
+.bx-messanger-tags div:nth-child(2) i{
+	float: right;
+    font-size: 2rem;
+    margin-right: 1rem;
+    position: relative;
+}
+
+.bx-messanger-tags div:first-child{
+	width:80%;
+}
+
+.bx-messanger-tags-main-list .bx-def-color-bg-hl-even{
+	border-top:1px solid rgba(40, 60, 80, 0.1);
+}
+
+.bx-messanger-tags-main{
+	display:table;
+	height:auto;
+	width:100%;
+}
+
+.bx-messenger-block{
+	overflow:hidden;
+	border-top:0px;
+}
+
+.bx-messenger-block-jots{
+	overflow:hidden;
+	width:100%;
+	display:table;		
+	/*border-collapse: separate;
+    border-spacing: 0px 5px;*/
+}
+
+.bx-messenger-lots-menu{
+	display:none;
+}
+
+div.bx-messenger-lots-menu{
+	width: auto;
+	height: auto;
+	overflow: hidden;
+	position:absolute;
+	border-radius: 3px;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+	border: 1px #dfdfdf solid;
+	background: #ffffff;
+	padding: 5px 2px 5px 5px;
+	z-index:10001;
+}
+
+div.bx-messenger-lots-menu ul{
+	margin: 0px;
+    padding-left: 2px;
+	padding-right: 2px;
+}
+
+div.bx-messenger-lots-menu li{
+	list-style-type: none;
+    margin: 2px;
+    padding-left: 5px;
+}
+
+div.bx-messenger-lots-menu ul span{
+	font-weight:700;
+}
+
+div.bx-messenger-lots-menu ul li a{
+	text-decoration:none;
+	text-transform:lowercase;
+}
+
+div.bx-messenger-lots-menu ul li a:hover,
+div.bx-messenger-lots-menu ul li a.active{	
+	font-weight:bold;	
+}
+
+#bx-menu-db-menu .bx-def-padding-sec-right{
+  padding-right:0px;
+}
+
+#bx-content-main .bx-layout-column-thin .bx-def-padding-sec-leftright{
+  padding-left:0px;
+  padding-right:0px;
+}
+#bx-content-main .bx-def-padding-sec-left{
+  padding-left:0px;
+}
+
+#bx-content-main .bx-def-padding-sec-left .bx-def-border-block{
+  /*border-left:1px;*/
+    border-left:1px solid rgba(40, 60, 80, 0.05);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.bx-messenger-friends-list{
+	vertical-align:middle;
+	overflow:hiden;
+}
+.bx-messenger-friends-list div{
+	width:100%;
+}
+
+.bx-messenger-top-user-info{
+	width:100%;
+	overflow:hidden;
+}
+
+#bx-messenger-add-users-input{
+	width:auto;
+	float:left;
+	border:0px;
+	box-shadow:none;
+	background-color:rgba(0,0,0,0);
+	height:2rem;
+}
+
+#bx-messenger-add-users img,
+#bx-messenger-add-users span{
+	float:left;	
+}
+
+#bx-messenger-add-users img.bx-def-thumb-size{
+	width:2rem;
+	height:2rem;
+	line-height: 2rem;
+}
+
+#bx-messenger-add-users b{
+	line-height: 2rem;	
+}
+
+.bx-messenger-block .bx-db-header  > div{
+	line-height:2.5rem;
+}
+
+.bx-db-header{
+	min-height:2.5rem;
+	height:auto;	
+}
+
+.bx-messenger-right-column{
+	text-align:left;
+	overflow:hidden;
+}
+
+.bx-messenger-right-column div.bx-form-input-autotoken{
+	padding:0.2rem 1rem 0rem 1rem;
+	line-height:2rem;
+}
+
+.bx-messenger-right-column div.bx-form-input-autotoken b{
+	padding-left:0;
+	margin-left:0;
+	margin-bottom:0.2rem;
+}
+
+.bx-messenger-right-column  .bx-form-input-autotoken b:after{
+   font-family: 'sys-user';
+   content: "\f00d";  
+   margin-left:0.1rem;
+}
+
+
+.bx-messenger-main-block{
+	overflow:auto;
+	position:relative;
+}
+
+.bx-messenger-block-jots  a,
+.bx-messenger-block-jots  a:hover,
+.bx-messanger-items-list a,
+.bx-messanger-items-list a:hover{
+	color:inherit;
+}
+
+
+.bx-messenger-jots-snip{
+	overflow:hidden;	
+	min-height:50px;	
+	display:table-row;
+	cursor:pointer;
+}
+
+.bx-messenger-jots-snip-avatars{
+	height:auto;
+	width:auto;
+	overflow:hidden;
+	text-align:center;	
+	position:relative;
+	display:table-cell;
+}
+
+.bx-messenger-jots-snip-info{
+	display: table-cell;
+    /*padding-right: 10px;*/
+    vertical-align: top;
+	width:100%;	
+}
+
+.bx-messenger-jots-snip-info span{
+	opacity:0.7;	
+}
+
+.bx-messenger-block-jots .bx-messenger-jots-snip-info{
+	padding-bottom:0.25rem;
+	vertical-align:top;
+}
+
+.bx-messenger-jots-snip-title{
+	position: relative;
+    width: 100%;
+	padding-bottom:0.1rem;
+	display:inline-block;
+}
+
+.bx-messenger-jots-snip-title span{
+	right:0.5rem;
+	top:0px;
+	/*color:#8ba1ab;*/
+	font-weight:normal;
+	position:absolute;
+}
+
+.bx-messenger-jots-snip-message{
+	position:relative;
+}
+
+.bx-messenger-jots-snip:hover {
+	background-color:rgba(0,0,0,0.05);
+}
+
+.bx-messenger-jots-snip.active{
+	background-color:rgba(0,0,0,0.1);
+}
+
+.bx-messenger-jots-snip-avatars-list{
+	position:relative;
+}
+
+.bx-messenger-jots-snip-avatars-list div{
+	position:relative;
+	z-index:1;
+	box-sizing: border-box;
+    float: left;
+    overflow: hidden;
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child{
+	border-right: 1px solid #fff;
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(2),
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(2) ~ div
+ {
+    width: 50%;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(1):nth-last-child(2) img,
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(1) img{
+	margin-left:-12px
+}
+
+.bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(3)
+ {
+    width: 50%;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(1):nth-last-child(3) img{
+	margin-left:-12px
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(2),
+.bx-messenger-jots-snip-avatars-list div:nth-child(3):nth-last-child(1){
+	height:50%;
+	width:50%;	
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(2):nth-last-child(2) img,
+.bx-messenger-jots-snip-avatars-list div:nth-child(3):nth-last-child(1) img{
+	height:100%;
+	width:100%;	
+	margin-bottom:10px;
+}
+
+.bx-messenger-jots-snip-avatars-list div:nth-child(3):nth-last-child(1){
+	border-top: 1px solid #fff;
+}
+
+.bx-messanger-padding-lots-lefttopbottom{
+	padding:0.9rem;	
+}
+
+.bx-messanger-padding-lots-topbottom{
+	padding-top:1rem;
+	padding-bottom:1rem;
+}
+
+.bx-messenger-jots-snip .unread-lot div{
+	font-size:1rem;
+}
+
+.bx-messenger-jots-snip .unread-lot span{
+	opacity:1;
+}

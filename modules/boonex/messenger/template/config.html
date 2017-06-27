@@ -1,0 +1,63 @@
+<script type="text/javascript">
+	<bx_if:onsignal>
+	/* One Signal  Push Notifications Init Begin */
+		var OneSignal = window.OneSignal || [];
+		OneSignal.push(["init", {
+									appId: '__one_signal_api__',
+									autoRegister: true, /* Set to true to automatically prompt visitors */
+									subdomainName: '__short_name__', /* required only for http  sites */
+									safari_web_id: '__safari_key__',
+									persistNotification: false,
+									welcomeNotification:{
+															disable:false
+															},
+									httpPermissionRequest: {
+															enable: true
+														  },
+									promptOptions: {
+															/* These prompt options values configure both the HTTP prompt and the HTTP popup. */
+															/* actionMessage limited to 90 characters */
+															actionMessage: '__notification_request__',
+															/* acceptButtonText limited to 15 characters */
+															acceptButtonText: '__notification_request_yes__',
+															/* cancelButtonText limited to 15 characters */
+															cancelButtonText: '__notification_request_no__'
+														}
+								 }
+					]);	
+
+		OneSignal.push(function() {
+			var isPushSupported = OneSignal.isPushNotificationsSupported();
+				OneSignal.setDefaultNotificationUrl('__jot_chat_page_url__');
+				OneSignal.isPushNotificationsEnabled().then(
+		        function(isEnabled) {								
+							OneSignal.sendTag('user', __profile_id__); // set tag for onesiganl, this tag will be used to send notification
+									if (!isEnabled && isPushSupported)
+												OneSignal.showHttpPermissionRequest();													
+				});
+		});	
+	/*  One Signal Push Notifications Init End */				
+	</bx_if:onsignal>
+	
+	if (oRTWSF != undefined)
+			oRTWSF.init({
+				server:'__server_url__',
+				ip:'__ip__'
+			});
+		
+	oMessenger.init({
+				emoji:{
+						emojiable_selector: '[data-emojiable=true]',
+						assetsPath: 'modules/boonex/messenger/template/images/emoji',
+						popupButtonClasses: 'sys-icon smile-o',
+						type_smiles:__smiles__
+					  },
+				oRTWSF:oRTWSF,
+				user_id:__profile_id__,
+				max:__message_length__				
+	});
+	
+	window.aDolLang['_bx_messenger_online'] = '__online__';
+	window.aDolLang['_bx_messenger_offline'] = '__offline__';
+	window.aDolLang['_bx_messenger_away'] = '__away__';	
+</script>

@@ -1,0 +1,123 @@
+.bx-main,
+#bx-content-container,
+#bx-content-wrapper,
+#bx-content-main,
+.bx-page-wrapper,
+.bx-page-block-container,
+.bx-layout-cell{
+	padding:0px;
+	margin:0px;
+}
+
+#bx-content-wrapper .bx-def-page-width{
+	width:100%;
+}
+
+#bx-footer-wrapper{
+	display:none;
+}
+
+.bx-messanger-items-list{
+	height:100%;
+	overflow-y:auto;
+	overflow-x:hidden;
+	-webkit-overflow-scrolling: touch;
+}
+
+#bx-messenger-add-users b{
+	background-color:rgba(210, 230, 250, 0.5);
+	border-radius:15px !important;
+}
+
+#bx-messenger-add-users .save{
+	position: relative;
+	bottom: 0px;
+	line-height: 2rem;		
+}
+
+.bx-messenger-block .bx-db-header .bx-db-menu.right{
+	position:absolute;
+	float:none;
+	right:1rem;
+	top:0.4rem;
+}
+
+.bx-messenger-main-block{
+	min-height:100% !important;
+}
+
+.bx-main{
+	height: 100vh;
+    overflow: hidden;
+	width:100%;
+}
+
+.bx-messenger-table-wrapper  .bx-messenger-table-wrapper-rows:first-child .cell{
+	height:100% !important;	
+}
+
+.bx-layout-row .bx-layout-col{
+	display:none;
+}
+
+.bx-messenger-block-lots{
+	border-left:0px;
+	border-top:0px;	
+	border-bottom:0px;	
+}
+
+.bx-messenger-status{
+    font-family: 'sys-user';
+	margin-right:0.2rem;
+	font-size:0.8rem;
+	font-weight:300;
+}
+
+.bx-messenger-status.online:before{
+    content: "\f111";
+	color: #00c39b;
+}
+
+.bx-messenger-status.away:before{
+    content: "\f111"; 
+	color: #f5a623;
+}
+
+.bx-messenger-status.offline:before{
+    content: "\f10c";
+    color: #9b9b9b;
+}
+
+.bx-messenger-status.count{
+	background-color: #9b9b9b;
+	color:#eee;
+	float: left;
+    vertical-align: middle;
+    padding:1px;
+    width: 0.5rem;
+    height: 0.8rem;
+	font-weight:400 !important;
+	font-size:0.7rem !important;
+	border-radius:3px;
+	text-align:center !important;
+	font-family:inherit;
+}
+
+.bx-messenger-usernames{
+	overflow:hidden;
+	width:auto;	
+}
+
+.bx-messenger-jots-snip-title .bubble{
+	background-color:#ea5c6e;
+}
+
+.bubble.hidden{
+	display:none;	
+}
+
+@media (max-width:720px){
+	.bx-messenger-hide-mobile{
+		display:block;
+	}	
+}
