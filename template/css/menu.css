@@ -7,7 +7,8 @@ ul.bx-menu-hor {
 }
 
 .bx-menu-hor li {
-    float:left;
+    display:inline-block;
+    vertical-align:middle;
 }
 
 .bx-menu-hor li a {
@@ -26,6 +27,11 @@ ul.bx-menu-hor {
 .bx-menu-hor li img,
 .bx-menu-hor li .sys-icon {
 	display:inline-block;
+    vertical-align:middle;
+}
+.bx-menu-hor li img {
+    height:1.6rem;
+    width:auto;    
 }
 
 /* --------------- horizontal inline menu with 'special' buttons */
