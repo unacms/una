@@ -5,7 +5,7 @@
 [![Follow UNA Team](https://img.shields.io/twitter/follow/unateam.svg?style=social&label=Follow)](https://twitter.com/unateam)
 
 
-[![UNA BAdge](https://una.io/s/sys_images_resized/ybevh6thcvqhp8ystv3hd6exzfbdhaqy.png?=120x)](https://una.io)
+
 
 UNA is a **C**MS - **Community** Management System - a full-stack web platform for creating and running a community website.
 
