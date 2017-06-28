@@ -1,5 +1,7 @@
 # UNA (United Networking Applications) - [https://una.io](https://una.io)
 
+[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg)]()
+
 UNA is a **C**MS - **Community** Management System - a full-stack web platform for creating and running a community website.
 
 A social website powered by UNA can work as a niche social network, business collaboration hub or any kind of multi-user system with various memberships, roles, content types and permissions defining the rules of the community operation.  
