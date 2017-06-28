@@ -1,6 +1,7 @@
 # UNA (United Networking Applications) - [https://una.io](https://una.io)
 
-[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg)]()
+[![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg)](https://github.com/unaio/una)
+[![Follow UNA Team](https://img.shields.io/twitter/follow/unateam.svg?style=social&label=Follow)](https://twitter.com/unateam)
 
 UNA is a **C**MS - **Community** Management System - a full-stack web platform for creating and running a community website.
 
