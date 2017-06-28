@@ -1,4 +1,4 @@
-# UNA (United Networking Applications) - [https://una.io](https://una.io)
+# UNA Community Management System - [https://una.io](https://una.io)
 [![UNA Official Website](https://img.shields.io/badge/website-una.io-blue.svg)](https://una.io)
 [![license](https://img.shields.io/github/license/unaio/una.svg)](https://github.com/unaio/una/blob/master/license.txt)
 [![UNA All Releases](https://img.shields.io/github/downloads/unaio/una/total.svg)](https://github.com/unaio/una)
