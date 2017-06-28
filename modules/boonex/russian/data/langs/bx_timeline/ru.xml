@@ -16,11 +16,14 @@
 
 	<string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>
+	<string name="_bx_timeline_form_post_display_add_public"><![CDATA[Написать публичное сообщение]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[ID владельца]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Действие]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Тип]]></string>
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Содержимое]]></string>
 	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
+    <string name="_bx_timeline_form_post_input_sys_object_privacy_view"><![CDATA[Видимость]]></string>
+    <string name="_bx_timeline_form_post_input_object_privacy_view"><![CDATA[Видимость]]></string>
 	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Ссылка]]></string>
 	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Добавить ссылку]]></string>
 	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Невозможно удалить ссылку. Пожалуйста, оповестите нас о проблеме.]]></string>

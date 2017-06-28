@@ -70,7 +70,8 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $this->_aObject = $aObject;
         $this->_sObject = $aObject['object'];
 
-        $this->_oDb = new BxDolPrivacyQuery($this->_aObject);
+        $this->_oDb = new BxDolPrivacyQuery();
+        $this->_oDb->init($this->_aObject);
     }
 
     /**
@@ -278,6 +279,13 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     public function checkFriends($iOwnerId, $iViewerId)
     {
         return BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iOwnerId, $iViewerId, true);
+    }
+
+    public function setTableFieldAuthor($sValue)
+    {
+        $this->_aObject['table_field_author'] = $sValue;
+
+        $this->_oDb->init($this->_aObject);
     }
 
 	protected function getPrivacyGroupsForContentPublic($iProfileIdOwner = 0, $aCustomGroups = array())

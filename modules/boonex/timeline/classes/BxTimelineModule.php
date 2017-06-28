@@ -419,7 +419,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetBlockPostHome()
     {
         $iProfileId = 0;
-        return $this->_getBlockPost($iProfileId);
+        return $this->_getBlockPost($iProfileId, array(
+            'form_display' => 'form_display_post_add_public'
+        ));
     }
 
     public function serviceGetBlockPostAccount()
@@ -719,11 +721,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-    public function getFormPost()
+    public function getFormPost($aParams = array())
     {
         $iUserId = $this->getUserId();
 
-        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_add'), $this->_oTemplate);
+        $sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
+        $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_add';
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -743,6 +747,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             if($bText)
             	$aContent['text'] = $sText;
+
+            //--- Process Privacy ---//
+            $iObjectPrivacyView = (int)$oForm->getCleanValue('object_privacy_view');
+            if(empty($iObjectPrivacyView))
+                $iObjectPrivacyView = $this->_oConfig->getPrivacyViewDefault('object');
 
             //--- Process Link ---//
             $aLinkIds = $oForm->getCleanValue('link');
@@ -764,7 +773,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $iId = $oForm->insert(array(
                 'object_id' => $iUserId,
-                'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
+                'object_privacy_view' => $iObjectPrivacyView,
                 'content' => serialize($aContent),
                 'title' => $sTitle,
                 'description' => $sDescription,
@@ -1301,14 +1310,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return array('content' => $sContent);
     }
 
-    protected function _getBlockPost($iProfileId)
+    protected function _getBlockPost($iProfileId, $aParams = array())
     {
         $this->_iOwnerId = $iProfileId;
 
         if($this->isAllowedPost() !== true)
             return array();
 
-		$sContent = $this->_oTemplate->getPostBlock($this->_iOwnerId);
+		$sContent = $this->_oTemplate->getPostBlock($this->_iOwnerId, $aParams);
         return array('content' => $sContent);
     }
 

@@ -16,11 +16,14 @@
 
 	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
+	<string name="_bx_timeline_form_post_display_add_public"><![CDATA[Write Public Post]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Action]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Type]]></string>
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Content]]></string>
 	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_sys_object_privacy_view"><![CDATA[Visibility]]></string>
+    <string name="_bx_timeline_form_post_input_object_privacy_view"><![CDATA[Visibility]]></string>
 	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Link]]></string>
 	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Add Link]]></string>
 	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Cannot remove the link. Please report.]]></string>
