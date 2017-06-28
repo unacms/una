@@ -13,6 +13,7 @@ bx_import('BxDolAcl');
 bx_import('BxBaseModNotificationsModule');
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
+define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
 define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
 
 define('BX_TIMELINE_VIEW_TIMELINE', 'timeline');
@@ -421,6 +422,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_getBlockPost($iProfileId);
     }
 
+    public function serviceGetBlockPostAccount()
+    {
+        $iProfileId = $this->getProfileId();
+		return $this->_getBlockPost($iProfileId);
+    }
+
     /*
      * Get View block for a separate page. Will return a block with "Empty" message if nothing found.
      */
@@ -460,12 +467,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_TIMELINE, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
     }
 
     public function serviceGetBlockViewAccountOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_OUTLINE, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_OUTLINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
     }
 
     public function serviceGetBlockItem()

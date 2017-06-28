@@ -53,11 +53,25 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getConnectedContentSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false)
     {
-        $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ?", $iInitiator);
-        if (false !== $isMutual)
-            $sWhere .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
+        $aResult = $this->getConnectedContentSQLPartsExt($sContentTable, $sContentField, $iInitiator, $isMutual);
         return array(
-            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`content` = `$sContentTable`.`$sContentField` $sWhere)",
+            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")",
+        );
+    }
+
+    public function getConnectedContentSQLPartsExt ($sContentTable, $sContentField, $iInitiator, $isMutual = false)
+    {
+        $sWhere = $this->prepareAsString(" AND `c`.`initiator` = ?", $iInitiator);
+        if(false !== $isMutual)
+            $sWhere .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
+
+        return array(
+            'join' => array(
+                'type' => 'INNER',
+				'table' => $this->_sTable,
+                'table_alias' => 'c',
+            	'condition' => "`c`.`content` = `" . $sContentTable . "`.`" . $sContentField . "`" . $sWhere
+            )
         );
     }
 
@@ -74,11 +88,25 @@ class BxDolConnectionQuery extends BxDolDb
 
     public function getConnectedInitiatorsSQLParts ($sInitiatorTable, $sInitiatorField, $iContent, $isMutual = false)
     {
-        $sWhere = $this->prepareAsString(" AND `c`.`content` = ?", $iContent);
-        if (false !== $isMutual)
-            $sWhere .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
+        $aResult = $this->getConnectedInitiatorsSQLPartsExt($sInitiatorTable, $sInitiatorField, $iContent, $isMutual);
         return array(
-            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`initiator` = `$sInitiatorTable`.`$sInitiatorField` $sWhere)",
+            'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")",
+        );
+    }
+
+    public function getConnectedInitiatorsSQLPartsExt ($sInitiatorTable, $sInitiatorField, $iContent, $isMutual = false)
+    {
+        $sWhere = $this->prepareAsString(" AND `c`.`content` = ?", $iContent);
+        if(false !== $isMutual)
+            $sWhere .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
+
+        return array(
+            'join' => array(
+                'type' => 'INNER',
+        		'table' => $this->_sTable,
+                'table_alias' => 'c',
+        		'condition' => "`c`.`initiator` = `" . $sInitiatorTable . "`.`" . $sInitiatorField . "`" . $sWhere
+            )
         );
     }
 
