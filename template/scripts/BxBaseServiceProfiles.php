@@ -163,7 +163,7 @@ class BxBaseServiceProfiles extends BxDol
         return $s . '<div class="bx-clear"></div>';
     }
 
-    public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '')
+    public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bViewMode = 0)
     {
     	$oTemplate = BxDolTemplate::getInstance();
     	BxDolInformer::getInstance($oTemplate)->setEnabled(false);
@@ -196,7 +196,7 @@ class BxBaseServiceProfiles extends BxDol
                 ),
                 'bx_if:inactive' => array (
                     'condition' => $iActiveProfileId != $aProfile['id'],
-                    'content' => array('id' => $aProfile['id'], 'url_switch' => $sUrlProfileAction ? str_replace('{profile_id}', $aProfile['id'], $sUrlProfileAction) : BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $aProfile['id']))),
+                    'content' => array('id' => $aProfile['id'], 'url_switch' => $sUrlProfileAction ? str_replace('{profile_id}', $aProfile['id'], $sUrlProfileAction) : BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $aProfile['id'], 'redirect_back' => 1))),
                 ),
                 'unit' => BxDolService::call($aProfile['type'], 'profile_unit', array($aProfile['content_id'])),
             );

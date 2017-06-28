@@ -3308,7 +3308,8 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_footer', 'system', 'terms', '_sys_menu_item_title_system_terms', '_sys_menu_item_title_terms', 'page.php?i=terms', '', '', '', '', 2147483647, 1, 1, 2),
 ('sys_footer', 'system', 'privacy', '_sys_menu_item_title_system_privacy', '_sys_menu_item_title_privacy', 'page.php?i=privacy', '', '', '', '', 2147483647, 1, 1, 3),
 ('sys_footer', 'system', 'switch_language', '_sys_menu_item_title_system_switch_language', '_sys_menu_item_title_switch_language', 'javascript:void(0);', 'bx_menu_popup(''sys_switch_language_popup'', window);', '', '', '', 2147483647, 0, 1, 4),
-('sys_footer', 'system', 'switch_template', '_sys_menu_item_title_system_switch_template', '_sys_menu_item_title_switch_template', 'javascript:void(0);', 'bx_menu_popup(''sys_switch_template'', window);', '', '', '', 2147483647, 1, 1, 5);
+('sys_footer', 'system', 'switch_template', '_sys_menu_item_title_system_switch_template', '_sys_menu_item_title_switch_template', 'javascript:void(0);', 'bx_menu_popup(''sys_switch_template'', window);', '', '', '', 2147483647, 1, 1, 5),
+('sys_footer', 'system', 'powered_by', '_sys_menu_item_title_system_powered_by', '', 'https://una.io', '', '_blank', 'una.png', '', 2147483647, 1, 1, 9999);
 
 -- site toolbar menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
@@ -3341,7 +3342,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_settings', 'system', 'account-settings-info', '_sys_menu_item_title_system_account_settings_info', '_sys_menu_item_title_account_settings_info', 'page.php?i=account-settings-info', '', '', 'info-circle', '', 2147483646, 1, 1, 2),
 ('sys_account_settings', 'system', 'account-settings-email', '_sys_menu_item_title_system_account_settings_email', '_sys_menu_item_title_account_settings_email', 'page.php?i=account-settings-email', '', '', 'envelope', '', 2147483646, 1, 1, 3),
 ('sys_account_settings', 'system', 'account-settings-password', '_sys_menu_item_title_system_account_settings_pwd', '_sys_menu_item_title_account_settings_pwd', 'page.php?i=account-settings-password', '', '', 'key', '', 2147483646, 1, 1, 4),
-('sys_account_settings', 'system', 'account-settings-more', '_sys_menu_item_title_system_more', '_sys_menu_item_title_more', 'javascript:void(0);', 'bx_menu_popup(''sys_account_settings_more'', this);', '', '', '', 2147483647, 1, 1, 999);
+('sys_account_settings', 'system', 'account-settings-more', '_sys_menu_item_title_system_more', '_sys_menu_item_title_more', 'javascript:void(0);', 'bx_menu_popup(''sys_account_settings_more'', this);', '', '', '', 2147483647, 1, 1, 9999);
 
 -- account settings menu more
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
