@@ -5,7 +5,7 @@
  */
 class BxAntispamModuleTest extends BxDolTestCase
 {
-    protected $_sSampleEmail = 'some@example.com';
+    protected $_sSampleEmail = 'some@email.com';
     protected $_sSampleIP = '0.0.0.0';
 
     protected $_oModule;
