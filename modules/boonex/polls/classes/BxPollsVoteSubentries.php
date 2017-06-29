@@ -106,7 +106,7 @@ class BxPollsVoteSubentries extends BxTemplVote
 
     protected function _getTitleDoLike($bVoted)
     {
-    	return $this->_aObjectInfo['title'];
+    	return bx_process_output($this->_aObjectInfo['title']);
     }
 
     protected function _getTitleDoBy()
