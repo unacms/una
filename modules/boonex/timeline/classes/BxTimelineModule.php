@@ -1112,7 +1112,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         //--- Event -> Post for Alerts Engine ---//
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId, array(
-        	'object_author_id' => $aEvent['owner_id']
+        	'privacy_view' => $aEvent['object_privacy_view'],
+        	'object_author_id' => $aEvent['owner_id'],
         ));
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
@@ -1136,8 +1137,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         //--- Timeline -> Update for Alerts Engine ---//
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId, array(
-        	'repost_id' => $iId,
+        	'privacy_view' => $aEvent['object_privacy_view'],
         	'object_author_id' => $aReposted['owner_id'],
+        	'repost_id' => $iId,
         ));
         $oAlert->alert();
         //--- Timeline -> Update for Alerts Engine ---//
