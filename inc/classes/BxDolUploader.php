@@ -316,7 +316,7 @@ abstract class BxDolUploader extends BxDolFactory
         if ($sImagesTranscoder)
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sImagesTranscoder);
 
-        $a = '';
+        $a = array();
         $aGhosts = $oStorage->getGhosts(isAdmin() && $iContentId ? false : $iProfileId, $iContentId);
         foreach ($aGhosts as $aFile) {
             $sFileIcon = '';
