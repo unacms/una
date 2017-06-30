@@ -81,7 +81,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
             $fPercent = $iTotal > 0 ? 100 * (float)$aSubentry['votes']/$iTotal : 0;
             $aTmplVarsSubentries[] = array(
-                'title' => $aSubentry['title'],
+                'title' => bx_process_output($aSubentry['title']),
                 'width' => (int)round($fPercent) . '%',
                 'votes' => $oVotes->getCounter(array('show_counter_empty' => true, 'show_counter_in_brackets' => false)),
                 'percent' => _t('_bx_polls_txt_subentry_vote_percent', $iTotal > 0 ? round($fPercent, 2) : 0),
