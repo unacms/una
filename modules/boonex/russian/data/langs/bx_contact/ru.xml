@@ -30,7 +30,8 @@
     <string name="_bx_contact_menu_item_title_system_contact"><![CDATA[Связь]]></string>
     <string name="_bx_contact_menu_item_title_contact"><![CDATA[Связь]]></string>
 
-	<string name="_bx_contact_option_email"><![CDATA[Адрес имейл для получения сообщений (если пусто, будет использован имейл сайта)]]></string>
+    <string name="_bx_contact_option_email"><![CDATA[E-mail для получения сообщений (если пусто, будет использован e-mail сайта)]]></string>
+    <string name="_bx_contact_option_send_from_senders_email"><![CDATA[Отсылать сообщения с e-mail адреса отправителя]]></string>
 
 	<string name="_bx_contact_acl_action_contact"><![CDATA[Контакты]]></string>
 
