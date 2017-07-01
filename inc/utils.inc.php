@@ -316,9 +316,10 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
  * @param $iEmailType - email message type: BX_EMAIL_SYSTEM, BX_EMAIL_NOTIFY or BX_EMAIL_MASS
  * @param $sEmailFlag - use 'html' for HTML email message
  * @param $isDisableAlert - disable alert
+ * @param $aCustomHeaders - custom email headers
  * @return true if message was send or false otherwise
  */
-function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false)
+function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array())
 {
     // make sure that recipient's email is valid and message isn't empty
     if (!$sMailBody || !$sRecipientEmail || preg_match('/\(2\)$/', $sRecipientEmail))
@@ -365,10 +366,19 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     }
 
     // email message headers
-    $sMailHeader = "From: =?UTF-8?B?" . base64_encode( $sSiteTitle ) . "?= <{$sEmailNotify}>";
-    $sMailParameters = "-f{$sEmailNotify}";
-    $sMailSubject = '=?UTF-8?B?' . base64_encode( $sMailSubject ) . '?=';
-    $sMailHeader = "MIME-Version: 1.0\r\n" . $sMailHeader;
+    $sMailHeader = '';
+    foreach ($aCustomHeaders as $sHeaderName => $sHeaderValue)
+        $sMailHeader = "$sHeaderName: $sHeaderValue\r\n" . $sMailHeader;
+
+    if (!isset($aCustomHeaders['From']))
+        $sMailHeader = "From: =?UTF-8?B?" . base64_encode( $sSiteTitle ) . "?= <{$sEmailNotify}>";
+
+    if (!isset($aCustomHeaders['MIME-Version']))
+        $sMailHeader = "MIME-Version: 1.0\r\n" . $sMailHeader;
+
+    $sMailParameters = isset($aCustomHeaders['Sender']) ? "-f{$aCustomHeaders['Sender']}" : "-f{$sEmailNotify}";
+
+    $sMailSubject = !isset($aCustomHeaders['Subject']) ? '=?UTF-8?B?' . base64_encode( $sMailSubject ) . '?=' : $aCustomHeaders['Subject'];
 
     // build data for alert handler
     $bResult = null;
@@ -380,6 +390,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         'params' => $sMailParameters,
         'recipient' => $aRecipientInfo,
         'html' => 'html' == $sEmailFlag ? true : false,
+        'custom_headers' => $aCustomHeaders,
         'override_result' => &$bResult,
     );
 

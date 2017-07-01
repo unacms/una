@@ -20,7 +20,7 @@ class BxSMTPAlertsResponse extends BxDolAlertsResponse
             return;
 
         $a = $oAlert->aExtras;
-        $a['override_result'] = BxDolService::call('bx_smtp', 'send', array($a['email'], $a['subject'], $a['body'], $a['header'], $a['params'], $a['html'], $a['recipient']));
+        $a['override_result'] = BxDolService::call('bx_smtp', 'send', array($a['email'], $a['subject'], $a['body'], $a['header'], $a['params'], $a['html'], $a['recipient'], $a['custom_headers'] ));
     }
 }
 

@@ -19,7 +19,7 @@ class BxSMTPModule extends BxDolModule
         parent::__construct($aModule);
     }
 
-    function serviceSend ($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters, $isHtml, $aRecipientInfo = array())
+    function serviceSend ($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters, $isHtml, $aRecipientInfo = array(), $aCustomHeaders = array())
     {
         $iRet = true;
 
@@ -29,7 +29,7 @@ class BxSMTPModule extends BxDolModule
 
             if ('on' == getParam('bx_smtp_on'))
                 $mail->IsSMTP();
-            //$mail->SMTPDebug = 2;
+            // $mail->SMTPDebug = 2;
 
             $mail->CharSet = 'utf8';
 
@@ -67,16 +67,20 @@ class BxSMTPModule extends BxDolModule
             $mail->Username = getParam ('bx_smtp_username');
             $mail->Password = getParam ('bx_smtp_password');
 
-            $sParamSender = trim(getParam('bx_smtp_from_email'));
-            if ($sParamSender)
-                $mail->From = $sParamSender;
-            else
-                $mail->From = getParam('site_email_notify');
+            if (!isset($aCustomHeaders['From'])) {
+                $sParamSender = trim(getParam('bx_smtp_from_email'));
+                if ($sParamSender)
+                    $mail->From = $sParamSender;
+                else
+                    $mail->From = getParam('site_email_notify');
 
-            // get site name or some other name as sender's name
-            $mail->FromName = getParam ('bx_smtp_from_name');
+                // get site name or some other name as sender's name
+                $mail->FromName = getParam ('bx_smtp_from_name');
+            } 
 
-            $mail->Subject = $sMailSubject;
+            if (!isset($aCustomHeaders['Subject']))
+                $mail->Subject = $sMailSubject;
+
             if ($isHtml) {
                 $mail->Body = $sMailBody;
                 $mail->AltBody = $isHtml ? strip_tags($sMailBody) : $sMailBody;
@@ -89,6 +93,20 @@ class BxSMTPModule extends BxDolModule
             $mail->AddAddress($sRecipientEmail);
 
             $mail->IsHTML($isHtml ? true : false);
+
+            foreach ($aCustomHeaders as $sHeaderName => $sHeaderValue) {
+                if ('From' == $sHeaderName) {
+                    if (preg_match('/(.+)<(.+)>/', $sHeaderValue, $m)) {
+                        $mail->setFrom($m[2], trim($m[1]), false);
+                    }
+                    else {
+                        $mail->setFrom($sHeaderValue, '', false);
+                    }
+                } 
+                else {
+                    $mail->addCustomHeader($sHeaderName, $sHeaderValue);
+                }
+            }
 
             try {
                 $mail->Send();
