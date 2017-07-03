@@ -163,7 +163,7 @@ class BxBaseServiceProfiles extends BxDol
         return $s . '<div class="bx-clear"></div>';
     }
 
-    public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bViewMode = 0)
+    public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '', $bShowAll = 0)
     {
     	$oTemplate = BxDolTemplate::getInstance();
     	BxDolInformer::getInstance($oTemplate)->setEnabled(false);
@@ -183,6 +183,9 @@ class BxBaseServiceProfiles extends BxDol
             'bx_repeat:row' => array(),
         );
         foreach ($aProfiles as $aProfile) {
+            if (!$bShowAll && $iActiveProfileId == $aProfile['id'])
+                continue;
+
         	if(!$oModuleDb->isEnabledByName($aProfile['type']))
         		continue;
 

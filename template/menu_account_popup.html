@@ -3,12 +3,12 @@
         <div class="bx-sliding-menu-main-cnt">
 	        <a class="bx-sliding-menu-close bx-def-margin bx-def-font-h1" href="javascript:void(0);" onclick="bx_menu_slide('#bx-sliding-menu-account')"><i class="sys-icon times"></i></a>
 
-	        <div class="bx-menu-account-popup bx-menu-object-__object__ bx-def-padding">
-	            <div class="bx-def-font-h1 bx-menu-account-popup-profile">__profile_display_name__</div>
-	            <div class="bx-menu-account-popup-menu bx-def-margin-top bx-def-margin-bottom">__menu_account__</div>
-	            <div>__menu_notifications__</div>     
+	        <div class="bx-menu-account-popup bx-menu-object-__object__ bx-def-padding-top bx-def-padding-leftright">
+	            <div class="bx-menu-account-popup-profile bx-clearfix">__active_profile__</div>
+	            <div class="bx-menu-account-popup-menu">__menu_notifications__</div>     
 	        </div>
-	        <div class="bx-menu-account-popup-profile-switcher bx-def-box-sizing bx-def-padding-leftright">__profile_switcher__</div>
+            <hr class="bx-def-hr" />
+	        <div class="bx-menu-account-popup-profile-switcher bx-def-box-sizing">__profile_switcher__</div>
 	        <bx_if:multiple_profiles_mode>
 	            <div class="bx-menu-account-popup-profile-switcher-link bx-def-padding"><a href="__url_switch_profile__"><bx_text:_sys_txt_my_profiles /></div>
 	        </bx_if:multiple_profiles_mode>

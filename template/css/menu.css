@@ -301,19 +301,31 @@ ul.bx-menu-toolbar li .sys-icon {
     white-space:nowrap;
 }
 
-.bx-sliding-menu-main .bx-menu-account-popup-profile-switcher {
-    overflow:hidden;
-
+.bx-sliding-menu-main .bx-menu-account-popup-profile .bx-base-pofile-unit {
+    margin-bottom:0;
 }
 
+.bx-sliding-menu-main .bx-menu-account-popup-profile-switcher {
+    overflow:hidden;
+}
+
+.bx-popup-content .bx-menu-floating-blocks-wide,
 .bx-popup-content .bx-menu-floating-blocks {
     width:256px;
     width:16rem;
 }
+.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks-wide,
 .bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks {
     width:auto;
 }
 
+.bx-menu-account-popup-menu ul.bx-menu-floating-blocks-wide {
+    display:inline-block;
+    max-width:800px;
+    max-width:50rem;
+}
+
+ul.bx-menu-floating-blocks-wide,
 ul.bx-menu-floating-blocks-big,
 ul.bx-menu-floating-blocks {
     padding:0;
@@ -322,6 +334,7 @@ ul.bx-menu-floating-blocks {
 }
 
 .bx-menu-floating-blocks-big li,
+.bx-menu-floating-blocks-wide li,
 .bx-menu-floating-blocks li {
     display: inline-block;
     /* For IE 7 */
@@ -340,30 +353,48 @@ ul.bx-menu-floating-blocks {
     height:128px;
     height:8rem;
 }
+.bx-menu-floating-blocks-wide li {
+    position:relative;
+    width:100px;
+    width:6.25rem;
+}
+.bx-menu-floating-blocks-wide li .bx-menu-item-addon {
+    right:10px;
+    right:0.625rem;
+    bottom:auto;
+    top:0;    
+}
 
 .bx-menu-floating-blocks-big li:hover,
+.bx-menu-floating-blocks-wide li:hover,
 .bx-menu-floating-blocks li:hover {
     opacity:0.8;
 }
 
 .bx-menu-floating-blocks-big li:active,
 .bx-menu-floating-blocks-big li.bx-menu-tab-active,
+.bx-menu-floating-blocks-wide li:active,
+.bx-menu-floating-blocks-wide li.bx-menu-tab-active,
 .bx-menu-floating-blocks li:active,
 .bx-menu-floating-blocks li.bx-menu-tab-active {
     opacity:1.0;
 }
 
 .bx-menu-floating-blocks-big li a,
+.bx-menu-floating-blocks-wide li a,
 .bx-menu-floating-blocks li a {
     display:block;
     text-decoration:none;
 }
 
 .bx-menu-floating-blocks-big li.bx-menu-tab-active a,
+.bx-menu-floating-blocks-wide li.bx-menu-tab-active a,
 .bx-menu-floating-blocks li.bx-menu-tab-active a {
     color:#000;
 }
 
+.bx-menu-floating-blocks-wide li img,
+.bx-menu-floating-blocks-wide li .sys-icon,
 .bx-menu-floating-blocks li img,
 .bx-menu-floating-blocks li .sys-icon {
     display:block;
@@ -386,14 +417,23 @@ ul.bx-menu-floating-blocks {
     margin:1rem 2rem 0.5rem 2rem;
     background-size:4rem 4rem;
 }
+.bx-menu-floating-blocks-wide li img,
+.bx-menu-floating-blocks-wide li .sys-icon {
+    margin-left:34px;
+    margin-right:34px;
+    margin-left:2.125rem;
+    margin-right:2.125rem;
+}
 
 .bx-menu-floating-blocks-big li img,
+.bx-menu-floating-blocks-wide li img,
 .bx-menu-floating-blocks li img {
     background-position:center center;
     background-repeat:no-repeat;
 }
 
 .bx-menu-floating-blocks-big li .sys-icon,
+.bx-menu-floating-blocks-wide li .sys-icon,
 .bx-menu-floating-blocks li .sys-icon {
     text-align:center;
     vertical-align:bottom;
@@ -410,6 +450,7 @@ ul.bx-menu-floating-blocks {
 }
 
 .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title,
+.bx-menu-floating-blocks-wide li .bx-menu-floating-blocks-title,
 .bx-menu-floating-blocks li .bx-menu-floating-blocks-title {
     text-align:center;
     overflow:hidden;
@@ -473,7 +514,6 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
     min-width:17em;
 }
 
-.bx-menu-search-popup-title,
 .bx-menu-account-popup-menu {
     text-align:center;
 }
@@ -482,8 +522,8 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
     position:relative;
 }
 
-.bx-menu-account-popup-profile-switcher-link b {
-    vertical-align:middle;
+.bx-menu-account-popup-profile-switcher-link {
+    text-align:center;
 }
 
 .bx-menu-account-popup-profile-switcher-link a:hover,

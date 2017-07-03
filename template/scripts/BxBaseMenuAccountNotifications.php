@@ -16,6 +16,10 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->addMarkers(array(
+        	'studio_url' => BX_DOL_URL_STUDIO
+        ));        
     }
 
     /**
@@ -28,8 +32,12 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
         // default visible settings
         if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
-
+        
         switch ($a['name']) {
+            case 'studio':
+                if (!isAdmin())
+                    return false;
+                break;
         	case 'notifications-cart':
         		$oPayments = BxDolPayments::getInstance();
         		if(!$oPayments->isActive())
