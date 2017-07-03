@@ -301,11 +301,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iPremium, @iIdActionEntryView),
 
 -- entry vote
-(@iUnauthenticated, @iIdActionEntryVote),
-(@iAccount, @iIdActionEntryVote),
 (@iStandard, @iIdActionEntryVote),
-(@iUnconfirmed, @iIdActionEntryVote),
-(@iPending, @iIdActionEntryVote),
 (@iModerator, @iIdActionEntryVote),
 (@iAdministrator, @iIdActionEntryVote),
 (@iPremium, @iIdActionEntryVote),
