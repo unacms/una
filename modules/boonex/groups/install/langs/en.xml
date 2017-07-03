@@ -73,8 +73,8 @@
 	<string name="_bx_groups_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_groups_page_title_sys_group_fans"><![CDATA[Members]]></string>
 	<string name="_bx_groups_page_title_group_fans"><![CDATA[Members]]></string>
-	<string name="_bx_groups_page_title_sys_profile_comments"><![CDATA[Сomments]]></string>
-    <string name="_bx_groups_page_title_profile_comments"><![CDATA[Сomments]]></string>
+	<string name="_bx_groups_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_groups_page_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Group Info]]></string>
 	<string name="_bx_groups_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_groups_page_title_sys_recent"><![CDATA[New Groups]]></string>
@@ -108,7 +108,7 @@
 	<string name="_bx_groups_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_groups_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_groups_page_block_title_system_fans"><![CDATA[Members]]></string>
-	<string name="_bx_groups_page_block_title_profile_comments"><![CDATA[Сomments]]></string>
+	<string name="_bx_groups_page_block_title_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_groups_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_groups_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_groups_page_block_title_featured_profiles"><![CDATA[Featured Groups]]></string>
