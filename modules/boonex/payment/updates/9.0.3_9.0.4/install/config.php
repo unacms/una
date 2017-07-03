@@ -8,26 +8,26 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Contact',
-    'version_from' => '9.0.2',
-	'version_to' => '9.0.3',
+    'title' => 'Payment',
+    'version_from' => '9.0.3',
+	'version_to' => '9.0.4',
     'vendor' => 'BoonEx',
 
-	'compatible_with' => array(
+    'compatible_with' => array(
         '9.0.0-RC1'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/contact/updates/update_9.0.2_9.0.3/',
-	'home_uri' => 'contact_update_902_903',
+    'home_dir' => 'boonex/payment/updates/update_9.0.3_9.0.4/',
+	'home_uri' => 'payment_update_903_904',
 
-	'module_dir' => 'boonex/contact/',
-	'module_uri' => 'contact',
+	'module_dir' => 'boonex/payment/',
+	'module_uri' => 'payment',
 
-    'db_prefix' => 'bx_contact_',
-    'class_prefix' => 'BxContact',
+    'db_prefix' => 'bx_payment_',
+    'class_prefix' => 'BxPayment',
 
     /**
      * Installation/Uninstallation Section.
@@ -42,7 +42,7 @@ $aConfig = array(
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Contact',
+    'language_category' => 'Payment',
 
 	/**
      * Files Section

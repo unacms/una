@@ -8,26 +8,34 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Contact',
-    'version_from' => '9.0.2',
-	'version_to' => '9.0.3',
+    'title' => 'Timeline',
+    'version_from' => '9.0.3',
+	'version_to' => '9.0.4',
     'vendor' => 'BoonEx',
 
-	'compatible_with' => array(
+    'compatible_with' => array(
         '9.0.0-RC1'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/contact/updates/update_9.0.2_9.0.3/',
-	'home_uri' => 'contact_update_902_903',
+    'home_dir' => 'boonex/timeline/updates/update_9.0.3_9.0.4/',
+	'home_uri' => 'timeline_update_903_904',
 
-	'module_dir' => 'boonex/contact/',
-	'module_uri' => 'contact',
+	'module_dir' => 'boonex/timeline/',
+	'module_uri' => 'timeline',
 
-    'db_prefix' => 'bx_contact_',
-    'class_prefix' => 'BxContact',
+    'db_prefix' => 'bx_timeline_',
+    'class_prefix' => 'BxTimeline',
+
+	/**
+     * List of page triggers.
+     */
+    'page_triggers' => array (
+    	'trigger_page_profile_view_entry', 
+    	'trigger_page_group_view_entry'
+    ),
 
     /**
      * Installation/Uninstallation Section.
@@ -36,13 +44,14 @@ $aConfig = array(
 		'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
+		'process_page_triggers' => 1,
 		'clear_db_cache' => 1,
     ),
 
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Contact',
+    'language_category' => 'Timeline',
 
 	/**
      * Files Section

@@ -8,26 +8,26 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Contact',
-    'version_from' => '9.0.2',
-	'version_to' => '9.0.3',
+    'title' => 'Twitter connect',
+    'version_from' => '9.0.1',
+	'version_to' => '9.0.2',
     'vendor' => 'BoonEx',
 
-	'compatible_with' => array(
+    'compatible_with' => array(
         '9.0.0-RC1'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/contact/updates/update_9.0.2_9.0.3/',
-	'home_uri' => 'contact_update_902_903',
+    'home_dir' => 'boonex/twitter_connect/updates/update_9.0.1_9.0.2/',
+	'home_uri' => 'twitter_update_901_902',
 
-	'module_dir' => 'boonex/contact/',
-	'module_uri' => 'contact',
+	'module_dir' => 'boonex/twitter_connect/',
+	'module_uri' => 'twitter',
 
-    'db_prefix' => 'bx_contact_',
-    'class_prefix' => 'BxContact',
+    'db_prefix' => 'bx_twitter_',
+    'class_prefix' => 'BxTwitter',
 
     /**
      * Installation/Uninstallation Section.
@@ -35,14 +35,14 @@ $aConfig = array(
     'install' => array(
 		'execute_sql' => 1,
         'update_files' => 1,
-        'update_languages' => 1,
+        'update_languages' => 0,
 		'clear_db_cache' => 1,
     ),
 
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Contact',
+    'language_category' => 'Twitter Connect',
 
 	/**
      * Files Section
