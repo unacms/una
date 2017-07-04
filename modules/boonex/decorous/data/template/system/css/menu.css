@@ -72,10 +72,6 @@
 
 
 /*--- Account Popup Submenu & Add Content Menu ---*/
-.bx-menu-account-popup-profile,
-.bx-menu-account-popup-menu {
-	text-align: left;
-}
 .bx-menu-floating-blocks.bx-menu-object-sys_account li,
 .bx-menu-object-sys_site.bx-menu-object-sys_add_content li {
 	display: block;
