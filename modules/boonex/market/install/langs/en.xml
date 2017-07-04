@@ -341,9 +341,9 @@
 
 	<string name="_bx_market_err_access_denied"><![CDATA[Access denied.]]></string>
 	<string name="_bx_market_err_no_payments"><![CDATA[There is no installed payment processing module.]]></string>
-	<string name="_bx_market_err_not_accept_payments"><![CDATA[You need to activate at least one payment provider. You may do it via My Account menu -> Orders page -> <a href="{0}">Settings</a> tab.]]></string>
-	<string name="_bx_market_err_not_accept_payments_single"><![CDATA[You need to activate at least one payment provider, which is working with Shopping Cart. You may do it via My Account menu -> Orders page -> <a href="{0}">Settings</a> tab.]]></string>
-	<string name="_bx_market_err_not_accept_payments_recurring"><![CDATA[You need to activate at least one payment provider, which is working with Subscriptions. You may do it via My Account menu -> Orders page -> <a href="{0}">Settings</a> tab.]]></string>
+	<string name="_bx_market_err_not_accept_payments"><![CDATA[You need to activate at least one payment provider. You may do it via My Account menu -> Settings page -> <a href="{0}">Payments</a> tab.]]></string>
+	<string name="_bx_market_err_not_accept_payments_single"><![CDATA[You need to activate at least one payment provider, which is working with Shopping Cart. You may do it via My Account menu -> Settings page -> <a href="{0}">Payments</a> tab.]]></string>
+	<string name="_bx_market_err_not_accept_payments_recurring"><![CDATA[You need to activate at least one payment provider, which is working with Subscriptions. You may do it via My Account menu -> Settings page -> <a href="{0}">Payments</a> tab.]]></string>
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">All Products by {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Category:]]></string>

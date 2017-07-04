@@ -24,6 +24,9 @@
 	<string_add name="_bx_market_search_extended_cmts"><![CDATA[Market Comments Search]]></string_add>
 
 	<string_upd name="_bx_market_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string_upd>
+	<string_upd name="_bx_market_err_not_accept_payments"><![CDATA[You need to activate at least one payment provider. You may do it via My Account menu -> Settings page -> <a href="{0}">Payments</a> tab.]]></string_upd>
+	<string_upd name="_bx_market_err_not_accept_payments_single"><![CDATA[You need to activate at least one payment provider, which is working with Shopping Cart. You may do it via My Account menu -> Settings page -> <a href="{0}">Payments</a> tab.]]></string_upd>
+	<string_upd name="_bx_market_err_not_accept_payments_recurring"><![CDATA[You need to activate at least one payment provider, which is working with Subscriptions. You may do it via My Account menu -> Settings page -> <a href="{0}">Payments</a> tab.]]></string_upd>
 
 	<string_del name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Licenses]]></string_del>
 	<string_del name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Licenses]]></string_del>
