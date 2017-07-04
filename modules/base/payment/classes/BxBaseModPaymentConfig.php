@@ -13,7 +13,6 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 {
 	protected $_oDb;
 
-	protected $_iSiteId;
 	protected $_sCurrencySign;
     protected $_sCurrencyCode;
 
@@ -75,17 +74,6 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     public function init(&$oDb)
     {
     	$this->_oDb = $oDb;
-    	
-    	$sPrefix = $this->getPrefix('options');
-        $this->_iSiteId = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
-    }
-
-    public function getSiteId()
-    {
-        if(empty($this->_iSiteId))
-            return $this->_oDb->getFirstAdminId();
-
-        return $this->_iSiteId;
     }
 
     public function getDefaultCurrencySign()
