@@ -124,11 +124,13 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
     function entryAllActions ($sActionsEntity, $sActionsSocial)
     {
-        $aVars = array (
+        if(empty($sActionsEntity) && empty($sActionsSocial))
+            return '';
+
+        return $this->parseHtmlByName('entry-all-actions.html', array (
             'actions_entity' => $sActionsEntity,
             'actions_social' => $sActionsSocial,
-        );
-        return $this->parseHtmlByName('entry-all-actions.html', $aVars);
+        ));
     }
 }
 
