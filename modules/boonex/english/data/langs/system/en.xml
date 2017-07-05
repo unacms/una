@@ -2396,6 +2396,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_n_friends"><![CDATA[{0} friends]]></string>
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} mutual friends]]></string>
     <string name="_sys_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> mutual friend]]></string>
+    <string name="_sys_txt_powered_by"><![CDATA[Powered by UNA Community Management System]]></string>
 	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Your new password is <b>{0}</b>, please make sure to save it somewhere because we wasn't able to send it to your email. You can change it to any other password after first login.]]></string>
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Your new password - <b>{0}</b> - was sent to your email. You can change it once you login to your account.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Error occurred, please <a href="{0}">try again</a>.]]></string>

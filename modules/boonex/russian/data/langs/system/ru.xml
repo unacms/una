@@ -2394,6 +2394,7 @@
     <string name="_sys_txt_n_friends"><![CDATA[{0} друзей]]></string>
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} общих друзей]]></string>
     <string name="_sys_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> общий друг]]></string>
+    <string name="_sys_txt_powered_by"><![CDATA[Сделано с помощью UNA - системя для управления сообществами]]></string>
 	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Ваш новый пароль <b>{0}</b>. Пожалуйста, сохраните его в надёжном месте, так как нам не удалось отослать Вам его по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Ваш новый пароль - <b>{0}</b> - был отослан Вам по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Произошла ошибка, Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
