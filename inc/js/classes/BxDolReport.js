@@ -40,13 +40,13 @@ BxDolReport.prototype.report = function(oLink) {
     var oData = this._getDefaultParams();
     oData['action'] = 'Report';
 
-    this._oParent = oLink;
+    this._oParent = $(oLink);
 
     $.get(
     	this._sActionsUrl,
     	oData,
     	function(oData) {
-    		$this.processJson(oData, oLink);
+    		$this.processJson(oData, this._oParent);
     	},
     	'json'
     );
