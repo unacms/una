@@ -200,6 +200,10 @@
     width:10.2rem;
 }
 
+.bx-form-datepicker-modal {
+    z-index:1000 !important;
+}
+
 .bx-form-input-number {
     width:6rem;
 }
