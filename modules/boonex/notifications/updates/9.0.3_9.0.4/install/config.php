@@ -36,6 +36,7 @@ $aConfig = array(
 		'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
+    	'update_relations_for_all' => 1,
 		'clear_db_cache' => 1,
     ),
 
