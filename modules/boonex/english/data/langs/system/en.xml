@@ -2323,7 +2323,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_tour_launcher_builder_permissions_title"><![CDATA[Define who can do what]]></string>
 	<string name="_sys_tour_launcher_builder_permissions_txt"><![CDATA[Create and edit Membership Levels and associated Actions permissions.]]></string>
 	<string name="_sys_tour_launcher_builder_forms_title"><![CDATA[Form and re-form your forms]]></string>
-	<string name="_sys_tour_launcher_builder_forms_txt"><![CDATA[Forms builder is powerful tool that allows deep customisation of site database and forms. You can create and mange data lists, form fields and even display types (like Add/Edit/Delete). Your Forms will define the structure and theme of the site.]]></string>
+	<string name="_sys_tour_launcher_builder_forms_txt"><![CDATA[Forms builder is a powerful tool that allows deep customisation of site database and forms. You can create and manage data lists, form fields and even display types (like Add/Edit/Delete). Your Forms will define the structure and theme of the site.]]></string>
 	<string name="_sys_tour_launcher_builder_menus_title"><![CDATA[Show them around]]></string>
 	<string name="_sys_tour_launcher_builder_menus_txt"><![CDATA[Add and manage site navigation menus. You can edit links, re-order them, add new ones, change icons and control visibility according to membership permissions.]]></string>
 	<string name="_sys_tour_launcher_polyglot_title"><![CDATA[Speak their language]]></string>
