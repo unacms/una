@@ -10,4 +10,15 @@ class BxAntispamUpdater extends BxDolStudioUpdater
 	{
         parent::__construct($aConfig);
     }
+
+	public function update($aParams)
+    {
+		$aResult = parent::update($aParams);
+		if(!$aResult['result'])
+			return $aResult;
+
+        BxDolService::call('bx_antispam', 'update_disposable_domains_lists');
+
+		return $aResult;
+	}
 }
