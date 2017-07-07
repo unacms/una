@@ -8,7 +8,7 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Notifications',
+    'title' => 'Profiler',
     'version_from' => '9.0.3',
 	'version_to' => '9.0.4',
     'vendor' => 'BoonEx',
@@ -20,30 +20,29 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/notifications/updates/update_9.0.3_9.0.4/',
-	'home_uri' => 'notifications_update_903_904',
+    'home_dir' => 'boonex/profiler/updates/update_9.0.3_9.0.4/',
+	'home_uri' => 'profiler_update_903_904',
 
-	'module_dir' => 'boonex/notifications/',
-	'module_uri' => 'notifications',
+	'module_dir' => 'boonex/profiler/',
+	'module_uri' => 'profiler',
 
-    'db_prefix' => 'bx_notifications_',
-    'class_prefix' => 'BxNtfs',
+    'db_prefix' => 'bx_profiler_',
+    'class_prefix' => 'BxProfiler',
 
     /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
-		'execute_sql' => 1,
+		'execute_sql' => 0,
         'update_files' => 1,
-        'update_languages' => 1,
-		'update_relations_for_all' => 1,
-		'clear_db_cache' => 1,
+        'update_languages' => 0,
+		'clear_db_cache' => 0,
     ),
 
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Notifications',
+    'language_category' => 'Boonex Profiler',
 
 	/**
      * Files Section
