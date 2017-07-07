@@ -200,6 +200,13 @@ class BxForumTemplate extends BxBaseModTextTemplate
         ));
     }
 
+    function getAuthorDesc ($aData)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return bx_time_js($aData[$CNF['FIELD_ADDED']]);
+    }
+
     function getAuthorAddon ($aData, $oProfile)
     {
         return '';

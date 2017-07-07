@@ -2088,7 +2088,6 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_social_sharing_googleplus"><![CDATA[Share in Google Plus]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Share in Twitter]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Share in Pinterest]]></string>
-	<string name="_sys_menu_set_title_account"><![CDATA[Account]]></string>
 	<string name="_sys_menu_set_title_account_dashboard"><![CDATA[Account Dashboard]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
@@ -2111,6 +2110,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Horizontal Buttons]]></string>	
 	<string name="_sys_menu_template_title_buttons_ver"><![CDATA[Vertical Buttons]]></string>
 	<string name="_sys_menu_template_title_floating_blocks"><![CDATA[Floating Blocks]]></string>
+	<string name="_sys_menu_template_title_floating_blocks_wide"><![CDATA[Wide Floating Blocks with Notifications]]></string>
 	<string name="_sys_menu_template_title_floating_blocks_big"><![CDATA[Floating Blocks Big]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Footer Links]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Horizontal Links]]></string>
@@ -2126,7 +2126,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_account_notifications"><![CDATA[Account notifications]]></string>
 	<string name="_sys_menu_template_title_account_popup"><![CDATA[Account popup]]></string>
 	<string name="_sys_menu_template_title_custom"><![CDATA[Custom menu items]]></string>
-	<string name="_sys_menu_title_account"><![CDATA[Account Menu]]></string>
 	<string name="_sys_menu_title_account_dashboard"><![CDATA[Account Dashboard Menu]]></string>
 	<string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools Menu]]></string>
 	<string name="_sys_menu_title_account_notifications"><![CDATA[Notifications Items]]></string>
@@ -2324,7 +2323,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_tour_launcher_builder_permissions_title"><![CDATA[Define who can do what]]></string>
 	<string name="_sys_tour_launcher_builder_permissions_txt"><![CDATA[Create and edit Membership Levels and associated Actions permissions.]]></string>
 	<string name="_sys_tour_launcher_builder_forms_title"><![CDATA[Form and re-form your forms]]></string>
-	<string name="_sys_tour_launcher_builder_forms_txt"><![CDATA[Forms builder is powerful tool that allows deep customisation of site database and forms. You can create and mange data lists, form fields and even display types (like Add/Edit/Delete). Your Forms will define the structure and theme of the site.]]></string>
+	<string name="_sys_tour_launcher_builder_forms_txt"><![CDATA[Forms builder is a powerful tool that allows deep customisation of site database and forms. You can create and manage data lists, form fields and even display types (like Add/Edit/Delete). Your Forms will define the structure and theme of the site.]]></string>
 	<string name="_sys_tour_launcher_builder_menus_title"><![CDATA[Show them around]]></string>
 	<string name="_sys_tour_launcher_builder_menus_txt"><![CDATA[Add and manage site navigation menus. You can edit links, re-order them, add new ones, change icons and control visibility according to membership permissions.]]></string>
 	<string name="_sys_tour_launcher_polyglot_title"><![CDATA[Speak their language]]></string>
@@ -2390,13 +2389,14 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_login_description"><![CDATA[Not a member yet? <a href="{0}">Sign up.</a>]]></string>
 	<string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>
-    <string name="_sys_txt_my_profiles"><![CDATA[<b>@</b> my profiles...</a>]]></string>
+    <string name="_sys_txt_my_profiles"><![CDATA[Create a new profile]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[New Picture]]></string>
     <string name="_sys_txt_no_picture_uploaded"><![CDATA[No picture uploaded]]></string>
     <string name="_sys_txt_n_by"><![CDATA[{0} by]]></string>
     <string name="_sys_txt_n_friends"><![CDATA[{0} friends]]></string>
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} mutual friends]]></string>
     <string name="_sys_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> mutual friend]]></string>
+    <string name="_sys_txt_powered_by"><![CDATA[Powered by UNA Community Management System]]></string>
 	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Your new password is <b>{0}</b>, please make sure to save it somewhere because we wasn't able to send it to your email. You can change it to any other password after first login.]]></string>
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Your new password - <b>{0}</b> - was sent to your email. You can change it once you login to your account.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Error occurred, please <a href="{0}">try again</a>.]]></string>
@@ -2406,6 +2406,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Pull up a chair. Take a taste.<br />Come join us. Life is so endlessly<br />delicious."]]></string>
 	<string name="_sys_txt_splash_slide03_txt"><![CDATA["The only way to have a friend is to be one."]]></string>
 	<string name="_sys_txt_splash_slide04_txt"><![CDATA[Already one of us?]]></string>
+	<string name="_sys_txt_switch_profile_context"><![CDATA[Switch]]></string>
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Your email preferences has been successfully updated.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>

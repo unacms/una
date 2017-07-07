@@ -9,10 +9,10 @@
     margin-left: 0px;
     text-align: left;
 }
-#bx-footer-wrapper {
-	position: relative;
+#bx-content-wrapper {
+	padding-bottom: 116px;
+    padding-bottom: 7.25rem;
 }
-
 
 /*--- Main Page Content ---*/
 .cd-main-content-wrp {
@@ -29,6 +29,7 @@
 }
 .cd-main-content .content-wrapper {
     position: relative;
+    min-height: 100vh;
     right: 100%;
 }
 .cd-main-content::before {

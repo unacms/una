@@ -14,6 +14,8 @@
  */
 class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 {
+    protected $_bPublicMode;
+
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_timeline';
@@ -23,8 +25,21 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $iUserId = $this->_oModule->getUserId();
         $iOwnerId = $this->_oModule->getOwnerId();
 
+        $this->_bPublicMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_public');
+
 		$this->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'post/';
         $this->aInputs['owner_id']['value'] = $iOwnerId;
+
+        if(isset($this->aInputs['object_privacy_view'])) {
+            $this->aInputs['object_privacy_view'] = array_merge($this->aInputs['object_privacy_view'], BxDolPrivacy::getGroupChooser($this->_oModule->_oConfig->getObject('privacy_view'), 0, array(
+                'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
+            )));
+
+            if($this->_bPublicMode)
+                foreach($this->aInputs['object_privacy_view']['values'] as $iKey => $aValue)
+                    if($aValue['key'] !== BX_DOL_PG_ALL)
+                        unset($this->aInputs['object_privacy_view']['values'][$iKey]);
+        }
 
         if(isset($this->aInputs['link']))
             $this->aInputs['link']['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId);

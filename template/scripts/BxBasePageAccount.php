@@ -61,8 +61,13 @@ class BxBasePageAccount extends BxTemplPage
             if (BxDolService::call($aProfile['type'], 'act_as_profile')) {
                 if ($oProfile && $oProfile->getAccountId() == getLoggedId()) {
                     $oAccount = BxDolAccount::getInstance();
-                    if ($oAccount->updateProfileContext($iSwitchToProfileId))
+                    if ($oAccount->updateProfileContext($iSwitchToProfileId)) {
                         $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
+                        if ((int)bx_get('redirect_back') && isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) {
+                            header("Location:" . $_SERVER['HTTP_REFERER']);
+                            exit;
+                        }
+                    }
                 }
 
                 if ($oInformer)

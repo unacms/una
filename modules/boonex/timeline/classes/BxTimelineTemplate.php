@@ -43,9 +43,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getPostBlock($iOwnerId)
+    public function getPostBlock($iOwnerId, $aParams = array())
     {
-        $aForm = $this->getModule()->getFormPost();
+        $aForm = $this->getModule()->getFormPost($aParams);
 
         return $this->parseHtmlByName('block_post.html', array (
             'style_prefix' => $this->_oConfig->getPrefix('style'),
@@ -160,6 +160,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
+        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+        if($oPrivacy) {
+            $oPrivacy->setTableFieldAuthor($this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id');
+            if(!$oPrivacy->check($aEvent['id']))
+                return '';
+        }
+
         $aResult = $this->getData($aEvent);
         if($aResult === false)
             return '';

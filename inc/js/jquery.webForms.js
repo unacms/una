@@ -209,6 +209,10 @@
                 if ($(this).attr('max') && (m = $(this).attr('max').match(/^(\d{4})/)))
                     sYearMax = m[1];
 
+                var onBeforeShow = function(oInput, oInstance) {
+                	$(oInstance.dpDiv).addClass('bx-form-datepicker-modal');
+                };
+
                 if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datepicker") { // Date picker
 
                     $(this).datepicker({
@@ -216,7 +220,8 @@
                         changeMonth: true,
                         dateFormat: 'yy-mm-dd',
                         //defaultDate: '-22y',
-                        yearRange: iYearMin + ':' + iYearMax 
+                        yearRange: iYearMin + ':' + iYearMax,
+                        beforeShow: onBeforeShow
                     });
 
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
@@ -224,7 +229,8 @@
                     $(this).datetimepicker({
                         changeYear: true,
                         changeMonth: true,
-                        dateFormat: 'yy-mm-dd'
+                        dateFormat: 'yy-mm-dd',
+                        beforeShow: onBeforeShow
                     });
                 }
 

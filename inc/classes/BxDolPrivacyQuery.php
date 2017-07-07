@@ -24,16 +24,10 @@ class BxDolPrivacyQuery extends BxDolDb
 
     protected $_sCacheTestedObject;
 
-    public function __construct($aObject = array())
+    public function __construct()
     {
         parent::__construct();
-        $this->_aObject = $aObject;
-
-        if(!empty($this->_aObject)) {
-            $this->_sTable = $this->_aObject['table'];
-            $this->_sFieldId = $this->_aObject['table_field_id'];
-            $this->_sFieldOwnerId = $this->_aObject['table_field_author'];
-        }
+        $this->_aObject = array();
 
         $this->_sCachePrivacyObject = 'sys_privacy_object_';
         $this->_sCachePrivacyObjectDefault = 'sys_privacy_object_default_';
@@ -56,6 +50,18 @@ class BxDolPrivacyQuery extends BxDolDb
             return false;
 
         return $aObject;
+    }
+
+    public function init($aObject = array())
+    {
+        if(empty($aObject) || !is_array($aObject)) 
+            return;
+
+        $this->_aObject = $aObject;
+
+        $this->_sTable = $this->_aObject['table'];
+        $this->_sFieldId = $this->_aObject['table_field_id'];
+        $this->_sFieldOwnerId = $this->_aObject['table_field_author'];
     }
 
     function getObjectInfo($sAction, $iObjectId)

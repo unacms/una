@@ -969,7 +969,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     {
         if (!isset($this->aInputs[$sName]))
             return false;
-        return $bCheckAllFields ? true : !in_array($this->aInputs[$sName]['type'], array('password', 'captcha', 'hidden', 'button', 'reset', 'submit', 'block_header', 'input_set'));
+        return $bCheckAllFields ? true : !in_array($this->aInputs[$sName]['type'], array('password', 'captcha', 'hidden', 'button', 'reset', 'submit', 'block_header', 'input_set', 'location'));
     }
 
 

@@ -98,7 +98,9 @@ class BxPollsModule extends BxBaseModTextModule
 
     protected function _getContentForTimelinePost($aEvent, $aContentInfo)
     {
-        $aBlock = $this->_oTemplate->entrySubentries($aContentInfo);
+        $CNF = &$this->_oConfig->CNF;
+
+        $aBlock = $this->_oTemplate->{$this->_oDb->isPerformed($aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aContentInfo);
 
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo);
         $aResult['title'] = $this->_oConfig->getTitle($aContentInfo);

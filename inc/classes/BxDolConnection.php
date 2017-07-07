@@ -390,6 +390,11 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     {
         return $this->_oQuery->getConnectedContentSQLParts($sContentTable, $sContentField, $iInitiator, $isMutual);
     }
+    
+    public function getConnectedContentAsSQLPartsExt ($sContentTable, $sContentField, $iInitiator, $isMutual = false)
+    {
+        return $this->_oQuery->getConnectedContentSQLPartsExt($sContentTable, $sContentField, $iInitiator, $isMutual);
+    }
 
 	/**
      * Get necessary parts of SQL query to use connections in other queries

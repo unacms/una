@@ -20,7 +20,7 @@ class BxBaseMenuFooter extends BxTemplMenu
     public function getMenuItems ()
     {
         $aItems = parent::getMenuItems();
-        foreach($aItems as $iKey => $aItem)
+        foreach($aItems as $iKey => $aItem) {
             switch($aItem['name']) {
                 case 'switch_language':
                     $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_language_mask', $aItems[$iKey]['title'], genFlag());
@@ -34,7 +34,13 @@ class BxBaseMenuFooter extends BxTemplMenu
 
                     $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplateTitle);
                     break;
+                case 'powered_by':
+                    $aItems[$iKey]['alt'] = _t('_sys_txt_powered_by');
+                    break;
             }
+            if (!isset($aItems[$iKey]['alt']))
+                $aItems[$iKey]['alt'] = $aItems[$iKey]['title'];
+        }
 
         return $aItems;
     }

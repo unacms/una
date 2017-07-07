@@ -178,16 +178,23 @@ class BxPaymentDb extends BxBaseModPaymentDb
 		return $aResult;
 	}
 
-    public function getFirstAdminId()
-    {
-    	$sQuery = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `role`&" . BX_DOL_ROLE_ADMIN . " ORDER BY `profile_id` ASC LIMIT 1");
-        return (int)$this->getOne($sQuery);
-    }
-
     public function getAdminsIds()
     {
-    	$sQuery = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `role`&" . BX_DOL_ROLE_ADMIN . " ORDER BY `profile_id` ASC");
-        return $this->getColumn($sQuery);
+        $sQuery = "SELECT 
+        		`tp`.`id` AS `id`,
+        		`tp`.`type` AS `type`  
+        	FROM `sys_profiles` AS `tp` 
+        	INNER JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` AND `ta`.`role`&" . BX_DOL_ROLE_ADMIN . " 
+        	WHERE 
+        		`tp`.`type`<>'system' AND `tp`.`status`='active' 
+        	ORDER BY `tp`.`id` ASC";
+
+        $aAdmins = $this->getAllWithKey($sQuery, 'id');
+        foreach($aAdmins as $iId => $aAdmin)
+            if(!BxDolService::call($aAdmin['type'], 'act_as_profile'))
+                unset($aAdmins[$iId]);
+
+        return array_keys($aAdmins);
     }
 
 

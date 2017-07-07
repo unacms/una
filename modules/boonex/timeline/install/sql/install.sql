@@ -277,13 +277,15 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('bx_timeline_post', @sName, '_bx_timeline_form_post', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, 'BxTimelineFormPost', 'modules/boonex/timeline/classes/BxTimelineFormPost.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('bx_timeline_post_add', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_add', 0);
+('bx_timeline_post_add', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_add', 0),
+('bx_timeline_post_add_public', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_add_public', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_timeline_post', @sName, 'type', 'post', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_timeline_post', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_timeline_post', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_timeline_post', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_post_input_sys_text', '_bx_timeline_form_post_input_text', '', 0, 0, 0, 'a:1:{s:12:"autocomplete";s:3:"off";}', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_timeline_post', @sName, 'object_privacy_view', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_object_privacy_view', '_bx_timeline_form_post_input_object_privacy_view', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'link', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'photo', 'a:1:{i:0;s:24:"bx_timeline_simple_photo";}', 'a:1:{s:24:"bx_timeline_simple_photo";s:26:"_sys_uploader_simple_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -296,12 +298,25 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add', 'action', 2147483647, 1, 2),
 ('bx_timeline_post_add', 'owner_id', 2147483647, 1, 3),
 ('bx_timeline_post_add', 'text', 2147483647, 1, 4),
-('bx_timeline_post_add', 'location', 2147483647, 1, 5),
-('bx_timeline_post_add', 'link', 2147483647, 1, 6),
-('bx_timeline_post_add', 'photo', 2147483647, 1, 7),
-('bx_timeline_post_add', 'video', 2147483647, 1, 8),
-('bx_timeline_post_add', 'attachments', 2147483647, 1, 9),
-('bx_timeline_post_add', 'do_submit', 2147483647, 1, 10);
+('bx_timeline_post_add', 'object_privacy_view', 2147483647, 1, 5),
+('bx_timeline_post_add', 'location', 2147483647, 1, 6),
+('bx_timeline_post_add', 'link', 2147483647, 1, 7),
+('bx_timeline_post_add', 'photo', 2147483647, 1, 8),
+('bx_timeline_post_add', 'video', 2147483647, 1, 9),
+('bx_timeline_post_add', 'attachments', 2147483647, 1, 10),
+('bx_timeline_post_add', 'do_submit', 2147483647, 1, 11),
+
+('bx_timeline_post_add_public', 'type', 2147483647, 1, 1),
+('bx_timeline_post_add_public', 'action', 2147483647, 1, 2),
+('bx_timeline_post_add_public', 'owner_id', 2147483647, 1, 3),
+('bx_timeline_post_add_public', 'text', 2147483647, 1, 4),
+('bx_timeline_post_add_public', 'object_privacy_view', 2147483647, 1, 5),
+('bx_timeline_post_add_public', 'location', 2147483647, 1, 6),
+('bx_timeline_post_add_public', 'link', 2147483647, 1, 7),
+('bx_timeline_post_add_public', 'photo', 2147483647, 1, 8),
+('bx_timeline_post_add_public', 'video', 2147483647, 1, 9),
+('bx_timeline_post_add_public', 'attachments', 2147483647, 1, 10),
+('bx_timeline_post_add_public', 'do_submit', 2147483647, 1, 11);
 
 -- Forms -> Attach link
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

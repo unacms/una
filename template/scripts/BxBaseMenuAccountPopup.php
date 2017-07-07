@@ -23,8 +23,7 @@ class BxBaseMenuAccountPopup extends BxTemplMenu
         $aVars = parent::_getTemplateVars ();
 
         $aVars['bx_repeat:menu_items'] = array(true);
-        $aVars['profile_display_name'] = BxDolProfile::getInstance()->getDisplayName();
-        $aVars['menu_account'] = BxDolMenu::getObjectInstance('sys_account')->getCode();
+        $aVars['active_profile'] = BxDolProfile::getInstance()->getUnit();
         $aVars['menu_notifications'] = BxDolMenu::getObjectInstance('sys_account_notifications')->getCode();
         $aVars['bx_if:multiple_profiles_mode'] = array(
             'condition' => 1 != (int)getParam('sys_account_limit_profiles_number'),
