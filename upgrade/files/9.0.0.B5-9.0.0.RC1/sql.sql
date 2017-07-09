@@ -369,7 +369,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 -- Pages blocks
 
-UPDATE `sys_pages_blocks` SET `layout_id` = 12 WHERE `object` = 'sys_dashboard';
+UPDATE `sys_objects_page` SET `layout_id` = 12 WHERE `object` = 'sys_dashboard';
 
 DELETE FROM `sys_pages_blocks` WHERE `object` = 'sys_dashboard' AND `title_system` IN('_sys_page_block_title_profile_stats', '_sys_page_block_title_profile_membership', '_sys_page_block_title_manage_tools', '_sys_page_block_title_chart_growth', '_sys_page_block_title_chart_stats');
 
