@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_invites',
     'title' => 'Invitations',
     'note' => 'Invitations module.',
-    'version' => '9.0.4.DEV',
+    'version' => '9.0.5.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

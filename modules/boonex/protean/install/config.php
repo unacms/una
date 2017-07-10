@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_protean',
     'title' => 'Protean',
     'note' => 'Design template',
-    'version' => '9.0.4.DEV',
+    'version' => '9.0.5.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
