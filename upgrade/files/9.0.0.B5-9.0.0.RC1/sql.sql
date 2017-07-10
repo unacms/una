@@ -371,7 +371,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 UPDATE `sys_objects_page` SET `layout_id` = 12 WHERE `object` = 'sys_dashboard';
 
-DELETE FROM `sys_pages_blocks` WHERE `object` = 'sys_dashboard' AND `title_system` IN('_sys_page_block_title_profile_stats', '_sys_page_block_title_profile_membership', '_sys_page_block_title_manage_tools', '_sys_page_block_title_chart_growth', '_sys_page_block_title_chart_stats');
+DELETE FROM `sys_pages_blocks` WHERE `object` = 'sys_dashboard' AND `title` IN('_sys_page_block_title_profile_stats', '_sys_page_block_title_profile_membership', '_sys_page_block_title_manage_tools', '_sys_page_block_title_chart_growth', '_sys_page_block_title_chart_stats');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('sys_dashboard', 3, 'system', '', '_sys_page_block_title_profile_stats', 13, 2147483646, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"profile_stats";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
