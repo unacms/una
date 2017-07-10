@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_snipcart',
     'title' => 'Snipcart',
     'note' => 'Snipcart shopping module.',
-    'version' => '9.0.0.DEV',
+    'version' => '9.0.1.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

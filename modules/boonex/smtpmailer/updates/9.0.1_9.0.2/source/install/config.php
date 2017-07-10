@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    FacebookConnect Facebook Connect
+ * @defgroup    SMTPMailer SMTP Mailer
  * @ingroup     UnaModules
  *
  * @{
@@ -14,30 +14,30 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_facebook',
-    'title' => 'Facebook connect',
-    'note' => 'Join the site using Facebook account.',
-    'version' => '9.0.4.DEV',
+    'name' => 'bx_smtp',
+    'title' => 'SMTP Mailer',
+    'note' => 'Use remote SMTP server for sending mails.',
+    'version' => '9.0.2',
     'vendor' => 'BoonEx',
-    'help_url' => 'http://feed.boonex.com/?section={module_name}',
+	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '9.0.0-RC1'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/facebook_connect/',
-    'home_uri' => 'facebook_connect',
+    'home_dir' => 'boonex/smtpmailer/',
+    'home_uri' => 'smtpmailer',
 
-    'db_prefix' => 'bx_facebook_',
-    'class_prefix' => 'BxFaceBookConnect',
+    'db_prefix' => 'bx_smtp_',
+    'class_prefix' => 'BxSMTP',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Facebook',
+    'language_category' => 'SMTP Mailer',
 
     /**
      * Installation/Uninstallation Section.
@@ -54,7 +54,7 @@ $aConfig = array(
         'execute_sql' => 1,
         'clear_db_cache' => 1,
     ),
-    'disable' => array (
+    'disable' => array(
         'execute_sql' => 1,
         'clear_db_cache' => 1,
     ),
