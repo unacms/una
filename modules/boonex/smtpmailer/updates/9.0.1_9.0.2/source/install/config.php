@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_smtp',
     'title' => 'SMTP Mailer',
     'note' => 'Use remote SMTP server for sending mails.',
-    'version' => '9.0.3.DEV',
+    'version' => '9.0.2',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '9.0.0-RC1'
     ),
 
     /**
