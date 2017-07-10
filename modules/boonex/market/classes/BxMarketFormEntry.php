@@ -27,7 +27,6 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         	$sJsObject = $this->_oModule->_oConfig->getJsObject('entry');
 
         	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = "javascript:" . $sJsObject . ".checkName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
-        	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onkeyup'] = "javascript:" . $sJsObject . ".updateName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
         }
 
 	    if(isset($this->aInputs[$CNF['FIELD_FILE']])) {
