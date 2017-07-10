@@ -36,10 +36,13 @@ class BxBaseMenuFooter extends BxTemplMenu
                     break;
                 case 'powered_by':
                     $aItems[$iKey]['alt'] = _t('_sys_txt_powered_by');
+                    $aItems[$iKey]['bx_if:image']['content']['alt'] = _t('_sys_txt_powered_by');
                     break;
             }
-            if (!isset($aItems[$iKey]['alt']))
+            if (!isset($aItems[$iKey]['alt'])) {
                 $aItems[$iKey]['alt'] = $aItems[$iKey]['title'];
+                $aItems[$iKey]['bx_if:image']['content']['alt'] = $aItems[$iKey]['title'];
+            }
         }
 
         return $aItems;
