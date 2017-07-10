@@ -1,0 +1,17 @@
+.sys-auth .bx-btn {
+    float: none;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.sys-auth-compact {
+	position: relative;
+	display: inline-block;
+}
+
+.sys-auth-compact .bx-btn {
+	width: auto;
+}

@@ -1,0 +1,28 @@
+/*-- My Prpfiles: Create Profile --*/
+.bx-menu-object-sys_add_profile {
+    text-align: center;
+}
+
+
+/*-- My Prpfiles: Switch Profile --*/
+.sys-profile-switch-row {
+    position:relative;
+}
+
+.sys-profile-switch-row-control {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+
+.sys-profile-switch-row-unit .bx-def-unit {
+    margin:0;
+}
+
+.sys-profile-switch-row-control .bx-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
