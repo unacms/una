@@ -121,17 +121,14 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'process_storages' => array(
                 'title' => _t('_adm_txt_modules_process_storages'),
             ),
+            'process_esearches' => array(
+                'title' => _t('_adm_txt_modules_process_esearches'),
+            ),
             'register_transcoders' => array(
                 'title' => _t('_adm_txt_modules_register_transcoders'),
             ),
             'unregister_transcoders' => array(
                 'title' => _t('_adm_txt_modules_unregister_transcoders'),
-            ),
-            'register_esearches' => array(
-                'title' => _t('_adm_txt_modules_register_esearches'),
-            ),
-            'unregister_esearches' => array(
-                'title' => _t('_adm_txt_modules_unregister_esearches'),
             ),
             'clear_db_cache' => array(
                 'title' => _t('_adm_txt_modules_clear_db_cache'),
@@ -821,6 +818,26 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
 	/**
      * 
+     * Process the list of extended search forms provided in config array. 
+     * @param string $sOperation - operation type.
+     */
+    protected function actionProcessEsearches($sOperation)
+    {
+    	if(empty($this->_aConfig['esearches'])) 
+        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+        foreach($this->_aConfig['esearches'] as $sObject) {
+            if(in_array($sOperation, array('install', 'enable', 'enable_success')))
+		        BxDolSearchExtended::getObjectInstance($sObject);
+            else if(in_array($sOperation, array('uninstall', 'disable')))
+                BxDolSearchExtended::getObjectInstance($sObject)->clean();
+        }		    
+
+		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+	/**
+     * 
      * Process the list of transcoders provided in config array. 
      * Transcoder objects to automatically register/unregister necessary alerts for.
      * @param string $sOperation - operation type.
@@ -848,38 +865,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
 		BxDolTranscoderImage::unregisterHandlersArray($this->_aConfig['transcoders']);
         BxDolTranscoderImage::cleanupObjectsArray($this->_aConfig['transcoders']);
-
-		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
-    }
-
-	/**
-     * 
-     * Register the list of extended search forms provided in config array. 
-     * @param string $sOperation - operation type.
-     */
-    protected function actionRegisterEsearches($sOperation)
-    {
-    	if(empty($this->_aConfig['esearches'])) 
-        	return BX_DOL_STUDIO_INSTALLER_FAILED;
-
-        foreach($this->_aConfig['esearches'] as $sObject)
-		    BxDolSearchExtended::getObjectInstance($sObject);
-
-		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
-    }
-
-	/**
-     * 
-     * Unregister the list of extended search forms provided in config array. 
-     * @param string $sOperation - operation type.
-     */
-    protected function actionUnregisterEsearches($sOperation)
-    {
-    	if(empty($this->_aConfig['esearches'])) 
-        	return BX_DOL_STUDIO_INSTALLER_FAILED;
-
-		foreach($this->_aConfig['esearches'] as $sObject)
-		    BxDolSearchExtended::getObjectInstance($sObject)->clean();
 
 		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }

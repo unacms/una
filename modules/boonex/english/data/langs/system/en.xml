@@ -1440,8 +1440,7 @@
 	<string name="_adm_txt_modules_process_storages"><![CDATA[Process storages:]]></string>
 	<string name="_adm_txt_modules_process_failed"><![CDATA[Failed]]></string>
 	<string name="_adm_txt_modules_process_success"><![CDATA[Done]]></string>
-	<string name="_adm_txt_modules_register_esearches"><![CDATA[Register search forms:]]></string>
-	<string name="_adm_txt_modules_unregister_esearches"><![CDATA[Unregister search forms:]]></string>
+	<string name="_adm_txt_modules_process_esearches"><![CDATA[Process search forms:]]></string>
 	<string name="_adm_txt_modules_register_transcoders"><![CDATA[Register transcoders:]]></string>
 	<string name="_adm_txt_modules_unregister_transcoders"><![CDATA[Unregister transcoders:]]></string>
 	<string name="_adm_txt_modules_show_conclusion"><![CDATA[Conclusion from vendor:]]></string>
