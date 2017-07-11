@@ -405,11 +405,6 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_market', '_bx_market', @iSearchOrder + 1, 'BxMarketSearchResult', 'modules/boonex/market/classes/BxMarketSearchResult.php'),
 ('bx_market_cmts', '_bx_market_cmts', @iSearchOrder + 2, 'BxMarketCmtsSearchResult', 'modules/boonex/market/classes/BxMarketCmtsSearchResult.php');
 
--- SEARCH EXTENDED
-INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
-('bx_market', 'bx_market', 'bx_market', '_bx_market_search_extended', 1, '', ''),
-('bx_market_cmts', 'bx_market_cmts', 'bx_market', '_bx_market_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
-
 -- CONNECTIONS
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
 ('bx_market_subentries', 'bx_market_subproducts', 'one-way', '', '');
@@ -421,15 +416,6 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
 ('bx_market_cats', 'bx_market', 'bx_market', 'bx_market_cats', 'bx_market_products', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_market_products`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
-
--- CONTENT INFO
-INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_market', '_bx_market', 'bx_market', 'added', 'edited', 'deleted', '', ''),
-('bx_market_cmts', '_bx_market_cmts', 'bx_market', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
-
-INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-('bx_market', 'bx_market_administration', 'id', '', ''),
-('bx_market', 'bx_market_common', 'id', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

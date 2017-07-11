@@ -30,8 +30,6 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_snipcart';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_snipcart', 'bx_snipcart_cmts');
 
--- SEARCH EXTENDED
-DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_snipcart';
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_snipcart';
@@ -39,12 +37,6 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_snipcart';
 
 -- CATEGORY
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_snipcart_cats';
-
-
--- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_snipcart', 'bx_snipcart_cmts');
-
-DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_snipcart');
 
 
 -- STATS

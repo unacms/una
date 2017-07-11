@@ -29,8 +29,15 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_groups';
 
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_groups_cats');
 
--- STUDIO PAGE & WIDGET
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_groups', 'bx_groups_cmts');
 
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_groups');
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_groups';
+
+-- STUDIO PAGE & WIDGET
 DELETE FROM `tp`, `tw`, `tpw`
 USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`
 WHERE `tp`.`id` = `tw`.`page_id` AND `tw`.`id` = `tpw`.`widget_id` AND `tp`.`name` = 'bx_groups';

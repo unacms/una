@@ -31,22 +31,12 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_shopify';
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_shopify', 'bx_shopify_cmts');
 
 
--- SEARCH EXTENDED
-DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_shopify';
-
-
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_shopify';
 
 
 -- CATEGORY
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_shopify_cats';
-
-
--- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_shopify', 'bx_shopify_cmts');
-
-DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_shopify');
 
 
 -- STATS

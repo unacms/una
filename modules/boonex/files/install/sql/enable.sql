@@ -332,11 +332,6 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_files', '_bx_files', @iSearchOrder + 1, 'BxFilesSearchResult', 'modules/boonex/files/classes/BxFilesSearchResult.php'),
 ('bx_files_cmts', '_bx_files_cmts', @iSearchOrder + 2, 'BxFilesCmtsSearchResult', 'modules/boonex/files/classes/BxFilesCmtsSearchResult.php');
 
--- SEARCH EXTENDED
-INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
-('bx_files', 'bx_files', 'bx_files', '_bx_files_search_extended', 1, '', ''),
-('bx_files_cmts', 'bx_files_cmts', 'bx_files', '_bx_files_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
-
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_files', 'bx_files_meta_keywords', '', '', '', '');
@@ -344,15 +339,6 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
 ('bx_files_cats', 'bx_files', 'bx_files', 'bx_files_cats', 'bx_files_main', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_files_main`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
-
--- CONTENT INFO
-INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_files', '_bx_files', 'bx_files', 'added', 'edited', 'deleted', '', ''),
-('bx_files_cmts', '_bx_files_cmts', 'bx_files', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
-
-INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-('bx_files', 'bx_files_administration', 'id', '', ''),
-('bx_files', 'bx_files_common', 'id', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

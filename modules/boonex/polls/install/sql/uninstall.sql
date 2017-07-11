@@ -48,6 +48,16 @@ DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_polls';
 DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_polls';
 
 
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_polls', 'bx_polls_cmts');
+
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_polls');
+
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_polls';
+
+
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`
 USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`

@@ -184,6 +184,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_snipcart_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0'),
 ('bx_snipcart_cover', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0');
 
+
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_snipcart', 'bx_snipcart', '_bx_snipcart_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_snipcart_entries', 'id', '', '', 'do_submit', '', 0, 1, 'BxSnipcartFormEntry', 'modules/boonex/snipcart/classes/BxSnipcartFormEntry.php'),
@@ -317,6 +318,22 @@ INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `
 -- FEATURED
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
 ('bx_snipcart', '1', '1', 'page.php?i=view-snipcart-entry&id={object_id}', 'bx_snipcart_entries', 'id', 'author', 'featured', '', '');
+
+
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_snipcart', '_bx_snipcart', 'bx_snipcart', 'added', 'edited', 'deleted', '', ''),
+('bx_snipcart_cmts', '_bx_snipcart_cmts', 'bx_snipcart', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
+
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_snipcart', 'bx_snipcart_administration', 'id', '', ''),
+('bx_snipcart', 'bx_snipcart_common', 'id', '', '');
+
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_snipcart', 'bx_snipcart', 'bx_snipcart', '_bx_snipcart_search_extended', 1, '', ''),
+('bx_snipcart_cmts', 'bx_snipcart_cmts', 'bx_snipcart', '_bx_snipcart_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 
 -- STUDIO: page & widget

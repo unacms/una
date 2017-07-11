@@ -26,6 +26,16 @@ DELETE FROM `sys_form_pre_lists` WHERE `module`=@sName;
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN ('bx_forum_cats');
 
 
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` IN (@sName, 'bx_forum_cmts');
+
+DELETE FROM `sys_content_info_grids` WHERE `object` IN (@sName);
+
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_forum';
+
+
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`
 USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`

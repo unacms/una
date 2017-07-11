@@ -39,6 +39,16 @@ DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_shopify';
 DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_shopify';
 
 
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_shopify', 'bx_shopify_cmts');
+
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_shopify');
+
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_shopify';
+
+
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`
 USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`

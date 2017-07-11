@@ -25,19 +25,11 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_files';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_files', 'bx_files_cmts');
 
--- SEARCH EXTENDED
-DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_files';
-
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_files';
 
 -- CATEGORY
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_files_cats';
-
--- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_files', 'bx_files_cmts');
-
-DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_files');
 
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_files%';

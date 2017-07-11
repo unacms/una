@@ -46,14 +46,6 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_organizations_cats';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
 
--- SEARCH EXTENDED
-DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_organizations';
-
--- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_organizations', 'bx_organizations_cmts');
-
-DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_organizations');
-
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_organizations%';
 

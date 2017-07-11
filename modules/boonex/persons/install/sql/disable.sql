@@ -43,14 +43,6 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_persons';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_persons';
 
--- SEARCH EXTENDED
-DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_persons';
-
--- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_persons', 'bx_persons_cmts');
-
-DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_persons');
-
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_persons%';
 
