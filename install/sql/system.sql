@@ -528,6 +528,10 @@ CREATE TABLE `sys_acl_actions` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'connect', NULL, '_sys_acl_action_connect', '', 0, 3);
+SET @iIdActionConnect = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'vote', NULL, '_sys_acl_action_vote', '', 0, 0);
 SET @iIdActionVote = LAST_INSERT_ID();
 
@@ -627,6 +631,12 @@ SET @iAdministrator = 8;
 SET @iPremium = 9;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
+
+-- connect
+(@iStandard, @iIdActionConnect),
+(@iModerator, @iIdActionConnect),
+(@iAdministrator, @iIdActionConnect),
+(@iPremium, @iIdActionConnect),
 
 -- vote 
 (@iStandard, @iIdActionVote),

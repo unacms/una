@@ -1534,6 +1534,7 @@
 	<string name="_sys_acl_action_comments_post"><![CDATA[Comments Post]]></string>
 	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Comments Remove All]]></string>
 	<string name="_sys_acl_action_comments_remove_own"><![CDATA[Comments Remove Own]]></string>
+	<string name="_sys_acl_action_connect"><![CDATA[Connect (befriend, follow, etc)]]></string>
 	<string name="_sys_acl_action_create_account"><![CDATA[Create Account]]></string>
 	<string name="_sys_acl_action_create_account_desc"><![CDATA[It make sense for guests only, you can temporary disable it or set limit by time for example.]]></string>
 	<string name="_sys_acl_action_delete_account"><![CDATA[Delete Account]]></string>

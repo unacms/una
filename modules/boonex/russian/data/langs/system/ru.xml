@@ -1532,6 +1532,7 @@
 	<string name="_sys_acl_action_comments_post"><![CDATA[Комментарии - Размещать]]></string>
 	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Комментарии - Удалить Все]]></string>
 	<string name="_sys_acl_action_comments_remove_own"><![CDATA[Комментарии - Удалить Собственные]]></string>
+	<string name="_sys_acl_action_connect"><![CDATA[Установить связь (подружиться, следить и т.п.)]]></string>
 	<string name="_sys_acl_action_create_account"><![CDATA[Создать Аккаунт]]></string>
 	<string name="_sys_acl_action_create_account_desc"><![CDATA[Это имеет смысл только для гостей. Например, Вы можете временно отключить или задать лимит по времени для этого пункта.]]></string>
 	<string name="_sys_acl_action_delete_account"><![CDATA[Удалить Аккаунт]]></string>
