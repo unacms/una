@@ -1438,6 +1438,8 @@
 	<string name="_adm_txt_modules_process_storages"><![CDATA[Обработка хранилищ:]]></string>
 	<string name="_adm_txt_modules_process_failed"><![CDATA[Неудача]]></string>
 	<string name="_adm_txt_modules_process_success"><![CDATA[Выполнено]]></string>
+	<string name="_adm_txt_modules_register_esearches"><![CDATA[Зарегистрировать формы поиска:]]></string>
+	<string name="_adm_txt_modules_unregister_esearches"><![CDATA[Разрегистрировать формы поиска:]]></string>
 	<string name="_adm_txt_modules_register_transcoders"><![CDATA[Зарегистрировать транскодеры:]]></string>
 	<string name="_adm_txt_modules_unregister_transcoders"><![CDATA[Разрегистрировать транскодеры:]]></string>
 	<string name="_adm_txt_modules_show_conclusion"><![CDATA[Вывод от продавца:]]></string>

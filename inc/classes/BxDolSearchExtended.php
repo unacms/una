@@ -95,9 +95,14 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         return isset($this->_aObject['active']) && (int)$this->_aObject['active'] != 0;
     }
 
+    public function clean()
+    {
+        return $this->_oDb->deleteFields(array('object' => $this->_sObject)) !== false;
+    }
+
     public function reset()
     {
-        if($this->_oDb->deleteFields(array('object' => $this->_sObject)) === false)
+        if(!$this->clean())
             return false;
 
         $this->_aObject['fields'] = BxDolSearchExtendedQuery::getSearchFields($this->_aObject);
