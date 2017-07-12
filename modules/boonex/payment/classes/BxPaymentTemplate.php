@@ -303,7 +303,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         $aTmplVarsItems = array();
 
         foreach($aItems as $aItem) {
-            $aTmplVarsItems[] = array(
+            $aTmplVarsItems[$aItem['title']] = array(
                 'id' => $aItem['id'],
                 'price' => $this->_oConfig->getPrice($sType, $aItem),
                 'bx_if:link' => array(
@@ -322,7 +322,11 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             );
         }
 
-        if(empty($aTmplVarsItems))
+        if(!empty($aTmplVarsItems) && is_array($aTmplVarsItems)) {
+            ksort($aTmplVarsItems);
+            $aTmplVarsItems = array_values($aTmplVarsItems);
+        }
+        else 
         	$aTmplVarsItems = MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
         return $this->parseHtmlByName('items.html', array(
