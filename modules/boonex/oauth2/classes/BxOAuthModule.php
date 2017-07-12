@@ -167,7 +167,7 @@ class BxOAuthModule extends BxDolModule
             $_POST['profile_id'] = $aProfile['id'];
         }
 
-        if (!($iProfileId = $this->_oDb->getSavedProfile($aProfiles)) && empty($_POST)) {
+        if (!($iProfileId = $this->_oDb->getSavedProfile(bx_get('client_id'), $aProfiles)) && empty($_POST)) {
             $oPage = BxDolPage::getObjectInstanceByURI('oauth-authorization');
             $this->_oTemplate->getPage(false, $oPage->getCode());
             return;

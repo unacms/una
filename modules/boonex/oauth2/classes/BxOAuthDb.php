@@ -101,10 +101,10 @@ class BxOAuthDb extends BxDolModuleDb
         return $this->query("DELETE FROM `bx_oauth_clients` WHERE " . $this->arrayToSQL($aParams, ' AND '));
     }
 
-    function getSavedProfile($aProfiles)
+    function getSavedProfile($sClientId, $aProfiles)
     {
         $aIds = array_keys($aProfiles);
-        return $this->getOne("SELECT `user_id` FROM `bx_oauth_refresh_tokens` WHERE `user_id` IN (" . $this->implode_escape($aIds) . ") LIMIT 1");
+        return $this->getOne("SELECT `user_id` FROM `bx_oauth_refresh_tokens` WHERE `client_id` = ? AND `user_id` IN (" . $this->implode_escape($aIds) . ") LIMIT 1", array($sClientId));
     }
 
 }
