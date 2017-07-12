@@ -1878,46 +1878,58 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _parseContent($sContent, $aVariables, $mixedKeyWrapperHtml = null)
     {
-        $aKeys = array_keys($aVariables);
-        $aValues = array_values($aVariables);
+        $aKeysSrc = array_keys($aVariables);
+        $aValuesSrc = array_values($aVariables);
 
         $aKeyWrappers = $this->_getKeyWrappers($mixedKeyWrapperHtml);
 
-        $iCountKeys = count($aKeys);
+        $sKeyIf = 'bx_if:';
+        $sKeyRepeat = 'bx_repeat:';
+        $iCountKeys = count($aKeysSrc);
+        $aKeys = $aValues = array();
+
+        //--- Parse simple keys ---//
         for ($i = 0; $i < $iCountKeys; $i++) {
-            if (strncmp($aKeys[$i], 'bx_repeat:', 10) === 0) {
-                $sKey = "'<" . $aKeys[$i] . ">(.*)<\/" . $aKeys[$i] . ">'s";
+            if (strncmp($aKeysSrc[$i], $sKeyRepeat, 10) === 0 || strncmp($aKeysSrc[$i], $sKeyIf, 6) === 0)
+                continue;
+
+            $aKeys[] = "'" . $aKeyWrappers['left'] . $aKeysSrc[$i] . $aKeyWrappers['right'] . "'s";
+            $aValues[] = str_replace('$', '\\$', $aValuesSrc[$i]);
+        }
+
+        //--- Parse keys with constructions ---//
+        for ($i = 0; $i < $iCountKeys; $i++) {
+            if (strncmp($aKeysSrc[$i], $sKeyRepeat, 10) === 0) {
+                $sKey = "'<" . $aKeysSrc[$i] . ">(.*)<\/" . $aKeysSrc[$i] . ">'s";
 
                 $aMatches = array();
                 preg_match($sKey, $sContent, $aMatches);
 
                 $sValue = '';
                 if(isset($aMatches[1]) && !empty($aMatches[1])) {
-                    if(is_array($aValues[$i]))
-                        foreach($aValues[$i] as $aValue)
+                    if(is_array($aValuesSrc[$i]))
+                        foreach($aValuesSrc[$i] as $aValue)
                             $sValue .= $this->parseHtmlByContent($aMatches[1], $aValue, $mixedKeyWrapperHtml);
-                    else if(is_string($aValues[$i]))
-                        $sValue = $aValues[$i];
+                    else if(is_string($aValuesSrc[$i]))
+                        $sValue = $aValuesSrc[$i];
                 }
             } 
-            else if (strncmp($aKeys[$i], 'bx_if:', 6) === 0) {
-                $sKey = "'<" . $aKeys[$i] . ">(.*)<\/" . $aKeys[$i] . ">'s";
+            else if (strncmp($aKeysSrc[$i], $sKeyIf, 6) === 0) {
+                $sKey = "'<" . $aKeysSrc[$i] . ">(.*)<\/" . $aKeysSrc[$i] . ">'s";
 
                 $aMatches = array();
                 preg_match($sKey, $sContent, $aMatches);
 
                 $sValue = '';
                 if(isset($aMatches[1]) && !empty($aMatches[1]))
-                    if(is_array($aValues[$i]) && isset($aValues[$i]['content']) && isset($aValues[$i]['condition']) && $aValues[$i]['condition'])
-                        $sValue .= $this->parseHtmlByContent($aMatches[1], $aValues[$i]['content'], $mixedKeyWrapperHtml);
+                    if(is_array($aValuesSrc[$i]) && isset($aValuesSrc[$i]['content']) && isset($aValuesSrc[$i]['condition']) && $aValuesSrc[$i]['condition'])
+                        $sValue .= $this->parseHtmlByContent($aMatches[1], $aValuesSrc[$i]['content'], $mixedKeyWrapperHtml);
             } 
-            else {
-                $sKey = "'" . $aKeyWrappers['left'] . $aKeys[$i] . $aKeyWrappers['right'] . "'s";
-                $sValue = $aValues[$i];
-            }
+            else 
+                continue;
 
-            $aKeys[$i] = $sKey;
-            $aValues[$i] = str_replace('$', '\\$', $sValue);
+            $aKeys[] = $sKey;
+            $aValues[] = str_replace('$', '\\$', $sValue);
         }
 
         try {
