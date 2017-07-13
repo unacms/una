@@ -37,7 +37,7 @@ class BxPollsModule extends BxBaseModTextModule
         if(!method_exists($this, $sMethod))
             return echoJson(array());
 
-        $aBlock = $this->$sMethod($iContentId);
+        $aBlock = $this->$sMethod($iContentId, true);
         if(empty($aBlock) || !is_array($aBlock))
             return echoJson(array());
 
@@ -57,14 +57,14 @@ class BxPollsModule extends BxBaseModTextModule
         return $this->_oTemplate->getJsCode('entry') . BxDolService::call('system', 'get_results', array($aParams), 'TemplSearchExtendedServices');
     }
 
-    public function serviceGetBlockSubentries($iContentId = 0)
+    public function serviceGetBlockSubentries($iContentId = 0, $bForceDisplay = false)
     {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
 
-        if($this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id()))
+        if(!$bForceDisplay && $this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id()))
             return $this->serviceGetBlockResults($iContentId);
 
         return $this->_serviceTemplateFunc('entrySubentries', $iContentId);
