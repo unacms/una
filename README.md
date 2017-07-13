@@ -5,7 +5,7 @@
 [![Follow UNA Team](https://img.shields.io/twitter/follow/unateam.svg?style=social&label=Follow)](https://twitter.com/unateam)
 
 
-[![UNA - Community Management System](https://user-images.githubusercontent.com/22210428/27618752-754e87be-5c01-11e7-8c85-e9248db730a5.png)](https://una.op)
+[![UNA - Community Management System](https://user-images.githubusercontent.com/22210428/27618752-754e87be-5c01-11e7-8c85-e9248db730a5.png)](https://una.io)
 
 
 UNA is a **C**MS - **Community** Management System - a full-stack web platform for creating and running a community website. A social website powered by UNA can work as a niche social network, business collaboration hub or any kind of multi-user system with various memberships, roles, content types and permissions defining the rules of the community operation.  UNA can be used as a conventional CMS or blogging platform with focus on content publishing.
