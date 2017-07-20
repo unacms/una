@@ -11,8 +11,8 @@
 
 class BxOAuthFormAdd extends BxTemplFormView
 {
-    protected static $LENGTH_ID = 10;
-    protected static $LENGTH_SECRET = 32;
+    public static $LENGTH_ID = 10;
+    public static $LENGTH_SECRET = 32;
 
     protected $_sModule;
     protected $_oModule;
