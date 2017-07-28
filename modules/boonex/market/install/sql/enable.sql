@@ -313,7 +313,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryDelete = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_market', 'download entry', NULL, '_bx_market_acl_action_download_entry', '', 1, 3);
+('bx_market', 'download entry', NULL, '_bx_market_acl_action_download_entry', '', 1, 0);
 SET @iIdActionEntryDownload = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -361,7 +361,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iPremium, @iIdActionEntryDelete),
 
 -- entry download
+(@iUnauthenticated, @iIdActionEntryDownload),
+(@iAccount, @iIdActionEntryDownload),
 (@iStandard, @iIdActionEntryDownload),
+(@iUnconfirmed, @iIdActionEntryDownload),
+(@iPending, @iIdActionEntryDownload),
 (@iModerator, @iIdActionEntryDownload),
 (@iAdministrator, @iIdActionEntryDownload),
 (@iPremium, @iIdActionEntryDownload),
