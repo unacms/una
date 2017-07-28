@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolForm');
+
 class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 {
     public static $SEARCHABLE_TYPES = array(
