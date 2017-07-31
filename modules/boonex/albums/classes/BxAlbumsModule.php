@@ -346,7 +346,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $aParams;
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 

@@ -102,9 +102,9 @@ class BxSnipcartModule extends BxBaseModTextModule
         );
     }
 
-    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
-        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo);
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
         $aResult['raw'] = $this->_oTemplate->getBuyButton($aContentInfo);
 
         return $aResult;

@@ -167,7 +167,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 return '';
         }
 
-        $aResult = $this->getData($aEvent);
+        $aResult = $this->getData($aEvent, $aBrowseParams);
         if($aResult === false)
             return '';
 
@@ -649,9 +649,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getData(&$aEvent)
+    public function getData(&$aEvent, $aBrowseParams = array())
     {
-        $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent) : $this->_getCommonData($aEvent);
+        $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent, $aBrowseParams) : $this->_getCommonData($aEvent, $aBrowseParams);
         if(empty($aResult) || empty($aResult['owner_id']) || empty($aResult['content']))
             return false;
 
@@ -1083,9 +1083,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getSystemData(&$aEvent)
+    protected function _getSystemData(&$aEvent, $aBrowseParams = array())
     {
-        $mixedResult = $this->_oConfig->getSystemData($aEvent);
+        $mixedResult = $this->_oConfig->getSystemData($aEvent, $aBrowseParams);
 		if($mixedResult !== false)
 			return $mixedResult;
 
@@ -1096,7 +1096,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		return $this->$sMethod($aEvent);
     }
 
-    protected function _getCommonData(&$aEvent)
+    protected function _getCommonData(&$aEvent, $aBrowseParams = array())
     {
         $CNF = $this->_oConfig->CNF;
 
@@ -1185,10 +1185,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 if(!$this->_oConfig->isSystem($aContent['type'] , $aContent['action'])) {
                     $aReposted = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
-                    $aReposted = $this->_getCommonData($aReposted);
+                    $aReposted = $this->_getCommonData($aReposted, $aBrowseParams);
                 } 
                 else
-                	$aReposted = $this->_getSystemData($aContent);
+                	$aReposted = $this->_getSystemData($aContent, $aBrowseParams);
 
 				if(empty($aReposted) || !is_array($aReposted))
 					return array();

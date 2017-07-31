@@ -117,9 +117,9 @@ class BxEventsModule extends BxBaseModGroupsModule
      * @param $aEvent timeline event array from Timeline module
      * @return array in special format which is needed specifically for Timeline module to display the data.
      */
-    public function serviceGetTimelinePost($aEvent)
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
-        $a = parent::serviceGetTimelinePost($aEvent);
+        $a = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
 
         if (!($aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id'])))
             return $a;

@@ -590,7 +590,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * Entry post for Timeline module
      */
-    public function serviceGetTimelinePost($aEvent)
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
         $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         if(empty($aContentInfo) || !is_array($aContentInfo))
@@ -654,7 +654,7 @@ class BxBaseModGeneralModule extends BxDolModule
         	'sample_wo_article' => $CNF['T']['txt_sample_single'],
     	    'sample_action' => isset($CNF['T']['txt_sample_single_action']) ? $CNF['T']['txt_sample_single_action'] : '',
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
-            'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo), //a string to display or array to parse default template before displaying.
+            'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
@@ -988,14 +988,14 @@ class BxBaseModGeneralModule extends BxDolModule
         exit;
     }
 
-    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
     	$CNF = &$this->_oConfig->CNF;
 
     	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
     	//--- Image(s)
-        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl);
+        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
     	return array(
     		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
@@ -1009,7 +1009,7 @@ class BxBaseModGeneralModule extends BxDolModule
 		);
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 

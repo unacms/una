@@ -347,9 +347,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     /**
      * Entry post for Timeline module
      */
-    public function serviceGetTimelinePost($aEvent)
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
-        $a = parent::serviceGetTimelinePost($aEvent);
+        $a = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
 
@@ -502,7 +502,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
