@@ -144,6 +144,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sSystem = 'profile'; ///< current comment system name
     protected $_aSystem = array (); ///< current comments system array
     protected $_iId = 0; ///< obect id to be commented
+    protected $_bHtml = false; ///< whether HTML formating is used during comment posting or not. Read Only!
 
     protected $_aT = array (); ///< an array of lang keys
     protected $_aMarkers = array ();
