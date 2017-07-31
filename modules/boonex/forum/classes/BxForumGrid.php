@@ -74,6 +74,9 @@ class BxForumGrid extends BxTemplGrid
 
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        if($this->_oModule->checkAllowedAdd() !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_ADD_ENTRY']);
 
         unset($a['attr']['bx_grid_action_independent']);
