@@ -91,24 +91,26 @@ class BxPollsModule extends BxBaseModTextModule
 	/**
      * INTERNAL METHODS
      */
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         return array();
     }
 
-    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
+        $bDynamic = isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true;
 
-        $aBlock = $this->_oTemplate->{$this->_oDb->isPerformed($aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aContentInfo);
+        $sInclude = '';
+        $sInclude .= $this->_oTemplate->addJs(array('entry.js'), $bDynamic);
+        $sInclude .= $this->_oTemplate->addCss(array('entry.css'), $bDynamic);
 
-        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo);
+        $aBlock = $this->_oTemplate->{$this->_oDb->isPerformed($aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aContentInfo, $bDynamic);
+
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
         $aResult['title'] = $this->_oConfig->getTitle($aContentInfo);
         $aResult['text'] = '';
-        $aResult['raw'] = $this->_oTemplate->getJsCode('entry') . $aBlock['content'];
-
-        $this->_oTemplate->addJs(array('entry.js'));
-        $this->_oTemplate->addCss(array('entry.css'));
+        $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->getJsCode('entry') . $aBlock['content'];
 
         return $aResult;
     }

@@ -31,7 +31,8 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
         return parent::getJsCode($sType, $aParams, $bWrap);
     }
-    public function entrySubentries ($aData)
+
+    public function entrySubentries ($aData, $bDynamic = false)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
@@ -44,7 +45,9 @@ class BxPollsTemplate extends BxBaseModTextTemplate
             $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_SUBENTRIES'], $aSubentry['id']);
 
             $aTmplVarsSubentries[] = array(
-                'subentry' => $oVotes->getElementBlock()
+                'subentry' => $oVotes->getElementBlock(array(
+                    'dynamic_mode' => $bDynamic
+                ))
             );
         }
 
@@ -61,7 +64,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         );
     }
 
-    public function entryResults($aData)
+    public function entryResults($aData, $bDynamic = false)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
@@ -85,6 +88,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
                 'width' => (int)round($fPercent) . '%',
                 'votes' => $oVotes->getCounter(array('show_counter_empty' => true, 'show_counter_in_brackets' => false)),
                 'percent' => _t('_bx_polls_txt_subentry_vote_percent', $iTotal > 0 ? round($fPercent, 2) : 0),
+                'js_code' => $oVotes->getJsScript($bDynamic)
             );
         }
 
