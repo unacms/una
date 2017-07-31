@@ -37,7 +37,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
         	'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
         ), array(
         	'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
-        	'title' => $aContentInfo[$CNF['FIELD_TITLE']]
+        	'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
         ));
 
     	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
