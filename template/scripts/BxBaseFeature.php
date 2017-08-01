@@ -137,7 +137,7 @@ class BxBaseFeature extends BxDolFeature
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
-            'class' => $this->_sStylePrefix . ($bShowDoFeatureAsButton ? '-button' : '') . ($bShowDoFeatureAsButtonSmall ? '-button-small' : ''),
+            'class' => $this->_sStylePrefix . ($bShowDoFeatureAsButton ? '-button' : '-link') . ($bShowDoFeatureAsButtonSmall ? '-button-small' : ''),
             'count' => $aFeature['count'],
             'do_feature' => $this->_getDoFeature($aParams, $bAllowedFeature),
             'script' => $this->getJsScript($bDynamicMode)

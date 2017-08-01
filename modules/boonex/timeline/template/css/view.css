@@ -115,6 +115,10 @@ div.bx-tl-item div.bx-tl-item-image {
     display: inline-block;
 }
 
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
+	margin-right: 1.25rem;
+} 
+
 
 /*--- Item Style: Timeline ---*/
 div.bx-tl-view-timeline div.bx-tl-items:before {

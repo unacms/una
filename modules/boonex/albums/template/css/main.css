@@ -2,12 +2,15 @@
 @import url(../../../../base/text/template/css/main.css);
 
 .bx-albums-unit-size {
-    width: 18.75rem;
-    height: 18.75rem;
+    width: 18.0rem;
+    height: 18.0rem;
     object-fit: cover;
 }
 .bx-albums-media-wrapper {
-    width: 18.75rem;
+	display: inline-block;
+	vertical-align: top;
+
+    width: 18.0rem;
 }
 
 @media (max-width:520px) {
@@ -28,11 +31,13 @@
 }
 
 
-.bx-albums-media-caption,
-.bx-albums-media-actions {
+.bx-albums-media-caption {
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+}
+.bx-albums-media-actions {
+	text-align: left;
 }
 .bx-base-text-unit-ext .bx-albums-unit-text-cont {
 	text-align: left;

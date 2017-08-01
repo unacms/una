@@ -120,7 +120,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             'module_name' => _t($CNF['T']['txt_media_single']),
             'content_url' => $aVarsTmp['url'],
             'ts' => $aFile['added'],
-            'actions' => $oModule->serviceMediaSocialSharing($aData['id'], true, false),
+            'actions' => $oModule->serviceMediaSocialSharing($aData['id'], true, false, false),
             'bx_if:thumb' => array (
                 'condition' => $aData['file_id'],
                 'content' => array (
