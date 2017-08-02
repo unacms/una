@@ -104,6 +104,10 @@ div.bx-tl-item-content div.bx-tl-title {
 	text-overflow: ellipsis;
     overflow: hidden;
 }
+div.bx-tl-item-content div.bx-tl-content iframe {
+	width: 100%;
+	height: auto;
+}
 
 /*--- Item Images Style ---*/
 div.bx-tl-item div.bx-tl-item-images {

@@ -25,14 +25,13 @@
         var eBox = $(this).parents('.bx-db-content, .bx-def-box');
         var iMaxWidth = eBox.size() ? eBox.innerWidth() : $(window).width() - 70;
 
-        if (iMaxWidth > o['max-width']) iMaxWidth = o['max-width'];
-        
+        if (iMaxWidth > o['max-width']) iMaxWidth = o['max-width']; 
 		return this.each(function() {
 			$(this).embedly({
                 key: sEmbedlyKey,
                 query: {maxwidth: iMaxWidth},
                 // only videos/sound/images are supported, to generate own list goto http://embed.ly/tools/generator
-                urlRe: sEmbedlyPattern
+                urlRe: new RegExp(sEmbedlyPattern, 'i')
             });
 		});
 	};

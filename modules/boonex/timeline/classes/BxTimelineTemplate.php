@@ -566,7 +566,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         foreach($aLinks as $aLink)
             $sLinks .= $this->getAttachLinkItem($iUserId, $aLink);
 
-        return $this->parsePageByName('attach_link_form_field.html', array(
+        return $this->parseHtmlByName('attach_link_form_field.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('post', 'attach_link_form_field'),
             'style_prefix' => $sStylePrefix,
             'links' => $sLinks
@@ -585,17 +585,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bTmplVarsEmbed = false;
         $aTmplVarsEmbed = array();
+        $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
         $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
         $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-        if(!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match($sEmbedlyPattern, $aLink['url'])) {
+        if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
             $bTmplVarsEmbed = true;
             $aTmplVarsEmbed = array(
                 'style_prefix' => $sStylePrefix,
-            	'embed' => $this->parsePageByName('bx_a.html', array(
+            	'embed' => $this->parseHtmlByName('bx_a.html', array(
             		'href' => $aLink['url'],
             		'title' => bx_html_attribute($aLink['title']),
             		'bx_repeat:attrs' => array(
-                        array('key' => 'class', 'value' => 'bx-link-embed')
+                        array('key' => 'class', 'value' => 'bx-link')
                     ),
             		'content' => $aLink['title'],
             	))
@@ -624,7 +625,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             		)
             	),
     			'url' => $aLink['url'],
-            	'link' => $this->parsePageByName('bx_a.html', array(
+            	'link' => $this->parseHtmlByName('bx_a.html', array(
             		'href' => $aLink['url'],
             		'title' => bx_html_attribute($aLink['title']),
             		'bx_repeat:attrs' => $aLinkAttrs,
@@ -633,7 +634,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             );
         }
 
-        return $this->parsePageByName('attach_link_item.html', array(
+        return $this->parseHtmlByName('attach_link_item.html', array(
             'html_id' => $sLinkIdPrefix . $aLink['id'],
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
@@ -883,17 +884,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             foreach($aContent['links'] as $aLink) {
                 $bTmplVarsEmbed = false;
                 $aTmplVarsEmbed = array();
+                $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
                 $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
                 $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-                if(!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match($sEmbedlyPattern, $aLink['url'])) {
+                if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
                     $bTmplVarsEmbed = true;
                     $aTmplVarsEmbed = array(
                         'style_prefix' => $sStylePrefix,
-                    	'embed' => $this->parsePageByName('bx_a.html', array(
+                    	'embed' => $this->parseHtmlByName('bx_a.html', array(
                     		'href' => $aLink['url'],
                     		'title' => bx_html_attribute($aLink['title']),
                     		'bx_repeat:attrs' => array(
-                                array('key' => 'class', 'value' => 'bx-link-embed')
+                                array('key' => 'class', 'value' => 'bx-link')
                             ),
                     		'content' => $aLink['title'],
                     	))
@@ -916,7 +918,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     			'thumbnail' => $aLink['thumbnail']
                     		)
                     	),
-                    	'link' => $this->parsePageByName('bx_a.html', array(
+                    	'link' => $this->parseHtmlByName('bx_a.html', array(
     		        		'href' => $aLink['url'],
     		        		'title' => $aLink['title'],
     		        		'bx_repeat:attrs' => $aLinkAttrs,
