@@ -22,10 +22,11 @@
 		if(!sEmbedlyKey || !sEmbedlyPattern)
 			return this;
 
-        var eBox = $(this).parents('.bx-db-content, .bx-def-box');
+        var eBox = $(this).parent();
         var iMaxWidth = eBox.size() ? eBox.innerWidth() : $(window).width() - 70;
+        if (iMaxWidth > o['max-width']) 
+        	iMaxWidth = o['max-width'];
 
-        if (iMaxWidth > o['max-width']) iMaxWidth = o['max-width']; 
 		return this.each(function() {
 			$(this).embedly({
                 key: sEmbedlyKey,
