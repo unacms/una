@@ -756,10 +756,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject, $sDisplayName, $oTemplate = false)
+    static public function getObjectInstance($sObject, $sDisplayName, $oTemplate = false, $sParam = '')
     {
-        if (isset($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName]))
-            return $GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName];
+        $sKey = 'BxDolForm!'.$sObject.'!'.$sDisplayName.'!'.$sParam;
+
+        if (isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aObject = BxDolFormQuery::getFormArray($sObject, $sDisplayName);
         if (!$aObject || !is_array($aObject))
@@ -774,7 +776,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         $o = new $sClass($aObject, $oTemplate);
 
-        return ($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     /**
