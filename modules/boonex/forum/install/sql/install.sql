@@ -243,7 +243,6 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_search_full', 'do_submit', 2147483647, 1, 4);
 
 
-
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_forum_cats', '_bx_forum_pre_lists_cats', 'bx_forum', '0');
@@ -251,6 +250,23 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUE
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_forum_cats', '', 0, '_sys_please_select', ''),
 ('bx_forum_cats', '1', 1, '_bx_forum_cat_General', '');
+
+
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+(@sName, '_bx_forum', @sName, 'added', 'edited', 'deleted', '', ''),
+('bx_forum_cmts', '_bx_forum_cmts', @sName, 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
+
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+(@sName, @sName, 'id', '', 'a:1:{s:4:"sort";a:2:{s:5:"stick";s:4:"desc";s:12:"lr_timestamp";s:4:"desc";}}'),
+(@sName, 'bx_forum_administration', 'id', '', ''),
+(@sName, 'bx_forum_common', 'id', '', '');
+
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_forum', 'bx_forum', 'bx_forum', '_bx_forum_search_extended', 1, '', ''),
+('bx_forum_cmts', 'bx_forum_cmts', 'bx_forum', '_bx_forum_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 
 -- STUDIO: page & widget

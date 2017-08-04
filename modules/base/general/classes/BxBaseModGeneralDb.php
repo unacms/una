@@ -74,6 +74,17 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                             $sSearchValue = " IN (" . $this->implode_escape($aSearchParam['value']) . ")";
                             break;
 
+                        case 'and':
+                            $iResult = 0;
+                            if (is_array($aSearchParam['value']))
+                                foreach ($aSearchParam['value'] as $iValue)
+                                    $iResult |= pow (2, $iValue - 1);
+                            else 
+                                $iResult = (int)$aSearchParam['value'];
+
+                            $sSearchValue = " & " . $iResult . "";
+                            break;
+
                         default:
                              $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
                              $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];                             

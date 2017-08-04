@@ -91,6 +91,7 @@
     }
 	div.cmt-head,
 	div.cmt-subhead {
+		text-align: left;
     	text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
@@ -108,6 +109,7 @@
     /*--- Comment Body ---*/
     div.cmt-cont {
         position: relative;
+    	text-align: left;
     }
 	div.cmt-cont .bullet {
 		padding: 0px 5px;
@@ -146,6 +148,7 @@
     /*--- Comment Actions ---*/
 	div.cmt-actions {
 		position: relative;
+		text-align: left;
 	}
 	div.cmt-ago,
 	div.cmt-comment-manage-link, 

@@ -141,7 +141,7 @@ BxDolStudioFormsFields.prototype.onChangeVisibleFor = function(oSelect) {
 BxDolStudioFormsFields.prototype.onChangeValues = function(iUseForSets, oSelect) {
 	var $this = this;
 	var oDate = new Date();
-	var oPopup = $(oSelect).parents('.bx-popup-applied');
+	var oPopup = $(oSelect).parents('.bx-popup-applied:first');
 
 	bx_loading(oPopup, true);
 
@@ -157,7 +157,7 @@ BxDolStudioFormsFields.prototype.onChangeValues = function(iUseForSets, oSelect)
 			bx_loading(oPopup, false);
 
 			if(oData.content)
-				$('#adm-form-field-add-value').html(oData.content);
+				oPopup.find('#adm-form-field-add-value').html(oData.content);
 		},
 		'json'
 	);

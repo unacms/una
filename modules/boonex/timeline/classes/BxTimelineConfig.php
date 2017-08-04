@@ -266,7 +266,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sPrefix = $this->getPrefix('common_post');
         return strpos($sType, $sPrefix) === false && !empty($sAction);
     }
-    public function getSystemData(&$aEvent)
+    public function getSystemData(&$aEvent, $aBrowseParams = array())
     {
 		$sHandler = $aEvent['type'] . '_' . $aEvent['action'];
         if(!$this->isHandler($sHandler))
@@ -276,7 +276,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         if(empty($aHandler['module_name']) || empty($aHandler['module_class']) || empty($aHandler['module_method']))
         	return false; 
 
-		return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
+		return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent, $aBrowseParams), $aHandler['module_class']);
     }
     public function getSystemDataByDescriptor($sType, $sAction, $iObjectId)
     {

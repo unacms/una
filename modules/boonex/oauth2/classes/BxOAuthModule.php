@@ -167,7 +167,7 @@ class BxOAuthModule extends BxDolModule
             $_POST['profile_id'] = $aProfile['id'];
         }
 
-        if (!($iProfileId = $this->_oDb->getSavedProfile($aProfiles)) && empty($_POST)) {
+        if (!($iProfileId = $this->_oDb->getSavedProfile(bx_get('client_id'), $aProfiles)) && empty($_POST)) {
             $oPage = BxDolPage::getObjectInstanceByURI('oauth-authorization');
             $this->_oTemplate->getPage(false, $oPage->getCode());
             return;
@@ -204,6 +204,29 @@ class BxOAuthModule extends BxDolModule
 
     function serviceAddClient ($aClient)
     {
+        if (!isset($aClient['client_id'])) {
+            bx_import('FormAdd', 'bx_oauth');
+            for ($i = 0; $i < 99 ; ++$i) {
+                $aClient['client_id'] = strtolower(genRndPwd(BxOAuthFormAdd::$LENGTH_ID, false));
+                if (!$this->_oDb->getClientTitle($aClient['client_id'])) // check for uniq
+                    break;
+            }
+        }
+
+        if (!isset($aClient['client_secret'])) {
+            bx_import('FormAdd', 'bx_oauth');
+            $aClient['client_secret'] = strtolower(genRndPwd(BxOAuthFormAdd::$LENGTH_SECRET, false));
+        }
+
+        if (!isset($aClient['scope']))
+            $aClient['scope'] = 'market';
+
+        if (!isset($aClient['user_id']))
+            $aClient['user_id'] = bx_get_logged_profile_id();
+
+        if (!isset($aClient['title']) && isset($aClient['redirect_uri']) && ($sHost = parse_url($aClient['redirect_uri'], PHP_URL_HOST)))
+            $aClient['title'] = $sHost;
+
     	return $this->_oDb->addClient($aClient);
     }
 

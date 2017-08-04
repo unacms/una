@@ -111,7 +111,7 @@ class BxAlbumsModule extends BxBaseModTextModule
      * @param $iMediaId media ID, if it's omitted then it's taken from 'id' GET variable.
      * @return HTML string with block content. On error false or empty string is returned.
      */
-    public function serviceMediaSocialSharing ($iMediaId = 0, $bEnableCommentsBtn = false, $bEnableSocialSharing = true)
+    public function serviceMediaSocialSharing ($iMediaId = 0, $bEnableCommentsBtn = false, $bEnableSocialSharing = true, $bShowAsButton = true)
     {
         if (!$iMediaId)
             $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -123,6 +123,7 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         $CNF = &$this->_oConfig->CNF;
         return $this->_entitySocialSharing ($iMediaId, array(
+            'show_as_button' => $bShowAsButton,
             'id_timeline' => 0,
         	'id_thumb' => $aMediaInfo['file_id'],
         	'title' => $aMediaInfo['title'],
@@ -346,7 +347,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $aParams;
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 

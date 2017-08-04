@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_polls',
     'title' => 'Polls',
     'note' => 'Basic poll module.',
-    'version' => '9.0.1.DEV',
+    'version' => '9.0.2.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
@@ -70,6 +70,14 @@ $aConfig = array(
         'bx_polls_cover'
     ),
 
+	/**
+     * Extended Search Forms.
+     */
+    'esearches' => array(
+        'bx_polls',
+    	'bx_polls_cmts',
+    ),
+
     /**
      * Installation/Uninstallation Section.
      */
@@ -80,6 +88,7 @@ $aConfig = array(
     ),
     'uninstall' => array (
     	'process_storages' => 1,
+    	'process_esearches' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
     	'update_relations' => 1,
@@ -93,6 +102,7 @@ $aConfig = array(
     'enable_success' => array(
         'process_menu_triggers' => 1,
         'process_page_triggers' => 1,
+    	'process_esearches' => 1,
     	'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),

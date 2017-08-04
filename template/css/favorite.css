@@ -30,8 +30,8 @@ div.bx-favorite div.bx-favorite-counter-holder {
 }
 
 /*--- Favorite Element Styles ---*/
-.bx-favorite-favorite .bx-favorite-element-holder,
-.bx-favorite-favorite .bx-favorite-counter-holder {
+.bx-favorite .bx-favorite-element-holder,
+.bx-favorite .bx-favorite-counter-holder {
 	line-height: 20px;
 	line-height: 1.25rem;
 }
@@ -56,4 +56,8 @@ div.bx-favorite div.bx-favorite-counter-holder {
 .bx-favorite-button .bx-favorite-counter-holder,
 .bx-favorite-button-small .bx-favorite-counter-holder {
 	font-size: 1.5rem;
+}
+
+.bx-favorite-link .bx-favorite-counter-holder.bx-btn-border {
+	border-width: 0px;
 }

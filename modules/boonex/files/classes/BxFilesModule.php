@@ -179,9 +179,9 @@ class BxFilesModule extends BxBaseModTextModule
         }
     }
 
-    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
-        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo);
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
 
         $aFile = $this->getContentFile($aContentInfo);
         if (!$aFile['is_image']) {
@@ -200,7 +200,7 @@ class BxFilesModule extends BxBaseModTextModule
         return $aResult;
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $aFile = $this->getContentFile($aContentInfo);
         if (!$aFile)

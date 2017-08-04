@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_forum',
     'title' => 'Discussions',
     'note' => 'Discussions module.',
-    'version' => '9.0.3.DEV',
+    'version' => '9.0.4.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
@@ -69,6 +69,14 @@ $aConfig = array(
     ),
 
     /**
+     * Extended Search Forms.
+     */
+    'esearches' => array(
+        'bx_forum',
+    	'bx_forum_cmts',
+    ),
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -78,6 +86,7 @@ $aConfig = array(
     ),
     'uninstall' => array (
     	'process_storages' => 1,
+    	'process_esearches' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
     	'update_relations' => 1,
@@ -91,6 +100,7 @@ $aConfig = array(
 	'enable_success' => array(
     	'process_menu_triggers' => 1,
         'process_page_triggers' => 1,
+    	'process_esearches' => 1,
     	'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),

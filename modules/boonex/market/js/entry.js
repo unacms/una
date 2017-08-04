@@ -24,20 +24,20 @@ function BxMarketEntry(oOptions) {
     });
 }
 
-BxMarketEntry.prototype.updateName = function(sTitleId, sNameId) {
-	var sTitle = jQuery("[name='" + sTitleId + "']").val();
-	sTitle = sTitle.replace(/[^A-Za-z0-9_]/g, '-');
-	sTitle = sTitle.replace(/[-]{2,}/g, '-');
-
-	jQuery("[name='" + sNameId + "']").val(sTitle.toLowerCase());
-};
-
 BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
 	var oDate = new Date();
 
-	var sTitle = jQuery("[name='" + sTitleId + "']").val();
-	if(sTitle.length == 0)
+	var oName = jQuery("[name='" + sNameId + "']");
+	var oTitle = jQuery("[name='" + sTitleId + "']");
+
+	var sName = oName.val();
+	var sTitle = oTitle.val();	
+	if(sName.length != 0 || sTitle.length == 0)
 		return;
+
+	sName = sTitle.replace(/[^A-Za-z0-9_]/g, '-');
+	sName = sName.replace(/[-]{2,}/g, '-');
+	oName.val(sName.toLowerCase());
 
 	jQuery.get(
 		this._sActionsUrl + 'check_name',
@@ -49,7 +49,7 @@ BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
     		if(!oData || oData.name == undefined)
     			return;
 
-    		jQuery("[name='" + sNameId + "']").val(oData.name);
+    		oName.val(oData.name);
     	},
     	'json'
 	);

@@ -518,7 +518,7 @@ BLAH;
         $sCode = $this->{$this->_sSectionClose}();
 
         if (empty($aAttrs))
-            $aAttrs['class'] = 'bx-form-collapsable ' . $sClassAddCollapsable;
+            $aAttrs = array('class' => 'bx-form-collapsable ' . $sClassAddCollapsable);
         else
             $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
 

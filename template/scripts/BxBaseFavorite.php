@@ -105,14 +105,22 @@ class BxBaseFavorite extends BxDolFavorite
 
     public function getCounter($aParams = array())
     {
+        $bShowDoFavoriteAsButtonSmall = isset($aParams['show_do_favorite_as_button_small']) && $aParams['show_do_favorite_as_button_small'] == true;
+        $bShowDoFavoriteAsButton = !$bShowDoFavoriteAsButtonSmall && isset($aParams['show_do_favorite_as_button']) && $aParams['show_do_favorite_as_button'] == true;
+
         $aFavorite = $this->_oQuery->getFavorite($this->getId());
+        $sClass = $this->_sStylePrefix . '-counter';
+        if($bShowDoFavoriteAsButtonSmall)
+            $sClass .= ' bx-btn-small-height';
+        if($bShowDoFavoriteAsButton)
+            $sClass .= ' bx-btn-height';
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
             'href' => 'javascript:void(0)',
             'title' => _t('_favorite_do_favorite_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter bx-btn-height'),
+                array('key' => 'class', 'value' => $sClass),
                 array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)')
             ),
             'content' => (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : ''
@@ -157,7 +165,7 @@ class BxBaseFavorite extends BxDolFavorite
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
-            'class' => $this->_sStylePrefix . ($bShowDoFavoriteAsButton ? '-button' : '') . ($bShowDoFavoriteAsButtonSmall ? '-button-small' : ''),
+            'class' => $this->_sStylePrefix . ($bShowDoFavoriteAsButton ? '-button' : '-link') . ($bShowDoFavoriteAsButtonSmall ? '-button-small' : ''),
             'count' => $aFavorite['count'],
             'do_favorite' => $this->_getDoFavorite($aParams, $bAllowedFavorite),
             'bx_if:show_counter' => array(
@@ -168,7 +176,7 @@ class BxBaseFavorite extends BxDolFavorite
         				'condition' => !$bCount,
         				'content' => array()
         			),
-                    'counter' => $this->getCounter()
+                    'counter' => $this->getCounter($aParams)
                 )
             ),
             'script' => $this->getJsScript($bDynamicMode)

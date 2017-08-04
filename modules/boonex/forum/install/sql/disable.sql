@@ -39,10 +39,6 @@ DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_forum_allow_view_to');
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_forum', 'bx_forum_cmts');
 
 
--- SEARCH EXTENDED
-DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_forum';
-
-
 -- CONNECTIONS
 DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_forum_subscribers';
 
@@ -73,12 +69,6 @@ DELETE FROM `sys_objects_favorite` WHERE `Name` = @sName;
 
 -- FEATURED
 DELETE FROM `sys_objects_feature` WHERE `name` = @sName;
-
-
--- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN (@sName, 'bx_forum_cmts');
-
-DELETE FROM `sys_content_info_grids` WHERE `object` IN (@sName);
 
 
 -- STATS

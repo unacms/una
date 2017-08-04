@@ -1,6 +1,5 @@
 
 -- SETTINGS
-
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
 ('modules', 'bx_albums', '_bx_albums', 'bx_albums@modules/boonex/albums/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
@@ -18,13 +17,13 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_albums_rss_num', '10', @iCategId, '_bx_albums_option_rss_num', 'digit', '', '', '', 20),
 ('bx_albums_searchable_fields', 'title,text', @iCategId, '_bx_albums_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
+
 -- PAGE: create entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_create_entry', '_bx_albums_page_title_sys_create_entry', '_bx_albums_page_title_create_entry', 'bx_albums', 5, 2147483647, 1, 'create-album', 'page.php?i=create-album', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_albums_create_entry', 1, 'bx_albums', '_bx_albums_page_block_title_create_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
-
 
 -- PAGE: add images
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -40,14 +39,12 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_albums_edit_entry', 1, 'bx_albums', '_bx_albums_page_block_title_edit_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:11:"entity_edit";}', 0, 0, 0);
 
-
 -- PAGE: delete entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_delete_entry', '_bx_albums_page_title_sys_delete_entry', '_bx_albums_page_title_delete_entry', 'bx_albums', 5, 2147483647, 1, 'delete-album', '', '', '', '', 0, 1, 0, 'BxAlbumsPageEntry', 'modules/boonex/albums/classes/BxAlbumsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_albums_delete_entry', 1, 'bx_albums', '_bx_albums_page_block_title_delete_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:13:"entity_delete";}', 0, 0, 0);
-
 
 -- PAGE: view entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -64,7 +61,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 ('bx_albums_view_entry', 3, 'bx_albums', '_bx_albums_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0);
 
-
 -- PAGE: view media
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_media', 'view-album-media', '_bx_albums_page_title_sys_view_media', '_bx_albums_page_title_view_media', 'bx_albums', 10, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxAlbumsPageMedia', 'modules/boonex/albums/classes/BxAlbumsPageMedia.php');
@@ -76,14 +72,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_albums_view_media', 4, 'bx_albums', '', '_bx_albums_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"media_comments\";}', 0, 0, 1, 0),
 ('bx_albums_view_media', 4, 'bx_albums', '', '_bx_albums_page_block_title_entry_view_media_exif', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:10:\"media_exif\";}', 0, 0, 1, 1);
 
-
 -- PAGE: view entry comments
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_entry_comments', '_bx_albums_page_title_sys_view_entry_comments', '_bx_albums_page_title_view_entry_comments', 'bx_albums', 5, 2147483647, 1, 'view-album-comments', '', '', '', '', 0, 1, 0, 'BxAlbumsPageEntry', 'modules/boonex/albums/classes/BxAlbumsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_albums_view_entry_comments', 1, 'bx_albums', '_bx_albums_page_block_title_entry_comments', '_bx_albums_page_block_title_entry_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1);
-
 
 -- PAGE: popular albums
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -171,26 +165,21 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 
 -- MENU: add to site menu
-
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_site', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_home', '_bx_albums_menu_item_title_entries_home', 'page.php?i=albums-home', '', '', 'picture-o col-blue1', 'bx_albums_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to homepage menu
-
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_homepage', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_home', '_bx_albums_menu_item_title_entries_home', 'page.php?i=albums-home', '', '', 'picture-o col-blue1', 'bx_albums_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
 -- MENU: add to "add content" menu
-
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_add_content_links', 'bx_albums', 'create-album', '_bx_albums_menu_item_title_system_create_entry', '_bx_albums_menu_item_title_create_entry', 'page.php?i=create-album', '', '', 'picture-o col-blue1', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
-
 -- MENU: actions menu for view entry 
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view', '_bx_albums_menu_title_view_entry', 'bx_albums_view', 'bx_albums', 9, 0, 1, 'BxAlbumsMenuView', 'modules/boonex/albums/classes/BxAlbumsMenuView.php');
 
@@ -203,7 +192,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_albums_view', 'bx_albums', 'delete-album', '_bx_albums_menu_item_title_system_delete_entry', '_bx_albums_menu_item_title_delete_entry', 'page.php?i=delete-album&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 
 -- MENU: actions menu for view media
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_media', '_bx_albums_menu_title_view_media', 'bx_albums_view_media', 'bx_albums', 9, 0, 1, 'BxAlbumsMenuView', 'modules/boonex/albums/classes/BxAlbumsMenuView.php');
 
@@ -215,7 +203,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_albums_view_media', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_album', '_bx_albums_menu_item_title_edit_album', 'page.php?i=edit-album&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 20);
 
 -- MENU: actions menu for my entries
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_my', '_bx_albums_menu_title_entries_my', 'bx_albums_my', 'bx_albums', 9, 0, 1, 'BxAlbumsMenu', 'modules/boonex/albums/classes/BxAlbumsMenu.php');
 
@@ -225,9 +212,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_albums_my', 'bx_albums', 'create-album', '_bx_albums_menu_item_title_system_create_entry', '_bx_albums_menu_item_title_create_entry', 'page.php?i=create-album', '', '', 'plus', '', 2147483647, 1, 0, 0);
 
-
 -- MENU: module sub-menu
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_submenu', '_bx_albums_menu_title_submenu', 'bx_albums_submenu', 'bx_albums', 8, 0, 1, '', '');
 
@@ -242,7 +227,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_albums_submenu', 'bx_albums', 'albums-manage', '_bx_albums_menu_item_title_system_entries_manage', '_bx_albums_menu_item_title_entries_manage', 'page.php?i=albums-manage', '', '', '', '', 2147483646, 1, 1, 5);
 
 -- MENU: sub-menu for view entry
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_submenu', '_bx_albums_menu_title_view_entry_submenu', 'bx_albums_view_submenu', 'bx_albums', 8, 0, 1, 'BxAlbumsMenuView', 'modules/boonex/albums/classes/BxAlbumsMenuView.php');
 
@@ -274,19 +258,16 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_account_dashboard_manage_tools', 'bx_albums', 'albums-administration', '_bx_albums_menu_item_title_system_admt_albums', '_bx_albums_menu_item_title_admt_albums', 'page.php?i=albums-administration', '', '_self', '', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
-
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('trigger_profile_view_submenu', 'bx_albums', 'albums-author', '_bx_albums_menu_item_title_system_view_entries_author', '_bx_albums_menu_item_title_view_entries_author', 'page.php?i=albums-author&profile_id={profile_id}', '', '', 'picture-o col-blue1', '', 2147483647, 1, 0, 0);
 
 
 -- PRIVACY 
-
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_albums_allow_view_to', 'bx_albums', 'view', '_bx_albums_form_entry_input_allow_view_to', '3', 'bx_albums_albums', 'id', 'author', '', '');
 
 
 -- ACL
-
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_albums', 'create entry', NULL, '_bx_albums_acl_action_create_entry', '', 1, 3);
 SET @iIdActionEntryCreate = LAST_INSERT_ID();
@@ -361,12 +342,6 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `GlobalSearch`
 ('bx_albums_media_cmts', '_bx_albums_media_cmts', @iSearchOrder + 4, 1, 'BxAlbumsCmtsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResultMedia.php'),
 ('bx_albums_media_camera', '_bx_albums_media', @iSearchOrder + 5, 0, 'BxAlbumsSearchResultMediaCamera', 'modules/boonex/albums/classes/BxAlbumsSearchResultMediaCamera.php');
 
--- SEARCH EXTENDED
-INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
-('bx_albums', 'bx_albums', 'bx_albums', '_bx_albums_search_extended', 1, '', ''),
-('bx_albums_media', 'bx_albums_media', 'bx_albums', '_bx_albums_search_extended_media', 1, '', ''),
-('bx_albums_cmts', 'bx_albums_cmts', 'bx_albums', '_bx_albums_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', ''),
-('bx_albums_media_cmts', 'bx_albums_media_cmts', 'bx_albums', '_bx_albums_search_extended_media_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
@@ -374,22 +349,13 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 ('bx_albums_media', 'bx_albums_meta_keywords_media', '', '', '', ''),
 ('bx_albums_media_camera', 'bx_albums_meta_keywords_media_camera', '', '', '', '');
 
--- CONTENT INFO
-INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_albums', '_bx_albums', 'bx_albums', 'added', 'edited', 'deleted', '', ''),
-('bx_albums_media', '_bx_albums_media', 'bx_albums', 'media_added', '', 'media_deleted', 'BxAlbumsContentInfoMedia', 'modules/boonex/albums/classes/BxAlbumsContentInfoMedia.php'),
-('bx_albums_cmts', '_bx_albums_cmts', 'bx_albums', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', ''),
-('bx_albums_media_cmts', '_bx_albums_media_cmts', 'bx_albums_media', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
-
-INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-('bx_albums', 'bx_albums_administration', 'id', '', ''),
-('bx_albums', 'bx_albums_common', 'id', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
 INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
 ('bx_albums', 'bx_albums', '_bx_albums', 'page.php?i=albums-home', 'picture-o col-blue1', 'SELECT COUNT(*) FROM `bx_albums_albums` WHERE 1 AND `status` = ''active'' AND `status_admin` = ''active''', @iMaxOrderStats + 1),
 ('bx_albums', 'bx_albums_media', '_bx_albums_media', '', 'picture-o col-blue1', 'SELECT COUNT(*) FROM `bx_albums_files` WHERE 1', @iMaxOrderStats + 2);
+
 
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
@@ -399,11 +365,11 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 ('bx_albums_growth_media', '_bx_albums_chart_growth_media', 'bx_albums_files', 'added', '', '', '', 1, @iMaxOrderCharts + 3, 'BxDolChartGrowth', ''),
 ('bx_albums_growth_speed_media', '_bx_albums_chart_growth_speed_media', 'bx_albums_files', 'added', '', '', '', 1, @iMaxOrderCharts + 4, 'BxDolChartGrowthSpeed', '');
 
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_albums_administration', 'Sql', 'SELECT * FROM `bx_albums_albums` WHERE 1 ', 'bx_albums_albums', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxAlbumsGridAdministration', 'modules/boonex/albums/classes/BxAlbumsGridAdministration.php'),
 ('bx_albums_common', 'Sql', 'SELECT * FROM `bx_albums_albums` WHERE 1 ', 'bx_albums_albums', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxAlbumsGridCommon', 'modules/boonex/albums/classes/BxAlbumsGridCommon.php');
-
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_albums_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
@@ -428,11 +394,13 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_albums_common', 'single', 'delete', '_bx_albums_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_albums_common', 'single', 'settings', '_bx_albums_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
+
 -- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_albums_simple', 1, 'BxAlbumsUploaderSimple', 'modules/boonex/albums/classes/BxAlbumsUploaderSimple.php'),
 ('bx_albums_html5', 1, 'BxAlbumsUploaderHTML5', 'modules/boonex/albums/classes/BxAlbumsUploaderHTML5.php'),
 ('bx_albums_crop', 1, 'BxAlbumsUploaderCrop', 'modules/boonex/albums/classes/BxAlbumsUploaderCrop.php');
+
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

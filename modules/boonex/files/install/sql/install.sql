@@ -2,7 +2,6 @@
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 -- TABLE: entries
-
 CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(10) unsigned NOT NULL,
@@ -29,7 +28,6 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
 );
 
 -- TABLE: storages & transcoders
-
 CREATE TABLE IF NOT EXISTS `bx_files_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
@@ -63,7 +61,6 @@ CREATE TABLE IF NOT EXISTS `bx_files_photos_resized` (
 );
 
 -- TABLE: comments
-
 CREATE TABLE IF NOT EXISTS `bx_files_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
@@ -83,7 +80,6 @@ CREATE TABLE IF NOT EXISTS `bx_files_cmts` (
 );
 
 -- TABLE: votes
-
 CREATE TABLE IF NOT EXISTS `bx_files_votes` (
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
@@ -103,7 +99,6 @@ CREATE TABLE IF NOT EXISTS `bx_files_votes_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: views
-
 CREATE TABLE `bx_files_views_track` (
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
@@ -113,7 +108,6 @@ CREATE TABLE `bx_files_views_track` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: metas
-
 CREATE TABLE `bx_files_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
@@ -122,7 +116,6 @@ CREATE TABLE `bx_files_meta_keywords` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: reports
-
 CREATE TABLE IF NOT EXISTS `bx_files_reports` (
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
@@ -142,7 +135,6 @@ CREATE TABLE IF NOT EXISTS `bx_files_reports_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: favorites
-
 CREATE TABLE `bx_files_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
@@ -152,7 +144,6 @@ CREATE TABLE `bx_files_favorites_track` (
 
 
 -- STORAGES & TRANSCODERS
-
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_files_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_files', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0),
 ('bx_files_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_files_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
@@ -166,7 +157,6 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_files_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
 -- FORMS
-
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_files', 'bx_files', '_bx_files_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_files_main', 'id', '', '', 'do_submit', '', 0, 1, 'BxFilesFormEntry', 'modules/boonex/files/classes/BxFilesFormEntry.php'),
 ('bx_files_upload', 'bx_files', '_bx_files_form_upload', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_files_main', 'id', '', '', 'do_submit', '', 0, 1, 'BxFilesFormUpload', 'modules/boonex/files/classes/BxFilesFormUpload.php');
@@ -233,7 +223,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_files_entry_upload', 'do_submit', 2147483647, 1, 5);
 
 -- PRE-VALUES
-
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_files_cats', '_bx_files_pre_lists_cats', 'bx_files', '0');
 
@@ -252,37 +241,44 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_files_cats', '11', 11, '_bx_files_cat_backup', '');
 
 -- COMMENTS
-
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_files', 'bx_files', 'bx_files_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-file&id={object_id}', '', 'bx_files_main', 'id', 'author', 'title', 'comments', '', '');
 
 -- VOTES
-
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_files', 'bx_files_votes', 'bx_files_votes_track', '604800', '1', '1', '0', '1', 'bx_files_main', 'id', 'author', 'rate', 'votes', '', '');
 
 -- REPORTS
-
 INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_files', 'bx_files_reports', 'bx_files_reports_track', '1', 'page.php?i=view-file&id={object_id}', 'bx_files_main', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
-
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_files', 'bx_files_views_track', '86400', '1', 'bx_files_main', 'id', 'author', 'views', '', '');
 
 -- FAFORITES
-
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_files', 'bx_files_favorites_track', '1', '1', '1', 'page.php?i=view-file&id={object_id}', 'bx_files_main', 'id', 'author', 'favorites', '', '');
 
 -- FEATURED
-
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
 ('bx_files', '1', '1', 'page.php?i=view-file&id={object_id}', 'bx_files_main', 'id', 'author', 'featured', '', '');
 
--- STUDIO: page & widget
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_files', '_bx_files', 'bx_files', 'added', 'edited', 'deleted', '', ''),
+('bx_files_cmts', '_bx_files_cmts', 'bx_files', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_files', 'bx_files_administration', 'id', '', ''),
+('bx_files', 'bx_files_common', 'id', '', '');
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_files', 'bx_files', 'bx_files', '_bx_files_search_extended', 1, '', ''),
+('bx_files_cmts', 'bx_files_cmts', 'bx_files', '_bx_files_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
+
+-- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'bx_files', '_bx_files', '_bx_files', 'bx_files@modules/boonex/files/|std-icon.svg');
 SET @iPageId = LAST_INSERT_ID();

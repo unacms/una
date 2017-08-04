@@ -9,6 +9,10 @@
 
 class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 {
+    protected $sSessionKeyStateToken;
+    protected $sSessionKeyCsrfToken;
+    protected $sSessionKeyCsrfTokenTime;
+
 	protected $sApiUrl;
 	protected $sScope;
 	protected $sPageHandle;
@@ -19,6 +23,10 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::__construct ();
+
+        $this->sSessionKeyStateToken = 'bx_studio_store_state_token';
+        $this->sSessionKeyCsrfToken = 'bx_studio_store_csrf_token';
+        $this->sSessionKeyCsrfTokenTime = 'bx_studio_store_csrf_token_time';
 
         $this->sKey = getParam('sys_oauth_key');
         $this->sSecret = getParam('sys_oauth_secret');
@@ -51,7 +59,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 
 		$bCode = bx_get('code') !== false;
 		$bState = bx_get('state') !== false;
-	    if($bCode && $bState && $this->_getCsrfToken() != bx_get('state'))
+	    if($bCode && $bState && $this->_getState() != bx_get('state'))
             return _t('_adm_err_oauth_cannot_read_answer');
 
 		//--- Get access token.
@@ -64,12 +72,14 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 
     protected function getRequestToken()
     {
+        
+
     	$sUrl = bx_append_url_params($this->sApiUrl . 'auth', array(
 			'response_type' => 'code',
 			'client_id' => $this->sKey,
 			'redirect_uri' => $this->sPageHandle,
 			'scope' => $this->sScope,
-			'state' => $this->_genCsrfToken(),
+			'state' => $this->_genState(),
 		));
 
 		return array(
@@ -146,30 +156,68 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
     	return false;
     }
 
-	protected function _genCsrfToken($bReturn = false)
+    protected function _genState()
     {
-        if (getParam('sys_security_form_token_enable') != 'on' || defined('BX_DOL_CRON_EXECUTE'))
+        $sResult = $this->_genCsrfToken();
+        if($sResult !== false)
+            return $sResult;
+
+        return $this->_genStateToken();
+    }
+
+    protected function _getState()
+    {
+        $sResult = $this->_getCsrfToken();
+        if($sResult !== false)
+            return $sResult;
+
+        return $this->_getStateToken();
+    }
+
+	protected function _genCsrfToken()
+    {
+        if(getParam('sys_security_form_token_enable') != 'on' || defined('BX_DOL_CRON_EXECUTE'))
             return false;
 
         $oSession = BxDolSession::getInstance();
 
         $iCsrfTokenLifetime = (int)getParam('sys_security_form_token_lifetime');
-        if ($oSession->getValue('bx_studio_store_csrf_token') === false || ($iCsrfTokenLifetime != 0 && time() - (int)$oSession->getValue('bx_studio_store_csrf_token_time') > $iCsrfTokenLifetime)) {
-            $sToken = genRndPwd(20, false);
-            $oSession->setValue('bx_studio_store_csrf_token', $sToken);
-            $oSession->setValue('bx_studio_store_csrf_token_time', time());
-        }
-        else {
-            $sToken = $oSession->getValue('bx_studio_store_csrf_token');
-        }
+        $sToken = $oSession->getValue($this->sSessionKeyCsrfToken);
+        if($sToken !== false && ($iCsrfTokenLifetime == 0 || time() - (int)$oSession->getValue($this->sSessionKeyCsrfTokenTime) < $iCsrfTokenLifetime))
+            return $sToken;
+
+        $sToken = genRndPwd(20, false);
+        $oSession->setValue($this->sSessionKeyCsrfToken, $sToken);
+        $oSession->setValue($this->sSessionKeyCsrfTokenTime, time());
 
         return $sToken;
     }
 
     protected function _getCsrfToken()
     {
+        if(getParam('sys_security_form_token_enable') != 'on' || defined('BX_DOL_CRON_EXECUTE'))
+            return false;
+
+        return BxDolSession::getInstance()->getValue($this->sSessionKeyCsrfToken);
+    }
+
+    protected function _genStateToken()
+    {
         $oSession = BxDolSession::getInstance();
-        return $oSession->getValue('bx_studio_store_csrf_token');
+
+        $sToken = $oSession->getValue($this->sSessionKeyStateToken);
+        if($sToken !== false)
+            return $sToken;
+
+        $sToken = genRndPwd(20, false);
+        $oSession->setValue($this->sSessionKeyStateToken, $sToken);
+
+        return $sToken;
+    }
+
+    protected function _getStateToken()
+    {
+        return BxDolSession::getInstance()->getValue($this->sSessionKeyStateToken);
     }
 }
 

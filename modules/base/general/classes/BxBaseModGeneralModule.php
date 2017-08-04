@@ -590,7 +590,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * Entry post for Timeline module
      */
-    public function serviceGetTimelinePost($aEvent)
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
         $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         if(empty($aContentInfo) || !is_array($aContentInfo))
@@ -654,7 +654,7 @@ class BxBaseModGeneralModule extends BxDolModule
         	'sample_wo_article' => $CNF['T']['txt_sample_single'],
     	    'sample_action' => isset($CNF['T']['txt_sample_single_action']) ? $CNF['T']['txt_sample_single_action'] : '',
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
-            'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo), //a string to display or array to parse default template before displaying.
+            'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
@@ -988,14 +988,14 @@ class BxBaseModGeneralModule extends BxDolModule
         exit;
     }
 
-    protected function _getContentForTimelinePost($aEvent, $aContentInfo)
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
     	$CNF = &$this->_oConfig->CNF;
 
     	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
     	//--- Image(s)
-        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl);
+        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
     	return array(
     		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
@@ -1009,7 +1009,7 @@ class BxBaseModGeneralModule extends BxDolModule
 		);
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1045,6 +1045,8 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _entitySocialSharing ($iId, $aParams = array())
     {
+        $bShowAsButton = !isset($aParams['show_as_button']) || $aParams['show_as_button'] === true;
+
         $sUrl = !empty($aParams['uri_view_entry']) ? BxDolPermalinks::getInstance()->permalink('page.php?i=' . $aParams['uri_view_entry'] . '&id=' . $iId) : '';
         $sTitle = !empty($aParams['title']) ? $aParams['title'] : '';
 
@@ -1054,6 +1056,9 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oComments) {
             $iNum = $oComments->getCommentsCountAll();
             $sComments = $this->_oTemplate->parseHtmlByName('comments-item.html', array (
+                'class' => 'bx-base-general-comments-' . ($bShowAsButton ? 'button' : 'link'),
+                'class_do' => $bShowAsButton ? ' bx-btn' : '',
+            	'class_counter' => $bShowAsButton ? ' bx-btn-height' : '',
                 'url' => $sUrl . '#' . $oComments->getListAnchor(),
                 'bx_if:comments' => array (
                     'condition' => $iNum,
@@ -1086,37 +1091,37 @@ class BxBaseModGeneralModule extends BxDolModule
         $sViews = '';
         $oViews = !empty($aParams['object_view']) ? BxDolView::getObjectInstance($aParams['object_view'], $iId) : false;
         if ($oViews)
-            $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => true));
+            $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => $bShowAsButton));
 
         //--- Votes
         $sVotes = '';
         $oVotes = !empty($aParams['object_vote']) ? BxDolVote::getObjectInstance($aParams['object_vote'], $iId) : false;
         if ($oVotes)
-            $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true));
+            $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
 
         //--- Favorite
         $sFavorites = '';
         $oFavorites = !empty($aParams['object_favorite']) ? BxDolFavorite::getObjectInstance($aParams['object_favorite'], $iId) : false;
         if ($oFavorites)
-            $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => true));
+            $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => $bShowAsButton));
 
         //--- Featured
         $sFeatured = '';
         $oFeatured = !empty($aParams['object_feature']) ? BxDolFeature::getObjectInstance($aParams['object_feature'], $iId) : false;
         if ($oFeatured)
-            $sFeatured = $oFeatured->getElementBlock(array('show_do_feature_as_button' => true));
+            $sFeatured = $oFeatured->getElementBlock(array('show_do_feature_as_button' => $bShowAsButton));
 
         //--- Timeline Repost
         $sRepost = '';
         $iIdTimeline = isset($aParams['id_timeline']) ? (int)$aParams['id_timeline'] : $iId;
         if ($iIdTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
-            $sRepost = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_repost_as_button' => true)));
+            $sRepost = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_repost_as_button' => $bShowAsButton)));
 
         //--- Report
 		$sReport = '';
         $oReport = !empty($aParams['object_report']) ? BxDolReport::getObjectInstance($aParams['object_report'], $iId) : false;
         if ($oReport)
-            $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => true));
+            $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => $bShowAsButton));
 
         $sSocial = '';
         if($bSocialSharing) {

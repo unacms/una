@@ -226,13 +226,3 @@ div.bx-base-text-breadcrumb i {
     display:inline-block;
     vertical-align:top;
 }
-
-.bx-base-text-comments-item {
-    float: left;
-}
-
-.bx-base-text-comments-item-counter-holder {
-    float: left;
-    font-size: 1.5rem;
-    line-height: 2.2rem;
-}

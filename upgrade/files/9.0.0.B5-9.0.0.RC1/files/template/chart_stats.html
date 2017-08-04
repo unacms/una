@@ -1,0 +1,22 @@
+<div class="bx-chart-stats bx-def-font-align-center">
+    <div class="bx-chart-stats-items bx-def-margin-bottom">
+        <bx_repeat:items>
+            <div class="bx-cs-item bx-def-padding-thd-leftright bx-def-box-sizing">
+                <bx_if:show_link>
+                    <a href="__link__" title="__title_attr__"><span class="bx-def-font-h3">__value__</span> __title__</a>
+                </bx_if:show_link>
+                <bx_if:show_text><span title="__title_attr__"><span class="bx-def-font-h3">__value__</span> __title__</span></bx_if:show_text>
+            </div>
+        </bx_repeat:items>
+    </div>
+    <div class="bx-chart-stats-graph bx-def-border">
+	    <canvas id="bx_chart_stats_graph" width="100%"></canvas>
+	    <script type="text/javascript">
+	    	var oStatsChart = new Chart($("#bx_chart_stats_graph"), {
+	    		type: 'doughnut',
+	    		data: __chart_data__,
+	    		options: {}
+	    	});
+	    </script>
+    </div>
+</div>

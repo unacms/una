@@ -66,6 +66,7 @@ div.bx-tl-item-cnt {
 /*--- Item Owner Style ---*/
 div.bx-tl-item div.bx-tl-item-owner {
     position: relative;
+	text-align: left;
 }
 div.bx-tl-item div.bx-tl-owner-avatar {
     position: absolute;
@@ -95,9 +96,16 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
 }
 
 /*--- Item Content Style ---*/
+div.bx-tl-item-content {
+	position: relative;
+    text-align: left;
+}
 div.bx-tl-item-content div.bx-tl-title {
 	text-overflow: ellipsis;
     overflow: hidden;
+}
+div.bx-tl-item-content div.bx-tl-content iframe {
+	width: 100%;
 }
 
 /*--- Item Images Style ---*/
@@ -109,6 +117,10 @@ div.bx-tl-item div.bx-tl-item-images {
 div.bx-tl-item div.bx-tl-item-image {
     display: inline-block;
 }
+
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
+	margin-right: 1.25rem;
+} 
 
 
 /*--- Item Style: Timeline ---*/

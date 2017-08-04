@@ -218,7 +218,6 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_events_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
 -- FORMS
-
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_event', 'bx_events', '_bx_events_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_events_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxEventsFormEntry', 'modules/boonex/events/classes/BxEventsFormEntry.php');
 
@@ -347,7 +346,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_view_full', 'event_desc', 2147483647, 0, 15);
 
 -- PRE-VALUES
-
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_events_reminder', '_bx_events_pre_lists_reminder', 'bx_events', '0');
 
@@ -404,7 +402,6 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_events_repeat_month', '11', 11, '_bx_events_cat_repeat_month_nov', ''),
 ('bx_events_repeat_month', '12', 12, '_bx_events_cat_repeat_month_dec', '');
 
-
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_events_repeat_week_of_month', '_bx_events_pre_lists_repeat_week_of_month', 'bx_events', '0');
 
@@ -416,7 +413,6 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_events_repeat_week_of_month', '4', 4, '_bx_events_cat_repeat_week_of_month_fourth_week_of_month', ''),
 ('bx_events_repeat_week_of_month', '5', 5, '_bx_events_cat_repeat_week_of_month_fifth_week_of_month', ''),
 ('bx_events_repeat_week_of_month', '6', 6, '_bx_events_cat_repeat_week_of_month_sixth_week_of_month', '');
-
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_events_repeat_day_of_month', '_bx_events_pre_lists_repeat_day_of_month', 'bx_events', '0');
@@ -455,7 +451,6 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_events_repeat_day_of_month', '30', 30, '30', ''),
 ('bx_events_repeat_day_of_month', '31', 31, '31', '');
 
-
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_events_repeat_day_of_week', '_bx_events_pre_lists_repeat_day_of_week', 'bx_events', '0');
 
@@ -469,8 +464,21 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_events_repeat_day_of_week', '6', 6, '_bx_events_cat_repeat_day_of_week_sat', ''),
 ('bx_events_repeat_day_of_week', '7', 7, '_bx_events_cat_repeat_day_of_week_sun', '');
 
--- STUDIO PAGE & WIDGET
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_events', '_bx_events', 'bx_events', 'added', 'edited', 'deleted', '', ''),
+('bx_events_cmts', '_bx_events_cmts', 'bx_events', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_events', 'bx_events_administration', 'td`.`id', '', ''),
+('bx_events', 'bx_events_common', 'td`.`id', '', '');
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_events', 'bx_events', 'bx_events', '_bx_events_search_extended', 1, '', ''),
+('bx_events_cmts', 'bx_events_cmts', 'bx_events', '_bx_events_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
+
+-- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'bx_events', '_bx_events', '_bx_events', 'bx_events@modules/boonex/events/|std-icon.svg');
 SET @iPageId = LAST_INSERT_ID();

@@ -167,7 +167,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 return '';
         }
 
-        $aResult = $this->getData($aEvent);
+        $aResult = $this->getData($aEvent, $aBrowseParams);
         if($aResult === false)
             return '';
 
@@ -566,7 +566,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         foreach($aLinks as $aLink)
             $sLinks .= $this->getAttachLinkItem($iUserId, $aLink);
 
-        return $this->parsePageByName('attach_link_form_field.html', array(
+        return $this->parseHtmlByName('attach_link_form_field.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('post', 'attach_link_form_field'),
             'style_prefix' => $sStylePrefix,
             'links' => $sLinks
@@ -585,17 +585,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bTmplVarsEmbed = false;
         $aTmplVarsEmbed = array();
+        $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
         $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
         $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-        if(!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match($sEmbedlyPattern, $aLink['url'])) {
+        if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
             $bTmplVarsEmbed = true;
             $aTmplVarsEmbed = array(
                 'style_prefix' => $sStylePrefix,
-            	'embed' => $this->parsePageByName('bx_a.html', array(
+            	'embed' => $this->parseHtmlByName('bx_a.html', array(
             		'href' => $aLink['url'],
             		'title' => bx_html_attribute($aLink['title']),
             		'bx_repeat:attrs' => array(
-                        array('key' => 'class', 'value' => 'bx-link-embed')
+                        array('key' => 'class', 'value' => 'bx-link')
                     ),
             		'content' => $aLink['title'],
             	))
@@ -624,7 +625,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             		)
             	),
     			'url' => $aLink['url'],
-            	'link' => $this->parsePageByName('bx_a.html', array(
+            	'link' => $this->parseHtmlByName('bx_a.html', array(
             		'href' => $aLink['url'],
             		'title' => bx_html_attribute($aLink['title']),
             		'bx_repeat:attrs' => $aLinkAttrs,
@@ -633,7 +634,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             );
         }
 
-        return $this->parsePageByName('attach_link_item.html', array(
+        return $this->parseHtmlByName('attach_link_item.html', array(
             'html_id' => $sLinkIdPrefix . $aLink['id'],
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
@@ -649,9 +650,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getData(&$aEvent)
+    public function getData(&$aEvent, $aBrowseParams = array())
     {
-        $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent) : $this->_getCommonData($aEvent);
+        $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent, $aBrowseParams) : $this->_getCommonData($aEvent, $aBrowseParams);
         if(empty($aResult) || empty($aResult['owner_id']) || empty($aResult['content']))
             return false;
 
@@ -883,17 +884,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             foreach($aContent['links'] as $aLink) {
                 $bTmplVarsEmbed = false;
                 $aTmplVarsEmbed = array();
+                $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
                 $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
                 $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-                if(!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match($sEmbedlyPattern, $aLink['url'])) {
+                if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
                     $bTmplVarsEmbed = true;
                     $aTmplVarsEmbed = array(
                         'style_prefix' => $sStylePrefix,
-                    	'embed' => $this->parsePageByName('bx_a.html', array(
+                    	'embed' => $this->parseHtmlByName('bx_a.html', array(
                     		'href' => $aLink['url'],
                     		'title' => bx_html_attribute($aLink['title']),
                     		'bx_repeat:attrs' => array(
-                                array('key' => 'class', 'value' => 'bx-link-embed')
+                                array('key' => 'class', 'value' => 'bx-link')
                             ),
                     		'content' => $aLink['title'],
                     	))
@@ -916,7 +918,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     			'thumbnail' => $aLink['thumbnail']
                     		)
                     	),
-                    	'link' => $this->parsePageByName('bx_a.html', array(
+                    	'link' => $this->parseHtmlByName('bx_a.html', array(
     		        		'href' => $aLink['url'],
     		        		'title' => $aLink['title'],
     		        		'bx_repeat:attrs' => $aLinkAttrs,
@@ -1083,9 +1085,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getSystemData(&$aEvent)
+    protected function _getSystemData(&$aEvent, $aBrowseParams = array())
     {
-        $mixedResult = $this->_oConfig->getSystemData($aEvent);
+        $mixedResult = $this->_oConfig->getSystemData($aEvent, $aBrowseParams);
 		if($mixedResult !== false)
 			return $mixedResult;
 
@@ -1096,7 +1098,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		return $this->$sMethod($aEvent);
     }
 
-    protected function _getCommonData(&$aEvent)
+    protected function _getCommonData(&$aEvent, $aBrowseParams = array())
     {
         $CNF = $this->_oConfig->CNF;
 
@@ -1185,10 +1187,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 if(!$this->_oConfig->isSystem($aContent['type'] , $aContent['action'])) {
                     $aReposted = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
-                    $aReposted = $this->_getCommonData($aReposted);
+                    $aReposted = $this->_getCommonData($aReposted, $aBrowseParams);
                 } 
                 else
-                	$aReposted = $this->_getSystemData($aContent);
+                	$aReposted = $this->_getSystemData($aContent, $aBrowseParams);
 
 				if(empty($aReposted) || !is_array($aReposted))
 					return array();

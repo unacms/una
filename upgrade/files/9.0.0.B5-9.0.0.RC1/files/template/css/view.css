@@ -1,0 +1,65 @@
+/*--- Comment Viewed By ---*/
+div.bx-view-by-list {}
+div.bx-view-by-list-cnt {
+	max-height: 200px;
+	max-height: 12.5rem;
+	min-width: 220px;
+	min-width: 13.75rem;
+	overflow: auto;
+}
+div.bx-view-user {
+    position: relative;
+}
+div.bx-view-user-avatar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+div.bx-view-user-info {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+div.bx-view-user-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+div.bx-view-user-name a.bx-view-user-name {
+    font-weight: 700;
+}
+div.bx-view-user-name span.bx-view-user-info {
+    white-space: nowrap;
+}
+
+/*--- View Element Styles ---*/
+div.bx-view-element-holder,
+div.bx-view-counter-holder {
+	position: relative;
+	float: left;
+	
+	line-height: 20px;
+    line-height: 1.25rem;
+}
+
+.bx-view-button .bx-view-element-holder,
+.bx-view-button .bx-view-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-view-button-small .bx-view-element-holder,
+.bx-view-button-small .bx-view-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-view-element-holder .bx-view-do-view.bx-view-disabled,
+.bx-view-element-holder .bx-view-do-view.bx-view-disabled .sys-icon {
+	color: #ddd;
+}
+
+.bx-view-button .bx-view-counter-holder,
+.bx-view-button-small .bx-view-counter-holder {
+	font-size: 1.5rem;
+}

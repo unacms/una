@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_dolcon',
     'title' => 'Dolphin connect',
     'note' => 'Join the site using Dolphin site account credentials.',
-    'version' => '9.0.0.DEV',
+    'version' => '9.0.1.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

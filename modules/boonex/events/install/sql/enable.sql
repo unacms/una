@@ -383,23 +383,9 @@ SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_events', '_bx_events', @iSearchOrder + 1, 'BxEventsSearchResult', 'modules/boonex/events/classes/BxEventsSearchResult.php');
 
--- SEARCH EXTENDED
-INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
-('bx_events', 'bx_events', 'bx_events', '_bx_events_search_extended', 1, '', ''),
-('bx_events_cmts', 'bx_events_cmts', 'bx_events', '_bx_events_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
-
 -- CONNECTIONS
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
 ('bx_events_fans', 'bx_events_fans', 'mutual', '', '');
-
--- CONTENT INFO
-INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_events', '_bx_events', 'bx_events', 'added', 'edited', 'deleted', '', ''),
-('bx_events_cmts', '_bx_events_cmts', 'bx_events', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
-
-INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-('bx_events', 'bx_events_administration', 'td`.`id', '', ''),
-('bx_events', 'bx_events_common', 'td`.`id', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
@@ -427,7 +413,6 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_events_fans', 'single', 'delete', '', 'remove', 1, 40);
 
 -- GRIDS: administration
-
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_events_administration', 'Sql', 'SELECT `td`.*, `td`.`event_name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_events_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_events'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_events_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'event_name', '', 'like', '', '', 192, 'BxEventsGridAdministration', 'modules/boonex/events/classes/BxEventsGridAdministration.php'),
 ('bx_events_common', 'Sql', 'SELECT `td`.*, `td`.`event_name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_events_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_events'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_events_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'event_name', '', 'like', '', '', 2147483647, 'BxEventsGridCommon', 'modules/boonex/events/classes/BxEventsGridCommon.php');
@@ -454,7 +439,6 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 
 -- ALERTS
-
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_events', 'BxEventsAlertsResponse', 'modules/boonex/events/classes/BxEventsAlertsResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();
@@ -479,13 +463,11 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_events', 'timeline_repost', @iHandler);
 
 -- PRIVACY 
-
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_events_allow_view_to', 'bx_events', 'view', '_bx_events_form_profile_input_allow_view_to', '3', 'bx_events_data', 'id', 'author', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php'),
 ('bx_events_allow_view_notification_to', 'bx_events', 'view_event', '_bx_events_form_profile_input_allow_view_notification_to', '3', 'bx_notifications_events', 'id', 'object_owner_id', 'BxEventsPrivacyNotifications', 'modules/boonex/events/classes/BxEventsPrivacyNotifications.php');
 
 -- EMAIL TEMPLATES
-
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
 ('bx_events', '_bx_events_email_join_request', 'bx_events_join_request', '_bx_events_email_join_request_subject', '_bx_events_email_join_request_body'),
 ('bx_events', '_bx_events_email_join_reject', 'bx_events_join_reject', '_bx_events_email_join_reject_subject', '_bx_events_email_join_reject_body'),
@@ -497,13 +479,10 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('bx_events', '_bx_events_email_reminder', 'bx_events_reminder', '_bx_events_email_reminder_subject', '_bx_events_email_reminder_body');
 
 -- UPLOADERS
-
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_events_cover_crop', 1, 'BxEventsUploaderCoverCrop', 'modules/boonex/events/classes/BxEventsUploaderCoverCrop.php'),
 ('bx_events_picture_crop', 1, 'BxEventsUploaderPictureCrop', 'modules/boonex/events/classes/BxEventsUploaderPictureCrop.php');
 
 -- CRON
-
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_events_process_reminders', '55 * * * *', 'BxEventsCronProcessReminders', 'modules/boonex/events/classes/BxEventsCronProcessReminders.php', '');
-

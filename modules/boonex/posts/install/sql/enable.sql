@@ -334,11 +334,6 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_posts', '_bx_posts', @iSearchOrder + 1, 'BxPostsSearchResult', 'modules/boonex/posts/classes/BxPostsSearchResult.php'),
 ('bx_posts_cmts', '_bx_posts_cmts', @iSearchOrder + 2, 'BxPostsCmtsSearchResult', 'modules/boonex/posts/classes/BxPostsCmtsSearchResult.php');
 
--- SEARCH EXTENDED
-INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
-('bx_posts', 'bx_posts', 'bx_posts', '_bx_posts_search_extended', 1, '', ''),
-('bx_posts_cmts', 'bx_posts_cmts', 'bx_posts', '_bx_posts_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
-
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_posts', 'bx_posts_meta_keywords', 'bx_posts_meta_locations', '', '', '');
@@ -346,15 +341,6 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
 ('bx_posts_cats', 'bx_posts', 'bx_posts', 'bx_posts_cats', 'bx_posts_posts', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_posts_posts`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
-
--- CONTENT INFO
-INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-('bx_posts', '_bx_posts', 'bx_posts', 'added', 'edited', 'deleted', '', ''),
-('bx_posts_cmts', '_bx_posts_cmts', 'bx_posts', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
-
-INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-('bx_posts', 'bx_posts_administration', 'id', '', ''),
-('bx_posts', 'bx_posts_common', 'id', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

@@ -49,6 +49,10 @@ div.bx-vote div.bx-vote-counter-holder {
 	font-size: 1.5rem;
 }
 
+.bx-vote-likes .bx-vote-counter-holder.bx-btn-border {
+    border-width: 0px;
+}
+
 /*--- Stars based Element Styles ---*/
 .bx-vote-stars .bx-vote-element-holder,
 .bx-vote-stars .bx-vote-counter-holder {

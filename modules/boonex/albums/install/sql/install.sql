@@ -2,7 +2,6 @@
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 -- TABLE: entries
-
 CREATE TABLE IF NOT EXISTS `bx_albums_albums` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(10) unsigned NOT NULL,
@@ -26,7 +25,6 @@ CREATE TABLE IF NOT EXISTS `bx_albums_albums` (
 );
 
 -- TABLE: storages & transcoders
-
 CREATE TABLE IF NOT EXISTS `bx_albums_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
@@ -118,7 +116,6 @@ CREATE TABLE IF NOT EXISTS `bx_albums_cmts_media` (
 );
 
 -- TABLE: votes
-
 CREATE TABLE IF NOT EXISTS `bx_albums_votes` (
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
@@ -156,7 +153,6 @@ CREATE TABLE IF NOT EXISTS `bx_albums_votes_media_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: views
-
 CREATE TABLE `bx_albums_views_track` (
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
@@ -174,7 +170,6 @@ CREATE TABLE `bx_albums_views_media_track` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- TABLE: metas
-
 CREATE TABLE `bx_albums_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
@@ -275,9 +270,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_albums_video_webm', 'Webm', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:4:"webm";}', 0);
 
 
-
 -- FORMS
-
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums', 'bx_albums', '_bx_albums_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_albums_albums', 'id', '', '', 'do_submit', '', 0, 1, 'BxAlbumsFormEntry', 'modules/boonex/albums/classes/BxAlbumsFormEntry.php');
 
@@ -341,38 +334,60 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_albums_entry_delete', 'text', 2147483647, 0, 0),
 ('bx_albums_entry_delete', 'title', 2147483647, 0, 0);
 
--- COMMENTS
 
+-- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_albums', 'bx_albums', 'bx_albums_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album&id={object_id}', '', 'bx_albums_albums', 'id', 'author', 'title', 'comments', '', ''),
 ('bx_albums_media', 'bx_albums', 'bx_albums_cmts_media', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album-media&id={object_id}', '', 'bx_albums_files2albums', 'id', 'author', 'title', 'comments', '', '');
 
--- VOTES
 
+-- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_albums', 'bx_albums_votes', 'bx_albums_votes_track', '604800', '1', '1', '0', '1', 'bx_albums_albums', 'id', 'author', 'rate', 'votes', '', ''),
 ('bx_albums_media', 'bx_albums_votes_media', 'bx_albums_votes_media_track', '604800', '1', '1', '0', '1', 'bx_albums_files2albums', 'id', 'author', 'rate', 'votes', '', '');
 
--- REPORTS
 
+-- REPORTS
 INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_albums', 'bx_albums_reports', 'bx_albums_reports_track', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'reports', '', '');
 
--- VIEWS
 
+-- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_albums', 'bx_albums_views_track', '86400', '1', 'bx_albums_albums', 'id', '', 'views', '', ''),
 ('bx_albums_media', 'bx_albums_views_media_track', '86400', '1', 'bx_albums_files2albums', 'id', 'author', 'views', '', '');
+
 
 -- FAFORITES
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_albums', 'bx_albums_favorites_track', '1', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'favorites', '', ''),
 ('bx_albums_media', 'bx_albums_favorites_media_track', '1', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', '', 'favorites', '', '');
 
+
 -- FEATURED
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
 ('bx_albums', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'featured', '', ''),
 ('bx_albums_media', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', '', 'featured', '', '');
+
+
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_albums', '_bx_albums', 'bx_albums', 'added', 'edited', 'deleted', '', ''),
+('bx_albums_media', '_bx_albums_media', 'bx_albums', 'media_added', '', 'media_deleted', 'BxAlbumsContentInfoMedia', 'modules/boonex/albums/classes/BxAlbumsContentInfoMedia.php'),
+('bx_albums_cmts', '_bx_albums_cmts', 'bx_albums', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', ''),
+('bx_albums_media_cmts', '_bx_albums_media_cmts', 'bx_albums_media', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
+
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_albums', 'bx_albums_administration', 'id', '', ''),
+('bx_albums', 'bx_albums_common', 'id', '', '');
+
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_albums', 'bx_albums', 'bx_albums', '_bx_albums_search_extended', 1, '', ''),
+('bx_albums_media', 'bx_albums_media', 'bx_albums', '_bx_albums_search_extended_media', 1, '', ''),
+('bx_albums_cmts', 'bx_albums_cmts', 'bx_albums', '_bx_albums_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', ''),
+('bx_albums_media_cmts', 'bx_albums_media_cmts', 'bx_albums', '_bx_albums_search_extended_media_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 
 -- STUDIO: page & widget

@@ -5,7 +5,7 @@ div.bx-feature div.bx-feature-element-holder {
 }
 
 /*--- Feature Element Styles ---*/
-.bx-feature-feature .bx-feature-element-holder {
+.bx-feature .bx-feature-element-holder {
 	line-height: 20px;
 	line-height: 1.25rem;
 }

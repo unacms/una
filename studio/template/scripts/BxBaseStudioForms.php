@@ -214,7 +214,9 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         $aValues = BxDolForm::getDataItems(trim($sList, BX_DATA_LISTS_KEY_PREFIX . ' '), $bUseForSets);
 
-        $aTmplVars = array();
+        $aTmplVars = array(
+            array('value' => '', 'title' => _t('_adm_form_txt_field_value_select_value'))
+        );
         foreach($aValues as $mixedValue => $sTitle)
             $aTmplVars[] = array('value' => $mixedValue, 'title' => $sTitle);
 

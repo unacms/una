@@ -422,10 +422,6 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 (@sName, '_bx_forum', @iSearchOrder + 1, 'BxForumSearchResult', 'modules/boonex/forum/classes/BxForumSearchResult.php'),
 ('bx_forum_cmts', '_bx_forum_cmts', @iSearchOrder + 2, 'BxForumCmtsSearchResult', 'modules/boonex/forum/classes/BxForumCmtsSearchResult.php');
 
--- SEARCH EXTENDED
-INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
-('bx_forum', 'bx_forum', 'bx_forum', '_bx_forum_search_extended', 1, '', ''),
-('bx_forum_cmts', 'bx_forum_cmts', 'bx_forum', '_bx_forum_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 -- CONNECTIONS
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
@@ -465,17 +461,6 @@ INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `
 -- FEATURED
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
 (@sName, '1', '1', 'page.php?i=view-discussion&id={object_id}', 'bx_forum_discussions', 'id', 'author', 'featured', '', '');
-
-
--- CONTENT INFO
-INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
-(@sName, '_bx_forum', @sName, 'added', 'edited', 'deleted', '', ''),
-('bx_forum_cmts', '_bx_forum_cmts', @sName, 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
-
-INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-(@sName, @sName, 'id', '', 'a:1:{s:4:"sort";a:2:{s:5:"stick";s:4:"desc";s:12:"lr_timestamp";s:4:"desc";}}'),
-(@sName, 'bx_forum_administration', 'id', '', ''),
-(@sName, 'bx_forum_common', 'id', '', '');
 
 
 -- STATS

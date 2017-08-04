@@ -7,11 +7,14 @@
  * @{
  */
 
+bx_import('BxDolForm');
+
 class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 {
     public static $SEARCHABLE_TYPES = array(
         'text', 'textarea', 'number', 
-    	'select', 'radio_set', 
+    	'select', 'radio_set',
+        'checkbox_set', 'select_multiple',
     	'checkbox', 'switcher'
     );
 
@@ -22,6 +25,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'text_auto' => array('text_auto'),
         'select' => array('checkbox_set', 'select_multiple', 'select'),
         'radio_set' => array('checkbox_set', 'select_multiple', 'select'),
+    	'checkbox_set' => array('checkbox_set', 'select_multiple', 'select'),
+    	'select_multiple' => array('checkbox_set', 'select_multiple', 'select'),
         'checkbox' => array('checkbox', 'switcher'),
     	'switcher' => array('checkbox', 'switcher'),
     );
@@ -33,6 +38,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'text_auto' => array('in'),
         'select' => array('in'),
         'radio_set' => array('in'),
+    	'checkbox_set' => array('and'), 
+    	'select_multiple' => array('and'),
         'checkbox' => array('='),
     	'switcher' => array('='),
     );
@@ -95,9 +102,14 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         return isset($this->_aObject['active']) && (int)$this->_aObject['active'] != 0;
     }
 
+    public function clean()
+    {
+        return $this->_oDb->deleteFields(array('object' => $this->_sObject)) !== false;
+    }
+
     public function reset()
     {
-        if($this->_oDb->deleteFields(array('object' => $this->_sObject)) === false)
+        if(!$this->clean())
             return false;
 
         $this->_aObject['fields'] = BxDolSearchExtendedQuery::getSearchFields($this->_aObject);

@@ -48,6 +48,16 @@ DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_snipcart';
 DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_snipcart';
 
 
+-- CONTENT INFO
+DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_snipcart', 'bx_snipcart_cmts');
+
+DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_snipcart');
+
+
+-- SEARCH EXTENDED
+DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_snipcart';
+
+
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`
 USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`

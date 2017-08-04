@@ -185,7 +185,6 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_groups_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
 -- FORMS
-
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_group', 'bx_groups', '_bx_groups_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_groups_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxGroupsFormEntry', 'modules/boonex/groups/classes/BxGroupsFormEntry.php');
 
@@ -264,7 +263,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_view_full', 'group_desc', 2147483647, 1, 3);
 
 -- PRE-VALUES
-
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_groups_cats', '_bx_groups_pre_lists_cats', 'bx_groups', '0');
 
@@ -277,8 +275,21 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_groups_cats', '5', 5, '_bx_groups_cat_Fun', ''),
 ('bx_groups_cats', '6', 6, '_bx_groups_cat_Uncategorised', '');
 
--- STUDIO PAGE & WIDGET
+-- CONTENT INFO
+INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
+('bx_groups', '_bx_groups', 'bx_groups', 'added', 'edited', 'deleted', '', ''),
+('bx_groups_cmts', '_bx_groups_cmts', 'bx_groups', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
+INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
+('bx_groups', 'bx_groups_administration', 'td`.`id', '', ''),
+('bx_groups', 'bx_groups_common', 'td`.`id', '', '');
+
+-- SEARCH EXTENDED
+INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_groups', 'bx_groups', 'bx_groups', '_bx_groups_search_extended', 1, '', ''),
+('bx_groups_cmts', 'bx_groups_cmts', 'bx_groups', '_bx_groups_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
+
+-- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'bx_groups', '_bx_groups', '_bx_groups', 'bx_groups@modules/boonex/groups/|std-icon.svg');
 SET @iPageId = LAST_INSERT_ID();
