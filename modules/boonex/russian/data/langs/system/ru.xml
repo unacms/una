@@ -2383,6 +2383,7 @@
 	<string name="_sys_txt_form_entry_input_picture_pic_url"><![CDATA[URL Прикрепления:]]></string>
     <string name="_sys_txt_form_entry_input_picture_use_as_thumb"><![CDATA[Использовать в качестве Миниатюры]]></string>
 	<string name="_sys_txt_form_submission_error"><![CDATA[Неправильная информация. Пожалуйста, проверьте ввод и отошлите снова.]]></string>
+	<string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Маркер устарел. Пожалуйста попробуйте снова.]]></string>
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
     <string name="_sys_txt_join_description"><![CDATA[Уже зарегистрировались? <a href="{0}">Заходите.</a>]]></string>

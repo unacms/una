@@ -2385,6 +2385,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_form_entry_input_picture_pic_url"><![CDATA[Attachment URL:]]></string>
     <string name="_sys_txt_form_entry_input_picture_use_as_thumb"><![CDATA[Use as Thumbnail]]></string>
 	<string name="_sys_txt_form_submission_error"><![CDATA[Incorrect info. Please, check your inputs and try to submit again.]]></string>
+	<string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Token expired. Please try again.]]></string>
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Unity is strength... when there is teamwork and collaboration, wonderful things can be achieved.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Join Now!</button>]]></string>
     <string name="_sys_txt_join_description"><![CDATA[Already a member? <a href="{0}">Log in.</a>]]></string>
