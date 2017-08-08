@@ -61,7 +61,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 		$aOptions2Mixes = array();
 		if($this->bMixes) {
 			if(is_string($this->sCategory))
-        		$aMixesBrowse = array('type' => 'by_type_category', 'type' => $this->sType, 'category' => $this->sCategory, 'active' => 1);
+        		$aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory, 'active' => 1);
         	else
         		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType, 'active' => 1);
 
@@ -175,7 +175,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         $aTmplVarsMixes = array();
         if($this->bMixes) {
         	if(is_string($this->sCategory))
-        		$aMixesBrowse = array('type' => 'by_type_category', 'type' => $this->sType, 'category' => $this->sCategory);
+        		$aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory);
         	else
         		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType);
 
@@ -313,8 +313,13 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             )
         );
 
+        if(is_string($this->sCategory))
+    		$aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory);
+    	else
+    		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType);
+
         $aMixes = array();
-        $this->oDb->getMixes(array('type' => 'by_type_category', 'type' => $this->sType, 'category' => $this->sCategory), $aMixes, false);
+        $this->oDb->getMixes($aMixesBrowse, $aMixes, false);
         foreach($aMixes as $aMix)
         	$aForm['inputs']['duplicate']['values'][] = array('key' => $aMix['name'], 'value' => $aMix['title']);
 
