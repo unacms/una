@@ -31,10 +31,16 @@
     height: 2rem;
 
     margin: 0px;
-
-    line-height: 2rem;
+}
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li .sys-icon {
+	line-height: 2rem;
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.5);
+}
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li img {
+	background-pocition: center center;
+	background-repeat: none;
+	background-size: 60% 60%;
 }
 
 @media (min-width: 720px) and (max-width:1170px) {
@@ -51,6 +57,11 @@
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li .sys-icon {
         width: 100%;
         font-size: 1.5rem;
+    }
+
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-menu-object-sys_site li img {
+        margin: 0px auto;
+        background-size: 70% 70%;
     }
 }
 

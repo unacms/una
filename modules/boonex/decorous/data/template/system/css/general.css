@@ -63,7 +63,6 @@
   height: 45px;
   width: 100%;
   background: #3e454c;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
