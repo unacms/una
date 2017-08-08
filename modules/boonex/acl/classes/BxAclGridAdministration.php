@@ -219,6 +219,11 @@ class BxAclGridAdministration extends BxAclGridLevels
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);;
     }
+
+	protected function _isVisibleGrid ($a)
+    {
+        return isAdmin();
+    }
 }
 
 /** @} */
