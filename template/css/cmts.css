@@ -157,6 +157,9 @@
 		position: relative;
 		float: left;
 	}
+	div.cmt-actions li .bx-vote {
+	   margin-right: 1.25rem;
+	}
     div.cmt-comment-manage .bx-menu-ver li {
 		white-space: nowrap;
     }
