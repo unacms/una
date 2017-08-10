@@ -75,7 +75,7 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
             'id' => $aData['id'],
             'author' => $sAuthorName,
             'author_url' => $sAuthorUrl,
-            'title' => bx_process_output($aData['title']),
+            'title' => bx_process_output($aData['title'], BX_DATA_HTML),
         	'item_url' => $this->_oConfig->getItemViewUrl($aData),
             'item_date' => bx_time_js($aData['date'], BX_FORMAT_DATE),
             'module_name' => _t($CNF['T']['txt_sample_single_ext']),

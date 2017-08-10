@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `pinned` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `owner_id` (`owner_id`),
-  FULLTEXT KEY `search_fields` (`description`)
+  FULLTEXT KEY `search_fields` (`title`, `description`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
