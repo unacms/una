@@ -1039,6 +1039,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
+        if(empty($iAuthorId))
+            return BxDolProfileUndefined::getInstance();
+
         $oProfile = BxDolProfile::getInstance($iAuthorId);
         if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
