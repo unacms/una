@@ -197,7 +197,7 @@
 
 /*--- Sidebar ---*/
 .cd-side-nav {
-  position: absolute;
+  position: fixed;
   z-index: 400;
   left: 0;
   width: 100%;
