@@ -176,7 +176,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     protected $aPage;
     protected $aPageContent;
 
-    protected $_oConfigTemplate;
+    protected $_oTemplateConfig;
+    protected $_oTemplateFunctions;
 
     /**
      * Constructor
@@ -404,7 +405,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->aPage['injections'] = $aInjections;
 
         bx_import('BxTemplConfig'); // TODO: for some reason autoloader isn't working here....
-        $this->_oConfigTemplate = BxTemplConfig::getInstance();
+        $this->_oTemplateConfig = BxTemplConfig::getInstance();
+
+        bx_import('BxTemplFunctions');
+        $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
     }
 
     protected function getInjectionsData ()
@@ -834,6 +838,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     public function getTemplate($sName)
     {
         return $this->_aTemplates[$sName];
+    }
+
+    /**
+     * Get template functions object.
+     * @see BxBaseFunctions
+     */
+    public function getTemplateFunctions()
+    {
+        return $this->_oTemplateFunctions;
     }
 
     /**
@@ -1651,13 +1664,13 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Cache.php');
         	$aFiles = array($mixed['path'] => $mixed['url']);
         	$aOptions = array('cache_dir' => $this->_sCachePublicFolderPath);
-        	$sFile = Less_Cache::Get($aFiles, $aOptions, $this->_oConfigTemplate->aLessConfig);
+        	$sFile = Less_Cache::Get($aFiles, $aOptions, $this->_oTemplateConfig->aLessConfig);
 
             return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
         }
 
         $oLess = new Less_Parser();
-        $oLess->ModifyVars($this->_oConfigTemplate->aLessConfig);
+        $oLess->ModifyVars($this->_oTemplateConfig->aLessConfig);
         $oLess->parse($mixed);
         return $oLess->getCss();
     }

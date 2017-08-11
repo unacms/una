@@ -69,7 +69,7 @@ class BxDolModule extends BxDol
         $sClassName = $sClassPrefix . 'Template';
         require_once($sClassPath . $sClassName . '.php');
         $this->_oTemplate = new $sClassName($this->_oConfig, $this->_oDb);
-        $this->_oTemplate->loadTemplates();
+        $this->_oTemplate->init();
     }
 
     /**

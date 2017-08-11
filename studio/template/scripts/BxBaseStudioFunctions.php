@@ -26,62 +26,6 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         return $GLOBALS['bxDolClasses']['BxBaseStudioFunctions'];
     }
 
-    function getDesignBox($sTitle, $sContent, $aOptions = array())
-    {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        $sId = isset($aOptions['id']) && $aOptions['id'] != '' ? bx_html_attribute($aOptions['id']) : '';
-        $iIndex = isset($aOptions['db']) && !empty($aOptions['db']) ? (int)$aOptions['db'] : BX_DB_DEF;
-
-        $bNote = isset($aOptions['note']) && $aOptions['note'] != '';
-        return $oTemplate->parseHtmlByName('designbox_' . (int)$iIndex . '.html', array(
-            'id' => $sId != '' ? 'id="bx-db-container-' . $sId . '"' : '',
-            'title' => bx_process_output($sTitle),
-            'bx_if:note' => array(
-                'condition' => $bNote,
-                'content' => array(
-                    'note' => $bNote ? bx_process_output($aOptions['note']) : ''
-                )
-            ),
-            'caption_item' => isset($aOptions['caption_item']) && $aOptions['caption_item'] != '' ? $this->getDesignBoxMenu('cpt-' . $sId, $aOptions['caption_item']) : '',
-            'content' => $sContent,
-            'bottom_item' => isset($aOptions['bottom_item']) && $aOptions['bottom_item'] != '' ? $this->getDesignBoxMenu('cpt-' . $sId, $aOptions['bottom_item']) : '',
-        ));
-    }
-
-    function getDesignBoxMenu($sId, $mixedItems, $iIndex = 1)
-    {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        if(is_array($mixedItems)) {
-            $mixedButtons = array();
-            foreach($mixedItems as $sId => $aAction) {
-                $sClass = isset($aAction['class']) ? ' class="' . bx_html_attribute($aAction['class']) . '"' : '';
-
-                $mixedButtons[] = array(
-                    'id' => $sId,
-                    'title' => bx_process_output(_t($aAction['title'])),
-                    'class' => $sClass,
-                    'icon' => isset($aAction['icon']) ? '<img' . $sClass . ' src="' . bx_html_attribute($aAction['icon']) . '" />' : '',
-                    'href' => isset($aAction['href']) ? ' href="' . bx_html_attribute($aAction['href']) . '"' : '',
-                    'target' => isset($aAction['target'])  ? ' target="' . bx_html_attribute($aAction['target']) . '"' : '',
-                    'on_click' => isset($aAction['onclick']) ? ' onclick="' . bx_html_attribute($aAction['onclick']) . '"' : '',
-                    'bx_if:hide_active' => array(
-                        'condition' => !isset($aAction['active']) || $aAction['active'] != 1,
-                        'content' => array()
-                    ),
-                    'bx_if:hide_inactive' => array(
-                        'condition' => isset($aAction['active']) && $aAction['active'] == 1,
-                        'content' => array()
-                    )
-                );
-            }
-        } else
-            $mixedButtons = $mixedItems;
-
-        return $oTemplate->parseHtmlByName('designbox_menu_' . $iIndex . '.html', array('id' => $sId, 'bx_repeat:actions' => $mixedButtons));
-    }
-
     function getLoginForm()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
