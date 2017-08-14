@@ -201,7 +201,6 @@
 	<string name="_bx_payment_msg_item_deleted"><![CDATA[The item was successfully deleted from your shopping cart.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Free item was successfully processed]]></string>
 	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Cancelation request was sent. Please wait.]]></string>
-	<string name="_bx_payment_msg_providers_select"><![CDATA[Payments for products with Trial will be billed only when trial period is expired. You can cancel anytime during the trial period.]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Database access error.]]></string>
 	<string name="_bx_payment_err_cannot_validate"><![CDATA[Can't connect to remote host for validation.]]></string>
 	<string name="_bx_payment_err_empty_items"><![CDATA[There are no items selected.]]></string>

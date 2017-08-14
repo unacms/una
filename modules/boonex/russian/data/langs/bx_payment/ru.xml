@@ -201,7 +201,6 @@
 	<string name="_bx_payment_msg_item_deleted"><![CDATA[Товар был успешно удален из вашей корзины.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Бесплатный товар был успешно обработан.]]></string>
 	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Запрос на отмену был отправлен. Пожалуйста, ждите.]]></string>
-	<string name="_bx_payment_msg_providers_select"><![CDATA[Оплата за продукты с пробным периодом будет взыматься только после окончания пробного периода. При необходимости Вы можете отменить подписку в течение пробного периода.]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Ошибка обращения к базе данных.]]></string>
 	<string name="_bx_payment_err_cannot_validate"><![CDATA[Не могу присоединиться к удаленному хосту для проверки данных.]]></string>
 	<string name="_bx_payment_err_empty_items"><![CDATA[Товары не выбраны.]]></string>
