@@ -11,6 +11,33 @@
 
 class BxCnvCmts extends BxTemplCmts
 {
+    protected $_sModule;
+    protected $_oModule;
+
+    function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
+    {
+        $this->_sModule = 'bx_convos';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
+    }
+
+    public function getObjectTitle ($iObjectId = 0)
+    {
+    	$sResult = parent::getObjectTitle($iObjectId);
+    	if(!empty($sResult))
+    		return strmaxtextlen($sResult, 20, '...');
+
+        return $sResult;
+    }
+
+    public function addCssJs()
+    {
+        parent::addCssJs();
+
+        $this->_oModule->_oTemplate->addCss(array('cmts.css'));
+    }
+
     /**
      * Comments are enabled for collaborators only
      */
@@ -19,11 +46,10 @@ class BxCnvCmts extends BxTemplCmts
         if (!parent::isEnabled ())
             return false;
 
-        $oModule = BxDolModule::getInstance('bx_convos');
-        if (!$oModule->_oDb->getContentInfoById((int)$this->getId()))
+        if (!$this->_oModule->_oDb->getContentInfoById((int)$this->getId()))
             return false;
 
-        $aCollaborators = $oModule->_oDb->getCollaborators((int)$this->getId());
+        $aCollaborators = $this->_oModule->_oDb->getCollaborators((int)$this->getId());
         if (!isset($aCollaborators[bx_get_logged_profile_id()]))
             return false;
 
@@ -53,19 +79,28 @@ class BxCnvCmts extends BxTemplCmts
         return $this->msgErrRemoveAllowed ();
     }
 
+    public function getCommentsBlock($aBp = array(), $aDp = array())
+    {
+        $mixedBlock = parent::getCommentsBlock($aBp, $aDp);
+        if (is_array($mixedBlock) && isset($mixedBlock['title']))
+            $mixedBlock['title'] = _t('_bx_cnv_page_block_title_entry_comments', $this->getCommentsCount());
+
+        return $mixedBlock;
+    }
+
+    public function getCommentBlock($iCmtId = 0, $aBp = array(), $aDp = array())
+    {
+        if(!$this->isEnabled())
+            return '';
+
+        return parent::getCommentBlock($iCmtId, $aBp, $aDp);
+    }
+
     protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
     {
         $oForm = parent::_getFormObject($sAction);
         $oForm->aInputs['cmt_submit']['value'] = _t('_sys_send');
         return $oForm;
-    }
-
-    function getCommentsBlock($aBp = array(), $aDp = array())
-    {
-        $mixedBlock = parent::getCommentsBlock($aBp, $aDp);
-        if (is_array($mixedBlock) && isset($mixedBlock['title']))
-            $mixedBlock['title'] = _t('_bx_cnv_page_block_title_entry_comments', $this->getCommentsCount());
-        return $mixedBlock;
     }
 }
 
