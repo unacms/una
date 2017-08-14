@@ -21,19 +21,29 @@ class BxBaseModConnectDb extends BxBaseModGeneralDb
     }
     
     /**
-     * Check remote profile id
+     * Get local profile id by remote profile id
      *
-     * @param $iRemoteId integer
+     * @param $iRemoteId remote profile id
      * @return local profile id
      */
     function getProfileId($iRemoteId)
     {
-        $iRemoteId = (int) $iRemoteId;
-
         $sQuery = $this->prepare ("SELECT `local_profile` FROM `{$this -> sTablePrefix}accounts` WHERE `remote_profile` = ? LIMIT 1", $iRemoteId);
-        return $this -> getOne($sQuery);
+        return $this->getOne($sQuery);
     }
 
+    /**
+     * Get remote profile id by local profile id
+     *
+     * @param $iLocalId local profile id
+     * @return remote profile id
+     */
+    function getRemoteProfileId($iLocalId)
+    {
+        $sQuery = $this->prepare ("SELECT `remote_profile` FROM `{$this -> sTablePrefix}accounts` WHERE `local_profile` = ? LIMIT 1", (int)$iLocalId);
+        return $this->getOne($sQuery);
+    }
+    
     /**
      * Save new remote ID
      *
