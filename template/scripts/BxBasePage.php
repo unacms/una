@@ -208,6 +208,7 @@ class BxBasePage extends BxDolPage
     protected function _getBlockCode($aBlock)
     {
         $sContentWithBox = '';
+        $oFunctions = $this->_oTemplate->getTemplateFunctions();
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
 
@@ -219,7 +220,7 @@ class BxBasePage extends BxDolPage
             $sTitle = $this->getBlockTitle($aBlock);
 
             if (is_array($mixedContent) && !empty($mixedContent['content'])) {
-				$sContentWithBox = DesignBoxContent(
+				$sContentWithBox = $oFunctions->designBoxContent(
                 	isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,
                     $mixedContent['content'],
                     isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'],
@@ -227,7 +228,7 @@ class BxBasePage extends BxDolPage
 				);
             } 
             elseif (is_string($mixedContent) && !empty($mixedContent)) {                    
-                $sContentWithBox = DesignBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
+                $sContentWithBox = $oFunctions->designBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
             }
         }
 

@@ -756,10 +756,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject, $sDisplayName, $oTemplate = false)
+    static public function getObjectInstance($sObject, $sDisplayName, $oTemplate = false, $sParam = '')
     {
-        if (isset($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName]))
-            return $GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName];
+        $sKey = 'BxDolForm!'.$sObject.'!'.$sDisplayName.'!'.$sParam;
+
+        if (isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aObject = BxDolFormQuery::getFormArray($sObject, $sDisplayName);
         if (!$aObject || !is_array($aObject))
@@ -774,7 +776,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         $o = new $sClass($aObject, $oTemplate);
 
-        return ($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     /**
@@ -1138,15 +1140,6 @@ class BxDolFormChecker
         $oChecker = $this->_oChecker;
         $iErrors = 0;
 
-        // check CSRF token if it's needed.
-        if (getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true && ($mixedCsrfTokenSys = BxDolForm::getCsrfToken()) !== false) {
-            $mixedCsrfTokenUsr = BxDolForm::getSubmittedValue('csrf_token', $this->_sFormMethod, $this->_aSpecificValues);
-            unset($aInputs['csrf_token']);
-
-            if($mixedCsrfTokenUsr === false || $mixedCsrfTokenSys != $mixedCsrfTokenUsr)
-                return false;
-        }
-
         $sSubmitName = false;
 
         foreach ($aInputs as $k => $a) {
@@ -1221,6 +1214,17 @@ class BxDolFormChecker
                 $aInputs[$k]['checked'] = ($aInputs[$k]['value'] == $val);
             elseif (!isset(BxDolForm::$TYPES_FILE[$a['type']]) && !isset(BxDolForm::$TYPES_SKIP[$a['type']]))
                 $aInputs[$k]['value'] = bx_process_input($val);
+        }
+
+        // check CSRF token if it's needed.
+        if (getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true && ($mixedCsrfTokenSys = BxDolForm::getCsrfToken()) !== false) {
+            $mixedCsrfTokenUsr = BxDolForm::getSubmittedValue('csrf_token', $this->_sFormMethod, $this->_aSpecificValues);
+            unset($aInputs['csrf_token']);
+
+            if($mixedCsrfTokenUsr === false || $mixedCsrfTokenSys != $mixedCsrfTokenUsr) {
+                $aInputs[$sSubmitName]['error'] = _t('_sys_txt_form_submission_error_csrf_expired');
+                return false;
+            }
         }
 
         // check for spam

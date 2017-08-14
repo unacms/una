@@ -63,7 +63,6 @@
   height: 45px;
   width: 100%;
   background: #3e454c;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -161,7 +160,8 @@
   /* hide line in the center */
   background: rgba(255, 255, 255, 0);
 }
-.cd-nav-trigger.nav-is-visible span::before, .cd-nav-trigger.nav-is-visible span::after {
+.cd-nav-trigger.nav-is-visible span::before, 
+.cd-nav-trigger.nav-is-visible span::after {
   /* keep visible other 2 lines */
   background: white;
 }
@@ -197,7 +197,7 @@
 
 /*--- Sidebar ---*/
 .cd-side-nav {
-  position: absolute;
+  position: fixed;
   z-index: 400;
   left: 0;
   width: 100%;

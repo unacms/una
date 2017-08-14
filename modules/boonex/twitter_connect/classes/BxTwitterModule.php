@@ -54,7 +54,7 @@ class BxTwitterModule extends BxBaseModConnectModule
     {
         require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
 
-        // check CSRF token
+        // check token
         if (empty($_GET['oauth_token'])) {
             $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_bx_twitter_error_no_oauth_token')));
             return;

@@ -40,7 +40,7 @@ class BxUnaConModule extends BxBaseModConnectModule
                 'client_id' => $this->_oConfig->sApiID,
                 'redirect_uri' => $this->_oConfig->sPageHandle,
                 'scope' => $this->_oConfig->sScope,
-                'state' => $this->_genCsrfToken(),
+                'state' => $this->_genToken(),
             ));
             $this->_redirect($sUrl);
         }
@@ -50,8 +50,8 @@ class BxUnaConModule extends BxBaseModConnectModule
     {
         require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
 
-        // check CSRF token
-        if ($this->_getCsrfToken() != bx_get('state')) {
+        // check token
+        if ($this->_getToken() != bx_get('state')) {
             $this->_oTemplate->getPage(_t('_Error'), MsgBox(_t('_sys_connect_state_invalid')));
             return;
         }
@@ -134,33 +134,6 @@ class BxUnaConModule extends BxBaseModConnectModule
         
         return $aProfileFields;
     }
-
-    protected function _genCsrfToken($bReturn = false)
-    {
-        if (getParam('sys_security_form_token_enable') != 'on' || defined('BX_DOL_CRON_EXECUTE'))
-            return false;
-
-        $oSession = BxDolSession::getInstance();
-
-        $iCsrfTokenLifetime = (int)$this->_oDb->getParam('sys_security_form_token_lifetime');
-        if ($oSession->getValue('bx_unacon_csrf_token') === false || ($iCsrfTokenLifetime != 0 && time() - (int)$oSession->getValue('csrf_token_time') > $iCsrfTokenLifetime)) {
-            $sToken = genRndPwd(20, false);
-            $oSession->setValue('bx_unacon_csrf_token', $sToken);
-            $oSession->setValue('bx_unacon_csrf_token_time', time());
-        }
-        else {
-            $sToken = $oSession->getValue('bx_unacon_csrf_token');
-        }
-
-        return $sToken;
-    }
-
-    protected function _getCsrfToken()
-    {
-        $oSession = BxDolSession::getInstance();
-        return $oSession->getValue('bx_unacon_csrf_token');
-    }
-
 }
 
 /** @} */

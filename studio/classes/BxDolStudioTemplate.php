@@ -76,7 +76,9 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             'jquery.dolPopup.js',
         ));
 
-        $this->_oConfigTemplate = BxTemplStudioConfig::getInstance();
+        $this->_oTemplateConfig = BxTemplStudioConfig::getInstance();
+
+        $this->_oTemplateFunctions = BxTemplStudioFunctions::getInstance($this);
     }
 
     function _getAbsoluteLocation($sType, $sFolder, $sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)

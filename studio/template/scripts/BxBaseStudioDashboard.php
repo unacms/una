@@ -56,7 +56,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
     function getPageCode($bHidden = false)
     {
-    	$oPage = BxDolPage::getObjectInstance('sys_std_dashboard');
+    	$oPage = BxDolPage::getObjectInstance('sys_std_dashboard', BxDolStudioTemplate::getInstance());
     	return $oPage->getCode();
     }
 

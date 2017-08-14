@@ -31,6 +31,18 @@ class BxDolModuleTemplate extends BxDolTemplate
         $this->addLocationJs($sName, $sHomePath . 'js/', $sHomeUrl . 'js/');
     }
 
+    /**
+     * Initialize module template engine.
+     * Note. The method is executed with the system, you shouldn't execute it in your subclasses.
+     */
+    public function init()
+    {
+        $this->loadTemplates();
+
+        bx_import('BxTemplFunctions');
+        $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
+    }
+
     function addCss($mixedFiles, $bDynamic = false)
     {
         return $this->_addFiles(BxDolTemplate::getInstance(), 'addCss', 'addDynamicLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true);

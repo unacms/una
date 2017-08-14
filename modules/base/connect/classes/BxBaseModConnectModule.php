@@ -285,6 +285,31 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         header("Location:{$sUrl}", true, $iStatus);
         exit;
     }
+
+    protected function _genToken($bReturn = false)
+    {
+        $oSession = BxDolSession::getInstance();
+
+        $sPrefix = $this->getName();
+
+        $iCsrfTokenLifetime = 3600;
+        if ($oSession->getValue($sPrefix . '_token') === false || (time() - (int)$oSession->getValue($sPrefix . '_token_time') > $iCsrfTokenLifetime)) {
+            $sToken = genRndPwd(20, false);
+            $oSession->setValue($sPrefix . '_token', $sToken);
+            $oSession->setValue($sPrefix . '_token_time', time());
+        }
+        else {
+            $sToken = $oSession->getValue($sPrefix . '_token');
+        }
+
+        return $sToken;
+    }
+
+    protected function _getToken()
+    {
+        $oSession = BxDolSession::getInstance();
+        return $oSession->getValue($this->getName() . '_token');
+    }
 }
 
 /** @} */

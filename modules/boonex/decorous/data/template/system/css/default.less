@@ -33,9 +33,6 @@
 	padding: @bx-content-padding-block;
 }
 
-#bx-logo {
-    margin-top:-@bx-content-padding-header;
-}
 
 /* shadow */
 .bx-shadow-header {
@@ -165,10 +162,27 @@ a:hover > .sys-icon-a i {
 .bx-header .sys-icon-a {
 	color: @bx-color-icon-header; 
 }
+.bx-header .cd-nav-trigger span, 
+.bx-header .cd-nav-trigger span::before, 
+.bx-header .cd-nav-trigger span::after,
+.bx-header .cd-nav-trigger.nav-is-visible span::before, 
+.bx-header .cd-nav-trigger.nav-is-visible span::after {
+    background: @bx-color-icon-header;
+}
 .bx-header a:hover .sys-icon,
 .bx-header a:hover .sys-icon-a {
 	color: @bx-color-icon-header-hover; 
-} 
+}
+.bx-header .cd-nav-trigger.nav-is-visible:hover span {
+  background: rgba(255, 255, 255, 0);
+}
+.bx-header .cd-nav-trigger:hover span, 
+.bx-header .cd-nav-trigger:hover span::before, 
+.bx-header .cd-nav-trigger:hover span::after,
+.bx-header .cd-nav-trigger.nav-is-visible:hover span::before, 
+.bx-header .cd-nav-trigger.nav-is-visible:hover span::after {
+    background: @bx-color-icon-header-hover;
+}
 .bx-header .sys-icon-a i {
 	.background-color (@bx-color-icon-header) !important;
 	color: @bx-color-icon-header;

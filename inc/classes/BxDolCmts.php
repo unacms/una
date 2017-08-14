@@ -1039,6 +1039,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
+        if(empty($iAuthorId))
+            return BxDolProfileUndefined::getInstance();
+
         $oProfile = BxDolProfile::getInstance($iAuthorId);
         if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
@@ -1050,7 +1053,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         $sDisplayName = '_sFormDisplay' . ucfirst($sAction);
 
-        return BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
+        return BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName, false, $this->_sSystem);
     }
 
     protected function _getParams(&$aBp, &$aDp)

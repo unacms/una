@@ -225,8 +225,8 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
 
 			case 'by_type_category':
 				$aMethod['params'][1] = array(
-                	'type' => $aParams['type'],
-					'category' => $aParams['category']
+                	'type' => $aParams['mix_type'],
+					'category' => $aParams['mix_category']
                 );
 
 				$sWhereClause .= "AND `tm`.`type`=:type AND `tm`.`category`=:category";

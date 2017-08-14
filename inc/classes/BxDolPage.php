@@ -134,7 +134,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      * @param $sURI unique page URI
      * @return object instance or false on error
      */
-    static public function getObjectInstanceByURI($sURI = '')
+    static public function getObjectInstanceByURI($sURI = '', $oTemplate = false)
     {
     	if(empty($sURI) && bx_get('i') !== false)
     		$sURI = bx_process_input(bx_get('i'));
@@ -143,7 +143,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 			return false;
 
         $sObject = BxDolPageQuery::getPageObjectNameByURI($sURI);
-        return $sObject ? self::getObjectInstance($sObject) : false;
+        return $sObject ? self::getObjectInstance($sObject, $oTemplate) : false;
     }
 
     /**
@@ -151,7 +151,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject)
+    static public function getObjectInstance($sObject, $oTemplate = false)
     {
         if (isset($GLOBALS['bxDolClasses']['BxDolPage!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolPage!'.$sObject];
@@ -167,7 +167,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
         }
 
-        $o = new $sClass($aObject);
+        $o = new $sClass($aObject, $oTemplate);
 
         return ($GLOBALS['bxDolClasses']['BxDolPage!'.$sObject] = $o);
     }
