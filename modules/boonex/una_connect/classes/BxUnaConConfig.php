@@ -39,7 +39,7 @@ class BxUnaConConfig extends BxBaseModConnectConfig
         $this -> isAlwaysConfirmEmail = (bool)getParam('bx_unacon_confirm_email'); 
         $this -> isAlwaysAutoApprove = (bool)getParam('bx_unacon_approve');
 
-        $this -> bAutoFriends = 'on' == getParam('bx_unacon_auto_friends');
+        $this -> bAutoFriends = (bool)getParam('bx_unacon_auto_friends');
 
         $this -> sPageStart = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'start';
         $this -> sPageHandle = BX_DOL_URL_ROOT . $this -> getBaseUri() . 'handle';
