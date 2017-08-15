@@ -117,6 +117,9 @@
 	                },
 	                onUnpin: function() {
 	                    bx_menu_slide_close_all_opened();
+
+	                    if(sidebar.hasClass('nav-is-visible'))
+	                    	sidebar.toggleClass('nav-is-visible');
 	                }
 	            }).init();
         });
