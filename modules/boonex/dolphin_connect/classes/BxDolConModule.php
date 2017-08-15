@@ -178,6 +178,8 @@ class BxDolConModule extends BxBaseModConnectModule
             $sFullname = $aProfileInfo['FirstName'] . (!empty($aProfileInfo['LastName']) ? ' ' . $aProfileInfo['LastName'] : '');
 
         $aProfileFields['name'] = $aProfileInfo['NickName'];
+        $aProfileFields['gender'] = isset($aProfileInfo['Sex']) && ('male' == $aProfileInfo['Sex'] || 'female' == $aProfileInfo['Sex']) ? ('male' == $aProfileInfo['Sex'] ? 1 : 2) : '';
+        $aProfileFields['birthday'] = isset($aProfileInfo['DateOfBirth']) ? $aProfileInfo['DateOfBirth'] : '';
         $aProfileFields['fullname'] = $sFullname;
         $aProfileFields['picture'] = $aProfileInfo['picture'];
         $aProfileFields['allow_view_to'] = getParam('bx_dolcon_privacy');
