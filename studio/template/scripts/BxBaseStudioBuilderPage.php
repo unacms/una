@@ -1103,7 +1103,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'content' => MsgBox(_t('_adm_bp_err_page_visible_for_levels'))
                 )
             );
-        else
+        else {
         	bx_import('BxDolStudioUtils');
             $aInputs = array(
                 'visible_for' => array(
@@ -1129,7 +1129,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'visible_for_levels',
                     'caption' => _t('_adm_bp_txt_page_visible_for_levels'),
                     'info' => _t('_adm_bp_dsc_page_visible_for_levels'),
-                    'value' => '',
+                    'value' => array(),
                     'values' => array(),
                     'tr_attrs' => array(
                         'style' => $iVisibleForLevels == BX_DOL_INT_MAX ? 'display:none' : ''
@@ -1139,6 +1139,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     )
                 )
             );
+        }
 
         $aForm = array(
             'form_attrs' => array(

@@ -197,6 +197,11 @@ class BxDolStudioUtils extends BxDol
 
     public static function getVisibilityValues($iValue, &$aValuesAll, &$aValuesSelected)
     {
+        if(!is_array($aValuesAll))
+            $aValuesAll = array();
+        if(!is_array($aValuesSelected))
+            $aValuesSelected = array();
+
         $aLevels = BxDolAcl::getInstance()->getMemberships(false, true);
         foreach($aLevels as $iKey => $sValue) {
             if(((int)$iValue & pow(2, (int)$iKey - 1)) != 0)
