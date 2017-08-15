@@ -241,8 +241,16 @@ BxDolStudioBuilderPage.prototype.onChangeLayout = function(iId, oLink) {
 	$("[name = 'layout_id']").val(iId);
 };
 
-BxDolStudioBuilderPage.prototype.onSaveSettings = function() {
+BxDolStudioBuilderPage.prototype.onSaveSettingsLayout = function() {
 	window.location.href = this.parsePageUrl({page: this.sPage});
+};
+
+BxDolStudioBuilderPage.prototype.onCloseSettings = function() {
+	$('.bx-popup-applied:visible').dolPopupHide({
+		onHide: function(oPopup) {
+			$(oPopup).remove();
+		}
+	});
 };
 
 /**

@@ -246,6 +246,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     protected function actionPageCreate()
     {
+        $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sModule = BX_DOL_STUDIO_MODULE_CUSTOM;
@@ -316,12 +317,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
             $iId = (int)$oForm->insert(array('object' => $sObject, 'url' => $this->sPageBaseUrl . $sUri));
             if($iId != 0)
-                return array('eval' => $this->getPageJsObject() . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
+                return array('eval' => $sJsObject . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
             else
                 return array('msg' => _t('_adm_bp_err_page_create'));
         }
 
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['add_popup_id'], _t('_adm_bp_txt_create_popup'), $oTemplate->parseHtmlByName('bp_add_page.html', array(
+            'js_object' => $sJsObject,
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
         )));
@@ -382,7 +384,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     if($aLayoutOld['cells_number'] > $aLayoutNew['cells_number'] && $this->oDb->resetBlocksByPage($this->sPage, $aLayoutNew['cells_number']) === false)
                         return array('msg' => _t('_adm_bp_err_save'));
 
-                    return array('eval' => $sJsObject . '.onSaveSettings()');
+                    return array('eval' => $sJsObject . '.onSaveSettingsLayout()');
                 }
 
                 return array();
@@ -392,6 +394,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         }
 
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_popup_id'], _t('_adm_bp_txt_settings_popup'), $oTemplate->parseHtmlByName('bp_edit_page.html', array(
+            'js_object' => $sJsObject,
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
         )));
@@ -1689,6 +1692,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     	$sJsObject = $this->getPageJsObject();
 
         $aTmplParams = array(
+            'js_object' => $sJsObject,
             'menu' => array(),
             'html_settings_groups_id' => $this->aHtmlIds['settings_groups_id'],
             'bx_repeat:settings_groups' => array(),
