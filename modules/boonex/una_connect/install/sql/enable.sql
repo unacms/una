@@ -37,6 +37,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_unacon_url', '', @iCategId, '_bx_unacon_option_app_url', 'digit', '', '', 30, ''),
 ('bx_unacon_redirect_page', 'dashboard', @iCategId, '_sys_connect_option_redirect', 'select', '', '', 40, 'join,settings,dashboard,index'),
 ('bx_unacon_module', 'bx_persons', @iCategId, '_sys_connect_option_module', 'select', '', '', 50, 'a:2:{s:6:"module";s:9:"bx_unacon";s:6:"method";s:20:"get_profiles_modules";}'),
+('bx_unacon_privacy', '3', @iCategId, '_sys_connect_option_privacy', 'select', '', '', 54, 'a:2:{s:6:"module";s:9:"bx_unacon";s:6:"method";s:18:"get_privacy_groups";}'),
 ('bx_unacon_auto_friends', 'on', @iCategId, '_bx_unacon_option_auto_friends', 'checkbox', '', '', 60, ''),
 ('bx_unacon_confirm_email', 'on', @iCategId, '_sys_connect_option_confirm_email', 'checkbox', '', '', 70, ''),
 ('bx_unacon_approve', '', @iCategId, '_sys_connect_option_approve', 'checkbox', '', '', 80, ''),
