@@ -18,13 +18,14 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
         $this->aCurrent = array(
             'name' => 'bx_timeline',
             'module_name' => 'bx_timeline',
+            'object_metatags' => 'bx_timeline',
             'title' => _t('_bx_timeline_page_title_browse'),
             'table' => 'bx_timeline_events',
             'ownFields' => array('id', 'owner_id', 'type', 'action', 'object_id', 'object_privacy_view', 'content', 'title', 'description', 'views', 'rate', 'votes', 'comments', 'reports', 'reposts', 'date', 'active', 'hidden', 'pinned'),
             'searchFields' => array('description'),
             'restriction' => array(
-        		'internal' => array('value' => 'timeline_common_post', 'field' => 'type', 'operator' => '='),
-        		'active' => array('value' => '1', 'field' => 'active', 'operator' => '='),
+                'internal' => array('value' => 'timeline_common_post', 'field' => 'type', 'operator' => '='),
+                'active' => array('value' => '1', 'field' => 'active', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_timeline_events_per_page'), 'start' => 0),
             'sorting' => 'last',
@@ -40,6 +41,7 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_timeline');
                 $this->aCurrent['paginate']['perPage'] = 3;
+                unset($this->aCurrent['rss']);
                 break;
 
             default:

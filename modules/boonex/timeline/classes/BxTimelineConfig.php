@@ -55,6 +55,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'FIELD_LOCATION_PREFIX' => 'location',
 
         	// objects
+        	'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
         	'OBJECT_VIEWS' => $this->_sName,
         	'OBJECT_VOTES' => $this->_sName,
