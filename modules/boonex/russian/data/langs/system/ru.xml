@@ -2403,7 +2403,7 @@
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Ваш новый пароль - <b>{0}</b> - был отослан Вам по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Произошла ошибка, Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
 	<string name="_sys_txt_splash_btn_join"><![CDATA[Зарегистрироваться]]></string>
-	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые раделяют Ваши увлечения]]></string>
+	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые разделяют Ваши увлечения]]></string>
 	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, видео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
 	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Присядь на стул. Попробуй.<br />Зарегистрируйся. Жизнь такая<br />сладкая."]]></string>
 	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
