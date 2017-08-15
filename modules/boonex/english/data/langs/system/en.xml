@@ -2165,6 +2165,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_next"><![CDATA[Next]]></string>
     <string name="_sys_notification_account"><![CDATA[<h3>Accounts created in the last 24 hours:</h3><ul>{0}</ul>]]></string>
 	<string name="_sys_notification_account_link"><![CDATA[<li><a href="{0}">{1}</a> ({2})</li>]]></string>
+    <string name="_sys_not_specified"><![CDATA[Not Specified]]></string>
     <string name="_sys_on"><![CDATA[on]]></string>
     <string name="_sys_off"><![CDATA[off]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[About]]></string>

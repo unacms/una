@@ -43,6 +43,10 @@
 	<string name="_bx_persons_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this profile]]></string>
 	<string name="_bx_persons_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
 	<string name="_bx_persons_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete your profile.]]></string>
+    <string name="_bx_persons_form_profile_input_sys_birthday"><![CDATA[Birthday]]></string>
+    <string name="_bx_persons_form_profile_input_birthday"><![CDATA[Birthday]]></string>
+    <string name="_bx_persons_form_profile_input_sys_gender"><![CDATA[Gender]]></string>
+    <string name="_bx_persons_form_profile_input_gender"><![CDATA[Gender]]></string>
 
 	<string name="_bx_persons_acl_action_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Delete Person's Profile]]></string>

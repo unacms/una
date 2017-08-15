@@ -205,9 +205,9 @@
                 var m;
 
                 if ($(this).attr('min') && (m = $(this).attr('min').match(/^(\d{4})/)))
-                    sYearMin = m[1];
+                    iYearMin = m[1];
                 if ($(this).attr('max') && (m = $(this).attr('max').match(/^(\d{4})/)))
-                    sYearMax = m[1];
+                    iYearMax = m[1];
 
                 var onBeforeShow = function(oInput, oInstance) {
                 	$(oInstance.dpDiv).addClass('bx-form-datepicker-modal');
