@@ -166,10 +166,13 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
      */
     protected function _makeFriends($iProfileId)
     {
-        if (!$this->_oConfig->bAutoFriends) {
+        if (!$this->_oConfig->bAutoFriends)
             return;
-        }
 
+        $oConnFrinds = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if (!$oConnFrinds)
+            return;
+        
         try {
             //get friends from facebook
             $oFriendsResponse = $this -> oFacebook -> get('/me/friends?limit=50');
@@ -184,11 +187,12 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
         do {
             foreach ($oPagesEdge as $oPage) {
                 $aFriend = $oPage->asArray();
-                $iFriendId = $this -> _oDb -> getProfileId($aFriend['id']);
-
-                // TODO:
+                if (!($iLocalProfileId = $this->_oDb->getProfileId($aFriend['id'])))
+                    continue;
+                $oConnFrinds->actionAdd($iProfileId, $iLocalProfileId);
+                $oConnFrinds->actionAdd($iLocalProfileId, $iProfileId);
             }
-        } while ($oPagesEdge = $this -> oFacebook -> next($oPagesEdge));
+        } while ($oPagesEdge = $this->oFacebook->next($oPagesEdge));
     }
 
     /**
