@@ -362,7 +362,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         ));
 
         //--- Load Embed.ly if Key and Pattern are available ---//
-        $bEmbedly = !empty(getParam('sys_embedly_api_key')) && !empty(getParam('sys_embedly_api_pattern'));
+        $bEmbedly = !empty(getParam('sys_embedly_api_key'));
         if($bEmbedly) {
             $this->addJsSystem(array(
             	'jquery.embedly.min.js',
