@@ -9,6 +9,11 @@
     float:left;
 }
 
+.bx-base-pofile-unit-wo-info {
+	position: relateive;
+	display: block;
+}
+
 .bx-base-pofile-unit div {
     width:136px;
     width:8.5rem;

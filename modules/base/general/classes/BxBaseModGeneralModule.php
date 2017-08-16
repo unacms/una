@@ -334,9 +334,8 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityLocation ($iContentId = 0)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+        $iContentId = $this->_getContent($iContentId, false);
+        if($iContentId === false)
             return false;
 
         return $this->_oTemplate->entryLocation ($iContentId);
@@ -380,9 +379,8 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityActions ($iContentId = 0)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+        $iContentId = $this->_getContent($iContentId, false);
+        if($iContentId === false)
             return false;
 
         $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
@@ -394,13 +392,11 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntitySocialSharing ($iContentId = 0)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
             return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
 
         $CNF = &$this->_oConfig->CNF;
         return $this->_entitySocialSharing ($iContentId, array(
@@ -940,9 +936,8 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+        $iContentId = $this->_getContent($iContentId, false);
+        if($iContentId === false)
             return false;
 
         bx_import('FormsEntryHelper', $this->_aModule);
@@ -953,14 +948,11 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _serviceTemplateFunc ($sFunc, $iContentId, $sFuncGetContent = 'getContentInfoById')
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+        $mixedContent = $this->_getContent($iContentId, $sFuncGetContent);
+        if($mixedContent === false)
             return false;
 
-        $aContentInfo = $this->_oDb->$sFuncGetContent($iContentId);
-        if (!$aContentInfo)
-            return false;
+        list($iContentId, $aContentInfo) = $mixedContent;
 
         return $this->_oTemplate->$sFunc($aContentInfo);
     }
@@ -986,6 +978,24 @@ class BxBaseModGeneralModule extends BxDolModule
             $o->outputRSS();
 
         exit;
+    }
+
+    protected function _getContent($iContentId = 0, $sFuncGetContent = 'getContentInfoById')
+    {
+        if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$iContentId)
+            return false;
+
+        if(empty($sFuncGetContent) || !method_exists($this->_oDb, $sFuncGetContent))
+            return $iContentId;
+
+        $aContentInfo = $this->_oDb->$sFuncGetContent($iContentId);
+        if(!$aContentInfo)
+            return false;
+
+        return array($iContentId, $aContentInfo);
     }
 
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())

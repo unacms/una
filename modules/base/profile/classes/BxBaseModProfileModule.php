@@ -164,9 +164,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $aRet;
     }
 
-    public function serviceProfileUnit ($iContentId)
+    public function serviceProfileUnit ($iContentId, $aParams = array())
     {
-        return $this->_serviceTemplateFunc('unit', $iContentId);
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        $bCheckPrivateContent = isset($aParams['check_private_content']) ? (bool)$aParams['check_private_content'] : true;
+        $sTemplate = (!empty($aParams['template']) ? $aParams['template'] : 'unit') . '.html';
+
+        return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, $sTemplate);
     }
 
     public function serviceProfilePicture ($iContentId)
@@ -356,13 +365,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function serviceEntitySocialSharing ($iContentId = 0)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
             return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
 
         $CNF = &$this->_oConfig->CNF;
         return $this->_entitySocialSharing ($iContentId, array(
@@ -382,27 +389,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileMembership ($iContentId = 0)
     {
-    	if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+    	$mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
             return false;
 
-		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
+        list($iContentId, $aContentInfo) = $mixedContent;
 
 		return BxDolAcl::getInstance()->getProfileMembership($aContentInfo['profile_id']);
     }
+
     public function serviceProfileFriends ($iContentId = 0)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
             return false;
 
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
+        list($iContentId, $aContentInfo) = $mixedContent;
 
         bx_import('BxDolConnection');
         $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);

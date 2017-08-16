@@ -224,10 +224,10 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     /**
      * Get profile unit
      */
-    public function getUnit($iProfileId = 0)
+    public function getUnit($iProfileId = 0, $aParams = array())
     {
         $aInfo = $this->getInfo($iProfileId);
-        return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id']));
+        return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id'], $aParams));
     }
 
     /**
