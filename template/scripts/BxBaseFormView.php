@@ -321,7 +321,7 @@ EOS;
                 if (empty($aInput['value']) || !$aInput['value'] || '0000-00-00' == $aInput['value'])
                     break;
 
-                $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
+                $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
             break;
 
             case 'date_time':
@@ -330,7 +330,7 @@ EOS;
                 if(empty($aInput['value']) || !$aInput['value'] || '0000-00-00 00:00:00' == $aInput['value'] || '0000-00-00 00:00' == $aInput['value'])
                     break;
 
-                $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
+                $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
             break;
 
             case 'checkbox_set':
