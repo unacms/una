@@ -175,8 +175,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'cover', 'a:1:{i:0;s:21:"bx_persons_cover_crop";}', 'a:1:{s:21:"bx_persons_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_persons_form_profile_input_sys_cover', '_bx_persons_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_person', 'bx_persons', 'picture', 'a:1:{i:0;s:23:"bx_persons_picture_crop";}', 'a:1:{s:23:"bx_persons_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_persons_form_profile_input_picture_err', '', '', 1, 0),
 ('bx_person', 'bx_persons', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_person', 'bx_persons', 'birthday', 0, '', 0, 'datepicker', '_bx_persons_form_profile_input_sys_birthday', '_bx_persons_form_profile_input_birthday', '', 0, 0, 0, 0, '', '', '', '', '', '', 'Date', '', 1, 0),
-('bx_person', 'bx_persons', 'gender', '', '#!Sex', 0, 'select', '_bx_persons_form_profile_input_sys_gender', '_bx_persons_form_profile_input_gender', '', 0, 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
+('bx_person', 'bx_persons', 'birthday', 0, '', 0, 'datepicker', '_bx_persons_form_profile_input_sys_birthday', '_bx_persons_form_profile_input_birthday', '', 0, 0, 0, '', '', '', '', '', '', 'Date', '', 1, 0),
+('bx_person', 'bx_persons', 'gender', '', '#!Sex', 0, 'select', '_bx_persons_form_profile_input_sys_gender', '_bx_persons_form_profile_input_gender', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
