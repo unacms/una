@@ -142,11 +142,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 			$oProfileAuthor = BxDolProfileUndefined::getInstance();
 
     	return $this->parseHtmlByName('entry-author.html', array(
-			'id' => $oProfileAuthor->id(),
-			'url' => $oProfileAuthor->getUrl(),
-			'title' => $oProfileAuthor->getDisplayName(),
-			'title_attr' => bx_html_attribute($oProfileAuthor->getDisplayName()),
-			'thumb_url' => $oProfileAuthor->getThumb(),
+			'unit' => $oProfileAuthor->getUnit(0, array('template' => 'unit_wo_info')),
     	));
     }
 
