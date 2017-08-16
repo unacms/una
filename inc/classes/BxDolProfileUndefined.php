@@ -152,9 +152,17 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
     /**
      * Check if profile is active
      */
-    public function isActive()
+    public function isActive($iProfileId = false)
     {
         return true;
+    }
+
+	/**
+     * Is profile online
+     */
+	public function isOnline($iProfileId = false)
+    {
+        return false;
     }
 }
 
