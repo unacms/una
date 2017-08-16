@@ -63,6 +63,9 @@ html {
 #bx-logo-container {
     margin:0 3rem;
 }
+#bx-footer-wrapper {
+	height: auto;
+}
 
 /* common.css */
 
