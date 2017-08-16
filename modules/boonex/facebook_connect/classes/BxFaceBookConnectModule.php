@@ -220,8 +220,6 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
            }
         }
 
-        echoDbgLog($aProfileInfo);
-
         // fill array with all needed values
 
         $sGender = '';
