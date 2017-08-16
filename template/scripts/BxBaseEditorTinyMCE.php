@@ -72,7 +72,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         height: '150',
                         theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image',
-                        statusbar: false,
+                        statusbar: true,
+                        resize: true,
     ";
 
     /**
