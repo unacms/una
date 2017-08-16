@@ -588,7 +588,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
         $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
         $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-        if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
+        if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && (empty($sEmbedlyPattern) || preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url'])))) {
             $bTmplVarsEmbed = true;
             $aTmplVarsEmbed = array(
                 'style_prefix' => $sStylePrefix,
@@ -887,7 +887,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
                 $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
                 $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-                if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
+                if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && (empty($sEmbedlyPattern) || preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url'])))) {
                     $bTmplVarsEmbed = true;
                     $aTmplVarsEmbed = array(
                         'style_prefix' => $sStylePrefix,

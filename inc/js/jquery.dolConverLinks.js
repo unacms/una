@@ -1,6 +1,6 @@
 (function( $ ){
 	$.fn.dolConverLinks = function(options) {
-		if(bx_get_param('sys_embedly_api_key') != '' && bx_get_param('sys_embedly_api_pattern') != '')
+		if(bx_get_param('sys_embedly_api_key') != '')
 			return this.dolEmbedly(options);
 
 		if(bx_get_param('sys_iframely_api_key') != '')
@@ -19,7 +19,7 @@
         var o = $.extend({}, {'max-width':900}, options);
 		var sEmbedlyKey = bx_get_param('sys_embedly_api_key');
 		var sEmbedlyPattern = bx_get_param('sys_embedly_api_pattern');
-		if(!sEmbedlyKey || !sEmbedlyPattern)
+		if(!sEmbedlyKey)
 			return this;
 
         var eBox = $(this).parent();
@@ -27,13 +27,17 @@
         if (iMaxWidth > o['max-width']) 
         	iMaxWidth = o['max-width'];
 
+        var oParams = {
+            key: sEmbedlyKey,
+            query: {maxwidth: iMaxWidth}
+        };
+
+    	// only videos/sound/images are supported, to generate own list goto http://embed.ly/tools/generator
+        if(sEmbedlyPattern != '')
+        	oParams.urlRe = new RegExp(sEmbedlyPattern, 'i');
+
 		return this.each(function() {
-			$(this).embedly({
-                key: sEmbedlyKey,
-                query: {maxwidth: iMaxWidth},
-                // only videos/sound/images are supported, to generate own list goto http://embed.ly/tools/generator
-                urlRe: new RegExp(sEmbedlyPattern, 'i')
-            });
+			$(this).embedly(oParams);
 		});
 	};
 })( jQuery );
