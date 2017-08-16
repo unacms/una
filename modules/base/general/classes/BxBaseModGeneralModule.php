@@ -924,7 +924,8 @@ class BxBaseModGeneralModule extends BxDolModule
             $oProfile->getDisplayName(),
             $oProfile->getUrl(),
             $oProfile->getThumb(),
-            $oProfile->getUnit()
+            $oProfile->getUnit(),
+            $oProfile->getUnit(0, array('template' => 'unit_wo_info'))
         );
     }
 
