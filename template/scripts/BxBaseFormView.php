@@ -61,7 +61,7 @@ class BxBaseFormView extends BxDolForm
      * Function name for generation open form section HTML.
      */
     protected $_sSectionOpen = 'getOpenSection';
-
+    
     /**
      * Constructor
      *
@@ -318,7 +318,7 @@ EOS;
 
             case 'datepicker':
                 $sValue = null;
-                if(empty($aInput['value']))
+                if (empty($aInput['value']) || !$aInput['value'] || '0000-00-00' == $aInput['value'])
                     break;
 
                 $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
@@ -327,7 +327,7 @@ EOS;
             case 'date_time':
             case 'datetime':
                 $sValue = null;
-                if(empty($aInput['value']))
+                if(empty($aInput['value']) || !$aInput['value'] || '0000-00-00 00:00:00' == $aInput['value'] || '0000-00-00 00:00' == $aInput['value'])
                     break;
 
                 $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
@@ -372,6 +372,8 @@ EOS;
 
     function genViewRowValueForSelect(&$aInput)
     {
+        if (!isset($aInput['value']) || !$aInput['value'])
+            return null;
         $s = isset($aInput['value']) && isset($aInput['values'][$aInput['value']]) ? $aInput['values'][$aInput['value']] : null;
         if (isset($aInput['values_list_name'])  && ($oCategory = BxDolCategory::getObjectInstanceByFormAndList($this->aFormAttrs['name'], $aInput['values_list_name'])))
             return $oCategory->getCategoryLink($s, $aInput['value']);

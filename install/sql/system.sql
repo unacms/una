@@ -3117,8 +3117,9 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('Country', 'ZW', 246, '__Zimbabwe', '');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
-('Sex', '1', 0, '_Male', '_LookinMale'),
-('Sex', '2', 1, '_Female', '_LookinFemale');
+('Sex', '', 1, '_sys_not_specified', ''),
+('Sex', '1', 2, '_Male', '_LookinMale'),
+('Sex', '2', 3, '_Female', '_LookinFemale');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES 
 ('Language', '1', 1, '__English', ''),

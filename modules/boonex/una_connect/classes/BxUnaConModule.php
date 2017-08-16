@@ -172,6 +172,8 @@ class BxUnaConModule extends BxBaseModConnectModule
         $aProfileFields = $aProfileInfo;
 
         $aProfileFields['name'] = $aProfileInfo['profile_display_name'];
+        $aProfileFields['gender'] = isset($aProfileInfo['gender']) ? $aProfileInfo['gender'] : '';
+        $aProfileFields['birthday'] = isset($aProfileInfo['birthday']) ? $aProfileInfo['birthday'] : '';
         $aProfileFields['fullname'] = $aProfileInfo['profile_display_name'];
         $aProfileFields['picture'] = $aProfileInfo['picture'];
         $aProfileFields['allow_view_to'] = getParam('bx_unacon_privacy');
