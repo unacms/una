@@ -15,7 +15,7 @@
     <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Notifications]]></string>
 
 	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Number of events are displayed on View page]]></string>
-	<string name="_bx_ntfs_option_events_hide"><![CDATA[Show events in Notifications]]></string>
+	<string name="_bx_ntfs_option_events_hide"><![CDATA[Show notifications to followers when user performs action]]></string>
 
 	<string name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string>
 
