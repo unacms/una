@@ -193,7 +193,7 @@ class BxOAuthModule extends BxDolModule
             'redirect_uri' => bx_get('redirect_uri'),
         	'scope' => bx_get('scope'),
             'state' => bx_get('state'),
-            'profiles' => BxDolService::call('system', 'account_profile_switcher', array(getLoggedId(), false, "javascript: $('#bx-auth-profile-id').val('{profile_id}'); $('#bx-auth-form form').submit(); void(0);"), 'TemplServiceProfiles')['content'],
+            'profiles' => BxDolService::call('system', 'account_profile_switcher', array(getLoggedId(), false, "javascript: $('#bx-auth-profile-id').val('{profile_id}'); $('#bx-auth-form form').submit(); void(0);", true, _t('_bx_oauth_connect'), 'unit_wo_links'), 'TemplServiceProfiles')['content'],
         ));
     }
 
