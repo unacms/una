@@ -168,7 +168,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     public function getDisplayName($iAccountId = false)
     {
         $aInfo = $this->getInfo($iAccountId);
-        return bx_process_output($aInfo['name']);
+        return bx_process_output(!empty($aInfo['name']) ? $aInfo['name'] : _t('_sys_txt_user_n', $aInfo['id']));
     }
 
     /**

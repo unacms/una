@@ -2413,6 +2413,7 @@
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, Пожалуйста, зайдите в свой аккаунт и обновите имейл-установки там или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить имейл-установки для <b>{0}</b>]]></string>
     <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Ссылка отписки неправильная.]]></string>
+    <string name="_sys_txt_user_n"><![CDATA[Пользователь #{0}]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Важная информация:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[База Данных и версии файлов отличаются, возможно, предыдущий патч не был правильно применён.]]></string>
 	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Невозможно применить обновление, так как следующие файлы были изменены: {0}]]></string>
