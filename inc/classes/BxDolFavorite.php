@@ -111,6 +111,15 @@ class BxDolFavorite extends BxDolObject
         return $GLOBALS['bx_dol_favorite_systems'];
     }
 
+    public static function onAuthorDelete ($iAuthorId)
+    {
+        $aSystems = self::getSystems();
+        foreach($aSystems as $sSystem => $aSystem)
+            self::getObjectInstance($sSystem, 0)->getQueryObject()->deleteAuthorEntries($iAuthorId);
+
+        return true;
+    }
+
 	/**
      * Actions functions
      */

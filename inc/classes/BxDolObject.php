@@ -182,6 +182,14 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         return true;
     }
 
+    /**
+     * Database functions
+     */
+    public function getQueryObject ()
+    {
+        return $this->_oQuery;
+    }
+
 	/**
      * Permissions functions
      */

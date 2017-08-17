@@ -18,6 +18,8 @@ class BxDolViewQuery extends BxDolObjectQuery
     {
         parent::__construct($oModule);
 
+        $this->_sTableTrackFieldAuthor = 'viewer_id';
+
         $aSystem = $this->_oModule->getSystemInfo();
         $this->_iPeriod = (int)$aSystem['period'];
     }

@@ -146,6 +146,15 @@ class BxDolVote extends BxDolObject
         return $GLOBALS['bx_dol_vote_systems'];
     }
 
+    public static function onAuthorDelete ($iAuthorId)
+    {
+        $aSystems = self::getSystems();
+        foreach($aSystems as $sSystem => $aSystem)
+            self::getObjectInstance($sSystem, 0)->getQueryObject()->deleteAuthorEntries($iAuthorId);
+
+        return true;
+    }
+
     public function isUndo()
     {
         return (int)$this->_aSystem['is_undo'] == 1;
