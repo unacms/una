@@ -249,9 +249,6 @@
     <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group has new request from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_groups_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group timeline  from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
 
-    <string name="_bx_groups_privacy_group_closed"><![CDATA[Closed]]></string>
-    <string name="_bx_groups_privacy_group_secret"><![CDATA[Secret]]></string>
-
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Group categories]]></string>
     <string name="_bx_groups_cat_General"><![CDATA[General]]></string>
     <string name="_bx_groups_cat_Business"><![CDATA[Business]]></string>
