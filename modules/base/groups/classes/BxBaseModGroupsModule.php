@@ -155,33 +155,31 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if (!($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             return false;
 
-
-
         $sEntryTitle = $aContentInfo[$CNF['FIELD_NAME']];
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
         // send invitation to the group 
         if ($iIgnoreJoinConfirmation && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
 
-            bx_alert($this->getName(), 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
+            bx_alert($this->getName(), 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
 
         }
         // send notification to group's admins that new connection is pending confirmation 
         elseif (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
 
-            bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
+            bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
 
         }
         // send notification that join request was accepted 
         else if (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
             
-            bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
+            bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
 
         }
 
         // new fan was added
         if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
-            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
+            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
             return false;
         }
 

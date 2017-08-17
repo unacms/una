@@ -91,14 +91,15 @@ class BxBaseServiceLogin extends BxDol
 
         $sFormCode = $oForm->getCode();
 
-        $sJoinText = '';
-        if (strpos($sParams, 'no_join_text') === false) {
-            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
-        }
-
         BxDolTemplate::getInstance()->addJs(array('jquery.form.min.js'));
+        
+        $sJoinText = '';
+        if (strpos($sParams, 'no_join_text') === false)
+            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
 
-        $sAuth = $this->serviceMemberAuthCode();
+        $sAuth = '';
+        if (strpos($sParams, 'no_auth_buttons') === false)
+            $sAuth = $this->serviceMemberAuthCode();
 
         return $sCustomHtmlBefore . $sAuth . $sFormCode . $sCustomHtmlAfter . $sJoinText;
 
