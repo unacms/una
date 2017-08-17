@@ -72,6 +72,7 @@ div.bx-market-unit-cnt div.bx-market-unit-info {
 	white-space: nowrap;
 }
 div.bx-market-unit-title {
+	padding-top: 0.125rem;
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -81,7 +82,20 @@ div.bx-market-unit-title {
 	margin-left: auto;
 	margin-right: auto;
 }
-
+.bx-market-fcell {
+	position: relative;
+	display: block;
+}
+.bx-market-fcell.fc-left {
+	float: left;
+}
+.bx-market-fcell.fc-right {
+    float: right;
+}
+.bx-market-fcell .bx-vote {
+	margin: 0px;
+}
+	
 /*--- Defaults ---*/
 .bx-market-thumb-size {
     width: 148px;
