@@ -2390,8 +2390,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sTitle = $bTranslate ? _t($s) : $s;
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
-        $oTemplate->setPageHeader ($sTitle);
-        $oTemplate->setPageContent ('page_main_code', DesignBoxContent($sTitle, MsgBox($sTitle), BX_DB_PADDING_DEF));
+        $oTemplate->setPageHeader (_t('_Error'));
+        $oTemplate->setPageContent ('page_main_code', DesignBoxContent(_t('_Error'), MsgBox($sTitle), BX_DB_PADDING_DEF));
         $oTemplate->getPageCode();
         exit;
     }
