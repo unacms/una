@@ -4,7 +4,7 @@
     border-collapse:collapse;
 }
 .bx-grid-table-wrapper {    
-    overflow-x:scroll;
+    overflow-x:hidden;
     overflow-y:hidden;    
 }
 .bx-grid-table-wrapper2 {
@@ -32,9 +32,16 @@
     right:-1px;
     background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
 }
-.bx-grid-header .bx-def-hr, 
 .bx-grid-table-wrapper .bx-def-hr {
     margin:0;
+}
+
+.bx-grid-header-controls-filter {
+    float:left;
+}
+.bx-grid-header-controls-independent {
+    float:right;
+    margin-top:0;
 }
 
 .bx-grid-table .bx-grid-table-row-hr td:first-child,
