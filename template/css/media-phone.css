@@ -139,4 +139,13 @@ ul.bx-menu-toolbar li a span {
     margin-bottom: 0px;
 }
 
+/* grid.css */
+
+html .bx-grid-table {
+    min-width:720px;
+}
+html .bx-grid-table-wrapper2:before,
+html .bx-grid-table-wrapper2:after {
+    display:block;
+
 } /* @media end */
