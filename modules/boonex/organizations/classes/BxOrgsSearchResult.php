@@ -139,6 +139,8 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                     'mainField' => 'account_id',
                     'onField' => 'user_id',
                     'joinFields' => array('date'),
+                    'groupTable' => $this->aCurrent['table'],
+                    'groupField' => 'id'
                 );
                 $this->aCurrent['sorting'] = 'online';
                 $this->sBrowseUrl = 'page.php?i=organizations-online';
