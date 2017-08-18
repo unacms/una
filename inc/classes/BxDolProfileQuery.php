@@ -253,8 +253,18 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function processDeletedProfiles ()
     {
-        $this->query("UPDATE  `sys_accounts` AS  `a` LEFT OUTER JOIN  `sys_profiles` AS  `p` ON  `a`.`profile_id` =  `p`.`id` SET  `a`.`profile_id` =0 WHERE  `p`.`id` IS NULL"); // reset deleted profiles
-        return $this->query("UPDATE  `sys_accounts` AS  `a` INNER JOIN  `sys_profiles` AS  `p` ON  `a`.`id` =  `p`.`account_id` AND  `p`.`type` =  'system' SET  `a`.`profile_id` =  `p`.`id`"); // assign system profile to reset accounts
+        $bResult = true;
+
+        // reset deleted profiles
+        $bResult &= $this->query("UPDATE `sys_accounts` AS `a` LEFT OUTER JOIN `sys_profiles` AS `p` ON `a`.`profile_id`=`p`.`id` SET `a`.`profile_id`='0' WHERE `p`.`id` IS NULL") !== false;
+
+        // try to assign another non-system profile to reset accounts
+        $bResult &= $this->query("UPDATE `sys_accounts` AS `a` INNER JOIN `sys_profiles` AS `p` ON `a`.`id`=`p`.`account_id` AND `p`.`type`<>'system' AND `a`.`profile_id`='0' SET `a`.`profile_id`=`p`.`id`") !== false;
+
+        // assign system profile to reset accounts
+        $bResult &= $this->query("UPDATE `sys_accounts` AS `a` INNER JOIN `sys_profiles` AS `p` ON `a`.`id`=`p`.`account_id` AND `p`.`type`='system' AND `a`.`profile_id`='0' SET `a`.`profile_id`=`p`.`id`") !== false;
+
+        return $bResult;
     }
 }
 
