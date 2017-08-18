@@ -36,7 +36,7 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $aVars['bx_if:info']['condition'] = true;
         $aVars['bx_if:info']['content']['members'] = $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($oGroupProfile->id(), true) : 0) : '&nbsp;';
         $aVars['bx_if:info']['content']['bx_if:btn'] = array (
-            'condition' => isLogged() && $isPublic && !$oConn->isConnected(bx_get_logged_profile_id(), $oGroupProfile->id(), true),
+            'condition' => $isPublic && $this->getModule()->checkAllowedFanAdd($aData) === CHECK_ACTION_RESULT_ALLOWED,
             'content' => array (
                 'id' => $oGroupProfile->id(),
                 'title' => $oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $oGroupProfile->id()) ? _t($CNF['T']['menu_item_title_become_fan_sent']) : _t($CNF['T']['menu_item_title_become_fan']),

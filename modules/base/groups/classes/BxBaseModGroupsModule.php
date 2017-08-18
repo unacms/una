@@ -415,8 +415,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function checkAllowedFanAdd (&$aDataEntry, $isPerformAction = false)
     {
-        if (!$this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]) && isLogged())
-            return CHECK_ACTION_RESULT_ALLOWED;
+        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]) || !isLogged())
+            return _t('_sys_txt_access_denied');
 
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], true, false);
     }
