@@ -929,11 +929,12 @@ class BxBaseModGeneralModule extends BxDolModule
         );
     }
 
-    // ====== PROTECTED METHODS
-    protected function _isModerator ($isPerformAction = false)
+    public function _isModerator ($isPerformAction = false)
     {
         return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntry ($isPerformAction);
     }
+
+    // ====== PROTECTED METHODS
 
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false)
     {

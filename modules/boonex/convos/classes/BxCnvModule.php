@@ -317,7 +317,7 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * No moderators for personal convos
      */
-    protected function _isModerator ($isPerformAction = false)
+    public function _isModerator ($isPerformAction = false)
     {
         return false;
     }

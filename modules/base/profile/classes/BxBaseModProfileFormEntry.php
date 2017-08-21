@@ -120,7 +120,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
-        $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId);
+        $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId, $this->_oModule->_isModerator());
         $this->_oModule->_oDb->updateContentPictureById($iContentId, 0/*$iProfileId*/, $iFileId, $sPictureField);
     }
 
