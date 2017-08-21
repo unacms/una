@@ -87,6 +87,29 @@ class BxDolCover extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get cover image URL by descriptive array. 
+     * @param mixed $mixedImage - image descriptive array.
+     * @return string with image URL or false on error. 
+     */
+    public static function getCoverImageUrl($mixedImage)
+    {
+        $bObject = !empty($mixedImage['object']);
+        $bTranscoder = !empty($mixedImage['transcoder']);
+        if(!is_array($mixedImage) || !isset($mixedImage['id']) || (!$bObject && !$bTranscoder))
+            return false;
+
+        if($bObject)
+            $o = BxDolStorage::getObjectInstance($mixedImage['object']);
+        else if($bTranscoder)
+            $o = BxDolTranscoder::getObjectInstance($mixedImage['transcoder']);
+
+        if(!$o)
+            return false;
+
+        return $o->getFileUrlById($mixedImage['id']);
+    }
+
+    /**
      * Determine whether cover is already set for the page or not.  
      */
     public function isCover()
@@ -119,23 +142,13 @@ class BxDolCover extends BxDolFactory implements iBxDolSingleton
      */
     public function setCoverImageUrl ($mixedCoverImage)
     {
-        if (is_string($mixedCoverImage)) {
+        if (is_string($mixedCoverImage))
             $this->_sCoverImageUrl = $mixedCoverImage;
-        } 
-        elseif (is_array($mixedCoverImage) && isset($mixedCoverImage['id']) && (isset($mixedCoverImage['object']) || isset($mixedCoverImage['transcoder']))) {
+        else
+            $this->_sCoverImageUrl = self::getCoverImageUrl($mixedCoverImage);
 
-            if (!empty($mixedCoverImage['object']))
-                $o = BxDolStorage::getObjectInstance($mixedCoverImage['object']);
-            elseif (!empty($mixedCoverImage['transcoder']))
-                $o = BxDolTranscoder::getObjectInstance($mixedCoverImage['transcoder']);
-            if (!$o)
-                return false;
-
-            $this->_sCoverImageUrl = $o->getFileUrlById($mixedCoverImage['id']);
-        } 
-        else {
+        if(!$this->_sCoverImageUrl)
             return false;
-        }
 
         bx_alert('system', 'set_cover_image', 0, false, array('cover_image' => &$this->_sCoverImageUrl, 'cover' => $this));
 

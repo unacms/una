@@ -80,7 +80,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         }
 
         // set cover
-        $this->_oModule->_oTemplate->setCover($this->_aContentInfo);
+        $this->_oModule->_oTemplate->setCover($this, $this->_aContentInfo);
     }
 
     public function getCode ()
