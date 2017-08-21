@@ -679,7 +679,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'hidden_on',
                     'caption' => _t('_adm_bp_txt_block_hidden_on'),
                     'info' => '',
-                	'value' => $aBlock['hidden_on'],
+                	'value' => (int)$aBlock['hidden_on'],
                     'values' => array(
                 		BX_DB_HIDDEN_PHONE => _t('_adm_bp_txt_block_hidden_on_phone'),
                 		BX_DB_HIDDEN_TABLET => _t('_adm_bp_txt_block_hidden_on_tablet'),

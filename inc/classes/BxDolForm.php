@@ -1644,6 +1644,8 @@ class BxDolFormCheckerHelper
     }    
     static public function displaySet ($i)
     {
+        $i = (int)$i;
+
         $bit = 1;
         $a = array();
         while ($bit < BX_DOL_INT_MAX && $bit > 0) {
