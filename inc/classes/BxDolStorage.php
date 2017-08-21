@@ -709,17 +709,18 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
      * @param $iProfileId profile id
      * @param $iContentId content id, or false to not consider content id at all
      * @param $isCheckAllAccountProfiles get all files associated with all account profiles
+     * @param $isAdmin if true, then don't check files ownership, it makes sense when $iContentId is provided, so it will return all files assiciated with content
      * @return array of arrays
      */
-    public function getGhosts($iProfileId, $iContentId = false, $isCheckAllAccountProfiles = false)
+    public function getGhosts($iProfileId, $iContentId = false, $isCheckAllAccountProfiles = false, $isAdmin = false)
     {
         if ($isCheckAllAccountProfiles && ($oProfile = BxDolProfile::getInstance($iProfileId))) {
             $oAccount = $oProfile->getAccountObject();
             $aProfiles = $oAccount->getProfilesIds(false);
-            return $this->_oDb->getGhosts($aProfiles, $iContentId);
+            return $this->_oDb->getGhosts($aProfiles, $iContentId, $isAdmin);
         }
         
-        return $this->_oDb->getGhosts($iProfileId, $iContentId);
+        return $this->_oDb->getGhosts($iProfileId, $iContentId, $isAdmin);
     }
 
     /**
@@ -727,16 +728,18 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
      * @param $mixedFileIds array of file ids or just one file id
      * @param $iProfileId profile id
      * @param $iContentId content id
+     * @param $isAdmin if true, then don't check files ownership
      * @return true on success or false otherwise
      */
-    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId)
+    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $isAdmin = false)
     {
         $aProfiles = array();
         if ($oProfile = BxDolProfile::getInstance($iProfileId)) {
             $oAccount = $oProfile->getAccountObject();
             $aProfiles = $oAccount->getProfilesIds(false);
         }
-        return $this->_oDb->updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $aProfiles);
+
+        return $this->_oDb->updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $aProfiles, $isAdmin);
     }
 
     /**
