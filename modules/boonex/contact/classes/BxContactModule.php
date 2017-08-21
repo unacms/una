@@ -72,10 +72,9 @@ class BxContactModule extends BxDolModule
                 $sResult = '';
                 $sRecipientEmail = $this->_oConfig->getEmail();
                 $aCustomHeaders = array();
-                if (getParam('bx_contact_send_from_senders_email')) {
+                if (getParam('bx_contact_add_reply_to')) {
                     $aCustomHeaders = array(
-                        'From' => $oForm->getCleanValue('name') . ' <' . bx_process_output($oForm->getCleanValue('email')) . '>',
-                        'Sender' => trim(getParam('bx_smtp_from_email')) ? trim(getParam('bx_smtp_from_email')) : getParam('site_email_notify'),
+                        'Reply-To' => $oForm->getCleanValue('name') . ' <' . bx_process_output($oForm->getCleanValue('email')) . '>',
                     );
                 }
                 
