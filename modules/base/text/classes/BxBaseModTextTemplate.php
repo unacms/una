@@ -42,12 +42,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if (!$oProfile)
             return '';
 
+        $sName = $oProfile->getDisplayName();
         $sAddon = $sFuncAuthorAddon ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';
 
         $aVars = array (
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
-            'author_title' => $oProfile->getDisplayName(),
+            'author_title' => $sName,
+            'author_title_attr' => bx_html_attribute($sName),
             'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData) : '',
             'bx_if:addon' => array (
                 'condition' => (bool)$sAddon,
