@@ -101,9 +101,9 @@ div.bx-std-block-panel-bottom .bx-menu-btns-hor .bx-btn u {
 
 	vertical-align: middle;
 
-	border-radius: 25px;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
 
 	text-align: center;
 	overflow: hidden;
@@ -118,19 +118,45 @@ div.bx-std-block-panel-bottom .bx-menu-btns-hor .bx-btn u {
 	line-height: 6rem;
 }
 .bx-std-product-title .bx-std-pt-content {
-	padding-left: 120px;
-	padding-left: 7.5rem;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
+    padding-left: 4.25rem;
 }
+.bx-std-product-title .bx-std-pt-content-cnt {
+	width: 100%;
+}
+
 .bx-std-product-title .bx-std-pt-title {
 	white-space: nowrap;	
 }
 .bx-std-product-gallery .bx-def-font-h3 {
-	margin-bottom: 0;
-	max-height: 3.75em;
-    line-height: 1.25em;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+.bx-std-pt-info {
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.bx-std-pt-vendor,
+.bx-std-pt-version,
+.bx-std-pt-versions,
+.bx-std-pt-count,
+.bx-std-pt-votes,
+.bx-std-pt-bullet {
+	vertical-align: middle;
+    white-space: nowrap;
+    line-height: 1.25em;
+}
+
+span.bx-std-product-price,
+span.bx-std-product-version,
+span.bx-std-product-versions {
+    font-weight: bold;
 }
 
 /*--- Cover Section ---*/
@@ -157,23 +183,6 @@ div.bx-std-block-panel-bottom .bx-menu-btns-hor .bx-btn u {
 
 
 /*--- Actions Section ---*/
-.bx-std-pa-info {
-    white-space: nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.bx-std-pa-vendor,
-.bx-std-pa-count {
-	white-space: nowrap;
-}
-
-span.bx-std-product-price,
-span.bx-std-product-version,
-span.bx-std-product-versions {
-	font-weight: bold;
-}
-
 .bx-std-pa-actions .bx-btn {
 	display: inline-block;
 	float: none;
@@ -191,6 +200,7 @@ span.bx-std-product-versions {
 .bx-std-pic-stars {
 	position: relative;
 	display: inline-block;
+	vertical-align: middle;
 }
 
 .bx-std-pic-underlay {}
