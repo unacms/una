@@ -42,6 +42,9 @@ DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_posts_administration', 'bx
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
 
+-- UPLOADERS
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_posts_simple', 'bx_posts_html5');
+
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_posts' LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
