@@ -75,7 +75,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
     protected function sendMailFriendRequest ($oAlert)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        if(empty($CNF['EMAIL_FRIEND_REQUEST']) || empty($CNF['URI_VIEW_FRIENDS']))
+        if(empty($CNF['EMAIL_FRIEND_REQUEST']) || empty($CNF['URI_VIEW_FRIEND_REQUESTS']))
             return;
 
         $iRecipient = $oAlert->aExtras['content'];
@@ -88,7 +88,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         sendMailTemplate($CNF['EMAIL_FRIEND_REQUEST'], 0, $iRecipient, array(
             'SenderUrl' => $oSender->getUrl(),
             'SenderDisplayName' => $oSender->getDisplayName(),
-            'FriendsLink' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $iRecipient),
+            'FriendsLink' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_FRIEND_REQUESTS'] . '&profile_id=' . $iRecipient),
         ), BX_EMAIL_NOTIFY);
     }
 
