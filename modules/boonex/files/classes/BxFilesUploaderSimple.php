@@ -39,6 +39,11 @@ class BxFilesUploaderSimple extends BxTemplUploaderSimple
         
         return false;
     }
+
+    protected function isAdmin ()
+    {
+        return $this->_oModule->_isModerator (false);
+    }
 }
 
 /** @} */
