@@ -15,8 +15,6 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
     function __construct($sMode = '', $aParams = array())
     {
-        $this->sCenterContentUnitSelector = '.bx-albums-media-wrapper';
-
         $this->aUnitViews = array('gallery' => 'unit_media.html');
 
         $this->sUnitTemplateLiveSearch = 'unit_media_live_search.html';
@@ -136,6 +134,8 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']);
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+
+        $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-albums-medias-wrapper'));
     }
 
     function getAlterOrder()
