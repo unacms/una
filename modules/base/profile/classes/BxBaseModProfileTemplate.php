@@ -51,6 +51,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         // generate html
         $aVars = array (
+        	'class' => $this->_getUnitClass($aData, $sTemplateName),
             'id' => $aData[$CNF['FIELD_ID']],
             'thumb_url' => $isPublic ? $this->thumb ($aData) : $this->getImageUrl('no-picture-thumb.png'),
             'cover_url' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedViewCoverImage($aData) ? $this->urlCoverUnit ($aData, true) : $this->getImageUrl('cover.jpg'),
@@ -232,6 +233,25 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$sField]);
         }
         return $bSubstituteNoImage && !$sImageUrl ? $this->getImageUrl($sNoImage) : $sImageUrl;
+    }
+
+    protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+
+        switch($sTemplateName) {
+            case 'unit.html':
+                $sResult = 'bx-base-pofile-unit';
+                break;
+            case 'unit_with_cover.html':
+                $sResult = 'bx-base-pofile-unit-with-cover';
+                break;
+            case 'unit_wo_info.html':
+                $sResult = 'bx-base-pofile-unit-wo-info';
+                break;
+        }
+
+        return $sResult;
     }
 }
 

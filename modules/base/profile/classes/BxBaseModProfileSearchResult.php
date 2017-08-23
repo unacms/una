@@ -15,6 +15,8 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     {
         parent::__construct($sMode, $aParams);
         $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
+
+        $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper'));
     }
 
     protected function _setConnectionsConditions ($aParams)

@@ -46,6 +46,23 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
 
         return $aVars;
     }
+
+    protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+
+        switch($sTemplateName) {
+            case 'unit.html':
+            case 'unit_with_cover.html':
+                $sResult = 'bx-base-pofile-unit-with-cover bx-base-groups-unit-with-cover';
+                break;
+            case 'unit_wo_info.html':
+                $sResult = 'bx-base-pofile-unit-wo-info bx-base-groups-unit-wo-info';
+                break;
+        }
+
+        return $sResult;
+    }
 }
 
 /** @} */
