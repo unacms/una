@@ -996,6 +996,15 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     protected function executeStatement($oStatement, $aBindings = array(), $bVerbose = null)
     {
     	$bResult = false;
+		
+		foreach($aBindings as $sKey => $mixedValue) {
+			if(is_null($mixedValue))
+				$oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_NULL);
+            else if(is_numeric($mixedValue))
+                $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_INT);
+            else
+                $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_STR);		
+		}
 
     	switch (self::$_rLink->getAttribute(PDO::ATTR_ERRMODE)) {
     		case PDO::ERRMODE_SILENT:
@@ -1010,12 +1019,12 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     	return $bResult;
     }
 
-    protected function executeStatementException($oStatement, $aBindings = array(), $bVerbose = null)
+    protected function executeStatementException($oStatement, $bVerbose = null)
     {
     	$bResult = false;
 
     	try {
-			$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
+			$bResult = $oStatement->execute();
 		}
 		catch (PDOException $oException) {
 			$aError = $oStatement->errorInfo();
@@ -1034,9 +1043,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 		return $bResult;
     }
 
-    protected function executeStatementSilent($oStatement, $aBindings = array(), $bVerbose = null)
+    protected function executeStatementSilent($oStatement, $bVerbose = null)
     {
-    	$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
+    	$bResult = $oStatement->execute();
     	if($bResult)
     		return true;
 

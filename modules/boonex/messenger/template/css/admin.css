@@ -3,6 +3,11 @@
 	padding-top:10px;
 	padding-bottom:10px;	
 	background-color:rgba(0, 0, 0, 0);
+	border-bottom:1px solid rgba(219,233,249, 0.5);
+}
+
+.bx-messenger-border input{
+	border:0px;
 }
 
 .bx-messanger-tags {
@@ -21,9 +26,9 @@
 
 .bx-messanger-tags div:nth-child(2) i{
 	float: right;
-    font-size: 2rem;
-    margin-right: 1rem;
-    position: relative;
+	font-size: 2rem;
+	margin-right: 1rem;
+	position: relative;
 }
 
 .bx-messanger-tags div:first-child{
@@ -50,7 +55,7 @@
 	width:100%;
 	display:table;		
 	/*border-collapse: separate;
-    border-spacing: 0px 5px;*/
+	border-spacing: 0px 5px;*/
 }
 
 .bx-messenger-lots-menu{
@@ -72,14 +77,14 @@ div.bx-messenger-lots-menu{
 
 div.bx-messenger-lots-menu ul{
 	margin: 0px;
-    padding-left: 2px;
+	padding-left: 2px;
 	padding-right: 2px;
 }
 
 div.bx-messenger-lots-menu li{
 	list-style-type: none;
-    margin: 2px;
-    padding-left: 5px;
+	margin: 2px;
+	padding-left: 5px;
 }
 
 div.bx-messenger-lots-menu ul span{
@@ -110,9 +115,9 @@ div.bx-messenger-lots-menu ul li a.active{
 
 #bx-content-main .bx-def-padding-sec-left .bx-def-border-block{
   /*border-left:1px;*/
-    border-left:1px solid rgba(40, 60, 80, 0.05);
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
+	border-left:1px solid rgba(40, 60, 80, 0.05);
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
 }
 
 .bx-messenger-friends-list{
@@ -207,17 +212,18 @@ div.bx-messenger-lots-menu ul li a.active{
 .bx-messenger-jots-snip-avatars{
 	height:auto;
 	width:auto;
-	overflow:hidden;
+	/*overflow:hidden;*/
 	text-align:center;	
 	position:relative;
 	display:table-cell;
+	border-bottom:1px solid rgba(219,233,249, 0.5);
 }
 
 .bx-messenger-jots-snip-info{
 	display: table-cell;
-    /*padding-right: 10px;*/
-    vertical-align: top;
-	width:100%;	
+	vertical-align: top;
+	width:100%;
+	border-bottom:1px solid rgba(219,233,249,0.5);
 }
 
 .bx-messenger-jots-snip-info span{
@@ -231,7 +237,7 @@ div.bx-messenger-lots-menu ul li a.active{
 
 .bx-messenger-jots-snip-title{
 	position: relative;
-    width: 100%;
+	width: 100%;
 	padding-bottom:0.1rem;
 	display:inline-block;
 }
@@ -239,7 +245,6 @@ div.bx-messenger-lots-menu ul li a.active{
 .bx-messenger-jots-snip-title span{
 	right:0.5rem;
 	top:0px;
-	/*color:#8ba1ab;*/
 	font-weight:normal;
 	position:absolute;
 }
@@ -249,23 +254,37 @@ div.bx-messenger-lots-menu ul li a.active{
 }
 
 .bx-messenger-jots-snip:hover {
-	background-color:rgba(0,0,0,0.05);
+	background-color:rgba(0,0,0,0.02);
 }
 
 .bx-messenger-jots-snip.active{
-	background-color:rgba(0,0,0,0.1);
+	background-color:rgba(0,0,0,0.03);	
 }
-
+.bx-messenger-active-border-none{
+	border-bottom:0px;
+}
+.bx-messenger-active-border{
+	border-bottom:1px solid rgba(219,233,249, 1);
+	border-top:1px solid rgba(219,233,249, 1);
+}
+.bx-messenger-active-border-bottom{
+	border-bottom:1px solid rgba(219,233,249, 1);	
+}
+	
 .bx-messenger-jots-snip-avatars-list{
 	position:relative;
+	overflow: hidden;
+	z-index:2;
 }
 
 .bx-messenger-jots-snip-avatars-list div{
 	position:relative;
 	z-index:1;
 	box-sizing: border-box;
-    float: left;
-    overflow: hidden;
+	float: left;
+	overflow: hidden;
+	line-height: 3rem;
+    height: 3rem;
 }
 
 .bx-messenger-jots-snip-avatars-list div:first-child{
@@ -275,7 +294,7 @@ div.bx-messenger-lots-menu ul li a.active{
 .bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(2),
 .bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(2) ~ div
  {
-    width: 50%;
+	width: 50%;
 }
 
 .bx-messenger-jots-snip-avatars-list div:nth-child(1):nth-last-child(2) img,
@@ -285,7 +304,7 @@ div.bx-messenger-lots-menu ul li a.active{
 
 .bx-messenger-jots-snip-avatars-list div:first-child:nth-last-child(3)
  {
-    width: 50%;
+	width: 50%;
 }
 
 .bx-messenger-jots-snip-avatars-list div:nth-child(1):nth-last-child(3) img{
@@ -324,4 +343,8 @@ div.bx-messenger-lots-menu ul li a.active{
 
 .bx-messenger-jots-snip .unread-lot span{
 	opacity:1;
+}
+
+.bx-db-menu i{
+	font-size:1.3rem;
 }
