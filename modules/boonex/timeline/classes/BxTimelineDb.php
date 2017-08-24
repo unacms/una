@@ -374,7 +374,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 		switch($aParams['type']) {
 		    case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
 		        //--- Apply privacy filter
-        		$aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart(BX_DOL_PG_ALL);
+		        $aPrivacyGroups = array(BX_DOL_PG_ALL);
+		        if(isLogged())
+		            $aPrivacyGroups[] = BX_DOL_PG_MEMBERS;
+
+        		$aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart($aPrivacyGroups);
         		$sWhereClause .= $aQueryParts['where'] . " ";
 		        break;
 
