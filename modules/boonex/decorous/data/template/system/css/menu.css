@@ -65,6 +65,19 @@
     }
 }
 
+@media (max-width:720px) {
+    .cd-main-content .cd-side-nav {
+        position:fixed;
+        width:100%;
+        height: calc(100%);
+
+        overflow-x:hidden;
+        overflow-y:auto;
+
+        -webkit-overflow-scrolling:touch;
+    }
+}
+
 
 /*--- Account Popup ---*/
 @media (min-width:720px) {

@@ -28,6 +28,11 @@ class BxAlbumsUploaderSimple extends BxTemplUploaderSimple
         $a['file_title_attr'] = bx_html_attribute($a['file_title']);
         return $a;
     }
+
+    protected function isAdmin ()
+    {
+        return $this->_oModule->_isModerator (false);
+    }
 }
 
 /** @} */

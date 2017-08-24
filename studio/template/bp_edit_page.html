@@ -9,7 +9,8 @@
                         bx_loading($("#__form_id__"), true);
                     },
                     success: function(oData) {
-                        $(".bx-popup-applied:visible").dolPopupHide();
+                        __js_object__.onCloseSettings();
+
                         oBxDolStudioPage.processJson(oData);
                     }
                 });

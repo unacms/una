@@ -1281,6 +1281,8 @@
 	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Page cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Enable page blocks cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Page blocks cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_single"><![CDATA[Number of items per page in Keyword Search results]]></string>
+	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Number of items per page in Site Search results]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string>
@@ -2165,6 +2167,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_next"><![CDATA[Next]]></string>
     <string name="_sys_notification_account"><![CDATA[<h3>Accounts created in the last 24 hours:</h3><ul>{0}</ul>]]></string>
 	<string name="_sys_notification_account_link"><![CDATA[<li><a href="{0}">{1}</a> ({2})</li>]]></string>
+    <string name="_sys_not_specified"><![CDATA[Not Specified]]></string>
     <string name="_sys_on"><![CDATA[on]]></string>
     <string name="_sys_off"><![CDATA[off]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[About]]></string>
@@ -2266,6 +2269,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Me only]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>
+	<string name="_sys_ps_group_title_closed"><![CDATA[Closed]]></string>
+	<string name="_sys_ps_group_title_secret"><![CDATA[Secret]]></string>
     <string name="_sys_read_more"><![CDATA[Continue reading "{0}"]]></string>
 	<string name="_sys_request_module_not_found_cpt"><![CDATA[Module was not found]]></string>
 	<string name="_sys_request_module_not_found_cnt"><![CDATA[Module({0}) was not found]]></string>
@@ -2414,6 +2419,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>
     <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>
+    <string name="_sys_txt_user_n"><![CDATA[User #{0}]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Important info:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[Database and files versions are different, probably previous patch wasn't applied correctly.]]></string>
 	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply upgrade because the following files were modified: {0}]]></string>

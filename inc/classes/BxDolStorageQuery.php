@@ -241,7 +241,7 @@ class BxDolStorageQuery extends BxDolDb
         return $iCount;
     }
 
-    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $aProfiles = array())
+    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId, $aProfiles = array(), $isAdmin = false)
     {
         $aBindings = array(
             'content' => $iContentId,
@@ -251,9 +251,9 @@ class BxDolStorageQuery extends BxDolDb
 
         $sSetAddon = '';
         $sWhere = " AND `profile_id` = :profile ";
-        if ($aProfiles || isAdmin()) {
+        if ($aProfiles || $isAdmin) {
             $sSetAddon = ', `profile_id` = :profile ';
-            $sWhere = isAdmin() ? "" : " AND `profile_id` IN(" . $this->implode_escape($aProfiles) . ")";
+            $sWhere = $isAdmin ? "" : " AND `profile_id` IN(" . $this->implode_escape($aProfiles) . ")";
         }
         
         $sQuery = $this->prepare("UPDATE `sys_storage_ghosts` SET `content_id` = :content $sSetAddon WHERE `object` = :object $sWhere AND `id` IN (" . $this->implode_escape($mixedFileIds) . ")");
@@ -278,9 +278,9 @@ class BxDolStorageQuery extends BxDolDb
         return $iCount;
     }
 
-    public function getGhosts($mixedProfileId, $iContentId = false)
+    public function getGhosts($mixedProfileId, $iContentId = false, $isAdmin = false)
     {
-        return $this->getFiles($mixedProfileId, true, $iContentId);
+        return $this->getFiles($mixedProfileId, true, $iContentId, $isAdmin);
     }
 
     public function getGhost($iFileId)
@@ -289,7 +289,7 @@ class BxDolStorageQuery extends BxDolDb
         return $this->getRow($sQuery);
     }
 
-    public function getFiles($mixedProfileId, $isGhostsOnly = false, $iContentId = false)
+    public function getFiles($mixedProfileId, $isGhostsOnly = false, $iContentId = false, $isAdmin = false)
     {
         $aBindings = array();        
 
@@ -299,7 +299,7 @@ class BxDolStorageQuery extends BxDolDb
             $aBindings['object'] = $this->_aObject['object'];
 
             $sOnProfile = '';
-            if (isAdmin() && $iContentId) {
+            if ($isAdmin && $iContentId) {
                 // don't check profile id for admins, so admin can edit any entry
             }
             elseif (is_array($mixedProfileId) && $mixedProfileId) {

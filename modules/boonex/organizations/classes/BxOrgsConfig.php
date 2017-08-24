@@ -60,6 +60,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-organization-profile',
         	'URI_VIEW_FRIENDS' => 'organization-profile-friends',
+        	'URI_VIEW_FRIEND_REQUESTS' => 'organization-friend-requests',
         	'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',

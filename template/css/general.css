@@ -138,3 +138,8 @@
 #bx-footer-copyright {
     float:right;
 }
+
+/* --------------- 'Add to Homescreen' popup */
+.ath-container {
+	color: #333;
+}

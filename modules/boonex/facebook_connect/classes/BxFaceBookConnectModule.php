@@ -166,10 +166,13 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
      */
     protected function _makeFriends($iProfileId)
     {
-        if (!$this->_oConfig->bAutoFriends) {
+        if (!$this->_oConfig->bAutoFriends)
             return;
-        }
 
+        $oConnFrinds = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if (!$oConnFrinds)
+            return;
+        
         try {
             //get friends from facebook
             $oFriendsResponse = $this -> oFacebook -> get('/me/friends?limit=50');
@@ -184,11 +187,12 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
         do {
             foreach ($oPagesEdge as $oPage) {
                 $aFriend = $oPage->asArray();
-                $iFriendId = $this -> _oDb -> getProfileId($aFriend['id']);
-
-                // TODO:
+                if (!($iLocalProfileId = $this->_oDb->getProfileId($aFriend['id'])))
+                    continue;
+                $oConnFrinds->actionAdd($iProfileId, $iLocalProfileId);
+                $oConnFrinds->actionAdd($iLocalProfileId, $iProfileId);
             }
-        } while ($oPagesEdge = $this -> oFacebook -> next($oPagesEdge));
+        } while ($oPagesEdge = $this->oFacebook->next($oPagesEdge));
     }
 
     /**
@@ -198,13 +202,6 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
      */
     protected function _convertRemoteFields($aProfileInfo, $sAlternativeName = '')
     {
-        // process the date of birth
-        if( isset($aProfileInfo['birthday']) ) {
-            $aProfileInfo['birthday'] = isset($aProfileInfo['birthday'])
-                ?  date('Y-m-d', strtotime($aProfileInfo['birthday']))
-                :  '';
-        }
-
         // define user's country and city
         $aLocation = array();
         if (isset($aProfileInfo['location']['name']))
@@ -224,11 +221,20 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
         }
 
         // fill array with all needed values
+
+        $sGender = '';
+        if (isset($aProfileInfo['gender']) && ('male' == $aProfileInfo['gender'] || 'female' == $aProfileInfo['gender']))
+            $sGender = ('male' == $aProfileInfo['gender'] ? 1 : 2);
+
+        $sBirthday = '';
+        if (isset($aProfileInfo['birthday']) && preg_match('/(\d{2})\/(\d{2})\/(\d{2})/', $aProfileInfo['birthday'], $aMatch))
+            $aProfileInfo['birthday'] = $aMatch[3] . '-' . $aMatch[1] . '-' . $aMatch[2];
+
         $aProfileFields = array(
             'name'      	=> $aProfileInfo['nick_name'] . $sAlternativeName,
             'email'         => isset($aProfileInfo['email']) ? $aProfileInfo['email'] : '',
-            'gender'        => isset($aProfileInfo['gender']) ? $aProfileInfo['gender'] : '',
-            'birthday'      => isset($aProfileInfo['birthday']) ? $aProfileInfo['birthday'] : '',
+            'gender'        => $sGender,
+            'birthday'      => $sBirthday,
             'fullname'		=> (isset($aProfileInfo['first_name']) ? $aProfileInfo['first_name'] : '') . (isset($aProfileInfo['last_name']) ? ' ' . $aProfileInfo['last_name'] : ''),
             'description'   => clear_xss(isset($aProfileInfo['bio']) ? $aProfileInfo['bio'] : ''),
             'interests'     => clear_xss(isset($aProfileInfo['interests']) ? $aProfileInfo['interests'] : ''),

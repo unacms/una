@@ -130,6 +130,7 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 		if(empty($aCart) || empty($aCart['items']) || !is_array($aCart['items']))
 			return array();
 
+        $this->_aOptions['source'] = array();
 		foreach($aCart['items'] as $aCartItem) {
 			$aCartItem['descriptor'] = $this->_oModule->_oConfig->descriptorA2S(array($aCart['vendor_id'], $aCartItem['module_id'], $aCartItem['id'], $aCartItem['quantity']));
 			$aCartItem['description'] = strip_tags($aCartItem['description']);

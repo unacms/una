@@ -27,7 +27,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_contact_email', '', @iCategId, '_bx_contact_option_email', 'digit', '', '', '', 1),
-('bx_contact_send_from_senders_email', '', @iCategId, '_bx_contact_option_send_from_senders_email', 'checkbox', '', '', '', 20);
+('bx_contact_add_reply_to', '', @iCategId, '_bx_contact_option_add_reply_to', 'checkbox', '', '', '', 20);
 
 
 -- ACL

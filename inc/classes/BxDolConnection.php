@@ -644,7 +644,15 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function onDeleteInitiator ($iIdInitiator)
     {
-        return $this->_oQuery->onDelete ($iIdInitiator, 'initiator');
+        if(!$this->_oQuery->onDelete ($iIdInitiator, 'initiator'))
+            return false;
+
+        bx_alert($this->_sObject, 'connection_removed_all', 0, bx_get_logged_profile_id(), array(
+            'initiator' => (int)$iIdInitiator,
+            'object' => $this,
+        ));
+
+        return true;
     }
 
     /**
@@ -654,7 +662,15 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
      */
     public function onDeleteContent ($iIdContent)
     {
-        return $this->_oQuery->onDelete ($iIdContent, 'content');
+        if(!$this->_oQuery->onDelete ($iIdContent, 'content'))
+            return false;
+
+        bx_alert($this->_sObject, 'connection_removed_all', 0, bx_get_logged_profile_id(), array(
+            'content' => (int)$iIdContent,
+            'object' => $this,
+        ));
+
+        return true;
     }
 
 

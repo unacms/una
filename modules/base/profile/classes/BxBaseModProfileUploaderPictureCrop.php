@@ -16,6 +16,7 @@ class BxBaseModProfileUploaderPictureCrop extends BxTemplUploaderCrop
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
+        
     }
 
     public function deleteGhostsForProfile($iProfileId, $iContentId = false)
@@ -64,7 +65,12 @@ class BxBaseModProfileUploaderPictureCrop extends BxTemplUploaderCrop
         }
 
         return json_encode($aResult);
-    }    
+    }
+
+    protected function isAdmin ()
+    {
+        return $this->_oModule->_isModerator (false);
+    }
 }
 
 /** @} */

@@ -66,7 +66,12 @@ class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderCrop
         }
 
         return json_encode($aResult);
-    }    
+    }
+
+    protected function isAdmin ()
+    {
+        return $this->_oModule->_isModerator (false);
+    }
 }
 
 /** @} */

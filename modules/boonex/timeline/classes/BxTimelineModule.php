@@ -426,6 +426,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetBlockPostAccount()
     {
+        if(!isLogged())
+            return '';
+
         $iProfileId = $this->getProfileId();
 		return $this->_getBlockPost($iProfileId);
     }
@@ -469,11 +472,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
+        if(!isLogged())
+            return '';
+
         return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
     }
 
     public function serviceGetBlockViewAccountOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
+        if(!isLogged())
+            return '';
+
         return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_OUTLINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
     }
 

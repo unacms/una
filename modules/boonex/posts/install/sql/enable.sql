@@ -382,6 +382,12 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_posts_common', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
+-- UPLOADERS
+
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_posts_simple', 1, 'BxPostsUploaderSimple', 'modules/boonex/posts/classes/BxPostsUploaderSimple.php'),
+('bx_posts_html5', 1, 'BxPostsUploaderHTML5', 'modules/boonex/posts/classes/BxPostsUploaderHTML5.php');
+
 -- ALERTS
 
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

@@ -70,6 +70,8 @@
                     $('.bx-form-section-content:first', eFormSection).slideDown(function () {
                         eFormSection.removeClass('bx-form-section-hidden');
 
+                        $(this).addWebForms();
+
                         //--- fire custom event 'bx_show'
                         eFormSection.trigger('bx_show');
                     }); 
@@ -107,9 +109,9 @@
             if (this.getAttribute("type") == 'doublerange') {
 
                 var cur = $(this);
-
-                if (cur.hasClass('bx-form-doublerange-processed'))
+                if(!cur.is(':visible') || cur.hasClass('bx-form-doublerange-processed'))
                     return;
+
                 cur.addClass('bx-form-doublerange-processed');
 
                 var $slider = $('<div class="bx-def-margin-right"></div>').insertAfter(cur);
@@ -162,9 +164,9 @@
             else if (this.getAttribute("type") == 'slider') {
 
                 var cur = $(this);
-
-                if (cur.hasClass('bx-form-range-processed'))
+                if(!cur.is(':visible') || cur.hasClass('bx-form-range-processed'))
                     return;
+
                 cur.addClass('bx-form-range-processed');
 
                 var $slider = $('<div class="bx-def-margin-right"></div>').insertAfter(cur)
@@ -205,9 +207,9 @@
                 var m;
 
                 if ($(this).attr('min') && (m = $(this).attr('min').match(/^(\d{4})/)))
-                    sYearMin = m[1];
+                    iYearMin = m[1];
                 if ($(this).attr('max') && (m = $(this).attr('max').match(/^(\d{4})/)))
-                    sYearMax = m[1];
+                    iYearMax = m[1];
 
                 var onBeforeShow = function(oInput, oInstance) {
                 	$(oInstance.dpDiv).addClass('bx-form-datepicker-modal');

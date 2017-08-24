@@ -778,10 +778,11 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getTmplVarsAuthor($aCmt)
     {
-    	list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
+    	list($sAuthorName, $sAuthorLink, $sAuthorIcon, $sAuthorUnit) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
     	$bAuthorIcon = !empty($sAuthorIcon);
 
     	return array(
+    	    'author_unit' => $sAuthorUnit,
     		'bx_if:show_icon' => array(
                 'condition' => $bAuthorIcon,
                 'content' => array(

@@ -86,6 +86,9 @@ class BxUnaConModule extends BxBaseModConnectModule
         $sExpiresAt = new \DateTime('+' . $sExpiresIn . ' seconds');
         $sRefreshToken = $aResponse['refresh_token'];
 
+        $oSession = BxDolSession::getInstance();
+        $oSession->setValue($this->getName() . '_access_token', $sAccessToken);
+        
         // request info about profile
         $s = bx_file_get_contents($this->_oConfig->sApiUrl . 'api/me', array(), 'get', array(
             'Authorization: Bearer ' . $sAccessToken,
@@ -120,6 +123,46 @@ class BxUnaConModule extends BxBaseModConnectModule
     }
 
     /**
+     * Make friends
+     *
+     * @param $iProfileId integer
+     * @return void
+     */
+    protected function _makeFriends($iProfileId)
+    {
+        if (!$this->_oConfig->bAutoFriends)
+            return;
+
+        $oConnFrinds = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if (!$oConnFrinds)
+            return;
+
+        // request info about profile
+        if (!($iRemoteProfileId = $this->_oDb->getRemoteProfileId($iProfileId)))
+            return;
+        $oSession = BxDolSession::getInstance();
+        if (!($sAccessToken = $oSession->getValue($this->getName() . '_access_token')))
+            return;
+        $s = bx_file_get_contents($this->_oConfig->sApiUrl . 'api/friends?id=' . $iRemoteProfileId, array(), 'get', array(
+            'Authorization: Bearer ' . $sAccessToken,
+        ));
+
+        // handle error
+        if (!$s || NULL === ($aResponse = json_decode($s, true)) || !$aResponse || isset($aResponse['error']) || !isset($aResponse['friends'])) {
+            $sErrorDescription = isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
+            return;
+        }
+
+        // add friends & followers
+        foreach ($aResponse['friends'] as $iRemoteProfileId) {
+            if (!($iLocalProfileId = $this->_oDb->getProfileId($iRemoteProfileId)))
+                continue;
+            $oConnFrinds->actionAdd($iProfileId, $iLocalProfileId);
+            $oConnFrinds->actionAdd($iLocalProfileId, $iProfileId);
+        }
+    }
+
+    /**
      * @param $aProfileInfo - remote profile info
      * @param $sAlternativeName - suffix to add to NickName to make it unique
      * @return profile array info, ready for the local database
@@ -129,8 +172,11 @@ class BxUnaConModule extends BxBaseModConnectModule
         $aProfileFields = $aProfileInfo;
 
         $aProfileFields['name'] = $aProfileInfo['profile_display_name'];
+        $aProfileFields['gender'] = isset($aProfileInfo['gender']) ? $aProfileInfo['gender'] : '';
+        $aProfileFields['birthday'] = isset($aProfileInfo['birthday']) ? $aProfileInfo['birthday'] : '';
         $aProfileFields['fullname'] = $aProfileInfo['profile_display_name'];
         $aProfileFields['picture'] = $aProfileInfo['picture'];
+        $aProfileFields['allow_view_to'] = getParam('bx_unacon_privacy');
         
         return $aProfileFields;
     }

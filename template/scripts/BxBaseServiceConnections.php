@@ -29,6 +29,18 @@ class BxBaseServiceConnections extends BxDol
         return $oGrid->getCode();
     }
 
+	/**
+     * get grid with friends connection requests
+     */
+    public function serviceConnectionsRequestTable ()
+    {
+        $oGrid = BxDolGrid::getObjectInstance('sys_grid_connections_requests');
+        if (!$oGrid)
+            return false;
+
+        return $oGrid->getCode();
+    }
+
     /**
      * get number of received unconfirmed connections (friend requests)
      * @param $sConnectionsObject connections object to get unconfirmed connections from

@@ -12,8 +12,8 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 class BxDolGridConnections extends BxTemplGrid
 {
     protected $_bOwner = false;
-    protected $_sContentModule = 'bx_persons';
     protected $_sObjectConnections = 'sys_profiles_friends';
+    protected $_oProfile;
     protected $_oConnection;
 
     public function __construct ($aOptions, $oTemplate = false)
@@ -29,19 +29,18 @@ class BxDolGridConnections extends BxTemplGrid
         if (!$iProfileId)
             return;
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$oProfile)
+        $this->_oProfile = BxDolProfile::getInstance($iProfileId);
+        if (!$this->_oProfile)
             return;
 
-        if ($oProfile->id() == bx_get_logged_profile_id())
+        if ($this->_oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
-        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $oProfile->id(), $this->_bOwner ? false : true);
+        $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_oProfile->id(), $this->_bOwner ? false : true);
 
         $this->addMarkers(array(
-            'profile_id' => $oProfile->id(),
-            'join_connections' => $aSQLParts['join'],
-            'content_module' => $this->_sContentModule,
+            'profile_id' => $this->_oProfile->id(),
+            'join_connections' => $aSQLParts['join']
         ));
     }
 

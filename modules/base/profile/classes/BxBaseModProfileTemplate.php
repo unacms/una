@@ -51,6 +51,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         // generate html
         $aVars = array (
+        	'class' => $this->_getUnitClass($aData, $sTemplateName),
             'id' => $aData[$CNF['FIELD_ID']],
             'thumb_url' => $isPublic ? $this->thumb ($aData) : $this->getImageUrl('no-picture-thumb.png'),
             'cover_url' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedViewCoverImage($aData) ? $this->urlCoverUnit ($aData, true) : $this->getImageUrl('cover.jpg'),
@@ -80,7 +81,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile cover
      */
-    function setCover ($aData, $sTemplateName = 'cover.html')
+    function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -88,19 +89,28 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $CNF = &$this->_oConfig->CNF;
             $aData[$CNF['FIELD_PICTURE']] = 0;
         }
-        
+
         if (CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedViewCoverImage($aData)) {
             $CNF = &$this->_oConfig->CNF;
             $aData[$CNF['FIELD_COVER']] = 0;
         }
-        
+
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         $sUrlPicture = $this->urlPicture ($aData);
         $sUrlAvatar = $this->urlAvatar ($aData);
         $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
-        $sUrlCover = $this->urlCover ($aData);
+        $sUrlCover = $this->urlCover ($aData, false);
+        if(!$sUrlCover && $oPage !== false && $oPage->isPageCover()) {
+            $aCover = $oPage->getPageCoverImage();
+			if(!empty($aCover))
+				$sUrlCover = BxDolCover::getCoverImageUrl($aCover);
+        }
+
+        if(!$sUrlCover)
+            $sUrlCover = $this->getImageUrl('cover.jpg');
+        
         $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         $sCoverPopup = '';
@@ -223,6 +233,25 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$sField]);
         }
         return $bSubstituteNoImage && !$sImageUrl ? $this->getImageUrl($sNoImage) : $sImageUrl;
+    }
+
+    protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+
+        switch($sTemplateName) {
+            case 'unit.html':
+                $sResult = 'bx-base-pofile-unit';
+                break;
+            case 'unit_with_cover.html':
+                $sResult = 'bx-base-pofile-unit-with-cover';
+                break;
+            case 'unit_wo_info.html':
+                $sResult = 'bx-base-pofile-unit-wo-info';
+                break;
+        }
+
+        return $sResult;
     }
 }
 

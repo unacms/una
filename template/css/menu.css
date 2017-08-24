@@ -196,15 +196,6 @@ ul.bx-menu-main-submenu {
 }
 
 /* --------------- toolbar menu */
-
-#bx-menu-toolbar-1-container .bx-menu-toolbar {
-    float:left;
-}
-
-#bx-menu-toolbar-2-container .bx-menu-toolbar {
-    float:right;
-}
-
 .bx-menu-toolbar {
     list-style:none;
     margin:0 0 0 0;
@@ -270,8 +261,24 @@ ul.bx-menu-toolbar li .sys-icon {
 	padding-top: 3rem;
 }
 
-/* --------------- floating blocks menu */
+#bx-menu-toolbar-1-container .bx-menu-toolbar {
+    float:left;
+}
 
+#bx-menu-toolbar-2-container .bx-menu-toolbar {
+    float:right;
+}
+
+#bx-menu-toolbar-2-container .bx-menu-toolbar .bx-menu-toolbar-item-title {
+	display: inline-block;
+	max-width: 10.0rem;
+
+	white-space: nowrap;
+	text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+/* --------------- floating blocks menu */
 .bx-sliding-menu-close,
 .bx-sliding-menu-close:hover {
     position:absolute;

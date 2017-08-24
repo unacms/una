@@ -224,10 +224,10 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     /**
      * Get profile unit
      */
-    public function getUnit($iProfileId = 0)
+    public function getUnit($iProfileId = 0, $aParams = array())
     {
         $aInfo = $this->getInfo($iProfileId);
-        return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id']));
+        return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id'], $aParams));
     }
 
     /**
@@ -358,9 +358,18 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         if ($isStopDeletion)
             return false;
 
-        // delete associated comments
-        if($bDeleteWithContent)
+        // delete associated content
+        if($bDeleteWithContent) {
 	        BxDolCmts::onAuthorDelete($ID);
+
+	        BxDolReport::onAuthorDelete($ID);
+
+	        BxDolVote::onAuthorDelete($ID);
+
+	        BxDolFavorite::onAuthorDelete($ID);
+
+	        BxDolView::onAuthorDelete($ID);
+        }
 
         // delete connections
         $oConn = BxDolConnection::getObjectInstance('sys_profiles_friends');

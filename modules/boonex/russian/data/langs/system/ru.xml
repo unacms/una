@@ -1279,6 +1279,8 @@
 	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Кэш-движок для Страниц (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Задействовать кэш для блоков страниц]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Кэш-движок для блоков страниц (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
+	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_single"><![CDATA[Число элементов на странице в результатах поиска по ключевому слову]]></string>
+    <string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Число элементов на странице в результатах поиска по сайту]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
@@ -2162,7 +2164,8 @@
     <string name="_sys_name"><![CDATA[Имя]]></string>
     <string name="_sys_next"><![CDATA[Ещё]]></string>
     <string name="_sys_notification_account"><![CDATA[<h3>Аккаунты, созданные за последние 24 часа:</h3><ul>{0}</ul>]]></string>
-	<string name="_sys_notification_account_link"><![CDATA[<li><a href="{0}">{1}</a> ({2})</li>]]></string>
+    <string name="_sys_notification_account_link"><![CDATA[<li><a href="{0}">{1}</a> ({2})</li>]]></string>
+    <string name="_sys_not_specified"><![CDATA[Не указано]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[Об...]]></string>
@@ -2402,7 +2405,7 @@
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Ваш новый пароль - <b>{0}</b> - был отослан Вам по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Произошла ошибка, Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
 	<string name="_sys_txt_splash_btn_join"><![CDATA[Зарегистрироваться]]></string>
-	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые раделяют Ваши увлечения]]></string>
+	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые разделяют Ваши увлечения]]></string>
 	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, видео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
 	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Присядь на стул. Попробуй.<br />Зарегистрируйся. Жизнь такая<br />сладкая."]]></string>
 	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
@@ -2412,6 +2415,7 @@
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, Пожалуйста, зайдите в свой аккаунт и обновите имейл-установки там или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить имейл-установки для <b>{0}</b>]]></string>
     <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Ссылка отписки неправильная.]]></string>
+    <string name="_sys_txt_user_n"><![CDATA[Пользователь #{0}]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Важная информация:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[База Данных и версии файлов отличаются, возможно, предыдущий патч не был правильно применён.]]></string>
 	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Невозможно применить обновление, так как следующие файлы были изменены: {0}]]></string>

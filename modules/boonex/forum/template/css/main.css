@@ -89,6 +89,10 @@
     line-height:1.15em;
 }
 
+.bx-forum-grid-author .bx-base-pofile-unit-wo-info {
+	display: inline-block;
+}
+
 .bx-forum-grid-preview div {
     white-space:nowrap;
     text-overflow:ellipsis;

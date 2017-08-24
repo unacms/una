@@ -227,7 +227,7 @@ BxDolGrid.prototype.processJson = function (oData, sAction, isDisableLoading) {
         this.loading(false);
 
     if (oData && undefined != oData.grid) {        
-        $('#' + this._sIdContainer).html(oData.grid);
+        $('#' + this._sIdContainer).html($(oData.grid).find('#' + this._sIdContainer).html());
         this._onDataReloaded(true);
     }
     if (oData && undefined != oData.msg) {
@@ -343,6 +343,18 @@ BxDolGrid.prototype._bindActionsSingle = function (eElement) {
 
 BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
     var $this = this;
+
+    jQuery('#' + this._sIdContainer).bind('scroll', function () {
+        if (-$(this).find('.bx-grid-table').position().left >= ($(this).find('.bx-grid-table').width() - $(this).width()))
+            $(this).parents('.bx-grid-table-wrapper2').addClass('bx-grid-table-hide-shadow-after');
+        else
+            $(this).parents('.bx-grid-table-wrapper2').removeClass('bx-grid-table-hide-shadow-after');
+        
+        if ($(this).find('.bx-grid-table').position().left >= 0)
+            $(this).parents('.bx-grid-table-wrapper2').addClass('bx-grid-table-hide-shadow-before');
+        else
+            $(this).parents('.bx-grid-table-wrapper2').removeClass('bx-grid-table-hide-shadow-before');
+    });
 
     jQuery('#' + this._sIdWrapper + ' *[bx_grid_action_bulk]').bind('click', function () {
         if ($(this).hasClass('bx-btn-disabled'))

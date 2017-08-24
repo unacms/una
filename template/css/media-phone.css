@@ -63,6 +63,9 @@ html {
 #bx-logo-container {
     margin:0 3rem;
 }
+#bx-footer-wrapper {
+	height: auto;
+}
 
 /* common.css */
 
@@ -122,7 +125,8 @@ html {
 
 /* menu.css */
 
-ul.bx-menu-toolbar li a span {
+ul.bx-menu-toolbar li a span.bx-menu-toolbar-item-title,
+#bx-menu-toolbar-2-container ul.bx-menu-toolbar li a span.bx-menu-toolbar-item-title {
     display:none;
 }
 
@@ -134,6 +138,19 @@ ul.bx-menu-toolbar li a span {
 .bx-btn.bx-btn-small .bx-loading-ajax-btn {
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+/* grid.css */
+
+html .bx-grid-table-wrapper {
+    overflow-x:scroll;
+}
+html .bx-grid-table {
+    min-width:720px;
+}
+html .bx-grid-table-wrapper2:before,
+html .bx-grid-table-wrapper2:after {
+    display:block;
 }
 
 } /* @media end */

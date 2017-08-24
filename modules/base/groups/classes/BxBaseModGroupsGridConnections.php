@@ -11,9 +11,9 @@
 
 class BxBaseModGroupsGridConnections extends BxDolGridConnections
 {
+    protected $_sContentModule;
     protected $_iGroupProfileId;
     protected $_oModule;
-    protected $_oConnection;
     protected $_aContentInfo = array();
 
     public function __construct ($aOptions, $oTemplate = false)

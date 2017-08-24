@@ -526,6 +526,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     protected function getProduct($sModuleName)
     {
+        $bShowRating = true;
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -562,6 +563,19 @@ class BxBaseStudioStore extends BxDolStudioStore
                 );
         }
 
+		$bTmplVarsRate = $bShowRating;
+		if($bTmplVarsRate)
+		    $aTmplVarsRate = array(
+		        'rate' => $this->getVoteStars($aProduct)
+		    );
+
+		$aTmplVarsVotes = array();
+		$bTmplVarsVotes = $bShowRating && (int)$aProduct['votes_cnt'] > 0;
+		if($bTmplVarsVotes)
+		    $aTmplVarsVotes = array(
+		        'count' => (int)$aProduct['votes_cnt']
+		    );
+
         $sContent = $oTemplate->parseHtmlByname('str_product_view.html', array(
             'id' => $aProduct['id'],
             'title' => $aProduct['title'],
@@ -587,6 +601,14 @@ class BxBaseStudioStore extends BxDolStudioStore
 					'price_recurring' => _t('_adm_str_txt_price_recurring', $aProduct['author_currency_sign'], $aProduct['price_recurring'], _t('_adm_str_txt_per_' . $aProduct['duration_recurring']))
         		)
         	),
+        	'bx_if:show_rate' => array(
+                'condition' => $bTmplVarsRate,
+                'content' => $aTmplVarsRate
+            ),
+            'bx_if:show_votes' =>  array(
+                'condition' => $bTmplVarsVotes,
+                'content' => $aTmplVarsVotes
+            ),
             'category' => $aProduct['category'],
             'category_url' => $aProduct['category_url'],
             'tags' => implode(', ', explode(',', $aProduct['tags'])),
@@ -683,6 +705,8 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     protected function displayProducts($mixedItems, $aParams = array())
     {
+        $bShowRating = false;
+
         if(!is_array($mixedItems))
             return MsgBox($mixedItems);
 
@@ -715,6 +739,20 @@ class BxBaseStudioStore extends BxDolStudioStore
 
             $sImage = !empty($aItem['cover']['big']) ? $aItem['cover']['big'] : '';
 			$bImage = strpos($sImage, '.') !== false;
+
+			$aTmplVarsRate = array();
+			$bTmplVarsRate = $bShowRating && !$bShoppingCart;
+			if($bTmplVarsRate)
+			    $aTmplVarsRate = array(
+			        'rate' => $this->getVoteStars($aItem)
+			    );
+
+			$aTmplVarsVotes = array();
+			$bTmplVarsVotes = $bShowRating && !$bShoppingCart && (int)$aItem['votes_cnt'] > 0;
+			if($bTmplVarsVotes)
+			    $aTmplVarsVotes = array(
+			        'count' => (int)$aItem['votes_cnt']
+			    );
 
             $sResult .= $oTemplate->parseHtmlByName('str_product_v2.html', array(
                 'js_object' => $sJsObject,
@@ -770,8 +808,14 @@ class BxBaseStudioStore extends BxDolStudioStore
                         'discount_single' => $sDiscount,
                     )
                 ),
-                'rate' => !$bShoppingCart ? $this->getVoteStars($aItem) : '',
-                'votes_cnt' => !$bShoppingCart && (int)$aItem['votes_cnt'] > 0 ? (int)$aItem['votes_cnt'] : '',
+                'bx_if:show_rate' => array(
+                    'condition' => $bTmplVarsRate,
+                    'content' => $aTmplVarsRate
+                ),
+                'bx_if:show_votes' =>  array(
+                    'condition' => $bTmplVarsVotes,
+                    'content' => $aTmplVarsVotes
+                ),
                 'bx_if:show_purchase_single' => array(
                     'condition' => $bPurchaseSingle && !$bInCart,
                     'content' => array(

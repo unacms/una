@@ -39,6 +39,11 @@ class BxFilesUploaderHTML5 extends BxTemplUploaderHTML5
         
         return false;
     }
+
+    protected function isAdmin ()
+    {
+        return $this->_oModule->_isModerator (false);
+    }
 }
 
 /** @} */

@@ -79,6 +79,8 @@ class BxDolSearch extends BxDol
     public function response ()
     {
         $sCode = '';
+
+        $bSingle = count($this->aChoice) == 1;
         foreach ($this->aChoice as $sKey => $aValue) {
             if (!$this->_sMetaType && !$aValue['GlobalSearch'])
                 continue;
@@ -96,6 +98,7 @@ class BxDolSearch extends BxDol
             $oEx->setMetaType($this->_sMetaType);
             $oEx->setCategoryObject($this->_sCategoryObject);
             $oEx->setCenterContentUnitSelector(false);
+            $oEx->setSingleSearch($bSingle);
             $sCode .= $oEx->processing();
         }
 
@@ -252,7 +255,9 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $sDisplayEmptyMsgKey = ''; ///< custom empty message language key, instead of default "empty" message
     protected $bProcessPrivateContent = true; ///< check each item for privacy, if view isn't allowed then display private view instead
     protected $bForceAjaxPaginate = false; ///< force ajax paginate
+    protected $iPaginatePerPage = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT; ///< default 'per page' value for paginate.
 
+    protected $_bSingleSearch = true;
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
     protected $_sCategoryObject = '';
@@ -282,6 +287,16 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setAjaxPaginate($b = true)
     {
         $this->bForceAjaxPaginate = $b;
+    }
+
+    public function setPaginatePerPage($iPerPage)
+    {
+        $this->iPaginatePerPage = $iPerPage;
+    }
+
+    public function setSingleSearch($bSingleSearch)
+    {
+        $this->_bSingleSearch = $bSingleSearch;
     }
 
     public function setLiveSearch($bLiveSearch)
@@ -766,10 +781,26 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setPaginate ()
     {
-        $this->aCurrent['paginate']['perPage'] = (isset($_GET['per_page']) && (int)$_GET['per_page'] != 0) ? (int)$_GET['per_page'] : $this->aCurrent['paginate']['perPage'];
-        if (empty($this->aCurrent['paginate']['perPage']))
-            $this->aCurrent['paginate']['perPage'] = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT;
+        $iPerPage = 0;
 
+        //--- Check in aCurrent (low priority).
+        if(isset($this->aCurrent['paginate']['perPage']) && (int)$this->aCurrent['paginate']['perPage'] != 0)
+            $iPerPage = (int)$this->aCurrent['paginate']['perPage'];
+
+        //--- Check in GET params (high priority).
+        if(isset($_GET['per_page']) && (int)$_GET['per_page'] != 0)
+            $iPerPage = (int)$_GET['per_page'];
+
+        //--- Trying to get from System settings.
+        if (empty($iPerPage))
+            $iPerPage = (int)getParam('sys_per_page_search_keyword_' . ($this->_bSingleSearch ? 'single' : 'plural'));
+
+        //--- Use default value in case of emergency.
+        if (empty($iPerPage))
+            $iPerPage = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT;
+
+        $this->aCurrent['paginate']['perPage'] = $iPerPage;
+            
         $this->aCurrent['paginate']['start'] = isset($this->aCurrent['paginate']['forceStart'])
             ? (int)$this->aCurrent['paginate']['forceStart']
             : (empty($_GET['start']) ? 0 : (int)$_GET['start']);

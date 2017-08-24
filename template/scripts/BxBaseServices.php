@@ -17,7 +17,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         parent::__construct();
     }
 
-    public function serviceProfileUnit ($iContentId)
+    public function serviceProfileUnit ($iContentId, $aParams = array())
     {
         return $this->_serviceProfileFunc('getUnit', $iContentId);
     }

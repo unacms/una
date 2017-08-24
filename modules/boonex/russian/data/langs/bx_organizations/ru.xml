@@ -75,6 +75,8 @@
 	<string name="_bx_orgs_page_title_profile_favorites"><![CDATA[Избранные организации]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_title_profile_friends"><![CDATA[Друзья]]></string>
+	<string name="_bx_orgs_page_title_sys_friend_requests"><![CDATA[Приглашения в друзья]]></string>
+    <string name="_bx_orgs_page_title_friend_requests"><![CDATA[Приглашения в друзья]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_orgs_page_title_profile_subscriptions"><![CDATA[Подписки и подписчики]]></string>
     <string name="_bx_orgs_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
@@ -111,6 +113,8 @@
 	<string name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
+	<string name="_bx_orgs_page_block_title_friend_requests_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Приглашения в друзья]]></string>
+    <string name="_bx_orgs_page_block_title_system_friend_requests"><![CDATA[Приглашения в друзья]]></string>
 	<string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Расположение]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Подписки]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Подписки]]></string>

@@ -56,8 +56,8 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
 
 		$aParams['dynamic_groups'] = array(
 			array ('key' => '', 'value' => '----'),
-			array ('key' => 'c', 'value' => _t('_bx_groups_privacy_group_closed')),
-			array ('key' => 's', 'value' => _t('_bx_groups_privacy_group_secret')),
+			array ('key' => 'c', 'value' => _t('_sys_ps_group_title_closed')),
+			array ('key' => 's', 'value' => _t('_sys_ps_group_title_secret')),
 		);
 
         return parent::getGroupChooser($sObject, $iOwnerId, $aParams);

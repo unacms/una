@@ -246,6 +246,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     protected function actionPageCreate()
     {
+        $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sModule = BX_DOL_STUDIO_MODULE_CUSTOM;
@@ -316,12 +317,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
             $iId = (int)$oForm->insert(array('object' => $sObject, 'url' => $this->sPageBaseUrl . $sUri));
             if($iId != 0)
-                return array('eval' => $this->getPageJsObject() . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
+                return array('eval' => $sJsObject . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
             else
                 return array('msg' => _t('_adm_bp_err_page_create'));
         }
 
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['add_popup_id'], _t('_adm_bp_txt_create_popup'), $oTemplate->parseHtmlByName('bp_add_page.html', array(
+            'js_object' => $sJsObject,
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
         )));
@@ -382,7 +384,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     if($aLayoutOld['cells_number'] > $aLayoutNew['cells_number'] && $this->oDb->resetBlocksByPage($this->sPage, $aLayoutNew['cells_number']) === false)
                         return array('msg' => _t('_adm_bp_err_save'));
 
-                    return array('eval' => $sJsObject . '.onSaveSettings()');
+                    return array('eval' => $sJsObject . '.onSaveSettingsLayout()');
                 }
 
                 return array();
@@ -392,6 +394,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         }
 
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_popup_id'], _t('_adm_bp_txt_settings_popup'), $oTemplate->parseHtmlByName('bp_edit_page.html', array(
+            'js_object' => $sJsObject,
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
         )));
@@ -676,7 +679,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'hidden_on',
                     'caption' => _t('_adm_bp_txt_block_hidden_on'),
                     'info' => '',
-                	'value' => $aBlock['hidden_on'],
+                	'value' => (int)$aBlock['hidden_on'],
                     'values' => array(
                 		BX_DB_HIDDEN_PHONE => _t('_adm_bp_txt_block_hidden_on_phone'),
                 		BX_DB_HIDDEN_TABLET => _t('_adm_bp_txt_block_hidden_on_tablet'),
@@ -1103,7 +1106,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'content' => MsgBox(_t('_adm_bp_err_page_visible_for_levels'))
                 )
             );
-        else
+        else {
         	bx_import('BxDolStudioUtils');
             $aInputs = array(
                 'visible_for' => array(
@@ -1129,7 +1132,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'visible_for_levels',
                     'caption' => _t('_adm_bp_txt_page_visible_for_levels'),
                     'info' => _t('_adm_bp_dsc_page_visible_for_levels'),
-                    'value' => '',
+                    'value' => array(),
                     'values' => array(),
                     'tr_attrs' => array(
                         'style' => $iVisibleForLevels == BX_DOL_INT_MAX ? 'display:none' : ''
@@ -1139,6 +1142,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     )
                 )
             );
+        }
 
         $aForm = array(
             'form_attrs' => array(
@@ -1688,6 +1692,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     	$sJsObject = $this->getPageJsObject();
 
         $aTmplParams = array(
+            'js_object' => $sJsObject,
             'menu' => array(),
             'html_settings_groups_id' => $this->aHtmlIds['settings_groups_id'],
             'bx_repeat:settings_groups' => array(),

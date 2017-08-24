@@ -139,6 +139,8 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                     'mainField' => 'account_id',
                     'onField' => 'user_id',
                     'joinFields' => array('date'),
+                    'groupTable' => $this->aCurrent['table'],
+                    'groupField' => 'id'
                 );
                 $this->aCurrent['sorting'] = 'online';
                 $this->sBrowseUrl = 'page.php?i=organizations-online';
@@ -147,8 +149,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_orgs');
-                $this->aCurrent['paginate']['perPage'] = 5;
-                unset($this->aCurrent['rss']);
+                unset($this->aCurrent['paginate']['perPage'], $this->aCurrent['rss']);
                 break;
 
             default:

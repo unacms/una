@@ -106,6 +106,21 @@ class BxDolVoteQuery extends BxDolObjectQuery
     	$sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ?, `{$this->_sTriggerFieldRate}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aEntry['count'], $aEntry['rate'], $iObjectId);
         return (int)$this->query($sQuery) > 0;
     }
+
+    protected function _deleteAuthorEntriesTableMain($aTrack)
+    {
+        return $this->query("UPDATE `{$this->_sTable}` SET `count`=`count`-1, `sum`=`sum`-:value WHERE `object_id`=:object_id", array(
+        	'object_id' => $aTrack['object_id'],
+            'value' => $aTrack['value']
+        ));
+    }
+
+    protected function _deleteAuthorEntriesTableTrigger($aTrack)
+    {
+        $aVote = $this->getVote($aTrack['object_id']);
+
+        return $this->_updateTriggerTable($aTrack['object_id'], $aVote);
+    }
 }
 
 /** @} */

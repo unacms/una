@@ -588,7 +588,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
         $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
         $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-        if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
+        if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && (empty($sEmbedlyPattern) || preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url'])))) {
             $bTmplVarsEmbed = true;
             $aTmplVarsEmbed = array(
                 'style_prefix' => $sStylePrefix,
@@ -683,7 +683,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('view');
 
-        list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aEvent['object_owner_id']);
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
 
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
@@ -719,6 +719,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_owner_url' => $sAuthorUrl,
             'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName,
+            'item_owner_unit' => $sAuthorUnitShort,
             'item_owner_action' => _t($aEvent['sample_action'], _t($aEvent['sample'])),
             'bx_if:show_timeline_owner' => array(
                 'condition' => !empty($aTmplVarsTimelineOwner),
@@ -887,7 +888,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
                 $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
                 $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-                if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && !empty($sEmbedlyPattern) && preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url']))) {
+                if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && (empty($sEmbedlyPattern) || preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url'])))) {
                     $bTmplVarsEmbed = true;
                     $aTmplVarsEmbed = array(
                         'style_prefix' => $sStylePrefix,
