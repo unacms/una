@@ -31,7 +31,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'cmt_author_id', 'operator' => '='),
             ),
-            'paginate' => array('start' => 0, 'perPage' => 3),
+            'paginate' => array('start' => 0),
             'sorting' => 'last',
 			'ident' => 'cmt_id'
         );

@@ -148,8 +148,7 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_groups');
-                $this->aCurrent['paginate']['perPage'] = 5;
-                unset($this->aCurrent['rss']);
+                unset($this->aCurrent['paginate']['perPage'], $this->aCurrent['rss']);
                 break;
 
             default:

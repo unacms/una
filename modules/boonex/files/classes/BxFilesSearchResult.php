@@ -101,8 +101,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_files');
-                $this->aCurrent['paginate']['perPage'] = 3;
-                unset($this->aCurrent['rss']);
+                unset($this->aCurrent['paginate']['perPage'], $this->aCurrent['rss']);
                 break;
 
             default:

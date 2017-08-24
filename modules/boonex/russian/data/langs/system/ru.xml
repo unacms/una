@@ -1279,6 +1279,8 @@
 	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Кэш-движок для Страниц (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Задействовать кэш для блоков страниц]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Кэш-движок для блоков страниц (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
+	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_single"><![CDATA[Число элементов на странице в результатах поиска по ключевому слову]]></string>
+    <string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Число элементов на странице в результатах поиска по сайту]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>

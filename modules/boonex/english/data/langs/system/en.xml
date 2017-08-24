@@ -1281,6 +1281,8 @@
 	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Page cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Enable page blocks cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Page blocks cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_single"><![CDATA[Number of items per page in Keyword Search results]]></string>
+	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Number of items per page in Site Search results]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string>
