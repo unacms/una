@@ -1000,19 +1000,19 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 		foreach($aBindings as $sKey => $mixedValue) {
 			if(is_null($mixedValue))
 				$oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_NULL);
-			else if(is_numeric($mixedValue))
-				$oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_INT);
-			else
-				$oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_STR);
+            else if(is_numeric($mixedValue))
+                $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_INT);
+            else
+                $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_STR);		
 		}
-		
+
     	switch (self::$_rLink->getAttribute(PDO::ATTR_ERRMODE)) {
     		case PDO::ERRMODE_SILENT:
-    			$bResult = $this->executeStatementSilent($oStatement, $aBindings, $bVerbose);
+    			$bResult = $this->executeStatementSilent($oStatement, $bVerbose);
     			break;
 
     		case PDO::ERRMODE_EXCEPTION:
-    			$bResult = $this->executeStatementException($oStatement, $aBindings, $bVerbose);
+    			$bResult = $this->executeStatementException($oStatement, $bVerbose);
     			break;
     	}
 
