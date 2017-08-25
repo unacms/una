@@ -1500,7 +1500,11 @@ function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
 
         $text = substr_replace($text, '<a ' . $sAttrs . ' href="'.$url.'">'.$matches[$i][0].'</a>', $matches[$i][1], strlen($matches[$i][0]));
     }
-
+	
+	// email pattern
+	$mail_pattern = "/([A-z0-9\._-]+\@[A-z0-9_-]+\.)([A-z0-9\_\-\.]{1,}[A-z])/";
+	$text = preg_replace($mail_pattern, '<a href="mailto:$1$2">$1$2</a>', $text);
+	
     return $text;
 }
 
