@@ -2364,7 +2364,7 @@
 	<string name="_sys_txt_data_successfully_submitted"><![CDATA[Выполнено]]></string>
     <string name="_sys_txt_delete"><![CDATA[Удалить]]></string>
     <string name="_sys_txt_discard"><![CDATA[Отменить]]></string>
-	<string name="_sys_txt_empty"><![CDATA[Очистить]]></string>
+	<string name="_sys_txt_empty"><![CDATA[Пусто]]></string>
 	<string name="_sys_txt_error_account_creation"><![CDATA[Не удалось создать Аккаунт]]></string>
 	<string name="_sys_txt_error_account_delete"><![CDATA[Не удалось удалить Аккаунт]]></string>
 	<string name="_sys_txt_error_account_is_not_defined"><![CDATA[Аккаунт не определён]]></string>
