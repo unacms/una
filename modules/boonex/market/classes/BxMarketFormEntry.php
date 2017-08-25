@@ -256,6 +256,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
             'id' => $aInput['name'] . time(),
             'url_get_recipients' => $sGetSubentriesUrl,
             'name' => $aInput['name'],
+			'b_img' => false,
             'placeholder' => $sPlaceholder,
             'vals' => $sVals,
         ));

@@ -946,7 +946,7 @@ BLAH;
             foreach ($aInput['value'] as $sVal) {
                 if (!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
                     continue;
-               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
+               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners"><img class="bx-def-thumb bx-def-thumb-size bx-def-margin-sec-right" src="' . $oProfile->getThumb() . '">' . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
             }
             $sVals = trim($sVals, ',');
         }
@@ -955,6 +955,7 @@ BLAH;
             'id' => $aInput['name'] . time() . mt_rand(0, 100),
             'url_get_recipients' => $aInput['ajax_get_suggestions'],
             'name' => $aInput['name'],
+			'b_img' => true,
             'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
             'vals' => $sVals,
         ));

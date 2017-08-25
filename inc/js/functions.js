@@ -757,4 +757,48 @@ function bx_get_param(s) {
     return aDolOptions[s];
 }
 
+function bx_autocomplete_fields(id, url, name, b_img){
+	$('#' + id + ' input[type=text]').autocomplete({
+		source: url,
+		select: function(e, ui) {
+			$(this).val(ui.item.label);
+			$(this).trigger('superselect', ui.item);
+			e.preventDefault();
+		}
+	});
+
+	$('#' + id + ' input[type=text]').on('superselect', function(e, item) {
+		$(this).hide();
+		if ('undefined' != typeof(item))
+			$(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">' + (b_img ? '<img class="bx-def-thumb bx-def-thumb-size bx-def-margin-sec-right" src="' + item.thumb + '">' : '') + item.label +'<input type="hidden" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="' + name + '[]" value="'+ item.value +'" /></b>');
+
+		fAutoShrinkInput();
+		$(this).show();
+		this.value = '';
+
+	}).on('keydown', function(e) {
+
+		// if: comma,enter (delimit more keyCodes with | pipe)
+		if (/(13)/.test(e.which))
+			e.preventDefault();
+
+	});
+
+	$('#' + id).on('click', 'b', function() {
+		$(this).remove();
+		fAutoShrinkInput();
+	});
+
+	fAutoShrinkInput = function () {
+		var iWidthCont = $('#' + id + '.bx-form-input-autotoken').innerWidth();
+		var iWidthExisting = 0;
+		$('#' + id + '.bx-form-input-autotoken b').each(function () {
+			iWidthExisting += $(this).outerWidth(true);
+		});
+		$('#' + id + '.bx-form-input-autotoken input').width(parseInt(iWidthCont - iWidthExisting > 180 ? iWidthCont - iWidthExisting : 180) - 5);
+	};
+
+	fAutoShrinkInput();
+};
+
 /** @} */

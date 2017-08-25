@@ -157,10 +157,10 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfilesSearch ($sTerm, $iLimit)
     {
-        $aRet = array();
+		$aRet = array();
         $a = $this->_oDb->searchByTerm($sTerm, $iLimit);
         foreach ($a as $r)
-            $aRet[] = array ('label' => $this->serviceProfileName($r['content_id']), 'value' => $r['profile_id']);
+            $aRet[] = array ('label' => $this->serviceProfileName($r['content_id']), 'value' => $r['profile_id'], 'thumb' =>  BxDolProfile::getInstance($r['profile_id']) -> getThumb());
         return $aRet;
     }
 
