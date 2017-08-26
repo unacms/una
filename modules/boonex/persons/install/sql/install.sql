@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `cover` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
   `views` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
