@@ -598,10 +598,19 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Check whether location exists or not.
+     * @param string $sKey - location's unique key.
+     */
+    function isLocation($sKey)
+    {
+        return isset($this->_aLocations[$sKey]);
+    }
+
+    /**
      * Add location in array of locations.
      * Note. Location is the path/url to folder where 'templates' folder is stored.
      *
-     * @param string $sKey          - location's    unique key.
+     * @param string $sKey          - location's unique key.
      * @param string $sLocationPath - location's path. For modules: '[path_to_script]/modules/[vendor_name]/[module_name]/'
      * @param string $sLocationUrl  - location's url. For modules: '[url_to_script]/modules/[vendor_name]/[module_name]/'
      */
