@@ -90,7 +90,10 @@ class BxAclModule extends BxDolModule
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$iSellerId = $this->_oConfig->getOwner();
+    	$iSellerIdSetting = $this->_oConfig->getOwner();
+    	if(empty($iSellerId) || ($iSellerId != $iSellerIdSetting && !isAdmin()))
+    	    return array();
+
         $aItems = $this->_oDb->getPrices(array('type' => 'all_full'));
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']);
 
@@ -98,7 +101,7 @@ class BxAclModule extends BxDolModule
         foreach($aItems as $aItem)
             $aResult[] = array(
 				'id' => $aItem['id'],
-				'author_id' => $iSellerId,
+				'author_id' => $iSellerIdSetting,
             	'name' => $aItem['name'],
 				'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
 				'description' => _t($aItem['level_description']),
