@@ -40,6 +40,16 @@ class BxSnipcartModule extends BxBaseModTextModule
         return $aSettings;
     }
 
+    public function serviceGetSearchableFields ()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetSearchableFields();
+        unset($aResult[$CNF['FIELD_PRICE']], $aResult[$CNF['FIELD_WEIGHT']]);
+
+        return $aResult;
+    }
+
     public function serviceIncludeCssJs($iProfileId = 0)
     {
         $iProfileId = !empty($iProfileId) ? $iProfileId : $this->_iProfileId;
