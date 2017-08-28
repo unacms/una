@@ -23,7 +23,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'shopping-cart col-green1',
+            'ICON' => 'shopping-cart col-green2',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
