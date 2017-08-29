@@ -30,6 +30,15 @@ class BxBaseModGroupsFormEntry extends BxBaseModProfileFormEntry
         $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . "modules/?r=" . $this->_oModule->_oConfig->getUri() . "/ajax_get_initial_members";
         return $this->genCustomInputUsernamesSuggestions($aInput);
     }
+
+    protected function _isAdmin ($iContentId = 0)
+    {
+        if (parent::_isAdmin ($iContentId))
+            return true;
+        if (!$iContentId || !($aDataEntry = $this->_oModule->_oDb->getContentInfoById((int)$iContentId)))
+            return false;
+        return CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->checkAllowedEdit ($aDataEntry);        
+    }
 }
 
 /** @} */

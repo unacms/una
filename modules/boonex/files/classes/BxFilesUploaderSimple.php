@@ -40,7 +40,7 @@ class BxFilesUploaderSimple extends BxTemplUploaderSimple
         return false;
     }
 
-    protected function isAdmin ()
+    protected function isAdmin ($iContentId = 0)
     {
         return $this->_oModule->_isModerator (false);
     }

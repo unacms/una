@@ -78,6 +78,8 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_forum%';
 -- CHARTS
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_forum%';
 
+-- UPLOADERS
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_forum_simple', 'bx_forum_html5');
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);

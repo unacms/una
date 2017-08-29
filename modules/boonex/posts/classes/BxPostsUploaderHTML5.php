@@ -19,7 +19,7 @@ class BxPostsUploaderHTML5 extends BxTemplUploaderHTML5
         $this->_oModule = BxDolModule::getInstance('bx_posts');
     }
 
-    protected function isAdmin ()
+    protected function isAdmin ($iContentId = 0)
     {
         return $this->_oModule->_isModerator (false);
     }

@@ -29,7 +29,7 @@ class BxAlbumsUploaderCrop extends BxTemplUploaderCrop
         return $a;
     }
 
-    protected function isAdmin ()
+    protected function isAdmin ($iContentId = 0)
     {
         return $this->_oModule->_isModerator (false);
     }
