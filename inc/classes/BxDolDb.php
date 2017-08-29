@@ -995,36 +995,36 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
     protected function executeStatement($oStatement, $aBindings = array(), $bVerbose = null)
     {
-    	$bResult = false;
-		
+        $bResult = false;
+
 		foreach($aBindings as $sKey => $mixedValue) {
 			if(is_null($mixedValue))
 				$oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_NULL);
             else if(is_numeric($mixedValue))
                 $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_INT);
             else
-                $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_STR);		
+                $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_STR);
 		}
 
     	switch (self::$_rLink->getAttribute(PDO::ATTR_ERRMODE)) {
     		case PDO::ERRMODE_SILENT:
-    			$bResult = $this->executeStatementSilent($oStatement, $bVerbose);
+    			$bResult = $this->executeStatementSilent($oStatement, $aBindings, $bVerbose);
     			break;
 
     		case PDO::ERRMODE_EXCEPTION:
-    			$bResult = $this->executeStatementException($oStatement, $bVerbose);
+    			$bResult = $this->executeStatementException($oStatement, $aBindings, $bVerbose);
     			break;
     	}
 
     	return $bResult;
     }
 
-    protected function executeStatementException($oStatement, $bVerbose = null)
+    protected function executeStatementException($oStatement, $aBindings = array(), $bVerbose = null)
     {
     	$bResult = false;
 
     	try {
-			$bResult = $oStatement->execute();
+			$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
 		}
 		catch (PDOException $oException) {
 			$aError = $oStatement->errorInfo();
@@ -1043,9 +1043,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 		return $bResult;
     }
 
-    protected function executeStatementSilent($oStatement, $bVerbose = null)
+    protected function executeStatementSilent($oStatement, $aBindings = array(), $bVerbose = null)
     {
-    	$bResult = $oStatement->execute();
+    	$bResult = $oStatement->execute(!empty($aBindings) && is_array($aBindings) ? $aBindings : null);
     	if($bResult)
     		return true;
 
