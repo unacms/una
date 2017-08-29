@@ -14,6 +14,8 @@ define ('BX_PROFILER_DISPLAY', 1);
 
 require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/install/config.php');
 $GLOBALS['bx_profiler_module'] = array (
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
+    'name' => 'bx_profiler',
     'title' => $aConfig['title'],
     'vendor' => $aConfig['vendor'],
     'path' => $aConfig['home_dir'],
