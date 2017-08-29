@@ -11,8 +11,8 @@
     <string name="_bx_cnv_form_entry_display_edit"><![CDATA[Редактирование сообщения]]></string>
 	<string name="_bx_cnv_form_entry_display_delete"><![CDATA[Удалить переписку]]></string>
 	<string name="_bx_cnv_form_entry_display_view"><![CDATA[Просмотреть переписку]]></string>
-	<string name="_bx_cnv_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_cnv_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
+	<string name="_bx_cnv_form_entry_input_sys_do_submit"><![CDATA[Отправить]]></string>
+	<string name="_bx_cnv_form_entry_input_do_submit"><![CDATA[Отправить]]></string>
 	<string name="_bx_cnv_form_entry_input_sys_text"><![CDATA[Текст]]></string>
 	<string name="_bx_cnv_form_entry_input_text"><![CDATA[Текст]]></string>
 	<string name="_bx_cnv_form_entry_input_text_err"><![CDATA[Поле для текста не может быть пустым]]></string>

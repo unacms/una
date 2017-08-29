@@ -101,7 +101,6 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
 
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
-                $this->aCurrent['title'] = _t('_bx_market');
                 unset($this->aCurrent['paginate']['perPage'], $this->aCurrent['rss']);
                 break;
 

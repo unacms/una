@@ -34,8 +34,8 @@
 	<string name="_bx_timeline_form_post_input_video"><![CDATA[]]></string>
 	<string name="_bx_timeline_form_post_input_video_alt"><![CDATA[Добавить видео]]></string>
 	<string name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Прикрепления]]></string>
-	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Сообщение]]></string>
-	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Сообщение]]></string>
+	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Создать]]></string>
+	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Создать]]></string>
 
 	<string name="_bx_timeline_form_attach_link"><![CDATA[Прикрепить ссылку]]></string>
 	<string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Прикрепить ссылку]]></string>

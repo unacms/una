@@ -13,7 +13,7 @@
 	<string name="_bx_market_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_market_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 
-	<string name="_bx_market_form_entry"><![CDATA[Market]]></string>
+	<string name="_bx_market_form_entry"><![CDATA[Product]]></string>
 	<string name="_bx_market_form_entry_display_add"><![CDATA[Add Product]]></string>
 	<string name="_bx_market_form_entry_display_edit"><![CDATA[Edit Product]]></string>
 	<string name="_bx_market_form_entry_display_delete"><![CDATA[Delete Product]]></string>
@@ -123,7 +123,7 @@
 	<string name="_bx_market_page_title_sys_view_entry"><![CDATA[View Product]]></string>
 	<string name="_bx_market_page_title_view_entry"><![CDATA[{title}]]></string>
 	<string name="_bx_market_page_block_title_entry_text"><![CDATA[Product Overview]]></string>
-	<string name="_bx_market_page_title_browse"><![CDATA[Market]]></string>
+	<string name="_bx_market_page_title_browse"><![CDATA[Products]]></string>
 	<string name="_bx_market_page_title_search_results"><![CDATA[Products matching "{0}"]]></string>
 	<string name="_bx_market_page_title_browse_by_author"><![CDATA[Products of {display_name}]]></string>
 	<string name="_bx_market_page_title_browse_featured"><![CDATA[Featured]]></string>
