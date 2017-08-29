@@ -1390,13 +1390,13 @@
 	<string name="_adm_strg_err_width"><![CDATA[Нужно указать ширину. Пожалуйста, заполните это поле.]]></string>
 	<string name="_adm_strg_txt_height"><![CDATA[Высота]]></string>
 	<string name="_adm_strg_err_height"><![CDATA[Нужно указать высоту. Пожалуйста, заполните это поле.]]></string>
-	<string name="_adm_tmi_cpt_edit"><![CDATA[Управление Загрузчиком]]></string>
+	<string name="_adm_tmi_cpt_edit"><![CDATA[Управление загрузчиком]]></string>
 	<string name="_adm_tmi_cpt_extensions"><![CDATA[Добавить приложения]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Показывать только Избранное]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Выйти]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
-	<string name="_adm_txt_back_to_launcher"><![CDATA[Назад к Загрузчику]]></string>
+	<string name="_adm_txt_back_to_launcher"><![CDATA[Назад к загрузчику]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Забыли пароль?]]></string>
@@ -2195,7 +2195,7 @@
 	<string name="_sys_page_block_title_unsubscribe_notifications"><![CDATA[Отписаться от уведомлений сайта]]></string>
 	<string name="_sys_page_block_title_std_dash_version"><![CDATA[Версия]]></string>
 	<string name="_sys_page_block_title_std_dash_space"><![CDATA[Использование дискового пространства]]></string>
-	<string name="_sys_page_block_title_std_dash_host_tools"><![CDATA[Хост - Инструменты]]></string>
+	<string name="_sys_page_block_title_std_dash_host_tools"><![CDATA[Инструменты хоста]]></string>
 	<string name="_sys_page_block_title_std_dash_cache"><![CDATA[Кэш]]></string>
 	<string name="_sys_page_block_title_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_lang_block_about"><![CDATA[Этот сайт сделан на UNA. Остальное - тайна, покрытая мраком.]]></string>
