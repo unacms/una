@@ -152,8 +152,8 @@
     <string name="_bx_files_menu_set_title_entries_my"><![CDATA[Меню для своих файлов]]></string>
 	<string name="_bx_files_menu_item_title_system_manage_my_files"><![CDATA[Мои файлы]]></string>
     <string name="_bx_files_menu_item_title_manage_my_files"><![CDATA[{addon} файлов]]></string>
-    <string name="_bx_files_menu_set_title_manage_tools"><![CDATA[Подменю управления файлами]]></string>
-    <string name="_bx_files_menu_title_manage_tools"><![CDATA[Подменю управления файлами]]></string>
+    <string name="_bx_files_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
+    <string name="_bx_files_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_files_menu_item_title_system_manage_account"><![CDATA[Управление учетной записью]]></string>
     <string name="_bx_files_menu_item_title_manage_account"><![CDATA[Управление учетной записью]]></string>
 	<string name="_bx_files_menu_item_title_system_admt_files"><![CDATA[Файлы]]></string>

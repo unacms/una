@@ -17,11 +17,11 @@
 	<string name="_bx_contact_form_contact_input_sys_body"><![CDATA[Текст сообщения]]></string>
 	<string name="_bx_contact_form_contact_input_body"><![CDATA[Текст сообщения]]></string>
 	<string name="_bx_contact_form_contact_input_body_err"><![CDATA[Вы должны указать здесь текст сообщения.]]></string>
-	<string name="_bx_contact_form_contact_input_sys_captcha"><![CDATA[Капча]]></string>
+	<string name="_bx_contact_form_contact_input_sys_captcha"><![CDATA[CAPTCHA]]></string>
 	<string name="_bx_contact_form_contact_input_captcha"><![CDATA[Секретная картинка]]></string>
 	<string name="_bx_contact_form_contact_input_captcha_err"><![CDATA[Проверка секретной картинки не удалась. Пожалуйста, попытайтесь снова.]]></string>
-	<string name="_bx_contact_form_contact_input_sys_do_submit"><![CDATA[Послать]]></string>
-	<string name="_bx_contact_form_contact_input_do_submit"><![CDATA[Послать]]></string>
+	<string name="_bx_contact_form_contact_input_sys_do_submit"><![CDATA[Отправить]]></string>
+	<string name="_bx_contact_form_contact_input_do_submit"><![CDATA[Отправить]]></string>
 
 	<string name="_bx_contact_page_title_sys_contact"><![CDATA[Написать нам]]></string>
 	<string name="_bx_contact_page_title_contact"><![CDATA[Написать нам]]></string>
@@ -30,8 +30,8 @@
     <string name="_bx_contact_menu_item_title_system_contact"><![CDATA[Связь]]></string>
     <string name="_bx_contact_menu_item_title_contact"><![CDATA[Связь]]></string>
 
-    <string name="_bx_contact_option_email"><![CDATA[E-mail для получения сообщений (если пусто, будет использован e-mail сайта)]]></string>
-    <string name="_bx_contact_option_add_reply_to"><![CDATA[Добавить e-mail адрес отправителя в 'Reply-To' (ответить на адрес) заголовок письма]]></string>
+    <string name="_bx_contact_option_email"><![CDATA[Имейл для получения сообщений (если пусто, будет использован имейл сайта)]]></string>
+    <string name="_bx_contact_option_add_reply_to"><![CDATA[Добавить ел. адрес отправителя в 'Reply-To' (ответить на адрес) заголовок письма]]></string>
 
 	<string name="_bx_contact_acl_action_contact"><![CDATA[Контакты]]></string>
 

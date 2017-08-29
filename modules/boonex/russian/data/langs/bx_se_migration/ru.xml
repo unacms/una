@@ -4,7 +4,7 @@
     <string name="_bx_se_migration_stg_cpt_type"><![CDATA[SE миграция]]></string>
     <string name="_bx_se_migration_option_version"><![CDATA[По умолчанию перенос доступен только для версии Social Engine 4]]></string>
     <string name="_bx_se_migration_cpt_settings"><![CDATA[Настройки]]></string>
-    <string name="_bx_se_migration_cpt_transfer_data"><![CDATA[Перенос Данных]]></string>
+    <string name="_bx_se_migration_cpt_transfer_data"><![CDATA[Перенос данных]]></string>
     <string name="_bx_se_migration_cpt_put_path"><![CDATA[Укажите абсолютный путь к Social Engine]]></string>  
     <string name="_bx_se_migration_cpt_save"><![CDATA[Сохранить]]></string>
     <string name="_bx_se_migration_cpt_update"><![CDATA[Обновить]]></string>
@@ -17,7 +17,7 @@
     <string name="_bx_se_migration_modules_records_number"><![CDATA[Количество записей]]></string>  
     <string name="_bx_se_migration_modules_status"><![CDATA[Статус]]></string>
     <string name="_bx_se_migration_se_defined_path"><![CDATA[Установленный путь к Social Engine]]></string>
-    <string name="_bx_se_migration_start_transfer"><![CDATA[Начать Перенос]]></string>
+    <string name="_bx_se_migration_start_transfer"><![CDATA[Начать перенос]]></string>
     <string name="_bx_se_migration_start_transfer_confirmation"><![CDATA[Пожалуйста, не перегружайте и не закрывайте страницу во время выполнения переноса!]]></string>  
     <string name="_bx_se_migration_reupload_data"><![CDATA[Если вы обновите путь к Social Engine, вся информация о перенесенных данных в таблице ниже будет утеряна, но перенесенные данные будут всё так же доступны.]]></string>  
     <string name="_bx_se_migration_already_transfer"><![CDATA[Данные модуля {0} уже был перенесены]]></string>
@@ -51,6 +51,6 @@
     <string name="_bx_se_migration_started_migration_blogs_finished"><![CDATA[{0} блогов с {1} комментариями и {2} категориями перенесено]]></string>
     <string name="_bx_se_migration_started_migration_blogs_error"><![CDATA[Произошла ошибка. Номер записи в базе {0}]]></string>
     <string name="_bx_se_migration_define_total_method"><![CDATA[Пожалуйста, определите метод для получения количество записей для переноса.]]></string>
-    <string name="_bx_se_migration_salt"><![CDATA[Social Engine Секрет]]></string>
+    <string name="_bx_se_migration_salt"><![CDATA[Social Engine - Секрет]]></string>
     <string name="_bx_se_migration_installation_problem"><![CDATA[Похоже, что модуль был установлен не кореектно, попробуйте переустановиь его.]]></string>       
 </resources>

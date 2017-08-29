@@ -203,7 +203,7 @@
     <string name="_bx_dev_frm_btn_search_forms_save"><![CDATA[Сохранить]]></string>
     <string name="_bx_dev_frm_btn_sys_search_forms_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_dev_frm_btn_search_forms_cancel"><![CDATA[Отменить]]></string>
-    <string name="_bx_dev_frm_txt_search_fields_edit_popup"><![CDATA[EРедактировать поле поиска "{0}"]]></string>
+    <string name="_bx_dev_frm_txt_search_fields_edit_popup"><![CDATA[Редактировать поле поиска "{0}"]]></string>
     <string name="_bx_dev_frm_err_search_fields_edit"><![CDATA[Невозможно обновить поле поиска]]></string>
     <string name="_bx_dev_frm_txt_search_fields_form"><![CDATA[Построитель форм - Поле поиска]]></string>
     <string name="_bx_dev_frm_txt_search_fields_display_edit"><![CDATA[Редактировать]]></string>
