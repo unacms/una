@@ -78,7 +78,7 @@ class BxMarketModule extends BxBaseModTextModule
         $CNF = &$this->_oConfig->CNF;
 
         $aResult = parent::serviceGetSearchableFields();
-        unset($aResult[$CNF['FIELD_PRICE_SINGLE']]);
+        unset($aResult[$CNF['FIELD_PRICE_SINGLE']], $aResult[$CNF['FIELD_TRIAL_RECURRING']]);
 
         return $aResult;
     }
