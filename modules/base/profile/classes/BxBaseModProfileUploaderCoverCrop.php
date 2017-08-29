@@ -68,7 +68,7 @@ class BxBaseModProfileUploaderCoverCrop extends BxTemplUploaderCrop
         return json_encode($aResult);
     }
 
-    protected function isAdmin ()
+    protected function isAdmin ($iContentId = 0)
     {
         return $this->_oModule->_isModerator (false);
     }

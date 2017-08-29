@@ -475,6 +475,11 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 ('bx_forum_growth', '_bx_forum_chart_growth', 'bx_forum_discussions', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
 ('bx_forum_growth_speed', '_bx_forum_chart_growth_speed', 'bx_forum_discussions', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
 
+-- UPLOADERS
+
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_forum_simple', 1, 'BxForumUploaderSimple', 'modules/boonex/forum/classes/BxForumUploaderSimple.php'),
+('bx_forum_html5', 1, 'BxForumUploaderHTML5', 'modules/boonex/forum/classes/BxForumUploaderHTML5.php');
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

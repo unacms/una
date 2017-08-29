@@ -3,18 +3,25 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Groups Groups
+ * @defgroup    Forum Forum
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxGroupsUploaderCoverCrop extends BxBaseModGroupsUploaderCoverCrop
+class BxForumUploaderSimple extends BxTemplUploaderSimple
 {
+    protected $_oModule;
+
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
-        $this->_oModule = BxDolModule::getInstance('bx_groups');
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
+        $this->_oModule = BxDolModule::getInstance('bx_forum');
+    }
+
+    protected function isAdmin ($iContentId = 0)
+    {
+        return $this->_oModule->_isModerator (false);
     }
 }
 

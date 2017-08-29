@@ -119,6 +119,11 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         return parent::delete($iContentId);
     }
 
+    protected function _isAdmin ($iContentId = 0)
+    {
+        return $this->_oModule->_isModerator();
+    }
+
     public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -136,7 +141,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         $iProfileId = $this->getContentOwnerProfileId($iContentId);
 
-        $aGhostFiles = $oStorage->getGhosts ($iProfileId, $isAssociateWithContent ? 0 : $iContentId, true, $this->_oModule->_isModerator());
+        $aGhostFiles = $oStorage->getGhosts ($iProfileId, $isAssociateWithContent ? 0 : $iContentId, true, $this->_isAdmin($iContentId));
         if (!$aGhostFiles)
             return true;
 

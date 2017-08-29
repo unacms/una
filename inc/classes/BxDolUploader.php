@@ -317,7 +317,7 @@ abstract class BxDolUploader extends BxDolFactory
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sImagesTranscoder);
 
         $a = array();
-        $aGhosts = $oStorage->getGhosts($this->isAdmin() && $iContentId ? false : $iProfileId, $iContentId);
+        $aGhosts = $oStorage->getGhosts($this->isAdmin($iContentId) && $iContentId ? false : $iProfileId, $iContentId);
         foreach ($aGhosts as $aFile) {
             $sFileIcon = '';
 
@@ -364,7 +364,7 @@ abstract class BxDolUploader extends BxDolFactory
         $oProfile = BxDolProfile::getInstance($iProfileId);
         $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
         $aProfiles = $oAccount ? $oAccount->getProfiles(false) : array();
-        if (!isset($aProfiles[$aFile['profile_id']]) && !$this->isAdmin())
+        if (!isset($aProfiles[$aFile['profile_id']]) && !$this->isAdmin($aFile['content_id']))
             return _t('_sys_txt_access_denied');
 
         if (!$oStorage->deleteFile($iFileId))
@@ -433,7 +433,7 @@ abstract class BxDolUploader extends BxDolFactory
         return false;
     }
 
-    protected function isAdmin ()
+    protected function isAdmin ($iContentId = 0)
     {
         return isAdmin();
     }
