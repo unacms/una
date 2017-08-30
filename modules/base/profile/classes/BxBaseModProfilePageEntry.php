@@ -38,7 +38,9 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
         }
 
-        if (!$this->_aContentInfo || !$this->_oProfile || (!$this->_oProfile->isActive() && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)) {
+        $bLoggedOwner = $this->_oProfile->id() == bx_get_logged_profile_id();
+        $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED; 
+        if (!$this->_aContentInfo || !$this->_oProfile || (!$this->_oProfile->isActive() && !$bLoggedOwner && !$bLoggedModerator)) {
             $this->setPageCover(false);
             return;
         }
@@ -57,13 +59,34 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name
         $this->addMarkers(array('profile_link' => $this->_oProfile->getUrl())); // profile link
 
-        // display message if profile isn't active
         $aInformers = array ();
         $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-        if (bx_get_logged_profile_id() == $this->_oProfile->id() && !empty($CNF['INFORMERS']['status']) && $oInformer) {
-            $sStatus = $this->_aContentInfo['profile_status'];
-            if (isset($CNF['INFORMERS']['status']['map'][$sStatus]))
-                $aInformers[] = array ('name' => $CNF['INFORMERS']['status']['name'], 'msg' => _t($CNF['INFORMERS']['status']['map'][$sStatus]), 'type' => BX_INFORMER_ALERT);
+        if($oInformer) {
+            // display message to profile author if profile isn't active
+            if ($bLoggedOwner && !empty($CNF['INFORMERS']['status'])) {
+                $sStatus = $this->_aContentInfo['profile_status'];
+
+                $aInformer = $CNF['INFORMERS']['status'];
+                if (isset($aInformer['map'][$sStatus]))
+                    $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]), 'type' => BX_INFORMER_ALERT);
+            }
+
+            // display message to moderator/administrator if profile isn't active
+            if (!$bLoggedOwner && $bLoggedModerator && !empty($CNF['INFORMERS']['status_moderation'])) {
+                $sStatus = $this->_aContentInfo['profile_status'];
+                $sManageUrl = '#';
+                if(!empty($CNF['FIELD_TITLE']) && !empty($CNF['URL_MANAGE_ADMINISTRATION']))
+                    $sManageUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_ADMINISTRATION'], array('filter' => urlencode($this->_aContentInfo[$CNF['FIELD_TITLE']])));
+
+                $aInformer = $CNF['INFORMERS']['status_moderation'];
+                if (isset($aInformer['map'][$sStatus]))
+                    $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus], $sManageUrl), 'type' => BX_INFORMER_ALERT);
+            }
+
+            // add informers
+            if ($aInformers)
+                foreach ($aInformers as $a)
+                    $oInformer->add($a['name'], $this->_replaceMarkers($a['msg']), $a['type']);
         }
 
         // display message if it is possible to switch to this profile
@@ -73,12 +96,6 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
                 $oProfile->checkSwitchToProfile($this->_oTemplate);
         }
 
-        // add informers
-        if ($aInformers && $oInformer) {
-            foreach ($aInformers as $a)
-                $oInformer->add($a['name'], $this->_replaceMarkers($a['msg']), $a['type']);
-        }
-
         // set cover
         $this->_oModule->_oTemplate->setCover($this, $this->_aContentInfo);
     }
@@ -86,7 +103,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
     public function getCode ()
     {
         // check if profile is active
-        if (!$this->_oProfile || (!$this->_oProfile->isActive() && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)) {
+        if (!$this->_oProfile || (!$this->_oProfile->isActive() && $this->_oProfile->id() != bx_get_logged_profile_id() && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)) {
             $this->_oTemplate->displayPageNotFound();
             exit;
         }

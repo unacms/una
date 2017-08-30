@@ -16,6 +16,7 @@ class BxBaseGrid extends BxDolGrid
     protected $_oTemplate;
     protected $_aPopupOptions = false;
     protected $_aQueryAppend = false;
+    protected $_aQueryReset = false;
     protected $_aConfirmMessages = false;
     protected $_bSelectAll = false;
     protected $_isDisplayPopupOnTextOverflow = true;
@@ -28,6 +29,8 @@ class BxBaseGrid extends BxDolGrid
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+        $this->_aQueryReset = array('filter', 'order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
     }
 
     public function performActionDisplay()
@@ -248,8 +251,7 @@ class BxBaseGrid extends BxDolGrid
      */
     public function resetQueryParams()
     {
-        $aKeys = array('filter', 'order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
-        foreach ($aKeys as $sKey) {
+        foreach ($this->_aQueryReset as $sKey) {
             unset($_GET[$sKey]);
             unset($_POST[$sKey]);
         }

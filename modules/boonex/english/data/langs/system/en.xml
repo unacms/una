@@ -2251,6 +2251,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_profile_sample_single"><![CDATA[profile]]></string>
 	<string name="_sys_profile_friendship_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> is now friends with <a href="{entry_url}">{entry_caption}</a>]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> subscribed to <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
+	<string name="_sys_profile_status_active"><![CDATA[Active]]></string>
+	<string name="_sys_profile_status_pending"><![CDATA[Pending]]></string>
+	<string name="_sys_profile_status_suspended"><![CDATA[Suspended]]></string>
 	<string name="_sys_private"><![CDATA[Private]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Database pruning:</h3>
         <ul>

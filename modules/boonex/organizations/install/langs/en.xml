@@ -45,6 +45,10 @@
 	<string name="_bx_orgs_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this profile]]></string>
 	<string name="_bx_orgs_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
 	<string name="_bx_orgs_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete your profile.]]></string>
+	<string name="_bx_orgs_form_profile_input_sys_profile_email"><![CDATA[Email]]></string>
+    <string name="_bx_orgs_form_profile_input_profile_email"><![CDATA[Email]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_profile_status"><![CDATA[Status]]></string>
+    <string name="_bx_orgs_form_profile_input_profile_status"><![CDATA[Status]]></string>
 
 	<string name="_bx_orgs_acl_action_create_profile"><![CDATA[Create Organization's Profile]]></string>
 	<string name="_bx_orgs_acl_action_delete_profile"><![CDATA[Delete Organization's Profile]]></string>
@@ -240,7 +244,9 @@
     <string name="_bx_orgs_search_extended_cmts"><![CDATA[Organizations Comments Search]]></string>
 
     <string name="_bx_orgs_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
+    <string name="_bx_orgs_txt_account_pending_moderation"><![CDATA[This <a href="{0}">profile</a> is pending approval.]]></string>
     <string name="_bx_orgs_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
+    <string name="_bx_orgs_txt_account_suspended_moderation"><![CDATA[This <a href="{0}">profile</a> is suspended.]]></string>
 
     <string name="_bx_orgs_pre_lists_cats"><![CDATA[Organization categories]]></string>
     <string name="_bx_orgs_cat_Agriculture"><![CDATA[Agriculture]]></string>

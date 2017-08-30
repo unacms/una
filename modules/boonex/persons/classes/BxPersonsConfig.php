@@ -142,6 +142,13 @@ class BxPersonsConfig extends BxBaseModProfileConfig
                         BX_PROFILE_STATUS_SUSPENDED => '_bx_persons_txt_account_suspended',
                     ),
                 ),
+                'status_moderation' => array (
+                    'name' => 'bx-persons-status-not-active-moderation',
+                    'map' => array (
+                        BX_PROFILE_STATUS_PENDING => '_bx_persons_txt_account_pending_moderation',
+                        BX_PROFILE_STATUS_SUSPENDED => '_bx_persons_txt_account_suspended_moderation',
+                    ),
+                ),
             ),
 
             // some language keys

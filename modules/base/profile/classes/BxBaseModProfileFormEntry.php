@@ -118,6 +118,50 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         return parent::delete($iContentId, $aContentInfo);
     }
 
+    protected function genCustomViewRowValueProfileEmail($aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(empty($aInput['value']))
+            return '';
+
+        $sEmail = $aInput['value'];
+
+        $sModuleAccounts = 'bx_accounts';
+    	if(!BxDolModuleQuery::getInstance()->isEnabledByName($sModuleAccounts))
+    		return $sEmail;
+
+		$oModuleAccounts = BxDolModule::getInstance($sModuleAccounts);
+		if(!$oModuleAccounts || empty($oModuleAccounts->_oConfig->CNF['URL_MANAGE_ADMINISTRATION']))
+			return $sEmail;
+
+        return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
+            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($oModuleAccounts->_oConfig->CNF['URL_MANAGE_ADMINISTRATION'], array(
+            	'filter' => urlencode($sEmail)
+            )),
+            'title' => '',
+            'content' => $sEmail
+        ));
+    }
+
+    protected function genCustomViewRowValueProfileStatus($aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(empty($aInput['value']))
+            return '';
+
+        $sStatus = _t('_sys_profile_status_' . $aInput['value']);
+        if(empty($CNF['URL_MANAGE_ADMINISTRATION']) || empty($CNF['FIELD_TITLE']) && !empty($this->aInputs[$CNF['FIELD_TITLE']]['value']))
+            return $sStatus;
+
+        return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
+            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_MANAGE_ADMINISTRATION'], array(
+            	'filter' => urlencode($this->aInputs[$CNF['FIELD_TITLE']]['value'])
+            )),
+            'title' => '',
+            'content' => $sStatus
+        ));
+    }
+
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
         $isAdmin = $this->_oModule->_isModerator();        

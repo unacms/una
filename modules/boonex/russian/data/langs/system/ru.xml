@@ -2249,6 +2249,9 @@
 	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
 	<string name="_sys_profile_friendship_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> и <a href="{entry_url}">{entry_caption}</a>]]> стали друзьями</string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> подписался на <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
+	<string name="_sys_profile_status_active"><![CDATA[Активный]]></string>
+    <string name="_sys_profile_status_pending"><![CDATA[В ожидании]]></string>
+    <string name="_sys_profile_status_suspended"><![CDATA[Заблокированный]]></string>
 	<string name="_sys_private"><![CDATA[Приватные]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Очистка базы данных:</h3>
         <ul>

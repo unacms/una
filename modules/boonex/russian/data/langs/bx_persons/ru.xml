@@ -47,6 +47,10 @@
     <string name="_bx_persons_form_profile_input_birthday"><![CDATA[День рождения]]></string>
     <string name="_bx_persons_form_profile_input_sys_gender"><![CDATA[Пол]]></string>
     <string name="_bx_persons_form_profile_input_gender"><![CDATA[Пол]]></string>
+    <string name="_bx_persons_form_profile_input_sys_profile_email"><![CDATA[Имейл]]></string>
+    <string name="_bx_persons_form_profile_input_profile_email"><![CDATA[Имейл]]></string>
+    <string name="_bx_persons_form_profile_input_sys_profile_status"><![CDATA[Статус]]></string>
+    <string name="_bx_persons_form_profile_input_profile_status"><![CDATA[Статус]]></string>
 
 	<string name="_bx_persons_acl_action_create_profile"><![CDATA[Создать персональный профиль]]></string>
 	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Удалить персональный профиль]]></string>
@@ -242,7 +246,9 @@
     <string name="_bx_persons_search_extended_cmts"><![CDATA[Поиск комментариев к персональным профилям]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
+    <string name="_bx_persons_txt_account_pending_moderation"><![CDATA[Этот <a href="{0}">профиль</a> ожидает одобрения.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>
+    <string name="_bx_persons_txt_account_suspended_moderation"><![CDATA[Этот <a href="{0}">профиль</a> заблокирован.]]></string>
     <string name="_bx_persons_txt_N_friends"><![CDATA[Друзья: {0}]]></string>
     <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[В профайле <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_persons_txt_sample_single"><![CDATA[Персона]]></string>

@@ -15,6 +15,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
     	$this->MODULE = 'bx_accounts';
         parent::__construct ($aOptions, $oTemplate);
+
+        $this->_aQueryReset = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
     }
 
     public function getCode($isDisplayHeader = true)
@@ -155,15 +157,6 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 	public function performActionUnmakeOperator()
     {
     	$this->_performActionChangeRole(1);
-    }
-
-    public function resetQueryParams()
-    {
-        $aKeys = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
-        foreach ($aKeys as $sKey) {
-            unset($_GET[$sKey]);
-            unset($_POST[$sKey]);
-        }
     }
 
 	protected function _performActionChangeRole($iRole)

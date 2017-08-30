@@ -21,6 +21,8 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $this->_aQueryReset = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
+
         $this->_sFilter1Name = 'filter1';
         $this->_aFilter1Values = array(
 			'active' => $CNF['T']['filter_item_active'],
