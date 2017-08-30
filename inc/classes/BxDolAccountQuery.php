@@ -83,7 +83,8 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getIdById($iId)
     {
-        return (int)$this->_getFieldByField('id', 'id', $iId);
+        $sSql = $this->prepare("SELECT `id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iId);
+        return $this->fromMemory('BxDolAccountQuery::getIdById', 'getOne', $sSql);
     }
 
     /**

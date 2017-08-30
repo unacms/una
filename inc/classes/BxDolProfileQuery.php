@@ -148,7 +148,8 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getIdById($iId)
     {
-        return (int)$this->_getFieldByField('id', 'id', $iId);
+        $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `id` = ? LIMIT 1 /* $iId */", $iId);
+        return $this->fromMemory('BxDolProfileQuery::getIdById' . $iId, 'getOne', $sSql);
     }
 
     /**
