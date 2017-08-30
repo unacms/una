@@ -227,7 +227,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_sFolderCss = 'css/';
         $this->_sFolderImages = 'images/';
         $this->_sFolderIcons = 'images/icons/';
-        $this->_aTemplates = array();
+        $this->_aTemplates = array('bx_a', 'bx_img');
 
         $this->addLocation('system', $this->_sRootPath, $this->_sRootUrl);
 
@@ -300,6 +300,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function init()
     {
+        $this->loadTemplates();
+
         //--- Load page elements related static variables ---//
         $this->aPage = array(
             'name_index' => BX_PAGE_DEFAULT,

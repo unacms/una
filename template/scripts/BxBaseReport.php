@@ -23,7 +23,7 @@ class BxBaseReport extends BxDolReport
     protected $_aElementDefaults;
 
     protected $_sTmplNameCounter;
-    protected $_sTmplNameDoReport;
+    protected $_sTmplContentDoReport;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -53,8 +53,8 @@ class BxBaseReport extends BxDolReport
 			'show_counter' => true
         );
 
-        $this->_sTmplNameCounter = 'report_counter.html';
-        $this->_sTmplNameDoReport = 'report_do_report.html';
+        $this->_sTmplNameCounter = 'bx_a';
+        $this->_sTmplContentDoReport = $this->_oTemplate->getHtml('report_do_report.html');
     }
 
     public function addCssJs($bDynamicMode = false)
@@ -119,7 +119,8 @@ class BxBaseReport extends BxDolReport
         if($bShowDoReportAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
+        $sMethod = strpos($this->_sTmplNameCounter, '.html') !== false ? 'parseHtmlByName' : 'parseHtmlByTemplateName';
+        return $this->_oTemplate->$sMethod($this->_sTmplNameCounter, array(
             'href' => 'javascript:void(0)',
             'title' => _t('_report_do_report_by'),
             'bx_repeat:attrs' => array(
@@ -201,7 +202,7 @@ class BxBaseReport extends BxDolReport
 		if($bDisabled)
 			$sClass .= $bShowDoReportAsButton || $bShowDoReportAsButtonSmall ? ' bx-btn-disabled' : 'bx-report-disabled';
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoReport, array(
+        return $this->_oTemplate->parseHtmlByContent($this->_sTmplContentDoReport, array(
             'style_prefix' => $this->_sStylePrefix,
         	'html_id' => $this->_aHtmlIds['do_link'],
             'class' => $sClass,
