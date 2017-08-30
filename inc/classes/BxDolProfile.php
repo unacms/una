@@ -15,6 +15,7 @@ define('BX_PROFILE_ACTION_EXTERNAL', 2); ///< action peformed by external servic
 class BxDolProfile extends BxDolFactory implements iBxDolProfile
 {
     protected $_iProfileID;
+    protected $_aProfile;
     protected $_oQuery;
 
     /**
@@ -120,7 +121,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
      */
     public function id()
     {
-        return $this->_oQuery->getIdById($this->_iProfileID);
+        $aProfile = $this->getInfo($this->_iProfileID);
+        return isset($aProfile['id']) ? $aProfile['id'] : false;
     }
 
     /**
@@ -189,7 +191,14 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
      */
     public function getInfo($iProfileId = 0)
     {
-        return $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+        if ($iProfileId && $iProfileId != $this->_iProfileID)
+            return $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+
+        if ($this->_aProfile)
+            return $this->_aProfile;
+        
+        $this->_aProfile = $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+        return $this->_aProfile;
     }
 
     /**
@@ -460,6 +469,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         // change status
         if (!$this->_oQuery->changeStatus($iProfileId, $sStatus))
             return false;
+
+        $this->_aProfile = array();
 
         // alert about status changing
         bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction));

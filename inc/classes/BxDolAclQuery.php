@@ -130,6 +130,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
 
     function getActions($aParams, &$aItems, $bReturnCount = true)
     {
+        $sMemoryKey = '';
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -144,6 +145,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 );
 
                 $sWhereClause .= " AND `taa`.`Name` IN(" . $this->implode_escape($aParams['value']) . ") AND `taa`.`Module` = :module ";
+                $sMemoryKey = 'BxDolAclQuery::getActions' . $aParams['type'] . $aParams['module'] . $sWhereClause;
                 break;
 
             case 'by_names':
@@ -200,6 +202,13 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 `taa`.`DisabledForLevels` AS `disabled_for_levels`" . $sSelectClause . "
             FROM `sys_acl_actions` AS `taa` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        if ($sMemoryKey) {
+            array_unshift($aMethod['params'], $sMemoryKey, $aMethod['name']);
+            $aItems = call_user_func_array(array($this, 'fromMemory'), $aMethod['params']);
+            return $bReturnCount ? count($aItems) : !empty($aItems);
+        }
+
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
@@ -237,7 +246,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             ORDER BY `sys_acl_levels_members`.DateStarts DESC
             LIMIT 1", $iTime, $iTime, $iProfileId);
 
-        return $this->getRow($sSql);
+        return $this->fromMemory('BxDolAclQuery::getLevelCurrent' . $iProfileId . $iTime, 'getRow', $sSql);
     }
 
     function getLevelByIdCached($iLevel)
@@ -268,7 +277,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             FROM `sys_acl_actions` AS `taa`
             LEFT JOIN `sys_acl_matrix` AS `tam` ON `tam`.`IDAction` = `taa`.`ID` AND `tam`.`IDLevel` = ?
             WHERE `taa`.`ID` = ?", $iMembershipId, $iActionId);
-        return $this->getRow($sQuery);
+        return $this->fromMemory('BxDolAclQuery::getAction' . $iMembershipId . $iActionId, 'getRow', $sQuery);
     }
 
     function getActionTrack($iActionId, $iProfileId)

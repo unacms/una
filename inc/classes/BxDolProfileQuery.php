@@ -76,7 +76,7 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     public function getProfileByContentAndType ($iContentId, $sType)
     {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `content_id` = ? AND `type` = ?", $iContentId, $sType);
-        return $this->getRow($sSql);
+        return $this->fromMemory( 'BxDolProfileQuery::getProfileByContentAndType' . $iContentId . $sType, 'getRow', $sSql);
     }
 
     /**
