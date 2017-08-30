@@ -29,6 +29,8 @@
  */
 class BxDolService extends BxDol
 {
+    static protected $_aMemoryCache = array();
+
     /**
      * Perform serice call
      * @param $mixed module name or module id
@@ -37,7 +39,7 @@ class BxDolService extends BxDol
      * @param $sClass class to search for service method, by default it is main module class
      * @return service call result
      */
-    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module')
+    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false)
     {
         $oDb = BxDolModuleQuery::getInstance();
 
@@ -47,7 +49,16 @@ class BxDolService extends BxDol
         else
             $aModule = $oDb->getModuleById($mixed);
 
-        return empty($aModule) ? '' : BxDolRequest::processAsService($aModule, $sMethod, $aParams, $sClass);
+        if (empty($aModule))
+            return '';
+
+        $sKey = md5($mixed . $sMethod . print_r($aParams, true) . $sClass);
+        if (!$bIgnoreCache && isset(self::$_aMemoryCache[$sKey]))
+            return self::$_aMemoryCache[$sKey];
+
+        self::$_aMemoryCache[$sKey] = BxDolRequest::processAsService($aModule, $sMethod, $aParams, $sClass);
+
+        return self::$_aMemoryCache[$sKey];
     }
 
     /**
