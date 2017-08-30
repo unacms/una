@@ -405,6 +405,14 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         return $aLevels;
     }
 
+    function getMembershipsBy($aParams)
+    {
+        $aLevels = array();
+        $this->oDb->getLevels($aParams, $aLevels, false);
+
+        return $aLevels;
+    }
+
     /**
      * Get info about a given membership
      *

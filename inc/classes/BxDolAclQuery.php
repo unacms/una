@@ -78,6 +78,20 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                 $sWhereClause .= "AND `tal`.`Active`='yes'";
                 break;
 
+            case 'all_active_not_automatic_pair':
+                $aMethod['name'] = "getPairs";
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = 'name';
+                $sWhereClause .= "AND `tal`.`Active`='yes' AND `tal`.`ID` NOT IN (" . $this->implode_escape(array(
+                    MEMBERSHIP_ID_NON_MEMBER,
+                    MEMBERSHIP_ID_ACCOUNT,
+                    MEMBERSHIP_ID_UNCONFIRMED,
+                    MEMBERSHIP_ID_PENDING,
+                    MEMBERSHIP_ID_SUSPENDED
+                    
+                )) . ")";
+                break;
+
             case 'all_pair':
                 $aMethod['name'] = "getPairs";
                 $aMethod['params'][1] = 'id';

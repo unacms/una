@@ -58,7 +58,9 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
 			$this->setSelected('', $aProfileAclLevel['id']);
 		}
 
-		$aAclLevels = $oAcl->getMemberships(false, true);
+		$aAclLevels = $oAcl->getMembershipsBy(array('type' => 'all_active_not_automatic_pair'));
+		foreach ($aAclLevels as $k => $s)
+            $aAclLevels[$k] = _t($s);
 
         $aItems = array();
         foreach ($aAclLevels as $iId => $sTitle) {
