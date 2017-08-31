@@ -11,6 +11,12 @@
 
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
+    protected static $_sTmplContentItemOutline;
+    protected static $_sTmplContentItemTimeline;
+    protected static $_sTmplContentItemSearch;
+    protected static $_sTmplContentTypePost;
+    protected static $_sTmplContentTypeRepost;
+
     protected $_bShowTimelineDividers;
 
     function __construct(&$oConfig, &$oDb)
@@ -728,7 +734,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
         );
 
-        return $this->parseHtmlByName('item_' . $aBrowseParams['view'] . '.html', $aTmplVars);
+        $sVariable = '_sTmplContentItem' . bx_gen_method_name($aBrowseParams['view']);
+        if(empty(self::$$sVariable))
+            self::$$sVariable = $this->getHtml('item_' . $aBrowseParams['view'] . '.html');
+
+        return $this->parseHtmlByContent(self::$$sVariable, $aTmplVars);
     }
 
     protected function _getContent($sType, $aEvent, $aBrowseParams = array())
@@ -737,8 +747,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!method_exists($this, $sMethod))
             return '';
 
-		$aTmplVars = $this->$sMethod($aEvent, $aBrowseParams);
-		return $this->parseHtmlByName('type_' . $sType . '.html', $aTmplVars);
+        $sVariable = '_sTmplContentType' . bx_gen_method_name($sType);
+        if(empty(self::$$sVariable))
+            self::$$sVariable = $this->getHtml('type_' . $sType . '.html');
+
+		return $this->parseHtmlByContent(self::$$sVariable, $this->$sMethod($aEvent, $aBrowseParams));
     }
 
     protected function _getComments($aComments)

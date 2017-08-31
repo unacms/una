@@ -12,7 +12,10 @@
  */
 class BxBaseReport extends BxDolReport
 {
+    protected static $_sTmplContentElementBlock;
+    protected static $_sTmplContentElementInline;
     protected static $_sTmplContentDoReport;
+    protected static $_sTmplContentDoReportLabel;
 
 	protected $_bCssJsAdded;
 
@@ -52,8 +55,17 @@ class BxBaseReport extends BxDolReport
 			'show_counter' => true
         );
 
+        if(empty(self::$_sTmplContentElementBlock))
+            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('report_element_block.html');
+
+        if(empty(self::$_sTmplContentElementInline))
+            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('report_element_inline.html');
+
         if(empty(self::$_sTmplContentDoReport))
             self::$_sTmplContentDoReport = $this->_oTemplate->getHtml('report_do_report.html');
+
+        if(empty(self::$_sTmplContentDoReportLabel))
+            self::$_sTmplContentDoReportLabel = $this->_oTemplate->getHtml('report_do_report_label.html');
     }
 
     public function addCssJs($bDynamicMode = false)
@@ -158,8 +170,8 @@ class BxBaseReport extends BxDolReport
 
         $aParams['is_reported'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
-        $sTmplName = 'report_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_REPORT_USAGE_DEFAULT) . '.html';
-        return $this->_oTemplate->parseHtmlByName($sTmplName, array(
+        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_REPORT_USAGE_DEFAULT)};
+        return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
             'class' => $this->_sStylePrefix . ($bShowDoReportAsButton ? '-button' : '') . ($bShowDoReportAsButtonSmall ? '-button-small' : ''),
@@ -219,7 +231,7 @@ class BxBaseReport extends BxDolReport
     protected function _getLabelDoReport($aParams = array())
     {
     	$bReported = isset($aParams['is_reported']) && $aParams['is_reported'] === true;
-        return $this->_oTemplate->parseHtmlByName('report_do_report_label.html', array(
+        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoReportLabel, array(
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_report_icon']) && $aParams['show_do_report_icon'] == true,
         		'content' => array(

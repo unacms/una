@@ -12,6 +12,8 @@
  */
 class BxBaseFeature extends BxDolFeature
 {
+    protected static $_sTmplContentElementBlock;
+    protected static $_sTmplContentElementInline;
     protected static $_sTmplContentDoFeatureLabel;
 
     protected $_bCssJsAdded;
@@ -46,6 +48,12 @@ class BxBaseFeature extends BxDolFeature
 			'show_do_feature_icon' => true,
 			'show_do_feature_label' => false
         );
+
+        if(empty(self::$_sTmplContentElementBlock))
+            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('feature_element_block.html');
+
+        if(empty(self::$_sTmplContentElementInline))
+            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('feature_element_inline.html');
 
         if(empty(self::$_sTmplContentDoFeatureLabel))
             self::$_sTmplContentDoFeatureLabel = $this->_oTemplate->getHtml('feature_do_feature_label.html');
@@ -132,8 +140,8 @@ class BxBaseFeature extends BxDolFeature
 
         $aParams['is_featured'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
-        $sTmplName = 'feature_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FEATURED_USAGE_DEFAULT) . '.html';
-        return $this->_oTemplate->parseHtmlByName($sTmplName, array(
+        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FEATURED_USAGE_DEFAULT)};
+        return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
             'class' => $this->_sStylePrefix . ($bShowDoFeatureAsButton ? '-button' : '-link') . ($bShowDoFeatureAsButtonSmall ? '-button-small' : ''),

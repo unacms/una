@@ -68,7 +68,7 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
     {
         return array(
             'addon' => $mixedAddon,
-            'addonf' => $this->_oTemplate->parseHtmlByName('menu_item_addon.html', array(
+            'addonf' => $this->_oTemplate->parseHtmlByTemplateName('menu_item_addon', array(
 		        'content' => $mixedAddon
 		    ))
 			

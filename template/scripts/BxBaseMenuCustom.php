@@ -10,9 +10,14 @@
 
 class BxBaseMenuCustom extends BxTemplMenu
 {
+    protected static $_sTmplContentCustomItem;
+
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
+
+        if(empty(self::$_sTmplContentCustomItem))
+            self::$_sTmplContentCustomItem = $this->_oTemplate->getHtml('menu_custom_item.html');
     }
 
     protected function _getMenuItem ($aItem)
@@ -30,7 +35,7 @@ class BxBaseMenuCustom extends BxTemplMenu
     		if($aItem === false)
     			return false;
 
-			$sItem = $this->_oTemplate->parseHtmlByName('menu_custom_item.html', $aItem);
+			$sItem = $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentCustomItem, $aItem);
     	}
     	else
     		$sItem = $this->$sMethod($aItem);

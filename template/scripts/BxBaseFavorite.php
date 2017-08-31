@@ -12,6 +12,8 @@
  */
 class BxBaseFavorite extends BxDolFavorite
 {
+    protected static $_sTmplContentElementBlock;
+    protected static $_sTmplContentElementInline;
     protected static $_sTmplContentDoFavoriteLabel;
 
     protected $_bCssJsAdded;
@@ -49,6 +51,12 @@ class BxBaseFavorite extends BxDolFavorite
 			'show_do_favorite_label' => false,
 			'show_counter' => true
         );
+
+        if(empty(self::$_sTmplContentElementBlock))
+            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('favorite_element_block.html');
+
+        if(empty(self::$_sTmplContentElementInline))
+            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('favorite_element_inline.html');
 
         if(empty(self::$_sTmplContentDoFavoriteLabel))
             self::$_sTmplContentDoFavoriteLabel = $this->_oTemplate->getHtml('favorite_do_favorite_label.html');
@@ -156,8 +164,8 @@ class BxBaseFavorite extends BxDolFavorite
 
         $aParams['is_favorited'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
-        $sTmplName = 'favorite_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FAVORITE_USAGE_DEFAULT) . '.html';
-        return $this->_oTemplate->parseHtmlByName($sTmplName, array(
+        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FAVORITE_USAGE_DEFAULT)};
+        return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
             'class' => $this->_sStylePrefix . ($bShowDoFavoriteAsButton ? '-button' : '-link') . ($bShowDoFavoriteAsButtonSmall ? '-button-small' : ''),

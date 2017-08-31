@@ -12,6 +12,8 @@
  */
 class BxBaseView extends BxDolView
 {
+    protected static $_sTmplContentElementBlock;
+    protected static $_sTmplContentElementInline;
     protected static $_sTmplContentCounter;
     protected static $_sTmplContentDoViewLabel;
 
@@ -47,6 +49,12 @@ class BxBaseView extends BxDolView
             'show_do_view_label' => false,
             'show_counter' => true
         );
+
+        if(empty(self::$_sTmplContentElementBlock))
+            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('view_element_block.html');
+
+        if(empty(self::$_sTmplContentElementInline))
+            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('view_element_inline.html');
 
         if(empty(self::$_sTmplContentCounter))
             self::$_sTmplContentCounter = $this->_oTemplate->getHtml('view_counter.html');
@@ -203,8 +211,8 @@ class BxBaseView extends BxDolView
 		if(!$bTmplVarsDoView && !$bTmplVarsCounter)
 			return '';
 
-        $sTmplName = 'view_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VIEW_USAGE_DEFAULT) . '.html';
-        return $this->_oTemplate->parseHtmlByName($sTmplName, array(
+        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VIEW_USAGE_DEFAULT)};
+        return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
             'class' => $this->_sStylePrefix . ($bShowDoViewAsButton ? '-button' : '') . ($bShowDoViewAsButtonSmall ? '-button-small' : ''),

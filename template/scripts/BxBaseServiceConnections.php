@@ -80,7 +80,7 @@ class BxBaseServiceConnections extends BxDol
     		'count' => $iCountNew, // required
     		'method' => 'bx_menu_show_live_update(oData)', // required
     		'data' => array(
-    			'code' => BxDolTemplate::getInstance()->parseHtmlByName('menu_item_addon.html', array(
+    			'code' => BxDolTemplate::getInstance()->parseHtmlByTemplateName('menu_item_addon', array(
     				'content' => '{count}'
                 )),
                 'mi_parent' => $aMenuItemParent,
