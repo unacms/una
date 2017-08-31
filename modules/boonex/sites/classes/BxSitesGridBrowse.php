@@ -112,11 +112,9 @@ class BxSitesGridBrowse extends BxTemplGrid
 
     protected function _getCellDomain ($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => BX_DOL_URL_ROOT . $this->_oPermalinks->permalink('page.php?i=site-view&id=' . $aRow['id']),
-            'title' => _t('_bx_sites_grid_browse_lnk_title_domain'),
-            'bx_repeat:attrs' => array(),
-            'content' => $this->_oModule->getDomain($mixedValue),
+        $sLink = BX_DOL_URL_ROOT . $this->_oPermalinks->permalink('page.php?i=site-view&id=' . $aRow['id']);
+        $mixedValue = $this->_oTemplate->parseLink($sLink, $this->_oModule->getDomain($mixedValue), array(
+            'title' => _t('_bx_sites_grid_browse_lnk_title_domain')
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);

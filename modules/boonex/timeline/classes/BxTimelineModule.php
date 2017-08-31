@@ -650,13 +650,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return '';
 
         $iCounter = (int)$oCmts->getCommentsCount();
-        return  $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => 'javascript:void(0)',
+        return  $this->_oTemplate->parseLink('javascript:void(0)', $iCounter > 0 ? $iCounter : '', array(
             'title' => _t('_bx_timeline_menu_item_title_item_comment'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'onclick', 'value' => "javascript:" . $this->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sSystem . "', " . $iObjectId . ")")
-            ),
-            'content' => $iCounter > 0 ? $iCounter : ''
+        	'onclick' => "javascript:" . $this->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sSystem . "', " . $iObjectId . ")" 
         ));
     }
 

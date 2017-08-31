@@ -1278,6 +1278,72 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         return $sRet;
     }
+    /**
+     * 
+     * Parse tag <A>
+     * @param string $sLink link URL
+     * @param string $sContent link content
+     * @param array $aAttrs an array of key => value pairs
+     */
+    function parseLink($sLink, $sContent, $aAttrs = array())
+    {
+        $sTemplate = '<a href="__link__" <bx_repeat:attrs>__key__="__value__"</bx_repeat:attrs>>__content__</a>';
+
+        $aTmplVarsAttrs = array();
+        foreach($aAttrs as $sKey => $sValue)
+            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
+
+        return $this->parseHtmlByContent($sTemplate, array(
+            'link' => $sLink,
+            'content' => $sContent,
+            'bx_repeat:attrs' => $aTmplVarsAttrs
+        ));
+    }
+    /**
+     * 
+     * Parse tag <IMG>
+     * @param string $sLink URL to image source 
+     * @param array $aAttrs an array of key => value pairs
+     */
+    function parseImage($sLink, $aAttrs = array())
+    {
+        $sTemplate = '<img src="__link__" <bx_repeat:attrs>__key__="__value__"</bx_repeat:attrs> />';
+
+        $aTmplVarsAttrs = array();
+        foreach($aAttrs as $sKey => $sValue)
+            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
+
+        return $this->parseHtmlByContent($sTemplate, array(
+            'link' => $sLink,
+            'bx_repeat:attrs' => $aTmplVarsAttrs
+        ));
+    }
+
+    /**
+     * 
+     * Parse font based icon in <I> tag
+     * @param string $sName font icon name
+     * @param array $aAttrs an array of key => value pairs
+     */
+    function parseIcon($sName, $aAttrs = array())
+    {
+        $sTemplate = '<i class="sys-icon __name__"  <bx_repeat:attrs>__key__="__value__"</bx_repeat:attrs>></i>';
+
+        if(!empty($aAttrs['class'])) {
+            $sName .= ' ' . $aAttrs['class'];
+            unset($aAttrs['class']);
+        }
+
+        $aTmplVarsAttrs = array();
+        foreach($aAttrs as $sKey => $sValue)
+            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
+
+        return $this->parseHtmlByContent($sTemplate, array(
+            'name' => $sName,
+            'bx_repeat:attrs' => $aTmplVarsAttrs
+        ));
+    }
+
     function getCacheFilePrefix($sType)
     {
     	$sResult = '';

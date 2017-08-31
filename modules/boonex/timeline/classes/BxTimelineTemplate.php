@@ -306,13 +306,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $iYearNow = date('Y', time());
         return $this->parseHtmlByName('back.html', array(
-            'style_prefix' => $sStylePrefix,
-            'href' => 'javascript:void(0)',
-            'title' => _t('_bx_timeline_txt_jump_to_n_year', $iYearNow),
-            'bx_repeat:attrs' => array(
-                array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.changeTimeline(this, 0)')
-            ),
-            'content' => _t('_bx_timeline_txt_jump_to_recent')
+        	'style_prefix' => $sStylePrefix,
+            'content' => $this->parseLink('javascript:void(0)', _t('_bx_timeline_txt_jump_to_recent'), array(
+                'title' => _t('_bx_timeline_txt_jump_to_n_year', $iYearNow),
+        		'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, 0)'
+            ))
         ));
     }
 
@@ -330,13 +328,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!empty($iYearMin)) {
             $iYearMax = date('Y', time()) - 1;
             for($i = $iYearMax; $i >= $iYearMin; $i--)
-                $sYears .= ($i != $iYearSel ? $this->parseHtmlByName('bx_a.html', array(
-                    'href' => 'javascript:void(0)',
+                $sYears .= ($i != $iYearSel ? $this->parseLink('javascript:void(0)', $i, array(
                     'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
-                    'bx_repeat:attrs' => array(
-                        array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')')
-                    ),
-                    'content' => $i
+                    'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')'
                 )) : $i) . ', ';
 
             $sYears = substr($sYears, 0, -2);
@@ -425,11 +419,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		else
 			$sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
 
-		$aOnClickAttrs = array();
+		$aOnClickAttrs = array(
+			'title' => _t('_bx_timeline_txt_do_repost')
+		);
 		if(!empty($sClass))
-			$aOnClickAttrs[] = array('key' => 'class', 'value' => $sClass);
+			$aOnClickAttrs['class'] = $sClass;
 		if(!empty($sOnClick))
-			$aOnClickAttrs[] = array('key' => 'onclick', 'value' => $sOnClick);
+			$aOnClickAttrs['onclick'] = $sOnClick;
 
 		$sDoRepost = '';
         if($bShowDoRepostIcon)
@@ -443,12 +439,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'html_id' => $this->_oConfig->getHtmlIds('repost', 'main') . $aReposted['id'],
             'class' => ($bShowDoRepostAsButton ? $sStylePrefixRepost . 'button' : '') . ($bShowDoRepostAsButtonSmall ? $sStylePrefixRepost . 'button-small' : ''),
             'count' => $aReposted['reposts'],
-            'do_repost' => $this->parseHtmlByName('bx_a.html', array(
-	            'href' => 'javascript:void(0)',
-	            'title' => _t('_bx_timeline_txt_do_repost'),
-	            'bx_repeat:attrs' => $aOnClickAttrs,
-	            'content' => $sDoRepost
-	        )),
+            'do_repost' => $this->parseLink('javascript:void(0)', $sDoRepost, $aOnClickAttrs),
             'bx_if:show_counter' => array(
                 'condition' => $bShowCounter,
                 'content' => array(
@@ -478,15 +469,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bShowDoRepostAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->parseHtmlByName('repost_counter.html', array(
-            'href' => 'javascript:void(0)',
+        return $this->parseLink('javascript:void(0)', !empty($aEvent['reposts']) && (int)$aEvent['reposts'] > 0 ? $aEvent['reposts'] : '', array(
+        	'id' => $this->_oConfig->getHtmlIds('repost', 'counter') . $aEvent['id'],
+        	'class' => $sClass,
             'title' => _t('_bx_timeline_txt_reposted_by'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'id', 'value' => $this->_oConfig->getHtmlIds('repost', 'counter') . $aEvent['id']),
-                array('key' => 'class', 'value' => $sClass),
-                array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')')
-            ),
-            'content' => !empty($aEvent['reposts']) && (int)$aEvent['reposts'] > 0 ? $aEvent['reposts'] : ''
+        	'onclick' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')'
         ));
     }
 
@@ -592,23 +579,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $bTmplVarsEmbed = true;
             $aTmplVarsEmbed = array(
                 'style_prefix' => $sStylePrefix,
-            	'embed' => $this->parseHtmlByName('bx_a.html', array(
-            		'href' => $aLink['url'],
-            		'title' => bx_html_attribute($aLink['title']),
-            		'bx_repeat:attrs' => array(
-                        array('key' => 'class', 'value' => 'bx-link')
-                    ),
-            		'content' => $aLink['title'],
+            	'embed' => $this->parseLink($aLink['url'], $aLink['title'], array(
+            		'class' => 'bx-link',
+            		'title' => $aLink['title']
             	))
             );
         }
         else {
-            $aLinkAttrs = array();
+            $aLinkAttrs = array(
+            	'title' => bx_html_attribute($aLink['title'])
+            );
             if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
-                $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
+                $aLinkAttrs['target'] = '_blank';
     
                 if($this->_oDb->getParam('sys_add_nofollow') == 'on')
-            	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+            	    $aLinkAttrs['rel'] = 'nofollow';
             }
 
             $sThumbnail = "";
@@ -625,12 +610,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             		)
             	),
     			'url' => $aLink['url'],
-            	'link' => $this->parseHtmlByName('bx_a.html', array(
-            		'href' => $aLink['url'],
-            		'title' => bx_html_attribute($aLink['title']),
-            		'bx_repeat:attrs' => $aLinkAttrs,
-            		'content' => $aLink['title'],
-            	))
+            	'link' => $this->parseLink($aLink['url'], $aLink['title'], $aLinkAttrs)
             );
         }
 
@@ -838,20 +818,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         //--- Process Text ---//
         $sUrl = isset($aContent['url']) ? bx_html_attribute($aContent['url']) : '';
-        $sTitle = $sTitleAttr = '';
-        if(isset($aContent['title'])) {
+        $sTitle = '';
+        if(isset($aContent['title']))
             $sTitle = bx_process_output($aContent['title']);
-            $sTitleAttr = bx_html_attribute($aContent['title']);
-        }
 
         if(!empty($sUrl) && !empty($sTitle))
-            $sTitle = $this->parseHtmlByName('bx_a.html', array(
-                'href' => $sUrl,
-                'title' => $sTitleAttr,
-                'bx_repeat:attrs' => array(
-                    array('key' => 'class', 'value' => $sStylePrefix . '-title')
-                ),
-                'content' => $sTitle
+            $sTitle = $this->parseLink($sUrl, $sTitle, array(
+            	'class' => $sStylePrefix . '-title',
+                'title' => $sTitle
             ));
 
         $sText = isset($aContent['text']) ? $aContent['text'] : '';
@@ -892,23 +866,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     $bTmplVarsEmbed = true;
                     $aTmplVarsEmbed = array(
                         'style_prefix' => $sStylePrefix,
-                    	'embed' => $this->parseHtmlByName('bx_a.html', array(
-                    		'href' => $aLink['url'],
-                    		'title' => bx_html_attribute($aLink['title']),
-                    		'bx_repeat:attrs' => array(
-                                array('key' => 'class', 'value' => 'bx-link')
-                            ),
-                    		'content' => $aLink['title'],
+                    	'embed' => $this->parseLink($aLink['url'], $aLink['title'], array(
+                    		'class' => 'bx-link',
+                    		'title' => $aLink['title']
                     	))
                     );
                 }
                 else {
-                    $aLinkAttrs = array();
+                    $aLinkAttrs = array(
+                    	'title' => $aLink['title']
+                    );
                     if(!$this->_oConfig->isEqualUrls(BX_DOL_URL_ROOT, $aLink['url'])) {
-                        $aLinkAttrs[] = array('key' => 'target', 'value' => '_blank');
+                        $aLinkAttrs['target'] = '_blank';
     
                         if($bAddNofollow)
-                    	    $aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+                    	    $aLinkAttrs['rel'] = 'nofollow';
                     }
 
                     $aTmplVarsEmbed = array(
@@ -919,12 +891,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     			'thumbnail' => $aLink['thumbnail']
                     		)
                     	),
-                    	'link' => $this->parseHtmlByName('bx_a.html', array(
-    		        		'href' => $aLink['url'],
-    		        		'title' => $aLink['title'],
-    		        		'bx_repeat:attrs' => $aLinkAttrs,
-    		        		'content' => $aLink['title'],
-    		        	)),
+                    	'link' => $this->parseLink($aLink['url'], $aLink['title'], $aLinkAttrs),
                         'bx_if:show_text' => array(
                             'condition' => !empty($aLink['text']),
                             'content' => array(
@@ -964,14 +931,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if(!empty($sImage) && (isset($aImage['url']) || isset($aImage['onclick']))) {
                     $aAttrs = array();
                     if(isset($aImage['onclick']))
-                        $aAttrs[] = array('key' => 'onclick', 'value' => $aImage['onclick']);
+                        $aAttrs['onclick'] = $aImage['onclick'];
 
-                    $sImage = $this->parseHtmlByName('bx_a.html', array(
-                        'href' => isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)',
-                        'title' => '',
-                        'bx_repeat:attrs' => $aAttrs,
-                        'content' => $sImage
-                    ));
+                    $sImage = $this->parseLink(isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
                 }
 
                 $aTmplVarsImages[] = array(
@@ -1050,20 +1012,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
-        $sOwnerLink = $this->parseHtmlByName('bx_a.html', array(
-            'href' => $aContent['owner_url'],
-            'title' => '',
-            'bx_repeat:attrs' => array(),
-            'content' => $aContent['owner_name']
-        ));
+        $sOwnerLink = $this->parseLink($aContent['owner_url'], $aContent['owner_name']);
 
         $sSample = _t($aContent['sample']);
-        $sSampleLink = empty($aContent['url']) ? $sSample : $this->parseHtmlByName('bx_a.html', array(
-            'href' => $aContent['url'],
-            'title' => '',
-            'bx_repeat:attrs' => array(),
-            'content' => $sSample
-        ));
+        $sSampleLink = empty($aContent['url']) ? $sSample : $this->parseLink($aContent['url'], $sSample);
 
         $sTitle = _t('_bx_timeline_txt_reposted', $sOwnerLink, $sSampleLink);
         $sText = $this->_getContent($aContent['parse_type'], $aEvent);

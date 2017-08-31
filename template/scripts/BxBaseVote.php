@@ -23,10 +23,10 @@ class BxBaseVote extends BxDolVote
 
     protected $_sTmplNameElementBlock;
     protected $_sTmplNameElementInline;
-    protected $_sTmplNameCounter;
     protected $_sTmplNameLegend;
-    protected $_sTmplNameDoVoteLikes;
+    protected $_sTmplNameByList;
     protected $_sTmplNameDoVoteStars;
+    protected $_sTmplNameDoVoteLikesLabel;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -66,10 +66,10 @@ class BxBaseVote extends BxDolVote
 
         $this->_sTmplNameElementBlock = 'vote_element_block.html';
         $this->_sTmplNameElementInline = 'vote_element_inline.html';
-        $this->_sTmplNameCounter = 'vote_counter.html';
         $this->_sTmplNameLegend = 'vote_legend.html';
-        $this->_sTmplNameDoVoteLikes = 'vote_do_vote_likes.html';
+        $this->_sTmplNameByList = 'vote_by_list.html';
         $this->_sTmplNameDoVoteStars = 'vote_do_vote_stars.html';
+        $this->_sTmplNameDoVoteLikesLabel = 'vote_do_vote_likes_label.html';
     }
 
     public function addCssJs($bDynamicMode = false)
@@ -144,15 +144,11 @@ class BxBaseVote extends BxDolVote
         if($bShowDoVoteAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
-            'href' => 'javascript:void(0)',
+        return $this->_oTemplate->parseLink('javascript:void(0)', $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : '', array(
+            'id' => $this->_aHtmlIds['counter'],
+            'class' => $sClass,
             'title' => _t($this->_getTitleDoBy()),
-            'bx_repeat:attrs' => array(
-                array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $sClass),
-                array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsClickCounter())
-            ),
-            'content' => $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
+            'onclick' => 'javascript:' . $this->getJsClickCounter() 
         ));
     }
 
@@ -351,17 +347,10 @@ class BxBaseVote extends BxDolVote
 		if($bDisabled)
 			$sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : 'bx-vote-disabled';
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoVoteLikes, array(
-            'style_prefix' => $this->_sStylePrefix,
-            'class' => $sClass,
-            'title' => bx_html_attribute(_t($this->_getTitleDoLike($bVoted))),
-        	'bx_if:show_onclick' => array(
-        		'condition' => !$bDisabled,
-        		'content' => array(
-                    'onclick' => $this->getJsClick()
-        		)
-        	),
-            'do_vote' => $this->_getLabelDoLike($aParams),
+        return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDoLike($aParams), array(
+            'class' => $this->_sStylePrefix . '-do-vote ' . $sClass,
+            'title' => _t($this->_getTitleDoLike($bVoted)),
+            'onclick' => !$bDisabled ? $this->getJsClick() : ''
         ));
     }
 
@@ -373,7 +362,7 @@ class BxBaseVote extends BxDolVote
     protected function _getLabelDoLike($aParams = array())
     {
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
-        return $this->_oTemplate->parseHtmlByName('vote_do_vote_likes_label.html', array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoVoteLikesLabel, array(
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true,
         		'content' => array(
@@ -405,7 +394,7 @@ class BxBaseVote extends BxDolVote
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
 
-        return $this->_oTemplate->parseHtmlByName('vote_by_list.html', array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameByList, array(
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:list' => $aTmplUsers
         ));

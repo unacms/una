@@ -12,6 +12,8 @@
  */
 class BxBaseReport extends BxDolReport
 {
+    protected static $_sTmplContentDoReport;
+
 	protected $_bCssJsAdded;
 
 	protected $_sJsObjClass;
@@ -21,9 +23,6 @@ class BxBaseReport extends BxDolReport
     protected $_aHtmlIds;
 
     protected $_aElementDefaults;
-
-    protected $_sTmplNameCounter;
-    protected $_sTmplContentDoReport;
 
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -53,8 +52,8 @@ class BxBaseReport extends BxDolReport
 			'show_counter' => true
         );
 
-        $this->_sTmplNameCounter = 'bx_a';
-        $this->_sTmplContentDoReport = $this->_oTemplate->getHtml('report_do_report.html');
+        if(empty(self::$_sTmplContentDoReport))
+            self::$_sTmplContentDoReport = $this->_oTemplate->getHtml('report_do_report.html');
     }
 
     public function addCssJs($bDynamicMode = false)
@@ -119,16 +118,11 @@ class BxBaseReport extends BxDolReport
         if($bShowDoReportAsButton)
             $sClass .= ' bx-btn-height';
 
-        $sMethod = strpos($this->_sTmplNameCounter, '.html') !== false ? 'parseHtmlByName' : 'parseHtmlByTemplateName';
-        return $this->_oTemplate->$sMethod($this->_sTmplNameCounter, array(
-            'href' => 'javascript:void(0)',
-            'title' => _t('_report_do_report_by'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $sClass),
-                array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
-            ),
-            'content' => (int)$aReport['count'] > 0 ? $this->_getLabelCounter($aReport['count']) : ''
+        return $this->_oTemplate->parseLink('javascript:void(0)',  (int)$aReport['count'] > 0 ? $this->_getLabelCounter($aReport['count']) : '', array(
+            'id' => $this->_aHtmlIds['counter'],
+            'class' => $sClass, 
+        	'title' => _t('_report_do_report_by'),
+            'onclick' => 'javascript:' . $sJsObject . '.toggleByPopup(this)' 
         ));
     }
 
@@ -202,7 +196,7 @@ class BxBaseReport extends BxDolReport
 		if($bDisabled)
 			$sClass .= $bShowDoReportAsButton || $bShowDoReportAsButtonSmall ? ' bx-btn-disabled' : 'bx-report-disabled';
 
-        return $this->_oTemplate->parseHtmlByContent($this->_sTmplContentDoReport, array(
+        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoReport, array(
             'style_prefix' => $this->_sStylePrefix,
         	'html_id' => $this->_aHtmlIds['do_link'],
             'class' => $sClass,

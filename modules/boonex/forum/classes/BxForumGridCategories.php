@@ -158,14 +158,10 @@ class BxForumGridCategories extends BxTemplStudioGrid
 
 	protected function _getCellVisibleForLevels($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => 'javascript:void(0)',
+        $mixedValue = $this->_oTemplate->parseLink('javascript:void(0)', BxDolStudioUtils::getVisibilityTitle($aRow['visible_for_levels']), array(
             'title' => _t('_bx_forum_grid_txt_manage_visibility'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'bx_grid_action_single', 'value' => 'show_to'),
-                array('key' => 'bx_grid_action_data', 'value' => $aRow['category'])
-            ),
-            'content' => BxDolStudioUtils::getVisibilityTitle($aRow['visible_for_levels'])
+            'bx_grid_action_single' => 'show_to',
+            'bx_grid_action_data' => $aRow['category']
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);

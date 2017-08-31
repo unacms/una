@@ -205,14 +205,10 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $sStatus = _t('_bx_sites_txt_status_' . $this->_aAccount['status']);
         if(in_array($sAction, array(BX_SITES_ACCOUNT_STATUS_UNCONFIRMED, BX_SITES_ACCOUNT_STATUS_PENDING, BX_SITES_ACCOUNT_STATUS_ACTIVE, BX_SITES_ACCOUNT_STATUS_CANCELED, BX_SITES_ACCOUNT_STATUS_SUSPENDED))) {
-            $sStatus = $this->_oModule->_oTemplate->parseHtmlByName('bx_a.html', array(
-                'href' => 'javascript:void(0)',
+            $sStatus = $this->_oModule->_oTemplate->parseLink('javascript:void(0)', $sStatus, array(
                 'title' => _t('_bx_sites_grid_overview_btn_' . $sAction),
-                'bx_repeat:attrs' => array(
-                    array('key' => 'bx_grid_action_independent', 'value' => $sAction),
-                    array('key' => 'bx_grid_action_data', 'value' => $this->_aAccount['id'])
-                ),
-                'content' => $sStatus,
+            	'bx_grid_action_independent' => $sAction,
+                'bx_grid_action_data' => $this->_aAccount['id']
             ));
         }
 

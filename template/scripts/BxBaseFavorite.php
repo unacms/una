@@ -12,6 +12,8 @@
  */
 class BxBaseFavorite extends BxDolFavorite
 {
+    protected static $_sTmplContentDoFavoriteLabel;
+
     protected $_bCssJsAdded;
 
 	protected $_sJsObjClass;
@@ -21,9 +23,6 @@ class BxBaseFavorite extends BxDolFavorite
     protected $_aHtmlIds;
 
     protected $_aElementDefaults;
-
-    protected $_sTmplNameCounter;
-    protected $_sTmplNameDoFavorite;
 
     public function __construct($sSystem, $iId, $iInit = 1, $oTemplate = false)
     {
@@ -51,8 +50,8 @@ class BxBaseFavorite extends BxDolFavorite
 			'show_counter' => true
         );
 
-        $this->_sTmplNameCounter = 'favorite_counter.html';
-        $this->_sTmplNameDoFavorite = 'favorite_do_favorite.html';
+        if(empty(self::$_sTmplContentDoFavoriteLabel))
+            self::$_sTmplContentDoFavoriteLabel = $this->_oTemplate->getHtml('favorite_do_favorite_label.html');
     }
 
     public function addCssJs($bDynamicMode = false)
@@ -115,15 +114,11 @@ class BxBaseFavorite extends BxDolFavorite
         if($bShowDoFavoriteAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
-            'href' => 'javascript:void(0)',
+        return $this->_oTemplate->parseLink('javascript:void(0)', (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : '', array(
             'title' => _t('_favorite_do_favorite_by'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
-                array('key' => 'class', 'value' => $sClass),
-                array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)')
-            ),
-            'content' => (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : ''
+        	'id' => $this->_aHtmlIds['counter'],
+        	'class' => $sClass,
+        	'onclick' => 'javascript:' . $this->getJsObjectName() . '.toggleByPopup(this)'
         ));
     }
 
@@ -199,18 +194,11 @@ class BxBaseFavorite extends BxDolFavorite
 		if($bDisabled)
 			$sClass .= $bShowDoFavoriteAsButton || $bShowDoFavoriteAsButtonSmall ? ' bx-btn-disabled' : 'bx-favorite-disabled';
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoFavorite, array(
-            'style_prefix' => $this->_sStylePrefix,
-        	'html_id' => $this->_aHtmlIds['do_link'],
-            'class' => $sClass,
-            'title' => bx_html_attribute(_t($this->_getTitleDoFavorite($bFavorited))),
-        	'bx_if:show_onclick' => array(
-        		'condition' => !$bDisabled,
-        		'content' => array(
-        			'onclick' => $this->getJsClick()
-        		)
-        	),
-            'do_favorite' => $this->_getLabelDoFavorite($aParams),
+        return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDoFavorite($aParams), array(
+        	'id' => $this->_aHtmlIds['do_link'],
+            'class' => $this->_sStylePrefix . '-do-favorite ' . $sClass,
+            'title' => _t($this->_getTitleDoFavorite($bFavorited)),
+        	'onclick' => !$bDisabled ? $this->getJsClick() : ''
         ));
     }
 
@@ -222,7 +210,7 @@ class BxBaseFavorite extends BxDolFavorite
     protected function _getLabelDoFavorite($aParams = array())
     {
     	$bFavorited = isset($aParams['is_favorited']) && $aParams['is_favorited'] === true;
-        return $this->_oTemplate->parseHtmlByName('favorite_do_favorite_label.html', array(
+        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoFavoriteLabel, array(
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_favorite_icon']) && $aParams['show_do_favorite_icon'] == true,
         		'content' => array(

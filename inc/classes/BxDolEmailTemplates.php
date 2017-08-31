@@ -68,11 +68,8 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
         $this->aDefaultKeys = array(
         	'site_url' => BX_DOL_URL_ROOT,
         	'site_name' => getParam('site_title'),
-            'about_us' => BxDolTemplate::getInstance()->parseHtmlByName('bx_a.html', array(
-                'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=about'),
-				'title' => bx_html_attribute($sAboutUs),
-                'bx_repeat:attrs' => array(),
-                'content' => $sAboutUs
+            'about_us' => BxDolTemplate::getInstance()->parseLink(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=about'), $sAboutUs, array(
+				'title' => $sAboutUs 
             ))
         );
 

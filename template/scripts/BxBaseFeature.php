@@ -12,6 +12,8 @@
  */
 class BxBaseFeature extends BxDolFeature
 {
+    protected static $_sTmplContentDoFeatureLabel;
+
     protected $_bCssJsAdded;
 
 	protected $_sJsObjClass;
@@ -21,9 +23,6 @@ class BxBaseFeature extends BxDolFeature
     protected $_aHtmlIds;
 
     protected $_aElementDefaults;
-
-    protected $_sTmplNameCounter;
-    protected $_sTmplNameDoFeature;
 
     public function __construct($sSystem, $iId, $iInit = 1, $oTemplate = false)
     {
@@ -48,8 +47,8 @@ class BxBaseFeature extends BxDolFeature
 			'show_do_feature_label' => false
         );
 
-        $this->_sTmplNameCounter = 'feature_counter.html';
-        $this->_sTmplNameDoFeature = 'feature_do_feature.html';
+        if(empty(self::$_sTmplContentDoFeatureLabel))
+            self::$_sTmplContentDoFeatureLabel = $this->_oTemplate->getHtml('feature_do_feature_label.html');
     }
 
     public function addCssJs($bDynamicMode = false)
@@ -160,25 +159,18 @@ class BxBaseFeature extends BxDolFeature
 		if($bDisabled)
 			$sClass .= $bShowDoFeatureAsButton || $bShowDoFeatureAsButtonSmall ? ' bx-btn-disabled' : 'bx-feature-disabled';
 
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoFeature, array(
-            'style_prefix' => $this->_sStylePrefix,
-        	'html_id' => $this->_aHtmlIds['do_link'],
-            'class' => $sClass,
-            'title' => bx_html_attribute(_t($this->_getTitleDoFeature($bFeatured))),
-        	'bx_if:show_onclick' => array(
-        		'condition' => !$bDisabled,
-        		'content' => array(
-        			'onclick' => $this->getJsClick()
-        		)
-        	),
-            'do_feature' => $this->_getLabelDoFeature($aParams),
+        return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDoFeature($aParams), array(
+        	'id' => $this->_aHtmlIds['do_link'],
+            'class' => $this->_sStylePrefix . '-do-feature ' . $sClass,
+            'title' => _t($this->_getTitleDoFeature($bFeatured)),
+        	'onclick' => !$bDisabled ? $this->getJsClick() : ''
         ));
     }
 
     protected function _getLabelDoFeature($aParams = array())
     {
     	$bFeatured = isset($aParams['is_featured']) && $aParams['is_featured'] === true;
-        return $this->_oTemplate->parseHtmlByName('feature_do_feature_label.html', array(
+        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoFeatureLabel, array(
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_feature_icon']) && $aParams['show_do_feature_icon'] == true,
         		'content' => array(
