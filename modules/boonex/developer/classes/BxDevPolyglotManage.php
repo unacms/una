@@ -74,15 +74,11 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
             foreach($aActions as $sAction) {
                 $sIcon = $this->aActions[$sAction];
                 $sTitle = _t('_bx_dev_pgt_txt_manage_' . $sAction . '_title' . ($bAll ? '_plur' : '_sing'));
-                $sContent = _t('_bx_dev_pgt_txt_manage_' . $sAction);
 
-                $mixedValue .= $this->_oTemplate->parseHtmlByName('bx_btn.html', array(
+                $mixedValue .= $this->_oTemplate->parseButton($this->_oTemplate->parseIcon($sIcon), array(
+                	'class' => 'bx-btn bx-def-margin-sec-left-auto',
                     'title' => sprintf($sTitle, $aField['title'], $aRow['title']),
-                    'bx_repeat:attrs' => array(
-                        array('key' => 'class', 'value' => 'bx-btn bx-def-margin-sec-left-auto'),
-                        array('key' => 'onclick', 'value' => sprintf($sOnclickMask, $sJsObject, $sAction, $sKey, $aRow['uri']))
-                    ),
-                    'content' => $this->_oTemplate->parseHtmlByName('bx_icon.html', array('name' => $sIcon))
+                	'onclick' => sprintf($sOnclickMask, $sJsObject, $sAction, $sKey, $aRow['uri'])
                 ));
             }
         }

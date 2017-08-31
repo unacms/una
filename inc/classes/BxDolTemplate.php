@@ -227,7 +227,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_sFolderCss = 'css/';
         $this->_sFolderImages = 'images/';
         $this->_sFolderIcons = 'images/icons/';
-        $this->_aTemplates = array('bx_img');
+        $this->_aTemplates = array();
 
         $this->addLocation('system', $this->_sRootPath, $this->_sRootUrl);
 
@@ -901,33 +901,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if($sUrl == "" && is_string($mixedId) && strpos($mixedId, '.') !== false)
             $sUrl = $this->{$aType2Method[$sType]}($mixedId);
 
-        if($sUrl != "") {
-        	$bAlt = isset($aParams['alt']) && !empty($aParams['alt']);
-            $bClass = isset($aParams['class']) && !empty($aParams['class']);
-
-            $aAttrs = array();
-            if($bClass)
-            	$aAttrs[] = array('key' => 'class', 'value' => $aParams['class']);
-			if($bAlt)
-				$aAttrs[] = array('key' => 'alt', 'value' => $aParams['alt']);
-
-            return $this->parseHtmlByName('bx_img.html', array(
-                'bx_if:class' => array(
-                    'condition' => $bClass,
-                    'content' => array(
-                        'content' => $bClass ? $aParams['class'] : ''
-                    )
-                ),
-                'bx_repeat:attrs' => $aAttrs,
-                'src' => $sUrl,
-                'alt' => $bAlt ? $aParams['alt'] : ''
+        if($sUrl != "")
+            return $this->parseImage($sUrl, array(
+                'class' => isset($aParams['class']) && !empty($aParams['class']) ? $aParams['class'] : '',
+            	'alt' => isset($aParams['alt']) && !empty($aParams['alt']) ? $aParams['alt'] : ''
             ));
-        }
 
         //--- Use iconic font.
-        return $this->parseHtmlByName('bx_icon.html', array(
-            'name' => $mixedId
-        ));
+        return $this->parseIcon($mixedId);
     }
 
     /**
@@ -1279,8 +1260,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $sRet;
     }
     /**
-     * 
      * Parse tag <A>
+     * 
      * @param string $sLink link URL
      * @param string $sContent link content
      * @param array $aAttrs an array of key => value pairs
@@ -1299,9 +1280,30 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'bx_repeat:attrs' => $aTmplVarsAttrs
         ));
     }
+
     /**
+     * Parse tag <BUTTON>
      * 
+     * @param string $sContent link content
+     * @param array $aAttrs an array of key => value pairs
+     */
+    function parseButton($sContent, $aAttrs = array())
+    {
+        $sTemplate = '<button <bx_repeat:attrs>__key__="__value__"</bx_repeat:attrs>>__content__</button>';
+
+        $aTmplVarsAttrs = array();
+        foreach($aAttrs as $sKey => $sValue)
+            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
+
+        return $this->parseHtmlByContent($sTemplate, array(
+            'content' => $sContent,
+            'bx_repeat:attrs' => $aTmplVarsAttrs
+        ));
+    }
+
+    /**
      * Parse tag <IMG>
+     * 
      * @param string $sLink URL to image source 
      * @param array $aAttrs an array of key => value pairs
      */
@@ -1320,8 +1322,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
-     * 
      * Parse font based icon in <I> tag
+     * 
      * @param string $sName font icon name
      * @param array $aAttrs an array of key => value pairs
      */

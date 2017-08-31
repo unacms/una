@@ -429,7 +429,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
 		$sDoRepost = '';
         if($bShowDoRepostIcon)
-            $sDoRepost .= $this->parseHtmlByName('bx_icon.html', array('name' => 'repeat'));
+            $sDoRepost .= $this->parseIcon('repeat');
 
         if($bShowDoRepostLabel)
             $sDoRepost .= ($sDoRepost != '' ? ' ' : '') . _t('_bx_timeline_txt_do_repost');
@@ -921,11 +921,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             foreach($aContent['images'] as $aImage) {
                 $sImage = '';
                 if(!empty($aImage['src']))
-                    $sImage = $this->parseHtmlByName('bx_img.html', array(
-                        'src' => $bBrowseItem && !empty($aImage['src_orig']) ? $aImage['src_orig'] : $aImage['src'],
-                        'bx_repeat:attrs' => array(
-                            array('key' => 'class', 'value' => $sStylePrefix . '-item-img')
-                        )
+                    $sImage = $this->parseImage($bBrowseItem && !empty($aImage['src_orig']) ? $aImage['src_orig'] : $aImage['src'], array(
+                    	'class' => $sStylePrefix . '-item-img'
                     ));
 
                 if(!empty($sImage) && (isset($aImage['url']) || isset($aImage['onclick']))) {
