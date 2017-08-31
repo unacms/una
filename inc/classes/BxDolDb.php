@@ -595,7 +595,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         return is_array(self::$_aParams) && isset(self::$_aParams[$sKey]);
     }
 
-    protected function cacheParams($bForceCacheInvalidate = false)
+    public function cacheParams($bForceCacheInvalidate = false)
     {
         if ($bForceCacheInvalidate)
             $this->cacheParamsClear();
@@ -645,7 +645,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         if ($bFromCache && $this->isParamInCache($sKey)) {
             return self::$_aParams[$sKey];
         } else {
-        	$sQuery = $this->prepare("SELECT `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' WHERE `tmo`.`option`=? LIMIT 1", $sKey);
+            $sQuery = $this->prepare("SELECT `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' WHERE `tmo`.`option`=? LIMIT 1", $sKey);
 			$mixedValue = $this->getOne($sQuery);
 			if($mixedValue !== false)
 				return $mixedValue;
