@@ -76,7 +76,7 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     public function getProfileByContentAndType ($iContentId, $sType)
     {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `content_id` = ? AND `type` = ?", $iContentId, $sType);
-        return $this->getRow($sSql);
+        return $this->fromMemory( 'BxDolProfileQuery::getProfileByContentAndType' . $iContentId . $sType, 'getRow', $sSql);
     }
 
     /**
@@ -116,7 +116,7 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     public function getCurrentProfileByAccount ($iAccountId)
     {
         $sSql = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iAccountId);
-        $iProfileId = $this->getOne($sSql);
+        $iProfileId = $this->fromMemory('BxDolProfileQuery::getCurrentProfileByAccount' . $iAccountId, 'getOne', $sSql);
         if (!$iProfileId) {
             $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `account_id` = ? LIMIT 1", $iAccountId);
             $iProfileId = $this->getOne($sSql);
@@ -148,7 +148,8 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getIdById($iId)
     {
-        return (int)$this->_getFieldByField('id', 'id', $iId);
+        $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `id` = ? LIMIT 1", $iId);
+        return $this->fromMemory('BxDolProfileQuery::getIdById' . $iId, 'getOne', $sSql);
     }
 
     /**

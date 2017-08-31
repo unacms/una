@@ -12,6 +12,7 @@ bx_import('BxDolAcl');
 class BxDolAccount extends BxDolFactory implements iBxDolSingleton
 {
     protected $_iAccountID;
+    protected $_aInfo;
     protected $_oQuery;
 
     /**
@@ -76,7 +77,8 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function id()
     {
-        return $this->_oQuery->getIdById($this->_iAccountID);
+        $a = $this->getInfo($this->_iAccountID);
+        return isset($a['id']) ? $a['id'] : false;
     }
 
     /**
@@ -104,6 +106,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             $this->sendConfirmationEmail($iId);
 
         if ($this->_oQuery->updateEmailConfirmed($isConfirmed, $iId)) {
+            $this->_aInfo = false;
             bx_alert('account', $isConfirmed ? 'confirm' : 'unconfirm', $iId);
             return true;
         }
@@ -125,6 +128,8 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         if (!$this->_oQuery->updateCurrentProfile($iId, $iSwitchToProfileId))
             return false;
 
+        $this->_aInfo = false;
+            
         bx_alert('account', 'switch_context', $iId, $iSwitchToProfileId, array('profile_id_old' => $aInfo['profile_id']));
 
         return true;
@@ -158,8 +163,15 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      * Get account info
      */
     public function getInfo($iAccountId = false)
-    {
-        return $this->_oQuery->getInfoById((int)$iAccountId ? (int)$iAccountId : $this->_iAccountID);
+    {        
+        if ($iAccountId && $iAccountId != $this->_iAccountID)
+            return $this->_oQuery->getInfoById((int)$iAccountId ? (int)$iAccountId : $this->_iAccountID);
+
+        if ($this->_aInfo)
+            return $this->_aInfo;
+
+        $this->_aInfo = $this->_oQuery->getInfoById($this->_iAccountID);
+        return $this->_aInfo;
     }
 
     /**

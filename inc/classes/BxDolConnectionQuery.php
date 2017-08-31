@@ -205,7 +205,7 @@ class BxDolConnectionQuery extends BxDolDb
     public function getConnection ($iInitiator, $iContent)
     {
         $sQuery = $this->prepare("SELECT * FROM `" . $this->_sTable . "` WHERE `initiator` = ? AND `content` = ?", $iInitiator, $iContent);
-        return $this->getRow($sQuery);
+        return $this->fromMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . $iContent, 'getRow', $sQuery);
     }
 
     public function addConnection ($iInitiator, $iContent, &$iMutualParam = null)
@@ -241,7 +241,9 @@ class BxDolConnectionQuery extends BxDolDb
     public function updateConnectionMutual ($iInitiator, $iContent, $iMutual)
     {
         $sQuery = $this->prepare("UPDATE `" . $this->_sTable . "` SET `mutual` = ? WHERE `initiator` = ? AND `content` = ?", $iMutual, $iInitiator, $iContent);
-        return $this->query($sQuery);
+        if ($bResult = $this->query($sQuery))
+            $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . $iContent);
+        return $bResult;
     }
 
     public function removeConnection ($iInitiator, $iContent)
@@ -253,6 +255,8 @@ class BxDolConnectionQuery extends BxDolDb
         if (!$this->res($sQuery))
             return false;
 
+        $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . $iContent);
+        
         if (BX_CONNECTIONS_TYPE_MUTUAL == $this->_sType && $aConnection['mutual'])
             $this->removeConnection($iContent, $iInitiator);
 
