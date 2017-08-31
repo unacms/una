@@ -166,11 +166,9 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
         $aDisplayes = array();
         $this->oDb->getDisplays(array('type' => 'by_object', 'value' => $aRow['object']), $aDisplayes, false);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => sprintf($this->sUrlViewDisplays, $aRow['module'], $aRow['object']),
-            'title' => _t('_adm_form_txt_forms_manage_displays'),
-            'bx_repeat:attrs' => array(),
-            'content' => _t('_adm_form_txt_forms_n_displays', count($aDisplayes))
+        $sLink = sprintf($this->sUrlViewDisplays, $aRow['module'], $aRow['object']);
+        $mixedValue = $this->_oTemplate->parseLink($sLink, _t('_adm_form_txt_forms_n_displays', count($aDisplayes)), array(
+            'title' => _t('_adm_form_txt_forms_manage_displays') 
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);

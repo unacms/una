@@ -419,11 +419,9 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
             $aValue = $this->_limitMaxLength(_t($aMenu['title']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow, false);
 
-            $mixedValue = $sPrefix . ' ' . $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-                'href' => sprintf($this->sUrlViewItems, $aMenu['module'], $aMenu['set_name']),
-                'title' => _t('_adm_nav_txt_manage_items'),
-                'bx_repeat:attrs' => array(),
-                'content' => $aValue[0]
+            $sLink = sprintf($this->sUrlViewItems, $aMenu['module'], $aMenu['set_name']);
+            $mixedValue = $sPrefix . ' ' . $this->_oTemplate->parseLink($sLink, $aValue[0], array(
+                'title' => _t('_adm_nav_txt_manage_items') 
             )) . (isset($aValue[1]) ? $aValue[1] : '');
         } else if($aRow['submenu_object'] == "" && $aRow['onclick'] != "")
             $mixedValue = $this->_limitMaxLength(_t('_adm_nav_txt_items_gl_link_custom'), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
@@ -444,14 +442,10 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         if(!$this->_isEditable($aRow))
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => 'javascript:void(0)',
+        $mixedValue = $this->_oTemplate->parseLink('javascript:void(0)', BxDolStudioUtils::getVisibilityTitle($aRow['visible_for_levels']), array(
             'title' => _t('_adm_nav_txt_manage_visibility'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'bx_grid_action_single', 'value' => 'show_to'),
-                array('key' => 'bx_grid_action_data', 'value' => $aRow['id'])
-            ),
-            'content' => BxDolStudioUtils::getVisibilityTitle($aRow['visible_for_levels'])
+        	'bx_grid_action_single' => 'show_to',
+        	'bx_grid_action_data' => $aRow['id']
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);

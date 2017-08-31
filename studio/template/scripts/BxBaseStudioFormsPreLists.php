@@ -283,11 +283,9 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
 
     protected function _getCellValues ($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => sprintf($this->sUrlViewValues, $aRow['module'], $aRow['key']),
-            'title' => _t('_adm_form_txt_pre_lists_manage_values'),
-            'bx_repeat:attrs' => array(),
-            'content' => _t('_adm_form_txt_pre_lists_n_values', $aRow['values_count'])
+        $sLink = sprintf($this->sUrlViewValues, $aRow['module'], $aRow['key']);
+        $mixedValue = $this->_oTemplate->parseLink($sLink, _t('_adm_form_txt_pre_lists_n_values', $aRow['values_count']), array(
+            'title' => _t('_adm_form_txt_pre_lists_manage_values')
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);

@@ -166,11 +166,9 @@ class BxBaseStudioFormsSearchForms extends BxDolStudioFormsSearchForms
         $aFields = array();
         $this->oDb->getSearchFields(array('type' => 'by_object', 'object' => $aRow['object']), $aFields, false);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => sprintf($this->sUrlViewFields, $aRow['module'], $aRow['object']),
-            'title' => _t('_adm_form_txt_search_forms_manage_fields'),
-            'bx_repeat:attrs' => array(),
-            'content' => _t('_adm_form_txt_search_forms_n_fields', count($aFields))
+        $sLink = sprintf($this->sUrlViewFields, $aRow['module'], $aRow['object']);
+        $mixedValue = $this->_oTemplate->parseLink($sLink, _t('_adm_form_txt_search_forms_n_fields', count($aFields)), array(
+            'title' => _t('_adm_form_txt_search_forms_manage_fields')
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);

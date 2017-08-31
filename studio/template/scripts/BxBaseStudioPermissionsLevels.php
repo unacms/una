@@ -273,11 +273,9 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
         $aActions = array();
         $iActions = $this->oDb->getActions(array('type' => 'by_level_id', 'value' => $aRow['ID']), $aActions);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => BX_DOL_URL_STUDIO . 'builder_permissions.php?page=actions&level=' . $aRow['ID'],
-            'title' => _t('_adm_prm_txt_manage_actions'),
-            'bx_repeat:attrs' => array(),
-            'content' => _t('_adm_prm_txt_n_actions', $iActions)
+        $sLink = BX_DOL_URL_STUDIO . 'builder_permissions.php?page=actions&level=' . $aRow['ID'];
+        $mixedValue = $this->_oTemplate->parseLink($sLink, _t('_adm_prm_txt_n_actions', $iActions), array(
+            'title' => _t('_adm_prm_txt_manage_actions')
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);

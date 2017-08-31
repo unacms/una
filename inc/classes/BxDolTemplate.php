@@ -227,7 +227,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_sFolderCss = 'css/';
         $this->_sFolderImages = 'images/';
         $this->_sFolderIcons = 'images/icons/';
-        $this->_aTemplates = array('bx_a', 'bx_img');
+        $this->_aTemplates = array('bx_img');
 
         $this->addLocation('system', $this->_sRootPath, $this->_sRootUrl);
 

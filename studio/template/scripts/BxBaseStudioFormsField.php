@@ -232,11 +232,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                             $aForm['inputs'][$sKey]['type'] = 'value';
                             foreach($aForm['inputs'][$sKey]['values'] as $aValue)
                                 if($aValue['key'] == $aForm['inputs'][$sKey]['value']) {
-                                    $aForm['inputs'][$sKey]['value'] = BxDolStudioTemplate::getInstance()->parseHtmlByName('bx_a.html', array(
-                                        'href' => BX_DOL_URL_STUDIO . 'builder_forms.php?page=pre_values&list=' . trim($aValue['key'], BX_DATA_LISTS_KEY_PREFIX . ' '),
-                                        'title' =>  _t('_adm_form_txt_field_values_manage'),
-                                        'bx_repeat:attrs' => array(),
-                                        'content' => $aValue['value']
+                                    $sLink = BX_DOL_URL_STUDIO . 'builder_forms.php?page=pre_values&list=' . trim($aValue['key'], BX_DATA_LISTS_KEY_PREFIX . ' ');
+                                    $aForm['inputs'][$sKey]['value'] = BxDolStudioTemplate::getInstance()->parseLink($sLink, $aValue['value'], array(
+                                        'title' =>  _t('_adm_form_txt_field_values_manage') 
                                     ));
                                     break;
                                 }

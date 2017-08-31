@@ -377,14 +377,10 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         if(!$this->_isEditable($aRow))
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => 'javascript:void(0)',
+        $mixedValue = $this->_oTemplate->parseLink('javascript:void(0)', BxDolStudioUtils::getVisibilityTitle($aRow['visible_for_levels']), array(
             'title' => _t('_adm_form_txt_fields_manage_visibility'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'bx_grid_action_single', 'value' => 'show_to'),
-                array('key' => 'bx_grid_action_data', 'value' => $aRow['id'])
-            ),
-            'content' => BxDolStudioUtils::getVisibilityTitle($aRow['visible_for_levels'])
+        	'bx_grid_action_single' => 'show_to',
+            'bx_grid_action_data' => $aRow['id']
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
