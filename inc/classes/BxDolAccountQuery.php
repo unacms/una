@@ -174,7 +174,10 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      */
     public function updateCurrentProfile($iID, $iProfileId)
     {
-        return $this->_updateField ($iID, 'profile_id', $iProfileId);
+        if ($bResult = $this->_updateField ($iID, 'profile_id', $iProfileId))
+            $this->cleanMemory('BxDolProfileQuery::getCurrentProfileByAccount');
+
+        return $bResult;
     }
 
     /**

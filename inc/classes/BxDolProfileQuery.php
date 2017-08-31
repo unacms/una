@@ -116,7 +116,7 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     public function getCurrentProfileByAccount ($iAccountId)
     {
         $sSql = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iAccountId);
-        $iProfileId = $this->getOne($sSql);
+        $iProfileId = $this->fromMemory('BxDolProfileQuery::getCurrentProfileByAccount' . $iAccountId, 'getOne', $sSql);
         if (!$iProfileId) {
             $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `account_id` = ? LIMIT 1", $iAccountId);
             $iProfileId = $this->getOne($sSql);
