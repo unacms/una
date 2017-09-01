@@ -139,7 +139,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
 		$aResult = array();
 		if($sName == BX_DOL_STUDIO_STG_MIX_SYSTEM || $this->oDb->updateMixes(array('active' => 1), array('name' => $sName))) {
-		    BxDolCacheUtilities::getInstance()->clear('css');
+		    $this->clearCache();
 
 			$aResult = array('eval' => $this->getPageJsObject() . '.onMixSelect(oData);');
 		}
@@ -198,8 +198,11 @@ class BxDolStudioSettings extends BxTemplStudioPage
     public function deleteMix($iId)
     {
     	$aResult = array();
-    	if($this->oDb->deleteMixesOptions(array('mix_id' => $iId)) && $this->oDb->deleteMixes(array('id' => $iId)))
+    	if($this->oDb->deleteMixesOptions(array('mix_id' => $iId)) && $this->oDb->deleteMixes(array('id' => $iId))) {
+    	    $this->clearCache();
+
     		$aResult = array('eval' => $this->getPageJsObject() . '.onMixDelete(oData);');
+    	}
     	else 
     		$aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
 
@@ -328,6 +331,12 @@ class BxDolStudioSettings extends BxTemplStudioPage
                 break;
         }
         return $mixedValue;
+    }
+
+    protected function clearCache()
+    {
+        BxDolDb::getInstance()->cacheParams(true);
+        BxDolCacheUtilities::getInstance()->clear('css');
     }
 }
 

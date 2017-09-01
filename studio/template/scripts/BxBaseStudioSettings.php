@@ -348,6 +348,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 			if(!empty($aDuplicate) && is_array($aDuplicate)) 
 				$this->oDb->duplicateMixesOptions($aDuplicate['id'], $iId);
 
+            $this->clearCache();
 			return array(
 				'eval' => $sJsObject . '.onMixCreate(oData);'
 			);
@@ -467,6 +468,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 			));
 			$this->oDb->updateMixes(array('active' => 1), array('id' => $iId));
 
+			$this->clearCache();
 			return array(
 				'eval' => $sJsObject . '.onMixImport(oData);'
 			);

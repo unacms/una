@@ -604,7 +604,12 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
         list($sTmplCode, $sTmplName) = BxDolTemplate::retrieveCode();
         if(!empty($sTmplCode) && !empty($sTmplName)) {
-            $aMixed = $this->fromCache(self::$_sParamsCacheNameMixed . $sTmplCode, 'getPairs', "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`type`=:type AND `tm`.`active`='1'", "option", "value", array(
+            $sCacheNameMixed = self::$_sParamsCacheNameMixed . $sTmplCode;
+
+            if ($bForceCacheInvalidate)
+                $this->cacheParamsClear($sCacheNameMixed);
+
+            $aMixed = $this->fromCache($sCacheNameMixed, 'getPairs', "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`type`=:type AND `tm`.`active`='1'", "option", "value", array(
     			'type' => $sTmplName
             ));
             if(!empty($aMixed))
@@ -619,9 +624,12 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         return true;
     }
 
-    public function cacheParamsClear()
+    public function cacheParamsClear($sCacheName = '')
     {
-        return $this->cleanCache(self::$_sParamsCacheName);
+        if(empty($sCacheName))
+            $sCacheName = self::$_sParamsCacheName;
+
+        return $this->cleanCache($sCacheName);
     }
 
     public function isParam($sKey, $bFromCache = true)
