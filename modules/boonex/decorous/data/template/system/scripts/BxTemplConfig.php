@@ -385,13 +385,13 @@ class BxTemplConfig extends BxBaseConfig
 
 		$iImageId = (int)getParam($sKey);
 		if(empty($iImageId))
-			return "";
+			return "none";
 
 		$sImageUrl = $oStorage->getFileUrlById($iImageId);
 		if(empty($sImageUrl))
-			return "";
+			return "none";
 
-		return "'" . $sImageUrl . "'";
+		return "url('" . $sImageUrl . "')";
     }
 
     protected function _setBgRepeat($sKey, $sDefault = '')
