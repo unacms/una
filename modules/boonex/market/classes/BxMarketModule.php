@@ -112,7 +112,9 @@ class BxMarketModule extends BxBaseModTextModule
     	if($this->checkAllowedDownload($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
     		return MsgBox(_t('_bx_market_err_access_denied'));
 
-        return $this->_oTemplate->entryAttachmentsByStorage($CNF['OBJECT_STORAGE_FILES'], $aContentInfo);
+        return $this->_oTemplate->entryAttachmentsByStorage($CNF['OBJECT_STORAGE_FILES'], $aContentInfo, array(
+            'filter_field' => ''
+        ));
     }
 
     public function serviceEntityRating($iContentId = 0)

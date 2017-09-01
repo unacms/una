@@ -393,11 +393,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	return $aUnit;
     }
 
-    protected function getAttachments($sStorage, $aData)
+    protected function getAttachments($sStorage, $aData, $aParams = array())
     {
     	$aFiles = $this->_oDb->getFile(array('type' => 'content_id_key_file_id', 'content_id' => $aData['id']));
 
-    	$aAttachments = parent::getAttachments($sStorage, $aData);
+    	$aAttachments = parent::getAttachments($sStorage, $aData, $aParams);
     	if(empty($aAttachments) || !is_array($aAttachments))
     		return $aAttachments;
 
