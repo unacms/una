@@ -9,6 +9,7 @@
 
 ini_set('pcre.backtrack_limit', 1000000);
 
+define('BX_DOL_TEMPLATE_CODE_KEY', 'skin');
 define('BX_DOL_TEMPLATE_DEFAULT_CODE', 'protean');
 define('BX_DOL_TEMPLATE_FOLDER_ROOT', 'template');
 
@@ -127,6 +128,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     /**
      * Main fields
      */
+    protected $_sName;
     protected $_sPrefix;
     protected $_sRootPath;
     protected $_sRootUrl;
@@ -196,20 +198,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_sInjectionsTable = 'sys_injections';
         $this->_sInjectionsCache = BX_DOL_TEMPLATE_INJECTIONS_CACHE;
 
-        $this->_sCodeKey = 'skin';
-
-        $sCode = getParam('template');
-        if(empty($sCode))
-            $sCode = BX_DOL_TEMPLATE_DEFAULT_CODE;
-        $this->_checkCode($sCode, false);
-
-        //--- Check selected template in COOKIE(the lowest priority) ---//
-        $sCode = !empty($_COOKIE[$this->_sCodeKey]) ? $_COOKIE[$this->_sCodeKey] : '';
-        $this->_checkCode($sCode, false);
-
-        //--- Check selected template in GET(the highest priority) ---//
-        $sCode = !empty($_GET[$this->_sCodeKey]) ? $_GET[$this->_sCodeKey] : '';
-        $this->_checkCode($sCode, true);
+        $this->_sCodeKey = BX_DOL_TEMPLATE_CODE_KEY;
+        list(
+            $this->_sCode, 
+            $this->_sName, 
+            $this->_sSubPath
+        ) = self::retrieveCode($this->_sCodeKey, $this->_sRootPath);
 
         if (!$this->_sSubPath)
             $this->_sSubPath = 'boonex/' . BX_DOL_TEMPLATE_DEFAULT_CODE . '/';
@@ -282,6 +276,61 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         }
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
+    }
+
+    /**
+     * Retrieve template code and check whether it's associated with active template or not.
+     *
+     * @param string  $sCodeKey template's code key.
+     * @param string $sRootPath path to root directory.
+     */
+    public static function retrieveCode($sCodeKey = BX_DOL_TEMPLATE_CODE_KEY, $sRootPath = BX_DIRECTORY_PATH_ROOT)
+    {
+        $fCheckCode = function($sCode, $bSetCookie) use($sCodeKey, $sRootPath) {
+            if(empty($sCode) || !preg_match('/^[A-Za-z0-9_-]+$/', $sCode))
+                return false;
+
+            $aModule = BxDolModuleQuery::getInstance()->getModuleByUri($sCode);
+            if(empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] != 1 || !file_exists($sRootPath . 'modules/' . $aModule['path'] . 'data/template/'))
+                return false;
+
+            $oConfig = new BxDolModuleConfig($aModule);
+
+            $aResult = array(
+                $oConfig->getUri(), //--- Template module's URI is used as template Code. 
+                $oConfig->getName(),
+                $oConfig->getDirectory()
+            );
+
+            if(!$bSetCookie || bx_get('preview'))
+                return $aResult;
+
+            $aUrl = parse_url(BX_DOL_URL_ROOT);
+            $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
+
+            setcookie($sCodeKey, $sCode, time() + 60*60*24*365, $sPath);
+
+            return $aResult;
+        };
+
+        $sCode = getParam('template');
+        if(empty($sCode))
+            $sCode = BX_DOL_TEMPLATE_DEFAULT_CODE;
+        $aResult = $fCheckCode($sCode, false);
+
+        //--- Check selected template in COOKIE(the lowest priority) ---//
+        $sCode = !empty($_COOKIE[$sCodeKey]) ? $_COOKIE[$sCodeKey] : '';
+        $aResultCheck = $fCheckCode($sCode, false);
+        if($aResultCheck !== false)
+            $aResult = $aResultCheck;
+
+        //--- Check selected template in GET(the highest priority) ---//
+        $sCode = !empty($_GET[$sCodeKey]) ? $_GET[$sCodeKey] : '';
+        $aResultCheck = $fCheckCode($sCode, true);
+        if($aResultCheck !== false)
+            $aResult = $aResultCheck;
+
+        return $aResult;
     }
 
     /**
@@ -529,6 +578,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get currently active template name.
+     *
+     * @return string template's name.
+     */
+    function getName()
+    {
+        return $this->_sName;
+    }
+
+    /**
      * Get currently active template code.
      *
      * @return string template's code.
@@ -536,35 +595,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function getCode()
     {
         return $this->_sCode;
-    }
-
-    /**
-     * Check whether code is associated with active template.
-     *
-     * @param string  $sCode      template's unique URI.
-     * @param boolean $bSetCookie save code in COOKIE or not.
-     */
-    protected function _checkCode($sCode, $bSetCookie)
-    {
-        if(empty($sCode) || !preg_match('/^[A-Za-z0-9_-]+$/', $sCode))
-            return;
-
-        $aModule = BxDolModuleQuery::getInstance()->getModuleByUri($sCode);
-        if(empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] != 1 || !file_exists($this->_sRootPath . 'modules/' . $aModule['path'] . 'data/template/'))
-            return;
-
-        $oConfig = new BxDolModuleConfig($aModule);
-
-        $this->_sCode = $oConfig->getUri();
-        $this->_sSubPath = $oConfig->getDirectory();
-
-        if(!$bSetCookie || bx_get('preview'))
-            return;
-
-        $aUrl = parse_url(BX_DOL_URL_ROOT);
-        $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-
-        setcookie( $this->_sCodeKey, $this->_sCode, time() + 60*60*24*365, $sPath);
     }
 
     /**

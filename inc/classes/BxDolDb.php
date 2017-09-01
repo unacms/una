@@ -24,7 +24,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
     protected static $_aParams;
     protected static $_sParamsCacheName = 'sys_options';
-    protected static $_sParamsCacheNameMixed = 'sys_options_mixed';
+    protected static $_sParamsCacheNameMixed = 'sys_options_mixed_';
 
     protected static $_sErrorKey = 'bx_db_error';
     protected static $_aErrors = array(
@@ -602,9 +602,14 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
         self::$_aParams = $this->fromCache(self::$_sParamsCacheName, 'getPairs', "SELECT `name`, `value` FROM `sys_options`", "name", "value");
 
-        $aMixed = $this->fromCache(self::$_sParamsCacheNameMixed, 'getPairs', "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1'", "option", "value");
-        if(!empty($aMixed))
-        	self::$_aParams = array_merge(self::$_aParams, $aMixed);
+        list($sTmplCode, $sTmplName) = BxDolTemplate::retrieveCode();
+        if(!empty($sTmplCode) && !empty($sTmplName)) {
+            $aMixed = $this->fromCache(self::$_sParamsCacheNameMixed . $sTmplCode, 'getPairs', "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`type`=:type AND `tm`.`active`='1'", "option", "value", array(
+    			'type' => $sTmplName
+            ));
+            if(!empty($aMixed))
+            	self::$_aParams = array_merge(self::$_aParams, $aMixed);
+        }
 
         if (empty(self::$_aParams)) {
             self::$_aParams = array ();
