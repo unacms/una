@@ -219,7 +219,7 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
         return empty($mixedData) ? '' : gmdate("Y-m-d H:i", (int)$mixedData);
 
     case BX_DATA_HTML:
-        return $mixedData;
+        return bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
     case BX_DATA_TEXT_MULTILINE:
         return $mixedData;
     case BX_DATA_TEXT:
