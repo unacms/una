@@ -62,6 +62,11 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
 
         return parent::getGroupChooser($sObject, $iOwnerId, $aParams);
     }
+
+    protected function getObjectInfo($sAction, $iObjectId)
+    {
+        return BxDolPrivacy::getObjectInfo($sAction, $iObjectId);
+    }
 }
 
 /** @} */
