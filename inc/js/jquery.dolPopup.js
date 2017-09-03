@@ -31,6 +31,13 @@
         offset_pointer: '0 0'
     }; 
 
+    $.fn.dolPopupCenter = function () {
+        this.css("position","absolute");
+        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+        return this;
+    }
+
     function _getScrollbarWidth () {
         if ($(document.body).height() <= $(window).height()) {
             return 0;
@@ -561,12 +568,7 @@
             } else if (o.position == 'centered') {
 
             	var oPosition = function(oElement) {
-            		oElement.position({
-                        of: window,                    
-                        my: 'center center+' + (oElement.outerHeight() > $(window).height() ? parseInt((oElement.outerHeight() - $(window).height()) / 2) : '0'),
-                        at: 'center center',
-                        collision: 'none none'
-                    });
+                    oElement.dolPopupCenter();
             	};
 
             	oPosition($el);
