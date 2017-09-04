@@ -71,7 +71,7 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
         ));
     }
 
-    public function entryAttachments ($aData)
+    public function entryAttachments ($aData, $aParams = array())
     {
         $sPopupId = 'bx-messages-atachment-popup-{id}';
         return $this->parseHtmlByName('attachments.html', array(

@@ -293,7 +293,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         return $a;
     }
 
-    function entryAttachments ($aData)
+    function entryAttachments ($aData, $aParams = array())
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
