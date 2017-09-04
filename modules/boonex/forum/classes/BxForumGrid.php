@@ -36,6 +36,7 @@ class BxForumGrid extends BxTemplGrid
     	if(!empty($this->_aBrowseParams['type']))
 	    	switch($this->_aBrowseParams['type']) {
 	    		case 'new':
+                case 'index':
 	    		case 'author':
                 case 'favorite':
 	    		case 'category':
@@ -45,19 +46,19 @@ class BxForumGrid extends BxTemplGrid
                 case 'featured':
 					$sField = 'featured';
 	                break;
-	
+
 				case 'updated':
 					$sField = 'changed';
 	                break;
-	
+
 				case 'latest':
 					$sField = 'lr_timestamp';
 	                break;
-	
+
 				case 'top':
 					$sField = 'comments';
 	                break;
-	
+
 	            case 'popular':
 	            	$sField = 'views';
 	                break;
