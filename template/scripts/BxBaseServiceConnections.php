@@ -72,8 +72,8 @@ class BxBaseServiceConnections extends BxDol
         if(!$oProfile || $oProfile->getModule() != $sModule)
             return false;
 
-        $iCountNew = $this->serviceGetUnconfirmedConnectionsNum($sConnectionsObject, $iProfile);
-        if($iCountNew <= $iCount)
+        $iCountNew = (int)$this->serviceGetUnconfirmedConnectionsNum($sConnectionsObject, $iProfile);
+        if($iCountNew == (int)$iCount)
 			return false;
 
         return array(

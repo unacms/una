@@ -237,7 +237,7 @@ class BxCnvModule extends BxBaseModTextModule
     {
         $iProfileId = (int)bx_get_logged_profile_id();
         $iCountNew = $this->_oDb->getUnreadMessagesNum($iProfileId);
-        if($iCountNew <= $iCount)
+        if($iCountNew == $iCount)
 			return false;
 
         return array(

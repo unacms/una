@@ -512,10 +512,17 @@ function bx_menu_show_live_update(oData) {
 		var oMenuItem = $('.bx-menu-object-' + oData.mi_parent.menu_object + ' #bx-menu-toolbar-item-' + oData.mi_parent.menu_item);
 		var oMenuItemAddon = oMenuItem.find('.bx-menu-item-addon');
 
+		var iSum = 0;
+		$('.bx-menu-object-' + oData.mi_child.menu_object + ' .bx-menu-item .bx-menu-item-addon').each(function() {
+			iValue = parseInt($(this).html());
+			if(iValue && iValue > 0)
+				iSum += iValue;
+		});
+
 		if(oMenuItemAddon.length > 0)
-			oMenuItemAddon.html(parseInt(oMenuItemAddon.html()) + (oData.count_new - oData.count_old));
+			oMenuItemAddon.html(iSum);
 		else
-			oMenuItem.append(oData.code.replace('{count}', oData.count_new));
+			oMenuItem.append(oData.code.replace('{count}', iSum));
 	}
 }
 /**

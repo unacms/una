@@ -35,7 +35,7 @@ class BxBasePaymentsServices extends BxDol
     public function serviceGetLiveUpdatesCart($aMenuItemParent, $aMenuItemChild, $iCount = 0)
     {
         $iCountNew = BxDolPayments::getInstance()->getCartItemsCount();
-        if($iCountNew <= $iCount)
+        if($iCountNew == $iCount)
 			return false;
 
         return array(
@@ -54,7 +54,7 @@ class BxBasePaymentsServices extends BxDol
     public function serviceGetLiveUpdatesOrders($aMenuItemParent, $aMenuItemChild, $iCount = 0)
     {
         $iCountNew = BxDolPayments::getInstance()->getOrdersCount('new');
-        if($iCountNew <= $iCount)
+        if($iCountNew == $iCount)
 			return false;
 
         return array(

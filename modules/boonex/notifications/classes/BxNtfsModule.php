@@ -102,7 +102,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     {
         $iOwnerId = $this->getUserId();
         $iCountNew = $this->serviceGetUnreadNotificationsNum($iOwnerId);
-        if($iCountNew <= $iCount)
+        if($iCountNew == $iCount)
 			return false;
 
         return array(
