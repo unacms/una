@@ -39,8 +39,6 @@
     <string name="_bx_forum_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
 	<string name="_bx_forum_form_entry_input_cat"><![CDATA[Категория]]></string>
 	<string name="_bx_forum_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
-    <string name="_bx_forum_form_entry_input_sys_submit_text"><![CDATA[Статус черновика]]></string>
-    <string name="_bx_forum_form_entry_input_sys_submit_block"><![CDATA[Блок отправки сообщения]]></string>
 	<string name="_bx_forum_form_search"><![CDATA[Поиск]]></string>
 	<string name="_bx_forum_form_search_display_full"><![CDATA[Полный поиск]]></string>
 	<string name="_bx_forum_form_search_input_sys_author"><![CDATA[Автор]]></string>
@@ -246,8 +244,6 @@
     <string name="_bx_forum_search_extended"><![CDATA[Поиск обсуждений]]></string>
     <string name="_bx_forum_search_extended_cmts"><![CDATA[Поиск комментариев к обсуждениям]]></string>
 
-    <string name="_bx_forum_draft_saving_error"><![CDATA[Ошибка сохранения черновика!]]></string>
-    <string name="_bx_forum_draft_saved_success"><![CDATA[Черновик сохранён.]]></string>
     <string name="_bx_forum_err_not_found"><![CDATA[Обсуждение не найдено.]]></string>
     <string name="_bx_forum_more"><![CDATA[{0} ещё]]></string>
     <string name="_bx_forum_participant_info"><![CDATA[{0} ({1})]]></string>
