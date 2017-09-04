@@ -10,7 +10,7 @@ VALUES (@iTypeId, 'bx_elasticsearch', '_bx_elasticsearch', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_elasticsearch_api_url', 'http://45.56.80.210:9200', @iCategId, '_bx_elasticsearch_option_api_url', 'digit', '', '', '', 1);
+('bx_elasticsearch_api_url', '', @iCategId, '_bx_elasticsearch_option_api_url', 'digit', '', '', '', 1);
 
 
 -- ALERTS

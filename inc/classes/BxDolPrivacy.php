@@ -241,7 +241,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if(empty($iViewerId))
             $iViewerId = (int)bx_get_logged_profile_id();
 
-        $aObject = $this->_oDb->getObjectInfo($this->convertActionToField($this->_aObject['action']), $iObjectId);
+        $aObject = $this->getObjectInfo($this->convertActionToField($this->_aObject['action']), $iObjectId);
         if(empty($aObject) || !is_array($aObject))
             return false;
 
@@ -286,6 +286,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $this->_aObject['table_field_author'] = $sValue;
 
         $this->_oDb->init($this->_aObject);
+    }
+
+    protected function getObjectInfo($sAction, $iObjectId)
+    {
+        return $this->_oDb->getObjectInfo($sAction, $iObjectId);
     }
 
 	protected function getPrivacyGroupsForContentPublic($iProfileIdOwner = 0, $aCustomGroups = array())

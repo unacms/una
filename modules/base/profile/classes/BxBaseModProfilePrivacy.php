@@ -33,6 +33,17 @@ class BxBaseModProfilePrivacy extends BxTemplPrivacy
     {
         return $this->_aPrivacyParticallyVisible;
     }
+
+    protected function getObjectInfo($sAction, $iObjectId)
+    {
+        $a = $this->_oDb->getObjectInfo($sAction, $iObjectId);
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iObjectId, $this->MODULE);
+        if (!$oProfile)
+            return false;
+
+        $a['owner_id'] = $oProfile->id();        
+        return $a;
+    }
 }
 
 /** @} */
