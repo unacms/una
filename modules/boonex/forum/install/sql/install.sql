@@ -227,8 +227,6 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_forum_entry_edit', 'allow_view_to', 2147483647, 1, 5),
 ('bx_forum_entry_edit', 'submit_block', 2147483647, 1, 6),
 ('bx_forum_entry_edit', 'do_submit', 2147483647, 1, 7),
-('bx_forum_entry_edit', 'submit_text', 2147483647, 1, 8),
-('bx_forum_entry_edit', 'draft_id', 2147483647, 1, 9),
 
 ('bx_forum_entry_view', 'title', 2147483647, 1, 1),
 ('bx_forum_entry_view', 'cat', 2147483647, 1, 2),

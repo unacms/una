@@ -147,7 +147,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         return $this->_oTemplate->parseHtmlByName('title_link.html', array(
             'href' => $sUrl,
             'title' => bx_html_attribute($mixedValue),
-            'content' => $mixedValue
+            'content' => bx_process_output($mixedValue)
         ));
     }
 }
