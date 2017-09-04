@@ -341,6 +341,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     protected function _getSqlPartsEventsList($aParams)
     {
+        $sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+
     	$sJoinClause = "";
     	$sWhereClause = "AND `{$this->_sTable}`.`hidden`='0' ";
 
@@ -380,6 +382,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         		$aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart($aPrivacyGroups);
         		$sWhereClause .= $aQueryParts['where'] . " ";
+
+        		$sWhereClause .= $this->prepareAsString("AND (SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "' OR `{$this->_sTable}`.`owner_id`=?) ", 0);
 		        break;
 
 			case BX_BASE_MOD_NTFS_TYPE_OWNER:
@@ -401,14 +405,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
 				$aJoin2 = $aQueryParts['join'];
 
-				$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
 				$sJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
 				$sWhereClause .= $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1) ", $aParams['owner_id']);
-				break;
-
-			case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
-				$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
-				$sWhereClause .= $this->prepareAsString("AND (SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "' OR `{$this->_sTable}`.`owner_id`=?) ", 0);
 				break;
 
 			case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
@@ -423,7 +421,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
 				$aJoin2 = $aQueryParts['join'];
 
-				$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
 				$sJoinClause .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
 				$sWhereClause .= $this->prepareAsString("AND ((`{$this->_sTable}`.`owner_id`=?) || (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))) ", $aParams['owner_id'], $aParams['owner_id']);
 			    break;
