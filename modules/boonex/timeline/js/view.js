@@ -108,12 +108,16 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
     			oView = $this.oViewTimeline;
     			oView.find('.' + $this.sClassItems).append($(sItems).hide()).find('.' + $this.sClassItem + ':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
 					$(this).bxTime();
+
+					$this.initFlickity();
 			    });
     			break;
 
     		case 'outline':
     			oView = $this.oViewOutline;
-    			$this.appendMasonry($(sItems).bxTime());
+    			$this.appendMasonry($(sItems).bxTime(), function() {
+    				$this.initFlickity();
+    			});
     			break;
     	}
 
@@ -149,8 +153,6 @@ BxTimelineView.prototype.changeTimeline = function(oLink, iYear) {
 	this._oRequestParams[sView].start = 0;
     this._oRequestParams[sView].timeline = iYear;
 	this._getPosts(oLink);
-	
-	console.log(this._oRequestParams);
 };
 
 BxTimelineView.prototype.showMoreContent = function(oLink) {
@@ -360,6 +362,8 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
 					$(this).html(sItems).show().bxTime();
 
+					$this.initFlickity();
+
 					onComplete();
 			    });
 				break;
@@ -373,6 +377,8 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 
 			        if(!$this.isMasonryEmpty())
 			        	$this.initMasonry();
+
+			        $this.initFlickity();
 
 			        onComplete();
 			    });
