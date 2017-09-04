@@ -38,9 +38,15 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
         }
 
+        
+        if (!$this->_aContentInfo || !$this->_oProfile) {
+            $this->setPageCover(false);
+            return;
+        }
+
         $bLoggedOwner = $this->_oProfile->id() == bx_get_logged_profile_id();
-        $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED; 
-        if (!$this->_aContentInfo || !$this->_oProfile || (!$this->_oProfile->isActive() && !$bLoggedOwner && !$bLoggedModerator)) {
+        $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
+        if(!$this->_oProfile->isActive() && !$bLoggedOwner && !$bLoggedModerator) {
             $this->setPageCover(false);
             return;
         }
