@@ -22,8 +22,6 @@ class BxForumGrid extends BxTemplGrid
 
         parent::__construct ($aOptions, $oTemplate);
 
-        $this->_aOptions['paginate_per_page'] = (int)$this->_oModule->_oDb->getParam('bx_forum_per_page_browse');
-
         $this->_sDefaultSortingOrder = 'DESC';
         $this->_sDefaultSource = $this->_aOptions['source'];
     }
