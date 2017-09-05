@@ -64,7 +64,7 @@
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_groups_page_title_browse"><![CDATA[Groups]]></string>
 	<string name="_bx_groups_page_title_browse_by_author"><![CDATA[Groups of {display_name}]]></string>
-	<string name="_bx_groups_page_title_browse_featured"><![CDATA[Featured]]></string>
+	<string name="_bx_groups_page_title_browse_featured"><![CDATA[Featured Groups]]></string>
 	<string name="_bx_groups_page_title_browse_top"><![CDATA[Top Groups]]></string>
 	<string name="_bx_groups_page_title_browse_recent"><![CDATA[New Groups]]></string>
 	<string name="_bx_groups_page_title_browse_connections"><![CDATA[{0} connections]]></string>
@@ -118,7 +118,7 @@
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Manage Groups]]></string>
     <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Top Groups]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
-    <string name="_bx_groups_page_block_title_categories"><![CDATA[Group categories]]></string>
+    <string name="_bx_groups_page_block_title_categories"><![CDATA[Groups Categories]]></string>
     <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
     <string name="_bx_groups_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_groups_page_block_title_search_results"><![CDATA[Search Results]]></string>
