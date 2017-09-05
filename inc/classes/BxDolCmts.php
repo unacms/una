@@ -626,6 +626,15 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $a[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $a[CHECK_ACTION_MESSAGE] : '';
     }
 
+    public function isViewAllowed ($isPerformAction = false)
+    {
+        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     public function isVoteAllowed ($aCmt, $isPerformAction = false)
     {
         if(!$this->isRatable())
@@ -726,8 +735,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if (!$this->isEnabled())
             return '';
 
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+        if($this->isViewAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
@@ -747,8 +755,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if (!$this->isEnabled())
             return '';
 
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+        if($this->isViewAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
         $aBp = $aDp = array();

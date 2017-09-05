@@ -137,7 +137,7 @@ class BxBaseCmts extends BxDolCmts
      */
     function getCommentBlock($iCmtId = 0, $aBp = array(), $aDp = array())
     {
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
+        $mixedResult = $this->isViewAllowed();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
 
