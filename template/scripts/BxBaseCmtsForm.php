@@ -9,9 +9,18 @@
 
 class BxBaseCmtsForm extends BxTemplFormView
 {
+    protected static $_sAttributeMaskId;
+    protected static $_sAttributeMaskName;
+    
     public function __construct($aInfo, $oTemplate)
     {
         parent::__construct($aInfo, $oTemplate);
+
+        if(empty(self::$_sAttributeMaskId))
+            self::$_sAttributeMaskId = $this->aFormAttrs['id'];
+
+        if(empty(self::$_sAttributeMaskName))
+            self::$_sAttributeMaskName = $this->aFormAttrs['name'];
 
     	if(isset($this->aInputs['cmt_image'])) {
             $aFormNested = array(
@@ -30,6 +39,12 @@ class BxBaseCmtsForm extends BxTemplFormView
             $this->aInputs['cmt_image']['multiple'] = true;
             $this->aInputs['cmt_image']['ghost_template'] = $oFormNested;
         }
+    }
+
+    public function getAttributeMask($sAttribute)
+    {
+        $sName = '_sAttributeMask' . bx_gen_method_name($sAttribute);
+        return isset(self::$$sName) ? self::$$sName : '';
     }
 
 	public function getStorageObjectName()

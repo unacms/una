@@ -629,8 +629,8 @@ class BxBaseCmts extends BxDolCmts
     protected function _getForm($sAction, $iId)
     {
         $oForm = $this->_getFormObject($sAction);
-        $oForm->setId(sprintf($oForm->aFormAttrs['id'], $sAction, $this->_sSystem, $iId));
-        $oForm->setName(sprintf($oForm->aFormAttrs['name'], $sAction, $this->_sSystem, $iId));
+        $oForm->setId(sprintf($oForm->getAttributeMask('id'), $sAction, $this->_sSystem, $iId));
+        $oForm->setName(sprintf($oForm->getAttributeMask('name'), $sAction, $this->_sSystem, $iId));
         $oForm->aParams['db']['table'] = $this->_aSystem['table'];
         $oForm->aInputs['sys']['value'] = $this->_sSystem;
         $oForm->aInputs['id']['value'] = $this->_iId;
