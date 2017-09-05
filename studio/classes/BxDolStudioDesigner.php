@@ -48,7 +48,18 @@ class BxDolStudioDesigner extends BxTemplStudioPage
 		$this->sParamLogoHeight = 'sys_site_logo_height';
 
 		$this->aCovers = array(
-        	'cover_common' => array('setting' => 'sys_site_cover_common', 'title' => '_adm_dsg_txt_cover_common'),
+        	'cover_common' => array(
+        		'setting' => 'sys_site_cover_common',
+		        'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER,
+        		'title' => '_adm_dsg_txt_cover_common', 
+        		'template' => 'dsr_cover_preview_page.html'
+		    ),
+			'cover_unit_profile' => array(
+				'setting' => 'sys_unit_cover_profile',
+		    	'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE, 
+				'title' => '_adm_dsg_txt_cover_unit_profile', 
+				'template' => 'dsr_cover_preview_unit_profile.html'
+		    )
         );
     }
 

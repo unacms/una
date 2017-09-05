@@ -381,23 +381,26 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         	if(($iImageId = (int)getParam($aCover['setting'])) == 0)
         		continue;
 
-			$sImageUrl = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER)->getFileUrl($iImageId);
+			$sImageUrl = BxDolTranscoderImage::getObjectInstance($aCover['transcoder'])->getFileUrl($iImageId);
             if($sImageUrl === false) {
             	setParam($aCover['setting'], 0);
                 continue;
 			}
 
 			$aTmplVarsCovers[] = array(
-				'js_object' => $sJsObject,
-				'type' => $sCover,
-				'caption' => _t($aCover['title']),
-				'image_id' => $iImageId,
-                'bx_if:show_bg' => array(
-					'condition' => !empty($sImageUrl),
-					'content' => array(
-						'image_url' => $sImageUrl
-					)
-				),
+			    'image_id' => $iImageId,
+			    'content' => $oTemplate->parseHtmlByName($aCover['template'], array(
+			        'js_object' => $sJsObject,
+    				'type' => $sCover,
+    				'caption' => _t($aCover['title']),
+    				'image_id' => $iImageId,
+                    'bx_if:show_bg' => array(
+    					'condition' => !empty($sImageUrl),
+    					'content' => array(
+    						'image_url' => $sImageUrl
+    					)
+    				),
+                ))
 			);
         }
 

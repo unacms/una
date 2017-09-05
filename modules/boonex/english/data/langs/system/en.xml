@@ -605,13 +605,14 @@
 	<string name="_adm_dsg_scs_save"><![CDATA[The changes were successfully saved]]></string>
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Logo Text]]></string>
 	<string name="_adm_dsg_txt_cover_common"><![CDATA[Default pages cover]]></string>
+	<string name="_adm_dsg_txt_cover_unit_profile"><![CDATA[Default profile unit cover]]></string>
 	<string name="_adm_dsg_txt_splash_enabled"><![CDATA[Enable splash page]]></string>
 	<string name="_adm_dsg_txt_default"><![CDATA[default]]></string>
 	<string name="_adm_dsg_txt_icon_apple"><![CDATA[Apple Touch Devices (152x152)]]></string>
 	<string name="_adm_dsg_txt_icon_facebook"><![CDATA[Facebook Share (100x100)]]></string>
 	<string name="_adm_dsg_txt_icon_favicon"><![CDATA[Favicon (16x16)]]></string>
-	<string name="_adm_dsg_txt_upload_cover_common"><![CDATA[Upload New Common Pages Cover]]></string>
-	<string name="_adm_dsg_txt_upload_cover_home"><![CDATA[Upload New Home Page Cover]]></string>
+	<string name="_adm_dsg_txt_upload_cover_common"><![CDATA[Upload new common pages cover]]></string>
+	<string name="_adm_dsg_txt_upload_cover_unit_profile"><![CDATA[Upload new profile unit cover]]></string>
 	<string name="_adm_dsg_txt_upload_icon"><![CDATA[Upload New Site Icon]]></string>
 	<string name="_adm_dsg_txt_upload_image"><![CDATA[Upload New Logo Image]]></string>
 	<string name="_adm_dsg_txt_upload_image_preview"><![CDATA[Current Logo Image]]></string>

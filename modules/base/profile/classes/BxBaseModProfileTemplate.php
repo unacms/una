@@ -49,12 +49,22 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $oConn = BxDolConnection::getObjectInstance($sConnectionsObject);
         $aConnectionTitles = $this->getModule()->serviceGetConnectionButtonsTitles($oProfile->id(), $sConnectionsObject);
 
+        $sCoverUrl = '';
+        if($this->getModule()->checkAllowedViewCoverImage($aData) === CHECK_ACTION_RESULT_ALLOWED)
+            $sCoverUrl = $this->urlCoverUnit($aData, false);
+
+        if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
+            $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
+
+        if(empty($sCoverUrl))
+            $sCoverUrl = $this->getImageUrl('cover.jpg');
+
         // generate html
         $aVars = array (
         	'class' => $this->_getUnitClass($aData, $sTemplateName),
             'id' => $aData[$CNF['FIELD_ID']],
             'thumb_url' => $isPublic ? $this->thumb ($aData) : $this->getImageUrl('no-picture-thumb.png'),
-            'cover_url' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedViewCoverImage($aData) ? $this->urlCoverUnit ($aData, true) : $this->getImageUrl('cover.jpg'),
+            'cover_url' => $sCoverUrl,
             'content_url' => $isPublic ? $sUrl : 'javascript:void(0);',
             'title' => bx_process_output($aData[$CNF['FIELD_NAME']]),
             'module_name' => _t($CNF['T']['txt_sample_single']),
