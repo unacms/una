@@ -33,6 +33,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $this->addCss(array(
         	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
             'jquery-ui/jquery-ui.css',
+			'cmts.css',
             'post.css',
             'repost.css',
         ));
@@ -44,6 +45,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'masonry.pkgd.min.js',
             'modernizr.js',
         	'flickity/flickity.pkgd.min.js',
+            'BxDolCmts.js',
             'post.js',
             'repost.js',
         ));
