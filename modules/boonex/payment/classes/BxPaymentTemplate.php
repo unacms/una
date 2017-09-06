@@ -302,25 +302,26 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     {
         $aTmplVarsItems = array();
 
-        foreach($aItems as $aItem) {
-            $aTmplVarsItems[$aItem['title']] = array(
-                'id' => $aItem['id'],
-                'price' => $this->_oConfig->getPrice($sType, $aItem),
-                'bx_if:link' => array(
-                    'condition' => !empty($aItem['url']),
-                    'content' => array(
-                        'url' => $aItem['url'],
-                        'title' => $aItem['title']
-                    )
-                ),
-                'bx_if:text' => array(
-                    'condition' => empty($aItem['url']),
-                    'content' => array(
-                        'title' => $aItem['title']
-                    )
-                ),
-            );
-        }
+        if(!empty($aItems) && is_array($aItems))
+            foreach($aItems as $aItem) {
+                $aTmplVarsItems[$aItem['title']] = array(
+                    'id' => $aItem['id'],
+                    'price' => $this->_oConfig->getPrice($sType, $aItem),
+                    'bx_if:link' => array(
+                        'condition' => !empty($aItem['url']),
+                        'content' => array(
+                            'url' => $aItem['url'],
+                            'title' => $aItem['title']
+                        )
+                    ),
+                    'bx_if:text' => array(
+                        'condition' => empty($aItem['url']),
+                        'content' => array(
+                            'title' => $aItem['title']
+                        )
+                    ),
+                );
+            }
 
         if(!empty($aTmplVarsItems) && is_array($aTmplVarsItems)) {
             ksort($aTmplVarsItems);
