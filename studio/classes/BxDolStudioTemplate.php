@@ -76,8 +76,10 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             'jquery.dolPopup.js',
         ));
 
+        bx_import('BxTemplStudioConfig');
         $this->_oTemplateConfig = BxTemplStudioConfig::getInstance();
 
+        bx_import('BxTemplStudioFunctions');
         $this->_oTemplateFunctions = BxTemplStudioFunctions::getInstance($this);
     }
 
