@@ -115,7 +115,10 @@ class BxSnipcartModule extends BxBaseModTextModule
     protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
     {
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+
         $aResult['raw'] = $this->_oTemplate->getBuyButton($aContentInfo);
+        if(isset($aBrowseParams['dynamic_mode']) && (bool)$aBrowseParams['dynamic_mode'] === true)
+            $aResult['raw'] .= $this->_oTemplate->addCss(array('timeline.css'), true);
 
         return $aResult;
     }
