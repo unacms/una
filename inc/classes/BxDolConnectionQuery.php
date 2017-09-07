@@ -235,6 +235,8 @@ class BxDolConnectionQuery extends BxDolDb
         if (null !== $iMutualParam)
             $iMutualParam = $iMutual;
 
+        $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . $iContent);
+            
         return true;
     }
 
