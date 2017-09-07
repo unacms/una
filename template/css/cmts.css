@@ -18,6 +18,10 @@
     li.cmt {
     	position: relative;
     }
+    li.cmt-no .bx-msg-box-container {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
     li.cmt-err {
         color: red;
     }

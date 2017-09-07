@@ -713,7 +713,8 @@ class BxBaseCmts extends BxDolCmts
     protected function _getEmpty()
     {
         return BxDolTemplate::getInstance()->parseHtmlByName('comment_empty.html', array(
-            'style_prefix' => $this->_sStylePrefix
+            'style_prefix' => $this->_sStylePrefix,
+            'content' => MsgBox(_t('_Empty'))
         ));
     }
 
