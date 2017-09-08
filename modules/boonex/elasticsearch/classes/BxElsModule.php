@@ -18,7 +18,7 @@ class BxElsModule extends BxBaseModGeneralModule
         parent::__construct($aModule);
 
         bx_import('Api', $aModule);
-        $this->_oApi = new BxElsApi();
+        $this->_oApi = new BxElsApi($this);
     }
 
     public function actionDebug($sType = '', $sIndex = '')
@@ -114,6 +114,13 @@ class BxElsModule extends BxBaseModGeneralModule
         else
             var_dump($mixed);
         echo '</pre>';
+    }
+
+    public function serviceIsConfigured()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return isset($CNF['PARAM_API_URL']) && getParam($CNF['PARAM_API_URL']) != '';
     }
 
     public function serviceSearchSimple($sTerm, $sType = '', $sIndex = '')

@@ -28,6 +28,9 @@ class BxElsConfig extends BxBaseModGeneralConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
 
+            // params
+			'PARAM_API_URL' => 'bx_elasticsearch_api_url',
+
             // objects
         	'OBJECT_FORM_MANAGE' => 'bx_elasticsearch_manage',
             'OBJECT_FORM_MANAGE_DISPLAY_INDEX' => 'bx_elasticsearch_manage_index',

@@ -16,15 +16,21 @@ define('BX_ELASTICSEARCH_LOG', 1);
  */
 class BxElsApi extends BxDol
 {
+	protected $_oModule;
+
     protected $_sError = false;
     protected $_iTimeout = 30;
     protected $_sApiUrl = 'http://localhost:9200';
 
     protected $_aOprs = array('AND' => array('AG' => 'bool', 'FN' => 'filter'), 'OR' => array('AG' => 'dis_max', 'FN' => 'queries'));
 
-    public function __construct()
+    public function __construct(&$oModule)
     {
-        $this->_sApiUrl = getParam('bx_elasticsearch_api_url');
+        $this->_oModule = $oModule;
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_sApiUrl = getParam($CNF['PARAM_API_URL']);
     }
 
     public function searchSimple($sIndex, $sType, $sTerm) 

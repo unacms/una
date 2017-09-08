@@ -11,8 +11,11 @@ require_once('./inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 $sClass = 'BxTemplSearch';
-if(BxDolModuleQuery::getInstance()->isEnabledByName('bx_elasticsearch')) {
-     $oModule = BxDolModule::getInstance('bx_elasticsearch');
+
+$sElsName = 'bx_elasticsearch';
+$sElsMethod = 'is_configured';
+if(BxDolRequest::serviceExists($sElsName, $sElsMethod) && BxDolService::call($sElsName, $sElsMethod)) {
+     $oModule = BxDolModule::getInstance($sElsName);
 
      bx_import('Search', $oModule->_aModule);
      $sClass = 'BxElsSearch';
