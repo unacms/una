@@ -36,8 +36,9 @@
     <string name="_bx_snipcart_form_entry_input_price_err"><![CDATA[Поле Цена не может быть пустым]]></string>
     <string name="_bx_snipcart_form_entry_input_sys_weight"><![CDATA[Вес]]></string>
     <string name="_bx_snipcart_form_entry_input_weight"><![CDATA[Вес]]></string>
-    <string name="_bx_snipcart_form_entry_input_weight_inf"><![CDATA[Значение указывается в Кг.]]></string>
+    <string name="_bx_snipcart_form_entry_input_weight_inf"><![CDATA[Значение указывается в кг.]]></string>
     <string name="_bx_snipcart_form_entry_input_weight_err"><![CDATA[Поле Вес не может быть пустым]]></string>
+    <string name="_bx_snipcart_form_entry_input_weight_value"><![CDATA[{0} кг]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
 	<string name="_bx_snipcart_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить этот товар]]></string>
 	<string name="_bx_snipcart_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
@@ -229,6 +230,8 @@
 
     <string name="_bx_snipcart_pre_lists_currencies"><![CDATA[Валюта]]></string>
 
+    <string name="_bx_snipcart_msg_save_settings"><![CDATA[Настройки сохранены.]]></string>
+    <string name="_bx_snipcart_err_save_settings"><![CDATA[Невозможно сохранить настройки.]]></string>
     <string name="_bx_snipcart_err_not_configured"><![CDATA[Сначала вам необходимо настроить магазин. <a href="{0}">Нажмите здесь</a>.]]></string>
 
     <string name="_bx_snipcart_txt_all_entries_by"><![CDATA[<a href="{0}">Все товары от {1} ({2})</a>]]></string>

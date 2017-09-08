@@ -53,6 +53,9 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     {
         $iId = time() . mt_rand(1, 1000);
 
+        if($iTimer > 0)
+            BxDolTemplate::getInstance()->addJs(array('jquery.anim.js'));
+
         return $this->_oTemplate->parseHtmlByName('messageBox.html', array(
             'id' => $iId,
             'msgText' => $sText,

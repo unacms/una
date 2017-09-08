@@ -84,31 +84,32 @@ class BxSnipcartModule extends BxBaseModTextModule
         $aSettings = $this->_oDb->getSettings(array('type' => 'author', 'author' => $this->_iProfileId));
         $bSettings = !empty($aSettings) && is_array($aSettings);
 
-        $oForm->initChecker($aSettings);
-        if(!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+        $sResultTimer = 0;
+        $sResultMessage = '';
 
-        if(!$bSettings) {
-            $aValsToAdd = array('author' => $this->_iProfileId);
-            $iSettings = $oForm->insert($aValsToAdd);
-            if(!$iSettings) {
-                if(!$oForm->isValid())
-                    return $oForm->getCode();
-                else
-                    return MsgBox(_t('_sys_txt_error_entry_creation'));
+        $oForm->initChecker($aSettings);
+        if($oForm->isSubmittedAndValid()) {         
+            if(!$bSettings) {
+                if((int)$oForm->insert(array('author' => $this->_iProfileId)) > 0) {
+                    $sResultTimer = 3;
+                    $sResultMessage = '_bx_snipcart_msg_save_settings';
+                }
+                else 
+                    $sResultMessage = '_bx_snipcart_err_save_settings';
+                
             }
-        }
-        else {
-            if(!$oForm->update($aSettings['id'])) {
-                if(!$oForm->isValid())
-                    return $oForm->getCode();
-                else
-                    return MsgBox(_t('_sys_txt_error_entry_update'));
+            else {
+                if($oForm->update($aSettings['id']) !== false) {
+                    $sResultTimer = 3;
+                    $sResultMessage = '_bx_snipcart_msg_save_settings';
+                }
+                else 
+                    $sResultMessage = '_bx_snipcart_err_save_settings';
             }
         }
 
         return array(
-        	'content' => $oForm->getCode()
+        	'content' => (!empty($sResultMessage) ? MsgBox(_t($sResultMessage), $sResultTimer) : '') . $oForm->getCode()
         );
     }
 

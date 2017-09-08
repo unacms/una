@@ -38,6 +38,7 @@
     <string name="_bx_snipcart_form_entry_input_weight"><![CDATA[Weight]]></string>
     <string name="_bx_snipcart_form_entry_input_weight_inf"><![CDATA[The value is indicated in Kg.]]></string>
     <string name="_bx_snipcart_form_entry_input_weight_err"><![CDATA[Weight field can't be empty]]></string>
+    <string name="_bx_snipcart_form_entry_input_weight_value"><![CDATA[{0} Kg]]></string>
 	<string name="_bx_snipcart_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_snipcart_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this product]]></string>
 	<string name="_bx_snipcart_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
@@ -229,6 +230,8 @@
 
     <string name="_bx_snipcart_pre_lists_currencies"><![CDATA[Currencies]]></string>
 
+    <string name="_bx_snipcart_msg_save_settings"><![CDATA[Settings were successfully saved.]]></string>
+    <string name="_bx_snipcart_err_save_settings"><![CDATA[Cannot save settings.]]></string>
     <string name="_bx_snipcart_err_not_configured"><![CDATA[You need to configure shop settings first. <a href="{0}">Click here</a>.]]></string>
 
     <string name="_bx_snipcart_txt_all_entries_by"><![CDATA[<a href="{0}">All Goods by {1} ({2})</a>]]></string>

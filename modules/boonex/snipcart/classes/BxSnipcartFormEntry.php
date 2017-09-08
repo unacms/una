@@ -27,6 +27,19 @@ class BxSnipcartFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_PRICE']]['info'] = sprintf($this->aInputs[$CNF['FIELD_PRICE']]['info'], $aCurency['code']);
         }
     }
+
+    public function genCustomViewRowValueWeight($aInput)
+    {
+        $mixedResult = null;
+
+        if(isset($aInput['value']) && $aInput['value'] !== '')
+            $mixedResult = bx_process_output($aInput['value'], BX_DATA_FLOAT);
+
+        if(!empty($mixedResult))
+            $mixedResult = _t('_bx_snipcart_form_entry_input_weight_value', $mixedResult);
+
+        return $mixedResult;
+    }
 }
 
 /** @} */
