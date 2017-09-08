@@ -210,7 +210,11 @@
     <string name="_bx_shopify_cat_sports_and_outdoors"><![CDATA[Спорт и активный отдых]]></string>
     <string name="_bx_shopify_cat_toys_kids_baby"><![CDATA[Игрушки, дети и младенцы]]></string>
 
+    <string name="_bx_shopify_msg_save_settings"><![CDATA[Настройки сохранены.]]></string>
+    <string name="_bx_shopify_err_save_settings"><![CDATA[Невозможно сохранить настройки.]]></string>
     <string name="_bx_shopify_err_not_configured"><![CDATA[Сначала вам необходимо настроить магазин. <a href="{0}">Нажмите здесь</a>.]]></string>
+    <string name="_bx_shopify_err_load_product"><![CDATA[Невозможно загрузить продукт. Пожалуйста, проверьте настройки вашего магазина и ID продукта.]]></string>
+    <string name="_bx_shopify_err_load_collection"><![CDATA[Невозможно загрузить коллекцию. Пожалуйста, проверьте настройки вашего магазина.]]></string>
 
     <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">Все товары от {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_sample_single"><![CDATA[товар]]></string>

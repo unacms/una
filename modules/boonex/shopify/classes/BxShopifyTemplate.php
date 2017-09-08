@@ -47,6 +47,11 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
             'sAppId' => $aSettings['app_id'],
         ));
 
+        $this->addJsTranslation(array(
+            '_bx_shopify_err_load_product',
+            '_bx_shopify_err_load_collection'
+        ));
+
         return bx_replace_markers($sCode, array(
             'profile_id' => $iProfileId
         ));
@@ -78,7 +83,7 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
             'html_id' => $this->_oConfig->getHtmlIds('entry_attachments'),
             'html_id_sample' => $this->_oConfig->getHtmlIds('entry_attachment_sample'),
         	'popup_id' => $sPopupId,
-            'popup' => BxTemplFunctions::getInstance()->transBox($sPopupId, '<img class="bx-spf-attachment-popup-img" src="{url}" />', true, true),
+            'popup' => BxTemplFunctions::getInstance()->transBox($sPopupId, '<img class="bx-spf-attachment-popup-img" src="" />', true, true),
         ));
     }
 

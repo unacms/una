@@ -42,8 +42,13 @@ BxShopifyShop.prototype.getUnit = function(iProduct) {
 		return;
 
 	bx_loading(oUnit.addClass(this._sClassLoading), true);
+
 	this.fetchProduct(iProduct, function (oProduct) {
 		$this.onGetUnit(oProduct);
+	}, function() {
+		bx_loading(oUnit.removeClass(this._sClassLoading), false);
+
+		alert(_t('_bx_shopify_err_load_product'));
 	});
 };
 
@@ -81,11 +86,16 @@ BxShopifyShop.prototype.onGetUnit = function(oProduct) {
 
 BxShopifyShop.prototype.getEntry = function(iProduct) {
 	var $this = this;
+	var oLoading = $('.' + this._sClassCover);
 
-	bx_loading($('.' + this._sClassCover), true);
+	bx_loading(oLoading, true);
 
 	this.fetchProduct(iProduct, function (oProduct) {
 		$this.onGetEntry(oProduct);
+	}, function() {
+		bx_loading(oLoading, false);
+
+		alert(_t('_bx_shopify_err_load_product'));
 	});
 };
 
@@ -135,7 +145,7 @@ BxShopifyShop.prototype.onGetEntry = function(oProduct) {
 	bx_loading($('.' + this._sClassCover), false);
 };
 
-BxShopifyShop.prototype.fetchProduct = function(iProduct, onComplete) {
+BxShopifyShop.prototype.fetchProduct = function(iProduct, onComplete, onError) {
 	var $this = this;
 
 	this._oShopClient.fetchProduct(iProduct).then(function(oProduct) {
@@ -143,10 +153,15 @@ BxShopifyShop.prototype.fetchProduct = function(iProduct, onComplete) {
 			onComplete(oProduct);
         else 
         	$this.onFetchProduct(oProduct);
+	}).catch(function() {
+		if(typeof(onError) == 'function')
+			onError();
+        else 
+        	alert(_t('_bx_shopify_err_load_product'));
 	});
 };
 
-BxShopifyShop.prototype.fetchCollection = function(iCollection, onComplete) {
+BxShopifyShop.prototype.fetchCollection = function(iCollection, onComplete, onError) {
 	var $this = this;
 
 	this._oShopClient.fetchQueryProducts({collection_id: iCollection}).then(function(oProducts) {
@@ -154,6 +169,11 @@ BxShopifyShop.prototype.fetchCollection = function(iCollection, onComplete) {
 			onComplete(oProduct);
         else 
         	$this.onFetchCollection(oProducts);
+	}).catch(function() {
+		if(typeof(onError) == 'function')
+			onError();
+        else 
+        	alert(_t('_bx_shopify_err_load_collection'));
 	});
 };
 

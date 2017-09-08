@@ -210,7 +210,11 @@
     <string name="_bx_shopify_cat_sports_and_outdoors"><![CDATA[Sports & Outdoors]]></string>
     <string name="_bx_shopify_cat_toys_kids_baby"><![CDATA[Toys, Kids & Baby]]></string>
 
+    <string name="_bx_shopify_msg_save_settings"><![CDATA[Settings were successfully saved.]]></string>
+    <string name="_bx_shopify_err_save_settings"><![CDATA[Cannot save settings.]]></string>
     <string name="_bx_shopify_err_not_configured"><![CDATA[You need to configure shop settings first. <a href="{0}">Click here</a>.]]></string>
+    <string name="_bx_shopify_err_load_product"><![CDATA[Cannot load product. Please check your shop settings and product ID.]]></string>
+    <string name="_bx_shopify_err_load_collection"><![CDATA[Cannot load collection. Please check your shop settings.]]></string>
 
     <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">All Goods by {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_sample_single"><![CDATA[shop item]]></string>
