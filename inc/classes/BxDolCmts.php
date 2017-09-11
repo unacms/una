@@ -270,8 +270,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public static function &getSystems ()
     {
-        if (!isset($GLOBALS['bx_dol_cmts_systems'])) {
-            $GLOBALS['bx_dol_cmts_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_cmts', 'getAllWithKey', '
+        $sKey = 'bx_dol_cache_memory_cmts_systems';
+
+        if (!isset($GLOBALS[$sKey])) {
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_cmts', 'getAllWithKey', '
                 SELECT
                     `ID` as `system_id`,
                     `Name` AS `name`,
@@ -303,7 +305,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     `ClassFile` AS `class_file`
                 FROM `sys_objects_cmts`', 'name');
         }
-        return $GLOBALS['bx_dol_cmts_systems'];
+        return $GLOBALS[$sKey];
     }
 
     public function init ($iId)

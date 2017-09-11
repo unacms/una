@@ -80,8 +80,10 @@ class BxDolFeature extends BxDolObject
 
     public static function &getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_feature_systems']))
-            $GLOBALS['bx_dol_feature_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_feature', 'getAllWithKey', '
+        $sKey = 'bx_dol_cache_memory_feature_systems';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_feature', 'getAllWithKey', '
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
@@ -96,7 +98,7 @@ class BxDolFeature extends BxDolObject
                     `class_file` AS `class_file`
                 FROM `sys_objects_feature`', 'name');
 
-        return $GLOBALS['bx_dol_feature_systems'];
+        return $GLOBALS[$sKey];
     }
 
 	/**

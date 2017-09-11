@@ -19,8 +19,10 @@ class BxDolLiveUpdatesQuery extends BxDolDb
 
 	public function getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_live_updates_systems']))
-            $GLOBALS['bx_dol_live_updates_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_live_updates', 'getAllWithKey', '
+        $sKey = 'bx_dol_cache_memory_live_updates_systems';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_live_updates', 'getAllWithKey', '
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
@@ -29,7 +31,7 @@ class BxDolLiveUpdatesQuery extends BxDolDb
                     `active` AS `active`
                 FROM `sys_objects_live_updates`', 'name');
 
-        return $GLOBALS['bx_dol_live_updates_systems'];
+        return $GLOBALS[$sKey];
     }
 }
 

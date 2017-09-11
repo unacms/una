@@ -122,8 +122,10 @@ class BxDolVote extends BxDolObject
 
     public static function &getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_vote_systems']))
-            $GLOBALS['bx_dol_vote_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_vote', 'getAllWithKey', '
+        $sKey = 'bx_dol_cache_memory_vote_systems';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_vote', 'getAllWithKey', '
                 SELECT
                     `ID` as `id`,
                     `Name` AS `name`,
@@ -143,7 +145,7 @@ class BxDolVote extends BxDolObject
                     `ClassFile` AS `class_file`
                 FROM `sys_objects_vote`', 'name');
 
-        return $GLOBALS['bx_dol_vote_systems'];
+        return $GLOBALS[$sKey];
     }
 
     public static function onAuthorDelete ($iAuthorId)

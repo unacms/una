@@ -874,6 +874,15 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         $oCache = $this->oDb->getDbCacheObject();
 
         $bResult = $oCache->removeAllByPrefix('db_');
+        $bResult &= $this->oDb->cleanMemoryAll();
+
+        $aKeys = array_keys($GLOBALS);
+        $aKeysPrefixes = array('bx_dol_cache_memory_');
+        foreach($aKeysPrefixes as $sKeyPrefix)
+            foreach($aKeys as $sKey)
+                if(substr($sKey, 0, strlen($sKeyPrefix)) == $sKeyPrefix)
+                    unset($GLOBALS[$sKey]);
+
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 

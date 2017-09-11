@@ -129,8 +129,10 @@ class BxDolReport extends BxDolObject
 
     public static function &getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_report_systems']))
-            $GLOBALS['bx_dol_report_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_report', 'getAllWithKey', '
+        $sKey = 'bx_dol_cache_memory_report_systems';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_report', 'getAllWithKey', '
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
@@ -146,7 +148,7 @@ class BxDolReport extends BxDolObject
                     `class_file` AS `class_file`
                 FROM `sys_objects_report`', 'name');
 
-        return $GLOBALS['bx_dol_report_systems'];
+        return $GLOBALS[$sKey];
     }
 
     public static function onAuthorDelete ($iAuthorId)

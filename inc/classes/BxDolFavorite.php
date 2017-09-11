@@ -90,8 +90,10 @@ class BxDolFavorite extends BxDolObject
 
     public static function &getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_favorite_systems']))
-            $GLOBALS['bx_dol_favorite_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_favorite', 'getAllWithKey', '
+        $sKey = 'bx_dol_cache_memory_favorite_systems';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_favorite', 'getAllWithKey', '
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
@@ -108,7 +110,7 @@ class BxDolFavorite extends BxDolObject
                     `class_file` AS `class_file`
                 FROM `sys_objects_favorite`', 'name');
 
-        return $GLOBALS['bx_dol_favorite_systems'];
+        return $GLOBALS[$sKey];
     }
 
     public static function onAuthorDelete ($iAuthorId)

@@ -148,7 +148,7 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
 
     public static function &getSystems()
     {
-        $sKey = 'bx_dol_content_info_systems';
+        $sKey = 'bx_dol_cache_memory_content_info_systems';
 
         if(!isset($GLOBALS[$sKey]))
             $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_content_info', 'getAllWithKey', '
@@ -169,7 +169,7 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
 
     public static function &getGrids()
     {
-        $sKey = 'bx_dol_content_info_grids';
+        $sKey = 'bx_dol_cache_memory_content_info_grids';
 
         if(!isset($GLOBALS[$sKey]))
             $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_content_info_grids', 'getAllWithKey', '
@@ -187,7 +187,7 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
 
     public static function &getSystemsByAlertType($sAlertType)
     {
-        $sKey = 'bx_dol_content_info_systems_' . $sAlertType;
+        $sKey = 'bx_dol_cache_memory_content_info_systems_' . $sAlertType;
 
         if(!isset($GLOBALS[$sKey])) {
             $aSystems = BxDolContentInfo::getSystems();

@@ -88,8 +88,10 @@ class BxDolView extends BxDolObject
 
     public static function &getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_view_systems']))
-            $GLOBALS['bx_dol_view_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_view', 'getAllWithKey', '
+        $sKey = 'bx_dol_cache_memory_view_systems';
+
+        if(!isset($GLOBALS[$sKey]))
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_view', 'getAllWithKey', '
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
@@ -104,7 +106,7 @@ class BxDolView extends BxDolObject
                     `class_file` AS `class_file`
                 FROM `sys_objects_view`', 'name');
 
-        return $GLOBALS['bx_dol_view_systems'];
+        return $GLOBALS[$sKey];
     }
 
     public static function onAuthorDelete ($iAuthorId)
