@@ -764,7 +764,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
     public function &fromMemory ($sName, $sFunc)
     {
-        if(array_key_exists($sName, self::$_aDbCacheData))
+        if(array_key_exists($sName, self::$_aDbCacheData) && !defined('BX_DOL_INSTALL') && !defined('BX_DOL_CRON_EXECUTE'))
 			return self::$_aDbCacheData[$sName];
 
 		$aArgs = func_get_args();
