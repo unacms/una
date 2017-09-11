@@ -406,6 +406,7 @@ EOF;
             return _t('_sys_inst_msg_script_isnt_installed');
 
         require_once(BX_INSTALL_PATH_HEADER);
+        require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
         bx_import('BxDolStudioInstallerUtils');
         bx_import('BxDolLanguages');
         BxDolLanguages::getInstance();
