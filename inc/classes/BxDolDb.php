@@ -154,7 +154,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
             $sStorageEngine = !$sVer || version_compare($sVer, '5.7.5', '>=') ? 'default_storage_engine' : 'storage_engine';
             $this->pdoExec("SET $sStorageEngine=" . $this->_sStorageEngine);
 
-			self::$_aDbCacheData = array();
+			$this->cleanMemoryAll();
     	}
     	catch (PDOException $oException) {
     		$oException->errorInfo[self::$_sErrorKey] = array(
@@ -781,6 +781,12 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         	return false;
 
 		unset(self::$_aDbCacheData[$sName]);
+		return true;
+    }
+
+    public function cleanMemoryAll ()
+    {
+        self::$_aDbCacheData = array();
 		return true;
     }
 
