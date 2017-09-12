@@ -1,0 +1,36 @@
+<div id="__html_id__" class="__style_prefix__-item __class__ bx-def-thumb-size-min-height bx-def-padding-bottom bx-clearfix">
+    <a name="timeline-event-__id__"></a>
+    <div class="__style_prefix__-item-type bx-def-media-phone-hide">
+	    <div class="__style_prefix__-item-circle">
+			<i class="sys-icon __item_icon__"></i>
+        </div>
+    </div>
+    <div class="__style_prefix__-item-cnt bx-def-box bx-def-padding-topbottom bx-def-round-corners __class_content__">
+        <div class="__style_prefix__-item-owner bx-def-margin-leftright"> 
+            <div class="__style_prefix__-owner-avatar bx-def-thumb bx-def-thumb-size">__item_owner_unit__</div>
+            <div class="__style_prefix__-owner-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
+                <!-- NOTE: Spaces after and between elements in 'owner-name' DIV are needed for better line folding -->
+                <div class="__style_prefix__-owner-name bx-def-font-middle bx-def-font-light bx-def-font-grayed">
+                    <a href="__item_owner_url__" class="__style_prefix__-owner-name" title="__item_owner_title__">__item_owner_name__</a> 
+                    <bx_if:show_timeline_owner>
+                        <i class="sys-icon caret-right"></i> <a href="__owner_url__" class="__style_prefix__-timeline-owner-name">__owner_username__</a> 
+                    </bx_if:show_timeline_owner>
+                    <span class="bx-def-font-small"> __item_owner_action__ </span> <span class="bx-bullet-narrow"> </span><a class="__style_prefix__-date bx-base-text-unit-date bx-def-font-small" href="__item_view_url__"> __item_date__ </a> 
+                    <bx_if:show_pinned>
+                        <span class="__style_prefix__-pinned bx-def-margin-thd-left">
+                            <i class="sys-icon thumb-tack bx-def-margin-thd-left" title="<bx_text_attribute:_bx_timeline_txt_pinned />"></i>
+                        </span>
+                    </bx_if:show_pinned>
+                </div>
+            </div>
+        </div>
+		<div class="__style_prefix__-item-content bx-def-margin-leftright bx-def-margin-top bx-clearfix">__content__</div>
+		<bx_if:show_location>
+		    <div class="__style_prefix__-item-location bx-def-margin-leftright bx-def-margin-top bx-def-font-grayed bx-clearfix">__location__</div>
+		</bx_if:show_location>
+		<bx_if:show_menu_item_actions>
+		    <div class="__style_prefix__-item-activity bx-def-margin-leftright bx-def-margin-top bx-clearfix">__menu_item_actions__</div>
+		</bx_if:show_menu_item_actions>
+		<div class="__style_prefix__-item-comments-holder bx-def-margin-leftright bx-def-font-middle">__comments__</div>
+    </div>
+</div>

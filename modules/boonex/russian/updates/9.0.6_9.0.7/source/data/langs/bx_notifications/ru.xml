@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string name="_bx_ntfs"><![CDATA[Уведомления]]></string>
+	<string name="_bx_notifications"><![CDATA[Уведомления]]></string>
+
+	<string name="_bx_ntfs_page_title_system_view"><![CDATA[Уведомления]]></string>
+	<string name="_bx_ntfs_page_title_view"><![CDATA[Уведомления]]></string>
+	<string name="_bx_ntfs_page_block_title_view"><![CDATA[Уведомления]]></string>
+
+	<string name="_bx_ntfs_menu_title_submenu"><![CDATA[Уведомления - Подменю]]></string>
+	<string name="_bx_ntfs_menu_set_title_submenu"><![CDATA[Уведомления - Подменю]]></string>
+	<string name="_bx_ntfs_menu_item_title_system_notifications_all"><![CDATA[Все уведомления]]></string>
+	<string name="_bx_ntfs_menu_item_title_notifications_all"><![CDATA[Все уведомления]]></string>
+    <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Уведомления]]></string>
+    <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Уведомления]]></string>
+
+	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Количество событий, отображаемых на странице просмотра]]></string>
+	<string name="_bx_ntfs_option_events_hide"><![CDATA[Показывать события для последователей, когда пользователь совершает действия]]></string>
+
+	<string name="_bx_ntfs_privacy_view"><![CDATA[Просматривать события]]></string>
+
+	<string name="_bx_ntfs_alert_action_added"><![CDATA[добавить]]></string>
+	<string name="_bx_ntfs_alert_action_commentPost"><![CDATA[добавить коментарий]]></string>
+	<string name="_bx_ntfs_alert_action_doVote"><![CDATA[добавить голос]]></string>
+	<string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[сообщение на линейке]]></string>
+
+	<string name="_bx_ntfs_alert_module_sys_profiles_subscriptions"><![CDATA[Подписки профайлов]]></string>
+	<string name="_bx_ntfs_alert_module_sys_profiles_friends"><![CDATA[Друзья профайлов]]></string>
+	<string name="_bx_ntfs_alert_action_connection_added"><![CDATA[добавить связь]]></string>	
+
+	<string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Пусто]]></string>
+	<string name="_bx_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> - {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_bx_ntfs_txt_subobject_added_text"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> - {subentry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_bx_ntfs_txt_subobject_added_link"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> - <a href="{subentry_url}">{subentry_sample}</a> <a href="{entry_url}">{entry_caption}</a>]]></string>
+</resources>
