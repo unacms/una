@@ -38,13 +38,13 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
                 if (!isAdmin())
                     return false;
                 break;
-        	case 'notifications-cart':
+        	case 'cart':
         		$oPayments = BxDolPayments::getInstance();
         		if(!$oPayments->isActive())
         			return false;
         		break;
 
-        	case 'notifications-orders':
+        	case 'orders':
         		$oPayments = BxDolPayments::getInstance();
         		if(!$oPayments->isActive())
         			return false;

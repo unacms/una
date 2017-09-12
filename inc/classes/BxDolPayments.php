@@ -174,7 +174,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     public function getCartItemsCount()
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_items_count', 'Cart'))
-    		return array();
+    		return 0;
 
 		$aSrvParams = array();
 		return BxDolService::call($this->_sActive, 'get_cart_items_count', $aSrvParams, 'Cart');
