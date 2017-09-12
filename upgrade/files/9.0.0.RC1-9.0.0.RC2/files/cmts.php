@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    UnaCore UNA Core
+ * @{
+ */
+
+require_once('./inc/header.inc.php');
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
+
+bx_import('BxDolLanguages');
+
+check_logged();
+
+$sSys = isset($_REQUEST['sys']) ? bx_process_input($_REQUEST['sys']) : '';
+$iObjectId = isset($_REQUEST['id']) ? bx_process_input($_REQUEST['id'], BX_DATA_INT) : 0;
+$sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUEST['action']) ? bx_process_input($_REQUEST['action']) : '';
+
+$oCmts = BxDolCmts::getObjectInstance($sSys, $iObjectId, true);
+
+if ($oCmts && $sSys && $iObjectId) {
+    if($sAction) {
+        header('Content-Type: text/html; charset=utf-8');
+        $sMethod = 'action' . $sAction;
+        echo $oCmts->$sMethod();
+        exit;
+    }
+
+    $iCmtId = bx_get('cmt_id');
+    if($iCmtId !== false) {
+        $oTemplate = BxDolTemplate::getInstance();
+        $sComment = $oCmts->getCommentBlock($iCmtId);
+        if ($sComment) {
+
+            $sObjectTitle = bx_process_output($oCmts->getObjectTitle($iObjectId));
+
+            $sHeader = _t('_cmt_page_view_header', $sObjectTitle);
+            $sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);
+            $sContent = DesignBoxContent($sTitle, $sComment, BX_DB_PADDING_DEF);
+            
+            $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
+            $oTemplate->setPageHeader($sHeader);
+            $oTemplate->setPageContent('page_main_code', $sContent);
+            $oTemplate->getPageCode();
+
+        } else {
+
+            $oTemplate->displayPageNotFound();
+
+        }
+    }
+}
+
+/** @} */

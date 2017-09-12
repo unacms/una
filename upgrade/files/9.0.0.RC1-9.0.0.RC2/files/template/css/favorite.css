@@ -1,0 +1,63 @@
+/*--- Favorited By List ---*/
+div.bx-favorite-by-list {}
+div.bx-favorite-by-list-cnt {
+	max-height: 400px;
+	max-height: 25rem;
+	min-width: 220px;
+	min-width: 13.75rem;
+	max-width: 320px;
+	max-width: 20rem;
+	overflow: auto;
+}
+div.bx-favorite-by-list div.bx-def-unit {
+	float: none;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+div.bx-favorite-bi-thumbnail,
+div.bx-favorite-bi-info {
+	position: relative;
+}
+div.bx-favorite-bi-info p {
+	margin: 0px; 
+}
+
+/*--- Favorite Element Styles ---*/
+div.bx-favorite div.bx-favorite-element-holder,
+div.bx-favorite div.bx-favorite-counter-holder {
+	position: relative;
+	float: left;
+}
+
+/*--- Favorite Element Styles ---*/
+.bx-favorite .bx-favorite-element-holder,
+.bx-favorite .bx-favorite-counter-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.bx-favorite-button .bx-favorite-element-holder,
+.bx-favorite-button .bx-favorite-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-favorite-button-small .bx-favorite-element-holder,
+.bx-favorite-button-small .bx-favorite-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-favorite .bx-favorite-element-holder .bx-favorite-do-favorite.bx-favorite-disabled,
+.bx-favorite .bx-favorite-element-holder .bx-favorite-do-favorite.bx-favorite-disabled .sys-icon {
+	color: #ddd;
+}
+
+.bx-favorite-button .bx-favorite-counter-holder,
+.bx-favorite-button-small .bx-favorite-counter-holder {
+	font-size: 1.5rem;
+}
+
+.bx-favorite-link .bx-favorite-counter-holder.bx-btn-border {
+	border-width: 0px;
+}

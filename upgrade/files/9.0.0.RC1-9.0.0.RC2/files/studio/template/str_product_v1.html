@@ -1,0 +1,46 @@
+<div class="bx-std-product bx-std-product-gallery bx-def-gal-unit-size" id="bx-std-product-__name__">
+	<div class="bx-std-product-cnt bx-std-product-gallery-cnt bx-def-margin-sec bx-def-border bx-def-round-corners bx-def-box bx-def-color-bg-box">
+		<!-- Title section -->
+		<div class="bx-std-product-title bx-def-padding-sec">
+			<div class="bx-std-pt-cnt">
+				<div class="bx-std-pt-icon bx-def-thumb-size">
+					<a href="javascript:void(0)" onclick="javascript:__js_object__.info('__name__', this)">
+						<bx_if:no_icon>
+							<div class="bx-std-pt-icon-plate bx-def-thumb-size">
+								<i class="sys-icon __icon__"></i>
+							</div>
+						</bx_if:no_icon>
+						<bx_if:icon>
+							<img class="bx-def-thumb-size" src="__icon_url__" />
+						</bx_if:icon>
+					</a>
+				</div>
+				<div class="bx-std-pt-content bx-def-thumb-size-min-height">
+				    <div class="bx-std-pt-content-cnt">
+						<div class="bx-std-pt-title bx-def-font-h3">
+				            <a class="bx-def-font-color" href="javascript:void(0)" onclick="javascript:__js_object__.info('__name__', this)">__title__</a>
+				        </div>
+				        <div class="bx-std-pt-info bx-def-font-small bx-def-font-grayed">
+			                <span class="bx-std-pt-vendor">__vendor__</span> <span class="bx-std-pt-bullet">&bull;</span> <span class="bx-std-pt-version">__version__</span>
+			            </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!-- Actions section -->
+        <div class="bx-std-product-actions bx-def-padding-sec-leftright bx-def-padding-sec-bottom">
+	        <div class="bx-std-pa-actions">
+	        	<div class="bx-std-pc-buttons bx-std-pcb-install bx-def-margin-thd-leftright-neg bx-clearfix" <bx_if:hide_install>style="display:none"</bx_if:hide_install>>
+	        		<a class="bx-btn bx-def-margin-thd-leftright" onclick="javascript:__js_object__.install('__dir__', this)"><bx_text:_adm_btn_install_submit /></a>
+	        		<a class="bx-btn bx-def-margin-thd-leftright" onclick="javascript:__js_object__.remove('__dir__', this)"><bx_text:_adm_btn_delete_submit /></a>
+	        	</div>
+	        	<div class="bx-std-pc-buttons bx-std-pcb-queued bx-def-margin-thd-leftright-neg bx-clearfix" <bx_if:hide_queued>style="display:none"</bx_if:hide_queued>>
+	            	<a class="bx-btn bx-def-margin-thd-leftright bx-btn-disabled"><bx_text:_adm_btn_queued_submit /></a>
+	            </div>
+	            <div class="bx-std-pc-buttons bx-std-pcb-installed bx-def-margin-thd-leftright-neg bx-clearfix" <bx_if:hide_installed>style="display:none"</bx_if:hide_installed>>
+	            	<a class="bx-btn bx-def-margin-thd-leftright bx-btn-disabled"><bx_text:_adm_btn_installed_submit /></a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>

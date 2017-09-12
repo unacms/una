@@ -1,0 +1,60 @@
+
+/* view entry */
+.bx-base-general-entity-info > p:first-child {
+    margin-top:0;
+}
+
+.bx-base-general-entity-share .bx-base-general-comments,
+.bx-base-general-entity-share .bx-view,
+.bx-base-general-entity-share .bx-vote,
+.bx-base-general-entity-share .bx-favorite,
+.bx-base-general-entity-share .bx-feature,
+.bx-base-general-entity-share .bx-report,
+.bx-base-general-entity-share .bx-tl-repost,
+.bx-base-general-entity-share .bx-menu-btns-hor.bx-menu-object-sys_social_sharing {
+	position: relative;
+	float: none;
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* comments item */
+div.bx-base-general-comments div.bx-base-general-comments-element-holder,
+div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
+    position: relative;
+    float: left;
+}
+.bx-base-general-comments-element-holder
+.bx-base-general-comments-counter-holder {
+    line-height: 20px;
+    line-height: 1.25rem;
+}
+.bx-base-general-comments-button .bx-base-general-comments-element-holder,
+.bx-base-general-comments-button .bx-base-general-comments-counter-holder {
+    line-height: 36px;
+    line-height: 2.2rem;
+}
+.bx-base-general-comments-button .bx-base-general-comments-counter-holder {
+    font-size: 1.5rem;
+}
+.bx-base-general-comments-link .bx-base-general-comments-counter-holder.bx-btn-border {
+    border-width: 0px;
+}
+
+/* unit */
+.bx-def-unit-live-search {
+    width:236px;
+    width:14.75;
+    overflow:hidden;
+}
+
+.bx-def-unit-live-search .bx-def-unit-info {
+    width:188px;
+    width:11.75;
+}
+
+.bx-def-unit-live-search .bx-def-unit-img {
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+}

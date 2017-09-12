@@ -1,0 +1,26 @@
+/*--- Feature Element Styles ---*/
+div.bx-feature div.bx-feature-element-holder {
+	position: relative;
+	float: left;
+}
+
+/*--- Feature Element Styles ---*/
+.bx-feature .bx-feature-element-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.bx-feature-button .bx-feature-element-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-feature-button-small .bx-feature-element-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-feature .bx-feature-element-holder .bx-feature-do-feature.bx-feature-disabled,
+.bx-feature .bx-feature-element-holder .bx-feature-do-feature.bx-feature-disabled .sys-icon {
+	color: #ddd;
+}

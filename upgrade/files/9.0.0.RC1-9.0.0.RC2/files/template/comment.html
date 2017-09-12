@@ -1,0 +1,40 @@
+<li id="cmt__id__" class="__style_prefix____class__ bx-def-padding-top bx-def-margin-bottom">
+	<a id="__system____id__" class="__style_prefix__-anchor bx-anchor-invisible"></a>
+	<div class="__style_prefix__-cnt__class_cnt__">
+		<div class="__style_prefix__-blink-plate"></div>
+		<div class="__style_prefix__-avatar bx-def-thumb bx-def-thumb-size">__author_unit__</div>
+		<div class="__style_prefix__-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
+			<div class="__style_prefix__-head bx-clearfix">
+				<bx_if:show_reply_to>
+					<span class="__style_prefix__-reply-to">
+						<a href="__par_cmt_link__" title="__par_cmt_title__"><i class="sys-icon reply"></i></a>
+					</span>
+				</bx_if:show_reply_to>
+				<span class="__style_prefix__-username">
+					<bx_if:show_author_link><a href="__author_link__" title="__author_title__">__author_name__</a> </bx_if:show_author_link>
+					<bx_if:show_author_text>__author_name__ </bx_if:show_author_text>
+				</span>
+			</div>
+			<div class="__style_prefix__-subhead bx-def-font-small bx-clearfix">
+				<div class="__style_prefix__-ago">
+					<bx_if:show_ago_link>
+						<a class="__style_prefix__-ago" href="__view_link__" rel="nofollow">__ago__</a>
+					</bx_if:show_ago_link>
+					<bx_if:show_ago_text>__ago__</bx_if:show_ago_text>
+				</div>
+			</div>
+			<div class="__style_prefix__-cont bx-def-margin-sec-topbottom">
+				<div class="__style_prefix__-cont-cnt">
+					<div class="__style_prefix__-body col-gray-dark">
+						__text__<bx_if:show_more><span class="__style_prefix__-body-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.showMore(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __text_more__</span></bx_if:show_more>
+					</div>
+					<bx_if:show_attached>
+						<div class="__style_prefix__-attached bx-def-margin-thd-leftright-neg bx-clearfix">__attached__</div>
+					</bx_if:show_attached>
+				</div>
+			</div>
+			__actions__
+		</div>
+	</div>
+	<ul class="cmts cmts-margin">__replies__</ul>
+</li>
