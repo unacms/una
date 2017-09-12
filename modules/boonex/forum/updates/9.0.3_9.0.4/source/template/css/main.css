@@ -1,0 +1,107 @@
+@import url(../../../../base/text/template/css/main.css);
+
+/*-- Participants --*/
+.bx-forum-participants {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.bx-popup-content .bx-forum-participants {
+    margin-right: 0px;
+}
+
+.bx-forum-participant {
+    display: inline;
+    display: inline-block;
+}
+
+.bx-forum-participant-author {
+    display: inline;
+    display: inline-block;
+}
+
+/*-- Replies --*/
+.cmt.bx-def-box .cmts.cmts-margin {
+	margin-top: 0px;
+}
+.cmt-attached-preview.bx-forum-attached-preview {
+	display: block;
+	float: none;
+
+	width: auto;
+	height: 2rem;
+	line-height: 2rem;
+}
+.cmt-attached-preview.bx-forum-attached-preview a,
+.cmt-attached-preview.bx-forum-attached-preview img,
+.cmt-attached-preview.bx-forum-attached-preview .sys-icon {
+	display: inline-block;
+	vertical-align: middle;
+}
+.cmt-attached-preview.bx-forum-attached-preview img,
+.cmt-attached-preview.bx-forum-attached-preview .sys-icon {
+	width: 2rem;
+	height: 2rem;
+}
+.cmt-attached-preview.bx-forum-attached-preview .sys-icon {
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+/*-- Preview --*/
+.bx-forum-preview {
+    position:relative;
+}
+
+.bx-forum-title {    
+    padding-right:2em;
+    white-space:nowrap;    
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+/*-- Grid --*/
+.bx-forum-grid-field-replies .bx-def-unit-alert-middle {
+    position:static;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.bx-forum-grid-field-replies > span {
+    vertical-align:middle;
+}
+
+.bx-forum-grid-field-replies {
+    white-space:nowrap;
+}
+
+.bx-forum-grid-field-label {
+    display:inline-block;
+}
+
+.bx-forum-preview .bx-forum-grid-field-label {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.bx-forum-preview .bx-def-unit-info {
+    line-height:1.15em;
+}
+
+.bx-forum-grid-author .bx-base-pofile-unit-wo-info {
+	display: inline-block;
+}
+
+.bx-forum-grid-preview div {
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    line-height:1.4em;
+}
+
+/*--- Snippet ---*/
+.bx-base-text-unit .bx-forum-grid-field-replies {
+	display: inline-block;
+	vertical-align: middle;
+}

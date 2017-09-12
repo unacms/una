@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_groups"><![CDATA[Groups]]></string>
+	<string name="_bx_groups_cmts"><![CDATA[Groups' Comments]]></string>
+
+	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
+	<string name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_groups_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
+    <string name="_bx_groups_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+
+	<string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
+	<string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>
+	<string name="_bx_groups_form_profile_display_edit"><![CDATA[Edit Group]]></string>
+	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
+	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Delete Group]]></string>
+	<string name="_bx_groups_form_profile_display_view"><![CDATA[View Group]]></string>
+	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Full View Group]]></string>
+	<string name="_bx_groups_form_profile_display_invite"><![CDATA[Invite to Group]]></string>
+	<string name="_bx_groups_form_entry_input_author"><![CDATA[Author]]></string>
+	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
+    <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
+    <string name="_bx_groups_form_profile_input_sys_allow_view_to"><![CDATA[Privacy]]></string>
+    <string name="_bx_groups_form_profile_input_allow_view_to"><![CDATA[Privacy]]></string>
+    <string name="_bx_groups_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the group and see who's in it, only members can see posts. Secret - only members can find the group and see posts.]]></string>
+    <string name="_bx_groups_form_profile_input_sys_initial_members"><![CDATA[Invite Members]]></string>
+    <string name="_bx_groups_form_profile_input_initial_members"><![CDATA[Invite Members]]></string>
+    <string name="_bx_groups_form_profile_input_sys_group_name"><![CDATA[Group Name]]></string>
+    <string name="_bx_groups_form_profile_input_group_name"><![CDATA[Group Name]]></string>
+    <string name="_bx_groups_form_profile_input_group_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
+    <string name="_bx_groups_form_profile_input_sys_group_desc"><![CDATA[Description]]></string>
+    <string name="_bx_groups_form_profile_input_group_desc"><![CDATA[Description]]></string>
+    <string name="_bx_groups_form_profile_input_sys_group_cat"><![CDATA[Category]]></string>
+	<string name="_bx_groups_form_profile_input_group_cat"><![CDATA[Category]]></string>
+    <string name="_bx_groups_form_profile_input_group_cat_err"><![CDATA[Category field is mandatory]]></string>
+	<string name="_bx_groups_form_profile_input_sys_picture"><![CDATA[Group Picture]]></string>
+	<string name="_bx_groups_form_profile_input_picture"><![CDATA[Upload New Group Picture]]></string>
+	<string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Group picture is mandatory.]]></string>
+	<string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
+	<string name="_bx_groups_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>
+	<string name="_bx_groups_form_profile_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+	<string name="_bx_groups_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this group]]></string>
+	<string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
+	<string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete group.]]></string>
+
+	<string name="_bx_groups_acl_action_create_profile"><![CDATA[Create Group]]></string>
+	<string name="_bx_groups_acl_action_delete_profile"><![CDATA[Delete Group]]></string>
+	<string name="_bx_groups_acl_action_view_profile"><![CDATA[View Group]]></string>
+	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Edit Any Group]]></string>
+
+	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Create Group]]></string>
+	<string name="_bx_groups_page_title_create_profile"><![CDATA[Create Group]]></string>
+	<string name="_bx_groups_page_title_sys_edit_profile"><![CDATA[Edit Group]]></string>
+	<string name="_bx_groups_page_title_edit_profile"><![CDATA[Edit Group]]></string>
+	<string name="_bx_groups_page_title_sys_edit_profile_cover"><![CDATA[Edit Group Cover]]></string>
+	<string name="_bx_groups_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+	<string name="_bx_groups_page_title_sys_delete_profile"><![CDATA[Delete Group]]></string>
+	<string name="_bx_groups_page_title_delete_profile"><![CDATA[Delete Group]]></string>
+	<string name="_bx_groups_page_title_sys_view_profile_closed"><![CDATA[View Closed Group]]></string>
+	<string name="_bx_groups_page_title_sys_view_profile"><![CDATA[View Group]]></string>
+	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
+	<string name="_bx_groups_page_title_browse"><![CDATA[Groups]]></string>
+	<string name="_bx_groups_page_title_browse_by_author"><![CDATA[Groups of {display_name}]]></string>
+	<string name="_bx_groups_page_title_browse_featured"><![CDATA[Featured Groups]]></string>
+	<string name="_bx_groups_page_title_browse_top"><![CDATA[Top Groups]]></string>
+	<string name="_bx_groups_page_title_browse_recent"><![CDATA[New Groups]]></string>
+	<string name="_bx_groups_page_title_browse_connections"><![CDATA[{0} connections]]></string>
+	<string name="_bx_groups_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
+	<string name="_bx_groups_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
+	<string name="_bx_groups_page_title_profile_friends"><![CDATA[Friends]]></string>
+	<string name="_bx_groups_page_title_sys_group_fans"><![CDATA[Members]]></string>
+	<string name="_bx_groups_page_title_group_fans"><![CDATA[Members]]></string>
+	<string name="_bx_groups_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_groups_page_title_profile_comments"><![CDATA[Comments]]></string>
+	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Group Info]]></string>
+	<string name="_bx_groups_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
+	<string name="_bx_groups_page_title_sys_recent"><![CDATA[New Groups]]></string>
+	<string name="_bx_groups_page_title_recent"><![CDATA[New Groups]]></string>
+	<string name="_bx_groups_page_title_sys_manage"><![CDATA[Manage Own Groups]]></string>
+	<string name="_bx_groups_page_title_sys_manage_administration"><![CDATA[Manage All Groups]]></string>
+	<string name="_bx_groups_page_title_manage"><![CDATA[Manage Groups]]></string>
+	<string name="_bx_groups_page_title_sys_top"><![CDATA[Top Groups]]></string>
+	<string name="_bx_groups_page_title_top"><![CDATA[Top Groups]]></string>
+	<string name="_bx_groups_page_title_sys_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
+	<string name="_bx_groups_page_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
+	<string name="_bx_groups_page_title_sys_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_groups_page_title_entries_search"><![CDATA[Search]]></string>
+
+	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Favorite Groups]]></string>
+    <string name="_bx_groups_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Groups]]></string>
+	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Joined Groups]]></string>
+	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Create Group]]></string>
+	<string name="_bx_groups_page_block_title_edit_profile"><![CDATA[Edit Group]]></string>
+	<string name="_bx_groups_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+	<string name="_bx_groups_page_block_title_delete_profile"><![CDATA[Delete Group]]></string>
+	<string name="_bx_groups_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
+	<string name="_bx_groups_page_block_title_profile_info"><![CDATA[Info]]></string>
+	<string name="_bx_groups_page_block_title_system_profile_info"><![CDATA[Info]]></string>
+	<string name="_bx_groups_page_block_title_profile_description"><![CDATA[Description]]></string>
+	<string name="_bx_groups_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
+	<string name="_bx_groups_page_block_title_profile_friends"><![CDATA[Friends]]></string>
+	<string name="_bx_groups_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
+	<string name="_bx_groups_page_block_title_admins"><![CDATA[Administrators]]></string>
+	<string name="_bx_groups_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_groups_page_block_title_fans"><![CDATA[Members]]></string>
+	<string name="_bx_groups_page_block_title_system_fans"><![CDATA[Members]]></string>
+	<string name="_bx_groups_page_block_title_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_groups_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
+	<string name="_bx_groups_page_block_title_profile_actions"><![CDATA[Actions]]></string>
+	<string name="_bx_groups_page_block_title_featured_profiles"><![CDATA[Featured Groups]]></string>
+	<string name="_bx_groups_page_block_title_latest_profiles"><![CDATA[New Groups]]></string>
+	<string name="_bx_groups_page_block_title_system_manage"><![CDATA[Manage Own Groups]]></string>
+	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Manage All Groups]]></string>
+	<string name="_bx_groups_page_block_title_manage"><![CDATA[Manage Groups]]></string>
+    <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Top Groups]]></string>
+    <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
+    <string name="_bx_groups_page_block_title_categories"><![CDATA[Groups Categories]]></string>
+    <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
+    <string name="_bx_groups_page_block_title_search_form"><![CDATA[Search Form]]></string>
+    <string name="_bx_groups_page_block_title_search_results"><![CDATA[Search Results]]></string>
+    <string name="_bx_groups_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
+    <string name="_bx_groups_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
+
+    <string name="_bx_groups_menu_title_submenu"><![CDATA[Groups Submenu]]></string>
+    <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Groups Submenu]]></string>
+    <string name="_bx_groups_menu_set_title_view_profile_actions"><![CDATA[Group Actions]]></string>
+    <string name="_bx_groups_menu_title_view_profile_actions"><![CDATA[Group Actions]]></string>
+    <string name="_bx_groups_menu_set_title_view_profile_actions_more"><![CDATA[Group More Actions]]></string>
+    <string name="_bx_groups_menu_title_view_profile_actions_more"><![CDATA[Group More Actions]]></string>
+    <string name="_bx_groups_menu_set_title_view_profile_submenu"><![CDATA[View Group Submenu]]></string>
+    <string name="_bx_groups_menu_title_view_profile_submenu"><![CDATA[View Group Submenu]]></string>
+    <string name="_bx_groups_menu_title_view_profile_submenu_cover"><![CDATA[Group Cover Submenu]]></string>
+	<string name="_bx_groups_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_groups_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_groups_menu_item_title_system_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_groups_menu_item_title_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_groups_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_groups_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_groups_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_groups_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_groups_menu_item_title_system_edit_profile"><![CDATA[Edit Group]]></string>
+    <string name="_bx_groups_menu_item_title_edit_profile"><![CDATA[Edit Group]]></string>
+    <string name="_bx_groups_menu_item_title_system_delete_profile"><![CDATA[Delete Group]]></string>
+    <string name="_bx_groups_menu_item_title_delete_profile"><![CDATA[Delete Group]]></string>
+    <string name="_bx_groups_menu_item_title_system_delete_account"><![CDATA[Delete Account]]></string>
+    <string name="_bx_groups_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
+    <string name="_bx_groups_menu_item_title_system_profile_type"><![CDATA[Group]]></string>
+    <string name="_bx_groups_menu_item_title_profile_type"><![CDATA[Group]]></string>
+    <string name="_bx_groups_menu_item_title_system_create_profile"><![CDATA[New Group]]></string>
+    <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[New Group]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Members]]></string>
+    <string name="_bx_groups_menu_item_title_view_fans"><![CDATA[Members]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_groups_menu_item_title_view_profile_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
+    <string name="_bx_groups_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_profile_view"><![CDATA[Group]]></string>
+    <string name="_bx_groups_menu_item_title_view_profile_view"><![CDATA[Group]]></string>
+    <string name="_bx_groups_menu_item_title_system_invite"><![CDATA[Invite]]></string>
+    <string name="_bx_groups_menu_item_title_invite"><![CDATA[Invite]]></string>
+
+    <string name="_bx_groups_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
+    <string name="_bx_groups_menu_item_title_befriend"><![CDATA[Add friend]]></string>
+    <string name="_bx_groups_menu_item_title_befriend_sent"><![CDATA[Add friend (requested)]]></string>
+    <string name="_bx_groups_menu_item_title_befriend_confirm"><![CDATA[Accept friend request]]></string>
+    <string name="_bx_groups_menu_item_title_system_unfriend"><![CDATA[Unfriend]]></string>
+    <string name="_bx_groups_menu_item_title_unfriend"><![CDATA[Unfriend]]></string>
+    <string name="_bx_groups_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
+    <string name="_bx_groups_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
+
+    <string name="_bx_groups_menu_item_title_system_become_fan"><![CDATA[Join Group]]></string>
+    <string name="_bx_groups_menu_item_title_become_fan"><![CDATA[Join Group]]></string>
+    <string name="_bx_groups_menu_item_title_become_fan_sent"><![CDATA[Join Group (requested)]]></string>
+    <string name="_bx_groups_menu_item_title_become_fan_confirm"><![CDATA[Accept Request]]></string>
+    <string name="_bx_groups_menu_item_title_system_leave_group"><![CDATA[Leave Group]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group"><![CDATA[Leave Group]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel Request]]></string>
+    <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Reject Request]]></string>
+
+    <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
+    <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Follow]]></string>
+    <string name="_bx_groups_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
+    <string name="_bx_groups_menu_item_title_unsubscribe"><![CDATA[Unfollow]]></string>
+    <string name="_bx_groups_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
+    <string name="_bx_groups_menu_item_title_more_actions"><![CDATA[]]></string>
+    <string name="_bx_groups_menu_item_title_system_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_groups_menu_item_title_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_groups_menu_item_title_system_friend_requests"><![CDATA[Friend requests number]]></string>
+    <string name="_bx_groups_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
+    <string name="_bx_groups_menu_item_title_system_manage_my_groups"><![CDATA[My groups]]></string>
+    <string name="_bx_groups_menu_item_title_manage_my_groups"><![CDATA[{addon} groups]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
+    <string name="_bx_groups_menu_item_title_entries_recent"><![CDATA[New]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_groups_menu_item_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_groups_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_groups_menu_item_title_system_entries_home"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_menu_item_title_entries_home"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_menu_item_title_system_admt_groups"><![CDATA[Groups]]></string>
+	<string name="_bx_groups_menu_item_title_admt_groups"><![CDATA[Groups - {addon} unapproved]]></string>
+	<string name="_bx_groups_menu_item_title_manage_my"><![CDATA[My Groups]]></string>
+	<string name="_bx_groups_menu_item_title_manage_all"><![CDATA[All Groups]]></string>
+	<string name="_bx_groups_menu_item_title_system_entries_top"><![CDATA[Top]]></string>
+	<string name="_bx_groups_menu_item_title_entries_top"><![CDATA[Top]]></string>
+
+	<string name="_bx_groups_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+	<string name="_bx_groups_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+	<string name="_bx_groups_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
+	<string name="_bx_groups_grid_filter_item_title_adm_suspended"><![CDATA[Suspended]]></string>
+	<string name="_bx_groups_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_groups_grid_column_title_adm_name"><![CDATA[Name]]></string>
+    <string name="_bx_groups_grid_column_title_adm_added"><![CDATA[Created]]></string>
+    <string name="_bx_groups_grid_column_title_adm_account"><![CDATA[Account]]></string>
+    <string name="_bx_groups_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_groups_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_groups_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
+	<string name="_bx_groups_grid_action_err_delete"><![CDATA[Cannot delete the selected group(s).]]></string>
+	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+
+    <string name="_bx_groups_chart_growth"><![CDATA[Groups: Growth]]></string>
+    <string name="_bx_groups_chart_growth_speed"><![CDATA[Groups: Growth Speed]]></string>
+
+    <string name="_bx_groups_search_extended"><![CDATA[Groups Search]]></string>
+    <string name="_bx_groups_search_extended_cmts"><![CDATA[Groups Comments Search]]></string>
+
+    <string name="_bx_groups_txt_account_pending"><![CDATA[This group is pending approval, please wait until it is activated.]]></string>
+    <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
+    <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>
+    <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
+    <string name="_bx_groups_txt_sample_single_with_article"><![CDATA[a group]]></string>
+    <string name="_bx_groups_txt_sample_comment_single"><![CDATA[group's comment]]></string>
+    <string name="_bx_groups_txt_sample_vote_single"><![CDATA[group's vote]]></string>
+    <string name="_bx_groups_txt_to_admins"><![CDATA[To Admins]]></string>
+    <string name="_bx_groups_txt_from_admins"><![CDATA[From Admins]]></string>
+    <string name="_bx_groups_txt_private_group"><![CDATA[Private group]]></string>
+
+	<string name="_bx_groups_alert_action_fan_added"><![CDATA[member joined]]></string>
+    <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group has got new member - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_groups_alert_action_join_request"><![CDATA[join request]]></string>
+    <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group has new request from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_groups_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> group timeline  from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+
+    <string name="_bx_groups_pre_lists_cats"><![CDATA[Group categories]]></string>
+    <string name="_bx_groups_cat_General"><![CDATA[General]]></string>
+    <string name="_bx_groups_cat_Business"><![CDATA[Business]]></string>
+    <string name="_bx_groups_cat_Interests"><![CDATA[Interests]]></string>
+    <string name="_bx_groups_cat_Causes"><![CDATA[Causes]]></string>
+    <string name="_bx_groups_cat_Fun"><![CDATA[Fun]]></string>
+    <string name="_bx_groups_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
+
+    <string name="_bx_groups_email_join_request"><![CDATA[Group join request]]></string>
+    <string name="_bx_groups_email_join_request_subject"><![CDATA[Request to join your group]]></string>
+    <string name="_bx_groups_email_join_request_body"><![CDATA[{email_header}
+<p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> group from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
+{email_footer}]]></string>
+
+    <string name="_bx_groups_email_join_reject"><![CDATA[Group join request was rejected]]></string>
+    <string name="_bx_groups_email_join_reject_subject"><![CDATA[Request to join a group was rejected]]></string>
+    <string name="_bx_groups_email_join_reject_body"><![CDATA[{email_header}
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> group was rejected by group admin.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_groups_email_join_confirm"><![CDATA[Group join request was confirmed]]></string>
+    <string name="_bx_groups_email_join_confirm_subject"><![CDATA[Your request to join a group was confirmed]]></string>
+    <string name="_bx_groups_email_join_confirm_body"><![CDATA[{email_header}
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> group was confirmed by the group admin.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_groups_email_fan_remove"><![CDATA[Profile was removed from group fans]]></string>
+    <string name="_bx_groups_email_fan_remove_subject"><![CDATA[Your profile was removed from the group]]></string>
+    <string name="_bx_groups_email_fan_remove_body"><![CDATA[{email_header}
+<p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> group by the group admin.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_groups_email_fan_become_admin"><![CDATA[Group admin status was granted]]></string>
+    <string name="_bx_groups_email_fan_become_admin_subject"><![CDATA[You are a group admin now]]></string>
+    <string name="_bx_groups_email_fan_become_admin_body"><![CDATA[{email_header}
+<p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> group now.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_groups_email_admin_become_fan"><![CDATA[Group admin status was revoked]]></string>
+    <string name="_bx_groups_email_admin_become_fan_subject"><![CDATA[Your group admin status was revoked]]></string>
+    <string name="_bx_groups_email_admin_become_fan_body"><![CDATA[{email_header}
+<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> group.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_groups_email_invitation"><![CDATA[Invitation to group]]></string>
+    <string name="_bx_groups_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" group]]></string>
+    <string name="_bx_groups_email_invitation_body"><![CDATA[{email_header}
+<p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} group</a>.</p>
+{email_footer}]]></string>
+</resources>
