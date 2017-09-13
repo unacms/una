@@ -16,6 +16,8 @@ require_once($aPathInfo['dirname'] . '/classes/BxDolUpgradeUtil.php');
 require_once($aPathInfo['dirname'] . '/classes/BxDolUpgradeDb.php');
 
 bx_import('BxDolCron');
+bx_import('BxDolLanguages');
+bx_import('BxDolEmailTemplates');
 
 class BxDolUpgradeCron extends BxDolCron
 {
