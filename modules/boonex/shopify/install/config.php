@@ -54,21 +54,6 @@ $aConfig = array(
     	'trigger_profile_view_submenu'
     ),
 
-    /**
-     * Storages.
-     */
-    'storages' => array(
-    	'bx_shopify_files'
-    ),
-
-    /**
-     * Transcoders.
-     */
-    'transcoders' => array(
-		'bx_shopify_preview',
-        'bx_shopify_gallery',
-    ),
-
 	/**
      * Extended Search Forms.
      */
@@ -86,7 +71,6 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
-    	'process_storages' => 1,
     	'process_esearches' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
@@ -102,17 +86,14 @@ $aConfig = array(
         'process_menu_triggers' => 1,
         'process_page_triggers' => 1,
     	'process_esearches' => 1,
-    	'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
     	'update_relations' => 1,
-    	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
     'disable_failed' => array (
-    	'register_transcoders' => 1,
     	'clear_db_cache' => 1,
     ),
 

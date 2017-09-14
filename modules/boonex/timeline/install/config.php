@@ -55,8 +55,9 @@ $aConfig = array(
     	'trigger_group_view_submenu',
     ),
 
-    /**
-     * Storages.
+	/**
+     * Storage objects to automatically delete files from upon module uninstallation.
+     * Note. Don't add storage objects used in transcoder objects.
      */
     'storages' => array(
     	'bx_timeline_photos',
@@ -83,7 +84,6 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
-    	'process_storages' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
         'clear_db_cache' => 1,
