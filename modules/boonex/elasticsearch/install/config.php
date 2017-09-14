@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_elasticsearch',
     'title' => 'ElasticSearch',
     'note' => 'Allows to translate content of the site on different languages',
-    'version' => '9.0.1.DEV',
+    'version' => '9.0.2.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
