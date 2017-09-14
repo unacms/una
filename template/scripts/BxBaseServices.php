@@ -107,6 +107,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $oAccount->$sFunc();
     }
 
+    public function serviceAlertResponseProcessInstalled()
+    {
+        BxDolTranscoderImage::registerHandlersSystem();
+    }
+
     public function serviceAlertResponseProcessStorageChange ($oAlert)
     {
         if ('sys_storage_default' != $oAlert->aExtras['option'])

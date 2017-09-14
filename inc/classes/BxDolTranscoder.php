@@ -187,6 +187,26 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Register system handlers
+     */
+    static public function registerHandlersSystem()
+    {
+        $sPrefix = 'sys_';
+
+        $aResults = array();
+        $aTranscoders = BxDolTranscoderQuery::getTranscoderObjects();
+        foreach($aTranscoders as $aTranscoder) {
+            if(strncasecmp($aTranscoder['object'], $sPrefix, strlen($sPrefix)) !== 0)
+                continue;
+
+            $aResults[] = $aTranscoder['object'];
+        }
+
+        if(!empty($aResults))
+            self::registerHandlersArray($aResults);
+    }
+
+    /**
      * Unregister handlers array
      * It can be called upon module disbale event.
      * @param $mixed array of transcoders objects, or just one object
