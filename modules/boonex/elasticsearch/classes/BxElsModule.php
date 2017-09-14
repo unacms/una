@@ -23,26 +23,23 @@ class BxElsModule extends BxBaseModGeneralModule
 
     public function actionDebug($sType = '', $sIndex = '')
     {
-        bx_import('Api', $this->_aModule);
-        $o = new BxElsApi();
-
         if(empty($sIndex))
             $sIndex = $this->_oConfig->getIndex();
 
         // search all
-        $mixed = $o->api('/' . $sIndex . (!empty($sType) ? '/' . $sType : '') . '/_search?q=*');
-        // $mixed = $o->api('/testdata/_search', ['query' => ['match_all' => (object)[]]]);
+        $mixed = $this->_oApi->api('/' . $sIndex . (!empty($sType) ? '/' . $sType : '') . '/_search?q=*');
+        // $mixed = $this->_oApi->api('/testdata/_search', ['query' => ['match_all' => (object)[]]]);
 
         // search for the term
-        // $mixed = $o->api('/testdata/_search', ['query' => ['simple_query_string' => ['query' => 'palm']]]);
-        // $mixed = $o->api('/testdata/_search?q=palm');
+        // $mixed = $this->_oApi->api('/testdata/_search', ['query' => ['simple_query_string' => ['query' => 'palm']]]);
+        // $mixed = $this->_oApi->api('/testdata/_search?q=palm');
 
         // search in a field
-        // $mixed = $o->api('/testdata/_search', ['query' => ['simple_query_string' => ['query' => 'palm', 'fields' => ['name']]]]);
+        // $mixed = $this->_oApi->api('/testdata/_search', ['query' => ['simple_query_string' => ['query' => 'palm', 'fields' => ['name']]]]);
 
         // compound searchs
         /*
-        $mixed = $o->api('/testdata/_search', array(
+        $mixed = $this->_oApi->api('/testdata/_search', array(
         	'query' => array(
             	'bool' => array(
             		'filter' => array(
@@ -81,36 +78,36 @@ class BxElsModule extends BxBaseModGeneralModule
 		*/
 
         // delete index
-        //$mixed = $o->api('/' . $this->_oConfig->getIndex(), array(), 'delete'); 
+        //$mixed = $this->_oApi->api('/' . $this->_oConfig->getIndex(), array(), 'delete'); 
 
         // delete indexed doc
-        //$mixed = $o->api('/' . $this->_oConfig->getIndex() . '/trees/23', [], 'delete'); 
+        //$mixed = $this->_oApi->api('/' . $this->_oConfig->getIndex() . '/trees/23', [], 'delete'); 
 
         // get indexed doc
-        // $mixed = $o->api('/testdata/trees/23'); 
+        // $mixed = $this->_oApi->api('/testdata/trees/23'); 
 
         // index a doc
-        // $mixed = $o->indexData('testdata', 'trees', 23, ['name' => 'apple tree', 'fruits' => 'apples']); 
-        // $mixed = $o->indexData('testdata', 'trees', 24, ['name' => 'palm', 'fruits' => 'coconuts']);
+        // $mixed = $this->_oApi->indexData('testdata', 'trees', 23, ['name' => 'apple tree', 'fruits' => 'apples']); 
+        // $mixed = $this->_oApi->indexData('testdata', 'trees', 24, ['name' => 'palm', 'fruits' => 'coconuts']);
 
         // get indexes
-        // $mixed = $o->api('/_cat/indices'); 
+        // $mixed = $this->_oApi->api('/_cat/indices'); 
 
         // add index
-        // $mixed = $o->api('/testdata', [], 'PUT'); 
+        // $mixed = $this->_oApi->api('/testdata', [], 'PUT'); 
 
         // test
-        //$mixed = $o->api('/_cat/health'); 
+        //$mixed = $this->_oApi->api('/_cat/health'); 
         
         // mapping put
-        //$mixed = $o->api('/' . $sIndex . '/_mapping/bx_forum', array('properties' => array('featured' => array('type' => 'long'))));
+        //$mixed = $this->_oApi->api('/' . $sIndex . '/_mapping/bx_forum', array('properties' => array('featured' => array('type' => 'long'))));
 
         // mapping get
-        //$mixed = $o->api('/' . $sIndex . '/_mapping' . (!empty($sType) ? '/' . $sType : ''));
+        //$mixed = $this->_oApi->api('/' . $sIndex . '/_mapping' . (!empty($sType) ? '/' . $sType : ''));
 
         echo '<pre>';
         if (null === $mixed)
-            echo $o->getErrorMsg();
+            echo $this->_oApi->getErrorMsg();
         else
             var_dump($mixed);
         echo '</pre>';
@@ -263,10 +260,7 @@ class BxElsModule extends BxBaseModGeneralModule
         if(empty($sIndex))
             $sIndex = $this->_oConfig->getIndex();
 
-        bx_import('Api', $this->_aModule);
-        $oApi = new BxElsApi();
-
-        $mixedResult = $oApi->deleteData($sIndex, $mixedContentInfo->getName(), $iContentId);
+        $mixedResult = $this->_oApi->deleteData($sIndex, $mixedContentInfo->getName(), $iContentId);
         if($mixedResult === null)
             return false;
 
@@ -281,9 +275,6 @@ class BxElsModule extends BxBaseModGeneralModule
         $aTypes = !empty($sType) ? array($sType) : array_keys(BxDolContentInfo::getSystems());
         if(empty($aTypes) || !is_array($aTypes))
             return false;
-
-        bx_import('Api', $this->_aModule);
-        $oApi = new BxElsApi();
 
         foreach($aTypes as $sType) {
             $oContentInfo = BxDolContentInfo::getObjectInstance($sType);
