@@ -119,6 +119,8 @@ class BxDolInstallController
         $this->_oView->setToolbarItem('question', 'http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#InstallScript-Step5-CronJobs', _t('_sys_inst_help_finish'), '_blank');
 
         $this->_oView->pageEnd($this->_getTitle());
+
+        bx_alert('system', 'installed', 0);
     }
 
     function actionRemoveInstall ()
