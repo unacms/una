@@ -24,6 +24,29 @@ class BxForumCmts extends BxTemplCmts
         $this->setTableNameFiles('bx_forum_files');
     }
 
+    public function registerTranscoders()
+    {
+        parent::registerTranscoders();
+
+        $aTranscoders = array(
+            $this->getTranscoderPreviewName()
+        );
+
+        BxDolTranscoderImage::registerHandlersArray($aTranscoders);
+    }
+
+    public function unregisterTranscoders()
+    {
+        parent::unregisterTranscoders();
+
+        $aTranscoders = array(
+            $this->getTranscoderPreviewName()
+        );
+
+        BxDolTranscoderImage::unregisterHandlersArray($aTranscoders);
+        BxDolTranscoderImage::cleanupObjectsArray($aTranscoders);
+    }
+
 	public function isPostReplyAllowed($isPerformAction = false)
     {
     	$aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iId);

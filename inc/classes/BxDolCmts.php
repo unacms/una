@@ -566,11 +566,39 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return true;
     }
 
+    public static function onModuleEnable ($sModuleName)
+    {
+        $aSystems = self::getSystems();
+        foreach($aSystems as $sSystem => $aSystem) {
+            if ($sModuleName !== $aSystem['module'])
+                continue;
+
+            $o = self::getObjectInstance($sSystem, 0);
+            $o->registerTranscoders();
+        }
+
+        return true;
+    }
+
+    public static function onModuleDisable ($sModuleName)
+    {
+        $aSystems = self::getSystems();
+        foreach($aSystems as $sSystem => $aSystem) {
+            if ($sModuleName !== $aSystem['module'])
+                continue;
+
+            $o = self::getObjectInstance($sSystem, 0);
+            $o->unregisterTranscoders();
+        }
+
+        return true;
+    }
+
     public static function onModuleUninstall ($sModuleName, &$iFiles = null)
     {
         $aSystems = self::getSystems();
         foreach($aSystems as $sSystem => $aSystem) {
-            if (0 !== strncasecmp($sModuleName, $sSystem, strlen($sModuleName)))
+            if ($sModuleName !== $aSystem['module'])
                 continue;
 
             $o = self::getObjectInstance($sSystem, 0);
@@ -1009,6 +1037,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         return $aResult;
     }
+
+    /**
+     * Overwrite this method and register transcoder(s) if comments object uses custom transcoder(s), 
+     * which differs from default one 'sys_cmts_images_preview'
+     */
+    public function registerTranscoders()
+    {}
+
+	/**
+     * Overwrite this method and unregister transcoder(s) if comments object uses custom transcoder(s), 
+     * which differs from default one 'sys_cmts_images_preview'
+     */
+    public function unregisterTranscoders()
+    {}
 
     public function serviceGetSearchResultExtended($aParams)
     {

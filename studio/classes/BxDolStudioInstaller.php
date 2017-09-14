@@ -200,6 +200,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $oFile->copy($sSrcPath, $sDstPath);
         }
 
+        $aResultBefore = $this->_onInstallBefore();
+        if($aResultBefore !== BX_DOL_STUDIO_INSTALLER_SUCCESS)
+            return array(
+                'message' => $aResultBefore['content'],
+                'result' => false
+            );
+
         //--- Check actions ---//
         $aResult = $this->_perform('install', $aParams);
         if($aResult['result']) {
@@ -224,6 +231,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 $this->oDb->insertModuleTrack($iModuleId, $aFile);
 
             $this->cleanupMemoryAfterAction($this->_aConfig['home_uri'], $iModuleId);
+
+            $this->_onInstallAfter();
 
             if(!empty($this->_aConfig['install_success']))
             	$this->_perform('install_success', $aParams);
@@ -285,6 +294,14 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'result' => false
             );
 
+        //--- Process storages and comments ---//
+        $aResultBefore = $this->_onUninstallBefore();
+        if($aResultBefore !== BX_DOL_STUDIO_INSTALLER_SUCCESS)
+            return array(
+                'message' => $aResultBefore['content'],
+                'result' => false
+            );
+
         $aResult = $this->_perform('uninstall', $aParams);
         if($aResult['result']) {
             $iModuleId = $this->oDb->deleteModule($this->_aConfig);
@@ -296,6 +313,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $oLanguages->compileLanguage();
 
             $this->cleanupMemoryAfterAction($this->_aConfig['home_uri'], $iModuleId);
+
+            $this->_onUninstallAfter();
 
             if(!empty($this->_aConfig['uninstall_success']))
             	$this->_perform('uninstall_success', $aParams);
@@ -389,11 +408,20 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if ($aResult && !$aResult['result'])
             return $aResult;
 
+        $aResultBefore = $this->_onEnableBefore();
+        if($aResultBefore !== BX_DOL_STUDIO_INSTALLER_SUCCESS)
+            return array(
+                'message' => $aResultBefore['content'],
+                'result' => false
+            );
+
         $aResult = $this->_perform('enable', $aParams);
         if($aResult['result']) {
             $this->oDb->enableModuleByUri($aModule['uri']);
 
             $this->cleanupMemoryAfterAction($aModule['uri'], $aModule['id']);
+
+		    $this->_onEnableAfter();
 
             if(!empty($this->_aConfig['enable_success']))
             	$this->_perform('enable_success', $aParams);
@@ -456,11 +484,20 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'result' => false
             );
 
+        $aResultBefore = $this->_onDisableBefore();
+        if($aResultBefore !== BX_DOL_STUDIO_INSTALLER_SUCCESS)
+            return array(
+                'message' => $aResultBefore['content'],
+                'result' => false
+            );
+
         $aResult = $this->_perform('disable', $aParams);
         if($aResult['result']) {
             $this->oDb->disableModuleByUri($aModule['uri']);
 
             $this->cleanupMemoryAfterAction($aModule['uri'], $aModule['id']);
+
+            $this->_onDisableAfter();
 
             if(!empty($this->_aConfig['disable_success']))
             	$this->_perform('disable_success', $aParams);
@@ -765,57 +802,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
-    /**
-     * 
-     * Storage objects to automatically delete files from upon module uninstallation.
-     * Note. Don't add storage objects used in transcoder objects.
-     * @param string $sOperation - operation type.
-     */
-    protected function actionProcessStorages($sOperation)
-    {
-    	if(empty($this->_aConfig['storages'])) 
-        	return BX_DOL_STUDIO_INSTALLER_FAILED;
-
-		// check if module is already waiting while files are deleting
-        if(self::isModulePendingUninstall($this->_aConfig['home_uri']))
-			return array(
-				'code' => BX_DOL_STUDIO_INSTALLER_FAILED,
-				'content' => _t('_adm_err_modules_pending_uninstall_already'),
-            );
-
-		$bSetModulePendingUninstall = false;
-
-        // queue for deletion storage files        
-        foreach($this->_aConfig['storages'] as $s)
-			if(($o = BxDolStorage::getObjectInstance($s)) && $o->queueFilesForDeletionFromObject())
-                $bSetModulePendingUninstall = true;
-
-        // delete comments and queue for deletion comments attachments
-        $iFiles = 0;
-        BxDolCmts::onModuleUninstall($this->_aConfig['name'], $iFiles);
-        if($iFiles)
-			$bSetModulePendingUninstall = true;
-
-        // if some files were added to the queue, set module as pending uninstall
-        if ($bSetModulePendingUninstall) {
-            self::setModulePendingUninstall($this->_aConfig['home_uri']);
-            return array(
-            	'code' => BX_DOL_STUDIO_INSTALLER_FAILED,
-                'content' => _t('_adm_err_modules_pending_uninstall'),
-            );
-        }
-
-		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
-    }
-
-	protected function actionProcessStoragesFailed($mixedResult)
-    {
-    	if(is_int($mixedResult))
-    		return $this->actionOperationFailed($mixedResult);
-
-        return $mixedResult['content'];
-    }
-
 	/**
      * 
      * Process the list of extended search forms provided in config array. 
@@ -884,6 +870,80 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                     unset($GLOBALS[$sKey]);
 
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+    }
+
+    protected function _onInstallBefore()
+    {
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    protected function _onInstallAfter()
+    {
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    protected function _onEnableBefore()
+    {
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    protected function _onEnableAfter()
+    {
+        BxDolCmts::onModuleEnable($this->_aConfig['name']);
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    protected function _onDisableBefore()
+    {
+        BxDolCmts::onModuleDisable($this->_aConfig['name']);
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    protected function _onDisableAfter()
+    {
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    protected function _onUninstallBefore()
+    {
+		// check if module is already waiting while files are deleting
+        if(self::isModulePendingUninstall($this->_aConfig['home_uri']))
+			return array(
+				'code' => BX_DOL_STUDIO_INSTALLER_FAILED,
+				'content' => _t('_adm_err_modules_pending_uninstall_already'),
+            );
+
+		$bSetModulePendingUninstall = false;
+
+		// delete comments and queue for deletion comments attachments
+        $iFiles = 0;
+        BxDolCmts::onModuleUninstall($this->_aConfig['name'], $iFiles);
+        if($iFiles)
+			$bSetModulePendingUninstall = true;
+
+        // queue for deletion storage files
+        if(!empty($this->_aConfig['storages']) && is_array($this->_aConfig['storages']))        
+            foreach($this->_aConfig['storages'] as $s)
+    			if(($o = BxDolStorage::getObjectInstance($s)) && $o->queueFilesForDeletionFromObject())
+                    $bSetModulePendingUninstall = true;       
+
+        // if some files were added to the queue, set module as pending uninstall
+        if ($bSetModulePendingUninstall) {
+            self::setModulePendingUninstall($this->_aConfig['home_uri']);
+            return array(
+            	'code' => BX_DOL_STUDIO_INSTALLER_FAILED,
+                'content' => _t('_adm_err_modules_pending_uninstall'),
+            );
+        }
+
+		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    protected function _onUninstallAfter()
+    {
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
 	protected function _perform($sOperationName, $aParams = array())
