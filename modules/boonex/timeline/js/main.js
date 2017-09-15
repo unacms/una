@@ -224,10 +224,18 @@ BxTimelineMain.prototype._loading = function(e, bShow) {
 	bx_loading(oParent, bShow);
 };
 
-BxTimelineMain.prototype._getView = function(oView) {
-	oView = $(oView);
+BxTimelineMain.prototype._getView = function(oElement) {
+	oElement = $(oElement);
+
+	var oView = oElement;
 	if(!oView.hasClass(this.sClassView))
-		oView = oView.parents('.bx-db-container:first').find('.' + this.sClassView + ':first');
+		oView = oElement.parents('.' + this.sClassView + ':first');
+
+	if(!oView.hasClass(this.sClassView))
+		oView = oElement.parents('.bx-page-block-container:first').find('.' + this.sClassView + ':first');
+
+	if(oView.hasClass(this.sClassView + '-item'))
+		return 'item';
 
 	if(oView.hasClass(this.sClassView + '-timeline'))
 		return 'timeline';

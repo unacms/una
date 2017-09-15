@@ -16,6 +16,7 @@ define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
 define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
 
+define('BX_TIMELINE_VIEW_ITEM', 'item');
 define('BX_TIMELINE_VIEW_TIMELINE', 'timeline');
 define('BX_TIMELINE_VIEW_OUTLINE', 'outline');
 define('BX_TIMELINE_VIEW_SEARCH', 'search');

@@ -11,6 +11,7 @@
 
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
+    protected static $_sTmplContentItemItem;
     protected static $_sTmplContentItemOutline;
     protected static $_sTmplContentItemTimeline;
     protected static $_sTmplContentItemSearch;
@@ -130,7 +131,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return MsgBox($mixedResult);
 
         $aParams = array(
-        	'view' => BX_TIMELINE_VIEW_DEFAULT, 
+        	'view' => BX_TIMELINE_VIEW_ITEM, 
         	'type' => BX_TIMELINE_TYPE_ITEM
         );
         $sContent = $this->getPost($aEvent, $aParams);
@@ -152,7 +153,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
         	'content' => $sContent,
         	'view_image_popup' => $this->_getImagePopup($aParams),
-            'js_content' => $this->getJsCode('view')
+            'js_content' => $this->getJsCode('view') . $this->getJsCode('repost')
         ));
     }
 
