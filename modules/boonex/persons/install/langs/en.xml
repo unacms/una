@@ -77,6 +77,7 @@
 	<string name="_bx_persons_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
 	<string name="_bx_persons_page_title_browse_favorites"><![CDATA[{0} favorites]]></string>
 	<string name="_bx_persons_page_title_browse_by_acl"><![CDATA[{0} People]]></string>
+	<string name="_bx_persons_page_title_browse_by_cmts"><![CDATA[People's Comments]]></string>
 	<string name="_bx_persons_page_title_sys_profile_favorites"><![CDATA[Favorite persons]]></string>
 	<string name="_bx_persons_page_title_profile_favorites"><![CDATA[Favorite persons]]></string>
 	<string name="_bx_persons_page_title_sys_profile_friends"><![CDATA[Friends]]></string>

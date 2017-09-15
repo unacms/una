@@ -379,7 +379,8 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
-('bx_persons', '_bx_persons', @iSearchOrder + 1, 'BxPersonsSearchResult', 'modules/boonex/persons/classes/BxPersonsSearchResult.php');
+('bx_persons', '_bx_persons', @iSearchOrder + 1, 'BxPersonsSearchResult', 'modules/boonex/persons/classes/BxPersonsSearchResult.php'),
+('bx_persons_cmts', '_bx_persons_cmts', @iSearchOrder + 2, 'BxPersonsCmtsSearchResult', 'modules/boonex/persons/classes/BxPersonsCmtsSearchResult.php');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);

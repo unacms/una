@@ -41,7 +41,7 @@ DELETE FROM `sys_objects_report` WHERE `name` = 'bx_persons';
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_persons';
 
 -- SEARCH
-DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_persons';
+DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_persons', 'bx_persons_cmts');
 
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_persons%';
