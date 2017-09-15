@@ -75,6 +75,7 @@
 	<string name="_bx_orgs_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
 	<string name="_bx_orgs_page_title_browse_favorites"><![CDATA[{0} избранных]]></string>
 	<string name="_bx_orgs_page_title_browse_by_acl"><![CDATA[Организации уровня {0}]]></string>
+	<string name="_bx_orgs_page_title_browse_by_cmts"><![CDATA[Организации - Комментарии]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_favorites"><![CDATA[Избранные организации]]></string>
 	<string name="_bx_orgs_page_title_profile_favorites"><![CDATA[Избранные организации]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_friends"><![CDATA[Друзья]]></string>

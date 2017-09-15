@@ -44,7 +44,7 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_organizations';
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_organizations_cats';
 
 -- SEARCH
-DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
+DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_organizations', 'bx_organizations_cmts');
 
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_organizations%';

@@ -392,7 +392,8 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
-('bx_organizations', '_bx_orgs', @iSearchOrder + 1, 'BxOrgsSearchResult', 'modules/boonex/organizations/classes/BxOrgsSearchResult.php');
+('bx_organizations', '_bx_orgs', @iSearchOrder + 1, 'BxOrgsSearchResult', 'modules/boonex/organizations/classes/BxOrgsSearchResult.php'),
+('bx_organizations_cmts', '_bx_orgs_cmts', @iSearchOrder + 2, 'BxOrgsCmtsSearchResult', 'modules/boonex/organizations/classes/BxOrgsCmtsSearchResult.php');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
