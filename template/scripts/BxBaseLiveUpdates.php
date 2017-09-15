@@ -22,11 +22,13 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
         if(!$this->_iProfileId)
             return '';
 
+        $aCached = $this->_getCachedData();
+
         $aParams = array_merge(array(
         	'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
         	'sObjName' => $this->_sJsObject,
         	'iInterval' => $this->_iInterval,
-        	'aSystemsActive' => $this->_aSystemsActive,
+        	'aSystemsActive' => array_intersect_key($aCached, array_flip($this->_aSystemsActive)),
         	'bServerRequesting' => !empty($this->_aSystems)
         ), $aParams);
 

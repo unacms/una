@@ -72,39 +72,42 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
 		$mixedSystemsActive = bx_get('systems_active');
 		if($mixedSystemsActive !== false)
-			$this->_aSystemsActive = $mixedSystemsActive;
+			$this->_aSystemsActive = array_keys($mixedSystemsActive);
 
 		$this->_aSystems = $this->_getCachedSystems();
     	if(empty($this->_aSystems) || !is_array($this->_aSystems))
     		return array();
 
-		$aCached = $this->_getCachedData();
-		$aRequested = $this->_getRequestedData($iIndex, true, $aCached);
+        $aCurrent = $mixedSystemsActive;
+        if(empty($aCurrent) || !is_array($aCurrent))
+		    $aCurrent = $this->_getCachedData();
+
+		$aRequested = $this->_getRequestedData($iIndex, true, $aCurrent);
 
 		$aResult = array();
 		$bUpdateCache = false;
 		foreach($aRequested as $sName => $aData) {
-			$bCached = isset($aCached[$sName]); 
-			if($bCached && (int)$aCached[$sName] == (int)$aData['count'])
-				continue;
+			if(isset($aCurrent[$sName])) {
+                if((int)$aCurrent[$sName] == (int)$aData['count'])			    
+    				continue;
 
-			if($bCached) {
-				$aResultData = array('count_new' => $aData['count'], 'count_old' => $aCached[$sName]);
+				$aResultData = array('count_new' => $aData['count'], 'count_old' => $aCurrent[$sName]);
 				if(isset($aData['data']))
 					$aResultData = array_merge($aResultData, $aData['data']);
 	
 				$aResult[] = array(
+					'system' => $sName, 
 					'data' => $aResultData,
 					'method' => $aData['method']
 				);
 			}
 
-			$aCached[$sName] = $aData['count'];
+			$aCurrent[$sName] = $aData['count'];
 			$bUpdateCache = true;
 		}
 
 		if($bUpdateCache)
-			$this->_updateCached('data', $aCached);
+			$this->_updateCached('data', $aCurrent);
 
     	return $aResult;
     }

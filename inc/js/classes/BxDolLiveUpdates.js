@@ -57,6 +57,9 @@ BxDolLiveUpdates.prototype.perform = function() {
         },
         function(aData) {
         	$.each(aData, function(iIndex, oValue) {
+        		if(oValue.system && $this._aSystemsActive[oValue.system] != undefined && oValue.data)
+        			$this._aSystemsActive[oValue.system] = oValue.data.count_new;
+
         		if(oValue.method) {
         			var oFunc = function(oData) {
         				eval(oValue.method);
