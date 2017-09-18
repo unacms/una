@@ -253,6 +253,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if(!$aGhostFiles)
             return false;
 
+        $aAttachmnts = array();
         foreach ($aGhostFiles as $k => $a) {
 
             $isImage = $oTranscoder && (0 === strncmp('image/', $a['mime_type'], 6)); // preview for images, transcoder object for preview must be defined
@@ -261,7 +262,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
 
             // images are displayed with preview and popup upon clicking
-            $aGhostFiles[$k]['bx_if:image'] = array (
+            $a['bx_if:image'] = array (
                 'condition' => $isImage,
                 'content' => array (
                     'url_original' => $sUrlOriginal,
@@ -273,7 +274,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             );
 
             // videos are displayed inline
-            $aGhostFiles[$k]['bx_if:video'] = array (
+            $a['bx_if:video'] = array (
                 'condition' => $isVideo,
                 'content' => array (
                     'video' => $isVideo && $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
@@ -286,7 +287,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             );
 
             // non-images are displayed as text links to original file
-            $aGhostFiles[$k]['bx_if:not_image'] = array (
+            $a['bx_if:not_image'] = array (
                 'condition' => !$isImage && !$isVideo,
                 'content' => array (
                     'url_original' => $sUrlOriginal,
@@ -294,9 +295,11 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'file_name' => bx_process_output($a['file_name']),
                 ),
             );
+
+            $aAttachmnts[] = $a;
         }
 
-        return $aGhostFiles;
+        return $aAttachmnts;
     }
 }
 
