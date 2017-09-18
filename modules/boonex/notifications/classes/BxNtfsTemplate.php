@@ -94,7 +94,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aEvent['content']['owner_name'] = $sOwnerName;
         $aEvent['content']['owner_link'] = $sOwnerUrl;
         if(!empty($aEvent['content']['entry_caption']))
-            $aEvent['content']['entry_caption'] = bx_process_output($aEvent['content']['entry_caption'], BX_DATA_HTML);
+            $aEvent['content']['entry_caption'] = bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT_MULTILINE);
 
         foreach($aEvent['content'] as $sKey => $sValue)
         	if(substr($sValue, 0, 1) == '_')
