@@ -1113,18 +1113,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
                 if(!empty($aPhotos) && is_array($aPhotos)) {
-                    $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'));
-
                     $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
+                    $oTranscoderBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
 
                     foreach($aPhotos as $iPhotoId) {
-                        $sPhotoSrcOrig = $oStorage->getFileUrlById($iPhotoId);
+                        $sPhotoSrcBig = $oTranscoderBig->getFileUrl($iPhotoId);
 
                         $aResult['content']['images'][] = array(
                             'src' => $oTranscoder->getFileUrl($iPhotoId),
-                            'src_orig' => $sPhotoSrcOrig,
+                            'src_orig' => $sPhotoSrcBig,
                             'title' => '',
-                            'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcOrig . '\')'
+                            'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcBig . '\')'
                         );
                     }
                 }

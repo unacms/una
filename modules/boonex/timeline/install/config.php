@@ -70,6 +70,7 @@ $aConfig = array(
     'transcoders' => array(
     	'bx_timeline_photos_preview',
     	'bx_timeline_photos_view',
+        'bx_timeline_photos_big',
     	'bx_timeline_videos_poster',
     	'bx_timeline_videos_mp4',
     	'bx_timeline_videos_webm'

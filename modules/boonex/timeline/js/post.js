@@ -223,6 +223,7 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 	if(!$.trim(oData.item).length) 
 		return;
 
+	var $this = this;
 	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
 
 	var oLoadMore = oView.find('.' + this.sSP + '-load-more');
@@ -249,12 +250,16 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 			oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
 			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed, function() {
 				$(this).find('a.bx-link').dolConverLinks();
+
+				$this.initFlickity();
 			});
 			break;
 
 		case 'outline':
 			this.prependMasonry(oContent, function(oItems) {
 				$(oItems).find('a.bx-link').dolConverLinks();
+
+				$this.initFlickity();
 			});
 			break;
 	}
