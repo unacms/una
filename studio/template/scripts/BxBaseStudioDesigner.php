@@ -358,9 +358,16 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     	$sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
+        $oDbSettings = new BxDolStudioSettingsQuery();
+
         $aFormInputs = array();
         $aTmplVarsCovers = array();
         foreach($this->aCovers as $sCover => $aCover) {
+            $aSetting = array();
+            $oDbSettings->getOptions(array('type' => 'by_name', 'value' => $aCover['setting']), $aSetting, false);
+            if(empty($aSetting) || !is_array($aSetting))
+                continue;
+
             $aFormInputs[$sCover] = array(
                 'type' => 'files',
 				'name' => $sCover,
@@ -368,7 +375,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 				'images_transcoder' => $this->sCoverTranscoder,
 				'uploaders' => array('sys_std_crop_cover'),
 				'multiple' => false,
-				'content_id' => 0,
+				'content_id' => $aSetting['id'],
 				'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
 					'name' => $sCover,
 				)),
