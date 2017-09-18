@@ -81,8 +81,8 @@
 
     <string name="_bx_payment_menu_title_sbs_actions"><![CDATA[Subscription Actions]]></string>
     <string name="_bx_payment_menu_set_title_sbs_actions"><![CDATA[Subscription Actions]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_cancel"><![CDATA[Request Cancelation]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Request Cancelation]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_cancel"><![CDATA[Request Cancellation]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Request Cancellation]]></string>
 
 	<!-- GRIDS -->
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Client]]></string>
@@ -186,11 +186,11 @@
 <p><a href="{JoinLink}">Join Now</a></p>
 {email_footer}]]></string>
 
-    <string name="_bx_payment_et_txt_name_cancelation_request"><![CDATA[Subscription cancelation request.]]></string>
-    <string name="_bx_payment_et_txt_subject_cancelation_request"><![CDATA[Subscription cancelation request.]]></string>
+    <string name="_bx_payment_et_txt_name_cancelation_request"><![CDATA[Subscription cancellation request.]]></string>
+    <string name="_bx_payment_et_txt_subject_cancelation_request"><![CDATA[Subscription cancellation request.]]></string>
     <string name="_bx_payment_et_txt_body_cancelation_request"><![CDATA[{email_header}
 <p>Hello,</p>
-<p>A user with {profile_name} profile name requested cancelation for a subscription.</p>
+<p>A user with {profile_name} profile name requested cancellation for a subscription.</p>
 <p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
 {email_footer}]]></string>
 
@@ -200,7 +200,7 @@
 	<string name="_bx_payment_msg_item_added"><![CDATA[The item was successfully added to your shopping cart.]]></string>
 	<string name="_bx_payment_msg_item_deleted"><![CDATA[The item was successfully deleted from your shopping cart.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Free item was successfully processed]]></string>
-	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Cancelation request was sent. Please wait.]]></string>
+	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Cancellation request was sent. Please wait.]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Database access error.]]></string>
 	<string name="_bx_payment_err_cannot_validate"><![CDATA[Can't connect to remote host for validation.]]></string>
 	<string name="_bx_payment_err_empty_items"><![CDATA[There are no items selected.]]></string>
