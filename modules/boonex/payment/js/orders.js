@@ -25,18 +25,9 @@ BxPaymentOrders.prototype.init = function(oOptions) {
 };
 
 /*--- Manual Order function ---*/
-BxPaymentOrders.prototype.paOnShowPopup = function(oSelect) {
-	var $this = this;
-
-	$('#' + this._aHtmlIds['order_processed_client']).autocomplete({
-        source: this._sActionsUrl + 'get_clients/',
-        select: function(oEvent, oUi) {
-        	$('#' + $this._aHtmlIds['order_processed_client_id']).val(oUi.item.value);
-            $(this).val(oUi.item.label);
-
-            oEvent.preventDefault();
-        }
-    });
+BxPaymentOrders.prototype.paOnShowPopup = function(oUi) {
+	console.log(oUi);
+	$('#' + this._aHtmlIds['order_processed_client_id']).val(oUi.item.value);	
 };
 
 BxPaymentOrders.prototype.paOnSelectModule = function(oSelect) {

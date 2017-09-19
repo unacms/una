@@ -11,10 +11,15 @@
 
 class BxPaymentFormView extends BxTemplStudioFormView
 {
-    function __construct($aInfo, $oTemplate = false)
+	function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
     }
+	
+	protected function genCustomInputClient ($aInput)
+	{
+		return parent::genCustomInputUsernamesSuggestions ($aInput);
+	}
 }
 
 /** @} */

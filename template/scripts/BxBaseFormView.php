@@ -955,14 +955,16 @@ BLAH;
             'id' => $aInput['name'] . time() . mt_rand(0, 100),
             'url_get_recipients' => $aInput['ajax_get_suggestions'],
             'name' => $aInput['name'],
-			'b_img' => true,
+			'b_img' => isset($aInput['custom']['b_img']) ? (int)$aInput['custom']['b_img'] : 1,
+			'only_once' => isset($aInput['custom']['only_once']) ? 1 : 0,
+			'on_select' => isset($aInput['custom']['on_select']) ? $aInput['custom']['on_select']: 'null',
             'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
             'vals' => $sVals,
         ));
     }
 
     /**
-     * Generate Select Element
+     * Generate Select Element	
      *
      * @param  array  $aInput
      * @return string

@@ -38,10 +38,18 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         $oForm->aInputs['client_id']['attrs'] = array(
         	'id' => $this->_oModule->_oConfig->getHtmlIds('processed', 'order_processed_client_id'),
         );
-        $oForm->aInputs['client']['attrs'] = array(
-        	'id' => $this->_oModule->_oConfig->getHtmlIds('processed', 'order_processed_client'),
+        
+		$oForm->aInputs['client']['attrs'] = array(
+        	'id' => $this->_oModule->_oConfig->getHtmlIds('processed', 'order_processed_client')			
         );
-
+		
+		$oForm->aInputs['client']['ajax_get_suggestions'] = BX_DOL_URL_ROOT . 'modules/?r=' . $this->_oModule->_oConfig->getUri() . '/get_clients';
+		
+		$oForm->aInputs['client']['custom'] = array(
+			'only_once' => true,
+			'on_select' => "function(oObject){{$sJsObject}.paOnShowPopup(oObject);}"
+		);
+				
         $oForm->aInputs['module_id']['attrs'] = array(
 			'onchange' => 'javascript:' . $sJsObject . '.paOnSelectModule(this);'
 		);
