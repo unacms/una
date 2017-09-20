@@ -197,7 +197,7 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         		continue;
 
 			$iIdOld = (int)getParam($aCover['setting']);
-			if($iIdOld != 0 && !$oStorage->deleteFile($iIdOld, $iProfile))
+			if(!$this->deleteCover($sCover))
 				return $this->getJsResult('_adm_dsg_err_remove_old_cover');
 
 			$this->oDb->setParam($aCover['setting'], $iIdNew);
@@ -213,7 +213,7 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         $oStorage = BxDolStorage::getObjectInstance($this->sCoverStorage);
 
         $iId = (int)getParam($this->aCovers[$sCover]['setting']);
-        if($iId != 0 && !$oStorage->deleteFile($iId, $iProfile))
+        if($iId != 0 && !$oStorage->deleteFile($iId, $iProfile) && $oStorage->getErrorCode() != BX_DOL_STORAGE_ERR_FILE_NOT_FOUND)
             return false;
 
         $this->oDb->setParam($this->aCovers[$sCover]['setting'], 0);
