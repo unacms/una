@@ -20,9 +20,12 @@ INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `repl
 
 
 -- PAGES
-INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('sys_account_profile_switcher', 1, 'bx_googletagman', '', '_bx_googletagman', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:15:"bx_googletagman";s:6:"method";s:22:"tracking_code_register";}', 0, 0, 1, 3);
+SET @iBlockOrderProfileSwitcher = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_account_profile_switcher' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
+SET @iBlockOrderDownloadEntry = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'bx_market_download_entry' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('sys_account_profile_switcher', 1, 'bx_googletagman', '', '_bx_googletagman', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:15:"bx_googletagman";s:6:"method";s:22:"tracking_code_register";}', 0, 0, 1, IFNULL(@iBlockOrderProfileSwitcher, 0) + 1),
+('bx_market_download_entry', 1, 'bx_googletagman', '', '_bx_googletagman', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:15:"bx_googletagman";s:6:"method";s:37:"tracking_code_download_market_product";}', 0, 0, 1, IFNULL(@iBlockOrderDownloadEntry, 0) + 1);
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

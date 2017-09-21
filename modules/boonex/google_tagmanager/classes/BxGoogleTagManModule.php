@@ -11,14 +11,18 @@
 
 class BxGoogleTagManModule extends BxDolModule
 {
+    protected $_sGtmContainerId;
+    
     public function __construct(&$aModule)
     {
         parent::__construct($aModule);        
+        
+        $this->_sGtmContainerId = getParam('bx_googletagman_container_id');
     }
 
     public function serviceInjection($sName)
     {
-        if (!($sGtmContainerId = getParam('bx_googletagman_container_id')))
+        if (!$this->_sGtmContainerId)
             return '';
 
         switch ($sName) {
@@ -50,14 +54,14 @@ class BxGoogleTagManModule extends BxDolModule
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','$sGtmContainerId');</script>
+})(window,document,'script','dataLayer','{$this->_sGtmContainerId}');</script>
 <!-- End Google Tag Manager -->
 EOF;
         case 'injection_header':
             
             return <<<EOF
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=$sGtmContainerId"
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={$this->_sGtmContainerId}"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 EOF;
@@ -66,6 +70,9 @@ EOF;
 
     public function serviceTrackingCodeRegister()
     {
+        if (!$this->_sGtmContainerId)
+            return '';
+        
         if (!bx_get('register'))
             return '';
 
@@ -74,8 +81,52 @@ EOF;
         ));
     }
     
+    public function serviceTrackingCodeDownloadMarketProduct()
+    {
+        if (!$this->_sGtmContainerId)
+            return '';
+
+        if (!($iProductId = (int)bx_get('id')))
+            return '';
+
+        if (!($aProductMarket = BxDolService::call('bx_market', 'get_entry_by', array('id', $iProductId))))
+            return '';
+
+        $aParams = array(
+            'event' => 'market-download',
+            'product-id' => $aProductMarket['id'],
+            'product-name' => $aProductMarket['name'],
+            'product-title' => $aProductMarket['title'],
+            'product-added' => $aProductMarket['added'],
+            'product-changed' => $aProductMarket['changed'],
+            'product-thumb' => $aProductMarket['thumb'],
+            'product-price-single' => $aProductMarket['price_single'],
+            'product-price-recurring' => $aProductMarket['price_recurring'],
+            'product-duration-recurring' => $aProductMarket['duration_recurring'],
+            'product-favorites' => $aProductMarket['favorites'],
+            'product-featured' => $aProductMarket['featured'],
+            'product-comments' => $aProductMarket['comments'],
+            'vendor-display-name' => BxDolProfile::getInstance($aProductMarket['author'])->getDisplayName(),
+            'vendor-profile-id' => $aProductMarket['author'],
+        );
+
+        $sParams = json_encode($aParams);
+        return <<<EOF
+<script>
+    $(document).ready(function () {
+        $('.bx-market-attachment a').on('click', function () {
+            dataLayer.push($.extend($sParams, {'filename': $(this).attr('title')}));
+        });
+    });
+</script>
+EOF;
+    }
+
     public function serviceTrackingCodePurchase($aTransaction, $aProducts)
     {
+        if (!$this->_sGtmContainerId)
+            return '';
+        
         $a = array(
             'event' => 'purchase',
             'ecommerce' => array(
@@ -90,29 +141,65 @@ EOF;
             ),
         );
 
+        $iAuthorIdIndex = 0;
+        $iModuleIdIndex = 1;
+        $iProductIdIndex = 2;
+        $iQuantityIndex = 3;
+            
         foreach ($aProducts as $sProduct) {
             $aProduct = explode('_', $sProduct);
-            $a['ecommerce']['purchase']['products'][] = array(
-                'id' => $aProduct[2],
-                'brand' => BxDolProfile::getInstance($aProduct[0])->getDisplayName(),
 
-                'vendor-profile-id' => $aProduct[0],
-                'module-id' => $aProduct[1],                
-                'quantity' => $aProduct[3],
+            if (!($aModule = BxDolModuleQuery::getInstance()->getModuleById($aProduct[$iModuleIdIndex])))
+                continue;
+            
+            $oVendor = BxDolProfile::getInstance($aProduct[$iAuthorIdIndex]);
+            if (!$oVendor)
+                $oVendor = BxDolProfileUndefined::getInstance();
+            $sVendorDisplayName = $oVendor->getDisplayName();
+
+            $aProductFormatted = array(
+                'id' => $aProduct[$iProductIdIndex],
+                'brand' => $sVendorDisplayName,
+                'vendor-display-name' => $sVendorDisplayName,
+                'vendor-profile-id' => $aProduct[$iAuthorIdIndex],
+                'module-id' => $aModule['id'],
+                'module-name' => $aModule['name'],
+                'quantity' => $aProduct[$iQuantityIndex],
             );
+
+            if ('bx_market' == $aModule['name'] && ($aProductMarket = BxDolService::call('bx_market', 'get_entry_by', array('id', $aProduct[$iProductIdIndex])))) {
+                $aProductFormatted = array_merge($aProductFormatted, array(
+                    'product-id' => $aProductMarket['id'],
+                    'product-name' => $aProductMarket['name'],
+                    'product-title' => $aProductMarket['title'],
+                    'product-added' => $aProductMarket['added'],
+                    'product-changed' => $aProductMarket['changed'],
+                    'product-thumb' => $aProductMarket['thumb'],
+                    'product-price-single' => $aProductMarket['price_single'],
+                    'product-price-recurring' => $aProductMarket['price_recurring'],
+                    'product-duration-recurring' => $aProductMarket['duration_recurring'],
+                    'product-favorites' => $aProductMarket['favorites'],
+                    'product-featured' => $aProductMarket['featured'],
+                    'product-comments' => $aProductMarket['comments'],
+                ));
+            }
+            
+            $a['ecommerce']['purchase']['products'][] = $aProductFormatted;
+
+            if (!isset($a['product-id'])) {
+                unset($aProductFormatted['id']);
+                $a = array_merge($a, $aProductFormatted);
+            }
         }
-        
+
         return $this->getTrackingCode ($a);
     }
 
-    protected function getTrackingCode ($aParams)
+    protected function getTrackingCode ($aParams, $bWrapInScriptTag = true)
     {
         $sParams = json_encode($aParams);
-        return <<<EOF
-<script type="text/javascript">
-    dataLayer.push($sParams);
-</script>
-EOF;
+        $s = "dataLayer.push($sParams);";
+        return $bWrapInScriptTag ? "\n<script>\n" . $s . "\n</script>\n" : $s;
     }
 }
 
