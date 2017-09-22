@@ -606,7 +606,7 @@ class BxBaseCmts extends BxDolCmts
             $sCmtText = $this->_prepareTextForSave ($sCmtText);
             $oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
-            if($oForm->update($iCmtId)) {
+            if($oForm->update($iCmtId) !== false) {
 
                 $this->isEditAllowed(true);
 
