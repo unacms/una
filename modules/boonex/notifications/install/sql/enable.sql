@@ -12,7 +12,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 SET @iPBCellDashboard = 3;
 SET @iPBOrderDashboard = 4; --(SELECT IFNULL(MAX(`order`), 0) FROM `sys_pages_blocks` WHERE `object` = 'sys_dashboard' AND `cell_id` = @iPBCellDashboard LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('sys_dashboard', @iPBCellDashboard, @sName, '_bx_ntfs_page_block_title_view', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:14:"get_block_view";}', 0, 0, @iPBOrderDashboard);
+('sys_dashboard', @iPBCellDashboard, @sName, '_bx_ntfs_page_block_title_view', 11, 2147483644, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:14:"get_block_view";}', 0, 0, @iPBOrderDashboard);
 
 
 -- MENU: module sub-menu

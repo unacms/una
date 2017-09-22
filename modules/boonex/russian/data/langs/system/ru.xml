@@ -2354,7 +2354,7 @@
 	<string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Текущий профиль удачно изменён на: <b>{0}</b>]]></string>
 	<string name="_sys_txt_account_suspended"><![CDATA[Ваш аккаунт заблокирован.]]></string>
 	<string name="_sys_txt_account_unconfirmed"><![CDATA[Ваш имейл не подтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. <br />Не можете найти письмо? Проверьте папку "спам" или <a href="{0}">снова запросите письмо верификации</a>.]]></string>
-	<string name="_sys_txt_account_profile_system"><![CDATA[У Вас нет созданных профилей, поэтому Вы не можете пользоваться сайтом, пожалуйста, <a href="{0}">создайте профиль</a>.]]></string>
+	<string name="_sys_txt_account_profile_system"><![CDATA[Пожалуйста, <a href="{0}">создайте профиль</a>, чтобы начать пользоваться сайтом.]]></string>
 	<string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA недоступна]]></string>
     <string name="_sys_txt_change_image"><![CDATA[Изменить картинку]]></string>
     <string name="_sys_txt_cmt_loading"><![CDATA[Загрузка...]]></string>
