@@ -130,6 +130,8 @@ EOF;
         $a = array(
             'event' => 'purchase',
             'amount' => number_format((float)$aTransaction['amount'], 2, '.', ''),
+            'currency' => BxDolPayments::getInstance()->getOption('default_currency_code'),
+            'order-id' => $aTransaction['order'],
             'ecommerce' => array(
                 'currencyCode' => BxDolPayments::getInstance()->getOption('default_currency_code'),
                 'purchase' => array (
