@@ -510,6 +510,24 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		$this->_oDb->onProfileDelete($iProfileId);
     }
 
+    public function isAllowedPurchase($aItem, $bPerform = false)
+    {
+        $iUserId = (int)$this->getProfileId();
+
+        $aItemInfo = $this->callGetCartItem($aItem['module_id'], array($aItem['item_id']));
+		if(empty($aItemInfo))
+			return false;
+
+        if(isAdmin())
+            return true;
+
+        $aCheckResult = checkActionModule($iUserId, 'purchase', $this->getName(), $bPerform);
+        if($aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
+			return true;
+
+        return $aCheckResult[CHECK_ACTION_MESSAGE];
+    }
+
     public function isAllowedSell($aItem, $bPerform = false)
     {
 		$iUserId = (int)$this->getProfileId();
@@ -658,6 +676,14 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 	public function onPaymentRegister($aPending, $aResult = array())
 	{
+	    $bTypeSingle = $aPending['type'] == BX_PAYMENT_TYPE_SINGLE;
+
+	    if($bTypeSingle) {
+    	    $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+            foreach($aItems as $aItem)
+                $this->isAllowedPurchase(array('module_id' => $aItem['module_id'], 'item_id' => $aItem['item_id']), true);
+	    }
+
 		//--- 'System' -> 'Register Payment' for Alerts Engine ---//
 		bx_alert('system', 'register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
 		//--- 'System' -> 'Register Payment' for Alerts Engine ---//
@@ -672,6 +698,9 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 	public function onSubscriptionCreate($aPending, $aResult = array())
 	{
+	    $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+	    $this->isAllowedPurchase(array('module_id' => $aItems[0]['module_id'], 'item_id' => $aItems[0]['item_id']), true);
+
 		//--- 'System' -> 'Create Subscription' for Alerts Engine ---//
 		bx_alert('system', 'create_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
 		//--- 'System' -> 'Create Subscription' for Alerts Engine ---//

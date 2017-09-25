@@ -258,6 +258,14 @@ class BxPaymentCart extends BxBaseModPaymentCart
             return array('code' => 2, 'eval' => 'window.open("' . $sLoginUrl . '", "_self");');
         }
 
+        $mixedResult = $this->_oModule->isAllowedPurchase(array('module_id' => $iModuleId, 'item_id' => $iItemId));
+        if($mixedResult !== true) {
+            if(is_string($mixedResult) && !empty($mixedResult))
+                return array('code' => 2, 'message' => $mixedResult);
+            else 
+                return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
+        }
+
         if($iClientId == $iSellerId)
             return array('code' => 3, 'message' => _t($CNF['T']['ERR_SELF_PURCHASE']));
 
