@@ -16,7 +16,7 @@ $aConfig = array(
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_googletagman',
     'title' => 'Google Tag Manager',
-    'note' => 'This module adds Google Tag Manager integration',
+    'note' => 'Google Tag Manager replaces hard-coded tags that are used for marketing, analytics, and testing on a website, with dynamic tags that are easier to implement and update.',
     'version' => '9.0.0',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',

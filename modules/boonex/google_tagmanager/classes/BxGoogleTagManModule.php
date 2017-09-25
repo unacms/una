@@ -129,6 +129,9 @@ EOF;
         
         $a = array(
             'event' => 'purchase',
+            'amount' => number_format((float)$aTransaction['amount'], 2, '.', ''),
+            'currency' => BxDolPayments::getInstance()->getOption('default_currency_code'),
+            'order-id' => $aTransaction['order'],
             'ecommerce' => array(
                 'currencyCode' => BxDolPayments::getInstance()->getOption('default_currency_code'),
                 'purchase' => array (
@@ -169,6 +172,9 @@ EOF;
 
             if ('bx_market' == $aModule['name'] && ($aProductMarket = BxDolService::call('bx_market', 'get_entry_by', array('id', $aProduct[$iProductIdIndex])))) {
                 $aProductFormatted = array_merge($aProductFormatted, array(
+                    'name' => $aProductMarket['name'],
+                    'price' => number_format((float)($aProductMarket['price_single'] ? $aProductMarket['price_single'] : $aProductMarket['price_recurring']), 2, '.', ''),
+
                     'product-id' => $aProductMarket['id'],
                     'product-name' => $aProductMarket['name'],
                     'product-title' => $aProductMarket['title'],
