@@ -229,8 +229,6 @@ function bx_loading_animate (e, aOptions) {
 }
 
 function bx_loading_btn (oElement, bEnable) {
-	var bUseSvg = true;
-
     var oButton = $(oElement);
 
     if (oButton.children('div').size())
@@ -239,17 +237,15 @@ function bx_loading_btn (oElement, bEnable) {
     if(!bEnable)
     	oButton.find('.bx-loading-ajax-btn').remove();
     else if (!oButton.find('.bx-loading-ajax-btn').length)
-    	oButton.append('<b class="bx-loading-ajax-btn bx-btn-height">' + (bUseSvg ? bx_loading_svg('colored', 'bx-btn-height') : '') + '</b>');
+    	oButton.append('<b class="bx-loading-ajax-btn bx-btn-height">' + (bUseSvgLoading ? bx_loading_svg('colored', 'bx-btn-height') : '') + '</b>');
 
-    if(!bUseSvg)
+    if(!bUseSvgLoading)
     	bx_loading_animate(oButton.find('.bx-loading-ajax-btn'), aSpinnerSmallOpts);    
 }
 
 function bx_loading_content (oElement, bEnable, isReplace) {
-	var bUseSvg = true;
-
     var oBlock = $(oElement);
-    var oLoading = $('<div class="bx-loading-ajax bx-def-z-index-front">' + (bUseSvg ? bx_loading_svg('colored') : '') + '</div>');
+    var oLoading = $('<div class="bx-loading-ajax bx-def-z-index-front">' + (bUseSvgLoading ? bx_loading_svg('colored') : '') + '</div>');
     
     if(!bEnable)
     	oBlock.find(".bx-loading-ajax").remove();
@@ -259,7 +255,7 @@ function bx_loading_content (oElement, bEnable, isReplace) {
         else
             oBlock.append(oLoading);
 
-        if(!bUseSvg)
+        if(!bUseSvgLoading)
         	bx_loading_animate(oBlock.find('.bx-loading-ajax'), aSpinnerOpts);
     } 
 }
