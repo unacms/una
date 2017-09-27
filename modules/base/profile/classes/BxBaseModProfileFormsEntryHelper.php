@@ -19,7 +19,12 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     public function __construct($oModule)
     {
         parent::__construct($oModule);
-        $this->setAutoApproval(isset($oModule->_oConfig->CNF['PARAM_AUTOAPPROVAL']) ? (bool)getParam($oModule->_oConfig->CNF['PARAM_AUTOAPPROVAL']) : true);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $bAutoApproval = isset($CNF['PARAM_AUTOAPPROVAL']) ? (bool)getParam($CNF['PARAM_AUTOAPPROVAL']) : true;
+        $bAdministrator = BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_ADMINISTRATOR));
+        $this->setAutoApproval(isAdmin() || $bAdministrator || $bAutoApproval);
     }
 
     public function isAutoApproval()
