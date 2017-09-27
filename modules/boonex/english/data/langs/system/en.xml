@@ -1871,6 +1871,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_forgot_password_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_submit"><![CDATA[Submit]]></string>
+	<string name="_sys_form_input_age"><![CDATA[Age]]></string>
 	<string name="_sys_form_input_sys_location"><![CDATA[Location]]></string>
 	<string name="_sys_form_input_location"><![CDATA[Location]]></string>
 	<string name="_sys_form_login"><![CDATA[Log in]]></string>

@@ -53,6 +53,11 @@ class BxBaseFormView extends BxDolForm
     protected $_bDynamicMode = false;
 
     /**
+     * Form is displayed in view mode.
+     */
+    protected $_bViewMode = false;
+
+    /**
      * Function name for generation close form section HTML.
      */
     protected $_sSectionClose = 'getCloseSection';
@@ -77,7 +82,9 @@ class BxBaseFormView extends BxDolForm
     {
         parent::__construct($aInfo, $oTemplate);
 
-        if (isset($this->aParams['view_mode']) && $this->aParams['view_mode']) {
+        $this->_bViewMode = isset($this->aParams['view_mode']) && $this->aParams['view_mode'];
+
+        if ($this->_bViewMode) {
             $this->_sSectionClose = 'getCloseSectionViewMode';
             $this->_sSectionOpen = 'getOpenSectionViewMode';
         }
@@ -378,6 +385,40 @@ EOS;
         if (isset($aInput['values_list_name'])  && ($oCategory = BxDolCategory::getObjectInstanceByFormAndList($this->aFormAttrs['name'], $aInput['values_list_name'])))
             return $oCategory->getCategoryLink($s, $aInput['value']);
         return $s;
+    }
+
+    protected function genCustomRowBirthday(&$aInput)
+    {
+        if(!$this->_bViewMode)
+            return $this->genRowStandard($aInput);
+
+        $aInput['caption_src'] = '_sys_form_input_age';
+        $aInput['caption'] = _t($aInput['caption_src']);
+        return $this->genViewRowWrapped($aInput);
+    }
+
+    protected function genCustomViewRowValueBirthday(&$aInput)
+    {
+        if(!isset($aInput['value']) || !$aInput['value'])
+            return null;
+
+        $sValue = $aInput['value'];
+
+        $iPosSpace = strpos($sValue, ' ');
+        if($iPosSpace !== false)
+            $sValue = trim(substr($sValue, 0, $iPosSpace));
+
+        $aDate = explode('-', $sValue);
+
+        $iCdYear = (int)date('Y');
+        $iCdMonth = (int)date('n');
+        $iCdDay = (int)date('j');
+
+        $iResult = $iCdYear - (int)$aDate[0];
+        if($iCdMonth < (int)$aDate[1] || ($iCdMonth == (int)$aDate[1] && $iCdDay < (int)$aDate[2]))
+            $iResult -= 1;           
+
+        return $iResult;
     }
 
     /**

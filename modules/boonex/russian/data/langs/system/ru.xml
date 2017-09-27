@@ -1869,6 +1869,7 @@
 	<string name="_sys_form_forgot_password_input_caption_system_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_forgot_password_input_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_forgot_password_input_submit"><![CDATA[Выполнить]]></string>
+	<string name="_sys_form_input_age"><![CDATA[Возраст]]></string>
 	<string name="_sys_form_input_sys_location"><![CDATA[Расположение]]></string>
 	<string name="_sys_form_input_location"><![CDATA[Расположение]]></string>
 	<string name="_sys_form_login"><![CDATA[Вход]]></string>
