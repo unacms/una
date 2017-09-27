@@ -784,6 +784,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $this->aPage['js_images'][$sKey] = $sUrl;
         }
     }
+	/**
+	 * Add CSS style.
+	 *
+	 * @param string $sName CSS class name.
+	 * @param string $sContent CSS class styles.
+	 */
+	function addCssStyle($sName, $sContent)
+	{
+		$this->aPage['css_styles'][$sName] = $sContent;
+	}
     /**
      * Set page keywords.
      *
@@ -1160,6 +1170,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sContent = $this->parseHtmlByName('default.html', $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
 
         //--- Add CSS and JS at the very last ---//
+        if(strpos($sContent, '<bx_include_css_styles />') !== false) {
+            $aStyles = array(
+                'display' => 'none !important'
+            );
+
+            if(isLogged())
+                $this->addCssStyle('.bx-hide-when-logged-in', $aStyles);
+            else
+                $this->addCssStyle('.bx-hide-when-logged-out', $aStyles);
+
+            $sContent = str_replace('<bx_include_css_styles />', $this->includeCssStyles(), $sContent);
+        }
 
         if(strpos($sContent , '<bx_include_css_system />') !== false) {
             $sContent = str_replace('<bx_include_css_system />', $this->includeFiles('css', true), $sContent);
@@ -1817,6 +1839,26 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
         return "<style>" . $sCode . "</style>";
     }
+	/**
+     *  Include CSS style(s) in the page's head section.
+     */
+	function includeCssStyles()
+	{
+		$sResult = "";
+		if(empty($this->aPage['css_styles']) || !is_array($this->aPage['css_styles']))
+			return $sResult;
+
+		foreach($this->aPage['css_styles'] as $sName => $aContent) {
+			$sContent = "";
+			if(!empty($aContent) && is_array($aContent))
+				foreach($aContent as $sStyleName => $sStyleValue)
+					$sContent .= "\t" . $sStyleName . ": " . $sStyleValue . ";\r\n";
+
+			$sResult .= $sName . " {\r\n" . $sContent . "}\r\n";
+		}
+
+		return !empty($sResult) ? $this->_wrapInTagCssCode($sResult) : '';
+	}
     /**
      * Include CSS/JS file(s) attached to the page in its head section.
      * @see the method is system and would be called automatically.
