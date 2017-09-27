@@ -216,6 +216,8 @@
     <string name="_bx_market_menu_item_title_entries_categories"><![CDATA[Категории]]></string>
     <string name="_bx_market_menu_item_title_system_entries_public"><![CDATA[Рынок]]></string>
     <string name="_bx_market_menu_item_title_entries_public"><![CDATA[Рынок]]></string>
+    <string name="_bx_market_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_market_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_market_menu_item_title_system_entries_manage"><![CDATA[Управление продуктами]]></string>
     <string name="_bx_market_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_market_menu_item_title_system_entries_popular"><![CDATA[Популярные продукты]]></string>
@@ -248,8 +250,7 @@
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Действия с отрывоком]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[Ещё действия]]></string>
     <string name="_bx_market_menu_item_title_snippet_more"><![CDATA[Ещё действия]]></string>
-    <string name="_bx_market_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
-    <string name="_bx_market_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_market_menu_item_title_downloads_more"><![CDATA[Показать ещё]]></string>
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>

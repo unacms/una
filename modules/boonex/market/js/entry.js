@@ -90,4 +90,11 @@ BxMarketEntry.prototype.initScreenshots = function() {
 	});
 };
 
+/**
+ * Is used on Downloads page to show old versions. 
+ */
+BxMarketEntry.prototype.showMore = function() {
+	$('.bx-market-attachment:not(.bx-market-attachment-main)').bx_anim('toggle', this._sAnimationEffect, this._sAnimationSpeed);
+};
+
 /** @} */

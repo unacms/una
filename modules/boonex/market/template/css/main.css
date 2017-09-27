@@ -125,6 +125,10 @@ div.bx-market-unit-title {
 /*--- Attachments ---*/
 div.bx-market-attachment {
 	position: relative;
+	display: none;
+}
+div.bx-market-attachment.bx-market-attachment-main {
+    display: block;
 }
 div.bx-market-a-main {
 	position: absolute;

@@ -401,9 +401,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	if(empty($aAttachments) || !is_array($aAttachments))
     		return $aAttachments;
 
+        $aResults = array();
     	foreach($aAttachments as $iIndex => $aAttachment) {
     		$iAttachmentId = (int)$aAttachment['id'];
 
+    		$aAttachments[$iIndex]['class'] = (int)$aData['package'] == $iAttachmentId ? ' bx-market-attachment-main' : '';
     		$aAttachments[$iIndex]['bx_if:main'] = array(
     			'condition' => (int)$aData['package'] == $iAttachmentId,
     			'content' => array()
@@ -425,9 +427,12 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     				)
     			)
     		));
+
+    		$aFiles[$iAttachmentId] = $aAttachments[$iIndex];
+    		$aResults[$iAttachmentId] = $aAttachments[$iIndex];
     	}
 
-    	return $aAttachments;
+    	return array_intersect_key($aFiles, $aResults);
     }
 }
 

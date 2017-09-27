@@ -540,7 +540,7 @@ class BxMarketDb extends BxBaseModTextDb
     	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
     	
     	$sFieldsClause = "`tfe`.*";
-    	$sJoinClause = $sWhereClause = "";
+    	$sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
         switch($aParams['type']) {
             case 'id':
             	$aMethod['params'][1] = array(
@@ -589,6 +589,7 @@ class BxMarketDb extends BxBaseModTextDb
                 );
 
                 $sWhereClause = " AND `tfe`.`content_id`=:content_id";
+                $sOrderClause = "`tfe`.`type` ASC, `tfe`.`version` DESC";
                 break;
 
 			case 'content_id_and_type':
@@ -610,10 +611,16 @@ class BxMarketDb extends BxBaseModTextDb
             	break;
         }
 
+        if(!empty($sOrderClause))
+            $sOrderClause = " ORDER BY " . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = " LIMIT " . $sLimitClause;
+
         $aMethod['params'][0] = "SELECT
         		" . $sFieldsClause . "
             FROM `" . $sTable . "` AS `tfe`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause;
+            WHERE 1" . $sWhereClause . $sOrderClause . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }

@@ -250,6 +250,7 @@
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[More Actions]]></string>
     <string name="_bx_market_menu_item_title_snippet_more"><![CDATA[More Actions]]></string>
+    <string name="_bx_market_menu_item_title_downloads_more"><![CDATA[Show More]]></string>
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
