@@ -13,9 +13,10 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 {
     public static $SEARCHABLE_TYPES = array(
         'text', 'textarea', 'number', 
-    	'select', 'radio_set',
+        'select', 'radio_set',
         'checkbox_set', 'select_multiple',
-    	'checkbox', 'switcher'
+        'checkbox', 'switcher',
+        'location'
     );
 
     public static $TYPE_TO_TYPE_SEARCH = array(
@@ -25,23 +26,25 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'text_auto' => array('text_auto'),
         'select' => array('checkbox_set', 'select_multiple', 'select'),
         'radio_set' => array('checkbox_set', 'select_multiple', 'select'),
-    	'checkbox_set' => array('checkbox_set', 'select_multiple', 'select'),
-    	'select_multiple' => array('checkbox_set', 'select_multiple', 'select'),
+        'checkbox_set' => array('checkbox_set', 'select_multiple', 'select'),
+        'select_multiple' => array('checkbox_set', 'select_multiple', 'select'),
         'checkbox' => array('checkbox', 'switcher'),
-    	'switcher' => array('checkbox', 'switcher'),
+        'switcher' => array('checkbox', 'switcher'),
+        'location' => array('location')
     );
 
     public static $TYPE_TO_OPERATOR = array(
-    	'text' => array('like', '='),
+        'text' => array('like', '='),
         'textarea' => array('like', '='),
         'number' => array('='),
         'text_auto' => array('in'),
         'select' => array('in'),
         'radio_set' => array('in'),
-    	'checkbox_set' => array('and'), 
-    	'select_multiple' => array('and'),
+        'checkbox_set' => array('and'), 
+        'select_multiple' => array('and'),
         'checkbox' => array('='),
-    	'switcher' => array('='),
+        'switcher' => array('='),
+        'location' => array('locate')
     );
 
     protected $_oDb;

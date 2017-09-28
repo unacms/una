@@ -19,6 +19,20 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         parent::__construct($aInfo, $oTemplate);
     }
 
+    function getCleanValue ($sName)
+    {
+        if(isset($this->aInputs[$sName]['type']) && $this->aInputs[$sName]['type'] == 'location')
+            return BxDolMetatags::locationsRetrieveFromForm($sName, $this);
+
+        return parent::getCleanValue($sName);
+    }
+
+    public function genInputLocation(&$aInput)
+    {
+        $aInput['manual_input'] = true;
+        return parent::genInputLocation($aInput);
+    }
+
 	protected function genCustomInputAuthor($aInput)
     {
         $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . 'searchExtended.php?action=get_authors';

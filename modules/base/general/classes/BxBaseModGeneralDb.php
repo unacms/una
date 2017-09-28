@@ -85,12 +85,28 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                             $sSearchValue = " & " . $iResult . "";
                             break;
 
+                        case 'locate':
+                            if(!isset($CNF['OBJECT_METATAGS']))
+                                break;
+
+                            list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value'];
+
+                            $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
+
+                            if(!empty($aSql['join']))
+                                $sJoinClause .= $aSql['join'];
+
+                            if(!empty($aSql['where']))
+                                $sWhereConditions .= $aSql['where'];
+                            break;
+
                         default:
                              $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
                              $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];                             
                     }
 
-                    $sWhereConditions .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $sSearchParam . "`" . $sSearchValue;
+                    if(!empty($sSearchValue))
+                        $sWhereConditions .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $sSearchParam . "`" . $sSearchValue;
                 }
 
                 $sWhereClause .= " AND (" . $sWhereConditions . ")"; 

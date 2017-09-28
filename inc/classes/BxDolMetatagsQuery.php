@@ -87,6 +87,23 @@ class BxDolMetatagsQuery extends BxDolDb
         return $this->getRow($sQuery);
     }
 
+    public function locationsGetSQLParts($sContentTable, $sContentField, $sCountry = false, $sState = false, $sCity = false, $sZip = false)
+    {
+        $aFields = array('country' => 'sCountry', 'state' => 'sState', 'city' => 'sCity', 'zip' => 'sZip');
+
+        $aWhere = array();
+        foreach ($aFields as $sIndex => $sVar) {
+            if (!$$sVar)
+                continue;
+
+            $aWhere['tl`.`' . $sIndex] = $$sVar;
+        }
+
+        return array(
+            'where' => ' AND ' . $this->arrayToSQL($aWhere, ' AND '),
+            'join' => 'INNER JOIN `' . $this->_aObject['table_locations'] . '` AS `tl` ON `' . $sContentTable . '`.`' . $sContentField . '`=`tl`.`object_id`'
+        );
+    }
 
     protected function metaDelete($sTable, $mixedContentId)
     {

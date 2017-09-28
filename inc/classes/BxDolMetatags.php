@@ -408,6 +408,31 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $this->_oQuery->locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip, $sStreet, $sStreetNumber);
     }
 
+	/**
+     * Retrieve location for the content from POST data
+     * @param $sPrefix field prefix for POST data, or empty -  if no prefix
+     * @param $oForm form to use to get POST data, or null - then new form instance will be created
+     */
+    public static function locationsRetrieveFromForm($sPrefix = '', $oForm = null)
+    {
+        if ($sPrefix)
+            $sPrefix .= '_';
+
+        if (!$oForm)
+            $oForm = new BxDolForm(array(), false);
+
+        return array(
+            $oForm->getCleanValue($sPrefix.'lat'), 
+            $oForm->getCleanValue($sPrefix.'lng'), 
+            $oForm->getCleanValue($sPrefix.'country'), 
+            $oForm->getCleanValue($sPrefix.'state'), 
+            $oForm->getCleanValue($sPrefix.'city'), 
+            $oForm->getCleanValue($sPrefix.'zip'), 
+            $oForm->getCleanValue($sPrefix.'street'), 
+            $oForm->getCleanValue($sPrefix.'street_number')
+        );
+    }
+
     /**
      * Add location for the content from POST data
      * @param $iId content id
@@ -419,11 +444,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         if (!$this->locationsIsEnabled())
             return;
 
-        if ($sPrefix)
-            $sPrefix .= '_';
-        if (!$oForm)
-            $oForm = new BxDolForm(array(), false);
-        $this->locationsAdd($iId, $oForm->getCleanValue($sPrefix.'lat'), $oForm->getCleanValue($sPrefix.'lng'), $oForm->getCleanValue($sPrefix.'country'), $oForm->getCleanValue($sPrefix.'state'), $oForm->getCleanValue($sPrefix.'city'), $oForm->getCleanValue($sPrefix.'zip'), $oForm->getCleanValue($sPrefix.'street'), $oForm->getCleanValue($sPrefix.'street_number'));
+        call_user_func_array(array($this, 'locationsAdd'), array_merge(array($iId), self::locationsRetrieveFromForm($sPrefix, $oForm)));
     }
 
     /**
@@ -502,6 +523,20 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             'onField' => 'object_id',
             'joinFields' => array(),
         );
+    }
+
+    /**
+     * Set condition for search results object for meta locations
+     * @param $sContentTable content table or alias
+     * @param $sContentField content table field or field alias
+     * @param $sCountry country and other location info
+     */
+    public function locationsGetAsSQLPart($sContentTable, $sContentField, $sCountry = false, $sState = false, $sCity = false, $sZip = false)
+    {
+        if (empty($this->_aObject['table_locations']))
+            return array();
+
+        return call_user_func_array(array($this->_oQuery, 'locationsGetSQLParts'), func_get_args());
     }
 
     /**
