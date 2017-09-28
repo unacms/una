@@ -1284,6 +1284,7 @@
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
+	<string name="_adm_stg_cpt_option_sys_redirect_after_email_confirmation"><![CDATA[Перенаправлять после подтверждения имейла на]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Задействовать CSRF токен в формах]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF token - срок жизни в секундах (0 - не вести отчёт времени)]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Общий порог угрозы бесопасности перед тем, как послать отчёт и заблокировать агрессора]]></string>

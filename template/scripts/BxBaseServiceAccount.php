@@ -210,11 +210,15 @@ class BxBaseServiceAccount extends BxDol
         bx_login($aData['account_id']);
 
         // redirect with success message
+        $sUrl = getParam('sys_redirect_after_email_confirmation');
+        if(empty($sUrl))
+            $sUrl = 'page.php?i=account-settings-info';
+
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);
         $oTemplate->setPageHeader (_t('_sys_txt_confirm_email_success'));
         $oTemplate->setPageContent ('page_main_code', MsgBox(_t('_sys_txt_confirm_email_success')));
-        $oTemplate->setPageContent ('url_relocate', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-info'));
+        $oTemplate->setPageContent ('url_relocate', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sUrl));
 
         BxDolTemplate::getInstance()->getPageCode();
         exit;
