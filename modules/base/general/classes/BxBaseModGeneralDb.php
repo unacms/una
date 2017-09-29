@@ -93,11 +93,12 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
                             $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
 
-                            if(!empty($aSql['join']))
-                                $sJoinClause .= $aSql['join'];
-
-                            if(!empty($aSql['where']))
+                            if(!empty($aSql['where'])) {
                                 $sWhereConditions .= $aSql['where'];
+
+                                if(!empty($aSql['join']))
+                                    $sJoinClause .= $aSql['join'];
+                            }
                             break;
 
                         default:

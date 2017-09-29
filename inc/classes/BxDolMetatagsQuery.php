@@ -100,7 +100,7 @@ class BxDolMetatagsQuery extends BxDolDb
         }
 
         return array(
-            'where' => ' AND ' . $this->arrayToSQL($aWhere, ' AND '),
+            'where' => !empty($aWhere) ? ' AND ' . $this->arrayToSQL($aWhere, ' AND ') : '',
             'join' => 'INNER JOIN `' . $this->_aObject['table_locations'] . '` AS `tl` ON `' . $sContentTable . '`.`' . $sContentField . '`=`tl`.`object_id`'
         );
     }
