@@ -29,6 +29,8 @@ class BxDolImageResize extends BxDolFactory implements iBxDolSingleton
     protected $_isUseGD; ///< use GD library or command line ImagMagic utilites
     protected $_oManager; ///< Intervention Image Manager
     protected $_sError; ///< Intervention Image Manager error string
+    protected $_bRemoveTransparency = false; ///< remove transparency from images during resizing
+    protected $_sRemoveTransparencyFillColor = '#ffffff'; ///< when removing transparency - fill with this color
 
     protected function __construct()
     {
@@ -239,25 +241,45 @@ class BxDolImageResize extends BxDolFactory implements iBxDolSingleton
         return IMAGE_ERROR_SUCCESS;
     }
 
+    function _removeTransparency ($oImg)
+    {
+        $oImgBack = $this->_oManager->canvas($oImg->width(), $oImg->height(), $this->_sRemoveTransparencyFillColor);
+        return $oImgBack->insert($oImg);
+    }
+
     function _resize ($sSrcImage, $sDstImage = '')
     {       
         $this->_sError = '';
         try {
             if ($this->_isAutoCrop || $this->_isSquareResize) {
-                $this->_oManager
+
+                $oImg = $this->_oManager
                     ->make($sSrcImage)
-                    ->orientate()
+                    ->orientate();
+
+                if ($this->_bRemoveTransparency)
+                    $oImg = $this->_removeTransparency($oImg);
+
+                $oImg
                     ->fit($this->w, $this->_isSquareResize ? $this->w : $this->h)
                     ->save($sDstImage ? $sDstImage : $sSrcImage, $this->_iJpegQuality);
+
             } 
             else {
-                $this->_oManager
+
+                $oImg = $this->_oManager
                     ->make($sSrcImage)
-                    ->orientate()
+                    ->orientate();
+
+                if ($this->_bRemoveTransparency)
+                    $oImg = $this->_removeTransparency($oImg);
+
+                $oImg
                     ->resize($this->w, $this->h, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
+                    ->trim()
                     ->save($sDstImage ? $sDstImage : $sSrcImage, $this->_iJpegQuality);
             }
             chmod($sDstImage ? $sDstImage : $sSrcImage, BX_DOL_FILE_RIGHTS);
