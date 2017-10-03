@@ -493,7 +493,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$iItemId)
             return array();
 
-        return array('content' => $this->_oTemplate->getItemBlock($iItemId));
+        return $this->_oTemplate->getItemBlock($iItemId);
     }
 
 	/**

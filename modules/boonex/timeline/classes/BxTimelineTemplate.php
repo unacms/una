@@ -124,11 +124,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent))
-            return '';
+            return array('content' => MsgBox(_t('_Empty')), 'designbox_id' => 13);
 
-        $mixedResult = BxDolProfile::getInstance($aEvent[$CNF['FIELD_OWNER_ID']])->checkAllowedProfileView();
+        $oProfile = BxDolProfile::getInstance($aEvent[$CNF['FIELD_OWNER_ID']]);
+        if(!$oProfile)
+            return array('content' => MsgBox(_t('_Empty')), 'designbox_id' => 13);
+
+        $mixedResult = $oProfile->checkAllowedProfileView();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-            return MsgBox($mixedResult);
+            return array('content' => MsgBox($mixedResult), 'designbox_id' => 13);
 
         $aParams = array(
         	'view' => BX_TIMELINE_VIEW_ITEM, 
@@ -138,7 +142,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $oModule = $this->getModule();
         if($oModule->isAllowedViewCounter($aEvent) !== true)
-            return '';
+            return array('content' => MsgBox(_t('_Access denied')), 'designbox_id' => 13);
 
         if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
             $mixedViews = $oModule->getViewsData($aEvent['views']);
@@ -148,13 +152,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
-        return $this->parseHtmlByName('block_item.html', array(
+        return array('content' => $this->parseHtmlByName('block_item.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
         	'content' => $sContent,
         	'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view') . $this->getJsCode('repost')
-        ));
+        )));
     }
 
     public function getUnit(&$aEvent, $aBrowseParams = array())
