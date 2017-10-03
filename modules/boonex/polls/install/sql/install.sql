@@ -203,7 +203,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_polls', 'bx_polls', '_bx_polls_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_polls_entries', 'id', '', '', 'do_submit', '', 0, 1, 'BxPollsFormEntry', 'modules/boonex/polls/classes/BxPollsFormEntry.php');
+('bx_polls', 'bx_polls', '_bx_polls_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_polls_entries', 'id', '', '', 'do_submit', 'a:1:{s:14:"checker_helper";s:29:"BxPollsFormEntryCheckerHelper";}', 0, 1, 'BxPollsFormEntry', 'modules/boonex/polls/classes/BxPollsFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_polls', 'bx_polls_entry_add', 'bx_polls', 0, '_bx_polls_form_entry_display_add'),
@@ -219,7 +219,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_polls', 'bx_polls', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'pictures', 'a:1:{i:0;s:9:"sys_html5";}', 'a:2:{s:10:"sys_simple";s:26:"_sys_uploader_simple_title";s:9:"sys_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_polls_form_entry_input_sys_pictures', '_bx_polls_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'text', '', '', 0, 'textarea', '_bx_polls_form_entry_input_sys_text', '_bx_polls_form_entry_input_text', '', 1, 0, 3, '', '', '', 'Avail', '', '_bx_polls_form_entry_input_text_err', 'Xss', '', 1, 0),
-('bx_polls', 'bx_polls', 'subentries', '', '', 0, 'custom', '_bx_polls_form_entry_input_sys_subentries', '_bx_polls_form_entry_input_subentries', '_bx_polls_form_entry_input_subentries_inf', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_polls', 'bx_polls', 'subentries', '', '', 0, 'custom', '_bx_polls_form_entry_input_sys_subentries', '_bx_polls_form_entry_input_subentries', '_bx_polls_form_entry_input_subentries_inf', 1, 0, 0, '', '', '', 'AvailSubentries', '', '_bx_polls_form_entry_input_subentries_err', '', '', 1, 0),
 ('bx_polls', 'bx_polls', 'cat', '', '#!bx_polls_cats', 0, 'select', '_bx_polls_form_entry_input_sys_cat', '_bx_polls_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_polls_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'anonymous', 1, '', 1, 'switcher', '_bx_polls_form_profile_input_sys_anonymous', '_bx_polls_form_profile_input_anonymous', '_bx_polls_form_profile_input_anonymous_info', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'hidden_results', 1, '', 0, 'switcher', '_bx_polls_form_profile_input_sys_hidden_results', '_bx_polls_form_profile_input_hidden_results', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),

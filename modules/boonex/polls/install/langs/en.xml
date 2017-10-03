@@ -28,6 +28,7 @@
 	<string name="_bx_polls_form_entry_input_sys_subentries"><![CDATA[Answers]]></string>
     <string name="_bx_polls_form_entry_input_subentries"><![CDATA[Answers]]></string>
     <string name="_bx_polls_form_entry_input_subentries_inf"><![CDATA[Leave text box empty to remove an answer.]]></string>
+    <string name="_bx_polls_form_entry_input_subentries_err"><![CDATA[Poll should have at least 2 non-empty answers.]]></string>
     <string name="_bx_polls_form_entry_input_subentries_add"><![CDATA[Add More]]></string>
 	<string name="_bx_polls_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_polls_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this poll]]></string>

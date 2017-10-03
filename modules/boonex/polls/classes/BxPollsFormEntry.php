@@ -9,6 +9,16 @@
  * @{
  */
 
+class BxPollsFormEntryCheckerHelper extends BxDolFormCheckerHelper
+{
+    static public function checkAvailSubentries ($s)
+    {
+        if(!self::_isFullArray($s))
+            return false;
+
+        return count($s) >= 2;
+    }
+}
 /**
  * Create/Edit entry form
  */

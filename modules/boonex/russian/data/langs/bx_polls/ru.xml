@@ -28,6 +28,7 @@
 	<string name="_bx_polls_form_entry_input_sys_subentries"><![CDATA[Ответы]]></string>
     <string name="_bx_polls_form_entry_input_subentries"><![CDATA[Ответы]]></string>
     <string name="_bx_polls_form_entry_input_subentries_inf"><![CDATA[Оставьте текстовое поле пустым, чтобы удалить ответ.]]></string>
+    <string name="_bx_polls_form_entry_input_subentries_err"><![CDATA[Голосование должно иметь как минимум 2 не пустых ответа.]]></string>
     <string name="_bx_polls_form_entry_input_subentries_add"><![CDATA[Добавить ещё]]></string>    
 	<string name="_bx_polls_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
 	<string name="_bx_polls_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить это голосование]]></string>

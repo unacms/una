@@ -1669,6 +1669,18 @@ class BxDolFormCheckerHelper
                 return false;
         return true;
     }
+
+    static public function _isFullArray ($a)
+    {
+        if (!is_array($a))
+            return false;
+        if (empty($a))
+            return false;
+        foreach ($a as $k => $v)
+            if (empty($v))
+                return false;
+        return true;
+    }
 }
 
 /** @} */
