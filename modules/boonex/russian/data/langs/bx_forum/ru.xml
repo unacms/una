@@ -33,6 +33,7 @@
 	<string name="_bx_forum_form_entry_input_attachments"><![CDATA[Прикрепления]]></string>
 	<string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_forum_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_forum_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
     <string name="_bx_forum_form_entry_input_sys_title"><![CDATA[Тема]]></string>
     <string name="_bx_forum_form_entry_input_title"><![CDATA[Тема]]></string>
     <string name="_bx_forum_form_entry_input_title_err"><![CDATA[Необходимо указать тему]]></string>
@@ -53,6 +54,7 @@
 	<string name="_bx_forum_acl_action_create_entry"><![CDATA[Создавать новое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Удалить обсуждение]]></string>
 	<string name="_bx_forum_acl_action_view_entry"><![CDATA[Просмотреть обсуждение]]></string>
+	<string name="_bx_forum_acl_action_set_thumb"><![CDATA[Назначить обложку обсуждения]]></string>
 	<string name="_bx_forum_acl_action_edit_any_entry"><![CDATA[Редактировать любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Закреплять любое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Блокировать любое обсуждение]]></string>

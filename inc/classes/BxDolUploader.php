@@ -330,6 +330,7 @@ abstract class BxDolUploader extends BxDolFactory
             $aVars = array (
             	'storage_object' => $this->_sStorageObject,
                 'file_id' => $aFile['id'],
+                'file_type' => $aFile['mime_type'],
                 'file_name' => $aFile['file_name'],
                 'file_title' => $oStorage->getFileTitle($aFile['file_name']),
                 'file_icon' => $sFileIcon,

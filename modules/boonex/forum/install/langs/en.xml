@@ -33,6 +33,7 @@
 	<string name="_bx_forum_form_entry_input_attachments"><![CDATA[Attachments]]></string>
 	<string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_forum_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
+    <string name="_bx_forum_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>
     <string name="_bx_forum_form_entry_input_sys_title"><![CDATA[Topic]]></string>
     <string name="_bx_forum_form_entry_input_title"><![CDATA[Topic]]></string>
     <string name="_bx_forum_form_entry_input_title_err"><![CDATA[Topic is mandatory]]></string>
@@ -53,6 +54,7 @@
 	<string name="_bx_forum_acl_action_create_entry"><![CDATA[Create new discussion]]></string>
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Delete discussion]]></string>
 	<string name="_bx_forum_acl_action_view_entry"><![CDATA[View discussion]]></string>
+	<string name="_bx_forum_acl_action_set_thumb"><![CDATA[Set discussion's cover]]></string>
 	<string name="_bx_forum_acl_action_edit_any_entry"><![CDATA[Edit any discussion]]></string>
 	<string name="_bx_forum_acl_action_stick_any_entry"><![CDATA[Pin any discussion]]></string>
 	<string name="_bx_forum_acl_action_lock_any_entry"><![CDATA[Lock any discussion]]></string>

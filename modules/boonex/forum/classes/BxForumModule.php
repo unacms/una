@@ -372,14 +372,6 @@ class BxForumModule extends BxBaseModTextModule
         return $oForm->getCode();
     }
 
-    /**
-     * No thumbs for discussions
-     */
-    public function checkAllowedSetThumb()
-    {
-        return _t('_sys_txt_access_denied');
-    }
-
     public function checkAllowedSubscribe(&$aDataEntry, $isPerformAction = false)
     {
         $CNF = &$this->_oConfig->CNF;

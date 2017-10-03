@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `author` int(10) unsigned NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
+  `thumb` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
   `text` text NOT NULL,
@@ -172,11 +173,13 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_forum_preview', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_forum_files";}', 'no', '1', '2592000', '0', '', ''),
-('bx_forum_preview_cmts', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_forum_files_cmts";}', 'no', '1', '2592000', '0', '', '');
+('bx_forum_preview_cmts', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_forum_files_cmts";}', 'no', '1', '2592000', '0', '', ''),
+('bx_forum_cover', 'bx_forum_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_forum_files";}', 'no', '1', '2592000', '0', '', '');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_forum_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
-('bx_forum_preview_cmts', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
+('bx_forum_preview_cmts', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_forum_cover', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0');
 
 
 -- FORMS

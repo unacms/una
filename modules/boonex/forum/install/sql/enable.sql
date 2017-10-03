@@ -345,6 +345,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+(@sName, 'set thumb', NULL, '_bx_forum_acl_action_set_thumb', '', 1, 3);
+SET @iIdActionSetThumb = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 (@sName, 'edit any entry', NULL, '_bx_forum_acl_action_edit_any_entry', '', 1, 3);
 SET @iIdActionEntryEditAny = LAST_INSERT_ID();
 
@@ -393,6 +397,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionEntryView),
 (@iAdministrator, @iIdActionEntryView),
 (@iPremium, @iIdActionEntryView),
+
+-- set entry thumb
+(@iStandard, @iIdActionSetThumb),
+(@iModerator, @iIdActionSetThumb),
+(@iAdministrator, @iIdActionSetThumb),
+(@iPremium, @iIdActionSetThumb),
 
 -- edit any entry
 (@iModerator, @iIdActionEntryEditAny),

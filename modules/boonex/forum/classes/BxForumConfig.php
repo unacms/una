@@ -49,7 +49,7 @@ class BxForumConfig extends BxBaseModTextConfig
         	'FIELD_CATEGORY' => 'cat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'attachments',
-            'FIELD_THUMB' => '',
+            'FIELD_THUMB' => 'thumb',
             'FIELD_COMMENTS' => 'comments',
         	'FIELD_STICK' => 'stick',
         	'FIELD_LOCK' => 'lock',
@@ -94,6 +94,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_forum_preview',
         	'OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS' => 'bx_forum_preview_cmts',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => '',
+        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_forum_cover',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => 'bx_forum',
@@ -141,6 +142,7 @@ class BxForumConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_forum_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_forum_menu_item_title_manage_all',
             	'txt_all_entries_by_author' => '_bx_forum_page_title_browse_by_author',
+            	'txt_pict_use_as_thumb' => '_bx_forum_form_entry_input_picture_use_as_thumb'
             ),
         );
 
