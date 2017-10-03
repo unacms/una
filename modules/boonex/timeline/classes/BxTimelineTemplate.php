@@ -152,6 +152,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageHeader($aEvent['description']);
+        $oTemplate->setPageDescription(strip_tags($aEvent['title']));
+
+        $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+        if($oMetatags)
+            $oMetatags->metaAdd($aEvent[$CNF['FIELD_ID']]);
+
         return array('content' => $this->parseHtmlByName('block_item.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
@@ -668,6 +676,24 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aResult;
     }
 
+    public function getItemIcon($bT, $bL, $bP, $bV)
+    {
+        $sResult = '';
+
+        if($bT && !$bL && !$bP && !$bV)
+            $sResult = 'file-text-o';
+        else if(!$bT && $bL && !$bP && !$bV)
+            $sResult = 'link';
+        else if(!$bT && !$bL && $bP && !$bV)
+            $sResult = 'picture-o';
+        else if(!$bT && !$bL && !$bP && $bV)
+            $sResult = 'film';
+        else 
+            $sResult = 'file-o';
+
+        return '<i class="sys-icon ' . $sResult . '"></i>';
+    }
+
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -958,6 +984,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'image' => $sImage
                 );
             }
+
+            //--- Add Meta Image when Item is viewed on a separate page ---//
+            if($bBrowseItem && !empty($aContent['images'][0]['src']))
+                BxDolTemplate::getInstance()->addPageMetaImage($aContent['images'][0]['src']);
         }
 
     	//--- Process Videos ---//

@@ -773,9 +773,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds)
             	return array('msg' => _t('_bx_timeline_txt_err_empty_post'));
 
-            $sSample = '<i class="sys-icon picture-o"></i>';
-            $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $sSample;
-            $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, $sSample);
+            $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oTemplate->getItemIcon($bText, $bLinkIds, $bPhotoIds, $bVideoIds);
+            $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample_with_article'));
 
             $iId = $oForm->insert(array(
                 'object_id' => $iUserId,
