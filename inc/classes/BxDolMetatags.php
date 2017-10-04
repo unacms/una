@@ -460,17 +460,21 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         if(!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']]))
             return '';
 
+        $s = '';
+        
         $sCountryUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country&keyword=' . $aLocation['country'] . '">' . $aCountries[$aLocation['country']] . '</a>';
         if(empty($aLocation['state']) || empty($aLocation['city']))
-            return _t('_sys_location_country', $sCountryUrl);
+            $s = _t('_sys_location_country', $sCountryUrl);
 
-        $sCityUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_city&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '&city=' . rawurlencode($aLocation['city']) . '">' . $aLocation['city'] . '</a>';
-        $sStateUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_state&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '">' . $aLocation['state'] . '</a>';
+        if (!$s) {
+            $sCityUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_city&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '&city=' . rawurlencode($aLocation['city']) . '">' . $aLocation['city'] . '</a>';
+            $sStateUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_state&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '">' . $aLocation['state'] . '</a>';
 
-        if(empty($aLocation['street']) || empty($aLocation['street_number']))
-        	$s = _t('_sys_location_country_city', $sCountryUrl, $sStateUrl, $sCityUrl);
-        else
-            $s = _t('_sys_location_country_city_street', $sCountryUrl, $sStateUrl, $sCityUrl, $aLocation['street'], $aLocation['street_number']);
+            if(empty($aLocation['street']) || empty($aLocation['street_number']))
+        	    $s = _t('_sys_location_country_city', $sCountryUrl, $sStateUrl, $sCityUrl);
+            else
+                $s = _t('_sys_location_country_city_street', $sCountryUrl, $sStateUrl, $sCityUrl, $aLocation['street'], $aLocation['street_number']);
+        }
 
         return $bHTML ? $s : trim(strip_tags($s));
     }

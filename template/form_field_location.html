@@ -35,10 +35,20 @@
 
     var bx_location_process_address = function (o) {
         var i, sKey, sCountry, sCity;
+console.log(o);
         for (i in o) {
             for (sKey in oBxLocationHashMap) {
-                if (o[i].types.indexOf(oBxLocationHashMap[sKey]) > -1) {
-                    var sIndex = 'route' == oBxLocationHashMap[sKey] || 'locality' == oBxLocationHashMap[sKey] ? 'long_name' : 'short_name';
+
+                var sName = oBxLocationHashMap[sKey];
+                
+                if ('locality' == sName && -1 == o[i].types.indexOf(sName))
+                    sName = 'postal_town';
+                
+                if ('administrative_area_level_1' == sName && -1 == o[i].types.indexOf(sName))
+                    sName = 'administrative_area_level_2';
+
+                if (o[i].types.indexOf(sName) > -1) {
+                    var sIndex = 'route' == sName || 'locality' == sName ? 'long_name' : 'short_name';
                     $('[name="' + sKey + '"]').val(o[i][sIndex]);
                 }
                 
