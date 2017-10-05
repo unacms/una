@@ -1560,4 +1560,27 @@ function bx_has_proto($sLink)
     return preg_match('@^https?://@', $sLink);    
 }
 
+function bx_is_empty_array ($a)
+{
+    if (!is_array($a))
+        return true;
+    if (empty($a))
+        return true;
+    foreach ($a as $k => $v)
+        if ($v)
+            return false;
+    return true;
+}
+
+function bx_is_full_array ($a)
+{
+    if (!is_array($a))
+        return false;
+    if (empty($a))
+        return false;
+    foreach ($a as $k => $v)
+        if (empty($v))
+            return false;
+    return true;
+}
 /** @} */

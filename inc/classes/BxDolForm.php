@@ -1660,26 +1660,12 @@ class BxDolFormCheckerHelper
 
     static public function _isEmptyArray ($a)
     {
-        if (!is_array($a))
-            return true;
-        if (empty($a))
-            return true;
-        foreach ($a as $k => $v)
-            if ($v)
-                return false;
-        return true;
+        return bx_is_empty_array($a);
     }
 
     static public function _isFullArray ($a)
     {
-        if (!is_array($a))
-            return false;
-        if (empty($a))
-            return false;
-        foreach ($a as $k => $v)
-            if (empty($v))
-                return false;
-        return true;
+        return bx_is_full_array($a);
     }
 }
 

@@ -1023,7 +1023,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'cmt_author_id' => array(
             	'type' => 'text_auto', 
             	'caption' => $aSrchCaptions['cmt_author_id'],
-            	'values' => '' 
+            	'values' => '',
+        		'pass' => ''
             )
         );
 
@@ -1033,6 +1034,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 	'type' => $aInput['type'], 
                 	'caption' => !empty($aInput['caption_src']) ? $aInput['caption_src'] : (!empty($aSrchCaptions[$aInput['name']]) ? $aSrchCaptions[$aInput['name']] : ''),
                     'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
+                	'pass' => !empty($aInput['db']['pass']) ? $aInput['db']['pass'] : ''
                 );
 
         return $aResult;

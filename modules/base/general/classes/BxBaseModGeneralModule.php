@@ -140,17 +140,19 @@ class BxBaseModGeneralModule extends BxDolModule
         $aResult = array();
         if(!empty($CNF['FIELD_AUTHOR']) && !in_array($CNF['FIELD_AUTHOR'], $this->_aSearchableNamesExcept))
             $aResult[$CNF['FIELD_AUTHOR']] = array(
-            	'type' => 'text_auto', 
-            	'caption' => $CNF['T']['form_field_author'],
-            	'values' => '' 
+                'type' => 'text_auto', 
+                'caption' => $CNF['T']['form_field_author'],
+                'values' => '',
+                'pass' => ''
             );
 
         foreach ($oForm->aInputs as $aInput)
             if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept))
                 $aResult[$aInput['name']] = array(
-                	'type' => $aInput['type'], 
-                	'caption' => $aInput['caption_src'],
+                    'type' => $aInput['type'], 
+                    'caption' => $aInput['caption_src'],
                     'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
+                    'pass' => !empty($aInput['db']['pass']) ? $aInput['db']['pass'] : '',
                 );
 
         return $aResult;

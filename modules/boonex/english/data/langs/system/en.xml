@@ -794,7 +794,11 @@
 	<string name="_adm_form_txt_field_type_checkbox_set"><![CDATA[checkbox set]]></string>
 	<string name="_adm_form_txt_field_type_custom"><![CDATA[custom]]></string>
 	<string name="_adm_form_txt_field_type_datepicker"><![CDATA[date]]></string>
+	<string name="_adm_form_txt_field_type_datepicker_range"><![CDATA[date range]]></string>
+	<string name="_adm_form_txt_field_type_datepicker_range_age"><![CDATA[age range]]></string>
 	<string name="_adm_form_txt_field_type_datetime"><![CDATA[date time]]></string>
+	<string name="_adm_form_txt_field_type_datetime_range"><![CDATA[date time range]]></string>
+	<string name="_adm_form_txt_field_type_datetime_range_age"><![CDATA[age range]]></string>
 	<string name="_adm_form_txt_field_type_display"><![CDATA[Type]]></string>
 	<string name="_adm_form_txt_field_type_doublerange"><![CDATA[double range slider]]></string>
 	<string name="_adm_form_txt_field_type_file"><![CDATA[file]]></string>

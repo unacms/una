@@ -101,6 +101,17 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                             }
                             break;
 
+                        case 'between':
+                            if(!is_array($aSearchParam['value']) || count($aSearchParam['value']) != 2) 
+                                break;
+
+                            $sWhereConditions .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $sSearchParam . "` >= :" . $sSearchParam . "_from";
+                            $sWhereConditions .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $sSearchParam . "` <= :" . $sSearchParam . "_to";
+
+                            $aMethod['params'][1][$sSearchParam . "_from"] = $aSearchParam['value'][0]; 
+                            $aMethod['params'][1][$sSearchParam . "_to"] = $aSearchParam['value'][1]; 
+                            break;
+
                         default:
                              $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
                              $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];                             

@@ -930,6 +930,7 @@ CREATE TABLE `sys_search_extended_fields` (
   `type` varchar(32) NOT NULL default '',
   `caption` varchar(255) NOT NULL default '',
   `values` text NOT NULL default '',
+  `pass` varchar(32) NOT NULL,
   `search_type` varchar(32) NOT NULL  default '',
   `search_value` varchar(255) NOT NULL default '',
   `search_operator` varchar(32) NOT NULL  default '',

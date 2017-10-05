@@ -44,12 +44,13 @@ class BxDolSearchExtendedQuery extends BxDolDb
 
             $iOrder = 0;
             foreach($aFields as $sField => $aField) 
-                $oDb->query("INSERT INTO `sys_search_extended_fields`(`object`, `name`, `type`, `caption`, `values`, `search_type`, `search_operator`, `active`, `order`) VALUES(:object, :name, :type, :caption, :values, :search_type, :search_operator, '1', :order)", array(
+                $oDb->query("INSERT INTO `sys_search_extended_fields`(`object`, `name`, `type`, `caption`, `values`, `pass`, `search_type`, `search_operator`, `active`, `order`) VALUES(:object, :name, :type, :caption, :values, :pass, :search_type, :search_operator, '1', :order)", array(
                     'object' => $aObject['object'], 
                     'name' => $sField,
                     'type' => $aField['type'],
                     'caption' => $aField['caption'],
                     'values' => $aField['values'],
+                    'pass' => $aField['pass'],
                     'search_type' => reset(BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']]), 
                     'search_operator' => reset(BxDolSearchExtended::$TYPE_TO_OPERATOR[$aField['type']]),
                     'order' => $iOrder++

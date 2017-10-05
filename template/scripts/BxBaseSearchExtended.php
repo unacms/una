@@ -60,12 +60,12 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $aParams = array();
         foreach($this->_aObject['fields'] as $aField) {
             $sValue = $oForm->getCleanValue($aField['name']);
-            if(empty($sValue))
+            if(empty($sValue) || bx_is_empty_array($sValue))
                 continue;
 
             $aParams[$aField['name']] = array(
                 'type' => $aField['search_type'],
-            	'value' => $sValue,
+                'value' => $sValue,
                 'operator' => $aField['search_operator']
             );
         }
@@ -126,10 +126,10 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 'type' => $aField['search_type'],
                 'name' => $aField['name'],
                 'caption' => _t($aField['caption']),
-            	'values' => $aField['values'],
+                'values' => $aField['values'],
                 'value' => $aField['search_value'],
-            	'db' => array(
-                    'pass' => 'Xss'
+                'db' => array(
+                    'pass' => !empty($aField['pass']) ? $aField['pass'] : 'Xss'
                 )
             );
         }

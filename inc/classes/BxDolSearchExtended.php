@@ -16,6 +16,7 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'select', 'radio_set',
         'checkbox_set', 'select_multiple',
         'checkbox', 'switcher',
+        'datepicker', 'datetime',
         'location'
     );
 
@@ -30,6 +31,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'select_multiple' => array('checkbox_set', 'select_multiple', 'select'),
         'checkbox' => array('checkbox', 'switcher'),
         'switcher' => array('checkbox', 'switcher'),
+        'datepicker' => array('datepicker_range', 'datepicker_range_age'),
+        'datetime' => array('datetime_range', 'datetime_range_age'),
         'location' => array('location')
     );
 
@@ -44,6 +47,8 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'select_multiple' => array('and'),
         'checkbox' => array('='),
         'switcher' => array('='),
+    	'datepicker' => array('between'), 
+    	'datetime' => array('between'),
         'location' => array('locate')
     );
 
