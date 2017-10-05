@@ -74,15 +74,17 @@ class BxAclModule extends BxDolModule
 			return array();
 
 		return array (
-			'id' => $aItem['id'],
-			'author_id' => $this->_oConfig->getOwner(),
-			'name' => $aItem['name'],
-			'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
-			'description' => _t($aItem['level_description']),
-			'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']),
-			'price_single' => $aItem['price'],
-			'price_recurring' => $aItem['price'],
-			'trial_recurring' => $aItem['trial']
+            'id' => $aItem['id'],
+            'author_id' => $this->_oConfig->getOwner(),
+            'name' => $aItem['name'],
+            'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
+            'description' => _t($aItem['level_description']),
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']),
+            'price_single' => $aItem['price'],
+            'price_recurring' => $aItem['price'],
+            'period_recurring' => $aItem['period'],
+            'period_unit_recurring' => $aItem['period_unit'],
+            'trial_recurring' => $aItem['trial']
         );
     }
 
@@ -100,15 +102,17 @@ class BxAclModule extends BxDolModule
         $aResult = array();
         foreach($aItems as $aItem)
             $aResult[] = array(
-				'id' => $aItem['id'],
-				'author_id' => $iSellerIdSetting,
-            	'name' => $aItem['name'],
-				'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
-				'description' => _t($aItem['level_description']),
-				'url' => $sUrl,
-				'price_single' => $aItem['price'],
-            	'price_recurring' => $aItem['price'],
-            	'trial_recurring' => $aItem['trial']
+                'id' => $aItem['id'],
+                'author_id' => $iSellerIdSetting,
+                'name' => $aItem['name'],
+                'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
+                'description' => _t($aItem['level_description']),
+                'url' => $sUrl,
+                'price_single' => $aItem['price'],
+                'price_recurring' => $aItem['price'],
+                'period_recurring' => $aItem['period'],
+                'period_unit_recurring' => $aItem['period_unit'],
+                'trial_recurring' => $aItem['trial']
            );
 
         return $aResult;

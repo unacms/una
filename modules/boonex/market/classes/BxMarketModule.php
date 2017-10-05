@@ -318,16 +318,18 @@ class BxMarketModule extends BxBaseModTextModule
         if(empty($aItem) || !is_array($aItem))
 			return array();
 
-		return array (
-			'id' => $aItem[$CNF['FIELD_ID']],
-			'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
-			'name' => $aItem[$CNF['FIELD_NAME']],
-			'title' => $aItem[$CNF['FIELD_TITLE']],
-			'description' => $aItem[$CNF['FIELD_TEXT']],
-			'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
-			'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
-			'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
-		    'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']]
+        return array (
+            'id' => $aItem[$CNF['FIELD_ID']],
+            'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
+            'name' => $aItem[$CNF['FIELD_NAME']],
+            'title' => $aItem[$CNF['FIELD_TITLE']],
+            'description' => $aItem[$CNF['FIELD_TEXT']],
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
+            'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
+            'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
+            'period_recurring' => 1,
+            'period_unit_recurring' => $aItem[$CNF['FIELD_DURATION_RECURRING']],
+            'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']]
         );
     }
 
@@ -344,16 +346,18 @@ class BxMarketModule extends BxBaseModTextModule
         $aResult = array();
         foreach($aItems as $aItem)
             $aResult[] = array(
-				'id' => $aItem[$CNF['FIELD_ID']],
-				'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
-            	'name' => $aItem[$CNF['FIELD_NAME']],
-				'title' => $aItem[$CNF['FIELD_TITLE']],
-				'description' => $aItem[$CNF['FIELD_TEXT']],
-				'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
-				'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
-            	'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
-            	'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']]
-           );
+                'id' => $aItem[$CNF['FIELD_ID']],
+                'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
+                'name' => $aItem[$CNF['FIELD_NAME']],
+                'title' => $aItem[$CNF['FIELD_TITLE']],
+                'description' => $aItem[$CNF['FIELD_TEXT']],
+                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
+                'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
+                'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
+                'period_recurring' => 1,
+                'period_unit_recurring' => $aItem[$CNF['FIELD_DURATION_RECURRING']],
+                'trial_recurring' => $aItem[$CNF['FIELD_TRIAL_RECURRING']]
+            );
 
         return $aResult;
     }
