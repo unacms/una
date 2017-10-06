@@ -55,19 +55,20 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_view_entry', '_bx_market_page_title_sys_view_entry', '_bx_market_page_title_view_entry', 'bx_market', 7, 2147483647, 1, 'view-product', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
-('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 0, 1),
-('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 2),
-('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 3),
-('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_author_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:22:\"entity_author_entities\";}', 0, 0, 1, 4),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 2),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_rating', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"entity_rating\";}', 0, 0, 1, 3),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 4),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 5),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:9:\"bx_market\";i:1;s:4:\"{id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 1, 6),
-('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 0, 7);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_breadcrumb', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 1, 0),
+('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
+('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 0, 1),
+('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 2),
+('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 3),
+('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_author_entries', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:22:"entity_author_entities";}', 0, 0, 1, 4),
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 1, 0),
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 2),
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_rating', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"entity_rating";}', 0, 0, 1, 3),
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 4),
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 5),
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:9:"bx_market";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 6),
+('bx_market_view_entry', 3, 'bx_market', '', '_bx_market_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:18:"entity_attachments";}', 0, 0, 0, 7);
 
 
 
@@ -76,7 +77,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_view_entry_comments', '_bx_market_page_title_sys_view_entry_comments', '_bx_market_page_title_view_entry_comments', 'bx_market', 5, 2147483647, 1, 'view-product-comments', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_view_entry_comments', 1, 'bx_market', '_bx_market_page_block_title_entry_comments', '_bx_market_page_block_title_entry_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1);
+('bx_market_view_entry_comments', 1, 'bx_market', '_bx_market_page_block_title_entry_comments', '_bx_market_page_block_title_entry_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"entity_comments";}', 0, 0, 1);
 
 
 -- PAGE: view entry info
@@ -84,8 +85,8 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_view_entry_info', '_bx_market_page_title_sys_view_entry_info', '_bx_market_page_title_view_entry_info', 'bx_market', 5, 2147483647, 1, 'view-product-info', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_view_entry_info', 1, 'bx_market', '_bx_market_page_block_title_entry_info', '_bx_market_page_block_title_entry_info_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:16:\"entity_info_full\";}', 0, 0, 1),
-('bx_market_view_entry_info', 1, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 2);
+('bx_market_view_entry_info', 1, 'bx_market', '_bx_market_page_block_title_entry_info', '_bx_market_page_block_title_entry_info_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:16:"entity_info_full";}', 0, 0, 1),
+('bx_market_view_entry_info', 1, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:17:"entity_text_block";}', 0, 0, 2);
 
 
 -- PAGE: categories
@@ -93,8 +94,24 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_categories', '_bx_market_page_title_sys_entries_categories', '_bx_market_page_title_entries_categories', 'bx_market', 5, 2147483647, 1, 'products-categories', 'page.php?i=products-categories', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_categories', 1, 'bx_market', '_bx_market_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:15:\"categories_list\";s:6:\"params\";a:2:{i:0;s:14:\"bx_market_cats\";i:1;b:0;}s:5:\"class\";s:20:\"TemplServiceCategory\";}', 0, 1, 1);
+('bx_market_categories', 1, 'bx_market', '_bx_market_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:14:"bx_market_cats";i:1;b:0;}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1);
 --('bx_market_categories', 2, 'bx_market', '_bx_market_page_block_title_categories_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_category";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1);
+
+
+-- PAGE: latest entries
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_latest', '_bx_market_page_title_sys_entries_latest', '_bx_market_page_title_entries_latest', 'bx_market', 5, 2147483647, 1, 'products-latest', 'page.php?i=products-latest', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_market_latest', 1, 'bx_market', '_bx_market_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 0, 1);
+
+
+-- PAGE: featured entries
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_featured', '_bx_market_page_title_sys_entries_featured', '_bx_market_page_title_entries_featured', 'bx_market', 5, 2147483647, 1, 'products-featured', 'page.php?i=products-featured', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_market_featured', 1, 'bx_market', '_bx_market_page_block_title_featured_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_featured";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 0, 1);
 
 
 -- PAGE: popular entries
@@ -102,15 +119,15 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_popular', '_bx_market_page_title_sys_entries_popular', '_bx_market_page_title_entries_popular', 'bx_market', 5, 2147483647, 1, 'products-popular', 'page.php?i=products-popular', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_popular', 1, 'bx_market', '_bx_market_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
+('bx_market_popular', 1, 'bx_market', '_bx_market_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 0, 1);
 
 
--- PAGE: recently updated entries
+-- PAGE: updated entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_updated', '_bx_market_page_title_sys_entries_updated', '_bx_market_page_title_entries_updated', 'bx_market', 5, 2147483647, 1, 'products-updated', 'page.php?i=products-updated', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_updated', 1, 'bx_market', '_bx_market_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
+('bx_market_updated', 1, 'bx_market', '_bx_market_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 0, 1);
 
 
 -- PAGE: entries of author
@@ -118,28 +135,29 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_market_author', 'products-author', '_bx_market_page_title_sys_entries_of_author', '_bx_market_page_title_entries_of_author', 'bx_market', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxMarketPageAuthor', 'modules/boonex/market/classes/BxMarketPageAuthor.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_author', 1, 'bx_market', '', '_bx_market_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 1),
-('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_favorites_of_author', '_bx_market_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:15:\"browse_favorite\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
-('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_of_author', '_bx_market_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3);
+('bx_market_author', 1, 'bx_market', '', '_bx_market_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
+('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_favorites_of_author', '_bx_market_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
+('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_of_author', '_bx_market_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3);
 
 -- PAGE: profile's licenses
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_licenses', '_bx_market_page_title_sys_licenses', '_bx_market_page_title_licenses', 'bx_market', 5, 2147483647, 1, 'products-licenses', '', '', '', '', 0, 1, 0, 'BxMarketPageLicenses', 'modules/boonex/market/classes/BxMarketPageLicenses.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses_note', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:19:\"block_licenses_note\";}', 0, 0, 1, 0),
-('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"block_licenses\";}', 0, 0, 1, 1);
+('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses_note', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:19:"block_licenses_note";}', 0, 0, 1, 0),
+('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"block_licenses";}', 0, 0, 1, 1);
 
 -- PAGE: module home
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_home', 'products-home', '_bx_market_page_title_sys_home', '_bx_market_page_title_home', 'bx_market', 1, 2147483647, 1, 'page.php?i=products-home', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_home', 1, 'bx_market', '', '_bx_market_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:9:\"bx_market\";i:1;s:9:\"bx_market\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 1, 1, 0),
-('bx_market_home', 1, 'bx_market', '', '_bx_market_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:15:\"categories_list\";s:6:\"params\";a:2:{i:0;s:14:\"bx_market_cats\";i:1;a:1:{s:10:\"show_empty\";b:1;}}s:5:\"class\";s:20:\"TemplServiceCategory\";}', 0, 1, 1, 1),
-('bx_market_home', 2, 'bx_market', '', '_bx_market_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 1, 0),
-('bx_market_home', 2, 'bx_market', '', '_bx_market_page_block_title_recent_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 1, 1),
-('bx_market_home', 2, 'bx_market', '', '_bx_market_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 1, 2);
+('bx_market_home', 1, 'bx_market', '', '_bx_market_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:9:"bx_market";i:1;s:9:"bx_market";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 0),
+('bx_market_home', 1, 'bx_market', '', '_bx_market_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:14:"bx_market_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 0, 1, 1),
+('bx_market_home', 2, 'bx_market', '', '_bx_market_page_block_title_featured_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 1, 0),
+('bx_market_home', 2, 'bx_market', '', '_bx_market_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 1, 1),
+('bx_market_home', 2, 'bx_market', '', '_bx_market_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 1, 2),
+('bx_market_home', 2, 'bx_market', '', '_bx_market_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 0, 3);
 
 -- PAGE: search for entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -156,33 +174,36 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_manage', '_bx_market_page_title_sys_manage', '_bx_market_page_title_manage', 'bx_market', 5, 2147483647, 1, 'products-manage', 'page.php?i=products-manage', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_manage', 1, 'bx_market', '_bx_market_page_block_title_system_manage', '_bx_market_page_block_title_manage', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:12:\"manage_tools\";}}', 0, 1, 0);
+('bx_market_manage', 1, 'bx_market', '_bx_market_page_block_title_system_manage', '_bx_market_page_block_title_manage', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:12:"manage_tools";}}', 0, 1, 0);
 
 -- PAGE: module manage all
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_administration', '_bx_market_page_title_sys_manage_administration', '_bx_market_page_title_manage', 'bx_market', 5, 192, 1, 'products-administration', 'page.php?i=products-administration', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_market_administration', 1, 'bx_market', '_bx_market_page_block_title_system_manage_administration', '_bx_market_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
+('bx_market_administration', 1, 'bx_market', '_bx_market_page_block_title_system_manage_administration', '_bx_market_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:12:"manage_tools";s:6:"params";a:1:{i:0;s:14:"administration";}}', 0, 1, 0);
 
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('sys_home', 1, 'bx_market', '_bx_market_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_public\";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
+('sys_home', 1, 'bx_market', '_bx_market_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
 
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 SET @iPBCellProfile = 3;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_market', '_bx_market_page_block_title_view_profile', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_author\";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:8:"per_page";s:26:"bx_market_per_page_profile";}}}', 0, 0, 0);
+('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_market', '_bx_market_page_block_title_view_profile', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:8:"per_page";s:26:"bx_market_per_page_profile";}}}', 0, 0, 0);
 
 -- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('', 0, 'bx_market', '_bx_market_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:7:\"gallery\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
-
-('', 0, 'bx_market', '_bx_market_page_block_title_recent_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
+('', 0, 'bx_market', '_bx_market_page_block_title_latest_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{s:9:"unit_view";s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, 'bx_market', '_bx_market_page_block_title_latest_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
 ('', 0, 'bx_market', '_bx_market_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
-('', 0, 'bx_market', '_bx_market_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4);
+('', 0, 'bx_market', '_bx_market_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4),
+('', 0, 'bx_market', '_bx_market_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{s:9:"unit_view";s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 5),
+('', 0, 'bx_market', '_bx_market_page_block_title_featured_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 6),
+('', 0, 'bx_market', '_bx_market_page_block_title_updated_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{s:9:"unit_view";s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 7),
+('', 0, 'bx_market', '_bx_market_page_block_title_updated_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 8);
 
 
 -- MENU: add to site menu
@@ -247,10 +268,13 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_market_submenu', 'bx_market', 'products-home', '_bx_market_menu_item_title_system_entries_public', '_bx_market_menu_item_title_entries_public', 'page.php?i=products-home', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_market_submenu', 'bx_market', 'products-categories', '_bx_market_menu_item_title_system_entries_categories', '_bx_market_menu_item_title_entries_categories', 'page.php?i=products-categories', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_market_submenu', 'bx_market', 'products-popular', '_bx_market_menu_item_title_system_entries_popular', '_bx_market_menu_item_title_entries_popular', 'page.php?i=products-popular', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_market_submenu', 'bx_market', 'products-search', '_bx_market_menu_item_title_system_entries_search', '_bx_market_menu_item_title_entries_search', 'page.php?i=products-search', '', '', '', '', 2147483647, 1, 1, 4),
-('bx_market_submenu', 'bx_market', 'products-manage', '_bx_market_menu_item_title_system_entries_manage', '_bx_market_menu_item_title_entries_manage', 'page.php?i=products-manage', '', '', '', '', 2147483646, 1, 1, 5);
+('bx_market_submenu', 'bx_market', 'products-latest', '_bx_market_menu_item_title_system_entries_latest', '_bx_market_menu_item_title_entries_latest', 'page.php?i=products-latest', '', '', '', '', 2147483647, 1, 1, 2),
+('bx_market_submenu', 'bx_market', 'products-featured', '_bx_market_menu_item_title_system_entries_featured', '_bx_market_menu_item_title_entries_featured', 'page.php?i=products-featured', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_market_submenu', 'bx_market', 'products-popular', '_bx_market_menu_item_title_system_entries_popular', '_bx_market_menu_item_title_entries_popular', 'page.php?i=products-popular', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_market_submenu', 'bx_market', 'products-updated', '_bx_market_menu_item_title_system_entries_updated', '_bx_market_menu_item_title_entries_updated', 'page.php?i=products-updated', '', '', '', '', 2147483647, 1, 1, 5),
+('bx_market_submenu', 'bx_market', 'products-categories', '_bx_market_menu_item_title_system_entries_categories', '_bx_market_menu_item_title_entries_categories', 'page.php?i=products-categories', '', '', '', '', 2147483647, 1, 1, 6),
+('bx_market_submenu', 'bx_market', 'products-search', '_bx_market_menu_item_title_system_entries_search', '_bx_market_menu_item_title_entries_search', 'page.php?i=products-search', '', '', '', '', 2147483647, 1, 1, 7),
+('bx_market_submenu', 'bx_market', 'products-manage', '_bx_market_menu_item_title_system_entries_manage', '_bx_market_menu_item_title_entries_manage', 'page.php?i=products-manage', '', '', '', '', 2147483646, 1, 1, 8);
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

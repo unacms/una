@@ -78,12 +78,15 @@ class BxMarketConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-product',
             'URI_AUTHOR_ENTRIES' => 'products-author',
+			'URI_CATEGORY_ENTRIES' => 'products-category',
             'URI_ADD_ENTRY' => 'create-product',
         	'URI_EDIT_ENTRY' => 'edit-product',
         	'URI_DOWNLOAD_ENTRY' => 'download-product',
         	'URI_MANAGE_COMMON' => 'products-manage',
 
             'URL_HOME' => 'page.php?i=products-home',
+            'URL_LATEST' => 'page.php?i=products-latest',
+            'URL_FEATURED' => 'page.php?i=products-featured',
             'URL_POPULAR' => 'page.php?i=products-popular',
             'URL_UPDATED' => 'page.php?i=products-updated',
         	'URL_MANAGE_COMMON' => 'page.php?i=products-manage',
@@ -113,6 +116,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_market',
             'OBJECT_METATAGS' => 'bx_market',
             'OBJECT_COMMENTS' => 'bx_market',
+        	'OBJECT_CATEGORY' => 'bx_market_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_market_allow_view_to',
 			'OBJECT_PRIVACY_PURCHASE' => 'bx_market_allow_purchase_to',
 			'OBJECT_PRIVACY_COMMENT' => 'bx_market_allow_comment_to',

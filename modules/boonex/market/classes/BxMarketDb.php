@@ -101,6 +101,13 @@ class BxMarketDb extends BxBaseModTextDb
 				$sOrderClause = "`te`.`" . $CNF['FIELD_FEATURED'] . "` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 
+            case 'popular':
+				$sFieldsClause .= "";
+				$sJoinClause .= "";
+				$sWhereClause .= "";
+				$sOrderClause = "`te`.`views` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+				break;
+
 			case 'selected':
 				$sFieldsClause .= "";
 				$sJoinClause .= "";
@@ -118,11 +125,17 @@ class BxMarketDb extends BxBaseModTextDb
 				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 
-			//TODO: There is no tags in current version.
 			case 'tag':
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= $this->prepareAsString(" AND `te`.`tags`=? ", $aParams['value']);
+			    $sFieldsClause .= "";
+
+			    $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->keywordsGetAsSQLPart('te', $CNF['FIELD_ID'], $aParams['value']);
+                if(!empty($aSql['where'])) {
+                    $sWhereClause .= $aSql['where'];
+                
+                    if(!empty($aSql['join']))
+                        $sJoinClause .= $aSql['join'];
+                }
+
 				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
 				break;
 
@@ -174,7 +187,7 @@ class BxMarketDb extends BxBaseModTextDb
 
 		$aMethod['params'][0] = "SELECT
         		" . $sFieldsClause . "`te`.*
-            FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
+            FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
             WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);

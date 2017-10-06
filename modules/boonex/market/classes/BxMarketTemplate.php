@@ -28,6 +28,26 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
+    public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
+    {
+    	$CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oPermalink = BxDolPermalinks::getInstance();
+        $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+
+    	$aTmplVarsItems = array(array(
+        	'url' => bx_append_url_params($oPermalink->permalink('page.php?i=' . $CNF['URI_CATEGORY_ENTRIES']), array(
+        		'category' => $aContentInfo[$CNF['FIELD_CATEGORY']]
+        	)),
+        	'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
+        ), array(
+        	'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+        	'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
+        ));
+
+    	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
+    }
+
     public function entryRating($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
