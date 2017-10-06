@@ -800,24 +800,30 @@ class BxBaseStudioStore extends BxDolStudioStore
             $sDiscount = !$bFree && !empty($aItem['discount_single']) ? _t('_adm_str_txt_discount_csign', $aItem['author_currency_sign'], $aItem['discount_single']['price']) : '';
 
             $sIcon = !empty($aItem['thumbnail']['small']) ? $aItem['thumbnail']['small'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
-			$bIcon = strpos($sIcon, '.') !== false;
+            $bIcon = strpos($sIcon, '.') !== false;
 
-            $sImage = !empty($aItem['cover']['big']) ? $aItem['cover']['big'] : '';
-			$bImage = strpos($sImage, '.') !== false;
+            $sImage = '';
+            if(!empty($aItem['cover']['medium']))
+                $sImage = $aItem['cover']['medium'];
+            else if(!empty($aItem['cover']['large']))
+                $sImage = $aItem['cover']['large'];
+            else if(!empty($aItem['cover']['big']))
+                $sImage = $aItem['cover']['big'];
+            $bImage = !empty($sImage) && strpos($sImage, '.') !== false;
 
-			$aTmplVarsRate = array();
-			$bTmplVarsRate = $bShowRating && !$bShoppingCart;
-			if($bTmplVarsRate)
-			    $aTmplVarsRate = array(
-			        'rate' => $this->getVoteStars($aItem)
-			    );
+            $aTmplVarsRate = array();
+            $bTmplVarsRate = $bShowRating && !$bShoppingCart;
+            if($bTmplVarsRate)
+                $aTmplVarsRate = array(
+                    'rate' => $this->getVoteStars($aItem)
+                );
 
-			$aTmplVarsVotes = array();
-			$bTmplVarsVotes = $bShowRating && !$bShoppingCart && (int)$aItem['votes_cnt'] > 0;
-			if($bTmplVarsVotes)
-			    $aTmplVarsVotes = array(
-			        'count' => (int)$aItem['votes_cnt']
-			    );
+            $aTmplVarsVotes = array();
+            $bTmplVarsVotes = $bShowRating && !$bShoppingCart && (int)$aItem['votes_cnt'] > 0;
+            if($bTmplVarsVotes)
+                $aTmplVarsVotes = array(
+                    'count' => (int)$aItem['votes_cnt']
+                );
 
             $sResult .= $oTemplate->parseHtmlByName('str_product_v2.html', array(
                 'js_object' => $sJsObject,
