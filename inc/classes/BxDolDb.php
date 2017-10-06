@@ -537,6 +537,30 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         return $aResult;
     }
 
+    public function fetchField($oStatement, $iField, $aBindings = array())
+    {
+        $aResult = array();
+        if(!$oStatement)
+            return $aResult;
+
+        else if(!($oStatement instanceof PDOStatement) && is_string($oStatement)) {
+            $oStatement = $this->prepare($oStatement);
+            if(!$this->res($oStatement, $aBindings))
+                return $aResult;
+        }
+
+        return $oStatement->getColumnMeta($iField);
+    }
+
+    public function isTableExists($sTable)
+    {
+        $aTableNames = $this->listTables();
+        foreach($aTableNames as $iKey => $sTableName)
+            $aTableNames[$iKey] = strtoupper($sTableName);
+
+        return in_array(strtoupper($sTable), $aTableNames);
+    }
+
     public function isFieldExists($sTable, $sFieldName)
     {
         $aFields = $this->getFields($sTable);
