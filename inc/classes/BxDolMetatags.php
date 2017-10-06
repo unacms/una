@@ -376,6 +376,20 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         );
     }
 
+	/**
+     * Get part of SQL query for meta keyword
+     * @param $sContentTable content table or alias
+     * @param $sContentField content table field or field alias
+     * @param $sKeyword keyword
+     */
+    public function keywordsGetAsSQLPart($sContentTable, $sContentField, $sKeyword)
+    {
+        if (empty($this->_aObject['table_keywords']))
+            return array();
+
+        return call_user_func_array(array($this->_oQuery, 'keywordsGetSQLParts'), func_get_args());
+    }
+
     public function keywordsPopularList($iLimit)
     {
         return $this->_oQuery->keywordsPopularList($iLimit);
@@ -530,7 +544,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Set condition for search results object for meta locations
+     * Get part of SQL query for meta locations
      * @param $sContentTable content table or alias
      * @param $sContentField content table field or field alias
      * @param $sCountry country and other location info

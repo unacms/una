@@ -66,11 +66,11 @@ class BxBaseCategory extends BxDolCategory
      * @param $bDisplayEmptyCats display categories with no items, true by default
      * @return categories list html
      */
-    public function getCategoriesList($bDisplayEmptyCats = true)
+    public function getCategoriesList($bDisplayEmptyCats = true, $bAsArray = false)
     {
         $a = BxDolForm::getDataItems($this->_aObject['list_name']);
         if (!$a)
-            return '';
+            return $bAsArray ? array() : '';
 
         $aVars = array('bx_repeat:cats' => array());
         foreach ($a as $sValue => $sName) {
@@ -86,6 +86,9 @@ class BxBaseCategory extends BxDolCategory
                 'num' => $iNum,
             );
         }
+
+        if ($bAsArray)
+            return $aVars;
 
         if (!$aVars['bx_repeat:cats'])
             return '';

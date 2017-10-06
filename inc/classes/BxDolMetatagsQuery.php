@@ -58,6 +58,17 @@ class BxDolMetatagsQuery extends BxDolDb
         return $this->getColumn($sQuery);
     }
 
+    public function keywordsGetSQLParts($sContentTable, $sContentField, $mixedKeyword)
+    {
+        if(!is_array($mixedKeyword))
+            $mixedKeyword = array($mixedKeyword);
+
+        return array(
+            'where' => !empty($mixedKeyword) ? ' AND `tt`.`keyword` IN (' . $this->implode_escape($mixedKeyword) . ')' : '',
+            'join' => 'INNER JOIN `' . $this->_aObject['table_keywords'] . '` AS `tt` ON `' . $sContentTable . '`.`' . $sContentField . '`=`tt`.`object_id`'
+        );
+    }
+
     public function keywordsPopularList($iLimit)
     {
         $sQuery = $this->prepare("SELECT `keyword`, COUNT(*) as `count` FROM `{$this->_aObject['table_keywords']}` GROUP BY `keyword` ORDER BY `count` DESC LIMIT ?", $iLimit);

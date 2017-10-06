@@ -35,11 +35,11 @@ class BxBaseMetatags extends BxDolMetatags
     	)) . '{sections}';
     }
 
-    public function getKeywordsCloud($mixedSection, $iMaxCount)
+    public function getKeywordsCloud($mixedSection, $iMaxCount, $bAsArray = false)
     {
         $aKeywords = $this->keywordsPopularList($iMaxCount);
         if(!$aKeywords)
-			return '';
+            return $bAsArray ? array() : '';
 
         ksort($aKeywords, SORT_LOCALE_STRING);
 
@@ -72,6 +72,9 @@ class BxBaseMetatags extends BxDolMetatags
         $aVars = array (
             'bx_repeat:units' => $aUnits,
         );
+
+        if($bAsArray)
+            return $aVars;
 
         $this->addCssJs();
         return $this->_oTemplate->parseHtmlByName('metatags_keywords_cloud.html', $aVars);
