@@ -394,7 +394,7 @@ BxDolStudioStore.prototype.changePage = function(sType) {
 	return true;
 };
 
-BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, iStart, iPerPage) {
+BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, mixedValue, iStart, iPerPage) {
 	var oDate = new Date();
 	var $this = this;
 
@@ -403,6 +403,7 @@ BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, iStart,
 		{
 			str_action: 'get-products-by-page',
 			str_type: sType,
+			str_value: mixedValue,
 			str_start: iStart,
 			str_per_page: iPerPage,
 			_t:oDate.getTime()

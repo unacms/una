@@ -61,7 +61,7 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageCss()
     {
-        $aCss = array('page.css', 'menu_top.css');
+        $aCss = array('page.css', 'page-media-tablet.css', 'page-media-desktop.css', 'menu_top.css');
         if((int)$this->aPage['index'] == 3)
             $aCss[] = 'page_columns.css';
 
@@ -230,6 +230,20 @@ class BxBaseStudioPage extends BxDolStudioPage
      * Block Methods
      *
      */
+    public function getBlocksLine($aBlocks)
+    {
+        $aTmplVarsBlocks = array();
+        foreach ($aBlocks as $aBlock) {
+            $aTmplVarsBlocks[] = array(
+                'content' => $this->getBlockCode($aBlock)
+            ); 
+        }
+
+    	return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_blocks_line.html', array(
+    	    'count' => count($aTmplVarsBlocks),
+    		'bx_repeat:blocks' => $aTmplVarsBlocks
+    	));
+    }
     public function getBlockCode($aBlock)
     {
     	return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_block.html', array(
@@ -248,24 +262,25 @@ class BxBaseStudioPage extends BxDolStudioPage
         $aTmplActions = array();
         if(!empty($aBlock['actions']) && is_array($aBlock['actions']))
             foreach($aBlock['actions'] as $aAction) {
-                $sCaption = _t($aAction['caption']);
+                $sCaption = is_array($aAction['caption']) ? call_user_func_array('_t', $aAction['caption']) : _t($aAction['caption']);
+
+                $bOnClick = !empty($aAction['onclick']);
+                $aOnClick = $bOnClick ? array('onclick' => $aAction['onclick']) : array();
 
                 $aTmplActions[] = array(
                     'name' => $aAction['name'],
                     'url' => $aAction['url'],
                     'title' => $sCaption,
                     'bx_if:show_onclick' => array(
-                        'condition' => $aAction['onclick'] != '',
-                        'content' => array(
-                            'onclick' => $aAction['onclick']
-                        )
+                        'condition' => $bOnClick,
+                        'content' => $aOnClick
                     ),
                     'caption' => $sCaption
                 );
             }
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('block_caption.html', array(
-            'caption' => _t($aBlock['caption']),
+            'caption' => is_array($aBlock['caption']) ? call_user_func_array('_t', $aBlock['caption']) : _t($aBlock['caption']),
             'bx_if:show_actions' => array(
                 'condition' => !empty($aTmplActions),
                 'content' => array(

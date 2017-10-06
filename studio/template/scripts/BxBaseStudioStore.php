@@ -41,7 +41,10 @@ class BxBaseStudioStore extends BxDolStudioStore
         $aMenu = array();
         $aMenuItems = array(
 	        'goodies' => array('icon' => 'home'),
+        	'latest' => array('icon' => 'th-large'),
 	        'featured' => array('icon' => 'thumbs-up'),
+        	'popular' => array('icon' => 'star'),
+        	'categories' => array('icon' => 'tag'),
         	'search' => array('icon' => 'search'),
 	        'purchases' => array('icon' => 'shopping-cart'), 
 	        'updates' => array('icon' => 'refresh'), 
@@ -52,7 +55,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => $aItem['icon'],
-                'link' => BX_DOL_URL_STUDIO . 'store.php?page=' . $sMenuItem,
+                'link' => $this->getBaseUrl($sMenuItem),
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
             );
@@ -100,6 +103,19 @@ class BxBaseStudioStore extends BxDolStudioStore
 	        $aProducts = $this->loadGoodies();
 
 	        $sContent = "";
+	        $sContent .= $this->getBlocksLine(array(
+                array(
+    	            'caption' => '_adm_block_cpt_categories',
+                	'actions' => array(),
+                    'items' => $this->getCategoriesList(false)
+                ),
+                array(
+    	            'caption' => '_adm_block_cpt_tags',
+                	'actions' => array(),
+                    'items' => $this->getTagsList(false)
+                )
+            ));        
+
 	        foreach($aProducts as $aBlock) {
 	            $aBlock['items'] = $oTemplate->parseHtmlByName('str_products.html', array(
 	                'list' => $this->displayProducts($aBlock['items']),
@@ -121,7 +137,22 @@ class BxBaseStudioStore extends BxDolStudioStore
         ));
     }
 
+    protected function getLatestList($bWrapInBlock = true)
+    {
+        return $this->getBrowsingList('latest', $bWrapInBlock);
+    }
+
     protected function getFeaturedList($bWrapInBlock = true)
+    {
+        return $this->getBrowsingList('featured', $bWrapInBlock);
+    }
+
+    protected function getPopularList($bWrapInBlock = true)
+    {
+        return $this->getBrowsingList('popular', $bWrapInBlock);
+    }
+
+    protected function getBrowsingList($sType, $bWrapInBlock = true)
     {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -133,12 +164,12 @@ class BxBaseStudioStore extends BxDolStudioStore
 	        if(empty($iPerPage))
 	            $iPerPage = $this->iPerPageDefault;
 
-	        $aProducts = $this->loadFeatured($iStart, $iPerPage + 1);
+	        $aProducts = $this->{'load' . bx_gen_method_name($sType)}($iStart, $iPerPage + 1);
 
 	        $oPaginate = new BxTemplPaginate(array(
 	            'start' => $iStart,
 	            'per_page' => $iPerPage,
-	            'on_change_page' => $sJsObject . ".changePagePaginate(this, 'featured', {start}, {per_page})"
+	            'on_change_page' => $sJsObject . ".changePagePaginate(this, '" . $sType . "', null, {start}, {per_page})"
 	        ));
 	        $oPaginate->setNumFromDataArray($aProducts);
 
@@ -156,25 +187,106 @@ class BxBaseStudioStore extends BxDolStudioStore
         return $oTemplate->parseHtmlByName('store.html', array(
             'js_object' => $sJsObject,
             'content' => $this->getBlockCode(array(
-				'caption' => '_adm_block_cpt_featured',
+				'caption' => '_adm_block_cpt_' . $sType,
 				'items' => $sContent
 			))
         ));
     }
 
-    protected function getExtensionsList($bWrapInBlock = true)
+    protected function getCategoriesList($bWrapInBlock = true)
     {
-        return $this->getCategory('extensions', $bWrapInBlock);
+        return $this->getLabelsList('categories', $bWrapInBlock);
     }
 
-    protected function getTemplatesList($bWrapInBlock = true)
+    protected function getCategoryList($bWrapInBlock = true)
     {
-        return $this->getCategory('templates', $bWrapInBlock);
+        $sKey = 'value';
+        if(bx_get($sKey) === false)
+            $sKey = 'str_value';
+
+        $aValue = array();
+        $aValue['value'] = (int)bx_get($sKey);
+        if(bx_get('title') !== false)
+            $aValue['title'] = bx_process_input(urldecode(bx_get('title')));
+
+        return $this->getLabelList('category', $aValue, $bWrapInBlock);
     }
 
-    protected function getTranslationsList($bWrapInBlock = true)
+    protected function getTagsList($bWrapInBlock = true)
     {
-        return $this->getCategory('translations', $bWrapInBlock);
+        return $this->getLabelsList('tags', $bWrapInBlock);
+    }
+
+    protected function getTagList($bWrapInBlock = true)
+    {
+        $sKey = 'value';
+        if(bx_get($sKey) === false)
+            $sKey = 'str_value';
+
+        return $this->getLabelList('tag', bx_process_input(bx_get($sKey)), $bWrapInBlock);
+    }
+
+    protected function getLabelsList($sType, $bWrapInBlock = true)
+    {
+        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        if($mixedResult === true) {
+            $aLabels = $this->{'load' . bx_gen_method_name($sType)}();
+            $sContent = $this->{'display' . bx_gen_method_name($sType)}($aLabels);
+        }
+        else 
+            $sContent = $mixedResult;
+
+    	if(!$bWrapInBlock)
+			return $sContent;
+
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('store.html', array(
+            'js_object' => $this->getPageJsObject(),
+            'content' => $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_' . $sType,
+				'items' => $sContent
+			))
+        ));
+    }
+
+    protected function getLabelList($sType, $mixedValue, $bWrapInBlock = true)
+    {
+        $sJsObject = $this->getPageJsObject();
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $iStart = (int)bx_get('str_start');
+        $iPerPage = (int)bx_get('str_per_page');
+        if(empty($iPerPage))
+            $iPerPage = $this->iPerPageDefault;
+
+        $bArray = is_array($mixedValue);
+        $sValue = $bArray ? $mixedValue['value'] : $mixedValue;
+        $sTitle = $bArray && !empty($mixedValue['title']) ? $mixedValue['title'] : $sValue;
+
+		$sMethod = 'load' . bx_gen_method_name($sType);
+        $aProducts = $this->$sMethod($sValue, $iStart, $iPerPage + 1);
+
+        $oPaginate = new BxTemplPaginate(array(
+            'start' => $iStart,
+            'per_page' => $iPerPage,
+            'on_change_page' => $sJsObject . ".changePagePaginate(this, '" . $sType . "', '" . $sValue . "', {start}, {per_page})"
+        ));
+        $oPaginate->setNumFromDataArray($aProducts);
+
+        $sContent = $oTemplate->parseHtmlByName('str_products.html', array(
+            'list' => $this->displayProducts($aProducts),
+            'paginate' => $oPaginate->getSimplePaginate()
+        ));
+
+        if(!$bWrapInBlock)
+            return $sContent;
+
+        return $oTemplate->parseHtmlByName('store.html', array(
+            'js_object' => $sJsObject,
+            'content' => $this->getBlockCode(array(
+				'caption' => array('_adm_block_cpt_' . $sType, $sTitle),
+				'items' => $sContent,
+			))
+        ));
     }
 
     protected function getSearchList($bWrapInBlock = true)
@@ -267,53 +379,6 @@ class BxBaseStudioStore extends BxDolStudioStore
             'content' => $this->getBlockCode(array(
 				'caption' => '_adm_block_cpt_search',
 				'items' => $sContent
-			))
-        ));
-    }
-
-    protected function getTag($sLabel, $bWrapInBlock = true)
-    {
-    	return $this->getLabel('tag', $sLabel, $bWrapInBlock);
-    }
-
-	protected function getCategory($sLabel, $bWrapInBlock = true)
-    {
-    	return $this->getLabel('category', $sLabel, $bWrapInBlock);
-    }
-
-    protected function getLabel($sType, $sLabel, $bWrapInBlock = true)
-    {
-        $sJsObject = $this->getPageJsObject();
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        $iStart = (int)bx_get('str_start');
-        $iPerPage = (int)bx_get('str_per_page');
-        if(empty($iPerPage))
-            $iPerPage = $this->iPerPageDefault;
-
-		$sMethod = 'load' . bx_gen_method_name($sType);
-        $aProducts = $this->$sMethod($sLabel, $iStart, $iPerPage + 1);
-
-        $oPaginate = new BxTemplPaginate(array(
-            'start' => $iStart,
-            'per_page' => $iPerPage,
-            'on_change_page' => $sJsObject . ".changePagePaginate(this, '" . $sLabel . "', {start}, {per_page})"
-        ));
-        $oPaginate->setNumFromDataArray($aProducts);
-
-        $sContent = $oTemplate->parseHtmlByName('str_products.html', array(
-            'list' => $this->displayProducts($aProducts),
-            'paginate' => $oPaginate->getSimplePaginate()
-        ));
-
-        if(!$bWrapInBlock)
-            return $sContent;
-
-        return $oTemplate->parseHtmlByName('store.html', array(
-            'js_object' => $sJsObject,
-            'content' => $this->getBlockCode(array(
-				'caption' => '_adm_block_cpt_' . $sLabel,
-				'items' => $sContent,
 			))
         ));
     }
@@ -941,6 +1006,22 @@ class BxBaseStudioStore extends BxDolStudioStore
         }
 
         return $sResult;
+    }
+
+    protected function displayCategories($aCategories)
+    {
+        foreach($aCategories['bx_repeat:cats'] as $iKey => $aItem)
+            $aCategories['bx_repeat:cats'][$iKey]['url'] = $this->getBaseUrl(array('page' => 'category', 'value' => $aItem['value'], 'title' => urlencode($aItem['name'])));
+
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('str_lbl_categories.html', $aCategories);
+    }
+
+    protected function displayTags($aTags)
+    {
+        foreach($aTags['bx_repeat:units'] as $iKey => $aItem)
+            $aTags['bx_repeat:units'][$iKey]['href'] = $this->getBaseUrl(array('page' => 'tag', 'value' => $aItem['keyword']));
+
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('str_lbl_tags.html', $aTags);
     }
 
     private function getDownloadedModules($bNamesOnly = true)
