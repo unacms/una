@@ -130,6 +130,8 @@
     <string name="_bx_market_page_title_browse_latest"><![CDATA[Latest Products]]></string>
     <string name="_bx_market_page_title_browse_popular"><![CDATA[Popular Products]]></string>
     <string name="_bx_market_page_title_browse_updated"><![CDATA[Updated Products]]></string>
+    <string name="_bx_market_page_title_browse_category"><![CDATA[Products by category: {0}]]></string>
+    <string name="_bx_market_page_title_browse_keyword"><![CDATA[Products by hashtag: {0}]]></string>
     <string name="_bx_market_page_title_sys_home"><![CDATA[Market Home]]></string>
     <string name="_bx_market_page_title_home"><![CDATA[Market]]></string>
     <string name="_bx_market_page_block_title_featured_entries"><![CDATA[Featured Products]]></string>

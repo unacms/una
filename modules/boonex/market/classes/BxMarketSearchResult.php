@@ -113,7 +113,21 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
-    
+
+    public function setMetaType($s)
+    {
+        $this->_sMetaType = $s;
+        if(!empty($this->_sMetaType) && $this->_sMetaType == 'keyword')
+            $this->aCurrent['title'] = _t('_bx_market_page_title_browse_keyword', bx_process_pass(bx_get('keyword')));
+    }
+
+    public function setCategoryObject($s)
+    {
+        $this->_sCategoryObject = $s;
+        if(!empty($this->_sCategoryObject) && $o = BxDolCategory::getObjectInstance($this->_sCategoryObject))
+            $this->aCurrent['title'] = _t('_bx_market_page_title_browse_category', $o->getCategoryTitle((int)bx_get('keyword')));
+    }
+
     function displayResultBlock ()
     {
     	return BxDolPayments::getInstance()->getCartJs() . parent::displayResultBlock();

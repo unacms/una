@@ -130,6 +130,8 @@
     <string name="_bx_market_page_title_browse_latest"><![CDATA[Новые продукты]]></string>
     <string name="_bx_market_page_title_browse_popular"><![CDATA[Популярные продукты]]></string>
     <string name="_bx_market_page_title_browse_updated"><![CDATA[Обновлённые продукты]]></string>
+    <string name="_bx_market_page_title_browse_category"><![CDATA[Продукты в категории: {0}]]></string>
+    <string name="_bx_market_page_title_browse_keyword"><![CDATA[Продукты с хэштегом: {0}]]></string>
     <string name="_bx_market_page_title_sys_home"><![CDATA[Рынок - Домой]]></string>
     <string name="_bx_market_page_title_home"><![CDATA[Рынок]]></string>
     <string name="_bx_market_page_block_title_featured_entries"><![CDATA[Продвинутые продукты]]></string>
