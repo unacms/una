@@ -435,8 +435,8 @@
 	<string name="_adm_block_cpt_purchases"><![CDATA[Покупки]]></string>
 	<string name="_adm_block_cpt_search"><![CDATA[Поиск]]></string>
 	<string name="_adm_block_cpt_space"><![CDATA[Использовано места]]></string>
-	<string name="_adm_block_cpt_tag"><![CDATA[Таг: {0}]]></string>
-	<string name="_adm_block_cpt_tags"><![CDATA[Таги]]></string>
+	<string name="_adm_block_cpt_tag"><![CDATA[Хэштег: {0}]]></string>
+	<string name="_adm_block_cpt_tags"><![CDATA[Хэштеги]]></string>
 	<string name="_adm_block_cpt_updates"><![CDATA[Обновления]]></string>
 	<string name="_adm_block_cpt_versions"><![CDATA[Версии]]></string>
 	<string name="_adm_bp_btn_add_block"><![CDATA[Добавить блоки]]></string>

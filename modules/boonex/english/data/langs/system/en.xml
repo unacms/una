@@ -435,8 +435,8 @@
 	<string name="_adm_block_cpt_purchases"><![CDATA[Purchases]]></string>
 	<string name="_adm_block_cpt_search"><![CDATA[Search]]></string>
 	<string name="_adm_block_cpt_space"><![CDATA[Space Usage]]></string>
-	<string name="_adm_block_cpt_tag"><![CDATA[Tag: {0}]]></string>
-	<string name="_adm_block_cpt_tags"><![CDATA[Tags]]></string>
+	<string name="_adm_block_cpt_tag"><![CDATA[Hashtag: {0}]]></string>
+	<string name="_adm_block_cpt_tags"><![CDATA[Hashtags]]></string>
 	<string name="_adm_block_cpt_updates"><![CDATA[Updates]]></string>
 	<string name="_adm_block_cpt_versions"><![CDATA[Versions]]></string>
 	<string name="_adm_bp_btn_add_block"><![CDATA[Add Blocks]]></string>
