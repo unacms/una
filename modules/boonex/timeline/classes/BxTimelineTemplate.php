@@ -1250,7 +1250,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $s = bx_trim_nl_duplicates($s);
 
     	$s = bx_process_output($s, BX_DATA_HTML);
-        $s = bx_linkify_html($s, 'class="' . BX_DOL_LINK_CLASS . '"');
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
 		$s = $oMetatags->keywordsParse($iEventId, $s);
