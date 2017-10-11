@@ -61,10 +61,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($CNF['FIELD_AUTHOR']) && empty($aValsToAdd[$CNF['FIELD_AUTHOR']]))
             $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id ();
 
-        if (isset($CNF['FIELD_ADDED']) && empty($aValsToAdd[$CNF['FIELD_ADDED']]))
+        if (isset($CNF['FIELD_ADDED']) && empty($aValsToAdd[$CNF['FIELD_ADDED']]) && empty($this->getCleanValue($CNF['FIELD_ADDED'])))
             $aValsToAdd[$CNF['FIELD_ADDED']] = time();
 
-        if (isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]))
+        if (isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]) && empty($this->getCleanValue($CNF['FIELD_CHANGED'])))
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
         return parent::insert ($aValsToAdd, $isIgnore);
@@ -74,7 +74,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (isset($CNF['FIELD_CHANGED']))
+        if (isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]) && empty($this->getCleanValue($CNF['FIELD_CHANGED'])))
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
             
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
