@@ -1677,7 +1677,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>Hello,</p>
 <p>Your comment was replied. It reads:</p>
 <p>{reply_text}</p>
-<p>Please refer to comment page for more details: <a href="{comment_url}">My Comment</a></p>
+<p>Please refer to comment page for more details <a href="{comment_url}">here</a>.</p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
 <p>Hello,</p>

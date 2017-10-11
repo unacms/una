@@ -1073,7 +1073,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 'class' => 'bx-base-general-comments-' . ($bShowAsButton ? 'button' : 'link'),
                 'class_do' => $bShowAsButton ? ' bx-btn' : '',
             	'class_counter' => $bShowAsButton ? ' bx-btn-height' : '',
-                'url' => $sUrl . '#' . $oComments->getListAnchor(),
+                'url' => $sUrl . $oComments->getListAnchor(true),
                 'bx_if:comments' => array (
                     'condition' => $iNum,
                     'content' => array (

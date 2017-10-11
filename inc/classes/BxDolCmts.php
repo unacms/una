@@ -140,6 +140,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sViewUrl = '';
     protected $_sBaseUrl = '';
     protected $_sListAnchor = '';
+    protected $_sItemAnchor = '';
 
     protected $_sSystem = 'profile'; ///< current comment system name
     protected $_aSystem = array (); ///< current comments system array
@@ -213,6 +214,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
         $this->_sListAnchor = "cmts-anchor-%s-%d";
+        $this->_sItemAnchor = "cmt-anchor-%s-%d-%d";
 
         $this->_oQuery = new BxDolCmtsQuery($this);
 
@@ -376,12 +378,30 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function getListUrl()
     {
-        return $this->getBaseUrl() . '#' . $this->getListAnchor();
+        $sBaseUrl = $this->getBaseUrl();
+        if(empty($sBaseUrl))
+            return '';
+
+        return $sBaseUrl . $this->getListAnchor(true);
     }
 
-    public function getListAnchor()
+    public function getItemUrl($iItemId)
     {
-        return sprintf($this->_sListAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId());
+        $sBaseUrl = $this->getBaseUrl();
+        if(empty($sBaseUrl))
+            return '';
+
+        return $sBaseUrl . $this->getItemAnchor($iItemId, true);
+    }
+
+    public function getListAnchor($bWithHash = false)
+    {
+        return ($bWithHash ? '#' : '') . sprintf($this->_sListAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId());
+    }
+
+    public function getItemAnchor($iItemId, $bWithHash = false)
+    {
+        return ($bWithHash ? '#' : '') . sprintf($this->_sItemAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId(), $iItemId);
     }
 
 	public function getViewUrl($iCmtId)
@@ -1289,6 +1309,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(!empty($sBpFilter))
             $oSession->setValue($this->_sBpSessionKeyFilter . $iUserId, $sBpFilter);
     }
+
     protected function _sendNotificationEmail($iCmtId, $iCmtParentId)
     {
         $aCmt = $this->getCommentRow($iCmtId);
@@ -1306,7 +1327,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $aPlus = array();
         $aPlus['reply_text'] = $this->_prepareTextForOutput($aCmt['cmt_text'], $iCmtId);
-        $aPlus['comment_url'] = sprintf('%scmts.php?sys=%s&id=%d&cmt_id=%d', BX_DOL_URL_ROOT, $this->_sSystem, $this->_iId, $iCmtParentId);
+
+        $sViewUrl = $this->getBaseUrl();
+        if(!empty($sViewUrl))
+            $sViewUrl .= $this->getItemAnchor($iCmtParentId, true);
+        else 
+            $sViewUrl = $this->getViewUrl($iCmtParentId);
+        $aPlus['comment_url'] = $sViewUrl;
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_CommentReplied', $aPlus);
         return $aTemplate && sendMail($aAccount['email'], $aTemplate['Subject'], $aTemplate['Body']);

@@ -211,7 +211,7 @@ class BxBaseCmts extends BxDolCmts
 
             $aTmplReplyTo = array(
                 'style_prefix' => $this->_sStylePrefix,
-                'par_cmt_link' => $this->getBaseUrl() . '#' . $this->_sSystem . $aCmt['cmt_parent_id'],
+                'par_cmt_link' => $this->getItemUrl($aCmt['cmt_parent_id']),
             	'par_cmt_title' => bx_html_attribute(_t('_in_reply_to', $sParAuthorName)),
                 'par_cmt_author' => $sParAuthorName
             );
@@ -232,6 +232,7 @@ class BxBaseCmts extends BxDolCmts
             'style_prefix' => $this->_sStylePrefix,
             'js_object' => $this->_sJsObjName,
             'id' => $aCmt['cmt_id'],
+        	'anchor' => $this->getItemAnchor($aCmt['cmt_id']),
             'class' => $sClass,
         	'class_cnt' => $sClassCnt,
             'bx_if:show_reply_to' => array(
