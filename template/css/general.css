@@ -104,14 +104,15 @@
 /* --------------- content */
 
 #bx-content-wrapper {
-	padding-bottom: 100px;
-	padding-bottom: 6.25rem;
+	position: relative;
+	-webkit-flex-grow: 3; 
+    flex-grow: 3;
 }
 
 /* --------------- footer */
 
 #bx-footer-wrapper {
-	position: absolute;
+    position: relative;
 
 	width: 100%;
 	height: 100px;
