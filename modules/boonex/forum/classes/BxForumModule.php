@@ -327,6 +327,10 @@ class BxForumModule extends BxBaseModTextModule
         if(!$aContentInfo)
 			return false;
 
+        $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
+        if(!$oCmts)
+            return false;
+
         if(!$iTimestamp)
 			$iTimestamp = time();
 
@@ -340,6 +344,7 @@ class BxForumModule extends BxBaseModTextModule
                 sendMailTemplate('bx_forum_new_reply', 0, $aContentInfo[$CNF['FIELD_AUTHOR']], array(
                     'SenderDisplayName' => $oProfile->getDisplayName(),
                     'SenderUrl' => $oProfile->getUrl(),
+                    'ReplyUrl' => $oCmts->getItemUrl($iCommentId),
                     'Message' => $sCommentText,
                 ), BX_EMAIL_NOTIFY);
         }

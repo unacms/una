@@ -371,6 +371,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
     }
 
+	public function getViewUrl($iCmtId)
+    {
+    	if(empty($this->_aSystem['trigger_field_title']))
+    		return '';
+
+    	return bx_append_url_params($this->_sViewUrl, array(
+			'sys' => $this->_sSystem,
+			'id' => $this->_iId,
+			'cmt_id' => $iCmtId
+		));
+    }
+
     public function getBaseUrl()
     {
         return $this->_replaceMarkers($this->_sBaseUrl);
@@ -402,18 +414,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function getItemAnchor($iItemId, $bWithHash = false)
     {
         return ($bWithHash ? '#' : '') . sprintf($this->_sItemAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId(), $iItemId);
-    }
-
-	public function getViewUrl($iCmtId)
-    {
-    	if(empty($this->_aSystem['trigger_field_title']))
-    		return '';
-
-    	return bx_append_url_params($this->_sViewUrl, array(
-			'sys' => $this->_sSystem,
-			'id' => $this->_iId,
-			'cmt_id' => $iCmtId
-		));
     }
 
     public function getConnectionObject($sType)

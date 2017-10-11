@@ -128,7 +128,7 @@
     <string name="_bx_cnv_email_new_reply"><![CDATA[Новый ответ]]></string>
     <string name="_bx_cnv_email_new_reply_subject"><![CDATA[Новый ответ от {SenderDisplayName}]]></string>
     <string name="_bx_cnv_email_new_reply_body"><![CDATA[{email_header}
-<p>Новый ответ от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<p>Новый <a href="{ReplyUrl}">ответ</a> от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
 {email_footer}]]></string>

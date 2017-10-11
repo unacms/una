@@ -258,30 +258,37 @@ class BxCnvModule extends BxBaseModTextModule
      */
     public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iCommentId, $iTimestamp = 0, $sCommentText = '')
     {
+        $CNF = &$this->_oConfig->CNF;
+        
         if (!(int)$iContentId)
             return false;
         $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
         if (!$aContentInfo)
             return false;
 
+        $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
+        if(!$oCmts)
+            return false;
+            
         if (!$iTimestamp)
             $iTimestamp = time();
 
         if ($iProfileId == bx_get_logged_profile_id())
-            $this->_oDb->updateReadComments($iProfileId, $aContentInfo[$this->_oConfig->CNF['FIELD_ID']], $aContentInfo[$this->_oConfig->CNF['FIELD_COMMENTS']]);
+            $this->_oDb->updateReadComments($iProfileId, $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_COMMENTS']]);
 
         if (!$this->_oDb->updateLastCommentTimeProfile((int)$iContentId, (int)$iProfileId, (int)$iCommentId, $iTimestamp))
             return false;
 
         // send notification to all collaborators
         if ($oProfile = BxDolProfile::getInstance($iProfileId)) {
-            $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$this->_oConfig->CNF['FIELD_ID']]);
+            $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
             foreach ($aCollaborators as $iCollaborator => $iReadComments) {
                 if ($iCollaborator == $iProfileId)
                     continue;
                 sendMailTemplate('bx_cnv_new_reply', 0, $iCollaborator, array(
                     'SenderDisplayName' => $oProfile->getDisplayName(),
                     'SenderUrl' => $oProfile->getUrl(),
+                	'ReplyUrl' => $oCmts->getItemUrl($iCommentId),
                     'Message' => $sCommentText,
                 ), BX_EMAIL_NOTIFY);
             }
