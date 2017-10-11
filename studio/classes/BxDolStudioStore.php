@@ -189,7 +189,7 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     protected function loadGoodies()
     {
-        $iPerPage = 6;
+        $iPerPage = 3;
         $aProducts = array();
 
         $oJson = BxDolStudioJson::getInstance();
