@@ -33,7 +33,6 @@ $oTemplate->setPageHeader ("Interface elements");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->addCss(BX_DOL_URL_PLUGINS_PUBLIC . 'jush/jush.css');
 $oTemplate->addJs(BX_DOL_URL_PLUGINS_PUBLIC . 'jush/jush.js');
-$oTemplate->addJs(BX_DOL_URL_ROOT . 'samples/jquery.smint.js');
 $oTemplate->getPageCode();
 
 /**
