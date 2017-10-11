@@ -164,7 +164,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         // create new profile
         if ($oExistingAccount) {
 
-            if (!($oExistingProfile = BxDolProfile::getInstanceByAccount($oExistingAccount->id())))
+            if (!($oExistingProfile = BxDolProfile::getInstanceByAccount($oExistingAccount->id(), true)))
                 return _t('_sys_txt_error_account_creation');
 
             $iProfileId = $oExistingProfile->id();
@@ -195,7 +195,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
                 if ($sErrorMsg = $oFormHelperProfile->onDataAddAfter ($iAccountId, $iContentId))
                     return $sErrorMsg;
                 
-                $oProfile = BxDolProfile::getInstanceByAccount($iAccountId);
+                $oProfile = BxDolProfile::getInstanceByAccount($iAccountId, true);
                 $iProfileId = $oProfile->id();
             } 
             else {
