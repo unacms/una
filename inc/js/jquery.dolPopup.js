@@ -583,6 +583,9 @@
     	if(options.message)
     		oPPopup.find('.popup_prompt_text').html(options.message);
 
+    	if(options.value)
+    		oPPopup.setValue(options.value);
+
     	oPPopup.find('.popup_prompt_ok').bind('click', function() {
 			if(options.onClickOk && typeof(options.onClickOk) == 'function')
 				options.onClickOk(oPPopup);

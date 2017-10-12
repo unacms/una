@@ -150,7 +150,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         $oTemplate = BxDolTemplate::getInstance();
 
-        $sInputText = '$bx-popup-prompt-value';
+        $sInputText = 'bx-popup-prompt-value';
         $aInputText = array(
             'type' => 'text',
             'name' => $sInputText,
