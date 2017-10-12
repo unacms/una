@@ -173,7 +173,7 @@ class BxOAuthAPI extends BxDol
      * **Grant types:** 
      * `market`, `service`
      *
-     * Everything equivalent to @ref private_api_service, only module name parameter can be ommited
+     * Everything is equivalent to @ref private_api_service, only module name parameter can be ommited
      */
     function market($aToken) 
     {
