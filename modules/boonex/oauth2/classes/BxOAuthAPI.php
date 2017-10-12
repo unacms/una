@@ -89,7 +89,7 @@ class BxOAuthAPI extends BxDol
      * - `id` - profile ID
      *
      * Everything else is equivalent to @ref private_api_me
-     */     
+     */
     function user($aToken)
     {
         $iProfileId = (int)bx_get('id');
@@ -145,7 +145,7 @@ class BxOAuthAPI extends BxDol
      * }
      * @endcode
      * 
-     */     
+     */
     function friends($aToken)
     {
         $iProfileId = (int)bx_get('id');
@@ -164,6 +164,14 @@ class BxOAuthAPI extends BxDol
         ));
     }
 
+    /**
+     * @page private_api API Private
+     * @section private_api_market /m/oauth2/api/market
+     * 
+     * Market service call.
+     * 
+     * Everything equivalent to @ref private_api_service, only module name parameter can be ommited
+     */
     function market($aToken) 
     {
     	$_GET['key'] = $_POST['key'] = $aToken['client_id'];
@@ -172,11 +180,49 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * Service call should look like this
+     * @page private_api API Private
+     * @section private_api_service /m/oauth2/api/service
+     * 
+     * Perform system call. 
+     * For a list of avalibale service calls and their parameters refer to @ref service page.
+     * 
+     * URL should look like this in case of service API call:
+     * @code
      * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params[]=1&params[]=abc&class=custom_class_name_or_remove_it_if_module_class
-     * or
      * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params=serialized_string_of_params
-     */ 
+     * @endcode
+     *
+     * **Grant types:** 
+     * `market`
+     * 
+     * **HTTP Method:** 
+     * `GET`, `POST`
+     *
+     * **Parameters:**
+     * - `module` - module name to perform service call in
+     * - `method` - service call method
+     * - `params` - parameters array
+     * - `class` - custom module name if different from main module class
+     * 
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * Depends on particular service call
+     *
+     * **Response (error):**
+     * Error responce is described in particular service method.
+     * In case of general error (for example when service call isn't found, or error with token), the format is following:
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     * 
+     */
     function service($aToken) 
     {
         bx_login($aToken['user_id'], false, false);
