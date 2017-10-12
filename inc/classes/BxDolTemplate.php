@@ -410,6 +410,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             '_Are_you_sure',
             '_error occured',
             '_sys_loading',
+            '_copyright'
         ));
 
         //--- Load Embed.ly if Key and Pattern are available ---//

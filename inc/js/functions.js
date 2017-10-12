@@ -750,6 +750,15 @@ function on_filter_key_up (e, sCheckboxId)
     }
 }
 
+function on_copyright_click()
+{
+	oDate = new Date();
+
+	$(document).dolPopupAlert({
+		message: _t('_copyright', oDate.getFullYear())
+	});
+}
+
 function bx_activate_anim_icons(sColor)
 {
     if ('undefined' == typeof(sColor))
