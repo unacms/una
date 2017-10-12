@@ -175,14 +175,22 @@ class BxDolStudioToolsAudit extends BxDol
         <script language="javascript">
             function bx_sys_adm_audit_test_email()
             {
-                var sEmail = prompt('<?php echo _t('_Email'); ?>', '<?php echo class_exists('BxDolDb') && BxDolDb::getInstance() ? BxDolDb::getInstance()->getParam('site_email') : ''; ?>');
-                if (null == sEmail || ('string' == (typeof sEmail) && !sEmail.length))
-                    return;
+            	$(document).dolPopupPrompt({
+            		message: '<?php echo _t('_Email'); ?>',
+            		value: '<?php echo class_exists('BxDolDb') && BxDolDb::getInstance() ? BxDolDb::getInstance()->getParam('site_email') : ''; ?>',
+            		onClickOk: function(oPopup) {
+            			var sEmail = oPopup.getValue();
+                        if (null == sEmail || ('string' == (typeof sEmail) && !sEmail.length))
+                            return;
 
-                $('#bx-sys-adm-audit-test-email').html('Sending...');
-                $.post('<?php echo bx_append_url_params($sUrlSelf, array('action' => 'audit_send_test_email')); ?>&email=' + sEmail, function(data) {
-                    $('#bx-sys-adm-audit-test-email').html(data);
-                });
+                        $('#bx-sys-adm-audit-test-email').html('Sending...');
+                        $.post('<?php echo bx_append_url_params($sUrlSelf, array('action' => 'audit_send_test_email')); ?>&email=' + sEmail, function(data) {
+                            $('#bx-sys-adm-audit-test-email').html(data);
+                        });
+					}
+            	});
+
+            	return false;
             }
 
             function bx_sys_adm_audit_phpinfo()

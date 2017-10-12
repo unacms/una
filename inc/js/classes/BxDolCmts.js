@@ -185,39 +185,43 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
 };
 
 BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
-    if (!this._confirm()) 
-    	return;
+	var $this = this;
 
-    var $this = this;
-    var oParams = this._getDefaultActions();
-    oParams['action'] = 'Remove';
-    oParams['Cmt'] = iCmtId;
+	$(e).parents('.bx-popup-active:first').dolPopupHide();
 
-    this._loadingInContent(e, true);
+	$(document).dolPopupConfirm({
+		onClickYes: function() {
+			var oParams = $this._getDefaultActions();
+		    oParams['action'] = 'Remove';
+		    oParams['Cmt'] = iCmtId;
 
-    jQuery.post (
-        this._sActionsUrl,
-        oParams,
-        function(oData) {
-            $this._loadingInContent(e, false);
+		    $this._loadingInContent(e, true);
 
-            if(oData && oData.msg != undefined)
-                alert(oData.msg);
+		    jQuery.post (
+		        $this._sActionsUrl,
+		        oParams,
+		        function(oData) {
+		            $this._loadingInContent(e, false);
 
-            if(oData && oData.id != undefined) {
-            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
+		            if(oData && oData.msg != undefined)
+		                alert(oData.msg);
 
-            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
-                	if(oCounter)
-                		oCounter.html(oCounter.html() - 1);
+		            if(oData && oData.id != undefined) {
+		            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-                	$(this).remove();
-                });
-            }
-        },
-        'json'
-    );
+		            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+		                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
+		                	if(oCounter)
+		                		oCounter.html(oCounter.html() - 1);
+
+		                	$(this).remove();
+		                });
+		            }
+		        },
+		        'json'
+		    );
+		}
+	});
 };
 
 BxDolCmts.prototype.cmtLoad = function(oLink, iCmtParentId, iStart, iPerView)
