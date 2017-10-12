@@ -135,6 +135,37 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         BxDolTemplate::getInstance()->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'cubiq-add-to-homescreen/style/|addtohomescreen.css');
         return "<script>addToHomescreen();</script>";
     }
+
+    public function serviceAddPopupAlert()
+    {
+        return BxTemplFunctions::getInstance()->transBox('bx-popup-alert', BxDolTemplate::getInstance()->parseHtmlByName('popup_trans_alert_cnt.html', array()), true);
+    }
+
+    public function serviceAddPopupConfirm()
+    {
+        return BxTemplFunctions::getInstance()->transBox('bx-popup-confirm', BxDolTemplate::getInstance()->parseHtmlByName('popup_trans_confirm_cnt.html', array()), true);
+    }
+
+    public function serviceAddPopupPrompt()
+    {
+        $oTemplate = BxDolTemplate::getInstance();
+
+        $sInputText = '$bx-popup-prompt-value';
+        $aInputText = array(
+            'type' => 'text',
+            'name' => $sInputText,
+            'attrs' => array(
+                'id' => $sInputText,
+            ),
+            'value' => '',
+            'caption' => ''
+        );
+
+        $oForm = new BxTemplFormView(array(), $oTemplate);
+        return BxTemplFunctions::getInstance()->transBox('bx-popup-prompt', $oTemplate->parseHtmlByName('popup_trans_prompt_cnt.html', array(
+            'input' => $oForm->genRow($aInputText)
+        )), true);
+    }
 }
 
 /** @} */

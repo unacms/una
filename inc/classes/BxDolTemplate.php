@@ -407,7 +407,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         //--- Load translations in JS ---//
         bx_import('BxDolLanguages');
         $this->addJsTranslation(array(
-            '_are you sure?',
+            '_Are_you_sure',
             '_error occured',
             '_sys_loading',
         ));

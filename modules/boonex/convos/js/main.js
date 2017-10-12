@@ -8,7 +8,7 @@ function bx_cnv_mark_unread(e, iConvoId) {
 }
 
 function bx_cnv_action(sAction, e, iConvoId, isConfirm) {
-    if (isConfirm && !confirm(_t('_are you sure?')))
+    if (isConfirm && !confirm(_t('_Are_you_sure')))
         return false;
 
     bx_loading_btn(e, 1);

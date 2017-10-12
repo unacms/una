@@ -42,7 +42,7 @@ function processJsonData(oData) {
 
 function getHtmlData( elem, url, callback, method , confirmation)
 {
-    if ('undefined' != typeof(confirmation) && confirmation && !confirm(_t('_are you sure?'))) 
+    if ('undefined' != typeof(confirmation) && confirmation && !confirm(_t('_Are_you_sure'))) 
         return false;
 
     // in most cases it is element ID, in other cases - object of jQuery
@@ -630,7 +630,7 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
  * @param bConfirm - show confirmation dialog
  */
 function bx_conn_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
-    if ('undefined' != typeof(bConfirm) && bConfirm && !confirm(_t('_are you sure?')))
+    if ('undefined' != typeof(bConfirm) && bConfirm && !confirm(_t('_Are_you_sure')))
         return;
                 
     var aParams = {

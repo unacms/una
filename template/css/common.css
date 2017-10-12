@@ -278,6 +278,20 @@ body > .bx-popup-wrapper {
     display:none;
 }
 
+#bx-popup-alert,
+#bx-popup-confirm,
+#bx-popup-prompt {
+	max-width: 500px;
+	max-width: 31.25rem;
+}
+
+.popup_alert_actions .bx-btn,
+.popup_confirm_actions .bx-btn,
+.popup_prompt_actions .bx-btn {
+    float: none;
+    display: inline-block;
+}
+
 /* --------------- notification boxes */
 .bx-popup-inline-holder {
 	padding-top: 70px;
