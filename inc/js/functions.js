@@ -849,4 +849,30 @@ function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect)
 		$('#' + iId + '.bx-form-input-autotoken input').outerWidth('100%');
 };
 
+function bx_alert(sMessage, fOnClickOk)
+{
+	$(document).dolPopupAlert({
+		message: sMessage,
+		onClickOk: fOnClickOk
+	});
+}
+
+function bx_confirm(sMessage, fOnClickYes, fOnClickNo)
+{
+	$(document).dolPopupConfirm({
+		message: sMessage,
+		onClickYes: fOnClickYes,
+		onClickNo: fOnClickNo
+	});
+}
+
+function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel)
+{
+	$(document).dolPopupPrompt({
+		message: sMessage,
+		value: sValue,
+		onClickOk: fOnClickOk,
+		onClickCancel: fOnClickCancel
+	});
+}
 /** @} */

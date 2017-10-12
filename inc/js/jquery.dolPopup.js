@@ -513,7 +513,7 @@
     $.fn.dolPopupAlert = function(options) {
     	var oAPopup = $('#bx-popup-alert');
 
-    	if(options.message)
+    	if(options.message != undefined && options.message.length > 0)
     		oAPopup.find('.popup_alert_text').html(options.message);
 
     	oAPopup.find('.popup_alert_ok').bind('click', function() {
@@ -537,7 +537,7 @@
     $.fn.dolPopupConfirm = function(options) {
     	var oCPopup = $('#bx-popup-confirm');
 
-    	if(options.message)
+    	if(options.message != undefined && options.message.length > 0)
     		oCPopup.find('.popup_confirm_text').html(options.message);
 
     	oCPopup.find('.popup_confirm_yes').bind('click', function(event) {
@@ -580,10 +580,10 @@
     		return oPPopup.find('[name="bx-popup-prompt-value"]').val();
     	};   		
 
-    	if(options.message)
+    	if(options.message != undefined && options.message.length > 0)
     		oPPopup.find('.popup_prompt_text').html(options.message);
 
-    	if(options.value)
+    	if(options.value != undefined && options.value.length > 0)
     		oPPopup.setValue(options.value);
 
     	oPPopup.find('.popup_prompt_ok').bind('click', function() {

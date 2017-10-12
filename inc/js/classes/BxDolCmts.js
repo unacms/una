@@ -189,38 +189,36 @@ BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
 
 	$(e).parents('.bx-popup-active:first').dolPopupHide();
 
-	$(document).dolPopupConfirm({
-		onClickYes: function() {
-			var oParams = $this._getDefaultActions();
-		    oParams['action'] = 'Remove';
-		    oParams['Cmt'] = iCmtId;
+	bx_confirm('', function() {
+	    var oParams = $this._getDefaultActions();
+	    oParams['action'] = 'Remove';
+	    oParams['Cmt'] = iCmtId;
 
-		    $this._loadingInContent(e, true);
+	    $this._loadingInContent(e, true);
 
-		    jQuery.post (
-		        $this._sActionsUrl,
-		        oParams,
-		        function(oData) {
-		            $this._loadingInContent(e, false);
+	    jQuery.post (
+	        $this._sActionsUrl,
+	        oParams,
+	        function(oData) {
+	            $this._loadingInContent(e, false);
 
-		            if(oData && oData.msg != undefined)
-		                alert(oData.msg);
+	            if(oData && oData.msg != undefined)
+	                alert(oData.msg);
 
-		            if(oData && oData.id != undefined) {
-		            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
+	            if(oData && oData.id != undefined) {
+	            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-		            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-		                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
-		                	if(oCounter)
-		                		oCounter.html(oCounter.html() - 1);
+	            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+	                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
+	                	if(oCounter)
+	                		oCounter.html(oCounter.html() - 1);
 
-		                	$(this).remove();
-		                });
-		            }
-		        },
-		        'json'
-		    );
-		}
+	                	$(this).remove();
+	                });
+	            }
+	        },
+	        'json'
+	    );
 	});
 };
 
