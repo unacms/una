@@ -170,6 +170,9 @@ class BxOAuthAPI extends BxDol
      * 
      * Market service call.
      * 
+     * **Grant types:** 
+     * `market`, `service`
+     *
      * Everything equivalent to @ref private_api_service, only module name parameter can be ommited
      */
     function market($aToken) 
@@ -193,7 +196,7 @@ class BxOAuthAPI extends BxDol
      * @endcode
      *
      * **Grant types:** 
-     * `market`
+     * `service`
      * 
      * **HTTP Method:** 
      * `GET`, `POST`
