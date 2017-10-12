@@ -16,6 +16,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+            'add-images-to-album' => 'checkAllowedEdit',
             'edit-album' => 'checkAllowedEdit',
             'delete-album' => 'checkAllowedDelete',
         );
