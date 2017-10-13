@@ -52,15 +52,19 @@ class BxEventsModule extends BxBaseModGroupsModule
 
     /**
      * @page service Service Calls
-     * @section Events Events
-     * @subsection bx_events-calendar calendar
-     * @see BxEventsModule::serviceCalendar
+     * @section bx_events Events
+     * @subsection bx_events-page_blocks Page Blocks
+     * @subsubsection bx_events-calendar calendar
+     * 
+     * @code bx_srv('bx_events', 'calendar', [...]); @endcode
      * 
      * Shows event or events calendar
      * 
      * @param $aData additional data to point which events to show, leave empty to show all events, specify event's ID in 'event' array key to show calendar for one event only. If only one event is specified then it will show calendar only if it's repeating event.
      * @param $sTemplate template to use to show calendar, or leave empty for default template, possible options: calendar.html, calendar_compact.html
      * @return HTML string with calendar to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error empty string is returned.
+     *
+     * @see BxEventsModule::serviceCalendar
      */
     /** 
      * @ref bx_events-calendar "calendar"
@@ -84,14 +88,18 @@ class BxEventsModule extends BxBaseModGroupsModule
 
     /**
      * @page service Service Calls
-     * @section Events Events
-     * @subsection bx_events-process_reminders process_reminders
-     * @see BxEventsModule::serviceProcessReminders
+     * @section bx_events Events
+     * @subsection bx_events-other Other
+     * @subsubsection bx_events-process_reminders process_reminders
+     * 
+     * @code bx_srv('bx_events', 'process_reminders'); @endcode
      * 
      * Send remiders to event's participants.
      *
      * It must be processed once every hour for the proper processing.
      * @return nothing
+     *
+     * @see BxEventsModule::serviceProcessReminders
      */
     /** 
      * @ref bx_events-process_reminders "process_reminders"
@@ -114,14 +122,18 @@ class BxEventsModule extends BxBaseModGroupsModule
 
     /**
      * @page service Service Calls
-     * @section Events Events
-     * @subsection bx_events-get_timeline_post get_timeline_post
-     * @see BxEventsModule::serviceGetTimelinePost
+     * @section bx_events Events
+     * @subsection bx_events-internal Internal
+     * @subsubsection bx_events-get_timeline_post get_timeline_post
      *
+     * @code bx_srv('bx_events', 'get_timeline_post', [...]); @endcode
+     * 
      * Get Timeline post. It's needed for Timeline module.
      * 
      * @param $aEvent timeline event array from Timeline module
      * @return array in special format which is needed specifically for Timeline module to display the data.
+     *
+     * @see BxEventsModule::serviceGetTimelinePost
      */
     /** 
      * @ref bx_events-get_timeline_post "get_timeline_post"
