@@ -82,6 +82,20 @@ class BxMarketModule extends BxBaseModTextModule
 
         return $aResult;
     }
+    
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-page-blocks Page Blocks
+     * @see BxMarketModule::serviceEntityCreate
+     * 
+     * Get page block with product creation form or an error message if something wasn't configured correctly.
+     *
+     * @return HTML string with block content to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     */
+    /** 
+     * @ref bx-market-page-blocks "Page Blocks"
+     */
     public function serviceEntityCreate ()
     {
     	$oPayments = BxDolPayments::getInstance();
@@ -95,6 +109,20 @@ class BxMarketModule extends BxBaseModTextModule
     	return $this->_oTemplate->getJsCode('entry') . parent::serviceEntityCreate();
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-page-blocks Page Blocks
+     * @see BxMarketModule::serviceEntityDownload
+     * 
+     * Get page block with a list of downloadable packages attached to the product. If something is wrong an error message is returned.
+     *
+     * @param $iContentId (optional) product's ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     */
+    /** 
+     * @ref bx-market-page-blocks "Page Blocks"
+     */
     public function serviceEntityDownload ($iContentId = 0)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -125,11 +153,39 @@ class BxMarketModule extends BxBaseModTextModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-page-blocks Page Blocks
+     * @see BxMarketModule::serviceEntityRating
+     * 
+     * Get page block with Stars based product's rating.
+     *
+     * @param $iContentId (optional) product's ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return HTML string with block content to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     */
+    /** 
+     * @ref bx-market-page-blocks "Page Blocks"
+     */
     public function serviceEntityRating($iContentId = 0)
     {
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-page-blocks Page Blocks
+     * @see BxMarketModule::serviceEntityAuthorEntities
+     * 
+     * Get page block with a list of other products of the same author.
+     *
+     * @param $iContentId (optional) product's ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     */
+    /** 
+     * @ref bx-market-page-blocks "Page Blocks"
+     */
 	public function serviceEntityAuthorEntities($iContentId = 0)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -149,7 +205,17 @@ class BxMarketModule extends BxBaseModTextModule
     }
 
     /**
-     * Licenses 
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-page-blocks Page Blocks
+     * @see BxMarketModule::serviceBlockLicenses
+     * 
+     * Get page block with a list of licenses purchased by currently logged member.
+     *
+     * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     */
+    /** 
+     * @ref bx-market-page-blocks "Page Blocks"
      */
 	public function serviceBlockLicenses() 
 	{
@@ -165,16 +231,38 @@ class BxMarketModule extends BxBaseModTextModule
         	'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
         );
 	}
+
+	/**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-page-blocks Page Blocks
+     * @see BxMarketModule::serviceBlockLicensesNote
+     * 
+     * Get page block with a notice for licenses usage.
+     *
+     * @return HTML string with block content to display on the site.
+     */
+    /** 
+     * @ref bx-market-page-blocks "Page Blocks"
+     */
 	public function serviceBlockLicensesNote()
 	{
 	    return MsgBox(_t('_bx_market_page_block_content_licenses_note'));
 	}
 
-    /**
-     * Get number of unused licenses for some profile. It can be used in menus with "alert" counters.
+	/**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-licenses Licenses
+     * @see BxMarketModule::serviceGetUnusedLicensesNum
      * 
-     * @param $iProfileId - profile to get unused licenses for, if omitted then currently logged in profile is used
-     * @return integer
+     * Get number of unused licenses for some profile. It can be used in menus with "alert" counters.
+     *
+     * @param $iProfileId profile to get unused licenses for, if omitted then currently logged in profile is used
+     * @return an integer value with a number of unused licenses.
+     */
+    /** 
+     * @ref bx-market-licenses "Licenses"
      */
     public function serviceGetUnusedLicensesNum ($iProfileId = 0)
     {
@@ -185,31 +273,119 @@ class BxMarketModule extends BxBaseModTextModule
         return !empty($aLicenses) && is_array($aLicenses) ? count($aLicenses) : 0;
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-licenses Licenses
+     * @see BxMarketModule::serviceHasLicense
+     * 
+     * Check whether a profile has a license for specified product. Domain on which the license is used can be attached to checking.
+     *
+     * @param $iProfileId profile which ownership will be checked.
+     * @param $iProductId product which the license(s) will be searched for.  
+     * @param $sDomain (optional) domain name on which the license is used.
+     * @return boolean value determining where the license is available or not.
+     */
+    /** 
+     * @ref bx-market-licenses "Licenses"
+     */
 	public function serviceHasLicense ($iProfileId, $iProductId, $sDomain = '')
     {
     	return $this->_oDb->hasLicense($iProfileId, $iProductId, $sDomain);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-licenses Licenses
+     * @see BxMarketModule::serviceGetLicense
+     * 
+     * Get a list of licenses which meet requirements provided in the input array.
+     *
+     * @param $aParams array of requirements which will be used for searching.
+     * @return an array of licenses which meet requirements.
+     */
+    /** 
+     * @ref bx-market-licenses "Licenses"
+     */
     public function serviceGetLicense ($aParams)
     {
     	return $this->_oDb->getLicense($aParams);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-licenses Licenses
+     * @see BxMarketModule::serviceUpdateLicense
+     * 
+     * Update license(s) changing necessary fields. Updatable license(s) should meet requirements provided in the input array.
+     *
+     * @param $aSet an array of data to be saved  
+     * @param $aWhere an array of requirements which will be used for searching.
+     * @return an array of licenses which meet requirements.
+     */
+    /** 
+     * @ref bx-market-licenses "Licenses"
+     */
     public function serviceUpdateLicense ($aSet, $aWhere)
     {
     	return $this->_oDb->updateLicense($aSet, $aWhere);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-browsing Browsing
+     * @see BxMarketModule::serviceGetEntryBy
+     * 
+     * Get entry (product) which meets requirements.
+     *
+     * @param $sType string with search type.  
+     * @param $mixedValue mixed value to be used for searching.
+     * @return an array describing a product which meets requirements.
+     */
+    /** 
+     * @ref bx-market-browsing "Browsing"
+     */
     public function serviceGetEntryBy($sType, $mixedValue)
     {
     	return $this->_oDb->getContentInfoBy(array('type' => $sType, 'value' => $mixedValue));
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-browsing Browsing
+     * @see BxMarketModule::serviceGetEntriesBy
+     * 
+     * Get an array of entries (products) which meet requirements.
+     * 
+     * @param $aParams an array of requirements which will be used for searching.
+     * @return an array of products which meets requirements.
+     */
+    /** 
+     * @ref bx-market-browsing "Browsing"
+     */
     public function serviceGetEntriesBy($aParams)
     {
     	return $this->_oDb->getContentInfoBy($aParams);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-entry Entry
+     * @see BxMarketModule::serviceGetThumbnail
+     * 
+     * Get an array of image URLs for the product's thumbnail. Returned images have different dimensions ('small' and 'big').
+     * 
+     * @param $iPhotoId photo ID which is attached to a product as thumbnail.
+     * @return an array of image URLs.
+     */
+    /** 
+     * @ref bx-market-entry "Entry"
+     */
     public function serviceGetThumbnail($iPhotoId)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -223,6 +399,20 @@ class BxMarketModule extends BxBaseModTextModule
     	);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-entry Entry
+     * @see BxMarketModule::serviceGetCover
+     * 
+     * Get an array of image URLs for the product's cover. Returned images have different dimensions ('small', 'large' and 'big').
+     * 
+     * @param $iPhotoId photo ID which is attached to a product as cover.
+     * @return an array of image URLs.
+     */
+    /** 
+     * @ref bx-market-entry "Entry"
+     */
     public function serviceGetCover($iPhotoId)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -238,6 +428,20 @@ class BxMarketModule extends BxBaseModTextModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-entry Entry
+     * @see BxMarketModule::serviceGetFile
+     * 
+     * Get an array with file's description.
+     * 
+     * @param $iFileId file ID which is attached to a product as package (version, update, etc).
+     * @return an array with file's description.
+     */
+    /** 
+     * @ref bx-market-entry "Entry"
+     */
     public function serviceGetFile($iFileId)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -255,6 +459,21 @@ class BxMarketModule extends BxBaseModTextModule
     	return $aFile;
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-entry Entry
+     * @see BxMarketModule::serviceGetUpdates
+     * 
+     * Get an array with update(s)' description(s).
+     * 
+     * @param $iContentId product's ID.
+     * @param $sVersion (optional) if version is specified then it will be used for searching as 'Version From'.
+     * @return an array with update(s)' description(s).
+     */
+    /** 
+     * @ref bx-market-entry "Entry"
+     */
 	public function serviceGetUpdates($iContentId, $sVersion = '')
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -274,6 +493,20 @@ class BxMarketModule extends BxBaseModTextModule
     	return $aFile;
     }
 
+	/**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-entry Entry
+     * @see BxMarketModule::serviceGetScreenshots
+     * 
+     * Get an array with screenshots' descriptions.
+     * 
+     * @param $iItemId product's ID.
+     * @return an array with screenshots' descriptions.
+     */
+    /** 
+     * @ref bx-market-entry "Entry"
+     */
     public function serviceGetScreenshots($iItemId)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -300,15 +533,39 @@ class BxMarketModule extends BxBaseModTextModule
 
 		return $aResult;
     }
-    
-    /**
-     * Integration with Payment based modules.  
+
+	/**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceGetPaymentData
+     * 
+     * Get an array with module's description. Is needed for payments processing module.
+     * 
+     * @return an array with module's description.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
      */
 	public function serviceGetPaymentData()
     {
         return $this->_aModule;
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceGetCartItem
+     * 
+     * Get an array with prodict's description. Is used in Shopping Cart in payments processing module.
+     * 
+     * @param $iItemId product's ID.
+     * @return an array with prodict's description. Empty array is returned if something is wrong.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
+     */
     public function serviceGetCartItem($iItemId)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -335,6 +592,20 @@ class BxMarketModule extends BxBaseModTextModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceGetCartItems
+     * 
+     * Get an array with prodicts' descriptions by seller. Is used in Manual Order Processing in payments processing module.
+     * 
+     * @param $iSellerId seller ID.
+     * @return an array with prodicts' descriptions. Empty array is returned if something is wrong or seller doesn't have any products.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
+     */
     public function serviceGetCartItems($iSellerId)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -364,26 +635,120 @@ class BxMarketModule extends BxBaseModTextModule
         return $aResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceRegisterCartItem
+     * 
+     * Register a processed single time payment inside the Market module. Is called with payment processing module after the payment was registered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return an array with purchased prodict's description. Empty array is returned if something is wrong.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
+     */
     public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
         return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_SINGLE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceRegisterSubscriptionItem
+     * 
+     * Register a processed subscription (recurring payment) inside the Market module. Is called with payment processing module after the subscription was registered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return an array with subscribed prodict's description. Empty array is returned if something is wrong.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
+     */
     public function serviceRegisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
 		return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_RECURRING);
     }
 
+	/**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceUnregisterCartItem
+     * 
+     * Unregister an earlier processed single time payment inside the Market module. Is called with payment processing module after the payment was unregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return boolean value determining where the payment was unregistered or not.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
+     */
     public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
         return $this->_serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_SINGLE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceUnregisterSubscriptionItem
+     * 
+     * Unregister an earlier processed subscription (recurring payment) inside the Market module. Is called with payment processing module after the subscription was unregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return boolean value determining where the subscription was unregistered or not.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
+     */
     public function serviceUnregisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
     	return $this->_serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_RECURRING); 
     }
 
+    /**
+     * @page service Service Calls
+     * @section Market Market
+     * @subsection bx-market-payments Payments
+     * @see BxMarketModule::serviceCancelSubscriptionItem
+     * 
+     * Cancel an earlier processed subscription (recurring payment) inside the Market module. Is called with payment processing module after the subscription was canceled there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return boolean value determining where the subscription was canceled or not.
+     */
+    /** 
+     * @ref bx-market-payments "Payments"
+     */
 	public function serviceCancelSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
     {
     	//TODO: Do something if it's necessary.
