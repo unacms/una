@@ -35,6 +35,8 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
 
         //--- Process field with 'Date Range Age' and 'Date-Time Range Age' type.
         if($bType && in_array($this->aInputs[$sName]['type'], array('datepicker_range_age', 'datetime_range_age'))) {
+            $bTypeDateTime = $this->aInputs[$sName]['type'] == 'datetime_range_age';
+
             $sMethod = $this->aFormAttrs['method'];
             $sValue = self::getSubmittedValue($sName, $sMethod);
 
@@ -43,13 +45,17 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
                 return array();
 
             $aArgs = array("%s-%s-%s", date('Y'), date('m'), date('d'));
-            if($this->aInputs[$sName]['type'] == 'datetime_range_age') {
+            if($bTypeDateTime) {
                 $aArgs[0] = "%s-%s-%s %s:%s:%s";
                 $aArgs = array_merge($aArgs, array(date('H'), date('i'), date('s')));
             }
 
             $aArgsFrom = $aArgs;
-            $aArgsFrom[1] -= $aMatches[2];
+            $aArgsFrom[1] -= ($aMatches[2] + 1);
+            if($bTypeDateTime)
+                $aArgsFrom[6] += 1;
+            else
+                $aArgsFrom[3] += 1;
 
             $aArgsTo = $aArgs;
             $aArgsTo[1] -= $aMatches[1];

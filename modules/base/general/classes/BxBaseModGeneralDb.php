@@ -40,27 +40,27 @@ class BxBaseModGeneralDb extends BxDolModuleDb
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
-        $sSelectClause = "`{$CNF['TABLE_ENTRIES']}`.*";
+        $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.*";
 
         switch($aParams['type']) {
             case 'id':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1]['id'] = (int)$aParams['id'];
 
-                $sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ID'] . "` = :id";
+                $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "` = :id";
                 break;
 
             case 'author':
             	$aMethod['name'] = 'getRow';
                 $aMethod['params'][1]['author'] = (int)$aParams['author'];
 
-                $sWhereClause .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_AUTHOR'] . "` = :author";
+                $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_AUTHOR'] . "` = :author";
                 break;
 
             case 'search_ids':
                 $aMethod['name'] = 'getColumn';
-                
-                $sSelectClause = "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ID'] . "`";
+
+                $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`";
 
                 $sWhereConditions = "1";
                 foreach($aParams['search_params'] as $sSearchParam => $aSearchParam) {
@@ -105,8 +105,8 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                             if(!is_array($aSearchParam['value']) || count($aSearchParam['value']) != 2) 
                                 break;
 
-                            $sWhereConditions .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $sSearchParam . "` >= :" . $sSearchParam . "_from";
-                            $sWhereConditions .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $sSearchParam . "` <= :" . $sSearchParam . "_to";
+                            $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` >= :" . $sSearchParam . "_from";
+                            $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` <= :" . $sSearchParam . "_to";
 
                             $aMethod['params'][1][$sSearchParam . "_from"] = $aSearchParam['value'][0]; 
                             $aMethod['params'][1][$sSearchParam . "_to"] = $aSearchParam['value'][1]; 
@@ -118,23 +118,23 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     }
 
                     if(!empty($sSearchValue))
-                        $sWhereConditions .= " AND `{$CNF['TABLE_ENTRIES']}`.`" . $sSearchParam . "`" . $sSearchValue;
+                        $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "`" . $sSearchValue;
                 }
 
                 $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
 
-                $sOrderClause .=  "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+                $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
                 break;
 
             case 'all_ids':
                 $aMethod['name'] = 'getColumn';
 
-                $sSelectClause = "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ID'] . "`";
-                $sOrderClause .=  "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+                $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`";
+                $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
                 break;
 
             case 'all':
-                $sOrderClause .=  "`{$CNF['TABLE_ENTRIES']}`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+                $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
                 break;
         }
 
@@ -144,7 +144,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         if(!empty($sLimitClause))
             $sLimitClause = 'LIMIT ' . $sLimitClause;
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `{$CNF['TABLE_ENTRIES']}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_ENTRIES'] . "` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
