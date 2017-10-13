@@ -79,7 +79,7 @@ class BxDolSession extends BxDolFactory implements iBxDolSingleton
 
         $aUrl = parse_url(BX_DOL_URL_ROOT);
         $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
-        setcookie(BX_DOL_SESSION_COOKIE, $this->sId, time() + BX_DOL_SESSION_LIFETIME, $sPath, '', false, true);
+        setcookie(BX_DOL_SESSION_COOKIE, $this->sId, 0, $sPath, '', false, true);
 
         $this->save();
         return true;
