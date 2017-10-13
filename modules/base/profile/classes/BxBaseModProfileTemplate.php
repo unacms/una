@@ -35,7 +35,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
 
-        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
+        $mixedCheckResults = $this->getModule()->checkAllowedView($aData);
+        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $mixedCheckResults || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
 
         //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
@@ -66,6 +67,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'thumb_url' => $isPublic ? $this->thumb ($aData) : $this->getImageUrl('no-picture-thumb.png'),
             'cover_url' => $sCoverUrl,
             'content_url' => $isPublic ? $sUrl : 'javascript:void(0);',
+            'content_click' => !$isPublic ? 'javascript:bx_alert(' . bx_js_string('"' . $mixedCheckResults . '"') . ');' : '',
             'title' => bx_process_output($aData[$CNF['FIELD_NAME']]),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
