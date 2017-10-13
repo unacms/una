@@ -99,7 +99,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
 
         $sFileOut = $this->getTmpFilename('.jpg');
         $bRet = false;
-        $aSeconds = array (0, 3, 5, 0);
+        $aSeconds = array (0, 3, 5, 8, 1);
         $sSize = $this->_getOptionSizeForVideo ($sFile, $aParams);
         foreach ($aSeconds as $iSecond) {
             $bRet = $this->_convertVideo($sFile, $sFileOut, '.jpg', $aParams, array (
@@ -112,9 +112,9 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             if (!$bRet)
                 continue;
 
-    		$aRgb = $oImage->getAverageColor($sFileOut);
+            $aRgb = $oImage->getAverageColor($sFileOut);
 		    $fRgb = ($aRgb['r'] + $aRgb['g'] + $aRgb['b']) / 3;
-	    	if ($fRgb > 32 && $fRgb < 224)
+            if ($fRgb > 32 && $fRgb < 224)
     			break;
         }
 
