@@ -399,7 +399,7 @@ EOS;
 
     protected function genCustomViewRowValueBirthday(&$aInput)
     {
-        if(!isset($aInput['value']) || !$aInput['value'])
+        if(!isset($aInput['value']) || !$aInput['value'] || in_array($aInput['value'], array('0000-00-00', '0000-00-00 00:00:00')))
             return null;
 
         $sValue = $aInput['value'];
