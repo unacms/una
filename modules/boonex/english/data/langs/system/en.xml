@@ -1677,9 +1677,8 @@ If it is not enabled then please consider implement this optimization, since it 
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
 <p>Hello,</p>
-<p>Your comment was replied. It reads:</p>
+<p>Your comment was replied on <a href="{page_url}">{page_title}</a> page. It reads:</p>
 <p>{reply_text}</p>
-<p>Please refer to comment page for more details <a href="{comment_url}">here</a>.</p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
 <p>Hello,</p>
@@ -1782,7 +1781,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_upgrade_modules_success"><![CDATA[Modules upgrade success]]></string>
 	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Background operation failed]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Message from <SiteName> Admin: <MessageSubject>]]></string>
-	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Your comment was replied]]></string>
+	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Your comment was replied by {sender_display_name}]]></string>
 	<string name="_sys_et_txt_subject_system_reported"><![CDATA[New report notification]]></string>
 	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm Your Email (ACTION REQUIRED)]]></string>
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Delayed {Module} module uninstall: {Result}]]></string>

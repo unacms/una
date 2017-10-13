@@ -126,9 +126,9 @@
 {email_footer}]]></string>
 
     <string name="_bx_cnv_email_new_reply"><![CDATA[New reply]]></string>
-    <string name="_bx_cnv_email_new_reply_subject"><![CDATA[New reply from {SenderDisplayName}]]></string>
+    <string name="_bx_cnv_email_new_reply_subject"><![CDATA[New reply in conversation from {SenderDisplayName}]]></string>
     <string name="_bx_cnv_email_new_reply_body"><![CDATA[{email_header}
-<p>New <a href="{ReplyUrl}">reply</a> from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<p>New reply in <a href="{PageUrl}">{PageTitle}</a> conversation from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
 {email_footer}]]></string>

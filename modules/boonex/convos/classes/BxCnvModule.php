@@ -288,7 +288,8 @@ class BxCnvModule extends BxBaseModTextModule
                 sendMailTemplate('bx_cnv_new_reply', 0, $iCollaborator, array(
                     'SenderDisplayName' => $oProfile->getDisplayName(),
                     'SenderUrl' => $oProfile->getUrl(),
-                	'ReplyUrl' => $oCmts->getItemUrl($iCommentId),
+                    'PageUrl' => $oCmts->getItemUrl($iCommentId),
+                    'PageTitle' => $oCmts->getObjectTitle(),
                     'Message' => $sCommentText,
                 ), BX_EMAIL_NOTIFY);
             }

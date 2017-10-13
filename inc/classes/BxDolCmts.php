@@ -1326,14 +1326,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aAccount = BxDolAccount::getInstance($iAccount)->getInfo();
 
         $aPlus = array();
+        $aPlus['sender_display_name'] = $oProfile->getDisplayName();
         $aPlus['reply_text'] = $this->_prepareTextForOutput($aCmt['cmt_text'], $iCmtId);
 
-        $sViewUrl = $this->getBaseUrl();
-        if(!empty($sViewUrl))
-            $sViewUrl .= $this->getItemAnchor($iCmtParentId, true);
+        $sPageUrl = $this->getBaseUrl();
+        if(empty($sPageUrl))
+            $sPageUrl = $this->getViewUrl($iCmtParentId);
         else 
-            $sViewUrl = $this->getViewUrl($iCmtParentId);
-        $aPlus['comment_url'] = $sViewUrl;
+            $sPageUrl .= $this->getItemAnchor($iCmtParentId, true);
+        $aPlus['page_url'] = $sPageUrl;
+
+        $sPageTitle = $this->getObjectTitle();
+        if(empty($sPageTitle))
+            $sPageTitle = _t('_Content');
+        $aPlus['page_title'] = $sPageTitle;
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_CommentReplied', $aPlus);
         return $aTemplate && sendMail($aAccount['email'], $aTemplate['Subject'], $aTemplate['Body']);

@@ -340,11 +340,12 @@ class BxForumModule extends BxBaseModTextModule
         // send notification to author
         if($iProfileId != $aContentInfo[$CNF['FIELD_AUTHOR']]) {
 	        $oProfile = BxDolProfile::getInstance($iProfileId);
-	        if($oProfile)
+	        if($oProfile) 
                 sendMailTemplate('bx_forum_new_reply', 0, $aContentInfo[$CNF['FIELD_AUTHOR']], array(
                     'SenderDisplayName' => $oProfile->getDisplayName(),
                     'SenderUrl' => $oProfile->getUrl(),
-                    'ReplyUrl' => $oCmts->getItemUrl($iCommentId),
+                    'PageUrl' => $oCmts->getItemUrl($iCommentId),
+                    'PageTitle' => $oCmts->getObjectTitle(),
                     'Message' => $sCommentText,
                 ), BX_EMAIL_NOTIFY);
         }

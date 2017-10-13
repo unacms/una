@@ -1675,9 +1675,8 @@
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
 <p>Привет,</p>
-<p>На Ваш комментарий ответили. Ответ:</p>
+<p>На Ваш комментарий ответили на <a href="{page_url}">{page_title}</a> странице. Ответ:</p>
 <p>{reply_text}</p>
-<p>Пожалуйста, перейдите на <a href="{comment_url}">страницу комментария</a> для получения дополнительной информации.</p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
 <p>Привет,</p>
@@ -1780,7 +1779,7 @@
 	<string name="_sys_et_txt_name_upgrade_modules_success"><![CDATA[Обновление модулей прошло удачно]]></string>
 	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Фоновая операция не удалась]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Сообщение от администратора сайта <SiteName>: <MessageSubject>]]></string>
-	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Ваш комментарий был отвечен]]></string>
+	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[{sender_display_name} ответил на Ваш комментарий]]></string>
 	<string name="_sys_et_txt_subject_system_reported"><![CDATA[Уведомление о новой жалобе]]></string>
 	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Подтвердите свой эл. адрес (ОБЯЗАТЕЛЬНО)]]></string>
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Отложенный демонтаж модуля {Module}: {Result}]]></string>

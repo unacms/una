@@ -261,9 +261,9 @@
     <string name="_bx_forum_you_are_last_replier"><![CDATA[Вы - последний ответивший]]></string>
 
     <string name="_bx_forum_email_new_reply"><![CDATA[Новый ответ]]></string>
-    <string name="_bx_forum_email_new_reply_subject"><![CDATA[Новый ответ от {SenderDisplayName}]]></string>
+    <string name="_bx_forum_email_new_reply_subject"><![CDATA[Новый ответ в "{PageTitle}" дискуссии]]></string>
     <string name="_bx_forum_email_new_reply_body"><![CDATA[{email_header}
-<p>Новый <a href="{ReplyUrl}">ответ</a> от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<p>Новый ответ в <a href="{PageUrl}">{PageTitle}</a> дискуссии от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
 {email_footer}]]></string>
