@@ -89,7 +89,8 @@ class BxEventsModule extends BxBaseModGroupsModule
     /**
      * @page service Service Calls
      * @section bx_events Events
-     * @subsection bx_events-process_reminders process_reminders
+     * @subsection bx_events-other Other
+     * @subsubsection bx_events-process_reminders process_reminders
      * 
      * @code bx_srv('bx_events', 'process_reminders'); @endcode
      * 
