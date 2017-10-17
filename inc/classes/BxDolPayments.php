@@ -247,33 +247,33 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 
 	public function getSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_url', 'Cart'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_url', 'Subscriptions'))
     		return '';
 
-    	return BxDolService::call($this->_sActive, 'get_subscribe_url', array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount), 'Cart');
+    	return BxDolService::call($this->_sActive, 'get_subscribe_url', array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount), 'Subscriptions');
     }
 
 	/**
      * Returns "Subscribe" JavaScript code to use in onclick attribute.
      */
-    public function getSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
+    public function getSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_js', 'Subscriptions'))
 			return array();
 
-		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount);
+		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sRedirect);
 		return BxDolService::call($this->_sActive, 'get_subscribe_js', $aSrvParams, 'Subscriptions');
     }
 
     /**
      * Returns the whole "Subscribe" link including HTML tag BUTTON and cart JavaScript code.
      */
-    public function getSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
+    public function getSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
     {
 		if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_link', 'Subscriptions'))
 			return '';
 
-		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount);
+		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sRedirect);
 		return BxDolService::call($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Subscriptions');
     }
 

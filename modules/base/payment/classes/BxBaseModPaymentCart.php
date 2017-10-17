@@ -21,6 +21,24 @@ class BxBaseModPaymentCart extends BxDol
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_cart_url get_cart_url
+     * 
+     * @code bx_srv('bx_payment', 'get_cart_url', [...], 'Cart'); @endcode
+     * 
+     * Get shopping cart URL.
+     *
+     * @param $iVendor (optional) integer value with vendor ID.
+     * @return string with shopping cart URL.
+     * 
+     * @see BxBaseModPaymentCart::serviceGetCartUrl
+     */
+    /** 
+     * @ref bx_base_payment-get_cart_url "get_cart_url"
+     */
 	public function serviceGetCartUrl($iVendor = 0)
     {
     	if(!$this->_oModule->isLogged())
@@ -32,11 +50,51 @@ class BxBaseModPaymentCart extends BxDol
     	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART'), array('seller_id' => $iVendor));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_cart_url get_cart_url
+     * 
+     * @code bx_srv('bx_payment', 'get_cart_url', [...], 'Cart'); @endcode
+     * 
+     * Get shopping cart URL.
+     *
+     * @param $iVendor (optional) integer value with vendor ID.
+     * @return string with shopping cart URL.
+     * 
+     * @see BxBaseModPaymentCart::serviceGetCartUrl
+     */
+    /** 
+     * @ref bx_base_payment-get_cart_url "get_cart_url"
+     */
     public function serviceGetCartJs($sType = '')
     {
         return $this->_oModule->_oTemplate->displayCartJs($sType);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_add_to_cart_js get_add_to_cart_js
+     * 
+     * @code bx_srv('bx_payment', 'get_add_to_cart_js', [...], 'Cart'); @endcode
+     * 
+     * Get JavaScript code to use in OnClick attributes. 
+     *
+     * @param $iVendor integer value with vendor ID.
+     * @param $mixedModuleId mixed value (ID, Name or URI) determining a module from which the action was initiated.
+     * @param $iItemId $iItemId integer value with item ID. 
+     * @param $iItemCount integer value with a number of items for purchasing. 
+     * @param $bNeedRedirect (optional) boolean value determining whether redirect is needed after add action or not.
+     * @return string with JavaScript code to use in OnClick attributes of HTML elements.
+     * 
+     * @see BxBaseModPaymentCart::serviceGetAddToCartJs
+     */
+    /** 
+     * @ref bx_base_payment-get_add_to_cart_js "get_add_to_cart_js"
+     */
     public function serviceGetAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
     {
 		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
@@ -46,6 +104,28 @@ class BxBaseModPaymentCart extends BxDol
         return $this->_oModule->_oTemplate->displayAddToCartJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_add_to_cart_link get_add_to_cart_link
+     * 
+     * @code bx_srv('bx_payment', 'get_add_to_cart_link', [...], 'Cart'); @endcode
+     * 
+     * Get HTML code for "Add to Cart" link. 
+     *
+     * @param $iVendorId integer value with vendor ID.
+     * @param $mixedModuleId mixed value (ID, Name or URI) determining a module from which the action was initiated.
+     * @param $iItemId $iItemId integer value with item ID. 
+     * @param $iItemCount integer value with a number of items for purchasing. 
+     * @param $bNeedRedirect (optional) boolean value determining whether redirect is needed after add action or not.
+     * @return HTML string with link to display on the site.
+     * 
+     * @see BxBaseModPaymentCart::serviceGetAddToCartLink
+     */
+    /** 
+     * @ref bx_base_payment-get_add_to_cart_link "get_add_to_cart_link"
+     */
 	public function serviceGetAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
     {
         $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
@@ -55,54 +135,50 @@ class BxBaseModPaymentCart extends BxDol
 		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
     }
 
-	public function serviceGetSubscriptionsUrl($iVendor = 0)
-    {
-    	if(!$this->_oModule->isLogged())
-            return '';
-
-		if($iVendor == 0)
-    		return $this->_oModule->_oConfig->getUrl('URL_SUBSCRIPTIONS');
-
-    	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_SUBSCRIPTIONS'), array('seller_id' => $iVendor));
-    }
-
-	public function serviceGetSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
-    {
-    	if(!$this->_oModule->isLogged())
-            return '';
-
-    	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_SUBSCRIBE'), array(
-    		'seller_id' => $iVendorId,
-    		'seller_provider' => $sVendorProvider,
-    		'module_id' => $mixedModuleId, 
-    		'item_id' => $iItemId,
-    		'item_count' => $iItemCount
-    	));
-    }
-
-	public function serviceGetSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
-    {
-		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
-        if(empty($iModuleId))
-            return '';
-
-        return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
-    }
-
-	public function serviceGetSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
-    {
-        $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
-        if(empty($iModuleId))
-            return '';
-
-		return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
-    }
-
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_cart_item_descriptor get_cart_item_descriptor
+     * 
+     * @code bx_srv('bx_payment', 'get_cart_item_descriptor', [...], 'Cart'); @endcode
+     * 
+     * Get cart item descriptor: 1-2-3-1. 
+     *
+     * @param $iVendorId integer value with vendor ID.
+     * @param $iModuleId integer value with module ID determining a module from which the action was initiated.
+     * @param $iItemId $iItemId integer value with item ID. 
+     * @param $iItemCount integer value with a number of items for purchasing. 
+     * @return string with item descriptor.
+     * 
+     * @see BxBaseModPaymentCart::serviceGetCartItemDescriptor
+     */
+    /** 
+     * @ref bx_base_payment-get_cart_item_descriptor "get_cart_item_descriptor"
+     */
 	public function serviceGetCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
 	{
 		return $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId, $iItemCount));
 	}
 
+	/**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_cart_items_count get_cart_items_count
+     * 
+     * @code bx_srv('bx_payment', 'get_cart_items_count', [...], 'Cart'); @endcode
+     * 
+     * Get items count in member's shopping cart. 
+     * 
+     * @param $iUserId (optional) integer value with user ID. If empty value is provided then currently logged in user will be used.
+     * @return integer value with items count.
+     * 
+     * @see BxBaseModPaymentCart::serviceGetCartItemsCount
+     */
+    /** 
+     * @ref bx_base_payment-get_cart_items_count "get_cart_items_count"
+     */
     public function serviceGetCartItemsCount($iUserId = 0)
     {
     	$iUserId = !empty($iUserId) ? $iUserId : $this->_oModule->getProfileId();

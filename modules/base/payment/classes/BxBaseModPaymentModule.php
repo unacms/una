@@ -22,6 +22,24 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         $this->_sLangsPrefix = $this->_oConfig->getPrefix('langs');
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-update_dependent_modules update_dependent_modules
+     * 
+     * @code bx_srv('bx_payment', 'update_dependent_modules', [...]); @endcode
+     * 
+     * Get payments dependent modules and save them. 
+     *
+     * @param $sModule (optional) string value with module name. All modules are used by default.
+     * @param $bInstall (optional) boolean value determining whether the install or uninstall operation is performed.
+     * 
+     * @see BxBaseModPaymentModule::serviceUpdateDependentModules
+     */
+    /** 
+     * @ref bx_base_payment-update_dependent_modules "update_dependent_modules"
+     */
 	public function serviceUpdateDependentModules($sModule = 'all', $bInstall = true)
     {
     	$aModules = $sModule == 'all' ? $this->_oDb->getModulesBy(array('type' => 'modules'), false) : array($this->_oDb->getModuleByName($sModule, false));
@@ -39,6 +57,23 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         }
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-other Other
+     * @subsubsection bx_base_payment-get_currency_info get_currency_info
+     * 
+     * @code bx_srv('bx_payment', 'get_currency_info', [...]); @endcode
+     * 
+     * Get default currency info (sign and code). 
+     *
+     * @return an array with currency info.
+     * 
+     * @see BxBaseModPaymentModule::serviceGetCurrencyInfo
+     */
+    /** 
+     * @ref bx_base_payment-get_currency_info "get_currency_info"
+     */
     public function serviceGetCurrencyInfo()
     {
         return array(
@@ -47,6 +82,24 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-other Other
+     * @subsubsection bx_base_payment-get_option get_option
+     * 
+     * @code bx_srv('bx_payment', 'get_option', [...]); @endcode
+     * 
+     * Get value of payment provider configuration option. 
+     *
+     * @param $sOption string value with option name. 
+     * @return string with option value.
+     * 
+     * @see BxBaseModPaymentModule::serviceGetOption
+     */
+    /** 
+     * @ref bx_base_payment-get_option "get_option"
+     */
 	public function serviceGetOption($sOption)
     {
     	$sMethod = 'get' . bx_gen_method_name($sOption);
@@ -56,6 +109,24 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     	return $this->_oDb->getParam($this->_oConfig->getPrefix('options') . $sOption);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-other Other
+     * @subsubsection bx_base_payment-get_providers_cart get_providers_cart
+     * 
+     * @code bx_srv('bx_payment', 'get_providers_cart', [...]); @endcode
+     * 
+     * Get list of available payment providers which can process single time payments via Shopping Cart. 
+     *
+     * @param $iVendorId integer value with vendor ID. 
+     * @return an array with special format.
+     * 
+     * @see BxBaseModPaymentModule::serviceGetProvidersCart
+     */
+    /** 
+     * @ref bx_base_payment-get_providers_cart "get_providers_cart"
+     */
 	public function serviceGetProvidersCart($iVendorId)
 	{
 		$aVendorProviders = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);

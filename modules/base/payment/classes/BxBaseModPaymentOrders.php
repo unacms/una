@@ -21,6 +21,23 @@ class BxBaseModPaymentOrders extends BxDol
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_orders_url get_orders_url
+     * 
+     * @code bx_srv('bx_payment', 'get_orders_url', [...], 'Orders'); @endcode
+     * 
+     * Get orders page URL.
+     *
+     * @return string with orders page URL.
+     * 
+     * @see BxBaseModPaymentOrders::serviceGetOrdersUrl
+     */
+    /** 
+     * @ref bx_base_payment-get_orders_url "get_orders_url"
+     */
 	public function serviceGetOrdersUrl()
     {
     	if(!$this->_oModule->isLogged())
@@ -29,6 +46,25 @@ class BxBaseModPaymentOrders extends BxDol
     	return $this->_oModule->_oConfig->getUrl('URL_ORDERS');
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_orders_count get_orders_count
+     * 
+     * @code bx_srv('bx_payment', 'get_orders_count', [...], 'Orders'); @endcode
+     * 
+     * Get processed orders count by type.
+     *
+     * @param $sType string value with type. For now 'new' type is available only.
+     * @param $iProfileId (optional) integer value with profile ID. If empty value is provided then currently logged in profile will be used.
+     * @return integer value with orders count.
+     * 
+     * @see BxBaseModPaymentOrders::serviceGetOrdersCount
+     */
+    /** 
+     * @ref bx_base_payment-get_orders_count "get_orders_count"
+     */
     public function serviceGetOrdersCount($sType, $iProfileId = 0)
     {
         if(!in_array($sType, array('new')))
