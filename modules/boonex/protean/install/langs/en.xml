@@ -16,6 +16,7 @@
 	<string name="_bx_protean_stg_cpt_option_header_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_header_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_header_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_header_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_header_bg_image_size"><![CDATA[Background image size]]></string>	
 	<string name="_bx_protean_stg_cpt_option_site_logo"><![CDATA[Logo image]]></string>
 	<string name="_bx_protean_stg_cpt_option_site_logo_alt"><![CDATA[Logo ALT]]></string>
@@ -33,6 +34,7 @@
 	<string name="_bx_protean_stg_cpt_option_footer_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_footer_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_protean_stg_cpt_option_footer_border_color"><![CDATA[Border color]]></string>
@@ -48,6 +50,7 @@
 	<string name="_bx_protean_stg_cpt_option_body_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_body_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_page_width"><![CDATA[Page Width]]></string>
 	<string name="_bx_protean_stg_cpt_option_body_icon_color"><![CDATA[Icons color]]></string>
@@ -78,6 +81,7 @@
 	<string name="_bx_protean_stg_cpt_option_block_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_block_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_protean_stg_cpt_option_block_border_color"><![CDATA[Border color]]></string>
@@ -100,6 +104,7 @@
 	<string name="_bx_protean_stg_cpt_option_card_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_card_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_protean_stg_cpt_option_card_border_color"><![CDATA[Border color]]></string>
@@ -111,6 +116,7 @@
 	<string name="_bx_protean_stg_cpt_option_popup_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_popup_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_protean_stg_cpt_option_popup_border_color"><![CDATA[Border color]]></string>
@@ -127,6 +133,7 @@
 	<string name="_bx_protean_stg_cpt_option_menu_main_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_main_border_color"><![CDATA[Border color]]></string>
@@ -144,6 +151,7 @@
     <string name="_bx_protean_stg_cpt_option_menu_account_bg_color"><![CDATA[Background color]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_bg_image"><![CDATA[Background image]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+    <string name="_bx_protean_stg_cpt_option_menu_account_bg_image_attachment"><![CDATA[Background image attachment]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_bg_image_size"><![CDATA[Background image size]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_content_padding"><![CDATA[Content margin]]></string>
     <string name="_bx_protean_stg_cpt_option_menu_account_border_color"><![CDATA[Border color]]></string>
@@ -161,6 +169,7 @@
 	<string name="_bx_protean_stg_cpt_option_menu_page_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_page_border_color"><![CDATA[Border color]]></string>
@@ -178,6 +187,7 @@
 	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image"><![CDATA[Background image]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image_repeat"><![CDATA[Background image repeat]]></string>
+	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image_attachment"><![CDATA[Background image attachment]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_bg_image_size"><![CDATA[Background image size]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_content_padding"><![CDATA[Content margin]]></string>
 	<string name="_bx_protean_stg_cpt_option_menu_slide_border_color"><![CDATA[Border color]]></string>
