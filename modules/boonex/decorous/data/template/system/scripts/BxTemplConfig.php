@@ -24,36 +24,47 @@ class BxTemplConfig extends BxBaseConfig
 
         $this->_aConfig['aLessConfig']['bx-image-bg-header'] = $this->_setBgUrl($sName . '_header_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-header-repeat'] = $this->_setBgRepeat($sName . '_header_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-header-attachment'] = $this->_setBgAttachment($sName . '_header_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-header-size'] = $this->_setBgSize($sName . '_header_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-footer'] = $this->_setBgUrl($sName . '_footer_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-footer-repeat'] = $this->_setBgRepeat($sName . '_footer_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-footer-attachment'] = $this->_setBgAttachment($sName . '_footer_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-footer-size'] = $this->_setBgSize($sName . '_footer_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-page'] = $this->_setBgUrl($sName . '_body_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-page-repeat'] = $this->_setBgRepeat($sName . '_body_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-page-attachment'] = $this->_setBgAttachment($sName . '_body_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-page-size'] = $this->_setBgSize($sName . '_body_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-block'] = $this->_setBgUrl($sName . '_block_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-block-repeat'] = $this->_setBgRepeat($sName . '_block_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-block-attachment'] = $this->_setBgAttachment($sName . '_block_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-block-size'] = $this->_setBgSize($sName . '_block_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-box'] = $this->_setBgUrl($sName . '_card_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-box-repeat'] = $this->_setBgRepeat($sName . '_card_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-box-attachment'] = $this->_setBgAttachment($sName . '_card_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-box-size'] = $this->_setBgSize($sName . '_card_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-popup'] = $this->_setBgUrl($sName . '_popup_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-popup-repeat'] = $this->_setBgRepeat($sName . '_popup_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-popup-attachment'] = $this->_setBgAttachment($sName . '_popup_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-popup-size'] = $this->_setBgSize($sName . '_popup_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-main'] = $this->_setBgUrl($sName . '_menu_main_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-main-repeat'] = $this->_setBgRepeat($sName . '_menu_main_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-main-attachment'] = $this->_setBgAttachment($sName . '_menu_main_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-main-size'] = $this->_setBgSize($sName . '_menu_main_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-account'] = $this->_setBgUrl($sName . '_menu_account_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-account-repeat'] = $this->_setBgRepeat($sName . '_menu_account_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-account-attachment'] = $this->_setBgAttachment($sName . '_menu_account_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-account-size'] = $this->_setBgSize($sName . '_menu_account_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-add'] = $this->_setBgUrl($sName . '_menu_add_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-add-repeat'] = $this->_setBgRepeat($sName . '_menu_add_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-add-attachment'] = $this->_setBgAttachment($sName . '_menu_add_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-add-size'] = $this->_setBgSize($sName . '_menu_add_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-page'] = $this->_setBgUrl($sName . '_menu_page_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-page-repeat'] = $this->_setBgRepeat($sName . '_menu_page_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-page-attachment'] = $this->_setBgAttachment($sName . '_menu_page_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-page-size'] = $this->_setBgSize($sName . '_menu_page_bg_image_size', 'cover');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide'] = $this->_setBgUrl($sName . '_menu_slide_bg_image', $oStorage);
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-repeat'] = $this->_setBgRepeat($sName . '_menu_slide_bg_image_repeat', 'no-repeat');
+        $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-attachment'] = $this->_setBgAttachment($sName . '_menu_slide_bg_image_attachment', 'scroll');
         $this->_aConfig['aLessConfig']['bx-image-bg-menu-slide-size'] = $this->_setBgSize($sName . '_menu_slide_bg_image_size', 'cover');
         
 
@@ -401,6 +412,18 @@ class BxTemplConfig extends BxBaseConfig
 
     	$sValue = trim(getParam($sKey));
     	if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('no-repeat', 'repeat', 'repeat-x', 'repeat-y')))
+    		$sValue = $sDefault;
+
+		return $sValue;
+    }
+
+    protected function _setBgAttachment($sKey, $sDefault = '')
+    {
+		if(empty($sDefault))
+    		$sDefault = 'scroll';
+
+    	$sValue = trim(getParam($sKey));
+    	if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('fixed', 'scroll', 'local')))
     		$sValue = $sDefault;
 
 		return $sValue;
