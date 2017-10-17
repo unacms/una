@@ -26,6 +26,23 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         $this->_oConfig->init($this->_oDb);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_stripe_connect Stripe Connect
+     * @subsection bx_stripe_connect-other Other
+     * @subsubsection bx_stripe_connect-get_options_mode get_options_mode
+     * 
+     * @code bx_srv('bx_stripe_connect', 'get_options_mode', [...]); @endcode
+     * 
+     * Get an array with available modes. Is used in forms.
+     *
+     * @return an array with available modes represented as key => value pairs.
+     * 
+     * @see BxStripeConnectModule::serviceGetOptionsMode
+     */
+    /** 
+     * @ref bx_stripe_connect-get_options_mode "get_options_mode"
+     */
     public function serviceGetOptionsMode()
     {
         return array(
@@ -34,6 +51,23 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_stripe_connect Stripe Connect
+     * @subsection bx_stripe_connect-other Other
+     * @subsubsection bx_stripe_connect-get_options_api_scope get_options_api_scope
+     * 
+     * @code bx_srv('bx_stripe_connect', 'get_options_api_scope', [...]); @endcode
+     * 
+     * Get an array with available API scopes. Is used in forms.
+     *
+     * @return an array with available scopes represented as key => value pairs.
+     * 
+     * @see BxStripeConnectModule::serviceGetOptionsApiScope
+     */
+    /** 
+     * @ref bx_stripe_connect-get_options_api_scope "get_options_api_scope"
+     */
     public function serviceGetOptionsApiScope()
     {
         return array(
@@ -42,6 +76,23 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_stripe_connect Stripe Connect
+     * @subsection bx_stripe_connect-other Other
+     * @subsubsection bx_stripe_connect-get_options_pmode_single get_options_pmode_single
+     * 
+     * @code bx_srv('bx_stripe_connect', 'get_options_pmode_single', [...]); @endcode
+     * 
+     * Get an array with available processing modes for single time payments. Is used in forms.
+     *
+     * @return an array with available modes represented as key => value pairs.
+     * 
+     * @see BxStripeConnectModule::serviceGetOptionsPmodeSingle
+     */
+    /** 
+     * @ref bx_stripe_connect-get_options_pmode_single "get_options_pmode_single"
+     */
     public function serviceGetOptionsPmodeSingle()
     {
         return array(
@@ -51,7 +102,22 @@ class BxStripeConnectModule extends BxBaseModConnectModule
     }
 
     /**
-     * Note. Subscriptions do not currently support the Platform mode.
+     * @page service Service Calls
+     * @section bx_stripe_connect Stripe Connect
+     * @subsection bx_stripe_connect-other Other
+     * @subsubsection bx_stripe_connect-get_options_pmode_recurring get_options_pmode_recurring
+     * 
+     * @code bx_srv('bx_stripe_connect', 'get_options_pmode_recurring', [...]); @endcode
+     * 
+     * Get an array with available processing modes for recurring payments. Is used in forms.
+     * Note. Subscriptions (recurring payments) do not currently support the Platform mode.
+     *
+     * @return an array with available modes represented as key => value pairs.
+     * 
+     * @see BxStripeConnectModule::serviceGetOptionsPmodeRecurring
+     */
+    /** 
+     * @ref bx_stripe_connect-get_options_pmode_recurring "get_options_pmode_recurring"
      */
     public function serviceGetOptionsPmodeRecurring()
     {
@@ -60,6 +126,23 @@ class BxStripeConnectModule extends BxBaseModConnectModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_stripe_connect Stripe Connect
+     * @subsection bx_stripe_connect-page_blocks Page Blocks
+     * @subsubsection bx_stripe_connect-get_block_connect get_block_connect
+     * 
+     * @code bx_srv('bx_stripe_connect', 'get_block_connect', [...]); @endcode
+     * 
+     * Get page block with necessary info and actions to connect/disconnect.
+     *
+     * @return HTML string with block content to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxStripeConnectModule::serviceGetBlockConnect
+     */
+    /** 
+     * @ref bx_stripe_connect-get_block_connect "get_block_connect"
+     */
     public function serviceGetBlockConnect()
     {
     	return $this->_oTemplate->displayBlockConnect();

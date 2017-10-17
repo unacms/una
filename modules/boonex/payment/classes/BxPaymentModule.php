@@ -119,9 +119,24 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		));
     }
 
-
     /**
-     * Payment Details Methods
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-is_accepting_payments is_accepting_payments
+     * 
+     * @code bx_srv('bx_payment', 'is_accepting_payments', [...]); @endcode
+     * 
+     * Check whether the specified vendor has a configured payment provider or not.
+     *
+     * @param $iVendorId integer value with vendor ID.
+     * @param $sPaymentType (optional) string value with payment type. If specified then the vendor will be checked for having the payment provider of the requested type.
+     * @return boolean value determining the result of checking.
+     * 
+     * @see BxPaymentModule::serviceIsAcceptingPayments
+     */
+    /** 
+     * @ref bx_payment-is_accepting_payments "is_accepting_payments"
      */
     public function serviceIsAcceptingPayments($iVendorId, $sPaymentType = '')
     {
@@ -146,12 +161,52 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		return $bResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-is_payment_provider is_payment_provider
+     * 
+     * @code bx_srv('bx_payment', 'is_payment_provider', [...]); @endcode
+     * 
+     * Check whether the specified vendor has configured the specified payment provider or not.
+     *
+     * @param $iVendorId integer value with vendor ID.
+     * @param $sVendorProvider string value with payment provider name.
+     * @param $sPaymentType (optional) string value with payment type. If specified then the vendor will be checked for having the payment provider of the requested type.
+     * @return boolean value determining the result of checking.
+     * 
+     * @see BxPaymentModule::serviceIsPaymentProvider
+     */
+    /** 
+     * @ref bx_payment-is_payment_provider "is_payment_provider"
+     */
     public function serviceIsPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
     {
     	$aProvider = $this->serviceGetPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType);
     	return $aProvider !== false;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-get_payment_provider get_payment_provider
+     * 
+     * @code bx_srv('bx_payment', 'is_payment_provider', [...]); @endcode
+     * 
+     * Get configuration settings for the payment provider entered by the specified vendor.
+     *
+     * @param $iVendorId integer value with vendor ID.
+     * @param $sVendorProvider string value with payment provider name.
+     * @param $sPaymentType (optional) string value with payment type. If specified then the vendor will be checked for having the payment provider of the requested type.
+     * @return an array with special format describing the payment provider or false value if something is wrong.
+     * 
+     * @see BxPaymentModule::serviceGetPaymentProvider
+     */
+    /** 
+     * @ref bx_payment-get_payment_provider "get_payment_provider"
+     */
     public function serviceGetPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
     {
     	$aProviders = array();
@@ -171,6 +226,23 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	return !empty($aProviders) && !empty($aProviders[$sVendorProvider]) && is_array(($aProviders[$sVendorProvider])) ? $aProviders[$sVendorProvider] : false;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-other Other
+     * @subsubsection bx_payment-get_options_default_currency_code get_options_default_currency_code
+     * 
+     * @code bx_srv('bx_payment', 'get_options_default_currency_code', [...]); @endcode
+     * 
+     * Get an array with available currencies. Is used in forms.
+     *
+     * @return an array with available currencies represented as key => value pairs.
+     * 
+     * @see BxPaymentModule::serviceGetOptionsDefaultCurrencyCode
+     */
+    /** 
+     * @ref bx_payment-get_options_default_currency_code "get_options_default_currency_code"
+     */
     public function serviceGetOptionsDefaultCurrencyCode()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -187,6 +259,23 @@ class BxPaymentModule extends BxBaseModPaymentModule
         return $aResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-other Other
+     * @subsubsection bx_payment-get_options_site_admin get_options_site_admin
+     * 
+     * @code bx_srv('bx_payment', 'get_options_site_admin', [...]); @endcode
+     * 
+     * Get an array with profiles which can be used as 'Site Admin (Owner)'. 'Site Admin' is a person who will be displayed to buyers when something is selling on behalf of the site.
+     *
+     * @return an array with profiles represented as key => value pairs.
+     * 
+     * @see BxPaymentModule::serviceGetOptionsSiteAdmin
+     */
+    /** 
+     * @ref bx_payment-get_options_site_admin "get_options_site_admin"
+     */
     public function serviceGetOptionsSiteAdmin()
     {
         $aResult = array(
@@ -243,7 +332,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	if(empty($iItemCount))
     		$iItemCount = 1;
 
-        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount);
+        $aResult = $this->getObjectSubscriptions()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount);
         $bRedirect = !empty($aResult['redirect']);
 
         if(!empty($aResult['popup'])) {
@@ -277,7 +366,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     		$iItemCount = 1;
         $sRedirect = bx_process_input(bx_get('redirect'));
 
-        $aResult = $this->getObjectCart()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
+        $aResult = $this->getObjectSubscriptions()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
 		echoJson($aResult);
     }
 
@@ -364,6 +453,28 @@ class BxPaymentModule extends BxBaseModPaymentModule
         exit;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-initialize_checkout initialize_checkout
+     * 
+     * @code bx_srv('bx_payment', 'initialize_checkout', [...]); @endcode
+     * 
+     * Initialize the checkout process.
+     * 
+     * @param $sType string value with payment type (single or recurring). 
+     * @param $iSellerId integer value with seller ID. 
+     * @param $sProvider string value with payment provider name. 
+     * @param $aItems (optional) an array with items to be purchased. 
+     * @param $sRedirect (optional) string value with redirect URL if it's needed.
+     * @return the result depends on the payment provider which is used for processing or represented as string value with error message if something is wrong.
+     * 
+     * @see BxPaymentModule::serviceInitializeCheckout
+     */
+    /** 
+     * @ref bx_payment-initialize_checkout "initialize_checkout"
+     */
 	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array(), $sRedirect = '')
 	{
 		if(!is_array($aItems))
@@ -546,6 +657,37 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			return true;
 
         return $aCheckResult[CHECK_ACTION_MESSAGE];
+    }
+
+    public function checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+		if($iSellerId == BX_PAYMENT_EMPTY_ID || empty($iModuleId) || empty($iItemId) || empty($iItemCount))
+            return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
+
+		$iClientId = $this->getProfileId();
+        if(empty($iClientId)) {
+        	$sLoginUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=login');
+            return array('code' => 2, 'eval' => 'window.open("' . $sLoginUrl . '", "_self");');
+        }
+
+        $mixedResult = $this->isAllowedPurchase(array('module_id' => $iModuleId, 'item_id' => $iItemId));
+        if($mixedResult !== true) {
+            if(is_string($mixedResult) && !empty($mixedResult))
+                return array('code' => 2, 'message' => $mixedResult);
+            else 
+                return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
+        }
+
+        if($iClientId == $iSellerId)
+            return array('code' => 3, 'message' => _t($CNF['T']['ERR_SELF_PURCHASE']));
+
+        $aSeller = $this->getVendorInfo($iSellerId);
+        if(!$aSeller['active'])
+            return array('code' => 4, 'message' => _t($CNF['T']['ERR_INACTIVE_VENDOR']));
+
+		return true;
     }
 
 	public function registerPayment($mixedPending)

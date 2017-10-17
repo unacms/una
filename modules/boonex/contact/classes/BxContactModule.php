@@ -26,6 +26,23 @@ class BxContactModule extends BxDolModule
     /**
      * SERVICE METHODS
      */
+    /**
+     * @page service Service Calls
+     * @section bx_contact Contact
+     * @subsection bx_contact-page_blocks Page Blocks
+     * @subsubsection bx_contact-get_block_form get_block_form
+     * 
+     * @code bx_srv('bx_contact', 'get_block_form', [...]); @endcode
+     * 
+     * Get page block with contact form.
+     *
+     * @return an array describing a block to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxContactModule::serviceGetBlockForm
+     */
+    /** 
+     * @ref bx_contact-get_block_form "get_block_form"
+     */
     public function serviceGetBlockForm()
     {
         $aDefaultFields = array('name', 'email', 'subject', 'body', 'do_submit');
@@ -98,6 +115,23 @@ class BxContactModule extends BxDolModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_contact Contact
+     * @subsection bx_contact-other Other
+     * @subsubsection bx_contact-get_contact_page_url get_contact_page_url
+     * 
+     * @code bx_srv('bx_contact', 'get_contact_page_url', [...]); @endcode
+     * 
+     * Get string with contact page URL. Is used in system and inter-modular integration.
+     *
+     * @return string with contact page URL.
+     * 
+     * @see BxContactModule::serviceGetContactPageUrl
+     */
+    /** 
+     * @ref bx_contact-get_block_form "get_block_form"
+     */
     public function serviceGetContactPageUrl()
     {
         //if (true !== $this->isAllowedContact())

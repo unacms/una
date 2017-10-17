@@ -24,8 +24,25 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
 
     /*
      * Service methods
+     */
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_join get_block_join
      * 
+     * @code bx_srv('bx_payment', 'get_block_join', [...], 'Join'); @endcode
+     * 
+     * Get page block with join form to complete the payment.
      * TODO: Should be tested when paid memberships with "Paid Before Join" or some similar feature will appear.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentJoin::serviceGetBlockJoin
+     */
+    /** 
+     * @ref bx_payment-get_block_join "get_block_join"
      */
 	public function serviceGetBlockJoin()
     {
@@ -42,14 +59,20 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
     	}
 
 		if(empty($iPendingId))
-			return MsgBox(_t($this->_sLangsPrefix . 'err_not_allowed'));
+			return array(
+        		'content' => MsgBox(_t($this->_sLangsPrefix . 'err_not_allowed'))
+			);
 
 		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
 	    if(empty($aPending['order']) || (int)$aPending['error_code'] != 1)
-			return MsgBox(_t($this->_sLangsPrefix . 'err_not_processed'));
+			return array(
+        		'content' => MsgBox(_t($this->_sLangsPrefix . 'err_not_processed'))
+			);
 
 		if((int)$aPending['processed'] == 1)
-			return MsgBox(_t($this->_sLangsPrefix . 'err_already_processed'));
+			return array(
+        		'content' => MsgBox(_t($this->_sLangsPrefix . 'err_already_processed'))
+			);
 
 		//--- 'System' -> 'Join after Payment' for Alerts Engine ---//
 		$bOverride = false;

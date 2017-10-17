@@ -25,6 +25,25 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
 	/*
      * Service methods
      */
+    
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_orders get_block_orders
+     * 
+     * @code bx_srv('bx_payment', 'get_block_orders', [...], 'Orders'); @endcode
+     * 
+     * Get page block with a list of orders represented as table.
+     *
+     * @param $sType string value with order type (processed or pending).
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentOrders::serviceGetBlockOrders
+     */
+    /** 
+     * @ref bx_payment-get_block_orders "get_block_orders"
+     */
 	public function serviceGetBlockOrders($sType = '', $iUserId = BX_PAYMENT_EMPTY_ID)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -33,7 +52,9 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
     		$sType = bx_get('type') !== false ? bx_process_input(bx_get('type')) : BX_PAYMENT_ORDERS_TYPE_PROCESSED;
 
     	if(!$this->_oModule->isLogged())
-            return MsgBox(_t($this->_sLangsPrefix . 'err_required_login'));
+            return array(
+            	'content' => MsgBox(_t($this->_sLangsPrefix . 'err_required_login'))
+            );
 
         $iUserId = $iUserId != BX_PAYMENT_EMPTY_ID ? $iUserId : $this->_oModule->getProfileId();
         if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED)
@@ -54,17 +75,28 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
     }
 
     /**
-     * Check transaction(s) in database which satisty all conditions.
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-other Other
+     * @subsubsection bx_payment-get_orders_info get_orders_info
+     * 
+     * @code bx_srv('bx_payment', 'get_orders_info', [...], 'Orders'); @endcode
+     * 
+     * Get transaction(s) which meets all requirements.
      *
-     * @param array $aConditions an array of pears('key' => 'value'). Available keys are the following:
+     * @param $aConditions an array of pears('key' => 'value'). Available keys are the following:
      * a. license - internal license (string)
      * b. client_id - client's ID (integer)
      * c. seller_id - seller's ID (integer)
      * d. module_id - modules's where the purchased product is located. (integer)
      * e. item_id - item id in the database. (integer)
      * f. date - the date when the payment was processed(UNIXTIME STAMP)
-     *
-     * @return array of transactions. Each transaction has full info(client ID, seller ID, external transaction ID, date and so on)
+     * @return an array of transactions. Each transaction has full info(client ID, seller ID, external transaction ID, date and so on)
+     * 
+     * @see BxPaymentOrders::serviceGetOrdersInfo
+     */
+    /** 
+     * @ref bx_payment-get_orders_info "get_orders_info"
      */
     public function serviceGetOrdersInfo($aConditions)
     {
@@ -75,9 +107,16 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
     }
 
     /**
-     * Check pending transaction(s) in database which satisty all conditions.
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-other Other
+     * @subsubsection bx_payment-get_pending_orders_info get_pending_orders_info
+     * 
+     * @code bx_srv('bx_payment', 'get_pending_orders_info', [...], 'Orders'); @endcode
+     * 
+     * Get pending transaction(s) which meets all requirements.
      *
-     * @param array $aConditions an array of pears('key' => 'value'). The most useful keys are the following:
+     * @param $aConditions an array of pears('key' => 'value'). The most useful keys are the following:
      * a. client_id - client's ID (integer)
      * b. seller_id - seller's ID (integer)
      * c. type - transaction type: single or recurring (string)
@@ -86,8 +125,12 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
      * f. provider - payment provider name (string)
      * g. date - the date when the payment was established(UNIXTIME STAMP)
      * h. processed - whether the payment was processed or not (integer, 0 or 1)
-     *
-     * @return array of pending transactions. Each transaction has full info(client ID, seller ID, type, date and so on)
+     * @return an array of pending transactions. Each transaction has full info(client ID, seller ID, type, date and so on)
+     * 
+     * @see BxPaymentOrders::serviceGetPendingOrdersInfo
+     */
+    /** 
+     * @ref bx_payment-get_pending_orders_info "get_pending_orders_info"
      */
     public function serviceGetPendingOrdersInfo($aConditions)
     {

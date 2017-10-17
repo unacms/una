@@ -67,6 +67,23 @@ class BxInvModule extends BxDolModule
     /**
      * SERVICE METHODS
      */
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-page_blocks Page Blocks
+     * @subsubsection bx_invites-get_block_invite get_block_invite
+     * 
+     * @code bx_srv('bx_invites', 'get_block_invite', [...]); @endcode
+     * 
+     * Get page block for member's Dashboard which displays invitations related info and action(s).
+     *
+     * @return an array describing a block to display on the site or empty string if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxInvModule::serviceGetBlockInvite
+     */
+    /** 
+     * @ref bx_invites-get_block_invite "get_block_invite"
+     */
     public function serviceGetBlockInvite()
     {
 		$iProfileId = $this->getProfileId();
@@ -85,6 +102,23 @@ class BxInvModule extends BxDolModule
     	);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-page_blocks Page Blocks
+     * @subsubsection bx_invites-get_block_form_invite get_block_form_invite
+     * 
+     * @code bx_srv('bx_invites', 'get_block_form_invite', [...]); @endcode
+     * 
+     * Get page block with invite form.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxInvModule::serviceGetBlockFormInvite
+     */
+    /** 
+     * @ref bx_invites-get_block_form_invite "get_block_form_invite"
+     */
     public function serviceGetBlockFormInvite()
     {
     	$iProfileId = $this->getProfileId();
@@ -129,6 +163,23 @@ class BxInvModule extends BxDolModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-page_blocks Page Blocks
+     * @subsubsection bx_invites-get_block_form_request get_block_form_request
+     * 
+     * @code bx_srv('bx_invites', 'get_block_form_request', [...]); @endcode
+     * 
+     * Get page block with request invitation form.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxInvModule::serviceGetBlockFormRequest
+     */
+    /** 
+     * @ref bx_invites-get_block_form_request "get_block_form_request"
+     */
     public function serviceGetBlockFormRequest()
     {
     	if(!$this->_oConfig->isRequestInvite())
@@ -179,6 +230,23 @@ class BxInvModule extends BxDolModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-page_blocks Page Blocks
+     * @subsubsection bx_invites-get_block_manage_requests get_block_manage_requests
+     * 
+     * @code bx_srv('bx_invites', 'get_block_manage_requests', [...]); @endcode
+     * 
+     * Get page block with manage invitation requests table.
+     *
+     * @return HTML string with block content to display on the site or empty string if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxInvModule::serviceGetBlockManageRequests
+     */
+    /** 
+     * @ref bx_invites-get_block_manage_requests "get_block_manage_requests"
+     */
     public function serviceGetBlockManageRequests()
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_requests'));
@@ -189,14 +257,44 @@ class BxInvModule extends BxDolModule
 		return $oGrid->getCode();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-other Other
+     * @subsubsection bx_invites-get_menu_addon_requests get_menu_addon_requests
+     * 
+     * @code bx_srv('bx_invites', 'get_menu_addon_requests', [...]); @endcode
+     * 
+     * Get number or invitation requests.
+     *
+     * @return integer value with number of invitation requests.
+     * 
+     * @see BxInvModule::serviceGetMenuAddonRequests
+     */
+    /** 
+     * @ref bx_invites-get_menu_addon_requests "get_menu_addon_requests"
+     */
 	public function serviceGetMenuAddonRequests()
 	{
         return $this->_oDb->getRequests(array('type' => 'count_all'));
 	}
 
-    /**
-     * Perform neccessary checking on join form
-     * @return empty string - if join is allowed and should be processed as usual, non-empty string - if join form need to be replaced with this code
+	/**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-other Other
+     * @subsubsection bx_invites-account_add_form_check account_add_form_check
+     * 
+     * @code bx_srv('bx_invites', 'account_add_form_check', [...]); @endcode
+     * 
+     * Perform neccessary checking on join form.
+     *
+     * @return empty string - if join is allowed and should be processed as usual, non-empty string - if join form need to be replaced with this code.
+     * 
+     * @see BxInvModule::serviceAccountAddFormCheck
+     */
+    /** 
+     * @ref bx_invites-account_add_form_check "account_add_form_check"
      */
 	public function serviceAccountAddFormCheck()
 	{

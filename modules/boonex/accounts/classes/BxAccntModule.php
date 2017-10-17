@@ -21,6 +21,23 @@ class BxAccntModule extends BxBaseModGeneralModule
         $this->_oConfig->init($this->_oDb);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_accounts Accounts
+     * @subsection bx_accounts-other Other
+     * @subsubsection bx_accounts-get_menu_addon_manage_tools get_menu_addon_manage_tools
+     * 
+     * @code bx_srv('bx_accounts', 'get_menu_addon_manage_tools', [...]); @endcode
+     * 
+     * Get number of 'unconfirmed' accounts for User End -> Dasboard page -> Manage block.
+     *
+     * @return integer number of 'unconfirmed' accounts
+     * 
+     * @see BxAccntModule::serviceGetMenuAddonManageTools
+     */
+    /** 
+     * @ref bx_accounts-get_menu_addon_manage_tools "get_menu_addon_manage_tools"
+     */
 	public function serviceGetMenuAddonManageTools()
 	{
 		bx_import('SearchResult', $this->_aModule);

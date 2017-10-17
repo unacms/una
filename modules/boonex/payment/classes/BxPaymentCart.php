@@ -21,6 +21,24 @@ class BxPaymentCart extends BxBaseModPaymentCart
     /*
      * Service methods
      */
+    
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_carts get_block_carts
+     * 
+     * @code bx_srv('bx_payment', 'get_block_carts', [...], 'Cart'); @endcode
+     * 
+     * Get page block with shopping carts by vendors.
+     *
+     * @return an array describing a block to display on the site or an empty string if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentCart::serviceGetBlockCarts
+     */
+    /** 
+     * @ref bx_payment-get_block_carts "get_block_carts"
+     */
 	public function serviceGetBlockCarts()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -37,6 +55,23 @@ class BxPaymentCart extends BxBaseModPaymentCart
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_cart get_block_cart
+     * 
+     * @code bx_srv('bx_payment', 'get_block_cart', [...], 'Cart'); @endcode
+     * 
+     * Get page block with content of selected shopping cart.
+     *
+     * @return an array describing a block to display on the site or an empty string if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentCart::serviceGetBlockCart
+     */
+    /** 
+     * @ref bx_payment-get_block_cart "get_block_cart"
+     */
 	public function serviceGetBlockCart()
     {
     	// Don't show the block at all if 'seller_id' not exists.
@@ -47,11 +82,15 @@ class BxPaymentCart extends BxBaseModPaymentCart
 
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
-            return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
+            return array(
+            	'content' => MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']))
+            );
 
     	$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
     	if(empty($iSellerId))
-    		return MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']));
+    		return array(
+            	'content' => MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']))
+    		);
 
 		$aSeller = $this->_oModule->getProfileInfo($iSellerId);
         return array(
@@ -60,6 +99,23 @@ class BxPaymentCart extends BxBaseModPaymentCart
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_cart_history get_block_cart_history
+     * 
+     * @code bx_srv('bx_payment', 'get_block_cart_history', [...], 'Cart'); @endcode
+     * 
+     * Get page block with shopping cart history.
+     *
+     * @return an array describing a block to display on the site or an empty string if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentCart::serviceGetBlockCartHistory
+     */
+    /** 
+     * @ref bx_payment-get_block_cart_history "get_block_cart_history"
+     */
     public function serviceGetBlockCartHistory()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -68,13 +124,36 @@ class BxPaymentCart extends BxBaseModPaymentCart
 
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
-            return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
+            return array(
+            	'content' => MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']))
+            );
 
         return array(
         	'content' => $this->_oModule->_oTemplate->displayBlockHistory($iUserId, $iSellerId),
 		);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-add_to_cart add_to_cart
+     * 
+     * @code bx_srv('bx_payment', 'add_to_cart', [...], 'Cart'); @endcode
+     * 
+     * Add an item described with method's params to shopping cart.
+     *
+     * @param $iSellerId integer value with seller ID.
+     * @param $mixedModuleId mixed value (ID, Name or URI) determining a module from which the action was initiated.
+     * @param $iItemId integer value with item ID.
+     * @param $iItemCount integer value with a number of items for purchasing.
+     * @return an array with special format which describes the result of operation.
+     * 
+     * @see BxPaymentCart::serviceAddToCart
+     */
+    /** 
+     * @ref bx_payment-add_to_cart "add_to_cart"
+     */
     public function serviceAddToCart($iSellerId, $mixedModuleId, $iItemId, $iItemCount)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -82,7 +161,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
     	$iClientId = $this->_oModule->getProfileId();
 
-    	$mixedResult = $this->_checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
+    	$mixedResult = $this->_oModule->checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
     	if($mixedResult !== true)
     		return $mixedResult;
 
@@ -118,6 +197,26 @@ class BxPaymentCart extends BxBaseModPaymentCart
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-delete_from_cart delete_from_cart
+     * 
+     * @code bx_srv('bx_payment', 'delete_from_cart', [...], 'Cart'); @endcode
+     * 
+     * Delete an item(s) from shopping cart.
+     *
+     * @param $iSellerId integer value with seller ID. The items owned by this seller will be removed only.
+     * @param $iModuleId (optional) integer value with module ID. If specified, the items related to this module will be removed only.
+     * @param $iItemId (optional) integer value with item ID. If specified, the item with this ID will be removed only.
+     * @return an array with special format which describes the result of operation.
+     * 
+     * @see BxPaymentCart::serviceDeleteFromCart
+     */
+    /** 
+     * @ref bx_payment-delete_from_cart "delete_from_cart"
+     */
     public function serviceDeleteFromCart($iSellerId, $iModuleId = 0, $iItemId = 0)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -139,40 +238,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $this->_oModule->_oDb->setCartItems($iClientId, $sCartItems);
 
         return array('code' => 0, 'message' => _t($CNF['T']['MSG_ITEM_DELETED']));
-    }
-
-	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '')
-    {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-    	$iClientId = $this->_oModule->getProfileId();
-
-    	$mixedResult = $this->_checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
-    	if($mixedResult !== true)
-    		return $mixedResult;
-
-        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersRecurring($iSellerId);
-        if(empty($aSellerProviders))
-            return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
-
-        $aCartItem = array($iSellerId, $iModuleId, $iItemId, $iItemCount);
-        $sCartItem = $this->_oModule->_oConfig->descriptorA2S($aCartItem);
-
-		if(empty($sSellerProvider)) {
-			$sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
-			$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
-			return array('popup' => array(
-				'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect)), 
-				'options' => array('closeOnOuterClick' => true)
-			));
-		}
-
-		$aProvider = $aSellerProviders[$sSellerProvider];
-        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem), $sRedirect);
-        if(is_string($mixedResult))
-        	return array('code' => 6, 'message' => _t($mixedResult));
-
-		return $mixedResult;
     }
 
     public function getInfo($sType, $iUserId, $iSellerId = BX_PAYMENT_EMPTY_ID, $aItems = array())
@@ -243,37 +308,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
             'items_price' => $fItemsPrice,
             'items' => $aItemsInfo
         );
-    }
-
-	protected function _checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount)
-    {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-		if($iSellerId == BX_PAYMENT_EMPTY_ID || empty($iModuleId) || empty($iItemId) || empty($iItemCount))
-            return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
-
-		$iClientId = $this->_oModule->getProfileId();
-        if(empty($iClientId)) {
-        	$sLoginUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=login');
-            return array('code' => 2, 'eval' => 'window.open("' . $sLoginUrl . '", "_self");');
-        }
-
-        $mixedResult = $this->_oModule->isAllowedPurchase(array('module_id' => $iModuleId, 'item_id' => $iItemId));
-        if($mixedResult !== true) {
-            if(is_string($mixedResult) && !empty($mixedResult))
-                return array('code' => 2, 'message' => $mixedResult);
-            else 
-                return array('code' => 1, 'message' => _t($CNF['T']['ERR_WRONG_DATA']));
-        }
-
-        if($iClientId == $iSellerId)
-            return array('code' => 3, 'message' => _t($CNF['T']['ERR_SELF_PURCHASE']));
-
-        $aSeller = $this->_oModule->getVendorInfo($iSellerId);
-        if(!$aSeller['active'])
-            return array('code' => 4, 'message' => _t($CNF['T']['ERR_INACTIVE_VENDOR']));
-
-		return true;
     }
 }
 

@@ -21,28 +21,103 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
     /*
      * Service methods
      */
+    
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_list_my get_block_list_my
+     * 
+     * @code bx_srv('bx_payment', 'get_block_list_my', [...], 'Subscriptions'); @endcode
+     * 
+     * Get page block with a list of currently logged in member's subscriptions.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentSubscriptions::serviceGetBlockListMy
+     */
+    /** 
+     * @ref bx_payment-get_block_list_my "get_block_list_my"
+     */
     public function serviceGetBlockListMy()
     {
         return $this->_getBlock('list_my');
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_list_all get_block_list_all
+     * 
+     * @code bx_srv('bx_payment', 'get_block_list_all', [...], 'Subscriptions'); @endcode
+     * 
+     * Get page block with a list of all subscriptions. It's available for authorized members only.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentSubscriptions::serviceGetBlockListAll
+     */
+    /** 
+     * @ref bx_payment-get_block_list_all "get_block_list_all"
+     */
     public function serviceGetBlockListAll()
     {
         return $this->_getBlock('list_all');
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-page_blocks Page Blocks
+     * @subsubsection bx_payment-get_block_history get_block_history
+     * 
+     * @code bx_srv('bx_payment', 'get_block_history', [...], 'Subscriptions'); @endcode
+     * 
+     * Get page block with a list of payments related to subscriptions of currently logged in member.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPaymentSubscriptions::serviceGetBlockHistory
+     */
+    /** 
+     * @ref bx_payment-get_block_history "get_block_history"
+     */
     public function serviceGetBlockHistory()
     {
         return $this->_getBlock('history');
     }
 
-	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount)
+	/**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-subscribe subscribe
+     * 
+     * @code bx_srv('bx_payment', 'subscribe', [...], 'Subscriptions'); @endcode
+     * 
+     * Initialize subscription for specified item.
+     *
+     * @param $iSellerId integer value with seller ID.
+     * @param $sSellerProvider string value with a name of payment provider to be used for processing. Empty value means that payment provider selector should be shown.
+     * @param $iModuleId integer value with module ID.
+     * @param $iItemId integer value with item ID.
+     * @param $iItemCount integer value with a number of items for purchasing. It's equal to 1 in case of subscription.
+     * @param $sRedirect (optional) string value with redirect URL, if it's needed. 
+     * @return an array with special format which describes the result of operation.
+     * 
+     * @see BxPaymentSubscriptions::serviceSubscribe
+     */
+    /** 
+     * @ref bx_payment-subscribe "subscribe"
+     */
+	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '')
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	$iClientId = $this->_oModule->getProfileId();
 
-    	$mixedResult = $this->_checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
+    	$mixedResult = $this->_oModule->checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
     	if($mixedResult !== true)
     		return $mixedResult;
 
@@ -56,11 +131,14 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 		if(empty($sSellerProvider)) {
 			$sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
 			$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
-			return array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders)));
+			return array('popup' => array(
+				'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect)), 
+				'options' => array('closeOnOuterClick' => true)
+			));
 		}
 
 		$aProvider = $aSellerProviders[$sSellerProvider];
-        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem));
+        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem), $sRedirect);
         if(is_string($mixedResult))
         	return array('code' => 6, 'message' => _t($mixedResult));
 
@@ -101,11 +179,15 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 
         $sMethod = 'displayBlockSbs' . bx_gen_method_name($sType);
         if(!method_exists($this->_oModule->_oTemplate, $sMethod))
-            return MsgBox(_t('_Empty'));
+            return array(
+        		'content' => MsgBox(_t('_Empty'))
+            );
 
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
-            return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
+            return array(
+        		'content' => MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']))
+            );
 
         $this->_oModule->setSiteSubmenu('menu_dashboard', 'system', 'dashboard-subscriptions');
 

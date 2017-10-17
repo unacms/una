@@ -50,6 +50,25 @@ class BxPollsModule extends BxBaseModTextModule
     /**
      * SERVICE METHODS
      */
+    
+    /**
+     * @page service Service Calls
+     * @section bx_polls Polls
+     * @subsection bx_polls-page_blocks Page Blocks
+     * @subsubsection bx_polls-get_results_search_extended get_results_search_extended
+     * 
+     * @code bx_srv('bx_polls', 'get_results_search_extended', [...]); @endcode
+     * 
+     * Get page block with the results of Extended Search.
+     *
+     * @param $aParams an array with search params.
+     * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPollsModule::serviceGetResultsSearchExtended
+     */
+    /** 
+     * @ref bx_polls-get_results_search_extended "get_results_search_extended"
+     */
     public function serviceGetResultsSearchExtended($aParams)
     {
         $this->_oTemplate->addJs(array('entry.js'));
@@ -57,6 +76,25 @@ class BxPollsModule extends BxBaseModTextModule
         return $this->_oTemplate->getJsCode('entry') . BxDolService::call('system', 'get_results', array($aParams), 'TemplSearchExtendedServices');
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_polls Polls
+     * @subsection bx_polls-page_blocks Page Blocks
+     * @subsubsection bx_polls-get_block_subentries get_block_subentries
+     * 
+     * @code bx_srv('bx_polls', 'get_block_subentries', [...]); @endcode
+     * 
+     * Get page block with poll questions.
+     *
+     * @param $iContentId (optional) poll's ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @param $bForceDisplay (optional) if true is passed then the block will be displayed as is (without checking whether user answered the poll or not).
+     * @return HTML string with block content to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPollsModule::serviceGetBlockSubentries
+     */
+    /** 
+     * @ref bx_polls-get_block_subentries "get_block_subentries"
+     */
     public function serviceGetBlockSubentries($iContentId = 0, $bForceDisplay = false)
     {
         if (!$iContentId)
@@ -70,6 +108,24 @@ class BxPollsModule extends BxBaseModTextModule
         return $this->_serviceTemplateFunc('entrySubentries', $iContentId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_polls Polls
+     * @subsection bx_polls-page_blocks Page Blocks
+     * @subsubsection bx_polls-get_block_results get_block_results
+     * 
+     * @code bx_srv('bx_polls', 'get_block_results', [...]); @endcode
+     * 
+     * Get page block with poll results.
+     *
+     * @param $iContentId (optional) poll's ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return HTML string with block content to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPollsModule::serviceGetBlockResults
+     */
+    /** 
+     * @ref bx_polls-get_block_results "get_block_results"
+     */
     public function serviceGetBlockResults($iContentId = 0)
     {
         return $this->_serviceTemplateFunc('entryResults', $iContentId);

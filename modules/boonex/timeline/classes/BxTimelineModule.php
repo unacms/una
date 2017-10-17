@@ -335,6 +335,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /**
      * SERVICE METHODS
      */
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_author get_author
+     * 
+     * @code bx_srv('bx_timeline', 'get_author', [...]); @endcode
+     * 
+     * Get author ID from content info by content ID. Is used in "Content Info Objects" system.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @return integer value with author ID.
+     * 
+     * @see BxTimelineModule::serviceGetAuthor
+     */
+    /** 
+     * @ref bx_timeline-get_author "get_author"
+     */
     public function serviceGetAuthor ($iContentId)
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
@@ -344,11 +362,48 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? (int)$aEvent['owner_id'] : (int)$aEvent['object_id'];
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_date_changed get_date_changed
+     * 
+     * @code bx_srv('bx_timeline', 'get_date_changed', [...]); @endcode
+     * 
+     * Get date when the content was changed last time. Is used in "Content Info Objects" system.
+     * Note. In case of Timeline event 0 is returned everytime.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @return integer value with changing date.
+     * 
+     * @see BxTimelineModule::serviceGetDateChanged
+     */
+    /** 
+     * @ref bx_timeline-get_date_changed "get_date_changed"
+     */
     public function serviceGetDateChanged ($iContentId)
     {
         return 0;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_link get_link
+     * 
+     * @code bx_srv('bx_timeline', 'get_link', [...]); @endcode
+     * 
+     * Get content view page link. Is used in "Content Info Objects" system.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @return string value with view page link.
+     * 
+     * @see BxTimelineModule::serviceGetLink
+     */
+    /** 
+     * @ref bx_timeline-get_link "get_link"
+     */
     public function serviceGetLink ($iContentId)
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
@@ -358,11 +413,50 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oConfig->getItemViewUrl($aEvent);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_thumb get_thumb
+     * 
+     * @code bx_srv('bx_timeline', 'get_thumb', [...]); @endcode
+     * 
+     * Get content thumbnail link. Is used in "Content Info Objects" system.
+     * Note. In case of Timeline event an empty string is returned everytime.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @param $sTranscoder (optional) string value with transcoder name which should be applied to thumbnail image.
+     * @return string value with thumbnail link.
+     * 
+     * @see BxTimelineModule::serviceGetThumb
+     */
+    /** 
+     * @ref bx_timeline-get_thumb "get_thumb"
+     */
     public function serviceGetThumb ($iContentId, $sTranscoder = '') 
     {
         return '';
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_info get_info
+     * 
+     * @code bx_srv('bx_timeline', 'get_info', [...]); @endcode
+     * 
+     * Get content info by content ID. Is used in "Content Info Objects" system.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @param $bSearchableFieldsOnly (optional) boolean value determining all info or "searchable fields" only will be returned.
+     * @return an array with content info. Empty array is returned if something is wrong.
+     * 
+     * @see BxTimelineModule::serviceGetInfo
+     */
+    /** 
+     * @ref bx_timeline-get_info "get_info"
+     */
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
     {
         $aContentInfo = $this->_oDb->getEvents(array(
@@ -373,6 +467,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return BxDolContentInfo::formatFields($aContentInfo);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_search_result_unit get_search_result_unit
+     * 
+     * @code bx_srv('bx_timeline', 'get_search_result_unit', [...]); @endcode
+     * 
+     * Get search result unit by content ID. Is used in "Content Info Objects" system.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @param $sUnitTemplate (optional) string value with template name.
+     * @return HTML string with search result unit. Empty string is returned if something is wrong.
+     * 
+     * @see BxTimelineModule::serviceGetSearchResultUnit
+     */
+    /** 
+     * @ref bx_timeline-get_search_result_unit "get_search_result_unit"
+     */
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
@@ -386,7 +499,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_post get_block_post
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_post', [...]); @endcode
+     * 
      * Get Post block for a separate page.
+     *
+     * @param $iProfileId (optional) profile ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockPost
+     */
+    /** 
+     * @ref bx_timeline-get_block_post "get_block_post"
      */
     public function serviceGetBlockPost($iProfileId = 0)
     {
@@ -402,6 +530,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_getBlockPost($iProfileId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_post_profile get_block_post_profile
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_post_profile', [...]); @endcode
+     * 
+     * Get Post block for the Profile page.
+     *
+     * @param $sProfileModule (optional) string value with profile based module name. Persons module is used by default.
+     * @param $iProfileContentId (optional) profile's content ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockPostProfile
+     */
+    /** 
+     * @ref bx_timeline-get_block_post_profile "get_block_post_profile"
+     */
     public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0)
     {
         if(empty($sProfileModule))
@@ -417,6 +564,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		return $this->_getBlockPost($oProfile->id());
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_post_home get_block_post_home
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_post_home', [...]); @endcode
+     * 
+     * Get Post block for site's Home page.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockPostHome
+     */
+    /** 
+     * @ref bx_timeline-get_block_post_home "get_block_post_home"
+     */
     public function serviceGetBlockPostHome()
     {
         $iProfileId = 0;
@@ -425,6 +589,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_post_account get_block_post_account
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_post_account', [...]); @endcode
+     * 
+     * Get Post block for the Dashboard page.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockPostAccount
+     */
+    /** 
+     * @ref bx_timeline-get_block_post_account "get_block_post_account"
+     */
     public function serviceGetBlockPostAccount()
     {
         if(!isLogged())
@@ -434,19 +615,76 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		return $this->_getBlockPost($iProfileId);
     }
 
-    /*
-     * Get View block for a separate page. Will return a block with "Empty" message if nothing found.
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view get_block_view
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view', [...]); @endcode
+     * 
+     * Get Timeline View block for a separate page.
+     *
+     * @param $iProfileId (optional) profile ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockView
+     */
+    /** 
+     * @ref bx_timeline-get_block_view "get_block_view"
      */
     public function serviceGetBlockView($iProfileId = 0)
     {
     	return $this->_serviceGetBlockView($iProfileId, BX_TIMELINE_VIEW_TIMELINE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_outline get_block_view_outline
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_outline', [...]); @endcode
+     * 
+     * Get Outline View block for a separate page.
+     * 
+     * @param $iProfileId (optional) profile ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewOutline
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_outline "get_block_view_outline"
+     */
     public function serviceGetBlockViewOutline($iProfileId = 0)
     {
         return $this->_serviceGetBlockView($iProfileId, BX_TIMELINE_VIEW_OUTLINE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_profile get_block_view_profile
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_profile', [...]); @endcode
+     * 
+     * Get Timeline View block for the Profile page.
+     * 
+     * @param $sProfileModule (optional) string value with profile based module name. Persons module is used by default.
+     * @param $iProfileContentId (optional) profile's content ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewProfile
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_profile "get_block_view_profile"
+     */
     public function serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
     {
         $sView = BX_TIMELINE_VIEW_TIMELINE;
@@ -454,6 +692,30 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_serviceGetBlockViewProfile($sProfileModule, $iProfileContentId, $sView, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_profile_outline get_block_view_profile_outline
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_profile_outline', [...]); @endcode
+     * 
+     * Get Outline View block for the Profile page.
+     * 
+     * @param $sProfileModule (optional) string value with profile based module name. Persons module is used by default.
+     * @param $iProfileContentId (optional) profile's content ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewProfileOutline
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_profile_outline "get_block_view_profile_outline"
+     */
 	public function serviceGetBlockViewProfileOutline($sProfileModule = 'bx_persons', $iProfileContentId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
     {
         $sView = BX_TIMELINE_VIEW_OUTLINE;
@@ -461,16 +723,85 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_serviceGetBlockViewProfile($sProfileModule, $iProfileContentId, $sView, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_home get_block_view_home
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_home', [...]); @endcode
+     * 
+     * Get Timeline View block for site's Home page.
+     * 
+     * @param $iProfileId (optional) profile ID. 0 should be used here.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewHome
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_home "get_block_view_home"
+     */
     public function serviceGetBlockViewHome($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         return $this->_serviceGetBlockViewHome($iProfileId, BX_TIMELINE_VIEW_TIMELINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_home_outline get_block_view_home_outline
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_home_outline', [...]); @endcode
+     * 
+     * Get Outline View block for site's Home page.
+     * 
+     * @param $iProfileId (optional) profile ID. 0 should be used here.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewHomeOutline
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_home_outline "get_block_view_home_outline"
+     */
 	public function serviceGetBlockViewHomeOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         return $this->_serviceGetBlockViewHome($iProfileId, BX_TIMELINE_VIEW_OUTLINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_account get_block_view_account
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_account', [...]); @endcode
+     * 
+     * Get Timeline View block for the Dashboard page.
+     * 
+     * @param $iProfileId (optional) profile ID. 0 should be used here.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewAccount
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_account "get_block_view_account"
+     */
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         if(!isLogged())
@@ -479,6 +810,29 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_account_outline get_block_view_account_outline
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_account_outline', [...]); @endcode
+     * 
+     * Get Outline View block for the Dashboard page.
+     * 
+     * @param $iProfileId (optional) profile ID. 0 should be used here.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewAccountOutline
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_account_outline "get_block_view_account_outline"
+     */
     public function serviceGetBlockViewAccountOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         if(!isLogged())
@@ -487,6 +841,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_OUTLINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_item get_block_item
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_item', [...]); @endcode
+     * 
+     * Get View Item block.
+     * 
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockItem
+     */
+    /** 
+     * @ref bx_timeline-get_block_item "get_block_item"
+     */
     public function serviceGetBlockItem()
     {
         $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -496,8 +867,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oTemplate->getItemBlock($iItemId);
     }
 
-	/**
-     * Data for Notifications module
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_data get_notifications_data
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_data', [...]); @endcode
+     * 
+     * Data for Notifications module.
+     * 
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsData
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_data "get_notifications_data"
      */
     public function serviceGetNotificationsData()
     {
@@ -527,6 +912,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_repost get_notifications_repost
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_repost', [...]); @endcode
+     * 
+     * Get data for Repost event to display in Notifications module.
+     * 
+     * @param $aEvent an array with event description.
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsRepost
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_repost "get_notifications_repost"
+     */
     public function serviceGetNotificationsRepost($aEvent)
     {
         $aResult = $this->serviceGetNotificationsPost($aEvent);
@@ -535,6 +938,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_post get_notifications_post
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_post', [...]); @endcode
+     * 
+     * Get data for Post event to display in Notifications module.
+     * 
+     * @param $aEvent an array with event description.
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsPost
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_post "get_notifications_post"
+     */
     public function serviceGetNotificationsPost($aEvent)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -555,6 +976,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_comment get_notifications_comment
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_comment', [...]); @endcode
+     * 
+     * Get data for Post Comment event to display in Notifications module.
+     * 
+     * @param $aEvent an array with event description.
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsComment
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_comment "get_notifications_comment"
+     */
     public function serviceGetNotificationsComment($aEvent)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -581,6 +1020,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_vote get_notifications_vote
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_vote', [...]); @endcode
+     * 
+     * Get data for Vote event to display in Notifications module.
+     * 
+     * @param $aEvent an array with event description.
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsVote
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_vote "get_notifications_vote"
+     */
     public function serviceGetNotificationsVote($aEvent)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -606,6 +1063,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-get_repost_element_block get_repost_element_block
+     * 
+     * @code bx_srv('bx_timeline', 'get_repost_element_block', [...]); @endcode
+     * 
+     * Get repost element for content based modules.
+     * 
+     * @param $iOwnerId integer value with owner profile ID.
+     * @param $sType string value with type (module name). 
+     * @param $sAction string value with action (module action). 
+     * @param $iObjectId integer value with object ID to be reposted. 
+     * @param $aParams (optional) an array with additional params.
+     * @return HTML string with repost element to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetRepostElementBlock
+     */
+    /** 
+     * @ref bx_timeline-get_repost_element_block "get_repost_element_block"
+     */
     public function serviceGetRepostElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
     {
     	if(!$this->isEnabled())
@@ -615,6 +1094,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oTemplate->getRepostElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-get_repost_counter get_repost_counter
+     * 
+     * @code bx_srv('bx_timeline', 'get_repost_counter', [...]); @endcode
+     * 
+     * Get repost counter.
+     * 
+     * @param $sType string value with type (module name). 
+     * @param $sAction string value with action (module action). 
+     * @param $iObjectId integer value with object ID to be reposted. 
+     * @return HTML string with repost counter to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetRepostCounter
+     */
+    /** 
+     * @ref bx_timeline-get_repost_counter "get_repost_counter"
+     */
     public function serviceGetRepostCounter($sType, $sAction, $iObjectId)
     {
     	if(!$this->isEnabled())
@@ -625,6 +1124,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oTemplate->getRepostCounter($aReposted);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-get_repost_js_script get_repost_js_script
+     * 
+     * @code bx_srv('bx_timeline', 'get_repost_js_script', [...]); @endcode
+     * 
+     * Get repost JavaScript code.
+     * 
+     * @return HTML string with JavaScript code to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetRepostJsScript
+     */
+    /** 
+     * @ref bx_timeline-get_repost_js_script "get_repost_js_script"
+     */
     public function serviceGetRepostJsScript()
     {
     	if(!$this->isEnabled())
@@ -633,6 +1149,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oTemplate->getRepostJsScript();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-repost Repost
+     * @subsubsection bx_timeline-get_repost_js_click get_repost_js_click
+     * 
+     * @code bx_srv('bx_timeline', 'get_repost_js_click', [...]); @endcode
+     * 
+     * Get repost JavaScript code for OnClick event.
+     * 
+     * @param $iOwnerId integer value with owner profile ID.
+     * @param $sType string value with type (module name). 
+     * @param $sAction string value with action (module action). 
+     * @param $iObjectId integer value with object ID to be reposted. 
+     * @return HTML string with JavaScript code to display in OnClick events of HTML elements.
+     * 
+     * @see BxTimelineModule::serviceGetRepostJsClick
+     */
+    /** 
+     * @ref bx_timeline-get_repost_js_click "get_repost_js_click"
+     */
     public function serviceGetRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId)
     {
     	if(!$this->isEnabled())
@@ -641,6 +1178,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oTemplate->getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_menu_item_addon_comment get_menu_item_addon_comment
+     * 
+     * @code bx_srv('bx_timeline', 'get_menu_item_addon_comment', [...]); @endcode
+     * 
+     * Get addon for Comment menu item.
+     * 
+     * @param $sSystem string value with comments engine system.
+     * @param $iObjectId integer value with object ID. 
+     * @return HTML string to display in menu item.
+     * 
+     * @see BxTimelineModule::serviceGetMenuItemAddonComment
+     */
+    /** 
+     * @ref bx_timeline-get_menu_item_addon_comment "get_menu_item_addon_comment"
+     */
     public function serviceGetMenuItemAddonComment($sSystem, $iObjectId)
     {
         if(empty($sSystem) || empty($iObjectId))
@@ -657,6 +1213,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_settings_checker_helper get_settings_checker_helper
+     * 
+     * @code bx_srv('bx_timeline', 'get_settings_checker_helper', [...]); @endcode
+     * 
+     * Get Checker Helper class name for Forms engine.
+     * 
+     * @return string with Checker Helper class name.
+     * 
+     * @see BxTimelineModule::serviceGetSettingsCheckerHelper
+     */
+    /** 
+     * @ref bx_timeline-get_settings_checker_helper "get_settings_checker_helper"
+     */
     public function serviceGetSettingsCheckerHelper()
     {
         bx_import('FormCheckerHelper', $this->_aModule);

@@ -40,8 +40,23 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
     /**
      * SERVICE METHODS
+     */
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-page_blocks Page Blocks
+     * @subsubsection bx_notifications-get_block_view get_block_view
+     * 
+     * @code bx_srv('bx_notifications', 'get_block_view', [...]); @endcode
      * 
      * Get View block for a separate page. Will return a block with "Empty" message if nothing found.
+     *
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxNtfsModule::serviceGetBlockView
+     */
+    /** 
+     * @ref bx_notifications-get_block_view "get_block_view"
      */
     public function serviceGetBlockView($sType = '', $iStart = -1, $iPerPage = -1, $aModules = array())
     {
@@ -74,6 +89,23 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         return array('content' => $sContent); 
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-browsing Browsing
+     * @subsubsection bx_notifications-get_event_by_id get_event_by_id
+     * 
+     * @code bx_srv('bx_notifications', 'get_event_by_id', [...]); @endcode
+     * 
+     * Get event's data by event ID.
+     *
+     * @return an array with event's data.
+     * 
+     * @see BxNtfsModule::serviceGetEventById
+     */
+    /** 
+     * @ref bx_notifications-get_event_by_id "get_event_by_id"
+     */
     public function serviceGetEventById($iId)
     {
         $aParams = array(
@@ -83,6 +115,23 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     	return $this->_oDb->getEvents($aParams);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-other Other
+     * @subsubsection bx_notifications-get_unread_notifications_num get_unread_notifications_num
+     * 
+     * @code bx_srv('bx_notifications', 'get_unread_notifications_num', [...]); @endcode
+     * 
+     * Get number of unread notifications.
+     *
+     * @return integer value with number of unread notifications.
+     * 
+     * @see BxNtfsModule::serviceGetUnreadNotificationsNum
+     */
+    /** 
+     * @ref bx_notifications-get_unread_notifications_num "get_unread_notifications_num"
+     */
     public function serviceGetUnreadNotificationsNum($iOwnerId = 0)
     {
     	if(!$iOwnerId)
@@ -98,6 +147,23 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 		return $iCount;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-other Other
+     * @subsubsection bx_notifications-get_live_updates get_live_updates
+     * 
+     * @code bx_srv('bx_notifications', 'get_live_updates', [...]); @endcode
+     * 
+     * Get data for Live Updates system.
+     *
+     * @return an array with special format.
+     * 
+     * @see BxNtfsModule::serviceGetLiveUpdates
+     */
+    /** 
+     * @ref bx_notifications-get_live_updates "get_live_updates"
+     */
     public function serviceGetLiveUpdates($aMenuItemParent, $aMenuItemChild, $iCount = 0)
     {
         $iOwnerId = $this->getUserId();

@@ -33,6 +33,24 @@ class BxAclModule extends BxDolModule
     /**
      * SERVICE METHODS
      */
+    
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-page_blocks Page Blocks
+     * @subsubsection bx_acl-get_block_view get_block_view
+     * 
+     * @code bx_srv('bx_acl', 'get_block_view', [...]); @endcode
+     * 
+     * Get page block with a list of available ACL levels to purchase or get for Free. List is represented as table.
+     *
+     * @return HTML string with a list of ACL levels to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error empty string is returned.
+     * 
+     * @see BxAclModule::serviceGetBlockView
+     */
+    /** 
+     * @ref bx_acl-get_block_view "get_block_view"
+     */
 	public function serviceGetBlockView()
 	{
 		$sGrid = $this->_oConfig->getGridObject('view');
@@ -46,6 +64,23 @@ class BxAclModule extends BxDolModule
         );
 	}
 
+	/**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-page_blocks Page Blocks
+     * @subsubsection bx_acl-get_membership_actions get_membership_actions
+     * 
+     * @code bx_srv('bx_acl', 'get_membership_actions', [...]); @endcode
+     * 
+     * Get page block with a list of current membership level's actions.
+     *
+     * @return HTML string with a list of actions to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error empty string is returned.
+     * 
+     * @see BxAclModule::serviceGetMembershipActions
+     */
+    /** 
+     * @ref bx_acl-get_membership_actions "get_membership_actions"
+     */
 	public function serviceGetMembershipActions($iProfileId)
 	{
 		if($iProfileId != $this->getUserId())
@@ -55,13 +90,45 @@ class BxAclModule extends BxDolModule
 	}
 
 	/**
-     * Integration with Payment based modules.  
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-get_payment_data get_payment_data
+     * 
+     * @code bx_srv('bx_acl', 'get_payment_data', [...]); @endcode
+     * 
+     * Get an array with module's description. Is needed for payments processing module.
+     * 
+     * @return an array with module's description.
+     * 
+     * @see BxAclModule::serviceGetPaymentData
+     */
+    /** 
+     * @ref bx_acl-get_payment_data "get_payment_data"
      */
 	public function serviceGetPaymentData()
     {
         return $this->_aModule;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-get_cart_item get_cart_item
+     * 
+     * @code bx_srv('bx_acl', 'get_cart_item', [...]); @endcode
+     * 
+     * Get an array with level's description. Is used in Shopping Cart in payments processing module.
+     * 
+     * @param $iItemId level's ID.
+     * @return an array with level's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxAclModule::serviceGetCartItem
+     */
+    /** 
+     * @ref bx_acl-get_cart_item "get_cart_item"
+     */
     public function serviceGetCartItem($iItemId)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -88,6 +155,24 @@ class BxAclModule extends BxDolModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-get_cart_items get_cart_items
+     * 
+     * @code bx_srv('bx_acl', 'get_cart_items', [...]); @endcode
+     * 
+     * Get an array with levels' descriptions by seller. Is used in Manual Order Processing in payments processing module.
+     * 
+     * @param $iSellerId seller ID.
+     * @return an array with levels' descriptions. Empty array is returned if something is wrong or seller doesn't have any paid level.
+     * 
+     * @see BxAclModule::serviceGetCartItems
+     */
+    /** 
+     * @ref bx_acl-get_cart_items "get_cart_items"
+     */
     public function serviceGetCartItems($iSellerId)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -118,26 +203,140 @@ class BxAclModule extends BxDolModule
         return $aResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-register_cart_item register_cart_item
+     * 
+     * @code bx_srv('bx_acl', 'register_cart_item', [...]); @endcode
+     * 
+     * Register a processed single time payment inside the Paid Levels module. Is called with payment processing module after the payment was registered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return an array with purchased prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxAclModule::serviceRegisterCartItem
+     */
+    /** 
+     * @ref bx_acl-register_cart_item "register_cart_item"
+     */
     public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
         return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_ACL_LICENSE_TYPE_SINGLE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-register_subscription_item register_subscription_item
+     * 
+     * @code bx_srv('bx_acl', 'register_subscription_item', [...]); @endcode
+     * 
+     * Register a processed subscription (recurring payment) inside the Paid Levels module. Is called with payment processing module after the subscription was registered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return an array with subscribed prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxAclModule::serviceRegisterSubscriptionItem
+     */
+    /** 
+     * @ref bx_acl-register_subscription_item "register_subscription_item"
+     */
     public function serviceRegisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
 		return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_ACL_LICENSE_TYPE_RECURRING);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-unregister_cart_item unregister_cart_item
+     * 
+     * @code bx_srv('bx_acl', 'unregister_cart_item', [...]); @endcode
+     * 
+     * Unregister an earlier processed single time payment inside the Paid Levels module. Is called with payment processing module after the payment was unregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return boolean value determining where the payment was unregistered or not.
+     * 
+     * @see BxAclModule::serviceUnregisterCartItem
+     */
+    /** 
+     * @ref bx_acl-unregister_cart_item "unregister_cart_item"
+     */
     public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
         return $this->_serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_ACL_LICENSE_TYPE_SINGLE);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-unregister_subscription_item unregister_subscription_item
+     * 
+     * @code bx_srv('bx_acl', 'unregister_subscription_item', [...]); @endcode
+     * 
+     * Unregister an earlier processed subscription (recurring payment) inside the Paid Levels module. Is called with payment processing module after the subscription was unregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return boolean value determining where the subscription was unregistered or not.
+     * 
+     * @see BxAclModule::serviceUnregisterSubscriptionItem
+     */
+    /** 
+     * @ref bx_acl-unregister_subscription_item "unregister_subscription_item"
+     */
     public function serviceUnregisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
     	return $this->_serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_ACL_LICENSE_TYPE_RECURRING); 
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-cancel_subscription_item cancel_subscription_item
+     * 
+     * @code bx_srv('bx_acl', 'cancel_subscription_item', [...]); @endcode
+     * 
+     * Cancel an earlier processed subscription (recurring payment) inside the Paid Levels module. Is called with payment processing module after the subscription was canceled there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return boolean value determining where the subscription was canceled or not.
+     * 
+     * @see BxAclModule::serviceCancelSubscriptionItem
+     */
+    /** 
+     * @ref bx_acl-cancel_subscription_item "cancel_subscription_item"
+     */
     public function serviceCancelSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
     {
     	//TODO: Do something if it's necessary.

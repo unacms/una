@@ -113,6 +113,23 @@ class BxElsModule extends BxBaseModGeneralModule
         echo '</pre>';
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-other Other
+     * @subsubsection bx_elasticsearch-is_configured is_configured
+     * 
+     * @code bx_srv('bx_elasticsearch', 'is_configured', [...]); @endcode
+     * 
+     * Checkes whether the module is correctly configured or not. 
+     *
+     * @return boolean value determining where the module is configured or not.
+     * 
+     * @see BxElsModule::serviceIsConfigured
+     */
+    /** 
+     * @ref bx_elasticsearch-is_configured "is_configured"
+     */
     public function serviceIsConfigured()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -120,6 +137,26 @@ class BxElsModule extends BxBaseModGeneralModule
         return isset($CNF['PARAM_API_URL']) && getParam($CNF['PARAM_API_URL']) != '';
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-search Search
+     * @subsubsection bx_elasticsearch-search_simple search_simple
+     * 
+     * @code bx_srv('bx_elasticsearch', 'search_simple', [...]); @endcode
+     * 
+     * Perform a simple search by term. Index and Type to search in can be specified.
+     *
+     * @param $sTerm string value with keyword to search for.
+     * @param $sType (optional) if type is specified then the search will be performed in this type only.
+     * @param $sIndex (optional) if index is specified then the search will be performed in this index only.
+     * @return an array with search results.
+     * 
+     * @see BxElsModule::serviceSearchSimple
+     */
+    /** 
+     * @ref bx_elasticsearch-search_simple "search_simple"
+     */
     public function serviceSearchSimple($sTerm, $sType = '', $sIndex = '')
     {
         if(empty($sIndex))
@@ -132,7 +169,22 @@ class BxElsModule extends BxBaseModGeneralModule
         return $mixedResult['hits'];
     }
 
-    /*
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-search Search
+     * @subsubsection bx_elasticsearch-search_extended search_extended
+     * 
+     * @code bx_srv('bx_elasticsearch', 'search_extended', [...]); @endcode
+     * 
+     * Perform an extended search by provided conditions. Index and Type to search in can be specified.
+     *
+     * @param $aCondition an array with conditions to construct search request from.
+     * @param $aSelection (optional) an array with custom condition. 
+     * @param $sType (optional) if type is specified then the search will be performed in this type only.
+     * @param $sIndex (optional) if index is specified then the search will be performed in this index only.
+     * @return an array with search results.
+     * 
      * Condition #1: keyword search
      * $aCondition = array('val' => 'test');
      * 
@@ -160,6 +212,10 @@ class BxElsModule extends BxBaseModGeneralModule
      * 		array('fld' => 'allow_view_to', 'val' => 3)
      * ));
      * 
+     * @see BxElsModule::serviceSearchExtended
+     */
+    /** 
+     * @ref bx_elasticsearch-search_extended "search_extended"
      */
     public function serviceSearchExtended($aCondition, $aSelection = array(), $sType = '', $sIndex = '')
     {
@@ -173,6 +229,26 @@ class BxElsModule extends BxBaseModGeneralModule
         return $mixedResult['hits'];
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-manage Manage
+     * @subsubsection bx_elasticsearch-get get
+     * 
+     * @code bx_srv('bx_elasticsearch', 'get', [...]); @endcode
+     * 
+     * Get item's data by content ID and type.
+     *
+     * @param $iContentId integer value with content ID.
+     * @param $sType a string with content type.
+     * @param $sIndex (optional) if index is specified then the item will be searched in this index only.
+     * @return an array with item's data.
+     * 
+     * @see BxElsModule::serviceGet
+     */
+    /** 
+     * @ref bx_elasticsearch-get "get"
+     */
     public function serviceGet($iContentId, $sType, $sIndex = '')
     {
         if(empty($sIndex))
@@ -181,6 +257,26 @@ class BxElsModule extends BxBaseModGeneralModule
         return $this->_oApi->getData($sIndex, $sType, $iContentId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-manage Manage
+     * @subsubsection bx_elasticsearch-add add
+     * 
+     * @code bx_srv('bx_elasticsearch', 'add', [...]); @endcode
+     * 
+     * Add item to store in Elasticsearch.
+     *
+     * @param $iContentId integer value with content ID.
+     * @param $mixedContentInfo mixed value with content info to store.
+     * @param $sIndex (optional) if index is specified then the item will be stored in this index.
+     * @return boolean value determining where the item was added or not.
+     * 
+     * @see BxElsModule::serviceAdd
+     */
+    /** 
+     * @ref bx_elasticsearch-add "add"
+     */
     public function serviceAdd($iContentId, $mixedContentInfo, $sIndex = '')
     {
         if(is_array($mixedContentInfo)) {
@@ -213,6 +309,26 @@ class BxElsModule extends BxBaseModGeneralModule
         return $mixedResult['result'] == 'created';
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-manage Manage
+     * @subsubsection bx_elasticsearch-update update
+     * 
+     * @code bx_srv('bx_elasticsearch', 'update', [...]); @endcode
+     * 
+     * Update item in Elasticsearch storage.
+     *
+     * @param $iContentId integer value with content ID.
+     * @param $mixedContentInfo mixed value with new content info.
+     * @param $sIndex (optional) if index is specified then the item will be updated in this index.
+     * @return boolean value determining where the item was updated or not.
+     * 
+     * @see BxElsModule::serviceUpdate
+     */
+    /** 
+     * @ref bx_elasticsearch-update "update"
+     */
     public function serviceUpdate($iContentId, $mixedContentInfo, $sIndex = '')
     {
         if(is_array($mixedContentInfo)) {
@@ -245,6 +361,26 @@ class BxElsModule extends BxBaseModGeneralModule
         return $mixedResult['result'] == 'updated';
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-manage Manage
+     * @subsubsection bx_elasticsearch-delete delete
+     * 
+     * @code bx_srv('bx_elasticsearch', 'delete', [...]); @endcode
+     * 
+     * Delete item from Elasticsearch storage.
+     *
+     * @param $iContentId integer value with content ID.
+     * @param $mixedContentInfo mixed value with content info which is needed during deletion.
+     * @param $sIndex (optional) if index is specified then the item will be deleted from this index.
+     * @return boolean value determining where the item was deleted or not.
+     * 
+     * @see BxElsModule::serviceDelete
+     */
+    /** 
+     * @ref bx_elasticsearch-delete "delete"
+     */
     public function serviceDelete($iContentId, $mixedContentInfo, $sIndex = '')
     {
         if(is_array($mixedContentInfo)) {
@@ -267,6 +403,25 @@ class BxElsModule extends BxBaseModGeneralModule
         return $mixedResult['result'] == 'deleted';
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_elasticsearch ElasticSearch
+     * @subsection bx_elasticsearch-manage Manage
+     * @subsubsection bx_elasticsearch-index index
+     * 
+     * @code bx_srv('bx_elasticsearch', 'delete', [...]); @endcode
+     * 
+     * Index data in Elasticsearch storage.
+     *
+     * @param $sIndex string value with storage's index name which will be indexed.
+     * @param $sType (optional) if type is specified then data in this type will be indexed only.
+     * @return boolean value determining where the data was indexed or not.
+     * 
+     * @see BxElsModule::serviceIndex
+     */
+    /** 
+     * @ref bx_elasticsearch-index "index"
+     */
     public function serviceIndex($sIndex, $sType = '')
     {
         if(empty($sIndex))
@@ -288,6 +443,8 @@ class BxElsModule extends BxBaseModGeneralModule
             foreach($aIds as $iId)
                 $this->serviceAdd($iId, $oContentInfo);
         }
+
+        return true;
     }
 
     protected function _prepareToIndex($mixed)

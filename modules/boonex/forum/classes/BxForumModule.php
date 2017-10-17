@@ -74,6 +74,25 @@ class BxForumModule extends BxBaseModTextModule
     /**
      * Service methods
      */
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-other Other
+     * @subsubsection bx_forum-get_info get_info
+     * 
+     * @code bx_srv('bx_forum', 'get_info', [...]); @endcode
+     * 
+     * Get content info by content ID. Is used in "Content Info Objects" system.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @param $bSearchableFieldsOnly (optional) boolean value determining all info or "searchable fields" only will be returned.
+     * @return an array with content info. Empty array is returned if something is wrong.
+     * 
+     * @see BxForumModule::serviceGetInfo
+     */
+    /** 
+     * @ref bx_forum-get_info "get_info"
+     */
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
     {
         $aContentInfo = $this->_getFields($iContentId);
@@ -83,6 +102,26 @@ class BxForumModule extends BxBaseModTextModule
         return $aContentInfo;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_new browse_new
+     * 
+     * @code bx_srv('bx_forum', 'browse_new', [...]); @endcode
+     * 
+     * Get page block with a list of items ordered by newness and represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseNew
+     */
+    /** 
+     * @ref bx_forum-browse_new "browse_new"
+     */
 	public function serviceBrowseNew ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'new';
@@ -93,6 +132,27 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_latest browse_latest
+     * 
+     * @code bx_srv('bx_forum', 'browse_latest', [...]); @endcode
+     * 
+     * Get page block with a list of items ordered by Recent Posts in them and represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @param $bShowHeader (optional) boolean value determining whether a resulting table should have Header section or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseNew
+     */
+    /** 
+     * @ref bx_forum-browse_latest "browse_latest"
+     */
 	public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
     	$sType = 'latest';
@@ -103,6 +163,27 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_featured browse_featured
+     * 
+     * @code bx_srv('bx_forum', 'browse_featured', [...]); @endcode
+     * 
+     * Get page block with a list of featured items represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @param $bShowHeader (optional) boolean value determining whether a resulting table should have Header section or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseFeatured
+     */
+    /** 
+     * @ref bx_forum-browse_featured "browse_featured"
+     */
     public function serviceBrowseFeatured($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -119,6 +200,26 @@ class BxForumModule extends BxBaseModTextModule
 		), $bShowHeader);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_top browse_top
+     * 
+     * @code bx_srv('bx_forum', 'browse_top', [...]); @endcode
+     * 
+     * Get page block with a list of items ordered by a number of comments and represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseTop
+     */
+    /** 
+     * @ref bx_forum-browse_top "browse_top"
+     */
 	public function serviceBrowseTop($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'top';
@@ -129,6 +230,26 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_popular browse_popular
+     * 
+     * @code bx_srv('bx_forum', 'browse_popular', [...]); @endcode
+     * 
+     * Get page block with a list of items ordered by a number of views and represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowsePopular
+     */
+    /** 
+     * @ref bx_forum-browse_popular "browse_popular"
+     */
     public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
         $sType = 'popular';
@@ -139,6 +260,26 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_updated browse_updated
+     * 
+     * @code bx_srv('bx_forum', 'browse_updated', [...]); @endcode
+     * 
+     * Get page block with a list of updated items represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseUpdated
+     */
+    /** 
+     * @ref bx_forum-browse_updated "browse_updated"
+     */
     public function serviceBrowseUpdated ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
         $sType = 'updated';
@@ -149,6 +290,27 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_serviceBrowseTable(array('type' => $sType));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_index browse_index
+     * 
+     * @code bx_srv('bx_forum', 'browse_index', [...]); @endcode
+     * 
+     * Get page block for Site's Home page with a list of items ordered by newness and represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @param $bShowHeader (optional) boolean value determining whether a resulting table should have Header section or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseIndex
+     */
+    /** 
+     * @ref bx_forum-browse_index "browse_index"
+     */
 	public function serviceBrowseIndex($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
     {
     	$sType = 'index';
@@ -162,6 +324,25 @@ class BxForumModule extends BxBaseModTextModule
 		), $bShowHeader);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_author browse_author
+     * 
+     * @code bx_srv('bx_forum', 'browse_author', [...]); @endcode
+     * 
+     * Get page block with a list of items filtered by Author and represented as table.
+     * 
+     * @param $iProfileId (optional) integer value with author ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @param $aParams (optional) an array of additional params. It's not used for now.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseAuthor
+     */
+    /** 
+     * @ref bx_forum-browse_author "browse_author"
+     */
 	public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
     {
         if(!$iProfileId)
@@ -178,6 +359,25 @@ class BxForumModule extends BxBaseModTextModule
         ), false);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_favorite browse_favorite
+     * 
+     * @code bx_srv('bx_forum', 'browse_favorite', [...]); @endcode
+     * 
+     * Get page block with a list of favorited items by some profile and represented as table.
+     * 
+     * @param $iProfileId (optional) integer value with profile ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @param $aParams (optional) an array of additional params. It's not used for now.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseFavorite
+     */
+    /** 
+     * @ref bx_forum-browse_favorite "browse_favorite"
+     */
     public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -232,6 +432,26 @@ class BxForumModule extends BxBaseModTextModule
         ), false);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_category browse_category
+     * 
+     * @code bx_srv('bx_forum', 'browse_category', [...]); @endcode
+     * 
+     * Get page block with a list of items filter by some category and represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseCategory
+     */
+    /** 
+     * @ref bx_forum-browse_category "browse_category"
+     */
     public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'category';
@@ -247,6 +467,26 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_keyword browse_keyword
+     * 
+     * @code bx_srv('bx_forum', 'browse_keyword', [...]); @endcode
+     * 
+     * Get page block with a list of items filter by some keyword and represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseKeyword
+     */
+    /** 
+     * @ref bx_forum-browse_keyword "browse_keyword"
+     */
 	public function serviceBrowseKeyword($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'keyword';
@@ -258,11 +498,31 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $this->_getSearchKeywordDescriptor('#' . $sKeyword)));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_search_results browse_search_results
+     * 
+     * @code bx_srv('bx_forum', 'browse_search_results', [...]); @endcode
+     * 
+     * Get page block with search results by Author(s), Category, Keyword represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowseSearchResults
+     */
+    /** 
+     * @ref bx_forum-browse_search_results "browse_search_results"
+     */
     public function serviceBrowseSearchResults($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
     	$sType = 'search';
 
-    	$aAutors = bx_process_input(bx_get('author'));
+    	$aAuthors = bx_process_input(bx_get('author'));
     	$iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
     	$sKeyword = bx_process_input(bx_get('keyword'));
 
@@ -274,8 +534,8 @@ class BxForumModule extends BxBaseModTextModule
         	return $this->_serviceBrowse('', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
         $aWhereGroupAnd = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
-        if(!empty($aAutors) && is_array($aAutors))
-        	$aWhereGroupAnd['cnds'][] = $this->_getSearchAuthorDescriptor($aAutors);
+        if(!empty($aAuthors) && is_array($aAuthors))
+        	$aWhereGroupAnd['cnds'][] = $this->_getSearchAuthorDescriptor($aAuthors);
 
         if(!empty($iCategory))
         	$aWhereGroupAnd['cnds'][] = array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=');
@@ -286,10 +546,23 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $aWhereGroupAnd), false);
     }
 
-	/**
-     * Get number of discussions for some profile
-     * @param $iProfileId - profile to get discussions for, if omitted then currently logged in profile is used
-     * @return integer
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-other Other
+     * @subsubsection bx_forum-get_discussions_num get_discussions_num
+     * 
+     * @code bx_srv('bx_forum', 'get_discussions_num', [...]); @endcode
+     * 
+     * Get number of discussions for some profile.
+     * 
+     * @param $iProfileId (optional) profile to get discussions for, if omitted then currently logged in profile is used.
+     * @return integer value with a number of discussions.
+     * 
+     * @see BxForumModule::serviceGetDiscussionsNum
+     */
+    /** 
+     * @ref bx_forum-get_discussions_num "get_discussions_num"
      */
     public function serviceGetDiscussionsNum ($iProfileId = 0)
     {
@@ -300,9 +573,22 @@ class BxForumModule extends BxBaseModTextModule
     }
 
     /**
-     * Get number of unreplied discussions for some profile
-     * @param $iProfileId - profile to get unreplied discussions for, if omitted then currently logged is profile is used
-     * @return integer
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-other Other
+     * @subsubsection bx_forum-get_unreplied_discussions_num get_unreplied_discussions_num
+     * 
+     * @code bx_srv('bx_forum', 'get_unreplied_discussions_num', [...]); @endcode
+     * 
+     * Get number of unreplied discussions for some profile.
+     * 
+     * @param $iProfileId (optional) profile to get unreplied discussions for, if omitted then currently logged is profile is used.
+     * @return integer value with a number of discussions.
+     * 
+     * @see BxForumModule::serviceGetUnrepliedDiscussionsNum
+     */
+    /** 
+     * @ref bx_forum-get_unreplied_discussions_num "get_unreplied_discussions_num"
      */
     public function serviceGetUnrepliedDiscussionsNum ($iProfileId = 0)
     {
@@ -313,7 +599,29 @@ class BxForumModule extends BxBaseModTextModule
     }
 
     /**
-     * Update last comment time and author
+     * 
+     */
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-other Other
+     * @subsubsection bx_forum-trigger_comment_post trigger_comment_post
+     * 
+     * @code bx_srv('bx_forum', 'trigger_comment_post', [...]); @endcode
+     * 
+     * Update last comment time and author when new comment was added in the discussion.
+     * 
+     * @param $iContentId integer value with content ID.
+     * @param $iProfileId integer value with profile ID.
+     * @param $iCommentId integer value with comment ID.
+     * @param $iTimestamp (optional) date in UNIX Timestamp format, if omitted then current date is used.
+     * @param $sCommentText (optional) string value with text of comment.
+     * @return boolean value determining where the operation is successful or not.
+     * 
+     * @see BxForumModule::serviceTriggerCommentPost
+     */
+    /** 
+     * @ref bx_forum-trigger_comment_post "trigger_comment_post"
      */
     public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iCommentId, $iTimestamp = 0, $sCommentText = '')
     {
@@ -354,7 +662,22 @@ class BxForumModule extends BxBaseModTextModule
     }
 
     /**
-     * Entry collaborators block
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-entity_participants entity_participants
+     * 
+     * @code bx_srv('bx_forum', 'entity_participants', [...]); @endcode
+     * 
+     * Get page block with discussion's collaborators.
+     * 
+     * @param $iContentId (optional) content ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceEntityParticipants
+     */
+    /** 
+     * @ref bx_forum-entity_participants "entity_participants"
      */
     public function serviceEntityParticipants ($iContentId = 0)
     {
@@ -369,6 +692,23 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_oTemplate->entryParticipants ($aContentInfo, 5, 'right');
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-search search
+     * 
+     * @code bx_srv('bx_forum', 'search', [...]); @endcode
+     * 
+     * Get page block with search form.
+     * 
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceSearch
+     */
+    /** 
+     * @ref bx_forum-search "search"
+     */
 	public function serviceSearch()
     {
     	$CNF = $this->_oConfig->CNF;
