@@ -439,7 +439,7 @@ class BxMarketModule extends BxBaseModTextModule
 
     /**
      * @page service Service Calls
-     * @section Market Market
+     * @section bx_market Market
      * @subsection bx_market-entry Entry
      * @subsubsection bx_market-get_thumbnail get_thumbnail
      * 
