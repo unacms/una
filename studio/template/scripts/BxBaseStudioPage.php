@@ -120,7 +120,7 @@ class BxBaseStudioPage extends BxDolStudioPage
                 'name' => 'actions',
                 'icon' => 'cog',
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
-                'title' => '_adm_txt_show_help'
+                'title' => '_adm_txt_show_actions'
             );
 
         if($bHelp)

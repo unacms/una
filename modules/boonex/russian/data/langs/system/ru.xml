@@ -1465,6 +1465,7 @@
 	<string name="_adm_txt_pca_favorite"><![CDATA[Избранные]]></string>
 	<string name="_adm_txt_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_adm_txt_select_module"><![CDATA[Выбрать модуль...]]></string>
+	<string name="_adm_txt_show_actions"><![CDATA[Действия]]></string>
 	<string name="_adm_txt_show_help"><![CDATA[Помощь]]></string>
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Помошь недоступна]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Демонтировать]]></string>
