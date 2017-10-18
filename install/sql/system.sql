@@ -394,8 +394,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'add_to_mobile_homepage', '_adm_stg_cpt_option_add_to_mobile_homepage', 'on', 'checkbox', '', '', '', 8),
 (@iCategoryId, 'site_login_social_compact', '_adm_stg_cpt_option_site_login_social_compact', '', 'checkbox', '', '', '', 9),
 
-(@iCategoryId, 'sys_autoupdate_system', '_adm_stg_cpt_option_sys_autoupdate_system', 'on', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_autoupdate_modules', '_adm_stg_cpt_option_sys_autoupdate_modules', 'on', 'checkbox', '', '', '', 11),
+(@iCategoryId, 'sys_autoupdate', '_adm_stg_cpt_option_sys_autoupdate', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_autoupdate_force_modified_files', '_adm_stg_cpt_option_sys_autoupdate_force_modified_files', '', 'checkbox', '', '', '', 12),
 
 (@iCategoryId, 'sys_per_page_search_keyword_single', '_adm_stg_cpt_option_sys_per_page_search_keyword_single', '24', 'digit', '', '', '', 20),

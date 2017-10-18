@@ -11,7 +11,7 @@ class BxDolCronUpgradeModulesCheck extends BxDolCron
 {
     public function processing()
     {
-        if('on' != getParam('sys_autoupdate_modules'))
+        if('on' != getParam('sys_autoupdate'))
             return;
 
 		BxDolStudioInstallerUtils::getInstance()->performModulesUpgrade();

@@ -1254,9 +1254,8 @@
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[За сколько дней до окончания членства оповестить пользователя об окончании (-1 = после окончания)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Оповещать пользователей об окончании членства только одинажды (каждый день в противном случае)]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Добавить атрибут "nofollow" для внешних ссылок]]></string>
-	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Инициировать автообновление для сайта и модулей, даже если какие-то файлы были модифицированы]]></string>
-	<string name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Автообновление расширений]]></string>
-	<string name="_adm_stg_cpt_option_sys_autoupdate_system"><![CDATA[Автообновление системных файлов]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Инициировать автообновление, даже если какие-то файлы были модифицированы]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Включить автообновление]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached - адрес сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Объект CAPTCHA]]></string>

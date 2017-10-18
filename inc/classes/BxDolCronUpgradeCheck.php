@@ -11,7 +11,7 @@ class BxDolCronUpgradeCheck extends BxDolCron
 {
     public function processing()
     {
-        if ('on' != getParam('sys_autoupdate_system'))
+        if ('on' != getParam('sys_autoupdate'))
             return;
 
         $o = bx_instance('BxDolUpgrader');
@@ -19,7 +19,7 @@ class BxDolCronUpgradeCheck extends BxDolCron
             sendMailTemplateSystem('t_UpgradeFailed', array (
                 'error_msg' => $o->getError(),
             ));
-            setParam('sys_autoupdate_system', ''); // disable auto-update if it is failed
+            setParam('sys_autoupdate', ''); // disable auto-update if it is failed
         }
     }
 }

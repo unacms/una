@@ -1256,9 +1256,8 @@
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members (-1 = after expiration)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Add "nofollow" attribute for external links]]></string>
-	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Force site and module auto-update, even if some files were modified]]></string>
-	<string name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Apps auto-update]]></string>
-	<string name="_adm_stg_cpt_option_sys_autoupdate_system"><![CDATA[System files auto-update]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Force auto-update, even if some files were modified]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Enable auto-update]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
 	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Сaptcha object]]></string>
