@@ -86,6 +86,13 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 		    unset($this->aInputs[$CNF['FIELD_SUBENTRIES']]);
     }
 
+    function getCode($bDynamicMode = false)
+    {
+        return $this->_oModule->_oTemplate->parseHtmlByName('form.html', array(
+            'content' => parent::getCode($bDynamicMode)
+        ));
+    }
+
 	function initChecker ($aValues = array (), $aSpecificValues = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
