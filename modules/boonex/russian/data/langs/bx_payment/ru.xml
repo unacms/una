@@ -249,8 +249,8 @@
 	<string name="_bx_payment_pp_mode_test"><![CDATA[тестовый]]></string>
 	<string name="_bx_payment_pp_business_cpt"><![CDATA[E-mail]]></string>
 	<string name="_bx_payment_pp_business_dsc"><![CDATA[E-mail вашего PayPal аккаунта]]></string>
-	<string name="_bx_payment_pp_prc_type_cpt"><![CDATA[Вид обработки]]></string>
-	<string name="_bx_payment_pp_prc_type_dsc"><![CDATA[Вид, которым должны быть обработаны данные. В IPN-режиме используйте адрес типа http://www.your-site.com/your-path/m/payment/act_finalize_checkout/paypal как адрес уведомления (notify URL) в Вашем PayPal-аккаунте.]]></string>
+	<string name="_bx_payment_pp_prc_type_cpt"><![CDATA[Режим обработки]]></string>
+	<string name="_bx_payment_pp_prc_type_dsc"><![CDATA[Режим, в которым будут обработаны данные]]></string>
 	<string name="_bx_payment_pp_prc_type_direct"><![CDATA[прямой]]></string>
 	<string name="_bx_payment_pp_prc_type_pdt"><![CDATA[PDT]]></string>
 	<string name="_bx_payment_pp_prc_type_ipn"><![CDATA[IPN]]></string>

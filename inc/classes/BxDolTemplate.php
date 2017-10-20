@@ -2622,6 +2622,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if (empty($oTemplate))
            $oTemplate = $this;
 
+        $oZ = new BxDolAlerts('system', 'design_before_output', 0, 0, array('_page' => &$this->aPage, '_page_cont' => &$this->aPageContent));
+        $oZ->alert();
+
         header( 'Content-type: text/html; charset=utf-8' );
         header( 'X-Frame-Options: sameorigin' );
         echo $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());

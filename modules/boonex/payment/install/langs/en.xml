@@ -250,7 +250,7 @@
 	<string name="_bx_payment_pp_business_cpt"><![CDATA[Business]]></string>
 	<string name="_bx_payment_pp_business_dsc"><![CDATA[Business email address]]></string>
 	<string name="_bx_payment_pp_prc_type_cpt"><![CDATA[Process type]]></string>
-	<string name="_bx_payment_pp_prc_type_dsc"><![CDATA[The type in which data is to be processed. In IPN mode use URL like the following http://www.your-site.com/your-path/m/payment/act_finalize_checkout/paypal as notify URL in your PayPal account]]></string>
+	<string name="_bx_payment_pp_prc_type_dsc"><![CDATA[The type in which data is to be processed]]></string>
 	<string name="_bx_payment_pp_prc_type_direct"><![CDATA[direct]]></string>
 	<string name="_bx_payment_pp_prc_type_pdt"><![CDATA[PDT]]></string>
 	<string name="_bx_payment_pp_prc_type_ipn"><![CDATA[IPN]]></string>
