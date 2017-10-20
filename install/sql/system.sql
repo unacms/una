@@ -244,7 +244,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_redirect_after_email_confirmation', '_adm_stg_cpt_option_sys_redirect_after_email_confirmation', 'page.php?i=account-settings-info', 'digit', '', '', '', 41),
 
 (@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_tinymce', 'digit', '', '', '', 50),
-(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha', 'digit', '', '', '', 51),
+(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'digit', '', '', '', 51),
 
 (@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', 60);
 

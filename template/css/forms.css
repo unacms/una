@@ -379,7 +379,7 @@
 /****************************************
 *		Custom reCaptcha Theme
 ****************************************/
-.bx-form-input-captcha {
+.bx-form-input-captcha-custom {
 	background-color: #b71800;
 	padding: 0.5em;
 	border-radius: 1em;
@@ -389,12 +389,12 @@
 	font: 0.75em/1em Helvetica, Arial, sans-serif;
 	color: #ffffff;
 }
-.bx-form-input-captcha a {
+.bx-form-input-captcha-custom a {
 	color: #ffffff;
 	text-decoration: none;
 }
-.bx-form-input-captcha img,
-.bx-form-input-captcha #recaptcha_image {
+.bx-form-input-captcha-custom img,
+.bx-form-input-captcha-custom #recaptcha_image {
 	width: 100% !important;
 	height: auto !important;
 	-webkit-border-radius: 0.5em;
@@ -404,12 +404,12 @@
 	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
 }
-.bx-form-input-captcha .solution {
+.bx-form-input-captcha-custom .solution {
 	position: relative;
 	float: left;
 	width: 75%;
 }
-.bx-form-input-captcha .solution-cnt {
+.bx-form-input-captcha-custom .solution-cnt {
 	margin-top: 0.5em;
 	padding: 1.2em 1em;
 	-webkit-border-radius: 0.5em;
@@ -422,7 +422,7 @@
 	color: #000000;
 	display: block;
 }
-.bx-form-input-captcha .solution-cnt input {
+.bx-form-input-captcha-custom .solution-cnt input {
 	display: block;
 	width: calc(90% - 2px);
 	margin: 0.35em auto;
@@ -432,16 +432,16 @@
 	font-size: 150%;
 	outline: none;
 }
-.bx-form-input-captcha .solution-cnt input:focus {
+.bx-form-input-captcha-custom .solution-cnt input:focus {
 	border-color: #b71800;
 }
-.bx-form-input-captcha .options {
+.bx-form-input-captcha-custom .options {
 	position: relative;
 	float: right;
 	width: 25%;
 	
 }
-.bx-form-input-captcha .options-cnt {
+.bx-form-input-captcha-custom .options-cnt {
 	margin-top: 0.5em;
 	padding-left: 0.5em;
 	-webkit-border-radius: 0.5em;
@@ -451,7 +451,7 @@
 	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
 }
-.bx-form-input-captcha .options-cnt a {
+.bx-form-input-captcha-custom .options-cnt a {
 	background-color: #c5523d;
 	display: block;
 	padding: 0.5em 1.0em;
@@ -459,10 +459,10 @@
 	border-left: 1px solid #000000;
 	border-right: 1px solid #000000;
 }
-.bx-form-input-captcha .options-cnt a:first-child {
+.bx-form-input-captcha-custom .options-cnt a:first-child {
 	border-radius: 0.5em 0.5em 0 0;
 }
-.bx-form-input-captcha .options-cnt a:last-child {
+.bx-form-input-captcha-custom .options-cnt a:last-child {
 	border-radius: 0 0 0.5em 0.5em;
 	border-bottom: 1px solid #000000;
 }

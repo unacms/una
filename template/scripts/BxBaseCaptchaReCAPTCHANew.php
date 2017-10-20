@@ -20,6 +20,7 @@ class BxBaseCaptchaReCAPTCHANew extends BxTemplCaptchaReCAPTCHA
     {
         parent::__construct ($aObject, $oTemplate);
 
+        $this->_sSkin = 'light';
         $this->sApiUrl = 'https://www.google.com/recaptcha/api.js';
         $this->sVerifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
     }
