@@ -16,11 +16,17 @@ class BxTemplMenuSite extends BxTemplMenu
     {
         parent::__construct ($aObject, $oTemplate);
     }
+
     public function getCode ()
     {
-        $sClass = $this->_sObject == 'sys_site' ? 'bx-sliding-smenu-main' : 'bx-sliding-menu-main';
+        $bSite = $this->_sObject == 'sys_site';
 
-        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="' . $sClass . ' bx-def-z-index-nav" style="display:none;"><div class="bx-sliding-menu-main-cnt">' . parent::getCode() . '</div></div>';
+        $sClass = $bSite ? 'bx-sliding-smenu-main' : 'bx-sliding-menu-main';
+        $sResult = '<div id="bx-sliding-menu-' . $this->_sObject . '" class="' . $sClass . ' bx-def-z-index-nav" style="display:none;"><div class="bx-sliding-menu-main-cnt">' . parent::getCode() . '</div></div>';
+        if($bSite) 
+            $sResult = '<div class="cd-side-nav bx-def-box-sizing">' . $sResult . '</div>';
+
+        return $sResult;
     }
 }
 

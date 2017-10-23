@@ -17,6 +17,13 @@ class BxDecorousTemplate extends BxBaseModGeneralTemplate
     {
         $this->MODULE = 'bx_decorous';
         parent::__construct($oConfig, $oDb);
+
+        $oMenu = BxDolMenu::getObjectInstance('sys_site');
+        if($oMenu === false) {
+            BxDolTemplate::getInstance()->addCssStyle('.cd-main-content .content-wrapper', array(
+                'margin-left' => '0px !important'
+            ));
+        }
     }
 }
 
