@@ -32,6 +32,9 @@ class BxBaseMenu extends BxDolMenu
      */
     public function getCode ()
     {
+        if(!$this->isVisible())
+            return '';
+
         $sMenuTitle = isset($this->_aObject['title']) ? _t($this->_aObject['title']) : 'Menu-' . rand(0, PHP_INT_MAX);
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginMenu($sMenuTitle);
 

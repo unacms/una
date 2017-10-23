@@ -129,7 +129,7 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
             return $GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject];
 
         $aObject = BxDolMenuQuery::getMenuObject($sObject);
-        if (!$aObject || !is_array($aObject))
+        if (!$aObject || !is_array($aObject) || (int)$aObject['active'] == 0)
             return false;
 
         $sClass = 'BxTemplMenu';
