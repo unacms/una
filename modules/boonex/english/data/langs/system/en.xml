@@ -906,8 +906,8 @@
 	<string name="_adm_lmi_cpt_splash"><![CDATA[Splash]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Displays]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Downloaded]]></string>
-	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Email Templates]]></string>
-	<string name="_adm_lmi_cpt_etemplates_hf"><![CDATA[Emails header/footer]]></string>
+	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Emails]]></string>
+	<string name="_adm_lmi_cpt_etemplates_hf"><![CDATA[Email Template]]></string>
 	<string name="_adm_lmi_cpt_featured"><![CDATA[Featured]]></string>
 	<string name="_adm_lmi_cpt_fields"><![CDATA[Fields]]></string>
 	<string name="_adm_lmi_cpt_files"><![CDATA[Files]]></string>
@@ -1669,69 +1669,79 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_done"><![CDATA[Done]]></string>    
 	<string name="_sys_et_txt_about_us"><![CDATA[About us]]></string>
 	<string name="_sys_et_txt_body_admin_email"><![CDATA[{email_header}
-<p>Hello,</p>
-<p>Administration of the <a href="{site_url}">{site_name}</a> is glad to inform you that</p>
-<p>=========================</p>
-<p style="color:#3B5C8E">{MessageText}</p>
-<p>=========================</p>
+<p>Message from <a href="{site_url}">{site_name}</a> admin:</p>
+<p> </p>
+<p>{MessageText}</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_comment_replied"><![CDATA[{email_header}
-<p>Hello,</p>
-<p>Your comment was replied on <a href="{page_url}">{page_title}</a> page. It reads:</p>
+<p>User {sender_display_name} posted reply to your comment: </p>
+<p> </p>
 <p>{reply_text}</p>
+<p> </p>
+<p>View and reply here: <a href="{page_url}">{page_title}</a>.</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_system_reported"><![CDATA[{email_header}
-<p>Hello,</p>
-<p>New report with <b>{report_type}</b> type was received. It reads:</p>
+<p>New <b>{report_type}</b> report received:</p>
+<p> </p>
 <p>{report_text}</p>
-<p>Please refer to content page for more details <a href="{report_url}">here</a>.</p>
+<p> </p>
+<p><a href="{report_url}">View report</a>.</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
 <p>Hello, {name}.</p>
-<p>Please verify your email address by clicking on the link below:</p>
-<p><a href="{conf_link}">Verify email address</a></p>
+<p>Click the link below to verify your email address, please:</p>
+<p> </p>
+<p><a href="{conf_link}">Verify my email address</a>.</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
 <p>Module: <b>{Module}</b></p>
-<p>Uninstaltion result: {Result}</p>
+<p>Uninstallation result: {Result}</p>
+<p> </p>
 <p>{Message}</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_forgot"><![CDATA[{email_header}
-<p>Hello,</p>
-<p>Please, follow the link below to reset your password:</p>
-<p><a href="{forgot_password_url}">{forgot_password_url}</a></p>
-<p>Thank you.</p>
+<p>Click the link below to reset your password, please:</p>
+<p> </p>
+<p><a href="{forgot_password_url}">Reset my password</a>.</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_mem_changed"><![CDATA[{email_header}
-<p>Hello,</p>
-<p>Your membership level was changed to: <b>{membership_level}</b></p>
+<p><b>{profile_name}</b> profile membership level is now <b>{membership_level}</b>.</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_mem_expiration"><![CDATA[{email_header}
-<p>Hello,</p>
-<p>We are notifying you that your {site_name} {membership_name} will expire in {expire_days} days (-1 means already expired).</p>
-<p>To renew your membership login to your {site_name} account at <a href="{site_url}member.php">{site_url}member.php</a> and go to <a href="{site_url}modules/?r=membership/index/">My Membership</a></p>
+<p>Your {membership_name} membership will expire in {expire_days} days (-1 means already expired).</p>
+<p>Click the link below to renew your membership:</p>
+<p> </p>
+<p><a href="{page_url}">Renew my membership</a></p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_password_reset"><![CDATA[{email_header}
-<p>Hello,</p>
 <p>Your new password is:</p>
+<p> </p>
 <p><b>{password}</b></p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[{email_header}
-<p>Hello, {profile_name}.</p>
-<p>Welcome to {site_name}! Here's a copy of your account details:</p>
+<p>Your {site_name} account details:</p>
+<p> </p>
 <p>Name: {account_name}</p>
-<p>Email Address: {account_email}</p>
-<p>Site URL: <a href="{site_url}">{site_url}</a></p>
-<p>Thank you!</p>
+<p>Email: {account_email}</p>
+<p>URL: <a href="{site_url}">{site_url}</a></p>
+<p></p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[{email_header}
-<p>Hello, {profile_name}.</p>
-<p>Your profile is waiting for review, as soon as it is reviewed you will receive notification by email.</p>
-<p>Thank you!</p>
+<p>Your profile is pending review. We will send you the review result shortly.</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[{email_header}
-<p>Hello {profile_name},</p>
-<p>Your profile was suspended.</p>
+<p>Your profile is currently suspended.</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_account"><![CDATA[{email_header}
 <p>{account_output}</p>
@@ -1741,23 +1751,33 @@ If it is not enabled then please consider implement this optimization, since it 
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_upgrade_failed"><![CDATA[{email_header}
 <p>Upgrade failed due to the following error:</p>
+<p> </p>
 <p>{error_msg}</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[{email_header}
 <p>The following errors appeared during modules upgrade:</p>
+<p> </p>
 <p>{conclusion}</p>
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Site was successfully upgraded to {new_version}.</p>
+<p> </p>
 {conclusion}
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[{email_header}
 <p>The following modules were successfully upgraded.</p>
+<p> </p>
 {conclusion}
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[{email_header}
 <p>Background operation failed with the following message.</p>
+<p> </p>
 {conclusion}
+<p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_success"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string>
 	<string name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> module: {1}<br />]]></string>
@@ -1781,17 +1801,17 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_upgrade_modules_success"><![CDATA[Modules upgrade success]]></string>
 	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Background operation failed]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Message from <SiteName> Admin: <MessageSubject>]]></string>
-	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Your comment was replied by {sender_display_name}]]></string>
+	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[User {sender_display_name} replied to your comment.]]></string>
 	<string name="_sys_et_txt_subject_system_reported"><![CDATA[New report notification]]></string>
-	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm Your Email (ACTION REQUIRED)]]></string>
+	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm your Email, please. (ACTION REQUIRED)]]></string>
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Delayed {Module} module uninstall: {Result}]]></string>
-	<string name="_sys_et_txt_subject_forgot"><![CDATA[Reset Your Password]]></string>
+	<string name="_sys_et_txt_subject_forgot"><![CDATA[Reset your password]]></string>
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Your membership level was changed]]></string>
 	<string name="_sys_et_txt_subject_mem_expiration"><![CDATA[Your membership is about to expire]]></string>
-	<string name="_sys_et_txt_subject_password_reset"><![CDATA[New Password]]></string>
-	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Profile Activated]]></string>
-	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Profile Pending Review]]></string>
-	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Profile was Suspended]]></string>
+	<string name="_sys_et_txt_subject_password_reset"><![CDATA[Your new password]]></string>
+	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Profile activated]]></string>
+	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Profile pending review]]></string>
+	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Profile suspended]]></string>
 	<string name="_sys_et_txt_subject_account"><![CDATA[{site_name} {account_count} accounts created yesterday]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} pruning result]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} upgrade failed]]></string>
@@ -2256,8 +2276,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_pre_lists_report_types_nude"><![CDATA[nude]]></string>
 	<string name="_sys_pre_lists_report_types_other"><![CDATA[other]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[profile]]></string>
-	<string name="_sys_profile_friendship_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> is now friends with <a href="{entry_url}">{entry_caption}</a>]]></string>
-	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> subscribed to <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
+	<string name="_sys_profile_friendship_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> befriended <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> followed <a href="{entry_url}">{entry_caption}</a>]]></string>
 	<string name="_sys_profile_status_active"><![CDATA[Active]]></string>
 	<string name="_sys_profile_status_pending"><![CDATA[Pending]]></string>
 	<string name="_sys_profile_status_suspended"><![CDATA[Suspended]]></string>

@@ -33,7 +33,31 @@ class BxAclModule extends BxDolModule
     /**
      * SERVICE METHODS
      */
-    
+
+	/**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-other Other
+     * @subsubsection bx_acl-get_view_url get_view_url
+     * 
+     * @code bx_srv('bx_acl', 'get_view_url', [...]); @endcode
+     * 
+     * Get page URL with membership levels list.
+     *
+     * @return string with page URL.
+     * 
+     * @see BxAclModule::serviceGetViewUrl
+     */
+    /** 
+     * @ref bx_acl-get_view_url "get_view_url"
+     */
+	public function serviceGetViewUrl()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	return  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_acl Paid Levels

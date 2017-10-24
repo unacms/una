@@ -609,7 +609,8 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 
         $aPlus = array(
             'membership_name' => $sLevelName,
-            'expire_days' => $iLevelExpireDays
+            'expire_days' => $iLevelExpireDays,
+            'page_url' => BxDolRequest::serviceExists('bx_acl', 'get_view_url') ? BxDolService::call('bx_acl', 'get_view_url') : '#'
         );
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemExpiration', $aPlus, 0, $iProfileId);
