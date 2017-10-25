@@ -342,6 +342,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     	$iClientId = $oModule->getProfileId();
 
 		$oCart = $oModule->getObjectCart();
+		$oSubscriptions = $oModule->getObjectSubscriptions();
 		list($iSellerId, $iModuleId, $iItemId, $iItemCount) = $aCartItem;
 
 		$aTmplVarsProviders = array();
@@ -372,7 +373,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 				$sButton = $oProvider->getButtonRecurring($iClientId, $iSellerId, $aParams);
 			}
 			else {
-				list($sJsCode, $sJsOnclick) = $oCart->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount, $sRedirect);
+				list($sJsCode, $sJsOnclick) = $oSubscriptions->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount, $sRedirect);
 
 				$sButton = $this->parsePageByName('providers_select_button.html', array(
 					'onclick' => $sJsOnclick,
@@ -424,7 +425,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             return array();
         else if(is_array($mixedContent))
             return $mixedContent;
-//TODO: Continue from here. Popup Should use correct HTML ID to avoid duplocations. 
+
         $sKey = 'order_' . BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION . '_' . $sType;
     	$sId = $this->_oConfig->getHtmlIds(BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION, $sKey);
     	$sTitle = _t($this->_sLangsPrefix . 'popup_title_ods_' . $sKey);
