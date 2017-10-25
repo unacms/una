@@ -77,6 +77,8 @@ class BxAclModule extends BxDolModule
      */
 	public function serviceGetBlockView()
 	{
+	    bx_require_authentication(false, false, $this->serviceGetViewUrl());
+
 		$sGrid = $this->_oConfig->getGridObject('view');
 		$oGrid = BxDolGrid::getObjectInstance($sGrid);
         if(!$oGrid)

@@ -233,7 +233,7 @@ function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
  * Declare that content is require user authoriztion and display login form if user isn't logged in
  * @param $bStudio require webmaster authorization
  */
-function bx_require_authentication ($bStudio = false)
+function bx_require_authentication ($bStudio = false, $bAjaxMode = false, $sForceRelocate = '')
 {
     $iRole = BX_DOL_ROLE_MEMBER;
     if ($bStudio)
@@ -243,7 +243,7 @@ function bx_require_authentication ($bStudio = false)
     $sPassword = isset($_COOKIE['memberPassword']) ? bx_process_input($_COOKIE['memberPassword']) : false;
 
     if (bx_check_login($sID, $sPassword, $iRole)) {
-        bx_login_form($bStudio);
+        bx_login_form($bStudio, $bAjaxMode, $sForceRelocate);
     }
 
     check_logged();
