@@ -523,10 +523,16 @@
     width:auto;
 	float:left;
 }
-
-.bx-form-value .bx-form-input-autotoken img.bx-def-thumb-size {
+.bx-form-value .bx-form-input-autotoken .bx-def-thumb-size {
     width: 2.5rem;
     height: 2.5rem;
     line-height: 2.5rem;
 	float:left;	
+}
+.bx-form-value .bx-form-input-autotoken .bx-base-pofile-unit-wo-info {
+    display: inline-block;
+    vertical-align: middle;
+
+    margin-right: 8px;
+    margin-right: 0.5rem;
 }

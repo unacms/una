@@ -48,6 +48,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $aVars = array (
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
+            'author_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
             'author_title' => $sName,
             'author_title_attr' => bx_html_attribute($sName),
             'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData) : '',

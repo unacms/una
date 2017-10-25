@@ -987,7 +987,7 @@ BLAH;
             foreach ($aInput['value'] as $sVal) {
                 if (!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
                     continue;
-               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners"><img class="bx-def-thumb bx-def-thumb-size bx-def-margin-sec-right" src="' . $oProfile->getThumb() . '">' . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
+               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getUnit(0, array('template' => 'unit_wo_info')) . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
             }
             $sVals = trim($sVals, ',');
         }

@@ -26,19 +26,37 @@ class BxBaseMenuToolbar extends BxTemplMenu
             return $a;
 
         foreach ($a as $k => $r) {
-            if ('account' != $r['name'])
+            $a[$k]['bx_if:unit'] = array(
+            	'condition' => false,
+            	'content' => array()
+            );
+
+            if('account' != $r['name'])
                 continue;
 
-            $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id ());
-            $sUrlIcon = $oProfile->getThumb();
-            if (!$sUrlIcon)
-                break;
+            $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id());
 
-            $a[$k]['bx_if:image'] = array (
-                'condition' => true,
-                'content' => array('icon_url' => $sUrlIcon),
-            );
-            $a[$k]['bx_if:icon']['condition'] = false;
+            $sUnit = $oProfile->getUnit(0, array('template' => 'unit_wo_info_links'));
+            if(!empty($sUnit)) {
+                $a[$k]['bx_if:icon']['condition'] = false;
+                $a[$k]['bx_if:unit'] = array (
+                    'condition' => true,
+                    'content' => array('unit' => $sUnit),
+                );
+
+                break;
+            }
+
+            $sThumb = $oProfile->getThumb();
+            if(!empty($sThumb)) {
+                $a[$k]['bx_if:icon']['condition'] = false;
+                $a[$k]['bx_if:image'] = array (
+                    'condition' => true,
+                    'content' => array('icon_url' => $sThumb),
+                );
+
+                break;
+            }
         }
 
         return $a;

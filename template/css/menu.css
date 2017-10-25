@@ -249,11 +249,17 @@ ul.bx-menu-toolbar li .sys-icon-a,
 ul.bx-menu-toolbar li .sys-icon {
     display:inline-block;
     vertical-align:middle;
+
     font-size:24px;
     font-size:1.5rem;
     text-align:center;
     width:1.5rem;
     height:1.5rem;
+}
+
+ul.bx-menu-toolbar li .bx-menu-toolbar-item-unit {
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .bx-menu-toolbar-padding {

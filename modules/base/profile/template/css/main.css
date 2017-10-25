@@ -36,11 +36,28 @@
     background-size:cover;
 }
 
-.bx-base-pofile-unit-cover img {
-    background-color:#fff;
-    vertical-align:middle;
+img.bx-base-pofile-unit-thumb {
+	display: block;
+
+    background-color: #fff;
 }
 
+p.bx-base-pofile-unit-thumb,
+p.bx-base-pofile-unit-ava {
+	display: block;
+    margin: 0px;
+
+	font-size: 32px;
+	font-size: 2.0rem;
+	font-weight: 700;
+	color: #d0d0d0;
+}
+p.bx-base-pofile-unit-ava {
+	font-size: 48px;
+    font-size: 3.0rem;
+    font-weight: 700;
+}
+	
 .bx-base-pofile-unit-info,
 .bx-base-pofile-unit-title {
     min-width:17.5rem;
@@ -49,6 +66,12 @@
 .bx-base-pofile-unit-with-cover {
     display:inline-block;
     overflow:hidden;
+}
+
+.bx-base-pofile-unit-with-cover .bx-base-pofile-unit-thumb,
+.bx-base-pofile-unit-with-cover .bx-base-pofile-unit-ava {
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .bx-layout-column-thin .bx-base-pofile-unit-with-cover {
@@ -131,7 +154,8 @@ a.bx-base-pofile-cover-image:hover,
     margin-right:0;
 }
 
-.bx-base-pofile-cover-info img {
+.bx-base-pofile-cover-info img,
+.bx-base-pofile-cover-info .bx-base-pofile-unit-ava {
     border:2px solid #fff;
     border:0.15rem solid #fff;
 }

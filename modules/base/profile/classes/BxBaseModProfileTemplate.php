@@ -41,7 +41,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
         $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
-        
+
+        // get profile's title
+        $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
+
         // get profile's url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
@@ -60,15 +63,31 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.jpg');
 
+        $sThumbUrl = $isPublic ? $this->thumb($aData, false) : false;
+        $bThumbUrl = !empty($sThumbUrl);
+
         // generate html
         $aVars = array (
         	'class' => $this->_getUnitClass($aData, $sTemplateName),
             'id' => $aData[$CNF['FIELD_ID']],
-            'thumb_url' => $isPublic ? $this->thumb ($aData) : $this->getImageUrl('no-picture-thumb.png'),
+            'bx_if:show_thumb_image' => array(
+                'condition' => $bThumbUrl,
+                'content' => array(
+                    'thumb_url' => $sThumbUrl
+                )
+            ),
+            'bx_if:show_thumb_letter' => array(
+                'condition' => !$bThumbUrl,
+                'content' => array(
+                    'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
+                    'letter' => mb_substr($sTitle, 0, 1)
+                )
+            ),
+            'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
             'cover_url' => $sCoverUrl,
             'content_url' => $isPublic ? $sUrl : 'javascript:void(0);',
             'content_click' => !$isPublic ? 'javascript:bx_alert(' . bx_js_string('"' . $mixedCheckResults . '"') . ');' : '',
-            'title' => bx_process_output($aData[$CNF['FIELD_NAME']]),
+            'title' => $sTitle,
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
             'bx_if:info' => array(
@@ -108,10 +127,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+        $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
 
         $sUrlPicture = $this->urlPicture ($aData);
-        $sUrlAvatar = $this->urlAvatar ($aData);
         $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+
+        $sUrlAvatar = $this->urlAvatar($aData, false);
+        $bUrlAvatar = !empty($sUrlAvatar);
 
         $sUrlCover = $this->urlCover ($aData, false);
         if(!$sUrlCover && $oPage !== false && $oPage->isPageCover()) {
@@ -159,12 +181,25 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
-            'title' => bx_process_output($aData[$CNF['FIELD_NAME']]),
+            'title' => $sTitle,
             //'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(), // TODO: check if menu is used somewhere
 
             'action_menu' => $oMenu ? $oMenu->getCode() : '',
 
-            'picture_avatar_url' => $sUrlAvatar,
+        	'bx_if:show_ava_image' => array(
+                'condition' => $bUrlAvatar,
+                'content' => array(
+                    'ava_url' => $sUrlAvatar
+                )
+            ),
+            'bx_if:show_ava_letter' => array(
+                'condition' => !$bUrlAvatar,
+                'content' => array(
+            		'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
+                    'letter' => mb_substr($sTitle, 0, 1)
+                )
+            ),
+            'picture_avatar_url' => $bUrlAvatar ? $sUrlAvatar : $this->getImageUrl('no-picture-preview.png'),
             'picture_popup' => $sPicturePopup,
             'picture_popup_id' => $sPicturePopupId,
             'picture_url' => $sUrlPicture,
@@ -255,10 +290,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             case 'unit.html':
                 $sResult = 'bx-base-pofile-unit';
                 break;
+
             case 'unit_with_cover.html':
                 $sResult = 'bx-base-pofile-unit-with-cover';
                 break;
+
             case 'unit_wo_info.html':
+            case 'unit_wo_info_links.html':
                 $sResult = 'bx-base-pofile-unit-wo-info';
                 break;
         }

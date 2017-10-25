@@ -19,6 +19,9 @@ define('BX_DOL_TEMPLATE_CHECK_IN_BOTH', 'both');
 define('BX_DOL_TEMPLATE_CHECK_IN_BASE', 'base');
 define('BX_DOL_TEMPLATE_CHECK_IN_TMPL', 'tmpl');
 
+define('BX_DOL_COLOR_BG', 'bg');
+define('BX_DOL_COLOR_FT', 'ft');
+
 define('BX_PAGE_DEFAULT', 0); ///< default, regular page
 define('BX_PAGE_CLEAR', 2); ///< clear page, without any headers and footers
 define('BX_PAGE_POPUP', 44); ///< popup page, without any headers and footers
@@ -125,6 +128,29 @@ define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display
  */
 class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 {
+    protected static $_aColors = array(
+    	'red1' => array(216, 9, 96), 
+    	'red1-dark' => array(194, 7, 86), 
+    	'red2' => array(231, 68, 30), 
+    	'red2-dark' => array(207, 60, 25), 
+    	'red3' => array(243, 143, 0), 
+    	'red3-dark' => array(218, 128, 0), 
+    	'green1' => array(96, 174, 0), 
+    	'green1-dark' => array(86, 156, 0), 
+    	'green2' => array(209, 211, 0), 
+    	'green2-dark' => array(186, 188, 0), 
+    	'green3' => array(48, 116, 36), 
+    	'green3-dark' => array(43, 104, 32), 
+    	'blue1' => array(10, 61, 143), 
+    	'blue1-dark' => array(9, 54, 128), 
+    	'blue2' => array(0, 164, 165), 
+    	'blue2-dark' => array(0, 146, 148), 
+    	'blue3' => array(0, 160, 206), 
+    	'blue3-dark' => array(0, 143, 184), 
+    	'gray' => array(97, 97, 97), 
+    	'gray-dark' => array(87, 87, 87)
+    );
+
     /**
      * Main fields
      */
@@ -331,6 +357,41 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $aResult = $aResultCheck;
 
         return $aResult;
+    }
+
+    public static function getColorCode($sName = '', $fOpacity = false)
+    {
+        $aClasses = array_keys(self::$_aColors);
+
+        if(empty($sName) || !in_array($sName, $aClasses))
+            $sName = $aClasses[rand(0, count($aClasses) - 1)];
+
+        $aColor = self::$_aColors[$sName];
+        if($fOpacity !== false && is_numeric($fOpacity))
+            $aColor[] = $fOpacity;
+
+        return $aColor;
+    }
+
+    public static function getColorClass($sType = BX_DOL_COLOR_FT, $sName = '')
+    {
+        $aClasses = array_keys(self::$_aColors);
+
+        if(empty($sName) || !in_array($sName, $aClasses))
+            $sName = $aClasses[rand(0, count($aClasses) - 1)];
+
+        $sPrefix = '';
+        switch ($sType) {
+            case BX_DOL_COLOR_FT:
+                $sPrefix = 'col-';
+                break;
+
+            case BX_DOL_COLOR_BG:
+                $sPrefix = 'bg-col-';
+                break;
+        }
+
+        return $sPrefix . $sName;
     }
 
     /**

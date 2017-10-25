@@ -7,6 +7,7 @@
     -webkit-border-radius:0.1875rem;
 }
 
+.bx-base-group-unit .bx-def-thumb,
 .bx-base-groups-unit-wo-info .bx-def-thumb,
 .bx-base-groups-unit-with-cover .bx-base-pofile-unit-cover .bx-def-thumb {
     border-width:0.0625rem;

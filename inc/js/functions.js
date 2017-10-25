@@ -804,10 +804,15 @@ function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect)
 
 	$('#' + iId + ' input[type=text]').on('superselect', function(e, item) {
 		$(this).hide();
-		if ('undefined' != typeof(item))
-			$(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">' + 
-							(bShowImg ? '<img class="bx-def-thumb bx-def-thumb-size bx-def-margin-sec-right" src="' + item.thumb + '">' : '') + 
-							item.label + '<input type="hidden" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="' + sName + (bOnlyOnce ? '' : '[]') + '" value="' + item.value + '" /></b>');
+		if ('undefined' != typeof(item)) {
+			var sImage = '';
+			if(bShowImg && item.unit != undefined)
+				sImage = item.unit;
+			else if(bShowImg && item.thumb != undefined)
+				sImage = '<img class="bx-def-thumb bx-def-thumb-size bx-def-margin-sec-right" src="' + item.thumb + '">';
+
+			$(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">' + sImage + item.label + '<input type="hidden" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="' + sName + (bOnlyOnce ? '' : '[]') + '" value="' + item.value + '" /></b>');
+		}
 
 		if (!bOnlyOnce)
 		{
