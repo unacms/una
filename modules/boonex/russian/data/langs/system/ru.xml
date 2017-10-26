@@ -2191,8 +2191,7 @@
 	<string name="_sys_mobile_status"><![CDATA[Статус]]></string>
     <string name="_sys_name"><![CDATA[Имя]]></string>
     <string name="_sys_next"><![CDATA[Ещё]]></string>
-    <string name="_sys_notification_account"><![CDATA[<h3>Аккаунты, созданные за последние 24 часа:</h3><ul>{0}</ul>]]></string>
-    <string name="_sys_notification_account_link"><![CDATA[<li><a href="{0}">{1}</a> ({2})</li>]]></string>
+    <string name="_sys_notification_account"><![CDATA[Аккаунты, созданные за последние 24 часа:]]></string>
     <string name="_sys_not_specified"><![CDATA[Не указано]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>

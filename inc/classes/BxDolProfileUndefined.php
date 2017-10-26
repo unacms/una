@@ -88,6 +88,14 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
     }
 
     /**
+     * Check whether a profile has real image uploaded by user.
+     */
+    public function hasImage()
+    {
+        return false;
+    }
+
+    /**
      * Get picture url
      */
     public function getPicture()

@@ -22,6 +22,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $this->_serviceProfileFunc('getUnit', $iContentId);
     }
 
+    public function serviceHasImage ($iContentId)
+    {
+        return false;
+    }
+
     public function serviceProfilePicture ($iContentId)
     {
         return $this->_serviceProfileFunc('getPicture', $iContentId);

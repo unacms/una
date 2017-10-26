@@ -188,6 +188,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, $sTemplate);
     }
 
+    public function serviceHasImage ($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $mixedContent = $this->_getContent($iContentId, 'getContentInfoById');
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        return !empty($aContentInfo[$CNF['FIELD_PICTURE']]);
+    }
+
     public function serviceProfilePicture ($iContentId)
     {
         return $this->_serviceTemplateFunc('urlPicture', $iContentId);

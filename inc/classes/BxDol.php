@@ -168,6 +168,7 @@ interface iBxDolProfile
     public function getDisplayName();
     public function getUrl();
     public function getUnit();
+    public function hasImage();
     public function getPicture();
     public function getAvatar();
     public function getThumb();

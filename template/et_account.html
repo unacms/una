@@ -1,0 +1,81 @@
+<style>
+    .et-item {
+        position: relative;
+        display: inline-block;
+        width: 240px;
+    }
+    .et-item-cnt {
+        position: relative;
+        margin: 5px;
+    }
+    .et-item-img,
+    .et-item-img p,
+    .et-item-img img {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+        border-radius: 80px;
+    }
+    .et-item-img {
+    	position: absolute;
+        top: 0px;
+        left: 0px;
+        background-clip: padding-box;
+        text-align: center;
+        overflow: hidden;
+    }
+	.et-item-img p {
+	    display: block;
+        box-sizing: border-box;
+	    margin: 0px;
+        border: 1px solid #ccc;
+	    line-height: 46px;
+	    line-height: 2.9rem;
+	    font-size: 20px;
+	    font-size: 1.2rem;
+	    font-weight: 700;
+	    color: #d0d0d0;
+	}
+    .et-item-info {
+    	position: relative;
+        min-height: 48px;
+        margin-left: 58px;
+    }
+    .et-item-info-cnt {
+        padding: 5px 0px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .et-item-info-cnt a {
+	   font-weight: bold;
+    }
+</style>
+<h3><bx_text:_sys_notification_account /></h3>
+<div>
+    <bx_repeat:items>
+        <div class="et-item">
+            <div class="et-item-cnt">
+			    <div class="et-item-img">
+		            <bx_if:show_thumb_image>
+		                <img src="__thumb_url__" />
+		            </bx_if:show_thumb_image>
+		            <bx_if:show_thumb_letter>
+		                <p style="background-color:rgba(__color__)">__letter__</p>
+		            </bx_if:show_thumb_letter>
+			    </div>
+			    <div class="et-item-info">
+			        <div class="et-item-info-cnt">
+	                    <bx_if:show_title_link>
+	                        <a href="__content_url__" title="__content_title_attr__">__content_title__</a>
+			            </bx_if:show_title_link>
+			            <bx_if:show_title_text>
+	                        <b title="__content_title_attr__">__content_title__</b>
+			            </bx_if:show_title_text>
+	                    <br />__email__
+			        </div>
+			    </div>
+            </div>
+		</div>
+    </bx_repeat:items>
+</div>

@@ -239,6 +239,15 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id'], $aParams));
     }
 
+	/**
+     * Check whether a profile has real image uploaded by user.
+     */
+    public function hasImage($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'has_image', array($aInfo['content_id']));
+    }
+
     /**
      * Get picture url
      */

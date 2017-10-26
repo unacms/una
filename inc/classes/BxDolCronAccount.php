@@ -40,9 +40,9 @@ class BxDolCronAccount extends BxDolCron
         $aSent = array();
         $aProfiles = BxDolAclQuery::getInstance()->getProfilesByMembership(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR));
         foreach($aProfiles as $aProfile) {
-        	$oProfile = BxDolProfile::getInstance($aProfile['id']);
-        	if(!$oProfile)
-        		continue;
+            $oProfile = BxDolProfile::getInstance($aProfile['id']);
+            if(!$oProfile)
+                continue;
         	
         	$oAccount = $oProfile->getAccountObject();
         	if(!$oAccount || !$oAccount->isConfirmed())
@@ -67,21 +67,63 @@ class BxDolCronAccount extends BxDolCron
             return;
 
         $iAccounts = 0;
-        $sAccounts = "";
+        $aTmplVarsItems = array();
         foreach($aAccounts as $aAccount) {
-        	$oProfile = BxDolProfile::getInstance($aAccount['profile_id']);
-        	if(!$oProfile)
-        	    continue;
+            $oProfile = BxDolProfile::getInstance($aAccount['profile_id']);
+            if(!$oProfile)
+                continue;
 
-        	$sAccounts .= _t('_sys_notification_account_link', $oProfile->getUrl(), $oProfile->getDisplayName(), $aAccount['email']);
-        	$iAccounts += 1;
+            $sUrl = $oProfile->getUrl();
+            $bUrl = $oProfile->getModule() != 'system';
+
+            $sTitle = $oProfile->getDisplayName();
+            $sTitleAttr = bx_html_attribute($sTitle);
+
+            $sThumbUrl = $oProfile->getThumb();
+            $bThumbUrl = $oProfile->hasImage();
+
+            $aTmplVarsItems[] = array(
+                'bx_if:show_thumb_image' => array(
+                    'condition' => $bThumbUrl,
+                    'content' => array(
+                        'thumb_url' => $sThumbUrl
+                    )
+                ),
+                'bx_if:show_thumb_letter' => array(
+                    'condition' => !$bThumbUrl,
+                    'content' => array(
+                        'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
+                        'letter' => strtoupper(mb_substr($sTitle, 0, 1))
+                    )
+                ),
+                'bx_if:show_title_link' => array(
+                    'condition' => $bUrl,
+                    'content' => array(
+                        'content_url' => $sUrl,
+                        'content_title' => $sTitle,
+                        'content_title_attr' => $sTitleAttr
+                    )
+                ),
+                'bx_if:show_title_text' => array(
+                    'condition' => !$bUrl,
+                    'content' => array(
+                        'content_title' => $sTitle,
+                        'content_title_attr' => $sTitleAttr
+                    )
+                ),
+                'email' => $aAccount['email']
+            );
+
+            $iAccounts += 1;
         }
 
-        if(!$sAccounts)
+        if(empty($aTmplVarsItems))
             return;
 
         $this->_aParseParams['account_count'] = $iAccounts;
-        $this->_aParseParams['account_output'] = _t('_sys_notification_account', $sAccounts);
+        $this->_aParseParams['account_output'] = BxDolTemplate::getInstance()->parseHtmlByName('et_account.html', array(
+            'bx_repeat:items' => $aTmplVarsItems
+        ));
     }
 }
 
