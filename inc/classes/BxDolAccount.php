@@ -196,7 +196,11 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getUnit($iAccountId = false)
     {
-        return '<div>' . $this->getDisplayName($iAccountId) . '</div>';
+        $sTitle = $this->getDisplayName($iAccountId);
+        return BxDolTemplate::getInstance()->parseHtmlByName('unit_account.html', array(
+            'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
+			'letter' => strtoupper(mb_substr($sTitle, 0, 1))
+        ));
     }
 
     /**

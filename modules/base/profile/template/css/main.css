@@ -47,12 +47,18 @@ p.bx-base-pofile-unit-ava {
 	display: block;
     margin: 0px;
 
-	font-size: 32px;
-	font-size: 2.0rem;
+	line-height: 46px;
+    line-height: 2.9rem;
+
+	font-size: 20px;
+	font-size: 1.2rem;
 	font-weight: 700;
 	color: #d0d0d0;
 }
 p.bx-base-pofile-unit-ava {
+	line-height: 94px;
+    line-height: 5.9rem;
+
 	font-size: 48px;
     font-size: 3.0rem;
     font-weight: 700;

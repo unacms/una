@@ -80,7 +80,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'condition' => !$bThumbUrl,
                 'content' => array(
                     'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
-                    'letter' => mb_substr($sTitle, 0, 1)
+                    'letter' => strtoupper(mb_substr($sTitle, 0, 1))
                 )
             ),
             'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
