@@ -26,11 +26,6 @@ class BxBaseMenuToolbar extends BxTemplMenu
             return $a;
 
         foreach ($a as $k => $r) {
-            $a[$k]['bx_if:unit'] = array(
-            	'condition' => false,
-            	'content' => array()
-            );
-
             if('account' != $r['name'])
                 continue;
 
@@ -65,8 +60,17 @@ class BxBaseMenuToolbar extends BxTemplMenu
     protected function _getMenuItem ($a)
     {
         $a = parent::_getMenuItem ($a);
+        if($a === false)
+            return $a;
+
+        $a['bx_if:unit'] = array(
+        	'condition' => false,
+        	'content' => array()
+        );
+
         if ('add-content' == $a['name'] || 'search' == $a['name'])
             $a['class_add'] .= ' bx-def-media-phone-hide';
+
         return $a;
     }
 
