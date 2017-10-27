@@ -252,7 +252,7 @@
     <string name="_bx_persons_txt_N_friends"><![CDATA[{0} friends]]></string>
     <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[New post in <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> profile timeline from <a href="{subentry_url}">{subentry_sample}</a>]]></string>
     <string name="_bx_persons_txt_sample_single"><![CDATA[person]]></string>
-    <string name="_bx_persons_txt_sample_comment_single"><![CDATA[person's comment]]></string>
+    <string name="_bx_persons_txt_sample_comment_single"><![CDATA[comment to person]]></string>
 
     <string name="_bx_persons_email_friend_request"><![CDATA[Friend request]]></string>
     <string name="_bx_persons_email_friend_request_subject"><![CDATA[Friendship Request]]></string>

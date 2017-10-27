@@ -237,6 +237,6 @@
     <string name="_bx_snipcart_txt_all_entries_by"><![CDATA[<a href="{0}">All Goods by {1} ({2})</a>]]></string>
     <string name="_bx_snipcart_txt_sample_single"><![CDATA[shop item]]></string>
     <string name="_bx_snipcart_txt_sample_single_with_article"><![CDATA[a shop item]]></string>
-    <string name="_bx_snipcart_txt_sample_comment_single"><![CDATA[shop item's comment]]></string>
-    <string name="_bx_snipcart_txt_sample_vote_single"><![CDATA[shop item's vote]]></string>
+    <string name="_bx_snipcart_txt_sample_comment_single"><![CDATA[comment to shop item]]></string>
+    <string name="_bx_snipcart_txt_sample_vote_single"><![CDATA[vote to shop item]]></string>
 </resources>

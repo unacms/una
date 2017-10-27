@@ -253,8 +253,8 @@
     <string name="_bx_forum_participant_last_replier"><![CDATA[last replier]]></string>
     <string name="_bx_forum_txt_entry_locked"><![CDATA[Locked discussion]]></string>
 	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Pinned discussion]]></string>
-    <string name="_bx_forum_txt_sample_comment_single"><![CDATA[discussion's comment]]></string>
-    <string name="_bx_forum_txt_sample_vote_single"><![CDATA[discussion's vote]]></string>
+    <string name="_bx_forum_txt_sample_comment_single"><![CDATA[comment to discussion]]></string>
+    <string name="_bx_forum_txt_sample_vote_single"><![CDATA[vote to discussion]]></string>
     <string name="_bx_forum_txt_sample_single"><![CDATA[discussion]]></string>
     <string name="_bx_forum_txt_sample_single_with_article"><![CDATA[a discussion]]></string>
     <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>
