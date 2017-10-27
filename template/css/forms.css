@@ -360,11 +360,15 @@
 }
 
 /* view mode */
-
 .bx-form-row-view-wrapper > div {
+	position: relative;
     display: inline-block;
-    white-space: normal;
+    width: 100%;
+
     vertical-align: bottom;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .bx-form-row-view-wrapper-textarea > div {
