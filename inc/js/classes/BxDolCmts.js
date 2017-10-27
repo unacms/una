@@ -147,7 +147,7 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
     oParams['action'] = 'GetFormEdit';
     oParams['Cmt'] = iCmtId;
 
-    $(oLink).parents('.cmt-comment-manage:first').dolPopupHide();
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
     var sBodyId = this._sRootId + ' #cmt' + iCmtId + ' .cmt-body:first';
     if ($(sBodyId + ' > form').length) {
@@ -171,8 +171,6 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
                 alert(oData.msg);
 
         	if(oData && oData.form != undefined && oData.form_id != undefined) {
-        		$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
-
         		$(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                     $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                     	$this.cmtInitFormEdit(oData.form_id);
