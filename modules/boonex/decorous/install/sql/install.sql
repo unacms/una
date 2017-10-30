@@ -150,15 +150,16 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, CONCAT(@sName, '_card_bg_color'), '_bx_decorous_stg_cpt_option_card_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_card_bg_image'), '_bx_decorous_stg_cpt_option_card_bg_image', '', 'image', '', '', '', 2),
-(@iCategoryId, CONCAT(@sName, '_card_bg_image_repeat'), '_bx_decorous_stg_cpt_option_card_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 3),
-(@iCategoryId, CONCAT(@sName, '_card_bg_image_attachment'), '_bx_decorous_stg_cpt_option_card_bg_image_attachment', 'scroll', 'select', 'fixed,scroll,local', '', '', 4),
-(@iCategoryId, CONCAT(@sName, '_card_bg_image_size'), '_bx_decorous_stg_cpt_option_card_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 5),
-(@iCategoryId, CONCAT(@sName, '_card_content_padding'), '_bx_decorous_stg_cpt_option_card_content_padding', '1rem', 'digit', '', '', '', 6),
-(@iCategoryId, CONCAT(@sName, '_card_border_color'), '_bx_decorous_stg_cpt_option_card_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_card_border_size'), '_bx_decorous_stg_cpt_option_card_border_size', '1px', 'digit', '', '', '', 8),
-(@iCategoryId, CONCAT(@sName, '_card_border_radius'), '_bx_decorous_stg_cpt_option_card_border_radius', '3px', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_card_shadow'), '_bx_decorous_stg_cpt_option_card_shadow', '0px 1px 3px 0px rgba(0, 0, 0, 0.05)', 'digit', '', '', '', 10);
+(@iCategoryId, CONCAT(@sName, '_card_bg_color_hover'), '_bx_decorous_stg_cpt_option_card_bg_color_hover', 'rgba(255, 255, 255, 0.5)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_card_bg_image'), '_bx_decorous_stg_cpt_option_card_bg_image', '', 'image', '', '', '', 3),
+(@iCategoryId, CONCAT(@sName, '_card_bg_image_repeat'), '_bx_decorous_stg_cpt_option_card_bg_image_repeat', 'no-repeat', 'select', 'no-repeat,repeat,repeat-x,repeat-y', '', '', 4),
+(@iCategoryId, CONCAT(@sName, '_card_bg_image_attachment'), '_bx_decorous_stg_cpt_option_card_bg_image_attachment', 'scroll', 'select', 'fixed,scroll,local', '', '', 5),
+(@iCategoryId, CONCAT(@sName, '_card_bg_image_size'), '_bx_decorous_stg_cpt_option_card_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 6),
+(@iCategoryId, CONCAT(@sName, '_card_content_padding'), '_bx_decorous_stg_cpt_option_card_content_padding', '1rem', 'digit', '', '', '', 7),
+(@iCategoryId, CONCAT(@sName, '_card_border_color'), '_bx_decorous_stg_cpt_option_card_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_card_border_size'), '_bx_decorous_stg_cpt_option_card_border_size', '1px', 'digit', '', '', '', 9),
+(@iCategoryId, CONCAT(@sName, '_card_border_radius'), '_bx_decorous_stg_cpt_option_card_border_radius', '3px', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_card_shadow'), '_bx_decorous_stg_cpt_option_card_shadow', '0px 1px 3px 0px rgba(0, 0, 0, 0.05)', 'digit', '', '', '', 11);
 
 
 -- SETTINGS: Decorous template Styles Popups

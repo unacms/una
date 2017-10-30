@@ -18,7 +18,8 @@ class BxTemplConfig extends BxBaseConfig
         
         	'bx-color-page' => '#b9e2f6',
         	'bx-color-block' => '#fff',
-        	'bx-color-box' => '#daf8ff',
+        	'bx-color-box' => 'rgba(218, 248, 255, 1.0)',
+        	'bx-color-box-hover' => 'rgba(218, 248, 255, 0.5)',
         	'bx-color-sec' => '#fff',
         	'bx-color-hl' => 'rgba(202, 242, 252, 0.2)',
         	'bx-color-active' => 'rgba(202, 242, 252, 0.4)',

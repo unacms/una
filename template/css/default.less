@@ -291,6 +291,9 @@
 .bx-def-color-bg-box {
     .background-color (@bx-color-box);
 }
+.bx-def-color-bg-box-hover:hover {
+    .background-color (@bx-color-box-hover);
+}
 .bx-def-color-bg-sec {
     .background-color (@bx-color-sec);
 }
@@ -383,7 +386,8 @@
     /*color:@bx-font-color-default; */ 
 }
 
-.bx-def-font-color {
+.bx-def-font-color,
+.bx-def-font-color:hover {
 	color:@bx-font-color-default;
 }
 

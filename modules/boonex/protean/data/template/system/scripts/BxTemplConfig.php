@@ -127,6 +127,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-block-title'] = $this->_setColorRgba($sName . '_block_title_bg_color', 'rgba(255, 255, 255, 1.0)');
         $this->_aConfig['aLessConfig']['bx-color-block-title-div'] = $this->_setColorRgba($sName . '_block_title_div_bg_color', 'rgba(208, 208, 208, 1)');        
         $this->_aConfig['aLessConfig']['bx-color-box'] = $this->_setColorRgba($sName . '_card_bg_color', 'rgba(242, 242, 242, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-box-hover'] = $this->_setColorRgba($sName . '_card_bg_color_hover', 'rgba(242, 242, 242, 0.5)');
         $this->_aConfig['aLessConfig']['bx-color-popup'] = $this->_setColorRgba($sName . '_popup_bg_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-popup-title'] = $this->_setColorRgba($sName . '_popup_title_bg_color', 'rgba(40, 60, 80, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-menu-main'] = $this->_setColorRgba($sName . '_menu_main_bg_color', 'rgba(255, 255, 255, 0.9)');
