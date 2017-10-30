@@ -39,9 +39,23 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         // re-translate timeline alert for timeline in this module for posts made by other profiles
         if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id'])) && $oGroupProfile->getModule() == $this->_oModule->getName() && $oGroupProfile->id() != $oAlert->iSender) {            
             $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
-            bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $oGroupProfile->id(), array('content' => $aContentInfo, 'group_profile' => $oGroupProfile->id(), 'profile' => $oAlert->iSender, 'notification_subobject_id' => $oAlert->iSender, 'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]));
+
+            /*
+             * Note. Group Profile ID is used as alert sender and also a content (group) owner (author).
+             */
+            $iSenderId = $iObjectAuthorId = $oGroupProfile->id(); 
+            bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $iSenderId, array(
+            	'object_author_id' => $iObjectAuthorId,
+            	'timeline_post_id' => $oAlert->iObject, 
+                'timeline_post_author_id' => $oAlert->iSender,
+
+            	'content' => $aContentInfo,
+
+            	'group_profile' => $oGroupProfile->id(), 
+            	'profile' => $oAlert->iSender,
+            ));
         }
- 
+
         if ($this->MODULE != $oAlert->sUnit)
             return;
 

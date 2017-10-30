@@ -29,7 +29,6 @@
 	<string name="_bx_ntfs_alert_action_connection_added"><![CDATA[add connection]]></string>
 
 	<string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Empty]]></string>
-	<string name="_bx_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
-	<string name="_bx_ntfs_txt_subobject_added_text"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a {subentry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
-	<string name="_bx_ntfs_txt_subobject_added_link"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a <a href="{subentry_url}">{subentry_sample}</a> <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_bx_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+	<string name="_bx_ntfs_txt_subobject_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 </resources>

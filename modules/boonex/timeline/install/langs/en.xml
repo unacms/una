@@ -159,7 +159,7 @@
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[comment to timeline post]]></string>
     <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[vote to timeline post]]></string>
-    <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
+    <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
 
 	<string name="_bx_timeline_txt_do_repost"><![CDATA[Repost]]></string>

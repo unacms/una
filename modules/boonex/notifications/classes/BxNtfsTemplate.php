@@ -72,6 +72,14 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    /**
+     * Enter description here ...
+     * @example Available keys are:
+     * 1. owner_name and owner_link
+     * 2. entry_caption and entry_url
+     * 3. subentry_url and subentry_sample
+     * 
+     */
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
     	$oModule = $this->getModule();
@@ -100,7 +108,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         	if(substr($sValue, 0, 1) == '_')
         		$aEvent['content'][$sKey] = _t($sValue);        
 
-    	$sContent = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getLangKey($aEvent));
+    	$sContent = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
     	$sContent = $this->parseHtmlByContent($sContent, $aEvent['content'], array('{', '}'));
 
         return $this->parseHtmlByName('event.html', array (
@@ -118,6 +126,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !$bAuthorIcon,
                 'content' => array()
             ),
+            'link' => $this->_getContentLink($aEvent),
             'content' => $sContent,
             'date' => bx_time_js($aEvent['date']),
         ));
@@ -177,14 +186,14 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 		return $this->$sMethod($aEvent);
     }
 
-    protected function _getLangKey(&$aEvent)
+    protected function _getContentLangKey(&$aEvent)
     {
-    	$sResult = '_bx_ntfs_txt_object_added';
+    	return !empty($aEvent['subobject_id']) ? '_bx_ntfs_txt_subobject_added' : '_bx_ntfs_txt_object_added';
+    }
 
-    	if(!empty($aEvent['subobject_id']))
-    		$sResult = '_bx_ntfs_txt_subobject_added_' . (!empty($aEvent['content']['subentry_url']) ? 'link' : 'text');
-
-    	return $sResult;
+    protected function _getContentLink(&$aEvent)
+    {
+        return !empty($aEvent['subobject_id']) && !empty($aEvent['content']['subentry_url']) ? $aEvent['content']['subentry_url'] : $aEvent['content']['entry_url'];
     }
 }
 

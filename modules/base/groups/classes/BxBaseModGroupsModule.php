@@ -167,19 +167,46 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         // send notification to group's admins that new connection is pending confirmation 
         elseif (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
 
-            bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
+            bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            	'object_author_id' => $iGroupProfileId,
+            	'performer_id' => $iProfileId, 
 
+            	'content' => $aContentInfo, 
+            	'entry_title' => $sEntryTitle, 
+            	'entry_url' => $sEntryUrl, 
+
+            	'group_profile' => $iGroupProfileId, 
+            	'profile' => $iProfileId
+            ));
         }
         // send notification that join request was accepted 
         else if (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
-            
-            bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
+            bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            	'object_author_id' => $iGroupProfileId,
+            	'performer_id' => $iProfileId,
 
+            	'content' => $aContentInfo, 
+            	'entry_title' => $sEntryTitle, 
+            	'entry_url' => $sEntryUrl, 
+
+            	'group_profile' => $iGroupProfileId, 
+            	'profile' => $iProfileId
+            ));
         }
 
         // new fan was added
         if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
-            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
+            bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            	'object_author_id' => $iGroupProfileId,
+            	'performer_id' => $iProfileId,
+
+            	'content' => $aContentInfo,
+            	'entry_title' => $sEntryTitle, 
+            	'entry_url' => $sEntryUrl,
+
+            	'group_profile' => $iGroupProfileId, 
+            	'profile' => $iProfileId,
+            ));
             return false;
         }
 
@@ -333,13 +360,48 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         return $this->_serviceGetNotification($aEvent, $this->_oConfig->CNF['T']['txt_ntfs_join_request']);
     }
-    
+
 	/**
      * Notification about new member in the group
      */
     public function serviceGetNotificationsFanAdded($aEvent)
     {
         return $this->_serviceGetNotification($aEvent, $this->_oConfig->CNF['T']['txt_ntfs_fan_added']);
+    }
+
+    protected function _serviceGetNotification($aEvent, $sLangKey)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $iContentId = (int)$aEvent['object_id'];
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
+        if(!$oGroupProfile)
+            return array();
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+        $oProfile = BxDolProfile::getInstance((int)$aEvent['subobject_id']);
+        if(!$oProfile)
+            return array();
+
+        /*
+         * Note. Group Profile URL is used for both Entry and Subentry URLs, 
+         * because Subentry URL has higher display priority and notification
+         * should be linked to Group Profile instead of Personal Profile of
+         * a member, who performed an action.
+         */
+        $sEntryUrl = $sSubentryUrl = $oGroupProfile->getUrl();
+		return array(
+			'entry_sample' => $CNF['T']['txt_sample_single'],
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $oGroupProfile->getDisplayName(),
+			'entry_author' => $oGroupProfile->id(),
+			'subentry_sample' => $oProfile->getDisplayName(),
+			'subentry_url' => $sSubentryUrl,
+			'lang_key' => $sLangKey
+		);
     }
 
     /**

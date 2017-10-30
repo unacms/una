@@ -152,6 +152,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
                 'txt_N_fans' => '_bx_groups_txt_N_fans',
                 'txt_ntfs_join_request' => '_bx_groups_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_groups_txt_ntfs_fan_added',
+            	'txt_ntfs_timeline_post_common' => '_bx_groups_txt_ntfs_timeline_post_common',
             	'form_field_author' => '_bx_groups_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',

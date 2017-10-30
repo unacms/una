@@ -1235,6 +1235,19 @@ function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = arr
     $o->alert();
 }
 
+/**
+ * Perform serice call
+ * @param $mixed module name or module id
+ * @param $sMethod service method name in format 'method_name', corresponding class metod is serviceMethodName
+ * @param $aParams params to pass to service method
+ * @param $sClass class to search for service method, by default it is main module class
+ * @return service call result
+ */
+function bx_srv($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false)
+{
+    return BxDolService::call($mixed, $sMethod, $aParams, $sClass, $bIgnoreCache);
+}
+
 function bx_replace_markers($mixed, $aMarkers)
 {
     if (empty($aMarkers))

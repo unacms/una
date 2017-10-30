@@ -465,7 +465,35 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function serviceGetNotificationsTimelinePostCommon($aEvent)
     {
-        return $this->_serviceGetNotification($aEvent, '_bx_' . $this->_oConfig->getUri() . '_txt_ntfs_timeline_post_common');
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContentId = (int)$aEvent['object_id'];
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
+        if(!$oGroupProfile)
+            return array();
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+            
+        $aSubcontentInfo = BxDolService::call('bx_timeline', 'get_info', array((int)$aEvent['subobject_id'], false));
+        if(empty($aSubcontentInfo) || !is_array($aSubcontentInfo))
+            return array();
+
+        $sSubentryUrl = BxDolService::call('bx_timeline', 'get_link', array((int)$aEvent['subobject_id']));
+        $sSubentrySample = $aSubcontentInfo['title'];
+        if(empty($sSubentrySample))
+            $sSubentrySample = strmaxtextlen($aSubcontentInfo['description'], 20, '...');
+
+		return array(
+			'entry_sample' => $CNF['T']['txt_sample_single'],
+			'entry_url' => $oGroupProfile->getUrl(),
+			'entry_caption' => $oGroupProfile->getDisplayName(),
+			'entry_author' => $oGroupProfile->id(),
+			'subentry_sample' => $sSubentrySample,
+			'subentry_url' => $sSubentryUrl,
+			'lang_key' => $CNF['T']['txt_ntfs_timeline_post_common'],
+		);
     }
 
     public function serviceGetConnectionButtonsTitles($iProfileId, $sConnectionsObject = 'sys_profiles_friends')

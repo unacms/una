@@ -251,7 +251,7 @@
     <string name="_bx_persons_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>
     <string name="_bx_persons_txt_account_suspended_moderation"><![CDATA[Этот <a href="{0}">профиль</a> заблокирован.]]></string>
     <string name="_bx_persons_txt_N_friends"><![CDATA[Друзья: {0}]]></string>
-    <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[В профайле <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[В профайле <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_persons_txt_sample_single"><![CDATA[Персона]]></string>
     <string name="_bx_persons_txt_sample_comment_single"><![CDATA[комментарий к персональному профилю]]></string>
 

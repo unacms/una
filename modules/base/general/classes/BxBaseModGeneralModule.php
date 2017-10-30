@@ -536,34 +536,6 @@ class BxBaseModGeneralModule extends BxDolModule
 		);
     }
 
-    public function _serviceGetNotification($aEvent, $sLangKey)
-    {
-    	$CNF = &$this->_oConfig->CNF;
-
-        $iContentId = (int)$aEvent['object_id'];
-        $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
-        if (!$oGroupProfile)
-            return false;
-
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if(empty($aContentInfo) || !is_array($aContentInfo))
-            return array();
-        
-        $oProfile = BxDolProfile::getInstance((int)$aEvent['subobject_id']);
-        if (!$oProfile)
-            return false;
-
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single'],
-			'entry_url' => $oGroupProfile->getUrl(),
-			'entry_caption' => $oGroupProfile->getDisplayName(),
-			'entry_author' => $oGroupProfile->id(),
-			'subentry_sample' => $oProfile->getDisplayName(),
-			'subentry_url' => $oProfile->getUrl(),
-			'lang_key' => $sLangKey,
-		);
-    }
-    
     /**
      * Data for Timeline module
      */

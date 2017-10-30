@@ -244,10 +244,10 @@
     <string name="_bx_groups_txt_private_group"><![CDATA[Приватная группа]]></string>
 
 	<string name="_bx_groups_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
-    <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[В группу "<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a>" добавился новый член - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[В группу <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_groups_alert_action_join_request"><![CDATA[запрос на присоединение к событию]]></string>
-    <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[В группу "<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a>" хочет присоединиться новый член - <a href="{subentry_url}">{subentry_sample}</a>]]></string>
-    <string name="_bx_groups_txt_ntfs_timeline_post_common"><![CDATA[В группе <a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> новая публикация от <a href="{subentry_url}">{subentry_sample}</a>]]></string>
+    <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[В группу <b class="bx-ntfs-content-profile">{owner_name}</b> хочет вступить <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_groups_txt_ntfs_timeline_post_common"><![CDATA[В группе <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 
     <string name="_bx_groups_pre_lists_cats"><![CDATA[Категории групп]]></string>
     <string name="_bx_groups_cat_General"><![CDATA[Обобщение]]></string>
