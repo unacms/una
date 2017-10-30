@@ -4,9 +4,9 @@
 	<string name="_bx_groups"><![CDATA[Группы]]></string>
 	<string name="_bx_groups_cmts"><![CDATA[Группы - Комментарии]]></string>
 
-	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Число элементов в блоке друзей]]></string>
-	<string name="_bx_groups_option_per_page_browse"><![CDATA[Число элементов на странице]]></string>
-    <string name="_bx_groups_option_num_rss"><![CDATA[Число элементов в ленте RSS]]></string>
+	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
+	<string name="_bx_groups_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
+    <string name="_bx_groups_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_groups_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
 
 	<string name="_bx_groups_form_profile"><![CDATA[Группы]]></string>

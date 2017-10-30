@@ -6,8 +6,8 @@
 
 	<string name="_bx_snipcart_option_summary_chars"><![CDATA[Number of characters in auto-cropped item summary]]></string>
 	<string name="_bx_snipcart_option_plain_summary_chars"><![CDATA[Number of characters in plain item description when item hasn't thumb]]></string>
-	<string name="_bx_snipcart_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_snipcart_option_per_page_profile"><![CDATA[Number of items per page on profile/group page]]></string>
+	<string name="_bx_snipcart_option_per_page_browse"><![CDATA[Number of items on a page]]></string>
+	<string name="_bx_snipcart_option_per_page_profile"><![CDATA[Number of items on profile page]]></string>
 	<string name="_bx_snipcart_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_snipcart_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 

@@ -8,8 +8,8 @@
 	<string name="_bx_market_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>
 	<string name="_bx_market_option_summary_chars"><![CDATA[Number of characters in auto-cropped product summary]]></string>
 	<string name="_bx_market_option_plain_summary_chars"><![CDATA[Number of characters in plain product description when product hasn't thumb]]></string>
-	<string name="_bx_market_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_market_option_per_page_profile"><![CDATA[Number of items per page on Profile View page]]></string>
+	<string name="_bx_market_option_per_page_browse"><![CDATA[Number of items on a page]]></string>
+	<string name="_bx_market_option_per_page_profile"><![CDATA[Number of items on profile page]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_market_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 

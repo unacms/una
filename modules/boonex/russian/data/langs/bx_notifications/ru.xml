@@ -14,7 +14,7 @@
     <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Уведомления]]></string>
     <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Уведомления]]></string>
 
-	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Количество событий, отображаемых на странице просмотра]]></string>
+	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Количество элементов на странице]]></string>
 	<string name="_bx_ntfs_option_events_hide"><![CDATA[Показывать события для последователей, когда пользователь совершает действия]]></string>
 
 	<string name="_bx_ntfs_privacy_view"><![CDATA[Просматривать события]]></string>

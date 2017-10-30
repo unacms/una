@@ -5,7 +5,7 @@
 	<string name="_bx_events_cmts"><![CDATA[Events' Comments]]></string>
 
 	<string name="_bx_events_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
-    <string name="_bx_events_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_events_option_per_page_browse"><![CDATA[Number of items a page]]></string>
 	<string name="_bx_events_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_events_option_time_format"><![CDATA[Time format]]></string>
     <string name="_bx_events_option_short_date_format"><![CDATA[Short date format]]></string>

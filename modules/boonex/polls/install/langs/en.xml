@@ -5,7 +5,7 @@
 	<string name="_bx_polls_cmts"><![CDATA[Polls' Comments]]></string>
 
 	<string name="_bx_polls_option_title_chars"><![CDATA[Number of characters in auto-cropped poll title]]></string>
-	<string name="_bx_polls_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+	<string name="_bx_polls_option_per_page_browse"><![CDATA[Number of items on a page]]></string>
 	<string name="_bx_polls_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_polls_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 

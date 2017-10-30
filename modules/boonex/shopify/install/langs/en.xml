@@ -4,8 +4,8 @@
 	<string name="_bx_shopify"><![CDATA[Shopify]]></string>
 	<string name="_bx_shopify_cmts"><![CDATA[Shopify's Reviews]]></string>
 
-	<string name="_bx_shopify_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_shopify_option_per_page_profile"><![CDATA[Number of items per page on profile/group page]]></string>
+	<string name="_bx_shopify_option_per_page_browse"><![CDATA[Number of items on a page]]></string>
+	<string name="_bx_shopify_option_per_page_profile"><![CDATA[Number of items on profile page]]></string>
 	<string name="_bx_shopify_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_shopify_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
 

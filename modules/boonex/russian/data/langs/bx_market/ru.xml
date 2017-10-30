@@ -9,7 +9,7 @@
 	<string name="_bx_market_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к продуктам]]></string>
 	<string name="_bx_market_option_plain_summary_chars"><![CDATA[Количество символов в описании продукта при отсутствующей картинке продукта]]></string>
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
-	<string name="_bx_market_option_per_page_profile"><![CDATA[Количество элементов на странице при просмотре Профиля]]></string>
+	<string name="_bx_market_option_per_page_profile"><![CDATA[Количество элементов на странице профиля]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 	<string name="_bx_market_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
