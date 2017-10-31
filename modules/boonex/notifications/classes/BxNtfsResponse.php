@@ -42,6 +42,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
     				if(!empty($iId))
     					$this->_oModule->onPost($iId);
                 }
+
+                $this->sendNotifications($iId, $oAlert, $aHandler);
 				break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
@@ -192,6 +194,49 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             	'object_id' => $oAlert->aExtras['content']
             )
         );
+    }
+
+    protected function sendNotifications($iId, &$oAlert, &$aHandler)
+    {
+        $aHidden = $this->_oModule->_oConfig->getHandlersHidden('email');
+        if(in_array($aHandler['id'], $aHidden))
+            return;
+
+        $aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return;
+
+        //--- Get event.
+        $sEvent = $this->_oModule->_oTemplate->getPostEt($aEvent);
+
+        //--- Get subscribers.
+        $oConnection = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->getObject('conn_subscriptions'));
+        $aRecipients = $oConnection->getConnectedInitiators($aEvent['owner_id']);
+
+        //--- Get content owner.
+        if((int)$aEvent['owner_id'] != (int)$aEvent['object_owner_id'] && !in_array($aEvent['object_owner_id'], $aRecipients))
+            $aRecipients[] = $aEvent['object_owner_id'];
+
+        $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->getObject('privacy_view'));
+        $oPrivacyExt = $this->_oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
+        foreach($aRecipients as $iRecipient) {
+            $oProfile = BxDolProfile::getInstance($iRecipient);
+            if(!$oProfile)
+                continue;
+
+            if(!bx_srv($oProfile->getModule(), 'act_as_profile'))
+                continue;
+
+            if($oPrivacyExt !== false && !$oPrivacyExt->check($iId, $iRecipient)) 
+    		    continue;
+
+            if($oPrivacyInt !== false && !$oPrivacyInt->check($iId, $iRecipient))
+                continue;
+
+            sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array(
+                'content' => $sEvent
+            ));
+        }
     }
 }
 

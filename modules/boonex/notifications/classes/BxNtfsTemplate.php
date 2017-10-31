@@ -132,6 +132,35 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getPostEt(&$aEvent, $aBrowseParams = array())
+    {
+        $oModule = $this->getModule();
+
+        $this->getPost($aEvent, $aBrowseParams);
+
+        list($sOwnerName, $sOwnerUrl, $sOwnerIcon) = $oModule->getUserInfo($aEvent['owner_id']);
+        $bAuthorIcon = !empty($sOwnerIcon);
+
+        $sContent = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
+    	$sContent = $this->parseHtmlByContent($sContent, $aEvent['content'], array('{', '}'));
+
+        return $this->parseHtmlByName('et_new_event.html', array(
+        	'bx_if:show_icon' => array(
+                'condition' => $bAuthorIcon,
+                'content' => array(
+                    'icon_url' => $sOwnerIcon
+                )
+            ),
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bAuthorIcon,
+                'content' => array()
+            ),
+            'content_url' => $this->_getContentLink($aEvent),
+            'content' => $sContent,
+            'date' => bx_process_output($aEvent['date'], BX_DATA_DATETIME_TS),
+        ));
+    }
+
     public function getEmpty($bVisible = true)
     {
         return $this->parseHtmlByName('empty.html', array(

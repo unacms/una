@@ -32,3 +32,7 @@ DELETE FROM `sys_objects_live_updates` WHERE `name` = @sName;
 SET @iHandlerId = (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandlerId;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
+
+
+-- EMAIL TEMPLATES
+DELETE FROM `sys_email_templates` WHERE `Module` = @sName;

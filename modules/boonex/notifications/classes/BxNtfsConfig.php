@@ -12,7 +12,10 @@
 bx_import('BxDolPrivacy');
 
 class BxNtfsConfig extends BxBaseModNotificationsConfig
-{  
+{
+    protected $_aHandlersHiddenEmail;
+    protected $_aHandlersHiddenPush;
+
     /**
      * Constructor
      */
@@ -34,6 +37,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '');
         $this->_sHandlersMethod = 'get_notifications_data';
+        $this->_aHandlersHiddenEmail = array();
+        $this->_aHandlersHiddenPush = array();
 
         $this->_aJsClasses = array(
             'main' => 'BxNtfsMain',
@@ -62,6 +67,25 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     	$this->_aPerPage = array(
     		'default' => (int)getParam($sOptionPrefix . 'events_per_page')
     	);
+
+    	$aSettings = array(
+    	    'site' => '',
+    	    'email' => 'Email',
+    	    'push' => 'Push'
+    	);
+    	foreach($aSettings as $sSetting => $sVariable) {
+    	    $sHideTimeline = getParam($sOptionPrefix . 'events_hide_' . $sSetting);
+            if(!empty($sHideTimeline))
+                $this->{'_aHandlersHidden' . $sVariable} = explode(',', $sHideTimeline);
+    	}
+    }
+
+    public function getHandlersHidden($sType = '')
+    {
+        if(!in_array($sType, array('', 'email', 'push')))
+            return array();
+
+        return $this->{'_aHandlersHidden' . ucfirst($sType)};
     }
 
     /**
