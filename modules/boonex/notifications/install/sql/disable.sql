@@ -36,3 +36,7 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `Module` = @sName;
+
+
+-- INJECTION
+DELETE FROM `sys_injections` WHERE `name`=@sName;

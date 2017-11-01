@@ -18,6 +18,10 @@
 	<string name="_bx_ntfs_option_events_hide_site"><![CDATA[Onsite notifications]]></string>
 	<string name="_bx_ntfs_option_events_hide_email"><![CDATA[Email notifications]]></string>
 	<string name="_bx_ntfs_option_events_hide_push"><![CDATA[Push notifications]]></string>
+	<string name="_bx_ntfs_option_push_app_id"><![CDATA[OneSignal App ID]]></string>
+    <string name="_bx_ntfs_option_push_rest_api"><![CDATA[REST API Key]]></string>
+    <string name="_bx_ntfs_option_push_short_name"><![CDATA[Short name (required only for http sites. It must match the Subdomain you entered on the Web Push settings on the OneSignal dashboard)]]></string>
+    <string name="_bx_ntfs_option_push_safari_id"><![CDATA[Apple Safari Web ID on the Web Push settings]]></string>
 
 	<string name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string>
 
@@ -33,6 +37,11 @@
 	<string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Empty]]></string>
 	<string name="_bx_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_bx_ntfs_txt_subobject_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+
+    <string name="_bx_ntfs_push_notification_request"><![CDATA[Would you like to get notifications from {0}?]]></string>  
+    <string name="_bx_ntfs_push_notification_request_yes"><![CDATA[Yes]]></string>  
+    <string name="_bx_ntfs_push_notification_request_no"><![CDATA[No, thanks]]></string>
+    <string name="_bx_ntfs_push_new_event_subject"><![CDATA[New on "{0}"]]></string>
 
 	<string name="_bx_ntfs_email_new_event"><![CDATA[New notification]]></string>
     <string name="_bx_ntfs_email_new_event_subject"><![CDATA[New notification on "{site_name}"]]></string>

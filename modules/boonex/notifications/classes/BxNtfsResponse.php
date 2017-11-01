@@ -198,16 +198,32 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
     protected function sendNotifications($iId, &$oAlert, &$aHandler)
     {
-        $aHidden = $this->_oModule->_oConfig->getHandlersHidden('email');
-        if(in_array($aHandler['id'], $aHidden))
-            return;
-
         $aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent) || !is_array($aEvent))
             return;
 
-        //--- Get event.
-        $sEvent = $this->_oModule->_oTemplate->getPostEt($aEvent);
+        $aTypes = array(BX_NTFS_DTYPE_EMAIL, BX_NTFS_DTYPE_PUSH);
+        $aTypesToSend = array();
+        foreach($aTypes as $sType) {
+            $aHidden = $this->_oModule->_oConfig->getHandlersHidden($sType);
+            if(in_array($aHandler['id'], $aHidden))
+                continue;
+
+            $sMethodPostfix = bx_gen_method_name($sType);
+            $sMethodGet = 'getNotification' . $sMethodPostfix;
+            $sMethodSend = 'sendNotification' . $sMethodPostfix;
+            if(!method_exists($this->_oModule->_oTemplate, $sMethodGet) || !method_exists($this, $sMethodSend))
+                continue;
+
+            //--- Get event.
+            $aTypesToSend[$sType] = array(
+            	'method' => $sMethodSend,
+                'content' => $this->_oModule->_oTemplate->$sMethodGet($aEvent)
+            );
+        }
+
+        if(empty($aTypesToSend) || !is_array($aTypesToSend))
+            return;
 
         //--- Get subscribers.
         $oConnection = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->getObject('conn_subscriptions'));
@@ -227,16 +243,64 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             if(!bx_srv($oProfile->getModule(), 'act_as_profile'))
                 continue;
 
-            if($oPrivacyExt !== false && !$oPrivacyExt->check($iId, $iRecipient)) 
+            if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id'], $iRecipient)) 
     		    continue;
 
-            if($oPrivacyInt !== false && !$oPrivacyInt->check($iId, $iRecipient))
+            if($oPrivacyInt !== false && !$oPrivacyInt->check($aEvent['id'], $iRecipient))
                 continue;
 
-            sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array(
-                'content' => $sEvent
-            ));
+            foreach($aTypesToSend as $aType)
+                $this->{$aType['method']}($oProfile, $aType['content']);
         }
+    }
+
+    protected function sendNotificationEmail($oProfile, $sContent)
+    {
+        sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array(
+            'content' => $sContent
+        ));
+    }
+
+    protected function sendNotificationPush($oProfile, $aContent)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sAppId = getParam($CNF['PARAM_PUSH_APP_ID']);
+        $sRestApi = getParam($CNF['PARAM_PUSH_REST_API']);
+        if(empty($sAppId) || empty($sRestApi))
+            return;
+
+		$sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
+
+		$aFields = array(
+			'app_id' => $sAppId,
+			'filters' => array(
+		        array("field" => "tag", "key" => "user", "relation" => "=", "value" => $oProfile->id())
+            ),
+			'contents' => array(
+    			 $sLanguage => $aContent['message']
+    		),
+			'headings' => array(
+				 $sLanguage => _t('_bx_ntfs_push_new_event_subject', getParam('site_title'))
+			),
+			'url' => $aContent['url'],
+			'chrome_web_icon' => $aContent['icon']
+		);
+
+		$oChannel = curl_init();
+		curl_setopt($oChannel, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+		curl_setopt($oChannel, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json; charset=utf-8',
+			'Authorization: Basic ' . $sRestApi
+		));
+		curl_setopt($oChannel, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($oChannel, CURLOPT_HEADER, false);
+		curl_setopt($oChannel, CURLOPT_POST, true);
+		curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
+		curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
+
+		$sResult = curl_exec($oChannel);
+		curl_close($oChannel);
     }
 }
 

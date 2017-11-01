@@ -13,6 +13,8 @@ bx_import('BxDolPrivacy');
 
 class BxNtfsConfig extends BxBaseModNotificationsConfig
 {
+    protected $_iPushMaxLen;
+
     protected $_aHandlersHiddenEmail;
     protected $_aHandlersHiddenPush;
 
@@ -26,6 +28,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         $this->CNF = array (
         	'URL_HOME' => 'page.php?i=notifications-view',
 
+        	'PARAM_PUSH_APP_ID' => 'bx_notifications_push_app_id',
+        	'PARAM_PUSH_REST_API' => 'bx_notifications_push_rest_api',
+			'PARAM_PUSH_SAFARI_WEB_ID' => 'bx_notifications_push_safari_id',
+			'PARAM_PUSH_SHORT_NAME' => 'bx_notifications_push_short_name',
+
         	'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
         );
         
@@ -35,6 +42,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         	'option' => 'bx_notifications_'
         );
 
+        $this->_iPushMaxLen = 190;
+
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '');
         $this->_sHandlersMethod = 'get_notifications_data';
         $this->_aHandlersHiddenEmail = array();
@@ -43,10 +52,12 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         $this->_aJsClasses = array(
             'main' => 'BxNtfsMain',
         	'view' => 'BxNtfsView',
+        	'push' => 'BxNtfsPush',
         );
         $this->_aJsObjects = array(
         	'main' => 'oBxNtfsMain',
             'view' => 'oBxNtfsView',
+        	'push' => 'oBxNtfsPush',
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
@@ -78,6 +89,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             if(!empty($sHideTimeline))
                 $this->{'_aHandlersHidden' . $sVariable} = explode(',', $sHideTimeline);
     	}
+    }
+
+    public function getPushMaxLen()
+    {
+        return $this->_iPushMaxLen;
     }
 
     public function getHandlersHidden($sType = '')

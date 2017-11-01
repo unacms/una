@@ -16,6 +16,38 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function getInclude($iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sAppId = getParam($CNF['PARAM_PUSH_APP_ID']);
+        if(empty($sAppId))
+            return;
+
+        $sShortName = getParam($CNF['PARAM_PUSH_REST_API']);
+        $sSafariWebId = getParam($CNF['PARAM_PUSH_SAFARI_WEB_ID']);
+
+        $this->addJs(array(
+        	'https://cdn.onesignal.com/sdks/OneSignalSDK.js',
+        	'push.js',
+        ));
+
+        $this->addJsTranslation(array(
+            '_bx_ntfs_push_notification_request',
+            '_bx_ntfs_push_notification_request_yes',
+            '_bx_ntfs_push_notification_request_no'
+        ));
+
+        return $this->getJsCode('push', array(
+            'sSiteName' => getParam('site_title'),
+            'iProfileId' => $iProfileId,
+            'sAppId' => $sAppId,
+            'sShortName' => $sShortName,
+            'sSafariWebId' => $sSafariWebId,
+            'sNotificationUrl' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
+        ));
+    }
+
     public function getViewBlock($aParams)
     {
         return $this->parseHtmlByName('block_view.html', array(
@@ -101,6 +133,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aEvent['content'] = unserialize($aEvent['content']);
         $aEvent['content']['owner_name'] = $sOwnerName;
         $aEvent['content']['owner_link'] = $sOwnerUrl;
+        $aEvent['content']['owner_icon'] = $sOwnerIcon;
         if(!empty($aEvent['content']['entry_caption']))
             $aEvent['content']['entry_caption'] = bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT_MULTILINE);
 
@@ -108,8 +141,8 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         	if(substr($sValue, 0, 1) == '_')
         		$aEvent['content'][$sKey] = _t($sValue);        
 
-    	$sContent = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
-    	$sContent = $this->parseHtmlByContent($sContent, $aEvent['content'], array('{', '}'));
+    	$aEvent['content_parsed'] = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
+    	$aEvent['content_parsed'] = $this->parseHtmlByContent($aEvent['content_parsed'], $aEvent['content'], array('{', '}'));
 
         return $this->parseHtmlByName('event.html', array (
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
@@ -127,28 +160,21 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
                 'content' => array()
             ),
             'link' => $this->_getContentLink($aEvent),
-            'content' => $sContent,
+            'content' => $aEvent['content_parsed'],
             'date' => bx_time_js($aEvent['date']),
         ));
     }
 
-    public function getPostEt(&$aEvent, $aBrowseParams = array())
+    public function getNotificationEmail(&$aEvent)
     {
-        $oModule = $this->getModule();
+        $this->getPost($aEvent);
 
-        $this->getPost($aEvent, $aBrowseParams);
-
-        list($sOwnerName, $sOwnerUrl, $sOwnerIcon) = $oModule->getUserInfo($aEvent['owner_id']);
-        $bAuthorIcon = !empty($sOwnerIcon);
-
-        $sContent = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
-    	$sContent = $this->parseHtmlByContent($sContent, $aEvent['content'], array('{', '}'));
-
+        $bAuthorIcon = !empty($aEvent['content']['owner_icon']);
         return $this->parseHtmlByName('et_new_event.html', array(
         	'bx_if:show_icon' => array(
                 'condition' => $bAuthorIcon,
                 'content' => array(
-                    'icon_url' => $sOwnerIcon
+                    'icon_url' => $aEvent['content']['owner_icon']
                 )
             ),
             'bx_if:show_icon_empty' => array(
@@ -156,9 +182,24 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
                 'content' => array()
             ),
             'content_url' => $this->_getContentLink($aEvent),
-            'content' => $sContent,
+            'content' => $aEvent['content_parsed'],
             'date' => bx_process_output($aEvent['date'], BX_DATA_DATETIME_TS),
         ));
+    }
+
+    public function getNotificationPush(&$aEvent)
+    {
+        $this->getPost($aEvent);
+
+        $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', '"', $aEvent['content_parsed']);
+		if($sMessage)
+            $sMessage = BxTemplFunctions::getInstance()->getStringWithLimitedLength(html_entity_decode($sMessage), $this->_oConfig->getPushMaxLen());
+
+        return array(
+            'url' => $this->_getContentLink($aEvent),
+            'message' => $sMessage,
+            'icon' => !empty($aEvent['content']['owner_icon']) ? $aEvent['content']['owner_icon'] : ''
+        );
     }
 
     public function getEmpty($bVisible = true)
