@@ -30,8 +30,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
         	'PARAM_PUSH_APP_ID' => 'bx_notifications_push_app_id',
         	'PARAM_PUSH_REST_API' => 'bx_notifications_push_rest_api',
+        	'PARAM_PUSH_SHORT_NAME' => 'bx_notifications_push_short_name',
 			'PARAM_PUSH_SAFARI_WEB_ID' => 'bx_notifications_push_safari_id',
-			'PARAM_PUSH_SHORT_NAME' => 'bx_notifications_push_short_name',
 
         	'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
         );

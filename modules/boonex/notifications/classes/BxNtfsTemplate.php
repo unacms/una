@@ -24,7 +24,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($sAppId))
             return;
 
-        $sShortName = getParam($CNF['PARAM_PUSH_REST_API']);
+        $sShortName = getParam($CNF['PARAM_PUSH_SHORT_NAME']);
         $sSafariWebId = getParam($CNF['PARAM_PUSH_SAFARI_WEB_ID']);
 
         $this->addJs(array(
