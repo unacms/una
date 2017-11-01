@@ -28,8 +28,12 @@ BxNtfsPush.prototype.init = function() {
 		subdomainName: $this._sShortName, /* required only for http  sites */
 		safari_web_id: $this._sSafariWebId,
 		persistNotification: false,
-		welcomeNotification: {disable:false},
-		httpPermissionRequest: {enable: true},
+		welcomeNotification: {
+			disable:false
+		},
+		httpPermissionRequest: {
+			enable: true
+		},
 		promptOptions: {
 			/* These prompt options values configure both the HTTP prompt and the HTTP popup. */
 			/* actionMessage limited to 90 characters */

@@ -169,18 +169,8 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     {
         $this->getPost($aEvent);
 
-        $bAuthorIcon = !empty($aEvent['content']['owner_icon']);
         return $this->parseHtmlByName('et_new_event.html', array(
-        	'bx_if:show_icon' => array(
-                'condition' => $bAuthorIcon,
-                'content' => array(
-                    'icon_url' => $aEvent['content']['owner_icon']
-                )
-            ),
-            'bx_if:show_icon_empty' => array(
-                'condition' => !$bAuthorIcon,
-                'content' => array()
-            ),
+        	'icon_url' => !empty($aEvent['content']['owner_icon']) ? $aEvent['content']['owner_icon'] : $this->getIconUrl('std-icon.svg'),
             'content_url' => $this->_getContentLink($aEvent),
             'content' => $aEvent['content_parsed'],
             'date' => bx_process_output($aEvent['date'], BX_DATA_DATETIME_TS),

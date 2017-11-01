@@ -1,73 +1,13 @@
-<style>
-    .et-item {
-        position: relative;
-        display: inline-block;
-    }
-    .et-item-cnt {
-        position: relative;
-        margin: 5px;
-    }
-    .et-item-img,
-    .et-item-img p,
-    .et-item-img img {
-        width: 48px;
-        height: 48px;
-        line-height: 48px;
-        border-radius: 80px;
-    }
-    .et-item-img {
-    	position: absolute;
-        top: 0px;
-        left: 0px;
-        background-clip: padding-box;
-        text-align: center;
-        overflow: hidden;
-    }
-	.et-item-img .sys-icon {
-	    display: block;
-        box-sizing: border-box;
-	    margin: 0px;
-        border: 0px solid #ccc;
-	    line-height: 46px;
-	    line-height: 2.9rem;
-	    font-size: 20px;
-	    font-size: 1.2rem;
-	    font-weight: 700;
-	    color: #d0d0d0;
-	}
-    .et-item-info {
-    	position: relative;
-        min-height: 48px;
-        margin-left: 58px;
-    }
-    .et-item-info-cnt {
-        padding: 5px 0px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-    .et-item-info-cnt p {
-	   margin: 5px 0px 0px 0px;
-    }
-    .et-item-info-cnt p:first-child {
-       margin-top: 0px;
-    }
-</style>
-<div class="et-item">
+<div style="position: relative; display: inline-block;">
 	<a href="__content_url__">
-		<div class="et-item-cnt">
-			<div class="et-item-img">
-				<bx_if:show_icon>
-				    <img src="__icon_url__" />
-				</bx_if:show_icon>
-				<bx_if:show_icon_empty>
-				    <i class="sys-icon user"></i>
-				</bx_if:show_icon_empty>
+		<div style="position: relative; margin: 5px;">
+			<div style="position: absolute; top: 0px; left: 0px; width: 48px; height: 48px; background-clip: padding-box; border-radius: 80px; line-height: 48px;text-align: center; overflow: hidden;">
+                <img style="width: 48px; height: 48px; line-height: 48px; border-radius: 80px;" src="__icon_url__" />
 			</div>
-			<div class="et-item-info">
-			    <div class="et-item-info-cnt">
-                    <p>__content__</p>
-                    <p>__date__</p>
+			<div style="position: relative; min-height: 48px; margin-left: 58px;">
+			    <div style="padding: 5px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                    <p style="margin: 0px;">__content__</p>
+                    <p style="margin: 5px 0px 0px 0px;">__date__</p>
                 </div>
 			</div>
 		</div>
