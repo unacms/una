@@ -207,10 +207,14 @@
                 // show popup
                 $el.css({display: 'block', visibility: 'visible'});
                 if (o.fog) {
+                	var oOnHide = function() {
+                		$(window).triggerHandler('resize.popupFog');
+                	};
+                	
                     if (o.speed > 0)
-                        $('#bx-popup-fog').fadeIn(o.speed);
+                        $('#bx-popup-fog').fadeIn(o.speed, oOnHide);
                     else
-                        $('#bx-popup-fog').show();
+                        $('#bx-popup-fog').show(oOnHide);
                 }
 
                 setTimeout(function () {
