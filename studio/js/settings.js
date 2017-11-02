@@ -174,7 +174,9 @@ BxDolStudioSettings.prototype.processResult = function(oData) {
 	var $this = this;
 
 	if(oData && oData.message != undefined && oData.message.length != 0)
-    	alert(oData.message);
+		$(document).dolPopupAlert({
+			message: oData.message
+		});
 
     if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
     	document.location = document.location;

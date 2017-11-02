@@ -1319,6 +1319,7 @@
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
 	<string name="_adm_stg_err_cannot_perform"><![CDATA[Не могу выполнить действие.]]></string>
+	<string name="_adm_stg_err_mix_already_exists"><![CDATA[Набор с таким именем уже существует.]]></string>
 	<string name="_adm_stg_txt_create_mix_popup"><![CDATA[Добавить новый набор]]></string>
 	<string name="_adm_stg_txt_import_mix_popup"><![CDATA[Импортировать набор]]></string>
 	<string name="_adm_stg_txt_mix_duplicate"><![CDATA[Продублировать]]></string>

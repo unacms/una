@@ -445,6 +445,11 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 			if(!is_array($aContent) || empty($aContent['mix']) || empty($aContent['options']))
 				return array('code' => '3', 'message' => $sError);
 
+            $aMix = array();
+            $this->oDb->getMixes(array('type' => 'by_name', 'value' => $aContent['mix']['name']), $aMix, false);
+            if(!empty($aMix) && is_array($aMix))
+                return array('code' => '4', 'message' => _t('_adm_stg_err_mix_already_exists'));
+
         	$iId = $oForm->insert(array(
         		'type' => $aContent['mix']['type'],
         		'category' => $aContent['mix']['category'],
@@ -452,7 +457,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         		'title' => $aContent['mix']['title']
         	));
         	if($iId === false)
-	        	return array('code' => '4', 'message' => $sError); 
+	        	return array('code' => '5', 'message' => $sError); 
 
 			foreach($aContent['options'] as $sKey => $sValue)
 				$this->oDb->insertMixesOptions(array(
