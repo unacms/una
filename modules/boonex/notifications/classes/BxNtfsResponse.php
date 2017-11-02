@@ -39,11 +39,12 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
                 foreach($aDataItems as $aDataItem) {
                     $iId = $this->_oModule->_oDb->insertEvent($aDataItem);
-    				if(!empty($iId))
-    					$this->_oModule->onPost($iId);
-                }
+                    if(!empty($iId)) {
+                        $this->sendNotifications($iId, $oAlert, $aHandler);
 
-                $this->sendNotifications($iId, $oAlert, $aHandler);
+                        $this->_oModule->onPost($iId);
+                    }
+                }
 				break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
