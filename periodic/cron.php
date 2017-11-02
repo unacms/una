@@ -122,6 +122,8 @@ function runJob($aJob)
 bx_import('BxDolCronQuery');
 $oDb = BxDolCronQuery::getInstance();
 
+setParam('sys_cron_time', time());
+
 // run one time transient jobs
 $aJobsTransient = $oDb->getTransientJobs();
 if (!empty($aJobsTransient)) {

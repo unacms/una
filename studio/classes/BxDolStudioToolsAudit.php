@@ -358,6 +358,9 @@ class BxDolStudioToolsAudit extends BxDol
 
         $s .= $this->getBlock(_t('_sys_audit_cron_jobs'), '', _t('_sys_audit_msg_cron_jobs', `crontab -l 2>&1`));
 
+        $iCronTime = getParam('sys_cron_time');
+        $s .= $this->getBlock(_t('_sys_audit_cron_jobs_exec_time'), '', !empty($iCronTime) ? bx_time_js($iCronTime, BX_FORMAT_DATE_TIME, true) : _t('_None'));
+
         echo '<h1>' . _t('_sys_audit_header_site_setup') . '</h1>';
         echo "<ul>$s</ul>";
     }

@@ -1274,6 +1274,7 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to the script on FTP server]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP server login]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
+	<string name="_adm_stg_cpt_option_sys_cron_time"><![CDATA[Last cron execution time]]></string>
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
 	<string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Google Maps API key]]></string>
@@ -1574,6 +1575,7 @@
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
 	<string name="_sys_admin_filter"><![CDATA[Filter:]]></string>
 	<string name="_sys_audit_cron_jobs"><![CDATA[Cron jobs]]></string>
+	<string name="_sys_audit_cron_jobs_exec_time"><![CDATA[Last cron jobs execution]]></string>
 	<string name="_sys_audit_header_manual_audit"><![CDATA[Manual Server Audit]]></string>
 	<string name="_sys_audit_header_requirements"><![CDATA[Requirements]]></string>
 	<string name="_sys_audit_header_site_optimization"><![CDATA[Site optimization]]></string>

@@ -164,11 +164,11 @@ BxDolStudioDashboard.prototype.clearCache = function(sType) {
 
 BxDolStudioDashboard.prototype.permissions = function() {
     this.hostTools('permissions');
-}
+};
 
 BxDolStudioDashboard.prototype.serverAudit = function() {
     this.hostTools('server_audit');
-}
+};
 
 BxDolStudioDashboard.prototype.hostTools = function(sAction) {
 	var $this = this;
@@ -191,7 +191,9 @@ BxDolStudioDashboard.prototype.hostTools = function(sAction) {
 			if(!sData.length)
 			    return;
 
-			$('#' + sDivId).hide().html(sData).bx_anim('show', 'fade', 'slow');
+			$('#' + sDivId).hide().html(sData).bx_anim('show', 'fade', 'slow', function() {
+				$(this).bxTime();
+			});
 		},
 		'html'
 	);
