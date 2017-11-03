@@ -133,7 +133,7 @@ div.bx-base-text-breadcrumb i {
     /* tells flexbox to start items from the left */
     -webkit-box-pack: start;
     -ms-flex-pack: start;
-    plex-pack: start;
+    flex-pack: start;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }

@@ -111,17 +111,35 @@ div.mce-fullscreen {
 .bx-db-container {
     position:relative;
 }
+.bx-db-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
 .bx-db-title {
-    display:inline-block;
-    float:left;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+
     line-height:40px;
 }
 
 .bx-db-menu {
+	-webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    
     line-height:40px;
-    float: right;
-    vertical-align:baseline;
 }
 
 .bx-db-menu-tab {
