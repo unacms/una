@@ -102,6 +102,24 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         );
     }
 
+    protected function getDeleteDataBxTimelineDelete(&$oAlert, &$aHandler)
+    {
+        $aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
+
+    	return array(
+    	    array(
+            	'type' => $oAlert->sUnit, 
+            	'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
+            	'object_id' => $oAlert->iObject,
+            	'subobject_id' => $this->_getSubObjectId($oAlert->aExtras)
+            ),
+            array(
+            	'action' => 'timeline_post_common', 
+            	'subobject_id' => $oAlert->iObject
+            )
+        );
+    }
+
 	/**
      * Custom insert data getter for sys_profiles_friends -> connection_added and connection_removed alerts. 
      */
