@@ -1287,6 +1287,10 @@
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Кэш-движок для блоков страниц (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_single"><![CDATA[Число элементов на странице в результатах поиска по ключевому слову]]></string>
     <string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Число элементов на странице в результатах поиска по сайту]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_app_id"><![CDATA[OneSignal App ID]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID в натройках Web Push]]></string>    
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
@@ -2300,6 +2304,11 @@
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Только я]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Пользователей]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Публичные]]></string>
+	<string name="_sys_ps_group_title_closed"><![CDATA[Закрытая]]></string>
+    <string name="_sys_ps_group_title_secret"><![CDATA[Секретная]]></string>
+	<string name="_sys_push_notification_request"><![CDATA[Вы не хотели бы получать уведомления с сайта {0}?]]></string>   
+    <string name="_sys_push_notification_request_yes"><![CDATA[Да]]></string>   
+    <string name="_sys_push_notification_request_no"><![CDATA[Нет, спасибо]]></string>
     <string name="_sys_read_more"><![CDATA[Продолжить чтение "{0}"]]></string>
 	<string name="_sys_request_module_not_found_cpt"><![CDATA[Модуль не найден]]></string>
 	<string name="_sys_request_module_not_found_cnt"><![CDATA[Модуль({0}) не найден]]></string>

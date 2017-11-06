@@ -1,17 +1,11 @@
-function BxNtfsPush(oOptions) {
-	this._sActionsUri = oOptions.sActionUri;
-    this._sActionsUrl = oOptions.sActionUrl;
-    this._sObjName = oOptions.sObjName == undefined ? 'oBxNtfsPush' : oOptions.sObjName;
-    this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
+function BxDolPush(oOptions) {
+    this._sObjName = oOptions.sObjName == undefined ? 'oBxDolPush' : oOptions.sObjName;
     this._sSiteName = oOptions.sSiteName == undefined ? '' : oOptions.sSiteName;
     this._iProfileId = oOptions.iProfileId == undefined ? 0 : oOptions.iProfileId;
     this._sAppId = oOptions.sAppId == undefined ? '' : oOptions.sAppId;
     this._sShortName = oOptions.sShortName == undefined ? '' : oOptions.sShortName;
     this._sSafariWebId = oOptions.sSafariWebId == undefined ? '' : oOptions.sSafariWebId;
     this._sNotificationUrl = oOptions.sNotificationUrl == undefined ? '' : oOptions.sNotificationUrl;
-    this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
-    this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
-    this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
 
     var $this = this;
     $(document).ready(function() {
@@ -19,7 +13,7 @@ function BxNtfsPush(oOptions) {
     });
 }
 
-BxNtfsPush.prototype.init = function() {
+BxDolPush.prototype.init = function() {
 	var $this = this;
 	var OneSignal = window.OneSignal || [];
 	OneSignal.push(["init", {
@@ -37,11 +31,11 @@ BxNtfsPush.prototype.init = function() {
 		promptOptions: {
 			/* These prompt options values configure both the HTTP prompt and the HTTP popup. */
 			/* actionMessage limited to 90 characters */
-			actionMessage: _t('_bx_ntfs_push_notification_request', $this._sSiteName), 
+			actionMessage: _t('_sys_push_notification_request', $this._sSiteName), 
 			/* acceptButtonText limited to 15 characters */
-			acceptButtonText: _t('_bx_ntfs_push_notification_request_yes'),
+			acceptButtonText: _t('_sys_push_notification_request_yes'),
 			/* cancelButtonText limited to 15 characters */
-			cancelButtonText: _t('_bx_ntfs_push_notification_request_no')
+			cancelButtonText: _t('_sys_push_notification_request_no')
 		}
 	}]);
 

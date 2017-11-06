@@ -51,32 +51,6 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     /**
      * SERVICE METHODS
      */
-    
-	/**
-     * @page service Service Calls
-     * @section bx_notifications Notifications
-     * @subsection bx_notifications-integration Integration
-     * @subsubsection bx_notifications-include include
-     * 
-     * @code bx_srv('bx_notifications', 'include', [...]); @endcode
-     * 
-     * Get integration code with all necessary includes. 
-     *
-     * @return HTML sting with integration code to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. Empty string is returned if there is no enough input data.
-     * 
-     * @see BxSnipcartModule::serviceInclude
-     */
-    /** 
-     * @ref bx_notifications-include_css_js "include"
-     */
-    public function serviceGetInclude($iProfileId = 0)
-    {
-        $iProfileId = !empty($iProfileId) ? $iProfileId : bx_get_logged_profile_id();
-        if(empty($iProfileId))
-            return '';
-
-        return $this->_oTemplate->getInclude($iProfileId);
-    }
 
     /**
      * @page service Service Calls

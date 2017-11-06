@@ -16,38 +16,6 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    public function getInclude($iProfileId)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $sAppId = getParam($CNF['PARAM_PUSH_APP_ID']);
-        if(empty($sAppId))
-            return;
-
-        $sShortName = getParam($CNF['PARAM_PUSH_SHORT_NAME']);
-        $sSafariWebId = getParam($CNF['PARAM_PUSH_SAFARI_WEB_ID']);
-
-        $this->addJs(array(
-        	'https://cdn.onesignal.com/sdks/OneSignalSDK.js',
-        	'push.js',
-        ));
-
-        $this->addJsTranslation(array(
-            '_bx_ntfs_push_notification_request',
-            '_bx_ntfs_push_notification_request_yes',
-            '_bx_ntfs_push_notification_request_no'
-        ));
-
-        return $this->getJsCode('push', array(
-            'sSiteName' => getParam('site_title'),
-            'iProfileId' => $iProfileId,
-            'sAppId' => $sAppId,
-            'sShortName' => $sShortName,
-            'sSafariWebId' => $sSafariWebId,
-            'sNotificationUrl' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
-        ));
-    }
-
     public function getViewBlock($aParams)
     {
         return $this->parseHtmlByName('block_view.html', array(

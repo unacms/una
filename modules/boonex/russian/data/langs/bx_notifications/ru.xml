@@ -18,10 +18,6 @@
 	<string name="_bx_ntfs_option_events_hide_site"><![CDATA[Уведомления на сайте]]></string>
 	<string name="_bx_ntfs_option_events_hide_email"><![CDATA[Уведомления через имейл]]></string>
 	<string name="_bx_ntfs_option_events_hide_push"><![CDATA[Push-уведомления]]></string>
-	<string name="_bx_ntfs_option_push_app_id"><![CDATA[OneSignal App ID]]></string>
-    <string name="_bx_ntfs_option_push_rest_api"><![CDATA[REST API Key]]></string>
-    <string name="_bx_ntfs_option_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
-    <string name="_bx_ntfs_option_push_safari_id"><![CDATA[Apple Safari Web ID в натройках Web Push]]></string>
 
 	<string name="_bx_ntfs_privacy_view"><![CDATA[Просматривать события]]></string>
 
@@ -38,9 +34,6 @@
 	<string name="_bx_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> - {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_bx_ntfs_txt_subobject_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> - {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 
-    <string name="_bx_ntfs_push_notification_request"><![CDATA[Вы не хотели бы получать уведомления с сайта {0}?]]></string>   
-    <string name="_bx_ntfs_push_notification_request_yes"><![CDATA[Да]]></string>   
-    <string name="_bx_ntfs_push_notification_request_no"><![CDATA[Нет, спасибо]]></string>
     <string name="_bx_ntfs_push_new_event_subject"><![CDATA[Новое на сайте "{0}"]]></string>
 
 	<string name="_bx_ntfs_email_new_event"><![CDATA[Новое уведомление]]></string>

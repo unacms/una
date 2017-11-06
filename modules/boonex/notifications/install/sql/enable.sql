@@ -45,11 +45,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_notifications_events_per_page', '10', @iCategId, '_bx_ntfs_option_events_per_page', 'digit', '', '', '', '', 1),
 ('bx_notifications_events_hide_site', '', @iCategId, '_bx_ntfs_option_events_hide_site', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 10),
 ('bx_notifications_events_hide_email', '', @iCategId, '_bx_ntfs_option_events_hide_email', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 11),
-('bx_notifications_events_hide_push', '', @iCategId, '_bx_ntfs_option_events_hide_push', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 12),
-('bx_notifications_push_app_id', '', @iCategId, '_bx_ntfs_option_push_app_id', 'digit', '', '', '', '', 20),
-('bx_notifications_push_rest_api', '', @iCategId, '_bx_ntfs_option_push_rest_api', 'digit', '', '', '', '', 21),
-('bx_notifications_push_short_name', '', @iCategId, '_bx_ntfs_option_push_short_name', 'digit', '', '', '', '', 22),
-('bx_notifications_push_safari_id', '', @iCategId, '_bx_ntfs_option_push_safari_id', 'digit', '', '', '', '', 23);
+('bx_notifications_events_hide_push', '', @iCategId, '_bx_ntfs_option_events_hide_push', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 12);
 
 
 -- PRIVACY 
@@ -80,8 +76,3 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
 (@sName, '_bx_ntfs_email_new_event', 'bx_notifications_new_event', '_bx_ntfs_email_new_event_subject', '_bx_ntfs_email_new_event_body');
-
-
--- INJECTION
-INSERT INTO `sys_injections`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
-(@sName, 0, 'injection_header', 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:11:"get_include";}', '0', '1');

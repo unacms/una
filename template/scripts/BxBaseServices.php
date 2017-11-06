@@ -171,6 +171,48 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'input' => $oForm->genRow($aInputText)
         )), true);
     }
+
+    public function serviceAddPushInit($iProfileId = 0)
+    {
+        $iProfileId = !empty($iProfileId) ? $iProfileId : bx_get_logged_profile_id();
+        if(empty($iProfileId))
+            return '';
+
+        $sAppId = getParam('sys_push_app_id');
+        if(empty($sAppId))
+            return '';
+
+        $oTemplate = BxDolTemplate::getInstance();
+
+        $sShortName = getParam('sys_push_short_name');
+        $sSafariWebId = getParam('sys_push_safari_id');
+
+        $oTemplate->addJs(array(
+        	'https://cdn.onesignal.com/sdks/OneSignalSDK.js',
+        	'BxDolPush.js',
+        ));
+
+        $oTemplate->addJsTranslation(array(
+            '_sys_push_notification_request',
+            '_sys_push_notification_request_yes',
+            '_sys_push_notification_request_no'
+        ));
+
+        $sJsClass = 'BxDolPush';
+        $sJsObject = 'oBxDolPush';
+
+        $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode(array(
+        	'sObjName' => $sJsObject,
+            'sSiteName' => getParam('site_title'),
+            'iProfileId' => $iProfileId,
+            'sAppId' => $sAppId,
+            'sShortName' => $sShortName,
+            'sSafariWebId' => $sSafariWebId,
+            'sNotificationUrl' => BX_DOL_URL_ROOT,
+        )) . ");";
+
+        return $oTemplate->_wrapInTagJsCode($sContent);
+    }
 }
 
 /** @} */

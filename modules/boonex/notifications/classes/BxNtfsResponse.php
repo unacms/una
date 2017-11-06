@@ -266,8 +266,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sAppId = getParam($CNF['PARAM_PUSH_APP_ID']);
-        $sRestApi = getParam($CNF['PARAM_PUSH_REST_API']);
+        $sAppId = getParam('sys_push_app_id');
+        $sRestApi = getParam('sys_push_rest_api');
         if(empty($sAppId) || empty($sRestApi))
             return;
 
