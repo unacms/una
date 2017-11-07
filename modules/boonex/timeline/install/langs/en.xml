@@ -112,8 +112,10 @@
     <string name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[View]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Share]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Share]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Report]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[More]]></string>
+    <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[More Actions]]></string>
 
 	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Form Attachments]]></string>

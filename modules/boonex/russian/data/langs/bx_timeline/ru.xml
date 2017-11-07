@@ -112,8 +112,10 @@
     <string name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[Посмотреть]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Голосовать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Поделиться]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Поделиться]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Пожаловаться]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[Ещё]]></string>
+    <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[Дополнительные действия]]></string>
 
 	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
