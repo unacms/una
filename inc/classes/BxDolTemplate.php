@@ -934,7 +934,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 				<meta name="twitter:image" content="' . $this->aPage['image'] . '" />';
         }
 
-        $sRet .= BxTemplFunctions::getInstance()->getMetaIcons();
+        $oFunctions = BxTemplFunctions::getInstance();
+        $sRet .= $oFunctions->getManifests();
+        $sRet .= $oFunctions->getMetaIcons();
 
         if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
             $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';

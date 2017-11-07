@@ -5,6 +5,7 @@ function BxDolPush(oOptions) {
     this._sAppId = oOptions.sAppId == undefined ? '' : oOptions.sAppId;
     this._sShortName = oOptions.sShortName == undefined ? '' : oOptions.sShortName;
     this._sSafariWebId = oOptions.sSafariWebId == undefined ? '' : oOptions.sSafariWebId;
+    this._sSubfolder = oOptions.sSubfolder == undefined ? '/plugins_public/onesignal/' : oOptions.sSubfolder;
     this._sNotificationUrl = oOptions.sNotificationUrl == undefined ? '' : oOptions.sNotificationUrl;
 
     var $this = this;
@@ -16,11 +17,19 @@ function BxDolPush(oOptions) {
 BxDolPush.prototype.init = function() {
 	var $this = this;
 	var OneSignal = window.OneSignal || [];
+
+	OneSignal.push(function() {
+		OneSignal.SERVICE_WORKER_UPDATER_PATH = "OneSignalSDKUpdaterWorker.js.php";
+    	OneSignal.SERVICE_WORKER_PATH = "OneSignalSDKWorker.js.php";
+    	OneSignal.SERVICE_WORKER_PARAM = { scope: '/' }; /* This registers the workers at the root scope, which is allowed by the HTTP header "Service-Worker-Allowed: /" */
+	});
+
 	OneSignal.push(["init", {
 		appId: $this._sAppId,
 		autoRegister: true, /* Set to true to automatically prompt visitors */
 		subdomainName: $this._sShortName, /* required only for http  sites */
 		safari_web_id: $this._sSafariWebId,
+		path: $this._sSubfolder, /* A trailing slash is required */
 		persistNotification: false,
 		welcomeNotification: {
 			disable:false

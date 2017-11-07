@@ -187,9 +187,17 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         $sShortName = getParam('sys_push_short_name');
         $sSafariWebId = getParam('sys_push_safari_id');
 
+        $sSubfolder = '/plugins_public/onesignal/';
+        $aUrl = parse_url(BX_DOL_URL_ROOT);
+        if(!empty($aUrl['path'])) {
+            $sPath = trim($aUrl['path'], '/');
+            if(!empty($sPath))
+                $sSubfolder = '/' . $sPath . $sSubfolder;
+        }
+
         $oTemplate->addJs(array(
-        	'https://cdn.onesignal.com/sdks/OneSignalSDK.js',
-        	'BxDolPush.js',
+            'https://cdn.onesignal.com/sdks/OneSignalSDK.js',
+            'BxDolPush.js',
         ));
 
         $oTemplate->addJsTranslation(array(
@@ -202,12 +210,13 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         $sJsObject = 'oBxDolPush';
 
         $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode(array(
-        	'sObjName' => $sJsObject,
+            'sObjName' => $sJsObject,
             'sSiteName' => getParam('site_title'),
             'iProfileId' => $iProfileId,
             'sAppId' => $sAppId,
             'sShortName' => $sShortName,
             'sSafariWebId' => $sSafariWebId,
+            'sSubfolder' => $sSubfolder,
             'sNotificationUrl' => BX_DOL_URL_ROOT,
         )) . ");";
 

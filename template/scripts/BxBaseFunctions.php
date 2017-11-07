@@ -336,6 +336,31 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get HTML code for manifests.
+     * @return HTML string to insert into HEAD section
+     */
+    function getManifests()
+    {
+        $sRet = '';
+        $bLogged = isLogged();
+
+        /*
+         * OneSignal manifest must appear before any other <link rel="manifest" ...> in <head>
+         */
+        $sPushAppId = getParam('sys_push_app_id');
+        if($bLogged && !empty($sPushAppId)) {
+            $aUrlRoot = parse_url(BX_DOL_URL_ROOT);
+
+            $sUrl = BX_DOL_URL_PLUGINS_PUBLIC .  'onesignal/manifest.json.php';
+            $sUrl = bx_append_url_params($sUrl, array('bx_name' => $aUrlRoot['host']));
+
+            $sRet .= '<link rel="manifest" href="' . $sUrl . '" />';
+        }
+
+        return $sRet;
+    }
+
+    /**
      * Get HTML code for meta icons.
      * @return HTML string to insert into HEAD section
      */
