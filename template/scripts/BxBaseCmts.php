@@ -326,6 +326,8 @@ class BxBaseCmts extends BxDolCmts
     function getNotification($iCountOld = 0, $iCountNew = 0)
     {
     	$iCount = (int)$iCountNew - (int)$iCountOld;
+    	if($iCount < 0)
+    	    return '';
 
 		$aComments = $this->_oQuery->getCommentsBy(array('type' => 'latest', 'object_id' => $this->_iId, 'author' => $this->_getAuthorId(), 'others' => 1, 'start' => '0', 'per_page' => $iCount));
 		if(empty($aComments) || !is_array($aComments))

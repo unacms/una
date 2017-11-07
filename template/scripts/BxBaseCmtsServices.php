@@ -41,7 +41,7 @@ class BxBaseCmtsServices extends BxDol
     		return false;
 
 		$iCountNew = $oCmts->getCommentsCount($iContentId, -1, BX_CMT_FILTER_OTHERS);
-		if($iCountNew <= $iCount)
+		if($iCountNew == $iCount)
 			return false;
 
     	return array(
