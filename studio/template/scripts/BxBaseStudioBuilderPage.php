@@ -368,9 +368,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             foreach($this->aPageSettings as $aSetting)
                 $oForm->aInputs = array_merge($oForm->aInputs, $this->{'getSettings' . $this->getClassName($aSetting['name']) . 'Fields'}($this->aPageRebuild, false));
 
-            $iVisibleFor = BxDolStudioUtils::getVisibilityValue($oForm->getCleanValue('visible_for'), $oForm->getCleanValue('visible_for_levels'));
-            BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
-            unset($oForm->aInputs['visible_for']);
+            $mixedVisibleFor = $oForm->getCleanValue('visible_for');
+            $mixedVisibleForLevels = $oForm->getCleanValue('visible_for_levels');
+            if($mixedVisibleFor !== false && $mixedVisibleForLevels !== false) {
+                $iVisibleFor = BxDolStudioUtils::getVisibilityValue($mixedVisibleFor, $mixedVisibleForLevels);
+                BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
+                unset($oForm->aInputs['visible_for']);
+            }
 
             if($oForm->update($this->aPageRebuild['id'])) {
                 $iLevelId = $oForm->getCleanValue('layout_id');
@@ -1168,7 +1172,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     protected function getSettingsVisibilityFields($aPage = array(), $bCreate = true)
     {
-    	return $this->getSettingsVisibility($aPage = array(), $bCreate, true);
+        return $this->getSettingsVisibility($aPage, $bCreate, true);
     }
 
     protected function getSettingsCache($aPage = array(), $bCreate = true, $bInputsOnly = false)
