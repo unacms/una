@@ -41,6 +41,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
         $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
+        $iProfile = $oProfile->id();
 
         // get profile's title
         $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
@@ -51,7 +52,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         // connections object 
         $sConnectionsObject = isset($CNF['OBJECT_CONNECTIONS']) ? $CNF['OBJECT_CONNECTIONS'] : 'sys_profiles_friends';
         $oConn = BxDolConnection::getObjectInstance($sConnectionsObject);
-        $aConnectionTitles = $this->getModule()->serviceGetConnectionButtonsTitles($oProfile->id(), $sConnectionsObject);
+        $aConnectionTitles = $this->getModule()->serviceGetConnectionButtonsTitles($iProfile, $sConnectionsObject);
 
         $sCoverUrl = '';
         if($this->getModule()->checkAllowedViewCoverImage($aData) === CHECK_ACTION_RESULT_ALLOWED)
@@ -79,7 +80,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'bx_if:show_thumb_letter' => array(
                 'condition' => !$bThumbUrl,
                 'content' => array(
-                    'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
+                    'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 0.5)),
                     'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
                 )
             ),
@@ -93,11 +94,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'bx_if:info' => array(
                 'condition' => true,
                 'content' => array (
-                    'members' => $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($oProfile->id(), true) : 0) : '&nbsp;',
+                    'members' => $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($iProfile, true) : 0) : '&nbsp;',
                     'bx_if:btn' => array (
                         'condition' => isLogged() && !empty($aConnectionTitles['add']) && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedFriendAdd($aData),
                         'content' => array (
-                            'id' => $oProfile->id(),
+                            'id' => $iProfile,
                             'title' => isset($aConnectionTitles['add']) ? $aConnectionTitles['add'] : '',
                             'object' => $sConnectionsObject,
                         ),

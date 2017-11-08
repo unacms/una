@@ -359,14 +359,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $aResult;
     }
 
-    public static function getColorCode($sName = '', $fOpacity = false)
+    public static function getColorCode($mixedName = false, $fOpacity = false)
     {
         $aClasses = array_keys(self::$_aColors);
 
-        if(empty($sName) || !in_array($sName, $aClasses))
-            $sName = $aClasses[rand(0, count($aClasses) - 1)];
+        if($mixedName === false || (is_string($mixedName) && !is_numeric($mixedName) && !in_array($mixedName, $aClasses)))
+            $mixedName = $aClasses[rand(0, count($aClasses) - 1)];
+        else if(is_numeric($mixedName))
+            $mixedName = $aClasses[(int)$mixedName % count($aClasses)];
 
-        $aColor = self::$_aColors[$sName];
+        $aColor = self::$_aColors[$mixedName];
         if($fOpacity !== false && is_numeric($fOpacity))
             $aColor[] = $fOpacity;
 

@@ -73,6 +73,7 @@ class BxDolCronAccount extends BxDolCron
             if(!$oProfile)
                 continue;
 
+            $iId = $oProfile->id();
             $sUrl = $oProfile->getUrl();
             $bUrl = $oProfile->getModule() != 'system';
 
@@ -92,7 +93,7 @@ class BxDolCronAccount extends BxDolCron
                 'bx_if:show_thumb_letter' => array(
                     'condition' => !$bThumbUrl,
                     'content' => array(
-                        'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
+                        'color' => implode(', ', BxDolTemplate::getColorCode($iId, 0.5)),
                         'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
                     )
                 ),
