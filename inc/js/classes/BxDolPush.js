@@ -8,6 +8,10 @@ function BxDolPush(oOptions) {
     this._sSubfolder = oOptions.sSubfolder == undefined ? '/plugins_public/onesignal/' : oOptions.sSubfolder;
     this._sNotificationUrl = oOptions.sNotificationUrl == undefined ? '' : oOptions.sNotificationUrl;
 
+    this._sTxtNotificationRequest = oOptions.sTxtNotificationRequest == undefined ? 'Would you like to get notifications' : oOptions.sTxtNotificationRequest;
+    this._sTxtNotificationRequestYes = oOptions.sTxtNotificationRequestYes == undefined ? 'Yes' : oOptions.sTxtNotificationRequestYes;
+    this._sTxtNotificationRequestNo = oOptions.sTxtNotificationRequestNo == undefined ? 'No' : oOptions.sTxtNotificationRequestNo;
+
     var $this = this;
     $(document).ready(function() {
     	$this.init();
@@ -40,11 +44,11 @@ BxDolPush.prototype.init = function() {
 		promptOptions: {
 			/* These prompt options values configure both the HTTP prompt and the HTTP popup. */
 			/* actionMessage limited to 90 characters */
-			actionMessage: _t('_sys_push_notification_request', $this._sSiteName), 
+			actionMessage: $this._sTxtNotificationRequest, 
 			/* acceptButtonText limited to 15 characters */
-			acceptButtonText: _t('_sys_push_notification_request_yes'),
+			acceptButtonText: $this._sTxtNotificationRequestYes,
 			/* cancelButtonText limited to 15 characters */
-			cancelButtonText: _t('_sys_push_notification_request_no')
+			cancelButtonText: $this._sTxtNotificationRequestNo
 		}
 	}]);
 

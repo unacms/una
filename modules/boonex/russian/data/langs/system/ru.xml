@@ -2306,7 +2306,7 @@
 	<string name="_sys_ps_group_title_public"><![CDATA[Публичные]]></string>
 	<string name="_sys_ps_group_title_closed"><![CDATA[Закрытая]]></string>
     <string name="_sys_ps_group_title_secret"><![CDATA[Секретная]]></string>
-	<string name="_sys_push_notification_request"><![CDATA[Вы не хотели бы получать уведомления с сайта {0}?]]></string>   
+	<string name="_sys_push_notification_request"><![CDATA[Хотите получать уведомления с сайта {0}?]]></string>   
     <string name="_sys_push_notification_request_yes"><![CDATA[Да]]></string>   
     <string name="_sys_push_notification_request_no"><![CDATA[Нет, спасибо]]></string>
     <string name="_sys_read_more"><![CDATA[Продолжить чтение "{0}"]]></string>

@@ -200,12 +200,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'BxDolPush.js',
         ));
 
-        $oTemplate->addJsTranslation(array(
-            '_sys_push_notification_request',
-            '_sys_push_notification_request_yes',
-            '_sys_push_notification_request_no'
-        ));
-
         $sJsClass = 'BxDolPush';
         $sJsObject = 'oBxDolPush';
 
@@ -218,6 +212,9 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'sSafariWebId' => $sSafariWebId,
             'sSubfolder' => $sSubfolder,
             'sNotificationUrl' => BX_DOL_URL_ROOT,
+            'sTxtNotificationRequest' => bx_js_string(_t('_sys_push_notification_request', getParam('site_title'))),
+            'sTxtNotificationRequestYes' => bx_js_string(_t('_sys_push_notification_request_yes')),
+            'sTxtNotificationRequestNo' => bx_js_string(_t('_sys_push_notification_request_no')),
         )) . ");";
 
         return $oTemplate->_wrapInTagJsCode($sContent);
