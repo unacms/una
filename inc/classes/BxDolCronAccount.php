@@ -93,7 +93,7 @@ class BxDolCronAccount extends BxDolCron
                     'condition' => !$bThumbUrl,
                     'content' => array(
                         'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
-                        'letter' => strtoupper(mb_substr($sTitle, 0, 1))
+                        'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
                     )
                 ),
                 'bx_if:show_title_link' => array(

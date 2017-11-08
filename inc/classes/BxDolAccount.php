@@ -199,7 +199,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         $sTitle = $this->getDisplayName($iAccountId);
         return BxDolTemplate::getInstance()->parseHtmlByName('unit_account.html', array(
             'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
-			'letter' => strtoupper(mb_substr($sTitle, 0, 1))
+			'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
         ));
     }
 
