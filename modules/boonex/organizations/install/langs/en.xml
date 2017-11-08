@@ -12,7 +12,7 @@
     <string name="_bx_orgs_option_redirect_aadd_custom"><![CDATA[Custom Page]]></string>
     <string name="_bx_orgs_option_redirect_aadd_custom_url"><![CDATA[URL for 'Custom Page' redirect]]></string>
 	<string name="_bx_orgs_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
-	<string name="_bx_orgs_option_per_page_browse"><![CDATA[Number of items on a page]]></string>
+	<string name="_bx_orgs_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_orgs_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_orgs_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Public following list]]></string>

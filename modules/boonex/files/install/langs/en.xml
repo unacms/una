@@ -5,7 +5,7 @@
 	<string name="_bx_files_cmts"><![CDATA[Files' Comments]]></string>
 
 	<string name="_bx_files_option_summary_chars"><![CDATA[Number of characters in auto-cropped file summary]]></string>
-	<string name="_bx_files_option_per_page_browse"><![CDATA[Number of items on a page]]></string>
+	<string name="_bx_files_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_files_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string>
 	<string name="_bx_files_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_files_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>

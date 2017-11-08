@@ -8,7 +8,7 @@
 
 	<string name="_bx_albums_option_summary_chars"><![CDATA[Number of characters in auto-cropped album summary]]></string>
 	<string name="_bx_albums_option_plain_summary_chars"><![CDATA[Number of characters in plain album description when album hasn't thumb]]></string>
-	<string name="_bx_albums_option_per_page_browse"><![CDATA[Number of items a page]]></string>
+	<string name="_bx_albums_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_albums_option_per_page_profile"><![CDATA[Number of items on profile page]]></string>
 	<string name="_bx_albums_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_albums_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>

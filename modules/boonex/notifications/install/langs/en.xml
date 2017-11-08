@@ -14,7 +14,7 @@
     <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
     <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Notifications]]></string>
 
-	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Number of items on a page]]></string>
+	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_ntfs_option_events_hide_site"><![CDATA[Onsite notifications]]></string>
 	<string name="_bx_ntfs_option_events_hide_email"><![CDATA[Email notifications]]></string>
 	<string name="_bx_ntfs_option_events_hide_push"><![CDATA[Push notifications]]></string>
