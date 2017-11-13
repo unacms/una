@@ -77,6 +77,19 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
         $this->_sQueueTable = $this->_oDb->getQueueTable();
     }
 
+    public static function getDuration($sFile)
+    {
+        $sCommand = escapeshellcmd(BX_SYSTEM_FFMPEG) . " -i " . escapeshellarg($sFile) . " 2>&1";
+        $sResult = `$sCommand`;
+
+        $aMatch = array();
+        if(!preg_match("/duration:\s([0-9]{2}):([0-9]{2}):([0-9]{2})\.([0-9]{2})/i", $sResult, $aMatch))
+            return false;
+
+        $aDuration = array_slice($aMatch, 1, -1);
+        return 3600 * (int)$aDuration[0] + 60 * (int)$aDuration[1] + (int)$aDuration[2];
+    }
+
     public function getDevicePixelRatioHandlerSuffix ()
     {
         return '';
