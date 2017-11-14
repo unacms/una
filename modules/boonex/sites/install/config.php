@@ -20,7 +20,7 @@ $aConfig = array(
     'note' => 'Sites module.',
     'version' => '8.0.1.DEV',
     'vendor' => 'Boonex',
-	'help_url' => 'http://feed.boonex.com/?section={module_name}',
+	'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
         '8.0.x'

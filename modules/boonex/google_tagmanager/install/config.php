@@ -19,7 +19,7 @@ $aConfig = array(
     'note' => 'Google Tag Manager replaces hard-coded tags that are used for marketing, analytics, and testing on a website, with dynamic tags that are easier to implement and update.',
     'version' => '9.0.0',
     'vendor' => 'BoonEx',
-	'help_url' => 'http://feed.boonex.com/?section={module_name}',
+	'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
         '9.0.x'

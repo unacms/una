@@ -4,7 +4,7 @@
  * MIT License - https://opensource.org/licenses/MIT
  *
  * @defgroup    StripeConnect Stripe Connect
- * @ingroup     TridentModules
+ * @ingroup     UnaModules
  *
  * @{
  */
@@ -19,7 +19,7 @@ $aConfig = array(
     'note' => 'Organize eCommerce platform using Stripe Connect.',
     'version' => '9.0.1.DEV',
     'vendor' => 'BoonEx',
-    'help_url' => 'http://feed.boonex.com/?section={module_name}',
+    'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
         '9.0.x'

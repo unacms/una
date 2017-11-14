@@ -20,7 +20,7 @@ $aConfig = array(
     'note' => 'Basic blogging module.',
     'version' => '9.0.6.DEV',
     'vendor' => 'BoonEx',
-	'help_url' => 'http://feed.boonex.com/?section={module_name}',
+	'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
         '9.0.x'
