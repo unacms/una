@@ -167,14 +167,24 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
 	function delete ($iContentId, $aContentInfo = array())
     {
-    	$bResult = parent::delete($iContentId, $aContentInfo);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $bResult = parent::delete($iContentId, $aContentInfo);
         if(!$bResult)
-			return $bResult;
+            return $bResult;
 
-		$bResult &= $this->_oModule->_oDb->deassociatePhotoWithContent($iContentId, 0);
-		$bResult &= $this->_oModule->_oDb->deassociateFileWithContent($iContentId, 0);
+        // delete associated files
+        if (!empty($CNF['OBJECT_STORAGE_FILES'])) {
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
+            if($oStorage)
+                $oStorage->queueFilesForDeletionFromGhosts($aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
+        }
 
-		return $bResult;
+        // delete associations
+        $bResult &= $this->_oModule->_oDb->deassociatePhotoWithContent($iContentId, 0);
+        $bResult &= $this->_oModule->_oDb->deassociateFileWithContent($iContentId, 0);
+
+        return $bResult;
     }
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
