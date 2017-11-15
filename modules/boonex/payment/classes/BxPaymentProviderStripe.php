@@ -340,7 +340,11 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         if($oForm->isSubmittedAndValid()) {
             $aResultError = array('code' => 1, 'message' => _t('_bx_payment_strp_err_billing_changed'));
 
-            list($iMonth, $iYear) = explode(' ', $oForm->getCleanValue('card_expire'));
+            $aMatch = array();
+            if(!preg_match('/^([0-9]{2})\D([0-9]{4})$/i', $oForm->getCleanValue('card_expire'), $aMatch))
+                return $aResultError;
+
+            list($iMonth, $iYear) = array_slice($aMatch, 1);
 
         	$aToken = $this->_createToken(array(
                 'number' => $oForm->getCleanValue('card_number'),
