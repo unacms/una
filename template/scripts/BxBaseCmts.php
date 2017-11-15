@@ -565,7 +565,8 @@ class BxBaseCmts extends BxDolCmts
                 if($iCmtParentId) {
                     $this->_oQuery->updateRepliesCount($iCmtParentId, 1);
 
-                    $this->_sendNotificationEmail($iCmtId, $iCmtParentId);
+                    if(!BxDolModuleQuery::getInstance()->isEnabledByName('bx_notifications'))
+                        $this->_sendNotificationEmail($iCmtId, $iCmtParentId);
                 }
 
                 $this->_triggerComment();

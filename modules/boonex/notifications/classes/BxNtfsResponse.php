@@ -87,7 +87,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
     	    )
 		);
     }
-    
+
     protected function getDeleteData(&$oAlert, &$aHandler)
     {
         $aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));

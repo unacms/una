@@ -87,18 +87,19 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     	if((int)$aEvent['processed'] == 0)
     		$this->_processContent($aEvent);
 
+        $aEvent['content'] = unserialize($aEvent['content']);
+
     	$oPrivacy = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
     	if($oPrivacy !== false && !$oPrivacy->check($aEvent['id'])) 
     		return '';
 
         $sService = 'check_allowed_with_content';
-        if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $aEvent['object_id'])) !== CHECK_ACTION_RESULT_ALLOWED)
+        if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent))) !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
         list($sOwnerName, $sOwnerUrl, $sOwnerIcon) = $oModule->getUserInfo($aEvent['owner_id']);
         $bAuthorIcon = !empty($sOwnerIcon);
 
-        $aEvent['content'] = unserialize($aEvent['content']);
         $aEvent['content']['owner_name'] = $sOwnerName;
         $aEvent['content']['owner_link'] = $sOwnerUrl;
         $aEvent['content']['owner_icon'] = $sOwnerIcon;
@@ -212,6 +213,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         	return array();
 
 		return $this->$sMethod($aEvent);
+    }
+
+    protected function _getContentObjectId(&$aEvent)
+    {
+        return !empty($aEvent['content']['object_id']) ? (int)$aEvent['content']['object_id'] : (int)$aEvent['object_id'];
     }
 
     protected function _getContentLangKey(&$aEvent)

@@ -18,9 +18,22 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
         parent::__construct();
     }
 
+    /**
+     * Note. Check priprity is IMPORTANT!
+     * Don't swap the checks without a REAL need.
+     */
 	protected function _getObjectOwnerId($aExtras)
     {
-        return is_array($aExtras) && isset($aExtras['object_author_id']) ? (int)$aExtras['object_author_id'] : 0;
+        if(!is_array($aExtras))
+            return 0;
+
+        if(isset($aExtras['parent_author_id']))
+    		return (int)$aExtras['parent_author_id'];
+
+        if(isset($aExtras['object_author_id']))
+    		return (int)$aExtras['object_author_id'];
+
+        return 0;
     }
 
     protected function _getObjectPrivacyView($aExtras)
@@ -28,21 +41,27 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
         return is_array($aExtras) && isset($aExtras['privacy_view']) ? (int)$aExtras['privacy_view'] : $this->_oModule->_oConfig->getPrivacyViewDefault('object');
     }
 
+    /**
+     * Note. Check priprity is NOT IMPORTANT!
+     */
 	protected function _getSubObjectId($aExtras)
     {
-    	if(is_array($aExtras) && isset($aExtras['comment_id']))
+        if(!is_array($aExtras))
+            return 0;
+
+    	if(isset($aExtras['comment_id']))
     		return (int)$aExtras['comment_id'];
 
-   		if(is_array($aExtras) && isset($aExtras['vote_id']))
+   		if(isset($aExtras['vote_id']))
     		return (int)$aExtras['vote_id'];
 
-        if(is_array($aExtras) && isset($aExtras['repost_id']))
+        if(isset($aExtras['repost_id']))
     		return (int)$aExtras['repost_id'];
 
-        if(is_array($aExtras) && isset($aExtras['timeline_post_id']))
+        if(isset($aExtras['timeline_post_id']))
             return (int)$aExtras['timeline_post_id'];
 
-        if(is_array($aExtras) && isset($aExtras['performer_id']))
+        if(isset($aExtras['performer_id']))
             return (int)$aExtras['performer_id'];
 
         return 0;

@@ -850,11 +850,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return;
         };
 
+        $iObjId = $this->getId();
+        $iObjAthrId = $this->getObjectAuthorId($iObjId);
+
         $iCmtId = 0;
         if(bx_get('Cmt') !== false)
             $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
 
-        $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
+        $aCmt = $this->_oQuery->getCommentSimple ($iObjId, $iCmtId);
         if(!$aCmt) {
             echoJson(array('msg' => _t('_No such comment')));
             return;
@@ -865,33 +868,68 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return;
         }
 
-        $iCmtAuthorId = $this->_getAuthorId();
+        $iPerformerId = $this->_getAuthorId();
         if(!$this->isRemoveAllowed($aCmt)) {
-            echoJson(array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
+            echoJson(array('msg' => $aCmt['cmt_author_id'] == $iPerformerId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
             return;
         }
 
-        $iCmtObjectId = $this->getId();
-        if($this->_oQuery->removeComment($iCmtObjectId, $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
+        if($this->_oQuery->removeComment($iObjId, $iCmtId, $aCmt['cmt_parent_id'])) {
             $this->_triggerComment();
 
             $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
-            $aImages = $this->_oQuery->getFiles($this->_aSystem['system_id'], $aCmt['cmt_id']);
+            $aImages = $this->_oQuery->getFiles($this->_aSystem['system_id'], $iCmtId);
             foreach($aImages as $aImage)
                 $oStorage->deleteFile($aImage['image_id']);
 
-            $this->_oQuery->deleteImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+            $this->_oQuery->deleteImages($this->_aSystem['system_id'], $iCmtId);
 
             $this->isRemoveAllowed(true);
 
-            $this->deleteMetaInfo ($aCmt['cmt_id']);
+            $this->deleteMetaInfo ($iCmtId);
 
-            $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $iCmtObjectId, $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
-            $oZ->alert();
+            bx_alert($this->_sSystem, 'commentRemoved', $iObjId, $iPerformerId, array(
+                'object_author_id' => $iObjAthrId,
 
-            $oZ = new BxDolAlerts('comment', 'deleted', $aCmt['cmt_id'], $iCmtAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iCmtObjectId));
-        	$oZ->alert();
+                'comment_id' => $iCmtId, 
+                'comment_author_id' => $aCmt['cmt_author_id']
+            ));
+
+            bx_alert('comment', 'deleted', $iCmtId, $iPerformerId, array(
+                'object_system' => $this->_sSystem, 
+                'object_id' => $iObjId, 
+                'object_author_id' => $iObjAthrId,
+                
+                'comment_author_id' => $aCmt['cmt_author_id']
+            ));
+
+            if(!empty($aCmt['cmt_parent_id'])) {
+                $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
+                $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
+                if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
+                    bx_alert($this->_sSystem, 'replyRemoved', $iCmtPrntId, $iPerformerId, array(
+                        'object_id' => $iObjId, 
+                        'object_author_id' => $iObjAthrId,
+                        
+                        'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+                        
+                        'comment_id' => $iCmtId, 
+                        'comment_author_id' => $aCmt['cmt_author_id'],
+                    ));
+
+                    bx_alert('reply', 'deleted', $iCmtId, $iPerformerId, array(
+                        'object_system' => $this->_sSystem, 
+                        'object_id' => $iObjId, 
+                        'object_author_id' => $iObjAthrId,
+
+                        'parent_id' => $iCmtPrntId,
+                        'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+
+                        'comment_author_id' => $aCmt['cmt_author_id'], 
+                    ));
+                }
+            }
 
             echoJson(array('id' => $iCmtId));
             return;
@@ -916,40 +954,91 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     	BxDolSession::getInstance()->setValue($sKey, 1);
     }
 
-    public function onPostAfter($iId)
+    public function onPostAfter($iCmtId)
     {
-        $iObjectId = (int)$this->getId();
-        $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
+        $iObjId = (int)$this->getId();
+        $iObjAthrId = $this->getObjectAuthorId($iObjId);
 
-        $aComment = $this->_oQuery->getCommentSimple($iObjectId, $iId);
-        if(empty($aComment) || !is_array($aComment))
+        $aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
+        if(empty($aCmt) || !is_array($aCmt))
             return false;
 
-        $iAuthorId = (int)$aComment['cmt_author_id'];
-        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $iObjectId, $iAuthorId, array('comment_id' => $iId, 'comment_text' => $aComment['cmt_text'], 'comment_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        $oZ->alert();
+        $iPerformerId = (int)$aCmt['cmt_author_id'];
+        bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, array(
+			'object_author_id' => $iObjAthrId,
 
-        $oZ = new BxDolAlerts('comment', 'added', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'comment_text' => $aComment['cmt_text']));
-        $oZ->alert();
-        
+        	'comment_id' => $iCmtId, 
+        	'comment_author_id' => $aCmt['cmt_author_id'], 
+        	'comment_text' => $aCmt['cmt_text']
+        ));
+
+        bx_alert('comment', 'added', $iCmtId, $iPerformerId, array(
+        	'object_system' => $this->_sSystem, 
+        	'object_id' => $iObjId, 
+        	'object_author_id' => $iObjAthrId,
+
+        	'comment_author_id' => $aCmt['cmt_author_id'], 
+        	'comment_text' => $aCmt['cmt_text']
+        ));
+
+        if(!empty($aCmt['cmt_parent_id'])) {
+            $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
+            $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
+            if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
+                bx_alert($this->_sSystem, 'replyPost', $iCmtPrntId, $iPerformerId, array(
+                    'object_id' => $iObjId, 
+                    'object_author_id' => $iObjAthrId,
+
+                	'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+
+                	'comment_id' => $iCmtId,
+                	'comment_author_id' => $aCmt['cmt_author_id'], 
+                	'comment_text' => $aCmt['cmt_text']
+                ));
+
+                bx_alert('comment', 'replied', $iCmtId, $iPerformerId, array(
+                	'object_system' => $this->_sSystem, 
+                	'object_id' => $iObjId, 
+                	'object_author_id' => $iObjAthrId,
+ 
+                	'parent_id' => $iCmtPrntId,
+                	'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+
+                	'comment_author_id' => $aCmt['cmt_author_id'],  
+                	'comment_text' => $aCmt['cmt_text']
+                ));
+            }
+        }
+
         return true;
     }
 
-    public function onEditAfter($iId)
+    public function onEditAfter($iCmtId)
     {
-        $iObjectId = (int)$this->getId();
-    	$iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
+        $iObjId = (int)$this->getId();
+    	$iObjAthrId = $this->getObjectAuthorId($iObjId);
 
-    	$aComment = $this->_oQuery->getCommentSimple($iObjectId, $iId);
-        if(empty($aComment) || !is_array($aComment))
+    	$aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
+        if(empty($aCmt) || !is_array($aCmt))
             return false;
 
-        $iAuthorId = (int)$aComment['cmt_author_id'];
-        $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $iObjectId, $iAuthorId, array('comment_id' => $iId, 'comment_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        $oZ->alert();
+        $iPerformerId = $this->_getAuthorId();
+        bx_alert($this->_sSystem, 'commentUpdated', $iObjId, $iPerformerId, array(
+            'object_author_id' => $iObjAthrId,
 
-        $oZ = new BxDolAlerts('comment', 'edited', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
-        $oZ->alert();
+            'comment_id' => $iCmtId, 
+            'comment_author_id' => $aCmt['cmt_author_id'], 
+            'comment_text' => $aCmt['cmt_text']        	
+        ));
+
+        bx_alert('comment', 'edited', $iCmtId, $iPerformerId, array(
+            'object_system' => $this->_sSystem, 
+            'object_id' => $iObjId, 
+            'object_author_id' => $iObjAthrId,
+
+            'comment_author_id' => $aCmt['cmt_author_id'],
+            'comment_text' => $aCmt['cmt_text']
+        ));
 
         return true;
     }

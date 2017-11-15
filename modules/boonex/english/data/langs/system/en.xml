@@ -1510,6 +1510,8 @@
 	<string name="_cmt_txt_link_show"><![CDATA[Show]]></string>
 	<string name="_cmt_txt_link_reply"><![CDATA[Reply]]></string>
 	<string name="_cmt_txt_or"><![CDATA[or]]></string>
+	<string name="_cmt_txt_sample_comment_single"><![CDATA[comment]]></string>
+	<string name="_cmt_txt_sample_reply_to"><![CDATA[reply to comment]]></string>
 	<string name="_copyright"><![CDATA[&copy; {0} Company]]></string>
 	<string name="_delete"><![CDATA[delete]]></string>
 	<string name="_error occured"><![CDATA[Error occurred]]></string>

@@ -23,6 +23,7 @@
 
 	<string name="_bx_ntfs_alert_action_added"><![CDATA[add]]></string>
 	<string name="_bx_ntfs_alert_action_commentPost"><![CDATA[add comment]]></string>
+	<string name="_bx_ntfs_alert_action_replyPost"><![CDATA[reply to own comment]]></string>
 	<string name="_bx_ntfs_alert_action_doVote"><![CDATA[add vote]]></string>
 	<string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[post to timeline]]></string> 
 

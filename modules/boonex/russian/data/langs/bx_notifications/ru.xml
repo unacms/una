@@ -23,6 +23,7 @@
 
 	<string name="_bx_ntfs_alert_action_added"><![CDATA[добавить]]></string>
 	<string name="_bx_ntfs_alert_action_commentPost"><![CDATA[добавить коментарий]]></string>
+	<string name="_bx_ntfs_alert_action_replyPost"><![CDATA[ответ на собственный комментарий]]></string>
 	<string name="_bx_ntfs_alert_action_doVote"><![CDATA[добавить голос]]></string>
 	<string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[сообщение на линейке]]></string>
 

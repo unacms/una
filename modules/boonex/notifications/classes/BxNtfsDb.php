@@ -81,6 +81,8 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
 					$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
 					$sJoinClause .= ' ' . $aQueryParts['join'];
+
+					$sWhereClause .= "AND `{$this->_sTable}`.`action` <> 'replyPost' ";
 					break;
 
                 case BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS:
@@ -89,7 +91,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 					$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
 					$sJoinClause .= ' ' . str_replace('INNER', 'LEFT', $aQueryParts['join']);
 
-					$sWhereClause .= $this->prepareAsString("AND (NOT ISNULL(`c`.`content`) || (`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=?)) ", $aParams['owner_id']);
+					$sWhereClause .= $this->prepareAsString("AND ((NOT ISNULL(`c`.`content`) AND `{$this->_sTable}`.`action` <> 'replyPost') || (`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=?)) ", $aParams['owner_id']);
                     break;
 			}
 
