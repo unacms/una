@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_videos_entries`, `bx_videos_photos`, `bx_videos_videos`, `bx_videos_media_resized`, `bx_videos_cmts`, `bx_videos_votes`, `bx_videos_votes_track`, `bx_videos_views_track`, `bx_videos_meta_keywords`, `bx_videos_meta_locations`, `bx_videos_reports`, `bx_videos_reports_track`, `bx_videos_favorites_track`;
+DROP TABLE IF EXISTS `bx_videos_entries`, `bx_videos_photos`, `bx_videos_videos`, `bx_videos_media_resized`, `bx_videos_cmts`, `bx_videos_votes`, `bx_videos_votes_track`, `bx_videos_svotes`, `bx_videos_svotes_track`, `bx_videos_views_track`, `bx_videos_meta_keywords`, `bx_videos_meta_locations`, `bx_videos_reports`, `bx_videos_reports_track`, `bx_videos_favorites_track`;
 
 
 -- STORAGES & TRANSCODERS
@@ -31,7 +31,7 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_videos';
 
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_videos';
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_videos', 'bx_videos_stars');
 
 
 -- REPORTS

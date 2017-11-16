@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS `bx_videos_entries` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `srate` float NOT NULL default '0',
+  `svotes` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
@@ -104,6 +106,24 @@ CREATE TABLE IF NOT EXISTS `bx_videos_votes` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `bx_videos_votes_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_videos_svotes` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_videos_svotes_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
@@ -303,7 +323,8 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_videos', 'bx_videos_votes', 'bx_videos_votes_track', '604800', '1', '5', '0', '1', 'bx_videos_entries', 'id', 'author', 'rate', 'votes', '', '');
+('bx_videos', 'bx_videos_votes', 'bx_videos_votes_track', '604800', '1', '1', '0', '1', 'bx_videos_entries', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_videos_stars', 'bx_videos_svotes', 'bx_videos_svotes_track', '604800', '1', '5', '0', '1', 'bx_videos_entries', 'id', 'author', 'srate', 'svotes', '', '');
 
 
 -- REPORTS

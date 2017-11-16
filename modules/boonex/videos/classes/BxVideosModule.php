@@ -70,14 +70,6 @@ class BxVideosModule extends BxBaseModTextModule
     {
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
     }
-
-    protected function _entitySocialSharing ($iId, $aParams = array())
-    {
-        $CNF = &$this->_oConfig->CNF;
-        return parent::_entitySocialSharing($iId, array_merge($aParams, array(
-        	'object_vote' => ''
-        )));
-    }
 }
 
 /** @} */

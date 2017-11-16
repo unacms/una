@@ -65,7 +65,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
     	$sVotes = '';
-        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $aData['id']);
         if($oVotes) {
 			$sVotes = $oVotes->getElementBlock(array('show_counter' => true, 'show_legend' => true));
 			if(!empty($sVotes))
@@ -84,6 +84,11 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $this->_checkDuration($aData);
 
         $aUnit = parent::getUnit($aData, $aParams);
+
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $aData['id']);
+        if($oVotes)
+            $aUnit['entry_rating'] = $oVotes->getElementInline(array('show_counter' => true));
+
         $aUnit['entry_views'] = _t('_bx_videos_txt_n_views', $aData[$CNF['FIELD_VIEWS']]);
         $aUnit['bx_if:thumb']['content']['duration'] = _t_format_duration($aData[$CNF['FIELD_DURATION']]);
 
