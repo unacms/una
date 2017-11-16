@@ -60,6 +60,23 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         ));
     }
 
+    public function entryRating($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+    	$sVotes = '';
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);
+        if($oVotes) {
+			$sVotes = $oVotes->getElementBlock(array('show_counter' => true, 'show_legend' => true));
+			if(!empty($sVotes))
+				$sVotes = $this->parseHtmlByName('entry-rating.html', array(
+		    		'content' => $sVotes,
+		    	));
+        }
+
+    	return $sVotes; 
+    }
+
     protected function getUnit($aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

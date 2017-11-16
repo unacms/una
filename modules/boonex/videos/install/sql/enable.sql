@@ -47,6 +47,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_videos_view_entry', 1, 'bx_videos', '', '_bx_videos_page_block_title_entry_video', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_video_block";}', 0, 0, 1, 0),
 ('bx_videos_view_entry', 1, 'bx_videos', '', '_bx_videos_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 1),
 ('bx_videos_view_entry', 2, 'bx_videos', '', '_bx_videos_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 0),
+('bx_videos_view_entry', 2, 'bx_market', '', '_bx_videos_page_block_title_entry_rating', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"entity_rating";}', 0, 0, 1, 1),
 ('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 1),
 ('bx_videos_view_entry', 3, 'bx_videos', '', '_bx_videos_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 2),
 ('bx_videos_view_entry', 4, 'bx_videos', '', '_bx_videos_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 0),

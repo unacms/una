@@ -90,6 +90,7 @@
     <string name="_bx_videos_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_videos_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_videos_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
+    <string name="_bx_videos_page_block_title_entry_rating"><![CDATA[Rating]]></string>
     <string name="_bx_videos_page_title_sys_entries_popular"><![CDATA[Popular Videos]]></string>
     <string name="_bx_videos_page_title_entries_popular"><![CDATA[Popular Videos]]></string>
     <string name="_bx_videos_page_title_sys_entries_updated"><![CDATA[Updated Videos]]></string>
