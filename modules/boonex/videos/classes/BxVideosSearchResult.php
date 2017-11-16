@@ -21,7 +21,7 @@ class BxVideosSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_videos',
             'title' => _t('_bx_videos_page_title_browse'),
             'table' => 'bx_videos_entries',
-            'ownFields' => array('id', 'title', 'text', 'duration', 'thumb', 'video', 'author', 'added'),
+            'ownFields' => array('id', 'title', 'text', 'duration', 'thumb', 'video', 'author', 'added', 'views'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),

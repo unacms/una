@@ -67,6 +67,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $this->_checkDuration($aData);
 
         $aUnit = parent::getUnit($aData, $aParams);
+        $aUnit['entry_views'] = _t('_bx_videos_txt_n_views', $aData[$CNF['FIELD_VIEWS']]);
         $aUnit['bx_if:thumb']['content']['duration'] = _t_format_duration($aData[$CNF['FIELD_DURATION']]);
 
         return $aUnit;

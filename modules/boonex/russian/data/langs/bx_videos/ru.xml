@@ -224,4 +224,5 @@
     <string name="_bx_videos_txt_sample_single_with_article"><![CDATA[видео]]></string>
     <string name="_bx_videos_txt_sample_comment_single"><![CDATA[комментарий к видео]]></string>
     <string name="_bx_videos_txt_sample_vote_single"><![CDATA[голос за видео]]></string>
+    <string name="_bx_videos_txt_n_views"><![CDATA[{0} просмотров]]></string>
 </resources>

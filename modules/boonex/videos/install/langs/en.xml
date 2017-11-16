@@ -224,4 +224,5 @@
     <string name="_bx_videos_txt_sample_single_with_article"><![CDATA[a video]]></string>
     <string name="_bx_videos_txt_sample_comment_single"><![CDATA[comment to video]]></string>
     <string name="_bx_videos_txt_sample_vote_single"><![CDATA[vote to video]]></string>
+    <string name="_bx_videos_txt_n_views"><![CDATA[{0} views]]></string>
 </resources>

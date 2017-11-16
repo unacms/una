@@ -43,6 +43,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'FIELD_THUMB' => 'thumb',
         	'FIELD_VIDEOS' => 'videos',
             'FIELD_VIDEO' => 'video',
+			'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
