@@ -54,11 +54,22 @@ div.bx-vote div.bx-vote-counter-holder {
 }
 
 /*--- Stars based Element Styles ---*/
+.bx-vote-stars,
+.bx-vote-stars .bx-vote-do,
 .bx-vote-stars .bx-vote-element-holder,
 .bx-vote-stars .bx-vote-counter-holder {
-	line-height: 16px;
-	line-height: 1rem;
+	position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+    line-height: 16px;
+    line-height: 1rem;
 }
+
+.bx-vote-stars .bx-vote-counter-holder {
+	border-width: 0px;
+}
+
 
 /*--- Stars Styles ---*/
 div.bx-vote-element {
@@ -76,9 +87,12 @@ div.bx-vote-slider {
     white-space: nowrap;
     overflow: hidden;
 }
-i.bx-vote-star,
-span.bx-vote-star {
+span.bx-vote-stars div.bx-vote-element a.bx-vote-button,
+span.bx-vote-stars div.bx-vote-element i.bx-vote-star,
+span.bx-vote-stars div.bx-vote-element span.bx-vote-star {
+	position: relative;
 	display: inline-block;
+	vertical-align: top;
 	height: 16px;
 	height: 1rem;
 	width: 16px;
