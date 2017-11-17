@@ -37,6 +37,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'video-text',
+            'FIELD_CATEGORY' => 'cat',
             'FIELD_DURATION' => 'duration',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
@@ -91,6 +92,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_videos',
             'OBJECT_METATAGS' => 'bx_videos',
             'OBJECT_COMMENTS' => 'bx_videos',
+            'OBJECT_CATEGORY' => 'bx_videos_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_videos_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_videos',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_videos_entry_view',
@@ -102,6 +104,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_videos_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_videos_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'videos-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_videos_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_videos_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_videos_administration',
         	'OBJECT_GRID_COMMON' => 'bx_videos_common',
