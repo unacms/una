@@ -61,6 +61,17 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
         $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
 
+        $sMeta = '';
+        if(!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
+            $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
+            if($oMenuMeta) {
+                $oMenuMeta->setContentId($aData[$CNF['FIELD_ID']]);
+                $sMeta = $this->parseDiv($oMenuMeta->getCode(), array(
+                	'class' => 'bx-base-text-unit-meta' 
+                ));
+            }
+        }
+
         // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
@@ -72,6 +83,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
+        	'meta' => $sMeta,
             'bx_repeat:browse' => $aBrowseUnits,
 
             'bx_if:thumb' => array (
