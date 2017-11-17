@@ -1319,6 +1319,14 @@
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
 	<string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_author"><![CDATA[Автор]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_date"><![CDATA[Дата]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_category"><![CDATA[Категория]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_tags"><![CDATA[Тэги]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_views"><![CDATA[Просмотры]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_rating"><![CDATA[Рейтинг]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_comments"><![CDATA[Комментарии]]></string>
+    <string name="_adm_stg_cpt_option_sys_snippet_meta_actions"><![CDATA[Действия]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
@@ -1509,7 +1517,8 @@
 	<string name="_cmt_txt_link_reply"><![CDATA[Ответить]]></string>
 	<string name="_cmt_txt_or"><![CDATA[или]]></string>
 	<string name="_cmt_txt_sample_comment_single"><![CDATA[комментарий]]></string>
-	<string name="_cmt_txt_sample_reply_to"><![CDATA[ответ на комментарий]]></string>	
+	<string name="_cmt_txt_sample_reply_to"><![CDATA[ответ на комментарий]]></string>
+	<string name="_cmt_txt_n_comments"><![CDATA[{0} комментариев]]></string>	
 	<string name="_copyright"><![CDATA[&copy; {0} Компания]]></string>
 	<string name="_delete"><![CDATA[удалить]]></string>
 	<string name="_error occured"><![CDATA[Произошла ошибка]]></string>
@@ -2502,6 +2511,7 @@
 	<string name="_view_do_view"><![CDATA[Посмотреть]]></string>
 	<string name="_view_do_view_by"><![CDATA[Просмотрено]]></string>
 	<string name="_view_do_view_by_counter"><![CDATA[{0} просмотров]]></string>
+	<string name="_view_n_views"><![CDATA[{0} просмотров]]></string>
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>

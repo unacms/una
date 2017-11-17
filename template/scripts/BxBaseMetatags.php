@@ -35,6 +35,43 @@ class BxBaseMetatags extends BxDolMetatags
     	)) . '{sections}';
     }
 
+    /**
+     * Get list of keywords associated with the content
+     * @param $iId content id
+     * @return string with content related keywords
+     */
+    public function getKeywordsList($iId, $iMaxCount = 0, $bAsArray = false)
+    {
+        $aKeywords = $this->keywordsGet($iId);
+        if(!$aKeywords)
+            return $bAsArray ? array() : '';
+
+        sort($aKeywords, SORT_LOCALE_STRING);
+        if($iMaxCount > 0 && count($aKeywords) > $iMaxCount)
+            $aKeywords = array_slice($aKeywords, 0, $iMaxCount);
+
+        $aUnits = array();
+        foreach($aKeywords as $sKeyword) {
+            $aUnits[] = array(
+                'href' => BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
+            		'keyword' => rawurlencode($sKeyword),
+            		'sections' => ''
+            	)),
+                'keyword' => htmlspecialchars_adv($sKeyword),
+            );
+        }
+
+        $aVars = array (
+            'bx_repeat:units' => $aUnits,
+        );
+
+        if($bAsArray)
+            return $aVars;
+
+        $this->addCssJs();
+        return $this->_oTemplate->parseHtmlByName('metatags_keywords_list.html', $aVars);
+    }
+
     public function getKeywordsCloud($mixedSection, $iMaxCount, $bAsArray = false)
     {
         $aKeywords = $this->keywordsPopularList($iMaxCount);
