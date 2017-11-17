@@ -101,55 +101,6 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         );
     }
 
-    protected function getUnit ($aData, $aParams = array())
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-        $sJsObject = $this->_oConfig->getJsObject('entry');
-
-        $iContentId = $aData[$CNF['FIELD_ID']];
-        $bPerformed = $this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id());
-
-        $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
-
-        $bTmplVarsComments = $oComments && $oComments->isEnabled();
-        $aTmplVarsComments = array();
-        if($bTmplVarsComments)
-            $aTmplVarsComments = array(
-            	'entry_comments' => _t('_bx_polls_txt_entry_comment_counter', $aData[$CNF['FIELD_COMMENTS']]),
-                'entry_comments_url' => $oComments->getListUrl()
-            );
-
-        $bTmplVarsSwitcher = (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 0 || $bPerformed;
-        $aTmplVarsSwitcher = array();
-        if($bTmplVarsSwitcher)
-            $aTmplVarsSwitcher = array(
-                'js_object' => $sJsObject,
-                'id' => $iContentId,
-                'bx_if:hide_subentries' => array(
-                    'condition' => !$bPerformed,
-                    'content' => array()
-                ),
-                'bx_if:hide_results' => array(
-                    'condition' => $bPerformed,
-                    'content' => array()
-                ),
-            );
-
-        $aResult = parent::getUnit ($aData, $aParams);
-        $aResult = array_merge($aResult, array(
-            'bx_if:show_comments' => array(
-                'condition' => $bTmplVarsComments, 
-                'content' => $aTmplVarsComments
-            ),
-            'bx_if:show_switcher' => array(
-                'condition' => $bTmplVarsSwitcher, 
-                'content' => $aTmplVarsSwitcher
-            ),
-        )); 
-
-        return $aResult;
-    }
-
     protected function getTitle($aData)
     {
         return $this->_oConfig->getTitle($aData);

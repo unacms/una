@@ -37,9 +37,11 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'post-text',
+        	'FIELD_CATEGORY' => 'cat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+        	'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
@@ -78,6 +80,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_posts',
             'OBJECT_METATAGS' => 'bx_posts',
             'OBJECT_COMMENTS' => 'bx_posts',
+            'OBJECT_CATEGORY' => 'bx_posts_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_posts_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_posts',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_posts_entry_view',
@@ -89,6 +92,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_posts_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_posts_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'posts-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_posts_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_posts_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_posts_administration',
         	'OBJECT_GRID_COMMON' => 'bx_posts_common',

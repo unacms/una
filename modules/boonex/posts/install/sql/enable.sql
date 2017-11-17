@@ -218,7 +218,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_posts_submenu', 'bx_posts', 'posts-manage', '_bx_posts_menu_item_title_system_entries_manage', '_bx_posts_menu_item_title_entries_manage', 'page.php?i=posts-manage', '', '', '', '', 2147483646, 1, 1, 4);
 
 -- MENU: sub-menu for view entry
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_posts_view_submenu', '_bx_posts_menu_title_view_entry_submenu', 'bx_posts_view_submenu', 'bx_posts', 8, 0, 1, 'BxPostsMenuView', 'modules/boonex/posts/classes/BxPostsMenuView.php');
 
@@ -228,6 +227,21 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_posts_view_submenu', 'bx_posts', 'view-post', '_bx_posts_menu_item_title_system_view_entry', '_bx_posts_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-post&id={content_id}', '', '', '', '', 2147483647, 0, 0, 1),
 ('bx_posts_view_submenu', 'bx_posts', 'view-post-comments', '_bx_posts_menu_item_title_system_view_entry_comments', '_bx_posts_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-post-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 2);
+
+-- MENU: custom menu for snippet meta info
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_posts_snippet_meta', '_sys_menu_title_snippet_meta', 'bx_posts_snippet_meta', 'bx_posts', 15, 0, 1, 'BxPostsMenuSnippetMeta', 'modules/boonex/posts/classes/BxPostsMenuSnippetMeta.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_posts_snippet_meta', 'bx_posts', '_sys_menu_set_title_snippet_meta', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_posts_snippet_meta', 'bx_posts', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
+('bx_posts_snippet_meta', 'bx_posts', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 2),
+('bx_posts_snippet_meta', 'bx_posts', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
+('bx_posts_snippet_meta', 'bx_posts', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
+('bx_posts_snippet_meta', 'bx_posts', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
+('bx_posts_snippet_meta', 'bx_posts', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);

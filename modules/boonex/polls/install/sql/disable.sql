@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_polls' OR `object` IN('bx_po
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_polls';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_polls';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_polls' OR `set_name` IN('bx_polls_view', 'bx_polls_submenu', 'bx_polls_view_submenu', 'bx_polls_my');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_polls' OR `set_name` IN('bx_polls_view', 'bx_polls_submenu', 'bx_polls_view_submenu', 'bx_polls_snippet_meta', 'bx_polls_my');
 
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_polls_allow_view_to';

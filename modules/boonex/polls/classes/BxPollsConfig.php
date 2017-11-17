@@ -39,12 +39,14 @@ class BxPollsConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => '',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'poll-text',
+        	'FIELD_CATEGORY' => 'cat',
         	'FIELD_SUBENTRIES' => 'subentries',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
         	'FIELD_ANONYMOUS' => 'anonymous',
         	'FIELD_HIDDEN_RESULTS' => 'hidden_results',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+        	'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
@@ -85,6 +87,7 @@ class BxPollsConfig extends BxBaseModTextConfig
         	'OBJECT_FEATURED' => 'bx_polls',
             'OBJECT_METATAGS' => 'bx_polls',
             'OBJECT_COMMENTS' => 'bx_polls',
+            'OBJECT_CATEGORY' => 'bx_polls_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_polls_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_polls',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_polls_entry_view',
@@ -96,6 +99,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_polls_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_polls_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'polls-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_polls_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_polls_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_polls_administration',
         	'OBJECT_GRID_COMMON' => 'bx_polls_common',
