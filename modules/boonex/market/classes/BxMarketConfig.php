@@ -67,6 +67,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'FIELD_COVER' => 'cover',
         	'FIELD_FILE' => 'files',
         	'FIELD_PACKAGE' => 'package',
+        	'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
         	'FIELD_FEATURED' => 'featured',
         	'FIELD_STATUS' => 'status',
@@ -134,6 +135,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_market_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_market_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'products-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_market_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_market_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_market_administration',
         	'OBJECT_GRID_COMMON' => 'bx_market_common',

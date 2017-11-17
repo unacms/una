@@ -258,6 +258,20 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_market_snippet', 'bx_market', 'snippet-more', '_bx_market_menu_item_title_system_snippet_more', '_bx_market_menu_item_title_snippet_more', 'javascript:void(0)', 'bx_menu_popup(''bx_market_view_popup'', this, {''id'':''bx_market_snippet_{content_id}''}, {id:{content_id}});', '', 'ellipsis-v', '', 'bx_market_view_popup', 1, 2147483647, 1, 0, 0, 1);
 
+-- MENU: custom menu for snippet meta info
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_snippet_meta', '_sys_menu_title_snippet_meta', 'bx_market_snippet_meta', 'bx_market', 15, 0, 1, 'BxMarketMenuSnippetMeta', 'modules/boonex/market/classes/BxMarketMenuSnippetMeta.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_market_snippet_meta', 'bx_market', '_sys_menu_set_title_snippet_meta', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_market_snippet_meta', 'bx_market', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
+('bx_market_snippet_meta', 'bx_market', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
+('bx_market_snippet_meta', 'bx_market', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
+('bx_market_snippet_meta', 'bx_market', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
+('bx_market_snippet_meta', 'bx_market', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
+('bx_market_snippet_meta', 'bx_market', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6);
 
 -- MENU: module sub-menu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
