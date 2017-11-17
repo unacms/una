@@ -31,7 +31,7 @@
     font-size:3.2rem;
 }
 
-.bx-files-text-unit .bx-base-text-unit-text div,
-.bx-files-text-unit .bx-base-text-unit-text h2 {
+.bx-files-text-unit .bx-base-text-unit-text h2,
+.bx-files-text-unit .bx-base-text-unit-text > div {
     margin-left:3.5rem;
 }

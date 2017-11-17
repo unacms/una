@@ -43,6 +43,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'FIELD_TEXT_ID' => 'file-desc',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'attachments',
+        	'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
@@ -81,6 +82,7 @@ class BxFilesConfig extends BxBaseModTextConfig
         	'OBJECT_FEATURED' => 'bx_files',
             'OBJECT_METATAGS' => 'bx_files',
             'OBJECT_COMMENTS' => 'bx_files',
+            'OBJECT_CATEGORY' => 'bx_files_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_files_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_files',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_files_entry_view',
@@ -92,6 +94,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_files_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_files_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'files-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_files_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_files_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_files_administration',
         	'OBJECT_GRID_COMMON' => 'bx_files_common',
