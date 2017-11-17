@@ -68,10 +68,15 @@ div.bx-base-text-breadcrumb i {
     object-fit: cover;
 }
 
-.bx-base-text-unit-info {
+.bx-base-text-unit-info,
+.bx-base-text-unit-meta {
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+}
+
+.bx-base-text-unit-meta ul.bx-menu-custom li:first-child .bx-base-text-unit-meta-div {
+	display: none;
 }
 
 .bx-base-text-unit-date {

@@ -164,6 +164,17 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $sTitle = bx_process_output($sTitle);
 
+        $sMeta = '';
+        if(!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
+            $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
+            if($oMenuMeta) {
+                $oMenuMeta->setContentId($aData[$CNF['FIELD_ID']]);
+                $sMeta = $this->parseDiv($oMenuMeta->getCode(), array(
+                    'class' => 'bx-base-text-unit-meta' 
+                ));
+            }
+        }
+
         // generate html
         return array (
             'id' => $aData[$CNF['FIELD_ID']],
@@ -180,6 +191,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
+            'meta' => $sMeta,
             'bx_if:thumb' => array (
                 'condition' => $sPhotoThumb,
                 'content' => array (
