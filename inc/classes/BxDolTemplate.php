@@ -1377,6 +1377,45 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         return $sRet;
     }
+    
+    protected function _parseHtmlTag($sTemplate, $sContent, $aAttrs = array())
+    {
+        $aTmplVarsAttrs = array();
+        foreach($aAttrs as $sKey => $sValue)
+            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
+
+        return $this->parseHtmlByContent($sTemplate, array(
+            'content' => $sContent,
+            'bx_repeat:attrs' => $aTmplVarsAttrs
+        ));
+    }
+
+	/**
+     * Parse tag <DIV>
+     * 
+     * @param string $sContent content
+     * @param array $aAttrs an array of key => value pairs
+     */
+    function parseDiv($sContent, $aAttrs = array())
+    {
+        $sTemplate = '<div <bx_repeat:attrs>__key__="__value__"</bx_repeat:attrs>>__content__</div>';
+
+        return $this->_parseHtmlTag($sTemplate, $sContent, $aAttrs);
+    }
+
+	/**
+     * Parse tag <SPAN>
+     * 
+     * @param string $sContent content
+     * @param array $aAttrs an array of key => value pairs
+     */
+    function parseSpan($sContent, $aAttrs = array())
+    {
+        $sTemplate = '<span <bx_repeat:attrs>__key__="__value__"</bx_repeat:attrs>>__content__</span>';
+
+        return $this->_parseHtmlTag($sTemplate, $sContent, $aAttrs);
+    }
+
     /**
      * Parse tag <A>
      * 
