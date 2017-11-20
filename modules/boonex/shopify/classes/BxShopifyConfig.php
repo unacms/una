@@ -41,9 +41,11 @@ class BxShopifyConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'shopify-entry-text',
+        	'FIELD_CATEGORY' => 'cat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => '',
             'FIELD_THUMB' => '',
+        	'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
@@ -82,6 +84,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_shopify',
             'OBJECT_METATAGS' => 'bx_shopify',
             'OBJECT_COMMENTS' => 'bx_shopify',
+        	'OBJECT_CATEGORY' => 'bx_shopify_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_shopify_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_shopify',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_shopify_entry_view',
@@ -95,6 +98,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_shopify_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_shopify_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'shopify-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_shopify_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_shopify_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_shopify_administration',
         	'OBJECT_GRID_COMMON' => 'bx_shopify_common',
