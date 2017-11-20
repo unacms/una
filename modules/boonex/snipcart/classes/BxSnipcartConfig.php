@@ -38,11 +38,13 @@ class BxSnipcartConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'snipcart-entry-text',
+        	'FIELD_CATEGORY' => 'cat',
             'FIELD_PRICE' => 'price',
             'FIELD_WEIGHT' => 'weight',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+        	'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
@@ -82,6 +84,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_snipcart',
             'OBJECT_METATAGS' => 'bx_snipcart',
             'OBJECT_COMMENTS' => 'bx_snipcart',
+        	'OBJECT_CATEGORY' => 'bx_snipcart_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_snipcart_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_snipcart',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_snipcart_entry_view',
@@ -96,6 +99,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_snipcart_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_snipcart_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'snipcart-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_snipcart_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_snipcart_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_snipcart_administration',
         	'OBJECT_GRID_COMMON' => 'bx_snipcart_common',

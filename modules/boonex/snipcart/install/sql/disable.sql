@@ -15,7 +15,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_snipcart' OR `object` IN('bx
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_snipcart';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_snipcart';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_snipcart' OR `set_name` IN('bx_snipcart_view', 'bx_snipcart_submenu', 'bx_snipcart_view_submenu', 'bx_snipcart_my');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_snipcart' OR `set_name` IN('bx_snipcart_view', 'bx_snipcart_submenu', 'bx_snipcart_view_submenu', 'bx_snipcart_snippet_meta', 'bx_snipcart_my');
 
 
 -- PRIVACY 
