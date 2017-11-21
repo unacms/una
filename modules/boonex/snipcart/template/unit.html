@@ -6,7 +6,9 @@
     </bx_if:thumb>
     <div class="bx-base-text-unit-text bx-def-padding bx-def-box-sizing">
         <h2><a href="__content_url__">__title__</a></h2>
-        <div class="bx-base-text-unit-info bx-def-margin-sec-top bx-def-font-small">__meta__</div>
+        <div class="bx-base-text-unit-info bx-def-margin-sec-top bx-def-font-small">
+            <bx_if:meta><div class="bx-base-text-unit-meta">__meta__</div></bx_if:meta>
+        </div>
         <div class="bx-base-text-unit-summary bx-def-margin-sec-top bx-clearfix">__summary__</div>
         <bx_if:show_buy>
 	        <div class="bx-snipcart-unit-actions bx-def-margin-sec-top">

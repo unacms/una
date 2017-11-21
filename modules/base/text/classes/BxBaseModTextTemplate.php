@@ -30,7 +30,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function getUnitMetaItemLink($sContent, $aAttrs = array())
     {
-        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_A, $sContent, $aAttrs, 'unit_meta_item.html');
+        return $this->getUnitMetaItem('a', $sContent, $aAttrs);
     }
 
     function getUnitMetaItemText($sContent, $aAttrs = array())
@@ -40,12 +40,12 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $aAttrs['class'] = (!empty($aAttrs['class']) ? $aAttrs['class'] . ' ' : '') . 'bx-def-font-grayed';
 
-        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_SPAN, $sContent, $aAttrs, 'unit_meta_item.html');
+        return $this->getUnitMetaItem('span', $sContent, $aAttrs);
     }
 
     function getUnitMetaItemCustom($sContent)
     {
-        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_CUSTOM, $sContent, array(), 'unit_meta_item.html');
+        return $this->getUnitMetaItem('custom', $sContent);
     }
 
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
@@ -184,14 +184,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $sTitle = bx_process_output($sTitle);
 
-        $sMeta = '';
+        $aTmplVarsMeta = array();
         if(!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
             $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
             if($oMenuMeta) {
                 $oMenuMeta->setContentId($aData[$CNF['FIELD_ID']]);
-                $sMeta = $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_DIV, $oMenuMeta->getCode(), array(
-                    'class' => 'bx-base-text-unit-meta' 
-                ));
+                $aTmplVarsMeta = array(
+                    'meta' => $oMenuMeta->getCode()
+                );
             }
         }
 
@@ -211,7 +211,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
-            'meta' => $sMeta,
+            'bx_if:meta' => array(
+                'condition' => !empty($aTmplVarsMeta),
+                'content' => $aTmplVarsMeta
+            ),
             'bx_if:thumb' => array (
                 'condition' => $sPhotoThumb,
                 'content' => array (
@@ -232,6 +235,33 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 ),
             ),
         );
+    }
+
+    protected function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
+    {
+        $aTags = array('span', 'a', 'custom');
+
+        $aTmplVarsAttrs = array();
+        foreach($aAttrs as $sKey => $sValue)
+            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
+
+        $aTmplVars = array();
+        foreach($aTags as $sTag) {
+            $aTmplVarsTag = array();
+            $bTmplVarsTag = $sTag == $sName;
+            if($bTmplVarsTag)
+                $aTmplVarsTag = array(
+                    'content' => $sContent,
+                    'bx_repeat:attrs' => $aTmplVarsAttrs
+                );
+
+            $aTmplVars['bx_if:' . $sTag] = array(
+            	'condition' => $bTmplVarsTag,
+                'content' => $aTmplVarsTag
+            );
+        }
+
+        return $this->parseHtmlByName($sTemplate, $aTmplVars);
     }
 
     protected function getTitle($aData)

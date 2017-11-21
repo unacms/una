@@ -19,14 +19,6 @@ define('BX_DOL_TEMPLATE_CHECK_IN_BOTH', 'both');
 define('BX_DOL_TEMPLATE_CHECK_IN_BASE', 'base');
 define('BX_DOL_TEMPLATE_CHECK_IN_TMPL', 'tmpl');
 
-define('BX_DOL_TEMPLATE_TAG_I', 'i');
-define('BX_DOL_TEMPLATE_TAG_SPAN', 'span');
-define('BX_DOL_TEMPLATE_TAG_DIV', 'div');
-define('BX_DOL_TEMPLATE_TAG_IMG', 'img');
-define('BX_DOL_TEMPLATE_TAG_A', 'a');
-define('BX_DOL_TEMPLATE_TAG_BUTTON', 'button');
-define('BX_DOL_TEMPLATE_TAG_CUSTOM', 'custom');
-
 define('BX_DOL_COLOR_BG', 'bg');
 define('BX_DOL_COLOR_FT', 'ft');
 
@@ -1385,49 +1377,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         return $sRet;
     }
-    
-    /**
-     * 
-     * Enter description here ...
-     * @param string $sName tag name (i, span, div, img, a, button, custom)
-     * @param string $sContent tag content (HTML)
-     * @param array $aAttrs an array of key - value pairs of attributes
-     * @param string $sTemplate
-     */
-    public function parseHtmlTag($sName, $sContent, $aAttrs = array(), $sTemplate = 'html_tags')
-    {
-        $aTags = array(BX_DOL_TEMPLATE_TAG_I, BX_DOL_TEMPLATE_TAG_SPAN, BX_DOL_TEMPLATE_TAG_DIV, BX_DOL_TEMPLATE_TAG_IMG, BX_DOL_TEMPLATE_TAG_A, BX_DOL_TEMPLATE_TAG_BUTTON, BX_DOL_TEMPLATE_TAG_CUSTOM);
-
-        $aTmplVarsAttrs = array();
-        foreach($aAttrs as $sKey => $sValue)
-            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
-
-        $aTmplVars = array();
-        foreach($aTags as $sTag) {
-            $aTmplVarsTag = array();
-            $bTmplVarsTag = $sTag == $sName;
-            if($bTmplVarsTag)
-                $aTmplVarsTag = array(
-                    'content' => $sContent,
-                    'bx_repeat:attrs' => $aTmplVarsAttrs
-                );
-
-            $aTmplVars['bx_if:' . $sTag] = array(
-            	'condition' => $bTmplVarsTag,
-                'content' => $aTmplVarsTag
-            );
-        }
-
-        $sMethod = '';
-        if(strpos($sTemplate, '.') !== false)
-            $sMethod = 'parseHtmlByName';
-        else if(array_key_exists($sTemplate, $this->_aTemplates))
-            $sMethod = 'parseHtmlByTemplateName';
-        else
-            $sMethod = 'parseHtmlByContent';
-
-        return $this->$sMethod($sTemplate, $aTmplVars);
-    }
 
     /**
      * Parse tag <A>
@@ -1438,12 +1387,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function parseLink($sLink, $sContent, $aAttrs = array())
     {
-        if(!is_array($aAttrs))
-            $aAttrs = array();
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
-        $aAttrs['href'] = $sLink;
-
-        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_A, $sContent, $aAttrs);
+        return '<a href="' . $sLink . '"' . $sAttrs . '>' . $sContent . '</a>';
     }
 
     /**
@@ -1454,7 +1402,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function parseButton($sContent, $aAttrs = array())
     {
-        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_BUTTON, $sContent, $aAttrs);
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
+
+        return '<button' . $sAttrs . '>' . $sContent . '</button>';
     }
 
     /**
@@ -1465,12 +1417,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function parseImage($sLink, $aAttrs = array())
     {
-        if(!is_array($aAttrs))
-            $aAttrs = array();
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
-        $aAttrs['src'] = $sLink;
-
-        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_IMG, '', $aAttrs);
+        return '<img src="' . $sLink . '"' . $sAttrs . ' />';
     }
 
     /**
@@ -1481,12 +1432,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function parseIcon($sName, $aAttrs = array())
     {
-        if(!is_array($aAttrs))
-            $aAttrs = array();
+        if(!empty($aAttrs['class'])) {
+            $sName .= ' ' . $aAttrs['class'];
+            unset($aAttrs['class']);
+        }
 
-        $aAttrs['class'] = 'sys-icon ' . $sName . (!empty($aAttrs['class']) ? ' ' . $aAttrs['class'] : '');
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
-        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_I, '', $aAttrs);
+        return '<i class="sys-icon ' . $sName . '"' . $sAttrs . '></i>';
     }
 
     function getCacheFilePrefix($sType)

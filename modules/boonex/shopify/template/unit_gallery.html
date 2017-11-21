@@ -2,7 +2,9 @@
     <div class="bx-base-text-unit-cnt bx-def-box bx-def-round-corners bx-def-color-bg-box bx-def-box-sizing">
         <div class="bx-base-text-unit-text bx-def-padding-leftright bx-def-padding-sec-topbottom bx-def-font-align-center bx-def-box-sizing">
             <h2><a href="__content_url__">__title__</a></h2>
-            <div class="bx-base-text-unit-info">__meta__</div>
+            <div class="bx-base-text-unit-info">
+                <bx_if:meta><div class="bx-base-text-unit-meta">__meta__</div></bx_if:meta>
+            </div>
         </div>
         <a href="__content_url__" title="__summary_attr__">
             <div class="bx-base-text-unit-thumb bx-spf-unit-thumb bx-def-gal-div-size bx-def-round-corners bx-def-font-middle" style="background-image:url(__gallery_url__)">

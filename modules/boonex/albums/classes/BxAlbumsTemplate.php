@@ -66,9 +66,9 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
             if($oMenuMeta) {
                 $oMenuMeta->setContentId($aData[$CNF['FIELD_ID']]);
-                $sMeta = $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_DIV, $oMenuMeta->getCode(), array(
-                	'class' => 'bx-base-text-unit-meta' 
-                ));
+                $aTmplVarsMeta = array(
+                    'meta' => $oMenuMeta->getCode()
+                );
             }
         }
 
@@ -83,9 +83,11 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
-        	'meta' => $sMeta,
+        	'bx_if:meta' => array(
+                'condition' => !empty($aTmplVarsMeta),
+                'content' => $aTmplVarsMeta
+            ),
             'bx_repeat:browse' => $aBrowseUnits,
-
             'bx_if:thumb' => array (
                 'condition' => $aBrowseUnits,
                 'content' => array (
