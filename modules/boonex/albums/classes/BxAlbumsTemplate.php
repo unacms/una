@@ -66,7 +66,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
             if($oMenuMeta) {
                 $oMenuMeta->setContentId($aData[$CNF['FIELD_ID']]);
-                $sMeta = $this->parseDiv($oMenuMeta->getCode(), array(
+                $sMeta = $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_DIV, $oMenuMeta->getCode(), array(
                 	'class' => 'bx-base-text-unit-meta' 
                 ));
             }

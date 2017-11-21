@@ -28,6 +28,26 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
     }
 
+    function getUnitMetaItemLink($sContent, $aAttrs = array())
+    {
+        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_A, $sContent, $aAttrs, 'unit_meta_item.html');
+    }
+
+    function getUnitMetaItemText($sContent, $aAttrs = array())
+    {
+        if(!is_array($aAttrs))
+            $aAttrs = array();
+
+        $aAttrs['class'] = (!empty($aAttrs['class']) ? $aAttrs['class'] . ' ' : '') . 'bx-def-font-grayed';
+
+        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_SPAN, $sContent, $aAttrs, 'unit_meta_item.html');
+    }
+
+    function getUnitMetaItemCustom($sContent)
+    {
+        return $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_CUSTOM, $sContent, array(), 'unit_meta_item.html');
+    }
+
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -169,7 +189,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
             if($oMenuMeta) {
                 $oMenuMeta->setContentId($aData[$CNF['FIELD_ID']]);
-                $sMeta = $this->parseDiv($oMenuMeta->getCode(), array(
+                $sMeta = $this->parseHtmlTag(BX_DOL_TEMPLATE_TAG_DIV, $oMenuMeta->getCode(), array(
                     'class' => 'bx-base-text-unit-meta' 
                 ));
             }

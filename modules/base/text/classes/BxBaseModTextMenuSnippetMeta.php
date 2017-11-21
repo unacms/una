@@ -31,19 +31,6 @@ class BxBaseModTextMenuSnippetMeta extends BxTemplMenuCustom
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
         if($this->_aContentInfo)
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
-    }  
-    
-    protected function _getMenuItem ($aItem)
-    {
-        $mixedResult = parent::_getMenuItem($aItem);
-        if(empty($mixedResult) || !is_array($mixedResult))
-            return $mixedResult;
-
-        $mixedResult['item'] = $this->_oTemplate->parseSpan('&#183;&nbsp;', array(
-        	'class' => 'bx-base-text-unit-meta-div bx-def-font-grayed'
-        )) . $mixedResult['item'];
-        
-        return $mixedResult;
     }
 
     protected function _getMenuItemAuthor($aItem)
@@ -54,18 +41,17 @@ class BxBaseModTextMenuSnippetMeta extends BxTemplMenuCustom
         if(!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
 
-        $sAuthor = $oProfile->getDisplayName();
-		$sAuthorUrl = $oProfile->getUrl();
-        return $this->_oTemplate->parseLink($sAuthorUrl, $sAuthor, array('class' => 'bx-base-text-unit-author'));
+        return $this->_oTemplate->getUnitMetaItemLink($oProfile->getDisplayName(), array(
+            'href' => $oProfile->getUrl(),
+            'class' => 'bx-base-text-unit-author'
+        ));
     }
 
     protected function _getMenuItemDate($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        return $this->_oTemplate->parseSpan(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE), array(
-        	'class' => 'bx-def-font-grayed'
-        ));
+        return $this->_oTemplate->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE));
     }
 
     protected function _getMenuItemCategory($aItem)
@@ -80,7 +66,7 @@ class BxBaseModTextMenuSnippetMeta extends BxTemplMenuCustom
             return false;
 
         $sTitle = $oCategory->getCategoryTitle($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
-        return $oCategory->getCategoryLink($sTitle, $this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
+        return $this->_oTemplate->getUnitMetaItemCustom($oCategory->getCategoryLink($sTitle, $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
     }
 
     protected function _getMenuItemTags($aItem)
@@ -94,7 +80,7 @@ class BxBaseModTextMenuSnippetMeta extends BxTemplMenuCustom
         if(!$oMetatags || !$oMetatags->keywordsIsEnabled())
             return false;
 
-        return $oMetatags->getKeywordsList($this->_aContentInfo[$CNF['FIELD_ID']], 3);
+        return $this->_oTemplate->getUnitMetaItemCustom($oMetatags->getKeywordsList($this->_aContentInfo[$CNF['FIELD_ID']], 3));
     }
 
     protected function _getMenuItemViews($aItem)
@@ -104,9 +90,7 @@ class BxBaseModTextMenuSnippetMeta extends BxTemplMenuCustom
         if(empty($CNF['FIELD_VIEWS']) || empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]))
             return false;
 
-        return $this->_oTemplate->parseSpan(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]), array(
-        	'class' => 'bx-def-font-grayed'
-        ));
+        return $this->_oTemplate->getUnitMetaItemText(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]));
     }
 
     protected function _getMenuItemRating($aItem)
@@ -120,7 +104,7 @@ class BxBaseModTextMenuSnippetMeta extends BxTemplMenuCustom
         if(!$oVotes)
             return false;
 
-        return $oVotes->getElementInline(array('show_counter' => true));
+        return $this->_oTemplate->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
     }
 
     protected function _getMenuItemComments($aItem)
@@ -134,7 +118,9 @@ class BxBaseModTextMenuSnippetMeta extends BxTemplMenuCustom
         if(!$oComments || !$oComments->isEnabled())
             return false;
 
-        return $this->_oTemplate->parseLink($oComments->getListUrl(), _t('_cmt_txt_n_comments', $this->_aContentInfo[$CNF['FIELD_COMMENTS']]));
+        return $this->_oTemplate->getUnitMetaItemLink(_t('_cmt_txt_n_comments', $this->_aContentInfo[$CNF['FIELD_COMMENTS']]), array(
+            'href' => $oComments->getListUrl()
+        ));
     }
 }
 

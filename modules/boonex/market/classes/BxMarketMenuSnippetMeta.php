@@ -26,7 +26,7 @@ class BxMarketMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         if(!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
 
-        return $this->_oTemplate->parseSpan($oProfile->getDisplayName(), array('class' => 'bx-def-font-grayed'));
+        return $this->_oTemplate->getUnitMetaItemText($oProfile->getDisplayName());
     }
 }
 
