@@ -88,6 +88,7 @@ class BxBaseModPaymentCart extends BxDol
      * @param $iItemId $iItemId integer value with item ID. 
      * @param $iItemCount integer value with a number of items for purchasing. 
      * @param $bNeedRedirect (optional) boolean value determining whether redirect is needed after add action or not.
+     * @param $aCustom (optional) array with custom data to attach to an item added into a cart.
      * @return string with JavaScript code to use in OnClick attributes of HTML elements.
      * 
      * @see BxBaseModPaymentCart::serviceGetAddToCartJs
@@ -95,13 +96,13 @@ class BxBaseModPaymentCart extends BxDol
     /** 
      * @ref bx_base_payment-get_add_to_cart_js "get_add_to_cart_js"
      */
-    public function serviceGetAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
+    public function serviceGetAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $aCustom = array())
     {
 		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-        return $this->_oModule->_oTemplate->displayAddToCartJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
+        return $this->_oModule->_oTemplate->displayAddToCartJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
     }
 
     /**
@@ -119,6 +120,7 @@ class BxBaseModPaymentCart extends BxDol
      * @param $iItemId $iItemId integer value with item ID. 
      * @param $iItemCount integer value with a number of items for purchasing. 
      * @param $bNeedRedirect (optional) boolean value determining whether redirect is needed after add action or not.
+     * @param $aCustom (optional) array with custom data to attach to an item added into a cart.
      * @return HTML string with link to display on the site.
      * 
      * @see BxBaseModPaymentCart::serviceGetAddToCartLink
@@ -126,13 +128,13 @@ class BxBaseModPaymentCart extends BxDol
     /** 
      * @ref bx_base_payment-get_add_to_cart_link "get_add_to_cart_link"
      */
-	public function serviceGetAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
+	public function serviceGetAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $aCustom = array())
     {
         $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
+		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
     }
 
     /**

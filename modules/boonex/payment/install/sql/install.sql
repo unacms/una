@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_user_values` (
 CREATE TABLE IF NOT EXISTS `bx_payment_cart` (
   `client_id` int(11) NOT NULL default '0',
   `items` text NOT NULL default '',
+  `customs` text NOT NULL default '',
   PRIMARY KEY(`client_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -91,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_transactions_pending` (
   `type` varchar(16) NOT NULL default 'single',
   `provider` varchar(32) NOT NULL default '',
   `items` text NOT NULL default '',
+  `customs` text NOT NULL default '',
   `amount` float NOT NULL default '0',
   `order` varchar(32) NOT NULL default '',
   `error_code` varchar(16) NOT NULL default '',

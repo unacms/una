@@ -24,20 +24,23 @@ BxPaymentCart.prototype.init = function(oOptions) {
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 };
 
-BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iItemCount, iRedirect, sRedirect) {
+BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iItemCount, iRedirect, sCustom) {
 	var $this = this;
     var oDate = new Date();
 
-    iRedirect = parseInt(iRedirect);
-    if(!iRedirect)
-    	iRedirect = 0;
+    var sRedirect = '';
+    if(typeof iRedirect == 'number' && parseInt(iRedirect) > 0)
+    	sRedirect = sUrlRoot + 'cart.php?seller_id=' + iSellerId;
+	else if(typeof iRedirect == 'string' && iRedirect.length > 0)
+		sRedirect = iRedirect;
 
     $.post(
         this._sActionsUrl + 'add_to_cart/' + iSellerId + '/' + iModuleId + '/' + iItemId + '/' + iItemCount + '/',
         {
+        	custom: sCustom ? sCustom : '',
             _t:oDate.getTime()
         },
-        function(oData){
+        function(oData) {
         	$this.processResult(oData);
 
             if(oData.code == 0) {
@@ -48,8 +51,8 @@ BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iIte
                 $('#bx-payment-tbar-content').replaceWith(oData.content);
                 */
 
-            	if(iRedirect == 1)
-            		window.location.href = sRedirect && sRedirect.length > 0 ? sRedirect : sUrlRoot + 'cart.php?seller_id=' + iSellerId;
+            	if(sRedirect)
+            		window.location.href = sRedirect;
             }
         },
         'json'
@@ -70,7 +73,7 @@ BxPaymentCart.prototype.onCartCheckout = function(oData) {
 	location.href = oData.link;
 };
 
-BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sRedirect) {
+BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sRedirect, sCustom) {
     var $this = this;
     var oDate = new Date();
 
@@ -81,6 +84,7 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
     	item_id: iItemId,
     	item_count: 1,
     	redirect: sRedirect ? sRedirect : '',
+    	custom: sCustom ? sCustom : '',
     	_t: oDate.getTime()
     };
 

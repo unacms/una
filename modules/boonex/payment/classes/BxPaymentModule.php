@@ -298,9 +298,19 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /**
      * Cart Processing Methods
      */
-    public function actionAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount)
+    public function actionAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount, $sCustom = '')
     {
-        $aResult = $this->getObjectCart()->serviceAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount);
+        if(empty($sCustom) && bx_get('custom') !== false)
+            $sCustom = bx_process_input(bx_get('custom'));
+
+        $aCustom = array();
+        if(!empty($sCustom)) {
+            $aCustom = unserialize(base64_decode($sCustom));
+            if(empty($aCustom) || !is_array($aCustom))
+                $aCustom = array();
+        }
+
+        $aResult = $this->getObjectCart()->serviceAddToCart($iSellerId, $iModuleId, $iItemId, $iItemCount, $aCustom);
 		echoJson($aResult);
     }
 
@@ -332,7 +342,17 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	if(empty($iItemCount))
     		$iItemCount = 1;
 
-        $aResult = $this->getObjectSubscriptions()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount);
+        $sRedirect = bx_process_input(bx_get('redirect'));
+        $sCustom = bx_process_input(bx_get('custom'));
+
+        $aCustom = array();
+        if(!empty($sCustom)) {
+            $aCustom = unserialize(base64_decode($sCustom));
+            if(empty($aCustom) || !is_array($aCustom))
+                $aCustom = array();
+        }
+
+        $aResult = $this->getObjectSubscriptions()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
         $bRedirect = !empty($aResult['redirect']);
 
         if(!empty($aResult['popup'])) {
@@ -361,12 +381,22 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	$sSellerProvider = bx_process_input(bx_get('seller_provider'));
     	$iModuleId = bx_process_input(bx_get('module_id'), BX_DATA_INT);
     	$iItemId = bx_process_input(bx_get('item_id'), BX_DATA_INT);
+
     	$iItemCount = bx_process_input(bx_get('item_count'), BX_DATA_INT);
     	if(empty($iItemCount))
     		$iItemCount = 1;
-        $sRedirect = bx_process_input(bx_get('redirect'));
 
-        $aResult = $this->getObjectSubscriptions()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
+        $sRedirect = bx_process_input(bx_get('redirect'));
+        $sCustom = bx_process_input(bx_get('custom'));
+
+        $aCustom = array();
+        if(!empty($sCustom)) {
+            $aCustom = unserialize(base64_decode($sCustom));
+            if(empty($aCustom) || !is_array($aCustom))
+                $aCustom = array();
+        }
+
+        $aResult = $this->getObjectSubscriptions()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
 		echoJson($aResult);
     }
 
@@ -468,6 +498,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
      * @param $sProvider string value with payment provider name. 
      * @param $aItems (optional) an array with items to be purchased. 
      * @param $sRedirect (optional) string value with redirect URL if it's needed.
+     * @param $aCustom (optional) array with custom data to attach to a payment.
      * @return the result depends on the payment provider which is used for processing or represented as string value with error message if something is wrong.
      * 
      * @see BxPaymentModule::serviceInitializeCheckout
@@ -475,8 +506,11 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /** 
      * @ref bx_payment-initialize_checkout "initialize_checkout"
      */
-	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array(), $sRedirect = '')
+	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array(), $sRedirect = '', $aCustoms = array())
 	{
+	    $bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
+	    $bTypeRecurring = $sType == BX_PAYMENT_TYPE_RECURRING;
+
 		if(!is_array($aItems))
 			$aItems = array($aItems);
 
@@ -491,38 +525,67 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $aInfo = $this->getObjectCart()->getInfo($sType, $this->_iUserId, $iSellerId, $aItems);
         if(empty($aInfo) || $aInfo['vendor_id'] == BX_PAYMENT_EMPTY_ID || empty($aInfo['items']))
             return $this->_sLangsPrefix . 'err_empty_order';
-
+            
 		/*
 		 * Process FREE (price = 0) items for LOGGED IN members
 		 * WITHOUT processing via payment provider.
+		 * Note. This section isn't used for now!
 		 */
 		$bProcessedFree = false;
 		$sKeyPriceSingle = $this->_oConfig->getKey('KEY_ARRAY_PRICE_SINGLE');
 		$sKeyPriceRecurring = $this->_oConfig->getKey('KEY_ARRAY_PRICE_RECURRING');
-		foreach($aInfo['items'] as $iIndex => $aItem)
-			if((int)$aInfo['client_id'] != 0 && (float)$aItem[$sKeyPriceSingle] == 0 && (float)$aItem[$sKeyPriceRecurring] == 0) {
-				$aItemInfo = $this->callRegisterCartItem((int)$aItem['module_id'], array($aInfo['client_id'], $aInfo['vendor_id'], $aItem['id'], $aItem['quantity'], $this->_oConfig->getLicense()));
+		foreach($aInfo['items'] as $iIndex => $aItem) {
+		    if((int)$aInfo['client_id'] == 0)
+		        continue;
+
+            //--- For Single time payments.
+			if($bTypeSingle && (float)$aItem[$sKeyPriceSingle] == 0) {
+			    $aCart = $this->_oDb->getCartContent($aInfo['client_id']);
+			    $aCartCustoms = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
+
+			    $aCartItem = array($aInfo['vendor_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity']);
+			    $aCartItemCustom = $this->_oConfig->pullCustom($aCartItem, $aCartCustoms);
+
+				$aItemInfo = $this->callRegisterCartItem((int)$aItem['module_id'], array($aInfo['client_id'], $aInfo['vendor_id'], $aItem['id'], $aItem['quantity'], $this->_oConfig->getLicense(), $aCartItemCustom));
 	            if(is_array($aItemInfo) && !empty($aItemInfo))
 	            	$bProcessedFree = true;
 
 	            $aInfo['items_count'] -= 1;
 	            unset($aInfo['items'][$iIndex]);
 
-	            $sCartItems = $this->_oDb->getCartItems($aInfo['client_id']);
-	            $sCartItems = trim(preg_replace("'" . $this->_oConfig->descriptorA2S(array($aInfo['vendor_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity'])) . ":?'", "", $sCartItems), ":");
-	            $this->_oDb->setCartItems($aInfo['client_id'], $sCartItems);
+	            $aCart['items'] = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aCartItem) . ":?'", "", $aCart['items']), ":");
+	            $this->_oDb->setCartItems($aInfo['client_id'], $aCart['items'], $aCartCustoms);
 			}
+
+			//--- For Recurring payments.
+			if($bTypeRecurring && (float)$aItem[$sKeyPriceRecurring] == 0) {
+			    //TODO: Process FREE subscription here, if such situation will be possible.
+			}
+		}
 
 		if(empty($aInfo['items']))
             return $this->_sLangsPrefix . ($bProcessedFree ? 'msg_successfully_processed_free' : 'err_empty_order');
 
-        $iPendingId = $this->_oDb->insertOrderPending($this->_iUserId, $sType, $sProvider, $aInfo);
+        if($bTypeSingle && (empty($aCustoms) || !is_array($aCustoms))) {
+            $aCart = $this->_oDb->getCartContent($aInfo['client_id']);
+            $aCartCustoms = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
+
+            $aCustoms = array();
+            foreach($aInfo['items'] as $aItem) {
+                $sCartItem = $this->_oConfig->descriptorA2S(array($aInfo['vendor_id'], $aItem['module_id'], $aItem['id']));
+                $aCartItemCustom = $this->_oConfig->getCustom($sCartItem, $aCartCustoms);
+                $this->_oConfig->putCustom($sCartItem, $aCartItemCustom, $aCustoms);
+            }
+        }
+
+        $iPendingId = $this->_oDb->insertOrderPending($this->_iUserId, $sType, $sProvider, $aInfo, $aCustoms);
         if(empty($iPendingId))
             return $this->_sLangsPrefix . 'err_access_db';
 
 		/*
 		 * Perform Join WITHOUT processing via payment provider
 		 * if a client ISN'T logged in and has only ONE FREE item in the card.
+		 * Note. This section isn't used for now because only a member can purchase!
 		 */
 		if((int)$aInfo['client_id'] == 0 && (int)$aInfo['items_count'] == 1) {
 			reset($aInfo['items']);
@@ -704,16 +767,22 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 		$iClientId = (int)$aPending['client_id'];
 		$sLicense = $this->_oConfig->getLicense();
+		$aCustoms = !empty($aPending['customs']) ? unserialize($aPending['customs']) : array();
 
-		$sCartItems = '';
-		if($bTypeSingle)
-			$sCartItems = $this->_oDb->getCartItems($iClientId);
+		$aCart = array();
+		if($bTypeSingle) {
+			$aCart = $this->_oDb->getCartContent($iClientId);
+			$aCart['customs'] = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
+		}
 
 		$bResult = false;
         $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
         foreach($aItems as $aItem) {
+            $sItem = $this->_oConfig->descriptorA2S(array($aItem['vendor_id'], $aItem['module_id'], $aItem['item_id']));
+		    $aItemCustom = $this->_oConfig->getCustom($sItem, $aCustoms);
+
         	$sMethod = $bTypeSingle ? 'callRegisterCartItem' : 'callRegisterSubscriptionItem';
-        	$aItemInfo = $this->$sMethod((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order'], $sLicense));
+        	$aItemInfo = $this->$sMethod((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order'], $sLicense, $aItemCustom));
             if(empty($aItemInfo) || !is_array($aItemInfo))
                 continue;
 
@@ -721,21 +790,24 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 'pending_id' => $aPending['id'],
                 'client_id' => $aPending['client_id'],
                 'seller_id' => $aPending['seller_id'],
-                'module_id' => $aItem['module_id'],
-                'item_id' => $aItem['item_id'],
-                'item_count' => $aItem['item_count'],
-                'amount' => $aItem['item_count'] * $this->_oConfig->getPrice($sType, $aItemInfo),
+                'module_id' => (int)$aItem['module_id'],
+                'item_id' => (int)$aItem['item_id'],
+                'item_count' => (int)$aItem['item_count'],
+                'amount' => (int)$aItem['item_count'] * $this->_oConfig->getPrice($sType, $aItemInfo),
             	'license' => $sLicense,
             ));
 
-            if($bTypeSingle)
-            	$sCartItems = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aItem) . ":?'", "", $sCartItems), ":");
+            if($bTypeSingle) {
+                $this->_oConfig->pullCustom($sItem, $aCart['customs']);
+
+            	$aCart['items'] = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aItem) . ":?'", "", $aCart['items']), ":");
+            }
 
 			$bResult = true;
         }
 
         if($bTypeSingle)
-			$this->_oDb->setCartItems($iClientId, $sCartItems);
+			$this->_oDb->setCartItems($iClientId, $aCart['items'], $aCart['customs']);
 
         if($bResult) {
         	$this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));

@@ -137,15 +137,27 @@ class BxPaymentDb extends BxBaseModPaymentDb
     	$sQuery = $this->prepare("SELECT `items` FROM `" . $this->_sPrefix . "cart` WHERE `client_id`=? LIMIT 1", $iId);
         return $this->getOne($sQuery);
     }
-    public function setCartItems($iId, $sItems)
+
+    public function getCartContent($iId)
+    {
+    	return $this->getRow("SELECT * FROM `" . $this->_sPrefix . "cart` WHERE `client_id`=:client_id LIMIT 1", array(
+    		'client_id' => $iId
+    	));
+    }
+
+    public function setCartItems($iId, $sItems, $aCustoms = array())
     {
         $sItems = trim($sItems, ":");
         if(empty($sItems))
-            $sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "cart` WHERE `client_id`=? LIMIT 1", $iId);
-        else
-            $sQuery = $this->prepare("REPLACE INTO `" . $this->_sPrefix . "cart` SET `client_id`=?, `items`=?", $iId, $sItems);
+            return $this->query("DELETE FROM `" . $this->_sPrefix . "cart` WHERE `client_id`=:client_id LIMIT 1", array(
+                'client_id' => $iId
+            ));
 
-        return $this->query($sQuery);
+        return $this->query("REPLACE INTO `" . $this->_sPrefix . "cart` SET `client_id`=:client_id, `items`=:items, `customs`=:customs", array(
+            'client_id' => $iId,
+            'items' => $sItems,
+            'customs' => !empty($aCustoms) && is_array($aCustoms) ? serialize($aCustoms) : ''
+        ));
     }
 
 	public function getVendorInfoProvidersSingle($iVendorId)
@@ -236,22 +248,21 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
-    public function insertOrderPending($iClientId, $sType, $sProvider, $aCartInfo)
+    public function insertOrderPending($iClientId, $sType, $sProvider, $aCartInfo, $aCustom = array())
     {
         $sItems = "";
         foreach($aCartInfo['items'] as $aItem)
-            $sItems .= $aCartInfo['vendor_id'] . '_' . $aItem['module_id'] . '_' . $aItem['id'] . '_' . $aItem['quantity'] . ':';
+            $sItems .= $this->_oConfig->descriptorA2S(array($aCartInfo['vendor_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity'])) . ':';
 
-        $sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET
-                    `client_id`=?,
-                    `seller_id`=?,
-                    `type`=?,
-                    `provider`=?,
-                    `items`=?,
-                    `amount`=?,
-                    `date`=UNIX_TIMESTAMP()", $iClientId, $aCartInfo['vendor_id'], $sType, $sProvider, trim($sItems, ':'), $aCartInfo['items_price']);
-
-        return (int)$this->query($sQuery) > 0 ? $this->lastId() : 0;
+        return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET `client_id`=:client_id, `seller_id`=:seller_id, `type`=:type, `provider`=:provider, `items`=:items, `customs`=:customs, `amount`=:amount, `date`=UNIX_TIMESTAMP()", array(
+            'client_id' => $iClientId,
+            'seller_id' => $aCartInfo['vendor_id'],
+            'type' => $sType, 
+            'provider' => $sProvider,
+            'items' => trim($sItems, ':'),
+            'customs' => !empty($aCustom) && is_array($aCustom) ? serialize($aCustom) : '',
+            'amount' => $aCartInfo['items_price']
+        )) > 0 ? $this->lastId() : 0;
     }
 
     public function updateOrderPending($iId, $aValues)

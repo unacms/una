@@ -42,6 +42,7 @@ BxPaymentProviderStripe.prototype.init = function(oOptions) {
     this._iItemId  = oOptions.iItemId;
     this._iItemCount  = oOptions.iItemCount;
     this._sRedirect  = oOptions.sRedirect;
+    this._sCustom  = oOptions.sCustom;
 };
 
 BxPaymentProviderStripe.prototype.checkout = function(oLink) {
@@ -85,6 +86,7 @@ BxPaymentProviderStripe.prototype.subscribe = function(oLink) {
 		    	item_id: $this._iItemId,
 		    	item_count: $this._iItemCount,
 		    	redirect: $this._sRedirect,
+		    	custom: $this._sCustom,
 		    	token: token.id,
 		    	_t: oDate.getTime()
 		    };

@@ -111,7 +111,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
     /** 
      * @ref bx_payment-subscribe "subscribe"
      */
-	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '')
+	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '', $aCustom = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -132,13 +132,15 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 			$sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
 			$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
 			return array('popup' => array(
-				'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect)), 
+				'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect, $aCustom)), 
 				'options' => array('closeOnOuterClick' => true)
 			));
 		}
 
-		$aProvider = $aSellerProviders[$sSellerProvider];
-        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aProvider['name'], array($sCartItem), $sRedirect);
+		$aCustoms = array();
+		$this->_oModule->_oConfig->putCustom($aCartItem, $aCustom, $aCustoms);
+
+        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aSellerProviders[$sSellerProvider]['name'], array($sCartItem), $sRedirect, $aCustoms);
         if(is_string($mixedResult))
         	return array('code' => 6, 'message' => _t($mixedResult));
 

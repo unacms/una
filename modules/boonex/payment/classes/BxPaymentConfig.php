@@ -225,6 +225,42 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         return $aResult;
     }
 
+    public function putCustom($mDsc, $aCustom, &$aCustoms)
+    {
+        if(empty($aCustom) || !is_array($aCustom))
+            return;
+
+        if(is_array($mDsc))
+            $mDsc = $this->descriptorA2S(array_slice($mDsc, 0, 3));
+
+        $aCustoms[$mDsc] = !empty($aCustoms[$mDsc]) && is_array($aCustoms[$mDsc]) ? array_merge($aCustoms[$mDsc], $aCustom) : $aCustom;
+    }
+
+    public function getCustom($mDsc, &$aCustoms)
+    {
+        if(is_array($mDsc))
+            $mDsc = $this->descriptorA2S(array_slice($mDsc, 0, 3));
+
+        if(empty($aCustoms) || !is_array($aCustoms) || empty($aCustoms[$mDsc]))
+            return array();
+
+        return $aCustoms[$mDsc];
+    }
+
+    public function pullCustom($mDsc, &$aCustoms)
+    {
+        if(is_array($mDsc))
+            $mDsc = $this->descriptorA2S(array_slice($mDsc, 0, 3));
+
+        if(empty($aCustoms) || !is_array($aCustoms) || empty($aCustoms[$mDsc]))
+            return array();
+
+        $aResult = $aCustoms[$mDsc];
+        unset($aCustoms[$mDsc]);           
+
+        return $aResult;
+    }
+
 	public function http2https($s)
     {
     	if(strncmp($s, 'https://', 8) === 0)

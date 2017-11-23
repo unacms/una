@@ -147,6 +147,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
      * @param $mixedModuleId mixed value (ID, Name or URI) determining a module from which the action was initiated.
      * @param $iItemId integer value with item ID.
      * @param $iItemCount integer value with a number of items for purchasing.
+     * @param $aCustom array with custom data.
      * @return an array with special format which describes the result of operation.
      * 
      * @see BxPaymentCart::serviceAddToCart
@@ -154,7 +155,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
     /** 
      * @ref bx_payment-add_to_cart "add_to_cart"
      */
-    public function serviceAddToCart($iSellerId, $mixedModuleId, $iItemId, $iItemCount)
+    public function serviceAddToCart($iSellerId, $mixedModuleId, $iItemId, $iItemCount, $aCustom = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -169,19 +170,29 @@ class BxPaymentCart extends BxBaseModPaymentCart
         if(empty($aSellerProviders))
             return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
 
-        $sCartItem = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $iItemCount));
-        $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
+        $aCart = $this->_oModule->_oDb->getCartContent($iClientId);
+        $sCartItems = !empty($aCart['items']) ? $aCart['items'] : '';
 
-        if(strpos($sCartItems, $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId))) !== false)
+        $sCiDsc = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId));
+        if(strpos($sCartItems, $sCiDsc) !== false)
             $sCartItems = preg_replace_callback(
             	"/" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '([0-9])+')) . "/", 
             	create_function('$aMatches', 'return ' . $this->_oModule->_oConfig->descriptorA2S(array("'" . $iSellerId, $iModuleId, $iItemId, "' . (\$aMatches[1] + " . $iItemCount . ")")) . ';'),
             	$sCartItems
 			);
-        else
+        else {
+            $sCartItem = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $iItemCount));
             $sCartItems = empty($sCartItems) ? $sCartItem : $sCartItems . $this->_oModule->_oConfig->getDivider('DIVIDER_DESCRIPTORS') . $sCartItem;
+        }
 
-        $this->_oModule->_oDb->setCartItems($iClientId, $sCartItems);
+        $aCartCustom = array();
+        if(!empty($aCart['customs']))
+            $aCartCustom = unserialize($aCart['customs']);
+
+        if(!empty($aCustom) && is_array($aCustom))
+            $aCartCustom[$sCiDsc] = !empty($aCartCustom[$sCiDsc]) && is_array($aCartCustom[$sCiDsc]) ? array_merge($aCartCustom[$sCiDsc], $aCustom) : $aCustom;
+
+        $this->_oModule->_oDb->setCartItems($iClientId, $sCartItems, $aCartCustom);
 
         $aInfo = $this->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId);
         $iTotalQuantity = 0;
@@ -228,14 +239,28 @@ class BxPaymentCart extends BxBaseModPaymentCart
         if(empty($iClientId))
             return array('code' => 2, 'message' => _t($CNF['T']['ERR_REQUIRED_LOGIN']));
 
-        if(!empty($iModuleId) && !empty($iItemId))
-            $sPattern = "'" . $iSellerId . "_" . $iModuleId . "_" . $iItemId . "_[0-9]+:?'";
-        else
-            $sPattern = "'" . $iSellerId . "_[0-9]+_[0-9]+_[0-9]+:?'";
+        $aCart = $this->_oModule->_oDb->getCartContent($iClientId);
 
-        $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
-        $sCartItems = trim(preg_replace($sPattern, "", $sCartItems), ":");
-        $this->_oModule->_oDb->setCartItems($iClientId, $sCartItems);
+        $aCartCustom = array();
+        if(!empty($aCart['customs']))
+            $aCartCustom = unserialize($aCart['customs']);
+
+        if(!empty($iModuleId) && !empty($iItemId)) {
+            $sCiDsc = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId));
+            if(!empty($aCartCustom[$sCiDsc]))
+                unset($aCartCustom[$sCiDsc]);
+        }
+        else {
+            $aCiDscs = array_keys($aCartCustom);
+            foreach($aCiDscs as $sCiDsc)
+                if(strpos($sCiDsc, $iSellerId . '_') === 0)
+                    unset($aCartCustom[$sCiDsc]);
+
+            $iModuleId = $iItemId = '[0-9]+';
+        }
+
+        $aCart['items'] = trim(preg_replace("'" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '[0-9]+:?')) . "'", "", $aCart['items']), ":");
+        $this->_oModule->_oDb->setCartItems($iClientId, $aCart['items'], $aCartCustom);
 
         return array('code' => 0, 'message' => _t($CNF['T']['MSG_ITEM_DELETED']));
     }

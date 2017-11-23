@@ -109,13 +109,13 @@ class BxBaseModPaymentSubscriptions extends BxDol
     /** 
      * @ref bx_base_payment-get_subscribe_js "get_subscribe_js"
      */
-    public function serviceGetSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
+    public function serviceGetSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
     {
 		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-        return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
+        return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
     }
 
     /**
@@ -141,13 +141,13 @@ class BxBaseModPaymentSubscriptions extends BxDol
     /** 
      * @ref bx_base_payment-get_subscribe_link "get_subscribe_link"
      */
-    public function serviceGetSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '')
+    public function serviceGetSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
     {
         $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-		return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect);
+		return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
     }
 }
 
