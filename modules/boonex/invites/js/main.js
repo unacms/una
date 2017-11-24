@@ -46,7 +46,7 @@ BxInvMain.prototype.showLinkPopup = function(oElement) {
         	}
 
         	if(oData && oData.message != undefined)
-        		alert(oData.message);
+        		bx_alert(oData.message);
         },
         'json'
     );

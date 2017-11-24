@@ -17,7 +17,7 @@ function bx_cnv_action(sAction, e, iConvoId, isConfirm) {
         if (sUrlRoot == s.substring(0,sUrlRoot.length))
             location.href = s;
         else
-            alert(s);
+            bx_alert(s);
     });
 }
 

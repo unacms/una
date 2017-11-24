@@ -11,59 +11,24 @@ BxStripeConnectMain.prototype.disconnect = function(iId, oLink) {
 	var $this = this;
 	var oDate = new Date();
 
-	if(!confirm(_t('_bx_stripe_connect_wrn_disconnect')))
-		return;
+	bx_confirm(_t('_bx_stripe_connect_wrn_disconnect'), function() {
+		$this.loadingInButton(oLink, true);
 
-    this.loadingInButton(oLink, true);
+	    $.get(
+	        this._sActionsUrl + 'delete/',
+	        {
+	        	id: iId,
+	        	_t: oDate.getTime()
+	        },
+	        function(oData) {
+	        	if(parseInt(oData.code) != 0)
+	        		$this.loadingInButton(oLink, false);
 
-    $.get(
-        this._sActionsUrl + 'delete/',
-        {
-        	id: iId,
-        	_t: oDate.getTime()
-        },
-        function(oData) {
-        	if(parseInt(oData.code) != 0)
-        		$this.loadingInButton(oLink, false);
-
-        	$this.processResult(oData);
-        },
-        'json'
-    );
-};
-
-BxStripeConnectMain.prototype.processResult = function(oData) {
-	var $this = this;
-
-	if(oData && oData.message != undefined && oData.message.length != 0)
-    	alert(oData.message);
-
-    if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
-    	document.location = document.location;
-
-    if(oData && oData.popup != undefined) {
-    	var oPopup = null;
-    	var oOptions = {
-            fog: {
-				color: '#fff',
-				opacity: .7
-            },
-            closeOnOuterClick: false
-        };
-
-    	if(typeof(oData.popup) == 'object') {
-    		oOptions = $.extend({}, oOptions, oData.popup.options);
-    		oPopup = $(oData.popup.html);
-    	}
-    	else 
-    		oPopup = $(oData.popup);
-
-    	$('#' + oPopup.attr('id')).remove();
-        oPopup.hide().prependTo('body').dolPopup(oOptions);
-    }
-
-    if (oData && oData.eval != undefined)
-        eval(oData.eval);
+	        	processJsonData(oData);
+	        },
+	        'json'
+	    );
+	});    
 };
 
 BxStripeConnectMain.prototype.loadingInButton = function(e, bShow) {

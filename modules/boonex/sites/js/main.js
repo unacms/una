@@ -26,7 +26,7 @@ BxSitesMain.prototype.reactivate = function(iId, oButton) {
         oParams,
         function(oData) {
         	if(oData.code != 0) {
-        		alert(oData.message);
+        		bx_alert(oData.message);
         		return;
         	}
 

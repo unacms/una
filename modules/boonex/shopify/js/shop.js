@@ -48,7 +48,7 @@ BxShopifyShop.prototype.getUnit = function(iProduct) {
 	}, function() {
 		bx_loading(oUnit.removeClass(this._sClassLoading), false);
 
-		alert(_t('_bx_shopify_err_load_product'));
+		bx_alert(_t('_bx_shopify_err_load_product'));
 	});
 };
 
@@ -95,7 +95,7 @@ BxShopifyShop.prototype.getEntry = function(iProduct) {
 	}, function() {
 		bx_loading(oLoading, false);
 
-		alert(_t('_bx_shopify_err_load_product'));
+		bx_alert(_t('_bx_shopify_err_load_product'));
 	});
 };
 
@@ -157,7 +157,7 @@ BxShopifyShop.prototype.fetchProduct = function(iProduct, onComplete, onError) {
 		if(typeof(onError) == 'function')
 			onError();
         else 
-        	alert(_t('_bx_shopify_err_load_product'));
+        	bx_alert(_t('_bx_shopify_err_load_product'));
 	});
 };
 
@@ -173,7 +173,7 @@ BxShopifyShop.prototype.fetchCollection = function(iCollection, onComplete, onEr
 		if(typeof(onError) == 'function')
 			onError();
         else 
-        	alert(_t('_bx_shopify_err_load_collection'));
+        	bx_alert(_t('_bx_shopify_err_load_collection'));
 	});
 };
 
