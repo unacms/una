@@ -62,35 +62,38 @@ BxDolCmts.prototype.cmtBeforePostSubmit = function(oCmtForm)
 
 BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
 {
+	var $this = this;
+	var fContinue = function() {
+		if(oData && oData.id != undefined) {
+			var iCmtId = parseInt(oData.id);
+	        if(iCmtId > 0) {
+	            $this._getCmt(oCmtForm, iCmtId);
+	            $this._getForm(undefined, parseInt(oData.parent_id), function(sForm) {
+	            	var oForm = $(sForm);
+	            	oCmtForm.parents('.cmt-reply:first').hide().html(oForm.html()).show();
+
+	            	var sFormId = oForm.find('form').attr('id');
+	            	$this.cmtInitFormPost(sFormId);
+	            });
+	        }
+
+	        return;
+		}
+
+		if(oData && oData.form != undefined && oData.form_id != undefined) {
+			$('#' + oData.form_id).replaceWith(oData.form);
+			$this.cmtInitFormPost(oData.form_id);
+
+			return;
+		}
+	};
+
 	this._loadingInButton($(oCmtForm).children().find(':submit'), false);
 
 	if(oData && oData.msg != undefined)
-        alert(oData.msg);
-
-	if(oData && oData.id != undefined) {
-		var iCmtId = parseInt(oData.id);
-        if(iCmtId > 0) {
-        	var $this = this;
-
-            this._getCmt(oCmtForm, iCmtId);
-            this._getForm(undefined, parseInt(oData.parent_id), function(sForm) {
-            	var oForm = $(sForm);
-            	oCmtForm.parents('.cmt-reply:first').hide().html(oForm.html()).show();
-
-            	var sFormId = oForm.find('form').attr('id');
-            	$this.cmtInitFormPost(sFormId);
-            });
-        }
-
-        return;
-	}
-
-	if(oData && oData.form != undefined && oData.form_id != undefined) {
-		$('#' + oData.form_id).replaceWith(oData.form);
-		this.cmtInitFormPost(oData.form_id);
-
-		return;
-	}
+        bx_alert(oData.msg, fContinue);
+	else 
+		fContinue();	
 };
 
 BxDolCmts.prototype.cmtInitFormEdit = function(sCmtFormId)
@@ -117,28 +120,32 @@ BxDolCmts.prototype.cmtBeforeEditSubmit = function(oCmtForm)
 BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData)
 {
 	var $this = this;
+	var fContinue = function() {
+		if(oData && oData.id != undefined && oData.text != undefined) {
+			var iCmtId = parseInt(oData.id);
+			if(iCmtId > 0) {
+				$('#cmt' + iCmtId + ' .cmt-body').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+					$(this).html(oData.text).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+				});
+	        }
+
+	        return;
+		}
+
+		if(oData && oData.form != undefined && oData.form_id != undefined) {
+			$('#' + oData.form_id).replaceWith(oData.form);
+			$this.cmtInitFormEdit(oData.form_id);
+
+			return;
+		}
+	};
+
 	this._loadingInButton($(oCmtForm).children().find(':submit'), false);
 
 	if(oData && oData.msg != undefined)
-        alert(oData.msg);
-
-	if(oData && oData.id != undefined && oData.text != undefined) {
-		var iCmtId = parseInt(oData.id);
-		if(iCmtId > 0) {
-			$('#cmt' + iCmtId + ' .cmt-body').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-				$(this).html(oData.text).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-			});
-        }
-
-        return;
-	}
-
-	if(oData && oData.form != undefined && oData.form_id != undefined) {
-		$('#' + oData.form_id).replaceWith(oData.form);
-		this.cmtInitFormEdit(oData.form_id);
-
-		return;
-	}
+        bx_alert(oData.msg, fContinue);
+	else 
+		fContinue();
 };
 
 BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
@@ -165,18 +172,22 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
         this._sActionsUrl,
         oParams,
         function (oData) {
+        	var fContinue = function() {
+        		if(oData && oData.form != undefined && oData.form_id != undefined) {
+            		$(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                        $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                        	$this.cmtInitFormEdit(oData.form_id);
+                        });
+                    });
+            	}
+        	};
+
         	$this._loadingInContent (oLink, false);
 
         	if(oData && oData.msg != undefined)
-                alert(oData.msg);
-
-        	if(oData && oData.form != undefined && oData.form_id != undefined) {
-        		$(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    	$this.cmtInitFormEdit(oData.form_id);
-                    });
-                });
-        	}
+                bx_alert(oData.msg, fContinue);
+        	else
+        		fContinue();
         },
         'json'
     );
@@ -198,22 +209,26 @@ BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
 	        $this._sActionsUrl,
 	        oParams,
 	        function(oData) {
+	            var fContinue = function() {
+	            	if(oData && oData.id != undefined) {
+		            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
+		            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+		                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
+		                	if(oCounter)
+		                		oCounter.html(oCounter.html() - 1);
+
+		                	$(this).remove();
+		                });
+		            }
+	            };
+
 	            $this._loadingInContent(e, false);
 
 	            if(oData && oData.msg != undefined)
-	                alert(oData.msg);
-
-	            if(oData && oData.id != undefined) {
-	            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
-
-	            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-	                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
-	                	if(oCounter)
-	                		oCounter.html(oCounter.html() - 1);
-
-	                	$(this).remove();
-	                });
-	            }
+	                bx_alert(oData.msg, fContinue);	            
+	            else
+	            	fContinue();
 	        },
 	        'json'
 	    );
