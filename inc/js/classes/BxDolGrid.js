@@ -40,7 +40,7 @@ BxDolGrid.prototype.resetSorting = function (sField, sDir) {
     this._sOrderField = '';
     this._sOrderDir = 'ASC';
     this.reload(0);
-}
+};
 
 BxDolGrid.prototype.setSorting = function (sField, sDir, isDisableReload) {
     
@@ -60,7 +60,7 @@ BxDolGrid.prototype.setSorting = function (sField, sDir, isDisableReload) {
     
     if (typeof(isDisableReload) == "undefined" || !isDisableReload)
         this.reload(0);
-}
+};
 
 BxDolGrid.prototype.setFilter = function (sFilter, isReload) {
 
@@ -75,7 +75,7 @@ BxDolGrid.prototype.setFilter = function (sFilter, isReload) {
         else
             this.reload();
     }
-}
+};
 
 BxDolGrid.prototype.orderable = function () {
     var $this = this;
@@ -88,8 +88,7 @@ BxDolGrid.prototype.orderable = function () {
     
     if (this._sOrderField)
         this.setSorting (this._sOrderField, this._sOrderDir, true);
-
-}
+};
 
 BxDolGrid.prototype.sortable = function () {
     var $this = this;
@@ -121,14 +120,14 @@ BxDolGrid.prototype.sortable = function () {
             $this.action('reorder', {}, s, true);
         }
     });
-}
+};
 
 BxDolGrid.prototype.blink = function (sId) {
     var e = jQuery('#' + sId);
     e.removeClass('bx-grid-table-row-trans');
     e.addClass('bx-def-color-bg-active');    
     setTimeout('glGrids.' + this._sObject + '._blinkCallback("' + sId + '")', 200);
-}
+};
 
 BxDolGrid.prototype.enable = function (sId, isEnable) {
     var e = jQuery('#' + sId);
@@ -145,13 +144,13 @@ BxDolGrid.prototype.enable = function (sId, isEnable) {
         if (eActions.length)
             this._unbindActionsSingle(e);
     }
-}
+};
 
 BxDolGrid.prototype._blinkCallback = function (sId) {
     var e = jQuery('#' + sId);
     e.addClass('bx-grid-table-row-trans');
     e.removeClass('bx-def-color-bg-active');
-}
+};
 
 BxDolGrid.prototype.actionWithId = function (sId, sAction, oData, sData, isDisableLoading, isConfirm) {
     var sDataAdd = 'ids[]=' + sId;
@@ -164,7 +163,7 @@ BxDolGrid.prototype.actionWithId = function (sId, sAction, oData, sData, isDisab
     } 
 
     this.action(sAction, oData, sData, isDisableLoading, isConfirm);
-}
+};
 
 BxDolGrid.prototype.actionWithSelected = function (sActionData, sAction, oData, sData, isDisableLoading, isConfirm) {    
 
@@ -187,102 +186,114 @@ BxDolGrid.prototype.actionWithSelected = function (sActionData, sAction, oData, 
     } 
 
     this.action(sAction, oData, sData, isDisableLoading, isConfirm);
-}
+};
 
 BxDolGrid.prototype.action = function (sAction, oData, sData, isDisableLoading, isConfirm) {
-
-    var sUrl = sUrlRoot + "grid.php?o=" + this._sObject + "&a=" + sAction;
-    var i;
     var $this = this;
+    var fPerform = function() {
+    	var i;
+    	var sUrl = sUrlRoot + "grid.php?o=" + $this._sObject + "&a=" + sAction;
 
-    if (typeof(isConfirm) != 'undefined' && parseInt(isConfirm) == 1 && !confirm('undefined' == typeof(this._oConfirmMessages[sAction]) ? _t('_sys_grid_confirmation') : this._oConfirmMessages[sAction]))
-        return;
+    	if (typeof($this._oQueryAppend) == 'object')
+            oData = $.extend({}, $this._oQueryAppend, oData);
 
-    if (typeof(this._oQueryAppend) == 'object')
-        oData = $.extend({}, this._oQueryAppend, oData);
+        for (i in oData)
+            sUrl += "&" + i + "=" + encodeURIComponent(oData[i]);
+        if (typeof(sData) != 'undefined')
+            sUrl += '&' + sData;
+        if ($this._sFilter.length)
+            sUrl += '&filter=' + encodeURIComponent ($this._sFilter);
+        if ($this._sOrderField.length)
+            sUrl += '&order_field=' + encodeURIComponent ($this._sOrderField);
+        if ($this._sOrderDir.length)
+            sUrl += '&order_dir=' + encodeURIComponent ($this._sOrderDir);
+        sUrl += '&_r=' + Math.random();
 
-    for (i in oData)
-        sUrl += "&" + i + "=" + encodeURIComponent(oData[i]);
-    if (typeof(sData) != 'undefined')
-        sUrl += '&' + sData;
-    if (this._sFilter.length)
-        sUrl += '&filter=' + encodeURIComponent (this._sFilter);
-    if (this._sOrderField.length)
-        sUrl += '&order_field=' + encodeURIComponent (this._sOrderField);
-    if (this._sOrderDir.length)
-        sUrl += '&order_dir=' + encodeURIComponent (this._sOrderDir);
-    sUrl += '&_r=' + Math.random();
+        if (typeof(isDisableLoading) == 'undefined' || !isDisableLoading)
+            $this.loading(true);
 
-    if (typeof(isDisableLoading) == 'undefined' || !isDisableLoading)
-        this.loading(true);
+        $.getJSON(sUrl, function (oData) {
+            $this.processJson(oData, sAction, isDisableLoading);
+        });
+    };
 
-    $.getJSON(sUrl, function (oData) {
-        $this.processJson(oData, sAction, isDisableLoading);
-    });
-
-}
+    if(typeof(isConfirm) != 'undefined' && parseInt(isConfirm) == 1)
+    	bx_confirm(typeof(this._oConfirmMessages[sAction]) == 'undefined' ? _t('_sys_grid_confirmation') : this._oConfirmMessages[sAction], function() {
+    		fPerform();
+    	});
+    else
+    	fPerform();
+};
 
 BxDolGrid.prototype.processJson = function (oData, sAction, isDisableLoading) {
+	var $this = this;
+    var fContinue = function() {
+    	if (oData && undefined != oData.grid) {        
+            $('#' + $this._sIdContainer).html($(oData.grid).find('#' + $this._sIdContainer).html());
+            $('#' + $this._sIdWrapper).find('.bx-grid-footer').html($(oData.grid).find('.bx-grid-footer').html());
+            $this._onDataReloaded(true);
+        }
+    	if (oData && undefined != oData.blink) {
+            if ('object' == typeof(oData.blink)) {
+                for(var i in oData.blink)
+                    $this.blink($this._sObject + '_row_' + oData.blink[i]);
+            } else {
+                $this.blink($this._sObject + '_row_' + oData.blink);
+            }
+        }
+        if (oData && undefined != oData.disable) {        
+            if ('object' == typeof(oData.disable)) {
+                for(var i in oData.disable)
+                    $this.enable($this._sObject + '_row_' + oData.disable[i], false);
+            } else {
+                $this.enable($this._sObject + '_row_' + oData.disable, false);
+            }
+        }
+        if (oData && undefined != oData.enable) {
+            if ('object' == typeof(oData.enable)) {
+                for(var i in oData.enable)
+                    $this.enable($this._sObject + '_row_' + oData.enable[i], true);
+            } else {
+                $this.enable($this._sObject + '_row_' + oData.enable, true);
+            }
+        }
+        if (oData && undefined != oData.popup) {
+            var sId = 'grid-popup-' + $this._sObject + '-' + sAction;
+            $('#' + sId).remove();
+            if ('object' == typeof(oData.popup)) {
+                var o = $.extend({}, $this._oPopupOptions, oData.popup.options);
+                $('<div id="' + sId + '" style="display: none;"></div>').prependTo('body').html(oData.popup.html);
+                $('#' + sId).dolPopup(o);
+            } else {
+                $('<div id="' + sId + '" style="display: none;"></div>').prependTo('body').html(oData.popup);
+                $('#' + sId).dolPopup($this._oPopupOptions);
+            }        
+        }
+        if (oData && undefined != oData.eval) {
+            eval(oData.eval);
+        }
+    };
+
     if (typeof(isDisableLoading) == 'undefined' || !isDisableLoading)
         this.loading(false);
 
-    if (oData && undefined != oData.grid) {        
-        $('#' + this._sIdContainer).html($(oData.grid).find('#' + this._sIdContainer).html());
-        $('#' + this._sIdWrapper).find('.bx-grid-footer').html($(oData.grid).find('.bx-grid-footer').html());
-        this._onDataReloaded(true);
-    }
     if (oData && undefined != oData.msg) {
-        alert(oData.msg);
+        bx_alert(oData.msg, function() {
+        	fContinue();
+        });
     }
-    if (oData && undefined != oData.blink) {
-        if ('object' == typeof(oData.blink)) {
-            for(var i in oData.blink)
-                this.blink(this._sObject + '_row_' + oData.blink[i]);
-        } else {
-            this.blink(this._sObject + '_row_' + oData.blink);
-        }
-    }
-    if (oData && undefined != oData.disable) {        
-        if ('object' == typeof(oData.disable)) {
-            for(var i in oData.disable)
-                this.enable(this._sObject + '_row_' + oData.disable[i], false);
-        } else {
-            this.enable(this._sObject + '_row_' + oData.disable, false);
-        }
-    }
-    if (oData && undefined != oData.enable) {
-        if ('object' == typeof(oData.enable)) {
-            for(var i in oData.enable)
-                this.enable(this._sObject + '_row_' + oData.enable[i], true);
-        } else {
-            this.enable(this._sObject + '_row_' + oData.enable, true);
-        }
-    }
-    if (oData && undefined != oData.popup) {
-        var sId = 'grid-popup-' + this._sObject + '-' + sAction;
-        $('#' + sId).remove();
-        if ('object' == typeof(oData.popup)) {
-            var o = $.extend({}, this._oPopupOptions, oData.popup.options);
-            $('<div id="' + sId + '" style="display: none;"></div>').prependTo('body').html(oData.popup.html);
-            $('#' + sId).dolPopup(o);
-        } else {
-            $('<div id="' + sId + '" style="display: none;"></div>').prependTo('body').html(oData.popup);
-            $('#' + sId).dolPopup(this._oPopupOptions);
-        }        
-    }
-    if (oData && undefined != oData.eval) {
-        eval(oData.eval);
-    }
-}
+    else
+    	fContinue();
+};
 
 BxDolGrid.prototype.loading = function (bShow) {
     bx_loading(this._sIdContainer, bShow);
-}
+};
 
 BxDolGrid.prototype.reload = function (iStart, iPerPage) {
     var oData = this._getActionDataForReload(iStart, iPerPage);
     this.action('display', oData);
-}
+};
 
 BxDolGrid.prototype._getActionDataForReload = function (iStart, iPerPage) {
     var oData = {};
@@ -306,7 +317,7 @@ BxDolGrid.prototype._getActionDataForReload = function (iStart, iPerPage) {
     }
 
     return oData;
-}
+};
 
 BxDolGrid.prototype._unbindActionsSingle = function (eElement) {
     var elements;
@@ -317,7 +328,7 @@ BxDolGrid.prototype._unbindActionsSingle = function (eElement) {
         elements = eElement.find('*[bx_grid_action_single]');
 
     elements.unbind('click');
-}
+};
 
 BxDolGrid.prototype._bindActionsSingle = function (eElement) {
     var $this = this;
@@ -339,8 +350,7 @@ BxDolGrid.prototype._bindActionsSingle = function (eElement) {
         oData = $this._checkAppend(this, oData);
         $this.actionWithId (sActionData, sAction, oData, '', false, sActionConfirm);
     });
-
-}
+};
 
 BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
     var $this = this;
@@ -400,7 +410,7 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
             $this._iSearchTimeoutId = setTimeout(function () {
                 glGrids[$this._sObject].setFilter(sTerm, true);
             }, 500);
-        }
+        };
         
         jQuery('#bx-grid-search-' + this._sObject).bind({
             keyup: function (e) {
@@ -417,8 +427,7 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
             }
         });
     }
-}
-
+};
 
 BxDolGrid.prototype._onDataReloaded = function (isSkipSearchInput) {
 
@@ -435,9 +444,9 @@ BxDolGrid.prototype._onDataReloaded = function (isSkipSearchInput) {
     this._bindActions(isSkipSearchInput);
 
     this.onDataReloaded(isSkipSearchInput);
-}
+};
 
-BxDolGrid.prototype.onDataReloaded = function (isSkipSearchInput) {}
+BxDolGrid.prototype.onDataReloaded = function (isSkipSearchInput) {};
 
 BxDolGrid.prototype._checkAppend = function (oInput, oData) {
 	var oAppend = $.parseJSON($(oInput).attr('bx_grid_action_append'));

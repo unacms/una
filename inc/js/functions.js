@@ -7,8 +7,6 @@
  */
 
 function processJsonData(oData) {
-	var $this = this;
-
 	var fContinue = function(oData) {
 		if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
 	    	document.location = document.location;
@@ -42,11 +40,8 @@ function processJsonData(oData) {
 	};
 
 	if(oData && oData.message != undefined && oData.message.length != 0)
-		$(document).dolPopupAlert({
-			message: oData.message,
-			onClickOk: function() {
-				fContinue(oData);
-			}
+		bx_alert(oData.message, function() {
+			fContinue(oData);
 		});
 	else
 		fContinue(oData);

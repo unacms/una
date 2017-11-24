@@ -37,7 +37,7 @@ BxDevPolyglot.prototype.perform = function(sAction, sLanguage, sModule) {
         	bx_loading($('body'), false);
 
         	if(oData.content)
-        		alert(oData.content);
+        		bx_alert(oData.content);
         },
         'json'
     );
