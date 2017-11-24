@@ -192,7 +192,7 @@ class BxDolFavorite extends BxDolObject
 	protected function _doFavorite()
     {
         if (!$this->isEnabled())
-           return array('code' => 1, 'msg' => _t('_favorite_err_not_enabled'));
+           return array('code' => 1, 'message' => _t('_favorite_err_not_enabled'));
 
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
@@ -203,13 +203,13 @@ class BxDolFavorite extends BxDolObject
         $bPerformUndo = $bPerformed && $bUndo ? true : false;
 
         if(!$bPerformUndo && !$this->isAllowedFavorite())
-            return array('code' => 2, 'msg' => $this->msgErrAllowedFavorite());
+            return array('code' => 2, 'message' => $this->msgErrAllowedFavorite());
 
         if($bPerformed && !$bUndo)
-        	return array('code' => 3, 'msg' => _t('_favorite_err_duplicate_favorite'));
+        	return array('code' => 3, 'message' => _t('_favorite_err_duplicate_favorite'));
 
         if(!$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId))
-            return array('code' => 4, 'msg' => _t('_favorite_err_cannot_perform_action'));
+            return array('code' => 4, 'message' => _t('_favorite_err_cannot_perform_action'));
 
         if(!$bPerformUndo)
             $this->isAllowedFavorite(true);

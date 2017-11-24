@@ -144,7 +144,7 @@ class BxDolFeature extends BxDolObject
 	protected function _doFeature()
     {
         if (!$this->isEnabled())
-           return array('code' => 1, 'msg' => _t('_feature_err_not_enabled'));
+           return array('code' => 1, 'message' => _t('_feature_err_not_enabled'));
 
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
@@ -155,13 +155,13 @@ class BxDolFeature extends BxDolObject
         $bPerformUndo = $bPerformed && $bUndo ? true : false;
 
         if(!$bPerformUndo && !$this->isAllowedFeature())
-            return array('code' => 2, 'msg' => $this->msgErrAllowedFeature());
+            return array('code' => 2, 'message' => $this->msgErrAllowedFeature());
 
         if($bPerformed && !$bUndo)
-        	return array('code' => 3, 'msg' => _t('_feature_err_duplicate_feature'));
+        	return array('code' => 3, 'message' => _t('_feature_err_duplicate_feature'));
 
         if(!$this->_triggerValue($bPerformUndo ? 0 : time()))
-            return array('code' => 4, 'msg' => _t('_feature_err_cannot_perform_action'));
+            return array('code' => 4, 'message' => _t('_feature_err_cannot_perform_action'));
             
         if(!$bPerformUndo)
             $this->isAllowedFeature(true);

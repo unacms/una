@@ -43,51 +43,59 @@ BxDolFeature.prototype.feature = function(oLink) {
 
 BxDolFeature.prototype.onFeature = function(oData, oElement)
 {
+	var fContinue = function() {
+		if(oData && oData.code != 0)
+	        return;
+
+		if(oData && oData.label_icon)
+			$(oElement).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+
+		if(oData && oData.label_title) {
+			$(oElement).attr('title', oData.label_title);
+			$(oElement).find('span').html(oData.label_title);
+		}
+
+		if(oData && oData.disabled)
+			$(oElement).removeAttr('onclick').addClass($(oElement).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-feature-disabled');
+	};
+
 	if(oData && oData.msg != undefined && oData.msg.length > 0)
-        alert(oData.msg);
+        bx_alert(oData.msg, fContinue);
+	else
+		fContinue();
 
-	if(oData && oData.code != 0)
-        return;
-
-	if(oData && oData.label_icon)
-		$(oElement).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
-
-	if(oData && oData.label_title) {
-		$(oElement).attr('title', oData.label_title);
-		$(oElement).find('span').html(oData.label_title);
-	}
-
-	if(oData && oData.disabled)
-		$(oElement).removeAttr('onclick').addClass($(oElement).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-feature-disabled');
+	
 };
 
 BxDolFeature.prototype.processJson = function(oData, oElement) {
 	oElement = oElement != undefined ? oElement : this._oParent;
 
+	var fContinue = function() {
+		//--- Show Popup
+	    if(oData && oData.popup != undefined) {
+	    	$('#' + oData.popup_id).remove();
+
+	    	$(oData.popup).hide().prependTo('body').dolPopup({
+	    		pointer: {
+	    			el: oElement
+	    		},
+	            fog: {
+					color: '#fff',
+					opacity: .7
+	            }
+	        });
+	    }
+
+	    //--- Evaluate JS code
+	    if (oData && oData.eval != undefined)
+	        eval(oData.eval);
+	};
+
     //--- Show Message
-    if(oData && oData.msg != undefined)
-        alert(oData.msg);
     if(oData && oData.message != undefined)
-        alert(oData.message);
-
-    //--- Show Popup
-    if(oData && oData.popup != undefined) {
-    	$('#' + oData.popup_id).remove();
-
-    	$(oData.popup).hide().prependTo('body').dolPopup({
-    		pointer: {
-    			el: oElement
-    		},
-            fog: {
-				color: '#fff',
-				opacity: .7
-            }
-        });
-    }
-
-    //--- Evaluate JS code
-    if (oData && oData.eval != undefined)
-        eval(oData.eval);
+        bx_alert(oData.message, fContinue);
+    else
+    	fContinue();
 };
 
 BxDolFeature.prototype._getButtons = function(oElement) {
