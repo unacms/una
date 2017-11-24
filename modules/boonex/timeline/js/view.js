@@ -228,7 +228,7 @@ BxTimelineView.prototype.pinPost = function(oLink, iId, iWay) {
         this._sActionsUrl + 'pin/',
         oData,
         function(oData) {
-        	$this.processResult(oData);
+        	processJsonData(oData);
         },
         'json'
     );
@@ -246,7 +246,7 @@ BxTimelineView.prototype.onPinPost = function(oData) {
         	$(sItemTimeline).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
     	        $(this).remove();
 
-    	        $this.processResult(oData);
+    	        processJsonData(oData);
         	});
         });
 	}
@@ -258,7 +258,7 @@ BxTimelineView.prototype.onPinPost = function(oData) {
 		this._oRequestParams['outline'].start = 0;
         this._getPosts(this.oViewOutline, function(oData) {
         	$this.removeMasonry(sItemOutline, function() {
-        		$this.processResult(oData);
+        		processJsonData(oData);
     		});
         });
 	}
@@ -281,7 +281,7 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
         this._sActionsUrl + 'delete/',
         oData,
         function(oData) {
-        	$this.processResult(oData);
+        	processJsonData(oData);
         },
         'json'
     );
@@ -333,7 +333,7 @@ BxTimelineView.prototype._getPosts = function(oElement, onComplete) {
 
         	$this.loadingInBlock(oElement, false);
 
-        	$this.processResult(oData);
+        	processJsonData(oData);
         },
         'json'
     );

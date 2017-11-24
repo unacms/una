@@ -57,33 +57,38 @@ BxTimelinePost.prototype.beforeFormPostSubmit = function(oForm)
 
 BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
 {
+	var $this = this;
+	var fContinue = function() {
+		if(oData && oData.id != undefined) {
+			var iId = parseInt(oData.id);
+	        if(iId <= 0) 
+	        	return;
+
+	        if($('#' + $this._aHtmlIds['main_timeline']).length)
+	        	$this._getPost(oForm, iId, 'timeline');
+
+	        if($('#' + $this._aHtmlIds['main_outline']).length)
+	        	$this._getPost(oForm, iId, 'outline');
+
+	        $this._getForm(oForm, $(oForm).find("input[name = 'type']").val());
+
+	        return;
+		}
+
+		if(oData && oData.form != undefined && oData.form_id != undefined) {
+			$('#' + oData.form_id).replaceWith(oData.form);
+			$this.initFormPost(oData.form_id);
+
+			return;
+		}
+	};
+
 	this.loadingInButton($(oForm).children().find(':submit'), false);
 
-	if(oData && oData.msg != undefined)
-        alert(oData.msg);
-
-	if(oData && oData.id != undefined) {
-		var iId = parseInt(oData.id);
-        if(iId <= 0) 
-        	return;
-
-        if($('#' + this._aHtmlIds['main_timeline']).length)
-        	this._getPost(oForm, iId, 'timeline');
-
-        if($('#' + this._aHtmlIds['main_outline']).length)
-        	this._getPost(oForm, iId, 'outline');
-
-        this._getForm(oForm, $(oForm).find("input[name = 'type']").val());
-
-        return;
-	}
-
-	if(oData && oData.form != undefined && oData.form_id != undefined) {
-		$('#' + oData.form_id).replaceWith(oData.form);
-		this.initFormPost(oData.form_id);
-
-		return;
-	}
+	if(oData && oData.message != undefined)
+        bx_alert(oData.message, fContinue);
+	else
+		fContinue();
 };
 
 BxTimelinePost.prototype.initFormAttachLink = function(sFormId)
@@ -110,34 +115,38 @@ BxTimelinePost.prototype.beforeFormAttachLinkSubmit = function(oForm)
 
 BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
 {
-	oForm = $(oForm);
-	this.loadingInButton(oForm.find(':submit'), false);
+	var $this = this;
+	var fContinue = function() {
+		if(oData && oData.item != undefined) {
+			$('#' + $this._aHtmlIds['attach_link_popup']).dolPopupHide({onHide: function() {
+				$(oForm).find('.bx-form-warn').hide();
+			}});
 
-	if(oData && oData.msg != undefined)
-        alert(oData.msg);
+			if(!$.trim(oData.item).length)
+				return;
 
-	if(oData && oData.item != undefined) {
-		$('#' + this._aHtmlIds['attach_link_popup']).dolPopupHide({onHide: function() {
-			oForm.find('.bx-form-warn').hide();
-		}});
+			var oItem = $(oData.item).hide();
+			$('#' + $this._aHtmlIds['attach_link_form_field']).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
+				$(this).find('a.bx-link').dolConverLinks();
+			});
 
-		if(!$.trim(oData.item).length)
+	        return;
+		}
+
+		if(oData && oData.form != undefined && oData.form_id != undefined) {
+			$('#' + oData.form_id).replaceWith(oData.form);
+			$this.initFormAttachLink(oData.form_id);
+
 			return;
+		}
+	};
 
-		var oItem = $(oData.item).hide();
-		$('#' + this._aHtmlIds['attach_link_form_field']).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', this._sAnimationEffect, this._sAnimationSpeed, function() {
-			$(this).find('a.bx-link').dolConverLinks();
-		});
+	this.loadingInButton($(oForm).find(':submit'), false);
 
-        return;
-	}
-
-	if(oData && oData.form != undefined && oData.form_id != undefined) {
-		$('#' + oData.form_id).replaceWith(oData.form);
-		this.initFormAttachLink(oData.form_id);
-
-		return;
-	}
+	if(oData && oData.message != undefined)
+        bx_alert(oData.message, fContinue);
+	else
+		fContinue();
 };
 
 BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId) {
@@ -152,16 +161,20 @@ BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId) {
         this._sActionsUrl + 'delete_attach_link/',
         oData,
         function(oData) {
+        	var fContinue = function() {
+        		if(oData && oData.code != undefined && oData.code == 0) {
+            		oAttachLink.bx_anim('hide', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
+            			$(this).remove;
+            		});
+            	}
+        	};
+
         	bx_loading(oAttachLink, false);
 
-        	if(oData && oData.msg != undefined)
-                alert(oData.msg);
-
-        	if(oData && oData.code != undefined && oData.code == 0) {
-        		oAttachLink.bx_anim('hide', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
-        			$(this).remove;
-        		});
-        	}
+        	if(oData && oData.message != undefined)
+                bx_alert(oData.message, fContinue);
+        	else
+        		fContinue();
         },
         'json'
     );
@@ -213,7 +226,7 @@ BxTimelinePost.prototype._getPost = function(oElement, iId, sView) {
         function(oData) {
         	$this.loadingInBlock(oElementView, false);
 
-        	$this.processResult(oData);
+        	processJsonData(oData);
         },
         'json'
     );

@@ -70,7 +70,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $mixedAllowed = $this->isAllowedPost(true);
         if($mixedAllowed !== true) {
-            echoJson(array('msg' => strip_tags($mixedAllowed)));
+            echoJson(array('message' => strip_tags($mixedAllowed)));
             return;
         }
 
@@ -87,7 +87,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $mixedAllowed = $this->{'isAllowed' . ((int)$aEvent['pinned'] == 0 ? 'Pin' : 'Unpin')}($aEvent, true);
         if($mixedAllowed !== true)
-            return echoJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
+            return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
 
 		$aEvent['pinned'] = (int)$aEvent['pinned'] == 0 ? time() : 0;
         if(!$this->_oDb->updateEvent(array('pinned' => $aEvent['pinned']), array('id' => $iId)))
@@ -108,7 +108,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $mixedAllowed = $this->isAllowedDelete($aEvent, true);
         if($mixedAllowed !== true)
-            return echoJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
+            return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
 
         if(!$this->deleteEvent($aEvent))
             return echoJson(array('code' => 2));
@@ -133,19 +133,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
         if(empty($aReposted) || !is_array($aReposted)) {
-            echoJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_repost')));
+            echoJson(array('code' => 1, 'message' => _t('_bx_timeline_txt_err_cannot_repost')));
             return;
         }
 
         $mixedAllowed = $this->isAllowedRepost($aReposted, true);
         if($mixedAllowed !== true) {
-            echoJson(array('code' => 2, 'msg' => strip_tags($mixedAllowed)));
+            echoJson(array('code' => 2, 'message' => strip_tags($mixedAllowed)));
             return;
         }
 
         $bReposted = $this->_oDb->isReposted($aReposted['id'], $iOwnerId, $iAuthorId);
 		if($bReposted) {
-        	echoJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_reposted')));
+        	echoJson(array('code' => 3, 'message' => _t('_bx_timeline_txt_err_already_reposted')));
             return;
         }
 
@@ -161,7 +161,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
 
         if(empty($iId)) {
-	        echoJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_repost')));        
+	        echoJson(array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost')));        
 	        return;
         }
 
@@ -172,7 +172,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
 		echoJson(array(
 			'code' => 0, 
-			'msg' => _t('_bx_timeline_txt_msg_success_repost'), 
+			'message' => _t('_bx_timeline_txt_msg_success_repost'), 
 			'count' => $aReposted['reposts'], 
 			'counter' => $sCounter,
 			'disabled' => !$bReposted
@@ -270,7 +270,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($this->_oDb->deleteUnusedLinks($iUserId, $iLinkId))
             $aResult = array('code' => 0);
         else
-            $aResult = array('code' => 1, 'msg' => _t('_bx_timeline_form_post_input_link_err_delete'));
+            $aResult = array('code' => 1, 'message' => _t('_bx_timeline_form_post_input_link_err_delete'));
 
         echoJson($aResult);
     }
@@ -1294,7 +1294,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 return array('item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId));
             }
 
-            return array('msg' => _t('_bx_timeline_txt_err_cannot_perform_action'));
+            return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
         }
 
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
@@ -1344,7 +1344,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
 
             if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds)
-            	return array('msg' => _t('_bx_timeline_txt_err_empty_post'));
+            	return array('message' => _t('_bx_timeline_txt_err_empty_post'));
 
             $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oTemplate->getItemIcon($bText, $bLinkIds, $bPhotoIds, $bVideoIds);
             $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample_with_article'));
@@ -1381,7 +1381,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 return array('id' => $iId);
             }
 
-            return array('msg' => _t('_bx_timeline_txt_err_cannot_perform_action'));
+            return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
         }
 
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);

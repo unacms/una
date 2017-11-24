@@ -46,19 +46,22 @@ BxTimelineRepost.prototype.repostItem = function(oLink, iOwnerId, sType, sAction
 
         	var oCounter = $this._getCounter(oLink);
         	var bCounter = oCounter && oCounter.length > 0;
-        	
-        	if(oData && oData.msg != undefined && oData.msg.length > 0 && !bCounter)
-                alert(oData.msg);
-        	
-        	if(oData && oData.counter != undefined && bCounter) {
-        		var oCounterHolder = oCounter.parents('.' + $this.sSP + '-repost-counter-holder:first');
+        	var fContinue = function() {
+        		if(oData && oData.counter != undefined && bCounter) {
+            		var oCounterHolder = oCounter.parents('.' + $this.sSP + '-repost-counter-holder:first');
 
-        		oCounter.replaceWith(oData.counter);
-        		oCounterHolder.bx_anim(oData.count > 0 ? 'show' : 'hide');
-        	}
+            		oCounter.replaceWith(oData.counter);
+            		oCounterHolder.bx_anim(oData.count > 0 ? 'show' : 'hide');
+            	}
 
-        	if(oData && oData.disabled)
-    			$(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : $this.sSP + '-repost-disabled');
+            	if(oData && oData.disabled)
+        			$(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : $this.sSP + '-repost-disabled');
+        	};
+
+        	if(oData && oData.message != undefined && oData.message.length > 0 && !bCounter)
+                bx_alert(oData.message, fContinue);
+        	else
+        		fContinue();
         },
         'json'
     );
