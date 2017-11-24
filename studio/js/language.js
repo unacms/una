@@ -24,7 +24,7 @@ BxDolStudioLanguage.prototype.activate = function(sLanguageName, oChecbox) {
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 
 				$(oChecbox).attr('checked', 'checked').trigger('enable');
 				return;

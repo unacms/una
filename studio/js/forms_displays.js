@@ -37,7 +37,7 @@ BxDolStudioFormsDisplays.prototype.onChangeModule = function() {
 			bx_loading($('body'), false);
 
 			if(oData.code != 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 

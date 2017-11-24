@@ -44,7 +44,7 @@ BxDolStudioDesigner.prototype.makeDefault = function(sUri) {
 		},
 		function(oData) {
 			if(oData.code != 0 && oData.message.length > 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 
@@ -66,7 +66,7 @@ BxDolStudioDesigner.prototype.deleteLogo = function() {
 		},
 		function(oData) {
 			if(oData.code != 0 && oData.message.length > 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 
@@ -89,7 +89,7 @@ BxDolStudioDesigner.prototype.deleteCover = function(sType, iId) {
 		},
 		function(oData) {
 			if(oData.code != 0 && oData.message.length > 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 

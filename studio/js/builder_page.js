@@ -109,7 +109,7 @@ BxDolStudioBuilderPage.prototype.reorder = function(oDraggable) {
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 		},

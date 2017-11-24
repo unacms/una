@@ -44,9 +44,6 @@ BxDolStudioPolyglot.prototype.changePage = function(sType, iStart, iLength) {
 		_t:oDate.getTime()
 	};
 
-	if(this.bShowWarning && !confirm(aDolLang['_adm_pgt_wrn_need_to_save']))
-		return true;
-
 	if(sType == 'keys') {
 		oParams.pgt_category = $('#pgt-keys-category').val();
 		oParams.pgt_language = $('#pgt-keys-language').val();
@@ -62,7 +59,7 @@ BxDolStudioPolyglot.prototype.changePage = function(sType, iStart, iLength) {
 		oParams,
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return true;
 			}
 

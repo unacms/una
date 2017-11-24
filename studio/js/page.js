@@ -22,32 +22,7 @@ function BxDolStudioPage(oOptions) {
 BxDolStudioPage.prototype.processJson = function (oData) {
 	bx_loading('bx-std-page-columns', false);
 
-    //--- Show Message
-    if(oData && oData.msg != undefined)
-        alert(oData.msg);
-    if(oData && oData.message != undefined)
-        alert(oData.message);
-
-    //--- Show Popup
-    if(oData && oData.popup != undefined) {
-    	if (typeof(oData.popup) == 'object') {
-    		var oPopup = $(oData.popup.html).hide(); 
-    		var oPopupOptions = $.extend({}, this.oPopupOptions, oData.popup.options);
-
-	    	$('#' + oPopup.attr('id')).remove();
-	        oPopup.prependTo('body').dolPopup(oPopupOptions);
-    	}
-    	else {
-	    	var oPopup = $(oData.popup).hide(); 
-	
-	    	$('#' + oPopup.attr('id')).remove();
-	        oPopup.prependTo('body').dolPopup(this.oPopupOptions);
-    	}
-    }
-
-    //--- Evaluate JS code
-    if (oData && oData.eval != undefined)
-        eval(oData.eval);
+	processJsonData(oData);
 };
 
 BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
@@ -99,17 +74,6 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
 		$(sId).dolPopup(oPopupOptions);
 };
 
-BxDolStudioPage.prototype.showMessage = function(oData) {
-	if(oData.message)
-		alert(oData.message);
-
-	if(oData.on_result)
-		eval(oData.on_result);
-
-	if(oData.redirect)
-		window.location.href = oData.redirect;
-};
-
 BxDolStudioPage.prototype.bookmark = function(sPageName, oLink) {
 	var oDate = new Date();
 
@@ -122,7 +86,7 @@ BxDolStudioPage.prototype.bookmark = function(sPageName, oLink) {
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 

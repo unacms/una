@@ -153,7 +153,7 @@ BxDolStudioSettings.prototype.changePage = function(sType) {
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 

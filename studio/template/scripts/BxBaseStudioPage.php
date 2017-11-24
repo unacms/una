@@ -318,9 +318,9 @@ class BxBaseStudioPage extends BxDolStudioPage
             $aResult['redirect'] = $sRedirect != '' ? $sRedirect : BX_DOL_URL_STUDIO;
 
         if(!empty($sOnResult))
-            $aResult['on_result'] = $sOnResult;
+            $aResult['eval'] = $sOnResult;
 
-        $sResult = "window.parent." . BX_DOL_STUDIO_PAGE_JS_OBJECT . ".showMessage(" . json_encode($aResult) . ");";
+        $sResult = "window.parent.processJsonData(" . json_encode($aResult) . ");";
 
         return BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sResult);
     }

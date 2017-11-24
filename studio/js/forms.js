@@ -22,7 +22,7 @@ function fviuDelete(sName, oLink) {
 		},
 		function(oData) {
 			if(oData.code != 0 && oData.message.length > 0) {
-				alert(oData.message);
+				bx_alert(oData.message);
 				return;
 			}
 

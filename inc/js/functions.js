@@ -43,6 +43,10 @@ function processJsonData(oData) {
 		bx_alert(oData.message, function() {
 			fContinue(oData);
 		});
+	else if(oData && oData.msg != undefined && oData.msg.length != 0)
+		bx_alert(oData.msg, function() {
+			fContinue(oData);
+		});
 	else
 		fContinue(oData);
 };
