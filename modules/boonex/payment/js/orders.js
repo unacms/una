@@ -25,17 +25,14 @@ BxPaymentOrders.prototype.init = function(oOptions) {
 };
 
 /*--- Manual Order function ---*/
-BxPaymentOrders.prototype.paOnShowPopup = function(oUi) {
-	console.log(oUi);
+BxPaymentOrders.prototype.showPopup = function(oUi) {
 	$('#' + this._aHtmlIds['order_processed_client_id']).val(oUi.item.value);	
 };
 
-BxPaymentOrders.prototype.paOnSelectModule = function(oSelect) {
+BxPaymentOrders.prototype.selectModule = function(oSelect) {
     var oDate = new Date();
 
-    var oPopup = $('#' + this._aHtmlIds['order_processed_add']); 
-    var oItems = $('#' + this._aHtmlIds['order_processed_items']);
-
+    var oPopup = $('#' + this._aHtmlIds['order_processed_add']);
     oPopup.bx_loading(true);
 
     $.get(
@@ -46,14 +43,15 @@ BxPaymentOrders.prototype.paOnSelectModule = function(oSelect) {
         function(oData) {
         	oPopup.bx_loading(false);
 
-        	if(oData.message != undefined)
-        		alert(oData.message);
-
-            if(oData.data != undefined)
-            	oItems.replaceWith(oData.data);
+        	processJsonData(oData);
         },
         'json'
     );
+};
+
+BxPaymentOrders.prototype.onSelectModule = function(oData) {
+	if(oData.data != undefined)
+		$('#' + this._aHtmlIds['order_processed_items']).replaceWith(oData.data);
 };
 
 /** @} */

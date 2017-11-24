@@ -41,19 +41,10 @@ BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iIte
             _t:oDate.getTime()
         },
         function(oData) {
-        	$this.processResult(oData);
+        	if(sRedirect)
+        		oData.redirect = sRedirect;
 
-            if(oData.code == 0) {
-            	/*
-            	 * TODO: Display counter somewhere if it's needed.
-            	 * 
-            	$('#bx-menu-object-sys_account_notifications').html(oData.total_quantity);
-                $('#bx-payment-tbar-content').replaceWith(oData.content);
-                */
-
-            	if(sRedirect)
-            		window.location.href = sRedirect;
-            }
+        	processJsonData(oData);
         },
         'json'
     );
@@ -95,7 +86,7 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
         this._sActionsUrl + 'subscribe_json/',
         oParams,
         function(oData){
-        	$this.processResult(oData);
+        	processJsonData(oData);
         },
         'json'
     );

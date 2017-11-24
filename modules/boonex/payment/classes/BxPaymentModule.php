@@ -115,6 +115,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 		echoJson(array(
 			'code' => 0, 
+		 	'eval' => $this->_oConfig->getJsObject('processed') . '.onSelectModule(oData);', 
 			'data' => $this->_oTemplate->displayItems($sType, $aItems)
 		));
     }

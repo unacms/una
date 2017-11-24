@@ -9,35 +9,47 @@
 function processJsonData(oData) {
 	var $this = this;
 
+	var fContinue = function(oData) {
+		if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
+	    	document.location = document.location;
+
+	    if(oData && oData.redirect != undefined && oData.redirect.length != 0)
+	    	document.location = oData.redirect;
+
+	    if(oData && oData.popup != undefined) {
+	    	var oPopup = null;
+	    	var oOptions = {
+	            fog: {
+					color: '#fff',
+					opacity: .7
+	            },
+	            closeOnOuterClick: false
+	        };
+
+	    	if(typeof(oData.popup) == 'object') {
+	    		oOptions = $.extend({}, oOptions, oData.popup.options);
+	    		oPopup = $(oData.popup.html);
+	    	}
+	    	else 
+	    		oPopup = $(oData.popup);
+
+	    	$('#' + oPopup.attr('id')).remove();
+	        oPopup.hide().prependTo('body').bxTime().dolPopup(oOptions);
+	    }
+
+	    if (oData && oData.eval != undefined)
+	        eval(oData.eval);
+	};
+
 	if(oData && oData.message != undefined && oData.message.length != 0)
-    	alert(oData.message);
-
-    if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
-    	document.location = document.location;
-
-    if(oData && oData.popup != undefined) {
-    	var oPopup = null;
-    	var oOptions = {
-            fog: {
-				color: '#fff',
-				opacity: .7
-            },
-            closeOnOuterClick: false
-        };
-
-    	if(typeof(oData.popup) == 'object') {
-    		oOptions = $.extend({}, oOptions, oData.popup.options);
-    		oPopup = $(oData.popup.html);
-    	}
-    	else 
-    		oPopup = $(oData.popup);
-
-    	$('#' + oPopup.attr('id')).remove();
-        oPopup.hide().prependTo('body').dolPopup(oOptions);
-    }
-
-    if (oData && oData.eval != undefined)
-        eval(oData.eval);
+		$(document).dolPopupAlert({
+			message: oData.message,
+			onClickOk: function() {
+				fContinue(oData);
+			}
+		});
+	else
+		fContinue(oData);
 };
 
 function getHtmlData( elem, url, callback, method , confirmation)

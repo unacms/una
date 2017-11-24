@@ -59,7 +59,7 @@ BxPaymentSubscriptions.prototype._performRequest = function(oLink, iId, sUri) {
         	$this.loadingInButton(oLink, false);
         	$(".bx-popup-applied:visible").dolPopupHide();
 
-        	$this.processResult(oData);
+        	processJsonData(oData);
         },
         'json'
     );

@@ -97,7 +97,7 @@ BxPaymentProviderStripe.prototype.subscribe = function(oLink) {
 		        function(oData){
 		        	$this.loadingInButton(oLink, true);
 
-		        	$this.processResult(oData);
+		        	processJsonData(oData);
 		        },
 		        'json'
 		    );
