@@ -86,37 +86,41 @@ BxDolVote.prototype.vote = function (oLink, iValue, onComplete)
     	this._sActionsUrl,
     	oParams,
     	function(oData) {
-    		if(oData && oData.msg != undefined)
-                alert(oData.msg);
+    		var fContinue = function() {
+    			if(oData && oData.code != 0)
+                    return;
 
-    		if(oData && oData.code != 0)
-                return;
+        		if($this._iLikeMode) {
+    	    		if(oData && oData.label_icon)
+    	    			$(oLink).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
 
-    		if($this._iLikeMode) {
-	    		if(oData && oData.label_icon)
-	    			$(oLink).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+    	    		if(oData && oData.label_title) {
+    	    			$(oLink).attr('title', oData.label_title);
+    	    			$(oLink).find('span').html(oData.label_title);
+    	    		}
 
-	    		if(oData && oData.label_title) {
-	    			$(oLink).attr('title', oData.label_title);
-	    			$(oLink).find('span').html(oData.label_title);
-	    		}
+    	    		if(oData && oData.disabled)
+    	    			$(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-vote-disabled');
+        		}
 
-	    		if(oData && oData.disabled)
-	    			$(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-vote-disabled');
-    		}
+        		if(!$this._iLikeMode)
+        			$this._iSaveWidth = Math.round(oData.rate * $this._getStarWidthDo(oLink));
 
-    		if(!$this._iLikeMode)
-    			$this._iSaveWidth = Math.round(oData.rate * $this._getStarWidthDo(oLink));
+                var oCounter = $this._getCounter(oLink);
+                if(oCounter && oCounter.length > 0) {
+                	oCounter.html(oData.countf);
 
-            var oCounter = $this._getCounter(oLink);
-            if(oCounter && oCounter.length > 0) {
-            	oCounter.html(oData.countf);
+                	oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
+                }
 
-            	oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
-            }
+                if(typeof onComplete == 'function')
+                	onComplete(oLink, oData);
+    		};
 
-            if(typeof onComplete == 'function')
-            	onComplete(oLink, oData);
+    		if(oData && oData.message != undefined)
+                bx_alert(oData.message, fContinue);
+    		else
+    			fContinue();
         },
         'json'
     );

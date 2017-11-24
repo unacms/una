@@ -209,7 +209,7 @@ class BxDolVote extends BxDolObject
     public function actionVote()
     {
         if(!$this->isEnabled()) {
-            echoJson(array('code' => 1));
+            echoJson(array('code' => 1, 'message' => _t('_vote_err_not_enabled')));
             return;
         }
 
@@ -225,12 +225,12 @@ class BxDolVote extends BxDolObject
         $bPerformUndo = $bVoted && $bUndo ? true : false;
 
         if(!$bPerformUndo && !$this->isAllowedVote(true)) {
-            echoJson(array('code' => 2, 'msg' => $this->msgErrAllowedVote()));
+            echoJson(array('code' => 2, 'message' => $this->msgErrAllowedVote()));
             return;
         }
 
         if((!$bLikeMode && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) || ($bLikeMode && $bVoted && !$bUndo)) {
-            echoJson(array('code' => 3, 'msg' => _t('_vote_err_duplicate_vote')));
+            echoJson(array('code' => 3, 'message' => _t('_vote_err_duplicate_vote')));
             return;
         }
 

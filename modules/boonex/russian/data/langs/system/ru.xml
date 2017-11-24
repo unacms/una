@@ -2526,6 +2526,7 @@
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
 	<string name="_vote_do_by"><![CDATA[Поблагодарил]]></string>
+	<string name="_vote_err_not_enabled"><![CDATA[Ваш голос не может быть принят в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Повторный голос]]></string>
 	<string name="_week_fri"><![CDATA[Пятница]]></string>
 	<string name="_week_mon"><![CDATA[Понедельник]]></string>

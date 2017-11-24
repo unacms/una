@@ -250,10 +250,10 @@ class BxBaseReport extends BxDolReport
     protected function _getReport()
     {
     	if (!$this->isEnabled())
-           return array('code' => 1, 'msg' => _t('_report_err_not_enabled'));
+           return array('code' => 1, 'message' => _t('_report_err_not_enabled'));
 
 	    if(!$this->isAllowedReport())
-            return array('code' => 2, 'msg' => $this->msgErrAllowedReport());
+            return array('code' => 2, 'message' => $this->msgErrAllowedReport());
 
     	$oForm = $this->_getFormObject();
 		$oForm->setId($this->_aHtmlIds['do_form']);
@@ -271,15 +271,15 @@ class BxBaseReport extends BxDolReport
 	        $iAuthorNip = ip2long($this->_getAuthorIp());
 
         	if(!$this->isAllowedReport(true))
-        		return array('code' => 2, 'msg' => $this->msgErrAllowedReport());
+        		return array('code' => 2, 'message' => $this->msgErrAllowedReport());
 
 	        $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
 	        if($bPerformed)
-	        	return array('code' => 4, 'msg' => _t('_report_err_duplicate_report'));
+	        	return array('code' => 4, 'message' => _t('_report_err_duplicate_report'));
 
 			$sType = $oForm->getCleanValue('type');
 	        if(!in_array($sType, $this->_aTypes)) 
-	        	return array('code' => 5, 'msg' => _t('_report_err_wrong_type'));
+	        	return array('code' => 5, 'message' => _t('_report_err_wrong_type'));
 
 			$sText = $oForm->getCleanValue('text');
             $sText = bx_process_input($sText, BX_DATA_TEXT_MULTILINE);
@@ -316,7 +316,7 @@ class BxBaseReport extends BxDolReport
 		        );
 			}
 
-			return array('code' => 3, 'msg' => _t('_report_err_cannot_perform_action'));
+			return array('code' => 3, 'message' => _t('_report_err_cannot_perform_action'));
         }
 
         $sPopupId = $this->_aHtmlIds['do_popup'];
