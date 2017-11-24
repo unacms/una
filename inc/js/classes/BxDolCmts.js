@@ -669,8 +669,4 @@ BxDolCmts.prototype._loadingInButton = function(e, bShow) {
 		bx_loading($('body'), bShow);	
 };
 
-BxDolCmts.prototype._confirm = function() {
-    return confirm(_t('_Are_you_sure'));
-};
-
 /** @} */
