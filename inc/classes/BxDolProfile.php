@@ -75,10 +75,10 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     /**
      * Get singleton instance of Profile by content id and type
      */
-    public static function getInstanceByContentAndType($iContent, $sType)
+    public static function getInstanceByContentAndType($iContent, $sType, $bClearCache = false)
     {
         $oQuery = BxDolProfileQuery::getInstance();
-        $aProfile = $oQuery->getProfileByContentAndType($iContent, $sType);
+        $aProfile = $oQuery->getProfileByContentAndType($iContent, $sType, $bClearCache);
         if (!$aProfile)
             return false;
         return self::getInstance($aProfile['id']);
@@ -98,11 +98,11 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     /**
      * Get singleton instance of Profile by profile id
      */
-    public static function getInstance($mixedProfileId = false)
+    public static function getInstance($mixedProfileId = false, $bClearCache = false)
     {
         if (!$mixedProfileId) {
             $oQuery = BxDolProfileQuery::getInstance();
-            $mixedProfileId = $oQuery->getCurrentProfileByAccount(getLoggedId());
+            $mixedProfileId = $oQuery->getCurrentProfileByAccount(getLoggedId(), $bClearCache);
         }
 
         $iProfileId = self::getID($mixedProfileId);

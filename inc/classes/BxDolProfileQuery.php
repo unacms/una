@@ -73,10 +73,13 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      * @param  string $iAccountId account id
      * @return array  if aprofile ids, key is profile id
      */
-    public function getProfileByContentAndType ($iContentId, $sType)
+    public function getProfileByContentAndType ($iContentId, $sType, $bClearCache = false)
     {
-        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `content_id` = ? AND `type` = ?", $iContentId, $sType);
         $sKey = 'BxDolProfileQuery::getProfileByContentAndType' . $iContentId . $sType;
+        if ($bClearCache)
+            $this->cleanMemory($sKey);
+
+        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `content_id` = ? AND `type` = ?", $iContentId, $sType);        
         $mixedResult = $this->fromMemory($sKey, 'getRow', $sSql);
         if (!$mixedResult)
             $this->cleanMemory($sKey);

@@ -716,6 +716,11 @@ class BxBaseModGeneralModule extends BxDolModule
     }
     // ====== PERMISSION METHODS
 
+    public function checkAllowedSetThumb ()
+    {
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+    
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
      */

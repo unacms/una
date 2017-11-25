@@ -96,8 +96,10 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // process uploaded files
-        $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, false);
-        $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, false);
+        if (isset($CNF['FIELD_PICTURE']))
+            $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, false);
+        if (isset($CNF['FIELD_COVER']))
+            $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, false);
 
         // create an alert
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
@@ -133,8 +135,10 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         
         // process uploaded files
         $oForm = $this->getObjectFormAdd();
-        $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, true);
-        $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, true);
+        if (isset($CNF['FIELD_PICTURE']))
+            $oForm->processFiles($CNF['FIELD_PICTURE'], $iContentId, true);
+        if (isset($CNF['FIELD_COVER']))
+            $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, true);
 
         // alert
         bx_alert($this->_oModule->getName(), 'added', $iContentId);

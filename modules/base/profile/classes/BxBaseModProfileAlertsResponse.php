@@ -23,10 +23,10 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         $CNF = $this->_oModule->_oConfig->CNF;
 
         // update picture field id when file is deleted
-        if ($CNF['OBJECT_STORAGE'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction) {
+        if ($CNF['OBJECT_STORAGE'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction && isset($CNF['FIELD_PICTURE'])) {
             $this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_PICTURE']);
         }
-        if ($CNF['OBJECT_STORAGE_COVER'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction) {
+        if ($CNF['OBJECT_STORAGE_COVER'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction && isset($CNF['FIELD_COVER'])) {
             $this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_COVER']);
         }        
 

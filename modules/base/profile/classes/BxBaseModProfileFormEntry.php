@@ -78,7 +78,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             if ($aValues && !empty($aValues[$CNF['FIELD_ID']]))
                 $this->aInputs[$sField]['content_id'] = $aValues[$CNF['FIELD_ID']];
 
-            $this->aInputs[$sField]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $this->_getPhotoGhostTmplVars($sField, $aContentInfo));
+            $this->aInputs[$sField]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $this->_getProfilePhotoGhostTmplVars($sField, $aContentInfo));
         }
 
         parent::initChecker($aValues, $aSpecificValues);
@@ -171,7 +171,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         $this->_oModule->_oDb->updateContentPictureById($iContentId, 0/*$iProfileId*/, $iFileId, $sPictureField);
     }
 
-    protected function _getPhotoGhostTmplVars($sField, $aContentInfo = array())
+    protected function _getProfilePhotoGhostTmplVars($sField, $aContentInfo = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
