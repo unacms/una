@@ -448,6 +448,59 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Parse google's formatted address components into array with the followin indexes:
+     * lat, lng, country, state, city, zip, street, street_number
+     */ 
+    public static function locationsParseAddressComponents($aAdress, $sPrefix = '')
+    {
+        if (!isset($aAdress['address_components']))
+            return false;
+        if (!isset($aAdress['geometry']['location']))
+            return false;
+
+        $aRet = array(
+            $sPrefix . 'lat' => $aAdress['geometry']['location']['lat'],
+            $sPrefix . 'lng' => $aAdress['geometry']['location']['lng'],
+        );
+
+        $aMap = array(
+            $sPrefix . 'city' => 'locality',
+            $sPrefix . 'state' => 'administrative_area_level_1',
+            $sPrefix . 'country' => 'country',
+            $sPrefix . 'zip' => 'postal_code',
+            $sPrefix . 'street' => 'route',
+            $sPrefix . 'street_number' => 'street_number'        
+        );
+
+        $aAdressComponents = $aAdress['address_components'];
+        
+        foreach ($aAdressComponents as $r) {
+            if (!isset($r['types']))
+                continue;
+            foreach ($aMap as $sKey => $sName) {
+                
+                if ('locality' == $sName && !in_array($sName, $r['types']))
+                    $sName = 'postal_town';
+                
+                if ('administrative_area_level_1' == $sName && !in_array($sName, $r['types']))
+                    $sName = 'administrative_area_level_2';
+
+                if (in_array($sName, $r['types'])) {
+                    $sIndex = 'route' == $sName || 'locality' == $sName ? 'long_name' : 'short_name';
+                    $aRet[$sKey] = $r[$sIndex];
+                }
+
+                if (in_array('locality', $r['types']))
+                    $aRet[$sPrefix . 'city'] = $r['short_name'];
+                else if (in_array('country', $r['types']))
+                    $aRet[$sPrefix . 'country'] = $r['short_name'];
+            }
+        }
+        
+        return $aRet;
+    }
+    
+    /**
      * Add location for the content from POST data
      * @param $iId content id
      * @param $sPrefix field prefix for POST data, or empty -  if no prefix
