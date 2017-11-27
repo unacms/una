@@ -53,62 +53,61 @@ function processJsonData(oData) {
 
 function getHtmlData( elem, url, callback, method , confirmation)
 {
-    if ('undefined' != typeof(confirmation) && confirmation && !confirm(_t('_Are_you_sure'))) 
-        return false;
+    var fPerform = function() {
+		// in most cases it is element ID, in other cases - object of jQuery
+		if (typeof elem == 'string')
+		    elem = '#' + elem; // create selector from ID
 
-    // in most cases it is element ID, in other cases - object of jQuery
-    if (typeof elem == 'string')
-        elem = '#' + elem; // create selector from ID
+		var $block = $(elem);
 
-    var $block = $(elem);
+		var blockPos = $block.css('position');
 
-    var blockPos = $block.css('position');
+		$block.css('position', 'relative'); // set temporarily for displaying "loading icon"
 
-    $block.css('position', 'relative'); // set temporarily for displaying "loading icon"
+		bx_loading_content($block, true);
+		var $loadingDiv = $block.find('.bx-loading-ajax');
 
-    bx_loading_content($block, true);
-    var $loadingDiv = $block.find('.bx-loading-ajax');
+		var iLeftOff = parseInt(($block.innerWidth() / 2.0) - ($loadingDiv.outerWidth()  / 2.0));
+		var iTopOff  = parseInt(($block.innerHeight() / 2.0) - ($loadingDiv.outerHeight()));
+		if (iTopOff<0) iTopOff = 0;
 
-    var iLeftOff = parseInt(($block.innerWidth() / 2.0) - ($loadingDiv.outerWidth()  / 2.0));
-    var iTopOff  = parseInt(($block.innerHeight() / 2.0) - ($loadingDiv.outerHeight()));
-    if (iTopOff<0) iTopOff = 0;
+		$loadingDiv.css({
+		    position: 'absolute',
+		    left: iLeftOff,
+		    top:  iTopOff
+		});
 
-    $loadingDiv.css({
-        position: 'absolute',
-        left: iLeftOff,
-        top:  iTopOff
-    });
+		if (undefined != method && (method == 'post' || method == 'POST')) {
+		    $.post(url, function(data) {
+		        $block.html(data);
+		        $block.css('position', blockPos).bxTime();
+		        if ($.isFunction($.fn.addWebForms))
+		            $block.addWebForms();
 
-    if (undefined != method && (method == 'post' || method == 'POST')) {
+		        bx_activate_anim_icons();
 
-        $.post(url, function(data) {
+		        if (typeof callback == 'function')
+		            callback.apply($block);
+		    });		
+		} 
+		else {
+		    $block.load(url + '&_r=' + Math.random(), function() {
+		        $(this).css('position', blockPos).bxTime();
+		        if ($.isFunction($.fn.addWebForms))
+		            $(this).addWebForms();
 
-            $block.html(data);
-	        $block.css('position', blockPos).bxTime();
-            if ($.isFunction($.fn.addWebForms))
-                $block.addWebForms();
+		        bx_activate_anim_icons();
 
-            bx_activate_anim_icons();
+		        if (typeof callback == 'function')
+		            callback.apply(this);
+		    });
+		}
+    };
 
-            if (typeof callback == 'function')
-                callback.apply($block);
-        });
-
-    } else {
-
-        $block.load(url + '&_r=' + Math.random(), function() {
-
-	        $(this).css('position', blockPos).bxTime();
-            if ($.isFunction($.fn.addWebForms))
-                $(this).addWebForms();
-
-            bx_activate_anim_icons();
-
-            if (typeof callback == 'function')
-                callback.apply(this);
-        });
-
-    }
+    if (typeof(confirmation) != 'undefined' && confirmation)
+    	bx_confirm(_t('_Are_you_sure'), fPerform);
+    else 
+    	fPerform();
 }
 
 function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams) {
@@ -564,7 +563,7 @@ function bx_set_acl_level (iProfileId, iAclLevel, mixedLoadingElement) {
             bx_loading($(mixedLoadingElement), false);
 
         if (data.length) {
-            alert(data);
+            bx_alert(data);
         } else if ($(mixedLoadingElement).hasClass('bx-popup-applied')) {
             $(mixedLoadingElement).dolPopupHide().remove();
         }
@@ -641,39 +640,43 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
  * @param bConfirm - show confirmation dialog
  */
 function bx_conn_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
-    if ('undefined' != typeof(bConfirm) && bConfirm && !confirm(_t('_Are_you_sure')))
-        return;
-                
-    var aParams = {
-        obj: sObj,
-        act: sAction,
-        id: iContentId
-    };
-    var fCallback = function (data) {
-        bx_loading_btn(e, 0);
-        if ('object' != typeof(data))
-            return;
-        if (data.err) {
-            alert(data.msg);
-        } else {
-            if ('function' == typeof(fOnComplete))
-                fOnComplete(data, e);
-            else if (!loadDynamicBlockAuto(e))
-                location.reload();
-            else
-                $('#bx-popup-ajax-wrapper-bx_persons_view_actions_more').remove();
-        }
+    var fPerform = function() {
+		var aParams = {
+		    obj: sObj,
+		    act: sAction,
+		    id: iContentId
+		};
+		var fCallback = function (data) {
+		    bx_loading_btn(e, 0);
+		    if ('object' != typeof(data))
+		        return;
+		    if (data.err) {
+		        bx_alert(data.msg);
+		    } else {
+		        if ('function' == typeof(fOnComplete))
+		            fOnComplete(data, e);
+		        else if (!loadDynamicBlockAuto(e))
+		            location.reload();
+		        else
+		            $('#bx-popup-ajax-wrapper-bx_persons_view_actions_more').remove();
+		    }
+		};
+		
+		bx_loading_btn(e, 1);
+		
+		$.ajax({
+		    dataType: 'json',
+		    url: sUrlRoot + 'conn.php',
+		    data: aParams,
+		    type: 'POST',
+		    success: fCallback
+		});
     };
 
-    bx_loading_btn(e, 1);
-
-    $.ajax({
-        dataType: 'json',
-        url: sUrlRoot + 'conn.php',
-        data: aParams,
-        type: 'POST',
-        success: fCallback
-    });
+    if (typeof(bConfirm) != 'undefined' && bConfirm)
+    	bx_confirm(_t('_Are_you_sure'), fPerform);
+    else
+    	fPerform();
 }
 
 function bx_append_url_params (sUrl, mixedParams) {
