@@ -566,7 +566,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(empty($aContentInfo[$CNF['FIELD_PICTURE']]))
+        if(!isset($CNF['FIELD_PICTURE']) || empty($aContentInfo[$CNF['FIELD_PICTURE']]))
             return array();
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());

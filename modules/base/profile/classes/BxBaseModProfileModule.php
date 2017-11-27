@@ -635,7 +635,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         // check ACL and owner (checked by account! not as profile as ususal)
         $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
 
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name'], $isPerformAction);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
 

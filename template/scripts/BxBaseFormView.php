@@ -1224,10 +1224,16 @@ BLAH;
                 $aInput['checked'] = true;
             else
                 $aInput['checked'] = $this->getCleanValue($aInput['name'] . '_lat') && $this->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
-            $aVars['input'] = $isManualInput ? $this->genInputStandard($aInput) : $this->genInputSwitcher($aInput);
+            $aVars['input'] = $this->genInputSwitcher($aInput);
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+    }
+
+    public function setLocationVal ($aInput, $sIndex, $sVal)
+    {
+        $s = $aInput['name'] . '_' . $sIndex;
+        $this->_aSpecificValues[$s] = $sVal;
     }
 
     protected function getLocationVal ($aInput, $sIndex) 
