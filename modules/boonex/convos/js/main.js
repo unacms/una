@@ -8,17 +8,22 @@ function bx_cnv_mark_unread(e, iConvoId) {
 }
 
 function bx_cnv_action(sAction, e, iConvoId, isConfirm) {
-    if (isConfirm && !confirm(_t('_Are_you_sure')))
-        return false;
+	var oPerform = function() {
+		bx_loading_btn(e, 1);
 
-    bx_loading_btn(e, 1);
-    $.post(sUrlRoot + 'modules/?r=convos/' + sAction + '/' + parseInt(iConvoId), function (s) {
-        bx_loading_btn(e, 0);
-        if (sUrlRoot == s.substring(0,sUrlRoot.length))
-            location.href = s;
-        else
-            bx_alert(s);
-    });
+	    $.post(sUrlRoot + 'modules/?r=convos/' + sAction + '/' + parseInt(iConvoId), function (s) {
+	        bx_loading_btn(e, 0);
+	        if (sUrlRoot == s.substring(0,sUrlRoot.length))
+	            location.href = s;
+	        else
+	            bx_alert(s);
+	    });
+	};
+
+    if (isConfirm)
+    	bx_confirm(_t('_Are_you_sure'), oPerform);
+    else
+    	oPerform();    
 }
 
 $(document).ready(function () {

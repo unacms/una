@@ -7,7 +7,11 @@ function BxSitesMain(oOptions) {
 }
 
 BxSitesMain.prototype.onCancelSubscription = function(oForm) {
-	return confirm(aDolLang['_bx_sites_form_site_input_do_cancel_confirm']) ? true : false;
+	bx_confirm(aDolLang['_bx_sites_form_site_input_do_cancel_confirm'], function() {
+		$(oForm).removeAttr('onsubmit').submit();
+	});
+
+	return false;
 };
 
 /*
