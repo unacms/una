@@ -84,10 +84,11 @@ BxDolStudioBuilderPage.prototype.onCreatePage = function(sType, sPage) {
 };
 
 BxDolStudioBuilderPage.prototype.deletePage = function() {
-	if(!confirm(aDolLang['_adm_bp_wrn_page_delete']))
-		return;
+	var $this = this;
 
-	this.performAction('page_delete');
+	bx_confirm(aDolLang['_adm_bp_wrn_page_delete'], function() {
+		$this.performAction('page_delete');
+	});
 };
 
 BxDolStudioBuilderPage.prototype.reorder = function(oDraggable) {
@@ -205,11 +206,12 @@ BxDolStudioBuilderPage.prototype.onEditBlockCancel = function(oButton) {
 };
 
 BxDolStudioBuilderPage.prototype.deleteBlock = function(iId) {
-	if(!confirm(aDolLang['_adm_bp_wrn_page_block_delete']))
-		return;
+	var $this = this;
 
-	bx_loading(this.oHtmlIds['edit_block_popup_id'], true);
-	this.performAction('block_delete', {id:iId});
+	bx_confirm(aDolLang['_adm_bp_wrn_page_block_delete'], function() {
+		bx_loading($this.oHtmlIds['edit_block_popup_id'], true);
+		$this.performAction('block_delete', {id:iId});
+	});
 };
 
 BxDolStudioBuilderPage.prototype.onDeleteBlock = function(iId, oData) {
