@@ -79,11 +79,12 @@ BxDolUploaderSimple.prototype.showUploaderForm = function () {
 }
 
 BxDolUploaderSimple.prototype.onClickCancel = function () {
+	var $this = this;
     if (this._isUploadsInProgress) {
-        if (confirm(_t('_sys_uploader_confirm_close_popup'))) {
-            this.cancelAll();
-            $('#' + this._sPopupContainerId).dolPopupHide({});
-        }
+    	bx_confirm(_t('_sys_uploader_confirm_close_popup'), function() {
+    		$this.cancelAll();
+            $('#' + $this._sPopupContainerId).dolPopupHide({});
+    	});
     } else {
         $('#' + this._sPopupContainerId).dolPopupHide();
     }
