@@ -127,6 +127,9 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $aData[$CNF['FIELD_COVER']] = 0;
         }
 
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
+        $iProfile = $oProfile->id();
+
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
         $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
 
@@ -196,7 +199,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'bx_if:show_ava_letter' => array(
                 'condition' => !$bUrlAvatar,
                 'content' => array(
-            		'color' => implode(', ', BxDolTemplate::getColorCode('', 0.5)),
+            		'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 0.5)),
                     'letter' => mb_substr($sTitle, 0, 1)
                 )
             ),
