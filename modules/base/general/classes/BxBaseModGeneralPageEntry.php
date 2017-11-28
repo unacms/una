@@ -21,10 +21,15 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
     protected $_oModule;
     protected $_aContentInfo = false;
 
+    protected $_sCoverClass;
+
     public function __construct($aObject, $oTemplate = false)
     {
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
         parent::__construct($aObject, $oTemplate ? $oTemplate : $this->_oModule->_oTemplate);
+
+        $this->_sCoverClass = $this->_oModule->getName() . '_cover';
     }
 
     public function getCode ()
@@ -45,7 +50,7 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         }
 
         $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);
-        $oCover->setCoverClass($this->_oModule->getName() . '_cover');
+        $oCover->setCoverClass($this->_sCoverClass);
 
         // set cover image
         $mixedThumb = $this->_getThumbForMetaObject();

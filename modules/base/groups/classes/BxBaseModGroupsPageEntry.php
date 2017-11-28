@@ -17,6 +17,8 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
+
+        $this->_sCoverClass = 'bx-base-group-cover-wrapper ' . $this->_oModule->getName() . '_cover';
     }
 
     protected function _processPermissionsCheck ()
