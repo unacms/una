@@ -160,12 +160,20 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($oMetatags)
             $oMetatags->metaAdd($aEvent[$CNF['FIELD_ID']]);
 
+        $sReferrer = '';
+        if(isset($_SERVER['HTTP_REFERER']) && mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT) === 0)
+            $sReferrer = $_SERVER['HTTP_REFERER'];
+        else 
+            $sReferrer = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_HOME']);
+
         return array('content' => $this->parseHtmlByName('block_item.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
         	'content' => $sContent,
         	'view_image_popup' => $this->_getImagePopup($aParams),
-            'js_content' => $this->getJsCode('view') . $this->getJsCode('repost')
+            'js_content' => $this->getJsCode('view', array(
+                'sReferrer' => $sReferrer
+            )) . $this->getJsCode('repost')
         )));
     }
 

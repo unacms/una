@@ -13,6 +13,7 @@ function BxTimelineView(oOptions) {
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oTimelineView' : oOptions.sObjName;
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
+    this._sReferrer = oOptions.sReferrer == undefined ? '' : oOptions.sReferrer;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
@@ -290,7 +291,7 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
 BxTimelineView.prototype.onDeletePost = function(oData) {
 	var $this = this;
 
-	//--- Delete from Timeline (if available)
+	//--- Delete from 'Timeline' (if available)
 	if(this.bViewTimeline) {
 		$(this.sIdItemTimeline + oData.id).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
 	        $(this).remove();
@@ -301,9 +302,11 @@ BxTimelineView.prototype.onDeletePost = function(oData) {
 	        	$this.oViewTimeline.find('.' + $this.sSP + '-empty').show();
 	        }
 	    });
+
+		return;
 	}
 
-	//--- Delete from Outline (if available)
+	//--- Delete from 'Outline' (if available)
 	if(this.bViewOutline) {
 		$(this.sIdItemOutline + oData.id).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
 	        $(this).remove();
@@ -317,7 +320,13 @@ BxTimelineView.prototype.onDeletePost = function(oData) {
 	        else
 	        	$this.reloadMasonry();
 	    });
+
+		return;
 	}
+
+	//--- Delete from 'View Item' page.
+	if(this._sReferrer.length != 0)
+		document.location = this._sReferrer;
 };
 
 BxTimelineView.prototype._getPosts = function(oElement, onComplete) {

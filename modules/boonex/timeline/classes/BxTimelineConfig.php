@@ -54,6 +54,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'FIELD_TEXT' => 'description',
         	'FIELD_LOCATION_PREFIX' => 'location',
 
+            // page URIs
+        	'URL_HOME' => 'page.php?i=timeline-view-home',
+
         	// objects
         	'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
