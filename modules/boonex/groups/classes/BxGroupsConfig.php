@@ -172,9 +172,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
                 'menu_item_title_leave_group_cancel_request' => '_bx_groups_menu_item_title_leave_group_cancel_request',
                 'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
                 'menu_item_title_leave_group' => '_bx_groups_menu_item_title_leave_group',
-                
-                'menu_item_title_become_fan_sent' => '_bx_groups_menu_item_title_become_fan_sent',
-                'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
             	'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author'
             ),
 

@@ -17,6 +17,10 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
+        
+        $this->_sUnitClassWithCover .= ' bx-base-groups-unit-with-cover';
+        $this->_sUnitClass = $this->_sUnitClassWithCover;
+        $this->_sUnitClassWoInfo .= ' bx-base-groups-unit-wo-info'; 
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
@@ -45,23 +49,6 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         );
 
         return $aVars;
-    }
-
-    protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
-    {
-        $sResult = '';
-
-        switch($sTemplateName) {
-            case 'unit.html':
-            case 'unit_with_cover.html':
-                $sResult = 'bx-base-pofile-unit-with-cover bx-base-groups-unit-with-cover';
-                break;
-            case 'unit_wo_info.html':
-                $sResult = 'bx-base-pofile-unit-wo-info bx-base-groups-unit-wo-info';
-                break;
-        }
-
-        return $sResult;
     }
 }
 
