@@ -97,7 +97,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 
         // display message if it is possible to switch to this profile
         if ($this->_oModule->serviceActAsProfile()) {
-            $oProfile = $this->_aContentInfo ? BxDolProfile::getInstanceByContentTypeAccount($this->_aContentInfo['id'], $this->MODULE) : false;
+            $oProfile = $this->_aContentInfo ? BxDolProfile::getInstanceByContentAndType($this->_aContentInfo['id'], $this->MODULE) : false;
             if ($oProfile)
                 $oProfile->checkSwitchToProfile($this->_oTemplate);
         }

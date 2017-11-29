@@ -504,13 +504,17 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         if (!$iViewerAccountId || !$iViewerProfileId)
             return;
 
-        if ($iViewerAccountId != $this->getAccountId() ||  $iViewerProfileId == $this->id())
+        $iSwitchToAccountId = $this->getAccountId();
+        $iSwitchToProfileId = $this->id();
+        $bCanSwitch = $iSwitchToAccountId == $iViewerAccountId;
+        bx_alert('account', 'check_switch_context', $iSwitchToAccountId, $iViewerProfileId, array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
+
+        if (!$bCanSwitch ||  $iViewerProfileId == $iSwitchToProfileId)
             return;
 
         $oInformer = BxDolInformer::getInstance($oTemplate);
         if ($oInformer)
-            $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change_suggestion', BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $this->id()))), BX_INFORMER_INFO);
-
+            $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change_suggestion', BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $this->id(), 'redirect_back' => 1))), BX_INFORMER_INFO);
     }
 
 	/**

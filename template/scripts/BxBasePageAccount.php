@@ -53,13 +53,16 @@ class BxBasePageAccount extends BxTemplPage
 
         // switch profile context
         if ($iSwitchToProfileId = (int)bx_get('switch_to_profile')) {
-            $oInformer = BxDolInformer::getInstance($this->_oTemplate);
             $oProfile = BxDolProfile::getInstance($iSwitchToProfileId);
-            $aProfile = $oProfile->getInfo();
             $sInformerMsg = '';            
 
-            if (BxDolService::call($aProfile['type'], 'act_as_profile')) {
-                if ($oProfile && $oProfile->getAccountId() == getLoggedId()) {
+            if ($oProfile && BxDolService::call($oProfile->getModule(), 'act_as_profile')) {
+                $iViewerAccountId = getLoggedId();
+                $iSwitchToAccountId = $oProfile->getAccountId();
+                $bCanSwitch = $iSwitchToAccountId == $iViewerAccountId;
+                bx_alert('account', 'check_switch_context', $iSwitchToAccountId, bx_get_logged_profile_id(), array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
+
+                if ($bCanSwitch) {
                     $oAccount = BxDolAccount::getInstance();
                     if ($oAccount->updateProfileContext($iSwitchToProfileId)) {
                         $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
@@ -70,6 +73,7 @@ class BxBasePageAccount extends BxTemplPage
                     }
                 }
 
+                $oInformer = BxDolInformer::getInstance($this->_oTemplate);
                 if ($oInformer)
                     $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), $sInformerMsg ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
             }
