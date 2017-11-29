@@ -23,7 +23,10 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'view-organization-profile' => 'checkAllowedView',
             'edit-organization-profile' => 'checkAllowedEdit',
             'edit-organization-cover' => 'checkAllowedChangeCover',
+        	'invite-to-organization' => 'checkAllowedInvite',
             'delete-organization-profile' => 'checkAllowedDelete',
+        	'profile-fan-add' => 'checkAllowedFanAdd',
+            'profile-fan-remove' => 'checkAllowedFanRemove',
             'profile-friend-add' => 'checkAllowedFriendAdd',
             'profile-friend-remove' => 'checkAllowedFriendRemove',
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
@@ -41,6 +44,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
+        	'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -52,6 +56,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         	'FIELD_TEXT' => 'org_desc',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+        	'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELDS_QUICK_SEARCH' => array('org_name'),
         	'FIELD_LOCATION_PREFIX' => 'location',
@@ -64,6 +69,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         	'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',
+        	'URI_JOINED_ENTRIES' => 'joined-organizations',
         	'URI_MANAGE_COMMON' => 'organizations-manage',
 
             'URL_HOME' => 'page.php?i=organizations-home',
@@ -93,6 +99,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_organizations_cover_thumb',
         	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_organizations_gallery',
             'OBJECT_VIEWS' => 'bx_organizations',
+        	'OBJECT_VOTES' => '',
         	'OBJECT_FAVORITES' => 'bx_organizations',
         	'OBJECT_FEATURED' => 'bx_organizations',
             'OBJECT_COMMENTS' => 'bx_organizations',
@@ -105,6 +112,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_organization_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_organization_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_organization_delete',
+        	'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_organization_invite',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_organizations_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_organizations_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_SUBMENU' => 'bx_organizations_submenu', // main module submenu
@@ -115,12 +123,22 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_organizations_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_organizations_allow_view_to',
+        	'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_organizations_allow_view_notification_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
             'OBJECT_GRID_COMMON' => 'bx_organizations_common',
+        	'OBJECT_GRID_CONNECTIONS' => 'bx_organizations_fans',
+        	'OBJECT_CONNECTIONS' => 'bx_organizations_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_organizations_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_organizations_picture_crop'),
 
             'EMAIL_FRIEND_REQUEST' => 'bx_organizations_friend_request',
+        	'EMAIL_INVITATION' => 'bx_organizations_invitation',
+            'EMAIL_JOIN_REQUEST' => 'bx_organizations_join_request',
+            'EMAIL_JOIN_CONFIRM' => 'bx_organizations_join_confirm',
+            'EMAIL_FAN_BECOME_ADMIN' => 'bx_organizations_fan_become_admin',
+            'EMAIL_ADMIN_BECOME_FAN' => 'bx_organizations_admin_become_fan',
+            'EMAIL_FAN_REMOVE' => 'bx_organizations_fan_remove',
+            'EMAIL_JOIN_REJECT' => 'bx_organizations_join_reject',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',
@@ -155,7 +173,10 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'T' => array (
                 'txt_sample_single' => '_bx_orgs_txt_sample_single',
             	'txt_sample_comment_single' => '_bx_orgs_txt_sample_comment_single',
+            	'txt_private_group' => '_bx_orgs_txt_private_organization',
                 'txt_N_fans' => '_bx_orgs_txt_N_friends',
+            	'txt_ntfs_join_request' => '_bx_orgs_txt_ntfs_join_request',
+                'txt_ntfs_fan_added' => '_bx_orgs_txt_ntfs_fan_added',
             	'txt_ntfs_timeline_post_common' => '_bx_orgs_txt_ntfs_timeline_post_common',
                 'menu_item_title_befriend_sent' => '_bx_orgs_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_orgs_menu_item_title_unfriend_cancel_request',
@@ -163,20 +184,23 @@ class BxOrgsConfig extends BxBaseModProfileConfig
                 'menu_item_title_unfriend_reject_request' => '_bx_orgs_menu_item_title_unfriend_reject_request',
                 'menu_item_title_befriend' => '_bx_orgs_menu_item_title_befriend',
                 'menu_item_title_unfriend' => '_bx_orgs_menu_item_title_unfriend',
+            	'menu_item_title_become_fan_sent' => '_bx_orgs_menu_item_title_become_fan_sent',
+                'menu_item_title_leave_group_cancel_request' => '_bx_orgs_menu_item_title_leave_organization_cancel_request',
+                'menu_item_title_become_fan' => '_bx_orgs_menu_item_title_become_fan',
+                'menu_item_title_leave_group' => '_bx_orgs_menu_item_title_leave_organization',
+            	'menu_item_manage_my' => '_bx_orgs_menu_item_title_manage_my',
+            	'menu_item_manage_all' => '_bx_orgs_menu_item_title_manage_all',
             	'grid_action_err_delete' => '_bx_orgs_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_orgs_grid_txt_account_manager',
 				'filter_item_active' => '_bx_orgs_grid_filter_item_title_adm_active',
             	'filter_item_pending' => '_bx_orgs_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_orgs_grid_filter_item_title_adm_suspended',
             	'filter_item_select_one_filter1' => '_bx_orgs_grid_filter_item_title_adm_select_one_filter1',
-            	'menu_item_manage_my' => '_bx_orgs_menu_item_title_manage_my',
-            	'menu_item_manage_all' => '_bx_orgs_menu_item_title_manage_all',
             	'txt_browse_favorites' => '_bx_orgs_page_title_browse_favorites',
-            	'option_redirect_aadd_profile' => '_bx_persons_option_redirect_aadd_profile',
-            	'option_redirect_aadd_last' => '_bx_persons_option_redirect_aadd_last',
-            	'option_redirect_aadd_custom' => '_bx_persons_option_redirect_aadd_custom'
+            	'option_redirect_aadd_profile' => '_bx_orgs_option_redirect_aadd_profile',
+            	'option_redirect_aadd_last' => '_bx_orgs_option_redirect_aadd_last',
+            	'option_redirect_aadd_custom' => '_bx_orgs_option_redirect_aadd_custom'
             ),
-
         );
 
         $this->_aJsClasses = array(

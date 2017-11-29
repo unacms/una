@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxOrgsUploaderCoverCrop extends BxBaseModProfileUploaderCoverCrop
+class BxOrgsUploaderCoverCrop extends BxBaseModGroupsUploaderCoverCrop
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {

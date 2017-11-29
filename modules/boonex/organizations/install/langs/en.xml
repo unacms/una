@@ -25,9 +25,16 @@
 	<string name="_bx_orgs_form_profile_display_delete"><![CDATA[Delete Organization]]></string>
 	<string name="_bx_orgs_form_profile_display_view"><![CDATA[View Organization]]></string>
 	<string name="_bx_orgs_form_profile_display_view_full"><![CDATA[Full View Organization]]></string>
+	<string name="_bx_orgs_form_profile_display_invite"><![CDATA[Invite to Organization]]></string>
     <string name="_bx_orgs_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
+    <string name="_bx_orgs_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_orgs_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
+    <string name="_bx_orgs_form_profile_input_allow_view_to_info"><![CDATA[Closed - anyone can find the organization and see who's in it, only members can see posts. Secret - only members can find the organization and see posts.]]></string>
+    <string name="_bx_orgs_form_profile_input_allow_view_notification_to"><![CDATA[Show notifications to]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_initial_members"><![CDATA[Invite Members]]></string>
+    <string name="_bx_orgs_form_profile_input_initial_members"><![CDATA[Invite Members]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Organization Name]]></string>
     <string name="_bx_orgs_form_profile_input_org_name"><![CDATA[Organization Name]]></string>
     <string name="_bx_orgs_form_profile_input_org_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
@@ -84,6 +91,8 @@
     <string name="_bx_orgs_page_title_friend_requests"><![CDATA[Friend Requests]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_orgs_page_title_profile_subscriptions"><![CDATA[Following & Followers]]></string>
+    <string name="_bx_orgs_page_title_sys_fans"><![CDATA[Members]]></string>
+    <string name="_bx_orgs_page_title_fans"><![CDATA[Members]]></string>
     <string name="_bx_orgs_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_orgs_page_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
@@ -97,8 +106,12 @@
 	<string name="_bx_orgs_page_title_active"><![CDATA[Active Organizations]]></string>
 	<string name="_bx_orgs_page_title_sys_online"><![CDATA[Online Organizations]]></string>
 	<string name="_bx_orgs_page_title_online"><![CDATA[Online Organizations]]></string>
+	<string name="_bx_orgs_page_title_sys_invite_to_organization"><![CDATA[Invite Members to the Organization]]></string>
+    <string name="_bx_orgs_page_title_invite_to_organization"><![CDATA[Invite Members to the Organization]]></string>
 	<string name="_bx_orgs_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_orgs_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_orgs_page_title_sys_joined_entries"><![CDATA[Joined Organizations]]></string>
+    <string name="_bx_orgs_page_title_joined_entries"><![CDATA[Joined Organizations]]></string>
 
     <string name="_bx_orgs_page_block_title_profile_private"><![CDATA[Private Profile]]></string>
     <string name="_bx_orgs_page_block_title_choose_type"><![CDATA[Choose Profile Type]]></string>
@@ -120,6 +133,10 @@
 	<string name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_orgs_page_block_title_friend_requests_link"><![CDATA[Friend Requests for <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_orgs_page_block_title_system_friend_requests"><![CDATA[Friend Requests]]></string>
+    <string name="_bx_orgs_page_block_title_admins"><![CDATA[Administrators]]></string>
+    <string name="_bx_orgs_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_orgs_page_block_title_fans"><![CDATA[Members]]></string>
+    <string name="_bx_orgs_page_block_title_system_fans"><![CDATA[Members]]></string>
 	<string name="_bx_orgs_page_block_title_profile_location"><![CDATA[Location]]></string>
 	<string name="_bx_orgs_page_block_title_system_profile_subscriptions"><![CDATA[Following]]></string>
     <string name="_bx_orgs_page_block_title_profile_subscriptions"><![CDATA[Following]]></string>
@@ -136,10 +153,15 @@
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Active Organizations]]></string>
     <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Online Organizations]]></string>
     <string name="_bx_orgs_page_block_title_categories"><![CDATA[Organization categories]]></string>
+    <string name="_bx_orgs_page_block_title_invite_to_organization"><![CDATA[Invite Members to the Organization]]></string>
     <string name="_bx_orgs_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_orgs_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_orgs_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
     <string name="_bx_orgs_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
+    <string name="_bx_orgs_page_block_title_favorites_of_author"><![CDATA[Favorite Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_sys_joined_entries"><![CDATA[Joined Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_joined_entries"><![CDATA[Joined Organizations]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Organizations Submenu]]></string>
@@ -170,6 +192,8 @@
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_system_view_profile_fans"><![CDATA[Members]]></string>
+    <string name="_bx_orgs_menu_item_title_view_profile_fans"><![CDATA[Members]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_subscriptions"><![CDATA[Following]]></string>
@@ -180,6 +204,8 @@
     <string name="_bx_orgs_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_view"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_view"><![CDATA[Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_system_invite"><![CDATA[Invite]]></string>
+    <string name="_bx_orgs_menu_item_title_invite"><![CDATA[Invite]]></string>
     <string name="_bx_orgs_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
     <string name="_bx_orgs_menu_item_title_befriend"><![CDATA[Add friend]]></string>
     <string name="_bx_orgs_menu_item_title_befriend_sent"><![CDATA[Add friend (requested)]]></string>
@@ -188,6 +214,14 @@
     <string name="_bx_orgs_menu_item_title_unfriend"><![CDATA[Unfriend]]></string>
     <string name="_bx_orgs_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
     <string name="_bx_orgs_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
+    <string name="_bx_orgs_menu_item_title_system_become_fan"><![CDATA[Join Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_become_fan"><![CDATA[Join Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_become_fan_sent"><![CDATA[Join Organization (requested)]]></string>
+    <string name="_bx_orgs_menu_item_title_become_fan_confirm"><![CDATA[Accept Request]]></string>
+    <string name="_bx_orgs_menu_item_title_system_leave_organization"><![CDATA[Leave Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_leave_organization"><![CDATA[Leave Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_leave_organization_cancel_request"><![CDATA[Cancel Request]]></string>
+    <string name="_bx_orgs_menu_item_title_leave_organization_reject_request"><![CDATA[Reject Request]]></string>
     <string name="_bx_orgs_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_orgs_menu_item_title_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_orgs_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
@@ -286,14 +320,64 @@
     <string name="_bx_orgs_cat_University"><![CDATA[University]]></string>
     <string name="_bx_orgs_cat_Other"><![CDATA[Other]]></string>
 
+    <string name="_bx_orgs_alert_action_fan_added"><![CDATA[member joined]]></string>
+    <string name="_bx_orgs_txt_ntfs_fan_added"><![CDATA[Organization <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_orgs_alert_action_join_request"><![CDATA[join request]]></string>
+    <string name="_bx_orgs_txt_ntfs_join_request"><![CDATA[Organization <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> organization timeline]]></string>
+
     <string name="_bx_orgs_txt_sample_single"><![CDATA[organization]]></string>
     <string name="_bx_orgs_txt_sample_comment_single"><![CDATA[comment to organization]]></string>
     <string name="_bx_orgs_txt_N_friends"><![CDATA[{0} friends]]></string>
+    <string name="_bx_orgs_txt_to_admins"><![CDATA[To Admins]]></string>
+    <string name="_bx_orgs_txt_from_admins"><![CDATA[From Admins]]></string>
+    <string name="_bx_orgs_txt_private_organization"><![CDATA[Private organization]]></string>
 
-    <string name="_bx_organizations_email_friend_request"><![CDATA[Friend request]]></string>
-    <string name="_bx_organizations_email_friend_request_subject"><![CDATA[Friendship Request]]></string>
-    <string name="_bx_organizations_email_friend_request_body"><![CDATA[{email_header}
+    <string name="_bx_orgs_email_friend_request"><![CDATA[Friend request]]></string>
+    <string name="_bx_orgs_email_friend_request_subject"><![CDATA[Friendship Request]]></string>
+    <string name="_bx_orgs_email_friend_request_body"><![CDATA[{email_header}
 <p><a href="{SenderUrl}">{SenderDisplayName}</a> wants to be friends with you. <a href="{FriendsLink}">Respond</a>.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_join_request"><![CDATA[Organization join request]]></string>
+    <string name="_bx_orgs_email_join_request_subject"><![CDATA[Request to join your organization]]></string>
+    <string name="_bx_orgs_email_join_request_body"><![CDATA[{email_header}
+<p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> organization from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_join_reject"><![CDATA[Organization join request was rejected]]></string>
+    <string name="_bx_orgs_email_join_reject_subject"><![CDATA[Request to join an organization was rejected]]></string>
+    <string name="_bx_orgs_email_join_reject_body"><![CDATA[{email_header}
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> organization was rejected by the organization admin.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_join_confirm"><![CDATA[Organization join request was confirmed]]></string>
+    <string name="_bx_orgs_email_join_confirm_subject"><![CDATA[Your request to join an organization was confirmed]]></string>
+    <string name="_bx_orgs_email_join_confirm_body"><![CDATA[{email_header}
+<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> organization was confirmed by the organization admin.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_fan_remove"><![CDATA[Profile was removed from organization members]]></string>
+    <string name="_bx_orgs_email_fan_remove_subject"><![CDATA[Your profile was removed from the organization]]></string>
+    <string name="_bx_orgs_email_fan_remove_body"><![CDATA[{email_header}
+<p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> organization by the organization admin.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_fan_become_admin"><![CDATA[Organization admin status was granted]]></string>
+    <string name="_bx_orgs_email_fan_become_admin_subject"><![CDATA[You are an organization admin now]]></string>
+    <string name="_bx_orgs_email_fan_become_admin_body"><![CDATA[{email_header}
+<p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> organization now.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_admin_become_fan"><![CDATA[Organization admin status was revoked]]></string>
+    <string name="_bx_orgs_email_admin_become_fan_subject"><![CDATA[Your organization admin status was revoked]]></string>
+    <string name="_bx_orgs_email_admin_become_fan_body"><![CDATA[{email_header}
+<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> organization.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_invitation"><![CDATA[Invitation to organization]]></string>
+    <string name="_bx_orgs_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" organization]]></string>
+    <string name="_bx_orgs_email_invitation_body"><![CDATA[{email_header}
+<p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle}</a> organization.</p>
 {email_footer}]]></string>
 </resources>

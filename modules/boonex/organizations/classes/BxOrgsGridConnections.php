@@ -5,18 +5,16 @@
  *
  * @defgroup    Organizations Organizations
  * @ingroup     UnaModules
- *
+ * 
  * @{
  */
 
-/**
- * Organization profile forms functions
- */
-class BxOrgsFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
+class BxOrgsGridConnections extends BxBaseModGroupsGridConnections
 {
-    public function __construct($oModule)
+    public function __construct ($aOptions, $oTemplate = false)
     {
-        parent::__construct($oModule);
+        $this->_sContentModule = 'bx_organizations';
+        parent::__construct ($aOptions, $oTemplate);
     }
 }
 

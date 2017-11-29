@@ -10,14 +10,15 @@
  */
 
 /**
- * Organization profile forms functions
+ * Entries user joined to.
  */
-class BxOrgsFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
+class BxOrgsPageJoinedEntries extends BxBaseModGroupsPageJoinedEntries
 {
-    public function __construct($oModule)
+    public function __construct($aObject, $oTemplate = false)
     {
-        parent::__construct($oModule);
+        parent::__construct($aObject, $oTemplate);
     }
+
 }
 
 /** @} */

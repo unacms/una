@@ -12,7 +12,7 @@
 /**
  * Browse entries pages.
  */
-class BxOrgsPageBrowse extends BxBaseModProfilePageBrowse
+class BxOrgsPageBrowse extends BxBaseModGroupsPageBrowse
 {
     public function __construct($aObject, $oTemplate = false)
     {

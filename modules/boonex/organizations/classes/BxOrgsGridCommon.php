@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxOrgsGridCommon extends BxBaseModProfileGridCommon
+class BxOrgsGridCommon extends BxBaseModGroupsGridCommon
 {
     public function __construct ($aOptions, $oTemplate = false)
     {

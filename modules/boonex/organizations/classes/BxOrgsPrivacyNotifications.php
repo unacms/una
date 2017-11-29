@@ -9,14 +9,12 @@
  * @{
  */
 
-/**
- * Organization profile forms functions
- */
-class BxOrgsFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
+class BxOrgsPrivacyNotifications extends BxBaseModGroupsPrivacyNotifications
 {
-    public function __construct($oModule)
+    function __construct($aOptions, $oTemplate = false)
     {
-        parent::__construct($oModule);
+    	$this->MODULE = 'bx_organizations';
+        parent::__construct($aOptions, $oTemplate);
     }
 }
 

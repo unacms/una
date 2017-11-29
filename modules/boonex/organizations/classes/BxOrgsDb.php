@@ -12,7 +12,7 @@
 /*
  * Organizations module database queries
  */
-class BxOrgsDb extends BxBaseModProfileDb
+class BxOrgsDb extends BxBaseModGroupsDb
 {
     public function __construct(&$oConfig)
     {

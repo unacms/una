@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxOrgsSearchResult extends BxBaseModProfileSearchResult
+class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
 {
     function __construct($sMode = '', $aParams = false)
     {
@@ -76,6 +76,30 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
+
+            case 'joined_entries':
+                $oJoinedProfile = BxDolProfile::getInstance((int)$aParams['joined_profile']);
+                if (!$oJoinedProfile) {
+                    $this->isError = true;
+                    break;
+                }
+
+                $bProcessConditionsForPrivateContent = false;
+
+                $this->aCurrent['join']['fans'] = array(
+                    'type' => 'INNER',
+                    'table' => 'bx_organizations_fans',
+                    'mainField' => 'id',
+                    'onField' => 'content',
+                    'joinFields' => array('initiator'),
+                );
+
+                $this->aCurrent['restriction']['fans'] = array('value' => $oJoinedProfile->id(), 'field' => 'initiator', 'operator' => '=', 'table' => 'bx_organizations_fans');
+
+                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_JOINED_ENTRIES'] . '&profile_id={profile_id}';
+                $this->aCurrent['title'] = _t('_bx_orgs_page_title_joined_entries');
+                $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode . '/' . $oJoinedProfile->id();
+                break;
 
             case 'connections':
                 if ($this->_setConnectionsConditions($aParams)) {

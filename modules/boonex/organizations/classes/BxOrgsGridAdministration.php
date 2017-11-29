@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxOrgsGridAdministration extends BxBaseModProfileGridAdministration
+class BxOrgsGridAdministration extends BxBaseModGroupsGridAdministration
 {
     public function __construct ($aOptions, $oTemplate = false)
     {

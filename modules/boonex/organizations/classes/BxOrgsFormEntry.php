@@ -12,7 +12,7 @@
 /**
  * Create/Edit Organization Form.
  */
-class BxOrgsFormEntry extends BxBaseModProfileFormEntry
+class BxOrgsFormEntry extends BxBaseModGroupsFormEntry
 {
     public function __construct($aInfo, $oTemplate = false)
     {

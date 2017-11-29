@@ -12,7 +12,7 @@
 /**
  * 'View organization' menu.
  */
-class BxOrgsMenuView extends BxBaseModProfileMenuView
+class BxOrgsMenuView extends BxBaseModGroupsMenuView
 {
 
     public function __construct($aObject, $oTemplate = false)

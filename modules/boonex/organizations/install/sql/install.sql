@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
+  `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`org_name`,`org_desc`)
@@ -132,6 +133,28 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_meta_locations` (
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: fans
+CREATE TABLE IF NOT EXISTS `bx_organizations_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `initiator` int(11) NOT NULL,
+  `content` int(11) NOT NULL,
+  `mutual` tinyint(4) NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `initiator` (`initiator`,`content`),
+  KEY `content` (`content`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- TABLE: admins
+CREATE TABLE IF NOT EXISTS `bx_organizations_admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_profile_id` int(10) unsigned NOT NULL,
+  `fan_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_organizations_pics', @sStorageEngine, '', 360, 2592000, 3, 'bx_organizations_pics', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
@@ -155,6 +178,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_organizations_cover_thumb', 'Resize', 'a:3:{s:1:"w";s:2:"48";s:1:"h";s:2:"48";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_organizations_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
+
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_organization', 'bx_organizations', '_bx_orgs_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_organizations_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxOrgsFormEntry', 'modules/boonex/organizations/classes/BxOrgsFormEntry.php');
@@ -165,15 +189,18 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_organization', 'bx_organization_edit', 'bx_organizations', 0, '_bx_orgs_form_profile_display_edit'),
 ('bx_organization', 'bx_organization_edit_cover', 'bx_organizations', 0, '_bx_orgs_form_profile_display_edit_cover'),
 ('bx_organization', 'bx_organization_view', 'bx_organizations', 1, '_bx_orgs_form_profile_display_view'),
-('bx_organization', 'bx_organization_view_full', 'bx_organizations', 1, '_bx_orgs_form_profile_display_view_full');
+('bx_organization', 'bx_organization_view_full', 'bx_organizations', 1, '_bx_orgs_form_profile_display_view_full'),
+('bx_organization', 'bx_organization_invite', 'bx_organizations', 0, '_bx_orgs_form_profile_display_invite');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_organization', 'bx_organizations', 'allow_view_to', 3, '', 0, 'custom', '_bx_orgs_form_profile_input_sys_allow_view_to', '_bx_orgs_form_profile_input_allow_view_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_organization', 'bx_organizations', 'allow_view_to', 3, '', 0, 'custom', '_bx_orgs_form_profile_input_sys_allow_view_to', '_bx_orgs_form_profile_input_allow_view_to', '_bx_orgs_form_profile_input_allow_view_to_info', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_orgs_form_profile_input_sys_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_orgs_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'org_desc', '', '', 0, 'textarea', '_bx_orgs_form_profile_input_sys_org_desc', '_bx_orgs_form_profile_input_org_desc', '', 0, 0, 0, '', '', '', '', '', '', 'XssMultiline', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_cat', '', '#!bx_organizations_cats', 0, 'select', '_bx_orgs_form_profile_input_sys_org_cat', '_bx_orgs_form_profile_input_org_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_cat_err', 'Xss', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_name', '', '', 0, 'text', '_bx_orgs_form_profile_input_sys_org_name', '_bx_orgs_form_profile_input_org_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_name_err', 'Xss', '', 1, 0),
+('bx_organization', 'bx_organizations', 'initial_members', '', '', 0, 'custom', '_bx_orgs_form_profile_input_sys_initial_members', '_bx_orgs_form_profile_input_initial_members', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
+('bx_organization', 'bx_organizations', 'join_confirmation', 1, '', 1, 'switcher', '_bx_orgs_form_profile_input_sys_join_confirm', '_bx_orgs_form_profile_input_join_confirm', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'cover', 'a:1:{i:0;s:27:"bx_organizations_cover_crop";}', 'a:1:{s:27:"bx_organizations_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_orgs_form_profile_input_sys_cover', '_bx_orgs_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'picture', 'a:1:{i:0;s:29:"bx_organizations_picture_crop";}', 'a:1:{s:29:"bx_organizations_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_orgs_form_profile_input_sys_picture', '_bx_orgs_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_orgs_form_profile_input_picture_err', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -181,36 +208,34 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_organization', 'bx_organizations', 'profile_status', '', '', 0, 'custom', '_bx_orgs_form_profile_input_sys_profile_status', '_bx_orgs_form_profile_input_profile_status', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
 
 
-INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_organization_add', 'picture', 2147483647, 1, 1),
-('bx_organization_add', 'org_name', 2147483647, 1, 2),
-('bx_organization_add', 'org_cat', 2147483647, 1, 3),
-('bx_organization_add', 'org_desc', 2147483647, 1, 4),
-('bx_organization_add', 'location', 2147483647, 1, 5),
-('bx_organization_add', 'allow_view_to', 2147483647, 1, 6),
-('bx_organization_add', 'do_submit', 2147483647, 1, 7),
+INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('bx_organization_add', 'initial_members', 2147483647, 1, 1),
+('bx_organization_add', 'picture', 2147483647, 1, 2),
+('bx_organization_add', 'org_name', 2147483647, 1, 3),
+('bx_organization_add', 'org_cat', 2147483647, 1, 4),
+('bx_organization_add', 'org_desc', 2147483647, 1, 5),
+('bx_organization_add', 'location', 2147483647, 1, 6),
+('bx_organization_add', 'join_confirmation', 2147483647, 1, 7),
+('bx_organization_add', 'allow_view_to', 2147483647, 1, 8),
+('bx_organization_add', 'do_submit', 2147483647, 1, 9),
 
-('bx_organization_delete', 'picture', 2147483647, 0, 0),
-('bx_organization_delete', 'delete_confirm', 2147483647, 1, 0),
-('bx_organization_delete', 'cover', 2147483647, 0, 0),
-('bx_organization_delete', 'do_submit', 2147483647, 1, 1),
-('bx_organization_delete', 'org_name', 2147483647, 0, 2),
-('bx_organization_delete', 'org_cat', 2147483647, 0, 3),
+('bx_organization_invite', 'initial_members', 2147483647, 1, 1),
+('bx_organization_invite', 'do_submit', 2147483647, 1, 2),
+
+('bx_organization_delete', 'delete_confirm', 2147483647, 1, 1),
+('bx_organization_delete', 'do_submit', 2147483647, 1, 2),
 
 ('bx_organization_edit', 'picture', 2147483647, 1, 1),
 ('bx_organization_edit', 'org_name', 2147483647, 1, 2),
 ('bx_organization_edit', 'org_cat', 2147483647, 1, 3),
 ('bx_organization_edit', 'org_desc', 2147483647, 1, 4),
 ('bx_organization_edit', 'location', 2147483647, 1, 5),
-('bx_organization_edit', 'allow_view_to', 2147483647, 1, 6),
-('bx_organization_edit', 'do_submit', 2147483647, 1, 7),
+('bx_organization_edit', 'join_confirmation', 2147483647, 1, 6),
+('bx_organization_edit', 'allow_view_to', 2147483647, 1, 7),
+('bx_organization_edit', 'do_submit', 2147483647, 1, 8),
 
-('bx_organization_edit_cover', 'delete_confirm', 2147483647, 0, 1),
-('bx_organization_edit_cover', 'org_name', 2147483647, 0, 2),
-('bx_organization_edit_cover', 'picture', 2147483647, 0, 3),
-('bx_organization_edit_cover', 'org_cat', 2147483647, 0, 5),
-('bx_organization_edit_cover', 'cover', 2147483647, 1, 7),
-('bx_organization_edit_cover', 'do_submit', 2147483647, 1, 8),
+('bx_organization_edit_cover', 'cover', 2147483647, 1, 1),
+('bx_organization_edit_cover', 'do_submit', 2147483647, 1, 2),
 
 ('bx_organization_view', 'org_name', 2147483647, 1, 1),
 ('bx_organization_view', 'org_cat', 2147483647, 1, 2),
@@ -222,6 +247,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_view_full', 'org_desc', 2147483647, 1, 3),
 ('bx_organization_view_full', 'profile_email', 192, 1, 4),
 ('bx_organization_view_full', 'profile_status', 192, 1, 5);
+
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
@@ -265,6 +291,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_organizations_cats', '34', 34, '_bx_orgs_cat_University', ''),
 ('bx_organizations_cats', '35', 35, '_bx_orgs_cat_Other', '');
 
+
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
 ('bx_organizations', '_bx_orgs', 'bx_organizations', 'added', 'edited', 'deleted', '', ''),
@@ -274,10 +301,12 @@ INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, 
 ('bx_organizations', 'bx_organizations_administration', 'td`.`id', '', ''),
 ('bx_organizations', 'bx_organizations_common', 'td`.`id', '', '');
 
+
 -- SEARCH EXTENDED
 INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
 ('bx_organizations', 'bx_organizations', 'bx_organizations', '_bx_orgs_search_extended', 1, '', ''),
 ('bx_organizations_cmts', 'bx_organizations_cmts', 'bx_organizations', '_bx_orgs_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
+
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
@@ -290,4 +319,3 @@ INSERT INTO `sys_std_widgets` (`page_id`, `module`, `url`, `click`, `icon`, `cap
 (@iPageId, 'bx_organizations', '{url_studio}module.php?name=bx_organizations', '', 'bx_organizations@modules/boonex/organizations/|std-icon.svg', '_bx_orgs', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets` (`page_id`, `widget_id`, `order`) VALUES
 (@iParentPageId, LAST_INSERT_ID(), IF(ISNULL(@iParentPageOrder), 1, @iParentPageOrder + 1));
-
