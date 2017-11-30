@@ -146,8 +146,14 @@ function loadDynamicBlockAuto(e, sUrl) {
     if(oPaginate.length > 0) {
     	var iStart = parseInt(oPaginate.attr('bx-data-start'));
     	var iPerPage = parseInt(oPaginate.attr('bx-data-perpage'));
-    	if(!isNaN(iStart) && !isNaN(iPerPage) && sUrl.indexOf('start') == -1 && sUrl.indexOf('per_page') == -1)
-    		sUrl = bx_append_url_params(sUrl, 'start=' + iStart + '&per_page=' + iPerPage);
+
+    	var oParams = {};
+    	if(!isNaN(iStart) && sUrl.indexOf('start') == -1)
+    		oParams.start = iStart;
+    	if(!isNaN(iPerPage) && sUrl.indexOf('per_page') == -1)
+    		oParams.per_page = iPerPage;
+
+    	sUrl = bx_append_url_params(sUrl, oParams);
     }
 
     loadDynamicBlock(parseInt(aMatches[1]), sUrl);
