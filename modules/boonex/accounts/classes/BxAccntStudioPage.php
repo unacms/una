@@ -9,18 +9,40 @@
  * @{
  */
 
+define('BX_DOL_STUDIO_MOD_TYPE_MANAGE', 'manage');
+
 class BxAccntStudioPage extends BxTemplStudioModule
 {
+    protected $_sModule;
+	protected $_oModule;
+
     function __construct($sModule = "", $sPage = "")
     {
+        $this->sPageDefault = BX_DOL_STUDIO_MOD_TYPE_MANAGE;
+
+        $this->_sModule = 'bx_accounts';
+    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
+
         parent::__construct($sModule, $sPage);
 
-        $oPermalink = BxDolPermalinks::getInstance();
-
         $this->aMenuItems = array(
-            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            array('name' => 'manage', 'icon' => 'wrench', 'title' => '_bx_accnt_menu_item_title_manage', 'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=accounts-administration')),
+            array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_accnt_menu_item_title_manage')
         );
+    }
+
+    protected function getManage()
+    {
+        $sType = 'administration';
+
+        $sGrid = $this->_oModule->_oConfig->getGridObject($sType);
+        $oGrid = BxDolGrid::getObjectInstance($sGrid, BxDolStudioTemplate::getInstance());
+        if(!$oGrid)
+            return '';
+
+        $this->_oModule->_oTemplate->addStudioCss(array('manage_tools.css'));
+        $this->_oModule->_oTemplate->addStudioJs(array('manage_tools.js'));
+        $this->_oModule->_oTemplate->addStudioJsTranslation(array('_sys_grid_search'));
+        return $this->_oModule->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode();
     }
 }
 

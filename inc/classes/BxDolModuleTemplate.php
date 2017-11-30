@@ -68,6 +68,11 @@ class BxDolModuleTemplate extends BxDolTemplate
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
+    function addStudioJsTranslation($mixedKey)
+    {
+        BxDolStudioTemplate::getInstance()->addJsTranslation($mixedKey);
+    }
+
     function _addFiles($oTemplate, $sFuncAddFiles, $sFuncAddLocation, $sFuncRemoveLocation, $sPath, $mixedFiles, $bDynamic = false, $bSearchInModule = true)
     {
         $sLocationKey = '';
