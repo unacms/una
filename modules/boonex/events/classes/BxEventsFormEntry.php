@@ -128,7 +128,8 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
     protected function _isSameDayEvent()
     {
-        if (false === ($aStartEnd = $this->_getStartEnd()))
+        $aStartEnd = $this->_getStartEnd();
+        if($aStartEnd === false || (is_array($aStartEnd) && empty($aStartEnd)))
             return false;
         else
             return $aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d');
@@ -136,8 +137,11 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
     protected function _getStartEnd()
     {
-        if (!isset($this->aInputs['timezone']['value']) || !isset($this->aInputs['date_start']['value']) || !isset($this->aInputs['date_end']['value']))
+        if(!isset($this->aInputs['timezone']['value']) || !isset($this->aInputs['date_start']['value']) || !isset($this->aInputs['date_end']['value']))
             return false;
+
+        if(empty($this->aInputs['date_start']['value']) && empty($this->aInputs['date_end']['value']))
+            return array();
 
         $iTimeStart = bx_process_input ($this->aInputs['date_start']['value'], isset($this->aInputs['date_start']['date_filter']) ? $this->aInputs['date_start']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
         $iTimeEnd = bx_process_input ($this->aInputs['date_end']['value'], isset($this->aInputs['date_end']['date_filter']) ? $this->aInputs['date_end']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
@@ -152,10 +156,12 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
         if (!$this->aParams['view_mode'])
             return '';
 
-        if (false === ($aStartEnd = $this->_getStartEnd())) {
+        $aStartEnd = $this->_getStartEnd();
+        if ($aStartEnd === false)
             $aInput['value'] = "Timezone, date start & date end fields are required to display this field";
-        }
-        else {            
+        else if(is_array($aStartEnd) && empty($aStartEnd))
+            $aInput['value'] = '';
+        else {
             if ($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d'))
                 $aInput['value'] = _t('_bx_events_txt_from_time_to_time', $aStartEnd['start']->format(getParam('bx_events_time_format')), $aStartEnd['end']->format(getParam('bx_events_time_format')));
             else
@@ -168,9 +174,13 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
     {
         if (in_array($aInput['name'], array('date_start', 'date_end'))) {
 
-            if (false === ($aStartEnd = $this->_getStartEnd()))
+            $aStartEnd = $this->_getStartEnd();
+            if($aStartEnd === false)
                 return "Timezone, date start & date end fields are required to display this field";
-        
+
+            if(is_array($aStartEnd) && empty($aStartEnd))
+                return null;
+
             $sFormat = $aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d') ? BX_FORMAT_DATE : BX_FORMAT_DATE_TIME;
             $oDate = 'date_start' == $aInput['name'] ? $aStartEnd['start'] : $aStartEnd['end'];
             return bx_time_js ($oDate->getTimestamp(), $sFormat, true);
