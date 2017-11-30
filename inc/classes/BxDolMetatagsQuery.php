@@ -98,20 +98,26 @@ class BxDolMetatagsQuery extends BxDolDb
         return $this->getRow($sQuery);
     }
 
-    public function locationsGetSQLParts($sContentTable, $sContentField, $sCountry = false, $sState = false, $sCity = false, $sZip = false)
+    public function locationsGetSQLParts($sContentTable, $sContentField, $sCountry = false, $sState = false, $sCity = false, $sZip = false, $aBounds = array())
     {
-        $aFields = array('country' => 'sCountry', 'state' => 'sState', 'city' => 'sCity', 'zip' => 'sZip');
+        $aFields = array('country' => 'sCountry', 'state' => 'sState', 'city' => 'sCity', 'zip' => 'sZip', 'bounds' => 'aBounds');
 
         $aWhere = array();
+        $sWhereBounds = '';
         foreach ($aFields as $sIndex => $sVar) {
             if (!$$sVar)
                 continue;
 
-            $aWhere['tl`.`' . $sIndex] = $$sVar;
+            if ('bounds' == $sIndex) {
+                $sWhereBounds = $this->prepareAsString("AND `tl`.`lat` != 0 AND `tl`.`lng` != 0 AND `tl`.`lat` > ? AND `tl`.`lat` < ? AND `tl`.`lng` > ? AND `tl`.`lng` < ?", ${$sVar}['min_lat'], ${$sVar}['max_lat'], ${$sVar}['min_lng'], ${$sVar}['max_lng']);
+            } 
+            else {
+                $aWhere['tl`.`' . $sIndex] = $$sVar;
+            }
         }
 
         return array(
-            'where' => !empty($aWhere) ? ' AND ' . $this->arrayToSQL($aWhere, ' AND ') : '',
+            'where' => $sWhereBounds . (!empty($aWhere) ? ' AND ' . $this->arrayToSQL($aWhere, ' AND ') : ''),
             'join' => 'INNER JOIN `' . $this->_aObject['table_locations'] . '` AS `tl` ON `' . $sContentTable . '`.`' . $sContentField . '`=`tl`.`object_id`'
         );
     }

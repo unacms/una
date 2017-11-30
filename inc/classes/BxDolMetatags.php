@@ -602,7 +602,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      * @param $sContentField content table field or field alias
      * @param $sCountry country and other location info
      */
-    public function locationsGetAsSQLPart($sContentTable, $sContentField, $sCountry = false, $sState = false, $sCity = false, $sZip = false)
+    public function locationsGetAsSQLPart($sContentTable, $sContentField, $sCountry = false, $sState = false, $sCity = false, $sZip = false, $aBounds = array())
     {
         if (empty($this->_aObject['table_locations']))
             return array();
