@@ -16,6 +16,27 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         parent::__construct($sMode, $aParams);
     }
 
+    protected function _setAuthorConditions($sMode, $aParams, &$oProfileAuthor)
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
+        if (!$oProfileAuthor) 
+            return false;
+
+        $iProfileAuthor = $oProfileAuthor->id();
+        $this->aCurrent['restriction']['owner']['value'] = $iProfileAuthor;
+
+        if(!empty($aParams['per_page']))
+        	$this->aCurrent['paginate']['perPage'] = is_numeric($aParams['per_page']) ? (int)$aParams['per_page'] : (int)getParam($aParams['per_page']);
+
+        $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_JOINED_ENTRIES'] . '&profile_id={profile_id}';
+        $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
+        $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
+
+        return true;
+    }
+
     protected function _setFavoriteConditions($sMode, $aParams, &$oProfileAuthor)
     {
         $CNF = &$this->oModule->_oConfig->CNF;

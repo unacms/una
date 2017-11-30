@@ -76,6 +76,12 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
+            case 'created_entries':
+                if(!$this->_setAuthorConditions($sMode, $aParams, $oJoinedProfile)) {
+                    $this->isError = true;
+                    break;
+                }
+                break;
 
             case 'joined_entries':
                 $oJoinedProfile = BxDolProfile::getInstance((int)$aParams['joined_profile']);
