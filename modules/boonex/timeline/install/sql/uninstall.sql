@@ -35,6 +35,9 @@ DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_timeline%';
 DELETE FROM `sys_objects_storage` WHERE `object`  LIKE 'bx_timeline%';
 DELETE FROM `sys_objects_transcoder` WHERE `object`  LIKE 'bx_timeline%';
 DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` LIKE 'bx_timeline%';
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` LIKE 'bx_timeline%';
+DELETE FROM `sys_transcoder_videos_files` WHERE `transcoder_object` LIKE 'bx_timeline%';
+
 
 
 -- Forms All
