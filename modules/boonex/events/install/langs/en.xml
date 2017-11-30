@@ -73,8 +73,8 @@
 	<string name="_bx_events_acl_action_view_profile"><![CDATA[View Event]]></string>
 	<string name="_bx_events_acl_action_edit_any_profile"><![CDATA[Edit Any Event]]></string>
 
-	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[Joined Events]]></string>
-	<string name="_bx_events_page_title_joined_entries"><![CDATA[Joined Events]]></string>
+	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[Profile Events]]></string>
+	<string name="_bx_events_page_title_joined_entries"><![CDATA[Profile Events]]></string>
 	<string name="_bx_events_page_title_sys_create_profile"><![CDATA[Create Event]]></string>
 	<string name="_bx_events_page_title_create_profile"><![CDATA[Create Event]]></string>
 	<string name="_bx_events_page_title_sys_edit_profile"><![CDATA[Edit Event]]></string>
@@ -115,6 +115,8 @@
 	<string name="_bx_events_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_events_page_title_entries_search"><![CDATA[Search]]></string>
 
+    <string name="_bx_events_page_block_title_sys_entries_of_author"><![CDATA[Events of author]]></string>
+    <string name="_bx_events_page_block_title_entries_of_author"><![CDATA[Events by {display_name}]]></string>
 	<string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Favorite Events]]></string>
     <string name="_bx_events_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Events]]></string>
 	<string name="_bx_events_page_block_title_sys_joined_entries"><![CDATA[Joined Events]]></string>
