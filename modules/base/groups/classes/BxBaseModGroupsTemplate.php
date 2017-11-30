@@ -29,6 +29,10 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         
         $CNF = &$this->_oConfig->CNF;
 
+        $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
+        if (!$oProfile) 
+            $oProfile = BxDolProfileUndefined::getInstance();
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
 
         $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);        
@@ -37,6 +41,11 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
 
         $aVars['title'] = $isPublic ? bx_process_output($aData[$CNF['FIELD_NAME']]) : _t($CNF['T']['txt_private_group']);
+        $aVars['author'] = $oProfile->getDisplayName();
+        $aVars['author_url'] = $oProfile->getUrl();
+        $aVars['author_icon'] = $oProfile->getIcon();
+        $aVars['author_thumb'] = $oProfile->getThumb();
+        $aVars['author_avatar'] = $oProfile->getAvatar();
         $aVars['bx_if:info']['condition'] = true;
         $aVars['bx_if:info']['content']['members'] = $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($oGroupProfile->id(), true) : 0) : '&nbsp;';
         $aVars['bx_if:info']['content']['bx_if:btn'] = array (
