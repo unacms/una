@@ -13,11 +13,22 @@ class BxDolGridConnectionsRequests extends BxDolGridConnections
     {
         parent::__construct ($aOptions, $oTemplate);
 
+        
+    }
+
+    public function init()
+    {
+        $bResult = parent::init();
+        if(!$bResult)
+            return $bResult;
+
         $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_oProfile->id(), $this->_bOwner ? 0 : true);
 
         $this->addMarkers(array(
             'join_connections' => $aSQLParts['join']
         ));
+
+        return true;
     }
 
     public function getCode ($isDisplayHeader = true)

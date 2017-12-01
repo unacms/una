@@ -20,12 +20,16 @@ class BxBaseServiceConnections extends BxDol
     /**
      * get grid with friends connections
      */
-    public function serviceConnectionsTable ()
+    public function serviceConnectionsTable ($iProfileId = 0)
     {
+        if(!$iProfileId && bx_get('profile_id') !== false)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_connections');
         if (!$oGrid)
             return false;
 
+        $oGrid->setProfile($iProfileId);
         return $oGrid->getCode();
     }
 
@@ -140,9 +144,12 @@ class BxBaseServiceConnections extends BxDol
 	/**
      * get grid with subscriptions connections
      */
-    public function serviceSubscriptionsTable ()
+    public function serviceSubscriptionsTable ($iProfileId = 0)
     {
-        $aProfile = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getInfo();
+        if(!$iProfileId && bx_get('profile_id') !== false)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
         if(empty($aProfile) || !is_array($aProfile))
             return false;
 
@@ -154,18 +161,26 @@ class BxBaseServiceConnections extends BxDol
         if (!$oGrid)
             return false;
 
+        $oGrid->setProfileId($iProfileId);
+        $sContent = $oGrid->getCode();
+        if(empty($sContent))
+            return false;
+
         return BxDolTemplate::getInstance()->parseHtmlByName('connections_list.html', array(
             'name' => 'subscriptions',
-            'content' => $oGrid->getCode()
+            'content' => $sContent
         ));
     }
 
 	/**
      * get grid with subscribed me connections
      */
-    public function serviceSubscribedMeTable ()
+    public function serviceSubscribedMeTable ($iProfileId = 0)
     {
-        $aProfile = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getInfo();
+        if(!$iProfileId && bx_get('profile_id') !== false)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
         if(empty($aProfile) || !is_array($aProfile))
             return false;
 
@@ -174,12 +189,17 @@ class BxBaseServiceConnections extends BxDol
             return false;
 
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_subscribed_me');
-        if (!$oGrid)
+        if(!$oGrid)
+            return false;
+
+        $oGrid->setProfileId($iProfileId);
+        $sContent = $oGrid->getCode();
+        if(empty($sContent))
             return false;
 
         return BxDolTemplate::getInstance()->parseHtmlByName('connections_list.html', array(
             'name' => 'subscribers',
-            'content' => $oGrid->getCode()
+            'content' => $sContent
         ));
     }
 

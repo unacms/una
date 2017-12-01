@@ -11,6 +11,7 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 class BxDolGridConnections extends BxTemplGrid
 {
+    protected $_bInit = false;
     protected $_bOwner = false;
     protected $_sObjectConnections = 'sys_profiles_friends';
     protected $_oProfile;
@@ -21,20 +22,21 @@ class BxDolGridConnections extends BxTemplGrid
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
 
-        $this->_oConnection = BxDolConnection::getObjectInstance($this->_sObjectConnections);
-        if (!$this->_oConnection)
-            return;
+        if(($iProfileId = bx_get('profile_id')) !== false)
+            $this->setProfile($iProfileId);
+    }
 
-        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId)
-            return;
-
-        $this->_oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$this->_oProfile)
-            return;
+    public function init()
+    {
+        if(!$this->_oProfile)
+            return false;
 
         if ($this->_oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
+
+        $this->_oConnection = BxDolConnection::getObjectInstance($this->_sObjectConnections);
+        if (!$this->_oConnection)
+            return false;
 
         $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_oProfile->id(), $this->_bOwner ? false : true);
 
@@ -42,6 +44,13 @@ class BxDolGridConnections extends BxTemplGrid
             'profile_id' => $this->_oProfile->id(),
             'join_connections' => $aSQLParts['join']
         ));
+    }
+
+    public function setProfile($iProfileId)
+    {
+        $this->_oProfile = BxDolProfile::getInstance((int)$iProfileId);
+
+        $this->_bInit = $this->init();
     }
 
     /**

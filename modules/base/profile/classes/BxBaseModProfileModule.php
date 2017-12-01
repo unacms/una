@@ -436,6 +436,38 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $s;
     }
 
+    public function serviceProfileSubscriptions ($iContentId = 0)
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        bx_import('BxDolConnection');
+        $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_subscriptions', BX_CONNECTIONS_CONTENT_TYPE_CONTENT);
+        if (!$s)
+            return MsgBox(_t('_sys_txt_empty'));
+
+        return $s;
+    }
+
+    public function serviceProfileSubscribedMe ($iContentId = 0)
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        bx_import('BxDolConnection');
+        $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_subscriptions', BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        if (!$s)
+            return MsgBox(_t('_sys_txt_empty'));
+
+        return $s;
+    }
+
     /**
      * For internal usage only.
      */
@@ -823,6 +855,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             return false;
 
         return $oCmts->getCommentsBlock(array(), array('in_designbox' => false));
+    }
+
+    protected function _getContent($iContentId = 0, $sFuncGetContent = 'getContentInfoById')
+    {
+        if(!$iContentId && bx_get('id') === false && bx_get('profile_id') !== false) {
+            $oProfile = BxDolProfile::getInstance((int)bx_get('profile_id'));
+            if($oProfile)
+                $iContentId = $oProfile->getContentId();
+        }
+
+        return parent::_getContent($iContentId, $sFuncGetContent);
     }
 }
 

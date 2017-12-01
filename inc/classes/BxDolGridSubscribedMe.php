@@ -11,31 +11,39 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 class BxDolGridSubscribedMe extends BxTemplGrid
 {
-    protected $_bOwner = false;
+    protected $_bInit = false;
 
-    protected $_sObjectConnections = 'sys_profiles_subscriptions';
+    protected $_bOwner = false;
+    protected $_iProfileId = 0;
+
     protected $_oConnection;
-    protected $_sConnectionMethod = 'getConnectedInitiatorsAsSQLParts';
+    protected $_sConnectionObject = 'sys_profiles_subscriptions';
+    protected $_sConnectionMethod = 'getConnectedInitiatorsAsSQLParts';  
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
 
-        $this->_oConnection = BxDolConnection::getObjectInstance($this->_sObjectConnections);
-        if (!$this->_oConnection)
-            return;
+        if(($iProfileId = bx_get('profile_id')) !== false)
+            $this->setProfileId($iProfileId);   
+    }
 
-        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId)
-            return;
+    public function init()
+    {
+        if(!$this->_iProfileId)
+            return false;
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$oProfile)
-            return;
+        $oProfile = BxDolProfile::getInstance($this->_iProfileId);
+        if(!$oProfile)
+            return false;
 
-        if ($oProfile->id() == bx_get_logged_profile_id())
+        if($oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
+
+        $this->_oConnection = BxDolConnection::getObjectInstance($this->_sConnectionObject);
+        if(!$this->_oConnection)
+            return false;
 
         $aSQLParts = $this->_oConnection->{$this->_sConnectionMethod}('p', 'id', $oProfile->id());
 
@@ -43,6 +51,23 @@ class BxDolGridSubscribedMe extends BxTemplGrid
             'profile_id' => $oProfile->id(),
             'join_connections' => $aSQLParts['join']
         ));
+
+        return true;
+    }
+
+    public function setProfileId($iProfileId)
+    {
+        $this->_iProfileId = (int)$iProfileId;
+
+        $this->_bInit = $this->init();
+    }
+
+    public function getCode ($isDisplayHeader = true)
+    {
+        if(!$this->_bInit)
+            return '';
+
+        return parent::getCode($isDisplayHeader);        
     }
 
     /**
