@@ -28,26 +28,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
     }
 
-    function getUnitMetaItemLink($sContent, $aAttrs = array())
-    {
-        return $this->getUnitMetaItem('a', $sContent, $aAttrs);
-    }
-
-    function getUnitMetaItemText($sContent, $aAttrs = array())
-    {
-        if(!is_array($aAttrs))
-            $aAttrs = array();
-
-        $aAttrs['class'] = (!empty($aAttrs['class']) ? $aAttrs['class'] . ' ' : '') . 'bx-def-font-grayed';
-
-        return $this->getUnitMetaItem('span', $sContent, $aAttrs);
-    }
-
-    function getUnitMetaItemCustom($sContent)
-    {
-        return $this->getUnitMetaItem('custom', $sContent);
-    }
-
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -235,33 +215,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 ),
             ),
         );
-    }
-
-    protected function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
-    {
-        $aTags = array('span', 'a', 'custom');
-
-        $aTmplVarsAttrs = array();
-        foreach($aAttrs as $sKey => $sValue)
-            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
-
-        $aTmplVars = array();
-        foreach($aTags as $sTag) {
-            $aTmplVarsTag = array();
-            $bTmplVarsTag = $sTag == $sName;
-            if($bTmplVarsTag)
-                $aTmplVarsTag = array(
-                    'content' => $sContent,
-                    'bx_repeat:attrs' => $aTmplVarsAttrs
-                );
-
-            $aTmplVars['bx_if:' . $sTag] = array(
-            	'condition' => $bTmplVarsTag,
-                'content' => $aTmplVarsTag
-            );
-        }
-
-        return $this->parseHtmlByName($sTemplate, $aTmplVars);
     }
 
     protected function getTitle($aData)

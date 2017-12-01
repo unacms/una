@@ -50,6 +50,26 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
     }
 
+    function getUnitMetaItemLink($sContent, $aAttrs = array())
+    {
+        return $this->getUnitMetaItem('a', $sContent, $aAttrs);
+    }
+
+    function getUnitMetaItemText($sContent, $aAttrs = array())
+    {
+        if(!is_array($aAttrs))
+            $aAttrs = array();
+
+        $aAttrs['class'] = (!empty($aAttrs['class']) ? $aAttrs['class'] . ' ' : '') . 'bx-def-font-grayed';
+
+        return $this->getUnitMetaItem('span', $sContent, $aAttrs);
+    }
+
+    function getUnitMetaItemCustom($sContent)
+    {
+        return $this->getUnitMetaItem('custom', $sContent);
+    }
+
 	function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -131,6 +151,36 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'actions_entity' => $sActionsEntity,
             'actions_social' => $sActionsSocial,
         ));
+    }
+
+    protected function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
+    {
+        if(empty($sContent))
+            return '';
+
+        $aTags = array('span', 'a', 'custom');
+
+        $aTmplVarsAttrs = array();
+        foreach($aAttrs as $sKey => $sValue)
+            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
+
+        $aTmplVars = array();
+        foreach($aTags as $sTag) {
+            $aTmplVarsTag = array();
+            $bTmplVarsTag = $sTag == $sName;
+            if($bTmplVarsTag)
+                $aTmplVarsTag = array(
+                    'content' => $sContent,
+                    'bx_repeat:attrs' => $aTmplVarsAttrs
+                );
+
+            $aTmplVars['bx_if:' . $sTag] = array(
+            	'condition' => $bTmplVarsTag,
+                'content' => $aTmplVarsTag
+            );
+        }
+
+        return $this->parseHtmlByName($sTemplate, $aTmplVars);
     }
 }
 
