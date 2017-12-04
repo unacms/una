@@ -110,12 +110,15 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
     }
 
-    public function addDataForm ()
+    public function addDataForm ($sCheckFunction = false)
     {
+        if (!$sCheckFunction)
+            $sCheckFunction = 'checkAllowedAdd';
+        
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedAdd())) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction())) {
             $oProfile = BxDolProfile::getInstance();
             if ($oProfile && ($aProfileInfo = $oProfile->getInfo()) && $aProfileInfo['type'] == 'system' && is_subclass_of($this->_oModule, 'BxBaseModProfileModule') && $this->_oModule->serviceActAsProfile()) // special check for system profile is needed, because of incorrect error message
                 return MsgBox(_t('_sys_txt_access_denied'));
@@ -161,8 +164,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    public function editDataForm ($iContentId, $sDisplay = false)
+    public function editDataForm ($iContentId, $sDisplay = false, $sCheckFunction = false)
     {
+        if (!$sCheckFunction)
+            $sCheckFunction = 'checkAllowedEdit';
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // get content data and profile info
@@ -171,7 +177,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedEdit($aContentInfo)))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)))
             return MsgBox($sMsg);
 
         // check and display form
@@ -219,8 +225,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    public function deleteDataForm ($iContentId, $sDisplay = false)
+    public function deleteDataForm ($iContentId, $sDisplay = false, $sCheckFunction = false)
     {
+        if (!$sCheckFunction)
+            $sCheckFunction = 'checkAllowedDelete';
+        
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (false === $sDisplay)
@@ -232,7 +241,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedDelete($aContentInfo)))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)))
             return MsgBox($sMsg);
 
         // check and display form
