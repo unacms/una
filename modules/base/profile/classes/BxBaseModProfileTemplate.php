@@ -41,10 +41,14 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        $oModule = $this->getModule();
 
-        $mixedCheckResults = $this->getModule()->checkAllowedView($aData);
-        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $mixedCheckResults || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
+        $bPublic = true; 
+        if(!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+            if ($oPrivacy && !$oPrivacy->check($aData[$CNF['FIELD_ID']]) && !$oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]))
+                $bPublic = false;
+        }
 
         //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
@@ -60,10 +64,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         // connections object 
         $sConnectionsObject = isset($CNF['OBJECT_CONNECTIONS']) ? $CNF['OBJECT_CONNECTIONS'] : 'sys_profiles_friends';
         $oConn = BxDolConnection::getObjectInstance($sConnectionsObject);
-        $aConnectionTitles = $this->getModule()->serviceGetConnectionButtonsTitles($iProfile, $sConnectionsObject);
+        $aConnectionTitles = $oModule->serviceGetConnectionButtonsTitles($iProfile, $sConnectionsObject);
 
+        $sThumbUrl = '';
+        if($oModule->checkAllowedViewProfileImage($aData) === CHECK_ACTION_RESULT_ALLOWED)
+            $sThumbUrl = $this->thumb($aData, false);
+        $bThumbUrl = !empty($sThumbUrl);
+        
         $sCoverUrl = '';
-        if($this->getModule()->checkAllowedViewCoverImage($aData) === CHECK_ACTION_RESULT_ALLOWED)
+        if($oModule->checkAllowedViewCoverImage($aData) === CHECK_ACTION_RESULT_ALLOWED)
             $sCoverUrl = $this->urlCoverUnit($aData, false);
 
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
@@ -71,9 +80,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.jpg');
-
-        $sThumbUrl = $isPublic ? $this->thumb($aData, false) : false;
-        $bThumbUrl = !empty($sThumbUrl);
 
         // generate html
         $aVars = array (
@@ -94,15 +100,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             ),
             'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
             'cover_url' => $sCoverUrl,
-            'content_url' => $isPublic ? $sUrl : 'javascript:void(0);',
-            'content_click' => !$isPublic ? 'javascript:bx_alert(' . bx_js_string('"' . $mixedCheckResults . '"') . ');' : '',
+            'content_url' => $bPublic ? $sUrl : 'javascript:void(0);',
+            'content_click' => !$bPublic ? 'javascript:bx_alert(' . bx_js_string('"' . _t('_sys_access_denied_to_private_content') . '"') . ');' : '',
             'title' => $sTitle,
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
             'bx_if:info' => array(
                 'condition' => true,
                 'content' => array (
-                    'members' => $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($iProfile, true) : 0) : '&nbsp;',
+                    'members' => $bPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($iProfile, true) : 0) : '&nbsp;',
                     'bx_if:btn' => array (
                         'condition' => isLogged() && !empty($aConnectionTitles['add']) && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedFriendAdd($aData),
                         'content' => array (

@@ -14,6 +14,8 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
     public function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
+
+        $this->_aPrivacyParticallyVisible = array_merge($this->_aPrivacyParticallyVisible, array('c', BX_DOL_PG_FRIENDS));
     }
 
 	/**

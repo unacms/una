@@ -432,26 +432,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedViewCoverImage ($aDataEntry, $isPerformAction = false)
-    {
-        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = parent::checkAllowedViewCoverImage($aDataEntry)) && $oPrivacy->isPartiallyVisible($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]))
-            return CHECK_ACTION_RESULT_ALLOWED;
-        
-        return $sMsg;
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
-     */
-    public function checkAllowedViewProfileImage ($aDataEntry, $isPerformAction = false)
-    {
-        return $this->checkAllowedViewCoverImage($aDataEntry, $isPerformAction);
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
-     */
     public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
     {
         if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]))

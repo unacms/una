@@ -13,6 +13,7 @@ class BxBaseModProfilePrivacy extends BxTemplPrivacy
 {
 	protected $MODULE;
     protected $_oModule;
+
     protected $_aPrivacyParticallyVisible = array ();
 
     public function __construct($aOptions, $oTemplate = false)
@@ -22,6 +23,8 @@ class BxBaseModProfilePrivacy extends BxTemplPrivacy
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
     	if(!$oTemplate)
 			$oTemplate = $this->_oModule->_oTemplate;
+
+        $this->_aPrivacyParticallyVisible = array(BX_DOL_PG_FRIENDS);
     }
 
     public function isPartiallyVisible ($mixedPrivacy)

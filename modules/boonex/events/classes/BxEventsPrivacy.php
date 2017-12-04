@@ -14,7 +14,7 @@ class BxEventsPrivacy extends BxBaseModGroupsPrivacy
     public function __construct($aOptions, $oTemplate = false)
     {
         $this->MODULE = 'bx_events';
-        $this->_aPrivacyParticallyVisible = array ('c', 5);
+
         parent::__construct($aOptions, $oTemplate);
     }
 }

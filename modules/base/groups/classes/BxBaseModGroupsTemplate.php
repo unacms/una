@@ -33,23 +33,26 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
 
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-
-        $isPublic = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData) || $oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]);        
+        $bPublic = true; 
+        if(!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+            if ($oPrivacy && !$oPrivacy->check($aData[$CNF['FIELD_ID']]) && !$oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]))
+                $bPublic = false;
+        }
+        
         $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
-
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
 
-        $aVars['title'] = $isPublic ? bx_process_output($aData[$CNF['FIELD_NAME']]) : _t($CNF['T']['txt_private_group']);
+        $aVars['title'] = $bPublic ? bx_process_output($aData[$CNF['FIELD_NAME']]) : _t($CNF['T']['txt_private_group']);
         $aVars['author'] = $oProfile->getDisplayName();
         $aVars['author_url'] = $oProfile->getUrl();
         $aVars['author_icon'] = $oProfile->getIcon();
         $aVars['author_thumb'] = $oProfile->getThumb();
         $aVars['author_avatar'] = $oProfile->getAvatar();
         $aVars['bx_if:info']['condition'] = true;
-        $aVars['bx_if:info']['content']['members'] = $isPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($oGroupProfile->id(), true) : 0) : '&nbsp;';
+        $aVars['bx_if:info']['content']['members'] = $bPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($oGroupProfile->id(), true) : 0) : '&nbsp;';
         $aVars['bx_if:info']['content']['bx_if:btn'] = array (
-            'condition' => $isPublic && $this->getModule()->checkAllowedFanAdd($aData) === CHECK_ACTION_RESULT_ALLOWED,
+            'condition' => $bPublic && $this->getModule()->checkAllowedFanAdd($aData) === CHECK_ACTION_RESULT_ALLOWED,
             'content' => array (
                 'id' => $oGroupProfile->id(),
                 'title' => $oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $oGroupProfile->id()) ? _t($CNF['T']['menu_item_title_become_fan_sent']) : _t($CNF['T']['menu_item_title_become_fan']),

@@ -590,13 +590,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedViewProfileImage ($aDataEntry, $isPerformAction = false)
     {
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aDataEntry))) {
-            bx_import('BxDolPrivacy');
-            if (BX_DOL_PG_FRIENDS == $aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']])
-                return CHECK_ACTION_RESULT_ALLOWED;
-        }
-        
-        return $sMsg;
+        $CNF = &$this->_oConfig->CNF;
+
+        // check privacy
+        if (empty($CNF['OBJECT_PRIVACY_VIEW'])) 
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']]) && !$oPrivacy->isPartiallyVisible($aDataEntry[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            return _t('_sys_access_denied_to_private_content');
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     /**
@@ -604,7 +608,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedViewCoverImage ($aDataEntry, $isPerformAction = false)
     {
-        return $this->checkAllowedView($aDataEntry);
+        return $this->checkAllowedViewProfileImage($aDataEntry);
     }
     
     /**
