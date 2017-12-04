@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
-  `allow_view_to` int(11) NOT NULL DEFAULT '3',
+  `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`org_name`,`org_desc`)
 );
