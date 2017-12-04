@@ -79,6 +79,7 @@
     };
 
     $.fn.dolPopup = function(options) {
+        var $this = this;
         var options = options || {};
         var o = $.extend({}, $.fn.dolPopupDefaultOptions, options);
 
@@ -108,6 +109,9 @@
                 width: $(window).width(),
                 height: $(window).height()
             });
+        }).on('keyup.popup', function(oEvent) {
+            if(o.closeOnOuterClick && oEvent.which == 27)
+                $this.dolPopupHide();
         });
 
         return this.each(function() {
@@ -293,6 +297,7 @@
             $(window).off('resize.popupWindow');
             $(window).off('resize.popupPointer');
             $(window).off('resize.popupFog');
+            $(window).off('keyup.popup');
 
             if(typeof(o.onBeforeHide) == 'function')
             	o.onBeforeHide($el);
