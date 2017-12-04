@@ -47,6 +47,11 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
         return $this->getLanguageField($sName, 'Flag', $bFromCache);
     }
 
+    function getLanguageDirection($sName, $bFromCache = true)
+    {
+        return $this->getLanguageField($sName, 'Direction', $bFromCache);
+    }
+    
     protected function getLanguageField($sName, $sField, $bFromCache = true)
     {
         $sSql = $this->prepare("SELECT `" . $sField . "` FROM `sys_localization_languages` WHERE `Name`=? AND `Enabled`='1' LIMIT 1", $sName);

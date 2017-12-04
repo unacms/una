@@ -9,6 +9,9 @@
 
 define('BX_DOL_LANGUAGE_DEFAULT', 'en');
 
+define('BX_DOL_LANGUAGE_DIRECTION_LTR', 'LTR');
+define('BX_DOL_LANGUAGE_DIRECTION_RTL', 'RTL');
+
 define('BX_DOL_LANGUAGE_CATEGORY_SYSTEM', 1);
 define('BX_DOL_LANGUAGE_CATEGORY_CUSTOM', 2);
 
@@ -89,7 +92,16 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
     {
         if (!$sLang)
             $sLang = $this->getCurrentLanguage();
+
         return $this->oDb->getLanguageFlag($sLang);
+    }
+
+    function getLangDirection($sLang = '')
+    {
+        if (!$sLang)
+            $sLang = $this->getCurrentLanguage();
+
+        return $this->oDb->getLanguageDirection($sLang);
     }
 
     function getDefaultLangName()
@@ -228,6 +240,9 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
                 BxDolStudioLanguagesUtils::getInstance()->compileLanguage();
 
             require($sPath);
+
+            if($this->getLangDirection($GLOBALS['sCurrentLanguage']) == BX_DOL_LANGUAGE_DIRECTION_RTL)
+                BxDolTemplate::getInstance()->addCss('rtl.css');
         }
 
         $GLOBALS['bxDolClasses'][__CLASS__]->getCurrentLangName(true);
