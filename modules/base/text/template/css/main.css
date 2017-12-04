@@ -230,19 +230,6 @@ div.bx-base-text-breadcrumb i {
     margin-bottom:0;
 }
 
-.bx-base-text-attachments .bx-base-text-attachment video,
-.bx-base-text-attachments .bx-base-text-attachment {
-    width:18.75rem;
-    height:12.5rem;
-}
-
-.bx-base-text-attachments {
-    margin:-1px;
-}
-.bx-base-text-attachment {
-    margin:1px;
-}
-
 .bx-base-text-entity-actions-all .bx-base-text-entity-share,
 .bx-base-text-entity-actions-all .bx-menu-btns-hor {
     display:inline-block;

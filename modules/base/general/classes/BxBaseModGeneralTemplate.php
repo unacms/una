@@ -153,6 +153,21 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ));
     }
 
+    function entryAttachments ($aData, $aParams = array())
+    {
+        return $this->entryAttachmentsByStorage($this->getModule()->_oConfig->CNF['OBJECT_STORAGE'], $aData, $aParams);
+    }
+
+	function entryAttachmentsByStorage ($sStorage, $aData, $aParams = array())
+    {
+        if (!($a = $this->getAttachments($sStorage, $aData, $aParams)))
+            return '';
+
+    	return $this->parseHtmlByName('attachments.html', array(
+            'bx_repeat:attachments' => $a,
+        ));
+    }
+    
     protected function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
     {
         if(empty($sContent))
@@ -181,6 +196,85 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         }
 
         return $this->parseHtmlByName($sTemplate, $aTmplVars);
+    }
+
+	protected function getAttachments ($sStorage, $aData, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oStorage = BxDolStorage::getObjectInstance($sStorage);
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $aTranscodersVideo = false;
+
+        if (isset($CNF['OBJECT_VIDEOS_TRANSCODERS']) && $CNF['OBJECT_VIDEOS_TRANSCODERS'])
+            $aTranscodersVideo = array (
+                'poster' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
+                'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
+                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+            );
+
+        $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
+        if (!$aGhostFiles)
+            return false;
+
+        $sFilterField = isset($aParams['filter_field']) ? $aParams['filter_field'] : $CNF['FIELD_THUMB'];
+		if(!empty($sFilterField) && isset($aData[$sFilterField]))
+	        foreach ($aGhostFiles as $k => $a) {
+	            // don't show thumbnail in attachments
+	            if ($a['id'] == $aData[$sFilterField])
+	                unset($aGhostFiles[$k]);
+	        }
+
+        if(!$aGhostFiles)
+            return false;
+
+        $aAttachmnts = array();
+        foreach ($aGhostFiles as $k => $a) {
+
+            $isImage = $oTranscoder && (0 === strncmp('image/', $a['mime_type'], 6)); // preview for images, transcoder object for preview must be defined
+            $isVideo = $aTranscodersVideo && (0 === strncmp('video/', $a['mime_type'], 6)); // preview for videos, transcoder object for video must be defined
+            $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
+            $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
+
+            // images are displayed with preview and popup upon clicking
+            $a['bx_if:image'] = array (
+                'condition' => $isImage,
+                'content' => array (
+                    'url_original' => $sUrlOriginal,
+                    'attr_file_name' => bx_html_attribute($a['file_name']),
+                    'popup_id' => $sImgPopupId,
+                    'url_preview' => $isImage ? $oTranscoder->getFileUrl($a['id']) : '',
+                    'popup' =>  BxTemplFunctions::getInstance()->transBox($sImgPopupId, '<img src="' . $sUrlOriginal . '" />', true, true),
+                ),
+            );
+
+            // videos are displayed inline
+            $a['bx_if:video'] = array (
+                'condition' => $isVideo,
+                'content' => array (
+                    'video' => $isVideo && $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
+                        $aTranscodersVideo['poster']->getFileUrl($a['id']), 
+                        $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
+                        $aTranscodersVideo['webm']->getFileUrl($a['id']),
+                        false, ''
+                    ) : '',
+                ),
+            );
+
+            // non-images are displayed as text links to original file
+            $a['bx_if:not_image'] = array (
+                'condition' => !$isImage && !$isVideo,
+                'content' => array (
+                    'url_original' => $sUrlOriginal,
+                    'attr_file_name' => bx_html_attribute($a['file_name']),
+                    'file_name' => bx_process_output($a['file_name']),
+                ),
+            );
+
+            $aAttachmnts[] = $a;
+        }
+
+        return $aAttachmnts;
     }
 }
 

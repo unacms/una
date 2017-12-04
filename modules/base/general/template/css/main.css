@@ -18,6 +18,20 @@
 	vertical-align: top;
 }
 
+/* attachments */
+.bx-base-general-attachments .bx-base-general-attachment video,
+.bx-base-general-attachments .bx-base-general-attachment {
+    width:18.75rem;
+    height:12.5rem;
+}
+
+.bx-base-general-attachments {
+    margin:-1px;
+}
+.bx-base-general-attachment {
+    margin:1px;
+}
+
 /* comments item */
 div.bx-base-general-comments div.bx-base-general-comments-element-holder,
 div.bx-base-general-comments div.bx-base-general-comments-counter-holder {

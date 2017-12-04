@@ -356,6 +356,14 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
+     * Entry attachments block
+     */
+    public function serviceEntityAttachments ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryAttachments', $iContentId);
+    }
+    
+    /**
      * Delete content entry
      * @param $iContentId content id 
      * @return error message or empty string on success
@@ -952,7 +960,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     // ====== PROTECTED METHODS
 
-    protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false)
+    protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false, $sCheckFunction = false)
     {
         $iContentId = $this->_getContent($iContentId, false);
         if($iContentId === false)
@@ -961,7 +969,7 @@ class BxBaseModGeneralModule extends BxDolModule
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
-        return $oFormsHelper->$sFormMethod((int)$iContentId, $sDisplay);
+        return $oFormsHelper->$sFormMethod((int)$iContentId, $sDisplay, $sCheckFunction);
     }
 
     protected function _serviceTemplateFunc ($sFunc, $iContentId, $sFuncGetContent = 'getContentInfoById')
