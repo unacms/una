@@ -105,14 +105,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $this->_serviceTemplateFunc ('entryAuthor', $iContentId);
     }
 
-    /**
-     * Entry attachments block
-     */
-    public function serviceEntityAttachments ($iContentId = 0)
-    {
-        return $this->_serviceTemplateFunc ('entryAttachments', $iContentId);
-    }
-
     public function serviceEntityBreadcrumb ($iContentId = 0)
     {
     	if (!$iContentId)
