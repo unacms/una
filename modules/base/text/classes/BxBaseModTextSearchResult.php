@@ -43,19 +43,6 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']);
     }
 
-    protected function addConditionsForPrivateContent($CNF, $oProfileAuthor) 
-    {
-        // add conditions for private content
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oProfileAuthor ? $oProfileAuthor->id() : 0) : array();
-        if (isset($a['restriction']))
-            $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
-        if (isset($a['join']))
-            $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
-
-        $this->setProcessPrivateContent(false);
-    }
-
     protected function getCurrentOnclick($aAdditionalParams = array(), $bReplacePagesParams = true) 
     {
         // always add UnitView as additional param

@@ -43,12 +43,20 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $oModule = $this->getModule();
 
-        $bPublic = true; 
-        if(!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
+        $bPublic = true;
+        if($isCheckPrivateContent && !empty($CNF['OBJECT_PRIVACY_VIEW'])) {
             $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
             if ($oPrivacy && !$oPrivacy->check($aData[$CNF['FIELD_ID']]) && !$oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]))
                 $bPublic = false;
         }
+
+        $bPublicThumb = true;
+        if($isCheckPrivateContent && $oModule->checkAllowedViewProfileImage($aData) !== CHECK_ACTION_RESULT_ALLOWED)
+            $bPublicThumb = false;
+
+        $bPublicCover = true;
+        if($isCheckPrivateContent && $oModule->checkAllowedViewCoverImage($aData) !== CHECK_ACTION_RESULT_ALLOWED)
+            $bPublicCover = false;
 
         //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
 
@@ -66,18 +74,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $oConn = BxDolConnection::getObjectInstance($sConnectionsObject);
         $aConnectionTitles = $oModule->serviceGetConnectionButtonsTitles($iProfile, $sConnectionsObject);
 
-        $sThumbUrl = '';
-        if($oModule->checkAllowedViewProfileImage($aData) === CHECK_ACTION_RESULT_ALLOWED)
-            $sThumbUrl = $this->thumb($aData, false);
+        $sThumbUrl = $bPublicThumb ? $this->thumb($aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
-        
-        $sCoverUrl = '';
-        if($oModule->checkAllowedViewCoverImage($aData) === CHECK_ACTION_RESULT_ALLOWED)
-            $sCoverUrl = $this->urlCoverUnit($aData, false);
 
+        $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
             $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
-
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.jpg');
 

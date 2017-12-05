@@ -167,19 +167,6 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
         $this->sCenterContentUnitSelector = false;
     }
 
-    protected function addConditionsForPrivateContent($CNF, $oJoinedProfile) 
-    {
-        // add conditions for private content
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oJoinedProfile ? $oJoinedProfile->id() : 0, $oPrivacy->getPartiallyVisiblePrivacyGroups()) : array();
-        if (isset($a['restriction']))
-            $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
-        if (isset($a['join']))
-            $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
-
-        $this->setProcessPrivateContent(false);
-    }
-
     function getAlterOrder()
     {
         switch ($this->aCurrent['sorting']) {

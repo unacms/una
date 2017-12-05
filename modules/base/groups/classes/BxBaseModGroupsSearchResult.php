@@ -16,6 +16,18 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
         parent::__construct($sMode, $aParams);
     }
 
+    protected function addConditionsForPrivateContent($CNF, $oProfile, $aCustomGroup = array()) 
+    {
+        if(empty($CNF['OBJECT_PRIVACY_VIEW']))
+            return;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        if(!$oPrivacy)
+            return;
+
+        parent::addConditionsForPrivateContent($CNF, $oProfile, array_merge($aCustomGroup, $oPrivacy->getPartiallyVisiblePrivacyGroups()));
+    }
+
     protected function _setAuthorConditions($sMode, $aParams, &$oProfileAuthor)
     {
         $CNF = &$this->oModule->_oConfig->CNF;

@@ -48,6 +48,30 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
         return parent::rss();
     }
+
+    /**
+     * Add conditions for private content
+     */
+    protected function addConditionsForPrivateContent($CNF, $oProfile, $aCustomGroup = array()) 
+    {
+        if(empty($CNF['OBJECT_PRIVACY_VIEW']))
+            return;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        if(!$oPrivacy)
+            return;
+
+        $aCondition = $oPrivacy->getContentPublicAsCondition($oProfile ? $oProfile->id() : 0, $aCustomGroup);
+        if(empty($aCondition) || !is_array($aCondition))
+            return;
+
+        if(isset($aCondition['restriction']))
+            $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aCondition['restriction']);
+        if(isset($aCondition['join']))
+            $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aCondition['join']);
+
+        $this->setProcessPrivateContent(false);
+    }
 }
 
 /** @} */

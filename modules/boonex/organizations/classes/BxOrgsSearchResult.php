@@ -73,6 +73,9 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
         $this->oModule = $this->getMain();
         $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
+        $oJoinedProfile = null;
+        $bProcessConditionsForPrivateContent = true;
+
         $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
@@ -103,6 +106,7 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
 
             case 'connections':
                 if ($this->_setConnectionsConditions($aParams)) {
+                    $bProcessConditionsForPrivateContent = false;
                     $oProfile = BxDolProfile::getInstance($aParams['profile']);
                     $oProfile2 = isset($aParams['profile2']) ? BxDolProfile::getInstance($aParams['profile2']) : null;
 
@@ -179,6 +183,9 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
             default:
                 $this->isError = true;
         }
+
+        if ($bProcessConditionsForPrivateContent)
+            $this->addConditionsForPrivateContent($CNF, $oJoinedProfile);
 
         $this->sCenterContentUnitSelector = false;
     }
