@@ -106,6 +106,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if($sResult)
             return array('code' => 4, 'message' => $sResult);
 
+        // process uploaded files
+        if (isset($CNF['FIELD_PHOTO']))
+            $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
+        
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
     }
@@ -150,6 +154,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sResult)
             return $sResult;
 
+        // process uploaded files
+        if (isset($CNF['FIELD_PHOTO']))
+            $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
+        
         // perform action
         $this->_oModule->checkAllowedAdd(true);
 
@@ -212,9 +220,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sResult)
             return $sResult;
 
+        // process uploaded files
+        if (isset($CNF['FIELD_PHOTO']))
+            $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
+
         // perform action
         $this->_oModule->checkAllowedEdit($aContentInfo, true);
-
+        
         // redirect
         $this->redirectAfterEdit($aContentInfo);
     }
@@ -364,7 +376,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->keywordsIsEnabled())
                 $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
-            if ($oMetatags->locationsIsEnabled())
+            if (isset($CNF['FIELD_LOCATION_PREFIX']) && isset($oForm->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && $oMetatags->locationsIsEnabled())
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }
 

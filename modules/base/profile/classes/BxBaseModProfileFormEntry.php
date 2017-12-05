@@ -164,10 +164,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
-        $isAdmin = $this->_oModule->_isModerator();        
-        if (!$isAdmin && ($aDataEntry = $this->_oModule->_oDb->getContentInfoById((int)$iContentId)))
-            $isAdmin = CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->checkAllowedEdit ($aDataEntry);
-        $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId, $isAdmin);
+        $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId, $this->_isAdmin($iContentId));
         $this->_oModule->_oDb->updateContentPictureById($iContentId, 0/*$iProfileId*/, $iFileId, $sPictureField);
     }
 
@@ -183,6 +180,15 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 				'content' => array (),
 			),
 		);
+    }
+
+    protected function _isAdmin ($iContentId = 0)
+    {
+        if (parent::_isAdmin ($iContentId))
+            return true;
+        if (!$iContentId || !($aDataEntry = $this->_oModule->_oDb->getContentInfoById((int)$iContentId)))
+            return false;
+        return CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->checkAllowedEdit ($aDataEntry);        
     }
 }
 

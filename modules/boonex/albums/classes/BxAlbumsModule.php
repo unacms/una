@@ -161,7 +161,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $this->_oTemplate->entryMediaView ($iMediaId, $mixedContext);
     }
 
-    public function checkAllowedSetThumb ()
+    public function checkAllowedSetThumb ($iContentId = 0)
     {
         return CHECK_ACTION_RESULT_NOT_ALLOWED;
     }

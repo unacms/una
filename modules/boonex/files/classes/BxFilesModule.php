@@ -67,7 +67,7 @@ class BxFilesModule extends BxBaseModTextModule
         return $oMenu ? $oMenu->getCode() : false;
     }
 
-    public function checkAllowedSetThumb ()
+    public function checkAllowedSetThumb ($iContentId = 0)
     {
         return _t('_sys_txt_access_denied');
     }
