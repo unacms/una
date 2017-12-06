@@ -1,5 +1,8 @@
 <script>
     $(document).ready(function () {
+        if ($(window).width() <= 720)
+            return;
+
     	var iTimeout = 500;
     	var oLevelCells = function(iCellSmall, iCellLarge) {
             $('#bx-layout-cell-' + iCellSmall + ' .bx-db-container').css('height', $('#bx-layout-cell-' + iCellLarge + ' .bx-db-container').height());
