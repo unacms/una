@@ -105,11 +105,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
         
-        $iContentId = parent::insert ($aValsToAdd, $isIgnore);
-        if(!empty($iContentId) && isset($CNF['FIELD_PHOTO']))
-            $this->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
-
-        return $iContentId;
+        return parent::insert ($aValsToAdd, $isIgnore);
     }
 
     function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
@@ -118,25 +114,20 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         if (isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]) && empty($this->getCleanValue($CNF['FIELD_CHANGED'])))
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
-        
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb() && isset($CNF['FIELD_THUMB'])) {
+
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($iContentId) && isset($CNF['FIELD_THUMB']) && isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $aThumb = bx_process_input (bx_get($CNF['FIELD_THUMB']), BX_DATA_INT);
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
         
-        $iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
-
-        if (isset($CNF['FIELD_PHOTO']))
-            $this->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
-
-        return $iRet;
+        return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
-        $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId, $this->_oModule->_isModerator());
+        $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId, $this->_isAdmin($iContentId));
     }
 
     protected function _getPhotoGhostTmplVars($aContentInfo = array())
@@ -149,7 +140,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 			'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
 			'thumb_id' => isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
 			'bx_if:set_thumb' => array (
-				'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),
+				'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($this->aInputs[$CNF['FIELD_PHOTO']]['content_id']),
 				'content' => array (
 					'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
     				'txt_pict_use_as_thumb' => _t(!empty($CNF['T']['txt_pict_use_as_thumb']) ? $CNF['T']['txt_pict_use_as_thumb'] : '_sys_txt_form_entry_input_picture_use_as_thumb')
@@ -229,7 +220,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
             if ($aFile['private'])
                 $oStorage->setFilePrivate ($aFile['id'], 1);
-            
+
             if ($iContentId)
                 $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
         }
@@ -287,26 +278,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     function getContentOwnerProfileId ($iContentId)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        // file owner must be author of the content or profile itself in case of profile based module
-        if ($iContentId) {
-            if ($this->_oModule instanceof iBxDolProfileService) {
-                $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
-            }
-            else {
-                $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-                $oProfile = $aContentInfo ? BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]) : null;
-            }
-            $iProfileId = $oProfile ? $oProfile->id() : bx_get_logged_profile_id();
-        }
-        else {
-            $iProfileId = bx_get_logged_profile_id();
-        }
-
-        return $iProfileId;
+        return $this->_oModule->serviceGetContentOwnerProfileId($iContentId);
     }
-
 }
 
 /** @} */

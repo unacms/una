@@ -219,6 +219,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         $oStorage = BxDolStorage::getObjectInstance($sStorage);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $oTranscoderPreview = isset($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) && $CNF['OBJECT_IMAGES_TRANSCODER_PICTURE'] ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) : null;
         $aTranscodersVideo = false;
 
         if (isset($CNF['OBJECT_VIDEOS_TRANSCODERS']) && $CNF['OBJECT_VIDEOS_TRANSCODERS'])
@@ -228,7 +229,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
             );
 
-        $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
+        $aGhostFiles = $oStorage->getGhosts ($this->getModule()->serviceGetContentOwnerProfileId($aData[$CNF['FIELD_ID']]), $aData[$CNF['FIELD_ID']]);
         if (!$aGhostFiles)
             return false;
 
@@ -255,7 +256,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $a['bx_if:image'] = array (
                 'condition' => $isImage,
                 'content' => array (
-                    'url_original' => $sUrlOriginal,
+                    'url_original' => $isImage && $oTranscoderPreview ? $oTranscoderPreview->getFileUrl($a['id']) : $sUrlOriginal,
                     'attr_file_name' => bx_html_attribute($a['file_name']),
                     'popup_id' => $sImgPopupId,
                     'url_preview' => $isImage ? $oTranscoder->getFileUrl($a['id']) : '',

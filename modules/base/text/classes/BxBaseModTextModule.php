@@ -158,7 +158,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    public function checkAllowedSetThumb ()
+    public function checkAllowedSetThumb ($iContentId = 0)
     {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'set thumb', $this->getName(), false);

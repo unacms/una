@@ -722,9 +722,32 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         return $this->serviceCheckAllowedWithContent('comments_post', $iContentId);
     }
+
+    public function serviceGetContentOwnerProfileId ($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        // file owner must be author of the content or profile itself in case of profile based module
+        if ($iContentId) {
+            if ($this instanceof iBxDolProfileService) {
+                $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+            }
+            else {
+                $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+                $oProfile = $aContentInfo ? BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]) : null;
+            }
+            $iProfileId = $oProfile ? $oProfile->id() : bx_get_logged_profile_id();
+        }
+        else {
+            $iProfileId = bx_get_logged_profile_id();
+        }
+
+        return $iProfileId;
+    }
+    
     // ====== PERMISSION METHODS
 
-    public function checkAllowedSetThumb ()
+    public function checkAllowedSetThumb ($iContentId = 0)
     {
         return CHECK_ACTION_RESULT_ALLOWED;
     }

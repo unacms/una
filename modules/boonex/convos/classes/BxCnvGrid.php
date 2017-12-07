@@ -88,9 +88,9 @@ class BxCnvGrid extends BxTemplGrid
         $oModule = BxDolModule::getInstance($this->MODULE);
 
         if ($sErrorMsg = $oModule->deleteConvo ($mixedId))
-            return false;
+            return 0;
 
-        return $oModule->_oDb->moveConvo((int)$mixedId, bx_get_logged_profile_id(), BX_CNV_FOLDER_TRASH);
+        return 1;
     }
 
     protected function _addJsCss()

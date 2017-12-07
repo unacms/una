@@ -234,7 +234,7 @@ class BxShopifyModule extends BxBaseModTextModule
         return true;
     }
 
-    public function checkAllowedSetThumb()
+    public function checkAllowedSetThumb($iContentId = 0)
     {
         return _t('_sys_txt_access_denied');
     }
