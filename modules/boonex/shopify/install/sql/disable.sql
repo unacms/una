@@ -15,7 +15,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_shopify' OR `object` IN('bx_
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_shopify';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_shopify';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_shopify' OR `set_name` IN('bx_shopify_view', 'bx_shopify_submenu', 'bx_shopify_view_submenu', 'bx_shopify_snippet_meta', 'bx_shopify_my');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_shopify' OR `set_name` IN('bx_shopify_view', 'bx_shopify_submenu', 'bx_shopify_view_submenu', 'bx_shopify_snippet_meta', 'bx_shopify_my', 'bx_shopify_menu_manage_tools');
 
 
 -- PRIVACY 
