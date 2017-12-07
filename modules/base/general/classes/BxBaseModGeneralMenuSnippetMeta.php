@@ -24,6 +24,14 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
 
+    public function getCode()
+    {
+        if(empty($this->_aContentInfo) || !is_array($this->_aContentInfo))
+            return '';
+
+        return parent::getCode();
+    }
+
     public function setContentId($iContentId)
     {
         $this->_iContentId = (int)$iContentId;
