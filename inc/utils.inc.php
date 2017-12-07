@@ -510,6 +510,7 @@ function clear_xss($val)
         $oConfig->set('HTML.SafeObject', 'true');
         $oConfig->set('Output.FlashCompat', 'true');
         $oConfig->set('HTML.FlashAllowFullScreen', 'true');
+        $oConfig->set('Attr.AllowedFrameTargets', array('_blank', '_self', '_parent', '_top'));
 
         if (getParam('sys_add_nofollow')) {
             $sHost = parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST);
@@ -540,7 +541,7 @@ function clear_xss($val)
 		    $def->addElement('source', 'Block', 'Flow', 'Common', array(
 		        'src' => 'URI',
 		        'type' => 'Text',
-		    ));
+            ));
 		}
 
         $oHtmlPurifier = new HTMLPurifier($oConfig);
