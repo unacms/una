@@ -914,7 +914,8 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
                     isset($a['name_attr']) ? $a['name_attr'] : 'itemprop', 
                     isset($a['name']) ? $a['name'] : $k, 
                     isset($a['content_attr']) ? $a['content_attr'] : 'content', 
-                    $sCharset); 
+                    $sCharset,
+                    isset($a['specialchars_decode']) ? $a['specialchars_decode'] : true); 
             }
 
         }
@@ -923,7 +924,7 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
     return $aResult;
 }
 
-function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $sAttrContentName, $sCharset = false)
+function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $sAttrContentName, $sCharset = false, $bSpecialCharsDecode = true)
 {
     if (!preg_match("/<{$sTag}\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"]\s+{$sAttrContentName}[='\" ]+([^'>\"]*)['\"][^>]*>/i", $sContent, $aMatch) || !isset($aMatch[1]))
         preg_match("/<{$sTag}\s+{$sAttrContentName}[='\" ]+([^'>\"]*)['\"]\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"][^>]*>/i", $sContent, $aMatch);
@@ -933,6 +934,9 @@ function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $
     if ($s && $sCharset)
         $s = mb_convert_encoding($s, 'UTF-8', $sCharset);
 
+    if ($bSpecialCharsDecode)
+        $s = htmlspecialchars_decode($s);
+        
     return $s;
 }
 
