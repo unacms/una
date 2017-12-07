@@ -244,6 +244,25 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_groups_view_submenu', 'bx_groups', 'group-profile-comments', '_bx_groups_menu_item_title_system_view_profile_comments', '_bx_groups_menu_item_title_view_profile_comments', 'page.php?i=group-profile-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 3),
 ('bx_groups_view_submenu', 'bx_groups', 'group-fans', '_bx_groups_menu_item_title_system_view_fans', '_bx_groups_menu_item_title_view_fans', 'page.php?i=group-fans&profile_id={profile_id}', '', '', 'group col-blue3', '', 2147483647, 1, 0, 4);
 
+-- MENU: custom menu for snippet meta info
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_groups_snippet_meta', '_sys_menu_title_snippet_meta', 'bx_groups_snippet_meta', 'bx_groups', 15, 0, 1, 'BxGroupsMenuSnippetMeta', 'modules/boonex/groups/classes/BxGroupsMenuSnippetMeta.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_groups_snippet_meta', 'bx_groups', '_sys_menu_set_title_snippet_meta', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('bx_groups_snippet_meta', 'bx_groups', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
+('bx_groups_snippet_meta', 'bx_groups', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
+('bx_groups_snippet_meta', 'bx_groups', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
+('bx_groups_snippet_meta', 'bx_groups', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
+('bx_groups_snippet_meta', 'bx_groups', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
+('bx_groups_snippet_meta', 'bx_groups', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
+('bx_groups_snippet_meta', 'bx_groups', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 7),
+('bx_groups_snippet_meta', 'bx_groups', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 8),
+('bx_groups_snippet_meta', 'bx_groups', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, 1, 0, 1, 9),
+('bx_groups_snippet_meta', 'bx_groups', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, 0, 0, 1, 10);
+
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
