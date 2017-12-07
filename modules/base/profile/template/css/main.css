@@ -18,6 +18,18 @@
     text-align:center;
 }
 
+/* unit meta */
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-base-profile-unit-meta-item {
+	height: 1.625rem;
+	padding-left: 0.5rem;
+
+	line-height: 1.625rem;	
+}
+
+.bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-profile-unit-meta-item {
+    padding-left: 0px;
+}
+
 /* browse unit with cover */
 
 .bx-base-pofile-unit-cover {

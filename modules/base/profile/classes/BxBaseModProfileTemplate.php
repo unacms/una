@@ -42,11 +42,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $CNF = &$this->_oConfig->CNF;
 
         $oModule = $this->getModule();
+        $iContentId = (int)$aData[$CNF['FIELD_ID']];
 
         $bPublic = true;
         if($isCheckPrivateContent && !empty($CNF['OBJECT_PRIVACY_VIEW'])) {
             $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-            if ($oPrivacy && !$oPrivacy->check($aData[$CNF['FIELD_ID']]) && !$oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            if ($oPrivacy && !$oPrivacy->check($iContentId) && !$oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]))
                 $bPublic = false;
         }
 
@@ -58,21 +59,14 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if($isCheckPrivateContent && $oModule->checkAllowedViewCoverImage($aData) !== CHECK_ACTION_RESULT_ALLOWED)
             $bPublicCover = false;
 
-        //$aVars = parent::unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
-
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
         $iProfile = $oProfile->id();
 
         // get profile's title
         $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
 
         // get profile's url
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
-
-        // connections object 
-        $sConnectionsObject = isset($CNF['OBJECT_CONNECTIONS']) ? $CNF['OBJECT_CONNECTIONS'] : 'sys_profiles_friends';
-        $oConn = BxDolConnection::getObjectInstance($sConnectionsObject);
-        $aConnectionTitles = $oModule->serviceGetConnectionButtonsTitles($iProfile, $sConnectionsObject);
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
 
         $sThumbUrl = $bPublicThumb ? $this->thumb($aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
@@ -83,10 +77,23 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.jpg');
 
+        $aTmplVarsMeta = array();
+        if(!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
+            $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
+            if($oMenuMeta) {
+                $oMenuMeta->setContentId($iContentId);
+                $oMenuMeta->setContentPublic($bPublic);
+                $aTmplVarsMeta = array(
+                    'meta' => $oMenuMeta->getCode()
+                );
+            }
+        }
+
         // generate html
-        $aVars = array (
+        return array (
         	'class' => $this->_getUnitClass($aData, $sTemplateName),
-            'id' => $aData[$CNF['FIELD_ID']],
+            'id' => $iContentId,
+        	'public' => $bPublic,
             'bx_if:show_thumb_image' => array(
                 'condition' => $bThumbUrl,
                 'content' => array(
@@ -107,23 +114,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'title' => $sTitle,
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
-            'bx_if:info' => array(
-                'condition' => true,
-                'content' => array (
-                    'members' => $bPublic ? _t($CNF['T']['txt_N_fans'], $oConn ? $oConn->getConnectedInitiatorsCount($iProfile, true) : 0) : '&nbsp;',
-                    'bx_if:btn' => array (
-                        'condition' => isLogged() && !empty($aConnectionTitles['add']) && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedFriendAdd($aData),
-                        'content' => array (
-                            'id' => $iProfile,
-                            'title' => isset($aConnectionTitles['add']) ? $aConnectionTitles['add'] : '',
-                            'object' => $sConnectionsObject,
-                        ),
-                    ),
-                ),
-            ),
+            'bx_if:meta' => array(
+                'condition' => !empty($aTmplVarsMeta),
+                'content' => $aTmplVarsMeta
+            )
         );
-
-        return $aVars;
     }
 
     /**

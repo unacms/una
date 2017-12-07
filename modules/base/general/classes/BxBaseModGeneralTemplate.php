@@ -22,7 +22,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         parent::__construct($oConfig, $oDb);        
         $this->addCss ('main.css');
     }
-    
+
     public function getModule()
     {
         if (!$this->_oModule) {
@@ -50,22 +50,27 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
     }
 
-    function getUnitMetaItemLink($sContent, $aAttrs = array())
+    public function getUnitMetaItemLink($sContent, $aAttrs = array())
     {
         return $this->getUnitMetaItem('a', $sContent, $aAttrs);
     }
 
-    function getUnitMetaItemText($sContent, $aAttrs = array())
+    public function getUnitMetaItemText($sContent, $aAttrs = array())
     {
-        if(!is_array($aAttrs))
-            $aAttrs = array();
-
-        $aAttrs['class'] = (!empty($aAttrs['class']) ? $aAttrs['class'] . ' ' : '') . 'bx-def-font-grayed';
-
         return $this->getUnitMetaItem('span', $sContent, $aAttrs);
     }
 
-    function getUnitMetaItemCustom($sContent)
+    public function getUnitMetaItemButton($sContent, $aAttrs = array())
+    {
+        return $this->getUnitMetaItem('button', $sContent, $aAttrs);
+    }
+
+    public function getUnitMetaItemButtonSmall($sContent, $aAttrs = array())
+    {
+        return $this->getUnitMetaItem('sbutton', $sContent, $aAttrs);
+    }
+
+    public function getUnitMetaItemCustom($sContent)
     {
         return $this->getUnitMetaItem('custom', $sContent);
     }
@@ -173,7 +178,16 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if(empty($sContent))
             return '';
 
-        $aTags = array('span', 'a', 'custom');
+        if(!is_array($aAttrs))
+            $aAttrs = array();
+
+        $aTags = array('span', 'a', 'button', 'sbutton', 'custom');
+
+        $sTmplVarsClass = ''; 
+        if(!empty($aAttrs['class'])) {
+            $sTmplVarsClass = $aAttrs['class'];
+            unset($aAttrs['class']);
+        }
 
         $aTmplVarsAttrs = array();
         foreach($aAttrs as $sKey => $sValue)
@@ -185,6 +199,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $bTmplVarsTag = $sTag == $sName;
             if($bTmplVarsTag)
                 $aTmplVarsTag = array(
+                    'class' => $sTmplVarsClass,
                     'content' => $sContent,
                     'bx_repeat:attrs' => $aTmplVarsAttrs
                 );

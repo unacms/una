@@ -53,6 +53,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+        	'FIELD_VIEWS' => 'views',
+            'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
         	'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -111,6 +113,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_persons_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_persons_view_submenu_cover',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'persons-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_SNIPPET_META' => 'bx_persons_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_persons_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_persons_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_persons_view_profile_closed',
