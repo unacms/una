@@ -15,7 +15,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_videos' OR `object` IN('bx_v
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_videos';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_videos';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_videos' OR `set_name` IN('bx_videos_view', 'bx_videos_submenu', 'bx_videos_view_submenu', 'bx_videos_snippet_meta', 'bx_videos_my');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_videos' OR `set_name` IN('bx_videos_view', 'bx_videos_submenu', 'bx_videos_view_submenu', 'bx_videos_snippet_meta', 'bx_videos_my', 'bx_videos_menu_manage_tools');
 
 
 -- PRIVACY 

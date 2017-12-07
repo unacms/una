@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_market' OR `object` IN('bx_m
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_market';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_market';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_market' OR `set_name` IN('bx_market_view', 'bx_market_submenu', 'bx_market_view_submenu', 'bx_market_my', 'bx_market_snippet', 'bx_market_snippet_meta');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_market' OR `set_name` IN('bx_market_view', 'bx_market_submenu', 'bx_market_view_submenu', 'bx_market_my', 'bx_market_snippet', 'bx_market_snippet_meta', 'bx_market_menu_manage_tools');
 
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_market_allow_view_to', 'bx_market_allow_purchase_to', 'bx_market_allow_comment_to', 'bx_market_allow_vote_to');

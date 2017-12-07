@@ -72,3 +72,35 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     background-repeat:no-repeat;
     background-position:center center;
 }
+
+/* unit meta */
+.bx-base-general-unit-meta {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
+    display: none;
+}
+
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-base-general-unit-meta-item,
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-base-general-unit-meta-div,
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-btn,
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-vote.bx-vote-stars {
+    position: relative;
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-vote.bx-vote-stars {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.bx-base-general-unit-meta ul.bx-menu-custom li .bx-metatags-keyword {
+    margin: 0px;
+    line-height: normal;
+}

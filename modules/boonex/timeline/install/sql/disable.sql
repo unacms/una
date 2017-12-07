@@ -6,7 +6,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_timeline';
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_timeline';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_timeline';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_timeline';
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_timeline' OR `set_name` IN('bx_timeline_menu_item_share', 'bx_timeline_menu_item_manage', 'bx_timeline_menu_item_actions', 'bx_timeline_menu_post_attachments');
 
 
 -- SETTINGS
