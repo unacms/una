@@ -443,10 +443,13 @@
                 var sUrl = (options.url.indexOf('http://') == 0 || options.url.indexOf('https://') == 0 || options.url.indexOf('/') == 0 ? '' : sUrlRoot) + options.url;
 
                 $('#' + sPopupId).find(options.container).load(sUrl, function () {
-                	if($('#' + sPopupId).find('img').length > 0)
-                		$('#' + sPopupId).find('img').load(fOnLoad);
-                	else
-                		fOnLoad();
+                    var f = function () {
+                    	if($('#' + sPopupId).find('img').length > 0)
+                    		$('#' + sPopupId).find('img').load(fOnLoad);
+                    	else
+                    		fOnLoad();
+                    };
+                    setTimeout(f, 100); // TODO: better way is to check if item is animating before positioning it in the code where popup is positioning
                 });
             }
         });
