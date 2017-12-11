@@ -345,8 +345,10 @@
 
 
     $.fn.dolPopupAjax = function(options) { 
-        
-        if ('undefined' == typeof(options) || 'object' != typeof(options) || 'undefined' == typeof(options.url))
+        options = options || {};
+        options = $.extend({}, $.fn.dolPopupDefaultOptions, options);
+
+        if ('undefined' == typeof(options.url))
             return;
 
         if ('undefined' == typeof(options.container))
