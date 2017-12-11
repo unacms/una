@@ -607,6 +607,9 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'info' => '',
                     'value' => '1',
                     'checked' => isset($aItem['submenu_popup']) && $aItem['submenu_popup'] == '1',
+                    'attrs' => array(
+                        'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeSubmenu(this)'
+                    ),
                     'db' => array (
                         'pass' => 'Int',
                     )

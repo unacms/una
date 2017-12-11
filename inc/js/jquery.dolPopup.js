@@ -9,6 +9,7 @@
 (function($) {
 
     $.fn.dolPopupDefaultOptions = {
+        parent: 'body', // parent element selector
         closeOnOuterClick: true,
         closeElement: '.bx-popup-element-close', // link to element which will close popup
         position: 'centered', // | 'absolute' | 'fixed' | event | element,
@@ -415,7 +416,7 @@
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
 
-                $('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>').appendTo('body').find(options.container).hide();
+                $('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>').appendTo(options.parent).find(options.container).hide();
 
                 $('#' + sPopupId).addClass($('#bx-popup-loading').attr('class'));
 
