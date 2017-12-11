@@ -447,7 +447,8 @@
 
                 $('#' + sPopupId).find(options.container).load(sUrl, function () {
                     var f = function () {
-                    	if($('#' + sPopupId).find('img').length > 0)
+                    	if($('#' + sPopupId).find('img').length > 0 && !$('#' + sPopupId).find('img').get(0).complete)
+                    	
                     		$('#' + sPopupId).find('img').load(fOnLoad);
                     	else
                     		fOnLoad();
