@@ -44,14 +44,6 @@ div.bx-tl-uploader-file-preview img {
 	background-size: contain;
 }
 
-
-/*--- Attach Link Form Styles ---*/
-div.bx-tl-attach-link-form {
-	width: 460px;
-	width: 28.75rem;
-}
-
-
 /*--- Attach Link Form Field Styles ---*/
 div.bx-tl-attach-link-form-field {}
 div.bx-tl-al-item {
