@@ -67,3 +67,15 @@
     overflow:hidden;
     line-height:1.4em;
 }
+
+/* disable responsive grid */
+
+html #bx-grid-table-bx_convos.bx-grid-table {
+    min-width:0;
+}
+
+html #bx-grid-wrap-bx_convos .bx-grid-table-wrapper2:before,
+html #bx-grid-wrap-bx_convos .bx-grid-table-wrapper2:after {
+    display:none;
+}
+
