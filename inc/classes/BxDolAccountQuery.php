@@ -81,10 +81,13 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     /**
      * get account id by id
      */
-    public function getIdById($iId)
+    public function getIdById($iId, $bClearCache = false)
     {
-        $sSql = $this->prepare("SELECT `id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iId);
         $sKey = 'BxDolAccountQuery::getIdById' . $iId;
+        if ($bClearCache)
+            $this->cleanMemory($sKey);
+
+        $sSql = $this->prepare("SELECT `id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iId);
         $bResult = $this->fromMemory($sKey, 'getOne', $sSql);
         if (!$bResult)
             $this->cleanMemory($sKey);
@@ -233,7 +236,10 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     public function delete($iID)
     {
         $sSql = $this->prepare("DELETE FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iID);
-        return $this->query($sSql);
+        if ($res = $this->query($sSql)) {
+            $this->getIdById($iID, true);
+        }
+        return $res;
     }
 
 	/**

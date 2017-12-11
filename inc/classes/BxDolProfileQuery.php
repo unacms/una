@@ -158,10 +158,13 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     /**
      * get profile id by id
      */
-    public function getIdById($iId)
+    public function getIdById($iId, $bClearCache = false)
     {
-        $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `id` = ? LIMIT 1", $iId);
         $sKey = 'BxDolProfileQuery::getIdById' . $iId;
+        if ($bClearCache)
+            $this->cleanMemory($sKey);
+        
+        $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `id` = ? LIMIT 1", $iId);
         $mixedResult = $this->fromMemory($sKey, 'getOne', $sSql);
         if (!$mixedResult)
             $this->cleanMemory($sKey);
@@ -255,8 +258,14 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function delete($iID)
     {
+        $aInfo = $this->getInfoById($iID);
         $sSql = $this->prepare("DELETE FROM `sys_profiles` WHERE `id` = ? LIMIT 1", $iID);
-        return $this->query($sSql);
+        if ($res = $this->query($sSql)) {
+            $this->getProfileByContentAndType($aInfo['content_id'], $aInfo['type'], true);
+            $this->getCurrentProfileByAccount($aInfo['account_id'], true);
+            $this->getIdById($iID, true);
+        }
+        return $res;
     }
 
     /**

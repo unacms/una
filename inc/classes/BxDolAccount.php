@@ -351,14 +351,13 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         if (!$oAccountQuery->delete($this->_iAccountID))
             return false;
 
-        // create system event
-        bx_alert('account', 'delete', $this->_iAccountID, 0, array ('delete_with_content' => $bDeleteWithContent));
-
         // unset class instance to prevent creating the instance again
-        $this->_iAccountID = 0;
-        $sClass = get_class($this) . '_' . $this->_iAccountID;
+        $sClass = __CLASS__ . '_' . $this->_iAccountID;
         unset($GLOBALS['bxDolClasses'][$sClass]);
 
+       // create system event
+        bx_alert('account', 'delete', $this->_iAccountID, 0, array ('delete_with_content' => $bDeleteWithContent));
+        
         return true;
     }
 
