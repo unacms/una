@@ -55,6 +55,9 @@ class BxDolConnectionQuery extends BxDolDb
     {
         $aResult = $this->getConnectedContentSQLPartsExt($sContentTable, $sContentField, $iInitiator, $isMutual);
         return array(
+            'fields' => array(
+                'added' => "`" . $aResult['join']['table_alias'] . "`.`added`"
+            ),
             'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")",
         );
     }
