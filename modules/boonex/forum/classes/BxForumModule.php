@@ -320,7 +320,8 @@ class BxForumModule extends BxBaseModTextModule
 
 		return $this->_serviceBrowseTable(array(
 			'type' => $sType,
-			'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_index')
+			'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_index'),
+			'empty_message' => $bEmptyMessage
 		), $bShowHeader);
     }
 
@@ -351,11 +352,18 @@ class BxForumModule extends BxBaseModTextModule
         if(!$iProfileId)
             return '';
 
+        $bEmptyMessage = true;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
         return $this->_serviceBrowseTable(array(
         	'type' => 'author', 
         	'author' => $iProfileId, 
         	'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '='), 
-        	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile')
+        	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
+        	'empty_message' => $bEmptyMessage
         ), false);
     }
 

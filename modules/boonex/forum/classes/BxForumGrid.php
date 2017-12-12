@@ -68,7 +68,11 @@ class BxForumGrid extends BxTemplGrid
 
     public function getCode ($isDisplayHeader = true)
     {
-    	return $this->_oModule->_oTemplate->getJsCode('main') . parent::getCode($isDisplayHeader);
+        $sCode = parent::getCode($isDisplayHeader);
+        if(empty($sCode))
+            return '';
+
+    	return $this->_oModule->_oTemplate->getJsCode('main') . $sCode;
     }
 
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

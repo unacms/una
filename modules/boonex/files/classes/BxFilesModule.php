@@ -33,8 +33,14 @@ class BxFilesModule extends BxBaseModTextModule
             return '';
         if (!BxDolService::call($oGroupProfile->getModule(), 'is_group_profile'))
             return '';
-        
-        return $this->_serviceBrowse ('group_author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, true);
+
+        $bDisplayEmptyMsg = true;
+        if(isset($aParams['empty_message'])) {
+            $bDisplayEmptyMsg = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        return $this->_serviceBrowse ('group_author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
 
 

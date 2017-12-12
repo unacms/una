@@ -166,6 +166,9 @@ class BxBaseGrid extends BxDolGrid
 
         }
 
+        if((empty($aData) || !is_array($aData)) && isset($this->_aBrowseParams['empty_message']) && !(bool)$this->_aBrowseParams['empty_message'])
+            return '';
+
         $sPopupOptions = '{}';
         if (!empty($this->_aPopupOptions) && is_array($this->_aPopupOptions))
             $sPopupOptions = json_encode($this->_aPopupOptions);
@@ -394,7 +397,7 @@ class BxBaseGrid extends BxDolGrid
         if (empty($aData)) {
 
             $aGrid[] = array(
-                'row' => '<td class="bx-def-padding-sec-bottom bx-def-padding-sec-top" colspan="' . count($this->_aOptions['fields']) . '">' . _t('_Empty') . '</td>',
+                'row' => '<td class="bx-def-padding-sec-bottom bx-def-padding-sec-top" colspan="' . count($this->_aOptions['fields']) . '">' . MsgBox(_t('_Empty')) . '</td>',
                 'id_row' => 0,
                 'row_class' => 'bx-grid-table-row-empty',
             );
