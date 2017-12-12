@@ -239,6 +239,27 @@ class BxBaseModGeneralModule extends BxDolModule
     	return 0;
     }
 
+    /**
+     * My entries actions block
+     */
+    public function serviceMyEntriesActions ($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']))
+            return false;
+
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+
+        if ($iProfileId != $this->_iProfileId)
+            return false;
+
+        $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
+        return $oMenu ? $oMenu->getCode() : false;
+    }
+
 	/**
      * Display featured entries
      * @return HTML string

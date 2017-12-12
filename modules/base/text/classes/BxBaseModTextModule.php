@@ -126,23 +126,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     /**
-     * My entries actions block
-     */
-    public function serviceMyEntriesActions ($iProfileId = 0)
-    {
-        if (!$iProfileId)
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
-            return false;
-
-        if ($iProfileId != $this->_iProfileId)
-            return false;
-
-        $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
-        return $oMenu ? $oMenu->getCode() : false;
-    }
-
-    /**
      * Delete all content by profile 
      * @param $iProfileId profile id 
      * @return number of deleted items
