@@ -17,7 +17,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 SET @iPBCellDashboard = 3;
 SET @iPBOrderDashboard = 0;
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('sys_dashboard', @iPBCellDashboard, 'bx_convos', '_bx_cnv_page_block_title_convos', 11, 2147483644, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:17:\"messages_previews\";}', 0, 1, 0, @iPBOrderDashboard);
+('sys_dashboard', @iPBCellDashboard, 'bx_convos', '_bx_cnv_page_block_title_convos', 11, 2147483644, 'service', 'a:3:{s:6:"module";s:9:"bx_convos";s:6:"method";s:17:"messages_previews";s:6:"params";a:2:{i:0;i:0;i:1;b:0;}}', 0, 1, 0, @iPBOrderDashboard);
 
 
 -- PAGE: create entry

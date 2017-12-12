@@ -210,12 +210,14 @@ class BxCnvModule extends BxBaseModTextModule
         return $oGrid->getCode();
     }
 
-    public function serviceMessagesPreviews ($iProfileId = 0)
+    public function serviceMessagesPreviews ($iProfileId = 0, $bEmptyMessage = true)
     {
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
         $a = $this->_oDb->getMessagesPreviews($iProfileId, 0, (int)getParam('bx_convos_preview_messages_num'));
+        if((empty($a) || !is_array($a)) && !$bEmptyMessage)
+            return '';
 
         return $this->_oTemplate->getMessagesPreviews($a);
     }
