@@ -28,6 +28,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
         		'category' => array('value' => '', 'field' => 'cat', 'operator' => '='),
         		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+        		'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_forum_per_page_browse'), 'start' => 0),
             'sorting' => 'last',

@@ -32,6 +32,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
         		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+        		'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_albums_per_page_browse'), 'start' => 0),
             'sorting' => 'last',

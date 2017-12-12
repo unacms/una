@@ -28,6 +28,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
         		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
         		'except' => array('value' => '', 'field' => 'id', 'operator' => 'not in'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+        		'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_market_per_page_browse'), 'start' => 0),
             'sorting' => 'last',
