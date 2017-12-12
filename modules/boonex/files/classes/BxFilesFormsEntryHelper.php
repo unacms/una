@@ -24,7 +24,7 @@ class BxFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         return BxDolForm::getObjectInstance('bx_files_upload', 'bx_files_entry_upload', $this->_oModule->_oTemplate);
     }
     
-    public function addDataForm ()
+    public function addDataForm ($sCheckFunction = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 

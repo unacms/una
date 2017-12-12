@@ -184,7 +184,7 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_featured "browse_featured"
      */
-    public function serviceBrowseFeatured($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    public function serviceBrowseFeatured($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true, $bShowHeader = true)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -196,7 +196,8 @@ class BxForumModule extends BxBaseModTextModule
 		return $this->_serviceBrowseTable(array(
 			'grid' => $CNF['OBJECT_GRID_FEATURE'],
 			'type' => $sType, 
-			'where' => array('fld' => 'featured', 'val' => 0, 'opr' => '<>')
+			'where' => array('fld' => 'featured', 'val' => 0, 'opr' => '<>'),
+		    'empty_message' => $bEmptyMessage
 		), $bShowHeader);
     }
 
@@ -405,6 +406,12 @@ class BxForumModule extends BxBaseModTextModule
         if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id())
             return '';
 
+        $bEmptyMessage = false;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
         $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
         if(empty($aConditions) || !is_array($aConditions)) 
             return '';
@@ -436,7 +443,8 @@ class BxForumModule extends BxBaseModTextModule
         	'author' => $iProfileId, 
             'join' => $aJoinGroup,
         	'where' => $aWhereGroup, 
-        	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile')
+        	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
+        	'empty_message' => $bEmptyMessage
         ), false);
     }
 

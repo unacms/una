@@ -182,7 +182,7 @@ class BxAlbumsModule extends BxBaseModTextModule
      * Display featured media. 
      * For the list of params @see BxAlbumsModule::serviceBrowseRecentMedia
      */ 
-    public function serviceBrowseFeaturedMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
+    public function serviceBrowseFeaturedMedia ($sUnitView = false, $bDisplayEmptyMsg = false, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('featured', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
     }
@@ -213,7 +213,13 @@ class BxAlbumsModule extends BxBaseModTextModule
         if(!$oProfile)
             return '';
 
-        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, true, true, 'SearchResultMedia');
+        $bEmptyMessage = false;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, true, 'SearchResultMedia');
     }
 
     public function serviceGetNotificationsData()

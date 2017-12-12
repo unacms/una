@@ -243,7 +243,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * Display featured entries
      * @return HTML string
      */
-    public function serviceBrowseFeatured ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    public function serviceBrowseFeatured ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('featured', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
@@ -264,7 +264,13 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$oProfile)
             return '';
 
-        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, true);
+        $bEmptyMessage = false;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
     }
 
     public function serviceFormsHelper ()

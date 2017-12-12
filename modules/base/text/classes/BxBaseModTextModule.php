@@ -95,13 +95,13 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if (!$iProfileId)
             return '';
 
-        $bDisplayEmptyMsg = true;
+        $bEmptyMessage = true;
         if(isset($aParams['empty_message'])) {
-            $bDisplayEmptyMsg = (bool)$aParams['empty_message'];
+            $bEmptyMessage = (bool)$aParams['empty_message'];
             unset($aParams['empty_message']);
         }
 
-        return $this->_serviceBrowse ('author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+        return $this->_serviceBrowse ('author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
     }
 
     /**
