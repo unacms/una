@@ -228,7 +228,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     public function keywordsAdd($iId, $s) 
     {
         $a = array();
-        if (!preg_match_all('/[^&](\#[\pL\pN_]+)/u', ' ' . strip_tags($s), $a)) {
+        if (!preg_match_all('/[\s](\#[\pL\pN_]+)/u', ' ' . strip_tags($s), $a)) {
             $this->_oQuery->keywordsDelete($iId);
             return 0;
         }
@@ -264,7 +264,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $aFields = $this->keywordsFields($aContentInfo, $CNF, $sFormDisplay); 
         $sTextWithKeywords = '';
         foreach ($aFields as $sField)
-            $sTextWithKeywords .= $aContentInfo[$sField];
+            $sTextWithKeywords .= "\n" . $aContentInfo[$sField];
 
         return $this->keywordsAdd($iId, $sTextWithKeywords);
     }
