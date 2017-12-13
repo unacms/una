@@ -163,6 +163,8 @@
     <string name="_bx_orgs_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Organizations]]></string>
     <string name="_bx_orgs_page_block_title_sys_joined_entries"><![CDATA[Joined Organizations]]></string>
     <string name="_bx_orgs_page_block_title_joined_entries"><![CDATA[Joined Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_sys_entries_actions"><![CDATA[Organizations actions]]></string>
+    <string name="_bx_orgs_page_block_title_entries_actions"><![CDATA[Organizations actions]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Organizations Submenu]]></string>
@@ -173,6 +175,8 @@
     <string name="_bx_orgs_menu_set_title_view_profile_submenu"><![CDATA[View Organization Submenu]]></string>
     <string name="_bx_orgs_menu_title_view_profile_submenu"><![CDATA[View Organization Submenu]]></string>
     <string name="_bx_orgs_menu_title_view_profile_submenu_cover"><![CDATA[Organization Cover Submenu]]></string>
+    <string name="_bx_orgs_menu_title_entries_my"><![CDATA[Profile Organizations Action Menu]]></string>
+    <string name="_bx_orgs_menu_set_title_entries_my"><![CDATA[Profile Organizations Menu]]></string>
 	<string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_orgs_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete"><![CDATA[Delete]]></string>
@@ -193,6 +197,8 @@
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_system_new_profile"><![CDATA[New Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_new_profile"><![CDATA[New Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_fans"><![CDATA[Members]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_fans"><![CDATA[Members]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>

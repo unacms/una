@@ -190,6 +190,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_organizations_joined', 'joined-organizations', '_bx_orgs_page_title_sys_joined_entries', '_bx_orgs_page_title_joined_entries', 'bx_organizations', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxOrgsPageJoinedEntries', 'modules/boonex/organizations/classes/BxOrgsPageJoinedEntries.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_organizations_joined', 1, 'bx_organizations', '_bx_orgs_page_block_title_sys_entries_actions', '_bx_orgs_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
 ('bx_organizations_joined', 1, 'bx_organizations', '_bx_orgs_page_block_title_sys_favorites_of_author', '_bx_orgs_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 1),
 ('bx_organizations_joined', 1, 'bx_organizations', '_bx_orgs_page_block_title_sys_joined_entries', '_bx_orgs_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;i:0;i:1;b:1;}}', 0, 0, 1, 2);
 
@@ -261,6 +262,17 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-profile', '_bx_orgs_menu_item_title_system_delete_profile', '_bx_orgs_menu_item_title_delete_profile', 'page.php?i=delete-organization-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 40),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-account', '_bx_orgs_menu_item_title_system_delete_account', '_bx_orgs_menu_item_title_delete_account', 'page.php?i=account-settings-delete&id={account_id}', '', '', 'remove', '', 128, 1, 0, 50),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-account-content', '_bx_orgs_menu_item_title_system_delete_account_content', '_bx_orgs_menu_item_title_delete_account_content', 'page.php?i=account-settings-delete&id={account_id}&content=1', '', '', 'remove', '', 128, 1, 0, 60);
+
+-- MENU: actions menu for my entries
+
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_organizations_my', '_bx_orgs_menu_title_entries_my', 'bx_organizations_my', 'bx_organizations', 9, 0, 1, 'BxOrgsMenu', 'modules/boonex/organizations/classes/BxOrgsMenu.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_organizations_my', 'bx_organizations', '_bx_orgs_menu_set_title_entries_my', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_organizations_my', 'bx_organizations', 'create-organization-profile', '_bx_orgs_menu_item_title_system_new_profile', '_bx_orgs_menu_item_title_new_profile', 'page.php?i=create-organization-profile', '', '', 'plus', '', 2147483647, 1, 0, 0);
 
 -- MENU: module sub-menu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

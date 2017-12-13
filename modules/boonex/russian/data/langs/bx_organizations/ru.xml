@@ -163,6 +163,8 @@
     <string name="_bx_orgs_page_block_title_sys_favorites_of_author"><![CDATA[Избранные организации]]></string>
     <string name="_bx_orgs_page_block_title_sys_joined_entries"><![CDATA[Участие в организациях]]></string>
     <string name="_bx_orgs_page_block_title_joined_entries"><![CDATA[Участие в организациях]]></string>
+    <string name="_bx_orgs_page_block_title_sys_entries_actions"><![CDATA[Организации - Действия]]></string>
+    <string name="_bx_orgs_page_block_title_entries_actions"><![CDATA[Организации - Действия]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Организации - Подменю]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Организации - Подменю]]></string>
@@ -173,6 +175,8 @@
     <string name="_bx_orgs_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра организации]]></string>
     <string name="_bx_orgs_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра организации]]></string>
     <string name="_bx_orgs_menu_title_view_profile_submenu_cover"><![CDATA[Подменю организации на обложке]]></string>
+    <string name="_bx_orgs_menu_title_entries_my"><![CDATA[Организации профиля - Меню действий]]></string>
+    <string name="_bx_orgs_menu_set_title_entries_my"><![CDATA[Организации профиля - Меню]]></string>
 	<string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_orgs_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
@@ -193,6 +197,8 @@
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_menu_item_title_create_profile"><![CDATA[Организация]]></string>
+    <string name="_bx_orgs_menu_item_title_system_new_profile"><![CDATA[Создать организацию]]></string>
+    <string name="_bx_orgs_menu_item_title_new_profile"><![CDATA[Создать организацию]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_fans"><![CDATA[Участники]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_fans"><![CDATA[Участники]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
