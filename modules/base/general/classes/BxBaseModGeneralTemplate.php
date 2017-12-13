@@ -247,8 +247,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $aAttachmnts = array();
         foreach ($aGhostFiles as $k => $a) {
 
-            $isImage = $oTranscoder && (0 === strncmp('image/', $a['mime_type'], 6)); // preview for images, transcoder object for preview must be defined
-            $isVideo = $aTranscodersVideo && (0 === strncmp('video/', $a['mime_type'], 6)); // preview for videos, transcoder object for video must be defined
+            $isImage = $oTranscoder && (0 === strncmp('image/', $a['mime_type'], 6)) && $oTranscoder->isMimeTypeSupported($a['mime_type']); // preview for images, transcoder object for preview must be defined
+            $isVideo = $aTranscodersVideo && (0 === strncmp('video/', $a['mime_type'], 6)) && $aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type']); // preview for videos, transcoder object for video must be defined
             $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
             $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
 

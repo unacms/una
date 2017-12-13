@@ -1322,7 +1322,7 @@ class BxDolStorageHelperUrl extends BxDolStorageHelperPath
         if ($sTmpFilename = tempnam(BX_DIRECTORY_PATH_TMP, '')) {
             $s = '';
             if (!$sExt) {
-                $s = file_get_contents($aParams['url']);
+                $s = @file_get_contents($aParams['url']);
                 $oFinfo = new finfo(FILEINFO_MIME_TYPE);
                 $sMime = $oFinfo->buffer($s);
                 if (isset($this->aMime2Ext[$sMime]))

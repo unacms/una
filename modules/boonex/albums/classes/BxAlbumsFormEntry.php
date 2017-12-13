@@ -26,14 +26,15 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
+        
         $sData = '';
         $sExif = '';
         $aExif = false;
         $aFile = $oStorage->getFile($iFileId);
-        if (0 === strncmp('image/', $aFile['mime_type'], 6)) {
+        if ($oTranscoder->isMimeTypeSupported($aFile['mime_type'])) {
             $oImageReize = BxDolImageResize::getInstance();
 
-            $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_BIG']);            
             $a = $oImageReize->getImageSize($oTranscoder->getFileUrl($iFileId));
             $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
 

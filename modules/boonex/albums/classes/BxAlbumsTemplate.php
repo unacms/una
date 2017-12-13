@@ -222,8 +222,8 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         if (!$aFileInfo)
             return '';
 
-        $isImage = 0 === strncmp('image/', $aFileInfo['mime_type'], 6); // preview for images, transcoder object for preview must be defined
-        $isVideo = $aTranscodersVideo && (0 === strncmp('video/', $aFileInfo['mime_type'], 6)); // preview for videos, transcoder object for video must be defined
+        $isImage = 0 === strncmp('image/', $aFileInfo['mime_type'], 6) && $oTranscoder->isMimeTypeSupported($aFileInfo['mime_type']); // preview for images, transcoder object for preview must be defined
+        $isVideo = $aTranscodersVideo && (0 === strncmp('video/', $aFileInfo['mime_type'], 6)) && $aTranscodersVideo['poster']->isMimeTypeSupported($aFileInfo['mime_type']); // preview for videos, transcoder object for video must be defined
 
         $sMediaTitle = bx_process_output($aMediaInfo['title']);
         $sMediaTitleAttr = bx_html_attribute($aMediaInfo['title']);
