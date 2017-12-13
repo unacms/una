@@ -48,6 +48,7 @@ class BxDolUpgrader extends BxDol
             }
             elseif ($fChangedFilesPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) {
                 $this->setError(_t('_sys_upgrade_files_checksum_failed_too_many', round($fChangedFilesPercent * 100)));
+                break;
             }
 
             if (!($sPatchPath = $this->downloadPatch ($aVersionUpdateInfo))) {
