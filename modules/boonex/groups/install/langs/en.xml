@@ -89,6 +89,8 @@
 	<string name="_bx_groups_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_groups_page_title_entries_search"><![CDATA[Search]]></string>
 
+    <string name="_bx_groups_page_block_title_sys_entries_actions"><![CDATA[Groups actions]]></string>
+    <string name="_bx_groups_page_block_title_entries_actions"><![CDATA[Groups actions]]></string>
     <string name="_bx_groups_page_block_title_sys_entries_of_author"><![CDATA[Groups of author]]></string>
     <string name="_bx_groups_page_block_title_entries_of_author"><![CDATA[Groups by {display_name}]]></string>
 	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Favorite Groups]]></string>
@@ -136,6 +138,8 @@
     <string name="_bx_groups_menu_set_title_view_profile_submenu"><![CDATA[View Group Submenu]]></string>
     <string name="_bx_groups_menu_title_view_profile_submenu"><![CDATA[View Group Submenu]]></string>
     <string name="_bx_groups_menu_title_view_profile_submenu_cover"><![CDATA[Group Cover Submenu]]></string>
+    <string name="_bx_groups_menu_title_entries_my"><![CDATA[Profile Groups Action Menu]]></string>
+    <string name="_bx_groups_menu_set_title_entries_my"><![CDATA[Profile Groups Menu]]></string>
 	<string name="_bx_groups_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_groups_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_groups_menu_item_title_system_delete"><![CDATA[Delete]]></string>

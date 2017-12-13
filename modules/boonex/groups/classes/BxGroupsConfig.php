@@ -99,6 +99,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_group_invite',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_groups_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_groups_view_actions_more', // actions menu on view entry page for "more" popup
+            'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_groups_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_groups_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_groups_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_groups_view_submenu_cover',  // view entry submenu displayed in cover

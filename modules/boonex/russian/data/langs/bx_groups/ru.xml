@@ -89,6 +89,8 @@
     <string name="_bx_groups_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_groups_page_title_entries_search"><![CDATA[Поиск]]></string>
 
+    <string name="_bx_groups_page_block_title_sys_entries_actions"><![CDATA[Группы - Действия]]></string>
+    <string name="_bx_groups_page_block_title_entries_actions"><![CDATA[Группы - Действия]]></string>
     <string name="_bx_groups_page_block_title_sys_entries_of_author"><![CDATA[Группы автора]]></string>
     <string name="_bx_groups_page_block_title_entries_of_author"><![CDATA[{display_name} - Группы]]></string>
 	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Избранные группы]]></string>   
@@ -136,6 +138,8 @@
     <string name="_bx_groups_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра группы]]></string>
     <string name="_bx_groups_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра группы]]></string>
     <string name="_bx_groups_menu_title_view_profile_submenu_cover"><![CDATA[Подменю группы на обложке]]></string>
+    <string name="_bx_groups_menu_title_entries_my"><![CDATA[Группы профиля - Меню действий]]></string>
+    <string name="_bx_groups_menu_set_title_entries_my"><![CDATA[Группы профиля - Меню]]></string>
 	<string name="_bx_groups_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_groups_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_groups_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
