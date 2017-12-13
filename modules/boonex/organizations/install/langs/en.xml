@@ -205,6 +205,8 @@
     <string name="_bx_orgs_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_view"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_view"><![CDATA[Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_system_view_joined_groups"><![CDATA[Organizations]]></string>
+    <string name="_bx_orgs_menu_item_title_view_joined_groups"><![CDATA[Organizations]]></string>
     <string name="_bx_orgs_menu_item_title_system_invite"><![CDATA[Invite]]></string>
     <string name="_bx_orgs_menu_item_title_invite"><![CDATA[Invite]]></string>
     <string name="_bx_orgs_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
