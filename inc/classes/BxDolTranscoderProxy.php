@@ -26,6 +26,26 @@ class BxDolTranscoderProxy extends BxDolTranscoder implements iBxDolFactoryObjec
     }
 
     /**
+     * check if transcoder suppors given file mime type
+     */ 
+    public function isMimeTypeSupported($sMimeType)
+    {
+        if (!empty($this->_aObject['source_params']['image']))
+            $sTranscoder = $this->_aObject['source_params']['image'];
+        elseif (!empty($this->_aObject['source_params']['video_poster']))
+            $sTranscoder = $this->_aObject['source_params']['video_poster'];
+        elseif (!empty($this->_aObject['source_params']['video']))
+            $sTranscoder = $this->_aObject['source_params']['video'];
+        else
+            return false;
+
+        if (!($oTranscoder = BxDolTranscoder::getObjectInstance($sTranscoder)))
+            return false;        
+        
+        return $oTranscoder->isMimeTypeSupported($sMimeType);
+    }
+    
+    /**
      * Depending on original file mime type call appropriate transcoder 
      */
     public function getFileUrl($mixedHandler)

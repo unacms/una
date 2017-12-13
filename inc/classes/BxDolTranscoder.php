@@ -335,6 +335,14 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * check if transcoder suppors given file mime type
+     */ 
+    public function isMimeTypeSupported($sMimeType)
+    {
+        return false;
+    }
+
+    /**
      * Get transcoded file url.
      * If transcoded file is ready then direct url to the file is returned.
      * If there is no transcoded data available, then special url is returned, upon opening this url image is transcoded automatically and redirects to the ready transcoed image.
