@@ -1601,4 +1601,22 @@ function bx_is_full_array ($a)
             return false;
     return true;
 }
+
+function bx_is_url_in_content ($sContent)
+{
+    $a = array(
+        'http://',
+        'https://',
+        'https/',
+        'http/',
+        'www.',
+        '.com'
+    );
+    foreach ($a as $s)
+        if (false !== strpos($sContent, $s))
+            return true;
+
+    return false;
+}
+
 /** @} */
