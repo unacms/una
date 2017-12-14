@@ -91,17 +91,32 @@ class BxBaseAccountForms extends BxDolProfileForms
         		$aModulesProfile[] = $aModule;
         }
 
-        $sRedirectUrl = '';
         $sDefaultProfileType = getParam('sys_account_default_profile_type');
         if(count($aModulesProfile) == 1)
-        	$sRedirectUrl = BxDolService::call($aModulesProfile[0]['name'], 'profile_create_url', array(false));
+        	$sProfileModule = $aModulesProfile[0]['name'];
         else if(!empty($sDefaultProfileType)) 
-            $sRedirectUrl = BxDolService::call($sDefaultProfileType, 'profile_create_url', array(false));
+            $sProfileModule = $sDefaultProfileType;
 
-        $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
-            'account_id' => $iAccountId,
-            'profile_id' => $iProfileId,
-        ));
+        if (getParam('sys_account_auto_profile_creation')) {
+            $oAccount = BxDolAccount::getInstance($iAccountId);
+            $aProfileInfo = BxDolService::call($sProfileModule, 'prepare_fields', array(array(
+                'name' => $oAccount->getDisplayName(),
+            )));
+            
+            $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
+            if (0 != $a['code'])
+                return MsgBox(_t($a['message']));
+
+            BxDolService::call($sProfileModule, 'redirect_after_add', array($a['content']));
+        }
+        else {
+            $sRedirectUrl = BxDolService::call($sProfileModule, 'profile_create_url', array(false));
+        
+            $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
+                'account_id' => $iAccountId,
+                'profile_id' => $iProfileId,
+            ));
+        }
     }
 
     public function onAccountCreated ($iAccountId, $isSetPendingApproval, $iAction = BX_PROFILE_ACTION_MANUAL)

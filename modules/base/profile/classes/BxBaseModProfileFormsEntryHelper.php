@@ -152,7 +152,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return '';
     }
 
-    protected function redirectAfterAdd($aContentInfo)
+    public function redirectAfterAdd($aContentInfo)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -177,8 +177,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
             case BX_DOL_PROFILE_REDIRECT_CUSTOM:
                 $sRedirectCustom = getParam($CNF['PARAM_REDIRECT_AADD_CUSTOM_URL']);
-                if($sRedirectCustom) 
-                    $sRedirectUrl = $sRedirectCustom;
+                if($sRedirectCustom) {
+                    $sRedirectUrl = $this->prepareCustomRedirectUrl($sRedirectCustom, $aContentInfo);
+                }
         }
 
         $sCustomReferrer = $oSession->getValue('custom-referrer');

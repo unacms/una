@@ -305,12 +305,24 @@ class BxBaseModGeneralModule extends BxDolModule
      * Add entry using provided fields' values.
      * @return HTML string
      */
-    public function serviceEntityAdd ($iAccount, $aValues)
+    public function serviceEntityAdd ($iProfile, $aValues)
     {
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
-        return $oFormsHelper->addData($iAccount, $aValues);
+        return $oFormsHelper->addData($iProfile, $aValues);
+    }
+
+	/**
+     * Perform redirect after content creation
+     * @return nothing, rediret header is sent
+     */    
+    public function serviceRedirectAfterAdd($aContentInfo)
+    {
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
+        $oFormsHelper = new $sClass($this);
+        $oFormsHelper->redirectAfterAdd($aContentInfo);
     }
 
     /**

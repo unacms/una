@@ -25,6 +25,11 @@ class BxPersonsModule extends BxBaseModProfileModule
     {
     	return array();
     }
+
+    public function servicePrepareFields ($aFieldsProfile)
+    {
+        return parent::_servicePrepareFields($aFieldsProfile, array(), array('fullname' => 'name'));
+    }
 }
 
 /** @} */

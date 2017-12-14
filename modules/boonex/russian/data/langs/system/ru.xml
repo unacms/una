@@ -1246,7 +1246,8 @@
     <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Экскурсия по главной странице Студии]]></string>
     <string name="_adm_stg_cpt_option_add_to_mobile_homepage"><![CDATA[Компонент для добавления сайта на мобильное устройство]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Включить сообщение об активации аккаунта]]></string>
-	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Автоматическая активация аккаунта после создания]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Автоматическая активация аккаунта после создания]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_auto_profile_creation"><![CDATA[Автоматическое создание профайла из аккаунта]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Временные рамки статуса "онлайн" (минуты)]]></string>
     <string name="_adm_stg_err_option_sys_account_online_time"><![CDATA[Вам необходимо ввести значение больше нуля.]]></string>
     <string name="_adm_stg_cpt_option_sys_account_default_profile_type"><![CDATA[Тип профиля по умолчанию]]></string>

@@ -271,9 +271,40 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         return $this->serviceCheckAllowedProfileView($iContentId);
     }
-    
+
+    /**
+     * Prepare fields from some universal set of fields to fields in particular profile module. 
+     * By default only 'name' and 'description' fields are supported.
+     * After fields convertion it can be used in @see BxBaseModGeneralModule::serviceEntityAdd
+     * @param $aFieldsProfile fields in soem universal format.
+     * @return array which is ready to use for particular module
+     */ 
     public function servicePrepareFields ($aFieldsProfile)
+    {        
+        bx_alert($this->getName(), 'prepare_fields', 0, 0, array('fields_orig' => $aFieldsProfile, 'fields_result' => &$aFieldsProfile));
+
+        return $aFieldsProfile;
+    }
+
+    protected function _servicePrepareFields ($aFieldsProfile, $aFieldsDefault, $aMap)
     {
+        $aFieldsOrig = $aFieldsProfile;
+
+        bx_import('BxDolPrivacy');
+        $aFieldsDefault2 = array(
+            'allow_view_to' => BX_DOL_PG_ALL,
+        );
+        $aFieldsProfile = array_merge($aFieldsDefault2, $aFieldsDefault, $aFieldsProfile);
+
+        foreach ($aMap as $k => $v) {
+            if (isset($aFieldsProfile[$v]))
+                $aFieldsProfile[$k] = $aFieldsProfile[$v];
+            if ($k != $v && !isset($aMap[$k]))
+                unset($aFieldsProfile[$v]);
+        }
+        
+        bx_alert($this->getName(), 'prepare_fields', 0, 0, array('fields_orig' => $aFieldsOrig, 'fields_result' => &$aFieldsProfile));
+
         return $aFieldsProfile;
     }
 
