@@ -166,7 +166,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->redirectAfterAdd($aContentInfo);
     }
     
-    protected function redirectAfterAdd($aContentInfo)
+    public function redirectAfterAdd($aContentInfo)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
@@ -402,6 +402,31 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if ($oMetatags->locationsIsEnabled() && $aContentInfo)
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
         }
+    }
+
+    protected function prepareCustomRedirectUrl($s, $aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aContentInfo[$CNF['FIELD_ID']], $this->_oModule->getName());
+
+        $aMarkers = array(
+            '{profile_id}',
+            '{content_id}',
+            '{module}',
+        );
+        $aReplacements = array(
+            $oProfile ? $oProfile->id() : 0,
+            $aContentInfo[$CNF['FIELD_ID']],
+            $this->_oModule->getName(),
+        );
+        $s = str_replace($aMarkers, $aReplacements, $s);
+
+        $s = BxDolPermalinks::getInstance()->permalink($s);
+
+        if (false === strpos($s, 'http://') && false === strpos($s, 'https://'))
+            $s = BX_DOL_URL_ROOT . $s;
+        
+        return $s;
     }
 }
 

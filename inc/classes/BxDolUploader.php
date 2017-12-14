@@ -424,14 +424,8 @@ abstract class BxDolUploader extends BxDolFactory
     {
         if (!$oImagesTranscoder)
             return false;
-        
-        if (0 === strncmp($aFile['mime_type'], 'image/', 6) && (is_a($oImagesTranscoder, 'BxDolTranscoderImage') || is_a($oImagesTranscoder, 'BxDolTranscoderProxy')))
-            return true;
-        
-        if (0 === strncmp($aFile['mime_type'], 'video/', 6) && (is_a($oImagesTranscoder, 'BxDolTranscoderVideo') || is_a($oImagesTranscoder, 'BxDolTranscoderProxy')))
-            return true;
 
-        return false;
+        return $oImagesTranscoder->isMimeTypeSupported($aFile['mime_type']);
     }
 
     protected function isAdmin ($iContentId = 0)

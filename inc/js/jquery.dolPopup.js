@@ -465,7 +465,7 @@
         return this.each(function() {
 
             var ePopup = $(this);
-            var k = .95,
+            var k = .97,
                 w = $(window).width(),
                 h = $(window).height(),
                 eImg = new Image();
@@ -482,6 +482,9 @@
 
             $(eImg).on('load', function () {
 
+                var ri = eImg.width / eImg.height;
+                var rs = w/h;
+
                 if ('undefined' != typeof(sLoadingElement))
                     bx_loading (sLoadingElement, false);
 
@@ -497,18 +500,13 @@
                         height: 'auto'
                     });
                 }
-                else if ((w * k - eImg.width) < (h * k - eImg.height)) {
+                else {
                     ePopup.find('img').css({
-                        width: '' + (eImg.width > w * k ? parseInt(w * k) : eImg.width) + 'px',
-                        height: 'auto'
-                    }).addClass('bx-constrain-width');
-                } else {
-                    ePopup.find('img').css({
-                        width: 'auto',
-                        height: '' + (eImg.height > h * k ? parseInt(h * k) : eImg.height) + 'px'
+                        width: rs > ri ? parseInt(k * eImg.width * h/eImg.height) + 'px' : 'auto',
+                        height: rs > ri ? 'auto' : parseInt(k * eImg.height * w/eImg.width) + 'px',
                     }).addClass('bx-constrain-height');
                 }
-
+                
                 // show popup
                 ePopup.dolPopup();
 

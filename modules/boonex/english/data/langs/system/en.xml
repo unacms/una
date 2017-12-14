@@ -1249,6 +1249,7 @@
     <string name="_adm_stg_cpt_option_add_to_mobile_homepage"><![CDATA[Add to mobile homepage widget]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Enable account activation letter]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
+	<string name="_adm_stg_cpt_option_sys_account_auto_profile_creation"><![CDATA[Automatic profile creation from account name]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Online status timeframe (minutes)]]></string>
     <string name="_adm_stg_err_option_sys_account_online_time"><![CDATA[You need to enter a value greater than zero.]]></string>
     <string name="_adm_stg_cpt_option_sys_account_default_profile_type"><![CDATA[Default profile type]]></string>

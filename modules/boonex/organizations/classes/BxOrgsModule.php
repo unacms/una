@@ -34,11 +34,10 @@ class BxOrgsModule extends BxBaseModGroupsModule
 
     public function servicePrepareFields ($aFieldsProfile)
     {
-        $aFieldsProfile['org_name'] = $aFieldsProfile['name'];
-        $aFieldsProfile['org_desc'] = isset($aFieldsProfile['description']) ? $aFieldsProfile['description'] : '';
-        unset($aFieldsProfile['name']);
-        unset($aFieldsProfile['description']);
-        return $aFieldsProfile;
+        return parent::_servicePrepareFields($aFieldsProfile, array('org_cat' => 35), array(
+            'org_name' => 'name',
+            'org_desc' => 'description',
+        ));
     }
 
     public function serviceGetTimelineData()

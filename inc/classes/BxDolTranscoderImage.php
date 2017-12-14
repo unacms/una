@@ -82,6 +82,23 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
     }
 
     /**
+     * check if transcoder suppors given file mime type
+     */ 
+    public function isMimeTypeSupported($sMimeType)
+    {
+        $sMimeType = strtolower($sMimeType);
+        switch ($sMimeType) {
+        case 'image/gif':
+        case 'image/jpeg':
+        case 'image/pjpeg':
+        case 'image/png':
+            return true;
+        }
+
+        return false;
+    }
+    
+    /**
      * Get file url when file isn't transcoded yet
      */
     public function getFileUrlNotReady($mixedHandler)

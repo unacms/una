@@ -96,6 +96,17 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     }
 
     /**
+     * check if transcoder suppors given file mime type
+     */ 
+    public function isMimeTypeSupported($sMimeType)
+    {
+        if (0 === strncmp($sMimeType, 'video/', 6))
+            return true;
+
+        return false;
+    }
+    
+    /**
      * If video isn't processed yet then empty string is returned for video, or predefined image is returned for video poster
      */
     public function getFileUrlNotReady($mixedHandler)

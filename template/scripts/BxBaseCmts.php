@@ -744,7 +744,7 @@ class BxBaseCmts extends BxDolCmts
             $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
             foreach($aFiles as $aFile) {
-            	$bImage = strncmp($aFile['mime_type'], 'image/', 6) === 0;
+            	$bImage = $oTranscoder && $oTranscoder->isMimeTypeSupported($aFile['mime_type']);
 
             	$sPreview = '';
             	if($oTranscoder && $bImage)
