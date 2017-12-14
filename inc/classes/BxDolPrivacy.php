@@ -144,7 +144,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             'values' => $aValues,
             'checker' => array(
                 'func' => 'avail',
-                'error' => _t('_ps_ferr_incorrect_select')
+                'error' => _t('_sys_ps_ferr_incorrect_select')
             ),
             'db' => array(
                 'pass' => 'Int'
