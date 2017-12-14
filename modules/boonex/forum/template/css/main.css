@@ -31,17 +31,18 @@
 	width: auto;
 	height: 2rem;
 	line-height: 2rem;
+	white-space: nowrap;
+
+	overflow: hidden;
+    text-overflow: ellipsis;
 }
-.cmt-attached-preview.bx-forum-attached-preview a,
 .cmt-attached-preview.bx-forum-attached-preview img,
 .cmt-attached-preview.bx-forum-attached-preview .sys-icon {
 	display: inline-block;
 	vertical-align: middle;
-}
-.cmt-attached-preview.bx-forum-attached-preview img,
-.cmt-attached-preview.bx-forum-attached-preview .sys-icon {
+
 	width: 2rem;
-	height: 2rem;
+    height: 2rem;
 }
 .cmt-attached-preview.bx-forum-attached-preview .sys-icon {
 	text-align: center;
