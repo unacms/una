@@ -1565,7 +1565,9 @@
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Ваше текущее членство ({2}) не позволяет '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Ваше текущее членство ({2}) более не позволяет '{1}' {5}.]]></string>
 	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Ваше текущее членство ({2}) позволит '{1}' {6}.]]></string>
-	<string name="_sys_acl_action_pending"><![CDATA[В данный момент вы неактивный пользователь. Пожалуйста, попросите <a href="mailto:{7}">администратора сайта</a> активировать Вас, чтобы Вы могли <b>{1}</b>.]]></string>
+    <string name="_sys_acl_action_pending"><![CDATA[В данный момент вы неактивный пользователь. Пожалуйста, попросите <a href="mailto:{7}">администратора сайта</a> активировать Вас, чтобы Вы могли <b>{1}</b>.]]></string>
+	<string name="_sys_acl_action_post_links"><![CDATA[Публикация ссылок]]></string>
+    <string name="_sys_acl_action_post_links_desc"><![CDATA[Публикация ссылок в формах]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Назначить членство для профилей]]></string>
 	<string name="_sys_acl_action_suspended"><![CDATA[Вы не можете '{1}', потому что Ваш профайл заблокирован. Если Вы не знаете, почему, постарайтесь связаться с <a href="mailto:{7}">администратором</a>.]]></string>

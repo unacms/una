@@ -1567,7 +1567,9 @@
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership ({2}) doesn't allow you to '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Your current membership ({2}) stopped to allow you to '{1}' {5}.]]></string>
 	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Your current membership ({2}) will allow you to '{1}' {6}.]]></string>
-	<string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
+    <string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
+	<string name="_sys_acl_action_post_links"><![CDATA[Post links]]></string>
+	<string name="_sys_acl_action_post_links_desc"><![CDATA[Post links in text and textarea form fields]]></string>    
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Set membership level]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
 	<string name="_sys_acl_action_suspended"><![CDATA[You can't '{1}' because your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>

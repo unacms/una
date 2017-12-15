@@ -613,6 +613,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('system', 'chart view', NULL, '_sys_acl_action_chart_view', '_sys_acl_action_chart_view_desc', 0, 3);
 SET @iIdActionChartView = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'post links', NULL, '_sys_acl_action_post_links', '_sys_acl_action_post_links_desc', 0, 3);
+SET @iIdActionPostLinks = LAST_INSERT_ID();
+
 CREATE TABLE `sys_acl_actions_track` (
   `IDAction` int(10) unsigned NOT NULL DEFAULT '0',
   `IDMember` int(10) unsigned NOT NULL default '0',
@@ -744,7 +748,13 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionSetAclLevel),
 
 -- view charts
-(@iAdministrator, @iIdActionChartView);
+(@iAdministrator, @iIdActionChartView),
+
+-- post links
+(@iStandard, @iIdActionPostLinks),
+(@iModerator, @iIdActionPostLinks),
+(@iAdministrator, @iIdActionPostLinks),
+(@iPremium, @iIdActionPostLinks);
 
 
 CREATE TABLE `sys_acl_levels` (
