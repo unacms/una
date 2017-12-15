@@ -71,9 +71,11 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
 
         $this->sFilterName = 'bx_persons_filter';
         $this->oModule = $this->getMain();
-        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
 
         $CNF = &$this->oModule->_oConfig->CNF;
+        
+        $sSearchFields = getParam($CNF['PARAM_SEARCHABLE_FIELDS']);
+        $this->aCurrent['searchFields'] = !empty($sSearchFields) ? explode(',', $sSearchFields) : '';
 
         switch ($sMode) {
 

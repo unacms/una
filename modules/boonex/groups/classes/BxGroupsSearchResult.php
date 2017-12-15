@@ -68,12 +68,14 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
 
         $this->sFilterName = 'bx_groups_data_filter';
         $this->oModule = $this->getMain();
-        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
+
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $sSearchFields = getParam($CNF['PARAM_SEARCHABLE_FIELDS']);
+        $this->aCurrent['searchFields'] = !empty($sSearchFields) ? explode(',', $sSearchFields) : '';
 
         $oJoinedProfile = null;
         $bProcessConditionsForPrivateContent = true;
-
-        $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
             case 'created_entries':

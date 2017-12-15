@@ -177,7 +177,8 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         if ($bFulltextIndex)
             $this->query("ALTER TABLE `" . $CNF['TABLE_ENTRIES'] . "` DROP INDEX `" . $CNF['TABLE_ENTRIES_FULLTEXT'] . "`");
 
-        if (!($aFields = explode(',', getParam($CNF['PARAM_SEARCHABLE_FIELDS']))))
+        $sFields = getParam($CNF['PARAM_SEARCHABLE_FIELDS']);
+        if (!$sFields || !($aFields = explode(',', $sFields)))
             return true;
 
         $sFields = '';

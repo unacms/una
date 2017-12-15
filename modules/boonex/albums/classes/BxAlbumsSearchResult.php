@@ -54,11 +54,13 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
 
         $this->sFilterName = 'bx_albums_filter';
         $this->oModule = $this->getMain();
-        $this->aCurrent['searchFields'] = explode(',', getParam($this->oModule->_oConfig->CNF['PARAM_SEARCHABLE_FIELDS']));
-
-        $oProfileAuthor = null;
 
         $CNF = &$this->oModule->_oConfig->CNF;
+
+        $sSearchFields = getParam($CNF['PARAM_SEARCHABLE_FIELDS']);
+        $this->aCurrent['searchFields'] = !empty($sSearchFields) ? explode(',', $sSearchFields) : '';
+
+        $oProfileAuthor = null;
 
         switch ($sMode) {
 
