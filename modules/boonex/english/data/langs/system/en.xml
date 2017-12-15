@@ -1214,6 +1214,7 @@
 	<string name="_adm_stg_cpt_category_account"><![CDATA[Account]]></string>
 	<string name="_adm_stg_cpt_category_acl"><![CDATA[ACL]]></string>
 	<string name="_adm_stg_cpt_category_notifications"><![CDATA[Notifications]]></string>
+	<string name="_adm_stg_cpt_category_notifications_push"><![CDATA[Push Notifications]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
 	<string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
 	<string name="_adm_stg_cpt_category_hidden"><![CDATA[Hidden]]></string>
