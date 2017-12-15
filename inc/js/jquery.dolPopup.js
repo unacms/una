@@ -33,9 +33,11 @@
     }; 
 
     $.fn.dolPopupCenter = function () {
-        this.css("position","absolute");
-        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
-        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+        var dy = $(window).height() > $(this).outerHeight() ? ($(window).height() - $(this).outerHeight()) / 2 : 0;
+        var dx = $(window).width() > $(this).outerWidth() ? ($(window).width() - $(this).outerWidth()) / 2 : 0;
+        this.css("position","absolute");        
+        this.css("top", Math.max(0, dy + $(window).scrollTop()) + "px");
+        this.css("left", Math.max(0, dx + $(window).scrollLeft()) + "px");
         return this;
     }
 
