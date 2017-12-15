@@ -1182,7 +1182,7 @@ class BxDolFormChecker
             }
 
             // check for links in text fields
-            if (isset(BxDolForm::$TYPES_TEXT[$a['type']]) && bx_is_url_in_content($val))
+            if (isset(BxDolForm::$TYPES_TEXT[$a['type']]) && bx_is_url_in_content($val) && !isAdmin())
             {
                 $aCheck = checkActionModule(bx_get_logged_profile_id(), 'post links', 'system');
                 if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED) {
