@@ -709,6 +709,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);
 
+    static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1);
+
     protected $_aMarkers = array ();
 
     protected $oTemplate;
@@ -1182,7 +1184,13 @@ class BxDolFormChecker
             }
 
             // check for links in text fields
-            if (isset(BxDolForm::$TYPES_TEXT[$a['type']]) && bx_is_url_in_content($val) && !isAdmin())
+            $sCheckerFunc = isset($a['checker']['func']) ? strtolower($a['checker']['func']) : '';
+            if (
+                !isset(BxDolForm::$FUNC_SKIP_DOMAIN_CHECK[$sCheckerFunc]) && 
+                (!isset($a['skip_domain_check']) || false == $a['skip_domain_check']) && 
+                isset(BxDolForm::$TYPES_TEXT[$a['type']]) && 
+                bx_is_url_in_content($val) && 
+                !isAdmin())
             {
                 $aCheck = checkActionModule(bx_get_logged_profile_id(), 'post links', 'system');
                 if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED) {
