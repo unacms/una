@@ -66,7 +66,10 @@ $aConfig = array(
      * Transcoders.
      */
     'transcoders' => array(
-		'bx_forum_preview'
+		'bx_forum_preview',
+        'bx_forum_preview_cmts',
+        'bx_forum_gallery',
+        'bx_forum_cover'
     ),
 
     /**
