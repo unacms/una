@@ -329,9 +329,9 @@
     <string name="_bx_orgs_cat_University"><![CDATA[Преподавание]]></string>
     <string name="_bx_orgs_cat_Other"><![CDATA[Другое]]></string>
 
-    <string name="_bx_orgs_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
+    <string name="_bx_organizations_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
+    <string name="_bx_organizations_alert_action_join_request"><![CDATA[запрос на присоединение к организации]]></string>
     <string name="_bx_orgs_txt_ntfs_fan_added"><![CDATA[В организацию <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
-    <string name="_bx_orgs_alert_action_join_request"><![CDATA[запрос на присоединение к организации]]></string>
     <string name="_bx_orgs_txt_ntfs_join_request"><![CDATA[В организацию <b class="bx-ntfs-content-profile">{owner_name}</b> хочет вступить <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[В организации <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 
