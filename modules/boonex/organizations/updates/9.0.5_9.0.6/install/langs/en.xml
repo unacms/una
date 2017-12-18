@@ -44,9 +44,9 @@
 	<string_add name="_bx_orgs_menu_item_title_leave_organization"><![CDATA[Leave Organization]]></string_add>
 	<string_add name="_bx_orgs_menu_item_title_leave_organization_cancel_request"><![CDATA[Cancel Request]]></string_add>
 	<string_add name="_bx_orgs_menu_item_title_leave_organization_reject_request"><![CDATA[Reject Request]]></string_add>
-	<string_add name="_bx_orgs_alert_action_fan_added"><![CDATA[member joined]]></string_add>
+	<string_add name="_bx_organizations_alert_action_fan_added"><![CDATA[member joined]]></string_add>
+	<string_add name="_bx_organizations_alert_action_join_request"><![CDATA[join request]]></string_add>
 	<string_add name="_bx_orgs_txt_ntfs_fan_added"><![CDATA[Organization <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string_add>
-	<string_add name="_bx_orgs_alert_action_join_request"><![CDATA[join request]]></string_add>
 	<string_add name="_bx_orgs_txt_ntfs_join_request"><![CDATA[Organization <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string_add>
 	<string_add name="_bx_orgs_txt_to_admins"><![CDATA[To Admins]]></string_add>
 	<string_add name="_bx_orgs_txt_from_admins"><![CDATA[From Admins]]></string_add>
