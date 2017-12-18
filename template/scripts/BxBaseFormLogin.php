@@ -20,6 +20,9 @@ class BxBaseFormLogin extends BxTemplFormView
 
         $aNoRelocatePages = array('forgot-password', 'login', 'create-account', 'logout');
 
+        if (isset($this->aInputs['ID']))
+            $this->aInputs['ID']['skip_domain_check'] = true;
+
         $sRelocate = bx_process_input(bx_get('relocate'));
         if (!$sRelocate && isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) {
 
