@@ -152,8 +152,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
+        list($sAuthorName) = $oModule->getUserInfo($aEvent['object_owner_id']);
+
         $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->setPageHeader($aEvent['description']);
+        $oTemplate->setPageHeader(strip_tags($sAuthorName . ' ' . _t($aEvent['sample_action'], _t($aEvent['sample']))));
         $oTemplate->setPageDescription(strip_tags($aEvent['title']));
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
