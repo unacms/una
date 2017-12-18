@@ -27,7 +27,7 @@ class BxPollsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         if((int)$this->_aContentInfo[$CNF['FIELD_HIDDEN_RESULTS']] != 0 && !$bPerformed)
             return false;
 
-        return $this->_oTemplate->parseHtmlByName('unit_meta_actions.html', array(
+        $sContent = $this->_oTemplate->parseHtmlByName('unit_meta_actions.html', array(
             'js_object' => $this->_oModule->_oConfig->getJsObject('entry'),
             'id' => $iContentId,
             'bx_if:hide_subentries' => array(
@@ -39,6 +39,8 @@ class BxPollsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
                 'content' => array()
             ),
         ));
+
+        return $this->_oTemplate->getUnitMetaItemCustom($sContent);
     }
 }
 
