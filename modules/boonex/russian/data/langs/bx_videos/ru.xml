@@ -187,38 +187,15 @@
     <string name="_bx_videos_search_extended_cmts"><![CDATA[Поиск комментариев к видео]]></string>
 
     <string name="_bx_videos_pre_lists_cats"><![CDATA[Видео категории]]></string>
-    <string name="_bx_videos_cat_Animals_Pets"><![CDATA[Животные]]></string>
-    <string name="_bx_videos_cat_Architecture"><![CDATA[Архитектура]]></string>
-    <string name="_bx_videos_cat_Art"><![CDATA[Искусство]]></string>
-    <string name="_bx_videos_cat_Cars_Motorcycles"><![CDATA[Авто и мото]]></string>
-    <string name="_bx_videos_cat_Celebrities"><![CDATA[Знаменитости]]></string>
-    <string name="_bx_videos_cat_Design"><![CDATA[Дизайн]]></string>
-    <string name="_bx_videos_cat_DIY_Crafts"><![CDATA[Сделай сам]]></string>
-    <string name="_bx_videos_cat_Education"><![CDATA[Образование]]></string>
-    <string name="_bx_videos_cat_Film_Music_Books"><![CDATA[Фильмы, музыка и книги]]></string>
-    <string name="_bx_videos_cat_Food_Drink"><![CDATA[Еда и напитки]]></string>
-    <string name="_bx_videos_cat_Gardening"><![CDATA[Сад и огород]]></string>
-    <string name="_bx_videos_cat_Geek"><![CDATA[Гик]]></string>
-    <string name="_bx_videos_cat_Hair_Beauty"><![CDATA[Причёски и макияж]]></string>
-    <string name="_bx_videos_cat_Health_Fitness"><![CDATA[Здоровье и фитнесс]]></string>
-    <string name="_bx_videos_cat_History"><![CDATA[История]]></string>
-    <string name="_bx_videos_cat_Holidays_Events"><![CDATA[Праздники и события]]></string>
-    <string name="_bx_videos_cat_Home_Decor"><![CDATA[Интерьер]]></string>
-    <string name="_bx_videos_cat_Humor"><![CDATA[Юмор]]></string>
-    <string name="_bx_videos_cat_Illustrations_Posters"><![CDATA[Иллюстрации и постеры]]></string>
-    <string name="_bx_videos_cat_Kids_Parenting"><![CDATA[Дети и родители]]></string>
-    <string name="_bx_videos_cat_Mens_Fashion"><![CDATA[Мужская мода]]></string>
-    <string name="_bx_videos_cat_Outdoors"><![CDATA[Туризм]]></string>
-    <string name="_bx_videos_cat_Photography"><![CDATA[Фотография]]></string>
-    <string name="_bx_videos_cat_Products"><![CDATA[Продукты]]></string>
-    <string name="_bx_videos_cat_Quotes"><![CDATA[Цитаты]]></string>
-    <string name="_bx_videos_cat_Science_Nature"><![CDATA[Наука и природа]]></string>
-    <string name="_bx_videos_cat_Sports"><![CDATA[Спорт]]></string>
-    <string name="_bx_videos_cat_Tattoos"><![CDATA[Татуеровки]]></string>
-    <string name="_bx_videos_cat_Technology"><![CDATA[Технологии]]></string>
-    <string name="_bx_videos_cat_Travel"><![CDATA[Путешествия]]></string>
-    <string name="_bx_videos_cat_Weddings"><![CDATA[Свадьба]]></string>
-    <string name="_bx_videos_cat_Womens_Fashion"><![CDATA[Женская мода]]></string>
+    <string name="_bx_videos_cat_animals_and_pets"><![CDATA[Животные]]></string>
+    <string name="_bx_videos_cat_education"><![CDATA[Образование]]></string>
+    <string name="_bx_videos_cat_entertainment"><![CDATA[Развлечения]]></string>
+    <string name="_bx_videos_cat_film_and_animation"><![CDATA[Фильм и анимация]]></string>
+    <string name="_bx_videos_cat_music"><![CDATA[Музыка]]></string>
+    <string name="_bx_videos_cat_news"><![CDATA[Новости]]></string>
+    <string name="_bx_videos_cat_people_and_blogs"><![CDATA[Люди и Блоги]]></string>
+    <string name="_bx_videos_cat_sports"><![CDATA[Спорт]]></string>
+    <string name="_bx_videos_cat_travel"><![CDATA[Путешествия]]></string>
 
     <string name="_bx_videos_txt_all_entries_by"><![CDATA[<a href="{0}">Все видео от {1} ({2})</a>]]></string>
     <string name="_bx_videos_txt_sample_single"><![CDATA[видео]]></string>
