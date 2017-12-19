@@ -17,15 +17,6 @@ class BxBaseLanguagesServices extends BxDol
         parent::__construct();
     }
 
-    public function serviceAddDirection($sLanguage = '')
-    {
-        $sDirection = strtoupper(BxDolLanguages::getInstance()->getLangDirection($sLanguage));
-        if(empty($sDirection))
-            $sDirection = 'LTR';
-
-        return ' dir="' . $sDirection . '" ';
-    }
-
     public function serviceGetLanguages($bIdAsKey = false, $bActiveOnly = false)
     {
         $aValues = BxDolLanguages::getInstance()->getLanguages($bIdAsKey, $bActiveOnly);

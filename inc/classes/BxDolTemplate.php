@@ -1321,6 +1321,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             case 'lang':
                 $sRet = bx_lang_name();
                 break;
+            case 'lang_direction':
+                $sRet = bx_lang_direction();
+                break;
             case 'main_logo':
                 $sRet = BxTemplFunctions::getInstance()->getMainLogo();
                 break;

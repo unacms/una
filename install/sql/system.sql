@@ -1208,7 +1208,6 @@ CREATE TABLE `sys_injections` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_injections`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
-('sys_language_direction', 0, 'injection_body', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"add_direction";s:6:"params";a:0:{}s:5:"class";s:22:"TemplLanguagesServices";}', 0, 1),
 ('sys_popup_alert', 0, 'injection_footer', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"add_popup_alert";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1),
 ('sys_popup_confirm', 0, 'injection_footer', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"add_popup_confirm";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1),
 ('sys_popup_prompt', 0, 'injection_footer', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"add_popup_prompt";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1),
@@ -1234,7 +1233,6 @@ CREATE TABLE `sys_injections_admin` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_injections_admin`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
-('sys_language_direction', 0, 'injection_body', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"add_direction";s:6:"params";a:0:{}s:5:"class";s:22:"TemplLanguagesServices";}', 0, 1),
 ('sys_popup_alert', 0, 'injection_footer', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"add_popup_alert";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1),
 ('sys_popup_confirm', 0, 'injection_footer', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"add_popup_confirm";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1),
 ('sys_popup_prompt', 0, 'injection_footer', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"add_popup_prompt";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1);

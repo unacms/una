@@ -101,7 +101,7 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
         if (!$sLang)
             $sLang = $this->getCurrentLanguage();
 
-        return $this->oDb->getLanguageDirection($sLang);
+        return strtoupper($this->oDb->getLanguageDirection($sLang));
     }
 
     function getDefaultLangName()
@@ -381,6 +381,11 @@ function _t_format_extensions($mixedExtensions)
 function bx_lang_name()
 {
     return BxDolLanguages::getInstance()->getCurrentLanguage();
+}
+
+function bx_lang_direction($sLanguage = '')
+{
+    return BxDolLanguages::getInstance()->getLangDirection($sLanguage);
 }
 
 /** @} */
