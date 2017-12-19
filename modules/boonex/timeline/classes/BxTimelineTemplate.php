@@ -126,13 +126,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aEvent))
             return array('content' => MsgBox(_t('_Empty')), 'designbox_id' => 13);
 
-        $oProfile = BxDolProfile::getInstance($aEvent[$CNF['FIELD_OWNER_ID']]);
-        if(!$oProfile)
-            return array('content' => MsgBox(_t('_Empty')), 'designbox_id' => 13);
+        $iProfile = (int)$aEvent[$CNF['FIELD_OWNER_ID']];
+        if(!empty($iProfile)) {
+            $oProfile = BxDolProfile::getInstance($iProfile);
+            if(!$oProfile)
+                return array('content' => MsgBox(_t('_Empty')), 'designbox_id' => 13);
 
-        $mixedResult = $oProfile->checkAllowedProfileView();
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-            return array('content' => MsgBox($mixedResult), 'designbox_id' => 13);
+            $mixedResult = $oProfile->checkAllowedProfileView();
+            if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+                return array('content' => MsgBox($mixedResult), 'designbox_id' => 13);
+        }
 
         $aParams = array(
         	'view' => BX_TIMELINE_VIEW_ITEM, 
