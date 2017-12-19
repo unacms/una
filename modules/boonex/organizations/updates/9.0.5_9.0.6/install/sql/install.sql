@@ -37,26 +37,15 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_organization', 'bx_organizations', 'join_confirmation', 1, '', 1, 'switcher', '_bx_orgs_form_profile_input_sys_join_confirm', '_bx_orgs_form_profile_input_join_confirm', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
 
 
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_organization_add', 'bx_organization_invite', 'bx_organization_edit');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_organization_add' AND `input_name`='join_confirmation';
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_organization_add', 'initial_members', 2147483647, 1, 1),
-('bx_organization_add', 'picture', 2147483647, 1, 2),
-('bx_organization_add', 'org_name', 2147483647, 1, 3),
-('bx_organization_add', 'org_cat', 2147483647, 1, 4),
-('bx_organization_add', 'org_desc', 2147483647, 1, 5),
-('bx_organization_add', 'location', 2147483647, 1, 6),
-('bx_organization_add', 'join_confirmation', 2147483647, 1, 7),
-('bx_organization_add', 'allow_view_to', 2147483647, 1, 8),
-('bx_organization_add', 'do_submit', 2147483647, 1, 9),
+('bx_organization_add', 'join_confirmation', 2147483647, 1, 7);
 
+DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_organization_invite';
+INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_organization_invite', 'initial_members', 2147483647, 1, 1),
-('bx_organization_invite', 'do_submit', 2147483647, 1, 2),
+('bx_organization_invite', 'do_submit', 2147483647, 1, 2);
 
-('bx_organization_edit', 'picture', 2147483647, 1, 1),
-('bx_organization_edit', 'org_name', 2147483647, 1, 2),
-('bx_organization_edit', 'org_cat', 2147483647, 1, 3),
-('bx_organization_edit', 'org_desc', 2147483647, 1, 4),
-('bx_organization_edit', 'location', 2147483647, 1, 5),
-('bx_organization_edit', 'join_confirmation', 2147483647, 1, 6),
-('bx_organization_edit', 'allow_view_to', 2147483647, 1, 7),
-('bx_organization_edit', 'do_submit', 2147483647, 1, 8);
+DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_organization_edit' AND `input_name`='join_confirmation';
+INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('bx_organization_edit', 'join_confirmation', 2147483647, 1, 6);
