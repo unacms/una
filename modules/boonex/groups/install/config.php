@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_groups',
     'title' => 'Groups',
     'note' => 'Basic group profiles functionality.',
-    'version' => '9.0.6.DEV',
+    'version' => '9.0.7.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 

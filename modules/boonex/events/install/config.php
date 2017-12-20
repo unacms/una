@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_events',
     'title' => 'Events',
     'note' => 'Events functionality.',
-    'version' => '9.0.5.DEV',
+    'version' => '9.0.6.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 

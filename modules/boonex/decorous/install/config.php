@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_decorous',
     'title' => 'Decorous',
     'note' => 'Design template',
-    'version' => '9.0.2.DEV',
+    'version' => '9.0.3.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 
