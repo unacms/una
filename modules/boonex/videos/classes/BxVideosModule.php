@@ -70,6 +70,20 @@ class BxVideosModule extends BxBaseModTextModule
     {
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
     }
+
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        list($sImageThumb, $sImageGallery) = $this->_oTemplate->getUnitImages($aContentInfo);
+        if(empty($sImageGallery) && !empty($sImageThumb))
+            $sImageGallery = $sImageThumb;
+
+        if(empty($sImageGallery))
+            return array();
+
+        return array(
+            array('url' => $sUrl, 'src' => $sImageGallery),
+        );
+    }
 }
 
 /** @} */

@@ -77,6 +77,11 @@ class BxVideosTemplate extends BxBaseModTextTemplate
     	return $sVotes; 
     }
 
+    public function getUnitImages ($aData)
+    {
+        return $this->getUnitThumbAndGallery ($aData);
+    }
+
     protected function getUnit($aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
