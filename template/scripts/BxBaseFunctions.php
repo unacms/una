@@ -401,6 +401,21 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         return $sRet;
     }
 
+    function getInjectionHead() 
+    {
+        return $this->getInjection('getInjHead');
+    }
+
+    function getInjectionHeader() 
+    {
+        return $this->getInjection('getInjHeader');
+    }
+
+    function getInjectionFooter() 
+    {
+        return $this->getInjection('getInjFooter');
+    }
+
     /**
      * Output time wrapped in <time> tag in HTML.
      * Then time is autoformatted using JS upon page load, this is aumatically converted to user's timezone and
@@ -464,6 +479,43 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                     ' . ($sUrlWebM ? '<source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />' : '') . '
                     ' . ($sUrlMP4  ? '<source type="video/mp4" src="' . $sUrlMP4 . '" />' : '') . '
                 </video>';
+    }
+
+    protected function getInjection($sPrefix)
+    {
+        $sContent = '';
+
+        $aMethods = get_class_methods($this);
+        foreach($aMethods as $sMethod)
+            if(substr($sMethod, 0, strlen($sPrefix)) == $sPrefix)
+                $sContent .= $this->$sMethod();
+
+        return $sContent;
+    }
+
+    protected function getInjFooterPopupLoading() 
+    {
+        return $this->transBox('bx-popup-loading', $this->_oTemplate->parsePageByName('popup_loading.html', array()), true);  
+    }
+
+    protected function getInjFooterPopupMenus() 
+    {
+        $sContent = '';
+
+        $oSearch = new BxTemplSearch();
+        $oSearch->setLiveSearch(true);
+        $sContent .= $this->_oTemplate->parsePageByName('search.html', array(
+            'search_form' => $oSearch->getForm(BX_DB_CONTENT_ONLY),
+            'results' => $oSearch->getResultsContainer(),
+        ));
+
+        $sContent .= $this->_oTemplate->getMenu ('sys_site');
+        if(isLogged()) {
+            $sContent .= $this->_oTemplate->getMenu ('sys_add_content');
+            $sContent .= $this->_oTemplate->getMenu ('sys_account_popup');
+        }
+
+        return $sContent;
     }
 }
 

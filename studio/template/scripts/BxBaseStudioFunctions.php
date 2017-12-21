@@ -54,6 +54,11 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $oTemplate->setPageContent ('page_main_code', $sHtml);
         $oTemplate->getPageCode();
     }
+
+    protected function getInjFooterPopupMenus() 
+    {
+        return '';
+    }
 }
 
 /** @} */

@@ -25,16 +25,15 @@
     </script>
     __extra_js__
 
+    __injection_head__
     <bx_injection:injection_head />
-
 </head>
-
 <body class="bx-def-font bx-def-color-bg-page" dir="__lang_direction__" <bx_injection:injection_body /> >
-    <bx_injection:injection_header />
+	__injection_header__
+	<bx_injection:injection_header />
 
-    <div class="bx-def-padding-sec">
-        __page_main_code__
-    </div>
-
+	<div class="bx-def-padding-sec">
+	    __page_main_code__
+	</div>
 </body>
 </html>

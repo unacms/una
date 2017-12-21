@@ -1303,20 +1303,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 if(isset($this->aPage['header_text']))
                     $sRet = bx_process_output($this->aPage['header_text']);
                 break;
-            case 'popup_loading':
-                $s = $this->parsePageByName('popup_loading.html', array());
-                $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $s, true);
-
-                $oSearch = new BxTemplSearch();
-                $oSearch->setLiveSearch(true);
-                $sRet .= $this->parsePageByName('search.html', array(
-                    'search_form' => $oSearch->getForm(BX_DB_CONTENT_ONLY),
-                    'results' => $oSearch->getResultsContainer(),
-                ));
-
-                $sRet .= $this->getMenu ('sys_site');                
-                $sRet .= isLogged() ? $this->getMenu ('sys_add_content') : '';
-                $sRet .= isLogged() ? $this->getMenu ('sys_account_popup') : '';
+            case 'injection_head':
+                $sRet = $this->_oTemplateFunctions->getInjectionHead();
+                break;
+            case 'injection_header':
+                $sRet = $this->_oTemplateFunctions->getInjectionHeader();
+                break;
+            case 'injection_footer':
+                $sRet = $this->_oTemplateFunctions->getInjectionFooter();
                 break;
             case 'lang':
                 $sRet = bx_lang_name();
