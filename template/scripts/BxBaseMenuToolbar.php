@@ -26,8 +26,11 @@ class BxBaseMenuToolbar extends BxTemplMenu
             return $a;
 
         foreach ($a as $k => $r) {
-            if('account' != $r['name'])
+            if($r['name'] != 'account')
                 continue;
+
+            if($a[$k]['bx_if:image']['condition'])
+                break;
 
             $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id());
 
