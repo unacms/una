@@ -55,6 +55,11 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $oTemplate->getPageCode();
     }
 
+    protected function getInjHeadLiveUpdates() 
+    {
+        return '';
+    }
+
     protected function getInjFooterPopupMenus() 
     {
         return '';
