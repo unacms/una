@@ -416,6 +416,35 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         return $this->getInjection('getInjFooter');
     }
 
+    public function getPopupAlert()
+    {
+        return $this->transBox('bx-popup-alert', $this->_oTemplate->parseHtmlByName('popup_trans_alert_cnt.html', array()), true);
+    }
+
+    public function getPopupConfirm()
+    {
+        return $this->transBox('bx-popup-confirm', $this->_oTemplate->parseHtmlByName('popup_trans_confirm_cnt.html', array()), true);
+    }
+
+    public function getPopupPrompt()
+    {
+        $sInputText = 'bx-popup-prompt-value';
+        $aInputText = array(
+            'type' => 'text',
+            'name' => $sInputText,
+            'attrs' => array(
+                'id' => $sInputText,
+            ),
+            'value' => '',
+            'caption' => ''
+        );
+
+        $oForm = new BxTemplFormView(array(), $this->_oTemplate);
+        return $this->transBox('bx-popup-prompt', $this->_oTemplate->parseHtmlByName('popup_trans_prompt_cnt.html', array(
+            'input' => $oForm->genRow($aInputText)
+        )), true);
+    }
+
     /**
      * Output time wrapped in <time> tag in HTML.
      * Then time is autoformatted using JS upon page load, this is aumatically converted to user's timezone and
@@ -493,6 +522,57 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         return $sContent;
     }
 
+    protected function getInjHeadLiveUpdates() 
+    {
+        return BxDolLiveUpdates::getInstance()->init();
+    }
+
+    protected function getInjHeaderPushNotifications() 
+    {
+        $iProfileId = bx_get_logged_profile_id();
+        if(empty($iProfileId))
+            return '';
+
+        $sAppId = getParam('sys_push_app_id');
+        if(empty($sAppId))
+            return '';
+
+        $sShortName = getParam('sys_push_short_name');
+        $sSafariWebId = getParam('sys_push_safari_id');
+
+        $sSubfolder = '/plugins_public/onesignal/';
+        $aUrl = parse_url(BX_DOL_URL_ROOT);
+        if(!empty($aUrl['path'])) {
+            $sPath = trim($aUrl['path'], '/');
+            if(!empty($sPath))
+                $sSubfolder = '/' . $sPath . $sSubfolder;
+        }
+
+        $this->_oTemplate->addJs(array(
+            'https://cdn.onesignal.com/sdks/OneSignalSDK.js',
+            'BxDolPush.js',
+        ));
+
+        $sJsClass = 'BxDolPush';
+        $sJsObject = 'oBxDolPush';
+
+        $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode(array(
+            'sObjName' => $sJsObject,
+            'sSiteName' => getParam('site_title'),
+            'iProfileId' => $iProfileId,
+            'sAppId' => $sAppId,
+            'sShortName' => $sShortName,
+            'sSafariWebId' => $sSafariWebId,
+            'sSubfolder' => $sSubfolder,
+            'sNotificationUrl' => BX_DOL_URL_ROOT,
+            'sTxtNotificationRequest' => bx_js_string(_t('_sys_push_notification_request', getParam('site_title'))),
+            'sTxtNotificationRequestYes' => bx_js_string(_t('_sys_push_notification_request_yes')),
+            'sTxtNotificationRequestNo' => bx_js_string(_t('_sys_push_notification_request_no')),
+        )) . ");";
+
+        return $this->_oTemplate->_wrapInTagJsCode($sContent);
+    }
+
     protected function getInjFooterPopupLoading() 
     {
         return $this->transBox('bx-popup-loading', $this->_oTemplate->parsePageByName('popup_loading.html', array()), true);  
@@ -514,6 +594,17 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             $sContent .= $this->_oTemplate->getMenu ('sys_add_content');
             $sContent .= $this->_oTemplate->getMenu ('sys_account_popup');
         }
+
+        return $sContent;
+    }
+
+    protected function getInjFooterPopups() 
+    {
+        $sContent = '';
+
+        $sContent .= $this->getPopupAlert();
+        $sContent .= $this->getPopupConfirm();
+        $sContent .= $this->getPopupPrompt();
 
         return $sContent;
     }

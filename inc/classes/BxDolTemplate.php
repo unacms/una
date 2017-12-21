@@ -1303,13 +1303,13 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 if(isset($this->aPage['header_text']))
                     $sRet = bx_process_output($this->aPage['header_text']);
                 break;
-            case 'injection_head':
+            case 'system_injection_head':
                 $sRet = $this->_oTemplateFunctions->getInjectionHead();
                 break;
-            case 'injection_header':
+            case 'system_injection_header':
                 $sRet = $this->_oTemplateFunctions->getInjectionHeader();
                 break;
-            case 'injection_footer':
+            case 'system_injection_footer':
                 $sRet = $this->_oTemplateFunctions->getInjectionFooter();
                 break;
             case 'lang':
