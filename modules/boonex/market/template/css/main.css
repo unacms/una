@@ -133,6 +133,10 @@ div.bx-market-attachment.bx-market-attachment-main {
 div.bx-market-a-main {
 	position: absolute;
 
-	top: 5px;
-	right: 10px;
+	top: 0.25rem;
+	right: 0.5rem;
+}
+div.bx-market-a-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
