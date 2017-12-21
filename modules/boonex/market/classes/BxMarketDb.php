@@ -42,7 +42,7 @@ class BxMarketDb extends BxBaseModTextDb
     	$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_FILES2ENTRIES'] . "` AS `tfe` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tfe`.`content_id` AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=`tfe`.`file_id` LEFT JOIN `" . $CNF['TABLE_FILES'] . "` AS `tf` ON `te`.`" . $CNF['FIELD_PACKAGE'] . "`=`tf`.`id` ";
 
     	//--- Add license checking for Public listings if Client is specified.
-    	if(in_array($aParams['type'], array('featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0) {
+    	if(in_array($aParams['type'], array('latest', 'popular', 'featured', 'category', 'tag', 'vendor', 'keyword')) && isset($aParams['client']) && (int)$aParams['client'] != 0) {
     	    //--- Direct license purchase for a product
     	    $sLicDir = $this->prepareAsString("SELECT `tl`.`added` FROM `" . $CNF['TABLE_LICENSES'] . "` AS `tl` WHERE `tl`.`product_id`=`te`.`" . $CNF['FIELD_ID'] . "` AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") LIMIT 1", (int)$aParams['client'], $aParams['key']);
 
