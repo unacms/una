@@ -2,9 +2,6 @@
 
 
 /*--- Overwrite Defaults ---*/
-#bx-toolbar {
-	z-index: 500;
-}
 #bx-logo-container {
     margin-left: 0px;
     text-align: left;
@@ -199,7 +196,6 @@
 /*--- Sidebar ---*/
 .cd-side-nav {
   position: fixed;
-  z-index: 400;
   left: 0;
   width: 100%;
   visibility: hidden;
