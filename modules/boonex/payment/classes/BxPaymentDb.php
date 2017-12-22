@@ -140,9 +140,14 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
     public function getCartContent($iId)
     {
-    	return $this->getRow("SELECT * FROM `" . $this->_sPrefix . "cart` WHERE `client_id`=:client_id LIMIT 1", array(
-    		'client_id' => $iId
-    	));
+        $aCart = $this->getRow("SELECT * FROM `" . $this->_sPrefix . "cart` WHERE `client_id`=:client_id LIMIT 1", array(
+            'client_id' => $iId
+        ));
+
+        if(empty($aCart) || !is_array($aCart))
+            $aCart = array('items' => '', 'customs' => '');
+
+        return $aCart;
     }
 
     public function setCartItems($iId, $sItems, $aCustoms = array())
