@@ -424,7 +424,7 @@ function bx_menu_slide (jSel, e, sPosition) {
         var eToolbar = $('#bx-toolbar');
         eSlider.css({
             position: 'fixed',
-            top: eToolbar.outerHeight(true),
+            top: eToolbar.outerHeight(true) + (typeof iToolbarSubmenuTopOffset != 'undefined' ? parseInt(iToolbarSubmenuTopOffset) : 0),
             left: 0
         });
     };
