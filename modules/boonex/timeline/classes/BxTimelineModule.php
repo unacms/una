@@ -1601,6 +1601,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function isAllowedSend($aEvent, $bPerform = false)
     {
+        if(!$this->_oDb->isEnabledByName('bx_convos'))
+            return false;
+
         if(isAdmin())
             return true;
 
