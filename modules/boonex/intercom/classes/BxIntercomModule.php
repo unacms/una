@@ -268,7 +268,7 @@ EOS;
             'Accept: application/json',
         );
 
-        curl_setopt($r, CURLOPT_USERPWD, $sAppId . ":" . $sApiKey);
+        curl_setopt($r, CURLOPT_USERPWD, $sApiKey . ":");
         curl_setopt($r, CURLOPT_TIMEOUT, 10);
         curl_setopt($r, CURLOPT_URL, $this->sHostnameAPI . $sURI);
         curl_setopt($r, CURLOPT_HEADER, 0);
