@@ -22,9 +22,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']));
-
-        if (isset($this->aInputs['do_publish']) && !isset($this->aInputs['do_submit']))
-            $this->aParams['db']['submit_name'] = 'do_publish';
     }
 }
 

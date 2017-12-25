@@ -69,9 +69,16 @@ class BxDolFormQuery extends BxDolDb
         if (!empty($aObject['params']))
             $aAddFormParams = unserialize($aObject['params']);
 
+        $mixedSubminName = '';
+        if (!empty($aObject['submit_name'])) {
+            $mixedSubminName = @unserialize($aObject['submit_name']);
+            if($mixedSubminName === false)
+                $mixedSubminName = $aObject['submit_name'];
+        }
+
         $aDefaultsFormParams = array(
             'db' => array(
-                'submit_name' => $aObject['submit_name'],
+                'submit_name' => $mixedSubminName,
                 'table' => $aObject['table'],
                 'key' => $aObject['key'],
                 'uri' => $aObject['uri'],

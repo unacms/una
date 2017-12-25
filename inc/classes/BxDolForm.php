@@ -896,7 +896,15 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     function isSubmitted ()
     {
-        return BxDolForm::getSubmittedValue($this->aParams['db']['submit_name'], $this->aFormAttrs['method'], $this->_aSpecificValues) ? true : false;
+        $aSubmitName = $this->aParams['db']['submit_name'];
+        if(!is_array($aSubmitName))
+            $aSubmitName = array($aSubmitName);
+
+        foreach($aSubmitName as $sSubmitName)
+            if(BxDolForm::getSubmittedValue($sSubmitName, $this->aFormAttrs['method'], $this->_aSpecificValues))
+                return true;
+        
+        return false;
     }
 
     function getId ()
