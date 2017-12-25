@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `bx_shopify_favorites_track` (
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_shopify', 'bx_shopify', '_bx_shopify_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_shopify_entries', 'id', '', '', 'do_submit', '', 0, 1, 'BxShopifyFormEntry', 'modules/boonex/shopify/classes/BxShopifyFormEntry.php'),
+('bx_shopify', 'bx_shopify', '_bx_shopify_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_shopify_entries', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxShopifyFormEntry', 'modules/boonex/shopify/classes/BxShopifyFormEntry.php'),
 ('bx_shopify_settings', 'bx_shopify', '_bx_shopify_form_settings', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_shopify_settings', 'id', '', '', 'do_submit', '', 0, 1, 'BxShopifyFormSettings', 'modules/boonex/shopify/classes/BxShopifyFormSettings.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 

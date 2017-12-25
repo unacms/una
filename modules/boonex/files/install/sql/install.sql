@@ -158,8 +158,8 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_files', 'bx_files', '_bx_files_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_files_main', 'id', '', '', 'do_submit', '', 0, 1, 'BxFilesFormEntry', 'modules/boonex/files/classes/BxFilesFormEntry.php'),
-('bx_files_upload', 'bx_files', '_bx_files_form_upload', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_files_main', 'id', '', '', 'do_submit', '', 0, 1, 'BxFilesFormUpload', 'modules/boonex/files/classes/BxFilesFormUpload.php');
+('bx_files', 'bx_files', '_bx_files_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_files_main', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxFilesFormEntry', 'modules/boonex/files/classes/BxFilesFormEntry.php'),
+('bx_files_upload', 'bx_files', '_bx_files_form_upload', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_files_main', 'id', '', '', 'do_submit', '', 0, 1, 'BxFilesFormUpload', 'modules/boonex/files/classes/BxFilesFormUpload.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_files', 'bx_files_entry_delete', 'bx_files', 0, '_bx_files_form_entry_display_delete'),

@@ -203,7 +203,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_polls', 'bx_polls', '_bx_polls_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_polls_entries', 'id', '', '', 'do_submit', 'a:1:{s:14:"checker_helper";s:29:"BxPollsFormEntryCheckerHelper";}', 0, 1, 'BxPollsFormEntry', 'modules/boonex/polls/classes/BxPollsFormEntry.php');
+('bx_polls', 'bx_polls', '_bx_polls_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_polls_entries', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', 'a:1:{s:14:"checker_helper";s:29:"BxPollsFormEntryCheckerHelper";}', 0, 1, 'BxPollsFormEntry', 'modules/boonex/polls/classes/BxPollsFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_polls', 'bx_polls_entry_add', 'bx_polls', 0, '_bx_polls_form_entry_display_add'),

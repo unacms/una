@@ -289,7 +289,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_market', 'bx_market', '_bx_market_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_market_products', 'id', '', '', 'do_submit', '', 0, 1, 'BxMarketFormEntry', 'modules/boonex/market/classes/BxMarketFormEntry.php');
+('bx_market', 'bx_market', '_bx_market_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_market_products', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxMarketFormEntry', 'modules/boonex/market/classes/BxMarketFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_market', 'bx_market_entry_add', 'bx_market', 0, '_bx_market_form_entry_display_add'),

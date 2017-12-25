@@ -225,7 +225,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_videos', 'bx_videos', '_bx_videos_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_videos_entries', 'id', '', '', 'do_submit', '', 0, 1, 'BxVideosFormEntry', 'modules/boonex/videos/classes/BxVideosFormEntry.php');
+('bx_videos', 'bx_videos', '_bx_videos_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_videos_entries', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxVideosFormEntry', 'modules/boonex/videos/classes/BxVideosFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_videos', 'bx_videos_entry_add', 'bx_videos', 0, '_bx_videos_form_entry_display_add'),
