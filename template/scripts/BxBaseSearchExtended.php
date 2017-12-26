@@ -60,7 +60,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $aParams = array();
         foreach($this->_aObject['fields'] as $aField) {
             $sValue = $oForm->getCleanValue($aField['name']);
-            if(empty($sValue) || bx_is_empty_array($sValue))
+            if(empty($sValue) || (is_array($sValue) && bx_is_empty_array($sValue)))
                 continue;
 
             $aParams[$aField['name']] = array(
