@@ -15,7 +15,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_market_summary_chars', '700', @iCategId, '_bx_market_option_summary_chars', 'digit', '', '', '', 10),
 ('bx_market_plain_summary_chars', '240', @iCategId, '_bx_market_option_plain_summary_chars', 'digit', '', '', '', 11),
 ('bx_market_per_page_browse', '12', @iCategId, '_bx_market_option_per_page_browse', 'digit', '', '', '', 20),
-('bx_market_per_page_profile', '3', @iCategId, '_bx_market_option_per_page_profile', 'digit', '', '', '', 21),
+('bx_market_per_page_profile', '6', @iCategId, '_bx_market_option_per_page_profile', 'digit', '', '', '', 21),
 ('bx_market_rss_num', '10', @iCategId, '_bx_market_option_rss_num', 'digit', '', '', '', 25),
 ('bx_market_searchable_fields', 'title,text', @iCategId, '_bx_market_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:21:"get_searchable_fields";}', 30);
 

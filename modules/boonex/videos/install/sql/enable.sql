@@ -13,7 +13,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_videos_summary_chars', '700', @iCategId, '_bx_videos_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_videos_plain_summary_chars', '240', @iCategId, '_bx_videos_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_videos_per_page_browse', '12', @iCategId, '_bx_videos_option_per_page_browse', 'digit', '', '', '', 10),
-('bx_videos_per_page_profile', '3', @iCategId, '_bx_videos_option_per_page_profile', 'digit', '', '', '', 12),
+('bx_videos_per_page_profile', '6', @iCategId, '_bx_videos_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_videos_rss_num', '10', @iCategId, '_bx_videos_option_rss_num', 'digit', '', '', '', 20),
 ('bx_videos_searchable_fields', 'title,text', @iCategId, '_bx_videos_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:21:"get_searchable_fields";}', 30);
 

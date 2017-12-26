@@ -11,7 +11,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_shopify_per_page_browse', '12', @iCategId, '_bx_shopify_option_per_page_browse', 'digit', '', '', '', 10),
-('bx_shopify_per_page_profile', '3', @iCategId, '_bx_shopify_option_per_page_profile', 'digit', '', '', '', 12),
+('bx_shopify_per_page_profile', '6', @iCategId, '_bx_shopify_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_shopify_rss_num', '10', @iCategId, '_bx_shopify_option_rss_num', 'digit', '', '', '', 20),
 ('bx_shopify_searchable_fields', 'title', @iCategId, '_bx_shopify_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:10:"bx_shopify";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
