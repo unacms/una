@@ -126,8 +126,8 @@
     <string name="_bx_videos_page_block_title_entry_info"><![CDATA[Инфо]]></string>
     <string name="_bx_videos_page_block_title_my_entries"><![CDATA[Мои видео]]></string>
 
-    <string name="_bx_videos_menu_set_title_view_entry"><![CDATA[Публикация - Действия]]></string>
-    <string name="_bx_videos_menu_title_view_entry"><![CDATA[Публикация - Действия]]></string>
+    <string name="_bx_videos_menu_set_title_view_entry"><![CDATA[Видео - Действия]]></string>
+    <string name="_bx_videos_menu_title_view_entry"><![CDATA[Видео - Действия]]></string>
     <string name="_bx_videos_menu_title_submenu"><![CDATA[Видео - Подменю]]></string>
     <string name="_bx_videos_menu_set_title_submenu"><![CDATA[Видео - Подменю]]></string>
     <string name="_bx_videos_menu_item_title_system_create_entry"><![CDATA[Новое видео]]></string>
@@ -149,21 +149,21 @@
     <string name="_bx_videos_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_videos_menu_title_view_entry_submenu"><![CDATA[Просмотреть видео - Подменю]]></string>
     <string name="_bx_videos_menu_set_title_view_entry_submenu"><![CDATA[Просмотреть видео - Подменю]]></string>
-    <string name="_bx_videos_menu_item_title_view_entry_submenu_entry"><![CDATA[Публикация]]></string>
+    <string name="_bx_videos_menu_item_title_view_entry_submenu_entry"><![CDATA[Видео]]></string>
     <string name="_bx_videos_menu_item_title_view_entry_submenu_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_videos_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к видео]]></string>
     <string name="_bx_videos_menu_item_title_system_view_entries_author"><![CDATA[Видео]]></string>
     <string name="_bx_videos_menu_item_title_view_entries_author"><![CDATA[Видео]]></string>
     <string name="_bx_videos_menu_title_entries_my"><![CDATA[Мои видео - Меню действий]]></string>
     <string name="_bx_videos_menu_set_title_entries_my"><![CDATA[Мои видео - Меню]]></string>
-	<string name="_bx_videos_menu_item_title_system_manage_my_posts"><![CDATA[Мои видео]]></string>
-    <string name="_bx_videos_menu_item_title_manage_my_posts"><![CDATA[{addon} видео]]></string>
+	<string name="_bx_videos_menu_item_title_system_manage_my_videos"><![CDATA[Мои видео]]></string>
+    <string name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[{addon} видео]]></string>
     <string name="_bx_videos_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_videos_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_videos_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_videos_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
-	<string name="_bx_videos_menu_item_title_system_admt_posts"><![CDATA[Видео]]></string>
-	<string name="_bx_videos_menu_item_title_admt_posts"><![CDATA[Видео - {addon} спрятано]]></string>
+	<string name="_bx_videos_menu_item_title_system_admt_videos"><![CDATA[Видео]]></string>
+	<string name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Видео - {addon} спрятано]]></string>
 	<string name="_bx_videos_menu_item_title_manage_my"><![CDATA[Мои видео]]></string>
 	<string name="_bx_videos_menu_item_title_manage_all"><![CDATA[Все видео]]></string>
 
