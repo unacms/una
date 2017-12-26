@@ -1,0 +1,28 @@
+@import url(../../../../base/text/template/css/main.css);
+
+
+/*--- Cover Section ---*/
+.bx_photos_cover .bx-cover-title {
+    margin-top:9rem;
+}
+
+
+/*--- Photo Block  ---*/
+.bx-photos-entity-photo img {
+    max-width:100%;
+}
+
+
+/*--- Snippet ---*/
+.bx-base-text-unit-gallery .bx-base-text-unit-no-thumb,
+.bx-base-text-unit-gallery .bx-base-text-unit-thumb {
+	position: relative;
+}
+
+.bx-photo-unit-duration {
+	position: absolute;
+	right: 10px;
+    bottom: 10px;
+
+	background-color: rgba(255, 255, 255, 0.9);
+}
