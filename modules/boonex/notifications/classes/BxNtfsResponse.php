@@ -275,9 +275,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
     protected function sendNotificationEmail($oProfile, $sContent)
     {
-        sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array(
-            'content' => $sContent
-        ));
+        sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array('content' => $sContent), BX_EMAIL_NOTIFY, true);
     }
 
     protected function sendNotificationPush($oProfile, $aContent)

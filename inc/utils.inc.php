@@ -271,7 +271,7 @@ function htmlspecialchars_adv( $string )
 /**
  * Send mail to user by parsing email template
  */
-function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY)
+function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY, $bAddToQueue = false)
 {
     $oProfile = BxDolProfile::getInstance($iProfileId);
 
@@ -286,13 +286,13 @@ function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aRe
     if (!$aTemplate)
         return false;
 
-    return sendMail($oAccount->getEmail(), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), $iEmailType);
+    return sendMail($oAccount->getEmail(), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), $iEmailType, 'html', false, array(), $bAddToQueue);
 }
 
 /**
  * Send system email 
  */
-function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmailType = BX_EMAIL_SYSTEM)
+function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmailType = BX_EMAIL_SYSTEM, $bAddToQueue = false)
 {
     $oEmailTemplates = BxDolEmailTemplates::getInstance();
 
@@ -303,7 +303,7 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
     if (!$aTemplate)
         return false;
 
-    return sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), $iEmailType);
+    return sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), $iEmailType, 'html', false, array(), $bAddToQueue);
 }
 /**
  * Send email function
@@ -317,9 +317,10 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
  * @param $sEmailFlag - use 'html' for HTML email message
  * @param $isDisableAlert - disable alert
  * @param $aCustomHeaders - custom email headers
+ * @param $bAddToQueue - add message to email queue
  * @return true if message was send or false otherwise
  */
-function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array())
+function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
 {
     // make sure that recipient's email is valid and message isn't empty
     if (!$sMailBody || !$sRecipientEmail || preg_match('/\(2\)$/', $sRecipientEmail))
@@ -402,21 +403,24 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         unset($aAlert['override_result']);
     }
 
-    // send mail
-    if( 'html' == $sEmailFlag) {
+    // prepare HTML/Plain message
+    if($sEmailFlag == 'html')
         $sMailHeader = "Content-type: text/html; charset=UTF-8\r\n" . $sMailHeader;
-        $iSendingResult = mail( $sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters );
-    } else {
+    else {
         $sMailHeader = "Content-type: text/plain; charset=UTF-8\r\n" . $sMailHeader;
         $sMailBody = html2txt($sMailBody);
-        $iSendingResult = mail( $sRecipientEmail, $sMailSubject, html2txt($sMailBody), $sMailHeader, $sMailParameters );
     }
+
+    // send mail or put it into queue
+    $bResult = false;
+    if(!$bAddToQueue || !($bResult = BxDolEmailQueue::getInstance()->add($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters)))
+        $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);     
 
     // system alert
     if (!$isDisableAlert)
         bx_alert('system', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
 
-    return $iSendingResult;
+    return $bResult;
 }
 
 /*

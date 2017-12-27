@@ -1281,6 +1281,7 @@
     <string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Шаблон Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_iframely_api_key"><![CDATA[Ключ Iframely API]]></string>
+    <string name="_adm_stg_cpt_option_sys_eq_send_per_start"><![CDATA[Количество сообщенией, отправляемое из очереди при каждом запуске]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA-аккаунт - Key (ключ)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[UNA-аккаунт - Secret (секретное слово)]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Задействовать кэш для страниц]]></string>
