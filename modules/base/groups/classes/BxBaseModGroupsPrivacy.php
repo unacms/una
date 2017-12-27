@@ -10,7 +10,7 @@
  */
 
 class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
-{
+{    
     public function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
@@ -63,6 +63,22 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
 		);
 
         return parent::getGroupChooser($sObject, $iOwnerId, $aParams);
+
+        return $a;
+    }
+
+    protected function getGroups() 
+    {
+        $a = parent::getGroups();
+    
+        foreach ($a as $i => $r) {
+            if (BX_DOL_PG_FRIENDS == $r['key']) {
+                unset($a[$i]);
+                break;
+            }
+        }
+
+        return $a;
     }
 
     protected function getObjectInfo($sAction, $iObjectId)
