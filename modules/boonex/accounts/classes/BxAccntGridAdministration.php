@@ -236,6 +236,14 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         return '';
     }
 
+    protected function _getCellName($mixedValue, $sKey, $aField, $aRow)
+    {
+        $oAccount = BxDolAccount::getInstance($aRow['id']);
+        if ($oAccount)
+            $s = $oAccount->getDisplayName();
+        return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
+    }
+    
 	protected function _getCellProfiles($mixedValue, $sKey, $aField, $aRow)
     {
         $s = $this->_oModule->_oTemplate->getProfilesByAccount($aRow);
