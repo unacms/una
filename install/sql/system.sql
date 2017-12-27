@@ -1519,7 +1519,7 @@ INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VA
 ('sys_upgrade_modules', '30 2 * * *', 'BxDolCronUpgradeModulesCheck', 'inc/classes/BxDolCronUpgradeModulesCheck.php', ''),
 ('sys_storage', '* * * * *', 'BxDolCronStorage', 'inc/classes/BxDolCronStorage.php', ''),
 ('sys_transcoder', '* * * * *', 'BxDolCronTranscoder', 'inc/classes/BxDolCronTranscoder.php', ''),
-('sys_email_queue', '*/10 * * * *', 'BxDolCronEmailQueue', 'inc/classes/BxDolCronEmailQueue.php', '');
+('sys_email_queue', '* * * * *', 'BxDolCronEmailQueue', 'inc/classes/BxDolCronEmailQueue.php', '');
 
 -- --------------------------------------------------------
 
