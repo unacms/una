@@ -20,6 +20,16 @@ class BxPhotosPageEntry extends BxBaseModTextPageEntry
         parent::__construct($aObject, $oTemplate);
     }
 
+    public function getCode()
+    {
+        $sResult = parent::getCode();
+
+        //--- Don't use uploaded image as page cover.
+        BxDolCover::getInstance($this->_oModule->_oTemplate)->setCoverImageUrl('');
+
+        return $sResult;
+    }
+
     protected function _setSubmenu($aParams)
     {
     	parent::_setSubmenu(array_merge($aParams, array(
