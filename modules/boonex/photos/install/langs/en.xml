@@ -72,11 +72,11 @@
     <string name="_bx_photos_page_title_browse_updated"><![CDATA[Updated Photos]]></string>
     <string name="_bx_photos_page_title_sys_home"><![CDATA[Photos Home]]></string>
     <string name="_bx_photos_page_title_home"><![CDATA[Photos]]></string>
-    <string name="_bx_photos_page_block_title_featured_entries"><![CDATA[Featured Photos (Gallery View)]]></string>
-    <string name="_bx_photos_page_block_title_featured_entries_view_extended"><![CDATA[Featured Photos]]></string>
+    <string name="_bx_photos_page_block_title_featured_entries"><![CDATA[Featured Photos]]></string>
+    <string name="_bx_photos_page_block_title_featured_entries_view_extended"><![CDATA[Featured Photos (Extended View)]]></string>
     <string name="_bx_photos_page_block_title_featured_entries_view_full"><![CDATA[Featured Photos (Full View)]]></string>
-    <string name="_bx_photos_page_block_title_recent_entries"><![CDATA[Latest Photos (Gallery View)]]></string>
-    <string name="_bx_photos_page_block_title_recent_entries_view_extended"><![CDATA[Latest Photos]]></string>
+    <string name="_bx_photos_page_block_title_recent_entries"><![CDATA[Latest Photos]]></string>
+    <string name="_bx_photos_page_block_title_recent_entries_view_extended"><![CDATA[Latest Photos (Extended View)]]></string>
     <string name="_bx_photos_page_block_title_recent_entries_view_full"><![CDATA[Latest Photos (Full View)]]></string>
     <string name="_bx_photos_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_photos_page_block_title_entry_author"><![CDATA[Author]]></string>
