@@ -11,17 +11,20 @@
 
 class BxTwitterStudioPage extends BxTemplStudioModule
 {
+    function __construct($sModule = "", $sPage = "")
+    {
+        parent::__construct($sModule, $sPage);
+
+        $this->aMenuItems = array(
+            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            array('name' => 'help', 'icon' => 'question', 'title' => '_sys_connect_information'),
+        );
+    }
+
     function getHelp ()
     {
         $oModule = BxDolModule::getInstance('bx_twitter'); 
         return _t('_bx_twitter_information_block', BX_DOL_URL_ROOT . $oModule -> _oConfig -> getBaseUri() . 'handle');
-    }
-
-    protected function getPageCaptionHelp()
-    {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-        $sContent = '<a href="' . BX_DOL_URL_STUDIO . 'module.php?name=bx_twitter&page=help">' . _t('_sys_connect_information') . "</a>";
-        return $oTemplate->parseHtmlByName('page_caption_help.html', array('content' => $sContent));
     }
 }
 
