@@ -262,6 +262,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
     	return BxDolAccount::getInstance($iId)->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
     }
+
     protected function _addJsCss()
     {
         parent::_addJsCss();
@@ -275,6 +276,14 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             'clipboard.min.js',
             'main.js'
         ));
+    }
+
+    protected function _isVisibleGrid($a)
+    {
+        if(isAdmin())
+            return true;
+        
+        return parent::_isVisibleGrid($a);
     }
 }
 
