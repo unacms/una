@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 	<string name="_bx_smtp"><![CDATA[SMTP Mailer]]></string>
-	<string name="_bx_smtp_tester"><![CDATA[SMTP Mailer Tester]]></string>
+	<string name="_bx_smtp_tester"><![CDATA[Test]]></string>
 	<string name="_bx_smtp_recipient"><![CDATA[Recipient]]></string>
 	<string name="_bx_smtp_subject"><![CDATA[Subject]]></string>
 	<string name="_bx_smtp_body"><![CDATA[Body]]></string>
@@ -17,8 +17,6 @@
         <b>SMTP username/SMTP password</b> - registered email account username and password, it is better to create different account for this purpose, like no-reply@mysite.com.
         <br />
         <b>From name of the message</b> - recipients will see this name as email sender, so it is probably your site name.
-        <br />
-        <b>Attach every outgoing email all files from kmailer/attach folder</b> - you can upload any files to <b>modules/boonex/smtpmailer/data/attach</b> folder on your site and enable this option setting to attach uploaded files to every email.
         <br />
         <b>Is your SMTP server requires secure connection</b> - you can disable it if your hostname is localhost, secure connection is not needed if you send mails from localhost.
         <br />

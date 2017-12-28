@@ -11,16 +11,19 @@
 
 class BxChatPlusStudioPage extends BxTemplStudioModule
 {
+    function __construct($sModule = "", $sPage = "")
+    {
+        parent::__construct($sModule, $sPage);
+
+        $this->aMenuItems = array(
+            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            array('name' => 'help', 'icon' => 'question', 'title' => '_bx_chat_plus_information'),
+        );
+    }
+    
     function getHelp ()
     {
         return _t('_bx_chat_plus_information_block');
-    }
-
-    protected function getPageCaptionHelp()
-    {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-        $sContent = '<a href="' . BX_DOL_URL_STUDIO . 'module.php?name=bx_chat_plus&page=help">' . _t('_bx_chat_plus_information') . "</a>";
-        return $oTemplate->parseHtmlByName('page_caption_help.html', array('content' => $sContent));
     }
 }
 

@@ -146,8 +146,8 @@
 
             // Create the autocomplete object, restricting the search to geographical location types.
             glBxAutocomplete__name__ = new google.maps.places.Autocomplete(
-                /** @type {!HTMLInputElement} */(document.getElementById('__id_input__')),
-                {types: ['geocode']});
+                /** @type {!HTMLInputElement} */(document.getElementById('__id_input__'))
+            );
 
             // When the user selects an address from the dropdown, populate the address fields in the form.
             glBxAutocomplete__name__.addListener('place_changed', callbackFillInAddress);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 	<string name="_bx_smtp"><![CDATA[SMTP Почтовик]]></string>
-	<string name="_bx_smtp_tester"><![CDATA[SMTP Почтовик - Тест]]></string>
+	<string name="_bx_smtp_tester"><![CDATA[Тест]]></string>
 	<string name="_bx_smtp_recipient"><![CDATA[Получатель]]></string>
 	<string name="_bx_smtp_subject"><![CDATA[Тема]]></string>
 	<string name="_bx_smtp_body"><![CDATA[Тело]]></string>
@@ -17,8 +17,6 @@
         <b>Пользователь SMTP / пароль SMTP</b> - зарегистрированные имя пользователя и пароль для отправки почты. Лучше всего использовать отдельный адрес для этой цели, например no-reply@mysite.com.
         <br />
         <b>Имя отправителя сообщения</b> - получатели увидят это имя рядом с электронным адресом отправителя, так что, скорее всего, следует указать здесь имя Вашего сайта.
-        <br />
-        <b>Прикреплять к отправляемому письму все файлы из папки kmailer/attach</b> - Вы можете загрузить любые файлы в папку <b>modules/boonex/smtpmailer/data/attach</b>, и при включённой данной функции они будут прикреплены к любому письму, посылаемому Вашим сайтом.
         <br />
         <b>Требует ли Ваш SMTP-сервер безопасного подключения</b> - Вы можете отключить эту опцию, если имя Вашего хоста - localhost, так как безопасное подключение необязательно в данном случае.
         <br />

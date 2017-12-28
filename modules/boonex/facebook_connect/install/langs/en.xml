@@ -3,7 +3,7 @@
 	<string name="_sys_module_facebook_connect"><![CDATA[Facebook Connect]]></string>
 	<string name="_bx_facebook"><![CDATA[Facebook Connect]]></string>
 	<string name="_bx_facebook_settings"><![CDATA[Facebook Connect]]></string>
-	<string name="_bx_facebook_information_block"><![CDATA[To get your "App ID" and "App Secret", you need to <a href="https://developers.facebook.com/apps/" target="_blank">make Facebook app</a>. <br /><br />Please follow <a href="http://www.boonex.com/forums/topic/How-to-setup-Facebook-Connect-module.htm" target="_blank">these instructions</a> on how to create and setup the app. <br /><br />Your "Site URL" for the app: <b>{0}</b> <br /><br />After completing these steps, insert your "App ID" and "App Secret" below:]]></string>
+	<string name="_bx_facebook_information_block"><![CDATA[To get your "App ID" and "App Secret", you need to <a href="https://developers.facebook.com/apps/" target="_blank">make Facebook app</a>. <br /><br />Redirect URI: <b>{0}</b>]]></string>
 	<string name="_bx_facebook_profile_error_api_keys"><![CDATA[Please configure the module in admin panel (can't define facebook api keys)]]></string>
 	<string name="_bx_facebook_chart"><![CDATA[Facebook Profiles]]></string>
 	<string name="_bx_facebook_auth_title"><![CDATA[Facebook Connect]]></string>

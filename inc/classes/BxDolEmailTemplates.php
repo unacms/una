@@ -144,7 +144,7 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
             if ($oAccount && ($aAccountInfo = $oAccount->getInfo())) {
                 $aResultKeys = array_merge($aResultKeys, array(
                     'account_id' => $aAccountInfo['id'],
-                    'account_name' => $aAccountInfo['name'],
+                    'account_name' => $oAccount->getDisplayName(),
                     'account_email' => $aAccountInfo['email'],
                 ));
             }

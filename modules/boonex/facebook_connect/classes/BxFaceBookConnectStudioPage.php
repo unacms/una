@@ -3,13 +3,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    TwitterConnect Twitter Connect
+ * @defgroup    FacebookConnect Facebook Connect
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxTwitterStudioPage extends BxTemplStudioModule
+class BxFaceBookConnectStudioPage extends BxTemplStudioModule
 {
     function __construct($sModule = "", $sPage = "")
     {
@@ -20,11 +20,11 @@ class BxTwitterStudioPage extends BxTemplStudioModule
             array('name' => 'help', 'icon' => 'question', 'title' => '_sys_connect_information'),
         );
     }
-
+    
     function getHelp ()
     {
-        $oModule = BxDolModule::getInstance('bx_twitter'); 
-        return _t('_bx_twitter_information_block', BX_DOL_URL_ROOT . $oModule -> _oConfig -> getBaseUri() . 'handle');
+        $oModule = BxDolModule::getInstance('bx_facebook'); 
+        return _t('_bx_facebook_information_block', BX_DOL_URL_ROOT . $oModule -> _oConfig -> getBaseUri() . 'login_callback');
     }
 }
 

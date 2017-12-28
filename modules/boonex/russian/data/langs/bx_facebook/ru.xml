@@ -3,7 +3,7 @@
 	<string name="_sys_module_facebook_connect"><![CDATA[Facebook-соединение]]></string>
 	<string name="_bx_facebook"><![CDATA[Facebook-соединение]]></string>
 	<string name="_bx_facebook_settings"><![CDATA[Facebook-соединение]]></string>
-	<string name="_bx_facebook_information_block"><![CDATA[Чтобы получить "App ID" и "App Secret", нужно <a href="https://developers.facebook.com/apps/" target="_blank">создать новое приложение</a>. <br /><br /><a href="http://www.boonex.com/forums/topic/How-to-setup-Facebook-Connect-module.htm" target="_blank">Инструкции по созданию Facebook приложения</a> <br /><br />Значение поля "Site URL" для приложения: <b>{0}</b> <br /><br />После выполнения этих шагов укажите "API Key" и "App Secret" в форме ниже:]]></string>
+    <string name="_bx_facebook_information_block"><![CDATA[Чтобы получить "App ID" и "App Secret", нужно <a href="https://developers.facebook.com/apps/" target="_blank">создать новое приложение</a>. <br /><br />URL-адрес для перенаправления: <b>{0}</b>]]></string>
 	<string name="_bx_facebook_profile_error_api_keys"><![CDATA[Пожалуйста, настройте модуль в административной панели (невозможно определить ключи facebook api)]]></string>
 	<string name="_bx_facebook_chart"><![CDATA[Facebook профили]]></string>
 	<string name="_bx_facebook_auth_title"><![CDATA[Facebook-соединение]]></string>
