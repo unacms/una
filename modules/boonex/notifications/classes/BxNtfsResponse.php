@@ -234,10 +234,14 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             if(!method_exists($this->_oModule->_oTemplate, $sMethodGet) || !method_exists($this, $sMethodSend))
                 continue;
 
+            $mixedContent = $this->_oModule->_oTemplate->$sMethodGet($aEvent);
+            if($mixedContent === false)
+                continue;
+
             //--- Get event.
             $aTypesToSend[$sType] = array(
             	'method' => $sMethodSend,
-                'content' => $this->_oModule->_oTemplate->$sMethodGet($aEvent)
+                'content' => $mixedContent
             );
         }
 

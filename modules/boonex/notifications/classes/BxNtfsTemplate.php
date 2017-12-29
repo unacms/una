@@ -137,8 +137,8 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     public function getNotificationEmail(&$aEvent)
     {
         $sEvent = $this->getPost($aEvent);
-        if(empty($sEvent))
-            return;
+        if(empty($sEvent) || empty($aEvent['content_parsed']))
+            return false;
 
         return $this->parseHtmlByName('et_new_event.html', array(
         	'icon_url' => !empty($aEvent['content']['owner_icon']) ? $aEvent['content']['owner_icon'] : $this->getIconUrl('std-icon.svg'),
@@ -151,12 +151,15 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     public function getNotificationPush(&$aEvent)
     {
         $sEvent = $this->getPost($aEvent);
-        if(empty($sEvent))
-            return;
+        if(empty($sEvent) || empty($aEvent['content_parsed']))
+            return false;
 
         $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', '"', $aEvent['content_parsed']);
 		if($sMessage)
             $sMessage = BxTemplFunctions::getInstance()->getStringWithLimitedLength(html_entity_decode($sMessage), $this->_oConfig->getPushMaxLen());
+
+        if(empty($sMessage))
+            return false;
 
         return array(
             'url' => $this->_getContentLink($aEvent),
