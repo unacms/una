@@ -1361,7 +1361,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(!empty($iId)) {
             	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
             	if($bText)
- 					$oMetatags->keywordsAdd($iId, $sText);
+ 					$oMetatags->metaAdd($iId, $sText);
  				$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
 				//--- Process Link ---//

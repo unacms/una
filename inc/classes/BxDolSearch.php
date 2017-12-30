@@ -92,7 +92,9 @@ class BxDolSearch extends BxDol
 	                require_once(BX_DIRECTORY_PATH_ROOT . $aValue['file']);
 	        }
 
-            $oEx = new $sClassName();
+            $oEx = new $sClassName();            
+            if ($this->_sMetaType && !$oEx->isMetaEnabled($this->_sMetaType))
+                continue;
             $oEx->setId($aValue['id']);
             $oEx->setLiveSearch($this->_bLiveSearch);
             $oEx->setMetaType($this->_sMetaType);
@@ -131,7 +133,7 @@ class BxDolSearch extends BxDol
         if (in_array($s, $aMetaTypes))
             $this->_sMetaType = $s;
     }
-
+    
     public function setCategoryObject($s)
     {
         $this->_sCategoryObject = $s;
@@ -309,6 +311,28 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->_sMetaType = $s;
     }
 
+    public function isMetaEnabled($s)
+    {
+        if (empty($this->aCurrent['object_metatags']))
+            return false;
+            
+        if (!($o = BxDolMetatags::getObjectInstance($this->aCurrent['object_metatags'])))
+            return false;
+
+        switch ($s) {
+            case 'location_country_city':
+            case 'location_country_state':            
+            case 'location_country':
+                return $o->locationsIsEnabled();
+            case 'mention':
+                return $o->mentionsIsEnabled();
+            case 'keyword':
+                return $o->keywordsIsEnabled();
+        }
+
+        return false;
+    }
+    
     public function setCategoryObject($s)
     {
         $this->_sCategoryObject = $s;
@@ -628,10 +652,12 @@ class BxDolSearchResult implements iBxDolReplaceable
                         $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(bx_get('state')), bx_process_input(bx_get('city')));
                         break;
                     case 'mention':
-                        // TODO:
+                        $oCmts = !empty($this->sModuleObjectComments) ? BxDolCmts::getObjectInstance($this->sModuleObjectComments, 0, false) : false;
+                        $o->mentionsSetSearchCondition($this, $sKeyword, $oCmts ? $oCmts->getSystemId() : 0);
                         break;
                     case 'keyword':
-                        $o->keywordsSetSearchCondition($this, $sKeyword);
+                        $oCmts = !empty($this->sModuleObjectComments) ? BxDolCmts::getObjectInstance($this->sModuleObjectComments, 0, false) : false;
+                        $o->keywordsSetSearchCondition($this, $sKeyword, $oCmts ? $oCmts->getSystemId() : 0);
                         break;
                 }
             }

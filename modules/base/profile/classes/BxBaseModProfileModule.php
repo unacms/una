@@ -165,7 +165,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
             $aRet[] = array (
             	'label' => $this->serviceProfileName($r['content_id']), 
-            	'value' => $r['profile_id'], 
+                'value' => $r['profile_id'], 
+                'url' => $oProfile->getUrl(),
             	'thumb' => $oProfile->getThumb(),
                 'unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info'))
             );

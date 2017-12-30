@@ -141,10 +141,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         if(!empty($CNF['OBJECT_METATAGS'])) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-    
-            // keywords
-            if ($oMetatags->keywordsIsEnabled())
-                $sText = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $sText);
+            $sText = $oMetatags->metaParse($aData[$CNF['FIELD_ID']], $sText);
         }
 
         $sTitle = bx_process_output($sTitle);

@@ -23,7 +23,8 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 
         $this->aCurrent = array(
         	'name' => $this->oModule->_oConfig->getName() . '_cmts',
-        	'module_name' => $this->oModule->_oConfig->getName(),
+            'module_name' => $this->oModule->_oConfig->getName(),
+            'object_metatags' => 'sys_cmts',
         	'title' => '',
             'table' => $this->oModule->_oConfig->getDbPrefix() . 'cmts',
             'ownFields' => array('cmt_id', 'cmt_object_id', 'cmt_author_id', 'cmt_text', 'cmt_time'),
@@ -57,7 +58,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 			));
 		}
 		else
-			return $oCmts->getComment($aData['id'], array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
+			return $oCmts->getComment($aData['cmt_id'], array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
     }
 
     function displayResultBlock ()

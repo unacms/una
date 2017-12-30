@@ -73,7 +73,7 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         if (!empty($CNF['OBJECT_METATAGS']) && $mixedThumb) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($o)
-                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $mixedThumb);
+                $o->addPageMetaInfo($this->_aContentInfo[$CNF['FIELD_ID']], $mixedThumb);
         }
 
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');

@@ -88,11 +88,18 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
             // keywords
             if ($oMetatags->keywordsIsEnabled()) {
-                $aFields = array_merge($oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']), array('entry_title', 'entry_text'));
+                $aFields = array_merge($oMetatags->metaFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']), array('entry_title', 'entry_text'));
                 foreach ($aFields as $sField)
                     $aVars[$sField] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
             }
 
+            // mentions
+            if ($oMetatags->mentionsIsEnabled()) {
+                $aFields = array_merge($oMetatags->metaFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW'], true), array('entry_text'));
+                foreach ($aFields as $sField)
+                    $aVars[$sField] = $oMetatags->mentionsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
+            }
+            
             // location
             $aVars['location'] = $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aData[$CNF['FIELD_ID']]) : '';
         }

@@ -8,10 +8,8 @@
  */
 
 define('BX_METATAGS_KEYWORDS_MAX', 9);
+define('BX_METATAGS_MENTIONS_MAX', 9);
 
-// TODO: client side controls: some js to help to enter \@mentions and \#keywords(optional)
-// TODO: integrate to comments, try to integrate to one metatags object - maybe specify metatags object in comments object and make appropriate changes in comments, 
-//       comments content should be treated as main conetent and main content should be shown in search results
 // TODO: integration with notifications, when smbd is \@mentioned
 
 /**
@@ -66,10 +64,10 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  *   echo $oMetatags->locationsString($iContentId)
  * @endcode
  *
- * Upon page display call BxDolMetatags::metaAdd to add location (and all other, including content image) meta information to the page header:
+ * Upon page display call BxDolMetatags::addPageMetaInfo to add location (and all other, including content image) meta information to the page header:
  * @code
  *   $o = BxDolMetatags::getObjectInstance('object_name');
- *   $o->metaAdd($iContentId, array('id' => $iFileId, 'object' => 'storage_object_name'));
+ *   $o->addPageMetaInfo($iContentId, array('id' => $iFileId, 'object' => 'storage_object_name'));
  * @endcode
  * 
  * Form object must have location field, usual name for this field is 'location' (this name is used as $sPrefix in some functions), type is 'custom', 
@@ -91,7 +89,7 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  *   $sText = $oMetatags->keywordsParse($iContentId, $sText);
  * @endcode
  *
- * Upon page display call BxDolMetatags::metaAdd to add keywords (and all other, including content image) meta information to the page header.
+ * Upon page display call BxDolMetatags::addPageMetaInfo to add keywords (and all other, including content image) meta information to the page header.
  *
  * To be able to search by tags metatgs object must be specified in *SearchResult class as 'object_metatags' in 'aCurrent' array.
  *
@@ -168,7 +166,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      * Add all available meta tags to the head section 
      * @return number of successfully added metas
      */
-    public function metaAdd($iId, $mixedImage = false)
+    public function addPageMetaInfo($iId, $mixedImage = false)
     {
         $i = 0;
         foreach ($this->_aMetas as $sMeta) {
@@ -192,7 +190,58 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $i;
     }
 
+    /**
+     * Perform @see keywordsParse @see mentionsParse and maybe other
+     * @param $iId content id
+     * @param $s string
+     * @return modified string
+     */    
+    public function metaParse($iId, $s)
+    {
+        foreach ($this->_aMetas as $sMeta) {
+            $sFunc = $sMeta . 'Parse';
+            if (method_exists($this, $sFunc))
+                $s = $this->$sFunc($iId, $s);
+        }
+        return $s;
+    }
 
+    /**
+     * Perform @see keywordsAddAuto @see mentionsAddAuto and maybe other
+     * @param $iId content id
+     * @param $aContentInfo content info array
+     * @param $CNF module config array
+     * @param $sFormDisplay form display object
+     * @return number of founded keywords, mentions, etc
+     */
+    public function metaAddAuto($iId, $aContentInfo, $CNF, $sFormDisplay) 
+    {
+        $i = 0;
+        foreach ($this->_aMetas as $sMeta) {
+            $sFunc = $sMeta . 'AddAuto';
+            if (method_exists($this, $sFunc))
+                $i += $this->$sFunc($iId, $aContentInfo, $CNF, $sFormDisplay);
+        }
+        return $i;
+    }
+
+    /**
+     * Perform @see keywordsAdd @see mentionsAdd and maybe other
+     * @param $iId content id
+     * @param $s string
+     * @return number of added keywords, mentions, etc
+     */
+    public function metaAdd($iId, $s)
+    {
+        $i = 0;
+        foreach ($this->_aMetas as $sMeta) {
+            $sFunc = $sMeta . 'Add';
+            if (method_exists($this, $sFunc))
+                $i += $this->$sFunc($iId, $s);
+        }
+        return $i;
+    }
+    
     /**
      * Checks if keywords enabled for current metatags object
      */
@@ -227,16 +276,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAdd($iId, $s) 
     {
-        $a = array();
-        if (!preg_match_all('/[\s](\#[\pL\pN_]+)/u', ' ' . strip_tags($s), $a)) {
-            $this->_oQuery->keywordsDelete($iId);
-            return 0;
-        }
-
-        $aTags = array_unique($a[1]);
-        $aTags = array_slice($aTags, 0, BX_METATAGS_KEYWORDS_MAX);
-
-        return $this->_oQuery->keywordsAdd($iId, $aTags);
+        return $this->_metaAdd($iId, ' ' . strip_tags($s), '/[\s]\#([\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', BX_METATAGS_KEYWORDS_MAX);
     }
 
     /**
@@ -256,12 +296,14 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Add \#keywords from the content fields
      * @param $iId content id
-     * @param $s string with \#keywords
+     * @param $aContentInfo content info array
+     * @param $CNF module config array
+     * @param $sFormDisplay form display object
      * @return number of found keywords
      */
     public function keywordsAddAuto($iId, $aContentInfo, $CNF, $sFormDisplay) 
     {
-        $aFields = $this->keywordsFields($aContentInfo, $CNF, $sFormDisplay); 
+        $aFields = $this->metaFields($aContentInfo, $CNF, $sFormDisplay); 
         $sTextWithKeywords = '';
         foreach ($aFields as $sField)
             $sTextWithKeywords .= "\n" . $aContentInfo[$sField];
@@ -272,7 +314,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Get field names which are subject to parse keywords
      */
-    public function keywordsFields($aContentInfo, $CNF, $sFormDisplay)
+    public function metaFields($aContentInfo, $CNF, $sFormDisplay, $bHtmlOnly = false)
     {
         $aFields = array();
         if (empty($CNF['FIELDS_WITH_KEYWORDS'])) {
@@ -283,7 +325,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
                 return array();
 
             foreach ($oForm->aInputs as $k => $a) {
-                if ('textarea' == $a['type'])
+                if ('textarea' == $a['type'] && (!$bHtmlOnly || ($bHtmlOnly && $a['html'])))
                     $aFields[] = $a['name'];
             }
         } 
@@ -357,8 +399,16 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      * @param $oSearchResult search results object
      * @param $sKeyword keyword
      */
-    public function keywordsSetSearchCondition($oSearchResult, $sKeyword)
+    public function keywordsSetSearchCondition($oSearchResult, $sKeyword, $iCmtsSystemId = 0)
     {
+        if (!$this->keywordsIsEnabled())
+            return;
+
+        if ('sys_cmts' == $oSearchResult->aCurrent['object_metatags']) {
+            $this->keywordsSetSearchConditionCmts($oSearchResult, $sKeyword, $iCmtsSystemId);
+            return;
+        }
+
         $oSearchResult->aCurrent['restriction']['meta_keyword'] = array(
             'value' => $sKeyword,
             'field' => 'keyword',
@@ -376,6 +426,46 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         );
     }
 
+    public function keywordsSetSearchConditionCmts($oSearchResult, $sKeyword, $iCmtsSystemId = 0)
+    {
+        if (!$this->keywordsIsEnabled())
+            return;
+
+        if ($iCmtsSystemId) {
+            $oSearchResult->aCurrent['restriction']['meta_keyword_cmts_system'] = array(
+                'value' => $iCmtsSystemId,
+                'field' => 'system_id',
+                'operator' => '=',
+                'table' => 'sys_cmts_ids',
+            );
+        }
+        
+        $oSearchResult->aCurrent['restriction']['meta_keyword'] = array(
+            'value' => $sKeyword,
+            'field' => 'keyword',
+            'operator' => '=',
+            'table' => $this->_aObject['table_keywords'],
+        );
+
+        $oSearchResult->aCurrent['join']['meta_keyword_cmts'] = array(
+            'type' => 'INNER',
+            'table' => 'sys_cmts_ids',
+            'mainField' => $oSearchResult->aCurrent['ident'],
+            'mainTable' => !empty($oSearchResult->aCurrent['tableSearch']) ? $oSearchResult->aCurrent['tableSearch'] : $oSearchResult->aCurrent['table'],
+            'onField' => 'cmt_id',
+            'joinFields' => array(),
+        );
+        
+        $oSearchResult->aCurrent['join']['meta_keyword'] = array(
+            'type' => 'INNER',
+            'table' => $this->_aObject['table_keywords'],
+            'mainField' => 'id',
+            'mainTable' => 'sys_cmts_ids',
+            'onField' => 'object_id',
+            'joinFields' => array(),
+        );
+    }
+    
 	/**
      * Get part of SQL query for meta keyword
      * @param $sContentTable content table or alias
@@ -647,9 +737,27 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsAdd($iId, $s) 
     {
-        // TODO:        
+        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', BX_METATAGS_MENTIONS_MAX);
     }
 
+    /**
+     * Add \@mentions from the content of form fields
+     * @param $iId content id
+     * @param $aContentInfo content info array
+     * @param $CNF module config array
+     * @param $sFormDisplay form display object
+     * @return number of found keywords
+     */
+    public function mentionsAddAuto($iId, $aContentInfo, $CNF, $sFormDisplay) 
+    {
+        $aFields = $this->metaFields($aContentInfo, $CNF, $sFormDisplay, true); 
+        $sTextWithKeywords = '';
+        foreach ($aFields as $sField)
+            $sTextWithKeywords .= "\n" . $aContentInfo[$sField];
+
+        return $this->mentionsAdd($iId, $sTextWithKeywords);
+    }
+    
     /**
      * Add links to the \@mentions in the string (actual tranformation may have to be performed with ready links like <a data-mention="bx_persons|123">mention name</a>)
      * @param $iId content id
@@ -658,7 +766,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsParse($iId, $s) 
     {
-        // TODO:
+        return $s;
     }
 
     /**
@@ -674,11 +782,73 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      * @param $oSearchResult search results object
      * @param $sMention smbd
      */
-    public function mentionsSetSearchCondition($oSearchResult, $sMention)
+    public function mentionsSetSearchCondition($oSearchResult, $iProfileId, $iCmtsSystemId = 0)
     {
-        // TODO:
+        if (!$this->mentionsIsEnabled())
+            return;
+
+        if ('sys_cmts' == $oSearchResult->aCurrent['object_metatags']) {
+            $this->mentionsSetSearchConditionCmts($oSearchResult, $iProfileId, $iCmtsSystemId);
+            return;
+        }
+
+        $oSearchResult->aCurrent['restriction']['meta_mentions'] = array(
+            'value' => $iProfileId,
+            'field' => 'profile_id',
+            'operator' => '=',
+            'table' => $this->_aObject['table_mentions'],
+        );
+
+        $oSearchResult->aCurrent['join']['meta_mentions'] = array(
+            'type' => 'INNER',
+            'table' => $this->_aObject['table_mentions'],
+            'mainField' => $oSearchResult->aCurrent['ident'],
+            'mainTable' => !empty($oSearchResult->aCurrent['tableSearch']) ? $oSearchResult->aCurrent['tableSearch'] : $oSearchResult->aCurrent['table'],
+            'onField' => 'object_id',
+            'joinFields' => array(),
+        );
     }
 
+    public function mentionsSetSearchConditionCmts($oSearchResult, $iProfileId, $iCmtsSystemId = 0)
+    {
+        if (!$this->keywordsIsEnabled())
+            return;
+
+        if ($iCmtsSystemId) {
+            $oSearchResult->aCurrent['restriction']['meta_mentions_cmts_system'] = array(
+                'value' => $iCmtsSystemId,
+                'field' => 'system_id',
+                'operator' => '=',
+                'table' => 'sys_cmts_ids',
+            );
+        }
+        
+        $oSearchResult->aCurrent['restriction']['meta_mentions'] = array(
+            'value' => $iProfileId,
+            'field' => 'profile_id',
+            'operator' => '=',
+            'table' => $this->_aObject['table_mentions'],
+        );
+
+        $oSearchResult->aCurrent['join']['meta_mentions_cmts'] = array(
+            'type' => 'INNER',
+            'table' => 'sys_cmts_ids',
+            'mainField' => $oSearchResult->aCurrent['ident'],
+            'mainTable' => !empty($oSearchResult->aCurrent['tableSearch']) ? $oSearchResult->aCurrent['tableSearch'] : $oSearchResult->aCurrent['table'],
+            'onField' => 'cmt_id',
+            'joinFields' => array(),
+        );
+        
+        $oSearchResult->aCurrent['join']['meta_mentions'] = array(
+            'type' => 'INNER',
+            'table' => $this->_aObject['table_mentions'],
+            'mainField' => 'id',
+            'mainTable' => 'sys_cmts_ids',
+            'onField' => 'object_id',
+            'joinFields' => array(),
+        );
+    }
+    
     /**
      * Delete all data associated with the content
      * @param $iId content id
@@ -693,6 +863,26 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $i;
     }
 
+    protected function _metaAdd($iId, $s, $sPreg, $sFuncDelete, $sFuncAdd, $iMaxItems, $sAlertName)
+    {
+        $a = array();
+        if (!preg_match_all($sPreg, $s, $a)) {
+            $this->_oQuery->$sFuncDelete($iId);
+            return 0;
+        }
+
+        $aMetas = array_unique($a[1]);
+        $aMetas = array_slice($aMetas, 0, $iMaxItems);
+
+        if ($iRet = $this->_oQuery->$sFuncAdd($iId, $aMetas)) {
+            foreach ($aMetas as $sMeta) {
+                bx_alert($this->_sObject, $sAlertName . '_add', $iId, bx_get_logged_profile_id(), array('meta' => $sMeta));
+                bx_alert('meta_' . $sAlertName, 'add', $iId, bx_get_logged_profile_id(), array('meta' => $sMeta));
+            }
+        }
+
+        return $iRet;
+    }
 }
 
 /** @} */

@@ -546,6 +546,7 @@ function clear_xss($val)
 		        'src' => 'URI',
 		        'type' => 'Text',
             ));
+            $def->addAttribute('a', 'data-profile-id', 'Number');
 		}
 
         $oHtmlPurifier = new HTMLPurifier($oConfig);

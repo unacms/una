@@ -32,19 +32,19 @@ class BxDolMetatagsQuery extends BxDolDb
         return $aObject;
     }
 
+    public function mentionsAdd($mixedContentId, $aMentions, $bDeletePrevious = true)
+    {
+        return $this->metaAdd($mixedContentId, $aMentions, $bDeletePrevious, 'mentionsDelete', $this->_aObject['table_mentions'], 'profile_id');
+    }
 
-
+    public function mentionsDelete($mixedContentId)
+    {
+        return $this->metaDelete($this->_aObject['table_mentions'], $mixedContentId);
+    }
+    
     public function keywordsAdd($mixedContentId, $aKeywords, $bDeletePreviousKeywords = true)
     {
-        if ($bDeletePreviousKeywords)
-            $this->keywordsDelete($mixedContentId);
-
-        $i = 0;
-        foreach ($aKeywords as $sKeyword) {
-            $sQuery = $this->prepare("INSERT INTO `{$this->_aObject['table_keywords']}` SET `object_id` = ?, `keyword` = ?", $mixedContentId, trim($sKeyword, '#'));
-            $i += ($this->query($sQuery) ? 1 : 0);
-        }
-        return $i;
+        return $this->metaAdd($mixedContentId, $aKeywords, $bDeletePreviousKeywords, 'keywordsDelete', $this->_aObject['table_keywords'], 'keyword');
     }
 
     public function keywordsDelete($mixedContentId)
@@ -126,6 +126,19 @@ class BxDolMetatagsQuery extends BxDolDb
     {
         $sQuery = $this->prepare("DELETE FROM `{$sTable}` WHERE `object_id` = ?", $mixedContentId);
         return $this->query($sQuery);
+    }
+
+    protected function metaAdd($mixedContentId, $aMetas, $bDeletePrevious, $sFuncDelete, $sTable, $sField)
+    {
+        if ($bDeletePrevious)
+            $this->$sFuncDelete($mixedContentId);
+
+        $i = 0;
+        foreach ($aMetas as $sMeta) {
+            $sQuery = $this->prepare("INSERT INTO `{$sTable}` SET `object_id` = ?, `{$sField}` = ?", $mixedContentId, $sMeta);
+            $i += ($this->query($sQuery) ? 1 : 0);
+        }
+        return $i;
     }
 }
 

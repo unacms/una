@@ -16,20 +16,40 @@ class BxBaseEditorTinyMCE extends BxDolEditor
     /**
      * Common initialization params
      */
-    protected static $CONF_COMMON = "
+    protected static $CONF_COMMON = <<<EOS
                     jQuery('{bx_var_selector}').tinymce({
                         {bx_var_custom_init}
                         {bx_var_custom_conf}
                         document_base_url: '{bx_url_root}',
+                        theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         skin_url: '{bx_url_tinymce}skins/{bx_var_skin}/',
                         language_url: '{bx_url_tinymce}langs/{bx_var_lang}.js',
                         content_css: '{bx_var_css_path}',
                         entity_encoding: 'raw',
                         browser_spellcheck: true,
                         branding: false,
-                        body_class: 'bx-def-color-bg-block'
+                        body_class: 'bx-def-color-bg-block',
+                        mentions: {
+                            queryBy: 'label',
+                            source: function (query, process, delimiter) {
+                                if (delimiter === '@') {
+                                   $.getJSON('{bx_url_root}searchExtended.php?action=get_authors&term=' + query, function (data) {
+                                      process(data)
+                                   });
+                                }
+                            },
+                            insert: function(item) {
+                                return '<a data-profile-id="' + item.value + '" href="' + item.url + '">' + item.label + '</a>';
+                            },
+                            render: function(item) {
+                                return '<li><a href="javascript:;">' + item.label + '</a></li>';
+                            },
+                            renderDropdown: function() {
+                                return '<ul class="rte-autocomplete"></ul>';
+                            }
+                        }
                     });
-    ";
+EOS;
 
     /**
      * Standard view initialization params
@@ -47,10 +67,10 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             media: '{bx_url_tinymce}plugins/media/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            mention: '{bx_var_plugins_path}tinymce-mention/plugin.min.js',
                         },
                         width: '100%',
                         height: '270',
-                        theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
                         statusbar: true,
                         resize: true,
@@ -68,10 +88,10 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            mention: '{bx_var_plugins_path}tinymce-mention/plugin.min.js',
                         },
                         width: '100%',
-                        height: '150',
-                        theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
+                        height: '150',                        
                         toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image',
                         statusbar: true,
                         resize: true,
@@ -106,10 +126,10 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             textcolor: '{bx_url_tinymce}plugins/textcolor/plugin.min.js',
                             visualblocks: '{bx_url_tinymce}plugins/visualblocks/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            mention: '{bx_var_plugins_path}tinymce-mention/plugin.min.js',
                         },
                         width: '100%',
                         height: '320',
-                        theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         toolbar: [
                             'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
                             'print preview media | forecolor emoticons | fullscreen'
@@ -181,7 +201,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sToolsItems,
             'bx_var_custom_conf' => $this->_sConfCustom,
-            'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS, BX_ESCAPE_STR_APOS),
+            'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($aCss['url'], BX_ESCAPE_STR_APOS),
             'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
             'bx_var_lang' => bx_js_string($sLang, BX_ESCAPE_STR_APOS),
@@ -232,6 +252,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
         if ($this->_bJsCssAdded)
             return '';
         $this->_oTemplate->addJs(array('tinymce/tinymce.min.js', 'tinymce/jquery.tinymce.min.js', 'editor.tinymce.js'));
+        $this->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'tinymce-mention/css/|autocomplete.css'));
         $this->_bJsCssAdded = true;
         return '';
     }

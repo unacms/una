@@ -1283,7 +1283,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         if ($this->_sMetatagsObj && $iCmtId) {
             $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-            $s = $oMetatags->keywordsParse($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $s);
+            $s = $oMetatags->metaParse($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $s);
         }
 
         return $s;
