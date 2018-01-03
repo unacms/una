@@ -2239,6 +2239,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_switch_language_inline"><![CDATA[Language Switch (inline)]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Switch Template]]></string>
 	<string name="_sys_menu_title_snippet_meta"><![CDATA[Snippet Meta Info]]></string>
+	<string name="_sys_metatags_mention_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> mentioned <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_mobile_friends"><![CDATA[Friends]]></string>
 	<string name="_sys_mobile_info"><![CDATA[Info]]></string>
 	<string name="_sys_mobile_mail"><![CDATA[Messages]]></string>

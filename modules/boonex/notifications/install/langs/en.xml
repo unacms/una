@@ -27,6 +27,7 @@
 	<string name="_bx_ntfs_alert_action_doVote"><![CDATA[add vote]]></string>
 	<string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[post to timeline]]></string> 
 
+    <string name="_bx_ntfs_alert_module_meta_mention"><![CDATA[Profiles Mentions]]></string>
 	<string name="_bx_ntfs_alert_module_sys_profiles_subscriptions"><![CDATA[Profiles Subscriptions]]></string>
 	<string name="_bx_ntfs_alert_module_sys_profiles_friends"><![CDATA[Profiles Friends]]></string>
 	<string name="_bx_ntfs_alert_action_connection_added"><![CDATA[add connection]]></string>

@@ -2238,6 +2238,7 @@
 	<string name="_sys_menu_title_switch_language_inline"><![CDATA[Переключатель языка (встроенный)]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Переключить тему]]></string>
 	<string name="_sys_menu_title_snippet_meta"><![CDATA[Мета информация в карточке]]></string>
+	<string name="_sys_metatags_mention_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> упомянул <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_mobile_friends"><![CDATA[Друзья]]></string>
 	<string name="_sys_mobile_info"><![CDATA[Инфо]]></string>
 	<string name="_sys_mobile_mail"><![CDATA[Сообщения]]></string>

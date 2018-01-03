@@ -323,6 +323,18 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 		$sResult = curl_exec($oChannel);
 		curl_close($oChannel);
     }
+
+    protected function _getObjectOwnerId($aExtras)
+    {
+        $iResult = parent::_getObjectOwnerId($aExtras);
+        if(!empty($iResult))
+            return $iResult;
+
+        if(isset($aExtras['meta']))
+            return (int)$aExtras['meta'];
+
+        return 0;
+    }
 }
 
 /** @} */

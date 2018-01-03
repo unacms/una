@@ -66,6 +66,8 @@ SET @iHandler := LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('profile', 'delete', @iHandler),
 
+('meta_mention', 'added', @iHandler),
+
 ('sys_profiles_friends', 'connection_added', @iHandler),
 ('sys_profiles_friends', 'connection_removed', @iHandler),
 

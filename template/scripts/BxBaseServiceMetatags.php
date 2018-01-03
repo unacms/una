@@ -48,6 +48,25 @@ class BxBaseServiceMetatags extends BxDol
     {
         return BxDolMetatags::getObjectInstance($sObject)->getLocationsMap($iId, $sMapSize);
     }
+    
+	/**
+     * Get notification data for Notifications module - action Mention. 
+     */
+	public function serviceGetNotificationsPostMention($aEvent)
+    {
+    	$iProfile = (int)$aEvent['object_owner_id'];
+    	$oProfile = BxDolProfile::getInstance($iProfile);
+        if(!$oProfile)
+			return array();
+
+		return array(
+			'entry_sample' => '_sys_profile_sample_single',
+			'entry_url' => BX_DOL_URL_ROOT . bx_append_url_params('searchKeyword.php', array('type' => 'mention', 'keyword' => $iProfile)),
+			'entry_caption' => $oProfile->getDisplayName(),
+			'entry_author' => $iProfile,
+			'lang_key' => '_sys_metatags_mention_added',
+		);
+    }
 }
 
 /** @} */

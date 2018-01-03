@@ -94,10 +94,8 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 					$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
 					if(!empty($aQueryParts['join']))
 					    $sJoinClause .= ' ' . str_replace('INNER', 'LEFT', $aQueryParts['join']);
-                    if(!empty($aQueryParts['fields']['added']))
-					    $sWhereClause .= "AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'];
 
-					$sWhereClause .= $this->prepareAsString("AND ((NOT ISNULL(`c`.`content`) AND `{$this->_sTable}`.`action` <> 'replyPost') || (`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=?)) ", $aParams['owner_id']);
+					$sWhereClause .= $this->prepareAsString("AND ((NOT ISNULL(`c`.`content`)" . (!empty($aQueryParts['fields']['added']) ? " AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'] : "") . " AND `{$this->_sTable}`.`action` <> 'replyPost') || (`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=?)) ", $aParams['owner_id']);
                     break;
 			}
 
