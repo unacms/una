@@ -163,7 +163,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
         if($oMetatags)
-            $oMetatags->metaAdd($aEvent[$CNF['FIELD_ID']]);
+            $oMetatags->addPageMetaInfo($aEvent[$CNF['FIELD_ID']]);
 
         $sReferrer = '';
         if(isset($_SERVER['HTTP_REFERER']) && mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT) === 0)
@@ -1265,7 +1265,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     	$s = bx_process_output($s, BX_DATA_HTML);
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-		$s = $oMetatags->keywordsParse($iEventId, $s);
+		$s = $oMetatags->metaParse($iEventId, $s);
 
         return $s;
     }

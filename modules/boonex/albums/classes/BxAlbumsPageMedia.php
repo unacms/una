@@ -91,7 +91,7 @@ class BxAlbumsPageMedia extends BxTemplPage
         if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
             if ($o) {
-                $o->metaAdd($this->_aMediaInfo['id'], $aThumb);
+                $o->addPageMetaInfo($this->_aMediaInfo['id'], $aThumb);
             }
         }
 

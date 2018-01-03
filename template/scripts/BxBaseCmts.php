@@ -575,7 +575,7 @@ class BxBaseCmts extends BxDolCmts
 
                 if ($this->_sMetatagsObj) {
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
+                    $oMetatags->metaAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
                 $this->onPostAfter($iCmtId);
@@ -616,7 +616,7 @@ class BxBaseCmts extends BxDolCmts
 
                 if ($this->_sMetatagsObj) {
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
+                    $oMetatags->metaAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
                 $this->onEditAfter($iCmtId);

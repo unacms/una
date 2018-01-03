@@ -113,6 +113,13 @@ CREATE TABLE `bx_posts_meta_keywords` (
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bx_posts_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `bx_posts_meta_locations` (
   `object_id` int(10) unsigned NOT NULL,
   `lat` double NOT NULL,

@@ -264,7 +264,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $s = parent::genViewRowValue($aInput);
 
         if ($this->_oMetatagsObject && in_array($aInput['name'], $this->_aMetatagsFieldsWithKeywords) && $s)
-            $s = $this->_oMetatagsObject->keywordsParse($this->_oMetatagsContentId, $s);
+            $s = $this->_oMetatagsObject->metaParse($this->_oMetatagsContentId, $s);
 
         return $s;
     }
