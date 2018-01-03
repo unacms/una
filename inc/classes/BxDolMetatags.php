@@ -276,7 +276,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, ' ' . strip_tags($s), '/[\s]\#([\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', BX_METATAGS_KEYWORDS_MAX);
+        return $this->_metaAdd($iId, ' ' . strip_tags($s), '/[\s]\#([\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', BX_METATAGS_KEYWORDS_MAX, 'keyword');
     }
 
     /**
@@ -737,7 +737,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', BX_METATAGS_MENTIONS_MAX);
+        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', BX_METATAGS_MENTIONS_MAX, 'mention');
     }
 
     /**
