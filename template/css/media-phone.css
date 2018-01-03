@@ -53,7 +53,7 @@ html {
 	padding-right: 0px;
 }
 
-.bx-db-container.bx-def-border-block {
+#bx-content-container .bx-db-container.bx-def-border-block {
 	border-left-width: 0px;
 	border-right-width: 0px;
 }

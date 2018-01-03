@@ -11,6 +11,7 @@
     $.fn.dolPopupDefaultOptions = {
         parent: 'body', // parent element selector
         closeOnOuterClick: true,
+        removeOnClose: false,
         closeElement: '.bx-popup-element-close', // link to element which will close popup
         position: 'centered', // | 'absolute' | 'fixed' | event | element,
         fog: {color: '#fff', opacity: .7}, // {color, opacity},
@@ -278,6 +279,12 @@
     	});
     };
 
+    $.fn.dolPopupFullScreen = function(oOptions) {
+    	return this.each(function() {
+    		$(this).addClass('bx-popup-full-screen').dolPopup(oOptions);
+    	});
+    };
+
     $.fn.dolPopupHide = function(options) { 
 
         if ('undefined' == typeof(options) || 'object' != typeof(options))
@@ -328,6 +335,9 @@
                     if(typeof(onHide) == 'function')
                     	onHide($el);
 
+                    if(o.removeOnClose == true)
+                		$el.remove();
+
                 }, o.speed);
 
             } else {
@@ -338,6 +348,9 @@
                 $el.hide(function() {
                 	if(typeof(onHide) == 'function')
                     	onHide($el);
+
+                	if(o.removeOnClose == true)
+                		$el.remove();
                 });
             }
             
@@ -355,6 +368,10 @@
 
         if ('undefined' == typeof(options.container))
             options.container = '.bx-popup-content-wrapped';
+
+        var bFullScreen = false;
+        if (typeof(options.fullScreen) != 'undefined')
+        	bFullScreen = options.fullScreen;
 
         var bx_menu_on = function (e, b) {
             var li = $(e).parents('li:first');   
@@ -407,13 +424,21 @@
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
 
-                $('#' + sPopupId).dolPopup($.extend({}, options, {
+                var oPopupOptions = $.extend({}, options, {
                     pointer: oPointerOptions,
-                    onHide: function () {
+                    onHide: function (oPopup) {
                         if (!$.isWindow(e[0]))
                             bx_menu_on(e, false);
+
+                        if(typeof(options.onHide) == 'function')
+                        	options.onHide(oPopup);
                     }
-                }));
+                });
+
+                if(bFullScreen)
+                	$('#' + sPopupId).dolPopupFullScreen(oPopupOptions);
+                else
+                	$('#' + sPopupId).dolPopup(oPopupOptions);
 
             } else { // if popup doesn't exists - create new one from provided url
 
@@ -427,13 +452,21 @@
                 var oLoading = $('#' + sPopupId + ' .bx-popup-loading-wrapped');
                 bx_loading_content(oLoading, true, true);
 
-                $('#' + sPopupId).dolPopup($.extend({}, options, {
+                var oPopupOptions = $.extend({}, options, {
                     pointer: oPointerOptions,
-                    onHide: function () {
+                    onHide: function (oPopup) {
                         if (!$.isWindow(e[0]))
                             bx_menu_on(e, false);
+
+                        if(typeof(options.onHide) == 'function')
+                        	options.onHide(oPopup);
                     }
-                }));
+                });
+
+                if(bFullScreen)
+                	$('#' + sPopupId).dolPopupFullScreen(oPopupOptions);
+                else
+                	$('#' + sPopupId).dolPopup(oPopupOptions);
 
                 var fOnLoad = function() {
                 	bx_loading_content(oLoading, false);
