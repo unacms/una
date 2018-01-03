@@ -11,6 +11,8 @@
 
 class BxPhotosConfig extends BxBaseModTextConfig
 {
+    protected $_aHtmlIds;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -88,6 +90,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_photos_entry_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_photos_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_photos_entry_delete',
+            'OBJECT_PAGE_VIEW_ENTRY_BRIEF' => 'bx_photos_view_entry_brief', // brief view page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_photos_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_photos_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_photos_submenu', // main module submenu
@@ -128,10 +131,12 @@ class BxPhotosConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+        	'main' => 'BxPhotosMain',
         	'manage_tools' => 'BxPhotosManageTools'
         );
 
         $this->_aJsObjects = array(
+        	'main' => 'oBxPhotosMain',
         	'manage_tools' => 'oBxPhotosManageTools'
         );
 
@@ -139,6 +144,19 @@ class BxPhotosConfig extends BxBaseModTextConfig
         	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
+
+        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array(
+        	'view_entry_brief_popup' => $sHtmlPrefix . '-view-entry-brief-popup'
+        );
+    }
+
+    public function getHtmlIds($sKey = '')
+    {
+        if(empty($sKey))
+            return $this->_aHtmlIds;
+
+        return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
 }
 

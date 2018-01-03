@@ -61,6 +61,8 @@
     <string name="_bx_photos_page_block_title_delete_entry"><![CDATA[Delete]]></string>
 	<string name="_bx_photos_page_title_sys_view_entry"><![CDATA[View Photo]]></string>
 	<string name="_bx_photos_page_title_view_entry"><![CDATA[{title}]]></string>
+	<string name="_bx_photos_page_title_sys_view_entry_brief"><![CDATA[Brief View Photo]]></string>
+    <string name="_bx_photos_page_title_view_entry_brief"><![CDATA[{title}]]></string>
 	<string name="_bx_photos_page_block_title_entry_text"><![CDATA[Text]]></string>
 	<string name="_bx_photos_page_block_title_entry_photo"><![CDATA[Photo]]></string>
 	<string name="_bx_photos_page_title_browse"><![CDATA[Photos]]></string>
@@ -199,4 +201,6 @@
     <string name="_bx_photos_txt_sample_comment_single"><![CDATA[comment to photo]]></string>
     <string name="_bx_photos_txt_sample_vote_single"><![CDATA[vote to photo]]></string>
     <string name="_bx_photos_txt_n_views"><![CDATA[{0} views]]></string>
+    <string name="_bx_photos_txt_previous"><![CDATA[Previous]]></string>
+    <string name="_bx_photos_txt_next"><![CDATA[Next]]></string>
 </resources>

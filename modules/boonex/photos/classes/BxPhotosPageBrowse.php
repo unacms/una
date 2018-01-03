@@ -19,6 +19,13 @@ class BxPhotosPageBrowse extends BxBaseModTextPageBrowse
         $this->MODULE = 'bx_photos';
         parent::__construct($aObject, $oTemplate);
     }
+
+    public function getCode()
+    {
+        $this->_oModule->_oTemplate->addJs(array('main.js'));
+
+        return parent::getCode() . $this->_oModule->_oTemplate->getJsCode('main');
+    }
 }
 
 /** @} */

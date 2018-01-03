@@ -11,10 +11,13 @@
 
 class BxPhotosSearchResult extends BxBaseModTextSearchResult
 {
+    public $aParams;
+
     function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
 
+        $this->aParams = $aParams;
         $this->aCurrent = array(
             'name' => 'bx_photos',
             'module_name' => 'bx_photos',
@@ -59,14 +62,20 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
 
         switch ($sMode) {
             case 'author':
-                if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor)) {
+                if(empty($this->aParams['author']) && bx_get('author') !== false)
+                    $this->aParams['author'] = bx_process_input(bx_get('author'));
+
+                if(!$this->_updateCurrentForAuthor($sMode, $this->aParams, $oProfileAuthor)) {
                     $this->isError = true;
                     break;
                 }
                 break;
 
             case 'favorite':
-                if(!$this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor)) {
+                if(empty($this->aParams['author']) && bx_get('author') !== false)
+                    $this->aParams['author'] = bx_process_input(bx_get('author'));
+
+                if(!$this->_updateCurrentForFavorite($sMode, $this->aParams, $oProfileAuthor)) {
                     $this->isError = true;
                     break;
                 }
@@ -114,6 +123,19 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
         $this->processReplaceableMarkers($oProfileAuthor);
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+    }
+
+    function getSearchData ()
+    {
+        $aResult = parent::getSearchData();
+        if(empty($aResult) || !is_array($aResult))
+            return $aResult;
+
+        $this->aUnitParams = array_merge($this->aUnitParams, $this->aParams);
+        $this->aUnitParams['start'] = $this->aCurrent['paginate']['start'];
+        $this->aUnitParams['per_page'] = $this->aCurrent['paginate']['perPage'];
+
+        return $aResult;
     }
 
     function getAlterOrder()

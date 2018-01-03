@@ -9,7 +9,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_photos';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_photos' OR `object` IN('bx_photos_create_entry', 'bx_photos_edit_entry', 'bx_photos_delete_entry', 'bx_photos_view_entry', 'bx_photos_view_entry_comments', 'bx_photos_home', 'bx_photos_popular', 'bx_photos_updated', 'bx_photos_author', 'bx_photos_search', 'bx_photos_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_photos' OR `object` IN('bx_photos_create_entry', 'bx_photos_edit_entry', 'bx_photos_delete_entry', 'bx_photos_view_entry', 'bx_photos_view_entry_brief', 'bx_photos_view_entry_comments', 'bx_photos_home', 'bx_photos_popular', 'bx_photos_updated', 'bx_photos_author', 'bx_photos_search', 'bx_photos_manage');
 
 
 -- MENU

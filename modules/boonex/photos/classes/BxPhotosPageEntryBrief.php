@@ -10,27 +10,30 @@
  */
 
 /**
- * Profile's entries page.
+ * View Entry (brief)
  */
-class BxPhotosPageAuthor extends BxBaseModTextPageAuthor
+class BxPhotosPageEntryBrief extends BxTemplPage
 {
     protected $_sModule;
     protected $_oModule;
-    
+
+    protected $_aContentInfo;
+
     public function __construct($aObject, $oTemplate = false)
     {
+        parent::__construct($aObject, $oTemplate);
+
         $this->_sModule = 'bx_photos';
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($aObject, $oTemplate);
-    }
+        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-    //TODO: Continue from here!
-    public function getCode()
-    {
-        $this->_oModule->_oTemplate->addJs(array('main.js'));
+        $sMode = '';
+        if(bx_get('mode') !== false)
+            $sMode = bx_process_input(bx_get('mode'));
 
-        return parent::getCode() . $this->_oModule->_oTemplate->getJsCode('main');
+        if($iContentId)
+            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
     }
 }
 

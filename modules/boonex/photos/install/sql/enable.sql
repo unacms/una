@@ -57,6 +57,15 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_photos_view_entry', 4, 'bx_photos', '', '_bx_photos_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 4),
 ('bx_photos_view_entry', 4, 'bx_photos', '', '_bx_photos_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:9:"bx_photos";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 5);
 
+-- PAGE: view entry "brief"
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_photos_view_entry_brief', '_bx_photos_page_title_sys_view_entry_brief', '_bx_photos_page_title_view_entry_brief', 'bx_photos', 2, 2147483647, 1, 'quick-view-photo', '', '', '', '', 0, 1, 0, 'BxPhotosPageEntryBrief', 'modules/boonex/photos/classes/BxPhotosPageEntryBrief.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_photos_view_entry_brief', 1, 'bx_photos', '', '_bx_photos_page_block_title_entry_photo', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:27:"entity_photo_switcher_block";}', 0, 0, 1, 1),
+('bx_photos_view_entry_brief', 2, 'bx_photos', '', '_bx_photos_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 1),
+('bx_photos_view_entry_brief', 2, 'bx_photos', '', '_bx_photos_page_block_title_entry_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 2);
+
 -- PAGE: view entry comments
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_photos_view_entry_comments', '_bx_photos_page_title_sys_view_entry_comments', '_bx_photos_page_title_view_entry_comments', 'bx_photos', 5, 2147483647, 1, 'view-photo-comments', '', '', '', '', 0, 1, 0, 'BxPhotosPageEntry', 'modules/boonex/photos/classes/BxPhotosPageEntry.php');

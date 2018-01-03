@@ -59,8 +59,10 @@
     <string name="_bx_photos_page_title_sys_delete_entry"><![CDATA[Удалить фото]]></string>
     <string name="_bx_photos_page_title_delete_entry"><![CDATA[Удалить фото]]></string>
     <string name="_bx_photos_page_block_title_delete_entry"><![CDATA[Удалить фото]]></string>
-	<string name="_bx_photos_page_title_sys_view_entry"><![CDATA[Просмотреть фото]]></string>
+	<string name="_bx_photos_page_title_sys_view_entry"><![CDATA[Просмотр фото]]></string>
 	<string name="_bx_photos_page_title_view_entry"><![CDATA[{title}]]></string>
+	<string name="_bx_photos_page_title_sys_view_entry_brief"><![CDATA[Краткий просмотр фото]]></string>
+    <string name="_bx_photos_page_title_view_entry_brief"><![CDATA[{title}]]></string>
 	<string name="_bx_photos_page_block_title_entry_text"><![CDATA[Текст]]></string>
 	<string name="_bx_photos_page_block_title_entry_photo"><![CDATA[Фото]]></string>
 	<string name="_bx_photos_page_title_browse"><![CDATA[Фото]]></string>
@@ -199,4 +201,6 @@
     <string name="_bx_photos_txt_sample_comment_single"><![CDATA[комментарий к фото]]></string>
     <string name="_bx_photos_txt_sample_vote_single"><![CDATA[голос за фото]]></string>
     <string name="_bx_photos_txt_n_views"><![CDATA[{0} просмотров]]></string>
+    <string name="_bx_photos_txt_previous"><![CDATA[Предыдущее фото]]></string>
+    <string name="_bx_photos_txt_next"><![CDATA[Следующее фото]]></string>
 </resources>
