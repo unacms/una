@@ -164,6 +164,13 @@ CREATE TABLE IF NOT EXISTS `bx_events_meta_locations` (
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bx_events_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- TABLE: fans
 CREATE TABLE IF NOT EXISTS `bx_events_fans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

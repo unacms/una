@@ -404,7 +404,7 @@ INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trig
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_events', 'bx_events_meta_keywords', 'bx_events_meta_locations', '', '', '');
+('bx_events', 'bx_events_meta_keywords', 'bx_events_meta_locations', 'bx_events_meta_mentions', '', '');
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES

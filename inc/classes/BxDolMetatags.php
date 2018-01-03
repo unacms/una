@@ -876,8 +876,9 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
 
         if ($iRet = $this->_oQuery->$sFuncAdd($iId, $aMetas)) {
             foreach ($aMetas as $sMeta) {
-                bx_alert($this->_sObject, $sAlertName . '_add', $iId, bx_get_logged_profile_id(), array('meta' => $sMeta));
-                bx_alert('meta_' . $sAlertName, 'add', $iId, bx_get_logged_profile_id(), array('meta' => $sMeta));
+                $iObjectId = 'mention' == $sAlertName ? $sMeta : $iId;
+                bx_alert($this->_sObject, $sAlertName . '_add', $iObjectId, bx_get_logged_profile_id(), array('meta' => $sMeta, 'content_id' => $iId));
+                bx_alert('meta_' . $sAlertName, 'add', $iObjectId, bx_get_logged_profile_id(), array('meta' => $sMeta, 'content_id' => $iId, 'object' => $this->_sObject));
             }
         }
 
