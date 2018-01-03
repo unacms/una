@@ -327,7 +327,7 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_snipcart', 'bx_snipcart_meta_keywords', 'bx_snipcart_meta_locations', '', '', '');
+('bx_snipcart', 'bx_snipcart_meta_keywords', 'bx_snipcart_meta_locations', 'bx_snipcart_meta_mentions', '', '');
 
 
 -- CATEGORY

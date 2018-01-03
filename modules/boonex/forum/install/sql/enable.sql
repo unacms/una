@@ -440,7 +440,7 @@ INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-(@sName, 'bx_forum_meta_keywords', '', '', 'BxForumMetatags', 'modules/boonex/forum/classes/BxForumMetatags.php');
+(@sName, 'bx_forum_meta_keywords', '', 'bx_forum_meta_mentions', 'BxForumMetatags', 'modules/boonex/forum/classes/BxForumMetatags.php');
 
 
 -- CATEGORY

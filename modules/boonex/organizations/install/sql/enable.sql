@@ -450,7 +450,7 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_organizations', 'bx_organizations_meta_keywords', 'bx_organizations_meta_locations', '', '', '');
+('bx_organizations', 'bx_organizations_meta_keywords', 'bx_organizations_meta_locations', 'bx_organizations_meta_mentions', '', '');
 
 
 -- CATEGORY

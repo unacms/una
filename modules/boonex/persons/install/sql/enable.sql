@@ -395,7 +395,7 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_persons', 'bx_persons_meta_keywords', 'bx_persons_meta_locations', '', '', '');
+('bx_persons', 'bx_persons_meta_keywords', 'bx_persons_meta_locations', 'bx_persons_meta_mentions', '', '');
 
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);

@@ -323,7 +323,7 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_videos', 'bx_videos_meta_keywords', 'bx_videos_meta_locations', '', '', '');
+('bx_videos', 'bx_videos_meta_keywords', 'bx_videos_meta_locations', 'bx_videos_meta_mentions', '', '');
 
 
 -- CATEGORY

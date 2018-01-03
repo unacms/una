@@ -452,7 +452,7 @@ INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_market', 'bx_market_meta_keywords', 'bx_market_meta_locations', '', '', '');
+('bx_market', 'bx_market_meta_keywords', 'bx_market_meta_locations', 'bx_market_meta_mentions', '', '');
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES

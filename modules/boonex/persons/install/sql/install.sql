@@ -133,6 +133,13 @@ CREATE TABLE IF NOT EXISTS `bx_persons_meta_locations` (
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bx_persons_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_persons_pictures', @sStorageEngine, '', 360, 2592000, 3, 'bx_persons_pictures', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
