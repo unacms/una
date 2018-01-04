@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_events2users` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `event_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_notifications_handlers` (
   `id` int(11) NOT NULL auto_increment,

@@ -9,7 +9,7 @@ CREATE TABLE `bx_antispam_ip_table` (
   PRIMARY KEY  (`ID`),
   KEY `From` (`From`),
   KEY `To` (`To`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 CREATE TABLE `bx_antispam_dnsbl_rules` (
@@ -23,7 +23,7 @@ CREATE TABLE `bx_antispam_dnsbl_rules` (
   `added` int(11) NOT NULL,
   `active` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `bx_antispam_dnsbl_rules` (`chain`, `zonedomain`, `postvresp`, `url`, `recheck`, `comment`, `added`, `active`) VALUES
 ('spammers', 'sbl.spamhaus.org.', 'any', 'http://www.spamhaus.org/sbl/', 'http://www.spamhaus.org/query/bl?ip=%s', '_bx_antispam_rule_note_spamhaus_org', 0, 1),
@@ -34,7 +34,7 @@ INSERT INTO `bx_antispam_dnsbl_rules` (`chain`, `zonedomain`, `postvresp`, `url`
 CREATE TABLE `bx_antispam_dnsbluri_zones` (
   `level` tinyint(4) NOT NULL,
   `zone` varchar(64) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_antispam_disposable_email_domains` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `bx_antispam_disposable_email_domains` (
   `list` enum('blacklist','custom_blacklist','whitelist','custom_whitelist') NOT NULL DEFAULT 'custom_blacklist',
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain` (`domain`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `bx_antispam_block_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -54,7 +54,7 @@ CREATE TABLE `bx_antispam_block_log` (
   PRIMARY KEY (`id`),
   KEY `ip` (`ip`),
   KEY `profile_id` (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 -- Studio page and widget
 

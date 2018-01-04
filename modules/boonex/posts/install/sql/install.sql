@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_votes` (
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
   UNIQUE KEY `object_id` (`object_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_posts_votes_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_votes_track` (
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `vote` (`object_id`, `author_nip`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
 -- TABLE: views
 CREATE TABLE `bx_posts_views_track` (
@@ -103,7 +103,7 @@ CREATE TABLE `bx_posts_views_track` (
   `viewer_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 -- TABLE: metas
 CREATE TABLE `bx_posts_meta_keywords` (
@@ -111,14 +111,14 @@ CREATE TABLE `bx_posts_meta_keywords` (
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `bx_posts_meta_mentions` (
   `object_id` int(10) unsigned NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
   KEY `object_id` (`object_id`),
   KEY `profile_id` (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `bx_posts_meta_locations` (
   `object_id` int(10) unsigned NOT NULL,
@@ -132,14 +132,14 @@ CREATE TABLE `bx_posts_meta_locations` (
   `street_number` varchar(255) NOT NULL,
   PRIMARY KEY (`object_id`),
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 -- TABLE: reports
 CREATE TABLE IF NOT EXISTS `bx_posts_reports` (
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   UNIQUE KEY `object_id` (`object_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_posts_reports_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_reports_track` (
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `report` (`object_id`, `author_nip`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
 -- TABLE: favorites
 CREATE TABLE `bx_posts_favorites_track` (
@@ -159,7 +159,7 @@ CREATE TABLE `bx_posts_favorites_track` (
   `author_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`author_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 -- STORAGES & TRANSCODERS

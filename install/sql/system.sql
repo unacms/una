@@ -4,10 +4,10 @@
 
 -- --------------------------------------------------------
 
-SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_statistics`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
+SET NAMES 'utf8mb4';
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_email_templates`, `sys_email_queue`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_statistics`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 
-ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
+ALTER DATABASE DEFAULT CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
 
 
 -- --------------------------------------------------------
@@ -18,7 +18,7 @@ CREATE TABLE `sys_keys` (
   `data` text NOT NULL,
   `expire` int(11) NOT NULL,
   PRIMARY KEY (`key`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -33,7 +33,7 @@ CREATE TABLE `sys_objects_editor` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_file_handlers` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_file_handlers` (`object`, `title`, `preg_ext`, `active`, `order`, `override_class_name`, `override_class_file`) VALUES
 ('sys_ms_viewer', '_sys_file_handlers_ms_viewer', '/\\.(doc|docx|xls|xlsx|ppt|pptx)$/i', 1, 1, 'BxTemplFileHandlerMsViewer', ''),
@@ -73,7 +73,7 @@ CREATE TABLE `sys_objects_captcha` (
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_captcha` (`object`, `title`, `override_class_name`, `override_class_file`) VALUES
 ('sys_recaptcha', 'reCAPTCHA', 'BxTemplCaptchaReCAPTCHA', ''),
@@ -92,7 +92,7 @@ CREATE TABLE `sys_objects_auths` (
   `OnClick` varchar(255) NOT NULL,
   `Icon` varchar(64) NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -131,7 +131,7 @@ CREATE TABLE `sys_objects_cmts` (
   `ClassName` varchar(32) NOT NULL,
   `ClassFile` varchar(256) NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -143,7 +143,7 @@ CREATE TABLE `sys_email_queue` (
   `headers` text NOT NULL default '',
   `params` text NOT NULL default '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `sys_email_templates` (
   `Subject` varchar(255) NOT NULL,
   `Body` varchar(255) NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+);
 
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
 ('system', '_sys_et_txt_name_system_admin_email', 't_AdminEmail', '_sys_et_txt_subject_admin_email', '_sys_et_txt_body_admin_email'),
@@ -198,7 +198,7 @@ CREATE TABLE `sys_options` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`),
   KEY `category_id` (`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 --
 -- Table structure for table `sys_options_categories`
@@ -212,7 +212,7 @@ CREATE TABLE `sys_options_categories` (
   `order` int(11) default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 --
 -- Table structure for table `sys_options_types`
@@ -226,7 +226,7 @@ CREATE TABLE `sys_options_types` (
   `order` int(11) default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 --
 -- Dumping data for tables `sys_options_types`
@@ -488,7 +488,7 @@ CREATE TABLE `sys_options_mixes` (
   `editable` tinyint(1) NOT NULL default '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 --
 -- Table structure for table `sys_options_mixes2options`
@@ -498,7 +498,7 @@ CREATE TABLE `sys_options_mixes2options` (
   `mix_id` int(11) unsigned NOT NULL default '0',
   `value` mediumtext NOT NULL,
   UNIQUE KEY `value`(`option`, `mix_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -508,8 +508,8 @@ CREATE TABLE `sys_localization_categories` (
   `ID` int(6) unsigned NOT NULL auto_increment,
   `Name` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`ID`),
-  UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `Name` (`Name`(191))
+);
 
 INSERT INTO `sys_localization_categories` VALUES
 (1, 'System'),
@@ -522,7 +522,7 @@ CREATE TABLE `sys_localization_keys` (
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `Key` (`Key`),
   FULLTEXT KEY `KeyFilter` (`Key`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `sys_localization_languages` (
   `ID` int(10) unsigned NOT NULL auto_increment,
@@ -534,7 +534,7 @@ CREATE TABLE `sys_localization_languages` (
   `Enabled` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `sys_localization_strings` (
   `IDKey` int(10) unsigned NOT NULL default '0',
@@ -542,7 +542,7 @@ CREATE TABLE `sys_localization_strings` (
   `String` mediumtext NOT NULL,
   PRIMARY KEY  (`IDKey`,`IDLanguage`),
   FULLTEXT KEY `String` (`String`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -559,7 +559,7 @@ CREATE TABLE `sys_acl_actions` (
   `DisabledForLevels` int(10) unsigned NOT NULL DEFAULT '3',
   PRIMARY KEY  (`ID`),
   FULLTEXT KEY `ModuleAndName` (`Module`, `Name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'connect', NULL, '_sys_acl_action_connect', '', 0, 3);
@@ -643,7 +643,7 @@ CREATE TABLE `sys_acl_actions_track` (
   `ActionsLeft` int(10) unsigned NOT NULL DEFAULT '0',
   `ValidSince` datetime default NULL,
   PRIMARY KEY  (`IDAction`,`IDMember`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -656,7 +656,7 @@ CREATE TABLE `sys_acl_matrix` (
   `AllowedPeriodEnd` datetime default NULL,
   `AdditionalParamValue` varchar(255) default NULL,
   PRIMARY KEY  (`IDLevel`,`IDAction`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
@@ -792,7 +792,7 @@ CREATE TABLE `sys_acl_levels` (
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `Name` (`Name`),
   FULLTEXT KEY `Description` (`Description`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_acl_levels` (`ID`, `Name`, `Icon`, `Description`, `Active`, `Purchasable`, `Removable`, `QuotaSize`, `QuotaNumber`, `QuotaMaxFileSize`, `Order`) VALUES
 (1, '_adm_prm_txt_level_unauthenticated', 'user bx-def-font-color', '', 'yes', 'no', 'no', 0, 0, 0, 1),
@@ -820,7 +820,7 @@ CREATE TABLE IF NOT EXISTS `sys_sessions` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `date` (`date`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
+);
 
 -- --------------------------------------------------------
 
@@ -835,7 +835,7 @@ CREATE TABLE `sys_acl_levels_members` (
   `DateExpires` datetime default NULL,
   `TransactionID` varchar(16) NOT NULL default '',
   PRIMARY KEY  (`IDMember`,`IDLevel`,`DateStarts`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -857,9 +857,9 @@ CREATE TABLE `sys_accounts` (
   `changed` int(11) NOT NULL DEFAULT '0',
   `logged` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `email` (`email`(191)),
   KEY `added` (`added`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -872,7 +872,7 @@ CREATE TABLE IF NOT EXISTS `sys_profiles` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_type_content` (`account_id`,`type`,`content_id`),
   KEY `content_type` (`content_id`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -893,7 +893,7 @@ CREATE TABLE `sys_statistics` (
   `order` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES
 ('system', 'sys_accounts', '_sys_accounts', '', 'user', 'SELECT COUNT(*) FROM `sys_accounts` WHERE 1', 1);
@@ -911,7 +911,7 @@ CREATE TABLE `sys_objects_rss` (
   `class_name` varchar(32) NOT NULL default '',
   `class_file` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_rss` (`object`, `class_name`, `class_file`) VALUES
 ('sys_boonex', 'BxDolRssBoonEx', ''),
@@ -935,7 +935,7 @@ CREATE TABLE `sys_objects_search` (
   `ClassName` varchar(50) NOT NULL  default '',
   `ClassPath` varchar(100) NOT NULL  default '',
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+);
 
 -- --------------------------------------------------------
 
@@ -954,7 +954,7 @@ CREATE TABLE `sys_objects_search_extended` (
   `class_file` varchar(255) NOT NULL  default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -976,8 +976,8 @@ CREATE TABLE `sys_search_extended_fields` (
   `active` tinyint(4) NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `field` (`object`, `name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `field` (`object`(64), `name`(127))
+);
 
 -- --------------------------------------------------------
 
@@ -1003,7 +1003,7 @@ CREATE TABLE `sys_objects_vote` (
   `ClassName` varchar(32) NOT NULL default '',
   `ClassFile` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('sys_cmts', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', '', 'rate', 'votes', '', '');
@@ -1032,11 +1032,11 @@ CREATE TABLE `sys_modules` (
   `hash` varchar(32) NOT NULL default '',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `path` (`path`),
+  UNIQUE KEY `path` (`path`(191)),
   UNIQUE KEY `uri` (`uri`),
   UNIQUE KEY `class_prefix` (`class_prefix`),
   UNIQUE KEY `db_prefix` (`db_prefix`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
 ('module', 'system', 'System', 'UNA, Inc', '9', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
@@ -1048,7 +1048,7 @@ CREATE TABLE `sys_modules_file_tracks` (
   `file` varchar(255) NOT NULL default '',
   `hash` varchar(64) NOT NULL default '',  
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 CREATE TABLE `sys_modules_relations` (
@@ -1059,7 +1059,7 @@ CREATE TABLE `sys_modules_relations` (
   `on_enable` varchar(255) NOT NULL default '',
   `on_disable` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -1169,7 +1169,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_images2entries` (
   `image_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `image` (`system_id`,`cmt_id`,`image_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_ids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1179,28 +1179,28 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_ids` (
   `votes` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `system_cmt_id` (`system_id`,`cmt_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_meta_keywords` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),
   KEY `keyword` (`keyword`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_meta_mentions` (
   `object_id` int(10) unsigned NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
   KEY `object_id` (`object_id`),
   KEY `profile_id` (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_votes` (
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
   UNIQUE KEY `object_id` (`object_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_votes_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1211,7 +1211,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_votes_track` (
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `vote` (`object_id`, `author_nip`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -1226,7 +1226,7 @@ CREATE TABLE `sys_injections` (
   `replace` TINYINT NOT NULL DEFAULT '0',
   `active` TINYINT NOT NULL DEFAULT '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_injections`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
 ('update_cache', 150, 'injection_head', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_cache_updater";s:6:"params";a:0:{}s:5:"class";s:19:"TemplStudioLauncher";}', 0, 1),
@@ -1246,7 +1246,7 @@ CREATE TABLE `sys_injections_admin` (
   `replace` tinyint(4) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -1258,8 +1258,8 @@ CREATE TABLE `sys_permalinks` (
   `check` varchar(64) NOT NULL DEFAULT '',
   `compare_by_prefix` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `check` (`standard`,`permalink`,`check`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `check` (`standard`(80),`permalink`(80),`check`(30))
+);
 
 INSERT INTO `sys_permalinks` (`standard`, `permalink`, `check`, `compare_by_prefix`) VALUES
 ('page.php?i=', 'page/', 'permalinks_pages', 1),
@@ -1278,7 +1278,7 @@ CREATE TABLE `sys_alerts_handlers` (
   `service_call` text NOT NULL default '', 
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `sys_alerts` (
   `id` int(11) unsigned NOT NULL auto_increment,  
@@ -1287,7 +1287,7 @@ CREATE TABLE `sys_alerts` (
   `handler_id` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alert_handler` (`unit`, `action`, `handler_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_alerts_handlers` (`name`, `service_call`) VALUES
 ('sys_studio_settings_save_design', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:28:"alert_response_settings_save";s:6:"params";a:0:{}s:5:"class";s:25:"TemplStudioDesignServices";}');
@@ -1342,7 +1342,7 @@ CREATE TABLE `sys_objects_report` (
   `class_name` varchar(32) NOT NULL default '',
   `class_file` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -1361,7 +1361,7 @@ CREATE TABLE `sys_objects_view` (
   `class_name` varchar(32) NOT NULL default '',
   `class_file` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -1382,7 +1382,7 @@ CREATE TABLE `sys_objects_favorite` (
   `class_name` varchar(32) NOT NULL default '',
   `class_file` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -1401,7 +1401,7 @@ CREATE TABLE `sys_objects_feature` (
   `class_name` varchar(32) NOT NULL default '',
   `class_file` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -1424,7 +1424,7 @@ CREATE TABLE `sys_objects_chart` (
   `class_file` varchar(256) NOT NULL default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
 ('sys_accounts_growth', '_sys_chart_accounts_growth', 'sys_accounts', 'added', '', '', '', 1, 1, 'BxDolChartGrowth', ''),
@@ -1447,7 +1447,7 @@ CREATE TABLE `sys_objects_content_info` (
   UNIQUE KEY `alert_add` (`alert_unit` ,`alert_action_add`),
   UNIQUE KEY `alert_update` (`alert_unit` ,`alert_action_update`),
   UNIQUE KEY `alert_delete` (`alert_unit` ,`alert_action_delete`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -1461,7 +1461,7 @@ CREATE TABLE `sys_content_info_grids` (
   `selection` varchar(256) NOT NULL default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `grid_object` (`grid_object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -1480,15 +1480,15 @@ CREATE TABLE `sys_objects_privacy` (
   `override_class_file` varchar(255) NOT NULL default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`),
-  UNIQUE KEY `action` (`module`, `action`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `action` (`module`(64), `action`(127))
+);
 
 CREATE TABLE `sys_privacy_defaults` (  
   `owner_id` int(11) NOT NULL default '0',
   `action_id` int(11) NOT NULL default '0',
   `group_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`owner_id`, `action_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `sys_privacy_groups` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -1497,7 +1497,7 @@ CREATE TABLE `sys_privacy_groups` (
   `active` tinyint(4) NOT NULL default '1',
   `visible` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VALUES
 ('1', '', '', 1, 0),
@@ -1516,7 +1516,7 @@ CREATE TABLE `sys_cron_jobs` (
   `file` varchar(255) NOT NULL default '',
   `service_call` text NOT NULL default '', 
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('pruning', '0 0 * * *', 'BxDolCronPruning', 'inc/classes/BxDolCronPruning.php', ''),
@@ -1550,7 +1550,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_storage` (
   `ts` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('sys_images', 'Local', '', 360, 2592000, 0, 'sys_images', 'allow-deny', 'jpg,jpeg,jpe,gif,png,svg', '', 0, 0, 0, 0, 0, 0),
@@ -1567,7 +1567,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
   `current_number` int(11) NOT NULL,
   `ts` int(11) NOT NULL,
   PRIMARY KEY (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_tokens` (
   `id` int(11) NOT NULL,
@@ -1576,7 +1576,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_tokens` (
   `created` int(10) unsigned NOT NULL,
   UNIQUE KEY `id` (`id`,`object`,`hash`),
   KEY `created` (`created`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
   `id` int(11) NOT NULL,
@@ -1587,7 +1587,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
   UNIQUE KEY `id` (`id`,`object`),
   KEY `created` (`created`),
   KEY `profile_object_content` (`profile_id`,`object`,`content_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_deletions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1597,7 +1597,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_deletions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `object_file_id` (`object`,`file_id`),
   KEY `requested` (`requested`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_mime_types` (
   `ext` varchar(32) NOT NULL,
@@ -1605,7 +1605,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_mime_types` (
   `icon` varchar(255) NOT NULL,
   `icon_font` varchar(255) NOT NULL,
   PRIMARY KEY (`ext`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`, `icon_font`) VALUES
@@ -2684,7 +2684,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_form` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_login', 'system', '_sys_form_login', 'member.php', 'a:3:{s:2:"id";s:14:"sys-form-login";s:6:"action";s:10:"member.php";s:8:"onsubmit";s:31:"return validateLoginForm(this);";}', 'role', '', '', '', '', '', 0, 1, 'BxTemplFormLogin', ''),
@@ -2704,7 +2704,7 @@ CREATE TABLE IF NOT EXISTS `sys_form_displays` (
   `view_mode` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `object_display_name` (`object`,`display_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('sys_login', 'system', 'sys_login', '_sys_form_display_login', 0),
@@ -2749,8 +2749,8 @@ CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
   `editable` tinyint(4) NOT NULL DEFAULT '1',
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `display_name` (`object`,`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `display_name` (`object`(64),`name`(127))
+);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('sys_login', 'system', 'role', '1', '', 0, 'hidden', '_sys_form_login_input_caption_system_role', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -2814,7 +2814,7 @@ CREATE TABLE IF NOT EXISTS `sys_form_display_inputs` (
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `display_input` (`display_name`,`input_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 
@@ -2904,9 +2904,9 @@ CREATE TABLE `sys_form_pre_lists` (
   `use_for_sets` tinyint(4) unsigned NOT NULL default '1',
   `extendable` tinyint(4) unsigned NOT NULL default '1',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`key`),
-  FULLTEXT KEY `ModuleAndKey` (`module`, `key`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  UNIQUE KEY `key` (`key`(191)),
+  FULLTEXT KEY `ModuleAndKey` (`module`(32), `key`(159))
+);
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `extendable`) VALUES
 ('Country', '_adm_form_txt_pre_lists_country', 'system', '0', '0'),
@@ -2924,7 +2924,7 @@ CREATE TABLE `sys_form_pre_values` (
   `LKey2` varchar(255) NOT NULL default '',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `KeyAndValue` (`Key`, `Value`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('Country', 'AF', 1, '__Afghanistan', ''),
@@ -3249,7 +3249,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_templates` (
   `title` varchar(255) NOT NULL,
   `visible` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (1, 'menu_empty.html', '_sys_menu_template_title_empty', 1),
@@ -3285,7 +3285,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 14, 0, 1, 'BxTemplMenuSite', ''),
@@ -3319,7 +3319,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `title` varchar(255) NOT NULL,
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`set_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_site', 'system', '_sys_menu_set_title_site', 0),
@@ -3362,7 +3362,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `editable` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- site menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -3463,7 +3463,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_grid` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- GRIDS: studio
 
@@ -3497,8 +3497,8 @@ CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `chars_limit` int(11) NOT NULL DEFAULT '0',
   `params` text NOT NULL,
   `order` int(11) NOT NULL,
-  UNIQUE KEY `object_name` (`object`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  UNIQUE KEY `object_name` (`object`(64),`name`(127))
+);
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('sys_studio_lang_keys', 'checkbox', 'Select', '1%', 0, '', '', 1),
@@ -3609,8 +3609,8 @@ CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
   `icon_only` tinyint(4) NOT NULL DEFAULT '0',
   `confirm` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
-  UNIQUE KEY `object_name_type` (`object`,`type`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  UNIQUE KEY `object_name_type` (`object`(64),`type`,`name`(123))
+);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('sys_studio_lang_keys', 'bulk', 'delete', '_adm_pgt_btn_delete', '', 1, 1),
@@ -3751,7 +3751,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_connection` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
 ('sys_profiles_friends', 'sys_profiles_conn_friends', 'mutual', '', ''),
@@ -3766,7 +3766,7 @@ CREATE TABLE IF NOT EXISTS `sys_profiles_conn_subscriptions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `initiator` (`initiator`,`content`),
   KEY `content` (`content`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sys_profiles_conn_friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3777,7 +3777,7 @@ CREATE TABLE IF NOT EXISTS `sys_profiles_conn_friends` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `initiator` (`initiator`,`content`),
   KEY `content` (`content`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -3797,7 +3797,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_transcoder` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('sys_image_resize', 'sys_images_resized', 'Storage', 'a:2:{s:6:"object";s:10:"sys_images";s:14:"disable_retina";b:1;}', 'no', '0', '0', '0', '', ''),
@@ -3819,10 +3819,10 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
   `handler` varchar(255) NOT NULL,
   `atime` int(11) NOT NULL,
   `data` text NOT NULL,
-  UNIQUE KEY `transcoder_object` (`transcoder_object`,`handler`),
+  UNIQUE KEY `transcoder_object` (`transcoder_object`(64),`handler`(127)),
   KEY `atime` (`atime`),
   KEY `file_id` (`file_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_videos_files` (
@@ -3830,10 +3830,10 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_videos_files` (
   `file_id` int(11) NOT NULL,
   `handler` varchar(255) NOT NULL,
   `atime` int(11) NOT NULL,
-  UNIQUE KEY `transcoder_object` (`transcoder_object`,`handler`),
+  UNIQUE KEY `transcoder_object` (`transcoder_object`(64),`handler`(127)),
   KEY `atime` (`atime`),
   KEY `file_id` (`file_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_filters` (
@@ -3842,7 +3842,7 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_filters` (
   `filter_params` text NOT NULL,
   `order` int(11) NOT NULL DEFAULT '0',
   KEY `transcoder_object` (`transcoder_object`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
 ('sys_image_resize', 'ResizeVar', '', '0'),
@@ -3873,8 +3873,8 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_queue` (
   `changed` int(11) NOT NULL,
   `log` text NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `transcoder_object` (`transcoder_object`,`file_id_source`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `transcoder_object` (`transcoder_object`(64),`file_id_source`(127))
+);
 
 
 CREATE TABLE `sys_transcoder_queue_files` (
@@ -3891,7 +3891,7 @@ CREATE TABLE `sys_transcoder_queue_files` (
   `private` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `remote_id` (`remote_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- --------------------------------------------------------
@@ -3920,8 +3920,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`),
-  UNIQUE KEY `uri` (`uri`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `uri` (`uri`(191))
+);
 
 INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
 ('sys_home', 'home', '_sys_page_title_system_home', '_sys_page_title_home', 'system', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
@@ -3953,7 +3953,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_layouts` (
   `cells_number` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_pages_layouts` (`id`, `name`, `icon`, `title`, `template`, `cells_number`) VALUES
 (1, 'bar_left', 'layout_bar_left.png', '_sys_layout_bar_left', 'layout_bar_left.html', 2),
@@ -3976,7 +3976,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_design_boxes` (
   `template` varchar(255) NOT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_pages_design_boxes` (`id`, `title`, `template`, `order`) VALUES
 (0, '_sys_designbox_0', 'designbox_0.html', '2'),
@@ -4008,7 +4008,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- skeleton blocks
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
@@ -4088,7 +4088,7 @@ CREATE TABLE `sys_objects_metatags` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('sys_cmts', 'sys_cmts_meta_keywords', '', 'sys_cmts_meta_mentions', '', '');
@@ -4109,8 +4109,8 @@ CREATE TABLE `sys_objects_category` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`),
-  UNIQUE KEY `form_object` (`form_object`,`list_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `form_object` (`form_object`(64),`list_name`(127))
+);
 
 -- --------------------------------------------------------
 
@@ -4126,7 +4126,7 @@ CREATE TABLE `sys_objects_live_updates` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sys_objects_live_updates`(`name`, `frequency`, `service_call`, `active`) VALUES
 ('sys_payments_cart', 1, 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"get_live_updates_cart";s:6:"params";a:3:{i:0;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:1;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:4:"cart";}i:2;s:7:"{count}";}s:5:"class";s:21:"TemplPaymentsServices";}', 1),
@@ -4146,7 +4146,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_payments` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`),
   UNIQUE KEY `uri` (`uri`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -4162,7 +4162,7 @@ CREATE TABLE `sys_std_pages` (
   `icon` varchar(255) NOT NULL default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
@@ -4181,8 +4181,8 @@ CREATE TABLE `sys_std_widgets` (
   `cnt_actions` text NOT NULL default '',
   `bookmark` tinyint(4) unsigned NOT NULL default '0',
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `widget-page` (`id`, `page_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  UNIQUE KEY `widget-page` (`id`, `page_id`(187))
+);
 
 -- --------------------------------------------------------
 
@@ -4196,7 +4196,7 @@ CREATE TABLE `sys_std_pages_widgets` (
   `order` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `wid_pag` (`widget_id`, `page_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
   
 
 --

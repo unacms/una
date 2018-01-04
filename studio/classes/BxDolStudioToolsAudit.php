@@ -68,7 +68,7 @@ class BxDolStudioToolsAudit extends BxDol
             'php module: exif' => array('op' => 'module', 'val' => 'exif'),
         );
 
-        $this->sMinMysqlVer = '5.1';
+        $this->sMinMysqlVer = '5.5.3';
         $this->aMysqlOptimizationSettings = array (
             'key_buffer_size' => array('op' => '>=', 'val' => 128*1024, 'type' => 'bytes'),
             'query_cache_limit' => array('op' => '>=', 'val' => 1000000),

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_providers` (
   `class_name` varchar(128) NOT NULL default '',
   `class_file` varchar(255) NOT NULL  default '',
   PRIMARY KEY(`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_providers_options` (
   `id` int(11) NOT NULL auto_increment,
@@ -30,21 +30,21 @@ CREATE TABLE IF NOT EXISTS `bx_payment_providers_options` (
   `order` tinyint(4) NOT NULL default '0',
   PRIMARY KEY(`id`),
   UNIQUE KEY `name`(`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_user_values` (
   `user_id` int(11) NOT NULL default '0',
   `option_id` int(11) NOT NULL default '0',  
   `value` varchar(255) NOT NULL default '',
   UNIQUE KEY `value`(`user_id`, `option_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_cart` (
   `client_id` int(11) NOT NULL default '0',
   `items` text NOT NULL default '',
   `customs` text NOT NULL default '',
   PRIMARY KEY(`client_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_transactions` (
   `id` int(11) NOT NULL auto_increment,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_transactions` (
   `date` int(11) NOT NULL default '0',
   `new` tinyint(1) NOT NULL default '1',
   PRIMARY KEY(`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_subscriptions` (
   `id` int(11) NOT NULL auto_increment,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_subscriptions` (
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY(`id`),
   UNIQUE KEY `pending_id` (`pending_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_subscriptions_deleted` (
   `id` int(11) NOT NULL auto_increment,
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_subscriptions_deleted` (
   `deleted` int(11) NOT NULL default '0',
   PRIMARY KEY(`id`),
   UNIQUE KEY `pending_id` (`pending_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_transactions_pending` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -100,14 +100,14 @@ CREATE TABLE IF NOT EXISTS `bx_payment_transactions_pending` (
   `date` int(11) NOT NULL default '0',
   `processed` tinyint(4) NOT NULL default '0',
   PRIMARY KEY(`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `bx_payment_modules` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL default '',
   PRIMARY KEY(`id`),
   UNIQUE KEY `uri`(`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 
 -- PayPal payment provider
