@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `bx_antispam_disposable_email_domains` (
   `domain` varchar(255) NOT NULL,
   `list` enum('blacklist','custom_blacklist','whitelist','custom_whitelist') NOT NULL DEFAULT 'custom_blacklist',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `domain` (`domain`)
+  UNIQUE KEY `domain` (`domain`(191))
 );
 
 CREATE TABLE `bx_antispam_block_log` (

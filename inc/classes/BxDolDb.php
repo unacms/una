@@ -1127,6 +1127,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
                         }
 
         $sOutput = '';
+        
         if(!empty($aError['query']))
             $sOutput .= '<p><b>Query:</b><br />' . $aError['query'] . '</p>';
 
@@ -1136,6 +1137,8 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 		if(!empty($aErrorLocation))
 			$sOutput .= '<p><b>Location:</b><br />The error was found in <b>' . $aErrorLocation['function'] . '</b> function in the file <b>' . $aErrorLocation['file'] . '</b> at line <b>' . $aErrorLocation['line'] . '</b>.</p>';
 
+        $sOutput .= '<p><b>collation_connection:</b><br />' . $this->getOne("SELECT @@collation_connection") . '</p>';
+        
 		if(!empty($aError['trace'])) {
             $sBackTrace = print_r($aError['trace'], true);
             if (defined ('BX_DATABASE_USER'))
