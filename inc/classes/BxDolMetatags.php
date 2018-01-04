@@ -235,6 +235,8 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     {
         $i = 0;
         foreach ($this->_aMetas as $sMeta) {
+            if ('locations' == $sMeta)
+                continue;
             $sFunc = $sMeta . 'Add';
             if (method_exists($this, $sFunc))
                 $i += $this->$sFunc($iId, $s);
