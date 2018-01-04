@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_cmts`, `bx_organizations_views_track`, `bx_organizations_favorites_track`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`, `bx_organizations_meta_locations`, `bx_organizations_fans`, `bx_organizations_admins`;
+DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_cmts`, `bx_organizations_views_track`, `bx_organizations_favorites_track`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`, `bx_organizations_meta_locations`, `bx_organizations_meta_mentions`, `bx_organizations_fans`, `bx_organizations_admins`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_organizations';

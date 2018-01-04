@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_snipcart_entries`, `bx_snipcart_settings`, `bx_snipcart_files`, `bx_snipcart_photos_resized`, `bx_snipcart_cmts`, `bx_snipcart_votes`, `bx_snipcart_votes_track`, `bx_snipcart_views_track`, `bx_snipcart_meta_keywords`, `bx_snipcart_meta_locations`, `bx_snipcart_reports`, `bx_snipcart_reports_track`, `bx_snipcart_favorites_track`;
+DROP TABLE IF EXISTS `bx_snipcart_entries`, `bx_snipcart_settings`, `bx_snipcart_files`, `bx_snipcart_photos_resized`, `bx_snipcart_cmts`, `bx_snipcart_votes`, `bx_snipcart_votes_track`, `bx_snipcart_views_track`, `bx_snipcart_meta_keywords`, `bx_snipcart_meta_locations`, `bx_snipcart_meta_mentions`, `bx_snipcart_reports`, `bx_snipcart_reports_track`, `bx_snipcart_favorites_track`;
 
 
 -- STORAGES & TRANSCODERS
