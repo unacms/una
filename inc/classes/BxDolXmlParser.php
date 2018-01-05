@@ -113,10 +113,24 @@ class BxDolXmlParser extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
-     * Gets the values of the given tag.
+     * Gets the values of the given tag with some attribute. 'name' is used as default attribute.
+     * 
+     * Usage:
+     * Input:
+     * 		<string name="string1"><![CDATA[value1]]></string>
+     * 		<string name="string2"><![CDATA[value2]]></string>
+     * 		<string name="string3"><![CDATA[value3]]></string>
+     * Output:
+     * 		array(
+     * 			'string1' => 'value1',
+     * 			'string2' => 'value2',
+     * 			'string3' => 'value3'
+     * 		)
      */
-    function getValues($sXmlContent, $sXmlTagName)
+    function getValues($sXmlContent, $sXmlTagName, $sXmlAttrName = 'name')
     {
+        $sXmlAttrName = strtoupper($sXmlAttrName);
+
         $aValues = $aIndexes = array();
         $rParser = xml_parser_create("UTF-8");
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
@@ -127,8 +141,10 @@ class BxDolXmlParser extends BxDolFactory implements iBxDolSingleton
 
         $aReturnValues = array();
         foreach($aTagIndexes as $iTagIndex) {
-            $aReturnValues[$aValues[$iTagIndex]['attributes']['NAME']] =
-                isset($aValues[$iTagIndex]['value']) ? $aValues[$iTagIndex]['value'] : NULL;
+            if(!isset($aValues[$iTagIndex]['attributes'][$sXmlAttrName]))
+                continue;
+
+            $aReturnValues[$aValues[$iTagIndex]['attributes'][$sXmlAttrName]] = isset($aValues[$iTagIndex]['value']) ? $aValues[$iTagIndex]['value'] : NULL;
         }
         return $aReturnValues;
     }
