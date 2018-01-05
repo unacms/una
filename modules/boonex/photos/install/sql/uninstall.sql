@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_photos_entries`, `bx_photos_photos`, `bx_photos_media_resized`, `bx_photos_cmts`, `bx_photos_votes`, `bx_photos_votes_track`, `bx_photos_svotes`, `bx_photos_svotes_track`, `bx_photos_views_track`, `bx_photos_meta_keywords`, `bx_photos_meta_locations`, `bx_photos_reports`, `bx_photos_reports_track`, `bx_photos_favorites_track`;
+DROP TABLE IF EXISTS `bx_photos_entries`, `bx_photos_photos`, `bx_photos_media_resized`, `bx_photos_cmts`, `bx_photos_votes`, `bx_photos_votes_track`, `bx_photos_svotes`, `bx_photos_svotes_track`, `bx_photos_views_track`, `bx_photos_meta_keywords`, `bx_photos_meta_locations`, `bx_photos_meta_mentions`, `bx_photos_reports`, `bx_photos_reports_track`, `bx_photos_favorites_track`;
 
 
 -- STORAGES & TRANSCODERS

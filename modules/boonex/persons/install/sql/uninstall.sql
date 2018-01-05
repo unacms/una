@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_persons_data`,`bx_persons_pictures`, `bx_persons_pictures_resized`, `bx_persons_cmts`, `bx_persons_views_track`, `bx_persons_favorites_track`, `bx_persons_reports`, `bx_persons_reports_track`, `bx_persons_meta_keywords`, `bx_persons_meta_locations`;
+DROP TABLE IF EXISTS `bx_persons_data`,`bx_persons_pictures`, `bx_persons_pictures_resized`, `bx_persons_cmts`, `bx_persons_views_track`, `bx_persons_favorites_track`, `bx_persons_reports`, `bx_persons_reports_track`, `bx_persons_meta_keywords`, `bx_persons_meta_locations`, `bx_persons_meta_mentions`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_persons';

@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `bx_timeline_votes_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_meta_keywords`;
 DROP TABLE IF EXISTS `bx_timeline_meta_locations`;
+DROP TABLE IF EXISTS `bx_timeline_meta_mentions`;
 
 DROP TABLE IF EXISTS `bx_timeline_reports`;
 DROP TABLE IF EXISTS `bx_timeline_reports_track`;
