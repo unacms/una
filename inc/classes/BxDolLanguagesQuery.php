@@ -42,6 +42,11 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
         return (int)$this->getLanguageField($sName, 'ID', $bFromCache);
     }
 
+    function getLanguageName($iId, $bFromCache = true)
+    {
+        return $this->getLanguageFieldById($iId, 'Name', $bFromCache);
+    }
+
     function getLanguageFlag($sName, $bFromCache = true)
     {
         return $this->getLanguageField($sName, 'Flag', $bFromCache);
@@ -58,6 +63,16 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
 
         if($bFromCache)
             return $this->fromCache('checkLangExists_' . $sName . '_' . $sField, 'getOne', $sSql);
+        else
+            return $this->getOne($sSql);
+    }
+
+    protected function getLanguageFieldById($iId, $sField, $bFromCache = true)
+    {
+        $sSql = $this->prepare("SELECT `" . $sField . "` FROM `sys_localization_languages` WHERE `ID`=? AND `Enabled`='1' LIMIT 1", $iId);
+
+        if($bFromCache)
+            return $this->fromCache('checkLangExists_' . $iId . '_' . $sField, 'getOne', $sSql);
         else
             return $this->getOne($sSql);
     }
