@@ -113,8 +113,11 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                             break;
 
                         default:
-                             $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
-                             $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];                             
+                            if(empty($aSearchParam['operator']))
+                                break;
+
+                            $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
+                            $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];                             
                     }
 
                     if(!empty($sSearchValue))
