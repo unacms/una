@@ -284,44 +284,19 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
     protected function sendNotificationPush($oProfile, $aContent)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
-        $sAppId = getParam('sys_push_app_id');
-        $sRestApi = getParam('sys_push_rest_api');
-        if(empty($sAppId) || empty($sRestApi))
-            return;
-
-		$sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
-
-		$aFields = array(
-			'app_id' => $sAppId,
-			'filters' => array(
-		        array("field" => "tag", "key" => "user", "relation" => "=", "value" => $oProfile->id())
-            ),
-			'contents' => array(
+        return BxDolPush::getInstance()->send($oProfile->id(), array(
+		    'contents' => array(
     			 $sLanguage => $aContent['message']
     		),
 			'headings' => array(
 				 $sLanguage => _t('_bx_ntfs_push_new_event_subject', getParam('site_title'))
 			),
 			'url' => $aContent['url'],
-			'chrome_web_icon' => $aContent['icon']
-		);
-
-		$oChannel = curl_init();
-		curl_setopt($oChannel, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-		curl_setopt($oChannel, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json; charset=utf-8',
-			'Authorization: Basic ' . $sRestApi
-		));
-		curl_setopt($oChannel, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($oChannel, CURLOPT_HEADER, false);
-		curl_setopt($oChannel, CURLOPT_POST, true);
-		curl_setopt($oChannel, CURLOPT_POSTFIELDS, json_encode($aFields));
-		curl_setopt($oChannel, CURLOPT_SSL_VERIFYPEER, false);
-
-		$sResult = curl_exec($oChannel);
-		curl_close($oChannel);
+			'icon' => $aContent['icon']
+		
+		), true);
     }
 
     protected function _getObjectOwnerId($aExtras)

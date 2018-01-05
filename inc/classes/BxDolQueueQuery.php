@@ -8,22 +8,23 @@
  */
 
 /**
- * Database queries for BxDolEmailQueue object.
- * @see BxDolEmailQueue
+ * Database queries for BxDolQueue object.
+ * @see BxDolQueue
  */
-class BxDolEmailQueueQuery extends BxDolDb
+class BxDolQueueQuery extends BxDolDb
 {
     protected $_sTable;
 
     public function __construct()
     {
         parent::__construct();
-
-        $this->_sTable = 'sys_email_queue';
     }
 
     public function getItems($aParams = array())
     {
+        if(empty($this->_sTable))
+            return array();
+
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
     	$sSelectClause = '*';
@@ -46,6 +47,9 @@ class BxDolEmailQueueQuery extends BxDolDb
 
     public function insertItem($aValues)
     {
+        if(empty($this->_sTable))
+            return false;
+
         if(empty($aValues) || !is_array($aValues))
             return false;
 
@@ -54,6 +58,9 @@ class BxDolEmailQueueQuery extends BxDolDb
 
 	public function updateItem($aValues, $aWhere)
     {
+        if(empty($this->_sTable))
+            return false;
+
         if(empty($aValues) || !is_array($aValues) || empty($aWhere) || !is_array($aWhere))
             return false;
 
@@ -62,6 +69,9 @@ class BxDolEmailQueueQuery extends BxDolDb
 
     public function deleteItem($mixedId)
     {
+        if(empty($this->_sTable))
+            return false;
+
     	if(!is_array($mixedId))
     		$mixedId = array($mixedId);
 

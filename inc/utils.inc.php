@@ -413,7 +413,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
 
     // send mail or put it into queue
     $bResult = false;
-    if(!$bAddToQueue || !($bResult = BxDolEmailQueue::getInstance()->add($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters)))
+    if(!$bAddToQueue || !($bResult = BxDolQueueEmail::getInstance()->add($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters)))
         $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);     
 
     // system alert
