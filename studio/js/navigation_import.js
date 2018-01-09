@@ -31,7 +31,8 @@ BxDolStudioNavigationImport.prototype.onChangeFilter = function() {
 
 	clearTimeout($this._iSearchTimeoutId);
     $this._iSearchTimeoutId = setTimeout(function () {
-    	glGrids[$this.sObjNameGrid].setFilter(sValueSet + $this.sParamsDivider + sValueModule + $this.sParamsDivider + sValueSearch, true);
+    	if(glGrids[$this.sObjNameGrid])
+    		glGrids[$this.sObjNameGrid].setFilter(sValueSet + $this.sParamsDivider + sValueModule + $this.sParamsDivider + sValueSearch, true);
     }, 500);
 };
 
@@ -40,5 +41,17 @@ BxDolStudioNavigationImport.prototype.onImport = function(oData) {
 		$("[bx_grid_action_single = 'import'][bx_grid_action_data = '" + iValue + "']").addClass('bx-btn-disabled');
 	});
 	glGrids.sys_studio_nav_items.processJson({grid: oData.parent_grid, blink: oData.parent_blink}, 'import', false);
+};
+
+BxDolStudioNavigationImport.prototype.done = function(oData) {
+	var $this = this;
+
+	$('.bx-popup-applied:visible').dolPopupHide({
+		removeOnClose: true, 
+		onHide: function() {
+			if(glGrids[$this.sObjNameGrid] != undefined)
+				glGrids[$this.sObjNameGrid] = null;
+		}
+	})
 };
 /** @} */

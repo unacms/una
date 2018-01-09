@@ -28,6 +28,8 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
             exit;
         }
 
+        $oLanguagesUtils = BxDolStudioLanguagesUtils::getInstance();
+
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
             $aItem = array();
@@ -47,13 +49,28 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
                 $oStorage->afterUploadCleanup($mixedIcon, 0);
             }
 
-            $iIdImported = (int)$aItem['id'];
-            $sTitleKey = $aItem['title'];
+            $sPostfix = time();
 
+            $iIdImported = (int)$aItem['id'];
             unset($aItem['id']);
+            
             $aItem['set_name'] = $this->sSet;
             $aItem['module'] = BX_DOL_STUDIO_MODULE_CUSTOM;
-            $aItem['title'] .= '_' . time();
+
+            $sKeyTitleSystem = '';
+            if(!empty($aItem['title_system'])) {
+                $sKeyTitleSystem = $aItem['title_system'];
+
+                $aItem['title_system'] .= '_' . $sPostfix;
+            }
+
+            $sKeyTitle = '';
+            if(!empty($aItem['title'])) {
+                $sKeyTitle = $aItem['title'];
+
+                $aItem['title'] .= '_' . $sPostfix;
+            }
+
             $aItem['icon'] = $mixedIcon != 0 ? $mixedIcon : '';
             $aItem['active'] = 1;
             $aItem['order'] = $this->oDb->getItemOrderMax($this->sSet) + 1;
@@ -61,7 +78,11 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
             if(($iIdAdded = (int)$this->oDb->addItem($aItem)) == 0)
                 continue;
 
-            BxDolStudioLanguagesUtils::getInstance()->addLanguageString($aItem['title'], _t($sTitleKey));
+            if(!empty($sKeyTitleSystem))
+                $oLanguagesUtils->addLanguageString($aItem['title_system'], _t($sKeyTitleSystem));
+
+            if(!empty($sKeyTitle))
+                $oLanguagesUtils->addLanguageString($aItem['title'], _t($sKeyTitle));
 
             $aIdsImported[] = $iIdImported;
             $aIdsAdded[] = $iIdAdded;
@@ -71,6 +92,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
         $aResult = array('msg' => _t('_adm_nav_err_items_import'));
         if($iAffected) {
             $oGrid = BxDolGrid::getObjectInstance('sys_studio_nav_items');
+            $oGrid->resetQueryParams();
             if($oGrid !== false)
                 $aResult = array(
                     'parent_grid' => $oGrid->getCode(false),
@@ -111,7 +133,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
 
     protected function _getActionDone ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        $a['attr']['onclick'] = "$('.bx-popup-applied:visible').dolPopupHide()";
+        $a['attr']['onclick'] = "javascript: " . $this->getJsObject() . ".done();";
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
