@@ -209,8 +209,6 @@ ul.bx-menu-toolbar li {
 ul.bx-menu-toolbar li a {
     position:relative;
     display:block;
-    min-width:48px;
-    min-width:3rem;
     height:48px;
     height:3rem;
 
@@ -229,15 +227,9 @@ ul.bx-menu-toolbar li a img,
 ul.bx-menu-toolbar li a span {
     vertical-align:top;
 }
+
 ul.bx-menu-toolbar li a .sys-icon-a {
     margin-top:0.75rem;
-}
-ul.bx-menu-toolbar li a span {
-    margin-right:0;
-}
-
-ul.bx-menu-toolbar li:first-child a {
-    margin-left:0;
 }
 
 ul.bx-menu-toolbar li img {
@@ -260,6 +252,11 @@ ul.bx-menu-toolbar li .sys-icon {
 ul.bx-menu-toolbar li .bx-menu-toolbar-item-unit {
 	display: inline-block;
 	vertical-align: middle;
+}
+
+ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
+	right: 5px;
+    right: -0.3125rem;
 }
 
 .bx-menu-toolbar-padding {

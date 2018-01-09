@@ -530,7 +530,7 @@ function bx_menu_show_live_update(oData) {
 
 	//--- Update Parent Menu Item
 	if(oData.mi_parent) {
-		var oMenuItem = $('.bx-menu-object-' + oData.mi_parent.menu_object + ' #bx-menu-toolbar-item-' + oData.mi_parent.menu_item);
+		var oMenuItem = $('.bx-menu-object-' + oData.mi_parent.menu_object + ' .bx-menu-item-' + oData.mi_parent.menu_item);
 		var oMenuItemAddon = oMenuItem.find(sSelectorAddon);
 
 		var iSum = 0;

@@ -77,6 +77,16 @@ class BxBaseMenuToolbar extends BxTemplMenu
         return $a;
     }
 
+    protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
+    {
+        return array(
+            'addon' => $mixedAddon,
+            'addonf' => $this->_oTemplate->parseHtmlByTemplateName('menu_item_addon', array(
+		        'content' => $mixedAddon
+		    ))
+			
+        );
+    }
 }
 
 /** @} */
