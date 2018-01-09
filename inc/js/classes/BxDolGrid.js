@@ -408,7 +408,8 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
         var callbackSearch = function (sTerm) {
             clearTimeout($this._iSearchTimeoutId);
             $this._iSearchTimeoutId = setTimeout(function () {
-                glGrids[$this._sObject].setFilter(sTerm, true);
+            	if(glGrids[$this._sObject])
+            		glGrids[$this._sObject].setFilter(sTerm, true);
             }, 500);
         };
         

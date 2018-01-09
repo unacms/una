@@ -300,7 +300,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         foreach ($aMap as $k => $v) {
             if (isset($aFieldsProfile[$v]))
                 $aFieldsProfile[$k] = $aFieldsProfile[$v];
-            if ($k != $v && !isset($aMap[$k]))
+            if ($k != $v && !isset($aMap[$v]))
                 unset($aFieldsProfile[$v]);
         }
         
