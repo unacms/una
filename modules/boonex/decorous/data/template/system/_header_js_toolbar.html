@@ -22,6 +22,7 @@
                 onUnpin: function() {
                     bx_menu_slide_close_all_opened();
 
+                    var sidebar = $('.cd-side-nav');
                     if(sidebar.hasClass('nav-is-visible'))
                         sidebar.toggleClass('nav-is-visible');
 
