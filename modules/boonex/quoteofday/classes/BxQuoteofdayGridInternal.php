@@ -3,13 +3,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup     Quote of the Day module
+ * @defgroup    QuoteOfTheDay Quote of the Day
  * @ingroup     UnaModules
- * 
+ *
  * @{
  */
 
-class BxQuoteofdayGridInternal extends BxTemplGrid
+class BxQuoteOfDayGridInternal extends BxTemplGrid
 {
 	protected $MODULE;
 	protected $_oModule;
@@ -27,13 +27,8 @@ class BxQuoteofdayGridInternal extends BxTemplGrid
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 	
-	
 	public function performActionAdd()
     {
-		$oCheckAllowedViewValue=$this->_oModule->checkAcl();
-		if ($oCheckAllowedViewValue !== CHECK_ACTION_RESULT_ALLOWED)
-			return "";
-			
 		$sAction = 'add';
 		$oForm = BxDolForm::getObjectInstance('bx_quoteofday','bx_quoteofday_entry_add'); // get form instance for specified form object and display
 		if (!$oForm)
@@ -62,10 +57,6 @@ class BxQuoteofdayGridInternal extends BxTemplGrid
     
 	public function performActionEdit()
     {
-		$oCheckAllowedViewValue=$this->_oModule->checkAcl();
-		if ($oCheckAllowedViewValue !== CHECK_ACTION_RESULT_ALLOWED)
-			return "";
-		
 		$sAction = 'edit';
 		$aIds = bx_get('ids');
 		$iId = $aIds[0];
@@ -101,6 +92,7 @@ class BxQuoteofdayGridInternal extends BxTemplGrid
         $aIds = bx_get('ids');
 		$iId = $aIds[0];
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+        $this->_oModule->RemoveQuoteFromCache();
         $this->_oModule->PutQuoteToCache($aContentInfo["text"]);
         $aRes = array('msg' => _t('_bx_quoteofday_grid_action_title_adm_publish_text'));
         echoJson($aRes);

@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Quote of the Day
+ * @defgroup    QuoteOfTheDay Quote of the Day
  * @ingroup     UnaModules
  *
  * @{
@@ -18,12 +18,12 @@ $aConfig = array(
     'name' => 'bx_quoteofday',
     'title' => 'Quote of the Day',
     'note' => 'Quote of the Day module.',
-    'version' => '1.0.0',
+    'version' => '1.0.0.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.0-RC4'
+        '9.0.x'
     ),
 
     /**
@@ -33,12 +33,12 @@ $aConfig = array(
     'home_uri' => 'quoteofday',
 
     'db_prefix' => 'bx_quoteofday_',
-    'class_prefix' => 'BxQuoteofday',
+    'class_prefix' => 'BxQuoteOfDay',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Quoteofday',
+    'language_category' => 'QuoteOfDay',
 
     /**
      * Installation/Uninstallation Section.

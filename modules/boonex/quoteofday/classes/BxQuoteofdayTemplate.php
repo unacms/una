@@ -1,16 +1,17 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) Vendor
- * 
- * @defgroup    Quote of the Day module
- * @ingroup     VendorModules
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    QuoteOfTheDay Quote of the Day
+ * @ingroup     UnaModules
  *
  * @{
  */
 
 bx_import ('BxDolModuleTemplate');
 
-class BxQuoteofdayTemplate extends BxDolModuleTemplate 
+class BxQuoteOfDayTemplate extends BxDolModuleTemplate 
 {    
 	function __construct(&$oConfig, &$oDb) 
     {

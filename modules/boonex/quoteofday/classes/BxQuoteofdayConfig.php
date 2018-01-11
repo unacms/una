@@ -1,16 +1,17 @@
 <?php defined('BX_DOL') or die('hack attempt');
 /**
- * Copyright (c) Vendor
- * 
- * @defgroup    Quote of the Day
- * @ingroup     VendorModules
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    QuoteOfTheDay Quote of the Day
+ * @ingroup     UnaModules
  *
  * @{
  */
 
 bx_import('BxDolModuleConfig');
 
-class BxQuoteofdayConfig extends BxDolModuleConfig 
+class BxQuoteOfDayConfig extends BxDolModuleConfig 
 {
 	function __construct($aModule) 
     {
@@ -18,7 +19,8 @@ class BxQuoteofdayConfig extends BxDolModuleConfig
 		$this->CNF = array (
 			'OBJECT_GRID' => 'bx_quoteofday_internal',
 			'CACHEKEY' => 'bx_quoteofday',
-			 // database tables
+			 
+            // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'internal',
 			
 			 // database fields

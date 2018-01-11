@@ -3,13 +3,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Quote of the Day
+ * @defgroup    QuoteOfTheDay Quote of the Day
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxQuoteofdayInstaller extends BxBaseModTextInstaller
+class BxQuoteOfDayInstaller extends BxBaseModTextInstaller
 {
     function __construct($aConfig)
     {

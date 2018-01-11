@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Forum Forum
+ * @defgroup    QuoteOfTheDay Quote of the Day
  * @ingroup     UnaModules
  *
  * @{
@@ -11,7 +11,7 @@
 
 define('BX_DOL_STUDIO_MOD_TYPE_QUOTES', 'quotes');
 
-class BxQuoteofdayStudioPage extends BxTemplStudioModule
+class BxQuoteOfDayStudioPage extends BxTemplStudioModule
 {
 	protected $_sModule;
 	protected $_oModule;
