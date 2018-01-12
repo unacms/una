@@ -13,7 +13,6 @@ bx_import('BxDolModuleDb');
 
 class BxQuoteOfDayDb extends BxBaseModGeneralDb
 {
-	
 	function __construct(&$oConfig) 
     {
 		parent::__construct($oConfig);	
@@ -21,18 +20,18 @@ class BxQuoteOfDayDb extends BxBaseModGeneralDb
 	
 	public function getHiddenItemsCount()
 	{
-		$CNF=$this->_oConfig->CNF;
-		$sSql = $this->prepare("SELECT COUNT(*) FROM ".$CNF['TABLE_ENTRIES']." WHERE ".$CNF['FIELD_STATUS']."!='active' OR ".$CNF['FIELD_STATUS_ADMIN']."!='active' ");
-		return $this->getOne($sSql);
+		$CNF = &$this->_oConfig->CNF;
+		$sSql = $this->prepare("SELECT COUNT(*) FROM " . $CNF['TABLE_ENTRIES']." WHERE " . $CNF['FIELD_STATUS']."!='active'");
+		
+        return $this->getOne($sSql);
 	}
 	
 	public function getData()
 	{
 		$CNF = &$this->_oConfig->CNF;
-		return  $this->getColumn ("SELECT `".$CNF['FIELD_TEXT']."` FROM ".$CNF['TABLE_ENTRIES']." WHERE ".$CNF['FIELD_STATUS']."='active' AND ".$CNF['FIELD_STATUS_ADMIN']."='active'");
+		return  $this->getColumn("SELECT `" . $CNF['FIELD_TEXT'] . "` FROM " . $CNF['TABLE_ENTRIES'] . " WHERE " . $CNF['FIELD_STATUS'] . "='active'");
 	}
 	
 }
-
 
 /** @} */

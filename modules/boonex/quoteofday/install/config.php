@@ -72,9 +72,6 @@ $aConfig = array(
      * Dependencies Section
      */
     'dependencies' => array(),
-
-    
-
 );
 
 /** @} */

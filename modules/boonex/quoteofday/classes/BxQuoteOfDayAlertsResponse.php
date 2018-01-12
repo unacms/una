@@ -9,24 +9,20 @@
  * @{
  */
 
-class BxQuoteOfDayAlertsResponse extends BxBaseModTextAlertsResponse
-{
-    
-    protected $MODULE;
-	protected $_oModule;
-    
+class BxQuoteOfDayAlertsResponse extends BxDolAlertsResponse
+{  
     public function __construct()
     { 
-        $this->MODULE = 'bx_quoteofday';
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
         parent::__construct();
     }
     
     public function response($oAlert)
     {
-        if ($oAlert->aExtras['option']=="bx_quoteofday_source" || $oAlert->aExtras['option']=="bx_quoteofday_rss_url" || $oAlert->aExtras['option']=="bx_quoteofday_selection_mode"){
-            $this->_oModule->RemoveQuoteFromCache();
+        if ($oAlert->aExtras['option'] == 'bx_quoteofday_source' || $oAlert->aExtras['option'] == 'bx_quoteofday_rss_url' || $oAlert->aExtras['option'] == 'bx_quoteofday_selection_mode'){
+            $oModule = BxDolModule::getInstance('bx_quoteofday');
+            $oModule->removeQuoteFromCache();
         }
     }
 }
+
 /** @} */

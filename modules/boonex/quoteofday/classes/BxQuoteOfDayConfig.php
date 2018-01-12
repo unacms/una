@@ -28,14 +28,12 @@ class BxQuoteOfDayConfig extends BxDolModuleConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_TEXT' => 'text',
-			'FIELD_STATUS' => 'status',
-        	'FIELD_STATUS_ADMIN' => 'status_admin',
+			'FIELD_STATUS' => 'status'
 		);
 		
 		$this->_aGridObjects = array(
         	'common' => $this->CNF['OBJECT_GRID'],
         );
-		
     }   
 }
 

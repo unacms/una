@@ -6,11 +6,9 @@ CREATE TABLE `bx_quoteofday_internal` (
   `text` text NOT NULL,
   `added` int(11) DEFAULT NULL,
   `status` enum ('active', 'hidden') DEFAULT 'active',
-  `status_admin` enum ('active', 'hidden') DEFAULT 'active',
   PRIMARY KEY (`id`),
-  FULLTEXT INDEX ttext (`text`)
-)
-;
+  FULLTEXT INDEX `search_fields` (`text`)
+);
 
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES(@sName, @sName, '_bx_quoteofday_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'do_submit', 'bx_quoteofday_internal', 'id', '', '', '', 0, 1, '', '');
