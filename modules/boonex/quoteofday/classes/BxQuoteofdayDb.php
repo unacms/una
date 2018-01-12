@@ -21,7 +21,7 @@ class BxQuoteOfDayDb extends BxBaseModGeneralDb
 	public function getHiddenItemsCount()
 	{
 		$CNF = &$this->_oConfig->CNF;
-		$sSql = $this->prepare("SELECT COUNT(*) FROM " . $CNF['TABLE_ENTRIES']." WHERE " . $CNF['FIELD_STATUS']."!='active'");
+		$sSql = $this->prepare("SELECT COUNT(*) FROM " . $CNF['TABLE_ENTRIES']. " WHERE " . $CNF['FIELD_STATUS']. "!='active'");
 		
         return $this->getOne($sSql);
 	}
