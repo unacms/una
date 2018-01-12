@@ -5,8 +5,11 @@
 # exclude modules/boonex/sites/api/, run after this script: git checkout modules/boonex/sites/api/
 
 PHP="/Applications/MAMP/bin/php/php5.4.10/bin/php"
-FIXERS=indentation,linefeed,trailing_spaces,php_closing_tag,short_tag,braces,phpdoc_params,eof_ending,extra_empty_lines
-CSFIXER="./scripts/php-cs-fixer.phar"
+
+# FIXERS=indentation,linefeed,trailing_spaces,php_closing_tag,short_tag,braces,phpdoc_params,eof_ending,extra_empty_lines # for v1
+FIXERS='{"indentation_type":true,"full_opening_tag":true,"method_argument_space":true,"no_trailing_whitespace":true,"standardize_not_equals":true,"ternary_operator_spaces":true,"binary_operator_spaces":true,"concat_space":{"spacing":"one"}}' # for v2
+
+CSFIXER="./scripts/php-cs-fixer-v2.phar"
 
 find . -name "*.php" -maxdepth 1 -exec ${PHP} ${CSFIXER} fix {} --fixers=${FIXERS} \;
 find ./modules/ -name "*.php" -exec ${PHP} ${CSFIXER} fix {} --fixers=${FIXERS} \;
