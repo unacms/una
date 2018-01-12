@@ -18,6 +18,9 @@ Thumbs.db
 
 .*.swp
 
+cs_fixer_tmp*
+.php_cs.cache
+
 # Exclude tests files
 build.properties
 tests/vendor
