@@ -15,9 +15,9 @@ define('BX_QOD_SELECTION_MODE_BY_RANDOM', 'random');
 define('BX_QOD_SELECTION_MODE_BY_ORDER', 'order');
 define('BX_QOD_LIFETIME_IN_SECONDS', 86400);
 
-class BxQuoteOfDayModule extends BxDolModule 
+class BxQuoteOfDayModule extends BxDolModule
 {
-    function __construct(&$aModule) 
+    function __construct(&$aModule)
     {
         parent::__construct($aModule);
     }
@@ -42,12 +42,12 @@ class BxQuoteOfDayModule extends BxDolModule
     /** 
      * @ref bx_quoteofday-get_sources "get_sources"
      */
-	public function serviceGetSources()
+    public function serviceGetSources()
     {
         $aResult = array();
         $aChoices = array(BX_QOD_SOURCE_INTERNAL, BX_QOD_SOURCE_RSS);
-        foreach($aChoices as $sChoice) 
-		 	$aResult[$sChoice]=_t('_bx_quoteofday_source_'. $sChoice);
+        foreach($aChoices as $sChoice)
+            $aResult[$sChoice] = _t('_bx_quoteofday_source_' . $sChoice);
              
         return $aResult;
     }
@@ -73,12 +73,12 @@ class BxQuoteOfDayModule extends BxDolModule
     {
         $aResult = array();
         $aChoices = array(BX_QOD_SELECTION_MODE_BY_RANDOM, BX_QOD_SELECTION_MODE_BY_ORDER);
-        foreach($aChoices as $sChoice) 
-            $aResult[$sChoice]=_t('_bx_quoteofday_selection_mode_by_'. $sChoice);
+        foreach($aChoices as $sChoice)
+            $aResult[$sChoice] = _t('_bx_quoteofday_selection_mode_by_' . $sChoice);
         
         return $aResult;
     }
-	
+    
     /**
      * @page service Service Calls
      * @section bx_quoteofday Quote of the Day
@@ -96,11 +96,11 @@ class BxQuoteOfDayModule extends BxDolModule
     /** 
      * @ref bx_quoteofday-get_menu_addon_manage_tools "get_menu_addon_manage_tools"
      */
-	public function serviceGetMenuAddonManageTools()
-	{
-		return $this->_oDb->getHiddenItemsCount();
-	}
-	
+    public function serviceGetMenuAddonManageTools()
+    {
+        return $this->_oDb->getHiddenItemsCount();
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_quoteofday Quote of the Day
@@ -118,17 +118,17 @@ class BxQuoteOfDayModule extends BxDolModule
     /** 
      * @ref bx_quoteofday-get_quote "get_quote"
      */
-	public function serviceGetQuote()
+    public function serviceGetQuote()
     {
-		$sTextFromCache = $this->getQuoteFromCache();
+        $sTextFromCache = $this->getQuoteFromCache();
         if ($sTextFromCache == null || $sTextFromCache == "")
         {
             $sTextFromCache = $this->defineAndSetQuote();
         }
         
         return  $sTextFromCache;
-	}
-	
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_quoteofday Quote of the Day
@@ -148,33 +148,33 @@ class BxQuoteOfDayModule extends BxDolModule
      */
     public function serviceGetQuotesManage()
     {
-		$this->_oTemplate->addJs('jquery.form.min.js');
-		$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
-		if(!$oGrid)
-			return '';
+        $this->_oTemplate->addJs('jquery.form.min.js');
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
+        if(!$oGrid)
+            return '';
         
-		return $oGrid->getCode();
+        return $oGrid->getCode();
     }
     
     public function defineAndSetQuote()
     {
-		$sRssUrl = getParam('bx_quoteofday_rss_url');
-		$iRssMaxItems = intval(getParam('bx_quoteofday_rss_max_items'));
-		$aSources = explode(',', getParam('bx_quoteofday_source'));
+        $sRssUrl = getParam('bx_quoteofday_rss_url');
+        $iRssMaxItems = intval(getParam('bx_quoteofday_rss_max_items'));
+        $aSources = explode(',', getParam('bx_quoteofday_source'));
         $sSelectionType = getParam('bx_quoteofday_selection_mode');
-		$aData=array();
-		
-		//##### Get data from internal set #####
-		if (in_array(BX_QOD_SOURCE_INTERNAL, $aSources)) {
-			$aData = array_merge($aData, $this->getInternalData());
-		}
-		
-		//##### Get data from rss #####
-		if (in_array(BX_QOD_SOURCE_RSS, $aSources) && $sRssUrl != "" && $iRssMaxItems > 0)
-			$aData = array_merge($aData,$this->getRssData($sRssUrl, $iRssMaxItems));
+        $aData = array();
         
-		$iIndex = -1;
-		if ($sSelectionType == BX_QOD_SELECTION_MODE_BY_RANDOM) {
+        //##### Get data from internal set #####
+        if (in_array(BX_QOD_SOURCE_INTERNAL, $aSources)) {
+            $aData = array_merge($aData, $this->getInternalData());
+        }
+        
+        //##### Get data from rss #####
+        if (in_array(BX_QOD_SOURCE_RSS, $aSources) && $sRssUrl != "" && $iRssMaxItems > 0)
+            $aData = array_merge($aData, $this->getRssData($sRssUrl, $iRssMaxItems));
+        
+        $iIndex = -1;
+        if ($sSelectionType == BX_QOD_SELECTION_MODE_BY_RANDOM) {
             $iIndex = rand(0, count($aData) - 1);
         }
         else {
@@ -189,50 +189,50 @@ class BxQuoteOfDayModule extends BxDolModule
         }
         
         return $sTextToChache;
-	}
+    }
     
     public function putQuoteToCache($quoteText)
     {
         $oCachObject = $this->_oDb->getDbCacheObject();
-		$oCachObject->setData($this->_oConfig->CNF['CACHEKEY'], $quoteText, BX_QOD_LIFETIME_IN_SECONDS);
+        $oCachObject->setData($this->_oConfig->CNF['CACHEKEY'], $quoteText, BX_QOD_LIFETIME_IN_SECONDS);
     }
     
     public function getQuoteFromCache()
     {
-        $oCachObject = $this->_oDb->getDbCacheObject();    
-		return $oCachObject->getData($this->_oConfig->CNF['CACHEKEY'], BX_QOD_LIFETIME_IN_SECONDS); 
+        $oCachObject = $this->_oDb->getDbCacheObject();
+        return $oCachObject->getData($this->_oConfig->CNF['CACHEKEY'], BX_QOD_LIFETIME_IN_SECONDS);
     }
-	
+    
     public function removeQuoteFromCache()
     {
         $oCachObject = $this->_oDb->getDbCacheObject();
-		$oCachObject->delData($this->_oConfig->CNF['CACHEKEY']);
+        $oCachObject->delData($this->_oConfig->CNF['CACHEKEY']);
     }
-	
-	private function getInternalData()
+    
+    private function getInternalData()
     {
-		return $this->_oDb->getData();
-	}
-	
-	private function getRssData($sRssUrl, $iRssMaxItems)
+        return $this->_oDb->getData();
+    }
+    
+    private function getRssData($sRssUrl, $iRssMaxItems)
     {
-		$aTmpRv = array();
-		$oXmlParser = BxDolXmlParser::getInstance();
+        $aTmpRv = array();
+        $oXmlParser = BxDolXmlParser::getInstance();
         $sXmlContent = bx_file_get_contents($sRssUrl);
-		$aTmp=$oXmlParser->getTags($sXmlContent, 'description');
-		if (is_array($aTmp)) {
-			$iC = 0;
-			while (list(, $aValue) = each($aTmp)) {
-				if ($iC == $iRssMaxItems) break;
-				if (isset($aValue['value']) && $aValue['level'] == 4 && trim(strip_tags($aValue['value'])) != "") {
-					array_push($aTmpRv, $aValue['value']);
-					$iC++;
-				}
-			}
-		}
+        $aTmp = $oXmlParser->getTags($sXmlContent, 'description');
+        if (is_array($aTmp)) {
+            $iC = 0;
+            while (list(, $aValue) = each($aTmp)) {
+                if ($iC == $iRssMaxItems) break;
+                if (isset($aValue['value']) && $aValue['level'] == 4 && trim(strip_tags($aValue['value'])) != "") {
+                    array_push($aTmpRv, $aValue['value']);
+                    $iC++;
+                }
+            }
+        }
         
-		return $aTmpRv;
-	}
+        return $aTmpRv;
+    }
 }
 
 /** @} */

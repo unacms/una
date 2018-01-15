@@ -29,4 +29,5 @@
 	<string name="_bx_quoteofday_selection_mode"><![CDATA[Quote of the Day selected by]]></string>
 	<string name="_bx_quoteofday_selection_mode_by_order"><![CDATA[By order]]></string>
 	<string name="_bx_quoteofday_selection_mode_by_random"><![CDATA[By random]]></string>
+	<string name="_bx_quoteofday_adm_stg_cpt_type"><![CDATA[Quote of the Day]]></string>
 </resources>

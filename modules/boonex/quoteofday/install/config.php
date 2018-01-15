@@ -20,7 +20,7 @@ $aConfig = array(
     'note' => 'Quote of the Day module.',
     'version' => '1.0.0.DEV',
     'vendor' => 'BoonEx',
-	'help_url' => 'http://feed.una.io/?section={module_name}',
+    'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
         '9.0.x'
@@ -49,7 +49,7 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
-    	'execute_sql' => 1,
+        'execute_sql' => 1,
         'update_languages' => 1,
         'clear_db_cache' => 1,
     ),

@@ -28,4 +28,5 @@
   <string name="_bx_quoteofday_selection_mode"><![CDATA[Выбирать цитату дня]]></string>
   <string name="_bx_quoteofday_selection_mode_by_order"><![CDATA[По порядку]]></string>
   <string name="_bx_quoteofday_selection_mode_by_random"><![CDATA[Случайно]]></string>
+  <string name="_bx_quoteofday_adm_stg_cpt_type"><![CDATA[Цитата дня]]></string>
 </resources>

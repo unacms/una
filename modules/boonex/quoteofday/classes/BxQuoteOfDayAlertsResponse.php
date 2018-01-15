@@ -10,9 +10,9 @@
  */
 
 class BxQuoteOfDayAlertsResponse extends BxDolAlertsResponse
-{  
+{
     public function __construct()
-    { 
+    {
         parent::__construct();
     }
     
