@@ -22,27 +22,26 @@ function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
 }
 
 function bx_editor_remove_img (aEditorIds, aMarkers) {
-
     if ('object' != typeof(tinymce))
         return;
 
     var aEditors = [];
-    for (var i in aEditorIds)
+    for (var i = 0; i < aEditorIds.length; i++)
         aEditors.push(tinymce.get(aEditorIds[i]));
 
-    for (var j in aEditors) {
+    for (var j = 0; j < aEditors.length; j++) {
         var eEditor = aEditors[j];
-        if ('object' == typeof(eEditor) && 'object' == typeof(eEditor) && eEditor.dom && eEditor.dom.doc) { 
-            // delete images in html editor
-            for (var i in aMarkers) {
-                var jFiles = $(eEditor.dom.doc).find(aMarkers[i]);
-                jFiles.each(function () { 
-                    eEditor.execCommand('mceRemoveNode', false, this); 
-                });
-            }
+        if (typeof(eEditor) != 'object' || !eEditor.dom || !eEditor.dom.doc) 
+        	continue;
+
+        // delete images in html editor
+        for (var k = 0; k < aMarkers.length; k++) {
+            var jFiles = $(eEditor.dom.doc).find(aMarkers[k]);
+            jFiles.each(function () { 
+                eEditor.execCommand('mceRemoveNode', false, this); 
+            });
         }
     }
-
 }
 
 /** @} */

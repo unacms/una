@@ -52,9 +52,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
     }
 
-    public function getObjectFormDelete ()
+    public function getObjectFormDelete ($sDisplay = false)
     {
-        return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'], $this->_oModule->_oTemplate);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (false === $sDisplay)
+            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'];
+
+        return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
     }
 
     public function viewDataEntry ($iContentId)
@@ -244,9 +249,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay)
-            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'];
-
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
@@ -257,7 +259,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // check and display form
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        $oForm = $this->getObjectFormDelete($sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
@@ -304,7 +306,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return _t('_sys_txt_error_entry_is_not_defined');
 
         if (!$oForm)
-            $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'], $this->_oModule->_oTemplate);
+            $oForm = $this->getObjectFormDelete();
 
         if (!$oForm->delete ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo))
             return _t('_sys_txt_error_entry_delete');
