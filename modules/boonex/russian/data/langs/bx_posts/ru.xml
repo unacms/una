@@ -217,4 +217,8 @@
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[публикация]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарий к публикации]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[голос за публикацию]]></string>
+	
+	<string name="_bx_posts_page_block_title_recent_entries_view_showcase"><![CDATA[Последние публикации (Showcase View)]]></string>
+	<string name="_bx_posts_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные публикации (Витринный просмотр)]]></string>
+	<string name="_bx_posts_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые публикации (Витринный просмотр)]]></string>
 </resources>

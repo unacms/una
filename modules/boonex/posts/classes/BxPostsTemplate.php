@@ -21,8 +21,6 @@ class BxPostsTemplate extends BxBaseModTextTemplate
     {
         $this->MODULE = 'bx_posts';
         parent::__construct($oConfig, $oDb);
-		$this->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
-        $this->addJs(array('flickity/flickity.pkgd.min.js', 'main.js'));
     }
 
     /**

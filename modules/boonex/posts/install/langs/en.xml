@@ -218,7 +218,7 @@
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[comment to post]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[vote to post]]></string>
 	
-	<string name="_bx_posts_option_per_page_browse_showcase"><![CDATA[Number of items in showcase view]]></string>
 	<string name="_bx_posts_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Posts (Showcase View)]]></string>
 	<string name="_bx_posts_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Posts (Showcase View)]]></string>
+	<string name="_bx_posts_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Posts (Showcase View)]]></string>
 </resources>
