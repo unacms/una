@@ -17,7 +17,7 @@ class BxQuoteOfDayStudioPage extends BxTemplStudioModule
     {
         parent::__construct($sModule, $sPage);
         $oPermalink = BxDolPermalinks::getInstance();
-          $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_QUOTES , 'icon' => 'bars', 'title' => '_bx_quoteofday_lmi_cpt_quotes', 'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=quoteofday-manage'));
+        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_QUOTES , 'icon' => 'bars', 'title' => '_bx_quoteofday_lmi_cpt_quotes', 'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=quoteofday-manage'));
     }
 }
 
