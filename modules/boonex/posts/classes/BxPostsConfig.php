@@ -127,10 +127,12 @@ class BxPostsConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+			'main' => 'BxPostsMain',
         	'manage_tools' => 'BxPostsManageTools'
         );
 
         $this->_aJsObjects = array(
+			'main' => 'oBxPostsMain',
         	'manage_tools' => 'oBxPostsManageTools'
         );
 
