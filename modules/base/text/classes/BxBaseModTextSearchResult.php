@@ -11,9 +11,10 @@
 
 class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
-    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html');
+    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
     protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
+	protected $bShowcaseView = false;
 
     function __construct($sMode = '', $aParams = array())
     {
@@ -29,6 +30,10 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 
         if ('unit_gallery.html' == $this->sUnitTemplate)
             $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper'));
+		if ('unit_showcase.html' == $this->sUnitTemplate){
+			$this->bShowcaseView = true;
+            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-showcase-wrapper'));
+		}
     }
 
     protected function processReplaceableMarkers($oProfileAuthor) 
@@ -125,6 +130,19 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             'photo' => 'photo',
         );
     }
+	
+	function displayResultBlock ()
+    {
+		$sAddJs = "";
+		if ($this->bShowcaseView){
+			$this->aCurrent['paginate']['perPage'] =  getParam('bx_posts_per_page_browse_showcase');
+			$this->aCurrent['paginate']['perPage'] = 0;
+			$sAddJs = $this->oModule->_oTemplate->getJsCode('main');
+		}
+		$s = parent::displayResultBlock ();
+		return $sAddJs . $s;
+    }
+	
 }
 
 /** @} */
