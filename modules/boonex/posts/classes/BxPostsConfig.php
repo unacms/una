@@ -66,7 +66,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_posts_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_posts_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_posts_searchable_fields',
-            'PARAM_PER_PAGE_BROWSE_SHOWCASE1' => 'bx_posts_per_page_browse_showcase',
+            'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_posts_per_page_browse_showcase',
             
 
             // objects
