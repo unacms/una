@@ -16,7 +16,11 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
         parent::__construct($sMode, $aParams);
 
         $this->sUnitTemplate = 'unit_with_cover.html';
-
+        if ('showcase' == $aParams['unit_view']){
+			$this->bShowcaseView = true;
+            $this->sUnitTemplate = 'unit_with_cover_showcase.html';
+		}
+        
         $this->aCurrent =  array(
             'name' => 'bx_persons',
             'module_name' => 'bx_persons',

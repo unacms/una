@@ -259,4 +259,6 @@
     <string name="_bx_persons_email_friend_request_body"><![CDATA[{email_header}
 <p><a href="{SenderUrl}">{SenderDisplayName}</a> wants to be friends with you. <a href="{FriendsLink}">Respond</a>.</p>
 {email_footer}]]></string>
+
+    <string name="_bx_persons_page_block_title_featured_entries_view_showcase"><![CDATA[Featured People (Showcase View)]]></string>
 </resources>
