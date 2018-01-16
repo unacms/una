@@ -233,7 +233,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $oGrid->getCode();
     }
 
-    public function serviceFans ($iContentId = 0)
+    public function serviceFans ($iContentId = 0, $bAsArray = false)
     {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -247,11 +247,16 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
             return false;
 
-        bx_import('BxDolConnection');
-        $s = $this->serviceBrowseConnectionsQuick ($oGroupProfile->id(), $this->_oConfig->CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
-        if (!$s)
-            return MsgBox(_t('_sys_txt_empty'));
-        return $s;
+        if(!$bAsArray) {
+            bx_import('BxDolConnection');
+            $mixedResult = $this->serviceBrowseConnectionsQuick ($oGroupProfile->id(), $this->_oConfig->CNF['OBJECT_CONNECTIONS'], BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
+            if (!$mixedResult)
+                return MsgBox(_t('_sys_txt_empty'));
+        }
+        else
+            $mixedResult = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true);
+
+        return $mixedResult;
     }
 
     public function serviceAdmins ($iContentId = 0)
