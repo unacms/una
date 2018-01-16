@@ -8,14 +8,12 @@
  *
  * @{
  */
-define('BX_SYS_PER_PAGE_BROWSE_SHOWCASE', 32);
 
 class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
     protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
     protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
-	protected $bShowcaseView = false;
 
     function __construct($sMode = '', $aParams = array())
     {
@@ -33,7 +31,6 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper'));
 		if ('unit_showcase.html' == $this->sUnitTemplate){
 			$this->bShowcaseView = true;
-            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-showcase-wrapper'));
 		}
     }
 
@@ -118,26 +115,6 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
 
         return true;
-    }
-    
-    function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
-    {
-        if ($this->bShowcaseView)
-            return '';
-        else
-            return parent::showPagination ($bAdmin, $bChangePage, $bPageReload);
-    }
-    
-    function displayResultBlock ()
-    {
-		if ($this->bShowcaseView){
-            $CNF = &$this->oModule->_oConfig->CNF;
-            $iPerPageInShowCase = isset($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']) ? getParam($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']) : BX_SYS_PER_PAGE_BROWSE_SHOWCASE;
-			$this->aCurrent['paginate']['perPage'] = empty($iPerPageInShowCase) ? BX_SYS_PER_PAGE_BROWSE_SHOWCASE : $iPerPageInShowCase;
-			$this->oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
-            $this->oModule->_oTemplate->addJs(array('flickity/flickity.pkgd.min.js','modules/base/text/js/|showcase.js'));
-		}
-		return parent::displayResultBlock ();
     }
 
     function _getPseud ()
