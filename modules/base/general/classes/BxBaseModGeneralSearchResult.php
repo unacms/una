@@ -84,7 +84,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         else{
             $sTmp = parent::showPagination ($bAdmin, $bChangePage, $bPageReload);
             if ($sTmp != '')
-                return '<div class="bx-def-margin-top">' . parent::showPagination ($bAdmin, $bChangePage, $bPageReload) . '</div>';
+                return '<div class="bx-def-margin-top">' . $sTmp . '</div>';
             else
                 return '';
         }
