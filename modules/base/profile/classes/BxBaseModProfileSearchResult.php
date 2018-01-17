@@ -25,7 +25,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper', 'bx-def-margin-sec-bottom-neg'));
 		if ('unit_with_cover_showcase.html' == $this->sUnitTemplate){
 			$this->bShowcaseView = true;
-			$this->removeContainerClass ('bx-def-margin-sec-bottom-2neg');			
+			$this->removeContainerClass ('bx-def-margin-bottom-neg');			
         }
     }
 
