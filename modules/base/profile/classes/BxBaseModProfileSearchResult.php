@@ -21,13 +21,12 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
-        
-        if ('unit_with_cover_showcase.html' == $this->sUnitTemplate){
-			$this->bShowcaseView = true;
-        }
-        
         $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
-        $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper'));
+        $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper', 'bx-def-margin-sec-bottom-neg'));
+		if ('unit_with_cover_showcase.html' == $this->sUnitTemplate){
+			$this->bShowcaseView = true;
+			$this->removeContainerClass ('bx-def-margin-sec-bottom-2neg');			
+        }
     }
 
     protected function _setConnectionsConditions ($aParams)

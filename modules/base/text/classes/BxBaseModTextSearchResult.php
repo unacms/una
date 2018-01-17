@@ -26,9 +26,11 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
             $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
-
-        if ('unit_gallery.html' == $this->sUnitTemplate)
-            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper'));
+		$this->addContainerClass ('bx-def-margin-sec-bottom-2neg');
+        if ('unit_gallery.html' == $this->sUnitTemplate){
+			$this->removeContainerClass ('bx-def-margin-sec-bottom-2neg');		
+            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper bx-def-margin-sec-bottom-neg'));
+		}
 		if ('unit_showcase.html' == $this->sUnitTemplate){
 			$this->bShowcaseView = true;
 		}

@@ -81,7 +81,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         if ($this->bShowcaseView)
             return '';
         else
-            return parent::showPagination ($bAdmin, $bChangePage, $bPageReload);
+            return '<div class="bx-def-margin-sec-2top">' . parent::showPagination ($bAdmin, $bChangePage, $bPageReload) . '</div>';
     }
     
     function displayResultBlock ()

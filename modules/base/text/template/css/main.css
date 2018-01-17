@@ -136,7 +136,6 @@ div.bx-base-text-breadcrumb i {
     flex-pack: start;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
-    margin-bottom: 10px;
 }
 
 .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery {
@@ -166,8 +165,6 @@ div.bx-base-text-breadcrumb i {
 	{
 	   width:calc(50%);
 	}
-
-    
 }
 
 @media (min-width:533px) and (max-width:1024px) {
