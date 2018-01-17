@@ -71,9 +71,18 @@ class BxVideosModule extends BxBaseModTextModule
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
     }
 
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
+    {
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+
+        if(!empty($aResult['videos']) && is_array($aResult['videos']))
+            $aResult['images'] = array();
+
+        return $aResult;
+    }
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
-        list($sImageThumb, $sImageGallery) = $this->_oTemplate->getUnitImages($aContentInfo);
+        list($sImageThumb, $sImageGallery, $sImageCover) = $this->_oTemplate->getUnitImages($aContentInfo);
         if(empty($sImageGallery) && !empty($sImageThumb))
             $sImageGallery = $sImageThumb;
 
@@ -81,7 +90,30 @@ class BxVideosModule extends BxBaseModTextModule
             return array();
 
         return array(
-            array('url' => $sUrl, 'src' => $sImageGallery),
+            array('url' => $sUrl, 'src' => $sImageGallery, 'src_orig' => $sImageCover),
+        );
+    }
+
+    protected function _getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_STORAGE_VIDEOS']) || empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
+            return array();
+
+        $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
+        $aFile = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS'])->getFile($iFile);
+        if(empty($aFile) || !is_array($aFile) || strncmp('video/', $aFile['mime_type'], 6) !== 0)
+            return array();
+
+        $aTcvPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
+        $aTcvMp4 = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
+        $aTcvWebm = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
+        if(!$aTcvPoster || !$aTcvMp4 || !$aTcvWebm)
+            return array();
+
+        return array(
+            array('src_poster' => $aTcvPoster->getFileUrl($iFile), 'src_mp4' => $aTcvMp4->getFileUrl($iFile), 'src_webm' => $aTcvWebm->getFileUrl($iFile))
         );
     }
 }

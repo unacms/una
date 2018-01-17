@@ -32,9 +32,9 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $aTranscodersVideo = false;
         if($CNF['OBJECT_VIDEOS_TRANSCODERS'])
             $aTranscodersVideo = array (
-                'poster' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
-                'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
-                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+                'poster' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
+                'mp4' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
+                'webm' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
             );
 
         $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
@@ -79,7 +79,21 @@ class BxVideosTemplate extends BxBaseModTextTemplate
 
     public function getUnitImages ($aData)
     {
-        return $this->getUnitThumbAndGallery ($aData);
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        list($sImageThumb, $sImageGallery) = $this->getUnitThumbAndGallery ($aData);
+        if(empty($sImageThumb) && empty($sImageGallery))
+            return array($sImageThumb, $sImageGallery);
+
+        $sImageCover = $this->_getUnitImage($CNF['FIELD_THUMB'], $CNF['OBJECT_IMAGES_TRANSCODER_COVER'], $aData);
+        if(!empty($sImageCover))
+            return array($sImageThumb, $sImageGallery, $sImageCover);
+
+        $sImageCover = $this->_getUnitImage($CNF['FIELD_VIDEO'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster'], $aData);
+        if(!empty($sImageCover))
+            return array($sImageThumb, $sImageGallery, $sImageCover);
+
+        return array($sImageThumb, $sImageGallery, '');
     }
 
     /**
@@ -89,18 +103,18 @@ class BxVideosTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        $sImage = $this->_getUnitThumbAndGallery($CNF['FIELD_THUMB'], $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'], $aData);
+        $sImage = $this->_getUnitImage($CNF['FIELD_THUMB'], $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'], $aData);
         if(!empty($sImage))
             return array($sImage, $sImage);
 
-        $sImage = $this->_getUnitThumbAndGallery($CNF['FIELD_VIDEO'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster_gallery'], $aData);
+        $sImage = $this->_getUnitImage($CNF['FIELD_VIDEO'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster_gallery'], $aData);
         if(!empty($sImage))
             return array($sImage, $sImage);
 
         return array('', '');
     }
     
-    protected function _getUnitThumbAndGallery ($sField, $sTranscoder, &$aData)
+    protected function _getUnitImage ($sField, $sTranscoder, &$aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
