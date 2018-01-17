@@ -182,6 +182,73 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         )));
     }
 
+    /**
+     * Get event's content.
+     * @param integer $iId - event ID.
+     * @param string $sMode - 'photo' is only one mode which is available for now.
+     */
+    public function getItemBlockContent($iId, $sMode) {
+        $CNF = $this->_oConfig->CNF;
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent))
+            return '';
+
+        $aTmplVars = array(
+        	'style_prefix' => $sStylePrefix,
+            'bx_if:show_image' => array(
+                'condition' => false,
+                'content' => array()
+            )
+        );
+
+        switch($sMode) {
+            case 'photo':
+                $aTmplVars['bx_if:show_image']['condition'] = true;
+                $aTmplVars['bx_if:show_image']['content'] = array(
+                    'style_prefix' => $sStylePrefix,
+                    'src' => base64_decode(bx_process_input(bx_get('src'))),
+                );
+                break;
+        }
+
+        return $this->parseHtmlByName('block_item_content.html', $aTmplVars);
+    }
+
+    public function getItemBlockInfo($iId) {
+        $CNF = $this->_oConfig->CNF;
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent))
+            return '';
+
+        $aResult = $this->getData($aEvent);
+        if($aResult === false)
+            return '';
+
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit) = $this->getModule()->getUserInfo($aResult['owner_id']);
+
+        return $this->parseHtmlByName('block_item_info.html', array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'author' => $sAuthorUnit
+        ));
+    }
+
+    public function getItemBlockComments($iId) {
+        $CNF = $this->_oConfig->CNF;
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent))
+            return '';
+
+        $aResult = $this->getData($aEvent);
+        if($aResult === false)
+            return '';
+            
+        return $this->_getComments($aResult['comments']);
+    }
+
     public function getUnit(&$aEvent, $aBrowseParams = array())
     {
         $oModule = $this->getModule();
@@ -978,19 +1045,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsImages = array();
         if(!empty($aContent['images'])) {
             foreach($aContent['images'] as $aImage) {
-                $sImage = '';
-                if(!empty($aImage['src']))
-                    $sImage = $this->parseImage($bBrowseItem && !empty($aImage['src_orig']) ? $aImage['src_orig'] : $aImage['src'], array(
-                    	'class' => $sStylePrefix . '-item-img'
-                    ));
+                $sImageSrc = '';
+                if($bBrowseItem && !empty($aImage['src_orig']))
+                    $sImageSrc = $aImage['src_orig'];
+                else if(!empty($aImage['src']))
+                    $sImageSrc = $aImage['src'];
 
-                if(!empty($sImage) && (isset($aImage['url']) || isset($aImage['onclick']))) {
-                    $aAttrs = array();
-                    if(isset($aImage['onclick']))
-                        $aAttrs['onclick'] = $aImage['onclick'];
+                if(empty($sImageSrc))
+                    continue;
+                
+                $sImage = $this->parseImage($sImageSrc, array(
+                	'class' => $sStylePrefix . '-item-img'
+                ));
 
-                    $sImage = $this->parseLink(isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
-                }
+                $aAttrs = array();
+                if(isset($aImage['onclick']))
+                    $aAttrs['onclick'] = $aImage['onclick'];
+                else if(!$bBrowseItem && !empty($aImage['src_orig']))
+                    $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aImage['src_orig']))) . ')'; 
+
+                $sImage = $this->parseLink(isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
 
                 $aTmplVarsImages[] = array(
                     'style_prefix' => $sStylePrefix,
@@ -1164,13 +1238,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     $oTranscoderBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
 
                     foreach($aPhotos as $iPhotoId) {
+                        $sPhotoSrc = $oTranscoder->getFileUrl($iPhotoId);
                         $sPhotoSrcBig = $oTranscoderBig->getFileUrl($iPhotoId);
+                        if(empty($sPhotoSrcBig) && !empty($sPhotoSrc))
+                            $sPhotoSrcBig = $sPhotoSrc;
 
                         $aResult['content']['images'][] = array(
-                            'src' => $oTranscoder->getFileUrl($iPhotoId),
+                            'src' => $sPhotoSrc,
                             'src_orig' => $sPhotoSrcBig,
-                            'title' => '',
-                            'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcBig . '\')'
                         );
                     }
                 }

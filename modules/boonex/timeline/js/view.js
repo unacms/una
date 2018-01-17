@@ -171,10 +171,20 @@ BxTimelineView.prototype.showMoreContent = function(oLink) {
 	}	
 };
 
-BxTimelineView.prototype.showPhoto = function(oLink, sUrl) {
+BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams) {
 	var sView = this._getView(oLink);
+	var oData = $.extend({}, this._getDefaultData(), {id: iId, mode: sMode}, (oParams != undefined ? oParams : {}));
 
-	$('#' + this._aHtmlIds['photo_popup_' + sView]).dolPopupImage(sUrl, $(oLink).parent());
+	$(".bx-popup-full-screen.bx-popup-applied:visible").dolPopupHide();
+
+	$(window).dolPopupAjax({
+		id: {value: this._aHtmlIds['item_popup_' + sView] + iId, force: true},
+		url: bx_append_url_params(this._sActionsUrl + 'get_item_brief', oData),
+		removeOnClose: true,
+		fullScreen: true
+	});
+
+	return false;
 };
 
 BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {

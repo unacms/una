@@ -61,6 +61,8 @@
     <string name="_bx_timeline_page_title_view_home"><![CDATA[Общая хроника новостей]]></string>
 	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Элемент хроники]]></string>
 	<string name="_bx_timeline_page_title_item"><![CDATA[Элемент хроники]]></string>
+	<string name="_bx_timeline_page_title_sys_item_brief"><![CDATA[Предпросмотр элемента хроники]]></string>
+    <string name="_bx_timeline_page_title_item_brief"><![CDATA[Предпросмотр элемента хроники]]></string>
 	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Хроника новостей]]></string>
 	<string name="_bx_timeline_page_title_account"><![CDATA[Хроника новостей]]></string>
 	<string name="_bx_timeline_page_block_title_system_post_profile"><![CDATA[Создать публикацию]]></string>
@@ -70,6 +72,9 @@
 	<string name="_bx_timeline_page_block_title_system_view_profile_outline"><![CDATA[Хроника новостей профайла (сводка)]]></string>
 	<string name="_bx_timeline_page_block_title_view_profile_outline"><![CDATA[Хроника новостей профайла]]></string>
 	<string name="_bx_timeline_page_block_title_item"><![CDATA[Элемент]]></string>
+	<string name="_bx_timeline_page_block_title_item_content"><![CDATA[Содержимое]]></string>
+    <string name="_bx_timeline_page_block_title_item_info"><![CDATA[Информация]]></string>
+    <string name="_bx_timeline_page_block_title_item_comments"><![CDATA[Комментарии]]></string>
 	<string name="_bx_timeline_page_block_title_system_post_account"><![CDATA[Создать публикацию]]></string>
 	<string name="_bx_timeline_page_block_title_post_account"><![CDATA[Создать публикацию]]></string>
 	<string name="_bx_timeline_page_block_title_system_view_account"><![CDATA[Хроника новостей (лента)]]></string>

@@ -287,6 +287,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echo $this->_oTemplate->getRepostedBy($iRepostedId);
     }
 
+    public function actionGetItemBrief()
+    {
+        echo BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCode();
+    }
+
     function actionRss()
     {
         $aArgs = func_get_args();
@@ -867,6 +872,34 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oTemplate->getItemBlock($iItemId);
     }
 
+    public function serviceGetBlockItemContent()
+    {
+        $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $sMode = bx_process_input(bx_get('mode'));
+        if(!$iItemId || !$sMode)
+            return '';
+            
+        return $this->_oTemplate->getItemBlockContent($iItemId, $sMode);
+    }
+    
+    public function serviceGetBlockItemInfo()
+    {
+        $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(!$iItemId)
+            return '';
+
+        return $this->_oTemplate->getItemBlockInfo($iItemId);
+    }
+
+    public function serviceGetBlockItemComments()
+    {
+        $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(!$iItemId)
+            return '';
+
+        return $this->_oTemplate->getItemBlockComments($iItemId);
+    }
+    
     /**
      * @page service Service Calls
      * @section bx_timeline Timeline

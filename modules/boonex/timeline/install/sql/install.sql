@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_meta_locations` (
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
 );
 
-CREATE TABLE `bx_timeline_meta_mentions` (
+CREATE TABLE IF NOT EXISTS `bx_timeline_meta_mentions` (
   `object_id` int(10) unsigned NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
   KEY `object_id` (`object_id`),

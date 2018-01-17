@@ -277,6 +277,15 @@ div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-content {
 }
 
 
+/*--- Item Brief Style ---*/
+div.bx-tl-bview-image {
+	text-align: center;
+}
+div.bx-tl-bview-image img {
+	max-width: 100%;
+}
+
+
 /*--- Empty Style ---*/
 div.bx-tl-empty div.bx-msg-box-container {
 	margin-top: 0px;

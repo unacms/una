@@ -96,6 +96,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
         	'transcoder_videos_webm' => $this->_sName . '_videos_webm',
 
+        	'page_item_brief' => $this->_sName . '_item_brief',
+
         	'menu_item_manage' => $this->_sName . '_menu_item_manage',
         	'menu_item_actions' => $this->_sName . '_menu_item_actions',
         	'menu_post_attachments' => $this->_sName . '_menu_post_attachments',
@@ -135,14 +137,17 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'view' => array(
         		'main_' . $sHpI => $sHp . '-' . $sHpI,
         		'item_' . $sHpI => $sHp . '-item-' . $sHpI . '-',
+                'item_popup_' . $sHpI => $sHp . '-item-popup-' . $sHpI,
                 'photo_popup_' . $sHpI => $sHp . '-photo-popup-' . $sHpI,
 
                 'main_' . $sHpT => $sHp . '-' . $sHpT,
         		'item_' . $sHpT => $sHp . '-item-' . $sHpT . '-',
+        		'item_popup_' . $sHpT => $sHp . '-item-popup-' . $sHpT,
                 'photo_popup_' . $sHpT => $sHp . '-photo-popup-' . $sHpT,
 
         		'main_' . $sHpO => $sHp . '-' . $sHpO,
         		'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
+        		'item_popup_' . $sHpO => $sHp . '-item-popup-' . $sHpO,
                 'photo_popup_' . $sHpO => $sHp . '-photo-popup-' . $sHpO,
 
         		'main_' . $sHpS => $sHp . '-' . $sHpS,

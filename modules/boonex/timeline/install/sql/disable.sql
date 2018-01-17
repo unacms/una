@@ -1,6 +1,6 @@
 -- PAGES & BLOCKS
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_timeline';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_timeline';
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_timeline' OR `object` IN('bx_timeline_view', 'bx_timeline_view_home', 'bx_timeline_item', 'bx_photos_item_brief');
 
 
 -- MENU

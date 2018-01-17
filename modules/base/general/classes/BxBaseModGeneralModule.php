@@ -1095,6 +1095,9 @@ class BxBaseModGeneralModule extends BxDolModule
     	//--- Image(s)
         $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
+        //--- Video(s)
+        $aVideos = $this->_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
     	return array(
     		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
     		'sample_wo_article' => $CNF['T']['txt_sample_single'],
@@ -1104,6 +1107,7 @@ class BxBaseModGeneralModule extends BxDolModule
 			(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : ''),
 			'text' => isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '',
 			'images' => $aImages,
+            'videos' => $aVideos
 		);
     }
 
@@ -1111,19 +1115,33 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sImage = '';
-        if(isset($CNF['FIELD_COVER']) && isset($aContentInfo[$CNF['FIELD_COVER']]) && $aContentInfo[$CNF['FIELD_COVER']])
+        $sImage = $sImageOrig = '';
+        if(isset($CNF['FIELD_COVER']) && isset($aContentInfo[$CNF['FIELD_COVER']]) && $aContentInfo[$CNF['FIELD_COVER']]) {
             $sImage = $this->_oConfig->getImageUrl($aContentInfo[$CNF['FIELD_COVER']], array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_THUMB'));
+            $sImageOrig = $this->_oConfig->getImageUrl($aContentInfo[$CNF['FIELD_COVER']], array('OBJECT_IMAGES_TRANSCODER_COVER'));
+        }
 
-        if($sImage == '' && isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']])
+        $bImageThumb = isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']];
+        if($sImage == '' && $bImageThumb)
             $sImage = $this->_oConfig->getImageUrl($aContentInfo[$CNF['FIELD_THUMB']], array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_THUMB'));
+
+        if($sImageOrig == '' && $bImageThumb)
+            $sImageOrig = $this->_oConfig->getImageUrl($aContentInfo[$CNF['FIELD_THUMB']], array('OBJECT_IMAGES_TRANSCODER_COVER'));
 
         if(empty($sImage))
             return array();
 
+        if($sImageOrig == '')
+            $sImageOrig = $sImage;
+
         return array(
-		    array('url' => $sUrl, 'src' => $sImage),
+		    array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
 		);
+    }
+
+    protected function _getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        return array();
     }
 
     protected function _entityComments ($sObject, $iId = 0)
