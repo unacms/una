@@ -387,4 +387,7 @@
     <string name="_bx_market_txt_per_year"><![CDATA[year]]></string>
     <string name="_bx_market_txt_per_year_short"><![CDATA[year]]></string>
     <string name="_bx_market_txt_get_for_free"><![CDATA[Download for Free]]></string>
+    <string name="_bx_market_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Products (Showcase View)]]></string>
+    <string name="_bx_market_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Products (Showcase View)]]></string>
+    <string name="_bx_market_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Products (Showcase View)]]></string>
 </resources>

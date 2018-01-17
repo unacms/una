@@ -216,4 +216,8 @@
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} голосов]]></string>
     <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>
     <string name="_bx_polls_msg_public_voting"><![CDATA[Это публичное голосование, ваш выбор будет виден другим.]]></string>
+
+    <string name="_bx_polls_page_block_title_recent_entries_view_showcase"><![CDATA[Последние голосования (Витринный просмотр)]]></string>
+    <string name="_bx_polls_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные голосования (Витринный просмотр)]]></string>
+    <string name="_bx_polls_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые голосования (Витринный просмотр)]]></string>
 </resources>

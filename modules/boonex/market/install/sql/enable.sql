@@ -15,9 +15,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_market_summary_chars', '700', @iCategId, '_bx_market_option_summary_chars', 'digit', '', '', '', 10),
 ('bx_market_plain_summary_chars', '240', @iCategId, '_bx_market_option_plain_summary_chars', 'digit', '', '', '', 11),
 ('bx_market_per_page_browse', '12', @iCategId, '_bx_market_option_per_page_browse', 'digit', '', '', '', 20),
-('bx_market_per_page_profile', '6', @iCategId, '_bx_market_option_per_page_profile', 'digit', '', '', '', 21),
+('bx_market_per_page_profile', '6', @iCategId, '_bx_market_option_per_page_profile', 'digit', '', '', '', 22),
 ('bx_market_rss_num', '10', @iCategId, '_bx_market_option_rss_num', 'digit', '', '', '', 25),
-('bx_market_searchable_fields', 'title,text', @iCategId, '_bx_market_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_market_searchable_fields', 'title,text', @iCategId, '_bx_market_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_market_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 21);
 
 -- PAGE: create entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -202,7 +203,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('', 0, 'bx_market', '_bx_market_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{s:9:"unit_view";s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 5),
 ('', 0, 'bx_market', '_bx_market_page_block_title_featured_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 6),
 ('', 0, 'bx_market', '_bx_market_page_block_title_updated_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{s:9:"unit_view";s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 7),
-('', 0, 'bx_market', '_bx_market_page_block_title_updated_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 8);
+('', 0, 'bx_market', '_bx_market_page_block_title_updated_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_updated";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 8),
+('', 0, 'bx_market', '_bx_market_page_block_title_recent_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_public\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 9),
+('', 0, 'bx_market', '_bx_market_page_block_title_popular_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_popular\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 10),
+('', 0, 'bx_market', '_bx_market_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 11);
 
 
 -- MENU: add to site menu
