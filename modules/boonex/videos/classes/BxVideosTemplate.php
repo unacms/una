@@ -96,6 +96,18 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         return array($sImageThumb, $sImageGallery, '');
     }
 
+    protected function getUnit($aData, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $this->_checkDuration($aData);
+
+        $aUnit = parent::getUnit($aData, $aParams);
+        $aUnit['bx_if:thumb']['content']['duration'] = _t_format_duration($aData[$CNF['FIELD_DURATION']]);
+
+        return $aUnit;
+    }
+
     /**
      * Use Gallery image for both because currently there is no Unit types with small thumbnails.
      */
