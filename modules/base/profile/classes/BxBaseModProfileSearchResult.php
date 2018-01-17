@@ -11,11 +11,22 @@
 
 class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 {
+    protected $aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
+    protected $sUnitViewDefault = 'gallery';
+    
     public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
+        
+        if (!empty($aParams['unit_view']))
+            $this->sUnitViewDefault = $aParams['unit_view'];
+        $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
+        
+        if ('unit_with_cover_showcase.html' == $this->sUnitTemplate){
+			$this->bShowcaseView = true;
+        }
+        
         $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
-
         $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper'));
     }
 

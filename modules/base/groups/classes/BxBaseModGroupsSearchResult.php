@@ -11,6 +11,8 @@
 
 class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
 {
+    protected $aUnitViews = array('gallery' => 'unit.html', 'showcase' => 'unit_with_cover_showcase.html');
+    
     public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
