@@ -271,3 +271,13 @@ a.bx-base-pofile-cover-image:hover,
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* showcase view */
+.bx-base-unit-showcase-wrapper .bx-base-unit-showcase
+{
+	width:calc(34%);
+    margin-bottom: 0px;
+}
+.bx-base-unit-showcase-wrapper {
+    display:block
+}

@@ -11,7 +11,7 @@
 
 class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
-    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html');
+    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
     protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
 
@@ -29,6 +29,9 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 
         if ('unit_gallery.html' == $this->sUnitTemplate)
             $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper'));
+		if ('unit_showcase.html' == $this->sUnitTemplate){
+			$this->bShowcaseView = true;
+		}
     }
 
     protected function processReplaceableMarkers($oProfileAuthor) 

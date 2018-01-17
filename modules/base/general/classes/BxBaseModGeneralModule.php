@@ -37,7 +37,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $this->_rss($aArgs);
     }
 
-    // ====== SERVICE METHODS
+    // ====== SERVICE METHODS    
     public function serviceGetAuthor ($iContentId)
     {
         $mixedResult = $this->_getFieldValue('FIELD_AUTHOR', $iContentId);
@@ -125,6 +125,11 @@ class BxBaseModGeneralModule extends BxDolModule
             $aParams = array('type' => 'all');
 
         return $this->_oDb->getEntriesBy($aParams);
+    }
+
+    public function serviceGetAllByAuthor ($iProfileId)
+    {
+        return $this->_oDb->getEntriesByAuthor((int)$iProfileId);
     }
 
     public function serviceGetSearchableFieldsExtended()

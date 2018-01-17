@@ -26,7 +26,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     protected $sCenterContentUnitSelector = false;
 
-    protected $aContainerClasses = array('bx-search-result-block', 'bx-def-margin-bottom', 'bx-clearfix');
+    protected $aContainerClasses = array('bx-search-result-block', 'bx-clearfix');
 
     protected $aUnitParams = array(); ///< additional params array to pass to unit display function
 

@@ -369,6 +369,38 @@ class BxAclModule extends BxDolModule
     	return true;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-other Other
+     * @subsubsection bx_acl-get_prices get_prices
+     * 
+     * @code bx_srv('bx_acl', 'get_prices', [...]); @endcode
+     * 
+     * Get array of available price options for membership levels
+     *
+     * @param $iLevelId membership level id
+     * @param $bFreeUnlimitedOnly get unlimited free pricing options only
+     * @return array of levels, or empty array of there are no any pricing options avaiulable
+     * 
+     * @see BxAclModule::serviceGetPrices
+     */
+    /** 
+     * @ref bx_acl-get_prices "get_prices"
+     */
+	public function serviceGetPrices($iLevelId = 0, $bFreeUnlimitedOnly = false)
+    {
+        $aParams = array(
+            'type' => $iLevelId ? 'by_level_id' : 'all_full',
+            'value' => $iLevelId,
+        );
+        $aPrices = $this->_oDb->getPrices($aParams, false);        
+
+        return array_filter($aPrices, function ($r) use ($bFreeUnlimitedOnly) {
+            return $bFreeUnlimitedOnly ? !$r['price'] && !$r['period'] : true;
+        });
+    }
+    
     protected function _serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
     {
     	$aItem = $this->serviceGetCartItem($iItemId);

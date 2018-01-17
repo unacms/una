@@ -9,9 +9,12 @@
  * @{
  */
 
+define('BX_SYS_PER_PAGE_BROWSE_SHOWCASE', 32);
+
 class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 {
     protected $oModule;
+    protected $bShowcaseView = false;
 
     function __construct($sMode = '', $aParams = array())
     {
@@ -71,6 +74,27 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
             $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aCondition['join']);
 
         $this->setProcessPrivateContent(false);
+    }
+    
+    function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
+    {
+        if ($this->bShowcaseView)
+            return '';
+        else
+            return parent::showPagination ($bAdmin, $bChangePage, $bPageReload);
+    }
+    
+    function displayResultBlock ()
+    {
+		if ($this->bShowcaseView){
+            $this->addContainerClass(array('bx-def-margin-sec-lefttopright-neg', 'bx-base-unit-showcase-wrapper'));
+            $CNF = &$this->oModule->_oConfig->CNF;
+            $iPerPageInShowCase = isset($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']) ? getParam($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']) : BX_SYS_PER_PAGE_BROWSE_SHOWCASE;
+			$this->aCurrent['paginate']['perPage'] = empty($iPerPageInShowCase) ? BX_SYS_PER_PAGE_BROWSE_SHOWCASE : $iPerPageInShowCase;
+			$this->oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
+            $this->oModule->_oTemplate->addJs(array('flickity/flickity.pkgd.min.js','modules/base/general/js/|showcase.js'));
+		}
+		return parent::displayResultBlock ();
     }
 }
 

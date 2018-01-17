@@ -153,7 +153,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
     public function getEntriesByAuthor ($iProfileId)
     {
-        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_AUTHOR'] . "` = ?", $iProfileId);
+        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_AUTHOR'] . "` = ? ORDER BY `" . $this->_oConfig->CNF['FIELD_ADDED'] . "` DESC", $iProfileId);
         return $this->getAll($sQuery);
     }
 
