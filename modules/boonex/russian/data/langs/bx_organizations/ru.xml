@@ -388,4 +388,5 @@
     <string name="_bx_orgs_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас в организацию <a href="{EntryUrl}">{EntryTitle}</a>.</p>
 {email_footer}]]></string>
+    <string name="_bx_orgs_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые организации (Витринный просмотр)]]]></string>
 </resources>

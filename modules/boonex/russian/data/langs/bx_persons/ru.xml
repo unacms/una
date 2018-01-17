@@ -260,4 +260,5 @@
     <string name="_bx_persons_email_friend_request_body"><![CDATA[{email_header}
 <p><a href="{SenderUrl}">{SenderDisplayName}</a> хочет подружиться с вами. <a href="{FriendsLink}">Ответить</a>.</p>
 {email_footer}]]></string>
+    <string name="_bx_persons_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые профили (Витринный просмотр)]]></string>
 </resources>

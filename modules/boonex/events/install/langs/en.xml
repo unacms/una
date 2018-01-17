@@ -406,5 +406,5 @@
     Location: <span class="location">{EntryLocation}</span>
 </p>
 {email_footer}]]></string>
-
+    <string name="_bx_events_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Events (Showcase View)]]></string>
 </resources>

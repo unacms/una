@@ -304,4 +304,5 @@
     <string name="_bx_groups_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} group</a>.</p>
 {email_footer}]]></string>
+    <string name="_bx_groups_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Groups (Showcase View)]]></string>
 </resources>
