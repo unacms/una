@@ -14,9 +14,13 @@
  */
 class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 {
+    protected $_sUnitClassShowCase;
+    
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
+        
+        $this->_sUnitClassShowCase = 'bx-base-unit-showcase bx-base-text-unit-showcase bx-def-margin-sec-bottom';
     }
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
@@ -25,7 +29,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     	if($sResult)
             return $sResult;
 
-		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
+		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams, $sTemplateName));
     }
 
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
@@ -120,7 +124,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return array($sPhotoThumb, $sPhotoGallery);
     }
 
-	protected function getUnit ($aData, $aParams = array())
+	protected function getUnit ($aData, $aParams = array(), $sTemplateName = 'unit.html')
     {
         $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
@@ -159,6 +163,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         // generate html
         return array (
+            'class' => $this->_getUnitClass($aData, $sTemplateName),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
@@ -222,6 +227,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         // get summary
         $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $sTitle)) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
         return  strmaxtextlen($sText, (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
+    }
+    
+    protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+
+        switch($sTemplateName) {
+            case 'unit_showcase.html':
+                $sResult = $this->_sUnitClassShowCase;
+                break;
+        }
+
+        return $sResult;
     }
 }
 

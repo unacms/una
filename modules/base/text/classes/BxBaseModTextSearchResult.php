@@ -11,17 +11,15 @@
 
 class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
-    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
-    protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
 
     function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
 
+        $this->aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
-
         $this->aGetParams = array($this->sUnitViewParamName);
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))

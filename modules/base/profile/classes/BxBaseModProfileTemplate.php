@@ -17,6 +17,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     protected $_sUnitClass;
     protected $_sUnitClassWithCover;
     protected $_sUnitClassWoInfo;
+    protected $_sUnitClassShowCase;
     
     function __construct(&$oConfig, &$oDb)
     {
@@ -25,6 +26,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $this->_sUnitClass = 'bx-base-pofile-unit';
         $this->_sUnitClassWithCover = 'bx-base-pofile-unit-with-cover';
         $this->_sUnitClassWoInfo = 'bx-base-pofile-unit-wo-info';
+        $this->_sUnitClassShowCase = 'bx-base-unit-showcase bx-base-pofile-unit-showcase';
     }
 
     /**
@@ -313,6 +315,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             case 'unit_wo_info.html':
             case 'unit_wo_info_links.html':
                 $sResult = $this->_sUnitClassWoInfo;
+                break;
+                
+            case 'unit_with_cover_showcase.html':
+                $sResult = $this->_sUnitClassShowCase;
                 break;
         }
 

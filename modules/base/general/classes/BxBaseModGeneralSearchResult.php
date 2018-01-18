@@ -15,6 +15,8 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 {
     protected $oModule;
     protected $bShowcaseView = false;
+    protected $aUnitViews = array();
+    protected $sUnitViewDefault = 'gallery';
 
     function __construct($sMode = '', $aParams = array())
     {

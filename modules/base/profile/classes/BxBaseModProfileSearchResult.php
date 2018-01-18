@@ -10,14 +10,12 @@
  */
 
 class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
-{
-    protected $aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
-    protected $sUnitViewDefault = 'gallery';
-    
+{    
     public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
         
+        $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
