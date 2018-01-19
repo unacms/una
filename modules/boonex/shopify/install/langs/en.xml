@@ -132,6 +132,12 @@
     <string name="_bx_shopify_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_shopify_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
     <string name="_bx_shopify_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
+    <string name="_bx_shopify_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Goods (Showcase View)]]></string>
+    <string name="_bx_shopify_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Goods]]></string>
+    <string name="_bx_shopify_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Popular Goods (Showcase View)]]></string>
+    <string name="_bx_shopify_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Goods]]></string>
+    <string name="_bx_shopify_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Goods (Showcase View)]]></string>
+    <string name="_bx_shopify_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Goods]]></string>
 
     <string name="_bx_shopify_menu_set_title_view_entry"><![CDATA[Goods Actions]]></string>
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Goods Actions]]></string>
@@ -221,8 +227,4 @@
     <string name="_bx_shopify_txt_sample_single_with_article"><![CDATA[a shop item]]></string>
     <string name="_bx_shopify_txt_sample_comment_single"><![CDATA[comment to shop item]]></string>
     <string name="_bx_shopify_txt_sample_vote_single"><![CDATA[vote to shop item]]></string>
-  
-    <string name="_bx_shopify_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Goods (Showcase View)]]></string>
-    <string name="_bx_shopify_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Goods (Showcase View)]]></string>
-    <string name="_bx_shopify_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Goods (Showcase View)]]></string>
 </resources>

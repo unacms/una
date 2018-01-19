@@ -122,6 +122,12 @@
     <string name="_bx_polls_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_polls_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
     <string name="_bx_polls_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
+    <string name="_bx_polls_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Polls (Showcase View)]]></string>
+    <string name="_bx_polls_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Polls]]></string>
+    <string name="_bx_polls_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Popular Polls (Showcase View)]]></string>
+    <string name="_bx_polls_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Polls]]></string>
+    <string name="_bx_polls_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Polls (Showcase View)]]></string>
+    <string name="_bx_polls_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Polls]]></string>
 
     <string name="_bx_polls_menu_set_title_view_entry"><![CDATA[Poll Actions]]></string>
     <string name="_bx_polls_menu_title_view_entry"><![CDATA[Poll Actions]]></string>
@@ -217,8 +223,4 @@
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} votes]]></string>
     <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>
     <string name="_bx_polls_msg_public_voting"><![CDATA[This voting is public, your choice will be displayed for others.]]></string>
-
-    <string name="_bx_polls_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Polls (Showcase View)]]></string>
-    <string name="_bx_polls_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Polls (Showcase View)]]></string>
-    <string name="_bx_polls_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Polls (Showcase View)]]></string>
 </resources>

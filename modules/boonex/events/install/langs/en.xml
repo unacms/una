@@ -157,6 +157,8 @@
     <string name="_bx_events_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_events_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
     <string name="_bx_events_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
+    <string name="_bx_events_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Events (Showcase View)]]></string>
+    <string name="_bx_events_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Events]]></string>
     
     <string name="_bx_events_menu_title_submenu"><![CDATA[Events Submenu]]></string>
     <string name="_bx_events_menu_set_title_submenu"><![CDATA[Events Submenu]]></string>
@@ -406,5 +408,4 @@
     Location: <span class="location">{EntryLocation}</span>
 </p>
 {email_footer}]]></string>
-    <string name="_bx_events_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Events (Showcase View)]]></string>
 </resources>

@@ -14,9 +14,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_albums_plain_summary_chars', '200', @iCategId, '_bx_albums_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_albums_per_page_browse', '12', @iCategId, '_bx_albums_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_albums_per_page_profile', '6', @iCategId, '_bx_albums_option_per_page_profile', 'digit', '', '', '', 12),
+('bx_albums_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_albums_rss_num', '10', @iCategId, '_bx_albums_option_rss_num', 'digit', '', '', '', 20),
-('bx_albums_searchable_fields', 'title,text', @iCategId, '_bx_albums_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:21:"get_searchable_fields";}', 30),
-('bx_albums_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 11);
+('bx_albums_searchable_fields', 'title,text', @iCategId, '_bx_albums_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
 
 -- PAGE: create entry
@@ -163,8 +163,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('', 0, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_media', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:15:"bx_albums_media";i:1;s:15:"bx_albums_media";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, @iBlockOrder + 3),
 ('', 0, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_media_camera', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:22:"bx_albums_media_camera";i:1;s:22:"bx_albums_media_camera";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, @iBlockOrder + 4),
 ('', 0, 'bx_albums', '', '_bx_albums_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:13:"browse_public";s:6:"params";a:3:{s:9:"unit_view";s:8:"extended";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1, @iBlockOrder + 5),
-('', 0, 'bx_albums', '', '_bx_albums_page_block_title_recent_media_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:20:"browse_recent_media";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1, @iBlockOrder + 6),
-('', 0, 'bx_albums', '', '_bx_albums_page_block_title_popular_media_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:20:"browse_popular_media";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1,@iBlockOrder + 7);
+('', 0, 'bx_albums', '_bx_albums_page_block_title_sys_recent_media_view_showcase', '_bx_albums_page_block_title_recent_media_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:20:"browse_recent_media";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1, @iBlockOrder + 6),
+('', 0, 'bx_albums', '_bx_albums_page_block_title_sys_popular_media_view_showcase', '_bx_albums_page_block_title_popular_media_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:20:"browse_popular_media";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1,@iBlockOrder + 7);
 
 
 -- MENU: add to site menu

@@ -130,6 +130,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $aVarsTmp = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content'] : $aVars['bx_if:video']['content'];
 
         $aVars = array_merge($aVars, array (
+            'class' => $this->_getUnitClass($aData, $sTemplateName),
             'title' => $this->getMediaTitle($aData),
             'module_name' => _t($CNF['T']['txt_media_single']),
             'content_url' => $aVarsTmp['url'],

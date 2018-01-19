@@ -141,6 +141,8 @@
     <string name="_bx_persons_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_persons_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
     <string name="_bx_persons_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
+    <string name="_bx_persons_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые профили (Витринный просмотр)]]></string>
+    <string name="_bx_persons_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые профили]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Персоны - Подменю]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Персоны - Подменю]]></string>
@@ -260,5 +262,4 @@
     <string name="_bx_persons_email_friend_request_body"><![CDATA[{email_header}
 <p><a href="{SenderUrl}">{SenderDisplayName}</a> хочет подружиться с вами. <a href="{FriendsLink}">Ответить</a>.</p>
 {email_footer}]]></string>
-    <string name="_bx_persons_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые профили (Витринный просмотр)]]></string>
 </resources>
