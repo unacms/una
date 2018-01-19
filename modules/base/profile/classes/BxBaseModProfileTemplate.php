@@ -26,7 +26,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $this->_sUnitClass = 'bx-base-pofile-unit';
         $this->_sUnitClassWithCover = 'bx-base-pofile-unit-with-cover';
         $this->_sUnitClassWoInfo = 'bx-base-pofile-unit-wo-info';
-        $this->_sUnitClassShowCase = 'bx-base-unit-showcase bx-base-pofile-unit-showcase';
+        $this->_sUnitClassShowCase = 'bx-base-pofile-unit-with-cover bx-base-unit-showcase bx-base-pofile-unit-showcase';
     }
 
     /**

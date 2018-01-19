@@ -28,8 +28,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
     	if($sResult)
             return $sResult;
-
-		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams, $sTemplateName));
+        $aParams['template_name'] = $sTemplateName;
+		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
     }
 
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
@@ -124,7 +124,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return array($sPhotoThumb, $sPhotoGallery);
     }
 
-	protected function getUnit ($aData, $aParams = array(), $sTemplateName = 'unit.html')
+	protected function getUnit ($aData, $aParams = array())
     {
         $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
@@ -163,7 +163,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         // generate html
         return array (
-            'class' => $this->_getUnitClass($aData, $sTemplateName),
+            'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,

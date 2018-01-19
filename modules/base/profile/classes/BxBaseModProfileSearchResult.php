@@ -16,8 +16,11 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         parent::__construct($sMode, $aParams);
         
         $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
+        if (!empty($aParams['unit_views']))
+            $this->aUnitViews = $aParams['unit_views'];
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
+        
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
         $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper', 'bx-def-margin-sec-bottom-neg'));
