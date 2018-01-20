@@ -27,9 +27,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return BxDolStorage::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_STORAGE']);
     }
 
-    public function getObjectFormAdd ()
+    public function getObjectFormAdd ($sDisplay = false)
     {
-        return BxDolForm::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY'], $this->_oModule->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oModule->_oTemplate);
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (false === $sDisplay)
+            $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'];
+        
+        return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
     }
 
     public function getObjectFormEdit ($sDisplay = false)
@@ -76,12 +81,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return $this->_oModule->_oTemplate->entryText($aContentInfo);
     }
 
-    public function addData ($iProfile, $aValues)
+    public function addData ($iProfile, $aValues, $sDisplay = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // check and display form
-        $oForm = $this->getObjectFormAdd();
+        $oForm = $this->getObjectFormAdd($sDisplay);
         if (!$oForm)
             return array('code' => 1, 'message' => '_sys_txt_error_occured');
 
@@ -119,7 +124,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
     }
 
-    public function addDataForm ($sCheckFunction = false)
+    public function addDataForm ($sDisplay = false, $sCheckFunction = false)
     {
         if (!$sCheckFunction)
             $sCheckFunction = 'checkAllowedAdd';
@@ -136,7 +141,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         }
 
         // check and display form
-        $oForm = $this->getObjectFormAdd();
+        $oForm = $this->getObjectFormAdd($sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 

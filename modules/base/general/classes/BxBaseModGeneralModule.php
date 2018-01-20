@@ -334,17 +334,17 @@ class BxBaseModGeneralModule extends BxDolModule
      * Create entry form
      * @return HTML string
      */
-    public function serviceEntityCreate ()
+    public function serviceEntityCreate ($sDisplay = false)
     {
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
-        return $oFormsHelper->addDataForm();
+        return $oFormsHelper->addDataForm($sDisplay);
     }
 
-    public function serviceEntityEdit ($iContentId = 0)
+    public function serviceEntityEdit ($iContentId = 0, $sDisplay = false)
     {
-        return $this->_serviceEntityForm ('editDataForm', $iContentId);
+        return $this->_serviceEntityForm ('editDataForm', $iContentId, $sDisplay);
     }
 
     public function serviceEntityDelete ($iContentId = 0)
@@ -357,9 +357,9 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
     }
 
-    public function serviceEntityInfo ($iContentId = 0)
+    public function serviceEntityInfo ($iContentId = 0, $sDisplay = false)
     {
-        return $this->_serviceEntityForm ('viewDataForm', $iContentId);
+        return $this->_serviceEntityForm ('viewDataForm', $iContentId, $sDisplay);
     }
 
 	public function serviceEntityInfoFull ($iContentId = 0)

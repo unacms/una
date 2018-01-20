@@ -143,6 +143,7 @@ class BxShopifyModule extends BxBaseModTextModule
      * 
      * Get page block with product creation form or an error message if something wasn't configured correctly.
      *
+     * @param $sDisplay form display name to use
      * @return HTML string with block content to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
      * @see BxShopifyModule::serviceEntityCreate
@@ -150,7 +151,7 @@ class BxShopifyModule extends BxBaseModTextModule
     /** 
      * @ref bx_shopify-entity_create "entity_create"
      */
-    public function serviceEntityCreate ()
+    public function serviceEntityCreate ($sDisplay = false)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -158,7 +159,7 @@ class BxShopifyModule extends BxBaseModTextModule
         if(empty($aSettings) || !is_array($aSettings))
     		return MsgBox(_t('_bx_shopify_err_not_configured', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_SETTINGS'])));
 
-    	return parent::serviceEntityCreate();
+    	return parent::serviceEntityCreate($sDisplay);
     }
 
     /**

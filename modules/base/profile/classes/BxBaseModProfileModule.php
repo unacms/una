@@ -314,11 +314,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return parent::serviceFormsHelper ();
     }
 
-    public function serviceEntityCreate ()
+    public function serviceEntityCreate ($sDisplay = false)
     {
 	    BxDolInformer::getInstance($this->_oTemplate)->setEnabled(false);
 
-	    return parent::serviceEntityCreate ();
+	    return parent::serviceEntityCreate ($sDisplay);
     }
 
     public function serviceActAsProfile ()

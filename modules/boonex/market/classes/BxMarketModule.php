@@ -110,6 +110,7 @@ class BxMarketModule extends BxBaseModTextModule
      * 
      * Get page block with product creation form or an error message if something wasn't configured correctly.
      *
+     * @param $sDisplay form display name to use
      * @return HTML string with block content to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
      * @see BxMarketModule::serviceEntityCreate
@@ -117,7 +118,7 @@ class BxMarketModule extends BxBaseModTextModule
     /** 
      * @ref bx_market-entity_create "entity_create"
      */
-    public function serviceEntityCreate ()
+    public function serviceEntityCreate ($sDisplay = false)
     {
     	$oPayments = BxDolPayments::getInstance();
     	if(!$oPayments->isActive())
@@ -127,7 +128,7 @@ class BxMarketModule extends BxBaseModTextModule
     		return MsgBox(_t('_bx_market_err_not_accept_payments', $oPayments->getDetailsUrl()));
 
     	$this->_oTemplate->addJs(array('entry.js'));
-    	return $this->_oTemplate->getJsCode('entry') . parent::serviceEntityCreate();
+    	return $this->_oTemplate->getJsCode('entry') . parent::serviceEntityCreate($sDisplay);
     }
 
     /**
