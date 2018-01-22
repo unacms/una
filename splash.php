@@ -20,9 +20,11 @@ function getPageMainCode()
     if(!$bEnabled)
     	$oTemplate->displayPageNotFound();
 
+    $oPermalink = BxDolPermalinks::getInstance();
     $oTemplate->addJs(array('skrollr/skrollr.min.js'));
     $s = $oTemplate->parseHtmlByContent(getParam('sys_site_splash_code'), array(
-    	'join_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'),
+    	'join_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=create-account'),
+    	'login_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=login'),
     	'login_form' => BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin')
     )); 
 
