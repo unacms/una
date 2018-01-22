@@ -16,8 +16,9 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
     function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
-
         $this->aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
+		if (!empty($aParams['unit_views']))
+            $this->aUnitViews = $aParams['unit_views'];
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
         $this->aGetParams = array($this->sUnitViewParamName);
