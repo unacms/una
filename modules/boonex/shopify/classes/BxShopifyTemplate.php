@@ -101,11 +101,12 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
-        $sCode = $aData[$CNF['FIELD_CODE']] . $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : ''));
+        $sCode = $aData[$CNF['FIELD_CODE']];
+		$sClass = $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : ''));
         return array_merge(parent::getUnit($aData, $aParams), array(
             'js_object' => $this->_oConfig->getJsObjectShop($iProfileId),
             'js_content' => $this->_oModule->serviceIncludeCode($iProfileId),
-        	'class' => $this->_oConfig->getHtmlIds('unit') . $sCode,
+        	'class' => $this->_oConfig->getHtmlIds('unit') . $sClass,
             'entry_code' => $sCode,
         ));
     }
