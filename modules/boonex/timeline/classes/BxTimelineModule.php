@@ -2097,7 +2097,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     protected function _prepareTextForSave($s)
     {
-        return bx_process_input($s, BX_DATA_TEXT_MULTILINE);
+        return bx_process_input($s, BX_DATA_HTML);
     }
 
     protected function _getFieldValue($sField, $iContentId)

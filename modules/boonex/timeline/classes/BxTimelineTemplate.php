@@ -78,6 +78,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'empty' => $sEmpty, 
             'content' => $sContent,
             'load_more' =>  $sLoadMore,
+            'show_more' => $this->_getShowMore($aParams),
         	'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
             	'oRequestParams' => array(
@@ -877,6 +878,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->getComments($sSystem, $iObjectId);
     }
 
+    protected function _getShowMore($aParams)
+    {
+        return $this->parseHtmlByName('show_more.html', array(
+        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'js_object' => $this->_oConfig->getJsObject('view'),
+        ));
+    }
+
     protected function _getImagePopup($aParams)
     {
         $sViewImagePopupId = $this->_oConfig->getHtmlIds('view', 'photo_popup_' . $aParams['view']);
@@ -955,27 +964,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ));
 
         $sText = isset($aContent['text']) ? $aContent['text'] : '';
-        $sTextMore = '';
-
-        if($bBrowseItem)
-        	 $sText = strip_tags($sText, '<br><br/><p>');
-        else {
-        	$sText = strip_tags($sText);
-
-        	$iMaxLength = $this->_oConfig->getCharsDisplayMax();
-        	if(strlen($sText) > $iMaxLength) {
-            	$iLength = strpos($sText, ' ', $iMaxLength);
-
-            	$sTextMore = trim(substr($sText, $iLength));
-            	$sText = trim(substr($sText, 0, $iLength));
-        	}
-
-            $sTextMore = nl2br($sTextMore);
-            $sText = nl2br($sText);
-        }
-
         $sText = $this->_prepareTextForOutput($sText, $aEvent['id']);
-        $sTextMore = $this->_prepareTextForOutput($sTextMore, $aEvent['id']);
 
         //--- Process Links ---//
         $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
@@ -1100,15 +1089,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($sText),
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'item_content' => $sText,
-                    'bx_if:show_more' => array(
-                        'condition' => !empty($sTextMore),
-                        'content' => array(
-                            'style_prefix' => $sStylePrefix,
-                            'js_object' => $sJsObject,
-                            'item_content_more' => $sTextMore
-                        )
-                    ),
+                    'item_content' => $sText
                 )
             ),
             'bx_if:show_content_raw' => array(
