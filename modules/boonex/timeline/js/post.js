@@ -263,6 +263,9 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 			oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
 			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed, function() {
 				$(this).find('a.bx-link').dolConverLinks();
+				$(this).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+					$this.onFindOverflow(oElement);
+				});
 
 				$this.initFlickity();
 			});
@@ -271,6 +274,9 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 		case 'outline':
 			this.prependMasonry(oContent, function(oItems) {
 				$(oItems).find('a.bx-link').dolConverLinks();
+				$(oItems).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+					$this.onFindOverflow(oElement);
+				});
 
 				$this.initFlickity();
 			});

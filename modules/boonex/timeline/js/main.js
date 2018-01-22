@@ -53,6 +53,8 @@ BxTimelineMain.prototype.initMasonry = function(onComplete) {
 
 	oItems.resize(function(){
 		$this.reloadMasonry();
+	}).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+		$this.onFindOverflow(oElement);
 	});
 
 	oHolder.addClass(this.sClassMasonry).masonry({
@@ -141,6 +143,10 @@ BxTimelineMain.prototype.initFlickity = function() {
 	});
 };
 
+BxTimelineMain.prototype.onFindOverflow = function(oElement) {
+	$(oElement).after($(oElement).parents('.' + this.sClassView + ':first').find('.' + this.sSP + '-content-show-more:hidden:first').clone().show());
+};
+
 BxTimelineMain.prototype.loadingInButton = function(e, bShow) {
 	if($(e).length)
 		bx_loading_btn($(e), bShow);
@@ -221,3 +227,23 @@ BxTimelineMain.prototype._getDefaultData = function(oElement) {
 		_t:oDate.getTime()
     });
 };
+
+(function($) {
+    $.fn.checkOverflowHeight = function(sClass, onFind) {
+    	if(!sClass)
+    		sClass = 'bx-overflow';
+
+        return this.each(function() {
+            var oElement = $(this);
+            if(oElement.hasClass(sClass) || oElement.css('overflow') != 'hidden')
+            	return;
+
+            if(oElement.prop('scrollHeight') <= oElement.height())
+            	return;
+
+            oElement.addClass(sClass);
+            if(typeof onFind === 'function')
+            	onFind(oElement);
+        });
+    };
+})(jQuery);

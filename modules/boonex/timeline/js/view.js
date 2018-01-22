@@ -46,6 +46,9 @@ BxTimelineView.prototype.init = function() {
 		this._oRequestParams['timeline'] = jQuery.extend({}, this._oRequestParams['general']);
 
 		var oItems = this.oViewTimeline.find('.' + this.sClassItem);
+		oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+			$this.onFindOverflow(oElement);
+		});
 
 		//--- Hide timeline Events which are outside the viewport
 		this.hideEvents(oItems, this._fOutsideOffset);
@@ -156,10 +159,12 @@ BxTimelineView.prototype.changeTimeline = function(oLink, iYear) {
 	this._getPosts(oLink);
 };
 
-BxTimelineView.prototype.showMoreContent = function(oLink) {
+BxTimelineView.prototype.showMore = function(oLink) {
 	var sView = this._getView(oLink);
+	var sClassOverflow = this.sSP + '-overflow';
 
-	$(oLink).parent('span').next('span').show().prev('span').remove();
+	$(oLink).parents('.' + this.sClassItem + ':first').find('.' + sClassOverflow).css('max-height', 'none').removeClass(sClassOverflow);
+	$(oLink).parents('.' + this.sSP + '-content-show-more:first').remove();
 
 	switch(sView) {
 		case 'timeline':
