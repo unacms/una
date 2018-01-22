@@ -123,6 +123,12 @@
     <string name="_bx_photos_page_block_title_cats"><![CDATA[Фото категории]]></string>
     <string name="_bx_photos_page_block_title_entry_info"><![CDATA[Инфо]]></string>
     <string name="_bx_photos_page_block_title_my_entries"><![CDATA[Мои фото]]></string>
+    <string name="_bx_photos_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Последние фото (Витринный просмотр)]]></string>
+    <string name="_bx_photos_page_block_title_recent_entries_view_showcase"><![CDATA[Последние фото]]></string>
+    <string name="_bx_photos_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Популярные фото (Витринный просмотр)]]></string>
+    <string name="_bx_photos_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные фото]]></string>
+    <string name="_bx_photos_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые фото (Витринный просмотр)]]></string>
+    <string name="_bx_photos_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые фото]]></string>
 
     <string name="_bx_photos_menu_set_title_view_entry"><![CDATA[Фото - Действия]]></string>
     <string name="_bx_photos_menu_title_view_entry"><![CDATA[Фото - Действия]]></string>

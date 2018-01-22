@@ -165,6 +165,8 @@
     <string name="_bx_orgs_page_block_title_joined_entries"><![CDATA[Участие в организациях]]></string>
     <string name="_bx_orgs_page_block_title_sys_entries_actions"><![CDATA[Организации - Действия]]></string>
     <string name="_bx_orgs_page_block_title_entries_actions"><![CDATA[Организации - Действия]]></string>
+    <string name="_bx_orgs_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые организации (Витринный просмотр)]]]></string>
+    <string name="_bx_orgs_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые организации]]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Организации - Подменю]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Организации - Подменю]]></string>

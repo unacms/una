@@ -14,9 +14,13 @@
  */
 class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 {
+    protected $_sUnitClassShowCase;
+    
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
+        
+        $this->_sUnitClassShowCase = 'bx-base-unit-showcase bx-base-text-unit-showcase bx-def-margin-sec-bottom';
     }
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
@@ -24,7 +28,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
     	if($sResult)
             return $sResult;
-
+        $aParams['template_name'] = $sTemplateName;
 		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
     }
 
@@ -159,6 +163,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         // generate html
         return array (
+            'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
@@ -222,6 +227,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         // get summary
         $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $sTitle)) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
         return  strmaxtextlen($sText, (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
+    }
+    
+    protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+
+        switch($sTemplateName) {
+            case 'unit_showcase.html':
+                $sResult = $this->_sUnitClassShowCase;
+                break;
+        }
+
+        return $sResult;
     }
 }
 

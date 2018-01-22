@@ -10,12 +10,11 @@
  */
 
 class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
-{
+{    
     function __construct($sMode = '', $aParams = false)
     {
+        $aParams['unit_views'] = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
         parent::__construct($sMode, $aParams);
-
-        $this->sUnitTemplate = 'unit_with_cover.html';
 
         $this->aCurrent =  array(
             'name' => 'bx_organizations',

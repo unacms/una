@@ -30,7 +30,7 @@ class BxBaseGrid extends BxDolGrid
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
 
-        $this->_aQueryReset = array('filter', 'order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
+        $this->_aQueryReset = array($this->_aOptions['filter_get'], $this->_aOptions['order_get_field'], $this->_aOptions['order_get_dir'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
     }
 
     public function performActionDisplay()
@@ -109,9 +109,9 @@ class BxBaseGrid extends BxDolGrid
         $sIdContainer = 'bx-grid-cont-' . $this->_sObject;
         $sIdTable = 'bx-grid-table-' . $this->_sObject;
 
-        $sFilter = bx_unicode_urldecode(bx_process_input(bx_get('filter')));
-        $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get('order_field')));
-        $sOrderDir = 0 === strcasecmp('desc', bx_get('order_dir')) ? 'DESC' : 'ASC';
+        $sFilter = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['filter_get'])));
+        $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
+        $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
 
         if ($this->_aOptions['paginate_get_start'])
             $iStart = (int)bx_get($this->_aOptions['paginate_get_start']);
@@ -136,11 +136,11 @@ class BxBaseGrid extends BxDolGrid
 
                 $aParamsAppend = array();
                 if ($sFilter) {
-                    $aParamsAppend['filter'] = bx_process_input(bx_get('filter'));
+                    $aParamsAppend['filter'] = bx_process_input(bx_get($this->_aOptions['filter_get']));
                 }
                 if ($sOrderField) {
-                    $aParamsAppend['order_field'] = bx_process_input(bx_get('order_field'));
-                    $aParamsAppend['order_dir'] = bx_process_input(bx_get('order_dir'));
+                    $aParamsAppend['order_field'] = bx_process_input(bx_get($this->_aOptions['order_get_field']));
+                    $aParamsAppend['order_dir'] = bx_process_input(bx_get($this->_aOptions['order_get_dir']));
                 }
                 if ($aParamsAppend)
                     $sPageUrl = bx_append_url_params($sPageUrl, $aParamsAppend);
@@ -207,8 +207,11 @@ class BxBaseGrid extends BxDolGrid
             'start' => $iStart,
             'per_page' => $iPerPage,
             'filter' => bx_js_string($sFilter, BX_ESCAPE_STR_APOS),
+            'filter_get' => bx_js_string($this->_aOptions['filter_get']),
             'order_field' => bx_js_string($sOrderField, BX_ESCAPE_STR_APOS),
             'order_dir' => bx_js_string($sOrderDir, BX_ESCAPE_STR_APOS),
+            'order_get_field' => bx_js_string($this->_aOptions['order_get_field']),
+            'order_get_dir' => bx_js_string($this->_aOptions['order_get_dir']),
             'popup_options' => $sPopupOptions,
             'query_append' => $sQueryAppend,
             'confirm_messages' => $sConfirmMessages,

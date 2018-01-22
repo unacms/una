@@ -11,24 +11,24 @@
 
 class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
-    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
-    protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
 
     function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
 
+        $this->aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html', 'showcase' => 'unit_showcase.html');
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
-
         $this->aGetParams = array($this->sUnitViewParamName);
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
             $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
-
-        if ('unit_gallery.html' == $this->sUnitTemplate)
-            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper'));
+		$this->addContainerClass ('bx-def-margin-bottom-neg');
+        if ('unit_gallery.html' == $this->sUnitTemplate){
+			$this->removeContainerClass ('bx-def-margin-bottom-neg');		
+            $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-text-unit-gallery-wrapper bx-def-margin-sec-bottom-neg'));
+		}
 		if ('unit_showcase.html' == $this->sUnitTemplate){
 			$this->bShowcaseView = true;
 		}

@@ -202,11 +202,11 @@ BxDolGrid.prototype.action = function (sAction, oData, sData, isDisableLoading, 
         if (typeof(sData) != 'undefined')
             sUrl += '&' + sData;
         if ($this._sFilter.length)
-            sUrl += '&filter=' + encodeURIComponent ($this._sFilter);
+            sUrl += '&' + $this._oOptions.filter_get + '=' + encodeURIComponent ($this._sFilter);
         if ($this._sOrderField.length)
-            sUrl += '&order_field=' + encodeURIComponent ($this._sOrderField);
+            sUrl += '&' + $this._oOptions.order_get_field + '=' + encodeURIComponent ($this._sOrderField);
         if ($this._sOrderDir.length)
-            sUrl += '&order_dir=' + encodeURIComponent ($this._sOrderDir);
+            sUrl += '&' + $this._oOptions.order_get_dir + '=' + encodeURIComponent ($this._sOrderDir);
         sUrl += '&_r=' + Math.random();
 
         if (typeof(isDisableLoading) == 'undefined' || !isDisableLoading)

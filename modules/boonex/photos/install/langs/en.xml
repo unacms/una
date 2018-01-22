@@ -123,8 +123,14 @@
 	<string name="_bx_photos_page_block_title_cats"><![CDATA[Photos Categories]]></string>
 	<string name="_bx_photos_page_block_title_entry_info"><![CDATA[Info]]></string>
 	<string name="_bx_photos_page_block_title_my_entries"><![CDATA[My Photos]]></string>
+    <string name="_bx_photos_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Photos (Showcase View)]]></string>
+    <string name="_bx_photos_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Photos]]></string>
+    <string name="_bx_photos_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Popular Photos (Showcase View)]]></string>
+    <string name="_bx_photos_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Photos]]></string>
+    <string name="_bx_photos_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Photos (Showcase View)]]></string>
+    <string name="_bx_photos_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Photos]]></string>
 
-    <string name="_bx_photos_menu_set_title_view_entry"><![CDATA[Photo Actions]]></string>
+  <string name="_bx_photos_menu_set_title_view_entry"><![CDATA[Photo Actions]]></string>
     <string name="_bx_photos_menu_title_view_entry"><![CDATA[Photo Actions]]></string>
     <string name="_bx_photos_menu_title_submenu"><![CDATA[Photos Submenu]]></string>
     <string name="_bx_photos_menu_set_title_submenu"><![CDATA[Photos Submenu]]></string>

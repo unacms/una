@@ -42,6 +42,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
 
         $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
+        $aParams['template_name'] = $sTemplateName;
         $aVars = $this->getUnit($aData, $aParams);
 
         $aFile = BxDolModule::getInstance($this->MODULE)->getContentFile($aData);

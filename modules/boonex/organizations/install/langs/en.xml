@@ -165,6 +165,8 @@
     <string name="_bx_orgs_page_block_title_joined_entries"><![CDATA[Joined Organizations]]></string>
     <string name="_bx_orgs_page_block_title_sys_entries_actions"><![CDATA[Organizations actions]]></string>
     <string name="_bx_orgs_page_block_title_entries_actions"><![CDATA[Organizations actions]]></string>
+    <string name="_bx_orgs_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Organizations (Showcase View)]]></string>
+    <string name="_bx_orgs_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Organizations]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Organizations Submenu]]></string>

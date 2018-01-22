@@ -17,11 +17,11 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_persons_redirect_aadd_custom_url', '', @iCategId, '_bx_persons_option_redirect_aadd_custom_url', 'digit', '', '', '', 4),
 ('bx_persons_num_connections_quick', '6', @iCategId, '_bx_persons_option_num_connections_quick', 'digit', '', '', '', 10),
 ('bx_persons_per_page_browse', '24', @iCategId, '_bx_persons_option_per_page_browse', 'digit', '', '', '', 11),
-('bx_persons_num_rss', '10', @iCategId, '_bx_persons_option_num_rss', 'digit', '', '', '', 13),
+('bx_persons_num_rss', '10', @iCategId, '_bx_persons_option_num_rss', 'digit', '', '', '', 12),
+('bx_persons_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_persons_searchable_fields', 'fullname,description', @iCategId, '_bx_persons_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:10:"bx_persons";s:6:"method";s:21:"get_searchable_fields";}', '', '', 20),
 ('bx_persons_public_subscriptions', '', @iCategId, '_bx_persons_option_public_subscriptions', 'checkbox', '', '', '', 30),
-('bx_persons_public_subscribed_me', '', @iCategId, '_bx_persons_option_public_subscribed_me', 'checkbox', '', '', '', 31),
-('bx_persons_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 12);
+('bx_persons_public_subscribed_me', '', @iCategId, '_bx_persons_option_public_subscribed_me', 'checkbox', '', '', '', 31);
 
 -- PAGES
 
@@ -179,8 +179,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- PAGE: service blocks
 
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('', 0, 'bx_persons', '_bx_persons_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('', 0, 'bx_persons', '_bx_persons_page_block_title_sys_featured_entries_view_showcase', '_bx_persons_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:1;s:13:\"ajax_paginate\";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1);
 
 -- MENU
 

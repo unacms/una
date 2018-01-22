@@ -15,7 +15,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
     function __construct($sMode = '', $aParams = array())
     {
-        $this->aUnitViews = array('gallery' => 'unit_media.html');
+        $this->aUnitViews = array('gallery' => 'unit_media.html', 'showcase' => 'unit_showcase.html');
 
         $this->sUnitTemplateLiveSearch = 'unit_media_live_search.html';
     

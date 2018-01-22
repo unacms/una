@@ -28,7 +28,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-        if ('unit_media.html' == $sTemplateName || 'unit_media_live_search.html' == $sTemplateName)
+        if ('unit_media.html' == $sTemplateName || 'unit_media_live_search.html' == $sTemplateName || 'unit_showcase.html' == $sTemplateName)
             return $this->unitMedia($aData, $isCheckPrivateContent, $sTemplateName, $aParams);
 
         $oModule = BxDolModule::getInstance($this->MODULE);
@@ -130,6 +130,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $aVarsTmp = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content'] : $aVars['bx_if:video']['content'];
 
         $aVars = array_merge($aVars, array (
+            'class' => $this->_getUnitClass($aData, $sTemplateName),
             'title' => $this->getMediaTitle($aData),
             'module_name' => _t($CNF['T']['txt_media_single']),
             'content_url' => $aVarsTmp['url'],

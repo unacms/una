@@ -117,6 +117,12 @@
 	<string name="_bx_posts_page_block_title_cats"><![CDATA[Posts Categories]]></string>
 	<string name="_bx_posts_page_block_title_entry_info"><![CDATA[Info]]></string>
 	<string name="_bx_posts_page_block_title_my_entries"><![CDATA[My Posts]]></string>
+    <string name="_bx_posts_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Posts (Showcase View)]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Posts]]></string>
+    <string name="_bx_posts_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Popular Posts (Showcase View)]]></string>
+    <string name="_bx_posts_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Posts]]></string>
+    <string name="_bx_posts_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Posts (Showcase View)]]></string>
+    <string name="_bx_posts_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Posts]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Post Actions]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string>
@@ -217,8 +223,4 @@
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[a post]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[comment to post]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[vote to post]]></string>
-	
-    <string name="_bx_posts_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Posts (Showcase View)]]></string>
-    <string name="_bx_posts_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Posts (Showcase View)]]></string>
-    <string name="_bx_posts_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Posts (Showcase View)]]></string>
 </resources>

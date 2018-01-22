@@ -132,6 +132,12 @@
     <string name="_bx_shopify_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_shopify_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
     <string name="_bx_shopify_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
+    <string name="_bx_shopify_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Последние товары (Витринный просмотр)]]></string>
+    <string name="_bx_shopify_page_block_title_recent_entries_view_showcase"><![CDATA[Последние товары]]></string>
+    <string name="_bx_shopify_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Популярные товары (Витринный просмотр)]]></string>
+    <string name="_bx_shopify_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные товары]]></string>
+    <string name="_bx_shopify_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые товары (Витринный просмотр)]]></string>
+    <string name="_bx_shopify_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые товары]]></string>
 
     <string name="_bx_shopify_menu_set_title_view_entry"><![CDATA[Товар - Действия]]></string>
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Товар - Действия]]></string>

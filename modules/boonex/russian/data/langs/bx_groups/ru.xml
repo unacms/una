@@ -128,6 +128,8 @@
     <string name="_bx_groups_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_groups_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
     <string name="_bx_groups_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
+    <string name="_bx_groups_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые группы]]></string>
+    <string name="_bx_groups_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые группы (Витринный просмотр)]]></string>
 
     <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>
