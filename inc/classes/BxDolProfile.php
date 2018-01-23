@@ -47,7 +47,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     /**
      * Get singleton instance of Account Profile by account id
      */
-    public static function getInstanceAccountProfile($iAccountId = false)
+    public static function getInstanceAccountProfile($iAccountId = false, $bClearCache = false)
     {
         if (!$iAccountId)
             $iAccountId = getLoggedId();
@@ -55,7 +55,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $aProfile = $oQuery->getProfileByContentTypeAccount($iAccountId, 'system', $iAccountId);
         if (!$aProfile)
             return false;
-        return self::getInstance($aProfile['id']);
+        return self::getInstance($aProfile['id'], $bClearCache);
     }
 
     /**

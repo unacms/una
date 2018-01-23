@@ -139,17 +139,7 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
     {
         $aResultKeys = $this->aDefaultKeys;
 
-        if ($iAccountId) {
-            $oAccount = BxDolAccount::getInstance($iAccountId);
-            if ($oAccount && ($aAccountInfo = $oAccount->getInfo())) {
-                $aResultKeys = array_merge($aResultKeys, array(
-                    'account_id' => $aAccountInfo['id'],
-                    'account_name' => $oAccount->getDisplayName(),
-                    'account_email' => $aAccountInfo['email'],
-                ));
-            }
-        }
-
+        $oProfile = null;
         if ($iProfileId) {
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if ($oProfile && ($aProfileInfo = $oProfile->getInfo())) {
@@ -163,6 +153,17 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
                     'profile_status' => $aProfileInfo['status'],
                     'profile_type' => $aProfileInfo['type'],
                     'profile_content_id' => $aProfileInfo['content_id'],
+                ));
+            }
+        }
+        
+        if ($iAccountId || $oProfile) {
+            $oAccount = BxDolAccount::getInstance($iAccountId ? $iAccountId : $oProfile->getAccountId());
+            if ($oAccount && ($aAccountInfo = $oAccount->getInfo())) {
+                $aResultKeys = array_merge($aResultKeys, array(
+                    'account_id' => $aAccountInfo['id'],
+                    'account_name' => $oAccount->getDisplayName(),
+                    'account_email' => $aAccountInfo['email'],
                 ));
             }
         }
