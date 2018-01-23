@@ -358,12 +358,12 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     }
 
     // parse template
-    if ($aPlus || $iRecipientID) {
+    if ($aPlus || $iRecipientID || $oAccount) {
         if(!is_array($aPlus))
             $aPlus = array();
         $oEmailTemplates = BxDolEmailTemplates::getInstance();
-        $sMailSubject = $oEmailTemplates->parseContent($sMailSubject, $aPlus, 0, $iRecipientID);
-        $sMailBody = $oEmailTemplates->parseContent($sMailBody, $aPlus, 0, $iRecipientID);
+        $sMailSubject = $oEmailTemplates->parseContent($sMailSubject, $aPlus, $iRecipientID ? 0 : $oAccount->id(), $iRecipientID);
+        $sMailBody = $oEmailTemplates->parseContent($sMailBody, $aPlus, $iRecipientID ? 0 : $oAccount->id(), $iRecipientID);
     }
 
     // email message headers
