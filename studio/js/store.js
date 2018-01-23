@@ -311,20 +311,25 @@ BxDolStudioStore.prototype.update = function(sValue, oInput) {
 };
 
 BxDolStudioStore.prototype.remove = function(sValue, oInput) {
-	var onSuccess = function(oData) {
-		switch(parseInt(oData.code)) {
-			case 0:
-				$(oInput).parents('.bx-std-product:first').hide();
-				break;
-			case 2:
-				$(oInput).parent('.bx-std-pc-buttons:first').hide(0, function() {
-					$(this).siblings('.bx-std-pcb-queued:hidden').show(0);
-				});
-				break;
-		}
-	};
+	var $this = this;
 
-    return this.perform('delete', sValue, onSuccess, oInput);
+	bx_confirm('', function() {
+		$this.perform('delete', sValue, function(oData) {
+			switch(parseInt(oData.code)) {
+				case 0:
+					$(oInput).parents('.bx-std-product:first').hide();
+					break;
+
+				case 2:
+					$(oInput).parent('.bx-std-pc-buttons:first').hide(0, function() {
+						$(this).siblings('.bx-std-pcb-queued:hidden').show(0);
+					});
+					break;
+			}
+	    }, oInput);
+	});
+
+    return false; 
 };
 
 BxDolStudioStore.prototype.perform = function(sType, sValue, onSuccess, oInput) {
