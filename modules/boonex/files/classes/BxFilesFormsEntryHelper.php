@@ -19,9 +19,12 @@ class BxFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         parent::__construct($oModule);
     }
 
-    public function getObjectFormAdd ()
+    public function getObjectFormAdd ($sDisplay = false)
     {
-        return BxDolForm::getObjectInstance('bx_files_upload', 'bx_files_entry_upload', $this->_oModule->_oTemplate);
+        if (false === $sDisplay)
+            $sDisplay = 'bx_files_entry_upload';
+
+        return BxDolForm::getObjectInstance('bx_files_upload', $sDisplay, $this->_oModule->_oTemplate);
     }
     
     public function addDataForm ($sDisplay = false, $sCheckFunction = false)
