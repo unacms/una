@@ -39,6 +39,10 @@ function processJsonData(oData) {
 	        eval(oData.eval);
 	};
 
+	if(oData && oData.object != undefined && oData.grid != undefined)
+		if(glGrids[oData.object] != undefined)
+			glGrids[oData.object].processJson(oData);
+
 	if(oData && oData.message != undefined && oData.message.length != 0)
 		bx_alert(oData.message, function() {
 			fContinue(oData);

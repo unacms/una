@@ -25,9 +25,9 @@ class BxPaymentMenuSbsActions extends BxTemplMenu
         $iPendingId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(empty($iPendingId))
             return;
-            
+
         $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
-        if(empty($aPending) && !is_array($aPending))
+        if(empty($aPending) || !is_array($aPending))
             return;
 
         $sMethod = 'getMenuItemsActionsRecurring';
@@ -40,10 +40,15 @@ class BxPaymentMenuSbsActions extends BxTemplMenu
             'order' => $aPending['order']
         )), $this->getMenuItemsRaw());
 
-        $this->addMarkers(array(
+        $aMarkers = array(
 			'js_object' => $this->_oModule->_oConfig->getJsObject('subscription'),
             'id' => $iPendingId
-		));
+		);
+
+		if(bx_get('grid') !== false)
+		    $aMarkers['grid'] = bx_process_input(bx_get('grid'));
+
+        $this->addMarkers($aMarkers);
     }
 
     public function getCode()

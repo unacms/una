@@ -81,8 +81,10 @@
 
     <string name="_bx_payment_menu_title_sbs_actions"><![CDATA[Subscription Actions]]></string>
     <string name="_bx_payment_menu_set_title_sbs_actions"><![CDATA[Subscription Actions]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_cancel"><![CDATA[Request Cancellation]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Request Cancellation]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_request_cancelation"><![CDATA[Request Cancellation]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_request_cancelation"><![CDATA[Request Cancellation]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_cancel"><![CDATA[Cancel Subscription]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Cancel Subscription]]></string>
 
 	<!-- GRIDS -->
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Client]]></string>
@@ -176,6 +178,7 @@
 	<!-- ACL -->
 	<string name="_bx_payment_acl_action_purchase"><![CDATA[Purchase]]></string>
 	<string name="_bx_payment_acl_action_sell"><![CDATA[Sell]]></string>
+	<string name="_bx_payment_acl_action_manage_any_purchase"><![CDATA[Manage Any Purchase]]></string>
 
 	<!-- EMAIL TEMPLATES -->
 	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Paid and need to join.]]></string>
@@ -199,6 +202,7 @@
 	<string name="_bx_payment_msg_redirecting"><![CDATA[Redirecting... Please wait.]]></string>
 	<string name="_bx_payment_msg_item_added"><![CDATA[The item was successfully added to your shopping cart.]]></string>
 	<string name="_bx_payment_msg_item_deleted"><![CDATA[The item was successfully deleted from your shopping cart.]]></string>
+	<string name="_bx_payment_msg_successfully_performed"><![CDATA[The action was successfully performed.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Free item was successfully processed]]></string>
 	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Cancellation request was sent. Please wait.]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Database access error.]]></string>
@@ -439,7 +443,7 @@
 	<string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Details]]></string>
 	<string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Change Details]]></string>
 	<string name="_bx_payment_strp_menu_item_title_billing"><![CDATA[Billing Info]]></string>
-	<string name="_bx_payment_strp_menu_item_title_billing_change"><![CDATA[Change Billing Info]]></string>	
+	<string name="_bx_payment_strp_menu_item_title_billing_change"><![CDATA[Change Billing Info]]></string>
 	<string name="_bx_payment_strp_txt_plan"><![CDATA[Plan]]></string>
 	<string name="_bx_payment_strp_txt_cost"><![CDATA[Cost]]></string>
 	<string name="_bx_payment_strp_txt_cost_mask"><![CDATA[{0} {1} / {2}]]></string>

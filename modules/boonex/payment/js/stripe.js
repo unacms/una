@@ -77,7 +77,7 @@ BxPaymentProviderStripe.prototype.subscribe = function(oLink) {
 
 	this._rHandler.open({
 		token: function(token) {
-			$this.loadingInButton(oLink, true);
+			$this.loadingInPopup(oLink, true);
 
 		    var oParams = {
 		    	seller_id: $this._iSellerId,
@@ -95,7 +95,7 @@ BxPaymentProviderStripe.prototype.subscribe = function(oLink) {
 		        $this._sActionsUrl + 'subscribe_json/',
 		        oParams,
 		        function(oData){
-		        	$this.loadingInButton(oLink, true);
+		        	$this.loadingInPopup(oLink, true);
 
 		        	processJsonData(oData);
 		        },

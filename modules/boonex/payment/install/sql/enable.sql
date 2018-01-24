@@ -79,7 +79,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_payment_menu_sbs_actions', 'bx_payment', '_bx_payment_menu_set_title_sbs_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_payment_menu_sbs_actions', 'bx_payment', 'sbs-cancel', '_bx_payment_menu_item_title_system_sbs_cancel', '_bx_payment_menu_item_title_sbs_cancel', 'javascript:void(0)', '{js_object}.requestCancelation(this, {id})', '_self', '', '', '', 2147483647, 1, 0, 1, 1);
+('bx_payment_menu_sbs_actions', 'bx_payment', 'sbs-request-cancelation', '_bx_payment_menu_item_title_system_sbs_request_cancelation', '_bx_payment_menu_item_title_sbs_request_cancelation', 'javascript:void(0)', '{js_object}.requestCancelation(this, {id})', '_self', '', '', '', 2147483647, 1, 0, 1, 1),
+('bx_payment_menu_sbs_actions', 'bx_payment', 'sbs-cancel', '_bx_payment_menu_item_title_system_sbs_cancel', '_bx_payment_menu_item_title_sbs_cancel', 'javascript:void(0)', '{js_object}.cancel(this, {id}, \'{grid}\')', '_self', '', '', '', 2147483647, 0, 0, 1, 2);
 
 -- MENU: orders submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -117,6 +118,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 (@sName, 'sell', NULL, '_bx_payment_acl_action_sell', '', 1, 3);
 SET @iIdActionSell = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+(@sName, 'manage any purchase', NULL, '_bx_payment_acl_action_manage_any_purchase', '', 1, 3);
+SET @iIdActionManageAnyPurchase = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -139,7 +144,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iStandard, @iIdActionSell),
 (@iModerator, @iIdActionSell),
 (@iAdministrator, @iIdActionSell),
-(@iPremium, @iIdActionSell);
+(@iPremium, @iIdActionSell),
+
+-- manage any purchase
+(@iModerator, @iIdActionManageAnyPurchase),
+(@iAdministrator, @iIdActionManageAnyPurchase);
 
 
 -- EMAIL TEMPLATES

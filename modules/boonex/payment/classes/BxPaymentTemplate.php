@@ -402,22 +402,28 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
     protected function _displaySubscriptionData($sType, $iId)
     {
+        $aResult = array('code' => 1, 'message' => _t('_bx_payment_err_cannot_perform'));
+
         $aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => $iId));
-        if(empty($aPending) && !is_array($aPending))
-            return array();
+        if(empty($aPending) || !is_array($aPending))
+            return $aResult;
 
         $aSubscription = $this->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iId));
-        if(empty($aSubscription) && !is_array($aSubscription))
-            return array();
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return $aResult;
 
+        $mixedResult = $this->getModule()->isAllowedManage($aPending);
+        if($mixedResult !== true)
+            return array('code' => 2, 'message' => $mixedResult);
+            
         $sMethod = bx_gen_method_name($sType) . 'Recurring';
         $oProvider = $this->getModule()->getObjectProvider($aPending['provider'], $aPending['seller_id']);
         if($oProvider === false || !$oProvider->isActive() || !method_exists($oProvider, $sMethod))
-        	return array();
+        	return $aResult;
 
         $mixedContent = $oProvider->$sMethod($iId, $aSubscription['customer_id'], $aSubscription['subscription_id']);
         if(empty($mixedContent))
-            return array();
+            return $aResult;
         else if(is_array($mixedContent))
             return $mixedContent;
 

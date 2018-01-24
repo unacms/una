@@ -44,19 +44,30 @@ BxPaymentSubscriptions.prototype.requestCancelation = function(oLink, iId) {
 	this._performRequest(oLink, iId, 'subscription_cancelation');
 };
 
-BxPaymentSubscriptions.prototype._performRequest = function(oLink, iId, sUri) {
+BxPaymentSubscriptions.prototype.cancel = function(oLink, iId, sGrid) {
+	var $this = this;
+
+	var oParams = {};
+	if(sGrid != undefined)
+		oParams.grid = sGrid;
+
+	bx_confirm('', function() {
+		$this._performRequest(oLink, iId, 'subscription_cancel', oParams);
+	});
+};
+
+BxPaymentSubscriptions.prototype._performRequest = function(oLink, iId, sUri, oParams) {
 	var $this = this;
     var oDate = new Date();
 
-    this.loadingInButton(oLink, true);
+    this.loadingInPopup(oLink, true);
 
     $.post(
-        this._sActionsUrl + sUri + '/' + iId + '/',
-        {
-            _t:oDate.getTime()
-        },
+        this._sActionsUrl + sUri + '/' + iId,
+        $.extend({}, {_t:oDate.getTime()}, oParams),
         function(oData){
-        	$this.loadingInButton(oLink, false);
+        	$this.loadingInPopup(oLink, false);
+
         	$(".bx-popup-applied:visible").dolPopupHide();
 
         	processJsonData(oData);

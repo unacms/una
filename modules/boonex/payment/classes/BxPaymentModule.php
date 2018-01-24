@@ -430,16 +430,20 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $aResult = array('code' => 1, 'message' => _t('_bx_payment_err_cannot_perform'));
 
         $aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => $iId));
-        if(empty($aPending) && !is_array($aPending))
+        if(empty($aPending) || !is_array($aPending))
             return echoJson($aResult);
 
         $aSubscription = $this->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iId));
-        if(empty($aSubscription) && !is_array($aSubscription))
+        if(empty($aSubscription) || !is_array($aSubscription))
             return echoJson($aResult);
 
         $oRecipient = BxDolProfile::getInstance((int)$aPending['seller_id']);
         if(!$oRecipient)
             return echoJson($aResult);
+
+        $mixedResult = $this->isAllowedManage($aPending);
+        if($mixedResult !== true)
+            return echoJson(array('code' => 2, 'message' => $mixedResult));
 
 		$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oConfig->getPrefix('general') . 'cancelation_request', array(
 			'sibscription_id' => $aSubscription['subscription_id'],
@@ -461,6 +465,33 @@ class BxPaymentModule extends BxBaseModPaymentModule
         echoJson(array('code' => 0, 'message' => _t('_bx_payment_msg_cancelation_request_sent')));
     }
 
+    public function actionSubscriptionCancel($iId, $mixedGridObject = false)
+    {
+        $aResult = array('code' => 1, 'message' => _t('_bx_payment_err_cannot_perform'));
+
+        $aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => $iId));
+        if(empty($aPending) || !is_array($aPending))
+            return echoJson($aResult);
+
+        $mixedResult = $this->isAllowedManage($aPending);
+        if($mixedResult !== true)
+            return echoJson(array('code' => 2, 'message' => $mixedResult));
+
+        if(!$this->getObjectSubscriptions()->cancel($iId))
+            return echoJson($aResult);
+
+        if(empty($mixedGridObject) && bx_get('grid') !== false)
+            $mixedGridObject = bx_process_input(bx_get('grid'));
+
+        if(!empty($mixedGridObject) && $aPending['client_id'] == $this->getProfileId()) {
+            $oGrid = BxDolGrid::getObjectInstance($mixedGridObject, $this->_oTemplate);
+            $oGrid->addQueryParam('client_id', $aPending['client_id']);
+
+            return echoJson(array('object' => $mixedGridObject, 'grid' => $oGrid->getCode(false), 'blink' => array($iId)));
+        }
+        else
+            return echoJson(array('code' => 0, 'message' => _t('_bx_payment_msg_successfully_performed')));
+    }
 
     /**
      * Payment Processing Methods
@@ -718,6 +749,20 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $aCheckResult = checkActionModule($iUserId, 'sell', $this->getName(), $bPerform);
         if((int)$aItemInfo['author_id'] == $iUserId && $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
+			return true;
+
+        return $aCheckResult[CHECK_ACTION_MESSAGE];
+    }
+
+    public function isAllowedManage($aPending, $bPerform = false)
+    {
+        $iUserId = (int)$this->getProfileId();
+
+        if($iUserId == $aPending['client_id'] || $iUserId == $aPending['seller_id'] || isAdmin())
+            return true;
+
+        $aCheckResult = checkActionModule($iUserId, 'manage any purchase', $this->getName(), $bPerform);
+        if($aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
 			return true;
 
         return $aCheckResult[CHECK_ACTION_MESSAGE];

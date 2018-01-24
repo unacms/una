@@ -81,8 +81,10 @@
 
     <string name="_bx_payment_menu_title_sbs_actions"><![CDATA[Действия с подпиской]]></string>
     <string name="_bx_payment_menu_set_title_sbs_actions"><![CDATA[Действия с подпиской]]></string>
-    <string name="_bx_payment_menu_item_title_system_sbs_cancel"><![CDATA[Запросить отмену]]></string>
-    <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Запросить отмену]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_request_cancelation"><![CDATA[Запросить отмену]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_request_cancelation"><![CDATA[Запросить отмену]]></string>
+    <string name="_bx_payment_menu_item_title_system_sbs_cancel"><![CDATA[Отменить подписку]]></string>
+    <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Отменить подписку]]></string>
 
 	<!-- GRIDS -->
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Покупатель]]></string>
@@ -176,6 +178,7 @@
 	<!-- ACL -->
 	<string name="_bx_payment_acl_action_purchase"><![CDATA[Покупать]]></string>
 	<string name="_bx_payment_acl_action_sell"><![CDATA[Продавать]]></string>
+	<string name="_bx_payment_acl_action_manage_any_purchase"><![CDATA[Управлять любыми покупками]]></string>
 
 	<!-- EMAIL TEMPLATES -->
 	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Заплатил - присоединяйся.]]></string>
@@ -199,6 +202,7 @@
 	<string name="_bx_payment_msg_redirecting"><![CDATA[Пересылаю... Пожалуйста подождите.]]></string>
 	<string name="_bx_payment_msg_item_added"><![CDATA[Товар был успешно добавлен в вашу корзину.]]></string>
 	<string name="_bx_payment_msg_item_deleted"><![CDATA[Товар был успешно удален из вашей корзины.]]></string>
+	<string name="_bx_payment_msg_successfully_performed"><![CDATA[Действие было успешно выполнено.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Бесплатный товар был успешно обработан.]]></string>
 	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Запрос на отмену был отправлен. Пожалуйста, ждите.]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Ошибка обращения к базе данных.]]></string>

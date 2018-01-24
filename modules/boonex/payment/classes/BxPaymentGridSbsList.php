@@ -22,7 +22,7 @@ class BxPaymentGridSbsList extends BxPaymentGridSbsAdministration
     {
     	unset($a['attr']['bx_grid_action_single']);
     	$a['attr'] = array_merge($a['attr'], array(
-    		"onclick" => "bx_menu_popup('" . $this->_oModule->_oConfig->getObject('menu_sbs_actions') . "', this, {id: 'bx-payment-subscription-" . $aRow['id'] . "'}, {id: " . $aRow['id'] . "});"
+    		"onclick" => "bx_menu_popup('" . $this->_oModule->_oConfig->getObject('menu_sbs_actions') . "', this, {id: 'bx-payment-subscription-" . $aRow['id'] . "'}, {id: " . $aRow['id'] . ", grid: '" . $this->_sObject . "'});"
     	));
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
