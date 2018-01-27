@@ -74,9 +74,9 @@ class BxDolContentInfoCmts extends BxDolContentInfo
         return $this->_oCmts->serviceGetSearchableFieldsExtended();
     }
 
-    public function getSearchResultExtended ($aParams)
+    public function getSearchResultExtended ($aParams, $iStart = 0, $iPerPage = 0)
     {
-        return $this->_oCmts->serviceGetSearchResultExtended($aParams);
+        return $this->_oCmts->serviceGetSearchResultExtended($aParams, $iStart, $iPerPage);
     }
 }
 

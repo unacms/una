@@ -131,12 +131,12 @@ class BxAlbumsContentInfoMedia extends BxDolContentInfo
         );
     }
 
-    public function getSearchResultExtended ($aParams)
+    public function getSearchResultExtended ($aParams, $iStart = 0, $iPerPage = 0)
     {
         if(empty($aParams) || !is_array($aParams))
             return array();
 
-        return $this->_oModule->_oDb->getMediaBy(array('type' => 'search_ids', 'search_params' => $aParams));
+        return $this->_oModule->_oDb->getMediaBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
     }
 }
 

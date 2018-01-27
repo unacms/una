@@ -62,6 +62,11 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
                 $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`";
 
+                if (!empty($aParams['start']) && !empty($aParams['per_page']))
+                    $sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);
+                elseif (!empty($aParams['per_page']))
+                    $sLimitClause = $this->prepareAsString("?", $aParams['per_page']);
+        
                 $sWhereConditions = "1";
                 foreach($aParams['search_params'] as $sSearchParam => $aSearchParam) {
                     $sSearchValue = "";

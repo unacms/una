@@ -44,12 +44,32 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         return $oForm->getCode();
     }
 
-    public function getResults()
+    /**
+     * Get search results from search form or from custom condition
+     *
+     * @param $aCondition custom condition to pass instead of form submission, 
+     *        conditions are key&value pair, where 'key' is form input name and 
+     *        'value' is the term to search for
+     * @param $sUnitTemplate custom unit templates to use
+     * @param $iStart position of first record to display 
+     * @param $iPerPage number of items per page
+     * @return HTML string with search results
+     */ 
+    public function getResults($aCondition = array(), $sUnitTemplate = '', $iStart = 0, $iPerPage = 0)
     {
         if(!$this->isEnabled())
             return '';
 
         $oForm = $this->prepareForm();
+        if ($aCondition) {
+            $mixedSubmitName = $oForm->aParams['db']['submit_name'];
+            if (is_array($mixedSubmitName))
+                $mixedSubmitName = array_pop($mixedSubmitName);
+            $aCondition[$mixedSubmitName] = 1;
+            $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+            $oForm->aParams['csrf']['disable'] = true;
+        }
+        $oForm->initChecker(array(), $aCondition);
         if(!$oForm->isSubmittedAndValid()) 
             return '';
 
@@ -73,17 +93,22 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         if(empty($aParams) || !is_array($aParams))
             return '';
 
+        if (!$iPerPage) {
+            bx_import('BxDolSearch');
+            $iPerPage = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT;
+        }
+
         $aResults = false;
         bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => $aParams, 'search_results' => &$aResults));
     	if($aResults === false)
-    	    $aResults = $oContentInfo->getSearchResultExtended($aParams);
+    	    $aResults = $oContentInfo->getSearchResultExtended($aParams, $iStart, $iPerPage);
 
     	if(empty($aResults) || !is_array($aResults))
     	    return '';
 
     	$sResults = '';
     	foreach($aResults as $iId)
-    	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId);   	
+    	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate);   	
 
         return $sResults;
     }

@@ -42,7 +42,8 @@ class BxBaseSearchExtendedServices extends BxDol
 
         $bShowEmpty = isset($aParams['show_empty']) && (bool)$aParams['show_empty'];
 
-        $sResults = $oSearch->getResults();
+        $a = isset($aParams['cond']) && $aParams['cond'] ? $aParams['cond'] : array();
+        $sResults = $oSearch->getResults($a, !empty($aParams['template']) ? $aParams['template'] : '', !empty($aParams['start']) ? $aParams['start'] : 0, !empty($aParams['per_page']) ? $aParams['per_page'] : 0);
 
         return !empty($sResults) ? $sResults : ($bShowEmpty ? MsgBox(_t('_Empty')) : ''); 
     }
