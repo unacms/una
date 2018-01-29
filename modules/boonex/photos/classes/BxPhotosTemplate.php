@@ -152,11 +152,14 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        $sMode = $aParams['context'];
-        unset($aParams['context']);
+        $sMode = '';
+        if(isset($aParams['context'])) {
+            $sMode = $aParams['context'];
+            unset($aParams['context']);
+        }
 
         $aResult = parent::getUnit($aData, $aParams);
-        $aResult['bx_if:thumb']['content']['content_onclick'] = $this->_oConfig->getJsObject('main') . ".viewEntry(" . $aData[$CNF['FIELD_ID']] . ", '" . $sMode . "', " . bx_html_attribute(json_encode($aParams)) . "); return false;";
+        $aResult['bx_if:thumb']['content']['content_onclick'] = !empty($sMode) ? $this->_oConfig->getJsObject('main') . ".viewEntry(" . $aData[$CNF['FIELD_ID']] . ", '" . $sMode . "', " . bx_html_attribute(json_encode($aParams)) . "); return false;" : "";
 
         return $aResult;
     }
