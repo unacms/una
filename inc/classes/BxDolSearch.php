@@ -39,10 +39,14 @@ class BxDolSearch extends BxDol
 {
     protected $aClasses = array(); ///< array of all search classes
     protected $aChoice  = array(); ///< array of current search classes which were choosen in search area
+    protected $_bRawProcessing = false; ///< display search results without design box and paginate
 
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
     protected $_sCategoryObject = '';
+    protected $_aCustomSearchCondition = array();
+    protected $_aCustomCurrentCondition = array();
+    protected $_sUnitTemplate = '';
 
     /**
      * Constructor
@@ -101,7 +105,11 @@ class BxDolSearch extends BxDol
             $oEx->setCategoryObject($this->_sCategoryObject);
             $oEx->setCenterContentUnitSelector(false);
             $oEx->setSingleSearch($bSingle);
-            $sCode .= $oEx->processing();
+            $oEx->setCustomSearchCondition($this->_aCustomSearchCondition);
+            $oEx->aCurrent = array_merge($oEx->aCurrent, $this->_aCustomCurrentCondition);
+            if ($this->_sUnitTemplate)
+                $oEx->setUnitTemplate($this->_sUnitTemplate);
+            $sCode .= $this->_bRawProcessing ? $oEx->processingRaw() : $oEx->processing();
         }
 
         return $sCode;
@@ -137,6 +145,44 @@ class BxDolSearch extends BxDol
     public function setCategoryObject($s)
     {
         $this->_sCategoryObject = $s;
+    }
+
+    /**
+     * Set custom search condition to use istead of GET/POST variables
+     * @param $a array of params, such as 'keyword', 'state', 'city'
+     * @return nothing
+     */
+    public function setCustomSearchCondition($a)
+    {
+        $this->_aCustomSearchCondition = $a;
+    }
+
+    /**
+     * Set custom data for aCurrent array
+     * @param $a array of params
+     * @return nothing
+     */
+    public function setCustomCurrentCondition($a)
+    {
+        $this->_aCustomCurrentCondition = $a;
+    }
+
+    /**
+     * Set custom unit template
+     * @param $s template name
+     * @return nothing
+     */
+    public function setUnitTemplate($s)
+    {
+        $this->_sUnitTemplate = $s;
+    }
+    
+    /**
+     * Display search results without design box and paginate
+     */ 
+    public function setRawProcessing($b)
+    {
+        $this->_bRawProcessing = $b;
     }
 }
 
@@ -263,6 +309,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
     protected $_sCategoryObject = '';
+    protected $_aCustomSearchCondition = array();
 
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
 
@@ -338,6 +385,11 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->_sCategoryObject = $s;
     }
 
+    public function setCustomSearchCondition($a)
+    {
+        $this->_aCustomSearchCondition = $a;
+    }
+    
     /**
      * Display empty message if there is no content, custom empty message can be used.
      * @param $b - boolan value to enable or disable 'empty' message
@@ -359,6 +411,16 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->bProcessPrivateContent = $b;
     }
 
+    /**
+     * Get search results without design box and paginate
+     * @return html code
+     */
+    function processingRaw ()
+    {
+        $sCode = $this->displayResultBlock();
+        return $this->aCurrent['paginate']['num'] > 0 ? $sCode : '';
+    }
+    
     /**
      * Get html box of search results (usually used in grlobal search)
      * @return html code
@@ -617,7 +679,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     function setConditionParams()
     {
         // keyword
-        $sKeyword = bx_process_input(bx_get('keyword'));
+        $sKeyword = bx_process_input(isset($this->_aCustomSearchCondition['keyword']) ? $this->_aCustomSearchCondition['keyword'] : bx_get('keyword'));
         if ($sKeyword !== false)
             $this->aCurrent['restriction']['keyword'] = array(
                 'value' => $sKeyword,
@@ -646,10 +708,10 @@ class BxDolSearchResult implements iBxDolReplaceable
                         $o->locationsSetSearchCondition($this, $sKeyword);
                         break;
                     case 'location_country_state':
-                        $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(bx_get('state')));
+                        $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(isset($this->_aCustomSearchCondition['state']) ? $this->_aCustomSearchCondition['state'] : bx_get('state')));
                         break;
                     case 'location_country_city':
-                        $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(bx_get('state')), bx_process_input(bx_get('city')));
+                        $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(isset($this->_aCustomSearchCondition['state']) ? $this->_aCustomSearchCondition['state'] : bx_get('state')), bx_process_input(isset($this->_aCustomSearchCondition['city']) ? $this->_aCustomSearchCondition['city'] : bx_get('city')));
                         break;
                     case 'mention':
                         $oCmts = !empty($this->sModuleObjectComments) ? BxDolCmts::getObjectInstance($this->sModuleObjectComments, 0, false) : false;

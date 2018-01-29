@@ -97,6 +97,11 @@ class BxBaseSearchResult extends BxDolSearchResult
         return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bLiveSearch ? $this->sUnitTemplateLiveSearch : $this->sUnitTemplate, $this->aUnitParams);
     }
 
+    function setUnitTemplate ($s)
+    {
+        $this->sUnitTemplate = $s;
+    }
+
     function getDesignBoxMenu ()
     {
         return array();

@@ -2121,6 +2121,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sm_friends"><![CDATA[{0} friends]]></string>
     <string name="_sys_menu_item_title_sm_members"><![CDATA[{0} members]]></string>
     <string name="_sys_menu_item_title_sm_subscribers"><![CDATA[{0} followers]]></string>
+    <string name="_sys_menu_item_title_sm_country"><![CDATA[Country]]></string>
+    <string name="_sys_menu_item_title_sm_country_city"><![CDATA[Country and City]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Privacy]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Language]]></string>
@@ -2175,6 +2177,8 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Members]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Followers]]></string>
     <string name="_sys_menu_item_title_system_sm_unsubscribe"><![CDATA[Unfollow]]></string>
+    <string name="_sys_menu_item_title_system_sm_country"><![CDATA[Country]]></string>
+    <string name="_sys_menu_item_title_system_sm_country_city"><![CDATA[Country and City]]></string>
 	<string name="_sys_menu_set_title_account_dashboard"><![CDATA[Account Dashboard]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>

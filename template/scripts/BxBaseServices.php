@@ -103,6 +103,39 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aRet;
     }
 
+    public function serviceKeywordSearch ($sSection, $aCondition, $sTemplate = '', $iStart = 0, $iPerPage = 0, $bLiveSearch = 0)
+    {
+        if (!$sSection || !isset($aCondition['keyword']))
+            return '';
+
+        $sClass = 'BxTemplSearch';
+
+        $sElsName = 'bx_elasticsearch';
+        $sElsMethod = 'is_configured';
+        if(BxDolRequest::serviceExists($sElsName, $sElsMethod) && BxDolService::call($sElsName, $sElsMethod)) {
+             $oModule = BxDolModule::getInstance($sElsName);
+
+             bx_import('Search', $oModule->_aModule);
+             $sClass = 'BxElsSearch';
+        }
+
+        $oSearch = new $sClass(array($sSection));
+        $oSearch->setLiveSearch($bLiveSearch);
+        $oSearch->setMetaType(isset($aCondition['meta_type']) ? $aCondition['meta_type'] : '');
+        $oSearch->setCategoryObject(isset($aCondition['cat']) ? $aCondition['cat'] : '');
+        $oSearch->setCustomSearchCondition($aCondition);
+        $oSearch->setRawProcessing(true);
+        $oSearch->setCustomCurrentCondition(array(
+            'paginate' => array (
+                'start' => $iStart,
+                'perPage' => $iPerPage ? $iPerPage : BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT,
+            )));
+        if ($sTemplate)
+            $oSearch->setUnitTemplate($sTemplate);
+        
+        return $oSearch->response();
+    }
+    
     public function _serviceProfileFunc ($sFunc, $iContentId)
     {
         if (!$iContentId)

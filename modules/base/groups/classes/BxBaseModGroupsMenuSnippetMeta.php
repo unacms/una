@@ -82,6 +82,33 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
 
         return !empty($sAction) && isset($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
     }
+
+    protected function _getMenuItemCountry($aItem)
+    {
+        return $this->_getMenuItemLocation($aItem, true);
+    }
+
+    protected function _getMenuItemCountryCity($aItem)
+    {
+        return $this->_getMenuItemLocation($aItem, false);
+    }
+
+    protected function _getMenuItemLocation($aItem, $bCountryOnly = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_bContentPublic || !$this->_oContentProfile || empty($CNF['OBJECT_CONNECTIONS']))
+            return false;
+
+        $oMeta = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        if(!$oMeta)
+            return false;
+
+        if (!($sLocation = $oMeta->locationsString($this->_iContentId, false, $bCountryOnly ? array('country_only' => 1) : array('country_city_only' => 1))))
+            return false;
+
+        return $this->_oTemplate->getUnitMetaItemText($sLocation);
+    }
 }
 
 /** @} */
