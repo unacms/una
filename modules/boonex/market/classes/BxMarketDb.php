@@ -199,6 +199,12 @@ class BxMarketDb extends BxBaseModTextDb
         return $this->getRow($sQuery);
     }
 
+    public function updateContentInfoBy ($aSet, $aWhere)
+    {
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1");
+        return (int)$this->query($sQuery) > 0;
+    }
+
 	public function getPhoto($aParams = array())
     {
     	return $this->_getAttachment($this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'], $aParams);
@@ -307,6 +313,19 @@ class BxMarketDb extends BxBaseModTextDb
                 );
 
 				$sWhereClause = " AND `type` = :type AND `added` < UNIX_TIMESTAMP() AND `expired` <> 0 AND `expired` < UNIX_TIMESTAMP()";
+				break;
+
+            case 'product_id':
+				$aMethod['params'][1] = array(
+                	'product_id' => $aParams['product_id']
+                );
+
+				$sWhereClause = " AND `tl`.`product_id`=:product_id";
+
+				if(!empty($aParams['profile_id'])) {
+					$aMethod['params'][1]['profile_id'] = $aParams['profile_id'];
+					$sWhereClause .= " AND `tl`.`profile_id`=:profile_id";
+				}
 				break;
 
 			case 'profile_id':

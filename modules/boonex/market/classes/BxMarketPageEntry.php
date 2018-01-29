@@ -20,6 +20,20 @@ class BxMarketPageEntry extends BxBaseModTextPageEntry
         parent::__construct($aObject, $oTemplate);
     }
 
+    public function isActive()
+    {
+        if(parent::isActive())
+            return true;
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iProfile = bx_get_logged_profile_id();
+        if($this->_oModule->_oDb->hasLicense($iProfile, $this->_aContentInfo[$CNF['FIELD_ID']]))
+            return true;
+
+        return false;
+    }
+
     public function getCode ()
     {
     	$sResult = parent::getCode();

@@ -37,6 +37,26 @@ class BxMarketModule extends BxBaseModTextModule
         ));
     }
 
+    public function actionPerform()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_getContentInfo();
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return echoJson(array('code' => 1));
+
+        $sAction = bx_process_input(bx_get('action'));
+        if(empty($CNF['MENU_ITEM_TO_METHOD'][$CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']][$sAction])) 
+            return echoJson(array('code' => 2));
+
+        $sMethodCheck = $CNF['MENU_ITEM_TO_METHOD'][$CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']][$sAction];
+        $sMethodPerform = '_perform' . bx_gen_method_name($sAction, array('-', '_'));
+        if(!method_exists($this, $sMethodCheck) || $this->$sMethodCheck($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED || !method_exists($this, $sMethodPerform))
+            return echoJson(array('code' => 3, 'msg' => _t('_sys_txt_access_denied')));
+
+        return $this->$sMethodPerform($aContentInfo);
+    }
+
     public function actionCheckName()
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -976,6 +996,19 @@ class BxMarketModule extends BxBaseModTextModule
 		return $aTmplVars;
     }
 
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId) {
+            $aLicenses = $this->_oDb->getLicense(array('type' => 'product_id', 'product_id' => $aDataEntry[$CNF['FIELD_ID']]));
+            if(is_array($aLicenses) && count($aLicenses) > 0)
+                return _t('_sys_txt_access_denied');
+        }
+
+        return parent::checkAllowedDelete($aDataEntry, $isPerformAction);
+    }
+
     public function checkAllowedSetCover ()
     {
         $aCheck = checkActionModule($this->_iProfileId, 'set cover', $this->getName(), false);
@@ -1016,6 +1049,46 @@ class BxMarketModule extends BxBaseModTextModule
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function checkAllowedHide($aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aDataEntry[$CNF['FIELD_STATUS']] != 'active')
+            return CHECK_ACTION_RESULT_NOT_ALLOWED;
+
+        // moderator and owner always have access
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return CHECK_ACTION_RESULT_NOT_ALLOWED;
+    }
+
+    public function checkAllowedUnhide($aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aDataEntry[$CNF['FIELD_STATUS']] == 'active')
+            return CHECK_ACTION_RESULT_NOT_ALLOWED;
+
+        // moderator and owner always have access
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return CHECK_ACTION_RESULT_NOT_ALLOWED;
+    }
+
+    public function checkAllowedViewMoreMenu (&$aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']);
+        $oMenu->setContentId($aDataEntry[$CNF['FIELD_ID']]);
+        if(!$oMenu || !$oMenu->isVisible())
+            return CHECK_ACTION_RESULT_NOT_ALLOWED;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     protected function _getContentInfo($iContentId = 0)
     {
     	if(!$iContentId)
@@ -1029,6 +1102,26 @@ class BxMarketModule extends BxBaseModTextModule
             return false;
 
 		return $aContentInfo;
+    }
+
+    protected function _performHideProduct($aDataEntry) {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oDb->updateContentInfoBy(array($CNF['FIELD_STATUS'] => 'hidden'), array($CNF['FIELD_ID'] => $aDataEntry[$CNF['FIELD_ID']]))) 
+            return echoJson(array());
+
+        $this->checkAllowedHide($aDataEntry, true);
+        return echoJson(array('reload' => 1));
+    }
+
+    protected function _performUnhideProduct($aDataEntry) {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oDb->updateContentInfoBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $aDataEntry[$CNF['FIELD_ID']]))) 
+            return echoJson(array());
+
+        $this->checkAllowedHide($aDataEntry, true);
+        return echoJson(array('reload' => 1));
     }
 
     protected function _entitySocialSharing ($iId, $aParams = array())

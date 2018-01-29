@@ -211,22 +211,29 @@
     <string name="_bx_market_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Products]]></string>
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Product Actions]]></string>
-    <string name="_bx_market_menu_title_view_entry"><![CDATA[Product Actions]]></string>    
-    <string name="_bx_market_menu_title_view_entry_popup"><![CDATA[Product Actions (in popup)]]></string>
+    <string name="_bx_market_menu_title_view_entry"><![CDATA[Product Actions]]></string>
+    <string name="_bx_market_menu_set_title_view_entry_more"><![CDATA[Product More Actions]]></string>
+    <string name="_bx_market_menu_title_view_entry_more"><![CDATA[Product More Actions]]></string>
     <string name="_bx_market_menu_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[New Product]]></string>
     <string name="_bx_market_menu_item_title_create_entry"><![CDATA[New Product]]></string>
     <string name="_bx_market_menu_item_title_system_edit_entry"><![CDATA[Edit Product]]></string>
-    <string name="_bx_market_menu_item_title_edit_entry"><![CDATA[Edit Product]]></string>
+    <string name="_bx_market_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_market_menu_item_title_system_delete_entry"><![CDATA[Delete Product]]></string>
-    <string name="_bx_market_menu_item_title_delete_entry"><![CDATA[Delete Product]]></string>
+    <string name="_bx_market_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_market_menu_item_title_system_add_to_cart"><![CDATA[Add to Cart]]></string>
     <string name="_bx_market_menu_item_title_add_to_cart"><![CDATA[Buy for {0}{1}]]></string>
     <string name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Rent]]></string>
     <string name="_bx_market_menu_item_title_subscribe"><![CDATA[Rent for {0}{1}/{2}]]></string>
-    <string name="_bx_market_menu_item_title_system_download"><![CDATA[Download]]></string>
+    <string name="_bx_market_menu_item_title_system_download"><![CDATA[Download Product]]></string>
     <string name="_bx_market_menu_item_title_download"><![CDATA[Download]]></string>
+    <string name="_bx_market_menu_item_title_system_product_more"><![CDATA[More Actions]]></string>
+    <string name="_bx_market_menu_item_title_product_more"><![CDATA[]]></string>
+    <string name="_bx_market_menu_item_title_system_unhide_entry"><![CDATA[Unhide Product]]></string>
+    <string name="_bx_market_menu_item_title_unhide_entry"><![CDATA[Publish]]></string>
+    <string name="_bx_market_menu_item_title_system_hide_entry"><![CDATA[Hide Product]]></string>
+    <string name="_bx_market_menu_item_title_hide_entry"><![CDATA[Hide]]></string>
     <string name="_bx_market_menu_item_title_system_entries_home"><![CDATA[Market]]></string>
     <string name="_bx_market_menu_item_title_entries_home"><![CDATA[Market]]></string>
     <string name="_bx_market_menu_item_title_system_entries_categories"><![CDATA[Categories]]></string>
@@ -273,6 +280,8 @@
     <string name="_bx_market_menu_set_title_snippet"><![CDATA[Snippet Actions]]></string>
     <string name="_bx_market_menu_item_title_system_snippet_more"><![CDATA[More Actions]]></string>
     <string name="_bx_market_menu_item_title_snippet_more"><![CDATA[More Actions]]></string>
+    <string name="_bx_market_menu_title_snippet_more"><![CDATA[Snippet More Actions]]></string>
+    <string name="_bx_market_menu_set_title_snippet_more"><![CDATA[Snippet More Actions]]></string>
     <string name="_bx_market_menu_item_title_downloads_more"><![CDATA[Show More]]></string>
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>

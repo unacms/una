@@ -18,6 +18,10 @@ class BxMarketMenuView extends BxBaseModTextMenuView
     {
         $this->MODULE = 'bx_market';
         parent::__construct($aObject, $oTemplate);
+
+        $this->addMarkers(array(
+        	'js_object' => $this->_oModule->_oConfig->getJsObject('entry')
+        ));
     }
 
     public function getCode ()

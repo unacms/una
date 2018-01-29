@@ -227,19 +227,29 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- MENU: actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_market_view', '_bx_market_menu_title_view_entry', 'bx_market_view', 'bx_market', 9, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php'),
-('bx_market_view_popup', '_bx_market_menu_title_view_entry_popup', 'bx_market_view', 'bx_market', 4, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php');
+('bx_market_view', '_bx_market_menu_title_view_entry', 'bx_market_view', 'bx_market', 9, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_market_view', 'bx_market', '_bx_market_menu_set_title_view_entry', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_market_view', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
-('bx_market_view', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2),
-('bx_market_view', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '_bx_market_menu_item_title_download', 'page.php?i=download-product&id={content_id}', '', '', 'download', '', 2147483647, 1, 0, 3),
-('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '{add_to_cart_title}', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 2147483647, 1, 0, 4),
-('bx_market_view', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '{subscribe_title}', 'javascript:void(0);', 'javascript:{subscribe_onclick}', '', 'credit-card', '', 2147483647, 1, 0, 5);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('bx_market_view', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '_bx_market_menu_item_title_download', 'page.php?i=download-product&id={content_id}', '', '', 'download', '', 0, 2147483647, 1, 0, 10),
+('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '{add_to_cart_title}', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 0, 2147483647, 1, 0, 20),
+('bx_market_view', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '{subscribe_title}', 'javascript:void(0);', 'javascript:{subscribe_onclick}', '', 'credit-card', '', 0, 2147483647, 1, 0, 30),
+('bx_market_view', 'bx_market', 'unhide-product', '_bx_market_menu_item_title_system_unhide_entry', '_bx_market_menu_item_title_unhide_entry', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''unhide-product'', {content_id});', '', 'eye', '', 0, 2147483647, 1, 0, 40),
+('bx_market_view', 'bx_market', 'product-more', '_bx_market_menu_item_title_system_product_more', '_bx_market_menu_item_title_product_more', 'javascript:void(0)', 'bx_menu_popup(''bx_market_view_more'', this, {}, {id:{content_id}});', '', 'cog', 'bx_market_view_more', 1, 2147483647, 1, 0, 9999);
 
+-- MENU: actions more menu for view entry
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_view_more', '_bx_market_menu_title_view_entry_more', 'bx_market_view_more', 'bx_market', 6, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_market_view_more', 'bx_market', '_bx_market_menu_set_title_view_entry_more', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_market_view_more', 'bx_market', 'hide-product', '_bx_market_menu_item_title_system_hide_entry', '_bx_market_menu_item_title_hide_entry', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''hide-product'', {content_id});', '', 'eye-slash', '', 2147483647, 1, 0, 10),
+('bx_market_view_more', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 20),
+('bx_market_view_more', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 
 -- MENU: actions menu for my entries
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -259,7 +269,19 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_market_snippet', 'bx_market', '_bx_market_menu_set_title_snippet', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_market_snippet', 'bx_market', 'snippet-more', '_bx_market_menu_item_title_system_snippet_more', '_bx_market_menu_item_title_snippet_more', 'javascript:void(0)', 'bx_menu_popup(''bx_market_view_popup'', this, {''id'':''bx_market_snippet_{content_id}''}, {id:{content_id}});', '', 'ellipsis-v', '', 'bx_market_view_popup', 1, 2147483647, 1, 0, 0, 1);
+('bx_market_snippet', 'bx_market', 'snippet-more', '_bx_market_menu_item_title_system_snippet_more', '_bx_market_menu_item_title_snippet_more', 'javascript:void(0)', 'bx_menu_popup(''bx_market_snippet_more'', this, {''id'':''bx_market_snippet_{content_id}''}, {id:{content_id}});', '', 'ellipsis-v', '', 'bx_market_snippet_more', 1, 2147483647, 1, 0, 0, 1);
+
+-- MENU: actions more menu for snippet actions menu
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_market_snippet_more', '_bx_market_menu_title_snippet_more', 'bx_market_snippet_more', 'bx_market', 4, 0, 1, 'BxMarketMenuView', 'modules/boonex/market/classes/BxMarketMenuView.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
+('bx_market_snippet_more', 'bx_market', '_bx_market_menu_set_title_snippet_more', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('bx_market_snippet_more', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '_bx_market_menu_item_title_download', 'page.php?i=download-product&id={content_id}', '', '', 'download', '', 0, 2147483647, 1, 0, 10),
+('bx_market_snippet_more', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '{add_to_cart_title}', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 0, 2147483647, 1, 0, 20),
+('bx_market_snippet_more', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '{subscribe_title}', 'javascript:void(0);', 'javascript:{subscribe_onclick}', '', 'credit-card', '', 0, 2147483647, 1, 0, 30);
 
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

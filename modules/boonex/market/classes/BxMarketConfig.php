@@ -18,8 +18,11 @@ class BxMarketConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
+        	'hide-product' => 'checkAllowedHide',
+            'unhide-product' => 'checkAllowedUnhide',
             'edit-product' => 'checkAllowedEdit',
             'delete-product' => 'checkAllowedDelete',
+            'product-more' => 'checkAllowedViewMoreMenu'
         );
 
         $this->CNF = array (
@@ -129,9 +132,10 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_market_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_market_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_market_view', // actions menu on view entry page
-            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP' => 'bx_market_view_popup', // actions menu from view entry page but created for popup submenu
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_market_view_more', 
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_market_my', // actions menu on my entries page
             'OBJECT_MENU_ACTIONS_SNIPPET' => 'bx_market_snippet', // actions menu for entry snippet
+            'OBJECT_MENU_ACTIONS_SNIPPET_MORE' => 'bx_market_snippet_more', // actions menu (short) from view entry page but created for snippet actions menu
             'OBJECT_MENU_SUBMENU' => 'bx_market_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_market_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'products-home', // first item in view entry submenu from main module submenu
@@ -149,7 +153,8 @@ class BxMarketConfig extends BxBaseModTextConfig
                     'create-product' => 'checkAllowedAdd',
                 ),
                 'bx_market_view' => $aMenuItems2Methods,
-                'bx_market_view_popup' => $aMenuItems2Methods,
+                'bx_market_view_more' => $aMenuItems2Methods,
+                'bx_market_snippet_more' => $aMenuItems2Methods,
             ),
 
             // global settings

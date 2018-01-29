@@ -24,6 +24,26 @@ function BxMarketEntry(oOptions) {
     });
 }
 
+BxMarketEntry.prototype.perform = function(oLink, sAction, iId) {
+	var oDate = new Date();
+    var oData = {
+    	action: sAction,
+    	id: iId,
+		_t:oDate.getTime()
+    };
+
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({});
+
+    $.post(
+        this._sActionsUrl + 'perform/',
+        oData,
+        function(oData) {
+        	processJsonData(oData);
+        },
+        'json'
+    );
+};
+
 BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
 	var oDate = new Date();
 

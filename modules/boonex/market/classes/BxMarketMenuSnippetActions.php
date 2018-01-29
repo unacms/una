@@ -52,7 +52,7 @@ class BxMarketMenuSnippetActions extends BxBaseModTextMenu
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP']);
+        $oMenu = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_SNIPPET_MORE']);
         $oMenu->setContentId($this->_iContentId);
     	return $oMenu->isVisible();
     }
