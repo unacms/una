@@ -32,10 +32,15 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         $this->_sCoverClass = $this->_oModule->getName() . '_cover';
     }
 
+    public function isActive()
+    {
+        return true;
+    }
+
     public function getCode ()
     {
         // check if content exists
-        if (!$this->_aContentInfo) { // if entry is not found - display standard "404 page not found" page
+        if (!$this->_aContentInfo || !$this->isActive()) { // if entry is not found - display standard "404 page not found" page
             $this->_oTemplate->displayPageNotFound();
             exit;
         }

@@ -46,6 +46,22 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         ));
     }
 
+    public function isActive()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if($this->_aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id() || $this->_oModule->_isModerator())
+            return true;
+
+        if(isset($CNF['FIELD_STATUS']) && $this->_aContentInfo[$CNF['FIELD_STATUS']] != 'active')
+            return false;
+
+        if(isset($CNF['FIELD_STATUS_ADMIN']) && $this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != 'active')
+            return false;
+
+        return true;
+    }
+
     protected function _setSubmenu($aParams)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
