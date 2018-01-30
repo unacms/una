@@ -44,6 +44,14 @@ class BxOrgsModule extends BxBaseModGroupsModule
     {
     	return array();
     }
+
+    public function onFanRemovedFromAdmins($iGroupProfileId, $iProfileId)
+    {
+        if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+        $oAccount = $oProfile->getAccountObject();
+        $oAccount->updateProfileContextAuto();
+    }
 }
 
 /** @} */

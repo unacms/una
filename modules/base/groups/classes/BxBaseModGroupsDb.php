@@ -32,24 +32,42 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
 
     public function toAdmins ($iGroupProfileId, $mixedFansIds)
     {
-        if (is_array($mixedFansIds))
+        if (is_array($mixedFansIds)) {
             foreach ($mixedFansIds as $iFanId)
                 $this->toAdmins ($iFanId);
+            return true;
+        }
 
         $iFanId = (int)$mixedFansIds;
         $sQuery = $this->prepare("INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` SET `group_profile_id` = ?, `fan_id` = ?", $iGroupProfileId, $iFanId);
-        return $this->res($sQuery);
+        if (!$this->res($sQuery))
+            return false;
+
+        $oModule = BxDolModule::getInstance($this->_oConfig->getName());
+        if ($oModule && method_exists($oModule, 'onFanAddedToAdmins'))
+            $oModule->onFanAddedToAdmins($iGroupProfileId, $iFanId);
+
+        return true;
     }
 
     public function fromAdmins ($iGroupProfileId, $mixedFansIds)
     {
-        if (is_array($mixedFansIds))
+        if (is_array($mixedFansIds)) {
             foreach ($mixedFansIds as $iFanId)
-                $this->toAdmins ($iFanId);
+                $this->fromAdmins ($iFanId);
+            return true;
+        }
 
         $iFanId = (int)$mixedFansIds;
         $sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? AND `fan_id` = ?", $iGroupProfileId, $iFanId);
-        return $this->res($sQuery);
+        if (!$this->res($sQuery))
+            return false;
+
+        $oModule = BxDolModule::getInstance($this->_oConfig->getName());
+        if ($oModule && method_exists($oModule, 'onFanRemovedFromAdmins'))
+            $oModule->onFanRemovedFromAdmins($iGroupProfileId, $iFanId);
+        
+        return true;
     }
 
     public function deleteAdminsByGroupId ($iGroupProfileId)
