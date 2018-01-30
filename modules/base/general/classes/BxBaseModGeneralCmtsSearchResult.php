@@ -58,7 +58,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 			));
 		}
 		else
-			return $oCmts->getComment($aData['cmt_id'], array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
+			return $oCmts->getComment($aData['id'], array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
     }
 
     function displayResultBlock ()
