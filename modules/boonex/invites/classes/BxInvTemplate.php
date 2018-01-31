@@ -24,8 +24,16 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 
         $this->addJs(array(
         	'clipboard.min.js',
+        	'jquery.form.min.js', 
+        	'jquery.anim.js',
             'main.js'
         ));
+    }
+
+    public function getInclude()
+    {
+        $this->getCssJs();
+        return $this->getJsCode('main');
     }
 
     public function getBlockRequestText($aRequest)
@@ -75,6 +83,66 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
     			)
     		)
     	));
+    }
+    public function getBlockFormRequest()
+    {
+    	if(!$this->_oConfig->isRequestInvite())
+    		return MsgBox(_t('_bx_invites_err_not_available'));
+
+    	$mixedAllowed = $this->getModule()->isAllowedRequest(0);
+        if($mixedAllowed !== true)
+            return MsgBox($mixedAllowed);
+
+        $CNF = &$this->_oConfig->CNF;
+
+    	$sJsObject = $this->_oConfig->getJsObject('main');
+    	$oPermalink = BxDolPermalinks::getInstance();
+
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_request'), $this->_oConfig->getObject('form_display_request_send'));
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_REQUEST']);
+
+        $sFormId = $oForm->getId();
+        $sEval = $sJsObject . '.onRequestFormSubmit(oData)';
+
+        $oForm->initChecker();
+        if(!$oForm->isSubmittedAndValid()) {
+            $sForm = $oForm->getCode();
+            if(!$oForm->isSubmitted()) {
+                $this->getCssJs();
+                return $this->parseHtmlByName('block_request_form.html', array(
+                    'style_prefix' => $this->_oConfig->getPrefix('style'),
+                    'js_object' => $sJsObject,
+                	'js_code' => $this->getJsCode('main'),
+                	'form' => $sForm,
+                    'form_id' => $sFormId,
+                ));
+            }
+
+            if(!$oForm->isValid())
+                return array('content' => $sForm, 'content_id' => $sFormId, 'eval' => $sEval);
+        }
+
+    	$sIp = getVisitorIP();
+
+    	$iId = (int)$oForm->insert(array('nip' => ip2long($sIp),'date' => time()));
+		if(!$iId)
+		    return array('content' => MsgBox(_t('_bx_invites_err_cannot_perform')), 'content_id' => $sFormId, 'eval' => $sEval);
+
+		$sRequestsEmail = $this->_oConfig->getRequestsEmail();
+		if(!empty($sRequestsEmail)) {
+			$sManageUrl = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_REQUESTS']);
+
+			$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('bx_invites_request_form_message', array(
+				'sender_name' => bx_process_output($oForm->getCleanValue('name')),
+				'sender_email' => bx_process_output($oForm->getCleanValue('email')),
+				'sender_ip' => $sIp,
+				'manage_url' => $sManageUrl
+			));
+
+			sendMail($sRequestsEmail, $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
+		}
+
+		return array('content' => MsgBox(_t('_bx_invites_msg_request_sent')), 'content_id' => $sFormId, 'eval' => $sEval);
     }
 
 	public function getLinkPopup($sLink)

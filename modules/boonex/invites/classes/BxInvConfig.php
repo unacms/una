@@ -30,6 +30,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->CNF = array (
         	'URL_INVITE' => 'page.php?i=invites-invite',
         	'URL_REQUEST' => 'page.php?i=invites-request',
+        	'URL_REQUESTS' => 'page.php?i=invites-requests',
         );
 
 		$this->_aObjects = array(

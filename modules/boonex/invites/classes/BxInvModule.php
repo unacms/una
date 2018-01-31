@@ -67,6 +67,29 @@ class BxInvModule extends BxDolModule
     /**
      * SERVICE METHODS
      */
+    
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-other Other
+     * @subsubsection bx_invites-get_include get_include
+     * 
+     * @code bx_srv('bx_invites', 'get_include', [...]); @endcode
+     * 
+     * Get all necessary CSS and JS files to include in a page.
+     *
+     * @return string with all necessary CSS and JS files.
+     * 
+     * @see BxInvModule::serviceGetInclude
+     */
+    /** 
+     * @ref bx_invites-get_include "get_include"
+     */
+    public function serviceGetInclude()
+    {
+        return $this->_oTemplate->getInclude();
+    }
+
     /**
      * @page service Service Calls
      * @section bx_invites Invitations
@@ -182,51 +205,14 @@ class BxInvModule extends BxDolModule
      */
     public function serviceGetBlockFormRequest()
     {
-    	if(!$this->_oConfig->isRequestInvite())
-    		return array(
-                'content' => MsgBox(_t('_bx_invites_err_not_available'))
-            );
-
-    	$mixedAllowed = $this->isAllowedRequest(0);
-        if($mixedAllowed !== true)
-            return array(
-                'content' => MsgBox($mixedAllowed)
-            );
-
-    	$sResult = '';
-
-        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_request'), $this->_oConfig->getObject('form_display_request_send'));
-
-        $oForm->initChecker();
-        if($oForm->isSubmittedAndValid()) {
-        	$sIp = getVisitorIP();
-
-        	$iId = (int)$oForm->insert(array(
-        		'nip' => ip2long($sIp),
-				'date' => time()
-			));
-
-			if($iId !== false) {
-				$sRequestsEmail = $this->_oConfig->getRequestsEmail();
-				if(!empty($sRequestsEmail)) {
-					$sManageUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=invites-requests');
-
-					$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('bx_invites_request_form_message', array(
-						'sender_name' => bx_process_output($oForm->getCleanValue('name')),
-						'sender_email' => bx_process_output($oForm->getCleanValue('email')),
-						'sender_ip' => $sIp,
-						'manage_url' => $sManageUrl
-					));
-
-					sendMail($sRequestsEmail, $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
-				}
-
-				$sResult = MsgBox(_t('_bx_invites_msg_request_sent'));
-			}
+        $mixedResult = $this->_oTemplate->getBlockFormRequest();
+        if(is_array($mixedResult)) {
+            echoJson($mixedResult);
+            exit;
         }
 
-        return array(
-            'content' => $sResult . $oForm->getCode()
+    	return array(
+            'content' => $mixedResult
         );
     }
 

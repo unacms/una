@@ -4,7 +4,38 @@ function BxInvMain(oOptions) {
     this._sObjName = oOptions.sObjName == undefined ? 'oInvMain' : oOptions.sObjName;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+    this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
+    this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 }
+
+BxInvMain.prototype.initRequestForm = function(sFormId) {
+	var oForm = $('#' + sFormId);
+	if(!oForm.length)
+		return;
+
+	oForm.ajaxForm({ 
+        dataType: 'json',
+        beforeSubmit: function (formData, jqForm, options) {
+            bx_loading(oForm, true);
+        },
+        success: function (oData) {
+            processJsonData(oData);
+        }
+    });
+};
+
+BxInvMain.prototype.onRequestFormSubmit = function(oData) {
+	var $this = this;
+
+	if(!oData || !oData.content || !oData.content_id)
+		return;
+
+	$('#' + oData.content_id).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+		$(this).replaceWith(oData.content);
+
+		$this.initRequestForm(oData.content_id);
+	});
+};
 
 BxInvMain.prototype.showLinkPopup = function(oElement) {
     var $this = this;
