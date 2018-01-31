@@ -252,7 +252,6 @@ EOS;
         if ($this->_bJsCssAdded)
             return '';
         $this->_oTemplate->addJs(array('tinymce/tinymce.min.js', 'tinymce/jquery.tinymce.min.js', 'editor.tinymce.js'));
-        $this->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'tinymce-mention/css/|autocomplete.css'));
         $this->_bJsCssAdded = true;
         return '';
     }

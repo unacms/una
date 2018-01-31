@@ -113,6 +113,39 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         return false;
     }
 
+    /**
+     * Switch context automatically to the first available profile
+     * @param $iProfileIdFilterOut profile ID to exclude from the list of possible profiles
+     * @param $iAccountId account ID to use istead of current account
+     * @return true on success or false on error
+     */ 
+    public function updateProfileContextAuto($iProfileIdFilterOut = false, $iAccountId = false)
+    {
+        $oAccount = (!$iAccountId || $iAccountId == $this->_iAccountID ? $this : BxDolAccount::getInstance ($iAccountId));
+        if (!$oAccount)
+            return false;
+        $aAccountInfo = $oAccount->getInfo();
+        $aProfiles = $oAccount->getProfiles();
+        $oProfileAccount = BxDolProfile::getInstanceAccountProfile($oAccount->id());
+
+        // unset deleted profile and account profile
+        if ($iProfileIdFilterOut)
+            unset($aProfiles[$iProfileIdFilterOut]);
+        unset($aProfiles[$oProfileAccount->id()]);
+
+        if ($aProfiles) {
+            // try to use another profile
+            reset($aProfiles);
+            $iProfileId = key($aProfiles);
+        } 
+        else {
+            // if no profiles exist, use account profile
+            $iProfileId = $oProfileAccount->id();
+        }
+
+        return $oAccount->updateProfileContext($iProfileId);
+    }
+    
     public function updateProfileContext($iSwitchToProfileId, $iAccountId = false)
     {
         $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;

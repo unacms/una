@@ -138,7 +138,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $this->_oDb->fromAdmins($iGroupProfileId, $iProfileId);
 
         if ($oConn = BxDolConnection::getObjectInstance('sys_profiles_subscriptions'))
-            $oConn->removeConnection($iProfileId, $iGroupProfileId);
+            return $oConn->removeConnection($iProfileId, $iGroupProfileId);
+
+        return false;
     }
 
     public function serviceAddMutualConnection ($iGroupProfileId, $iInitiatorId, $iIgnoreJoinConfirmation = false)

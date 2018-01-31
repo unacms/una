@@ -448,6 +448,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'media-phone.css',
             'media-print.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'marka/|marka.min.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'tinymce-mention/css/|autocomplete.css',
         ));
 
         //--- Load default JS ---//
