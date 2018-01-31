@@ -362,8 +362,8 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         if(!is_array($aPlus))
             $aPlus = array();
         $oEmailTemplates = BxDolEmailTemplates::getInstance();
-        $sMailSubject = $oEmailTemplates->parseContent($sMailSubject, $aPlus, $iRecipientID ? 0 : $oAccount->id(), $iRecipientID);
-        $sMailBody = $oEmailTemplates->parseContent($sMailBody, $aPlus, $iRecipientID ? 0 : $oAccount->id(), $iRecipientID);
+        $sMailSubject = $oEmailTemplates->parseContent($sMailSubject, $aPlus, !$iRecipientID && $oAccount ? $oAccount->id() : 0, $iRecipientID);
+        $sMailBody = $oEmailTemplates->parseContent($sMailBody, $aPlus, !$iRecipientID && $oAccount ? $oAccount->id() : 0, $iRecipientID);
     }
 
     // email message headers
