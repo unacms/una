@@ -566,7 +566,7 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
-('bx_organizations', '_bx_organizations_email_friend_request', 'bx_organizations_friend_request', '_bx_organizations_email_friend_request_subject', '_bx_organizations_email_friend_request_body'),
+('bx_organizations', '_bx_orgs_email_friend_request', 'bx_organizations_friend_request', '_bx_orgs_email_friend_request_subject', '_bx_orgs_email_friend_request_body'),
 ('bx_organizations', '_bx_orgs_email_join_request', 'bx_organizations_join_request', '_bx_orgs_email_join_request_subject', '_bx_orgs_email_join_request_body'),
 ('bx_organizations', '_bx_orgs_email_join_reject', 'bx_organizations_join_reject', '_bx_orgs_email_join_reject_subject', '_bx_orgs_email_join_reject_body'),
 ('bx_organizations', '_bx_orgs_email_join_confirm', 'bx_organizations_join_confirm', '_bx_orgs_email_join_confirm_subject', '_bx_orgs_email_join_confirm_body'),
