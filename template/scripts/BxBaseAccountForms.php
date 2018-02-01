@@ -97,7 +97,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         else if(!empty($sDefaultProfileType)) 
             $sProfileModule = $sDefaultProfileType;
 
-        if (getParam('sys_account_auto_profile_creation')) {
+        if (getParam('sys_account_auto_profile_creation') && !empty($sProfileModule)) {
             $oAccount = BxDolAccount::getInstance($iAccountId);
             $aProfileInfo = BxDolService::call($sProfileModule, 'prepare_fields', array(array(
                 'name' => $oAccount->getDisplayName(),
@@ -110,7 +110,7 @@ class BxBaseAccountForms extends BxDolProfileForms
             BxDolService::call($sProfileModule, 'redirect_after_add', array($a['content']));
         }
         else {
-            $sRedirectUrl = BxDolService::call($sProfileModule, 'profile_create_url', array(false));
+            $sRedirectUrl = !empty($sProfileModule) ? BxDolService::call($sProfileModule, 'profile_create_url', array(false)) : '';
         
             $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
                 'account_id' => $iAccountId,
