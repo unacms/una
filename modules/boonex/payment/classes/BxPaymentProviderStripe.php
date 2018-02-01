@@ -617,10 +617,15 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		return $oSubscription;
 	}
 
-    protected function _listPlans()
+    protected function _listPlans($iLimit = 100)
 	{
+	    if($iLimit <= 0)
+	        $iLimit = 1;
+        if($iLimit > 100)
+            $iLimit = 100;
+
 		try {
-			$oPlans = \Stripe\Plan::all();
+			$oPlans = \Stripe\Plan::all(array('limit' => $iLimit));
 		}
 		catch (Exception $oException) {
 			return $this->_processException('List Plans Error: ', $oException);
