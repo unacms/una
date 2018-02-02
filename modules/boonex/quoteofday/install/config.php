@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_quoteofday',
     'title' => 'Quote of the Day',
     'note' => 'Quote of the Day module.',
-    'version' => '1.0.0.DEV',
+    'version' => '9.0.0.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
@@ -38,7 +38,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'QuoteOfDay',
+    'language_category' => 'Quote Of Day',
 
     /**
      * Installation/Uninstallation Section.
