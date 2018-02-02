@@ -35,7 +35,7 @@ class BxBaseMenuCustom extends BxTemplMenu
     		if($aItem === false)
     			return false;
 
-			$sItem = $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentCustomItem, $aItem);
+			$sItem = $this->_getMenuItemDefault($aItem);
     	}
     	else
     		$sItem = $this->$sMethod($aItem);
@@ -47,6 +47,11 @@ class BxBaseMenuCustom extends BxTemplMenu
 			'class' => $this->_isSelected($aItem) ? 'bx-menu-tab-active' : '',
 			'item' => $sItem
 		);
+    }
+
+    protected function _getMenuItemDefault ($aItem)
+    {
+        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentCustomItem, $aItem);
     }
 }
 
