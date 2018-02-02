@@ -173,20 +173,22 @@ class BxQuoteOfDayModule extends BxDolModule
         if (in_array(BX_QOD_SOURCE_RSS, $aSources) && $sRssUrl != "" && $iRssMaxItems > 0)
             $aData = array_merge($aData, $this->getRssData($sRssUrl, $iRssMaxItems));
         
-        $iIndex = -1;
-        if ($sSelectionType == BX_QOD_SELECTION_MODE_BY_RANDOM) {
-            $iIndex = rand(0, count($aData) - 1);
-        }
-        else {
-            $iDayOfYear = date('z');
-            $iIndex = $iDayOfYear % count($aData);
-        }
-        
         $sTextToChache = "";
-        if ($iIndex > -1 && count($aData) > 0) {
-            $sTextToChache = $aData[$iIndex];
-            $this->putQuoteToCache($sTextToChache);
-        }
+		$iIndex = -1;
+		if (count($aData) > 0){
+			if ($sSelectionType == BX_QOD_SELECTION_MODE_BY_RANDOM) {
+				$iIndex = rand(0, count($aData) - 1);
+			}
+			else {
+				$iDayOfYear = date('z');
+				$iIndex = $iDayOfYear % count($aData);
+			}
+			
+			if ($iIndex > -1) {
+				$sTextToChache = $aData[$iIndex];
+				$this->putQuoteToCache($sTextToChache);
+			}
+		}
         
         return $sTextToChache;
     }
