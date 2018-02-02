@@ -29,7 +29,6 @@ class BxMapJoinedTemplate extends BxBaseModGeneralTemplate
     {
         $aParams = array_merge(array(
             'sPathToJsonData' => $this->_oConfig->getHomeUrl() . 'js/continents.geojson',
-            'sPathToDotImage' => $this->getImageUrl('dot.png'),
             'iIntervalCheckNewInSeconds' => getParam('bx_mapjoined_interval_refresh_new_users_in_seconds'),
             'fCenterMapLonCoordinate' => getParam('bx_mapjoined_default_center_lat_coordinate'),
             'fCenterMapLatCoordinate' => getParam('bx_mapjoined_default_center_lon_coordinate'),

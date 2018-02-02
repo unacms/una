@@ -9,11 +9,11 @@
  */
 
 function BxMapJoined(oOptions) {
+    this._sContainerId = 'BxMapJoinedContainer';
     this._iMapPointsLastId = 0;
     this._oMap = null;
     this._sActionsUri = oOptions.sActionUri;
     this._sPathToJsonData = oOptions.sPathToJsonData == undefined ? '' : oOptions.sPathToJsonData;
-    this._sPathToDotImage = oOptions.sPathToDotImage == undefined ? {} : oOptions.sPathToDotImage;
     this._iIntervalCheckNewInSeconds = oOptions.iIntervalCheckNewInSeconds == undefined ? 5 : new Number(oOptions.iIntervalCheckNewInSeconds);
     this._fCenterMapLonCoordinate = oOptions.fCenterMapLonCoordinate == undefined ? 2.896372 : new Number(oOptions.fCenterMapLonCoordinate);
     this._fCenterMapLatCoordinate = oOptions.fCenterMapLatCoordinate == undefined ? 44.60240 : new Number(oOptions.fCenterMapLatCoordinate);
@@ -22,6 +22,7 @@ function BxMapJoined(oOptions) {
     $(document).ready(function () {
         $this.init();
     });
+    $(window).resize(function () { $this.adaptive(); })
 }
 
 BxMapJoined.prototype.init = function () {
@@ -32,12 +33,8 @@ BxMapJoined.prototype.init = function () {
     var iPixelRatio = ol.has.DEVICE_PIXEL_RATIO;
     var oPattern = (function () {
         oCanvas.width = oCanvas.height = 10 * iPixelRatio;
-        oContext.fillStyle = 'white';
-        oContext.fillRect(0, 0, oCanvas.width, oCanvas.height);
         oContext.fillStyle = 'rgb(214, 227, 241)';
-        oContext.beginPath();
-        oContext.arc(5 * iPixelRatio, 5 * iPixelRatio, 3 * iPixelRatio, 0, 2 * Math.PI);
-        oContext.fill();
+        oContext.fillRect(0, 0, oCanvas.width, oCanvas.height);
         return oContext.createPattern(oCanvas, 'repeat');
     }());
 
@@ -45,7 +42,7 @@ BxMapJoined.prototype.init = function () {
     var oStyle = new ol.style.Style({
         fill: oFill,
         stroke: new ol.style.Stroke({
-            color: '#fff',
+            color: 'rgb(214, 227, 241)',
             width: 1
         })
     });
@@ -62,13 +59,12 @@ BxMapJoined.prototype.init = function () {
         }),
         style: getStackedStyle
     });
-
     $this._oMap = new ol.Map({
         layers: [oBaseVectorLayer],
-        target: document.getElementById('BxMapJoinedContainer'),
+        target: document.getElementById($this._sContainerId),
         view: new ol.View({
             center: ol.proj.fromLonLat([$this._fCenterMapLonCoordinate, $this._fCenterMapLatCoordinate]),
-            zoom: $this._fMapZoom
+            zoom: $this.getZoomValue()
         }),
         controls: [],
         interactions: ol.interaction.defaults({
@@ -85,28 +81,51 @@ BxMapJoined.prototype.init = function () {
             select: false
         })
     });
-
+    $this.adaptive();
     $this.addPoints();
 }
+BxMapJoined.prototype.adaptive = function () {
+    var $this = this;
+    var oView = this._oMap.getView();
+    var fZoom = this.getZoomValue();
+    oView.setZoom(fZoom);
+};
+
+BxMapJoined.prototype.getZoomValue = function () {
+    return this._fMapZoom * ($('#' + this._sContainerId).width() / 1629);
+};
 
 BxMapJoined.prototype.addPoints = function () {
 
     var $this = this;
     var aPoints = new Array();
-    $.getJSON($this._sActionsUri + 'GetMapPoints/' + this._iMapPointsLastId + '/', function (aMapPoints) {
+
+    var oStyles = {
+        'small': new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 5,
+                fill: new ol.style.Fill({ color: '#00adea' }),
+                stroke: new ol.style.Stroke({ color: '#cef1fb', width: 5 })
+            })
+        }),
+        'large': new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({ color: '#00adea' }),
+                stroke: new ol.style.Stroke({ color: '#cef1fb', width: 10 })
+            })
+        })
+    };
+    var bIsInitedDots = ($this._iMapPointsLastId == 0);
+    $.getJSON($this._sActionsUri + 'GetMapPoints/' + $this._iMapPointsLastId + '/', function (aMapPoints) {
         $.each(aMapPoints, function (key, value) {
-            if (this._iMapPointsLastId < new Number(value.id))
-                this._iMapPointsLastId = new Number(value.id);
             var oPoint = new ol.Feature({
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([new Number(value.lng), new Number(value.lat)]))
             });
-            oPoint.setStyle(new ol.style.Style({
-                image: new ol.style.Icon(({
-                    crossOrigin: 'anonymous',
-                    src: $this._sPathToDotImage
-                }))
-            }));
+            oPoint.setStyle(bIsInitedDots ? oStyles['small'] : oStyles['large']);
             aPoints.push(oPoint);
+            if ($this._iMapPointsLastId < new Number(value.id))
+                $this._iMapPointsLastId = new Number(value.id);
         });
 
         if (aPoints.length > 0) {
