@@ -54,7 +54,9 @@ class BxDolChangeCOllationSqlCmd
                 $s .= "ALTER TABLE `$sTable` CHANGE `{$r['Field']}` `{$r['Field']}` {$r['Type']} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\n";
             }
 
-            $s .= "\n\n";
+            $s .= "\n";
+            $s .= "REPAIR TABLE `$sTable`;\n";
+            $s .= "OPTIMIZE TABLE `$sTable`;\n\n\n";
         }
 
         $this->finish(0, $s);
