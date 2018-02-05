@@ -140,7 +140,7 @@ CREATE TABLE `sys_queue_push` (
   `profile_id` int(11) NOT NULL default '0',
   `message` text NOT NULL default '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 -- --------------------------------------------------------
 
