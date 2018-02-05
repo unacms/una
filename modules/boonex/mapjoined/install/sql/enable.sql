@@ -15,8 +15,8 @@ INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `e
 (@iCategoryId, 'bx_mapjoined_initial_timeframe_users_shown_in_hours', '_bx_mapjoined_initial_timeframe_users_shown_in_hours', '24', 'digit', '', '', '', '', 1),
 (@iCategoryId, 'bx_mapjoined_interval_refresh_new_users_in_seconds', '_bx_mapjoined_interval_refresh_new_users_in_seconds', '30', 'digit', '', '', '', '', 2),
 (@iCategoryId, 'bx_mapjoined_default_center_lat_coordinate', '_bx_mapjoined_default_center_lat_coordinate', '44.60240', 'digit', '', '', '', '', 3),
-(@iCategoryId, 'bx_mapjoined_default_center_lon_coordinate', '_bx_mapjoined_default_center_lon_coordinate', '2.896372', 'digit', '', '', '', '', 4),
-(@iCategoryId, 'bx_mapjoined_default_zoom', '_bx_mapjoined_default_zoom', '2', 'digit', '', '', '', '', 5);
+(@iCategoryId, 'bx_mapjoined_default_center_lon_coordinate', '_bx_mapjoined_default_center_lon_coordinate', '32.896372', 'digit', '', '', '', '', 4),
+(@iCategoryId, 'bx_mapjoined_default_zoom', '_bx_mapjoined_default_zoom', '2.3', 'digit', '', '', '', '', 5);
 
 -- PAGE: service blocks
 
