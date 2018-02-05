@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MapJoined Display last joined users on map
+ * @defgroup    MapShow Display last sign up users on map
  * @ingroup     UnaModules
  *
  * @{
@@ -11,7 +11,7 @@
 
 bx_import ('BxDolModuleTemplate');
 
-class BxMapJoinedTemplate extends BxBaseModGeneralTemplate
+class BxMapShowTemplate extends BxBaseModGeneralTemplate
 {
     function __construct(&$oConfig, &$oDb)
     {
@@ -29,10 +29,10 @@ class BxMapJoinedTemplate extends BxBaseModGeneralTemplate
     {
         $aParams = array_merge(array(
             'sPathToJsonData' => $this->_oConfig->getHomeUrl() . 'js/continents.geojson',
-            'iIntervalCheckNewInSeconds' => getParam('bx_mapjoined_interval_refresh_new_users_in_seconds'),
-            'fCenterMapLonCoordinate' => getParam('bx_mapjoined_default_center_lat_coordinate'),
-            'fCenterMapLatCoordinate' => getParam('bx_mapjoined_default_center_lon_coordinate'),
-            'fMapZoom' => getParam('bx_mapjoined_default_zoom')
+            'iIntervalCheckNewInSeconds' => getParam('bx_mapshow_interval_refresh_new_users_in_seconds'),
+            'fCenterMapLonCoordinate' => getParam('bx_mapshow_default_center_lat_coordinate'),
+            'fCenterMapLatCoordinate' => getParam('bx_mapshow_default_center_lon_coordinate'),
+            'fMapZoom' => getParam('bx_mapshow_default_zoom')
         ), $aParams);
         
         return parent::getJsCode($sType, $aParams, $bWrap);

@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MapJoined Display last joined users on map
+ * @defgroup    MapShow Display last sign up users on map
  * @ingroup     UnaModules
  *
  * @{
@@ -11,7 +11,7 @@
 
 bx_import('BxDolModuleDb');
 
-class BxMapJoinedDb extends BxBaseModGeneralDb
+class BxMapShowDb extends BxBaseModGeneralDb
 {
     function __construct(&$oConfig)
     {
@@ -21,7 +21,7 @@ class BxMapJoinedDb extends BxBaseModGeneralDb
     public function getLngLatData($iLastId)
     {
         $CNF = &$this->_oConfig->CNF;
-        $sIntervalInHour = getParam('bx_mapjoined_initial_timeframe_users_shown_in_hours');
+        $sIntervalInHour = getParam('bx_mapshow_initial_timeframe_users_shown_in_hours');
         $sSql = "";
         if ($iLastId == 0) {
             $sSql = $CNF['FIELD_JOINED'] . " > date_sub(now(), INTERVAL " . $sIntervalInHour . " hour) ";

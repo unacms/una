@@ -3,7 +3,7 @@
 * Copyright (c) UNA, Inc - https://una.io
 * MIT License - https://opensource.org/licenses/MIT
 *
-* @defgroup    MapJoined Display last joined users on map
+* @defgroup    MapShow Display last sign up users on map
 * @ingroup     UnaModules
 *
 * @{

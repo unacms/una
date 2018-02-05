@@ -2,14 +2,14 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MapJoined Display last joined users on map
+ * @defgroup    MapShow Display last sign up users on map
  * @ingroup     UnaModules
  *
  * @{
  */
 
-function BxMapJoined(oOptions) {
-    this._sContainerId = 'BxMapJoinedContainer';
+function BxMapShow(oOptions) {
+    this._sContainerId = 'BxMapShowContainer';
     this._iMapPointsLastId = 0;
     this._oMap = null;
     this._sActionsUri = oOptions.sActionUri;
@@ -25,7 +25,7 @@ function BxMapJoined(oOptions) {
     $(window).resize(function () { $this.adaptive(); })
 }
 
-BxMapJoined.prototype.init = function () {
+BxMapShow.prototype.init = function () {
     var $this = this;
 
     var oCanvas = document.createElement('canvas');
@@ -84,18 +84,18 @@ BxMapJoined.prototype.init = function () {
     $this.adaptive();
     $this.addPoints();
 }
-BxMapJoined.prototype.adaptive = function () {
+BxMapShow.prototype.adaptive = function () {
     var $this = this;
     var oView = this._oMap.getView();
     var fZoom = this.getZoomValue();
     oView.setZoom(fZoom);
 };
 
-BxMapJoined.prototype.getZoomValue = function () {
+BxMapShow.prototype.getZoomValue = function () {
     return this._fMapZoom * ($('#' + this._sContainerId).width() / 1629);
 };
 
-BxMapJoined.prototype.addPoints = function () {
+BxMapShow.prototype.addPoints = function () {
 
     var $this = this;
     var aPoints = new Array();

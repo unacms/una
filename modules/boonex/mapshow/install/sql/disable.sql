@@ -1,4 +1,4 @@
-SET @sName = 'bx_mapjoined';
+SET @sName = 'bx_mapshow';
 
 -- SETTINGS
 SET @iTypeId = (SELECT `ID` FROM `sys_options_types` WHERE `name` = @sName LIMIT 1);
