@@ -531,8 +531,8 @@ CREATE TABLE `sys_localization_keys` (
   `IDCategory` int(6) unsigned NOT NULL default '0',
   `Key` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (`ID`),
-  UNIQUE KEY `Key` (`Key`),
-  FULLTEXT KEY `KeyFilter` (`Key`)
+  UNIQUE KEY `Key` (`Key`(191)),
+  FULLTEXT KEY `KeyFilter` (`Key`(191))
 );
 
 CREATE TABLE `sys_localization_languages` (
