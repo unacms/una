@@ -493,6 +493,16 @@ class BxDolUpgradeDb
         return in_array(strtoupper($sFieldName), $aFields['uppercase']);
     }
 
+	public function isIndexExists($sTable, $sIndexName)
+	{
+        $aIndexes = $this->getAll("SHOW INDEXES FROM `" . $sTable . "`");
+        foreach ($aIndexes as $aIndex)
+			if ($aIndex['Key_name'] == $sIndexName)
+				return true;
+
+		return false;
+    }
+    
     public function error($aError)
     {
     	$sErrorType = self::$_aErrors[$aError['code']];
