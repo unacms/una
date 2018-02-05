@@ -59,15 +59,13 @@ class BxMarketModule extends BxBaseModTextModule
 
     public function actionCheckName()
     {
-    	$CNF = &$this->_oConfig->CNF;
-
-    	$sTitle = strtolower(bx_process_input(bx_get('title')));
+    	$sTitle = bx_process_input(bx_get('title'));
     	if(empty($sTitle))
     		return echoJson(array());
 
     	echoJson(array(
     		'title' => $sTitle,
-    		'name' => uriGenerate($sTitle, $CNF['TABLE_ENTRIES'], $CNF['FIELD_NAME'])
+    		'name' => $this->_oConfig->getEntryName($sTitle)
     	));
     }
 

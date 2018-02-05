@@ -48,21 +48,31 @@ BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
 	var oDate = new Date();
 
 	var oName = jQuery("[name='" + sNameId + "']");
-	var oTitle = jQuery("[name='" + sTitleId + "']");
-
 	var sName = oName.val();
-	var sTitle = oTitle.val();	
-	if(sName.length != 0 || sTitle.length == 0)
+	var bName = sName.length != 0;
+	
+	var oTitle = jQuery("[name='" + sTitleId + "']");
+	var sTitle = oTitle.val();
+	var bTitle = sTitle.length != 0;
+
+	if(!bName && !bTitle)
 		return;
 
-	sName = sTitle.replace(/[^A-Za-z0-9_]/g, '-');
-	sName = sName.replace(/[-]{2,}/g, '-');
-	oName.val(sName.toLowerCase());
+	var sTitleCheck = '';
+	if(bName)
+		sTitleCheck = sName;
+	else if(bTitle) {
+		sTitleCheck = sTitle;
+
+		sTitle = sTitle.replace(/[^A-Za-z0-9_]/g, '-');
+		sTitle = sTitle.replace(/[-]{2,}/g, '-');
+		oName.val(sTitle.toLowerCase());
+	}
 
 	jQuery.get(
 		this._sActionsUrl + 'check_name',
 		{
-			title: sTitle,
+			title: sTitleCheck,
     		_t: oDate.getTime()
     	},
     	function(oData) {

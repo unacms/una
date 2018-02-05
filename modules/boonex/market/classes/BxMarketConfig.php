@@ -218,6 +218,13 @@ class BxMarketConfig extends BxBaseModTextConfig
     {
     	return $this->_aCurrency;
     }
+
+    public function getEntryName($sName)
+    {
+        $sName = strtolower($sName);
+
+        return uriGenerate($sName, $this->CNF['TABLE_ENTRIES'], $this->CNF['FIELD_NAME']);
+    }
 }
 
 /** @} */

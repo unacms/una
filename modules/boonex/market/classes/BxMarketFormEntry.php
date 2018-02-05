@@ -27,6 +27,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         	$sJsObject = $this->_oModule->_oConfig->getJsObject('entry');
 
         	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = "javascript:" . $sJsObject . ".checkName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
+        	$this->aInputs[$CNF['FIELD_NAME']]['attrs']['onblur'] = "javascript:" . $sJsObject . ".checkName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
         }
 
 	    if(isset($this->aInputs[$CNF['FIELD_FILE']])) {
@@ -121,6 +122,12 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if(isset($this->aInputs[$CNF['FIELD_NAME']])) {
+            $sName = BxDolForm::getSubmittedValue($CNF['FIELD_NAME'], $this->aFormAttrs['method'], $this->_aSpecificValues);
+            $sName = $this->_oModule->_oConfig->getEntryName($sName);
+            BxDolForm::setSubmittedValue($CNF['FIELD_NAME'], $sName, $this->aFormAttrs['method'], $this->_aSpecificValues);
+        }
+
 	    if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
             $aCover = isset($_POST[$CNF['FIELD_COVER']]) ? bx_process_input ($_POST[$CNF['FIELD_COVER']], BX_DATA_INT) : false;
 
@@ -144,6 +151,12 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 	function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(isset($this->aInputs[$CNF['FIELD_NAME']])) {
+            $sName = BxDolForm::getSubmittedValue($CNF['FIELD_NAME'], $this->aFormAttrs['method'], $this->_aSpecificValues);
+            $sName = $this->_oModule->_oConfig->getEntryName($sName);
+            BxDolForm::setSubmittedValue($CNF['FIELD_NAME'], $sName, $this->aFormAttrs['method'], $this->_aSpecificValues);
+        }
 
 	    if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
             $aCover = bx_process_input (bx_get($CNF['FIELD_COVER']), BX_DATA_INT);
