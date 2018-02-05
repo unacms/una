@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleConfig');
-
 class BxMapShowConfig extends BxBaseModGeneralConfig
 {
     function __construct($aModule)

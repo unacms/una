@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import ('BxDolModuleTemplate');
-
 class BxMapShowTemplate extends BxBaseModGeneralTemplate
 {
     function __construct(&$oConfig, &$oDb)

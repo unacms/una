@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleDb');
-
 class BxMapShowDb extends BxBaseModGeneralDb
 {
     function __construct(&$oConfig)
@@ -23,14 +21,17 @@ class BxMapShowDb extends BxBaseModGeneralDb
         $CNF = &$this->_oConfig->CNF;
         $sIntervalInHour = getParam('bx_mapshow_initial_timeframe_users_shown_in_hours');
         $sSql = "";
+        $aBindings = array();
         if ($iLastId == 0) {
-            $sSql = $CNF['FIELD_JOINED'] . " > date_sub(now(), INTERVAL " . $sIntervalInHour . " hour) ";
+            $aBindings['interval'] = $sIntervalInHour;
+            $sSql = $CNF['FIELD_JOINED'] . " > DATE_SUB(NOW(), INTERVAL :interval HOUR) ";
         }
         else{
-            $sSql = $CNF['FIELD_ID'] . " > " . $iLastId;
+            $aBindings['id'] = $iLastId;
+            $sSql = $CNF['FIELD_ID'] . " > :id";
         }
         
-        return $this->getAll("SELECT " . $CNF['FIELD_LNG'] . ", " . $CNF['FIELD_LAT'] . ", " . $CNF['FIELD_ID'] . " FROM " . $CNF['TABLE_ENTRIES'] . " WHERE " . $sSql);
+        return $this->getAll("SELECT " . $CNF['FIELD_LNG'] . ", " . $CNF['FIELD_LAT'] . ", " . $CNF['FIELD_ID'] . " FROM " . $CNF['TABLE_ENTRIES'] . " WHERE " . $sSql, $aBindings);
     }
     
     public function addIpInfo($iAccountId, $sIp, $sLng, $sLat)
@@ -42,7 +43,7 @@ class BxMapShowDb extends BxBaseModGeneralDb
             'lng' => $sLng,
             'lat' => $sLat
         );
-        $this->query("INSERT INTO " . $CNF['TABLE_ENTRIES'] . " (" . $CNF['FIELD_ACCOUNT_ID'] . ", " . $CNF['FIELD_IP'] . ", " . $CNF['FIELD_LNG'] . ", " . $CNF['FIELD_LAT'] . ") values (:account_id, :ip, :lng, :lat)", $aBindings);
+        $this->query("INSERT INTO " . $CNF['TABLE_ENTRIES'] . " (" . $CNF['FIELD_ACCOUNT_ID'] . ", " . $CNF['FIELD_IP'] . ", " . $CNF['FIELD_LNG'] . ", " . $CNF['FIELD_LAT'] . ") VALUES (:account_id, :ip, :lng, :lat)", $aBindings);
     }
 }
 
