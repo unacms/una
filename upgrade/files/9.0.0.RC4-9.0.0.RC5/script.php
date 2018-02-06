@@ -92,7 +92,7 @@
     // CHANGE COLLATION
 
     $aPathInfo = pathinfo(__FILE__);
-    $sChangeCollationSqlPath = $aPathInfo['dirname'] . '/change_collation.sql');
+    $sChangeCollationSqlPath = $aPathInfo['dirname'] . '/change_collation.sql';
     $this->oDb->executeSQL($sChangeCollationSqlPath);
 
     return true;
