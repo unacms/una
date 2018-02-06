@@ -1,7 +1,7 @@
-SET @sName = 'bx_mapjoined';;
+SET @sName = 'bx_mapshow';;
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_mapjoined_accounts`;
+DROP TABLE IF EXISTS `bx_mapshow_accounts`;
 
 -- STUDIO WIDGET
 DELETE FROM `tp`, `tw`, `tpw`

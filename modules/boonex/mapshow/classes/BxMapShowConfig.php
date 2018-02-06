@@ -3,15 +3,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MapJoined Display last joined users on map
+ * @defgroup    MapShow Display last sign up users on map
  * @ingroup     UnaModules
  *
  * @{
  */
 
-bx_import('BxDolModuleConfig');
-
-class BxMapJoinedConfig extends BxBaseModGeneralConfig
+class BxMapShowConfig extends BxBaseModGeneralConfig
 {
     function __construct($aModule)
     {
@@ -30,10 +28,10 @@ class BxMapJoinedConfig extends BxBaseModGeneralConfig
         );
         
         $this->_aJsClasses = array(
-            'map' => 'BxMapJoined'
+            'map' => 'BxMapShow'
         );
         $this->_aJsObjects = array(
-            'map' => 'oMapJoined'
+            'map' => 'oMapShow'
         );
     }
 }
