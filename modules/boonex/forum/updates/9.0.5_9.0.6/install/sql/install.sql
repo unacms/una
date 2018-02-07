@@ -1,6 +1,14 @@
 SET @sName = 'bx_forum';
 
 
+--TABLES
+CREATE TABLE IF NOT EXISTS `bx_forum_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+);
+
 -- TABLE: bx_forum_categories
 
 ALTER TABLE `bx_forum_categories` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -108,16 +116,6 @@ REPAIR TABLE `bx_forum_subscribers`;
 OPTIMIZE TABLE `bx_forum_subscribers`;
 
 
--- TABLE: bx_forum_topics
-
-ALTER TABLE `bx_forum_topics` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-ALTER TABLE `bx_forum_topics` CHANGE `text` `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-REPAIR TABLE `bx_forum_topics`;
-OPTIMIZE TABLE `bx_forum_topics`;
-
-
 -- TABLE: bx_forum_views_track
 
 ALTER TABLE `bx_forum_views_track` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -143,12 +141,3 @@ ALTER TABLE `bx_forum_votes_track` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8
 
 REPAIR TABLE `bx_forum_votes_track`;
 OPTIMIZE TABLE `bx_forum_votes_track`;
-
-
---TABLES
-CREATE TABLE IF NOT EXISTS `bx_forum_meta_mentions` (
-  `object_id` int(10) unsigned NOT NULL,
-  `profile_id` int(10) unsigned NOT NULL,
-  KEY `object_id` (`object_id`),
-  KEY `profile_id` (`profile_id`)
-);

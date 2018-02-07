@@ -1,3 +1,11 @@
+--TABLES
+CREATE TABLE IF NOT EXISTS `bx_persons_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+);
+
 -- TABLE: bx_persons_cmts
 
 ALTER TABLE `bx_persons_cmts` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -15,7 +23,6 @@ ALTER TABLE `bx_persons_data` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_u
 ALTER TABLE `bx_persons_data` CHANGE `fullname` `fullname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_persons_data` CHANGE `description` `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_persons_data` CHANGE `gender` `gender` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-ALTER TABLE `bx_persons_data` CHANGE `long_text` `long_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 REPAIR TABLE `bx_persons_data`;
 OPTIMIZE TABLE `bx_persons_data`;
@@ -53,15 +60,6 @@ ALTER TABLE `bx_persons_meta_locations` CHANGE `street_number` `street_number` v
 
 REPAIR TABLE `bx_persons_meta_locations`;
 OPTIMIZE TABLE `bx_persons_meta_locations`;
-
-
--- TABLE: bx_persons_meta_mentions
-
-ALTER TABLE `bx_persons_meta_mentions` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-
-REPAIR TABLE `bx_persons_meta_mentions`;
-OPTIMIZE TABLE `bx_persons_meta_mentions`;
 
 
 -- TABLE: bx_persons_pictures
@@ -119,15 +117,6 @@ ALTER TABLE `bx_persons_views_track` CONVERT TO CHARACTER SET utf8mb4 COLLATE ut
 
 REPAIR TABLE `bx_persons_views_track`;
 OPTIMIZE TABLE `bx_persons_views_track`;
-
-
---TABLES
-CREATE TABLE IF NOT EXISTS `bx_persons_meta_mentions` (
-  `object_id` int(10) unsigned NOT NULL,
-  `profile_id` int(10) unsigned NOT NULL,
-  KEY `object_id` (`object_id`),
-  KEY `profile_id` (`profile_id`)
-);
 
 
 -- FORMS

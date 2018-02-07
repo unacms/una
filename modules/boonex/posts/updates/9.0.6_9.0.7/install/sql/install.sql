@@ -1,3 +1,11 @@
+-- TABLES
+CREATE TABLE IF NOT EXISTS `bx_posts_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+);
+
 -- TABLE: bx_posts_cmts
 
 ALTER TABLE `bx_posts_cmts` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -49,18 +57,11 @@ ALTER TABLE `bx_posts_meta_locations` CHANGE `country` `country` varchar(2) CHAR
 ALTER TABLE `bx_posts_meta_locations` CHANGE `state` `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_posts_meta_locations` CHANGE `city` `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_posts_meta_locations` CHANGE `zip` `zip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `bx_posts_meta_locations` CHANGE `street` `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `bx_posts_meta_locations` CHANGE `street_number` `street_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 REPAIR TABLE `bx_posts_meta_locations`;
 OPTIMIZE TABLE `bx_posts_meta_locations`;
-
-
--- TABLE: bx_posts_meta_mentions
-
-ALTER TABLE `bx_posts_meta_mentions` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-
-REPAIR TABLE `bx_posts_meta_mentions`;
-OPTIMIZE TABLE `bx_posts_meta_mentions`;
 
 
 -- TABLE: bx_posts_photos_resized
@@ -83,7 +84,6 @@ ALTER TABLE `bx_posts_posts` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_un
 
 ALTER TABLE `bx_posts_posts` CHANGE `title` `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_posts_posts` CHANGE `text` `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-ALTER TABLE `bx_posts_posts` CHANGE `dslider` `dslider` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 REPAIR TABLE `bx_posts_posts`;
 OPTIMIZE TABLE `bx_posts_posts`;
@@ -134,16 +134,6 @@ ALTER TABLE `bx_posts_votes_track` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8
 
 REPAIR TABLE `bx_posts_votes_track`;
 OPTIMIZE TABLE `bx_posts_votes_track`;
-
-
-
--- TABLES
-CREATE TABLE IF NOT EXISTS `bx_posts_meta_mentions` (
-  `object_id` int(10) unsigned NOT NULL,
-  `profile_id` int(10) unsigned NOT NULL,
-  KEY `object_id` (`object_id`),
-  KEY `profile_id` (`profile_id`)
-);
 
 
 -- FORMS

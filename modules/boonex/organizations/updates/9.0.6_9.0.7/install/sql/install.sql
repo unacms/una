@@ -1,3 +1,11 @@
+-- TABLES
+CREATE TABLE IF NOT EXISTS `bx_organizations_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+);
+
 -- TABLE: bx_organizations_admins
 
 ALTER TABLE `bx_organizations_admins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -72,15 +80,6 @@ REPAIR TABLE `bx_organizations_meta_locations`;
 OPTIMIZE TABLE `bx_organizations_meta_locations`;
 
 
--- TABLE: bx_organizations_meta_mentions
-
-ALTER TABLE `bx_organizations_meta_mentions` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-
-REPAIR TABLE `bx_organizations_meta_mentions`;
-OPTIMIZE TABLE `bx_organizations_meta_mentions`;
-
-
 -- TABLE: bx_organizations_pics
 
 ALTER TABLE `bx_organizations_pics` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -136,15 +135,6 @@ ALTER TABLE `bx_organizations_views_track` CONVERT TO CHARACTER SET utf8mb4 COLL
 
 REPAIR TABLE `bx_organizations_views_track`;
 OPTIMIZE TABLE `bx_organizations_views_track`;
-
-
--- TABLES
-CREATE TABLE IF NOT EXISTS `bx_organizations_meta_mentions` (
-  `object_id` int(10) unsigned NOT NULL,
-  `profile_id` int(10) unsigned NOT NULL,
-  KEY `object_id` (`object_id`),
-  KEY `profile_id` (`profile_id`)
-);
 
 
 -- FORMS

@@ -93,12 +93,12 @@ OPTIMIZE TABLE `bx_payment_transactions`;
 ALTER TABLE `bx_payment_transactions_pending` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ALTER TABLE `bx_payment_transactions_pending` CHANGE `type` `type` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `bx_payment_transactions_pending` CHANGE `provider` `provider` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_payment_transactions_pending` CHANGE `items` `items` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_payment_transactions_pending` CHANGE `customs` `customs` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_payment_transactions_pending` CHANGE `order` `order` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_payment_transactions_pending` CHANGE `error_code` `error_code` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_payment_transactions_pending` CHANGE `error_msg` `error_msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-ALTER TABLE `bx_payment_transactions_pending` CHANGE `provider` `provider` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 REPAIR TABLE `bx_payment_transactions_pending`;
 OPTIMIZE TABLE `bx_payment_transactions_pending`;

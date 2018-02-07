@@ -1,3 +1,8 @@
+-- TABLES
+DELETE FROM `bx_notifications_handlers` WHERE `group`='mention';
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
+('mention', 'insert', 'meta_mention', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:30:"get_notifications_post_mention";s:12:"module_class";s:20:"TemplServiceMetatags";}');
+
 -- TABLE: bx_notifications_events
 
 ALTER TABLE `bx_notifications_events` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -34,9 +39,3 @@ ALTER TABLE `bx_notifications_handlers` CHANGE `privacy` `privacy` varchar(64) C
 
 REPAIR TABLE `bx_notifications_handlers`;
 OPTIMIZE TABLE `bx_notifications_handlers`;
-
-
--- TABLES
-DELETE FROM `bx_notifications_handlers` WHERE `group`='mention';
-INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
-('mention', 'insert', 'meta_mention', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:30:"get_notifications_post_mention";s:12:"module_class";s:20:"TemplServiceMetatags";}');

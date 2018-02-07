@@ -1,3 +1,11 @@
+-- TABLES
+CREATE TABLE IF NOT EXISTS `bx_market_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+);
+
 -- TABLE: bx_market_cmts
 
 ALTER TABLE `bx_market_cmts` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -96,18 +104,11 @@ ALTER TABLE `bx_market_meta_locations` CHANGE `country` `country` varchar(2) CHA
 ALTER TABLE `bx_market_meta_locations` CHANGE `state` `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_market_meta_locations` CHANGE `city` `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_market_meta_locations` CHANGE `zip` `zip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `bx_market_meta_locations` CHANGE `street` `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `bx_market_meta_locations` CHANGE `street_number` `street_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 REPAIR TABLE `bx_market_meta_locations`;
 OPTIMIZE TABLE `bx_market_meta_locations`;
-
-
--- TABLE: bx_market_meta_mentions
-
-ALTER TABLE `bx_market_meta_mentions` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-
-REPAIR TABLE `bx_market_meta_mentions`;
-OPTIMIZE TABLE `bx_market_meta_mentions`;
 
 
 -- TABLE: bx_market_photos
@@ -161,7 +162,6 @@ ALTER TABLE `bx_market_products` CHANGE `allow_view_to` `allow_view_to` varchar(
 ALTER TABLE `bx_market_products` CHANGE `allow_purchase_to` `allow_purchase_to` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_market_products` CHANGE `allow_comment_to` `allow_comment_to` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `bx_market_products` CHANGE `allow_vote_to` `allow_vote_to` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-ALTER TABLE `bx_market_products` CHANGE `sex` `sex` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 REPAIR TABLE `bx_market_products`;
 OPTIMIZE TABLE `bx_market_products`;
@@ -221,15 +221,6 @@ ALTER TABLE `bx_market_votes_track` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf
 
 REPAIR TABLE `bx_market_votes_track`;
 OPTIMIZE TABLE `bx_market_votes_track`;
-
-
--- TABLES
-CREATE TABLE IF NOT EXISTS `bx_market_meta_mentions` (
-  `object_id` int(10) unsigned NOT NULL,
-  `profile_id` int(10) unsigned NOT NULL,
-  KEY `object_id` (`object_id`),
-  KEY `profile_id` (`profile_id`)
-);
 
 
 -- COMMENTS

@@ -1,3 +1,11 @@
+-- TABLES
+CREATE TABLE IF NOT EXISTS `bx_snipcart_meta_mentions` (
+  `object_id` int(10) unsigned NOT NULL,
+  `profile_id` int(10) unsigned NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `profile_id` (`profile_id`)
+);
+
 -- TABLE: bx_snipcart_cmts
 
 ALTER TABLE `bx_snipcart_cmts` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -139,15 +147,6 @@ ALTER TABLE `bx_snipcart_votes_track` CONVERT TO CHARACTER SET utf8mb4 COLLATE u
 
 REPAIR TABLE `bx_snipcart_votes_track`;
 OPTIMIZE TABLE `bx_snipcart_votes_track`;
-
-
--- TABLES
-CREATE TABLE IF NOT EXISTS `bx_snipcart_meta_mentions` (
-  `object_id` int(10) unsigned NOT NULL,
-  `profile_id` int(10) unsigned NOT NULL,
-  KEY `object_id` (`object_id`),
-  KEY `profile_id` (`profile_id`)
-);
 
 
 -- FORMS
