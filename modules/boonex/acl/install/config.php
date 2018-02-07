@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_acl',
     'title' => 'Paid Levels',
     'note' => 'Paid Levels module.',
-    'version' => '9.0.7.DEV',
+    'version' => '9.0.8.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 

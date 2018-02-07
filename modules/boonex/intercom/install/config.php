@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_intercom',
     'title' => 'Intercom',
     'note' => 'Intercom integration.',
-    'version' => '9.0.2.DEV',
+    'version' => '9.0.3.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 
