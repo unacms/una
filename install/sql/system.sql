@@ -470,7 +470,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'enable_notification_pruning', '_adm_stg_cpt_option_enable_notification_pruning', '', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'enable_notification_account', '_adm_stg_cpt_option_enable_notification_account', 'on', 'checkbox', '', '', '', 2),
 
-(@iCategoryId, 'sys_eq_send_per_start', '_adm_stg_cpt_option_sys_eq_send_per_start', '20',  'digit', '', '', '', 10);
+(@iCategoryId, 'sys_eq_send_per_start', '_adm_stg_cpt_option_sys_eq_send_per_start', '500',  'digit', '', '', '', 10);
 
 --
 -- CATEGORY: Push Notifications
@@ -484,7 +484,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_push_short_name', '_adm_stg_cpt_option_sys_push_short_name', '', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_push_safari_id', '_adm_stg_cpt_option_sys_push_safari_id', '', 'digit', '', '', '', 4),
 
-(@iCategoryId, 'sys_push_queue_send_per_start', '_adm_stg_cpt_option_sys_push_queue_send_per_start', '20',  'digit', '', '', '', 10);
+(@iCategoryId, 'sys_push_queue_send_per_start', '_adm_stg_cpt_option_sys_push_queue_send_per_start', '500',  'digit', '', '', '', 10);
 
 --
 -- Table structure for table `sys_options_mixes`
