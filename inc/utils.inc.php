@@ -322,6 +322,9 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
  */
 function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
 {
+    if ($bAddToQueue)
+        $isDisableAlert = true;
+
     // make sure that recipient's email is valid and message isn't empty
     if (!$sMailBody || !$sRecipientEmail || preg_match('/\(2\)$/', $sRecipientEmail))
         return false;

@@ -61,7 +61,7 @@ class BxDolUpgradeDb
 
         $this->_sStorageEngine = 'MYISAM';
 
-        $this->_sCharset = 'utf8';
+        $this->_sCharset = 'utf8mb4';
 
         $this->_sHost = BX_DATABASE_HOST;
         $this->_sPort = BX_DATABASE_PORT;
@@ -116,7 +116,7 @@ class BxDolUpgradeDb
 				PDO::ATTR_PERSISTENT => $this->_bPdoPersistent
 	        ));
 
-	    	$this->pdoExec("SET NAMES 'utf8'");
+	    	$this->pdoExec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
 	        $this->pdoExec("SET sql_mode = ''");
 			$this->pdoExec("SET storage_engine=" . $this->_sStorageEngine);
 
