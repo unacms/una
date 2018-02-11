@@ -33,7 +33,6 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             $(editor.contentDocument.activeElement).atwho({
                                 searchKey: 'label',
                                 at: "@", 
-                                data: '{bx_url_root}searchExtended.php?action=get_authors',
                                 limit: 20,
                                 displayTpl: '<li class="bx-mention-row" data-value="\${value}"><span>\${label}</span> <img class="bx-def-round-corners" src="\${thumb}" /></li>',
                                 insertTpl: '<a data-profile-id="\${value}" href="\${url}">\${label}</a>',
