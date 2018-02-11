@@ -29,24 +29,29 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         browser_spellcheck: true,
                         branding: false,
                         body_class: 'bx-def-color-bg-block',
-                        mentions: {
-                            queryBy: 'label',
-                            source: function (query, process, delimiter) {
-                                if (delimiter === '@') {
-                                   $.getJSON('{bx_url_root}searchExtended.php?action=get_authors&term=' + query, function (data) {
-                                      process(data)
-                                   });
-                                }
-                            },
-                            insert: function(item) {
-                                return '<a data-profile-id="' + item.value + '" href="' + item.url + '">' + item.label + '</a>';
-                            },
-                            render: function(item) {
-                                return '<li><a href="javascript:;">' + item.label + '</a></li>';
-                            },
-                            renderDropdown: function() {
-                                return '<ul class="rte-autocomplete"></ul>';
-                            }
+                        init_instance_callback: function(editor) {
+                            $(editor.contentDocument.activeElement).atwho({
+                                searchKey: 'label',
+                                at: "@", 
+                                data: '{bx_url_root}searchExtended.php?action=get_authors',
+                                limit: 20,
+                                displayTpl: '<li class="bx-mention-row" data-value="\${value}"><span>\${label}</span> <img class="bx-def-round-corners" src="\${thumb}" /></li>',
+                                insertTpl: '<a data-profile-id="\${value}" href="\${url}">\${label}</a>',
+                                callbacks: {
+                                    remoteFilter: function(query, callback) {
+                                        $.getJSON("{bx_url_root}searchExtended.php?action=get_authors", {term: query}, function(data) {
+                                            callback(data);
+                                        });
+                                    }
+                                },
+
+                            });
+                        },
+                        setup: function(editor) {
+                            editor.on('keydown', function(e) {
+                                if (e.keyCode == 13 && $(editor.contentDocument.activeElement).atwho('isSelecting'))
+                                    return false;
+                            });
                         }
                     });
 EOS;
@@ -67,7 +72,6 @@ EOS;
                             media: '{bx_url_tinymce}plugins/media/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
-                            mention: '{bx_var_plugins_path}tinymce-mention/plugin.min.js',
                         },
                         width: '100%',
                         height: '270',
@@ -88,7 +92,6 @@ EOS;
                             lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
-                            mention: '{bx_var_plugins_path}tinymce-mention/plugin.min.js',
                         },
                         width: '100%',
                         height: '150',                        
@@ -126,7 +129,6 @@ EOS;
                             textcolor: '{bx_url_tinymce}plugins/textcolor/plugin.min.js',
                             visualblocks: '{bx_url_tinymce}plugins/visualblocks/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
-                            mention: '{bx_var_plugins_path}tinymce-mention/plugin.min.js',
                         },
                         width: '100%',
                         height: '320',

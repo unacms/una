@@ -122,8 +122,39 @@ class BxBaseServiceProfiles extends BxDol
         return $aModulesArray;
     }
 
+    public function serviceProfilesFriends ($iLimit = 20)
+    {
+        if (!($iProfileId = bx_get_logged_profile_id()))
+            return array();
+        
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
+        if (!$oConnection)
+            return array();
+
+        if (!($a = $oConnection->getConnectedContent ($iProfileId, true, 0, $iLimit)))
+            return array();
+
+        $aRet = array();
+        foreach ($a as $iId) {
+            $oProfile = BxDolProfile::getInstance($iId);
+
+            $aRet[] = array (
+            	'label' => $oProfile->getDisplayName(), 
+                'value' => $iId, 
+                'url' => $oProfile->getUrl(),
+            	'thumb' => $oProfile->getThumb(),
+                'unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info'))
+            );
+        }
+        return $aRet;
+    }
+
     public function serviceProfilesSearch ($sTerm, $iLimit = 20)
     {
+        // display friends by default
+        if (!$sTerm)
+            return $this->serviceProfilesFriends($iLimit);
+
         // get list of "profiles" modules
         $aModules = $this->serviceGetProfilesModules();
 
