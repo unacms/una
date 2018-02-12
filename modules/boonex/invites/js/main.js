@@ -6,6 +6,8 @@ function BxInvMain(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+    this._sObjNameGrid = oOptions.sObjNameGrid;
+    this._sParamsDivider = oOptions.sParamsDivider == undefined ? '#-#' : oOptions.sParamsDivider;
 }
 
 BxInvMain.prototype.initRequestForm = function(sFormId) {
@@ -102,4 +104,34 @@ BxInvMain.prototype._loading = function(e, bShow) {
 BxInvMain.prototype._getDefaultData = function () {
 	var oDate = new Date();
     return jQuery.extend({}, this._oRequestParams, {_t:oDate.getTime()});
+};
+
+BxInvMain.prototype.onChangeFilter = function (oFilter) {
+    var $this = this;
+	var oFilter1 = $('#bx-grid-filter1-' + this._sObjNameGrid);
+	var sValueFilter1 = oFilter1.length > 0 ? oFilter1.val() : '';
+	var oSearch = $('#bx-grid-search-' + this._sObjNameGrid);
+	var sValueSearch = oSearch.length > 0 ? oSearch.val() : '';
+	if(sValueSearch == _t('_sys_grid_search'))
+		sValueSearch = '';
+
+	clearTimeout($this._iSearchTimeoutId);
+	$this._iSearchTimeoutId = setTimeout(function () {
+        glGrids[$this._sObjNameGrid].setFilter(sValueFilter1 + $this._sParamsDivider + sValueSearch, true);
+    }, 500);
+};
+
+BxInvMain.prototype.setFilter = function (sFilter, isReload) {
+
+    if (this._sFilter == sFilter)
+        return;
+
+    this._sFilter = sFilter;
+
+    if (isReload) {
+        if (sFilter.length > 0)
+            this.reload(0);
+        else
+            this.reload();
+    }
 };

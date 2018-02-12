@@ -63,6 +63,13 @@ class BxInvModule extends BxDolModule
         	$this->getJoinLink($sKey)
         )));
     }
+    
+    public function actionSetSeenMark($Code)
+    {
+        header('Content-Type: image/png');
+        if (isset($Code) && trim($Code) != "")
+            $this->_oDb->updateDateSeenForInvite($Code);
+    }
 
     /**
      * SERVICE METHODS
@@ -144,40 +151,14 @@ class BxInvModule extends BxDolModule
      */
     public function serviceGetBlockFormInvite()
     {
-    	$iProfileId = $this->getProfileId();
-		$iAccountId = $this->getAccountId($iProfileId);
-
-        $mixedAllowed = $this->isAllowedInvite($iProfileId);
-        if($mixedAllowed !== true)
-            return array(
-                'content' => MsgBox($mixedAllowed)
-            );
-
-		$mixedInvites = false;
-		if(!isAdmin($iAccountId)) {
-			$iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
-			$mixedInvites = $this->_oConfig->getCountPerUser() - $iInvited;
-			if($mixedInvites <= 0)
-				return array(
-					'content' => MsgBox(_t('_bx_invites_err_limit_reached'))
-				);
-		}
-
         $oForm = $this->getFormObjectInvite();
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
 
         $sResult = '';
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-        	$sEmails = bx_process_input($oForm->getCleanValue('emails'));
-        	$sText = bx_process_pass($oForm->getCleanValue('text'));
-
-        	$mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $mixedInvites, $oForm);
-        	if($mixedResult !== false)
-        		$sResult = _t('_bx_invites_msg_invitation_sent', (int)$mixedResult);
-        	else
-				$sResult = _t('_bx_invites_err_not_available');
-
+        	
+            $sResult = $this->processFormObjectInvite($oForm);
         	$sResult = MsgBox($sResult);
         }
 
@@ -235,12 +216,15 @@ class BxInvModule extends BxDolModule
      */
     public function serviceGetBlockManageRequests()
     {
+        $this->_oTemplate->addJs('jquery.form.min.js');
+        $this->_oTemplate->addJs('main.js');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_requests'));
         if(!$oGrid)
             return '';
 
 		$this->_oTemplate->addCss(array('main.css'));
-		return $oGrid->getCode();
+        $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
+		return  $this->_oTemplate->getJsCode('main') . $oGrid->getCode();
     }
 
     /**
@@ -340,10 +324,10 @@ class BxInvModule extends BxDolModule
 			'text' => $sText
 		), $iAccountId, $iProfileId);
 
-		$iSent = 0;
+		$aAccountIds = array();
 		$iDate = time();
 		$aEmails = preg_split("/[\s\n,;]+/", $sEmails);
-		if(is_array($aEmails) && !empty($aEmails))
+		if(is_array($aEmails) && !empty($aEmails)){
 			foreach($aEmails as $sEmail) {
 				if($mixedLimit !== false && (int)$mixedLimit <= 0)
 					break;
@@ -353,25 +337,51 @@ class BxInvModule extends BxDolModule
 					continue;
 
 				$sKey = $oKeys->getNewKey(false, $iKeyLifetime);
-				if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $this->getJoinLink($sKey)), BX_EMAIL_SYSTEM)) {
-					$oForm->insert(array(
-						'account_id' => $iAccountId,
-						'profile_id' => $iProfileId,
-						'key' => $sKey,
-						'email' => $sEmail,
-						'date' => $iDate
-					));
-
-					$this->onInvite($iAccountId, $iProfileId);
-
-					$iSent += 1;
-					if($mixedLimit !== false) 
+				if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $this->getJoinLink($sKey), 'seen_image_url' => $this->getSeenImageUrl($sKey)), BX_EMAIL_SYSTEM)) {
+					$iInviteId = (int)$this->_oDb->insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate);
+                    array_push($aAccountIds, $iInviteId);
+					
+                    $this->onInvite($iAccountId, $iProfileId);
+					
+                    if($mixedLimit !== false) 
 						$mixedLimit -= 1;					
 				}
 			}
-
-		return $iSent;
+        }
+		return $aAccountIds;
 	}
+    
+    public function processFormObjectInvite($oForm)
+    {
+        $iProfileId = $this->getProfileId();
+		$iAccountId = $this->getAccountId($iProfileId);
+
+        $mixedAllowed = $this->isAllowedInvite($iProfileId);
+        if($mixedAllowed !== true)
+            return array(
+                'content' => MsgBox($mixedAllowed)
+            );
+
+		$mixedInvites = false;
+		if(!isAdmin($iAccountId)) {
+			$iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
+			$mixedInvites = $this->_oConfig->getCountPerUser() - $iInvited;
+			if($mixedInvites <= 0)
+				return array(
+					'content' => MsgBox(_t('_bx_invites_err_limit_reached'))
+				);
+		}
+        
+        $sEmails = bx_process_input($oForm->getCleanValue('emails'));
+        $sText = bx_process_pass($oForm->getCleanValue('text'));
+        $mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $mixedInvites, $oForm);
+        if($mixedResult !== false)
+            $sResult = _t('_bx_invites_msg_invitation_sent', count($mixedResult));
+        else
+            $sResult = _t('_bx_invites_err_not_available');
+        
+        return  $sResult;
+    }
 
 	public function isAllowedInvite($iProfileId, $bPerform = false)
     {
@@ -432,7 +442,7 @@ class BxInvModule extends BxDolModule
         //--- Event -> Request for Alerts Engine ---//
     }
 
-    protected function getFormObjectInvite($sDisplay = '')
+    public function getFormObjectInvite($sDisplay = '')
     {
     	if(empty($sDisplay))
     		$sDisplay = $this->_oConfig->getObject('form_display_invite_send');
@@ -448,6 +458,16 @@ class BxInvModule extends BxDolModule
 		$sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
 		return bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey));
 	}
+    
+    protected function getSeenImageUrl($sKey)
+	{
+        return  BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'SetSeenMark/' . $sKey . "/";
+	}
+    
+    public function attachAccountIdToInvite($iAccountId, $sKey)
+    {
+        $this->_oDb->attachAccountIdToInvite($iAccountId, $sKey);
+    }
 }
 
 /** @} */

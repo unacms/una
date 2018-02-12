@@ -37,12 +37,19 @@
 	<string name="_bx_invites_grid_column_title_nip"><![CDATA[IP]]></string>
 	<string name="_bx_invites_grid_column_title_date"><![CDATA[Date]]></string>
 
+  <string name="_bx_invites_grid_column_title_date_invite"><![CDATA[Date invite]]></string>
+  <string name="_bx_invites_grid_column_title_date_seen"><![CDATA[Date seen]]></string>
+  <string name="_bx_invites_grid_column_title_date_joined"><![CDATA[Date joined]]></string>
+  <string name="_bx_invites_grid_column_title_joined_account"><![CDATA[Joined]]></string>
+  <string name="_bx_invites_grid_column_title_status"><![CDATA[Status]]></string>
+
 	<string name="_bx_invites_grid_action_title_adm_info"><![CDATA[Info]]></string>
 	<string name="_bx_invites_grid_action_title_adm_invite"><![CDATA[Invite]]></string>
 	<string name="_bx_invites_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+  <string name="_bx_invites_grid_action_title_adm_add"><![CDATA[Send invitations]]></string>
 
 
-	<!-- Pages and Blocks -->
+  <!-- Pages and Blocks -->
 	<string name="_bx_invites_page_title_sys_invite"><![CDATA[Invite]]></string>
 	<string name="_bx_invites_page_title_invite"><![CDATA[Invite]]></string>
 	<string name="_bx_invites_page_block_title_invite_form"><![CDATA[Invite]]></string>
@@ -92,10 +99,12 @@
 
 	<string name="_bx_invites_et_invite_by_request_message"><![CDATA[Invite by request message.]]></string>
 	<string name="_bx_invites_et_invite_by_request_message_subject"><![CDATA[Invitation from {site_name}.]]></string>
-	<string name="_bx_invites_et_invite_by_request_message_body"><![CDATA[{email_header}
+	<string name="_bx_invites_et_invite_by_request_message_body">
+  <![CDATA[{email_header}
 <p><b>Dear Friend</b>,</p>
 <p>You are welcome to join <a href="{site_url}">{site_name}</a> community site.</p>
 <p>Click the following link to join: <a href="{join_url}">{join_url}</a></p>
+<img src="{seen_image_url}" width="1" height="1">
 {email_footer}]]></string>
 
 	<string name="_bx_invites_et_request_form_message"><![CDATA[Request Invitation form message.]]></string>
@@ -126,4 +135,13 @@
 	<string name="_bx_invites_err_invite"><![CDATA[Cannot send an invitation on request.]]></string>
 	<string name="_bx_invites_err_delete_request"><![CDATA[Cannot delete the request.]]></string>
 	<string name="_bx_invites_err_used"><![CDATA[The invitation link isn't available or already used.]]></string>
+  <string name="_bx_invites_request_status_new"><![CDATA[New]]></string>
+  <string name="_bx_invites_request_status_invited"><![CDATA[Invited]]></string>
+  <string name="_bx_invites_request_status_seen"><![CDATA[Joined]]></string>
+  <string name="_bx_invites_request_status_joined"><![CDATA[Joined]]></string>
+  <string name="_bx_invites_request_status_for_filter_all"><![CDATA[All requests]]></string>
+  <string name="_bx_invites_request_status_for_filter_new"><![CDATA[New requests]]></string>
+  <string name="_bx_invites_request_status_for_filter_invited"><![CDATA[Requests with invites]]></string>
+  <string name="_bx_invites_request_status_for_filter_seen"><![CDATA[Invite seen]]></string>
+  <string name="_bx_invites_request_status_for_filter_joined"><![CDATA[Joined]]></string>
 </resources>
