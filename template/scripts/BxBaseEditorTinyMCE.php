@@ -29,6 +29,12 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         browser_spellcheck: true,
                         branding: false,
                         body_class: 'bx-def-color-bg-block',
+                        codesample_languages: [
+                            {text: 'HTML/XML', value: 'markup'},
+                            {text: 'JavaScript', value: 'javascript'},
+                            {text: 'CSS', value: 'css'},
+                            {text: 'PHP', value: 'php'},
+                        ],
                         init_instance_callback: function(editor) {
                             $(editor.contentDocument.activeElement).atwho({
                                 searchKey: 'label',
@@ -71,10 +77,11 @@ EOS;
                             media: '{bx_url_tinymce}plugins/media/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            codesample: '{bx_url_tinymce}plugins/codesample/plugin.min.js',
                         },
                         width: '100%',
                         height: '270',
-                        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fullscreen codesample',
                         statusbar: true,
                         resize: true,
     ";
@@ -91,10 +98,11 @@ EOS;
                             lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
                             paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            codesample: '{bx_url_tinymce}plugins/codesample/plugin.min.js',
                         },
                         width: '100%',
                         height: '150',                        
-                        toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image',
+                        toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image | fullscreen codesample',
                         statusbar: true,
                         resize: true,
     ";
@@ -128,12 +136,13 @@ EOS;
                             textcolor: '{bx_url_tinymce}plugins/textcolor/plugin.min.js',
                             visualblocks: '{bx_url_tinymce}plugins/visualblocks/plugin.min.js',
                             fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            codesample: '{bx_url_tinymce}plugins/codesample/plugin.min.js',
                         },
                         width: '100%',
                         height: '320',
                         toolbar: [
                             'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                            'print preview media | forecolor emoticons | fullscreen'
+                            'print preview media | forecolor emoticons | fullscreen codesample'
                         ],
                         statusbar: true,
                         resize: true,

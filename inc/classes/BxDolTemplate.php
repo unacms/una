@@ -449,6 +449,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'media-print.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'marka/|marka.min.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'at.js/css/|jquery.atwho.min.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'prism/|prism.css',
         ));
 
         //--- Load default JS ---//
@@ -467,6 +468,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'marka/marka.min.js',
             'headroom.min.js',
             'at.js/js/jquery.atwho.min.js',
+            'prism/prism.js',
         ));
 
         //--- Load translations in JS ---//
