@@ -1523,12 +1523,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return true;
 
         $iUserId = (int)$this->getUserId();
-        if((int)$aEvent['owner_id'] == $iUserId && $this->_oConfig->isAllowDelete())
+        $iOwnerId = (int)$aEvent['owner_id'];
+        $iObjectId = (int)$aEvent['object_id'];
+        if((($iOwnerId == $iUserId) || ($iOwnerId == 0 && $this->_oConfig->isCommon($aEvent['type'], $aEvent['action']) && $iObjectId == $iUserId)) && $this->_oConfig->isAllowDelete())
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
 
-        $oProfileOwner = BxDolProfile::getInstance((int)$aEvent['owner_id']);
+        $oProfileOwner = BxDolProfile::getInstance($iOwnerId);
         if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 

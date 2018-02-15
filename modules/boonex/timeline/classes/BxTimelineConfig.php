@@ -276,11 +276,17 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-item&id=' . $aEvent['id']);
     }
 
+    public function isCommon($sType, $sAction)
+    {
+        return !$this->isSystem($sType, $sAction);
+    }
+
     public function isSystem($sType, $sAction)
     {
         $sPrefix = $this->getPrefix('common_post');
         return strpos($sType, $sPrefix) === false && !empty($sAction);
     }
+
     public function getSystemData(&$aEvent, $aBrowseParams = array())
     {
 		$sHandler = $aEvent['type'] . '_' . $aEvent['action'];
@@ -293,6 +299,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
 		return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent, $aBrowseParams), $aHandler['module_class']);
     }
+
     public function getSystemDataByDescriptor($sType, $sAction, $iObjectId)
     {
     	$aDescriptor = array(

@@ -390,7 +390,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				if(empty($aParams['owner_id']))
 					break;
 
-				$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+                //--- Select Own (System and Direct) posts from Profile's Timeline.
+				$sWhereSubclause = "(`{$this->_sTable}`.`owner_id` = ?)";
+
+				//--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
+				$sWhereSubclause .= " || (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))";
+
+				$sWhereClause .= $this->prepareAsString("AND (" . $sWhereSubclause . ") ", $aParams['owner_id'], $aParams['owner_id']);
 				break;
 
 			case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
@@ -405,7 +411,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
 				$aJoin2 = $aQueryParts['join'];
 
+				//--- Join System and Direct posts made by following members.  
 				$sJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
+
+				//--- Exclude Own (Direct) posts on timelines of following members. 
 				$sWhereClause .= $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1) ", $aParams['owner_id']);
 				break;
 
@@ -421,8 +430,19 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
 				$aJoin2 = $aQueryParts['join'];
 
+				//--- Join System and Direct posts made by following members. 'LEFT' join is essential to apply different conditions.
 				$sJoinClause .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
-				$sWhereClause .= $this->prepareAsString("AND ((`{$this->_sTable}`.`owner_id`=?) || (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))) ", $aParams['owner_id'], $aParams['owner_id']);
+				
+				//--- Select Own (System and Direct) posts from Profile's Timeline.
+				$sWhereSubclause = "(`{$this->_sTable}`.`owner_id` = ?)";
+				
+				//--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
+				$sWhereSubclause .= " || (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))";
+
+				//--- Exclude Own (Direct) posts on timelines of following members. 
+				$sWhereSubclause .= " || (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))";
+
+				$sWhereClause .= $this->prepareAsString("AND (" . $sWhereSubclause . ") ", $aParams['owner_id'], $aParams['owner_id'], $aParams['owner_id']);
 			    break;
 		}
 
