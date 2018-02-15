@@ -31,6 +31,9 @@ class BxInvConfig extends BxBaseModGeneralConfig
         	'URL_INVITE' => 'page.php?i=invites-invite',
         	'URL_REQUEST' => 'page.php?i=invites-request',
         	'URL_REQUESTS' => 'page.php?i=invites-requests',
+            
+            'TABLE_REQUESTS' => $aModule['db_prefix'] . 'requests',
+            'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
         );
 
 		$this->_aObjects = array(

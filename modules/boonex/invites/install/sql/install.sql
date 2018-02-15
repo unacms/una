@@ -9,7 +9,11 @@ CREATE TABLE IF NOT EXISTS `bx_inv_invites` (
   `key` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `date` int(11) NOT NULL default '0',
+   `date_seen` int(11) DEFAULT NULL,
+   `date_joined` int(11) DEFAULT NULL,
+   `joined_account_id` int(11) DEFAULT NULL,
   PRIMARY KEY  (`id`)
+
 );
 
 CREATE TABLE IF NOT EXISTS `bx_inv_requests` (
@@ -19,7 +23,9 @@ CREATE TABLE IF NOT EXISTS `bx_inv_requests` (
   `text` text NOT NULL,
   `nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  `invite_id` int(11) DEFAULT NULL,
+  PRIMARY KEY  (`id`),
+  INDEX `bx_inv_requests_invite_id` (`invite_id`)
 );
 
 
@@ -62,22 +68,28 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_invites_requests', 'Sql', 'SELECT * FROM `bx_inv_requests` WHERE 1 ', 'bx_inv_requests', 'id', '', '', '', 20, NULL, 'start', '', 'name,email', '', 'like', '', '', 192, 'BxInvGridRequests', 'modules/boonex/invites/classes/BxInvGridRequests.php');
+('bx_invites_requests', 'Sql', 'SELECT `bx_inv_requests`.*, `bx_inv_invites`.`date_seen`, `bx_inv_invites`.`date_joined`, `bx_inv_invites`.`joined_account_id` AS joined_account, `bx_inv_invites`.`date` AS `date_invite` FROM `bx_inv_requests` LEFT JOIN `bx_inv_invites` ON `bx_inv_invites`.`id` = `bx_inv_requests`.`invite_id` WHERE 1', 'bx_inv_requests', 'id', 'invite_id', '', '', 20, NULL, 'start', '', 'bx_inv_requests`.`name, bx_inv_requests`.`email', '', 'like', '', '', 192, 'BxInvGridRequests', 'modules/boonex/invites/classes/BxInvGridRequests.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_invites_requests', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_invites_requests', 'name', '_bx_invites_grid_column_title_name', '20%', 0, '', '', 2),
-('bx_invites_requests', 'email', '_bx_invites_grid_column_title_email', '20%', 1, '25', '', 3),
-('bx_invites_requests', 'nip', '_bx_invites_grid_column_title_nip', '15%', 0, '15', '', 4),
-('bx_invites_requests', 'date', '_bx_invites_grid_column_title_date', '20%', 0, '20', '', 5),
-('bx_invites_requests', 'actions', '', '23%', 0, '', '', 6);
+('bx_invites_requests', 'name', '_bx_invites_grid_column_title_name', '14%', 0, '', '', 2),
+('bx_invites_requests', 'email', '_bx_invites_grid_column_title_email', '14%', 1, '25', '', 3),
+('bx_invites_requests', 'nip', '_bx_invites_grid_column_title_nip', '10%', 0, '15', '', 4),
+('bx_invites_requests', 'date', '_bx_invites_grid_column_title_date', '10%', 0, '20', '', 5),
+/*('bx_invites_requests', 'date_invite', '_bx_invites_grid_column_title_date_invite', '8%', 0, '20', '', 6),
+('bx_invites_requests', 'date_seen', '_bx_invites_grid_column_title_date_seen', '8%', 0, '20', '', 7),
+('bx_invites_requests', 'date_joined', '_bx_invites_grid_column_title_date_joined', '8%', 0, '20', '', 8),*/
+('bx_invites_requests', 'joined_account', '_bx_invites_grid_column_title_joined_account', '20%', 0, '20', '', 6),
+('bx_invites_requests', 'status', '_bx_invites_grid_column_title_status', '10%', 0, '15', '', 7),
+('bx_invites_requests', 'actions', '', '20%', 0, '', '', 8);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_invites_requests', 'bulk', 'invite', '_bx_invites_grid_action_title_adm_invite', '', 0, 0, 1),
 ('bx_invites_requests', 'bulk', 'delete', '_bx_invites_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_invites_requests', 'single', 'info', '_bx_invites_grid_action_title_adm_info', 'exclamation-circle', 1, 0, 1),
 ('bx_invites_requests', 'single', 'invite', '_bx_invites_grid_action_title_adm_invite', 'envelope', 1, 0, 2),
-('bx_invites_requests', 'single', 'delete', '_bx_invites_grid_action_title_adm_delete', 'remove', 1, 1, 3);
+('bx_invites_requests', 'single', 'delete', '_bx_invites_grid_action_title_adm_delete', 'remove', 1, 1, 3),
+('bx_invites_requests', 'independent', 'add', '_bx_invites_grid_action_title_adm_add', '', 0, 0, 4);
 
 
 -- STUDIO PAGE & WIDGET

@@ -49,10 +49,10 @@ class BxInvResponse extends BxDolAlertsResponse
     		return;
 
     	$sKeyCode = $this->_oModule->_oConfig->getKeyCode();
-
     	$sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
     	if($sKey === false)
     		return;
+        $this->_oModule->attachAccountIdToInvite($oAlert->iObject, $sKey);
 
 		$oKeys = BxDolKey::getInstance();
     	if($oKeys && $oKeys->isKeyExists($sKey))

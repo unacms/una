@@ -159,3 +159,16 @@
     font-weight: 700;
     color: #d0d0d0;
 }
+
+/* --------------- Mentions */
+
+.bx-mention-row img {
+    width:1rem;
+    height:1rem;
+    vertical-align:middle;
+}
+
+.bx-mention-row span {
+    vertical-align:middle;
+}
+

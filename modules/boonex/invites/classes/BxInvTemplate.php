@@ -41,6 +41,27 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
     	return $this->parseHtmlByName('request_text.html', array(
 			'style_prefix' => $this->_oConfig->getPrefix('style'),
 			'text' => bx_process_output(nl2br($aRequest['text']), BX_DATA_TEXT_MULTILINE),
+            'bx_if:show_date_invite' => array(
+    			'condition' => $aRequest['date_invite'] != '',
+    			'content' => array(
+    				'title' => _t('_bx_invites_grid_column_title_date_invite'),
+                    'value' => bx_time_js($aRequest['date_invite'], BX_FORMAT_DATE_TIME, true)
+    			)
+    		),
+            'bx_if:show_date_seen' => array(
+    			'condition' => $aRequest['date_seen'] != '',
+    			'content' => array(
+    				'title' => _t('_bx_invites_grid_column_title_date_seen'),
+                    'value' => bx_time_js($aRequest['date_seen'], BX_FORMAT_DATE_TIME, true)
+    			)
+    		),
+            'bx_if:show_date_joined' => array(
+    			'condition' => $aRequest['date_joined'] != '',
+    			'content' => array(
+    				'title' => _t('_bx_invites_grid_column_title_date_joined'),
+                    'value' => bx_time_js($aRequest['date_joined'], BX_FORMAT_DATE_TIME, true)
+    			)
+    		)
 		));
     }
 
@@ -161,7 +182,8 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 	public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
         $aParams = array_merge(array(
-            'aHtmlIds' => $this->_oConfig->getHtmlIds()
+            'aHtmlIds' => $this->_oConfig->getHtmlIds(),
+            'sObjNameGrid' => $this->_oConfig->getObject('grid_requests'),
         ), $aParams);
 
         return parent::getJsCode($sType, $aParams, $bWrap);
