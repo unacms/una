@@ -202,6 +202,7 @@ ul.bx-menu-main-submenu {
     padding:0;
 }
 ul.bx-menu-toolbar li {
+	position:relative;
     float:left;
     margin:0px;
 } 
