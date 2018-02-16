@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    BxShowcaseViewInit();
+    bx_showcase_view_init();
 });
 
-function BxShowcaseViewInit() {
+function bx_showcase_view_init() {
     $('.bx-base-unit-showcase-wrapper').flickity({
         cellSelector: '.bx-base-unit-showcase',
         cellAlign: 'left',

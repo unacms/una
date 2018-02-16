@@ -168,7 +168,7 @@ function loadDynamicBlock(iBlockID, sUrl) {
     
     var oCallback = null;
     if($('#bx-page-block-' + iBlockID + ' .bx-base-unit-showcase-wrapper').length){
-        oCallback = BxShowcaseViewInit;
+        oCallback = bx_showcase_view_init;
     }
     getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(sUrl, 'dynamic=tab&pageBlock=' + iBlockID), oCallback);
     return true;
