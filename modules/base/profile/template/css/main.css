@@ -76,11 +76,6 @@ p.bx-base-pofile-unit-ava {
     font-weight: 700;
 }
 	
-.bx-base-pofile-unit-info,
-.bx-base-pofile-unit-title {
-    min-width:17.5rem;
-}
-
 .bx-base-pofile-unit-with-cover {
     display:inline-block;
     overflow:hidden;

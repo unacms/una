@@ -21,6 +21,16 @@
     width:33.4%;
 }
 
+/* layout bar content bar */
+
+.bx-layout-bcb-bar1,
+.bx-layout-bcb-bar2 {
+    width:25.0%;
+}
+.bx-layout-bcb-content {
+    width:50.0%;
+}
+
 /* layout 2 columns */
 
 .bx-layout-2-columns-column1,

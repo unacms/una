@@ -2045,11 +2045,13 @@
 	<string name="_sys_layout_2_columns"><![CDATA[2 столбца]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 столбца]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[С левой линейкой]]></string>
+	<string name="_sys_layout_bar_content_bar"><![CDATA[С левой и правой линейками]]></string>
 	<string name="_sys_layout_bar_right"><![CDATA[С правой линейкой]]></string>
 	<string name="_sys_layout_bottom_area_2_columns"><![CDATA[Нижнее пространство с 2 столбцами сверху]]></string>
 	<string name="_sys_layout_top_area_2_columns"><![CDATA[Верхнее пространство с 2 столбцами]]></string>
 	<string name="_sys_layout_top_area_3_columns"><![CDATA[Верхнее пространство с 3 столбцами]]></string>
 	<string name="_sys_layout_top_area_bar_left"><![CDATA[Верхнее пространство с левой линейкой]]></string>
+	<string name="_sys_layout_top_area_bar_content_bar"><![CDATA[Верхнее пространство с левой и правой линейками]]></string>
 	<string name="_sys_layout_top_area_bar_right"><![CDATA[Верхнее пространство с правой линейкой]]></string>
 	<string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Верхнее и нижнее пространства с 2 столбцами посередине]]></string>
 	<string name="_sys_layout_topbottom_area_bar_left"><![CDATA[Верхнее и нижнее пространства с левой линейкой посередине]]></string>

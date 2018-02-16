@@ -3983,7 +3983,9 @@ INSERT INTO `sys_pages_layouts` (`id`, `name`, `icon`, `title`, `template`, `cel
 (10, 'topbottom_area_2_columns', 'layout_topbottom_area_2_columns.png', '_sys_layout_topbottom_area_2_columns', 'layout_topbottom_area_2_columns.html', 4),
 (11, 'bottom_area_2_columns', 'layout_bottom_area_2_columns.png', '_sys_layout_bottom_area_2_columns', 'layout_bottom_area_2_columns.html', 3),
 (12, 'topbottom_area_bar_right', 'layout_topbottom_area_bar_right.png', '_sys_layout_topbottom_area_bar_right', 'layout_topbottom_area_bar_right.html', 4),
-(13, 'topbottom_area_bar_left', 'layout_topbottom_area_bar_left.png', '_sys_layout_topbottom_area_bar_left', 'layout_topbottom_area_bar_left.html', 4);
+(13, 'topbottom_area_bar_left', 'layout_topbottom_area_bar_left.png', '_sys_layout_topbottom_area_bar_left', 'layout_topbottom_area_bar_left.html', 4),
+(14, 'bar_content_bar', 'layout_bar_content_bar.png', '_sys_layout_bar_content_bar', 'layout_bar_content_bar.html', 3),
+(15, 'top_area_bar_content_bar', 'layout_top_area_bar_content_bar.png', '_sys_layout_top_area_bar_content_bar', 'layout_top_area_bar_content_bar.html', 4);
 
 CREATE TABLE IF NOT EXISTS `sys_pages_design_boxes` (
   `id` int(11) NOT NULL,

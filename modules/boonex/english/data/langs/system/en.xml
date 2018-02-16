@@ -2046,11 +2046,13 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_layout_2_columns"><![CDATA[2 columns]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 columns]]></string>
 	<string name="_sys_layout_bar_left"><![CDATA[With left bar]]></string>
+	<string name="_sys_layout_bar_content_bar"><![CDATA[With left and right bars]]></string>
 	<string name="_sys_layout_bar_right"><![CDATA[With right bar]]></string>
 	<string name="_sys_layout_bottom_area_2_columns"><![CDATA[Bottom area with 2 columns at top]]></string>
 	<string name="_sys_layout_top_area_2_columns"><![CDATA[Top area with 2 columns]]></string>
 	<string name="_sys_layout_top_area_3_columns"><![CDATA[Top area with 3 columns]]></string>
 	<string name="_sys_layout_top_area_bar_left"><![CDATA[Top area with left bar]]></string>
+	<string name="_sys_layout_top_area_bar_content_bar"><![CDATA[Top area with left and right bars]]></string>
 	<string name="_sys_layout_top_area_bar_right"><![CDATA[Top area with right bar]]></string>
 	<string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Top&bottom areas with 2 columns in the middle]]></string>
 	<string name="_sys_layout_topbottom_area_bar_left"><![CDATA[Top&bottom areas with left bar in the middle]]></string>
