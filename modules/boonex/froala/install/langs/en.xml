@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_sys_module_froala"><![CDATA[Froala]]></string>
+	<string name="_bx_froala"><![CDATA[Froala]]></string>
+
+	<string name="_bx_froala_setting"><![CDATA[Froala Setting]]></string>
+    <string name="_bx_froala_adm_stg_cpt_type"><![CDATA[Froala]]></string>
+    <string name="_bx_froala_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    <string name="_bx_froala_option_api_key"><![CDATA[Froala option]]></string>
+
+	<string name="_bx_froala_information"><![CDATA[Information]]></string>
+    <string name="_bx_froala_information_block"><![CDATA[Info here]]></string>
+</resources>
