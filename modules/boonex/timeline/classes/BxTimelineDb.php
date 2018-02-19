@@ -8,7 +8,7 @@
  *
  * @{
  */
-
+//TODO: Apply check for PROMOTED
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
     protected $_sTablesRepostTrack;
@@ -383,7 +383,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         		$aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart($aPrivacyGroups);
         		$sWhereClause .= $aQueryParts['where'] . " ";
 
-        		$sWhereClause .= $this->prepareAsString("AND (SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "' OR `{$this->_sTable}`.`owner_id`=?) ", 0);
+        		//--- Select All System posts
+        		$sWhereSubclause = "SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "'";
+
+        		//--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
+        		$sWhereSubclause .= $this->prepareAsString(" OR `{$this->_sTable}`.`owner_id`=?", 0);
 		        break;
 
 			case BX_BASE_MOD_NTFS_TYPE_OWNER:
@@ -391,12 +395,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 					break;
 
                 //--- Select Own (System and Direct) posts from Profile's Timeline.
-				$sWhereSubclause = "(`{$this->_sTable}`.`owner_id` = ?)";
+				$sWhereSubclause = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
 
 				//--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-				$sWhereSubclause .= " || (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))";
-
-				$sWhereClause .= $this->prepareAsString("AND (" . $sWhereSubclause . ") ", $aParams['owner_id'], $aParams['owner_id']);
+				$sWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
 				break;
 
 			case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
@@ -414,8 +416,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				//--- Join System and Direct posts made by following members.  
 				$sJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
 
-				//--- Exclude Own (Direct) posts on timelines of following members. 
-				$sWhereClause .= $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1) ", $aParams['owner_id']);
+				//--- Exclude Own (Direct) posts on timelines of following members.
+                $sWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
 				break;
 
 			case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
@@ -434,16 +436,21 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$sJoinClause .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
 				
 				//--- Select Own (System and Direct) posts from Profile's Timeline.
-				$sWhereSubclause = "(`{$this->_sTable}`.`owner_id` = ?)";
+				$sWhereSubclause = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
 				
 				//--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-				$sWhereSubclause .= " || (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))";
+				$sWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
 				//--- Exclude Own (Direct) posts on timelines of following members. 
-				$sWhereSubclause .= " || (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))";
-
-				$sWhereClause .= $this->prepareAsString("AND (" . $sWhereSubclause . ") ", $aParams['owner_id'], $aParams['owner_id'], $aParams['owner_id']);
+				$sWhereSubclause .= $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
 			    break;
+		}
+
+		if(!empty($sWhereSubclause)) {
+		    //--- Select Promoted posts.
+		    $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
+
+		    $sWhereClause .= "AND (" . $sWhereSubclause . ") ";
 		}
 
 		return array($sJoinClause, $sWhereClause);

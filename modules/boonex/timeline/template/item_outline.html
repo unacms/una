@@ -1,7 +1,13 @@
 <div id="__html_id__" class="__style_prefix__-item __class__">
 	<div class="__style_prefix__-item-ind bx-def-padding-sec">
 	    <div class="__style_prefix__-item-cnt bx-def-box bx-def-padding bx-def-round-corners __class_content__">
-	    	<div class="__style_prefix__-item-owner bx-def-margin-bottom"> 
+            <bx_if:show_note>
+	            <div class="__style_prefix__-item-note">
+	                <div class="__style_prefix__-in-text bx-def-font-grayed<bx_if:show_note_color> col-__item_note_color__</bx_if:show_note_color>">__item_note__</div>
+	                <div class="__style_prefix__-in-divider bx-def-hr bx-def-margin-sec-topbottom"></div>
+	            </div>
+	        </bx_if:show_note>
+	    	<div class="__style_prefix__-item-owner"> 
 		       	<div class="__style_prefix__-owner-avatar bx-def-thumb-size">__item_owner_unit__</div>
 				<div class="__style_prefix__-owner-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
 				    <!-- NOTE: Spaces after and between elements in 'owner-name' DIV are needed for better line folding -->
@@ -19,14 +25,14 @@
 					</div>
 				</div>
 			</div>
-			__content__
+			<div class="__style_prefix__-item-content bx-def-margin-sec-top bx-clearfix">__content__</div>
 			<bx_if:show_location>
-				<div class="__style_prefix__-item-location bx-def-margin-top bx-def-font-grayed bx-clearfix">__location__</div>
+				<div class="__style_prefix__-item-location bx-def-margin-sec-top bx-def-font-grayed bx-clearfix">__location__</div>
 			</bx_if:show_location>
 			<bx_if:show_menu_item_actions>
-				<div class="__style_prefix__-item-activity bx-def-margin-top bx-clearfix">__menu_item_actions__</div>
+				<div class="__style_prefix__-item-activity bx-def-margin-sec-top bx-clearfix">__menu_item_actions__</div>
 			</bx_if:show_menu_item_actions>
-			<div class="__style_prefix__-item-comments-holder bx-def-font-middle">__comments__</div>
+			<div class="__style_prefix__-item-comments-holder">__comments__</div>
 		</div>
 	</div>
 </div>

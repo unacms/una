@@ -54,6 +54,7 @@
 	<string name="_bx_timeline_acl_action_repost"><![CDATA[Сделать репост]]></string>
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Послать]]></string>
 	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять]]></string>
+	<string name="_bx_timeline_acl_action_promote"><![CDATA[Рекламировать]]></string>
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Хроника новостей профайла]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Хроника новостей профайла]]></string>
@@ -107,6 +108,10 @@
     <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Прикалывать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Откалывать]]></string>
     <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Откалывать]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_promote"><![CDATA[Рекламировать]]></string>
+    <string name="_bx_timeline_menu_item_title_item_promote"><![CDATA[Рекламировать]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unpromote"><![CDATA[Не рекламировать]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Не рекламировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Удалить]]></string>
 
@@ -147,6 +152,7 @@
     <string name="_bx_timeline_alert_action_repost"><![CDATA[добавить репост]]></string>
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Пусто]]></string>
+	<string name="_bx_timeline_txt_msg_performed_action"><![CDATA[Действие было успешно выполнено.]]></string>
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 	<string name="_bx_timeline_txt_err_empty_post"><![CDATA[Сообщение пусто.]]></string>
 
@@ -155,7 +161,7 @@
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Перейти к {0} году]]></string>
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Перейти к недавним сообщениям]]></string>
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>
-
+    <string name="_bx_timeline_txt_promoted"><![CDATA[Рекламируемое событие]]></string>
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[добавил {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} добавил {1}]]></string>

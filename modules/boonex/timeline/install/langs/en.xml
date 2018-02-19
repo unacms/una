@@ -54,6 +54,7 @@
 	<string name="_bx_timeline_acl_action_repost"><![CDATA[Repost]]></string>
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Send]]></string>
 	<string name="_bx_timeline_acl_action_pin"><![CDATA[Pin]]></string>
+	<string name="_bx_timeline_acl_action_promote"><![CDATA[Promote]]></string>
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Profile Feed]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Profile Feed]]></string>
@@ -107,6 +108,10 @@
     <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Pin]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Unpin]]></string>
     <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Unpin]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_promote"><![CDATA[Promote]]></string>
+    <string name="_bx_timeline_menu_item_title_item_promote"><![CDATA[Promote]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unpromote"><![CDATA[Unpromote]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Unpromote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Delete]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Delete]]></string>
 
@@ -147,6 +152,7 @@
 	<string name="_bx_timeline_alert_action_repost"><![CDATA[repost]]></string>
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Empty]]></string>
+	<string name="_bx_timeline_txt_msg_performed_action"><![CDATA[The action was successfully performed.]]></string>
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 	<string name="_bx_timeline_txt_err_empty_post"><![CDATA[The post is empty.]]></string>
 
@@ -155,7 +161,7 @@
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string>
-
+	<string name="_bx_timeline_txt_promoted"><![CDATA[Promoted post]]></string>
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[added {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>

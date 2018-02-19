@@ -100,6 +100,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		));
     }
 
+    function actionPromote()
+    {
+        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+
+        $mixedAllowed = $this->{'isAllowed' . ((int)$aEvent['promoted'] == 0 ? 'Promote' : 'Unpromote')}($aEvent, true);
+        if($mixedAllowed !== true)
+            return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
+
+		$aEvent['promoted'] = (int)$aEvent['promoted'] == 0 ? time() : 0;
+        if(!$this->_oDb->updateEvent(array('promoted' => $aEvent['promoted']), array('id' => $iId)))
+        	return echoJson(array('code' => 2));
+
+		echoJson(array(
+			'code' => 0, 
+			'message' => _t('_bx_timeline_txt_msg_performed_action')
+		));
+    }
+
     function actionDelete()
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
@@ -1671,6 +1692,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_isAllowedPin($aEvent, $bPerform);
     }
 
+    public function isAllowedPromote($aEvent, $bPerform = false)
+    {
+    	if((int)$aEvent['promoted'] != 0)
+    		return false;
+
+        return $this->_isAllowedPromote($aEvent, $bPerform);
+    }
+
+	public function isAllowedUnpromote($aEvent, $bPerform = false)
+    {
+    	if((int)$aEvent['promoted'] == 0)
+    		return false;
+
+        return $this->_isAllowedPromote($aEvent, $bPerform);
+    }
+
     public function isAllowedMore($aEvent, $bPerform = false)
     {
     	$oMoreMenu = $this->getManageMenuObject();
@@ -1997,6 +2034,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
         if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_pin', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+    }
+
+    protected function _isAllowedPromote($aEvent, $bPerform = false)
+    {
+        if(isAdmin())
+            return true;
+
+        $iUserId = (int)$this->getUserId();
+        if($iUserId == 0)
+            return false;
+
+        $aCheckResult = checkActionModule($iUserId, 'promote', $this->getName(), $bPerform);
+
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_promote', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }

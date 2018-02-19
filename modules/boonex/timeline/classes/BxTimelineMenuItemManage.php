@@ -67,6 +67,16 @@ class BxTimelineMenuItemManage extends BxTemplMenu
 				$aCheckFuncParams = array($this->_aEvent);
                 break;
 
+            case 'item-promote':
+                $sCheckFuncName = 'isAllowedPromote';
+				$aCheckFuncParams = array($this->_aEvent);
+                break;
+
+			case 'item-unpromote':
+                $sCheckFuncName = 'isAllowedUnpromote';
+				$aCheckFuncParams = array($this->_aEvent);
+                break;
+
             case 'item-delete':
                 $sCheckFuncName = 'isAllowedDelete';
 				$aCheckFuncParams = array($this->_aEvent);

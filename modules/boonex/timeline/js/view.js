@@ -280,6 +280,37 @@ BxTimelineView.prototype.onPinPost = function(oData) {
 	}
 };
 
+BxTimelineView.prototype.promotePost = function(oLink, iId, iWay) {
+	var $this = this;
+    var oData = this._getDefaultData();
+    oData['id'] = iId;
+
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({
+		onHide: function(oPopup) {
+			$(oPopup).remove();
+		}
+	});
+
+    var oLoadingContainer = null;
+    if(this.bViewTimeline)
+    	oLoadingContainer = $(this.sIdItemTimeline + iId);
+    if(this.bViewOutline)
+    	oLoadingContainer = $(this.sIdItemOutline + iId);
+
+    this.loadingInItem(oLoadingContainer, true);
+
+    $.post(
+        this._sActionsUrl + 'promote/',
+        oData,
+        function(oData) {
+        	$this.loadingInItem(oLoadingContainer, false);
+
+        	processJsonData(oData);
+        },
+        'json'
+    );
+};
+
 BxTimelineView.prototype.deletePost = function(oLink, iId) {
     var $this = this;
     var oData = this._getDefaultData();

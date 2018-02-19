@@ -786,6 +786,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
 
+        $aTmplVarsNote = $this->_getTmplVarsNote($aEvent);
+
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
 
         $aTmplVarsTimelineOwner = array();
@@ -805,6 +807,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'class' => $bBrowseItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
         	'class_content' => $bBrowseItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
             'id' => $aEvent['id'],
+            'bx_if:show_note' => array(
+                'condition' => !empty($aTmplVarsNote),
+                'content' => $aTmplVarsNote
+            ),
             'bx_if:show_owner_icon' => array(
                 'condition' => $bAuthorIcon,
                 'content' => array(
@@ -1151,6 +1157,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 )
             )
         );
+    }
+
+    protected function _getTmplVarsNote($aEvent)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        $aTmplVars = array();
+        if((int)$aEvent['promoted'] != 0)
+            $aTmplVars = array(
+                'style_prefix' => $sStylePrefix,
+                'bx_if:show_note_color' => array(
+                    'condition' => false,
+                    'content' => array(
+                        'item_note_color' => 'red1',
+                    )
+                ),
+                'item_note' => _t('_bx_timeline_txt_promoted')
+            );
+
+        return $aTmplVars;
     }
 
     protected function _getSystemData(&$aEvent, $aBrowseParams = array())

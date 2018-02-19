@@ -123,6 +123,12 @@ div.bx-tl-item-text div.bx-tl-content-show-more {
     text-transform: lowercase;
     text-align: center;
 }
+div.bx-tl-item-text div.bx-tl-content p {
+	margin-top: 10px;
+	margin-top: 0.625rem;
+	margin-bottom: 10px;
+	margin-bottom: 0.625rem;
+}
 
 /*--- Item Images Style ---*/
 div.bx-tl-item div.bx-tl-item-images {
