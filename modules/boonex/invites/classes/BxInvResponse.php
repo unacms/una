@@ -11,8 +11,8 @@
 
 class BxInvResponse extends BxDolAlertsResponse
 {
-	protected $_sModule;
-	protected $_oModule;
+    protected $_sModule;
+    protected $_oModule;
 
     public function __construct()
     {
@@ -29,11 +29,11 @@ class BxInvResponse extends BxDolAlertsResponse
      */
     public function response($oAlert)
     {
-		$sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
-		if(!method_exists($this, $sMethod))
-			return;
+        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
+        if(!method_exists($this, $sMethod))
+            return;
 
-		return $this->$sMethod($oAlert);
+        return $this->$sMethod($oAlert);
     }
 
     protected function _processAccountAddForm($oAlert)
@@ -45,25 +45,31 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAdded($oAlert)
     {
-    	if(!$this->_oModule->_oConfig->isRegistrationByInvitation())
-    		return;
+        if(!$this->_oModule->_oConfig->isRegistrationByInvitation())
+            return;
 
-    	$sKeyCode = $this->_oModule->_oConfig->getKeyCode();
-    	$sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
-    	if($sKey === false)
-    		return;
+        $sKeyCode = $this->_oModule->_oConfig->getKeyCode();
+        $sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
+        if($sKey === false)
+            return;
         $this->_oModule->attachAccountIdToInvite($oAlert->iObject, $sKey);
-
-		$oKeys = BxDolKey::getInstance();
-    	if($oKeys && $oKeys->isKeyExists($sKey))
-    		$oKeys->removeKey($sKey);
-
-    	return;
+        
+        $sKeysToRemove = $this->_oModule->_oDb->getInvites(array('type' => 'invites_code_by_single', 'value' => $sKey));
+        $aKeysToRemove = explode(',', $sKeysToRemove);
+        $oKeys = BxDolKey::getInstance();
+        if($oKeys){
+            foreach($aKeysToRemove as $sKeyToRemove) {
+                if($oKeys->isKeyExists($sKeyToRemove))
+                    $oKeys->removeKey($sKeyToRemove);
+            }
+        }
+        
+        return;
     }
 
     protected function _processProfileDelete($oAlert)
     {
-    	$this->_oModule->_oDb->deleteInvites(array('profile_id' => $oAlert->iObject));
+        $this->_oModule->_oDb->deleteInvites(array('profile_id' => $oAlert->iObject));
     }
 }
 

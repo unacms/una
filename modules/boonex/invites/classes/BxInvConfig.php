@@ -28,26 +28,26 @@ class BxInvConfig extends BxBaseModGeneralConfig
         parent::__construct($aModule);
 
         $this->CNF = array (
-        	'URL_INVITE' => 'page.php?i=invites-invite',
-        	'URL_REQUEST' => 'page.php?i=invites-request',
-        	'URL_REQUESTS' => 'page.php?i=invites-requests',
+            'URL_INVITE' => 'page.php?i=invites-invite',
+            'URL_REQUEST' => 'page.php?i=invites-request',
+            'URL_REQUESTS' => 'page.php?i=invites-requests',
             
             'TABLE_REQUESTS' => $aModule['db_prefix'] . 'requests',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
         );
 
-		$this->_aObjects = array(
-			'alert' => $this->_sName,
-			'grid_requests' => $this->_sName . '_requests',
-			'form_invite' => $this->_sName . '_invite',
-			'form_request' => $this->_sName . '_request',
-			'form_display_invite_send' => $this->_sName . '_invite_send',
-			'form_display_request_send' => $this->_sName . '_request_send',
-		);
+        $this->_aObjects = array(
+            'alert' => $this->_sName,
+            'grid_requests' => $this->_sName . '_requests',
+            'form_invite' => $this->_sName . '_invite',
+            'form_request' => $this->_sName . '_request',
+            'form_display_invite_send' => $this->_sName . '_invite_send',
+            'form_display_request_send' => $this->_sName . '_request_send',
+        );
 
-		$this->_aPrefixes = array(
-        	'style' => 'bx-inv',
-        	'option' => 'bx_invites_',
+        $this->_aPrefixes = array(
+            'style' => 'bx-inv',
+            'option' => 'bx_invites_',
         );
 
         $this->_iCountPerUser = 0;
@@ -58,7 +58,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_bRegistrationByInvitation = true;
 
         $this->_aJsClasses = array(
-        	'main' => 'BxInvMain',
+            'main' => 'BxInvMain',
         );
         $this->_aJsObjects = array(
             'main' => 'oInvMain',
@@ -66,8 +66,8 @@ class BxInvConfig extends BxBaseModGeneralConfig
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array(
-        	'link_popup' => $sHtmlPrefix . '-link-popup',
-        	'link_input' => $sHtmlPrefix . '-link-input',
+            'link_popup' => $sHtmlPrefix . '-link-popup',
+            'link_input' => $sHtmlPrefix . '-link-input',
         );
     }
 
@@ -84,17 +84,17 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_bRegistrationByInvitation = getParam($sOptionPrefix . 'enable_reg_by_inv') == 'on';
     }
 
-	public function getCountPerUser()
+    public function getCountPerUser()
     {
         return $this->_iCountPerUser;
     }
 
-	public function getKeyCode()
+    public function getKeyCode()
     {
         return $this->_sKeyCode;
     }
 
-	public function getKeyLifetime()
+    public function getKeyLifetime()
     {
         return $this->_iKeyLifetime;
     }
@@ -109,12 +109,12 @@ class BxInvConfig extends BxBaseModGeneralConfig
         return $this->_sRequestsEmail;
     }
 
-	public function isRegistrationByInvitation()
+    public function isRegistrationByInvitation()
     {
         return $this->_bRegistrationByInvitation;
     }
 
-	public function getHtmlIds($sKey = '')
+    public function getHtmlIds($sKey = '')
     {
         if(empty($sKey))
             return $this->_aHtmlIds;
