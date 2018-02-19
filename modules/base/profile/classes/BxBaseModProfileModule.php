@@ -326,6 +326,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return true;
     }
 
+    public function serviceBrowseRecommended ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('recommended', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
+    
     public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false)
     {
         return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);

@@ -92,13 +92,20 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         }
     }
     
+    protected function getItemPerPageInShowCase ()
+    {
+        $iPerPageInShowCase = BX_SYS_PER_PAGE_BROWSE_SHOWCASE;
+        $CNF = &$this->oModule->_oConfig->CNF;
+        if (isset($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']))
+            $iPerPageInShowCase =  getParam($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']);
+        return $iPerPageInShowCase;
+    }
+    
     function displayResultBlock ()
     {
 		if ($this->bShowcaseView){
             $this->addContainerClass(array('bx-def-margin-sec-lefttopright-neg', 'bx-base-unit-showcase-wrapper'));
-            $CNF = &$this->oModule->_oConfig->CNF;
-            $iPerPageInShowCase = isset($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']) ? getParam($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']) : BX_SYS_PER_PAGE_BROWSE_SHOWCASE;
-			$this->aCurrent['paginate']['perPage'] = empty($iPerPageInShowCase) ? BX_SYS_PER_PAGE_BROWSE_SHOWCASE : $iPerPageInShowCase;
+			$this->aCurrent['paginate']['perPage'] = $this->getItemPerPageInShowCase();
 			$this->oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
             $this->oModule->_oTemplate->addJs(array('flickity/flickity.pkgd.min.js','modules/base/general/js/|showcase.js'));
 		}

@@ -83,6 +83,9 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'PARAM_PUBLIC_SBSD' => 'bx_persons_public_subscribed_me',
             'PARAM_REDIRECT_AADD' => 'bx_persons_redirect_aadd',
             'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_persons_redirect_aadd_custom_url',
+            
+            'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_persons_per_page_browse_showcase',
+            'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_persons_per_page_browse_recommended',
 
             // objects
             'OBJECT_STORAGE' => 'bx_persons_pictures',
