@@ -44,7 +44,8 @@
   <string name="_bx_invites_grid_column_title_status"><![CDATA[Status]]></string>
 
 	<string name="_bx_invites_grid_action_title_adm_info"><![CDATA[Info]]></string>
-	<string name="_bx_invites_grid_action_title_adm_invite"><![CDATA[Invite]]></string>
+  <string name="_bx_invites_grid_action_title_adm_invite_info"><![CDATA[Invitation info]]></string>
+  <string name="_bx_invites_grid_action_title_adm_invite"><![CDATA[Invite]]></string>
 	<string name="_bx_invites_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
   <string name="_bx_invites_grid_action_title_adm_add"><![CDATA[Send invitations]]></string>
 
@@ -137,11 +138,13 @@
 	<string name="_bx_invites_err_used"><![CDATA[The invitation link isn't available or already used.]]></string>
   <string name="_bx_invites_request_status_new"><![CDATA[New]]></string>
   <string name="_bx_invites_request_status_invited"><![CDATA[Invited]]></string>
-  <string name="_bx_invites_request_status_seen"><![CDATA[Joined]]></string>
+  <string name="_bx_invites_request_status_seen"><![CDATA[Seen]]></string>
   <string name="_bx_invites_request_status_joined"><![CDATA[Joined]]></string>
   <string name="_bx_invites_request_status_for_filter_all"><![CDATA[All requests]]></string>
   <string name="_bx_invites_request_status_for_filter_new"><![CDATA[New requests]]></string>
   <string name="_bx_invites_request_status_for_filter_invited"><![CDATA[Requests with invites]]></string>
   <string name="_bx_invites_request_status_for_filter_seen"><![CDATA[Invite seen]]></string>
   <string name="_bx_invites_request_status_for_filter_joined"><![CDATA[Joined]]></string>
+  <string name="_bx_invites_title_date_invite_sent"><![CDATA[Date sent]]></string>
+  <string name="_bx_invites_title_date_invite_seen"><![CDATA[Date seen]]></string>
 </resources>

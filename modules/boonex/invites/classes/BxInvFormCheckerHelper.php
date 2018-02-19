@@ -13,12 +13,12 @@ bx_import('BxDolForm');
 
 class BxInvFormCheckerHelper extends BxDolFormCheckerHelper
 {
-	static public function checkEmails($s)
+    static public function checkEmails($s)
     {
-    	$aEmails = preg_split("/[\s\n,;]+/", $s);
-    	foreach($aEmails as $sEmail)
-    		if(!empty($sEmail) && !self::checkEmail($sEmail))
-    			return false;
+        $aEmails = preg_split("/[\s\n,;]+/", $s);
+        foreach($aEmails as $sEmail)
+            if(!empty($sEmail) && !self::checkEmail($sEmail))
+                return false;
 
         return true;
     }

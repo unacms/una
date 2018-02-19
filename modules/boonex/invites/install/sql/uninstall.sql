@@ -1,10 +1,8 @@
 SET @sName = 'bx_invites';
 
-
 -- TABLES
 DROP TABLE IF EXISTS `bx_inv_invites`;
 DROP TABLE IF EXISTS `bx_inv_requests`;
-
 
 -- FORMS ALL
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN  (SELECT `display_name` FROM `sys_form_displays` WHERE `module` = @sName);

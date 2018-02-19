@@ -165,7 +165,12 @@ function loadDynamicBlockAuto(e, sUrl) {
 }
 
 function loadDynamicBlock(iBlockID, sUrl) {
-    getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(sUrl, 'dynamic=tab&pageBlock=' + iBlockID));
+    
+    var oCallback = null;
+    if($('#bx-page-block-' + iBlockID + ' .bx-base-unit-showcase-wrapper').length){
+        oCallback = bx_showcase_view_init;
+    }
+    getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(sUrl, 'dynamic=tab&pageBlock=' + iBlockID), oCallback);
     return true;
 }
 

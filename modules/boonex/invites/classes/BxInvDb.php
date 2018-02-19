@@ -29,23 +29,70 @@ class BxInvDb extends BxDolModuleDb
         $this->_sTableRequests = $CNF['TABLE_REQUESTS'];
     }
 
-	public function getInvites($aParams, $bReturnCount = false)
+    public function getInvites($aParams, $bReturnCount = false)
     {
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "`{$this->_sTableInvites}`.*";
 
         switch($aParams['type']) {
             case 'count_by_account':
-            	$aMethod['name'] = 'getOne';
+                $aMethod['name'] = 'getOne';
                 $aMethod['params'][1] = array(
-                	'account_id' => $aParams['value']
+                    'account_id' => $aParams['value']
                 );
 
                 $sSelectClause = "COUNT(`{$this->_sTableInvites}`.`id`) AS `count`";
                 $sWhereClause = "AND `{$this->_sTableInvites}`.`account_id`=:account_id ";
                 $sLimitClause = "LIMIT 1";
+                break;
+            case 'count_by_request':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                    'request_id' => $aParams['value']
+                );
+
+                $sSelectClause = "COUNT(`{$this->_sTableInvites}`.`id`) AS `count`";
+                $sWhereClause = "AND `{$this->_sTableInvites}`.`request_id`=:request_id ";
+                $sLimitClause = "LIMIT 1";
+                break;
+            case 'account_by_request':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                    'request_id' => $aParams['value']
+                );
+
+                $sSelectClause = "MAX(`{$this->_sTableInvites}`.`joined_account_id`)";
+                $sWhereClause = "AND joined_account_id IS NOT NULL AND `{$this->_sTableInvites}`.`request_id`=:request_id ";
+                $sLimitClause = "LIMIT 1";
+                break;
+            case 'date_joined_by_request':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                    'request_id' => $aParams['value']
+                );
+
+                $sSelectClause = "MAX(`{$this->_sTableInvites}`.`date_joined`)";
+                $sWhereClause = "AND joined_account_id IS NOT NULL AND `{$this->_sTableInvites}`.`request_id`=:request_id ";
+                $sLimitClause = "LIMIT 1";
+                break;
+            case 'invites_code_by_single':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                    'keyvalue' => $aParams['value']
+                );
+
+                $sSelectClause = "GROUP_CONCAT(`{$this->_sTableInvites}`.`key` SEPARATOR ',')";
+                $sWhereClause = "AND `{$this->_sTableInvites}`.`request_id` IN (SELECT `request_id` FROM `{$this->_sTableInvites}` WHERE `key`=:keyvalue ) ";
+                $sLimitClause = "";
+                break;
+            case 'all':
+                $aMethod['name'] = 'getAll';
+                $aMethod['params'][1] = array(
+                    'request_id' => $aParams['value']
+                );
+                $sWhereClause = "AND `{$this->_sTableInvites}`.`request_id`=:request_id ";
                 break;
         }
 
@@ -55,15 +102,15 @@ class BxInvDb extends BxDolModuleDb
         $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
-        	return $aEntries;
+            return $aEntries;
 
         $aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
-		return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
+        return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
     }
 
-	public function deleteInvites($aParams)
+    public function deleteInvites($aParams)
     {
         $sSql = "DELETE FROM `{$this->_sTableInvites}` WHERE " . $this->arrayToSQL($aParams, " AND ");
         return $this->query($sSql);
@@ -72,12 +119,13 @@ class BxInvDb extends BxDolModuleDb
     public function attachInviteToRequest($iReqestId, $iInviteId)
     {
         $aBindings = array(
-            'id' => $iReqestId,
-            'invite_id' => $iInviteId
+            'request_id' => $iReqestId,
+            'id' => $iInviteId
         );
-        $this->query("UPDATE `{$this->_sTableRequests}` SET invite_id=:invite_id WHERE id=:id", $aBindings);
+        $this->query("UPDATE `{$this->_sTableInvites}` SET request_id=:request_id WHERE `id`=:id", $aBindings);
+        $this->updateRequestStatusByRequestId(1, $iReqestId);
     }
-    
+     
     public function attachAccountIdToInvite($iAccountId, $sKey)
     {
         $aBindings = array(
@@ -86,6 +134,7 @@ class BxInvDb extends BxDolModuleDb
             'date_joined' => time(),
         );
         $this->query("UPDATE `{$this->_sTableInvites}` SET `joined_account_id`=:joined_account_id, `date_joined`=:date_joined WHERE `key`=:keyvalue", $aBindings);
+        $this->updateRequestStatusByInviteCode(3, $sKey);
     }
     
     public function updateDateSeenForInvite($sKey)
@@ -95,41 +144,41 @@ class BxInvDb extends BxDolModuleDb
             'keyvalue' => $sKey
         );
         $this->query("UPDATE `{$this->_sTableInvites}` SET `date_seen`=:date_seen WHERE `key`=:keyvalue", $aBindings);
+        $this->updateRequestStatusByInviteCode(2, $sKey);
     }
     
-    public function insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate) 
+    public function insertInvite($iAccountId, $iProfileId, $sKey, $sEmail, $iDate)
     {
         $aBindings = array(
-			'account_id' => $iAccountId,
-			'profile_id' => $iProfileId,
-			'keyvalue' => $sKey,
-			'email' => $sEmail,
-			'date' => $iDate
-		);
-        $this->query("INSERT `{$this->_sTableInvites}` (account_id, profile_id, `key`, email, date) VALUES (:account_id, :profile_id, :keyvalue, :email, :date)", $aBindings);  
+            'account_id' => $iAccountId,
+            'profile_id' => $iProfileId,
+            'keyvalue' => $sKey,
+            'email' => $sEmail,
+            'date' => $iDate
+        );
+        $this->query("INSERT `{$this->_sTableInvites}` (account_id, profile_id, `key`, email, date) VALUES (:account_id, :profile_id, :keyvalue, :email, :date)", $aBindings);
         return (int)$this->lastId();
     }
 
-	public function getRequests($aParams, $bReturnCount = false)
+    public function getRequests($aParams, $bReturnCount = false)
     {
-    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
-        $sJoinClause = " LEFT JOIN `{$this->_sTableInvites}` ON `bx_inv_invites`.`id` = `bx_inv_requests`.`invite_id` ";
-        $sSelectClause = "`{$this->_sTableRequests}`.*, `{$this->_sTableInvites}`.`date_seen`, `{$this->_sTableInvites}`.`date_joined`, `{$this->_sTableInvites}`.`joined_account_id` AS joined_account, `{$this->_sTableInvites}`.`date` AS `date_invite` ";
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sWhereClause = $sJoinClause = $sOrderClause = $sLimitClause = "";
+        $sSelectClause = "`{$this->_sTableRequests}`.* ";
 
         switch($aParams['type']) {
-        	case 'by_id':
-        		$aMethod['name'] = 'getRow';
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'id' => $aParams['value']
+                    'id' => $aParams['value']
                 );
 
-        		$sWhereClause = "AND `{$this->_sTableRequests}`.`id`=:id ";
-        		$sLimitClause = "LIMIT 1";
-        		break;
+                $sWhereClause = "AND `{$this->_sTableRequests}`.`id`=:id ";
+                $sLimitClause = "LIMIT 1";
+                break;
 
             case 'count_all':
-            	$aMethod['name'] = 'getOne';
+                $aMethod['name'] = 'getOne';
 
                 $sSelectClause = "COUNT(`{$this->_sTableRequests}`.`id`) AS `count`";
                 $sLimitClause = "LIMIT 1";
@@ -137,17 +186,33 @@ class BxInvDb extends BxDolModuleDb
         }
 
         $sSql = "SELECT {select} FROM `{$this->_sTableRequests}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
-
+       
         $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
         $aEntries = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
         if(!$bReturnCount)
-        	return $aEntries;
+            return $aEntries;
 
-		$aMethod['name'] = 'getOne';
-		$aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
+        $aMethod['name'] = 'getOne';
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
-		return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
+        return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
+    }
+    
+    private function updateRequestStatusByRequestId($iStatus, $iReqestId)
+    {
+        $aBindings = array(
+            'request_id' => $iReqestId,
+            'status' => $iStatus
+        );
+        $this->query("UPDATE `{$this->_sTableRequests}` SET `status`=:status WHERE `id`=:request_id", $aBindings);
+    }
+    
+    private function updateRequestStatusByInviteCode($iStatus, $sKey)
+    {
+        $iReqestId = $this->getOne("SELECT request_id FROM `{$this->_sTableInvites}` WHERE `key`=:keyvalue", array('keyvalue' => $sKey));
+        if ($iReqestId != "")
+            $this->updateRequestStatusByRequestId($iStatus, $iReqestId);
     }
 }
 
