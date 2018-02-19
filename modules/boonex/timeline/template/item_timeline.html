@@ -12,7 +12,7 @@
                 <div class="__style_prefix__-in-divider bx-def-hr bx-def-margin-sec-topbottom"></div>
             </div>
         </bx_if:show_note>
-        <div class="__style_prefix__-item-owner bx-def-margin-leftright"> 
+        <div class="__style_prefix__-item-owner bx-def-margin-leftright __class_owner__"> 
             <div class="__style_prefix__-owner-avatar bx-def-thumb-size">__item_owner_unit__</div>
             <div class="__style_prefix__-owner-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
                 <!-- NOTE: Spaces after and between elements in 'owner-name' DIV are needed for better line folding -->
@@ -21,7 +21,8 @@
                     <bx_if:show_timeline_owner>
                         <i class="sys-icon caret-right"></i> <a href="__owner_url__" class="__style_prefix__-timeline-owner-name">__owner_username__</a> 
                     </bx_if:show_timeline_owner>
-                    <span class="bx-def-font-small"> __item_owner_action__ </span> <span class="bx-bullet-narrow"> </span><a class="__style_prefix__-date bx-base-text-unit-date bx-def-font-small" href="__item_view_url__"> __item_date__ </a> 
+                    <span class="bx-def-font-small"> __item_owner_action__ </span><br /> 
+                    <a class="__style_prefix__-date bx-base-text-unit-date bx-def-font-small" href="__item_view_url__"> __item_date__ </a> 
                     <bx_if:show_pinned>
                         <span class="__style_prefix__-pinned bx-def-margin-thd-left">
                             <i class="sys-icon thumb-tack bx-def-margin-thd-left" title="<bx_text_attribute:_bx_timeline_txt_pinned />"></i>
@@ -29,6 +30,13 @@
                     </bx_if:show_pinned>
                 </div>
             </div>
+            <bx_if:show_owner_actions>
+                <div class="__style_prefix__-owner-actions bx-def-thumb-size-min-height">
+                    <bx_repeat:actions>
+                        <a class="bx-btn bx-btn-small" href="__href__" onclick="__onclick__">__content__</a>
+                    </bx_repeat:actions>
+                </div>
+            </bx_if:show_owner_actions>
         </div>
 		<div class="__style_prefix__-item-content bx-def-margin-leftright bx-def-margin-sec-top bx-clearfix">__content__</div>
 		<bx_if:show_location>

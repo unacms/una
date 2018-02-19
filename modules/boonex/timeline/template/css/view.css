@@ -79,6 +79,10 @@ div.bx-tl-item div.bx-tl-owner-info {
     -webkit-align-items: center;
     align-items: center;
 }
+div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
+    margin-right: 68px;
+    margin-right: 4.25rem;
+}
 div.bx-tl-item div.bx-tl-owner-name {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -94,6 +98,19 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
     cursor: default;
 }
+div.bx-tl-item div.bx-tl-owner-actions {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+	line-height: 48px;
+	line-height: 3rem;
+}
+div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
+    display: inline-block;
+	float: none;
+	vertical-align: middle;
+}
+
 
 /*--- Item Content Style ---*/
 div.bx-tl-item-content {
