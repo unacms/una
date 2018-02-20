@@ -126,7 +126,7 @@ div.bx-tl-item-content div.bx-tl-content iframe {
 }
 div.bx-tl-item-text div.bx-tl-content {
 	position: relative;
-    max-height: 200px;
+    max-height: 1000px;
 
 	text-overflow: ellipsis;
     overflow: hidden;
@@ -230,6 +230,10 @@ div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
 div.bx-tl-view-outline div.bx-tl-item {
 	position: relative;
 }
+div.bx-tl-view-outline div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
+    margin-right: 48px;
+    margin-right: 3.0rem;
+}
 div.bx-tl-view-outline div.bx-tl-item-ind {
 	position: relative;
 }
@@ -289,7 +293,6 @@ div.bx-tl-view-outline div.bx-tl-il-thumbnail img {
 div.bx-tl-view-outline div.bx-tl-il-embed iframe,
 div.bx-tl-view-timeline div.bx-tl-il-embed iframe {
     width: 100%;
-    height: auto;
 }
 
 /*+++ Item Reposted +++*/

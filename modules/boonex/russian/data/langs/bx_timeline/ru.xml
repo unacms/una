@@ -161,7 +161,7 @@
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Перейти к {0} году]]></string>
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Перейти к недавним сообщениям]]></string>
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>
-    <string name="_bx_timeline_txt_promoted"><![CDATA[Рекламируемое событие]]></string>
+    <string name="_bx_timeline_txt_promoted"><![CDATA[Рекламируемое]]></string>
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[добавил {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} добавил {1}]]></string>

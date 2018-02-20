@@ -7,7 +7,7 @@
 	                <div class="__style_prefix__-in-divider bx-def-hr bx-def-margin-sec-topbottom"></div>
 	            </div>
 	        </bx_if:show_note>
-	    	<div class="__style_prefix__-item-owner"> 
+	    	<div class="__style_prefix__-item-owner __class_owner__"> 
 		       	<div class="__style_prefix__-owner-avatar bx-def-thumb-size">__item_owner_unit__</div>
 				<div class="__style_prefix__-owner-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
 				    <!-- NOTE: Spaces after and between elements in 'owner-name' DIV are needed for better line folding -->
@@ -24,6 +24,13 @@
                         </bx_if:show_pinned>
 					</div>
 				</div>
+				<bx_if:show_owner_actions>
+	                <div class="__style_prefix__-owner-actions bx-def-thumb-size-min-height">
+	                    <bx_repeat:actions>
+	                        <a class="bx-btn bx-btn-small" href="__href__" onclick="__onclick__" title="__title__"><i class="sys-icon __icon__"></i></a>
+	                    </bx_repeat:actions>
+	                </div>
+	            </bx_if:show_owner_actions>
 			</div>
 			<div class="__style_prefix__-item-content bx-def-margin-sec-top bx-clearfix">__content__</div>
 			<bx_if:show_location>

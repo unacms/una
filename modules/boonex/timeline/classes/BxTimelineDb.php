@@ -374,6 +374,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 		//--- Check type
 		switch($aParams['type']) {
+		    //--- Site (Public) Feed.
 		    case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
 		        //--- Apply privacy filter
 		        $aPrivacyGroups = array(BX_DOL_PG_ALL);
@@ -388,8 +389,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         		//--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
         		$sWhereSubclause .= $this->prepareAsString(" OR `{$this->_sTable}`.`owner_id`=?", 0);
+
+        		//--- Select Promoted posts.
+		        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
 		        break;
 
+            //--- Profile Feed
 			case BX_BASE_MOD_NTFS_TYPE_OWNER:
 				if(empty($aParams['owner_id']))
 					break;
@@ -401,6 +406,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$sWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
 				break;
 
+            //--- Profile Connections Feed
 			case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
 				if(empty($aParams['owner_id']))
 					break;
@@ -418,8 +424,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 				//--- Exclude Own (Direct) posts on timelines of following members.
                 $sWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
+
+                //--- Select Promoted posts.
+		        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
 				break;
 
+            //--- Profile + Profile Connections Feed
 			case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
 			    if(empty($aParams['owner_id']))
 					break;
@@ -443,15 +453,14 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 				//--- Exclude Own (Direct) posts on timelines of following members. 
 				$sWhereSubclause .= $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
+
+				//--- Select Promoted posts.
+		        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
 			    break;
 		}
 
-		if(!empty($sWhereSubclause)) {
-		    //--- Select Promoted posts.
-		    $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
-
+		if(!empty($sWhereSubclause))
 		    $sWhereClause .= "AND (" . $sWhereSubclause . ") ";
-		}
 
 		return array($sJoinClause, $sWhereClause);
     }

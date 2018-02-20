@@ -793,7 +793,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
 
         $aTmplVarsTimelineOwner = array();
-        if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_BASE_MOD_NTFS_TYPE_CONNECTIONS)
+        if(isset($aBrowseParams['type']) && in_array($aBrowseParams['type'], array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
             $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $sClassOwner = $bTmplVarsOwnerActions ? $sStylePrefix . '-io-with-actions' : '';
@@ -938,23 +938,20 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getTmplVarsTimelineOwner(&$aEvent)
     {
-        $oModule = $this->getModule();
+        $iOwnerId = (int)$aEvent['owner_id'];
+        if($iOwnerId == 0 || $iOwnerId == (int)$aEvent['object_owner_id'])
+            return array();
 
-        $aTmplVarsTimelineOwner = array();
-        if((int)$aEvent['owner_id'] != (int)$aEvent['object_owner_id']) {
-            list($sTimelineAuthorName, $sTimelineAuthorUrl) = $oModule->getUserInfo($aEvent['owner_id']);
+        list($sTimelineAuthorName, $sTimelineAuthorUrl) = $this->getModule()->getUserInfo($aEvent['owner_id']);
 
-            $aTmplVarsTimelineOwner = array(
-            	'style_prefix' => $this->_oConfig->getPrefix('style'),
-                'owner_url' => $sTimelineAuthorUrl,
-                'owner_username' => $sTimelineAuthorName,
-            );
-        }
-
-        return $aTmplVarsTimelineOwner;
+        return array(
+        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'owner_url' => $sTimelineAuthorUrl,
+            'owner_username' => $sTimelineAuthorName,
+        );
     }
 
-    protected function _getTmplVarsContentPost($aEvent, $aBrowseParams = array())
+    protected function _getTmplVarsContentPost(&$aEvent, $aBrowseParams = array())
     {
     	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
@@ -1136,7 +1133,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getTmplVarsContentRepost($aEvent, $aBrowseParams = array())
+    protected function _getTmplVarsContentRepost(&$aEvent, $aBrowseParams = array())
     {
     	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
@@ -1167,7 +1164,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getTmplVarsNote($aEvent)
+    protected function _getTmplVarsNote(&$aEvent)
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
@@ -1187,7 +1184,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aTmplVars;
     }
 
-    protected function _getTmplVarsOwnerActions($aEvent)
+    protected function _getTmplVarsOwnerActions(&$aEvent)
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
@@ -1198,12 +1195,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!empty($iUser) && !empty($iOwner) && !empty($aEvent['promoted'])) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             $oConnection = BxDolConnection::getObjectInstance($sConnection);
-            if(!$oConnection->isConnected($iUser, $iOwner))
+            if(!$oConnection->isConnected($iUser, $iOwner)) {
+                $sContent = _t('_sys_menu_item_title_sm_subscribe');
                 $aTmplVarsActions[] = array(
                     'href' => "javascript:void(0)",
                     'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $iOwner . "')",
-                    'content' => _t('_sys_menu_item_title_sm_subscribe')
+                	'title' => bx_html_attribute($sContent),
+                    'content' => $sContent,
+                    'icon' => 'check'
                 );
+            }
         }
 
         return array(
