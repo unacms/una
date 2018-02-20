@@ -10,11 +10,12 @@
  */
 
 class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
-{    
+{      
+    protected $bRecommendedView = false;
+    
     public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
-        
         $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
         if (!empty($aParams['unit_views']))
             $this->aUnitViews = $aParams['unit_views'];
@@ -28,6 +29,8 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 			$this->bShowcaseView = true;
 			$this->removeContainerClass ('bx-def-margin-bottom-neg');			
         }
+        if ($sMode == 'recommended')
+            $this->bRecommendedView=true;
     }
 
     protected function _setConnectionsConditions ($aParams)
@@ -44,6 +47,28 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
 
         return true;
+    }
+    
+    protected function _setConditionsForRecommended ()
+    {
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions'); 
+        $a = $oConnection->getConnectedContentAsSQLPartsExt ($this->aCurrent['table'], '', '');
+        
+        $aTmp = array(
+            'recommended' => array(
+            'type' => 'LEFT',
+            'table' =>  $a['join']['table'],
+            'mainField' => 'id',
+            'onField' => 'content',
+            'joinFields' => array(),
+            )
+        );
+        $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aTmp);
+        
+        if (isset($this->aCurrent['restriction_sql'])) 
+            $this->aCurrent['restriction_sql'] .= '  AND `' . $a['join']['table'] . '`.`initiator` IS NULL';
+        else
+            $this->aCurrent['restriction_sql'] = '  AND `' . $a['join']['table'] . '`.`initiator` IS NULL';
     }
 
 	protected function _setAclConditions ($aParams)
@@ -101,6 +126,16 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
 
         return true;
+    }
+	
+	function getItemPerPageInShowCase ()
+    {
+        $iPerPageInShowCase = parent::getItemPerPageInShowCase();
+        $CNF = &$this->oModule->_oConfig->CNF;
+		if ($this->bRecommendedView && isset($CNF['PARAM_PER_PAGE_BROWSE_RECOMMENDED'])){
+			$iPerPageInShowCase =  getParam($CNF['PARAM_PER_PAGE_BROWSE_RECOMMENDED']);
+        }
+        return $iPerPageInShowCase;
     }
 }
 
