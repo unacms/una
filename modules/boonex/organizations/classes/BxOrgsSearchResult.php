@@ -149,7 +149,16 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'featured';
                 break;
-
+                
+            case 'recommended':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_groups_page_title_browse_recommended');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'recommended';
+                $this->_setConditionsForRecommended();
+                break; 
+                
             case 'active':
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_active');
@@ -196,6 +205,8 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
         switch ($this->aCurrent['sorting']) {
             case 'featured':
                 return array('order' => ' ORDER BY `bx_organizations_data`.`featured` DESC ');
+            case 'recommended':
+                return array('order' => ' ORDER BY RAND() ');
 	        case 'none':
 	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
 			case 'active':

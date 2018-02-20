@@ -71,6 +71,8 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_groups_num_connections_quick',
 
             'PARAM_SEARCHABLE_FIELDS' => 'bx_groups_searchable_fields',
+            'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_groups_per_page_browse_showcase',
+            'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_groups_per_page_browse_recommended',
 
             // objects
             'OBJECT_STORAGE' => 'bx_groups_pics',

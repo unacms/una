@@ -167,8 +167,11 @@
     <string name="_bx_orgs_page_block_title_entries_actions"><![CDATA[Организации - Действия]]></string>
     <string name="_bx_orgs_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые организации (Витринный просмотр)]]]></string>
     <string name="_bx_orgs_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые организации]]]></string>
+    <string name="_bx_orgs_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Рекомендованные организации (Витринный просмотр)]]></string>
+    <string name="_bx_orgs_page_block_title_recommended_entries_view_showcase"><![CDATA[Рекомендованные организации]]></string>
 
-    <string name="_bx_orgs_menu_title_submenu"><![CDATA[Организации - Подменю]]></string>
+
+  <string name="_bx_orgs_menu_title_submenu"><![CDATA[Организации - Подменю]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Организации - Подменю]]></string>
     <string name="_bx_orgs_menu_set_title_view_profile_actions"><![CDATA[Организации - Действия]]></string>
     <string name="_bx_orgs_menu_title_view_profile_actions"><![CDATA[Организации - Действия]]></string>

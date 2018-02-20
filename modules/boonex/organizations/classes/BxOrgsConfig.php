@@ -85,6 +85,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'PARAM_NUM_RSS' => 'bx_organizations_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_organizations_num_connections_quick',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_organizations_searchable_fields',
+            'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_organizations_per_page_browse_showcase',
+            'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_organizations_per_page_browse_recommended',
         	'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
         	'PARAM_REDIRECT_AADD' => 'bx_organizations_redirect_aadd',

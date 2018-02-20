@@ -97,7 +97,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         $iPerPageInShowCase = BX_SYS_PER_PAGE_BROWSE_SHOWCASE;
         $CNF = &$this->oModule->_oConfig->CNF;
         if (isset($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']))
-            $iPerPageInShowCase =  getParam($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']);
+            $iPerPageInShowCase = getParam($CNF['PARAM_PER_PAGE_BROWSE_SHOWCASE']);
         return $iPerPageInShowCase;
     }
     
