@@ -909,4 +909,24 @@ function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel)
 		onClickCancel: fOnClickCancel
 	});
 }
+
+function bx_get_scripts (aFiles, fCallback) 
+{
+    var 
+        iLength = aFiles.length,
+        aDeferreds = [],
+        iCounter = 0,
+        i = 0,
+        fHandler = function() {
+            if (iCounter++ >= (iLength-1)) {
+                fCallback && fCallback();
+            } 
+            else {
+                $.getScript(aFiles[iCounter]).done(fHandler);
+            }
+        };
+
+    $.getScript(aFiles[iCounter]).done(fHandler);
+}
+
 /** @} */
