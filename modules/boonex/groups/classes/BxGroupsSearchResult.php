@@ -76,7 +76,6 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
 
         $oJoinedProfile = null;
         $bProcessConditionsForPrivateContent = true;
-
         switch ($sMode) {
             case 'created_entries':
                 if(!$this->_setAuthorConditions($sMode, $aParams, $oJoinedProfile)) {
@@ -146,6 +145,15 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['sorting'] = 'featured';
                 break;
 
+            case 'recommended':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_groups_page_title_browse_recommended');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'recommended';
+                $this->_setConditionsForRecommended();
+                break;    
+                
             case 'top':
                 $this->aCurrent['rss']['link'] = 'modules/?r=groups/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_groups_page_title_browse_top');
@@ -174,6 +182,8 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
         switch ($this->aCurrent['sorting']) {
         case 'featured':
             return array('order' => ' ORDER BY `bx_groups_data`.`featured` DESC ');
+        case 'recommended':
+            return array('order' => ' ORDER BY RAND() ');
         case 'none':
             return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
         case 'top':

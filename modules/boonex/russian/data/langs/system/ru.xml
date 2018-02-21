@@ -2574,4 +2574,5 @@
 	<string name="_week_tue"><![CDATA[Вторник]]></string>
 	<string name="_week_wed"><![CDATA[Среда]]></string>
 	<string name="_sys_option_per_page_browse_showcase"><![CDATA[Количество позиций при отображении витриной]]></string>
+  <string name="_sys_option_per_page_browse_recommended"><![CDATA[Количество позиций при отображении рекомендованных]]></string>
 </resources>
