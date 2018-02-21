@@ -1168,18 +1168,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
+        $iUser = bx_get_logged_profile_id();
+        $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
+
         $aTmplVars = array();
-        if((int)$aEvent['promoted'] != 0)
-            $aTmplVars = array(
-                'style_prefix' => $sStylePrefix,
-                'bx_if:show_note_color' => array(
-                    'condition' => false,
-                    'content' => array(
-                        'item_note_color' => 'red1',
-                    )
-                ),
-                'item_note' => _t('_bx_timeline_txt_promoted')
-            );
+        if(!empty($aEvent['promoted']) && $iUser != $iOwner) {
+            $sConnection = $this->_oConfig->getObject('conn_subscriptions');
+            $oConnection = BxDolConnection::getObjectInstance($sConnection);
+            if(!$oConnection->isConnected($iUser, $iOwner))
+                $aTmplVars = array(
+                    'style_prefix' => $sStylePrefix,
+                    'bx_if:show_note_color' => array(
+                        'condition' => false,
+                        'content' => array(
+                            'item_note_color' => 'red1',
+                        )
+                    ),
+                    'item_note' => _t('_bx_timeline_txt_promoted')
+                );
+        }
 
         return $aTmplVars;
     }
@@ -1192,7 +1199,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
 
         $aTmplVarsActions = array();
-        if(!empty($iUser) && !empty($iOwner) && !empty($aEvent['promoted'])) {
+        if(!empty($aEvent['promoted']) && !empty($iUser) && !empty($iOwner) && $iUser != $iOwner) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             $oConnection = BxDolConnection::getObjectInstance($sConnection);
             if(!$oConnection->isConnected($iUser, $iOwner)) {
