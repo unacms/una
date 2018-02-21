@@ -480,23 +480,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             '_copyright'
         ));
 
-        //--- Load Embed.ly if Key and Pattern are available ---//
-        $bEmbedly = !empty(getParam('sys_embedly_api_key'));
-        if($bEmbedly) {
-            $this->addJsSystem(array(
-            	'jquery.embedly.min.js',
-            ));
-
-            $this->addJsOption(array(
-            	'sys_embedly_api_key',
-            	'sys_embedly_api_pattern',
-            ));
-        }
-
         //--- Load Iframely if Key is available and Embed.ly is disabled ---//
         $sIframely = getParam('sys_iframely_api_key');
-        $bIframely = !$bEmbedly && !empty($sIframely);
-        if($bIframely) {
+        if(!empty($sIframely)) {
             $this->addJsSystem(array(
                 bx_proto() . '://cdn.iframe.ly/embed.js?key=' . md5($sIframely)
             ));
