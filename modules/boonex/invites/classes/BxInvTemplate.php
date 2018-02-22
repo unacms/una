@@ -142,7 +142,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         $oAccountQuery = BxDolAccountQuery::getInstance();
         $iAccount = $oAccountQuery->getIdByEmail($sEmail);
         if ($iAccount > 0)
-            return array('content' => MsgBox(_t('_bx_invites_err_already_registed')), 'content_id' => $sFormId, 'eval' => $sEval);
+            return array('content' => MsgBox(str_replace('{forgot_password_url}', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'), _t('_bx_invites_err_already_registed'))), 'content_id' => $sFormId, 'eval' => $sEval);
         $iCountByEmail = $this->_oDb->getRequests(array('type' => 'count_by_email', 'value' => $sEmail));
         if ($iCountByEmail > 0)
             return array('content' => MsgBox(_t('_bx_invites_err_already_send')), 'content_id' => $sFormId, 'eval' => $sEval);
