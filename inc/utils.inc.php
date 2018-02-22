@@ -322,9 +322,6 @@ function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmail
  */
 function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false, $aCustomHeaders = array(), $bAddToQueue = false)
 {
-    if ($bAddToQueue)
-        $isDisableAlert = true;
-
     // make sure that recipient's email is valid and message isn't empty
     if (!$sMailBody || !$sRecipientEmail || preg_match('/\(2\)$/', $sRecipientEmail))
         return false;
@@ -399,7 +396,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     );
 
     // system alert
-    if (!$isDisableAlert) {
+    if (!$bAddToQueue && !$isDisableAlert) {
         bx_alert('system', 'before_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
         if ($bResult !== null)
             return $bResult;
@@ -420,7 +417,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);     
 
     // system alert
-    if (!$isDisableAlert)
+    if (!$bAddToQueue && !$isDisableAlert)
         bx_alert('system', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
 
     return $bResult;

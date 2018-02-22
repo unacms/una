@@ -58,7 +58,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
             'recommended' => array(
             'type' => 'LEFT',
             'table' =>  $a['join']['table'],
-            'mainField' => 'id',
+            'mainField' => 'id` AND ' . bx_get_logged_profile_id() . ' = `' . $a['join']['table'] . '`.`initiator',
             'onField' => 'content',
             'joinFields' => array(),
             )

@@ -19,33 +19,60 @@ class BxFroalaEditor extends BxDolEditor
      * Common initialization params
      */
     protected static $CONF_COMMON = <<<EOS
-                    jQuery('{bx_var_selector}').froalaEditor();
+        jQuery('{bx_var_selector}')
+            .on('froalaEditor.initialized', function (e, editor) {
+                editor.\$el.atwho({
+                    searchKey: 'label',
+                    at: "@", 
+                    limit: 20,
+                    displayTpl: '<li class="bx-mention-row" data-value="\${value}"><span>\${label}</span> <img class="bx-def-round-corners" src="\${thumb}" /></li>',
+                    insertTpl: '<a data-profile-id="\${value}" href="\${url}">\${label}</a>',
+                    callbacks: {
+                        remoteFilter: function(query, callback) {
+                            $.getJSON("{bx_url_root}searchExtended.php?action=get_authors", {term: query}, function(data) {
+                                callback(data);
+                            });
+                        }
+                    },
+                });
+ 
+                editor.events.on('keydown', function (e) {
+                    if (e.which == $.FroalaEditor.KEYCODE.ENTER && editor.\$el.atwho('isSelecting'))
+                        return false;
+                }, true);
+            })
+            .froalaEditor({
+                {bx_var_custom_init}
+                {bx_var_custom_conf}
+                key:'jLAHYKAJOEh1HQDUH==',
+                embedlyKey: '{bx_var_embedly_key}',
+                emoticonsUseImage: false,
+                language: '{bx_var_lang}',
+                theme: '{bx_var_skin}'               
+            });
 EOS;
 
     /**
      * Standard view initialization params
      */
-    protected static $CONF_STANDARD = "
-    ";
+    protected static $CONF_STANDARD = "";
 
     /**
      * Minimal view initialization params
      */
-    protected static $CONF_MINI = "
-    ";
+    protected static $CONF_MINI = "";
 
     /**
      * Full view initialization params
      */
-    protected static $CONF_FULL = "
-    ";
+    protected static $CONF_FULL = "";
 
     protected $_sConfCustom = '';
 
     /**
      * Available editor languages
      */
-    protected static $CONF_LANGS = array('en' => 1);
+    protected static $CONF_LANGS = array('ar' => 1, 'bs' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'en_ca' => 1, 'en_gb' => 1, 'es' => 1, 'et' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'me' => 1, 'nb' => 1, 'nl' => 1, 'pl' => 1, 'pt_br' => 1, 'pt_pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sr' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh_cn' => 1, 'zh_tw' => 1);
 
     protected $_oTemplate;
     protected $_bJsCssAdded = false;
@@ -79,15 +106,21 @@ EOS;
         // set visual mode
         switch ($iViewMode) {
             case BX_EDITOR_MINI:
-                 $sToolsItems = self::$CONF_MINI;
+                $aToolbarItems = explode(',', getParam('bx_froala_option_toolbar_mini'));
+                $sCustomInit = self::$CONF_MINI;
                 break;
             case BX_EDITOR_FULL:
-                $sToolsItems = self::$CONF_FULL;
+                $aToolbarItems = explode(',', getParam('bx_froala_option_toolbar_full'));
+                $sCustomInit = self::$CONF_FULL;
             break;
             case BX_EDITOR_STANDARD:
             default:
-                 $sToolsItems = self::$CONF_STANDARD;
+                $aToolbarItems = explode(',', getParam('bx_froala_option_toolbar_standard'));
+                $sCustomInit = self::$CONF_STANDARD;
         }
+        $sCustomInit .= "\ntoolbarButtons: " . json_encode($aToolbarItems) . ",";
+        $sCustomInit .= "\ntoolbarButtonsSM: " . json_encode($aToolbarItems) . ",";
+        $sCustomInit .= "\ntoolbarButtonsXS: " . json_encode($aToolbarItems) . ",";
 
         // detect language
         $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
@@ -100,7 +133,7 @@ EOS;
 
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
-            'bx_var_custom_init' => $sToolsItems,
+            'bx_var_custom_init' => $sCustomInit,
             'bx_var_custom_conf' => $this->_sConfCustom,
             'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($aCss['url'], BX_ESCAPE_STR_APOS),
@@ -108,18 +141,18 @@ EOS;
             'bx_var_lang' => bx_js_string($sLang, BX_ESCAPE_STR_APOS),
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
+            'bx_var_embedly_key' => bx_js_string(getParam('sys_embedly_api_key'), BX_ESCAPE_STR_APOS),
         ));
 
         if ($bDynamicMode) {
 
-            $sCss = $this->_oTemplate->addCss(array(
-                BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_editor.pkgd.min.css', 
-                BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_style.min.css',
-            ), true);
+            list($aJs, $aCss) = $this->_getJsCss(true);
+            
+            $sCss = $this->_oTemplate->addCss($aCss, true);
+            
             $sScript = $sCss . "<script>
                 if ('undefined' == typeof(jQuery(document).froalaEditor)) {
-                    $.getScript('" . bx_js_string(BX_DOL_URL_MODULES . 'boonex/froala/js/editor.js', BX_ESCAPE_STR_APOS) . "');
-                    $.getScript('" . bx_js_string(BX_DOL_URL_MODULES . 'boonex/froala/plugins/froala/js/froala_editor.pkgd.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                    bx_get_scripts(" . json_encode($aJs) . ", function () {
                         $sInitEditor
                     });
                 } else {
@@ -152,17 +185,57 @@ EOS;
             return '';
         if ($this->_bJsCssAdded)
             return '';
-        $this->_oTemplate->addJs(array(
-            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/js/|froala_editor.pkgd.min.js',
-        ));
-        $this->_oTemplate->addCss(array(
-            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_editor.pkgd.min.css', 
-            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_style.min.css',
-        ));
+
+        list($aJs, $aCss) = $this->_getJsCss();
+
+        $this->_oTemplate->addJs($aJs);
+        $this->_oTemplate->addCss($aCss);
         $this->_bJsCssAdded = true;
         return '';
     }
 
+    protected function _getPlugins($b3rdParty = false)
+    {
+        $a3rdParty = array('embedly', 'image_aviary', 'spell_checker');
+        $a = explode(',', getParam('bx_froala_option_plugins'));
+        return array_filter($a, function ($s) use ($a3rdParty, $b3rdParty) {
+            return !($b3rdParty ^ in_array($s, $a3rdParty));
+        });
+    }
+
+    protected function _getJsCss($bUseUrlsForJs = false)
+    {
+        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
+        $sJsPrefix = $bUseUrlsForJs ? BX_DOL_URL_MODULES : BX_DIRECTORY_PATH_MODULES;
+        $sJsSuffix = $bUseUrlsForJs ? '' : '|';
+        
+        $aJs = array(
+            $sJsPrefix . 'boonex/froala/js/' . $sJsSuffix . 'editor.js',
+            $sJsPrefix . 'boonex/froala/plugins/froala/js/' . $sJsSuffix . 'froala_editor.pkgd.min.js',
+        );
+        if ($sLang && 'en' != $sLang)
+            $aJs[] = $sJsPrefix . 'boonex/froala/plugins/froala/js/languages/' . $sJsSuffix . $sLang . '.js';
+        
+        $aCss = array(
+            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_editor.pkgd.min.css', 
+            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_style.min.css',
+            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/themes/|' . $this->_aObject['skin'] . '.min.css',
+        );
+
+        $aPlugins = $this->_getPlugins(true);
+        foreach ($aPlugins as $sPlugin) {
+            $aJs[] = $sJsPrefix . 'boonex/froala/plugins/froala/js/third_party/' . $sJsSuffix . $sPlugin . '.min.js';
+            $aCss[] = BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/third_party/|' . $sPlugin . '.min.css';
+        }
+
+        $aPlugins = $this->_getPlugins(false);
+        foreach ($aPlugins as $sPlugin) {
+            $aJs[] = $sJsPrefix . 'boonex/froala/plugins/froala/js/plugins/' . $sJsSuffix . $sPlugin . '.min.js';
+            $aCss[] = BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/plugins/|' . $sPlugin . '.min.css';
+        }
+        
+        return array($aJs, $aCss);
+    }
 }
 
 /** @} */
