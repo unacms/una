@@ -1896,6 +1896,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $iUserId = $this->getUserId();
     	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+    	$sCommonPostComment = $this->_oConfig->getObject('comment');
+    	
+    	//--- Delete comments for Common posts.
+    	if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
+            $oComments = $this->getCmtsObject($sCommonPostComment, $aEvent['id']);
+            if($oComments !== false)
+                $oComments->onObjectDelete($aEvent['id']);
+    	}
 
     	//--- Delete attached photos, videos and links when common event was deleted.
     	if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_POST) {
@@ -1922,10 +1930,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		foreach($aRepostEvents as $aRepostEvent) {
 			$aContent = unserialize($aRepostEvent['content']);
 			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent['id'])) && (int)$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent['id'])) > 0) {
-                $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent['id'], $iUserId, array(
+			    $oComments = $this->getCmtsObject($sCommonPostComment, $aRepostEvent['id']);
+                if($oComments !== false)
+                    $oComments->onObjectDelete($aRepostEvent['id']);
+
+                bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent['id'], $iUserId, array(
                     'repost_id' => $aRepostEvent['id'],
                 ));
-                $oAlert->alert();
             }
 		}
 
@@ -1935,12 +1946,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         //--- Event -> Delete for Alerts Engine ---//
         if($bRepost)
-            $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted['id'], $iUserId, array(
+            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted['id'], $iUserId, array(
                 'repost_id' => $aEvent['id'],
             ));
         else
-            $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $iUserId);
-        $oAlert->alert();
+            bx_alert($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $iUserId);
         //--- Event -> Delete for Alerts Engine ---//
     }
 

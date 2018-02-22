@@ -1383,8 +1383,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _prepareTextForOutput($s, $iEventId = 0)
     {
-        $s = bx_trim_nl_duplicates($s);
-
     	$s = bx_process_output($s, BX_DATA_HTML);
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
