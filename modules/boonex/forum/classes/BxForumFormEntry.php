@@ -29,6 +29,19 @@ class BxForumFormEntry extends BxBaseModTextFormEntry
 
         return parent::insert($aValsToAdd, $isIgnore);
     }
+    
+    public function delete ($iContentId, $aContentInfo = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $mixedResult = parent::delete($iContentId, $aContentInfo);
+        if($mixedResult !== false) {
+            if(!empty($CNF['OBJECT_CONNECTION_SUBSCRIBERS']))
+                BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBSCRIBERS'])->onDeleteContent($iContentId);
+        }
+
+        return $mixedResult;
+    }
 }
 
 /** @} */
