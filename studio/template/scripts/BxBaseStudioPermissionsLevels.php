@@ -264,7 +264,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
     }
     protected function _getCellIcon ($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oTemplate->getImage($mixedValue, array('class' => 'bx-prm-level-icon bx-def-border'));
+        $mixedValue = $this->_oTemplate->getImage($mixedValue, array('class' => 'bx-prm-level-icon'));
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
