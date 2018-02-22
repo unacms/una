@@ -1640,7 +1640,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iUserId = (int)$this->getUserId();
         $iOwnerId = (int)$aEvent['owner_id'];
         $iObjectId = (int)$aEvent['object_id'];
-        if((($iOwnerId == $iUserId) || ($iOwnerId == 0 && $this->_oConfig->isCommon($aEvent['type'], $aEvent['action']) && $iObjectId == $iUserId)) && $this->_oConfig->isAllowDelete())
+        if((($iOwnerId == $iUserId && $this->_oConfig->isAllowDelete()) || ($this->_oConfig->isCommon($aEvent['type'], $aEvent['action']) && $iObjectId == $iUserId)))
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
@@ -1650,11 +1650,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
-    }
-
-    protected function _isAllowedModerate($sAction, $aEvent, $bPerform = false)
-    {
-        
     }
 
     public function isAllowedComment($aEvent, $bPerform = false)
