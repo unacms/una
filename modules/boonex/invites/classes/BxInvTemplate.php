@@ -138,8 +138,11 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
                 return array('content' => $sForm, 'content_id' => $sFormId, 'eval' => $sEval);
         }
 
+        $iCountByEmail = $this->_oDb->getRequests(array('type' => 'count_by_email', 'value' => $oForm->getCleanValue('email')));
+        if ($iCountByEmail > 0)
+            return array('content' => MsgBox(_t('_bx_invites_err_already_send')), 'content_id' => $sFormId, 'eval' => $sEval);
+        
         $sIp = getVisitorIP();
-
         $iId = (int)$oForm->insert(array('nip' => ip2long($sIp),'date' => time()));
         if(!$iId)
             return array('content' => MsgBox(_t('_bx_invites_err_cannot_perform')), 'content_id' => $sFormId, 'eval' => $sEval);

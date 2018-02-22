@@ -69,6 +69,11 @@ class BxInvGridRequests extends BxTemplGrid
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
     
+    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
+    {
+        return " ORDER BY `status` ASC, `date` DESC";
+    }
+    
     public function performActionAdd()
     {
         $sAction = 'add';
