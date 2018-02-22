@@ -72,7 +72,7 @@ EOS;
     protected static $CONF_FULL = "";
 
     protected $_sConfCustom = '';
-    protected $_sButtonsCustom = '';
+    protected $_sButtonsCustom = false;
 
     /**
      * Available editor languages
@@ -119,16 +119,16 @@ EOS;
         // set visual mode
         switch ($iViewMode) {
             case BX_EDITOR_MINI:
-                $aToolbarItems = explode(',', $this->_sButtonsCustom ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_mini'));
+                $aToolbarItems = explode(',', $this->_sButtonsCustom !== false ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_mini'));
                 $sCustomInit = self::$CONF_MINI;
                 break;
             case BX_EDITOR_FULL:
-                $aToolbarItems = explode(',', $this->_sButtonsCustom ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_full'));
+                $aToolbarItems = explode(',', $this->_sButtonsCustom !== false ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_full'));
                 $sCustomInit = self::$CONF_FULL;
             break;
             case BX_EDITOR_STANDARD:
             default:
-                $aToolbarItems = explode(',', $this->_sButtonsCustom ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_standard'));
+                $aToolbarItems = explode(',', $this->_sButtonsCustom !== false ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_standard'));
                 $sCustomInit = self::$CONF_STANDARD;
         }
         $sCustomInit .= "\ntoolbarButtons: " . json_encode($aToolbarItems) . ",";
