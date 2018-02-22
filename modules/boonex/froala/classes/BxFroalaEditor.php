@@ -37,6 +37,8 @@ class BxFroalaEditor extends BxDolEditor
                 });
  
                 editor.events.on('keydown', function (e) {
+                    if (e.which == $.FroalaEditor.KEYCODE.ENTER || e.which == $.FroalaEditor.KEYCODE.SPACE)
+                        bx_editor_on_space_enter('{bx_var_selector}');
                     if (e.which == $.FroalaEditor.KEYCODE.ENTER && editor.\$el.atwho('isSelecting'))
                         return false;
                 }, true);
@@ -47,6 +49,8 @@ class BxFroalaEditor extends BxDolEditor
                 key:'jLAHYKAJOEh1HQDUH==',
                 embedlyKey: '{bx_var_embedly_key}',
                 emoticonsUseImage: false,
+                charCounterCount: false,
+                quickInsertTags: [],                
                 language: '{bx_var_lang}',
                 theme: '{bx_var_skin}'               
             });
@@ -68,6 +72,7 @@ EOS;
     protected static $CONF_FULL = "";
 
     protected $_sConfCustom = '';
+    protected $_sButtonsCustom = '';
 
     /**
      * Available editor languages
@@ -96,6 +101,14 @@ EOS;
     }
 
     /**
+     * Set custom toolbar
+     */
+    public function setCustomToolbarButtons ($sButtons)
+    {
+        $this->_sButtonsCustom = $sButtons;
+    }
+    
+    /**
      * Attach editor to HTML element, in most cases - textarea.
      * @param $sSelector - jQuery selector to attach editor to.
      * @param $iViewMode - editor view mode: BX_EDITOR_STANDARD, BX_EDITOR_MINI, BX_EDITOR_FULL
@@ -106,16 +119,16 @@ EOS;
         // set visual mode
         switch ($iViewMode) {
             case BX_EDITOR_MINI:
-                $aToolbarItems = explode(',', getParam('bx_froala_option_toolbar_mini'));
+                $aToolbarItems = explode(',', $this->_sButtonsCustom ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_mini'));
                 $sCustomInit = self::$CONF_MINI;
                 break;
             case BX_EDITOR_FULL:
-                $aToolbarItems = explode(',', getParam('bx_froala_option_toolbar_full'));
+                $aToolbarItems = explode(',', $this->_sButtonsCustom ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_full'));
                 $sCustomInit = self::$CONF_FULL;
             break;
             case BX_EDITOR_STANDARD:
             default:
-                $aToolbarItems = explode(',', getParam('bx_froala_option_toolbar_standard'));
+                $aToolbarItems = explode(',', $this->_sButtonsCustom ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_standard'));
                 $sCustomInit = self::$CONF_STANDARD;
         }
         $sCustomInit .= "\ntoolbarButtons: " . json_encode($aToolbarItems) . ",";
