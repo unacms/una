@@ -11,10 +11,10 @@ VALUES (@iTypeId, 'bx_froala_general', '_bx_froala_adm_stg_cpt_category_general'
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_froala_option_plugins', 'embedly,draggable,fullscreen,image,link', @iCategId, '_bx_froala_option_plugins', 'digit', '', '', '', 10),
-('bx_froala_option_toolbar_mini', 'bold,italic,underline,quote,|,embedly,insertLink,insertImage,|,fullscreen', @iCategId, '_bx_froala_option_toolbar_mini', 'digit', '', '', '', 20),
-('bx_froala_option_toolbar_standard', 'bold,italic,underline,quote,|,undo,redo,|,align,formatOL,formatUL,outdent,indent,|,embedly,insertLink,insertImage,|,fullscreen', @iCategId, '_bx_froala_option_toolbar_standard', 'digit', '', '', '', 22),
-('bx_froala_option_toolbar_full', 'bold,italic,underline,quote,strikeThrough,clearFormatting,|,undo,redo,|,paragraphFormat,align,formatOL,formatUL,outdent,indent,|,embedly,insertLink,insertImage,insertHR,insertTable,|,print,fullscreen', @iCategId, '_bx_froala_option_toolbar_full', 'digit', '', '', '', 24);
+('bx_froala_option_plugins', 'emoticons,embedly,draggable,fullscreen,image,link', @iCategId, '_bx_froala_option_plugins', 'digit', '', '', '', 10),
+('bx_froala_option_toolbar_mini', 'bold,italic,underline,quote,|,emoticons,embedly,insertLink,insertImage,|,fullscreen', @iCategId, '_bx_froala_option_toolbar_mini', 'digit', '', '', '', 20),
+('bx_froala_option_toolbar_standard', 'bold,italic,underline,quote,|,undo,redo,|,align,formatOL,formatUL,outdent,indent,|,emoticons,embedly,insertLink,insertImage,|,fullscreen', @iCategId, '_bx_froala_option_toolbar_standard', 'digit', '', '', '', 22),
+('bx_froala_option_toolbar_full', 'bold,italic,underline,quote,strikeThrough,clearFormatting,|,undo,redo,|,paragraphFormat,align,formatOL,formatUL,outdent,indent,|,emoticons,embedly,insertLink,insertImage,insertHR,insertTable,|,print,fullscreen', @iCategId, '_bx_froala_option_toolbar_full', 'digit', '', '', '', 24);
 
 -- Editor
 
