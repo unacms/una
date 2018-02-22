@@ -179,9 +179,15 @@ class BxInvDb extends BxDolModuleDb
 
             case 'count_all':
                 $aMethod['name'] = 'getOne';
-
                 $sSelectClause = "COUNT(`{$this->_sTableRequests}`.`id`) AS `count`";
-                $sLimitClause = "LIMIT 1";
+                break;
+            case 'count_by_email':
+                $aMethod['name'] = 'getOne';
+                $sSelectClause = "COUNT(`{$this->_sTableRequests}`.`id`) AS `count`";
+                $aMethod['params'][1] = array(
+                    'email' => $aParams['value']
+                );
+                $sWhereClause = "AND `{$this->_sTableRequests}`.`email`=:email ";
                 break;
         }
 
@@ -205,7 +211,7 @@ class BxInvDb extends BxDolModuleDb
             'request_id' => $iReqestId,
             'status' => $iStatus
         );
-        $this->query("UPDATE `{$this->_sTableRequests}` SET `status`=:status WHERE `id`=:request_id", $aBindings);
+        $this->query("UPDATE `{$this->_sTableRequests}` SET `status`=:status WHERE `id`=:request_id AND `status` < :status", $aBindings);
     }
     
     private function updateRequestStatusByInviteCode($iStatus, $sKey)
