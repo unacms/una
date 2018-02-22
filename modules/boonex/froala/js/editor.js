@@ -20,11 +20,17 @@ function bx_editor_remove_img (aEditorIds, aMarkers)
 
 function bx_editor_on_space_enter (sEditorId)
 {
-    if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
-        for (var i = 0; i < glOnSpaceEnterInEditor.length; i++)
-            if (typeof glOnSpaceEnterInEditor[i] === "function")
-                glOnSpaceEnterInEditor[i]($(sEditorId).froalaEditor('html.get'));
-    }
+    if (typeof glBxEditorOnSpaceEnterTimer !== 'undefined')
+        clearTimeout(glBxEditorOnSpaceEnterTimer);
+
+    glBxEditorOnSpaceEnterTimer = setTimeout(function () {
+        glBxEditorOnSpaceEnterTimer = undefined;
+        if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
+            for (var i = 0; i < glOnSpaceEnterInEditor.length; i++)
+                if (typeof glOnSpaceEnterInEditor[i] === "function")
+                    glOnSpaceEnterInEditor[i]($(sEditorId).froalaEditor('html.get'));
+        }
+    }, 800);
 }
 
 /** @} */
