@@ -4,6 +4,7 @@
 	<string name="_bx_timeline"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_cmts"><![CDATA[Timelines' Comments]]></string>
 
+    <string name="_bx_timeline_option_enable_edit"><![CDATA[Allow Timeline owner to edit items]]></string>
 	<string name="_bx_timeline_option_enable_delete"><![CDATA[Allow Timeline owner to remove items]]></string>
 	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Number of items on profile page]]></string>
 	<string name="_bx_timeline_option_events_per_page_account"><![CDATA[Number of items on dashboard page]]></string>
@@ -17,6 +18,7 @@
 	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
 	<string name="_bx_timeline_form_post_display_add_public"><![CDATA[Write Public Post]]></string>
+	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Edit Post]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Action]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Type]]></string>
@@ -36,6 +38,8 @@
 	<string name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Attachments]]></string>
 	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_form_post_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_timeline_form_post_input_do_cancel"><![CDATA[Cancel]]></string>
 
 	<string name="_bx_timeline_form_attach_link"><![CDATA[Attach Link]]></string>
 	<string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Attach Link]]></string>
@@ -49,7 +53,8 @@
 	<string name="_bx_timeline_privacy_view"><![CDATA[View event]]></string>
 
 	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
-	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
+	<string name="_bx_timeline_acl_action_edit"><![CDATA[Edit Any Post]]></string>
+	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete Any Post]]></string>
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>
 	<string name="_bx_timeline_acl_action_repost"><![CDATA[Repost]]></string>
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Send]]></string>
@@ -112,6 +117,8 @@
     <string name="_bx_timeline_menu_item_title_item_promote"><![CDATA[Promote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpromote"><![CDATA[Unpromote]]></string>
     <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Unpromote]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_timeline_menu_item_title_item_edit"><![CDATA[Edit]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Delete]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Delete]]></string>
 

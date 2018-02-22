@@ -13,6 +13,7 @@ bx_import('BxDolPrivacy');
 
 class BxTimelineConfig extends BxBaseModNotificationsConfig
 {
+    protected $_bAllowEdit;
     protected $_bAllowDelete;
 
     protected $_iRssLength;
@@ -52,12 +53,16 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'FIELD_ADDED' => 'date',
         	'FIELD_TITLE' => 'title',
         	'FIELD_TEXT' => 'description',
+        	'FIELD_PHOTO' => 'photo',
+        	'FIELD_CONTROLS' => 'controls',
         	'FIELD_LOCATION_PREFIX' => 'location',
 
             // page URIs
         	'URL_HOME' => 'page.php?i=timeline-view-home',
 
         	// objects
+        	'OBJECT_STORAGE' => $this->_sName . '_photos',
+            'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
         	'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
         	'OBJECT_VIEWS' => $this->_sName,
@@ -87,9 +92,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'report' => $this->CNF['OBJECT_REPORTS'],
         	'metatags' => $this->_sName,
 
-        	'storage_photos' => $this->_sName . '_photos',
+        	'storage_photos' => $this->CNF['OBJECT_STORAGE'],
         	'storage_videos' => $this->_sName . '_videos',
-        	'transcoder_photos_preview' => $this->_sName . '_photos_preview',
+        	'transcoder_photos_preview' => $this->CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'],
         	'transcoder_photos_view' => $this->_sName . '_photos_view',
         	'transcoder_photos_big' => $this->_sName . '_photos_big',
         	'transcoder_videos_poster' => $this->_sName . '_videos_poster',
@@ -106,6 +111,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'form_attach_link' => $this->_sName . '_attach_link',
         	'form_display_post_add' => $this->_sName . '_post_add',
         	'form_display_post_add_public' => $this->_sName . '_post_add_public',
+            'form_display_post_edit' => $this->_sName . '_post_edit',
         	'form_display_attach_link_add' => $this->_sName . '_attach_link_add'
         ));
 
@@ -135,6 +141,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sHpS = BX_TIMELINE_VIEW_SEARCH;
         $this->_aHtmlIds = array(
         	'view' => array(
+                'edit_form' => $sHp . '-edit-',
+                
         		'main_' . $sHpI => $sHp . '-' . $sHpI,
         		'item_' . $sHpI => $sHp . '-item-' . $sHpI . '-',
                 'item_popup_' . $sHpI => $sHp . '-item-popup-' . $sHpI,
@@ -193,6 +201,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     	parent::init($oDb);
 
     	$sOptionPrefix = $this->getPrefix('option');
+    	$this->_bAllowEdit = getParam($sOptionPrefix . 'enable_edit') == 'on';
         $this->_bAllowDelete = getParam($sOptionPrefix . 'enable_delete') == 'on';
 
         $this->_aPerPage = array(
@@ -205,6 +214,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iCharsDisplayMax = (int)getParam($sOptionPrefix . 'chars_display_max');
         $this->_iCharsDisplayMaxTitle = 20;
+    }
+
+    public function isAllowEdit()
+    {
+        return $this->_bAllowEdit;
     }
 
     public function isAllowDelete()

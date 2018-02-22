@@ -70,7 +70,7 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
 	        if($('#' + $this._aHtmlIds['main_outline']).length)
 	        	$this._getPost(oForm, iId, 'outline');
 
-	        $this._getForm(oForm, $(oForm).find("input[name = 'type']").val());
+	        $this._getForm(oForm);
 
 	        return;
 		}
@@ -194,12 +194,12 @@ BxTimelinePost.prototype.showAttachLink = function(oLink) {
 	return false;
 };
 
-BxTimelinePost.prototype._getForm = function(oElement, sType) {
+BxTimelinePost.prototype._getForm = function(oElement) {
     var $this = this;
     var oData = this._getDefaultData();
 
     jQuery.post (
-	    this._sActionsUrl + 'get_post_form/' + sType + '/',
+	    this._sActionsUrl + 'get_post_form/',
 	    oData,
 	    function(oData) {
             if(oData && oData.form != undefined && oData.form_id != undefined) {
@@ -209,27 +209,6 @@ BxTimelinePost.prototype._getForm = function(oElement, sType) {
 	    },
 	    'json'
 	);
-};
-
-BxTimelinePost.prototype._getPost = function(oElement, iId, sView) {
-    var $this = this;
-    var oData = this._getDefaultData();
-    oData['id'] = iId;
-    oData['view'] = sView;
-
-    var oElementView = $('#' + this._aHtmlIds['main_' + sView]);
-    this.loadingInBlock(oElementView, true);
-
-    jQuery.post (
-        this._sActionsUrl + 'get_post/',
-        oData,
-        function(oData) {
-        	$this.loadingInBlock(oElementView, false);
-
-        	processJsonData(oData);
-        },
-        'json'
-    );
 };
 
 BxTimelinePost.prototype._onGetPost = function(oData) {

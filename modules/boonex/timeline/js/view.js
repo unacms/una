@@ -24,6 +24,7 @@ function BxTimelineView(oOptions) {
     };
 
     this._fOutsideOffset = 0.8;
+    this._oSaved = {};
 
     var $this = this;
     $(document).ready(function() {
@@ -311,6 +312,125 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay) {
     );
 };
 
+BxTimelineView.prototype.initFormEdit = function(sFormId)
+{
+	var $this = this;
+	var oForm = $('#' + sFormId);
+
+	autosize(oForm.find('textarea'));
+	oForm.ajaxForm({
+        dataType: "json",
+        beforeSubmit: function (formData, jqForm, options) {
+        	window[$this._sObjName].beforeFormEditSubmit(oForm);
+        },
+        success: function (oData) {
+        	window[$this._sObjName].afterFormEditSubmit(oForm, oData);
+        }
+    });
+};
+
+BxTimelineView.prototype.beforeFormEditSubmit = function(oForm)
+{
+	this.loadingInButton($(oForm).children().find(':submit'), true);
+};
+
+BxTimelineView.prototype.afterFormEditSubmit = function (oForm, oData)
+{
+	var $this = this;
+	var fContinue = function() {
+		if(oData && oData.id != undefined) {
+			var iId = parseInt(oData.id);
+	        if(iId <= 0) 
+	        	return;
+
+	        if($('#' + $this._aHtmlIds['main_timeline']).length)
+	        	$this._getPost(oForm, iId, 'timeline');
+
+	        if($('#' + $this._aHtmlIds['main_outline']).length)
+	        	$this._getPost(oForm, iId, 'outline');
+
+	        return;
+		}
+
+		if(oData && oData.form != undefined && oData.form_id != undefined) {
+			$('#' + oData.form_id).replaceWith(oData.form);
+			$this.initFormEdit(oData.form_id);
+
+			return;
+		}
+	};
+
+	this.loadingInButton($(oForm).children().find(':submit'), false);
+
+	if(oData && oData.message != undefined)
+        bx_alert(oData.message, fContinue);
+	else
+		fContinue();
+};
+
+BxTimelineView.prototype.editPost = function(oLink, iId) {
+	var $this = this;
+    var oData = this._getDefaultData();
+    oData['id'] = iId;
+
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
+    var oItem = null;
+    if(this.bViewTimeline)
+    	oItem = $(this.sIdItemTimeline + iId);
+
+    if(this.bViewOutline)
+    	oItem = $(this.sIdItemOutline + iId);
+
+    var oContent = oItem.find('.' + this.sClassItemContent);
+    if(oContent.find('form').length) {
+        $(oContent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+            $(this).html($this._oSaved[iId]).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        });
+        return;
+    }
+    else
+        this._oSaved[iId] = oContent.html();
+
+    this.loadingInItem(oItem, true);
+
+    jQuery.post (
+		this._sActionsUrl + 'get_edit_form/' + iId + '/',
+		oData,
+        function (oData) {
+			processJsonData(oData);
+        },
+        'json'
+    );
+};
+
+BxTimelineView.prototype.onEditPost = function(oData) {
+	var $this = this;
+
+	if(!oData || !oData.id)
+		return;
+
+	var oItem = null;
+	if(this.bViewTimeline)
+		oItem = $(this.sIdItemTimeline + oData.id);
+    if(this.bViewOutline)
+    	oItem = $(this.sIdItemOutline + oData.id);
+
+    this.loadingInItem(oItem, false);
+
+	if(oData && oData.form != undefined && oData.form_id != undefined) {
+		oItem.find('.' + this.sClassItemContent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+            $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+            	$this.initFormEdit(oData.form_id);
+            });
+        });
+	}
+};
+
+BxTimelineView.prototype.editPostCancel = function(oButton, iId) {
+	this.editPost(oButton, iId);
+};
+
 BxTimelineView.prototype.deletePost = function(oLink, iId) {
     var $this = this;
     var oData = this._getDefaultData();
@@ -439,7 +559,26 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 			    });
 				break;
 		}
-	}
+	}	
+};
 
-	
+
+BxTimelineView.prototype._onGetPost = function(oData) {
+	if(!$.trim(oData.item).length) 
+		return;
+
+	var oItem = $(oData.item).bxTime();
+	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
+
+	switch(oData.view) {
+		case 'timeline':
+			oView.find(this.sIdItemTimeline + oData.id).replaceWith(oItem);
+			break;
+
+		case 'outline':
+			oView.find(this.sIdItemOutline + oData.id).replaceWith(oItem);
+
+			this.reloadMasonry();
+			break;
+	}
 };

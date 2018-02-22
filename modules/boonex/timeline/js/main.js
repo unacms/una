@@ -24,6 +24,7 @@ function BxTimelineMain() {
 	this.sClassItems = this.sSP + '-items';
 	this.sClassItem = this.sSP + '-item';
 	this.sClassDividerToday = this.sSP + '-divider-today';
+	this.sClassItemContent = this.sSP + '-item-content';
 	this.sClassItemComments = this.sSP + '-item-comments-holder';
 	this.sClassItemImages = this.sSP + '-item-images';
 	this.sClassItemImage = this.sSP + '-item-image';
@@ -226,6 +227,29 @@ BxTimelineMain.prototype._getDefaultData = function(oElement) {
     	view: sView,
 		_t:oDate.getTime()
     });
+};
+
+
+BxTimelineMain.prototype._getPost = function(oElement, iId, sView) {
+    var $this = this;
+    var oData = this._getDefaultData();
+    oData['js_object'] = this._sObjName;
+    oData['view'] = sView;
+    oData['id'] = iId;
+
+    var oElementView = $('#' + this._aHtmlIds['main_' + sView]);
+    this.loadingInBlock(oElementView, true);
+
+    jQuery.post (
+        this._sActionsUrl + 'get_post/',
+        oData,
+        function(oData) {
+        	$this.loadingInBlock(oElementView, false);
+
+        	processJsonData(oData);
+        },
+        'json'
+    );
 };
 
 (function($) {

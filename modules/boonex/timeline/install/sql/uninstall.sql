@@ -40,12 +40,12 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` LIKE 'bx_tim
 DELETE FROM `sys_transcoder_videos_files` WHERE `transcoder_object` LIKE 'bx_timeline%';
 
 
-
 -- Forms All
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN  (SELECT `display_name` FROM `sys_form_displays` WHERE `module` = @sName);
 DELETE FROM `sys_form_inputs` WHERE `module` = @sName;
 DELETE FROM `sys_form_displays` WHERE `module` = @sName;
 DELETE FROM `sys_objects_form` WHERE `module` = @sName;
+
 
 -- STUDIO PAGE & WIDGET
 DELETE FROM `tp`, `tw`, `tpw`

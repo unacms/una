@@ -59,23 +59,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function actionPost()
     {
-        $sType = bx_process_input($_POST['type']);
-        $sMethod = 'getForm' . ucfirst($sType);
-        if(!method_exists($this, $sMethod)) {
-            echoJson(array());
-            return;
-        }
-
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
         $mixedAllowed = $this->isAllowedPost(true);
-        if($mixedAllowed !== true) {
-            echoJson(array('message' => strip_tags($mixedAllowed)));
-            return;
-        }
+        if($mixedAllowed !== true)
+            return echoJson(array('message' => strip_tags($mixedAllowed)));
 
-        $aResult = $this->$sMethod();
-        echoJson($aResult);
+        echoJson($this->getFormPost());
+    }
+
+    public function actionEdit($iId)
+    {
+        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+
+        $mixedAllowed = $this->isAllowedPost(true);
+        if($mixedAllowed !== true)
+            return echoJson(array('message' => strip_tags($mixedAllowed)));
+
+        echoJson($this->getFormEdit($iId));
     }
 
 	function actionPin()
@@ -202,10 +203,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     function actionGetPost()
     {
-        $sView = bx_process_input(bx_get('view'));
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => bx_process_input(bx_get('id'), BX_DATA_INT)));
+        $sJsObject = bx_process_input(bx_get('js_object'));
+        if(empty($sJsObject))
+            $sJsObject = $this->_oConfig->getJsObject('post');
+
+        $sView = bx_process_input(bx_get('view'));
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent) || !is_array($aEvent))
             return echoJson(array());
 
@@ -218,7 +225,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         		'owner_id' => $this->_iOwnerId, 
         		'dynamic_mode' => true
             )),
-            'eval' => $this->_oConfig->getJsObject('post') . "._onGetPost(oData)"
+            'eval' => $sJsObject . "._onGetPost(oData)"
         ));
     }
 
@@ -237,18 +244,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
-    public function actionGetPostForm($sType)
+    public function actionGetPostForm()
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
-        $sMethod = 'getForm' . ucfirst($sType);
-        if(!method_exists($this, $sMethod)) {
-            echoJson(array());
-            return;
-        }
-        $aResult = $this->$sMethod();
+        echoJson($this->getFormPost());
+    }
 
-        echoJson($aResult);
+    public function actionGetEditForm($iId)
+    {
+        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+
+        echoJson($this->getFormEdit($iId));
     }
 
     public function actionGetComments()
@@ -1441,6 +1448,69 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
+    public function getFormEdit($iId, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return array();
+
+        $aContent = unserialize($aEvent['content']);
+        if(is_array($aContent) && !empty($aContent['text']))
+            $aEvent['text'] = $aContent['text'];
+
+        $sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
+        $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_edit';
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
+        $oForm->setId($this->_oConfig->getHtmlIds('view', 'edit_form') . $iId);
+
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'edit/' . $iId ;
+        foreach($oForm->aInputs[$CNF['FIELD_CONTROLS']] as $mixedIndex => $aInput) {
+            if(!is_numeric($mixedIndex))
+                continue;
+
+            $oForm->aInputs[$CNF['FIELD_CONTROLS']][$mixedIndex]['attrs'] = bx_replace_markers($aInput['attrs'], array(
+                'js_object_view' => $this->_oConfig->getJsObject('view'),
+            	'content_id' => $iId
+            ));
+        }
+
+        $oForm->initChecker($aEvent);
+        if($oForm->isSubmittedAndValid()) {
+            $aContent = array();
+
+            //--- Process Text ---//
+            $sText = $oForm->getCleanValue('text');
+            $sText = $this->_prepareTextForSave($sText);
+            $bText = !empty($sText);
+            unset($oForm->aInputs['text']);
+
+            if($bText)
+            	$aContent['text'] = $sText;
+
+            //--- Process Privacy ---//
+            $iObjectPrivacyView = (int)$oForm->getCleanValue('object_privacy_view');
+            if(empty($iObjectPrivacyView))
+                $iObjectPrivacyView = $this->_oConfig->getPrivacyViewDefault('object');
+
+            if(!$oForm->update($iId, array('object_privacy_view' => $iObjectPrivacyView,'content' => serialize($aContent))))
+                return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
+
+            return array(
+                'id' => $iId,
+            	'eval' => $this->_oConfig->getJsObject('view') . '.onEditPostSubmit(oData)'
+            );
+        }
+
+        return array(
+            'id' => $iId, 
+        	'form' => $oForm->getCode(), 
+        	'form_id' => $oForm->id,
+        	'eval' => $this->_oConfig->getJsObject('view') . '.onEditPost(oData)'
+        );
+    }
+
     public function getCmtsObject($sSystem, $iId)
     {
         if(empty($sSystem) || (int)$iId == 0)
@@ -1535,6 +1605,30 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		return true;
     }
 
+    public function isAllowedEdit($aEvent, $bPerform = false)
+    {
+        //--- System posts cannot be edited at all.
+        if(!isLogged() || !$this->_oConfig->isCommon($aEvent['type'], $aEvent['action']))
+            return false;
+
+        if(isAdmin())
+            return true;
+
+        $iUserId = (int)$this->getUserId();
+        $iOwnerId = (int)$aEvent['owner_id'];
+        $iObjectId = (int)$aEvent['object_id'];
+        if($iObjectId == $iUserId && $this->_oConfig->isAllowEdit())
+           return true;
+
+        $aCheckResult = checkActionModule($iUserId, 'edit', $this->getName(), $bPerform);
+
+        $oProfileOwner = BxDolProfile::getInstance($iOwnerId);
+        if($oProfileOwner !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_edit', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+    }
+
     public function isAllowedDelete($aEvent, $bPerform = false)
     {
         if(!isLogged())
@@ -1556,6 +1650,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+    }
+
+    protected function _isAllowedModerate($sAction, $aEvent, $bPerform = false)
+    {
+        
     }
 
     public function isAllowedComment($aEvent, $bPerform = false)

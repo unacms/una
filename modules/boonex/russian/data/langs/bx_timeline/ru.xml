@@ -17,6 +17,7 @@
 	<string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>
 	<string name="_bx_timeline_form_post_display_add_public"><![CDATA[Написать публичное сообщение]]></string>
+	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Изменить сообщение]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[ID владельца]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Действие]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Тип]]></string>
@@ -36,6 +37,8 @@
 	<string name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Прикрепления]]></string>
 	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Создать]]></string>
 	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Создать]]></string>
+	<string name="_bx_timeline_form_post_input_sys_do_cancel"><![CDATA[Отмена]]></string>
+    <string name="_bx_timeline_form_post_input_do_cancel"><![CDATA[Отмена]]></string>
 
 	<string name="_bx_timeline_form_attach_link"><![CDATA[Прикрепить ссылку]]></string>
 	<string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Прикрепить ссылку]]></string>
@@ -48,10 +51,11 @@
 
 	<string name="_bx_timeline_privacy_view"><![CDATA[Просматривать события]]></string>
 
-	<string name="_bx_timeline_acl_action_post"><![CDATA[Сообщение]]></string>
-	<string name="_bx_timeline_acl_action_delete"><![CDATA[Удалить]]></string>
+	<string name="_bx_timeline_acl_action_post"><![CDATA[Писать сообщения]]></string>
+	<string name="_bx_timeline_acl_action_edit"><![CDATA[Изменять любое сообщение]]></string>
+	<string name="_bx_timeline_acl_action_delete"><![CDATA[Удалять любое сообщение]]></string>
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Голосовать]]></string>
-	<string name="_bx_timeline_acl_action_repost"><![CDATA[Сделать репост]]></string>
+	<string name="_bx_timeline_acl_action_repost"><![CDATA[Делать репост]]></string>
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Послать]]></string>
 	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять]]></string>
 	<string name="_bx_timeline_acl_action_promote"><![CDATA[Рекламировать]]></string>
@@ -112,6 +116,8 @@
     <string name="_bx_timeline_menu_item_title_item_promote"><![CDATA[Рекламировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpromote"><![CDATA[Не рекламировать]]></string>
     <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Не рекламировать]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_edit"><![CDATA[Изменить]]></string>
+    <string name="_bx_timeline_menu_item_title_item_edit"><![CDATA[Изменить]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Удалить]]></string>
 
