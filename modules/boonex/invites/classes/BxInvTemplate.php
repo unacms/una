@@ -137,14 +137,16 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
             if(!$oForm->isValid())
                 return array('content' => $sForm, 'content_id' => $sFormId, 'eval' => $sEval);
         }
+        
         $sEmail = $oForm->getCleanValue('email');
-        $iCountByEmail = $this->_oDb->getRequests(array('type' => 'count_by_email', 'value' => $sEmail));
-        if ($iCountByEmail > 0)
-            return array('content' => MsgBox(_t('_bx_invites_err_already_send')), 'content_id' => $sFormId, 'eval' => $sEval);
         $oAccountQuery = BxDolAccountQuery::getInstance();
         $iAccount = $oAccountQuery->getIdByEmail($sEmail);
         if ($iAccount > 0)
             return array('content' => MsgBox(_t('_bx_invites_err_already_registed')), 'content_id' => $sFormId, 'eval' => $sEval);
+        $iCountByEmail = $this->_oDb->getRequests(array('type' => 'count_by_email', 'value' => $sEmail));
+        if ($iCountByEmail > 0)
+            return array('content' => MsgBox(_t('_bx_invites_err_already_send')), 'content_id' => $sFormId, 'eval' => $sEval);
+       
         $sIp = getVisitorIP();
         $iId = (int)$oForm->insert(array('nip' => ip2long($sIp),'date' => time()));
         if(!$iId)
