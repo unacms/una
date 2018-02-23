@@ -267,10 +267,14 @@ div.bx-tl-view-outline div.bx-tl-item-image {
     text-align: center;
     overflow: hidden;
 }
-div.bx-tl-view-timeline div.bx-tl-item-image img,
 div.bx-tl-view-search div.bx-tl-item-image img,
-div.bx-tl-view-item div.bx-tl-item-image img {
+div.bx-tl-view-timeline div.bx-tl-item-images.bx-tl-ii-gallery div.bx-tl-item-image img,
+div.bx-tl-view-item div.bx-tl-item-images.bx-tl-ii-gallery div.bx-tl-item-image img {
 	height: 12.5rem;
+}
+div.bx-tl-view-timeline div.bx-tl-item-images.bx-tl-ii-single div.bx-tl-item-image img,
+div.bx-tl-view-item  div.bx-tl-item-images.bx-tl-ii-single div.bx-tl-item-image img {
+	max-width: 100%;
 }
 div.bx-tl-view-outline div.bx-tl-item-image img {
 	max-width: 100%;

@@ -1042,18 +1042,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
 
         //--- Process Photos ---//
+        $sImagesDisplay = '';
         $aTmplVarsImages = array();
         if(!empty($aContent['images'])) {
-            foreach($aContent['images'] as $aImage) {
-                $sImageSrc = '';
-                if($bBrowseItem && !empty($aImage['src_orig']))
-                    $sImageSrc = $aImage['src_orig'];
-                else if(!empty($aImage['src']))
-                    $sImageSrc = $aImage['src'];
+            $sImageSrcKey = '';
+            $sImageSrcKeyDefault = 'src';
+            if(count($aContent['images']) == 1) {
+                $sImagesDisplay = 'single';
+                $sImageSrcKey = $bBrowseItem ? 'src_orig' : 'src_medium';
+            }
+            else {
+                $sImagesDisplay = 'gallery';
+                $sImageSrcKey = 'src';
+            }
 
+            foreach($aContent['images'] as $aImage) {
+                $sImageSrc = !empty($aImage[$sImageSrcKey]) ? $aImage[$sImageSrcKey] : $aImage[$sImageSrcKeyDefault];
                 if(empty($sImageSrc))
                     continue;
-                
+
                 $sImage = $this->parseImage($sImageSrc, array(
                 	'class' => $sStylePrefix . '-item-img'
                 ));
@@ -1120,6 +1127,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($aTmplVarsImages),
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
+            		'images_display' => $sImagesDisplay,
                     'bx_repeat:images' => $aTmplVarsImages
                 )
             ),
@@ -1283,16 +1291,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
                 if(!empty($aPhotos) && is_array($aPhotos)) {
                     $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
+                    $oTranscoderMedium = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_medium'));
                     $oTranscoderBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
 
                     foreach($aPhotos as $iPhotoId) {
                         $sPhotoSrc = $oTranscoder->getFileUrl($iPhotoId);
+                        $sPhotoSrcMedium = $oTranscoderMedium->getFileUrl($iPhotoId);
                         $sPhotoSrcBig = $oTranscoderBig->getFileUrl($iPhotoId);
-                        if(empty($sPhotoSrcBig) && !empty($sPhotoSrc))
-                            $sPhotoSrcBig = $sPhotoSrc;
+                        if(empty($sPhotoSrcMedium) && !empty($sPhotoSrc))
+                            $sPhotoSrcMedium = $sPhotoSrc;
+                        if(empty($sPhotoSrcBig) && !empty($sPhotoSrcMedium))
+                            $sPhotoSrcBig = $sPhotoSrcMedium;
 
                         $aResult['content']['images'][] = array(
                             'src' => $sPhotoSrc,
+                        	'src_medium' => $sPhotoSrcMedium,
                             'src_orig' => $sPhotoSrcBig,
                         );
                     }

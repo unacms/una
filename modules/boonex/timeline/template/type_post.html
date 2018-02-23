@@ -1,5 +1,14 @@
+<div class="__style_prefix__-item-text">
+    <bx_if:show_title>
+        <div class="__style_prefix__-title bx-def-margin-sec-bottom bx-def-font-h3">__title__</div>
+    </bx_if:show_title>
+    <bx_if:show_content>
+        <div class="__style_prefix__-content">__item_content__</div>
+    </bx_if:show_content>
+    <bx_if:show_content_raw>__item_content_raw__</bx_if:show_content_raw>
+</div>
 <bx_if:show_images>
-    <div class="__style_prefix__-item-images bx-def-margin-topbottom bx-def-margin-leftright-neg">
+    <div class="__style_prefix__-item-images __style_prefix__-ii-__images_display__ bx-def-margin-topbottom bx-def-margin-leftright-neg">
         <bx_repeat:images>
             <div class="__style_prefix__-item-image">__image__</div>
         </bx_repeat:images>
@@ -12,15 +21,6 @@
         </bx_repeat:videos>
     </div>
 </bx_if:show_videos>
-<div class="__style_prefix__-item-text">
-	<bx_if:show_title>
-		<div class="__style_prefix__-title bx-def-margin-sec-bottom bx-def-font-h3">__title__</div>
-	</bx_if:show_title>
-	<bx_if:show_content>
-		<div class="__style_prefix__-content">__item_content__</div>
-	</bx_if:show_content>
-	<bx_if:show_content_raw>__item_content_raw__</bx_if:show_content_raw>
-</div>
 <bx_if:show_links>
 	<div class="__style_prefix__-item-links bx-def-margin-top">
 		<bx_repeat:links>
