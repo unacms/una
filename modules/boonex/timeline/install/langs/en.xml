@@ -181,6 +181,7 @@
     <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[vote to timeline post]]></string>
     <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
+    <string name="_bx_timeline_txt_some_text_here"><![CDATA[Share your thoughts, location, photos or video]]></string>
 
 	<string name="_bx_timeline_txt_do_repost"><![CDATA[Repost]]></string>
 	<string name="_bx_timeline_txt_reposted"><![CDATA[Reposted {0}'s {1}.]]></string>

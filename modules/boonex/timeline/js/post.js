@@ -22,6 +22,9 @@ function BxTimelinePost(oOptions) {
     	general: oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams
     };
 
+    this._sPregUrl = "\\b((https?://)|(www\\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\\@)?(([0-9]{1,3}\\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\\.[a-zA-Z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\\@&=+$,%#-]+)*/?)";
+    this._oAttachedLinks = {};
+
     var $this = this;
     $(document).ready(function () {
     	$($this.sIdPost + ' form').each(function() {
@@ -48,6 +51,25 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
         	window[$this._sObjName].afterFormPostSubmit(oForm, oData);
         }
     });
+
+	if(typeof window.glOnSpaceEnterInEditor === 'undefined')
+	    window.glOnSpaceEnterInEditor = [];
+
+	window.glOnSpaceEnterInEditor.push(function (sData) {
+		var oExp = new RegExp($this._sPregUrl , "ig");
+
+		var aMatch = null;
+		while(aMatch = oExp.exec(sData)) {
+			var sUrl = aMatch[0];
+			if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined)
+				continue;
+
+			//--- Mark that 'attach link' process was started.
+			$this._oAttachedLinks[sUrl] = 0;
+
+			$this.addAttachLink(oForm, sUrl);
+		}
+	});
 };
 
 BxTimelinePost.prototype.beforeFormPostSubmit = function(oForm)
@@ -163,6 +185,12 @@ BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId) {
         function(oData) {
         	var fContinue = function() {
         		if(oData && oData.code != undefined && oData.code == 0) {
+        			for(var sUrl in $this._oAttachedLinks)
+        				if(parseInt($this._oAttachedLinks[sUrl]) == parseInt(iId)) {
+        					delete $this._oAttachedLinks[sUrl];
+        					break;
+        				}
+
             		oAttachLink.bx_anim('hide', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
             			$(this).remove;
             		});
@@ -180,6 +208,33 @@ BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId) {
     );
 
 	return false;
+};
+
+BxTimelinePost.prototype.addAttachLink = function(oElement, sUrl) {
+	if(!sUrl)
+    	return;
+
+    var $this = this;
+    var oData = this._getDefaultData();
+    oData['url'] = sUrl;
+
+    jQuery.post (
+	    this._sActionsUrl + 'add_attach_link/',
+	    oData,
+	    function(oData) {
+	    	if(!oData.id || !oData.item || !$.trim(oData.item).length)
+				return;
+
+	    	//--- Mark that 'attach link' process was finished.
+	    	$this._oAttachedLinks[sUrl] = oData.id;
+
+			var oItem = $(oData.item).hide();
+			$('#' + $this._aHtmlIds['attach_link_form_field']).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed, function() {
+				$(this).find('a.bx-link').dolConverLinks();
+			});
+	    },
+	    'json'
+	);
 };
 
 BxTimelinePost.prototype.showAttachLink = function(oLink) {

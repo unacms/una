@@ -95,6 +95,28 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     		'attachments_menu' => $this->_oModule->getAttachmentsMenuObject()->getCode()
     	));
     }
+
+    public function addHtmlEditor($iViewMode, &$aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oEditor = BxDolEditor::getObjectInstance(false, $this->oTemplate);
+        if (!$oEditor)
+            return false;
+
+            
+        if(in_array($this->aParams['display'], array($this->_oModule->_oConfig->getObject('form_display_post_add'), $this->_oModule->_oConfig->getObject('form_display_post_add_public'))))
+            $oEditor->setCustomConf("
+                placeholderText: '" . _t('_bx_timeline_txt_some_text_here') . "',
+                initOnClick: true,
+            ");
+
+        $oEditor->setCustomToolbarButtons('');
+
+        $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode);
+
+        return true;
+    }
 }
 
 /** @} */
