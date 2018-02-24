@@ -609,20 +609,14 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         return $sContent;
     }
 
-    protected function getInjFooterEmbedly() 
-    {
-        $sKey = getParam('sys_embedly_api_key');
+    protected function getInjFooterEmbed() 
+    {    
+        // Load embed files
+        $oEmbed = BxDolEmbed::getObjectInstance(false);
+        if ($oEmbed) 
+            return $oEmbed->addJsCss();
 
-        // TODO: remove this condition when this code is moved to the separate module
-        if (empty($sKey))
-            return '';
-        
-        return $this->_oTemplate->parseHtmlByName('embedly.html', array(
-            'bx_if:key' => array (
-                'condition' => !empty($sKey),
-                'content' => array('key' => $sKey),
-            )
-        ));
+        return '';
     }
 }
 

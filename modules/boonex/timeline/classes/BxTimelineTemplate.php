@@ -674,17 +674,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bTmplVarsEmbed = false;
         $aTmplVarsEmbed = array();
-        $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
-        $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
-        $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-        if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && (empty($sEmbedlyPattern) || preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url'])))) {
+        $oEmbed = BxDolEmbed::getObjectInstance();
+        if($oEmbed) {
             $bTmplVarsEmbed = true;
             $aTmplVarsEmbed = array(
                 'style_prefix' => $sStylePrefix,
-            	'embed' => $this->parseLink($aLink['url'], $aLink['title'], array(
-            		'class' => 'bx-link',
-            		'title' => $aLink['title']
-            	))
+                'embed' => $oEmbed->getLinkHTML($aLink['url'], $aLink['title'], 300),
             );
         }
         else {
@@ -985,17 +980,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             foreach($aContent['links'] as $aLink) {
                 $bTmplVarsEmbed = false;
                 $aTmplVarsEmbed = array();
-                $sIframelyKey = $this->_oDb->getParam('sys_iframely_api_key');
-                $sEmbedlyKey = $this->_oDb->getParam('sys_embedly_api_key');
-                $sEmbedlyPattern = $this->_oDb->getParam('sys_embedly_api_pattern');
-                if(!empty($sIframelyKey) || (!empty($sEmbedlyKey) && (empty($sEmbedlyPattern) || preg_match("/" . $sEmbedlyPattern . "/i", $aLink['url'])))) {
+                $oEmbed = BxDolEmbed::getObjectInstance();
+                if ($oEmbed) {
                     $bTmplVarsEmbed = true;
                     $aTmplVarsEmbed = array(
                         'style_prefix' => $sStylePrefix,
-                    	'embed' => $this->parseLink($aLink['url'], $aLink['title'], array(
-                    		'class' => 'bx-link',
-                    		'title' => $aLink['title']
-                    	))
+                        'embed' => $oEmbed->getLinkHTML($aLink['url'], $aLink['title']),
                     );
                 }
                 else {
