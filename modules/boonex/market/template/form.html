@@ -5,8 +5,7 @@ __content__
     	if(iCoverId != undefined)
     	    oGhost.find('.bx-base-general-use-as-cover input[value="' + iCoverId + '"]').attr('checked', true);
 
-    	if(typeof(tinymce) == 'object')
-            oGhost.find('.bx-base-general-intert-to-post-link').show();
+        oGhost.find('.bx-base-general-intert-to-post-link').show();
 
     	// disable images drag&drop, because resized images address can be reset after some time
         oGhost.find(".bx-base-general-icon-" + iFileId).bind('dragstart', function() {

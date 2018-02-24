@@ -10,12 +10,28 @@
 
 function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) 
 {
+    if (typeof $('#' + sEditorId).froalaEditor !== 'function')
+        return;
+    
+    if ('undefined' == typeof(sClasses))
+        sClasses = '';
 
+    $('#' + sEditorId).froalaEditor('html.insert', '<img id="' + sImgId + '" class="' + sClasses + '" src="' + sImgUrl + '" />', false);
 }
 
 function bx_editor_remove_img (aEditorIds, aMarkers) 
 {
-
+    for (var i = 0; i < aEditorIds.length; i++) {
+        var eEditor = $('#' + aEditorIds[i]).parent();
+        
+        // delete images in html editor
+        for (var k = 0; k < aMarkers.length; k++) {
+            var jFiles = eEditor.find(aMarkers[k]);
+            jFiles.each(function () {
+                $(this).remove(); 
+            });
+        }
+    }
 }
 
 function bx_editor_on_space_enter (sEditorId)
