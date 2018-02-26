@@ -480,18 +480,6 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             '_copyright'
         ));
 
-        //--- Load Iframely if Key is available and Embed.ly is disabled ---//
-        $sIframely = getParam('sys_iframely_api_key');
-        if(!empty($sIframely)) {
-            $this->addJsSystem(array(
-                bx_proto() . '://cdn.iframe.ly/embed.js?key=' . md5($sIframely)
-            ));
-
-            $this->addJsOption(array(
-            	'sys_iframely_api_key'
-            ));
-        }
-
         //--- Load injection's cache ---//
         if (getParam('sys_db_cache_enable')) {
             $oDb = BxDolDb::getInstance();
