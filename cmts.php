@@ -34,7 +34,7 @@ if ($oCmts && $sSys && $iObjectId) {
         $sComment = $oCmts->getCommentBlock($iCmtId);
         if ($sComment) {
 
-            $sObjectTitle = bx_process_output($oCmts->getObjectTitle($iObjectId));
+            $sObjectTitle = bx_process_output(strip_tags($oCmts->getObjectTitle($iObjectId)));
 
             $sHeader = _t('_cmt_page_view_header', $sObjectTitle);
             $sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);

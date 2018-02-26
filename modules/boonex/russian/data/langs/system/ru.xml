@@ -1499,8 +1499,8 @@
 	<string name="_cmt_display_threaded"><![CDATA[Поэтапно]]></string>
 	<string name="_cmt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 	<string name="_cmt_msg_login_required"><![CDATA[Чтобы оставить комментарий, вам необходимо <a href="{0}">войти</a> или <a href="{1}">зарегистрироваться</a>.]]></string>
-	<string name="_cmt_page_view_header"><![CDATA[Комментировать {0}]]></string>
-	<string name="_cmt_page_view_title"><![CDATA[Комментировать <a href="{0}">{1}</a>]]></string>
+	<string name="_cmt_page_view_header"><![CDATA[Комментарий к '{0}']]></string>
+	<string name="_cmt_page_view_title"><![CDATA[Комментарий к <a href="{0}">{1}</a>]]></string>
 	<string name="_cmt_download_attached_file"><![CDATA[Скачать файл]]></string>
 	<string name="_cmt_view_attached_image"><![CDATA[Просмотреть изображение]]></string>
 	<string name="_cmt_load_more_comments_head"><![CDATA[Увидеть новые комментарии...]]></string>
