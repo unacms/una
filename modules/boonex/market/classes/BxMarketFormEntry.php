@@ -151,11 +151,17 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 	function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
 
-        if(isset($this->aInputs[$CNF['FIELD_NAME']])) {
-            $sName = BxDolForm::getSubmittedValue($CNF['FIELD_NAME'], $this->aFormAttrs['method'], $this->_aSpecificValues);
-            $sName = $this->_oModule->_oConfig->getEntryName($sName);
-            BxDolForm::setSubmittedValue($CNF['FIELD_NAME'], $sName, $this->aFormAttrs['method'], $this->_aSpecificValues);
+        $sNameKey = $CNF['FIELD_NAME'];
+        if(isset($this->aInputs[$sNameKey])) {
+            $sName = $this->getCleanValue($sNameKey);
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+
+            if($aContentInfo[$sNameKey] != $sName) {
+                $sName = $this->_oModule->_oConfig->getEntryName($sName);
+                BxDolForm::setSubmittedValue($sNameKey, $sName, $this->aFormAttrs['method'], $this->_aSpecificValues);
+            }
         }
 
 	    if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
