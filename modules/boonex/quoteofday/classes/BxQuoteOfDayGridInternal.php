@@ -82,7 +82,7 @@ class BxQuoteOfDayGridInternal extends BxTemplGrid
                 'object' => $this->_sObject,
                 'action' => $sAction
             )));
-           echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => true))));
+           echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
     
