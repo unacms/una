@@ -50,9 +50,10 @@ class BxFroalaEditor extends BxDolEditor
                 embedlyKey: '{bx_var_embedly_key}',
                 emoticonsUseImage: false,
                 charCounterCount: false,
-                quickInsertTags: [],                
+                quickInsertTags: [],
+                pastePlain: true,
                 language: '{bx_var_lang}',
-                theme: '{bx_var_skin}'               
+                theme: '{bx_var_skin}'
             });
 EOS;
 
