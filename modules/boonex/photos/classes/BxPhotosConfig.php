@@ -51,7 +51,8 @@ class BxPhotosConfig extends BxBaseModTextConfig
         	'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-
+       		'FIELD_FOR_STORE_FILEID' => 'thumb',
+			
             // page URIs
             'URI_VIEW_ENTRY' => 'view-photo',
             'URI_AUTHOR_ENTRIES' => 'photos-author',
@@ -127,7 +128,8 @@ class BxPhotosConfig extends BxBaseModTextConfig
             	'menu_item_manage_all' => '_bx_photos_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_photos_txt_all_entries_by',
                 'txt_all_entries_by_author' => '_bx_photos_page_title_browse_by_author',
-            	'txt_pict_use_as_thumb' => '_bx_photos_form_entry_input_picture_use_as_thumb'
+            	'txt_pict_use_as_thumb' => '_bx_photos_form_entry_input_picture_use_as_thumb',
+				'form_entry_upload_single_for_update' => '_bx_photos_form_entry_input_pictures_upload'
             ),
         );
 

@@ -46,6 +46,7 @@
     <string name="_bx_files_form_entry_input_date_added"><![CDATA[Создано]]></string>
     <string name="_bx_files_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_files_form_entry_input_date_changed"><![CDATA[Обновлено]]></string>
+	<string name="_bx_files_form_entry_input_pictures_upload"><![CDATA[Загрузка]]></string>
 
 	<string name="_bx_files_acl_action_create_entry"><![CDATA[Добавление файлов]]></string>
 	<string name="_bx_files_acl_action_delete_entry"><![CDATA[Удаление файлов]]></string>
