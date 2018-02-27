@@ -25,9 +25,9 @@ class BxFilesFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
     {
        
 		$mixedContent = $this->addDataFormAction($sDisplay, $sCheckFunction);
-		if (is_array($mixedContent) && $mixedContent['needRedirectAfterAction']){
+		if (is_array($mixedContent) && $mixedContent['need_redirect_after_action']){
 			$CNF = &$this->_oModule->_oConfig->CNF;
-			$aContentIds = $mixedContent['aContentIds'];
+			$aContentIds = $mixedContent['content_ids_array'];
 			$iContentId = array_pop($aContentIds);
 			$aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 			$oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);

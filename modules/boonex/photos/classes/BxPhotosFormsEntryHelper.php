@@ -24,7 +24,7 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
     public function addDataForm ($sDisplay = false, $sCheckFunction = false)
     {
         $mixedContent = $this->addDataFormAction($sDisplay, $sCheckFunction);
-		if (is_array($mixedContent) && $mixedContent['needRedirectAfterAction']){
+		if (is_array($mixedContent) && $mixedContent['need_redirect_after_action']){
 			$CNF = &$this->_oModule->_oConfig->CNF;
         	$this->_redirectAndExit(BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']));
 		}

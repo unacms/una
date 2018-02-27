@@ -37,6 +37,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
             'FIELD_FILE_ID' => 'file_id',
+			'FIELD_FOR_STORING_FILE_ID' => 'file_id',
             'FIELD_TITLE' => 'title',
             'FIELD_CATEGORY' => 'cat',
             'FIELD_TEXT' => 'desc',
@@ -49,7 +50,6 @@ class BxFilesConfig extends BxBaseModTextConfig
         	'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-			'FIELD_FOR_STORE_FILEID' => 'file_id',
 			
             // page URIs
             'URI_VIEW_ENTRY' => 'view-file',
@@ -116,6 +116,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             	'txt_sample_comment_single' => '_bx_files_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_files_txt_sample_vote_single',
              	'form_field_author' => '_bx_files_form_entry_input_author',
+				'form_entry_upload_single_for_update' => '_bx_files_form_entry_input_pictures_upload',
             	'grid_action_err_delete' => '_bx_files_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_files_grid_txt_account_manager',
 				'filter_item_active' => '_bx_files_grid_filter_item_title_adm_active',
@@ -124,8 +125,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_files_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_files_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_files_txt_all_entries_by',
-                'txt_all_entries_by_author' => '_bx_files_page_title_browse_by_author',
-				'form_entry_upload_single_for_update' => '_bx_files_form_entry_input_pictures_upload'
+                'txt_all_entries_by_author' => '_bx_files_page_title_browse_by_author'
             ),
         );
 

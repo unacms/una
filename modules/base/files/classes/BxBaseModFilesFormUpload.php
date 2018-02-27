@@ -85,7 +85,7 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
             $iContentId = 0;
             if ($isAssociateWithContent)
                 $iContentId = BxBaseModGeneralFormEntry::insert (array_merge(array(
-                    $CNF['FIELD_FOR_STORE_FILEID'] => $aFile['id'],
+                    $CNF['FIELD_FOR_STORING_FILE_ID'] => $aFile['id'],
                     $CNF['FIELD_TITLE'] => $this->getCleanValue('title-' . $aFile['id']),
                     $CNF['FIELD_AUTHOR'] => bx_get('profile_id') && $this->_oModule->serviceIsAllowedAddContentToProfile(bx_get('profile_id')) ? bx_get('profile_id') : '',
                 ), $aFormValues));

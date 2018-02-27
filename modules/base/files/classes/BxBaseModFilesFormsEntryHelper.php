@@ -67,7 +67,7 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
             $this->_oModule->checkAllowedAdd(true);
         }
         
-        return array('needRedirectAfterAction' => true, 'ContentIds' => $aContentIds);
+        return array('need_redirect_after_action' => true, 'content_ids_array' => $aContentIds);
     }
 }
 

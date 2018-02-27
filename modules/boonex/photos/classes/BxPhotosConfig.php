@@ -45,13 +45,13 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+			'FIELD_FOR_STORING_FILE_ID' => 'thumb',
 			'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-       		'FIELD_FOR_STORE_FILEID' => 'thumb',
 			
             // page URIs
             'URI_VIEW_ENTRY' => 'view-photo',
@@ -119,6 +119,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             	'txt_sample_comment_single' => '_bx_photos_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_photos_txt_sample_vote_single',
                 'form_field_author' => '_bx_photos_form_entry_input_author',
+				'form_entry_upload_single_for_update' => '_bx_photos_form_entry_input_pictures_upload',
             	'grid_action_err_delete' => '_bx_photos_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_photos_grid_txt_account_manager',
 				'filter_item_active' => '_bx_photos_grid_filter_item_title_adm_active',
@@ -128,8 +129,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             	'menu_item_manage_all' => '_bx_photos_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_photos_txt_all_entries_by',
                 'txt_all_entries_by_author' => '_bx_photos_page_title_browse_by_author',
-            	'txt_pict_use_as_thumb' => '_bx_photos_form_entry_input_picture_use_as_thumb',
-				'form_entry_upload_single_for_update' => '_bx_photos_form_entry_input_pictures_upload'
+            	'txt_pict_use_as_thumb' => '_bx_photos_form_entry_input_picture_use_as_thumb'
             ),
         );
 
