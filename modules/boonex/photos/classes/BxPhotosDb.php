@@ -29,6 +29,12 @@ class BxPhotosDb extends BxBaseModTextDb
         $sSql = "UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
         return $this->query($sSql);
     }
+    
+    public function getFileTitle($iFileId)
+    {
+        $sQuery = $this->prepare ("SELECT `c`.`title` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_storage_ghosts` AS `g` ON(`g`.`object` = ? AND `g`.`content_id` = `c`.`id`) WHERE `g`.`id` = ?", $this->_oConfig->CNF['TABLE_FILES'], $iFileId);
+        return $this->getOne($sQuery);
+    }
 }
 
 /** @} */

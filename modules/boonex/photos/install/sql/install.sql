@@ -200,10 +200,11 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_photos', 'bx_photos', '_bx_photos_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_photos_entries', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxPhotosFormEntry', 'modules/boonex/photos/classes/BxPhotosFormEntry.php');
+('bx_photos', 'bx_photos', '_bx_photos_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_photos_entries', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxPhotosFormEntry', 'modules/boonex/photos/classes/BxPhotosFormEntry.php'),
+('bx_photos_upload', 'bx_photos', '_bx_photos_form_upload', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_photos_entries', 'id', '', '', 'do_submit', '', 0, 1, 'BxPhotosFormUpload', 'modules/boonex/photos/classes/BxPhotosFormUpload.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
-('bx_photos', 'bx_photos_entry_add', 'bx_photos', 0, '_bx_photos_form_entry_display_add'),
+('bx_photos_upload', 'bx_photos_entry_upload', 'bx_photos', 0, '_bx_photos_form_entry_display_add'),
 ('bx_photos', 'bx_photos_entry_delete', 'bx_photos', 0, '_bx_photos_form_entry_display_delete'),
 ('bx_photos', 'bx_photos_entry_edit', 'bx_photos', 0, '_bx_photos_form_entry_display_edit'),
 ('bx_photos', 'bx_photos_entry_view', 'bx_photos', 1, '_bx_photos_form_entry_display_view');
@@ -219,16 +220,20 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_photos', 'bx_photos', 'title', '', '', 0, 'text', '_bx_photos_form_entry_input_sys_title', '_bx_photos_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_photos_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_photos', 'bx_photos', 'cat', '', '#!bx_photos_cats', 0, 'select', '_bx_photos_form_entry_input_sys_cat', '_bx_photos_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_photos_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_photos', 'bx_photos', 'added', '', '', 0, 'datetime', '_bx_photos_form_entry_input_sys_date_added', '_bx_photos_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_photos', 'bx_photos', 'changed', '', '', 0, 'datetime', '_bx_photos_form_entry_input_sys_date_changed', '_bx_photos_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_photos', 'bx_photos', 'changed', '', '', 0, 'datetime', '_bx_photos_form_entry_input_sys_date_changed', '_bx_photos_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+
+('bx_photos_upload', 'bx_photos', 'pictures', 'a:1:{i:0;s:15:"bx_photos_html5";}', 'a:2:{s:16:"bx_photos_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_photos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_photos_form_entry_input_sys_attachment', '_bx_photos_form_entry_input_attachment', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_photos_upload', 'bx_photos', 'cat', '', '#!bx_photos_cats', 0, 'select', '_bx_photos_form_entry_input_sys_cat', '_bx_photos_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_photos_form_entry_input_cat_err', 'Xss', '', 1, 0),
+('bx_photos_upload', 'bx_photos', 'allow_view_to', '', '', 0, 'custom', '_bx_photos_form_entry_input_sys_allow_view_to', '_bx_photos_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_photos_upload', 'bx_photos', 'do_submit', '_bx_photos_form_entry_input_do_submit', '', 0, 'submit', '_bx_photos_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_photos_upload', 'bx_photos', 'profile_id', '0', '', 0, 'hidden', '_bx_photos_form_entry_input_sys_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_photos_entry_add', 'title', 2147483647, 1, 1),
-('bx_photos_entry_add', 'cat', 2147483647, 1, 2),
-('bx_photos_entry_add', 'text', 2147483647, 1, 3),
-('bx_photos_entry_add', 'pictures', 2147483647, 1, 4),
-('bx_photos_entry_add', 'allow_view_to', 2147483647, 1, 5),
-('bx_photos_entry_add', 'location', 2147483647, 1, 6),
-('bx_photos_entry_add', 'do_publish', 2147483647, 1, 7),
+('bx_photos_entry_upload', 'profile_id', 2147483647, 1, 1),
+('bx_photos_entry_upload', 'pictures', 2147483647, 1, 2),
+('bx_photos_entry_upload', 'cat', 2147483647, 1, 3),
+('bx_photos_entry_upload', 'allow_view_to', 2147483647, 1, 4),
+('bx_photos_entry_upload', 'do_submit', 2147483647, 1, 5),
 
 ('bx_photos_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_photos_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -244,7 +249,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_photos_entry_view', 'cat', 2147483647, 1, 2),
 ('bx_photos_entry_view', 'added', 2147483647, 1, 3),
 ('bx_photos_entry_view', 'changed', 2147483647, 1, 4);
-
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES

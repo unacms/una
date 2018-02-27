@@ -16,7 +16,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_photo
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_photos';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_photos';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_photos';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_photos_entry_add', 'bx_photos_entry_edit', 'bx_photos_entry_view', 'bx_photos_entry_delete');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_photos_entry_add', 'bx_photos_entry_edit', 'bx_photos_entry_view', 'bx_photos_entry_delete', 'bx_photos_entry_upload');
 
 
 -- PRE-VALUES

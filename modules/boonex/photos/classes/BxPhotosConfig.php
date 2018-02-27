@@ -30,6 +30,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
         	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_FILES' => $aModule['db_prefix'] . 'photos',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -87,7 +88,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_PRIVACY_VIEW' => 'bx_photos_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_photos',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_photos_entry_view',
-            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_photos_entry_add',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_photos_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_photos_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_photos_entry_delete',
             'OBJECT_PAGE_VIEW_ENTRY_BRIEF' => 'bx_photos_view_entry_brief', // brief view page

@@ -107,6 +107,11 @@ class BxPhotosModule extends BxBaseModTextModule
     {
     	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
     }
+    
+    public function checkAllowedSetThumb ($iContentId = 0)
+    {
+        return $iContentId > 0 ? CHECK_ACTION_RESULT_ALLOWED : CHECK_ACTION_RESULT_NOT_ALLOWED;
+    }
 }
 
 /** @} */

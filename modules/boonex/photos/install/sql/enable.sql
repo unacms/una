@@ -258,8 +258,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- PRIVACY 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_photos_allow_view_to', 'bx_photos', 'view', '_bx_photos_form_entry_input_allow_view_to', '3', 'bx_photos_entries', 'id', 'author', '', '');
-
+('bx_photos_allow_view_to', 'bx_photos', 'view', '_bx_photos_form_entry_input_allow_view_to', '3', 'bx_photos_entries', 'id', 'author', 'BxPhotosPrivacy', 'modules/boonex/photos/classes/BxPhotosPrivacy.php');
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
