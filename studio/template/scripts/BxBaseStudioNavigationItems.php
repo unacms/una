@@ -661,6 +661,21 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'error' => _t('_adm_nav_err_items_onclick'),
                     ),
                 ),
+                'hidden_on' => array(
+                    'type' => 'select_multiple',
+                    'name' => 'hidden_on',
+                    'caption' => _t('_adm_nav_txt_block_hidden_on'),
+                    'info' => '',
+                	'value' => (int)$aItem['hidden_on'],
+                    'values' => array(
+                		BX_DB_HIDDEN_PHONE => _t('_adm_nav_txt_block_hidden_on_phone'),
+                		BX_DB_HIDDEN_TABLET => _t('_adm_nav_txt_block_hidden_on_tablet'),
+                		BX_DB_HIDDEN_DESKTOP => _t('_adm_nav_txt_block_hidden_on_desktop')
+                	),
+                	'db' => array (
+                        'pass' => 'Set',
+                    )
+				),
                 'icon' => array(
                     'type' => 'text',
                     'name' => 'icon',

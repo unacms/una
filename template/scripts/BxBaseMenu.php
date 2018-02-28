@@ -90,6 +90,12 @@ class BxBaseMenu extends BxDolMenu
 
 	protected function _getMenuItem ($a)
 	{
+        $aHiddenOn = array(
+			pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
+			pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
+			pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide'
+		);
+        
 		if (isset($a['active']) && !$a['active'])
 			return false;
 
@@ -116,6 +122,14 @@ class BxBaseMenu extends BxDolMenu
 		list ($sIcon, $sIconUrl, $sIconA) = $this->_getMenuIcon($a);
 
 		$a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
+        $a['class_add'] .= 'hza';
+        
+        $sHiddenOnCssClasses = '';
+        if(!empty($a['hidden_on']))
+            foreach($aHiddenOn as $iHiddenOn => $sClass)
+                if((int)$a['hidden_on'] & $iHiddenOn)
+                    $sHiddenOnCssClasses .= ' ' . $sClass;
+        $a['class_add'] .=  $sHiddenOnCssClasses;
 		$a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
 		$a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
 		$a['bx_if:image'] = array (

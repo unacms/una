@@ -1061,6 +1061,10 @@
 	<string name="_adm_nav_txt_sets_gl_module"><![CDATA[Module]]></string>
 	<string name="_adm_nav_txt_sets_gl_title"><![CDATA[System Name]]></string>
 	<string name="_adm_nav_txt_sets_title"><![CDATA[System Name]]></string>
+  <string name="_adm_nav_txt_block_hidden_on"><![CDATA[Hidden on]]></string>
+  <string name="_adm_nav_txt_block_hidden_on_phone"><![CDATA[phone]]></string>
+  <string name="_adm_nav_txt_block_hidden_on_tablet"><![CDATA[tablet]]></string>
+  <string name="_adm_nav_txt_block_hidden_on_desktop"><![CDATA[desktop]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Forms]]></string>
 	<string name="_adm_page_cpt_builder_menus"><![CDATA[Navigation]]></string>
 	<string name="_adm_page_cpt_builder_mobile"><![CDATA[Mobile Builder]]></string>

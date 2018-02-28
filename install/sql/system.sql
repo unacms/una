@@ -3393,6 +3393,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
   `editable` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
+  `hidden_on` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 );
 

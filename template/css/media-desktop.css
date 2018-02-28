@@ -5,7 +5,7 @@ html {
 }
 
 .bx-def-media-desktop-hide {
-    display:none;
+    display:none !important;
 }
 .bx-def-media-desktop-show-block {
     display:block;

@@ -5,7 +5,7 @@ html {
 }
 
 .bx-def-media-phone-hide {
-    display:none;
+    display:none !important;
 }
 .bx-def-media-phone-show-block {
     display:block;

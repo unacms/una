@@ -267,6 +267,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 `tmi`.`active` AS `active`,
                 `tmi`.`copyable` AS `copyable`,
                 `tmi`.`editable` AS `editable`,
+                `tmi`.`hidden_on` AS `hidden_on`,
                 `tmi`.`order` AS `order`" . $sSelectClause . "
             FROM `sys_menu_items` AS `tmi` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
