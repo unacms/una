@@ -6,6 +6,7 @@
 
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Разрешить пользователю изменять собственные сообщения]]></string>
 	<string name="_bx_timeline_option_enable_delete"><![CDATA[Разрешить владельцу ленты удалять сообщения]]></string>
+	<string name="_bx_timeline_option_enable_show_all"><![CDATA[Показывать все сообщения в 'Общей хронике', включая те, что были написаны в персональных Хрониках]]></string>
 	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
 	<string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество элементов на странице "панель аккаунта"]]></string>
 	<string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество элементов на главной странице сайта]]></string>

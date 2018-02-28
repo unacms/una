@@ -373,6 +373,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 			$sWhereClause .= $sWhereModuleFilter;
 
 		//--- Check type
+		$sWhereSubclause = "";
 		switch($aParams['type']) {
 		    //--- Site (Public) Feed.
 		    case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
@@ -383,6 +384,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         		$aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart($aPrivacyGroups);
         		$sWhereClause .= $aQueryParts['where'] . " ";
+
+        		if($this->_oConfig->isShowAll())
+        		    break;
 
         		//--- Select All System posts
         		$sWhereSubclause = "SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "'";

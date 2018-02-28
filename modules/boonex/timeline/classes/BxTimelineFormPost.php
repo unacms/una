@@ -35,7 +35,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
             )));
 
-            if($this->_bPublicMode)
+            if($this->_bPublicMode || ($iOwnerId != 0 && $iOwnerId != $iUserId))
                 foreach($this->aInputs['object_privacy_view']['values'] as $iKey => $aValue)
                     if($aValue['key'] !== BX_DOL_PG_ALL)
                         unset($this->aInputs['object_privacy_view']['values'][$iKey]);
