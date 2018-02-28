@@ -3389,11 +3389,11 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `submenu_object` varchar(64) NOT NULL,
   `submenu_popup` tinyint(4) NOT NULL DEFAULT '0',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
+  `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
   `editable` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
-  `hidden_on` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 );
 

@@ -666,7 +666,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'name' => 'hidden_on',
                     'caption' => _t('_adm_nav_txt_block_hidden_on'),
                     'info' => '',
-                	'value' => (int)$aItem['hidden_on'],
+                	'value' => isset($aItem['hidden_on']) ? (int)$aItem['hidden_on'] : '',
                     'values' => array(
                 		BX_DB_HIDDEN_PHONE => _t('_adm_nav_txt_block_hidden_on_phone'),
                 		BX_DB_HIDDEN_TABLET => _t('_adm_nav_txt_block_hidden_on_tablet'),

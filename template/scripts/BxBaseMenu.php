@@ -122,7 +122,6 @@ class BxBaseMenu extends BxDolMenu
 		list ($sIcon, $sIconUrl, $sIconA) = $this->_getMenuIcon($a);
 
 		$a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
-        $a['class_add'] .= 'hza';
         
         $sHiddenOnCssClasses = '';
         if(!empty($a['hidden_on']))
