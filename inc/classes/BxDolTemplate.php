@@ -426,6 +426,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'css_name' => array(),
             'css_compiled' => array(),
             'css_system' => array(),
+            'css_async' => array(),
             'js_name' => array(),
             'js_compiled' => array(),
             'js_system' => array(),
@@ -1244,7 +1245,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(strpos($sContent , '<bx_include_js />') !== false) {
             if (!empty($this->aPage['js_name']))
                 $this->addJs($this->aPage['js_name']);
-            $sContent = str_replace('<bx_include_js />', $this->includeFiles('js'), $sContent);
+            $sContent = str_replace('<bx_include_js />', $this->includeFiles('js') . $this->includeCssAsync(), $sContent);
         }
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endPage($sContent);
@@ -1661,6 +1662,46 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function addCss($mixedFiles, $bDynamic = false)
     {
         return $this->_processFiles('css', 'add', $mixedFiles, $bDynamic);
+    }
+
+    /**
+     * Add additional heavy css file (not very necessary) to load asynchronously for desktop browsers only
+     * @param  mixed          $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     */
+    function addCssAsync($mixedFiles)
+    {
+        if (!is_array($mixedFiles))
+            $mixedFiles = array($mixedFiles);
+
+        foreach ($mixedFiles as $sFile)
+            $this->aPage['css_async'][] = $this->_getAbsoluteLocationCss('url', $sFile);
+
+        $this->addJs('loadCSS.js');
+    }
+
+    /**
+     * Return script tag with special code to load async css.
+     * This tag is added after js files list
+     */
+    function includeCssAsync ()
+    {
+        if (empty($this->aPage['css_async']))
+            return '';
+
+        $this->aPage['css_async'] = array_unique($this->aPage['css_async']);
+
+        $sList = '';
+        foreach ($this->aPage['css_async'] as $sUrl)
+            $sList .= 'loadCSS("' . $sUrl . '", document.getElementById("bx_css_async"));';
+
+        // don't load css for mobile devices
+        return '
+            <script id="bx_css_async">
+                if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                    ' . $sList . '
+                }
+            </script>
+        ';
     }
 
     /**
