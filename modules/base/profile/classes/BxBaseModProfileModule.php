@@ -328,6 +328,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceBrowseRecommended ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
     {
+        if (!isLogged())
+            return '';
         return $this->_serviceBrowse ('recommended', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
     

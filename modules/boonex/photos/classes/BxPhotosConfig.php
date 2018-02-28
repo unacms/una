@@ -30,6 +30,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
         	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_FILES' => $aModule['db_prefix'] . 'photos',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -44,13 +45,14 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+			'FIELD_FOR_STORING_FILE_ID' => 'thumb',
 			'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-
+			
             // page URIs
             'URI_VIEW_ENTRY' => 'view-photo',
             'URI_AUTHOR_ENTRIES' => 'photos-author',
@@ -87,7 +89,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_PRIVACY_VIEW' => 'bx_photos_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_photos',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_photos_entry_view',
-            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_photos_entry_add',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_photos_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_photos_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_photos_entry_delete',
             'OBJECT_PAGE_VIEW_ENTRY_BRIEF' => 'bx_photos_view_entry_brief', // brief view page
@@ -117,6 +119,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             	'txt_sample_comment_single' => '_bx_photos_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_photos_txt_sample_vote_single',
                 'form_field_author' => '_bx_photos_form_entry_input_author',
+				'form_entry_upload_single_for_update' => '_bx_photos_form_entry_input_pictures_upload',
             	'grid_action_err_delete' => '_bx_photos_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_photos_grid_txt_account_manager',
 				'filter_item_active' => '_bx_photos_grid_filter_item_title_adm_active',

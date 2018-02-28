@@ -12,29 +12,21 @@
 /*
  * Module database queries
  */
-class BxFilesDb extends BxBaseModTextDb
+class BxFilesDb extends BxBaseModFilesDb
 {
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
     }
-
-    public function getFileTitle($iFileId)
-    {
-        $sQuery = $this->prepare ("SELECT `c`.`title` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_storage_ghosts` AS `g` ON(`g`.`object` = ? AND `g`.`content_id` = `c`.`id`) WHERE `g`.`id` = ?", $this->_oConfig->CNF['TABLE_FILES'], $iFileId);
-        return $this->getOne($sQuery);
-    }
-
+	
     public function updateFileId ($iContentId, $iFileId)
     {
-        $sQuery = $this->prepare ("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `file_id` = ?, `data` = '', `data_processed` = 0 WHERE `id` = ?", $iFileId, $iContentId);
-        return $this->query($sQuery);
+		return $this->updateEntries(array('file_id' => $iFileId, 'data' => '', 'data_processed' => 0), array('id' => $iContentId));
     }
     
     public function updateFileData ($iContentId, $sData, $iDataProcessed = 1)
     {
-        $sQuery = $this->prepare ("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `data` = ?, `data_processed` = ? WHERE `id` = ?", $sData, $iDataProcessed, $iContentId);
-        return $this->query($sQuery);
+		return $this->updateEntries(array('data' => $sData, 'data_processed' => $iDataProcessed), array('id' => $iContentId));
     }
 
     public function getNotProcessedFiles ($iLimit)

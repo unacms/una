@@ -9,19 +9,12 @@
  * @{
  */
 
-class BxPhotosUploaderHTML5 extends BxTemplUploaderHTML5
+class BxPhotosUploaderHTML5 extends BxBaseModFilesUploaderHTML5
 {
-    protected $_oModule;
-
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+		$this->MODULE = 'bx_photos';
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
-        $this->_oModule = BxDolModule::getInstance('bx_photos');
-    }
-
-    protected function isAdmin ($iContentId = 0)
-    {
-        return $this->_oModule->_isModerator (false);
     }
 }
 

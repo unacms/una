@@ -52,6 +52,7 @@ class BxFroalaEditor extends BxDolEditor
                 charCounterCount: false,
                 quickInsertTags: [],
                 pastePlain: true,
+                zIndex: 1100,
                 language: '{bx_var_lang}',
                 theme: '{bx_var_skin}'
             });

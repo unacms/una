@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Files Files
+ * @defgroup    Photos Files
  * @ingroup     UnaModules
  *
  * @{
@@ -12,13 +12,13 @@
 /**
  * Files upload form
  */
-class BxFilesFormUpload extends BxBaseModFilesFormUpload
+class BxPhotosFormUpload extends BxBaseModFilesFormUpload
 {
     public function __construct($aInfo, $oTemplate = false)
     {
-        $this->MODULE = 'bx_files';
+        $this->MODULE = 'bx_photos';
         parent::__construct($aInfo, $oTemplate);
-    }    
+    }
 }
 
 /** @} */

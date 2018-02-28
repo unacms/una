@@ -9,14 +9,12 @@
  * @{
  */
 
-/*
- * Module database queries
- */
-class BxPhotosDb extends BxBaseModFilesDb
+class BxPhotosPrivacy extends BxBaseModFilesPrivacy
 {
-    function __construct(&$oConfig)
+    public function __construct($aOptions, $oTemplate = false)
     {
-        parent::__construct($oConfig);
+		$this->MODULE = 'bx_photos';
+        parent::__construct($aOptions, $oTemplate);
     }
 }
 
