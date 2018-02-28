@@ -122,8 +122,10 @@ class BxDolRequest extends BxDol
     protected static function _methodExists($mixedModule, $sMethodType, $sMethodName, $sClass = "Module")
     {
         $aModule = $mixedModule;
-        if(is_string($mixedModule)) 
-            $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedModule);
+        if(is_string($mixedModule)) {
+            $oModuleQuery = BxDolModuleQuery::getInstance(); 
+            $aModule = $oModuleQuery->isEnabledByName($mixedModule) ? $oModuleQuery->getModuleByName($mixedModule) : array();
+        }
 
         if (!$aModule)
             return false;
