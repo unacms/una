@@ -25,9 +25,6 @@ class BxBaseCmts extends BxDolCmts
         $this->_sStylePrefix = isset($this->_aSystem['root_style_prefix']) ? $this->_aSystem['root_style_prefix'] : 'cmt';
 
         BxDolTemplate::getInstance()->addJsTranslation('_sys_txt_cmt_loading');
-
-        $oForm = $this->_getForm(BX_CMT_ACTION_POST, 0);
-        $this->_bHtml = (int)$oForm->aInputs['cmt_text']['html'] > 0;
     }
 
     /**
@@ -644,9 +641,10 @@ class BxBaseCmts extends BxDolCmts
             unset($oForm->aInputs['cmt_image']);
 
         if(isset($oForm->aInputs['cmt_text'])) {
+            $oForm->aInputs['cmt_text']['html'] = $this->_aSystem['html']; 
+
             $iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
             $iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
-
             $oForm->aInputs['cmt_text']['checker']['params'] = array($iCmtTextMin, $iCmtTextMax);
             $oForm->aInputs['cmt_text']['checker']['error'] = _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax);
         }
@@ -819,7 +817,7 @@ class BxBaseCmts extends BxDolCmts
     	$sText = $aCmt['cmt_text'];
         $sTextMore = '';
 
-        if(!$this->_bHtml) {
+        if(!$this->isHtml()) {
             $iMaxLength = (int)$this->_aSystem['chars_display_max'];
             if(strlen($sText) > $iMaxLength) {
                 $iLength = strpos($sText, ' ', $iMaxLength);

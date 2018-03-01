@@ -56,7 +56,7 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  * - ID - autoincremented id for internal usage
  * - ObjectName - your unique module name, with vendor prefix, lowercase and spaces are underscored
  * - TableCmts - table name where comments are stored
- * - Nl2br - convert new lines to <br /> on saving
+ * - Html - 0 - convert new lines to <br /> on saving, 1 - standard(default) visual editor, 2 - full visual editor, 3 - mini visual editor.
  * - PerView - number of comments on a page
  * - IsRatable - 0 or 1 allow to rate comments or not
  * - ViewingThreshold - comment viewing treshost, if comment is below this number it is hidden by default
@@ -145,7 +145,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sSystem = 'profile'; ///< current comment system name
     protected $_aSystem = array (); ///< current comments system array
     protected $_iId = 0; ///< obect id to be commented
-    protected $_bHtml = false; ///< whether HTML formating is used during comment posting or not. Read Only!
 
     protected $_aT = array (); ///< an array of lang keys
     protected $_aMarkers = array ();
@@ -284,7 +283,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     `CharsPostMin` AS `chars_post_min`,
                     `CharsPostMax` AS `chars_post_max`,
                     `CharsDisplayMax` AS `chars_display_max`,
-                    `Nl2br` AS `nl2br`,
+                    `Html` AS `html`,
                     `PerView` AS `per_view`,
                     `PerViewReplies` AS `per_view_replies`,
                     `BrowseType` AS `browse_type`,
@@ -461,9 +460,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     	$this->_oQuery->setTableNameFiles2Entries($sTable);
     }
 
-    public function isNl2br ()
+    public function isHtml ()
     {
-        return $this->_aSystem['nl2br'];
+        return $this->_aSystem['html'] > 0;
     }
 
     public function isRatable ()
@@ -1263,7 +1262,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _prepareTextForEdit ($s)
     {
-        if ($this->isNl2br())
+        if (!$this->isHtml())
             return htmlspecialchars_decode(str_replace('<br />', "", $s));
 
         return $s;
@@ -1271,13 +1270,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _prepareTextForSave ($s)
     {
-        $iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
+        $iDataAction = !$this->isHtml() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
         return bx_process_input($s, $iDataAction);
     }
 
     protected function _prepareTextForOutput ($s, $iCmtId = 0)
     {
-    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
+    	$iDataAction = !$this->isHtml() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
     	$s = bx_process_output($s, $iDataAction);
     	$s = bx_linkify_html($s, 'class="' . BX_DOL_LINK_CLASS . '"');
 
