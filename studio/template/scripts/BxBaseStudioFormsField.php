@@ -104,7 +104,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         $oForm = new BxTemplStudioFormView($aForm);
 
         if($oForm->isSubmitted())
-            $this->onCheckField($oForm);
+            $this->onCheckField('add', $oForm);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -144,7 +144,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
         $bAlter = false;
         if($oForm->isSubmitted())
-            $bAlter = $this->onCheckField($oForm);
+            $bAlter = $this->onCheckField('edit', $oForm);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -422,7 +422,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         return $mixedResult;
     }
 
-    protected function getCheckerFields()
+    protected function getCheckerFields($bMandatory = false)
     {
         $aResult = array(
             'checker_func' => array(
@@ -434,7 +434,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 'values' => array(
                     array('key' => '', 'value' => _t('_adm_form_txt_field_checker_empty'))
                 ),
-                'required' => '1',
+                'required' => $bMandatory ? '1' : '0',
                 'attrs' => array(
                     'id' => 'bx-form-field-type',
                     'onchange' => $this->getJsObject() . ".onSelectChecker(this)"
@@ -444,12 +444,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 ),
                 'db' => array (
                     'pass' => 'Xss',
-                ),
-                'checker' => array (
-                    'func' => 'avail',
-                    'params' => array(),
-                    'error' => _t('_adm_form_err_field_checker_func'),
-                ),
+                )
             ),
             'checker_params' => array(
                 'type' => 'hidden',
@@ -457,7 +452,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 'value' => '',
                 'db' => array (
                     'pass' => 'Xss',
-                ),
+                )
             ),
             'checker_params_length_min' => array(
                 'type' => 'text',
@@ -465,18 +460,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 'caption' => _t('_adm_form_txt_field_checker_params_length_min'),
                 'info' => '',
                 'value' => '',
-                'required' => '1',
+                'required' => $bMandatory ? '1' : '0',
                 'tr_attrs' => array(
                     'style' => 'display:none'
                 ),
                 'db' => array (
                     'pass' => 'Int',
-                ),
-                'checker' => array (
-                    'func' => 'preg',
-                    'params' => array('/^[0-9]+$/'),
-                    'error' => _t('_adm_form_err_field_checker_params_length_min'),
-                ),
+                )
             ),
             'checker_params_length_max' => array(
                 'type' => 'text',
@@ -484,18 +474,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 'caption' => _t('_adm_form_txt_field_checker_params_length_max'),
                 'info' => '',
                 'value' => '',
-                'required' => '1',
+                'required' => $bMandatory ? '1' : '0',
                 'tr_attrs' => array(
                     'style' => 'display:none'
                 ),
                 'db' => array (
                     'pass' => 'Int',
-                ),
-                'checker' => array (
-                    'func' => 'preg',
-                    'params' => array('/^[0-9]+$/'),
-                    'error' => _t('_adm_form_err_field_checker_params_length_max'),
-                ),
+                )
             ),
             'checker_params_preg' => array(
                 'type' => 'text',
@@ -503,18 +488,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 'caption' => _t('_adm_form_txt_field_checker_params_preg'),
                 'info' => _t('_adm_form_dsc_field_checker_params_preg'),
                 'value' => '',
-                'required' => '1',
+                'required' => $bMandatory ? '1' : '0',
                 'tr_attrs' => array(
                     'style' => 'display:none'
                 ),
                 'db' => array (
                     'pass' => 'Xss',
-                ),
-                'checker' => array (
-                    'func' => 'avail',
-                    'params' => array(),
-                    'error' => _t('_adm_form_err_field_checker_params_preg'),
-                ),
+                )
             ),
             'checker_error' => array(
                 'type' => 'text_translatable',
@@ -522,31 +502,74 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 'caption' => _t('_adm_form_txt_field_checker_error'),
                 'info' => '',
                 'value' => '_sys_form_txt_field_checker_error',
-                'required' => '1',
+                'required' => $bMandatory ? '1' : '0',
                 'tr_attrs' => array(
                     'style' => 'display:none'
                 ),
                 'db' => array (
                     'pass' => 'Xss',
-                ),
-                'checker' => array (
-                    'func' => 'availTranslatable',
-                    'params' => array('checker_error'),
-                    'error' => _t('_adm_form_err_field_checker_error'),
-                ),
+                )
             ),
         );
 
         foreach($this->aCheckFunctions as $sCheckFunction)
             $aResult['checker_func']['values'][] = array('key' => $sCheckFunction, 'value' => _t('_adm_form_txt_field_checker_' . $sCheckFunction));
 
+        if($bMandatory) 
+            $aResult = array_merge_recursive($aResult, array(
+                'checker_func' => array(
+            		'checker' => array (
+                        'func' => 'avail',
+                        'params' => array(),
+                        'error' => _t('_adm_form_err_field_checker_func'),
+                    )
+                ),
+                'checker_params_length_min' => array(
+                	'checker' => array (
+                        'func' => 'preg',
+                        'params' => array('/^[0-9]+$/'),
+                        'error' => _t('_adm_form_err_field_checker_params_length_min'),
+                    )
+                ),
+                'checker_params_length_max' => array(
+                	'checker' => array (
+                        'func' => 'preg',
+                        'params' => array('/^[0-9]+$/'),
+                        'error' => _t('_adm_form_err_field_checker_params_length_max'),
+                    )
+                ),
+                'checker_params_preg' => array(
+                    'checker' => array (
+                        'func' => 'avail',
+                        'params' => array(),
+                        'error' => _t('_adm_form_err_field_checker_params_preg'),
+                    ),
+                    
+                ),
+                'checker_error' => array(
+                	'checker' => array (
+                        'func' => 'availTranslatable',
+                        'params' => array('checker_error'),
+                        'error' => _t('_adm_form_err_field_checker_error'),
+                    )
+                )
+            ));
+
         return $aResult;
     }
 
-    protected function updateCheckerFields(&$oForm)
+    protected function updateCheckerFields($sType, &$oForm)
     {
             if((int)$oForm->getCleanValue('required') == 0)
-                $this->unsetCheckerFields($oForm);
+                switch($sType) {
+                    case 'add':
+                        $this->unsetCheckerFields($oForm);
+                        break;
+
+                    case 'edit':
+                        $this->clearCheckerFields($oForm);
+                        break;
+                }
             else {
                 unset($oForm->aInputs['checker_func']['tr_attrs']['style'], $oForm->aInputs['checker_error']['tr_attrs']['style']);
                 switch($oForm->getCleanValue('checker_func')) {
@@ -562,6 +585,34 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         $this->unsetCheckerFields($oForm, 'params');
                 }
             }
+    }
+
+    protected function clearCheckerFields(&$oForm, $sCheckerFunc = 'all')
+    {
+        switch($sCheckerFunc) {
+            case 'length':
+                $oForm->aInputs['checker_params_length_min']['value'] = '';
+                $oForm->aInputs['checker_params_length_max']['value'] = '';
+                break;
+
+            case 'preg':
+                $oForm->aInputs['checker_params_preg']['value'] = '';
+                break;
+
+            case 'params':
+                $oForm->aInputs['checker_params_length_min']['value'] = '';
+                $oForm->aInputs['checker_params_length_max']['value'] = '';
+                $oForm->aInputs['checker_params_preg']['value'] = '';
+                break;
+
+            case 'all':
+                $oForm->aInputs['checker_func']['value'] = '';
+                $oForm->aInputs['checker_params']['value'] = '';
+                $oForm->aInputs['checker_params_length_min']['value'] = '';
+                $oForm->aInputs['checker_params_length_max']['value'] = '';
+                $oForm->aInputs['checker_params_preg']['value'] = '';
+                $oForm->aInputs['checker_error']['value'] = '';
+        }
     }
 
     protected function unsetCheckerFields(&$oForm, $sCheckerFunc = 'all')
@@ -586,6 +637,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             case 'all':
                 unset(
                     $oForm->aInputs['checker_func'],
+                    $oForm->aInputs['checker_params'],
                     $oForm->aInputs['checker_params_length_min'],
                     $oForm->aInputs['checker_params_length_max'],
                     $oForm->aInputs['checker_params_preg'],
@@ -606,13 +658,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         return $sPrefix . $iIndex;
     }
 
-    protected function onCheckField(&$oForm)
+    protected function onCheckField($sType, &$oForm)
     {
         $bAlter = false;
 
         //--- Process field 'required' and related 'checker' fields.
         if(isset($oForm->aInputs['required']))
-            $this->updateCheckerFields($oForm);
+            $this->updateCheckerFields($sType, $oForm);
 
         //--- Process field 'db_pass' and related dependencies.
         if(isset($oForm->aInputs['db_pass']) && $oForm->aInputs['db_pass']['type'] == 'select') {
@@ -642,13 +694,18 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         }
 
         //--- Process field checker.
+        $sCheckerFunc = $oForm->getCleanValue('checker_func');
+
         $aCheckerParams = array();
-        if(isset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'])) {
-            $aCheckerParams['min'] = $oForm->getCleanValue('checker_params_length_min');
-            $aCheckerParams['max'] = $oForm->getCleanValue('checker_params_length_max');
+        if(!empty($sCheckerFunc)) {
+            if(isset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'])) {
+                $aCheckerParams['min'] = $oForm->getCleanValue('checker_params_length_min');
+                $aCheckerParams['max'] = $oForm->getCleanValue('checker_params_length_max');
+            }
+
+            if(isset($oForm->aInputs['checker_params_preg']))
+                $aCheckerParams['preg'] = $oForm->getCleanValue('checker_params_preg');
         }
-        if(isset($oForm->aInputs['checker_params_preg']))
-            $aCheckerParams['preg'] = $oForm->getCleanValue('checker_params_preg');
 
         unset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'], $oForm->aInputs['checker_params_preg']);
         BxDolForm::setSubmittedValue('checker_params', !empty($aCheckerParams) ? serialize($aCheckerParams) : '', $oForm->aFormAttrs['method']);

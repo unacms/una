@@ -1281,7 +1281,7 @@ BLAH;
 
     function genInfoIcon($sInfo)
     {
-        return '<div class="bx-form-info bx-def-font-grayed bx-def-font-small">' . bx_process_output($sInfo) . '</div>';
+        return '<div class="bx-form-info bx-def-font-grayed bx-def-font-small">' . bx_process_output($sInfo, BX_DATA_HTML) . '</div>';
     }
 
     function genErrorIcon( $sError = '' )
