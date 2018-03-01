@@ -70,8 +70,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         // get profile's url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
 
-        $sThumbUrl = $bPublicThumb ? $this->thumb($aData, false) : '';
+        $sThumbUrl = $sAvatarUrl = '';
+        if($bPublicThumb) {
+            $sThumbUrl = $this->thumb($aData, false);
+            $sAvatarUrl = $this->avatar($aData, false);
+        };
         $bThumbUrl = !empty($sThumbUrl);
+        $bAvatarUrl = !empty($sAvatarUrl);
 
         $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
@@ -102,14 +107,21 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                     'thumb_url' => $sThumbUrl
                 )
             ),
+            'bx_if:show_avatar_image' => array(
+                'condition' => $bAvatarUrl,
+                'content' => array(
+                    'avatar_url' => $sAvatarUrl
+                )
+            ),
             'bx_if:show_thumb_letter' => array(
-                'condition' => !$bThumbUrl,
+                'condition' => !$bThumbUrl && !$bAvatarUrl,
                 'content' => array(
                     'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 0.5)),
                     'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
                 )
             ),
             'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
+            'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
             'cover_url' => $sCoverUrl,
             'content_url' => $bPublic ? $sUrl : 'javascript:void(0);',
             'content_click' => !$bPublic ? 'javascript:bx_alert(' . bx_js_string('"' . _t('_sys_access_denied_to_private_content') . '"') . ');' : '',
@@ -229,6 +241,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         );
 
         BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
+    }
+
+	/**
+     * Get profile picture thumb url
+     */
+    function avatar ($aData, $bSubstituteNoImage = true)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR'], 'no-picture-thumb.png', $aData, $bSubstituteNoImage);
     }
 
     /**
