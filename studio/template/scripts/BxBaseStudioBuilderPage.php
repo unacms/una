@@ -1357,7 +1357,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'info' => _t('_adm_bp_dsc_block_content_raw'),
                         'value' => $aBlock['content'],
                         'required' => '0',
-                        'html' => 1,
+                        'html' => 2,
                 		'attrs' => array('id' => $this->aHtmlIds['edit_block_editor_id']),
                         'db' => array (
                             'pass' => 'XssHtml',
