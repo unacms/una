@@ -96,18 +96,6 @@ class BxForumCmts extends BxTemplCmts
 
         return $oResult;
     }
-
-    protected function _getForm($sAction, $iId)
-    {
-    	$oForm = parent::_getForm($sAction, $iId);
-
-    	if(isset($oForm->aInputs['cmt_text'])) {
-    		$oForm->aInputs['cmt_text']['html'] = 3;
-    		$oForm->aInputs['cmt_text']['db']['pass'] = 'XssHtml';
-    	}
-
-    	return $oForm;
-    }
 }
 
 /** @} */
