@@ -641,7 +641,8 @@ class BxBaseCmts extends BxDolCmts
             unset($oForm->aInputs['cmt_image']);
 
         if(isset($oForm->aInputs['cmt_text'])) {
-            $oForm->aInputs['cmt_text']['html'] = $this->_aSystem['html']; 
+            $oForm->aInputs['cmt_text']['html'] = $this->_aSystem['html'];
+            $oForm->aInputs['cmt_text']['db']['pass'] = $this->isHtml() ? 'XssHtml' : 'XssMultiline';
 
             $iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
             $iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
