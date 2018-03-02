@@ -44,4 +44,18 @@ function bx_editor_remove_img (aEditorIds, aMarkers) {
     }
 }
 
+function bx_editor_get_htmleditable (sEditorSelector)
+{
+    if (!$(sEditorSelector).size())
+        return false;
+
+    var sId = $(sEditorSelector).attr('id');
+    
+    var eEditor = 'object' == typeof(tinymce) ? tinymce.get(sId) : undefined;
+    if ('undefined' == typeof(eEditor) || !eEditor.dom)
+        return false;
+
+    return $(eEditor.dom.doc).find('body').get(0);
+}
+
 /** @} */
