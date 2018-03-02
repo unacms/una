@@ -129,7 +129,7 @@ CREATE TABLE `sys_objects_cmts` (
   `CharsPostMin` int(10) NOT NULL,
   `CharsPostMax` int(10) NOT NULL,
   `CharsDisplayMax` int(10) NOT NULL,
-  `Nl2br` smallint(1) NOT NULL,
+  `Html` smallint(1) NOT NULL,
   `PerView` smallint(6) NOT NULL,
   `PerViewReplies` smallint(6) NOT NULL,
   `BrowseType` varchar(50) NOT NULL,
