@@ -13,8 +13,13 @@
 	<string name="_bx_ntfs_menu_item_title_notifications_all"><![CDATA[All Notifications]]></string>
     <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
     <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Notifications]]></string>
+    <string name="_bx_ntfs_menu_title_preview"><![CDATA[Notifications Preview]]></string>
+    <string name="_bx_ntfs_menu_set_title_preview"><![CDATA[Notifications Preview]]></string>
+    <string name="_bx_ntfs_menu_item_title_system_more"><![CDATA[See all notifications]]></string>
+    <string name="_bx_ntfs_menu_item_title_more"><![CDATA[See all notifications]]></string>
 
 	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Number of items per page]]></string>
+	<string name="_bx_ntfs_option_events_per_preview"><![CDATA[Number of items in preview]]></string>
 	<string name="_bx_ntfs_option_events_hide_site"><![CDATA[Onsite notifications]]></string>
 	<string name="_bx_ntfs_option_events_hide_email"><![CDATA[Email notifications]]></string>
 	<string name="_bx_ntfs_option_events_hide_push"><![CDATA[Push notifications]]></string>

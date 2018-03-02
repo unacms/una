@@ -22,3 +22,9 @@ div.bx-ntfs-empty div.bx-msg-box-container {
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+
+/*--- Preview Popup Style ---*/
+.bx-menu-object-bx_notifications_preview .bx-ntfs-preview-item {
+	width: 100%;
+	text-align: center;
+}

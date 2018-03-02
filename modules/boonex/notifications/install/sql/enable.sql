@@ -25,10 +25,20 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_notifications_submenu', @sName, 'notifications-all', '_bx_ntfs_menu_item_title_system_notifications_all', '_bx_ntfs_menu_item_title_notifications_all', 'page.php?i=notifications-view', '', '', '', '', 2147483647, 1, 0, 1);
 
+-- MENU: preview popup
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_notifications_preview', '_bx_ntfs_menu_title_preview', 'bx_notifications_preview', @sName, 20, 0, 1, 'BxNtfsMenuPreview', 'modules/boonex/notifications/classes/BxNtfsMenuPreview.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_notifications_preview', @sName, '_bx_ntfs_menu_set_title_preview', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_notifications_preview', @sName, 'more', '_bx_ntfs_menu_item_title_system_more', '_bx_ntfs_menu_item_title_more', 'page.php?i=notifications-view', '', '', '', '', 2147483647, 1, 0, 1);
+
 -- MENU: Notifications
 SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications' AND `order` < 9999);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_notifications', @sName, 'notifications-notifications', '_bx_ntfs_menu_item_title_system_notifications', '_bx_ntfs_menu_item_title_notifications', 'page.php?i=notifications-view', '', '', 'bell col-green3', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:28:"get_unread_notifications_num";}', '', 2147483646, 1, 1, @iMIOrder + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_account_notifications', @sName, 'notifications-notifications', '_bx_ntfs_menu_item_title_system_notifications', '_bx_ntfs_menu_item_title_notifications', 'javascript:void(0)', 'bx_menu_slide(''bx_notifications_preview'', this, ''site'', {id:{value:''bx_notifications_preview'', force:1}});', '', 'bell col-green3', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:28:"get_unread_notifications_num";}', 'bx_notifications_preview', '1', 2147483646, 1, 1, @iMIOrder + 1);
 
 
 -- SETTINGS
@@ -43,6 +53,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_notifications_events_per_page', '12', @iCategId, '_bx_ntfs_option_events_per_page', 'digit', '', '', '', '', 1),
+('bx_notifications_events_per_preview', '6', @iCategId, '_bx_ntfs_option_events_per_preview', 'digit', '', '', '', '', 5),
 ('bx_notifications_events_hide_site', '', @iCategId, '_bx_ntfs_option_events_hide_site', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 10),
 ('bx_notifications_events_hide_email', '', @iCategId, '_bx_ntfs_option_events_hide_email', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 11),
 ('bx_notifications_events_hide_push', '', @iCategId, '_bx_ntfs_option_events_hide_push', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 12);
