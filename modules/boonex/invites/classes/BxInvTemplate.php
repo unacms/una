@@ -151,7 +151,7 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         $iId = (int)$oForm->insert(array('nip' => ip2long($sIp),'date' => time()));
         if(!$iId)
             return array('content' => MsgBox(_t('_bx_invites_err_cannot_perform')), 'content_id' => $sFormId, 'eval' => $sEval);
-
+        $this->getModule()->onRequest($iId);
         $sRequestsEmail = $this->_oConfig->getRequestsEmail();
         if(!empty($sRequestsEmail)) {
             $sManageUrl = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_REQUESTS']);

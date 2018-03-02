@@ -98,6 +98,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 					$sWhereClause .= $this->prepareAsString("AND ((NOT ISNULL(`c`.`content`)" . (!empty($aQueryParts['fields']['added']) ? " AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'] : "") . " AND `{$this->_sTable}`.`action` <> 'replyPost') || (`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=?)) ", $aParams['owner_id']);
                     break;
 			}
+            
 
 		return array($sJoinClause, $sWhereClause);
 	}

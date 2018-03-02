@@ -49,4 +49,11 @@ function bx_editor_on_space_enter (sEditorId)
     }, 800);
 }
 
+function bx_editor_get_htmleditable (sEditorSelector)
+{
+    if (!$(sEditorSelector).size())
+        return false;
+    return $(sEditorSelector).data('froala.editor').el;
+}
+
 /** @} */

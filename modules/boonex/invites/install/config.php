@@ -50,14 +50,17 @@ $aConfig = array(
     'uninstall' => array (
         'execute_sql' => 1,
         'update_languages' => 1,
+        'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
+        'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
+        'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
 
@@ -65,6 +68,13 @@ $aConfig = array(
      * Dependencies Section
      */
     'dependencies' => array(),
+    
+    /**
+      * Relations Section
+      */
+    'relations' => array(
+    	'bx_notifications'
+    ),
 );
 
 /** @} */
