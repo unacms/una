@@ -2222,7 +2222,8 @@
 	<string name="_sys_menu_template_title_ver_lite"><![CDATA[Вертикальные ссылки (облегчённые)]]></string>
 	<string name="_sys_menu_template_title_account_notifications"><![CDATA[Аккаунт - Уведомления]]></string>
 	<string name="_sys_menu_template_title_account_popup"><![CDATA[Аккаунт - Всплывающие]]></string>
-	<string name="_sys_menu_template_title_custom"><![CDATA[Индивидуальные элементы меню]]></string>
+	<string name="_sys_menu_template_title_custom_hor"><![CDATA[Горизонтальное меню с индивидуальными элементами]]></string>
+    <string name="_sys_menu_template_title_custom_ver"><![CDATA[Вертикальное меню с индивидуальными элементами]]></string>
 	<string name="_sys_menu_title_account_dashboard"><![CDATA[Панель аккаунта - Меню]]></string>
 	<string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Меню инструментов управления]]></string>
     <string name="_sys_menu_title_account_notifications"><![CDATA[Меню с уведомлениями]]></string>

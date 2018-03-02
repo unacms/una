@@ -50,19 +50,22 @@ ul.bx-menu-hor {
 
 ul.bx-menu-notif,
 ul.bx-menu-verlit,
-ul.bx-menu-ver {
+ul.bx-menu-ver,
+ul.bx-menu-custom-ver {
     padding:0;
     margin:0;
     list-style:none;
 }
 
-.bx-menu-ver li {
+.bx-menu-ver li,
+.bx-menu-custom-ver li {
     margin-top:1px;
 }
 
 .bx-menu-notif li:first-child,
 .bx-menu-verlit li:first-child,
-.bx-menu-ver li:first-child {
+.bx-menu-ver li:first-child,
+.bx-menu-custom-ver li:first-child {
     margin-top:0px;
 }
 
@@ -291,6 +294,7 @@ ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
     text-decoration:none;
 }
 
+.bx-sliding-menu,
 .bx-sliding-menu-main {
     width:100%;    
 
@@ -547,4 +551,9 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
 .bx-menu-custom > li > span,
 .bx-menu-custom > li > a {
     display:inline-block;
+}
+
+.bx-menu-custom.bx-menu-hor > li > span {
+	margin-right: 20px;
+    margin-right: 1.25rem;
 }
