@@ -294,6 +294,56 @@ class BxInvModule extends BxDolModule
 
         return $sReturn;
     }
+    
+    /**
+     * Data for Notifications module
+     */
+    public function serviceGetNotificationsData()
+    {
+    	$sModule = $this->_aModule['name'];
+
+    	$sEventPrivacy = $sModule . '_allow_view_event_to';
+		if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+			$sEventPrivacy = '';
+
+        return array(
+            'handlers' => array(
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'request', 'module_name' => $sModule, 'module_method' => 'get_notifications_request', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            ),
+            'alerts' => array(
+                array('unit' => $sModule, 'action' => 'request'),
+
+            )
+        );
+    }
+    
+    /**
+     * Entry post for Notifications module
+     */
+    public function serviceGetNotificationsRequest($aEvent)
+    {  
+        if (getParam('bx_invites_requests_notifictaions') != 'on')
+             return array();
+        
+        $aRequest = $this->_oDb->getRequests(array('type' => 'by_id', 'value' => $aEvent['object_id']));
+        if (!$aRequest)
+            return array();
+           
+        $CNF = &$this->_oConfig->CNF;
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URL_REQUESTS']);
+            
+		return array(
+			'entry_sample' => $aRequest['name'] . '(' . $aRequest['email'] . ')',
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $aRequest['text'],
+			'entry_author' => '',
+			'entry_privacy' => '', //may be empty or not specified. In this case Public privacy will be used.
+			'lang_key' => '_bx_invites_alert_action_request', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+    
+    
+    
 
     public function invite($sType, $sEmails, $sText, $mixedLimit = false, $oForm = null)
     {
@@ -434,10 +484,10 @@ class BxInvModule extends BxDolModule
         //--- Event -> Invite for Alerts Engine ---//
     }
 
-    protected function onRequest()
+    public function onRequest($iRequestId)
     {
         //--- Event -> Request for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'request');
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'request', $iRequestId);
         $oAlert->alert();
         //--- Event -> Request for Alerts Engine ---//
     }

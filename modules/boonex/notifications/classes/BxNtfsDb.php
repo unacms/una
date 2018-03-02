@@ -96,8 +96,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 					    $sJoinClause .= ' ' . str_replace('INNER', 'LEFT', $aQueryParts['join']);
 
 					$sWhereClause .= $this->prepareAsString("AND ((NOT ISNULL(`c`.`content`)" . (!empty($aQueryParts['fields']['added']) ? " AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'] : "") . " AND `{$this->_sTable}`.`action` <> 'replyPost') || (`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=?)) ", $aParams['owner_id']);
+                    if (BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_ADMINISTRATOR, MEMBERSHIP_ID_MODERATOR)))
+                        $sWhereClause .= $this->prepareAsString("OR `{$this->_sTable}`.`owner_id` = 0 ");
                     break;
 			}
+            
 
 		return array($sJoinClause, $sWhereClause);
 	}
