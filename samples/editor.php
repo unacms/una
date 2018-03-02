@@ -27,22 +27,38 @@ $oTemplate->getPageCode();
  */
 function PageCompMainCode()
 {
+    $oEditor = BxDolEditor::getObjectInstance(); // get default editor object instance
+    
     ob_start();
 
-    if (bx_get('my_textarea'))
+    if ('editor' == bx_get('action')) {
+        echo '<textarea id="my_textarea_popup" name="my_textarea_popup" rows="20" cols="80">Hello World!</textarea>';
+        echo $oEditor->attachEditor('#my_textarea_popup', BX_EDITOR_STANDARD, true);
+        exit;
+    }
+    elseif (bx_get('my_textarea')) {
         echo 'Submitted data:<hr class="bx-def-hr" />' . bx_process_output(bx_get('my_textarea')) . '<hr class="bx-def-hr" />';
+    }
+
+    // standard editor
 
     echo '<form method="post" id="my_form">'; // form must have id
     echo '<textarea id="my_textarea" name="my_textarea" rows="20" cols="80">some text here</textarea>'; // print text area element
     echo '<input type="submit" value="Submit" class="bx-btn bx-def-margin-sec-top" style="float:none;" />';
-    echo '</form>';
+    echo '</form><hr class="bx-def-hr" />';
 
-    $oEditor = BxDolEditor::getObjectInstance(); // get default editor object instance
+
+    // standard editor in popup
+
+    echo BxTemplFunctions::getInstance()->popupBox('bx-sample-editor-in-popup', 'popupBox', 'Editor in popup', true);
+    echo '<button class="bx-btn" onclick="$(window).dolPopupAjax({url: \'samples/editor.php?action=editor&_t=b'.time().'\', removeOnClose: true})">Editor in popup</button>';
+
+    
     if ($oEditor) // check if editor is available for using
         echo $oEditor->attachEditor ('#my_textarea'); // output HTML which will automatically apply editor to textarea element by its id
 
     // print all available editors and editors view modes below
-
+/*
     echo '<hr class="bx-def-hr" />';
 
     $aEditors = array('sys_tinymce', 'bx_froala');
@@ -59,7 +75,7 @@ function PageCompMainCode()
             echo '<hr class="bx-def-hr" />';
         }
     }
-
+ */
     return DesignBoxContent("Visual editor", ob_get_clean(), BX_DB_PADDING_DEF);
 }
 
