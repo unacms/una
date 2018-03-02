@@ -51,7 +51,7 @@ function PageCompMainCode()
     // standard editor in popup
 
     echo BxTemplFunctions::getInstance()->popupBox('bx-sample-editor-in-popup', 'popupBox', 'Editor in popup', true);
-    echo '<button class="bx-btn" onclick="$(window).dolPopupAjax({url: \'samples/editor.php?action=editor&_t=b'.time().'\', removeOnClose: true})">Editor in popup</button>';
+    echo '<button class="bx-btn" onclick="$(window).dolPopupAjax({url: \'' . BX_DOL_URL_ROOT . 'samples/editor.php?action=editor&_t=b'.time().'\', removeOnClose: true})">Editor in popup</button>';
 
     
     if ($oEditor) // check if editor is available for using
