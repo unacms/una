@@ -16,18 +16,33 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-	public function getCssJs()
+    public function getCss($bDynamic = false)
     {
-        $this->addCss(array(
+        $mixedResult = $this->addCss(array(
             'view.css',
             'view-media-tablet.css',
             'view-media-desktop.css',
-        ));
-        $this->addJs(array(
+        ), $bDynamic);
+
+        if($bDynamic)
+            return $mixedResult; 
+    }
+
+    public function getJs($bDynamic = false)
+    {
+        $mixedResult = $this->addJs(array(
         	'jquery.anim.js',
             'main.js',
             'view.js',
-        ));
+        ), $bDynamic);
+
+        if($bDynamic)
+            return $mixedResult; 
+    }
+
+	public function getCssJs($bDynamic = false)
+    {
+        return $this->getCss($bDynamic) . $this->getJs($bDynamic);
     }
 
 	public function getJsCode($sType, $aParams = array(), $bWrap = true)

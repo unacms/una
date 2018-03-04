@@ -405,14 +405,78 @@ function bx_menu_popup_inline (jSel, e, options) {
 }
 
 /**
- * Show pointer popup with menu from existing HTML.
- * @param jSel - jQuery selector for html to show in popup
+ * Show pointer popup with menu from URL.
+ * @param sObject - menu object name
+ * @param oElement - element to show popup at
+ * @param oOptions - popup options
+ * @param oVars - additional GET variables
+ */
+function bx_menu_slide (sObject, oElement, sPosition, oOptions, oVars) {
+	var oVars = oVars || {};
+    var oOptions = oOptions || {};
+    oOptions = $.extend({}, {parent: 'body', container: '.bx-sliding-menu-content'}, oOptions);
+
+    var sId = '';
+    var sIdSel = '';
+    var sIdPfx = 'bx-sliding-menu-wrapper-';
+    if(typeof(oOptions.id) != 'undefined')
+    	switch(typeof(oOptions.id)) {
+    		case 'string':
+    			sId = sIdPfx + oOptions.id;
+    			break;
+
+    		case 'object':
+    			sId = typeof(oOptions.id.force) != 'undefined' && oOptions.id.force ? oOptions.id.value : sIdPfx + oOptions.id.value;
+    			break;
+    	}
+    else
+    	sId = sIdPfx + parseInt(2147483647 * Math.random());
+
+    sIdSel = '#' + sId;
+    
+    //--- If slider exists
+    if ($(sIdSel).length) {
+    	bx_menu_slide_inline (sIdSel, oElement, sPosition);
+    	return;
+    }
+    //--- If slider doesn't exists
+    else {
+    	var oMenuLoading = $('#bx-sliding-menu-loading');
+    	$('<div id="' + sId + '" style="display:none;">' + oMenuLoading.html() + '</div>').addClass(oMenuLoading.attr('class')).appendTo(oOptions.parent);
+
+        var oLoading = $(sIdSel + ' .bx-sliding-menu-loading');
+        bx_loading_content(oLoading, true, true);
+
+        bx_menu_slide_inline (sIdSel, oElement, sPosition);
+        
+        var fOnLoad = function() {
+        	bx_loading_content(oLoading, false);
+
+        	$(sIdSel).bxTime().show();
+        };
+
+        $(sIdSel).find(oOptions.container).load(bx_append_url_params('menu.php', $.extend({o:sObject}, oVars)), function () {
+            var f = function () {
+            	if($(sIdSel).find('img').length > 0 && !$(sIdSel).find('img').get(0).complete)
+            		$(sIdSel).find('img').load(fOnLoad);
+            	else
+            		fOnLoad();
+            };
+            setTimeout(f, 100); // TODO: better way is to check if item is animating before positioning it in the code where popup is positioning
+        });
+    }
+    	
+}
+
+/**
+ * Show sliding menu from existing HTML.
+ * @param sMenu - jQuery object or selector for html to show in popup
  * @param e - element to click to open/close slider
  * @param sPosition - 'block' for sliding menu in blocks, 'site' - for sliding main menu
  */
-function bx_menu_slide (jSel, e, sPosition) {
+function bx_menu_slide_inline (sMenu, e, sPosition) {
     var options = options || {};
-    var eSlider = $(jSel);    
+    var eSlider = $(sMenu);    
 
     if ('undefined' == typeof(e))
         e = eSlider.data('data-control-btn');
@@ -463,7 +527,7 @@ function bx_menu_slide (jSel, e, sPosition) {
     if ('undefined' == typeof(sPosition))
         sPosition = 'block';
 
-    if ($(jSel + ':visible').length) {
+    if (eSlider.is(':visible')) {
         fClose();
 
         $(document).off('click.bx-sliding-menu touchend.bx-sliding-menu');
@@ -494,7 +558,7 @@ function bx_menu_slide (jSel, e, sPosition) {
             });
  
             $(document).on('click.bx-sliding-menu touchend.bx-sliding-menu', function (event) {
-                if ($(event.target).parents('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || $(event.target).filter('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || e === event.target)
+                if ($(event.target).parents('.bx-sliding-menu, .bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || $(event.target).filter('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || e === event.target)
                     event.stopPropagation();
                 else
                     bx_menu_slide_close_all_opened();
@@ -508,8 +572,8 @@ function bx_menu_slide (jSel, e, sPosition) {
  * Close all opened sliding menus
  */
 function bx_menu_slide_close_all_opened () {
-    $('.bx-sliding-menu-main:visible, .bx-popup-slide-wrapper:visible').each(function () {
-        bx_menu_slide('#' + this.id);
+    $('.bx-sliding-menu:visible, .bx-sliding-menu-main:visible, .bx-popup-slide-wrapper:visible').each(function () {
+        bx_menu_slide_inline('#' + this.id);
     });
 }
 

@@ -308,11 +308,10 @@ class BxInvModule extends BxDolModule
 
         return array(
             'handlers' => array(
-                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'request', 'module_name' => $sModule, 'module_method' => 'get_notifications_request', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'request_notify', 'module_name' => $sModule, 'module_method' => 'get_notifications_request', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             ),
             'alerts' => array(
-                array('unit' => $sModule, 'action' => 'request'),
-
+                array('unit' => $sModule, 'action' => 'request_notify'),
             )
         );
     }
@@ -479,16 +478,18 @@ class BxInvModule extends BxDolModule
         $this->isAllowedInvite($iProfileId, true);
 
         //--- Event -> Invite for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'invite', 0, $iProfileId);
-        $oAlert->alert();
+        bx_alert($this->_oConfig->getObject('alert'), 'invite', 0, $iProfileId);
         //--- Event -> Invite for Alerts Engine ---//
     }
 
     public function onRequest($iRequestId)
     {
         //--- Event -> Request for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'request', $iRequestId);
-        $oAlert->alert();
+        bx_alert($this->_oConfig->getObject('alert'), 'request', $iRequestId);
+        $aProfiles = BxDolAclQuery::getInstance()->getProfilesByMembership(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR));
+        foreach($aProfiles as $aProfile) {
+            bx_alert($this->_oConfig->getObject('alert'), 'request_notify', $iRequestId, 0, array('parent_author_id' => $aProfile['id']));
+        }
         //--- Event -> Request for Alerts Engine ---//
     }
 

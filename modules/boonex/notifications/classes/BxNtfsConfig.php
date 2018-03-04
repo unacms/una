@@ -69,7 +69,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
     	$sOptionPrefix = $this->getPrefix('option');
     	$this->_aPerPage = array(
-    		'default' => (int)getParam($sOptionPrefix . 'events_per_page')
+    		'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
+    	    'preview' => (int)getParam($sOptionPrefix . 'events_per_preview')
     	);
 
     	$aSettings = array(

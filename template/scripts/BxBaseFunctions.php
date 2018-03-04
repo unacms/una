@@ -246,7 +246,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
                 $sCode .= $this->slideBox($sId, $sMenu, true);
-                $aButtonMenu = array ('icon-a' => $this->_sDesignBoxIcon, 'onclick' => "bx_menu_slide('#" . $sId . "', this)");
+                $aButtonMenu = array ('icon-a' => $this->_sDesignBoxIcon, 'onclick' => "bx_menu_slide_inline('#" . $sId . "', this)");
             }
 
         }
@@ -571,6 +571,11 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         )) . ");";
 
         return $this->_oTemplate->_wrapInTagJsCode($sContent);
+    }
+
+    protected function getInjFooterMenuLoading() 
+    {
+        return $this->_oTemplate->parsePageByName('menu_loading.html', array());  
     }
 
     protected function getInjFooterPopupLoading() 

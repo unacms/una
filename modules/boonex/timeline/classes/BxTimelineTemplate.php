@@ -27,9 +27,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $this->_bShowTimelineDividers = false;
     }
 
-    public function getCssJs()
+    public function getCssJs($bDynamic = false)
     {
-    	parent::getCssJs();
+    	parent::getCssJs($bDynamic);
 
         $this->addCss(array(
         	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
@@ -38,6 +38,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'post.css',
             'repost.css',
         ));
+
         $this->addJs(array(
             'jquery-ui/jquery-ui.custom.min.js',
             'jquery.form.min.js',

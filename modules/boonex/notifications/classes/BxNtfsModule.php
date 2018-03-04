@@ -130,6 +130,38 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      * @page service Service Calls
      * @section bx_notifications Notifications
      * @subsection bx_notifications-other Other
+     * @subsubsection bx_notifications-get_unread_notifications get_unread_notifications
+     * 
+     * @code bx_srv('bx_notifications', 'get_unread_notifications', [...]); @endcode
+     * 
+     * Get unread notifications.
+     *
+     * @return array with unread notifications.
+     * 
+     * @see BxNtfsModule::serviceGetUnreadNotifications
+     */
+    /** 
+     * @ref bx_notifications-get_unread_notifications "get_unread_notifications"
+     */
+    public function serviceGetUnreadNotifications($iOwnerId = 0)
+    {
+    	if(!$iOwnerId)
+			$iOwnerId = $this->getUserId();
+
+		if(!$iOwnerId)
+			return 0;
+
+		$aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
+		$aParams['new'] = 1;
+
+		list($aEvent) = $this->_oDb->getEvents($aParams, true);
+		return $aEvent;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-other Other
      * @subsubsection bx_notifications-get_unread_notifications_num get_unread_notifications_num
      * 
      * @code bx_srv('bx_notifications', 'get_unread_notifications_num', [...]); @endcode
