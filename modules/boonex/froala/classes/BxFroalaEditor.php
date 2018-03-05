@@ -50,6 +50,7 @@ class BxFroalaEditor extends BxDolEditor
                 embedlyKey: '{bx_var_embedly_key}',
                 emoticonsUseImage: false,
                 charCounterCount: false,
+                toolbarSticky: false,
                 quickInsertTags: [],
                 pastePlain: true,
                 language: '{bx_var_lang}',
@@ -231,6 +232,7 @@ EOS;
             $aJs[] = $sJsPrefix . 'boonex/froala/plugins/froala/js/languages/' . $sJsSuffix . $sLang . '.js';
         
         $aCss = array(
+            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/template/css/|editor.css',
             BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_editor.pkgd.min.css', 
             BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_style.min.css',
             BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/themes/|' . $this->_aObject['skin'] . '.min.css',
