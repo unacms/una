@@ -147,6 +147,7 @@ class BxBaseModGeneralModule extends BxDolModule
             $aResult[$CNF['FIELD_AUTHOR']] = array(
                 'type' => 'text_auto', 
                 'caption' => $CNF['T']['form_field_author'],
+            	'value' => '',
                 'values' => '',
                 'pass' => ''
             );
@@ -156,6 +157,7 @@ class BxBaseModGeneralModule extends BxDolModule
                 $aResult[$aInput['name']] = array(
                     'type' => $aInput['type'], 
                     'caption' => $aInput['caption_src'],
+                	'value' => !empty($aInput['value']) ? $aInput['value'] : '',
                     'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
                     'pass' => !empty($aInput['db']['pass']) ? $aInput['db']['pass'] : '',
                 );
