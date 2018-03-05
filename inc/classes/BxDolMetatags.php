@@ -278,7 +278,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, ' ' . strip_tags($s), '/[\s]\#([\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', BX_METATAGS_KEYWORDS_MAX, 'keyword');
+        return $this->_metaAdd($iId, ' ' . strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s)), '/[\PL\PN]\#([\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', BX_METATAGS_KEYWORDS_MAX, 'keyword');
     }
 
     /**
