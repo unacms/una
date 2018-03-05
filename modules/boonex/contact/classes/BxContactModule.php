@@ -92,6 +92,7 @@ class BxContactModule extends BxDolModule
                 if (getParam('bx_contact_add_reply_to')) {
                     $aCustomHeaders = array(
                         'Reply-To' => $oForm->getCleanValue('name') . ' <' . bx_process_output($oForm->getCleanValue('email')) . '>',
+                        'X-Original-From' => $oForm->getCleanValue('name') . ' <' . bx_process_output($oForm->getCleanValue('email')) . '>',
                     );
                 }
                 
