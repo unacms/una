@@ -101,11 +101,13 @@ class BxDolXmlParser extends BxDolFactory implements iBxDolSingleton
         //--- Get an array of tags ---//
         if($iXmlTagIndex == -1) {
             $aResult = array();
-            $aTagIndexes = $aIndexes[strtoupper($sXmlTagName)];
-            if(count($aTagIndexes) <= 0) return NULL;
-            foreach($aTagIndexes as $iTagIndex)
-                $aResult[] = $aValues[$iTagIndex];
-            return $aResult;
+            if (isset($aIndexes[strtoupper($sXmlTagName)])){
+                $aTagIndexes = $aIndexes[strtoupper($sXmlTagName)];
+                if(count($aTagIndexes) <= 0) return NULL;
+                foreach($aTagIndexes as $iTagIndex)
+                    $aResult[] = $aValues[$iTagIndex];
+                return $aResult;
+            }
         } else {
             $iTagIndex = $aIndexes[strtoupper($sXmlTagName)][$iXmlTagIndex];
             return $aValues[$iTagIndex];
