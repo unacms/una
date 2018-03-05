@@ -2580,4 +2580,5 @@
 	<string name="_week_wed"><![CDATA[Среда]]></string>
 	<string name="_sys_option_per_page_browse_showcase"><![CDATA[Количество позиций при отображении витриной]]></string>
   <string name="_sys_option_per_page_browse_recommended"><![CDATA[Количество позиций при отображении рекомендованных]]></string>
+  <string name="_sys_javascript_requred"><![CDATA[Для корректной работы нужен включенный JavaScript! Пожалуйста, включите его в барузере!]]></string>
 </resources>
