@@ -28,6 +28,13 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     	return (int)$this->query($sSql) > 0;
     }
 
+    public function getLastRead($iUserId)
+    {
+        return (int)$this->getOne("SELECT `event_id` FROM `" . $this->_sTableEvt2Usr . "` WHERE `user_id`=:user_id LIMIT 1", array(
+            'user_id' => (int)$iUserId
+        ));
+    }
+
 	protected function _getSqlPartsEventsList($aParams)
 	{
 		$sJoinClause = $sWhereClause = "";
@@ -49,12 +56,8 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 			$sWhereClause .= $sWhereModuleFilter;
 
 		//--- Check flag 'New'
-		if(!empty($aParams['new']) && !empty($aParams['owner_id'])) {
-			$sSql = $this->prepare("SELECT `event_id` FROM `" . $this->_sTableEvt2Usr . "` WHERE `user_id`=? LIMIT 1", (int)$aParams['owner_id']);
-			$iId = (int)$this->getOne($sSql);
-
-			$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`>? ", $iId);
-		}
+		if(!empty($aParams['new']) && !empty($aParams['owner_id']))
+			$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`>? ", $this->getLastRead((int)$aParams['owner_id']));
 
 		//--- Apply privacy filter
 		$aPrivacy = array(BX_DOL_PG_ALL);

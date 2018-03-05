@@ -266,6 +266,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aParams['start'] = (int)$iStart > 0 ? $iStart : 0;
         $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage();
         $aParams['modules'] = is_array($aModules) && !empty($aModules) ? $aModules : array();
+        $aParams['last_read'] = $this->_oDb->getLastRead($aParams['owner_id']);
         $aParams['active'] = 1;
 
         return $aParams;

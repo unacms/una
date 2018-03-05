@@ -117,6 +117,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('view'),
+            'class' => !empty($aBrowseParams['last_read']) && $aEvent['id'] > $aBrowseParams['last_read'] ? ' bx-def-color-bg-box-active' : '', 
             'id' => $aEvent['id'],
             'bx_if:show_icon' => array(
                 'condition' => $bAuthorIcon,
