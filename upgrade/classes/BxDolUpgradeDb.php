@@ -117,8 +117,11 @@ class BxDolUpgradeDb
 	        ));
 
 	    	$this->pdoExec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
-	        $this->pdoExec("SET sql_mode = ''");
-			$this->pdoExec("SET storage_engine=" . $this->_sStorageEngine);
+            $this->pdoExec("SET sql_mode = ''");
+
+            $sVer = $this->getVersion();
+            $sStorageEngine = !$sVer || version_compare($sVer, '5.7.5', '>=') ? 'default_storage_engine' : 'storage_engine';
+            $this->pdoExec("SET $sStorageEngine=" . $this->_sStorageEngine);
 
 			self::$_aDbCacheData = array();
     	}
@@ -463,6 +466,15 @@ class BxDolUpgradeDb
     	return self::$_rLink->getAttribute(PDO::ATTR_SERVER_VERSION);
     }
 
+    /**
+     * get mysql version
+     */
+    public function getVersion()
+    {
+        $s = $this->getOne("SELECT VERSION()");
+        return preg_match("/([0-9\.]+)/", $s, $m) ? $m[1] : false;
+    }
+    
     /**
      * get list of tables in database
      */

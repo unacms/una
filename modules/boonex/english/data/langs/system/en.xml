@@ -2581,5 +2581,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_week_wed"><![CDATA[Wednesday]]></string>
 	<string name="_sys_option_per_page_browse_showcase"><![CDATA[Number of items in showcase view]]></string>
 	<string name="_sys_option_per_page_browse_recommended"><![CDATA[Number of items in recommended view]]></string>
+	<string name="_sys_javascript_requred"><![CDATA[This site is requered JavaScript! Please, enable it in browser!]]></string>
 	
 </resources>

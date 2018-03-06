@@ -1343,7 +1343,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             case 'is_profile_page':
                 $sRet = (defined('BX_PROFILE_PAGE')) ? 'true' : 'false';
                 break;
-
+			case 'system_js_requred':
+                $sRet = _t('_sys_javascript_requred');
+                break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
         }
