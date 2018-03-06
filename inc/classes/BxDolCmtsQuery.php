@@ -404,7 +404,8 @@ class BxDolCmtsQuery extends BxDolDb
         $isDelOccured = 0;
         $sQuery = $this->prepare("SELECT `cmt_id`, `cmt_parent_id` FROM {$this->_sTable} WHERE `cmt_author_id` = ? AND `cmt_replies` = 0", $iAuthorId);
         $a = $this->getAll ($sQuery);
-        for ( reset($a) ; list (, $r) = each ($a) ; ) {
+		reset($a) ;
+		foreach ($a as $r) {
             $sQuery = $this->prepare("DELETE FROM {$this->_sTable} WHERE `cmt_id` = ?", $r['cmt_id']);
             $this->query ($sQuery);
 

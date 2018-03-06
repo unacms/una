@@ -224,7 +224,7 @@ class BxQuoteOfDayModule extends BxDolModule
         $aTmp = $oXmlParser->getTags($sXmlContent, 'description');
         if (is_array($aTmp)) {
             $iC = 0;
-            while (list(, $aValue) = each($aTmp)) {
+            foreach ($aTmp as $aValue) {
                 if ($iC == $iRssMaxItems) break;
                 if (isset($aValue['value']) && $aValue['level'] == 4 && trim(strip_tags($aValue['value'])) != "") {
                     array_push($aTmpRv, $aValue['value']);

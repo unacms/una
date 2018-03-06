@@ -18,7 +18,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         parent::__construct($oTemplate ? $oTemplate : BxDolStudioTemplate::getInstance());
     }
 
-    public static function getInstance()
+    public static function getInstance($oTemplate = null)
     {
         if (!isset($GLOBALS['bxDolClasses']['BxBaseStudioFunctions']))
             $GLOBALS['bxDolClasses']['BxBaseStudioFunctions'] = new BxTemplStudioFunctions();

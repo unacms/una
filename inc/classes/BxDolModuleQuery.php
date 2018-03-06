@@ -28,7 +28,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance()
+    public static function getInstance($aDbConf = false, &$sError = NULL)
     {
         $sClass = __CLASS__;
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
