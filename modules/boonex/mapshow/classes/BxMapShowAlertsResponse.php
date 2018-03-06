@@ -20,7 +20,7 @@ class BxMapShowAlertsResponse extends BxDolAlertsResponse
     {
         if ($oAlert->sUnit == 'account' && $oAlert->sAction == 'added'){
             $oModule = BxDolModule::getInstance('bx_mapshow');
-            $oModule->addIpInfoToDb($oAlert->iObject, $_SERVER['REMOTE_ADDR']);
+            $oModule->addIpInfoToDb($oAlert->iObject, getVisitorIP());
         }
     }
 }

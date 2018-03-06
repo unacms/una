@@ -72,6 +72,8 @@ class BxBaseFormAccount extends BxTemplFormView
     static $FIELD_SALT = 'salt';
     static $FIELD_ADDED = 'added';
     static $FIELD_CHANGED = 'changed';
+    static $FIELD_IP = 'ip';
+    static $FIELD_REFFERED = 'reffered';
 
     protected $_bSetPendingApproval = false;
 
@@ -119,6 +121,8 @@ class BxBaseFormAccount extends BxTemplFormView
             self::$FIELD_SALT => $sSalt,
             self::$FIELD_ADDED => time(),
             self::$FIELD_CHANGED => time(),
+            self::$FIELD_IP => getVisitorIP(),
+            self::$FIELD_REFFERED => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '',
         ));
         return parent::insert ($aValsToAdd, $isIgnore);
     }

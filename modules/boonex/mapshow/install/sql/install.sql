@@ -4,12 +4,10 @@ SET @sName = 'bx_mapshow';
 CREATE TABLE `bx_mapshow_accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
-  `joined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ip` varchar(16) DEFAULT NULL,
   `lng` float DEFAULT NULL,
   `lat` float DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `mapshow_accounts_index` (`joined`)
+  INDEX `account_id` (`account_id`)
 
 );
 
