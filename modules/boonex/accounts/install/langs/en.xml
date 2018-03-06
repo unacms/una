@@ -42,7 +42,9 @@
 	<string name="_bx_accnt_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_accnt_grid_column_title_adm_name"><![CDATA[Name]]></string>
     <string name="_bx_accnt_grid_column_title_adm_email"><![CDATA[Email]]></string>
-    <string name="_bx_accnt_grid_column_title_adm_email_confirmed"><![CDATA[Email Confirmed]]></string>
+  <string name="_bx_accnt_grid_column_title_adm_ip"><![CDATA[IP]]></string>
+  
+  <string name="_bx_accnt_grid_column_title_adm_email_confirmed"><![CDATA[Email Confirmed]]></string>
     <string name="_bx_accnt_grid_column_title_adm_profiles"><![CDATA[Profiles]]></string>
     <string name="_bx_accnt_grid_column_title_adm_logged"><![CDATA[Last Online]]></string>
     <string name="_bx_accnt_grid_action_title_adm_activate"><![CDATA[Activate]]></string>

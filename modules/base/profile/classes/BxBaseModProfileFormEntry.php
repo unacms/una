@@ -120,26 +120,36 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
     protected function genCustomViewRowValueProfileEmail($aInput)
     {
+        return $this->genCustomViewRowValueProfileEmailOrIp($aInput);
+    }
+    
+    protected function genCustomViewRowValueProfileIp($aInput)
+    {
+        return $this->genCustomViewRowValueProfileEmailOrIp($aInput);
+    }
+    
+    private function genCustomViewRowValueProfileEmailOrIp($aInput)
+    {
         $CNF = &$this->_oModule->_oConfig->CNF;
         if(empty($aInput['value']))
             return '';
 
-        $sEmail = $aInput['value'];
+        $sValue = $aInput['value'];
 
         $sModuleAccounts = 'bx_accounts';
     	if(!BxDolModuleQuery::getInstance()->isEnabledByName($sModuleAccounts))
-    		return $sEmail;
+    		return $sValue;
 
 		$oModuleAccounts = BxDolModule::getInstance($sModuleAccounts);
 		if(!$oModuleAccounts || empty($oModuleAccounts->_oConfig->CNF['URL_MANAGE_ADMINISTRATION']))
-			return $sEmail;
+			return $sValue;
 
         return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
             'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($oModuleAccounts->_oConfig->CNF['URL_MANAGE_ADMINISTRATION'], array(
-            	'filter' => urlencode($sEmail)
+            	'filter' => urlencode($sValue)
             )),
             'title' => '',
-            'content' => $sEmail
+            'content' => $sValue
         ));
     }
 

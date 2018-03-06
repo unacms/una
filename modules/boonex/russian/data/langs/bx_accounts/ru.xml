@@ -38,6 +38,7 @@
 	<string name="_bx_accnt_grid_column_title_adm_active"><![CDATA[Активный]]></string>
     <string name="_bx_accnt_grid_column_title_adm_name"><![CDATA[Имя]]></string>
     <string name="_bx_accnt_grid_column_title_adm_email"><![CDATA[Имейл]]></string>
+  <string name="_bx_accnt_grid_column_title_adm_ip"><![CDATA[IP]]></string>
     <string name="_bx_accnt_grid_column_title_adm_email_confirmed"><![CDATA[Имейл подтверждён]]></string>
     <string name="_bx_accnt_grid_column_title_adm_profiles"><![CDATA[Профили]]></string>
     <string name="_bx_accnt_grid_column_title_adm_logged"><![CDATA[Последнее посещение]]></string>

@@ -51,6 +51,8 @@
     <string name="_bx_persons_form_profile_input_profile_email"><![CDATA[Имейл]]></string>
     <string name="_bx_persons_form_profile_input_sys_profile_status"><![CDATA[Статус]]></string>
     <string name="_bx_persons_form_profile_input_profile_status"><![CDATA[Статус]]></string>
+    <string name="_bx_persons_form_profile_input_sys_profile_ip"><![CDATA[IP]]></string>
+    <string name="_bx_persons_form_profile_input_profile_ip"><![CDATA[IP]]></string>
 
 	<string name="_bx_persons_acl_action_create_profile"><![CDATA[Создать персональный профиль]]></string>
 	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Удалить персональный профиль]]></string>
