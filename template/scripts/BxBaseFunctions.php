@@ -516,7 +516,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
         $aMethods = get_class_methods($this);
         foreach($aMethods as $sMethod)
-            if(substr($sMethod, 0, strlen($sPrefix)) == $sPrefix)
+            if(preg_match("/^(" . $sPrefix . ")[A-Z].+$/", $sMethod))
                 $sContent .= $this->$sMethod();
 
         return $sContent;
