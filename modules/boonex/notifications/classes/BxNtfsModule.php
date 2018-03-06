@@ -130,6 +130,39 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      * @page service Service Calls
      * @section bx_notifications Notifications
      * @subsection bx_notifications-other Other
+     * @subsubsection bx_notifications-get_notifications get_notifications
+     * 
+     * @code bx_srv('bx_notifications', 'get_notifications', [...]); @endcode
+     * 
+     * Get notifications by params.
+     *
+     * @return array with notifications.
+     * 
+     * @see BxNtfsModule::serviceGetNotifications
+     */
+    /** 
+     * @ref bx_notifications-get_notifications "get_notifications"
+     */
+    public function serviceGetNotifications($iOwnerId = 0, $aBrowseParams = array())
+    {
+    	if(!$iOwnerId)
+			$iOwnerId = $this->getUserId();
+
+		if(!$iOwnerId)
+			return 0;
+
+		$aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
+		if(!empty($aBrowseParams) && is_array($aBrowseParams))
+		    $aParams = array_merge($aParams, $aBrowseParams);
+
+		list($aEvent) = $this->_oDb->getEvents($aParams, true);
+		return $aEvent;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-other Other
      * @subsubsection bx_notifications-get_unread_notifications get_unread_notifications
      * 
      * @code bx_srv('bx_notifications', 'get_unread_notifications', [...]); @endcode
@@ -145,17 +178,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      */
     public function serviceGetUnreadNotifications($iOwnerId = 0)
     {
-    	if(!$iOwnerId)
-			$iOwnerId = $this->getUserId();
-
-		if(!$iOwnerId)
-			return 0;
-
-		$aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
-		$aParams['new'] = 1;
-
-		list($aEvent) = $this->_oDb->getEvents($aParams, true);
-		return $aEvent;
+		return $this->serviceGetNotifications($iOwnerId, array('new' => 1));
     }
 
     /**

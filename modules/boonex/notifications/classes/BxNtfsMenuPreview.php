@@ -16,6 +16,9 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
     protected $_sTmplContentPreviewItem;
 
+    protected $_iOwnerId;
+    protected $_aBrowseParams;
+
     public function __construct($aObject, $oTemplate = false)
     {
         $this->_sModule = 'bx_notifications';
@@ -28,6 +31,11 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
         if(empty($this->_sTmplContentPreviewItem))
             $this->_sTmplContentPreviewItem = $this->_oTemplate->getHtml('menu_preview_item.html');
+
+        $this->_iOwnerId = $this->_oModule->getUserId();
+        $this->_aBrowseParams = array(
+            'last_read' => $this->_oModule->_oDb->getLastRead($this->_iOwnerId)
+        );
     }
 
     public function getMenuItems ()
@@ -52,13 +60,9 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
     protected function getMenuItemsRaw ()
     {
-        $aItems = $this->_oModule->serviceGetUnreadNotifications();
+        $aItems = $this->_oModule->serviceGetNotifications(0, array('per_page' => $this->_oModule->_oConfig->getPerPage('preview')));
         if(empty($aItems) || !is_array($aItems))
             return array();
-
-        $iItemsMax = $this->_oModule->_oConfig->getPerPage('preview');
-        if(count($aItems) > $iItemsMax)
-            $aItems = array_slice($aItems, 0, $iItemsMax);
 
         foreach($aItems as $iKey => $aItem) 
             $aItems[$iKey]['name'] = 'event';
@@ -73,7 +77,7 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
     protected function _getMenuItemEvent($aItem)
     {
-        return $this->_oTemplate->getPost($aItem);
+        return $this->_oTemplate->getPost($aItem, $this->_aBrowseParams);
     }
 }
 
