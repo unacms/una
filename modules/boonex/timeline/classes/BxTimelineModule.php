@@ -1504,6 +1504,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(!$oForm->update($iId, array('object_privacy_view' => $iObjectPrivacyView,'content' => serialize($aContent))))
                 return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
 
+            $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+        	if($bText)
+				$oMetatags->metaAdd($iId, $sText);
+			$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+
             return array(
                 'id' => $iId,
             	'eval' => $this->_oConfig->getJsObject('view') . '.onEditPostSubmit(oData)'
