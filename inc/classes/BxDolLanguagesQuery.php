@@ -29,7 +29,7 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
     /**
      * Get singleton instance of the class
      */
-    static function getInstance()
+    static function getInstance($aDbConf = false, &$sError = NULL)
     {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolLanguagesQuery();

@@ -187,7 +187,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'birthday', 0, '', 0, 'datepicker', '_bx_persons_form_profile_input_sys_birthday', '_bx_persons_form_profile_input_birthday', '', 0, 0, 0, '', '', '', '', '', '', 'Date', '', 1, 0),
 ('bx_person', 'bx_persons', 'gender', '', '#!Sex', 0, 'select', '_bx_persons_form_profile_input_sys_gender', '_bx_persons_form_profile_input_gender', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_person', 'bx_persons', 'profile_email', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_profile_email', '_bx_persons_form_profile_input_profile_email', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
-('bx_person', 'bx_persons', 'profile_status', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_profile_status', '_bx_persons_form_profile_input_profile_status', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
+('bx_person', 'bx_persons', 'profile_status', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_profile_status', '_bx_persons_form_profile_input_profile_status', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_person', 'bx_persons', 'profile_ip', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_profile_ip', '_bx_persons_form_profile_input_profile_ip', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_add', 'picture', 2147483647, 1, 1),
@@ -225,6 +226,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_view', 'fullname', 2147483647, 1, 3),
 ('bx_person_view', 'profile_email', 192, 1, 4),
 ('bx_person_view', 'profile_status', 192, 1, 5),
+('bx_person_view', 'profile_ip', 192, 1, 6),
 
 ('bx_person_view_full', 'gender', 2147483647, 1, 1),
 ('bx_person_view_full', 'birthday', 2147483647, 1, 2),

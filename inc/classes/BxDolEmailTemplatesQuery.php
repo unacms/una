@@ -13,7 +13,7 @@
  */
 class BxDolEmailTemplatesQuery extends BxDolDb implements iBxDolSingleton
 {
-    public static function getInstance()
+    public static function getInstance($aDbConf = false, &$sError = NULL)
     {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $o = new BxDolEmailTemplatesQuery();

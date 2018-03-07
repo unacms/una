@@ -21,8 +21,6 @@ class BxMapShowConfig extends BxBaseModGeneralConfig
              // database fields
             'FIELD_ID' => 'id',
             'FIELD_ACCOUNT_ID' => 'account_id',
-            'FIELD_JOINED' => 'joined',
-            'FIELD_IP' => 'ip',
             'FIELD_LNG' => 'lng',
             'FIELD_LAT' => 'lat'
         );

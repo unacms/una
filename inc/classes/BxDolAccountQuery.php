@@ -32,7 +32,7 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance()
+    public static function getInstance($aDbConf = false, &$sError = NULL)
     {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolAccountQuery();
@@ -160,7 +160,8 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      */
     public function updateLoggedIn($iID)
     {
-        return $this->_updateField ($iID, 'logged', time());
+        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `logged` = ?, `ip` = ? WHERE `id`= ?", time(), getVisitorIP(), $iID);
+        return $this->query($sQuery);
     }
 
     /**
