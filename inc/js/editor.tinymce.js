@@ -21,6 +21,20 @@ function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
     eEditor.execCommand('mceInsertContent', false, '<img id="' + sImgId + '" class="' + sClasses + '" src="' + sImgUrl + '" />');
 }
 
+function bx_editor_on_init (sEditorId)
+{
+    if (typeof glOnInitEditor !== 'undefined' && glOnInitEditor instanceof Array) {
+        for (var i = 0; i < glOnInitEditor.length; i++)
+            if (typeof glOnInitEditor[i] === "function")
+                glOnInitEditor[i](sEditorId);
+    }
+}
+
+function bx_editor_on_space_enter (sEditorId)
+{
+    // TODO:
+}
+
 function bx_editor_remove_img (aEditorIds, aMarkers) {
     if ('object' != typeof(tinymce))
         return;

@@ -42,6 +42,8 @@ class BxFroalaEditor extends BxDolEditor
                     if (e.which == $.FroalaEditor.KEYCODE.ENTER && editor.\$el.atwho('isSelecting'))
                         return false;
                 }, true);
+
+                bx_editor_on_init('{bx_var_selector}');
             })
             .froalaEditor({
                 {bx_var_custom_init}

@@ -51,6 +51,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                                 },
 
                             });
+
+                            bx_editor_on_init('{bx_var_selector}');
                         },
                         setup: function(editor) {
                             editor.on('keydown', function(e) {
