@@ -31,12 +31,17 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-    public static function getInstance($oTemplate = null)
+    public static function getInstanceWithTemplate($oTemplate)
     {
         if(!isset($GLOBALS['bxDolClasses']['BxTemplFunctions']))
             $GLOBALS['bxDolClasses']['BxTemplFunctions'] = new BxTemplFunctions($oTemplate);
 
         return $GLOBALS['bxDolClasses']['BxTemplFunctions'];
+    }
+    
+    public static function getInstance()
+    {
+        return self::getInstanceWithTemplate(null);
     }
 
     function TemplPageAddComponent($sKey)

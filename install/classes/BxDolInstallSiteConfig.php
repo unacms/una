@@ -323,7 +323,7 @@ EOF;
                 $aDbConf[$this->_aConfig[$sKey]['db_conf']] = $a[$sKey];
 
         $sErrorMessage = '';
-        $oDb = BxDolDb::getInstance($aDbConf, $sErrorMessage);
+        $oDb = BxDolDb::getInstanceWithConf($aDbConf, $sErrorMessage);
         if (!$oDb) {
             $aErrorFields = array();
             if (isset($this->_aDbErrorMap[$sErrorMessage])) {

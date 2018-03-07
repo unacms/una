@@ -101,7 +101,13 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance($aDbConf = false, &$sError = null)
+    public static function getInstance()
+    {
+        $null = null;
+        return self::getInstanceWithConf(false, $null);
+    }
+    
+    public static function getInstanceWithConf($aDbConf, &$sError)
     {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             if($aDbConf === false && !defined('BX_DATABASE_HOST'))

@@ -29,7 +29,7 @@ class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery implements iBxDolSing
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance($aDbConf = false, &$sError = NULL)
+    public static function getInstance()
     {
         $sClass = __CLASS__;
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__]))
