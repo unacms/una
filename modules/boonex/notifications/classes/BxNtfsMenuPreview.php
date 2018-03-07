@@ -60,12 +60,17 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
     protected function getMenuItemsRaw ()
     {
-        $aItems = $this->_oModule->serviceGetNotifications(0, array('per_page' => $this->_oModule->_oConfig->getPerPage('preview')));
+        $aItems = $this->_oModule->serviceGetNotifications($this->_iOwnerId, array('per_page' => $this->_oModule->_oConfig->getPerPage('preview')));
         if(empty($aItems) || !is_array($aItems))
             return array();
 
-        foreach($aItems as $iKey => $aItem) 
+        $bFirst = true;
+        foreach($aItems as $iKey => $aItem) {
+            if($bFirst)
+    			$bFirst = !$this->_oModule->_oDb->markAsRead($this->_iOwnerId, $aItem['id']);
+
             $aItems[$iKey]['name'] = 'event';
+        }
 
         return array_merge($aItems, $this->_oQuery->getMenuItems());
     }
