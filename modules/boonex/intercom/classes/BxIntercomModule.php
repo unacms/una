@@ -26,6 +26,9 @@ class BxIntercomModule extends BxDolModule
 
         $aSettings = array(
             'app_id' => $sAppId,
+            'alignment' => getParam('bx_intercom_option_alignment'),
+            'horizontal_padding' => getParam('bx_intercom_option_horizontal_padding'),
+            'vertical_padding' => getParam('bx_intercom_option_vertical_padding'),
         );
 
         if (isLogged() && ($oProfile = BxDolProfile::getInstance()) && ($oAccountObject = $oProfile->getAccountObject())) {
