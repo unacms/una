@@ -310,6 +310,11 @@ ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
     overflow-y:auto;
 }
 
+.bx-sliding-menu > .bx-def-page-width,
+.bx-sliding-menu-main > .bx-def-page-width {
+    position: relative;
+}
+
 .bx-sliding-menu-main ul.bx-menu-floating-blocks-big {
     display:table;
     margin:0 auto;
@@ -531,10 +536,6 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
 
 .bx-menu-account-popup-menu {
     text-align:center;
-}
-
-.bx-sliding-menu-main > .bx-def-page-width {
-    position:relative;
 }
 
 .bx-menu-account-popup-profile-switcher-link {
