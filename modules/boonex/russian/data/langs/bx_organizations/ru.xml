@@ -56,6 +56,8 @@
     <string name="_bx_orgs_form_profile_input_profile_email"><![CDATA[Имейл]]></string>
     <string name="_bx_orgs_form_profile_input_sys_profile_status"><![CDATA[Статус]]></string>
     <string name="_bx_orgs_form_profile_input_profile_status"><![CDATA[Статус]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_profile_ip"><![CDATA[IP]]></string>
+    <string name="_bx_orgs_form_profile_input_profile_ip"><![CDATA[IP]]></string>
 
 	<string name="_bx_orgs_acl_action_create_profile"><![CDATA[Создать профиль организации]]></string>
 	<string name="_bx_orgs_acl_action_delete_profile"><![CDATA[Удалить профиль организации]]></string>

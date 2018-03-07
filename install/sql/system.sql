@@ -887,8 +887,8 @@ CREATE TABLE `sys_accounts` (
   `added` int(11) NOT NULL DEFAULT '0',
   `changed` int(11) NOT NULL DEFAULT '0',
   `logged` int(11) NOT NULL DEFAULT '0',
-  `ip` varchar(39) DEFAULT NULL,
-  `reffered` varchar(255) DEFAULT NULL,
+  `ip` varchar(40) NOT NULL DEFAULT '',
+  `reffered` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`(191)),
   KEY `added` (`added`)
