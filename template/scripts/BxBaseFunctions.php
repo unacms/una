@@ -531,6 +531,12 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     {
         return BxDolLiveUpdates::getInstance()->init();
     }
+    
+    protected function getInjHeadMetaColor() 
+    {
+        if (getParam('rgbcolorpallete') != '')
+            return '<meta name="theme-color" content="' . getParam('rgbcolorpallete') . '">';
+    }
 
     protected function getInjHeaderPushNotifications() 
     {

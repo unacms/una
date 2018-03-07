@@ -340,7 +340,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1);
-
+(@iCategoryId, 'rgbcolorpallete', '_adm_stg_cpt_option_rgbcolorpallete', '', 'digit', '', '', '', 2);
 
 --
 -- CATEGORY: Cache
