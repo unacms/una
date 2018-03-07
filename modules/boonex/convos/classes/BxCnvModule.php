@@ -173,6 +173,7 @@ class BxCnvModule extends BxBaseModTextModule
         $this->_oTemplate = BxDolTemplate::getInstance();
         $this->_oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
         $this->_oTemplate->setPageContent ('page_main_code', $s);
+        $_GET['i']='convos-folder'; //#1148
         $this->_oTemplate->getPageCode();
     }
 
