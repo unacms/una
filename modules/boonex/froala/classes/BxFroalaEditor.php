@@ -75,9 +75,6 @@ EOS;
      */
     protected static $CONF_FULL = "";
 
-    protected $_sConfCustom = '';
-    protected $_sButtonsCustom = false;
-
     /**
      * Available editor languages
      */
@@ -94,22 +91,6 @@ EOS;
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
-    }
-
-    /**
-     * Set custom configuration option
-     */
-    public function setCustomConf ($s)
-    {
-        $this->_sConfCustom = $s;
-    }
-
-    /**
-     * Set custom toolbar
-     */
-    public function setCustomToolbarButtons ($sButtons)
-    {
-        $this->_sButtonsCustom = $sButtons;
     }
     
     /**
