@@ -51,6 +51,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                                 },
 
                             });
+
+                            bx_editor_on_init('{bx_var_selector}');
                         },
                         setup: function(editor) {
                             editor.on('keydown', function(e) {
@@ -149,8 +151,6 @@ EOS;
                         image_advtab: true,
     ";
 
-    protected $_sConfCustom = '';
-
     /**
      * Available editor languages
      */
@@ -167,14 +167,6 @@ EOS;
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
-    }
-
-    /**
-     * Set custom TinyMCE configuration option
-     */
-    public function setCustomConf ($s)
-    {
-        $this->_sConfCustom = $s;
     }
 
     /**

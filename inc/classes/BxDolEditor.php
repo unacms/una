@@ -61,6 +61,8 @@ class BxDolEditor extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
+    protected $_sConfCustom = '';
+    protected $_sButtonsCustom = false;
 
     /**
      * Constructor
@@ -109,6 +111,22 @@ class BxDolEditor extends BxDolFactory implements iBxDolFactoryObject
     public function getObjectName ()
     {
         return $this->_sObject;
+    }
+
+    /**
+     * Set custom editor configuration options
+     */
+    public function setCustomConf ($s)
+    {
+        $this->_sConfCustom = $s;
+    }
+
+    /**
+     * Set custom toolbar
+     */
+    public function setCustomToolbarButtons ($sButtons)
+    {
+        $this->_sButtonsCustom = $sButtons;
     }
 
     /**

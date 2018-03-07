@@ -26,6 +26,7 @@ class BxIntercomModule extends BxDolModule
 
         $aSettings = array(
             'app_id' => $sAppId,
+            'hide_default_launcher' => ('messenger' == bx_get('i')),
             'alignment' => getParam('bx_intercom_option_alignment'),
             'horizontal_padding' => getParam('bx_intercom_option_horizontal_padding'),
             'vertical_padding' => getParam('bx_intercom_option_vertical_padding'),

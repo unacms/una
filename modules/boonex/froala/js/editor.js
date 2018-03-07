@@ -34,6 +34,15 @@ function bx_editor_remove_img (aEditorIds, aMarkers)
     }
 }
 
+function bx_editor_on_init (sEditorId)
+{
+    if (typeof glOnInitEditor !== 'undefined' && glOnInitEditor instanceof Array) {
+        for (var i = 0; i < glOnInitEditor.length; i++)
+            if (typeof glOnInitEditor[i] === "function")
+                glOnInitEditor[i](sEditorId);
+    }
+}
+
 function bx_editor_on_space_enter (sEditorId)
 {
     if (typeof glBxEditorOnSpaceEnterTimer !== 'undefined')
@@ -44,7 +53,7 @@ function bx_editor_on_space_enter (sEditorId)
         if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
             for (var i = 0; i < glOnSpaceEnterInEditor.length; i++)
                 if (typeof glOnSpaceEnterInEditor[i] === "function")
-                    glOnSpaceEnterInEditor[i]($(sEditorId).froalaEditor('html.get'));
+                    glOnSpaceEnterInEditor[i]($(sEditorId).froalaEditor('html.get'), sEditorId);
         }
     }, 800);
 }
