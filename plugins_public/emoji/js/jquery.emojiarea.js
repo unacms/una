@@ -29,8 +29,6 @@
         Backspace, Tab, Ctrl, Alt, Left Arrow, Up Arrow, Right Arrow, Down Arrow, Cmd Key, Delete
   */
   var MAX_LENGTH_ALLOWED_KEYS = [8, 9, 17, 18, 37, 38, 39, 40, 91, 46];
-  
-  var oEditArea = null;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -42,8 +40,6 @@
     iconSize : 25,
     icons : {},
   };
-  
-  
   var defaultRecentEmojis = ':joy:,:kissing_heart:,:heart:,:heart_eyes:,:blush:,:grin:,:+1:,:relaxed:,:pensive:,:smile:,:sob:,:kiss:,:unamused:,:flushed:,:stuck_out_tongue_winking_eye:,:see_no_evil:,:wink:,:smiley:,:cry:,:stuck_out_tongue_closed_eyes:,:scream:,:rage:,:smirk:,:disappointed:,:sweat_smile:,:kissing_closed_eyes:,:speak_no_evil:,:relieved:,:grinning:,:yum:,:laughing:,:ok_hand:,:neutral_face:,:confused:'
       .split(',');
   /* ! MODIFICATION END */
@@ -114,34 +110,29 @@
   })();
 
   util.replaceSelection = (function() {
-	if (window.getSelection)
-	{
-	   return function(content)
-	   {
-			var range, sel = window.getSelection();
-			var node = typeof content === 'string' ? document.createTextNode(content) : content;
-			if (sel.getRangeAt && sel.rangeCount) {
-			  range = sel.getRangeAt(0);
-			  range.deleteContents();			  
-			  range.insertNode(node);
-			  range.setStart(node, 0);
+    if (window.getSelection) {
+      return function(content) {
+        var range, sel = window.getSelection();
+        var node = typeof content === 'string' ? document
+            .createTextNode(content) : content;
+        if (sel.getRangeAt && sel.rangeCount) {
+          range = sel.getRangeAt(0);
+          range.deleteContents();
+          //range.insertNode(document.createTextNode(''));
+          range.insertNode(node);
+          range.setStart(node, 0);
 
-			  window.setTimeout(function()
-			  {
-				range = document.createRange();
-				range.setStartAfter(node);
-				range.collapse(true);
-				sel.removeAllRanges();
-				sel.addRange(range);				
-			  }, 0);
-			}
-			
+          window.setTimeout(function() {
+            range = document.createRange();
+            range.setStartAfter(node);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }, 0);
+        }
       }
-    }
-	else if (document.selection && document.selection.createRange)
-	{
-      return function(content)
-	  {
+    } else if (document.selection && document.selection.createRange) {
+      return function(content) {
         var range = document.selection.createRange();
         if (typeof content === 'string') {
           range.text = content;
@@ -152,10 +143,9 @@
     }
   })();
 
-  util.insertAtCursor = function(text, el)
-{
+  util.insertAtCursor = function(text, el) {
     text = ' ' + text;
-	var val = el.value, endIndex, startIndex, range;
+    var val = el.value, endIndex, startIndex, range;
     if (typeof el.selectionStart != 'undefined'
         && typeof el.selectionEnd != 'undefined') {
       startIndex = el.selectionStart;
@@ -324,13 +314,15 @@
     this.id = id;
     this.$textarea = $textarea;
     this.emojiPopup = options.emojiPopup;
-    
-	this.$editor = $(this.$textarea).addClass('emoji-wysiwyg-editor');
-	this.$editor.data('self', this);
-	
+    this.$editor = $('<div>').addClass('emoji-wysiwyg-editor').addClass($($textarea)[0].className);
+    this.$editor.data('self', this);
+
     if ($textarea.attr('maxlength'))
       this.$editor.attr('maxlength', $textarea.attr('maxlength'));
-
+    
+   if ($textarea.text().length)
+		this.$editor.text($textarea.text()); 
+	
 	this.$editor.attr({
       'data-id': id,
       'data-type': 'input',
@@ -371,7 +363,7 @@
 		return $this;
 	});
 
-    /*var editorDiv = this.$editor;
+    var editorDiv = this.$editor;
     this.$editor.on("change keydown keyup resize scroll", function(e) {
       if(MAX_LENGTH_ALLOWED_KEYS.indexOf(e.which) == -1 &&
         !((e.ctrlKey || e.metaKey) && e.which == 65) && // Ctrl + A
@@ -380,7 +372,7 @@
       {
         e.preventDefault();
       }
-      //self.updateBodyPadding(editorDiv);
+      self.updateBodyPadding(editorDiv);
 	  
 	  if(e.which == 8 || e.which == 46)
 		  $(this).trigger('change');
@@ -404,26 +396,25 @@
         editorDiv.scrollTop(editorDiv[0].scrollHeight);
       });
     }
-  	*/
+  	
 	if (typeof options.custom_events !== 'undefined')
 	{
 		for(evt in options.custom_events)			
 			this.$editor.on(evt, options.custom_events[evt]);
 	}
 	
-	//$textarea.hide().after(this.$editor);
+	$textarea.hide().after(this.$editor);
 
 	var oMenuWrapper = typeof this.options.menu_wrapper !== 'undefined' ? $(this.options.menu_wrapper) : $('<a class="smiles"></i>'),
-		oMenuIcon = typeof this.options.menu_icon !== 'undefined' ? $(this.options.menu_icon) : $('<i class="sys-icon smile-o">');
+		oMenuIcon = typeof this.options.menu_icon !== 'undefined' ? $(this.options.menu_icon) : '<i class="sys-icon smile-o">';
 	
-	oMenuIcon
-		.attr('data-id', id)
-		.attr('data-type', 'picker')
-		.addClass('emoji-picker-icon emoji-picker');
-					
-	//console.log(id);
-	if (typeof this.options.menu_wrapper !== 'undefined')
-		$(this.options.menu_wrapper).html(oMenuIcon);
+	oMenuWrapper
+		.html(
+				oMenuIcon
+					.attr('data-id', id)
+					.attr('data-type', 'picker')
+					.addClass('emoji-picker-icon emoji-picker')
+				);
 	
 	if (typeof this.options.menu_wrapper == 'undefined')
 		$(this.$editor).after(oMenuWrapper);
@@ -435,11 +426,11 @@
      * MODIFICATION: Following line was modified by Igor Zhukov, in order to
      * improve emoji insert behaviour
      */
-	$(document.body).on('mousedown', function() {
-	  if (self.hasFocus) {
-		self.selection = util.saveSelection();
-	  }
-	});
+    $(document.body).on('mousedown', function() {
+      if (self.hasFocus) {
+        self.selection = util.saveSelection();
+      }
+    });
   };
 
   EmojiArea_WYSIWYG.prototype.updateBodyPadding = function(target) {
@@ -459,36 +450,28 @@
 
   EmojiArea_WYSIWYG.prototype.onChange = function(e)
   {	
-	//this.$textarea.val(this.val()).trigger('change');
+	this.$textarea.val(this.val()).trigger('change');
   };
 
   EmojiArea_WYSIWYG.prototype.insert = function(emoji) {
     var insertionContent = this.emojiPopup.colonToUnicode(emoji);
 
-	if (!this.$editor.filter("[id='tinymce']").length)
-	{
-		this.$editor.trigger('keydown');	
-		if (this.selection)
-			util.restoreSelection(this.selection);
-		try
-		{
-			util.replaceSelection(insertionContent);			
-		}
-		catch (e)
-		{
-		}
-	}
-	else 
-		tinymce.execCommand('mceInsertContent', false, insertionContent); 
-		
+    this.$editor.trigger('focus');
+    if (this.selection) {
+      util.restoreSelection(this.selection);
+    }
+    try {
+      util.replaceSelection(insertionContent);
+    } catch (e) {
+    }
 
     /*
      * MODIFICATION: Following line was added by Igor Zhukov, in order to
      * save recent emojis
      */
-   
-	util.emojiInserted(emoji, this.menu);
-    //this.onChange();
+    util.emojiInserted(emoji, this.menu);
+
+    this.onChange();
   };
   
   EmojiArea_WYSIWYG.prototype.val = function() {
@@ -496,14 +479,14 @@
 		line = [],
 		emojiPopup = this.emojiPopup,
 		_this = this;
-	
-	var flush = function() {
+
+    var flush = function() {
       lines.push(line.join(''));
       line = [];
     };
 
     var sanitizeNode = function(node) {		
-	if (node.nodeType === TEXT_NODE) {
+	 if (node.nodeType === TEXT_NODE) {
 			function escapeRegex(text) {
 				return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 			}
@@ -617,9 +600,8 @@
     this.$items = $('<div class="emoji-items">').appendTo(
         this.$itemsWrap);
 
-    //this.emojiarea.$editor.after(this.$menu);
-	$('[data-id=' + self.id + '][data-type=picker]').after(this.$menu);
-	
+    this.emojiarea.$editor.after(this.$menu)
+
     $body.on('keydown', function(e) {
       if (e.keyCode === KEY_ESC || e.keyCode === KEY_TAB) {
         self.hide();
@@ -664,7 +646,7 @@
 
     this.$menu.on('click', 'a', function(e) {
 
-      //self.emojiarea.updateBodyPadding(self.emojiarea.$editor);
+      self.emojiarea.updateBodyPadding(self.emojiarea.$editor);
       if ($(this).hasClass('emoji-menu-tab'))
 	  {
         if (self.getTabIndex(this) !== self.currentCategory) {
