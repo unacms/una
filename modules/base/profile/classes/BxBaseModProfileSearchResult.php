@@ -137,6 +137,12 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         }
         return $iPerPageInShowCase;
     }
+    
+    function displayResultBlock ()
+    {
+		$this->oModule->_oTemplate->addJs(array('modules/base/profile/js/|searchresult.js'));
+		return parent::displayResultBlock ();
+	}
 }
 
 /** @} */
