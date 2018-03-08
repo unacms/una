@@ -33,6 +33,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $this->addCss(array(
         	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
+        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css',
             'jquery-ui/jquery-ui.css',
 			'cmts.css',
             'post.css',
@@ -43,11 +44,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'jquery-ui/jquery-ui.custom.min.js',
             'jquery.form.min.js',
             'jquery.ba-resize.min.js',
+        	'emoji/js/util.js',
+        	'emoji/js/config.js',
+            'emoji/js/emoji-picker.js',
         	'autosize.min.js',
             'masonry.pkgd.min.js',
             'modernizr.js',
         	'flickity/flickity.pkgd.min.js',
             'BxDolCmts.js',
+            'jquery.emojiarea.js',
             'post.js',
             'repost.js',
         ));

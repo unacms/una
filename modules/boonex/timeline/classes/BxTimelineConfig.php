@@ -169,6 +169,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'attach_link_popup' =>  $sHp . '-attach-link-popup',
                 'attach_link_form_field' => $sHp . '-attach-link-form_field',
                 'attach_link_item' => $sHp . '-attach-link-item-',
+            	'textarea' => $sHp . '-textarea-',
 
             	'main_' . $sHpT => $sHp . '-' . $sHpT,
             	'main_' . $sHpO => $sHp . '-' . $sHpO,
