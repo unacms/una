@@ -66,9 +66,9 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aTmp);
         
         if (isset($this->aCurrent['restriction_sql'])) 
-            $this->aCurrent['restriction_sql'] .= '  AND `' . $a['join']['table'] . '`.`initiator` IS NULL';
+            $this->aCurrent['restriction_sql'] .= ' AND `' . $a['join']['table'] . '`.`initiator` IS NULL AND ' . bx_get_logged_profile_id() . ' <> `sys_profiles`.`id` ' ;
         else
-            $this->aCurrent['restriction_sql'] = '  AND `' . $a['join']['table'] . '`.`initiator` IS NULL';
+            $this->aCurrent['restriction_sql'] = ' AND `' . $a['join']['table'] . '`.`initiator` IS NULL AND ' . bx_get_logged_profile_id() . ' <> `sys_profiles`.`id` ' ;
     }
 
 	protected function _setAclConditions ($aParams)
