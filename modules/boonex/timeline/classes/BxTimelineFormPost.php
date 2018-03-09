@@ -30,6 +30,13 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 		$this->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'post/';
         $this->aInputs['owner_id']['value'] = $iOwnerId;
 
+        if(isset($this->aInputs['text'])) {
+            if(empty($this->aInputs['text']['attrs']) || !is_array($this->aInputs['text']['attrs']))
+                $this->aInputs['text']['attrs'] = array();
+
+            $this->aInputs['text']['attrs']['id'] = $this->_oModule->_oConfig->getHtmlIds('post', 'textarea') . time();
+        }
+
         if(isset($this->aInputs['object_privacy_view'])) {
             $this->aInputs['object_privacy_view'] = array_merge($this->aInputs['object_privacy_view'], BxDolPrivacy::getGroupChooser($this->_oModule->_oConfig->getObject('privacy_view'), 0, array(
                 'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
@@ -108,7 +115,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if(in_array($this->aParams['display'], array($this->_oModule->_oConfig->getObject('form_display_post_add'), $this->_oModule->_oConfig->getObject('form_display_post_add_public'))))
             $oEditor->setCustomConf("
                 placeholderText: '" . _t('_bx_timeline_txt_some_text_here') . "',
-                initOnClick: true,
+                initOnClick: false,
             ");
 
         $oEditor->setCustomToolbarButtons('');

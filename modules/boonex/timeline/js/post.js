@@ -25,6 +25,22 @@ function BxTimelinePost(oOptions) {
     this._sPregUrl = "\\b((https?://)|(www\\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\\@)?(([0-9]{1,3}\\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\\.[a-zA-Z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\\@&=+$,%#-]+)*/?)";
     this._oAttachedLinks = {};
 
+    if (typeof window.glOnInitEditor === 'undefined')
+	    window.glOnInitEditor = [];
+
+	window.glOnInitEditor.push(function (sEditorSelector) {
+		var oLink = $(sEditorSelector).parents('form:first').find('a.add-emoji');
+
+		var oEmojiConf = {
+		    emojiable_selector: bx_editor_get_htmleditable(sEditorSelector), 
+		    convert_to_emoji: 0, /* allow to convert members manually typed symbols to unicode smiles, like :slightly_smiling_face: */
+		    popup_position: {right:'1rem'},
+		    menu_wrapper: oLink.parent(), /* selector for element into which to add emoji popup menu icon */
+		    menu_icon: oLink  /* emoji popup menu icon */
+		};
+		new EmojiPicker(oEmojiConf ).discover();  /* call init emoji function */
+	});
+
     var $this = this;
     $(document).ready(function () {
     	$($this.sIdPost + ' form').each(function() {
@@ -40,8 +56,10 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
 {
 	var $this = this;
 	var oForm = $('#' + sFormId);
+	var oTextarea = oForm.find('textarea');
 
-	autosize(oForm.find('textarea'));
+	autosize(oTextarea);
+
 	oForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
