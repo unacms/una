@@ -55,6 +55,8 @@ class BxFroalaEditor extends BxDolEditor
                 toolbarSticky: false,
                 quickInsertTags: [],
                 pastePlain: true,
+                imageUpload: true,
+                imageUploadURL: '{bx_var_image_upload_url}',
                 language: '{bx_var_lang}',
                 theme: '{bx_var_skin}'
             });
@@ -129,6 +131,8 @@ EOS;
         	'url' => $this->_oTemplate->getCssUrl($sCss)
         ));
 
+        $oModule = BxDolModule::getInstance('bx_froala');
+
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sCustomInit,
@@ -139,7 +143,8 @@ EOS;
             'bx_var_lang' => bx_js_string($sLang, BX_ESCAPE_STR_APOS),
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
-            'bx_var_embedly_key' => bx_js_string(getParam('sys_embedly_api_key'), BX_ESCAPE_STR_APOS),
+            'bx_var_embedly_key' => bx_js_string(getParam('sys_embedly_api_key'), BX_ESCAPE_STR_APOS),            
+            'bx_var_image_upload_url' => $oModule ? BX_DOL_URL_ROOT . $oModule->_oConfig->getBaseUri() . 'upload' : '',
         ));
 
         if ($bDynamicMode) {
