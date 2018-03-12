@@ -26,7 +26,7 @@ class BxFroalaEditor extends BxDolEditor
                     at: "@", 
                     limit: 20,
                     displayTpl: '<li class="bx-mention-row" data-value="\${value}"><span>\${label}</span> <img class="bx-def-round-corners" src="\${thumb}" /></li>',
-                    insertTpl: '<a data-profile-id="\${value}" href="\${url}">\${label}</a>',
+                    insertTpl: '<a class="bx-mention" data-profile-id="\${value}" href="\${url}">\${label}</a>',
                     callbacks: {
                         remoteFilter: function(query, callback) {
                             $.getJSON("{bx_url_root}searchExtended.php?action=get_authors", {term: query}, function(data) {

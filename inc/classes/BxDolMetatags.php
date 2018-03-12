@@ -10,8 +10,6 @@
 define('BX_METATAGS_KEYWORDS_MAX', 9);
 define('BX_METATAGS_MENTIONS_MAX', 9);
 
-// TODO: integration with notifications, when smbd is \@mentioned
-
 /**
  * Meta-tags for different content. It can handle \#keywords, \@mentions, locations and meta image for the content.
  *
@@ -354,7 +352,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             return $s;
 
         foreach ($a as $sKeyword)
-            $s = str_ireplace('#' . $sKeyword, '<a rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
+            $s = str_ireplace('#' . $sKeyword, '<a class="bx-tag" rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
 
         return $s;
     }
@@ -373,7 +371,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     
         foreach ($a as $sKeyword)
             if (0 === strcasecmp(mb_strtolower($s), mb_strtolower($sKeyword)))
-                $s = '<a rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '">' . $sKeyword . '</a>';
+                $s = '<a class="bx-tag" rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '">' . $sKeyword . '</a>';
 
         return $s;
     }
@@ -540,7 +538,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
-     * Parse google's formatted address components into array with the followin indexes:
+     * Parse google's formatted address components into array with the following indexes:
      * lat, lng, country, state, city, zip, street, street_number
      */ 
     public static function locationsParseAddressComponents($aAdress, $sPrefix = '')
