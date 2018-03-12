@@ -59,6 +59,14 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
 
         $aValsToAdd[$CNF['FIELD_VIDEO']] = isset($_POST[$CNF['FIELD_VIDEO']]) ? bx_process_input($_POST[$CNF['FIELD_VIDEO']], BX_DATA_INT) : 0;
 
+        if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED && isset($CNF['FIELD_POSTER'])) {
+            $aPoster = isset($_POST[$CNF['FIELD_POSTER']]) ? bx_process_input ($_POST[$CNF['FIELD_POSTER']], BX_DATA_INT) : false;
+
+            $aValsToAdd[$CNF['FIELD_POSTER']] = 0;
+            if(!empty($aPoster) && is_array($aPoster) && ($iFilePoster = array_pop($aPoster)))
+                $aValsToAdd[$CNF['FIELD_POSTER']] = $iFilePoster;
+        }
+
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
             $this->processFiles($CNF['FIELD_VIDEOS'], $iContentId, true);
@@ -71,6 +79,14 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aValsToAdd[$CNF['FIELD_VIDEO']] = isset($_POST[$CNF['FIELD_VIDEO']]) ? bx_process_input($_POST[$CNF['FIELD_VIDEO']], BX_DATA_INT) : 0;
+
+        if($this->_oModule->checkAllowedSetThumb($iContentId) === CHECK_ACTION_RESULT_ALLOWED && isset($CNF['FIELD_POSTER']) && isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
+            $aPoster = bx_process_input (bx_get($CNF['FIELD_POSTER']), BX_DATA_INT);
+
+            $aValsToAdd[$CNF['FIELD_POSTER']] = 0;
+            if(!empty($aPoster) && is_array($aPoster) && ($iFilePoster = array_pop($aPoster)))
+                $aValsToAdd[$CNF['FIELD_POSTER']] = $iFilePoster;
+        }
 
         $iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
 
@@ -100,6 +116,25 @@ class BxVideosFormEntry extends BxBaseModTextFormEntry
     protected function genCustomViewRowValueDuration(&$aInput)
     {
         return _t_format_duration($aInput['value']);
+    }
+
+    protected function _getPhotoGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aResult = parent::_getPhotoGhostTmplVars($aContentInfo);
+        $aResult = array_merge($aResult, array(
+            'poster_id' => isset($CNF['FIELD_POSTER']) && isset($aContentInfo[$CNF['FIELD_POSTER']]) ? $aContentInfo[$CNF['FIELD_POSTER']] : 0,
+        	'bx_if:set_poster' => array (
+    			'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($this->aInputs[$CNF['FIELD_PHOTO']]['content_id']),
+    			'content' => array (
+    				'name_poster' => isset($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : '',
+    				'txt_pict_use_as_poster' => _t(!empty($CNF['T']['txt_pict_use_as_poster']) ? $CNF['T']['txt_pict_use_as_poster'] : '_sys_txt_form_entry_input_picture_use_as_thumb')
+    			),
+    		)
+        ));
+
+    	return $aResult;
     }
 
     protected function _getVideoGhostTmplVars($aContentInfo = array())

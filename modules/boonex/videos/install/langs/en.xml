@@ -43,6 +43,7 @@
     <string name="_bx_videos_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_videos_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_videos_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>
+    <string name="_bx_videos_form_entry_input_picture_use_as_poster"><![CDATA[Poster Image]]></string>
     <string name="_bx_videos_form_entry_input_sys_date_added"><![CDATA[Created]]></string>
     <string name="_bx_videos_form_entry_input_date_added"><![CDATA[Created]]></string>
     <string name="_bx_videos_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>

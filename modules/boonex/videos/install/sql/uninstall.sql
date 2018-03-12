@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS `bx_videos_entries`, `bx_videos_photos`, `bx_videos_videos`
 DELETE FROM `sys_objects_storage` WHERE `object` IN ('bx_videos_photos', 'bx_videos_videos', 'bx_videos_media_resized');
 DELETE FROM `sys_storage_tokens` WHERE `object` IN ('bx_videos_photos', 'bx_videos_videos', 'bx_videos_media_resized');
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_videos_preview', 'bx_videos_gallery', 'bx_videos_cover', 'bx_videos_video_poster_preview', 'bx_videos_video_poster_gallery', 'bx_videos_video_poster_cover', 'bx_videos_video_mp4', 'bx_videos_video_webm');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_videos_preview', 'bx_videos_gallery', 'bx_videos_cover', 'bx_videos_video_poster_preview', 'bx_videos_video_poster_gallery', 'bx_videos_video_poster_cover', 'bx_videos_video_mp4', 'bx_videos_video_webm');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_videos_preview', 'bx_videos_gallery', 'bx_videos_cover', 'bx_videos_video_poster_preview', 'bx_videos_video_poster_gallery', 'bx_videos_video_poster_cover');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_videos_preview', 'bx_videos_gallery', 'bx_videos_cover', 'bx_videos_poster', 'bx_videos_video_poster_preview', 'bx_videos_video_poster_gallery', 'bx_videos_video_poster_cover', 'bx_videos_video_mp4', 'bx_videos_video_webm');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_videos_preview', 'bx_videos_gallery', 'bx_videos_cover', 'bx_videos_poster', 'bx_videos_video_poster_preview', 'bx_videos_video_poster_gallery', 'bx_videos_video_poster_cover', 'bx_videos_video_mp4', 'bx_videos_video_webm');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_videos_preview', 'bx_videos_gallery', 'bx_videos_cover', 'bx_videos_poster', 'bx_videos_video_poster_preview', 'bx_videos_video_poster_gallery', 'bx_videos_video_poster_cover');
 DELETE FROM `sys_transcoder_videos_files` WHERE `transcoder_object` IN('bx_videos_video_mp4', 'bx_videos_video_webm');
 
 

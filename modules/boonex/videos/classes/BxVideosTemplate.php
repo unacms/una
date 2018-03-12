@@ -47,12 +47,17 @@ class BxVideosTemplate extends BxBaseModTextTemplate
 
         $this->_checkDuration($aContentInfo);
 
+        if(isset($CNF['FIELD_POSTER']) && !empty($aContentInfo[$CNF['FIELD_POSTER']]))
+            $sPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER'])->getFileUrl($aContentInfo[$CNF['FIELD_POSTER']]);
+        else 
+            $sPoster = $aTranscodersVideo['poster']->getFileUrl($iFile);
+
         return $this->parseHtmlByName('entry-video.html', array(
             'img_title' => $sTitle,
             'img_title_attr' => $sTitleAttr,
             'img_src' => $aTranscodersVideo['poster']->getFileUrl($iFile),
             'video' => BxTemplFunctions::getInstance()->videoPlayer(
-                $aTranscodersVideo['poster']->getFileUrl($iFile), 
+                $sPoster, 
                 $aTranscodersVideo['mp4']->getFileUrl($iFile), 
                 $aTranscodersVideo['webm']->getFileUrl($iFile),
                 false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']

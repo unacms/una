@@ -42,6 +42,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+        	'FIELD_POSTER' => 'poster',
         	'FIELD_VIDEOS' => 'videos',
             'FIELD_VIDEO' => 'video',
 			'FIELD_VIEWS' => 'views',
@@ -76,6 +77,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_videos_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_videos_gallery',
         	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_videos_cover',
+        	'OBJECT_IMAGES_TRANSCODER_POSTER' => 'bx_videos_poster',
             'OBJECT_VIDEOS_TRANSCODERS' => array(
             	'poster' => 'bx_videos_video_poster_cover', 
             	'poster_preview' => 'bx_videos_video_poster_preview',
@@ -134,7 +136,8 @@ class BxVideosConfig extends BxBaseModTextConfig
             	'menu_item_manage_all' => '_bx_videos_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_videos_txt_all_entries_by',
                 'txt_all_entries_by_author' => '_bx_videos_page_title_browse_by_author',
-            	'txt_pict_use_as_thumb' => '_bx_videos_form_entry_input_picture_use_as_thumb'
+            	'txt_pict_use_as_thumb' => '_bx_videos_form_entry_input_picture_use_as_thumb',
+                'txt_pict_use_as_poster' => '_bx_videos_form_entry_input_picture_use_as_poster',
             ),
         );
 
