@@ -1,4 +1,12 @@
 
+-- TABLES
+
+DROP TABLE IF EXISTS `bx_froala_files`;
+
+-- STORAGES & TRANSCODERS
+
+DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_froala_files');
+
 -- Studio page and widget
 
 DELETE FROM `tp`, `tw`, `tpw`

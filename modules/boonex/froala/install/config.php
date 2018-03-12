@@ -39,6 +39,14 @@ $aConfig = array(
      */
     'language_category' => 'Froala',
 
+	/**
+     * Storage objects to automatically delete files from upon module uninstallation.
+     * Note. Don't add storage objects used in transcoder objects.
+     */
+    'storages' => array(
+    	'bx_froala_files'
+    ),
+    
     /**
      * Installation/Uninstallation Section.
      */

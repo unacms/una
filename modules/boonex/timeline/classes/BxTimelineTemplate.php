@@ -51,8 +51,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'masonry.pkgd.min.js',
             'modernizr.js',
         	'flickity/flickity.pkgd.min.js',
-            'BxDolCmts.js',
-            'jquery.emojiarea.js',
+			'emoji/js/jquery.emojiarea.js',
+            'BxDolCmts.js',            
             'post.js',
             'repost.js',
         ));
