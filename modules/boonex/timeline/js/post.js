@@ -22,6 +22,8 @@ function BxTimelinePost(oOptions) {
     	general: oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams
     };
 
+    this._sPregTag = "(<([^>]+bx-tag[^>]+)>)";
+    this._sPregMention = "(<([^>]+bx-mention[^>]+)>)";
     this._sPregUrl = "\\b((https?://)|(www\\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\\@)?(([0-9]{1,3}\\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\\.[a-zA-Z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\\@&=+$,%#-]+)*/?)";
     this._oAttachedLinks = {};
 
@@ -73,10 +75,19 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
 	if(typeof window.glOnSpaceEnterInEditor === 'undefined')
 	    window.glOnSpaceEnterInEditor = [];
 
-	window.glOnSpaceEnterInEditor.push(function (sData) {
-		var oExp = new RegExp($this._sPregUrl , "ig");
+	window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
+		if(!oTextarea.is(sSelector))
+			return;
 
-		var aMatch = null;
+		var oExp, aMatch = null;
+
+		oExp = new RegExp($this._sPregTag , "ig");
+		sData = sData.replace(oExp, '');
+
+		oExp = new RegExp($this._sPregMention , "ig");
+		sData = sData.replace(oExp, '');
+
+		oExp = new RegExp($this._sPregUrl , "ig");
 		while(aMatch = oExp.exec(sData)) {
 			var sUrl = aMatch[0];
 			if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined)
