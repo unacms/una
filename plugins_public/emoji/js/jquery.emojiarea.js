@@ -329,17 +329,6 @@
     if ($textarea.attr('maxlength'))
       this.$editor.attr('maxlength', $textarea.attr('maxlength'));
 
-	this.$editor.attr({
-      'data-id': id,
-      'data-type': 'input',
-      'placeholder': $textarea.attr('placeholder'),
-      'contenteditable': 'true',
-    });
-
-    /*
-     * ! MODIFICATION START Following code was modified by Igor Zhukov, in
-     * order to improve rich text paste
-     */
     var changeEvents = 'blur change';
     if (!this.options.norealTime) {
       changeEvents += ' keyup';
@@ -347,7 +336,7 @@
     this.$editor.on(changeEvents, function(e) {
       return self.onChange.apply(self, [ e ]);
     });
-    /* ! MODIFICATION END */
+
 
     this.$editor.on('mousedown focus', function() {
       document.execCommand('enableObjectResizing', false, false);
@@ -369,7 +358,7 @@
 		return $this;
 	});
 
-    /*var editorDiv = this.$editor;
+    var editorDiv = this.$editor;
     this.$editor.on("change keydown keyup resize scroll", function(e) {
       if(MAX_LENGTH_ALLOWED_KEYS.indexOf(e.which) == -1 &&
         !((e.ctrlKey || e.metaKey) && e.which == 65) && // Ctrl + A
@@ -378,13 +367,15 @@
       {
         e.preventDefault();
       }
-      //self.updateBodyPadding(editorDiv);
+      
+	  self.updateBodyPadding(editorDiv);
 	  
 	  if(e.which == 8 || e.which == 46)
 		  $(this).trigger('change');
     });
 
-    if (this.options.onPaste) {
+    if (this.options.onPaste)
+	{
       var self = this;
       this.$editor.on("paste", function (e) {
         e.preventDefault();
@@ -402,31 +393,29 @@
         editorDiv.scrollTop(editorDiv[0].scrollHeight);
       });
     }
-  	*/
+  	
 	if (typeof options.custom_events !== 'undefined')
 	{
 		for(evt in options.custom_events)			
 			this.$editor.on(evt, options.custom_events[evt]);
 	}
-	
-	//$textarea.hide().after(this.$editor);
 
-	var oMenuWrapper = typeof this.options.menu_wrapper !== 'undefined' ? $(this.options.menu_wrapper) : $('<a class="smiles"></i>'),
-		oMenuIcon = typeof this.options.menu_icon !== 'undefined' ? $(this.options.menu_icon) : $('<i class="sys-icon smile-o">');
+	var 
+		oMenuWrapper = typeof this.options.menu_wrapper !== 'undefined' ? $(this.options.menu_wrapper) : $('<a class="smiles"></a>'),		
+		oMenuIcon = typeof this.options.menu_icon !== 'undefined' ? $(this.options.menu_icon) : $('<i class="sys-icon smile-o"></i>');
 	
 	oMenuIcon
 		.attr('data-id', id)
 		.attr('data-type', 'picker')
 		.addClass('emoji-picker-icon emoji-picker');
-					
-	//console.log(id);
-	if (typeof this.options.menu_wrapper !== 'undefined')
-		$(this.options.menu_wrapper).html(oMenuIcon);
-	
-	if (typeof this.options.menu_wrapper == 'undefined')
+		
+	if (!$(document).find(oMenuIcon).length)
+		oMenuWrapper.wrapInner(oMenuIcon);
+		
+	if (!$(document).find(oMenuWrapper).length)
 		$(this.$editor).after(oMenuWrapper);
-	
-	this.setup();	
+		
+	this.setup();
 	this.$editor.trigger('focus');
 
     /*
@@ -457,7 +446,7 @@
 
   EmojiArea_WYSIWYG.prototype.onChange = function(e)
   {	
-	//this.$textarea.val(this.val()).trigger('change');
+		this.$textarea.val(this.val());
   };
 
   EmojiArea_WYSIWYG.prototype.insert = function(emoji) {
@@ -465,7 +454,10 @@
 
 	if (!this.$editor.filter("[id='tinymce']").length)
 	{
-		this.$editor.trigger('keydown');	
+		this.$editor
+			.trigger('focus')
+			.trigger('keydown');
+			
 		if (this.selection)
 			util.restoreSelection(this.selection);
 		try
@@ -479,14 +471,9 @@
 	else 
 		tinymce.execCommand('mceInsertContent', false, insertionContent); 
 		
-
-    /*
-     * MODIFICATION: Following line was added by Igor Zhukov, in order to
-     * save recent emojis
-     */
    
 	util.emojiInserted(emoji, this.menu);
-    //this.onChange();
+    this.onChange();
   };
   
   EmojiArea_WYSIWYG.prototype.val = function() {
@@ -609,14 +596,12 @@
             + '<td><a class="emoji-menu-tab"><i class="sys-icon car"></i></a></td>'
             + '<td><a class="emoji-menu-tab"><i class="sys-icon hashtag"></i></a></td>'
             + '</tr></table>').appendTo(this.$itemsTailWrap);
-    this.$itemsWrap = $(
-        '<div class="emoji-items-wrap mobile_scrollable_wrap"></div>')
-        .appendTo(this.$itemsTailWrap);
-    this.$items = $('<div class="emoji-items">').appendTo(
-        this.$itemsWrap);
+    this.$itemsWrap = $('<div class="emoji-items-wrap mobile_scrollable_wrap"></div>')
+							.appendTo(this.$itemsTailWrap);
+    
+	this.$items = $('<div class="emoji-items">').appendTo(this.$itemsWrap);
 
-    //this.emojiarea.$editor.after(this.$menu);
-	$('[data-id=' + self.id + '][data-type=picker]').after(this.$menu);
+	$('[data-id=' + self.id + '][data-type=picker]').parent().after(this.$menu);
 	
     $body.on('keydown', function(e) {
       if (e.keyCode === KEY_ESC || e.keyCode === KEY_TAB) {
@@ -662,7 +647,8 @@
 
     this.$menu.on('click', 'a', function(e) {
 
-      //self.emojiarea.updateBodyPadding(self.emojiarea.$editor);
+      self.emojiarea.updateBodyPadding(self.emojiarea.$editor);
+	  
       if ($(this).hasClass('emoji-menu-tab'))
 	  {
         if (self.getTabIndex(this) !== self.currentCategory) {
@@ -773,19 +759,20 @@
 
   EmojiMenu.prototype.hide = function(callback) {
     this.visible = false;
-    this.$menu.hide("fast");
+    this.$menu.fadeOut();
   };
 
   EmojiMenu.prototype.show = function(emojiarea) {
-   
-    if (this.visible)
+	var position = typeof emojiarea.options.popup_position == 'function' ? emojiarea.options.popup_position() : emojiarea.options.popup_position || {right:'0'};	
+	if (this.visible)
       return this.hide();
     
 	$(this.$menu).css('z-index', ++EmojiMenu.menuZIndexcss);	
 	
 	this.$menu
-		.css(typeof emojiarea.options.popup_position == 'function' ? emojiarea.options.popup_position() : emojiarea.options.popup_position)
-		.css({top:-this.$menu.height() - 10}).show("fast");
+		.css(position)
+		.css({top:-this.$menu.height() - 10})
+		.fadeIn();
 
     if (!this.currentCategory) {
       this.load(0);

@@ -45,7 +45,7 @@ img.emoji {
 
 .emoji-menu {
     position: absolute;
-    right: 0;
+	max-width: 16rem !important;    
     z-index: 999;
     width: 16rem;
     overflow: hidden;
@@ -127,6 +127,11 @@ img.emoji {
 
 .emoji-menu a .label {
     display: none;
+}
+
+.emoji-wysiwyg-editor:empty:before {
+    content: attr(placeholder);
+    color: #9aa2ab;
 }
 
 @media (max-width:720px){
