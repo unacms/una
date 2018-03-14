@@ -42,7 +42,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 		$aClient = $this->_oModule->getProfileInfo();
 		$aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
 
-		$oPage = $this->createHostedPage($iPendingId, $aItem, $aClient, $aVendor);
+		$oPage = $this->createHostedPage($aItem, $aClient, $aVendor, $iPendingId);
 		if($oPage === false)
 			return $this->_sLangsPrefix . 'err_cannot_perform';
 
@@ -91,7 +91,6 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
             'error_msg' => _t($aResult['message'])
         ));
 
-        $this->_oModule->onSubscriptionCreate($aPending, $aResult);
         return $aResult;
     }
 
@@ -101,15 +100,11 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 		http_response_code($iResult);
     }
 
-	public function createHostedPage($iPendingId, $aItem, $aClient, $aVendor) {
+	public function createHostedPage($aItem, $aClient, $aVendor = array(), $iPendingId = 0) {
 		$oPage = false;
 
 		try {
-			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-			$oResult = ChargeBee_HostedPage::checkoutNew(array(
-				'redirectUrl' => bx_append_url_params($this->getReturnDataUrl($aVendor['id']), array(
-					'pending_id' => $iPendingId
-				)),
+			$aPage = array(
 				'subscription' => array(
 					'planId' => $aItem['name']
 				), 
@@ -117,8 +112,15 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 					'email' => $aClient['email'],
 					'firstName' => $aClient['name']
 				), 
-			));
+			);
 
+			if(!empty($aVendor) && is_array($aVendor) && !empty($aVendor))
+                $aPage['redirectUrl'] = bx_append_url_params($this->getReturnDataUrl($aVendor['id']), array(
+					'pending_id' => $iPendingId
+				));
+
+			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+			$oResult = ChargeBee_HostedPage::checkoutNew($aPage);
 			$oPage = $oResult->hostedPage();
 		}
 		catch (Exception $oException) {
@@ -198,6 +200,30 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 		}
 
 		return true;
+	}
+
+    public function retrieveCustomer($sCustomerId)
+	{
+		$oCustomer = null;
+
+		try {
+			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+			$oResult = ChargeBee_Customer::retrieve($sCustomerId);
+
+			$oCustomer = $oResult->customer();
+			if($oCustomer->id != $sCustomerId)
+				return false;
+		}
+		catch (Exception $oException) {
+			$iError = $oException->getCode();
+			$sError = $oException->getMessage();
+
+			$this->log('Retrieve Customer Error: ' . $sError . '(' . $iError . ')');
+
+			return false;
+		}
+
+		return $oCustomer;
 	}
 
 	protected function _getSite()

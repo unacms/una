@@ -42,6 +42,12 @@
     cursor:pointer;
 }
 
+.bx-form-section-header span {
+	white-space: nowrap;
+	text-transform: none;
+	font-size: 0.75rem;
+}
+
 .bx-form-section-hidden .bx-form-section-content {
     display:none;
 }

@@ -161,7 +161,7 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
     case BX_DATA_DATETIME_TS:
     case BX_DATA_DATETIME_TS_UTC:
         if (!preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+):(\d+)#', $mixedData, $m) && !preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+)#', $mixedData, $m))
-            return bx_process_input ($mixedData, BX_DATA_DATE_TS, $mixedParams, $isCheckMagicQuotes);
+            return bx_process_input ($mixedData, BX_DATA_DATETIME_TS == $iDataType ? BX_DATA_DATE_TS : BX_DATA_DATE_TS_UTC, $mixedParams, $isCheckMagicQuotes);
         $iDay   = $m[3];
         $iMonth = $m[2];
         $iYear  = $m[1];

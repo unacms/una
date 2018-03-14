@@ -1,6 +1,3 @@
-SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
-
-
 -- TABLE: entries
 CREATE TABLE IF NOT EXISTS `bx_videos_entries` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -8,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `bx_videos_entries` (
   `added` int(11) NOT NULL default '0',
   `changed` int(11) NOT NULL default '0',
   `thumb` int(11) NOT NULL default '0',
+  `poster` int(11) NOT NULL default '0',
   `video` int(11) NOT NULL default '0',
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
@@ -201,6 +199,8 @@ CREATE TABLE `bx_videos_favorites_track` (
 
 
 -- STORAGES & TRANSCODERS
+SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
+
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_videos_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_videos_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_videos_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_videos_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
@@ -210,6 +210,7 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('bx_videos_preview', 'bx_videos_media_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_videos_photos";}', 'no', 1, 2592000, 0, '', ''),
 ('bx_videos_gallery', 'bx_videos_media_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_videos_photos";}', 'no', 1, 2592000, 0, '', ''),
 ('bx_videos_cover', 'bx_videos_media_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_videos_photos";}', 'no', 1, 2592000, 0, '', ''),
+('bx_videos_poster', 'bx_videos_media_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_videos_photos";}', 'no', 1, 2592000, 0, '', ''),
 
 ('bx_videos_video_poster_preview', 'bx_videos_media_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_videos_videos";}', 'no', 0, 0, 0, 'BxDolTranscoderVideo', ''),
 ('bx_videos_video_poster_gallery', 'bx_videos_media_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_videos_videos";}', 'no', 0, 0, 0, 'BxDolTranscoderVideo', ''),
@@ -221,6 +222,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_videos_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_videos_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0'),
 ('bx_videos_cover', 'Resize', 'a:1:{s:1:"w";s:4:"2000";}', '0'),
+('bx_videos_poster', 'Resize', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:3:"jpg";}', 0),
 
 ('bx_videos_video_poster_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:13:"square_resize";s:1:"1";}', 10),
 ('bx_videos_video_poster_preview', 'Poster', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:3:"jpg";}', 0),

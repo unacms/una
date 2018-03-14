@@ -103,14 +103,10 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
         $oProvider = null;
         foreach($aInputs as $aInput) {
             if($iProvider != $aInput['provider_id']) {
-                if(!empty($iProvider))
-                    $aForm['inputs']['provider_' . $iProvider . '_end'] = array(
-                        'type' => 'block_end'
-                    );
-
                 $aForm['inputs']['provider_' . $aInput['provider_id'] . '_begin'] = array(
                     'type' => 'block_header',
                     'caption' => _t($aInput['provider_caption']),
+                	'info' => _t($aInput['provider_description']),
                     'collapsable' => true,
                     'collapsed' => $bCollapsed
                 );
