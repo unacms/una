@@ -111,6 +111,7 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
                 $aForm['inputs']['provider_' . $aInput['provider_id'] . '_begin'] = array(
                     'type' => 'block_header',
                     'caption' => _t($aInput['provider_caption']),
+                	'info' => _t($aInput['provider_description']),
                     'collapsable' => true,
                     'collapsed' => $bCollapsed
                 );

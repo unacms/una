@@ -49,6 +49,11 @@ class BxBaseModPaymentProvider extends BxDol
         $this->_bRedirectOnResult = false;
     }
 
+    public function setOptionsByVendor($iVendorId)
+    {
+        $this->_aOptions = $this->_oModule->_oDb->getOptions((int)$iVendorId, $this->_iId);
+    }
+
     public function isActive()
     {
     	return $this->getOption('active') == 'on';

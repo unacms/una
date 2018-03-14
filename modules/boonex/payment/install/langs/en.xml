@@ -332,7 +332,9 @@
 
 	<!-- Chargebee payment provider -->
 	<string name="_bx_payment_cbee_cpt"><![CDATA[Chargebee]]></string>
-	<string name="_bx_payment_cbee_dsc"><![CDATA[Chargebee payment provider]]></string>
+	<string name="_bx_payment_cbee_dsc"><![CDATA[If enabled, users can checkout using Chargebee's hosted pages.]]></string>
+	<string name="_bx_payment_cbee_v3_cpt"><![CDATA[Chargebee]]></string>
+    <string name="_bx_payment_cbee_v3_dsc"><![CDATA[If enabled, users can checkout using Chargebee's drop-in script.]]></string>
 	<string name="_bx_payment_cbee_active_cpt"><![CDATA[Active]]></string>
 	<string name="_bx_payment_cbee_active_dsc"><![CDATA[Activate(Deactivate) provider. Note. It's recommended to use SSL for better payment processing.]]></string>
 	<string name="_bx_payment_cbee_mode_cpt"><![CDATA[Mode]]></string>
@@ -352,8 +354,12 @@
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
 	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Thank you! Subscription created. Please, check your email for further instructions.]]></string>
+	<string name="_bx_payment_cbee_txt_checkout_with_single"><![CDATA[Checkout with {0}]]></string>
+    <string name="_bx_payment_cbee_txt_checkout_with_recurring"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_txt_name_chargebee"><![CDATA[Chargebee]]></string>
+	<string name="_bx_payment_txt_name_chargebee_v3"><![CDATA[Chargebee]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Chargebee]]></string>
+	<string name="_bx_payment_txt_cart_chargebee_v3"><![CDATA[Chargebee]]></string>
 
 	<!-- Recurly payment provider -->
 	<string name="_bx_payment_rcrl_cpt"><![CDATA[Recurly]]></string>

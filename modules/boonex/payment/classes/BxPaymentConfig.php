@@ -97,6 +97,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'subscription' => 'BxPaymentSubscriptions',
         	'pending' => 'BxPaymentOrders',
         	'processed' => 'BxPaymentOrders',
+        	'chargebee_v3' => 'BxPaymentProviderChargebeeV3',
         	'stripe' => 'BxPaymentProviderStripe'
         );
 
@@ -106,6 +107,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'subscription' => 'oBxPaymentSubscriptions',
         	'pending' => 'oPaymentOrders',
         	'processed' => 'oPaymentOrders',
+        	'chargebee_v3' => 'oPaymentProviderChargebeeV3',
         	'stripe' => 'oPaymentProviderStripe'
         );
     }

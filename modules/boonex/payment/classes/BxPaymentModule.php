@@ -705,6 +705,19 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 		$oProvider->notify();
     }
+    
+    public function actionCall($sProvider, $sAction)
+    {
+        $oProvider = $this->getObjectProvider($sProvider);
+        if($oProvider === false)
+            BxDolRequest::methodNotFound($sAction, $this->getName());
+
+         $sMethod = 'action' . bx_gen_method_name($sAction);
+         if(!method_exists($oProvider, $sMethod))
+             BxDolRequest::methodNotFound($sAction, $this->getName());
+
+        return call_user_func_array(array($oProvider, $sMethod), array_slice(func_get_args(), 2));
+    }
 
     public function onProfileJoin($iProfileId)
     {
