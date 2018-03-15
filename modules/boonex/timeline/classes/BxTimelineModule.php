@@ -1417,13 +1417,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oTemplate->getItemIcon($bText, $bLinkIds, $bPhotoIds, $bVideoIds);
             $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample_with_article'));
 
+            //--- Process Date ---//
+            $iDate = 0;
+            if(isset($oForm->aInputs['date']))
+                $iDate = $oForm->getCleanValue('date');
+            if(empty($iDate))
+                $iDate = time();
+
             $iId = $oForm->insert(array(
                 'object_id' => $iUserId,
                 'object_privacy_view' => $iObjectPrivacyView,
                 'content' => serialize($aContent),
                 'title' => $sTitle,
                 'description' => $sDescription,
-                'date' => time()
+                'date' => $iDate
             ));
 
             if(!empty($iId)) {
@@ -1501,7 +1508,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(empty($iObjectPrivacyView))
                 $iObjectPrivacyView = $this->_oConfig->getPrivacyViewDefault('object');
 
-            if(!$oForm->update($iId, array('object_privacy_view' => $iObjectPrivacyView,'content' => serialize($aContent))))
+            $aValsToAdd = array(
+            	'object_privacy_view' => $iObjectPrivacyView,
+            	'content' => serialize($aContent)
+            );
+
+            //--- Process Date ---//
+            if(isset($oForm->aInputs['date'])) {
+                $iDate = $oForm->getCleanValue('date');
+                if(empty($iDate))
+                    $iDate = time();
+
+                $aValsToAdd['date'] = $iDate;
+            }
+
+            if(!$oForm->update($iId, $aValsToAdd))
                 return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
 
             $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));

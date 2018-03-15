@@ -8,7 +8,7 @@
  *
  * @{
  */
-//TODO: Apply check for PROMOTED
+
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
     protected $_sTablesRepostTrack;
@@ -371,6 +371,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 		if($sWhereModuleFilter != '')
 			$sWhereClause .= $sWhereModuleFilter;
+
+        //--- Apply unpublished (date in future) filter
+        $sWhereClause = $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
 
 		//--- Check type
 		$sWhereSubclause = "";

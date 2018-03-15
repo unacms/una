@@ -27,6 +27,9 @@
 	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
     <string name="_bx_timeline_form_post_input_sys_object_privacy_view"><![CDATA[Видимость]]></string>
     <string name="_bx_timeline_form_post_input_object_privacy_view"><![CDATA[Видимость]]></string>
+    <string name="_bx_timeline_form_post_input_sys_date"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_timeline_form_post_input_date"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_timeline_form_post_input_date_info"><![CDATA[Оставьте пустым, чтобы опубликовать немедленно.]]></string>
 	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Ссылка]]></string>
 	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Добавить ссылку]]></string>
 	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Невозможно удалить ссылку. Пожалуйста, оповестите нас о проблеме.]]></string>
