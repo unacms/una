@@ -25,7 +25,6 @@ class BxPostsCronPublishing extends BxDolCron
     function processing()
     {
         $mixedIds = $this->_oModule->_oDb->publish();
-        var_dump($mixedIds); exit;
         if($mixedIds === false)
         	return;
 
