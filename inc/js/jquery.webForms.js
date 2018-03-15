@@ -228,12 +228,27 @@
 
                 } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
 
-                    $(this).datetimepicker({
+                    var oPickerOptions = {
                         changeYear: true,
                         changeMonth: true,
                         dateFormat: 'yy-mm-dd',
                         beforeShow: onBeforeShow
-                    });
+                    };
+                    if (1 == $(this).attr('data-utc')) {
+                        var e = $(this).clone();
+                        if ($(this).val().length) {
+                            e.val(moment($(this).val() + ' Z').format("YYYY-MM-DD HH:mm:0 Z"));
+                            $(this).val(moment($(this).val() + ' Z').format("YYYY-MM-DD HH:mm"));
+                        }
+                        e.attr('type', 'hidden').appendTo($(this).parent());
+                        $(this).attr('name', $(this).attr('name') + '_fake');
+                        oPickerOptions['altField'] = e;
+                        oPickerOptions['altFieldTimeOnly'] = false;
+                        oPickerOptions['altTimeFormat'] = 'HH:mm:00 Z';
+                        oPickerOptions['showTimezone'] = 'false';
+                    }
+                    
+                    $(this).datetimepicker(oPickerOptions);
                 }
 
                 if (window.navigator.appVersion.search(/Chrome\/(.*?) /) == -1 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) < 24)

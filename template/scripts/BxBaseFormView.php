@@ -756,8 +756,7 @@ BLAH;
 
         if (isset($aInput['name'])) $aAttrs['name'] = $aInput['name'];
         if (isset($aInput['value'])) $aAttrs['value'] = $aInput['value'];
-
-
+        if (isset($aInput['db']['pass']) && ('DateUtc' == $aInput['db']['pass'] || 'DateTimeUtc' == $aInput['db']['pass'])) $aAttrs['data-utc'] = 1;
 
         // for inputs with labels generate id
         if (isset($aInput['label']))
