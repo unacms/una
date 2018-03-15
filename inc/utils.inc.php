@@ -160,16 +160,24 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
         return $iRet > 0 ? $iRet : false;
     case BX_DATA_DATETIME_TS:
     case BX_DATA_DATETIME_TS_UTC:
-        if (!preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+):(\d+)#', $mixedData, $m) && !preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+)#', $mixedData, $m))
+        if (!preg_match('#(\d+)\-(\d+)\-(\d+)[\s]{1}(\d+):(\d+):(\d+)[\s]{1}([+\-\d:Z]+)#', $mixedData, $m) && !preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+):(\d+)#', $mixedData, $m) && !preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+)#', $mixedData, $m))
             return bx_process_input ($mixedData, BX_DATA_DATETIME_TS == $iDataType ? BX_DATA_DATE_TS : BX_DATA_DATE_TS_UTC, $mixedParams, $isCheckMagicQuotes);
         $iDay   = $m[3];
         $iMonth = $m[2];
         $iYear  = $m[1];
         $iH = $m[4];
         $iM = $m[5];
-        $iS = isset($m[6]) ? $m[6] : 0;
+        $iS = isset($m[6]) ? $m[6] : 0;        
+        $iTimezoneOffset = 0;
+        if (isset($m[7])) {
+            $oTz = new DateTimeZone($m[7]);
+            $oUtc = new DateTime(str_replace($m[7], '', $mixedData), new DateTimeZone('UTC'));
+            if ($oTz && $oUtc)
+                $iTimezoneOffset = $oTz->getOffset($oUtc);
+        }
         $sFunc = BX_DATA_DATETIME_TS_UTC == $iDataType ? 'gmmktime' : 'mktime';
-        $iRet = $sFunc ($iH, $iM, $iS, $iMonth, $iDay, $iYear);
+        $iRet = $sFunc ($iH, $iM, $iS, $iMonth, $iDay, $iYear) - $iTimezoneOffset;
+
         return $iRet > 0 ? $iRet : false;
 
     case BX_DATA_HTML:
