@@ -35,10 +35,7 @@ function BxTimelinePost(oOptions) {
 
 		var oEmojiConf = {
 		    emojiable_selector: bx_editor_get_htmleditable(sEditorSelector), 
-		    convert_to_emoji: 0, /* allow to convert members manually typed symbols to unicode smiles, like :slightly_smiling_face: */
-		    popup_position: {right:'1rem'},
-		    menu_wrapper: oLink.parent(), /* selector for element into which to add emoji popup menu icon */
-		    menu_icon: oLink  /* emoji popup menu icon */
+			menu_icon: oLink  /* emoji popup menu icon */
 		};
 		new EmojiPicker(oEmojiConf ).discover();  /* call init emoji function */
 	});
