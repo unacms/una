@@ -1005,15 +1005,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     	    $aLinkAttrs['rel'] = 'nofollow';
                     }
 
+                    $sLinkAttrs = '';
+                    foreach($aLinkAttrs as $sKey => $sValue)
+                        $sLinkAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
+            
                     $aTmplVarsEmbed = array(
                         'bx_if:show_thumbnail' => array(
                     		'condition' => !empty($aLink['thumbnail']),
                     		'content' => array(
                     			'style_prefix' => $sStylePrefix,
-                    			'thumbnail' => $aLink['thumbnail']
+                    			'thumbnail' => $aLink['thumbnail'],
+                                'link' => !empty($aLink['url']) ? $aLink['url'] : 'javascript:void(0)',
+                                'attrs' => $sLinkAttrs
                     		)
                     	),
-                    	'link' => $this->parseLink($aLink['url'], $aLink['title'], $aLinkAttrs),
+                    	'link' => !empty($aLink['url']) ? $aLink['url'] : 'javascript:void(0)',
+                    	'attrs' => $sLinkAttrs,
+                    	'content' => $aLink['title'],
                         'bx_if:show_text' => array(
                             'condition' => !empty($aLink['text']),
                             'content' => array(
