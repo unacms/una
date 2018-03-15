@@ -43,6 +43,9 @@
     <string name="_bx_posts_form_entry_input_date_added"><![CDATA[Создано]]></string>
     <string name="_bx_posts_form_entry_input_sys_date_changed"><![CDATA[Обновлено]]></string>
     <string name="_bx_posts_form_entry_input_date_changed"><![CDATA[Обновлено]]></string>
+    <string name="_bx_posts_form_entry_input_sys_date_published"><![CDATA[Опубликовано]]></string>
+    <string name="_bx_posts_form_entry_input_date_published"><![CDATA[Опубликовано]]></string>
+    <string name="_bx_posts_form_entry_input_date_published_info"><![CDATA[Оставьте пустым, чтобы опубликовать немедленно.]]></string>
 
 	<string name="_bx_posts_acl_action_create_entry"><![CDATA[Создать публикацию]]></string>
 	<string name="_bx_posts_acl_action_delete_entry"><![CDATA[Удалить публикацию]]></string>

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `author` int(10) unsigned NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
+  `published` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
-  `status` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
@@ -198,7 +199,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_posts', 'bx_posts', 'title', '', '', 0, 'text', '_bx_posts_form_entry_input_sys_title', '_bx_posts_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_posts', 'bx_posts', 'cat', '', '#!bx_posts_cats', 0, 'select', '_bx_posts_form_entry_input_sys_cat', '_bx_posts_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_posts_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_posts', 'bx_posts', 'added', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_added', '_bx_posts_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_posts', 'bx_posts', 'changed', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_changed', '_bx_posts_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_posts', 'bx_posts', 'changed', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_changed', '_bx_posts_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_posts', 'bx_posts', 'published', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_published', '_bx_posts_form_entry_input_date_published', '_bx_posts_form_entry_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
@@ -209,17 +211,12 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_posts_entry_add', 'pictures', 2147483647, 1, 5),
 ('bx_posts_entry_add', 'allow_view_to', 2147483647, 1, 6),
 ('bx_posts_entry_add', 'location', 2147483647, 1, 7),
-('bx_posts_entry_add', 'do_submit', 2147483647, 0, 8),
+('bx_posts_entry_add', 'published', 192, 1, 8),
 ('bx_posts_entry_add', 'do_publish', 2147483647, 1, 9),
-('bx_posts_entry_delete', 'location', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'cat', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'pictures', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'text', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'do_publish', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'title', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'allow_view_to', 2147483647, 0, 0),
+
 ('bx_posts_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_posts_entry_delete', 'do_submit', 2147483647, 1, 2),
+
 ('bx_posts_entry_edit', 'do_publish', 2147483647, 0, 1),
 ('bx_posts_entry_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_posts_entry_edit', 'title', 2147483647, 1, 3),
@@ -228,18 +225,13 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_posts_entry_edit', 'pictures', 2147483647, 1, 6),
 ('bx_posts_entry_edit', 'allow_view_to', 2147483647, 1, 7),
 ('bx_posts_entry_edit', 'location', 2147483647, 1, 8),
-('bx_posts_entry_edit', 'do_submit', 2147483647, 1, 9),
-('bx_posts_entry_view', 'location', 2147483647, 0, 0),
-('bx_posts_entry_view', 'pictures', 2147483647, 0, 0),
-('bx_posts_entry_view', 'delete_confirm', 2147483647, 0, 0),
-('bx_posts_entry_view', 'text', 2147483647, 0, 0),
-('bx_posts_entry_view', 'do_publish', 2147483647, 0, 0),
-('bx_posts_entry_view', 'title', 2147483647, 0, 0),
-('bx_posts_entry_view', 'do_submit', 2147483647, 0, 0),
-('bx_posts_entry_view', 'allow_view_to', 2147483647, 0, 0),
+('bx_posts_entry_edit', 'published', 192, 1, 9),
+('bx_posts_entry_edit', 'do_submit', 2147483647, 1, 10),
+
 ('bx_posts_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_posts_entry_view', 'added', 2147483647, 1, 2),
-('bx_posts_entry_view', 'changed', 2147483647, 1, 3);
+('bx_posts_entry_view', 'changed', 2147483647, 1, 3),
+('bx_posts_entry_view', 'published', 192, 1, 4);
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES

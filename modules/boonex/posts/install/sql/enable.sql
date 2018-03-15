@@ -417,3 +417,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
 ('profile', 'delete', @iHandler);
 
+
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_posts_publishing', '* * * * *', 'BxPostsCronPublishing', 'modules/boonex/posts/classes/BxPostsCronPublishing.php', '');
