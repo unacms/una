@@ -1000,6 +1000,7 @@ CREATE TABLE `sys_search_extended_fields` (
   `name` varchar(255) NOT NULL  default '',
   `type` varchar(32) NOT NULL default '',
   `caption` varchar(255) NOT NULL default '',
+  `info` varchar(255) NOT NULL default '',
   `values` text NOT NULL default '',
   `pass` varchar(32) NOT NULL,
   `search_type` varchar(32) NOT NULL  default '',

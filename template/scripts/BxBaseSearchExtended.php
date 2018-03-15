@@ -151,6 +151,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 'type' => $aField['search_type'],
                 'name' => $aField['name'],
                 'caption' => _t($aField['caption']),
+            	'info' => _t($aField['info']),
                 'values' => $aField['values'],
                 'value' => $aField['search_value'],
                 'db' => array(

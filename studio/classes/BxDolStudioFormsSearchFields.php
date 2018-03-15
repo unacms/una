@@ -7,6 +7,8 @@
  * @{
  */
 
+require_once(BX_DOL_DIR_STUDIO_INC . 'utils.inc.php');
+
 class BxDolStudioFormsSearchFields extends BxTemplStudioGrid
 {
     protected $sModule = '';

@@ -42,20 +42,48 @@ class BxDolSearchExtendedQuery extends BxDolDb
             if(empty($aFields) || !is_array($aFields))
                 return array();
 
+            $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+            $aLangIds = array_keys($oLanguage->getLanguages(true));
+
             $iOrder = 0;
-            foreach($aFields as $sField => $aField) 
-                $oDb->query("INSERT INTO `sys_search_extended_fields`(`object`, `name`, `type`, `caption`, `values`, `pass`, `search_type`, `search_value`, `search_operator`, `active`, `order`) VALUES(:object, :name, :type, :caption, :values, :pass, :search_type, :search_value, :search_operator, '1', :order)", array(
+            foreach($aFields as $sField => $aField) {
+                $iNow = time();
+                $sCaptionKey = (!empty($aField['caption']) ? $aField['caption'] : '_sys_form_input_' . $sField) . '_' . $iNow;
+                $sInfoKey = (!empty($aField['info']) ? $aField['info'] : '_sys_form_input_' . $sField . '_info') . '_' . $iNow;
+
+                $bResult = (int)$oDb->query("INSERT INTO `sys_search_extended_fields`(`object`, `name`, `type`, `caption`, `info`, `values`, `pass`, `search_type`, `search_value`, `search_operator`, `active`, `order`) VALUES(:object, :name, :type, :caption, :info, :values, :pass, :search_type, :search_value, :search_operator, '1', :order)", array(
                     'object' => $aObject['object'], 
                     'name' => $sField,
                     'type' => $aField['type'],
-                    'caption' => $aField['caption'],
+                    'caption' => $sCaptionKey,
+                	'info' => $sInfoKey,
                     'values' => $aField['values'],
                     'pass' => $aField['pass'],
                     'search_type' => reset(BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']]),
                     'search_value' => in_array($aField['type'], array('checkbox', 'switcher')) ? $aField['value'] : '', 
                     'search_operator' => reset(BxDolSearchExtended::$TYPE_TO_OPERATOR[$aField['type']]),
                     'order' => $iOrder++
-                ));
+                )) > 0;
+
+                if($bResult) {
+                    $aCaptionValues = $oLanguage->getLanguageString($aField['caption']);
+                    $aInfoValues = $oLanguage->getLanguageString($aField['info']);
+
+                    foreach($aLangIds as $iLangId) {
+                        $sCaptionValue = '';
+                        if(isset($aCaptionValues[$iLangId]) && !empty($aCaptionValues[$iLangId]['string']))
+                            $sCaptionValue = $aCaptionValues[$iLangId]['string'];
+                        $oLanguage->addLanguageString($sCaptionKey, $sCaptionValue, $iLangId, 0, false);
+
+                        $sInfoValue = '';
+                        if(isset($aInfoValues[$iLangId]) && !empty($aInfoValues[$iLangId]['string']))
+                            $sInfoValue = $aInfoValues[$iLangId]['string'];
+                        $oLanguage->addLanguageString($sInfoKey, $sInfoValue, $iLangId, 0, false);
+                    }
+                }
+            }
+
+            $oLanguage->compileLanguage(0, true);
 
             $aFields = $oDb->getAll($sQueryFields, $aQueryFieldsBindings);
         }
@@ -84,7 +112,24 @@ class BxDolSearchExtendedQuery extends BxDolDb
         if(empty($aWhere))
     		return false;
 
-        return $this->query("DELETE FROM `sys_search_extended_fields` WHERE " . $this->arrayToSQL($aWhere, ' AND '));
+        $sWhereClause = $this->arrayToSQL($aWhere, ' AND ');
+
+        $aFields = $this->getAll("SELECT * FROM `sys_search_extended_fields` WHERE " . $sWhereClause);
+        if(!empty($aFields) && is_array($aFields)) {
+            $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+
+            foreach($aFields as $aField) {
+                if(!empty($aField['caption']))
+                    $oLanguage->deleteLanguageString($aField['caption'], 0, false);
+
+                if(!empty($aField['info']))
+                    $oLanguage->deleteLanguageString($aField['info'], 0, false);
+            }
+
+            $oLanguage->compileLanguage(0, true);
+        }
+
+        return $this->query("DELETE FROM `sys_search_extended_fields` WHERE " . $sWhereClause);
     }
 }
 

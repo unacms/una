@@ -876,6 +876,7 @@
     <string name="_adm_form_txt_search_forms_fields"><![CDATA[Fields]]></string>
     <string name="_adm_form_txt_search_forms_fields_type"><![CDATA[Type]]></string>
     <string name="_adm_form_txt_search_forms_fields_caption"><![CDATA[Caption]]></string>
+    <string name="_adm_form_txt_search_forms_fields_info"><![CDATA[Description]]></string>
     <string name="_adm_form_txt_search_forms_fields_search_type"><![CDATA[Search Type]]></string>
     <string name="_adm_form_txt_search_forms_fields_select_object"><![CDATA[Select Form...]]></string>
     <string name="_adm_form_txt_search_forms_fields_edit_popup"><![CDATA[Edit "{0}" Search Field]]></string>

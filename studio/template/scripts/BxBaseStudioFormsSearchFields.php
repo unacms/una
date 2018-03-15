@@ -76,21 +76,24 @@ class BxBaseStudioFormsSearchFields extends BxDolStudioFormsSearchFields
                         'pass' => 'Int',
                     ),
                 ),
-                'search_type' => array(
-                    'type' => 'select',
-                    'name' => 'search_type',
-                    'caption' => _t('_adm_form_txt_search_forms_fields_search_type'),
-                    'info' => _t('_adm_form_dsc_search_forms_fields_search_type'),
-                    'values' => array(),
-                    'value' => $aField['search_type'],
-                    'required' => '1',
+                'caption' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'caption',
+                    'caption' => _t('_adm_form_txt_search_forms_fields_caption'),
+                    'value' => $aField['caption'],
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
                     ),
-                    'checker' => array (
-                        'func' => 'Avail',
-                        'params' => array(),
-                        'error' => _t('_adm_form_err_search_forms_essential'),
+                ),
+                'info' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'info',
+                    'caption' => _t('_adm_form_txt_search_forms_fields_info'),
+                    'value' => $aField['info'],
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
                     ),
                 ),
                 'controls' => array(
@@ -114,8 +117,30 @@ class BxBaseStudioFormsSearchFields extends BxDolStudioFormsSearchFields
             )
         );
 
-        foreach(BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']] as $sType)
-            $aForm['inputs']['search_type']['values'][] = array('key' => $sType, 'value' => _t('_adm_form_txt_field_type_' . $sType));
+        $aSearchTypes = BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']];
+        if(is_array($aSearchTypes) && count($aSearchTypes) >= 2) {
+            $aForm['inputs'] = bx_array_insert_before(array(
+            	'search_type' => array(
+                    'type' => 'select',
+                    'name' => 'search_type',
+                    'caption' => _t('_adm_form_txt_search_forms_fields_search_type'),
+                    'info' => _t('_adm_form_dsc_search_forms_fields_search_type'),
+                    'values' => array(),
+                    'value' => $aField['search_type'],
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'Avail',
+                        'params' => array(),
+                        'error' => _t('_adm_form_err_search_forms_essential'),
+                    ),
+                )), $aForm['inputs'], 'controls');
+
+            foreach($aSearchTypes as $sType)
+                $aForm['inputs']['search_type']['values'][] = array('key' => $sType, 'value' => _t('_adm_form_txt_field_type_' . $sType));
+        }
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
@@ -228,18 +253,6 @@ class BxBaseStudioFormsSearchFields extends BxDolStudioFormsSearchFields
         $mixedValue = $this->_oTemplate->getIcon('ui-' . $aRow['search_type'] . '.png', array('alt' => _t('_adm_form_txt_field_type_' . $aRow['search_type'])));
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
-    }
-
-    protected function _getActionEdit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
-    {
-        if($sType == 'single' && !$this->_isEditable($aRow))
-            return '';
-
-        $aSearchTypes = BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aRow['type']];
-        if(!is_array($aSearchTypes) || count($aSearchTypes) < 2)
-    	    return '';
-
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
     protected function _getActionReset ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

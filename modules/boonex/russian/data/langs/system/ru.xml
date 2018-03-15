@@ -874,6 +874,7 @@
     <string name="_adm_form_txt_search_forms_fields"><![CDATA[Поля]]></string>
     <string name="_adm_form_txt_search_forms_fields_type"><![CDATA[Тип]]></string>
     <string name="_adm_form_txt_search_forms_fields_caption"><![CDATA[Заголовок]]></string>
+    <string name="_adm_form_txt_search_forms_fields_info"><![CDATA[Описание]]></string>
     <string name="_adm_form_txt_search_forms_fields_search_type"><![CDATA[Тип поиска]]></string>
     <string name="_adm_form_txt_search_forms_fields_select_object"><![CDATA[Выбрать форму...]]></string>
     <string name="_adm_form_txt_search_forms_fields_edit_popup"><![CDATA[Редактировать "{0}" поле формы поиска]]></string>
