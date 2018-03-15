@@ -237,6 +237,9 @@ ul.bx-menu-toolbar li a .sys-icon-a {
 }
 
 ul.bx-menu-toolbar li img {
+	max-height:48px;
+    max-height:3rem;
+
     background-position:center center;
     background-repeat:no-repeat;
 }
