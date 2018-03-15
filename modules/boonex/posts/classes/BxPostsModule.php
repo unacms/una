@@ -17,6 +17,11 @@ class BxPostsModule extends BxBaseModTextModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $CNF = &$this->_oConfig->CNF;
+        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+             $CNF['FIELD_PUBLISHED']
+        ));
     }
 
     /**
