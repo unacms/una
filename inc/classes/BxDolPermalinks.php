@@ -165,6 +165,13 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
         if (null !== $sRet)
             return $sRet;
 
+        $sPrefix = '';
+        if(strncmp($sLink, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) === 0) {
+            $sPrefix = BX_DOL_URL_ROOT;
+
+            $sLink = substr($sLink, strlen($sPrefix));
+        }
+            
         $sLink = $this->_fixUrl($sLink);
 
         foreach ($this->aPrefixesStandard as $sKey => $iLength) {
@@ -179,11 +186,11 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
 
             $sUrl = $this->_fixUrlAmpersand($this->aLinksStandard[$sKey]['permalink'] . $sPage);
 
-            return bx_append_url_params($sUrl, $aParams);
+            return $sPrefix . bx_append_url_params($sUrl, $aParams);
 
         }
 
-        return bx_append_url_params($this->_isEnabled($sLink) ? $this->aLinksStandard[$sLink]['permalink'] : $sLink, $aParams);
+        return $sPrefix . bx_append_url_params($this->_isEnabled($sLink) ? $this->aLinksStandard[$sLink]['permalink'] : $sLink, $aParams);
     }
 
     /**
@@ -194,13 +201,17 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
      */
     function unpermalink($sLink, $isStripBaseUrl = true)
     {
-        if ($isStripBaseUrl && 0 === strncmp($sLink, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
-            $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
-
         $sRet = null;
-        bx_alert('system', 'unpermalink', 0, 0, array('link' => $sLink, 'return_data' => &$sRet));
+        bx_alert('system', 'unpermalink', 0, 0, array('link' => $sLink, 'strip_base_url' => $isStripBaseUrl, 'return_data' => &$sRet));
         if (null !== $sRet)
             return $sRet;
+
+        $sPrefix = '';
+        if(!$isStripBaseUrl)
+            $sPrefix = BX_DOL_URL_ROOT;
+
+        if(strncmp($sLink, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) === 0)
+            $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
 
         foreach ($this->aPrefixesPermalink as $sKey => $iLength) {
 
@@ -209,16 +220,16 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
 
             $sPage = substr($sLink, $iLength);
 
-            return $this->aLinksPermalink[$sKey]['standard'] . $sPage;
+            return $sPrefix . $this->aLinksPermalink[$sKey]['standard'] . $sPage;
 
         }
 
-        return isset($this->aLinksPermalink[$sLink]) ? $this->aLinksPermalink[$sLink]['standard'] : $sLink;
+        return $sPrefix . (isset($this->aLinksPermalink[$sLink]) ? $this->aLinksPermalink[$sLink]['standard'] : $sLink);
     }
 
     function _isEnabled($sLink)
     {
-        return array_key_exists($sLink, $this->aLinksStandard) && $this->aLinksStandard[$sLink]['enabled'];
+        return !empty($sLink) && array_key_exists($sLink, $this->aLinksStandard) && $this->aLinksStandard[$sLink]['enabled'];
     }
 
     /**

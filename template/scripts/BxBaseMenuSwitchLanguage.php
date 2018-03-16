@@ -53,7 +53,7 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
                 'title' => $this->$sMethod($sName, $sLang),
                 'target' => '_self',
                 'icon' => '',
-                'link' => bx_html_attribute(bx_append_url_params($oPermalink->permalink($sPageLink), $aPageParams)),
+                'link' => bx_html_attribute($oPermalink->permalink(bx_append_url_params($sPageLink, $aPageParams))),
                 'onclick' => ''
             );
         }
@@ -85,7 +85,7 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
     protected function getBaseUrl($sPageLink)
     {
-        $sPageLink = BxDolPermalinks::getInstance()->unpermalink($sPageLink);
+        $sPageLink = BxDolPermalinks::getInstance()->unpermalink($sPageLink, false);
 
         $sPageParams = '';
         if(strpos($sPageLink, '?') !== false)
