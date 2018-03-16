@@ -14,22 +14,40 @@
  */
 class BxTimelineMenuItemActions extends BxTemplMenuCustom
 {
-    protected $_aEvent;
     protected $_oModule;
+
+    protected $_iEvent;
+    protected $_aEvent;
+
+    protected $_bShowTitles;
 
     public function __construct($aObject, $oTemplate = false)
     {
-        parent::__construct($aObject, $oTemplate);
-
         $this->_oModule = BxDolModule::getInstance('bx_timeline');
+
+        parent::__construct($aObject, $this->_oModule->_oTemplate);
+
+        $this->_bShowTitles = false;
+
+        $this->addMarkers(array(
+            'js_object_view' => $this->_oModule->_oConfig->getJsObject('view')
+        ));
     }
 
-    public function setEvent($sView, $aEvent)
+    public function setView($sView)
+    {
+        $this->addMarkers(array(
+            'view' => $sView
+        ));
+    }   
+
+    public function setEvent($aEvent)
     {
         if(empty($aEvent) || !is_array($aEvent))
             return;
 
         $this->_aEvent = $aEvent;
+        $this->_iEvent = (int)$this->_aEvent['id'];
 
         $iCommentsObject = 0;
         $sCommentsSystem = $sCommentsOnclick = '';
@@ -40,10 +58,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         }
 
         $this->addMarkers(array(
-        	'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
-
-            'view' => $sView,
-            'content_id' => $aEvent['id'],
+            'content_id' => $this->_iEvent,
 
             'comment_system' => $sCommentsSystem,
             'comment_object' => $iCommentsObject,
@@ -51,21 +66,22 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         ));
     }
 
-    public function isVisible()
+    public function setEventById($iEventId)
     {
-    	if(!isset($this->_aObject['menu_items']))
-			$this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
+    	$aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $iEventId));
+    	if(empty($aEvent) || !is_array($aEvent))
+            return;
 
-    	$bVisible = false;
-    	foreach ($this->_aObject['menu_items'] as $a) {
-    		if((isset($a['active']) && !$a['active']) || (isset($a['visible_for_levels']) && !$this->_isVisible($a)))
-				continue;
-			
-			$bVisible = true;
-			break;
-    	}
+    	$aEventData = $this->_oModule->_oTemplate->getData($aEvent);
+    	if($aEventData === false)
+            return;
 
-    	return $bVisible;
+    	$aEvent['views'] = $aEventData['views'];
+        $aEvent['votes'] = $aEventData['votes'];
+        $aEvent['reports'] = $aEventData['reports'];
+        $aEvent['comments'] = $aEventData['comments'];
+
+    	$this->setEvent($aEvent);
     }
 
     protected function _getMenuItemItemView($aItem)
@@ -75,7 +91,11 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
 		$sViewsSystem = $this->_aEvent['views']['system'];
 		$iViewsObject = $this->_aEvent['views']['object_id'];
-    	return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
+		$aViewsParams = array('dynamic_mode' => $this->_bDynamicMode);
+		if($this->_bShowTitles)
+            $aViewsParams['show_do_view_label'] = true;
+
+    	return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline($aViewsParams);
     }
 
     protected function _getMenuItemItemVote($aItem)
@@ -85,7 +105,11 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
 		$sVotesSystem = $this->_aEvent['votes']['system'];
 		$iVotesObject = $this->_aEvent['votes']['object_id'];
-    	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
+		$aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
+		if($this->_bShowTitles)
+		    $aVotesParams['show_do_vote_label'] = true;
+
+    	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline($aVotesParams);
     }
 
 	protected function _getMenuItemItemReport($aItem)
@@ -95,7 +119,11 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
 		$sReportsSystem = $this->_aEvent['reports']['system'];
 		$iReportsObject = $this->_aEvent['reports']['object_id'];
-    	return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
+		$aReportsParams = array('dynamic_mode' => $this->_bDynamicMode);
+		if($this->_bShowTitles)
+		    $aReportsParams['show_do_report_label'] = true;
+
+    	return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline($aReportsParams);
     }
 
     /**
@@ -105,9 +133,9 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
      */
     protected function _isVisible ($a)
     {
-        if(!parent::_isVisible($a) || empty($this->_aEvent))
+        if(!parent::_isVisible($a) || empty($this->_aEvent) || !is_array($this->_aEvent))
             return false;
-
+			
         $sCheckFuncName = '';
         $aCheckFuncParams = array($this->_aEvent);
         switch ($a['name']) {
@@ -130,6 +158,30 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             case 'item-more':
             	$sCheckFuncName = 'isAllowedMore';
             	break;
+            case 'item-pin':
+                $sCheckFuncName = 'isAllowedPin';
+                break;
+
+			case 'item-unpin':
+                $sCheckFuncName = 'isAllowedUnpin';
+                break;
+
+            case 'item-promote':
+                $sCheckFuncName = 'isAllowedPromote';
+                break;
+
+			case 'item-unpromote':
+                $sCheckFuncName = 'isAllowedUnpromote';
+                break;
+
+            case 'item-edit':
+                $sCheckFuncName = 'isAllowedEdit';
+				$aCheckFuncParams = array($this->_aEvent);
+                break;
+
+            case 'item-delete':
+                $sCheckFuncName = 'isAllowedDelete';
+                break;
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))
