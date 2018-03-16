@@ -1332,8 +1332,25 @@ class BxDolStorageHelperUrl extends BxDolStorageHelperPath
             $aParams['path'] =  $sTmpFilename . '.' . $sExt;
             @rename($sTmpFilename, $aParams['path']);
 
-            if ($s || $s = bx_file_get_contents ($aParams['url']))
+            if ($s) {
                 file_put_contents($aParams['path'], $s);
+            } 
+            else {
+                $hRead = fopen($aParams['url'], "rb");
+                $hWrite = fopen($aParams['path'], "wb");
+                if (false !== $hRead && false !== $hWrite) {
+                    while (!feof($hRead)) {
+                        $data = fread($hRead, 8192);
+                        if (false === fwrite($hWrite, $data)) {
+                            fclose($hWrite);
+                            file_put_contents($aParams['path'], '');
+                            break;
+                        }
+                    }
+                    fclose($hRead);
+                    fclose($hWrite);
+                }
+            }
         }
         parent::__construct($aParams);
     }
