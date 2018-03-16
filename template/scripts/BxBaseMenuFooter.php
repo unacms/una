@@ -23,7 +23,11 @@ class BxBaseMenuFooter extends BxTemplMenu
         foreach($aItems as $iKey => $aItem) {
             switch($aItem['name']) {
                 case 'switch_language':
-                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_language_mask', $aItems[$iKey]['title'], genFlag());
+                    $sTitle = _t('_sys_menu_item_title_switch_language_mask', $aItems[$iKey]['title'], genFlag());
+
+                    $aItems[$iKey]['title'] = $sTitle;
+                    $aItems[$iKey]['bx_if:title']['condition'] = (bool)$sTitle;
+                    $aItems[$iKey]['bx_if:title']['content']['title'] = $sTitle;
                     break;
 
                 case 'switch_template':
@@ -32,16 +36,26 @@ class BxBaseMenuFooter extends BxTemplMenu
                 	$sTemplateName = $this->_oTemplate->getCode();                    
                     $sTemplateTitle = isset($aTemplates[$sTemplateName]) ? $aTemplates[$sTemplateName] : '';
 
-                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplateTitle);
+                    $sTitle = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplateTitle);
+
+                    $aItems[$iKey]['title'] = $sTitle;
+                    $aItems[$iKey]['bx_if:title']['condition'] = (bool)$sTitle;
+                    $aItems[$iKey]['bx_if:title']['content']['title'] = $sTitle;
                     break;
+
                 case 'powered_by':
-                    $aItems[$iKey]['alt'] = _t('_sys_txt_powered_by');
-                    $aItems[$iKey]['bx_if:image']['content']['alt'] = _t('_sys_txt_powered_by');
+                    $sTitleAttr = bx_html_attribute(_t('_sys_txt_powered_by'));
+
+                    $aItems[$iKey]['title_attr'] = $sTitleAttr;
+                    $aItems[$iKey]['bx_if:image']['content']['title_attr'] = $sTitleAttr;
                     break;
             }
-            if (!isset($aItems[$iKey]['alt'])) {
-                $aItems[$iKey]['alt'] = $aItems[$iKey]['title'];
-                $aItems[$iKey]['bx_if:image']['content']['alt'] = $aItems[$iKey]['title'];
+
+            if (!isset($aItems[$iKey]['title_attr'])) {
+                $sTitleAttr = bx_html_attribute(strip_tags($aItems[$iKey]['title']));
+
+                $aItems[$iKey]['title_attr'] = $sTitleAttr;
+                $aItems[$iKey]['bx_if:image']['content']['title_attr'] = $sTitleAttr;
             }
         }
 
