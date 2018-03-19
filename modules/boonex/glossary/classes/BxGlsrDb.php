@@ -22,7 +22,7 @@ class BxGlsrDb extends BxBaseModTextDb
     public function getAlphabeticalIndex()
     {
         $CNF = &$this->_oConfig->CNF;
-        return  $this->getColumn("SELECT DISTINCT UPPER(LEFT(TRIM(`" . $CNF['FIELD_TITLE'] . "`),1)) FROM " . $CNF['TABLE_ENTRIES'] . " ORDER BY UPPER(LEFT(TRIM(`" . $CNF['FIELD_TITLE'] . "`),1)) ");
+        return  $this->getAll("SELECT MIN(`id`) AS `row_number`, `letter`, '' AS `url` FROM ( SELECT `a`.`id`, UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`) ,1)) as `letter`, COUNT(*) AS `row_number` FROM " . $CNF['TABLE_ENTRIES'] . " `a` JOIN " . $CNF['TABLE_ENTRIES'] . " `b` ON `a`.`id` >= `b`.`id` AND UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`), 1)) = UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`), 1)) GROUP BY `a`.`id`, UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`), 1))) AS `t` GROUP BY `letter` ");
     }
 }
 

@@ -100,20 +100,19 @@ class BxGlsrSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'updated';
                 break;
 
+            case 'alphabetical':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_glossary_page_title_browse_alphabetical');
+                $this->aCurrent['rss']['link'] = 'modules/?r=glossary/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'alphabetical';
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_glossary');
                 unset($this->aCurrent['paginate']['perPage'], $this->aCurrent['rss']);
                 break;
                 
-            case 'alphabetical':
-                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
-                $this->aCurrent['title'] = _t('_bx_glossary_page_title_browse_alphabetical');
-                $this->aCurrent['rss']['link'] = 'modules/?r=glossary/rss/' . $sMode;
-                $this->aCurrent['sorting'] = 'alphabetical';
-                unset($this->aCurrent['paginate']['perPage']);
-                break;
-
             default:
                 $sMode = '';
                 $this->isError = true;
@@ -149,18 +148,30 @@ class BxGlsrSearchResult extends BxBaseModTextSearchResult
     
     function displayResultBlock ()
     {
+        if ($this->bShowcaseView){
+            $this->addContainerClass(array('bx-def-margin-sec-lefttopright-neg', 'bx-base-unit-showcase-wrapper'));
+			$this->aCurrent['paginate']['perPage'] = $this->getItemPerPageInShowCase();
+			$this->oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
+            $this->oModule->_oTemplate->addJs(array('flickity/flickity.pkgd.min.js','modules/base/general/js/|showcase.js'));
+		}
+        
+        $bIsAlphabetical = false;
+        if ($this->aCurrent['sorting'] == 'alphabetical')
+            $bIsAlphabetical = true;
+        
         $CNF = &$this->oModule->_oConfig->CNF;
         $sCode = '';
         $sLetter = '';
-        
         $aData = $this->getSearchData();
         if ($this->aCurrent['paginate']['num'] > 0) {
             $sCode .= $this->addCustomParts();
             foreach ($aData as $aValue){
-                $sTmp = mb_strtoupper(get_mb_substr($aValue[$CNF['FIELD_TITLE']], 0, 1));
-                if($sTmp != $sLetter){
-                    $sLetter = $sTmp;
-                    $sCode .= $this->oModule->_oTemplate->getAlphabeticalAnchor($sLetter);
+                if ($bIsAlphabetical){
+                    $sTmp = mb_strtoupper(get_mb_substr($aValue[$CNF['FIELD_TITLE']], 0, 1));
+                    if($sTmp != $sLetter){
+                        $sLetter = $sTmp;
+                        $sCode .= $this->oModule->_oTemplate->getAlphabeticalAnchor($sLetter);
+                    }
                 }
                 $sCode .= $this->displaySearchUnit($aValue);
             }
@@ -176,8 +187,19 @@ class BxGlsrSearchResult extends BxBaseModTextSearchResult
                         });
                     </script>";
             }
+            if ($bIsAlphabetical){
+                $this->oModule->_oTemplate->addJs('alphabetical_list.js');
+                if (bx_get('letter')){
+                    $sCode .= "
+                    <script>
+                        $(document).ready(function() {
+                            BxGlsrAlphabeticalList_goAnchor('" . bx_get('letter') . "')
+                        });
+                    </script>";
+                }
+            }
         }
-        return $sCode;
+        return $sCode;   
     }
     
 }

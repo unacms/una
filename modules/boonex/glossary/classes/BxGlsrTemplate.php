@@ -36,7 +36,7 @@ class BxGlsrTemplate extends BxBaseModTextTemplate
     {
         $aVars = array();
         foreach ($aLetterData as $aLetter)
-            array_push($aVars, array ('letter' => $aLetter, 'url' => $_SERVER['REQUEST_URI'] . '#' . $aLetter));
+            array_push($aVars, array ('letter' => $aLetter['letter'], 'url' => $aLetter['url']));
         return $this->parseHtmlByName('alphabetical_list.html', array ('bx_repeat:items' => $aVars, 'content_list' => $sContentList));
     }
     
