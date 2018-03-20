@@ -36,6 +36,12 @@ function BxTimelineMain() {
 	this.bViewOutline = false;
 }
 
+BxTimelineMain.prototype.initVideos = function(oParent) {
+	oParent.find('iframe').load(function() {
+		$(this).height(($(this).contents().find('video').height()) + 'px');
+	});
+};
+
 BxTimelineMain.prototype.isMasonry = function() {
 	return $(this.sIdViewOutline + ' .' + this.sClassItems).hasClass(this.sClassMasonry);
 };

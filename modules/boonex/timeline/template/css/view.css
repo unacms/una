@@ -284,6 +284,12 @@ div.bx-tl-view-outline div.bx-tl-item-image img {
 	object-position: center center;
 }
 
+/*+++ Item Video +++*/
+.bx-tl-video-iframe {
+	width: 100%;
+	border: none;
+}
+
 /*+++ Item Link +++*/
 div.bx-tl-view-outline div.bx-tl-item-link {
 	text-align: center;

@@ -33,6 +33,11 @@ define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 define('BX_TIMELINE_MEDIA_PHOTO', 'photo');
 define('BX_TIMELINE_MEDIA_VIDEO', 'video');
 
+//--- Video Auto Play 
+define('BX_TIMELINE_VAP_OFF', 'off');
+define('BX_TIMELINE_VAP_ON_MUTE', 'on_mute');
+define('BX_TIMELINE_VAP_ON', 'on');
+
 class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolContentInfoService
 {
     protected $_sJsPostObject;
@@ -57,6 +62,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /**
      * ACTION METHODS
      */
+    public function actionVideo($iEventId, $iVideoId)
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEventId));
+        if(empty($aEvent) || !is_array($aEvent) || !$this->_oConfig->isCommon($aEvent['type'], $aEvent['action']))
+            return;
+
+        $aData = $this->_oTemplate->getData($aEvent);
+        if($aData === false || !isset($aData['content']['videos'][$iVideoId]))
+            return;
+
+        $oTemplate = $this->_oTemplate;
+        $oTemplate->setPageNameIndex (BX_PAGE_CLEAR);
+        $oTemplate->setPageContent ('page_main_code', $this->_oTemplate->getVideo($aEvent, $aData['content']['videos'][$iVideoId]));
+        $oTemplate->getPageCode();
+    }
+
     public function actionPost()
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
@@ -1304,6 +1325,37 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         bx_import('FormCheckerHelper', $this->_aModule);
         return 'BxTimelineFormCheckerHelper';
+    }
+
+	/**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_options_videos_autoplay get_options_videos_autoplay
+     * 
+     * @code bx_srv('bx_timeline', 'get_options_videos_autoplay', [...]); @endcode
+     * 
+     * Get an array with available options for 'Videos autoplay in Timeline' setting.
+     *
+     * @return an array with available options represented as key => value pairs.
+     * 
+     * @see BxTimelineModule::serviceGetOptionsVideosAutoplay
+     */
+    /** 
+     * @ref bx_timeline-get_options_videos_autoplay "get_options_videos_autoplay"
+     */
+    public function serviceGetOptionsVideosAutoplay()
+    {
+        $aOptions = array(BX_TIMELINE_VAP_OFF, BX_TIMELINE_VAP_ON_MUTE, BX_TIMELINE_VAP_ON);
+
+        $aResult = array();
+        foreach($aOptions as $sOption)
+            $aResult[] = array(
+                'key' => $sOption,
+                'value' => _t('_bx_timeline_option_videos_autoplay_' . $sOption)
+            );
+
+        return $aResult;
     }
 
     /*

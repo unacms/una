@@ -52,6 +52,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'modernizr.js',
         	'flickity/flickity.pkgd.min.js',
 			'emoji/js/jquery.emojiarea.js',
+            'player.min.js',
             'BxDolCmts.js',            
             'post.js',
             'repost.js',
@@ -66,6 +67,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('post'),
             'js_content' => $this->getJsCode('post', array(
+        		'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             	'oRequestParams' => array('owner_id' => $iOwnerId)
         	)),
             'form' => $aForm['form']
@@ -87,6 +89,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'show_more' => $this->_getShowMore($aParams),
         	'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
+                'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             	'oRequestParams' => array(
 	                'type' => $aParams['type'],
 	                'owner_id' => $aParams['owner_id'],
@@ -758,6 +761,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aResult;
     }
 
+    public function getVideo(&$aEvent, &$aVideo)
+    {
+        $sVideoId = $this->_oConfig->getHtmlIds('view', 'video') . $aEvent['id'] . '-' . $aVideo['id'];
+        return $this->parseHtmlByName('video_player.html', array(
+            'player' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_webm'], array('id' => $sVideoId)),
+            'html_id' => $sVideoId
+        ));
+    }
+
     public function getItemIcon($bT, $bL, $bP, $bV)
     {
         $sResult = '';
@@ -1090,14 +1102,27 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
     	//--- Process Videos ---//
+    	$sVap = $this->_oConfig->getVideosAutoplay();
+    	$sVapId = $this->_oConfig->getHtmlIds('view', 'video_iframe') . $aEvent['id'] . '-';
+    	$sVapSrc = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'video/' . $aEvent['id'] . '/';
+
         $aTmplVarsVideos = array();
         if(!empty($aContent['videos']))
-            foreach($aContent['videos'] as $aVideo) {
-                $aTmplVarsVideos[] = array(
-                    'style_prefix' => $sStylePrefix,
-                	'video' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_webm']) 
-                );
-            }
+            foreach($aContent['videos'] as $iVideo => $aVideo)
+                if($sVap == BX_TIMELINE_VAP_OFF)
+                    $aTmplVarsVideos[] = array(
+                        'style_prefix' => $sStylePrefix,
+                    	'video' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_webm']) 
+                    );
+                else 
+                    $aTmplVarsVideos[] = array(
+                        'style_prefix' => $sStylePrefix,
+                    	'video' => $this->parseHtmlByName('video_iframe.html', array(
+                    		'style_prefix' => $sStylePrefix,
+                            'html_id' => $sVapId . $iVideo,
+                            'src' => $sVapSrc . $iVideo . '/'
+                        )) 
+                    );
 
         return array(
             'style_prefix' => $sStylePrefix,
@@ -1323,7 +1348,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     $oTranscoderWebm = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_webm'));
 
                     foreach($aVideos as $iVideoId) {
-                        $aResult['content']['videos'][] = array(
+                        $aResult['content']['videos'][$iVideoId] = array(
+                            'id' => $iVideoId,
                             'src_poster' => $oTranscoderPoster->getFileUrl($iVideoId),
                         	'src_mp4' => $oTranscoderMp4->getFileUrl($iVideoId),
                         	'src_webm' => $oTranscoderWebm->getFileUrl($iVideoId),

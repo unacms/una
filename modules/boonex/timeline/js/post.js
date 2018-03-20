@@ -16,6 +16,7 @@ function BxTimelinePost(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
+    this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
     this._oRequestParams = {
     	timeline: null,
     	outline: null,
@@ -308,8 +309,8 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 	var oContent = $(oData.item).bxTime();
 	switch(oData.view) {
 		case 'timeline':
-			var oItem = null;
-			var oItems = $('#' + this._aHtmlIds['main_timeline'] + ' ' + '.' + this.sClassItems);
+			var oTimeline = $('#' + this._aHtmlIds['main_timeline']);
+			var oItems = oTimeline.find('.' + this.sClassItems);
 			var oDivider  = oItems.find('.' + this.sClassDividerToday);
 			var bDivider = oDivider.length > 0;
 
@@ -318,7 +319,7 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 
 			oContent.hide();
 
-			oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
+			var oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
 			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed, function() {
 				$(this).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
 					$this.onFindOverflow(oElement);
@@ -326,6 +327,9 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 
 				$this.initFlickity();
 			});
+
+			if(this._sVideosAutoplay != 'off')
+				this.initVideos(oTimeline);
 			break;
 
 		case 'outline':

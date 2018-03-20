@@ -20,6 +20,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iRssLength;
     protected $_iCharsDisplayMax;
     protected $_iCharsDisplayMaxTitle;
+    protected $_sVideosAutoplay;
 
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
@@ -164,6 +165,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         		'main_item' => $sHp . '-item',
 				'menu_popup' => $sHp . '-menu-popup-',
+
+        		'video_iframe' => $sHp . '-video-iframe-',
+                'video' => $sHp . '-video-',
             ),
             'post' => array(
                 'attach_link_popup' =>  $sHp . '-attach-link-popup',
@@ -217,6 +221,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iCharsDisplayMax = (int)getParam($sOptionPrefix . 'chars_display_max');
         $this->_iCharsDisplayMaxTitle = 20;
+        $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
     }
 
     public function isAllowEdit()
@@ -263,6 +268,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCharsDisplayMaxTitle()
     {
         return $this->_iCharsDisplayMaxTitle;
+    }
+
+    public function getVideosAutoplay()
+    {
+        return $this->_sVideosAutoplay;
     }
 
     public function getRepostDefaults()
