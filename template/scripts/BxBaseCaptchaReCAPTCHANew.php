@@ -52,7 +52,7 @@ class BxBaseCaptchaReCAPTCHANew extends BxTemplCaptchaReCAPTCHA
         	);
 
         	$sCode .= $this->_oTemplate->_wrapInTagJsCode($sOnLoadCode);
-        	$sCode .= '<div id="' . $sId . '">';
+        	$sCode .= '<div id="' . $sId . '"></div>';
         }
         else {
         	$aApiParams = array(
