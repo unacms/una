@@ -25,9 +25,22 @@ class BxGlsrModule extends BxBaseModTextModule
      */
     public function serviceBrowseAlphabetical ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
-        $aIndexData = $this->_oDb->getAlphabeticalIndex();
         $aTmp = $this->_serviceBrowse('alphabetical', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
-        $sRv = $this->_oTemplate->getAlphabeticalList($aIndexData, $aTmp['content']);
+        $iPerPage = getParam('bx_glossary_per_page_browse');   
+        $aLetterData = $this->_oDb->getAlphabeticalIndex();
+        
+        $iStartPage = bx_get('start') ? bx_get('start') : 0;
+        foreach ($aLetterData as $key => $aLetter){
+            $iStart = floor($aLetter['row_number'] / $iPerPage) * $iPerPage;
+            if ($iStartPage == $iStart){
+                $aLetterData[$key]['url'] = "javascript:BxGlsrAlphabeticalList_goAnchor('" . $aLetter['letter'] . "')";
+            }
+            else{
+                $aBaseLink = bx_get('dynamic') ? parse_url($_SERVER['HTTP_REFERER']) : parse_url($_SERVER['REQUEST_URI']);
+                $aLetterData[$key]['url'] = $aBaseLink['path'] . ($iStart>0 ? '?start=' . $iStart  . '&per_page=' . $iPerPage . '&letter=' . $aLetter['letter'] :  '?letter=' . $aLetter['letter']); 
+            }
+        }
+        $sRv = $this->_oTemplate->getAlphabeticalList($aLetterData, $aTmp['content']);
         $aTmp['content'] = $sRv;
         return $aTmp;
     }

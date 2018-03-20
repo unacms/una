@@ -186,38 +186,14 @@
     <string name="_bx_glossary_search_extended_cmts"><![CDATA[Terms Comments Search]]></string>
 
     <string name="_bx_glossary_pre_lists_cats"><![CDATA[Term categories]]></string>
-    <string name="_bx_glossary_cat_Animals_Pets"><![CDATA[Animals & Pets]]></string>
-    <string name="_bx_glossary_cat_Architecture"><![CDATA[Architecture]]></string>
-    <string name="_bx_glossary_cat_Art"><![CDATA[Art]]></string>
-    <string name="_bx_glossary_cat_Cars_Motorcycles"><![CDATA[Cars & Motorcycles]]></string>
-    <string name="_bx_glossary_cat_Celebrities"><![CDATA[Celebrities]]></string>
-    <string name="_bx_glossary_cat_Design"><![CDATA[Design]]></string>
-    <string name="_bx_glossary_cat_DIY_Crafts"><![CDATA[DIY & Crafts]]></string>
-    <string name="_bx_glossary_cat_Education"><![CDATA[Education]]></string>
-    <string name="_bx_glossary_cat_Film_Music_Books"><![CDATA[Film, Music & Books]]></string>
-    <string name="_bx_glossary_cat_Food_Drink"><![CDATA[Food & Drink]]></string>
-    <string name="_bx_glossary_cat_Gardening"><![CDATA[Gardening]]></string>
-    <string name="_bx_glossary_cat_Geek"><![CDATA[Geek]]></string>
-    <string name="_bx_glossary_cat_Hair_Beauty"><![CDATA[Hair & Beauty]]></string>
-    <string name="_bx_glossary_cat_Health_Fitness"><![CDATA[Health & Fitness]]></string>
-    <string name="_bx_glossary_cat_History"><![CDATA[History]]></string>
-    <string name="_bx_glossary_cat_Holidays_Events"><![CDATA[Holidays & Events]]></string>
-    <string name="_bx_glossary_cat_Home_Decor"><![CDATA[Home Decor]]></string>
-    <string name="_bx_glossary_cat_Humor"><![CDATA[Humor]]></string>
-    <string name="_bx_glossary_cat_Illustrations_Posters"><![CDATA[Illustrations & Posters]]></string>
-    <string name="_bx_glossary_cat_Kids_Parenting"><![CDATA[Kids & Parenting]]></string>
-    <string name="_bx_glossary_cat_Mens_Fashion"><![CDATA[Men's Fashion]]></string>
-    <string name="_bx_glossary_cat_Outdoors"><![CDATA[Outdoors]]></string>
-    <string name="_bx_glossary_cat_Photography"><![CDATA[Photography]]></string>
-    <string name="_bx_glossary_cat_Products"><![CDATA[Products]]></string>
-    <string name="_bx_glossary_cat_Quotes"><![CDATA[Quotes]]></string>
-    <string name="_bx_glossary_cat_Science_Nature"><![CDATA[Science & Nature]]></string>
-    <string name="_bx_glossary_cat_Sports"><![CDATA[Sports]]></string>
-    <string name="_bx_glossary_cat_Tattoos"><![CDATA[Tattoos]]></string>
-    <string name="_bx_glossary_cat_Technology"><![CDATA[Technology]]></string>
-    <string name="_bx_glossary_cat_Travel"><![CDATA[Travel]]></string>
-    <string name="_bx_glossary_cat_Weddings"><![CDATA[Weddings]]></string>
-    <string name="_bx_glossary_cat_Womens_Fashion"><![CDATA[Women's Fashion]]></string>
+    <string name="_bx_glossary_cat_Nouns"><![CDATA[Nouns]]></string>
+    <string name="_bx_glossary_cat_Pronouns"><![CDATA[Pronouns]]></string>
+    <string name="_bx_glossary_cat_Verbs"><![CDATA[Verbs]]></string>
+    <string name="_bx_glossary_cat_Adverbs"><![CDATA[Adverbs]]></string>
+    <string name="_bx_glossary_cat_Adjectives"><![CDATA[Adjectives]]></string>
+    <string name="_bx_glossary_cat_Interjections"><![CDATA[Interjections]]></string>
+    <string name="_bx_glossary_cat_Prepositions"><![CDATA[Prepositions]]></string>
+    <string name="_bx_glossary_cat_Infinitives"><![CDATA[Infinitives]]></string>
 
     <string name="_bx_glossary_txt_all_entries_by"><![CDATA[<a href="{0}">All Terms by {1} ({2})</a>]]></string>
     <string name="_bx_glossary_txt_sample_single"><![CDATA[term]]></string>
