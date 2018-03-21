@@ -422,6 +422,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     }
 
     /**
+     * Data for Timeline module
+     */
+    public function serviceGetTimelineData()
+    {
+        return BxBaseModGeneralModule::serviceGetTimelineData();
+    }
+
+    /**
      * Entry post for Timeline module
      */
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())

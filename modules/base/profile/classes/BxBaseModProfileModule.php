@@ -567,6 +567,135 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 		);
     }
 
+	/**
+     * Data for Timeline module
+     */
+    public function serviceGetTimelineData()
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $sModule = $this->_aModule['name'];
+
+        $aAlerts = array();
+        $aHandlers = array();
+        if(!empty($CNF['FIELD_PICTURE'])) {
+            $aAlerts[] = array('unit' => $sModule, 'action' => 'profile_picture_changed');
+            $aHandlers[] = array('group' => $sModule . '_profile_picture', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'profile_picture_changed', 'module_name' => $sModule, 'module_method' => 'get_timeline_profile_picture', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => '');
+        }
+
+        if(!empty($CNF['FIELD_COVER'])) {
+            $aAlerts[] = array('unit' => $sModule, 'action' => 'profile_cover_changed');
+            $aHandlers[] = array('group' => $sModule . '_profile_cover', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'profile_cover_changed', 'module_name' => $sModule, 'module_method' => 'get_timeline_profile_cover', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => '');
+        }
+
+    	$aResult = array();
+        if(!empty($aAlerts) && !empty($aHandlers))
+            $aResult = array(
+            	'handlers' => $aHandlers,
+            	'alerts' => $aAlerts
+            );
+
+        return $aResult;
+    }
+
+	/**
+     * Entry post for Timeline module
+     */
+    public function serviceGetTimelineProfilePicture($aEvent, $aBrowseParams = array())
+    {
+        return $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
+         	'fld_image' => 'FIELD_PICTURE',
+    		'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_AVATAR'),
+    		'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_PICTURE', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
+            'txt_ss' => 'txt_sample_pp_single',
+            'txt_sswa' => 'txt_sample_pp_single_with_article',
+            'txt_sa' => 'txt_sample_pi_action',
+            'txt_sau' => 'txt_sample_pi_action_user'
+        ));
+    }
+
+    public function serviceGetTimelineProfileCover($aEvent, $aBrowseParams = array())
+    {
+        return $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
+         	'fld_image' => 'FIELD_COVER',
+    		'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_COVER_THUMB'),
+    		'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
+            'txt_ss' => 'txt_sample_pc_single',
+            'txt_sswa' => 'txt_sample_pc_single_with_article',
+            'txt_sa' => 'txt_sample_pi_action',
+            'txt_sau' => 'txt_sample_pi_action_user'
+        ));
+    }
+    
+    protected function _serviceGetTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return '';
+
+        $CNF = &$this->_oConfig->CNF;
+
+        list($sUserName) = $this->getUserInfo($aContentInfo['profile_id']);
+
+        $sSample = isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']];
+
+        //--- Title & Description
+        $sTitle = !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '';
+        if(empty($sTitle) && !empty($aContentInfo[$CNF['FIELD_TEXT']]))
+            $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
+
+        $sDescription = _t($CNF['T'][$aBuildParams['txt_sau']], $sUserName, _t($sSample));
+
+        return array(
+            'owner_id' => $aContentInfo['profile_id'],
+            'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
+        	'sample' => $sSample,
+        	'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
+    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'content' => $this->_getContentForTimelineProfileImage($aEvent, $aContentInfo, $aBrowseParams, $aBuildParams), //a string to display or array to parse default template before displaying.
+            'date' => $aContentInfo[$CNF['FIELD_ADDED']],
+            'views' => '',
+            'votes' => '',
+            'reports' => '',
+            'comments' => '',
+            'title' => $sTitle, //may be empty.
+            'description' => $sDescription //may be empty.
+        );
+    }
+
+    protected function _getContentForTimelineProfileImage($aEvent, $aContentInfo, $aBrowseParams, $aBuildParams)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+
+    	//--- Image(s)
+    	$aImages = array();
+        if(isset($CNF[$aBuildParams['fld_image']]) && isset($aContentInfo[$CNF[$aBuildParams['fld_image']]]) && $aContentInfo[$CNF[$aBuildParams['fld_image']]]) {
+            $sImage = $this->_oConfig->getImageUrl($aContentInfo[$CNF[$aBuildParams['fld_image']]], $aBuildParams['trans']);
+            $sImageOrig = $this->_oConfig->getImageUrl($aContentInfo[$CNF[$aBuildParams['fld_image']]], $aBuildParams['trans_orig']);
+            if(!empty($sImage)) {
+                if(empty($sImageOrig))
+                    $sImageOrig = $sImage;
+
+                $aImages = array(
+                    array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
+                );
+            }
+        }
+
+    	return array(
+    		'sample' => isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']],
+    		'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
+    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
+			'url' => $sUrl,
+			'title' =>  '',
+			'text' => '',
+			'images' => $aImages,
+            'videos' => array()
+		);
+    }
+
     public function serviceGetConnectionButtonsTitles($iProfileId, $sConnectionsObject = 'sys_profiles_friends')
     {
         if (!isLogged())

@@ -1261,14 +1261,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getSystemData(&$aEvent, $aBrowseParams = array())
     {
         $mixedResult = $this->_oConfig->getSystemData($aEvent, $aBrowseParams);
-		if($mixedResult !== false)
-			return $mixedResult;
+		if($mixedResult === false) {
+    		$sMethod = 'display' . bx_gen_method_name($aEvent['type'] . '_' . $aEvent['action']);
+    		if(method_exists($this, $sMethod))
+    		    $mixedResult = $this->$sMethod($aEvent);
+		}
+		
+		if($mixedResult === false)
+            return '';
 
-		$sMethod = 'display' . bx_gen_method_name($aEvent['type'] . '_' . $aEvent['action']);
-		if(!method_exists($this, $sMethod))
-        	return '';
-
-		return $this->$sMethod($aEvent);
+        $this->_preparetDataActions($aEvent, $mixedResult);
+		return $mixedResult;
     }
 
     protected function _getCommonData(&$aEvent, $aBrowseParams = array())
@@ -1390,8 +1393,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 break;
         }
 
+        $this->_preparetDataActions($aEvent, $aResult);
+        return $aResult;
+    }
+
+    protected function _preparetDataActions(&$aEvent, &$aResult)
+    {
+        $oModule = $this->getModule();
+
         $sSystem = $this->_oConfig->getObject('view');
-        if($oModule->getViewObject($sSystem, $aEvent['id']) !== false)
+        if(empty($aResult['views']) && $oModule->getViewObject($sSystem, $aEvent['id']) !== false)
             $aResult['views'] = array(
                 'system' => $sSystem,
                 'object_id' => $aEvent['id'],
@@ -1399,7 +1410,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             );
 
         $sSystem = $this->_oConfig->getObject('vote');
-        if($oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
+        if(empty($aResult['votes']) && $oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
             $aResult['votes'] = array(
                 'system' => $sSystem,
                 'object_id' => $aEvent['id'],
@@ -1407,7 +1418,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             );
 
 		$sSystem = $this->_oConfig->getObject('report');
-        if($oModule->getReportObject($sSystem, $aEvent['id']) !== false)
+        if(empty($aResult['reports']) && $oModule->getReportObject($sSystem, $aEvent['id']) !== false)
             $aResult['reports'] = array(
                 'system' => $sSystem,
                 'object_id' => $aEvent['id'],
@@ -1415,14 +1426,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             );
 
         $sSystem = $this->_oConfig->getObject('comment');
-        if($oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
+        if(empty($aResult['comments']) && $oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
             $aResult['comments'] = array(
                 'system' => $sSystem,
                 'object_id' => $aEvent['id'],
                 'count' => $aEvent['comments']
             );
-
-        return $aResult;
     }
 
     protected function _prepareTextForOutput($s, $iEventId = 0)
