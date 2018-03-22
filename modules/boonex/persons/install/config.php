@@ -141,6 +141,7 @@ $aConfig = array(
      * Connections Section
      */
     'relations' => array(
+    	'bx_timeline',
         'bx_notifications',
     ),
 );

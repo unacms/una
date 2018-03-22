@@ -261,6 +261,12 @@
     <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[В профайле <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_persons_txt_sample_single"><![CDATA[Персона]]></string>
     <string name="_bx_persons_txt_sample_comment_single"><![CDATA[комментарий к персональному профилю]]></string>
+    <string name="_bx_persons_txt_sample_pp_single"><![CDATA[изображение профиля]]></string>
+    <string name="_bx_persons_txt_sample_pp_single_with_article"><![CDATA[изображение профиля]]></string>
+    <string name="_bx_persons_txt_sample_pc_single"><![CDATA[обложка профиля]]></string>
+    <string name="_bx_persons_txt_sample_pc_single_with_article"><![CDATA[обложка профиля]]></string>
+    <string name="_bx_persons_txt_sample_pi_action"><![CDATA[сменил(а) {0}]]></string>
+    <string name="_bx_persons_txt_sample_pi_action_user"><![CDATA[{0} сменил(а) {1}]]></string>
 
     <string name="_bx_persons_email_friend_request"><![CDATA[Запрос на добавление в друзья]]></string>
     <string name="_bx_persons_email_friend_request_subject"><![CDATA[Подружиться]]></string>

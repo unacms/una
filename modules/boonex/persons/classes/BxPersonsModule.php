@@ -21,11 +21,6 @@ class BxPersonsModule extends BxBaseModProfileModule
         $this->_aSearchableNamesExcept[] = $this->_oConfig->CNF['FIELD_AUTHOR'];
     }
 
-    public function serviceGetTimelineData()
-    {
-    	return array();
-    }
-
     public function servicePrepareFields ($aFieldsProfile)
     {
         return parent::_servicePrepareFields($aFieldsProfile, array(), array('fullname' => 'name'));

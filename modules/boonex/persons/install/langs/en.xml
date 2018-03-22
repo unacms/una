@@ -259,6 +259,13 @@
     <string name="_bx_persons_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> profile timeline]]></string>
     <string name="_bx_persons_txt_sample_single"><![CDATA[person]]></string>
     <string name="_bx_persons_txt_sample_comment_single"><![CDATA[comment to person]]></string>
+    <string name="_bx_persons_txt_sample_pp_single"><![CDATA[profile picture]]></string>
+    <string name="_bx_persons_txt_sample_pp_single_with_article"><![CDATA[a profile picture]]></string>
+    <string name="_bx_persons_txt_sample_pc_single"><![CDATA[profile cover]]></string>
+    <string name="_bx_persons_txt_sample_pc_single_with_article"><![CDATA[a profile cover]]></string>
+    <string name="_bx_persons_txt_sample_pi_action"><![CDATA[changed {0}]]></string>
+    <string name="_bx_persons_txt_sample_pi_action_user"><![CDATA[{0} changed {1}]]></string>
+    
 
     <string name="_bx_persons_email_friend_request"><![CDATA[Friend request]]></string>
     <string name="_bx_persons_email_friend_request_subject"><![CDATA[Friendship Request]]></string>
