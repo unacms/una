@@ -343,6 +343,12 @@
 
     <string name="_bx_orgs_txt_sample_single"><![CDATA[organization]]></string>
     <string name="_bx_orgs_txt_sample_comment_single"><![CDATA[comment to organization]]></string>
+    <string name="_bx_orgs_txt_sample_pp_single"><![CDATA[profile picture]]></string>
+    <string name="_bx_orgs_txt_sample_pp_single_with_article"><![CDATA[a profile picture]]></string>
+    <string name="_bx_orgs_txt_sample_pc_single"><![CDATA[profile cover]]></string>
+    <string name="_bx_orgs_txt_sample_pc_single_with_article"><![CDATA[a profile cover]]></string>
+    <string name="_bx_orgs_txt_sample_pi_action"><![CDATA[changed {0}]]></string>
+    <string name="_bx_orgs_txt_sample_pi_action_user"><![CDATA[{0} changed {1}]]></string>
     <string name="_bx_orgs_txt_N_friends"><![CDATA[{0} friends]]></string>
     <string name="_bx_orgs_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_orgs_txt_from_admins"><![CDATA[From Admins]]></string>

@@ -179,6 +179,12 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'T' => array (
                 'txt_sample_single' => '_bx_orgs_txt_sample_single',
             	'txt_sample_comment_single' => '_bx_orgs_txt_sample_comment_single',
+            	'txt_sample_pp_single' => '_bx_orgs_txt_sample_pp_single',
+            	'txt_sample_pp_single_with_article' => '_bx_orgs_txt_sample_pp_single_with_article',
+                'txt_sample_pc_single' => '_bx_orgs_txt_sample_pc_single',
+            	'txt_sample_pc_single_with_article' => '_bx_orgs_txt_sample_pc_single_with_article',
+            	'txt_sample_pi_action' => '_bx_orgs_txt_sample_pi_action',
+            	'txt_sample_pi_action_user' => '_bx_orgs_txt_sample_pi_action_user',
             	'txt_private_group' => '_bx_orgs_txt_private_organization',
                 'txt_N_fans' => '_bx_orgs_txt_N_friends',
             	'txt_ntfs_join_request' => '_bx_orgs_txt_ntfs_join_request',

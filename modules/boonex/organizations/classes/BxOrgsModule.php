@@ -42,7 +42,7 @@ class BxOrgsModule extends BxBaseModGroupsModule
 
     public function serviceGetTimelineData()
     {
-    	return array();
+    	return BxBaseModProfileModule::serviceGetTimelineData();
     }
 
     public function onFanRemovedFromAdmins($iGroupProfileId, $iProfileId)

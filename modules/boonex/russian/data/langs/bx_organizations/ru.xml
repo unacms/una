@@ -344,6 +344,12 @@
 
     <string name="_bx_orgs_txt_sample_single"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_txt_sample_comment_single"><![CDATA[комментарий к организации]]></string>
+    <string name="_bx_orgs_txt_sample_pp_single"><![CDATA[изображение профиля]]></string>
+    <string name="_bx_orgs_txt_sample_pp_single_with_article"><![CDATA[изображение профиля]]></string>
+    <string name="_bx_orgs_txt_sample_pc_single"><![CDATA[обложка профиля]]></string>
+    <string name="_bx_orgs_txt_sample_pc_single_with_article"><![CDATA[обложка профиля]]></string>
+    <string name="_bx_orgs_txt_sample_pi_action"><![CDATA[сменила {0}]]></string>
+    <string name="_bx_orgs_txt_sample_pi_action_user"><![CDATA[{0} сменила {1}]]></string>
     <string name="_bx_orgs_txt_N_friends"><![CDATA[Друзья: {0}]]></string>
     <string name="_bx_orgs_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_orgs_txt_from_admins"><![CDATA[Из админов]]></string>
