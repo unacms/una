@@ -503,6 +503,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     {
         $aAttrsDefaults = array(
             'controls' => '',
+            'controlsList' => 'nodownload',
             'preload' => 'none',
             'autobuffer' => '', 
         );
