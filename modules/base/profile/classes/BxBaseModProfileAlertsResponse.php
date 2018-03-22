@@ -21,14 +21,20 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         parent::response($oAlert);
 
         $CNF = $this->_oModule->_oConfig->CNF;
+        $sModule = $this->_oModule->getName();
 
         // update picture field id when file is deleted
         if ($CNF['OBJECT_STORAGE'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction && isset($CNF['FIELD_PICTURE'])) {
-            $this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_PICTURE']);
+            $bResult = (int)$this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_PICTURE']) > 0;
+            if($bResult)
+                bx_alert($sModule, 'profile_picture_deleted', $oAlert->iObject);
         }
+
         if ($CNF['OBJECT_STORAGE_COVER'] == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction && isset($CNF['FIELD_COVER'])) {
-            $this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_COVER']);
-        }        
+            $bResult = (int)$this->_oModule->_oDb->resetContentPictureByFileId($oAlert->iObject, $CNF['FIELD_COVER']) > 0;
+            if($bResult)
+                bx_alert($sModule, 'profile_cover_deleted', $oAlert->iObject);
+        }
 
         // connection events
         if ($oAlert->sUnit == 'sys_profiles_friends' && $oAlert->sAction == 'connection_added') {

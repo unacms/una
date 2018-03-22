@@ -183,13 +183,11 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             $sModule = $this->_oModule->getName();
             switch($sPictureField) {
                 case $CNF['FIELD_PICTURE']:
-                    bx_alert($sModule, 'profile_picture_changed', $iContentId, $iProfileId, array('file' => $iFileId));
-                    bx_alert('profile', 'picture_changed', $iProfileId, $iProfileId, array('file' => $iFileId, 'content' => $iContentId, 'module' => $sModule));
+                    bx_alert($sModule, 'profile_picture_changed', $iFileId, $iProfileId, array('content' => $iContentId, 'field' => $CNF['FIELD_PICTURE']));
                     break;
 
                 case $CNF['FIELD_COVER']:
-                    bx_alert($sModule, 'profile_cover_changed', $iContentId, $iProfileId, array('file' => $iFileId));
-                    bx_alert('profile', 'cover_changed', $iProfileId, $iProfileId, array('file' => $iFileId, 'content' => $iContentId, 'module' => $sModule));
+                    bx_alert($sModule, 'profile_cover_changed', $iFileId, $iProfileId, array('content' => $iContentId, 'field' => $CNF['FIELD_COVER']));
                     break;
             }
         }

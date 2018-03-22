@@ -578,13 +578,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $aAlerts = array();
         $aHandlers = array();
         if(!empty($CNF['FIELD_PICTURE'])) {
-            $aAlerts[] = array('unit' => $sModule, 'action' => 'profile_picture_changed');
-            $aHandlers[] = array('group' => $sModule . '_profile_picture', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'profile_picture_changed', 'module_name' => $sModule, 'module_method' => 'get_timeline_profile_picture', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => '');
+            $aAlerts = array_merge($aAlerts, array(
+                array('unit' => $sModule, 'action' => 'profile_picture_changed'),
+                array('unit' => $sModule, 'action' => 'profile_picture_deleted')
+            ));
+            $aHandlers = array_merge($aHandlers, array(
+                array('group' => $sModule . '_profile_picture', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'profile_picture_changed', 'module_name' => $sModule, 'module_method' => 'get_timeline_profile_picture', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+                array('group' => $sModule . '_profile_picture', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'profile_picture_deleted')
+            ));
         }
 
         if(!empty($CNF['FIELD_COVER'])) {
-            $aAlerts[] = array('unit' => $sModule, 'action' => 'profile_cover_changed');
-            $aHandlers[] = array('group' => $sModule . '_profile_cover', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'profile_cover_changed', 'module_name' => $sModule, 'module_method' => 'get_timeline_profile_cover', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => '');
+            $aAlerts = array_merge($aAlerts, array(
+                array('unit' => $sModule, 'action' => 'profile_cover_changed'),
+                array('unit' => $sModule, 'action' => 'profile_cover_deleted')
+            ));
+            $aHandlers = array_merge($aHandlers, array(
+                array('group' => $sModule . '_profile_cover', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'profile_cover_changed', 'module_name' => $sModule, 'module_method' => 'get_timeline_profile_cover', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+                array('group' => $sModule . '_profile_cover', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'profile_cover_deleted')
+            ));
         }
 
     	$aResult = array();
@@ -603,7 +615,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function serviceGetTimelineProfilePicture($aEvent, $aBrowseParams = array())
     {
         return $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
-         	'fld_image' => 'FIELD_PICTURE',
+            'stg' => 'OBJECT_STORAGE',
     		'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_AVATAR'),
     		'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_PICTURE', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
             'txt_ss' => 'txt_sample_pp_single',
@@ -616,7 +628,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function serviceGetTimelineProfileCover($aEvent, $aBrowseParams = array())
     {
         return $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
-         	'fld_image' => 'FIELD_COVER',
+        	'stg' => 'OBJECT_STORAGE_COVER',
     		'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_COVER_THUMB'),
     		'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
             'txt_ss' => 'txt_sample_pc_single',
@@ -624,76 +636,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'txt_sa' => 'txt_sample_pi_action',
             'txt_sau' => 'txt_sample_pi_action_user'
         ));
-    }
-    
-    protected function _serviceGetTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams)
-    {
-        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
-        if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
-
-        $CNF = &$this->_oConfig->CNF;
-
-        list($sUserName) = $this->getUserInfo($aContentInfo['profile_id']);
-
-        $sSample = isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']];
-
-        //--- Title & Description
-        $sTitle = !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '';
-        if(empty($sTitle) && !empty($aContentInfo[$CNF['FIELD_TEXT']]))
-            $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
-
-        $sDescription = _t($CNF['T'][$aBuildParams['txt_sau']], $sUserName, _t($sSample));
-
-        return array(
-            'owner_id' => $aContentInfo['profile_id'],
-            'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
-        	'sample' => $sSample,
-        	'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
-    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
-            'content' => $this->_getContentForTimelineProfileImage($aEvent, $aContentInfo, $aBrowseParams, $aBuildParams), //a string to display or array to parse default template before displaying.
-            'date' => $aContentInfo[$CNF['FIELD_ADDED']],
-            'views' => '',
-            'votes' => '',
-            'reports' => '',
-            'comments' => '',
-            'title' => $sTitle, //may be empty.
-            'description' => $sDescription //may be empty.
-        );
-    }
-
-    protected function _getContentForTimelineProfileImage($aEvent, $aContentInfo, $aBrowseParams, $aBuildParams)
-    {
-    	$CNF = &$this->_oConfig->CNF;
-
-    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
-
-    	//--- Image(s)
-    	$aImages = array();
-        if(isset($CNF[$aBuildParams['fld_image']]) && isset($aContentInfo[$CNF[$aBuildParams['fld_image']]]) && $aContentInfo[$CNF[$aBuildParams['fld_image']]]) {
-            $sImage = $this->_oConfig->getImageUrl($aContentInfo[$CNF[$aBuildParams['fld_image']]], $aBuildParams['trans']);
-            $sImageOrig = $this->_oConfig->getImageUrl($aContentInfo[$CNF[$aBuildParams['fld_image']]], $aBuildParams['trans_orig']);
-            if(!empty($sImage)) {
-                if(empty($sImageOrig))
-                    $sImageOrig = $sImage;
-
-                $aImages = array(
-                    array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
-                );
-            }
-        }
-
-    	return array(
-    		'sample' => isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']],
-    		'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
-    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
-			'url' => $sUrl,
-			'title' =>  '',
-			'text' => '',
-			'images' => $aImages,
-            'videos' => array()
-		);
     }
 
     public function serviceGetConnectionButtonsTitles($iProfileId, $sConnectionsObject = 'sys_profiles_friends')
@@ -1009,6 +951,81 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         // return profiles + paginate
         return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
+    }
+
+    protected function _serviceGetTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aFileInfo = BxDolStorage::getObjectInstance($CNF[$aBuildParams['stg']])->getFile((int)$aEvent['object_id']);
+        if(empty($aFileInfo) || !is_array($aFileInfo))
+            return '';
+            
+        $aEventContent = unserialize($aEvent['content']);
+        if(!is_array($aEventContent) || empty($aEventContent['content']))
+            return '';
+
+        $aContentInfo = $this->_oDb->getContentInfoById($aEventContent['content']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return '';
+
+        list($sUserName) = $this->getUserInfo($aContentInfo['profile_id']);
+
+        $sSample = isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']];
+
+        //--- Title & Description
+        $sTitle = !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '';
+        if(empty($sTitle) && !empty($aContentInfo[$CNF['FIELD_TEXT']]))
+            $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
+
+        $sDescription = _t($CNF['T'][$aBuildParams['txt_sau']], $sUserName, _t($sSample));
+
+        return array(
+            'owner_id' => $aContentInfo['profile_id'],
+            'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
+        	'sample' => $sSample,
+        	'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
+    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'content' => $this->_getContentForTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams, $aContentInfo, $aFileInfo), //a string to display or array to parse default template before displaying.
+            'date' => $aContentInfo[$CNF['FIELD_ADDED']],
+            'views' => '',
+            'votes' => '',
+            'reports' => '',
+            'comments' => '',
+            'title' => $sTitle, //may be empty.
+            'description' => $sDescription //may be empty.
+        );
+    }
+
+    protected function _getContentForTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams, $aContentInfo, $aFileInfo)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+
+    	//--- Image(s)
+        $sImage = $this->_oConfig->getImageUrl($aFileInfo['id'], $aBuildParams['trans']);
+        $sImageOrig = $this->_oConfig->getImageUrl($aFileInfo['id'], $aBuildParams['trans_orig']);
+        if(!empty($sImage)) {
+            if(empty($sImageOrig))
+                $sImageOrig = $sImage;
+
+            $aImages = array(
+                array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
+            );
+        }
+
+    	return array(
+    		'sample' => isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']],
+    		'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
+    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
+			'url' => $sUrl,
+			'title' =>  '',
+			'text' => '',
+			'images' => $aImages,
+            'videos' => array()
+		);
     }
 
     protected function _entityComments($sObject, $iId = 0)
