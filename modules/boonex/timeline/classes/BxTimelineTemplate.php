@@ -49,7 +49,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'emoji/js/emoji-picker.js',
         	'autosize.min.js',
             'masonry.pkgd.min.js',
-            'modernizr.js',
+            'modernizr.min.js',
         	'flickity/flickity.pkgd.min.js',
 			'emoji/js/jquery.emojiarea.js',
             'player.min.js',
