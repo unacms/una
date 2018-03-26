@@ -1484,6 +1484,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _preparetDataActions(&$aEvent, &$aResult)
     {
+        if(empty($aEvent) || !is_array($aEvent) || empty($aEvent['id']))
+            return;
+
         $oModule = $this->getModule();
 
         $sSystem = $this->_oConfig->getObject('view');
