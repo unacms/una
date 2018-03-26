@@ -168,6 +168,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         		'video_iframe' => $sHp . '-video-iframe-',
                 'video' => $sHp . '-video-',
+        
+                'live_update_popup' => $sHp . '-live-update-popup-',
             ),
             'post' => array(
                 'attach_link_popup' =>  $sHp . '-attach-link-popup',
@@ -307,6 +309,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-item&id=' . $aEvent['id']);
     }
+
+    public function getLiveUpdateKey($sType, $iOwnerId)
+	{
+		return $this->getName() . '_live_update_' . $sType . '_' . $iOwnerId;
+	}
 
     public function isCommon($sType, $sAction)
     {

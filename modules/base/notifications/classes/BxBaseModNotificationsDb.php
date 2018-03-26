@@ -186,7 +186,7 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause . "`{$this->_sTable}`.*", $sOrderClause, $sLimitClause), $sSql));
+        $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql));
         if(!$bReturnCount)
         	return $aEntries;
 
@@ -196,7 +196,8 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 	protected function _getSqlPartsEvents($aParams)
     {
     	$sMethod = 'getAll';
-        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+        $sSelectClause = "`{$this->_sTable}`.*";
+        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['browse']) {
             case 'id':

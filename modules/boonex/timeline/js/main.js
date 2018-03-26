@@ -28,6 +28,7 @@ function BxTimelineMain() {
 	this.sClassItemComments = this.sSP + '-item-comments-holder';
 	this.sClassItemImages = this.sSP + '-item-images';
 	this.sClassItemImage = this.sSP + '-item-image';
+	this.sClassBlink = this.sSP + '-blink';
 
 	this.oViewTimeline = null;
 	this.bViewTimeline = false;

@@ -76,9 +76,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getViewBlock($aParams)
     {
+        $oModule = $this->getModule();
+
+        //--- Add live update
+		$oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
+
+		$sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), 'get_live_updates', array($aParams['type'], $aParams['owner_id'], $oModule->getUserId(), '{count}'));
+		$sLiveUpdatesCode = BxDolLiveUpdates::getInstance()->add($this->_oConfig->getLiveUpdateKey($aParams['type'], $aParams['owner_id']), 1, $sServiceCall);
+		//--- Add live update
+
         list($sContent, $sLoadMore, $sBack, $sEmpty) = $this->getPosts($aParams);
 
-        return $this->parseHtmlByName('block_view.html', array(
+        return $sLiveUpdatesCode . $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_' . $aParams['view']),
             'view' => $aParams['view'],
@@ -788,6 +797,78 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return '<i class="sys-icon ' . $sResult . '"></i>';
     }
 
+    function getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCountOld = 0, $iCountNew = 0)
+    {
+        $oModule = $this->getModule();
+
+    	$iCount = (int)$iCountNew - (int)$iCountOld;
+    	if($iCount < 0)
+    	    return '';
+
+        $aParams = $oModule->getParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, 0, $iCount, BX_TIMELINE_FILTER_OTHER_VIEWER);
+        $aEvents = $this->_oDb->getEvents($aParams);
+        if(empty($aEvents) || !is_array($aEvents))
+			return '';
+
+		$sJsObject = $this->_oConfig->getJsObject('view');
+		$sStylePrefix = $this->_oConfig->getPrefix('style');
+
+		$aEvents = array_reverse($aEvents);
+		$iEvents = count($aEvents);
+
+		$aTmplVarsItems = array();
+		foreach($aEvents as $iIndex => $aEvent) {
+		    $aData = $this->getData($aEvent);
+            if($aData === false)
+                continue;
+
+			$iEventId = $aEvent['id'];
+			$iEventAuthorId = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
+
+			list($sAuthorName, $sAuthorLink, $sAuthorIcon, $sAuthorUnit) = $oModule->getUserInfo($iEventAuthorId);
+    	    $bAuthorIcon = !empty($sAuthorIcon);
+ 
+			$sShowOnClick = "javascript:" . $sJsObject . ".goTo(this, 'timeline-event-" . $iEventId . "', '" . $iEventId . "');";
+
+	    	$aTmplVarsItems[] = array(
+	    		'bx_if:show_as_hidden' => array(
+	    			'condition' => $iIndex < ($iEvents - 1),
+	    			'content' => array(),
+	    		),
+	    		'item' => $this->parseHtmlByName('live_update_notification.html', array(
+	    			'style_prefix' => $sStylePrefix,
+	    			'onclick_show' => $sShowOnClick,
+	    		    'author_link' => $sAuthorLink, 
+	    		    'author_title' => bx_html_attribute($sAuthorName),
+	    		    'author_name' => $sAuthorName,
+	    		    'bx_if:show_icon' => array(
+                        'condition' => $bAuthorIcon,
+                        'content' => array(
+                            'author_icon' => $sAuthorIcon
+                        )
+                    ),
+                    'bx_if:show_icon_empty' => array(
+                        'condition' => !$bAuthorIcon,
+                        'content' => array()
+                    ),
+                    'text' => _t($aData['sample_action'], _t($aData['sample'])),
+	    		)),
+	    		'bx_if:show_previous' => array(
+	    			'condition' => $iIndex > 0,
+	    			'content' => array(
+	    				'onclick_previous' => $sJsObject . '.previousLiveUpdate(this)'
+	    			)
+	    		),
+	    		'onclick_close' => $sJsObject . '.hideLiveUpdate(this)'
+			);
+		}
+
+		return $this->parseHtmlByName('popup_chain.html', array(
+			'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $sType,
+			'bx_repeat:items' => $aTmplVarsItems
+		));
+    }
+
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -813,6 +894,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
+        $sClass = $bBrowseItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer';
+        if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
+			$sClass .= ' ' . $sStylePrefix . '-blink';
+			
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  		$sLocation = $oMetatags->locationsString($aEvent['id']);
  
@@ -820,7 +905,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
-            'class' => $bBrowseItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
+            'class' => $sClass,
             'class_owner' => $sClassOwner,
         	'class_content' => $bBrowseItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
             'id' => $aEvent['id'],

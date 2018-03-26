@@ -192,6 +192,7 @@
 	<string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> - {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>
     <string name="_bx_timeline_txt_some_text_here"><![CDATA[Поделитесь своими мыслями, местоположением, фотографиями или видео]]></string>
+    <string name="_bx_timeline_txt_show"><![CDATA[Показать]]></string>
 
 	<string name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string>
 	<string name="_bx_timeline_txt_reposted"><![CDATA[Сделал репост {0} {1}.]]></string>

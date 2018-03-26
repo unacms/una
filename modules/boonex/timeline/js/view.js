@@ -31,6 +31,8 @@ function BxTimelineView(oOptions) {
     this._fVapOffsetStart = 0.8;
     this._fVapOffsetStop = 0.2;
 
+    this._bLiveUpdatePaused = false;
+
     var $this = this;
     $(document).ready(function() {
     	$this.init();
@@ -96,6 +98,9 @@ BxTimelineView.prototype.init = function() {
 					});
 			});
 		}
+
+	    //--- Blink (highlight) necessary items
+	    this.blink(this.oViewTimeline);
 	}
 
 	if(this.bViewOutline) {
@@ -109,6 +114,9 @@ BxTimelineView.prototype.init = function() {
     	this.oViewOutline.find('img.' + this.sClassItemImage).load(function() {
     		$this.reloadMasonry();
     	});
+
+    	//--- Blink (highlight) necessary items
+	    this.blink(this.oViewOutline);
 	}
 
 	this.initFlickity();
@@ -548,6 +556,148 @@ BxTimelineView.prototype.onDeletePost = function(oData) {
 		document.location = this._sReferrer;
 };
 
+
+/*----------------------------*/
+/*--- Live Updates methods ---*/
+/*----------------------------*/
+BxTimelineView.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
+{
+	var $this = this;
+
+	var sView = '';
+	var oView = $(this.sIdViewTimeline);
+	if(oView.length)
+		sView = 'timeline';
+	else {
+		oView = $(this.sIdViewOutline);
+		if(oView.length)
+			sView = 'outline';
+		else
+			return;
+	}
+
+	this.loadingInButton(oLink, true);
+
+    this._oRequestParams[sView].start = 0;
+    this._oRequestParams[sView].blink = sBlinkIds;
+    this._getPosts(oView, function(oData) {
+    	$this.loadingInButton(oLink, false);
+    	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
+    	oData.go_to = sGoToId;
+    	processJsonData(oData);
+    });
+};
+
+/*
+ * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
+ */
+BxTimelineView.prototype.showLiveUpdate = function(oData)
+{
+	if(!oData.code)
+		return;
+
+	var $this = this;
+
+	var oItems = $(oData.code);
+	var sId = oItems.attr('id');
+	$('#' + sId).remove();
+
+	oItems.prependTo('body').dolPopup({
+    	position: 'fixed',
+    	left: '1rem',
+    	top: 'auto',
+    	bottom: '1rem',
+    	fog: false,
+    	onBeforeShow: function() {
+    	},
+    	onBeforeHide: function() {
+    	},
+    	onHide: function() {
+    		$this.resumeLiveUpdates();
+    	}
+    });
+};
+
+BxTimelineView.prototype.previousLiveUpdate = function(oLink)
+{
+	var fPrevious = function() {
+		var sClass = 'bx-popup-chain-item';
+		$(oLink).parents('.' + sClass + ':first').hide().prev('.' + sClass).show();
+	};
+
+	if(!this.pauseLiveUpdates(fPrevious));
+		fPrevious();
+};
+
+BxTimelineView.prototype.hideLiveUpdate = function(oLink)
+{
+	$(oLink).parents('.bx-popup-applied:visible:first').dolPopupHide();
+};
+
+BxTimelineView.prototype.resumeLiveUpdates = function(onLoad)
+{
+	if(!this._bLiveUpdatePaused)
+		return false;
+
+	var $this = this;
+	this.changeLiveUpdates('resume_live_update', function() {
+		$this._bLiveUpdatePaused = false;
+
+		if(typeof onLoad == 'function')
+			onLoad();
+	});
+
+	return true;
+};
+
+BxTimelineView.prototype.pauseLiveUpdates = function(onLoad)
+{
+	if(this._bLiveUpdatePaused)
+		return false;
+
+	var $this = this;
+	this.changeLiveUpdates('pause_live_update', function() {
+		$this._bLiveUpdatePaused = true;
+
+		if(typeof onLoad == 'function')
+			onLoad();
+	});
+
+	return true;
+};
+
+BxTimelineView.prototype.changeLiveUpdates = function(sAction, onLoad)
+{
+	var $this = this;
+    var oParams = this._getDefaultActions();
+    oParams['action'] = sAction;
+
+	jQuery.get(
+	    this._sActionsUrl + sAction + '/',
+	    oParams,
+	    function() {
+	    	if(typeof onLoad == 'function')
+				onLoad();
+	    }
+	);
+};
+
+BxTimelineView.prototype.blink = function(oParent)
+{
+	oParent.find('.' + this.sClassBlink + '-plate:visible').animate({
+		opacity: 0
+	}, 
+	5000, 
+	function() {
+		oParent.find('.' + this.sClassBlink).removeClass(this.sClassBlink);
+	});
+};
+
+
+/*------------------------------------*/
+/*--- Internal (protected) methods ---*/
+/*------------------------------------*/
 BxTimelineView.prototype._getPosts = function(oElement, onComplete) {
 	var $this = this;
 	var oData = this._getDefaultData(oElement);
@@ -572,6 +722,9 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
 
 	var onComplete = function() {
+		if(oData && oData.go_to != undefined)
+			location.hash = oData.go_to;
+
 		if(oData && oData.load_more != undefined)
 			oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
 
@@ -590,6 +743,7 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
 					$(this).html(sItems).show().bxTime();
 
+					$this.blink($(this));
 					$this.initFlickity();
 
 					onComplete();
@@ -606,6 +760,7 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 			        if(!$this.isMasonryEmpty())
 			        	$this.initMasonry();
 
+			        $this.blink($(this));
 			        $this.initFlickity();
 
 			        onComplete();

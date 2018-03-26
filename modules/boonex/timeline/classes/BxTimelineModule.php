@@ -25,6 +25,7 @@ define('BX_TIMELINE_VIEW_DEFAULT', BX_TIMELINE_VIEW_OUTLINE);
 define('BX_TIMELINE_FILTER_ALL', 'all');
 define('BX_TIMELINE_FILTER_OWNER', 'owner');
 define('BX_TIMELINE_FILTER_OTHER', 'other');
+define('BX_TIMELINE_FILTER_OTHER_VIEWER', 'other_viewer');
 
 define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
 define('BX_TIMELINE_PARSE_TYPE_REPOST', 'repost');
@@ -348,6 +349,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function actionGetItemBrief()
     {
         echo BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCode();
+    }
+
+    public function actionResumeLiveUpdate($sType, $iOwnerId)
+    {
+    	$sKey = $this->_oConfig->getLiveUpdateKey($sType, $iOwnerId);
+
+    	bx_import('BxDolSession');
+    	BxDolSession::getInstance()->unsetValue($sKey, $iOwnerId);
+    }
+
+	public function actionPauseLiveUpdate($sType, $iOwnerId)
+    {
+    	$sKey = $this->_oConfig->getLiveUpdateKey($sType, $iOwnerId);
+
+    	bx_import('BxDolSession');
+    	BxDolSession::getInstance()->setValue($sKey, 1);
     }
 
     function actionRss()
@@ -1358,6 +1375,47 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_live_updates get_live_updates
+     * 
+     * @code bx_srv('bx_timeline', 'get_live_updates', [...]); @endcode
+     * 
+     * Get an array with actual Live Update info.
+     *
+     * @return an array with Live Update info.
+     * 
+     * @see BxTimelineModule::serviceGetLiveUpdates
+     */
+    /** 
+     * @ref bx_timeline-get_live_updates "get_live_updates"
+     */
+    public function serviceGetLiveUpdates($sType, $iOwnerId, $iProfileId, $iCount = 0)
+    {
+		$sKey = $this->_oConfig->getLiveUpdateKey($sType, $iOwnerId);
+
+		bx_import('BxDolSession');
+    	if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
+    		return false;
+
+        $aParams = $this->_prepareParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, false, false, BX_TIMELINE_FILTER_OTHER_VIEWER);
+        $aParams['count'] = true;
+
+		$iCountNew = $this->_oDb->getEvents($aParams);
+		if($iCountNew == $iCount)
+			return false;
+
+    	return array(
+    		'count' => $iCountNew, // required
+    		'method' => $this->_oConfig->getJsObject('view') . '.showLiveUpdate(oData)', // required
+    		'data' => array(
+    			'code' => $this->_oTemplate->getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCount, $iCountNew)
+    		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+    	);
+    }
+
     /*
      * COMMON METHODS
      */
@@ -2039,7 +2097,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         //--- Event -> Delete for Alerts Engine ---//
     }
 
-    public function getParams($sView = '', $sType = '', $iOwnerId = 0, $iStart = 0, $iPerPage = 0, $sFilter = '', $aModules = array(), $iTimeline = 0)
+    public function getParams($sView = '', $sType = '', $iOwnerId = 0, $iStart = 0, $iPerPage = 0, $sFilter = BX_TIMELINE_FILTER_ALL, $aModules = array(), $iTimeline = 0)
     {
         return $this->_prepareParams($sView, $sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
     }
@@ -2328,9 +2386,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		$this->_oDb->deleteMedia($sType, $iId);
     }
 
-    protected function _prepareParams($sView, $sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline)
+    protected function _prepareParams($sView, $sType, $iOwnerId, $iStart, $iPerPage, $sFilter = BX_TIMELINE_FILTER_ALL, $aModules = array(), $iTimeline = 0, $aBlink = array())
     {
-        return array(
+         $aParams = array(
             'view' => !empty($sView) ? $sView : BX_TIMELINE_VIEW_DEFAULT,
 
             'browse' => 'list',
@@ -2339,12 +2397,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'filter' => !empty($sFilter) ? $sFilter : BX_TIMELINE_FILTER_ALL,
             'modules' => is_array($aModules) && !empty($aModules) ? $aModules : array(),
             'timeline' => (int)$iTimeline > 0 ? $iTimeline : 0,
+         	'blink' => is_array($aBlink) && !empty($aBlink) ? $aBlink : array(),
             'active' => 1,
-            'hidden' => 0,
-
-            'start' => (int)$iStart > 0 ? $iStart : 0,
-            'per_page' => (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage(),
+            'hidden' => 0
         );
+
+        if($iStart !== false)
+            $aParams['start'] = (int)$iStart > 0 ? $iStart : 0;
+
+        if($iPerPage !== false)
+            $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage();
+
+        return $aParams;
     }
 
     protected function _prepareParamsGet()
@@ -2377,6 +2441,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams['timeline'] = bx_get('timeline');
         $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline'], BX_DATA_INT) : 0;
+
+        $aParams['blink'] = bx_get('blink');
+        $aParams['blink'] = $aParams['blink'] !== false ? explode(',', bx_process_input($aParams['blink'], BX_DATA_TEXT)) : array();
 
         $aParams['active'] = 1;
         $aParams['hidden'] = 0;

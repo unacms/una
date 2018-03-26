@@ -11,6 +11,7 @@
 
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
+    protected $_sTableEvent2User;
     protected $_sTablesRepostTrack;
 
     protected $_aTablesMedia;
@@ -22,6 +23,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
+        $this->_sTableEvent2User = $this->_sPrefix . 'events2users';
         $this->_sTableRepostsTrack = $this->_sPrefix . 'reposts_track';
 
         $this->_aTablesMedia = array(
@@ -276,12 +278,28 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     protected function _getFilterAddon($iOwnerId, $sFilter)
     {
         switch($sFilter) {
+            /**
+             * Direct posts in Timeline made by a timeline owner ($iOwnerId)
+             */
             case BX_TIMELINE_FILTER_OWNER:
                 $sFilterAddon = $this->prepareAsString(" AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`=? ", $iOwnerId);
                 break;
+
+            /**
+             * Direct posts in Timeline made by users except a timeline owner ($iOwnerId)
+             */
             case BX_TIMELINE_FILTER_OTHER:
                 $sFilterAddon = $this->prepareAsString(" AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`<>? ", $iOwnerId);
                 break;
+
+			/**
+             * All (Direct and System) posts in Timeline (owned by $iOwnerId) made by users except the viewer
+             */
+            case BX_TIMELINE_FILTER_OTHER_VIEWER:
+                $sFilterAddon = $this->prepareAsString(" AND (`{$this->_sTable}`.`action`<>'' OR (`{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`<>?)) ", bx_get_logged_profile_id());
+                break;
+                
+
             case BX_TIMELINE_FILTER_ALL:
             default:
                 $sFilterAddon = "";
@@ -292,7 +310,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     protected function _getSqlPartsEvents($aParams)
     {
     	$sMethod = 'getAll';
-        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+    	$sSelectClause = "`{$this->_sTable}`.*";
+        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['browse']) {
         	case 'owner_id':
@@ -332,9 +351,14 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             	list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
         }
 
-		$sSelectClause .= "DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`, ";
+		$sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
 		if($aParams['browse'] == 'list')
 			$sOrderClause = "ORDER BY `{$this->_sTable}`.`pinned` DESC, `{$this->_sTable}`.`date` DESC";
+
+        if(isset($aParams['count']) && $aParams['count'] === true) {
+            $sMethod = 'getOne';
+            $sSelectClause = "COUNT(`{$this->_sTable}`.`id`)";
+        }
 
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }
@@ -373,7 +397,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 			$sWhereClause .= $sWhereModuleFilter;
 
         //--- Apply unpublished (date in future) filter
-        $sWhereClause = $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
+        $sWhereClause .= $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
 
 		//--- Check type
 		$sWhereSubclause = "";
