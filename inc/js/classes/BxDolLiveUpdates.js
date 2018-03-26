@@ -12,7 +12,9 @@ function BxDolLiveUpdates(oOptions)
 	this._sObjName = oOptions.sObjName == undefined ? 'oLiveUpdates' : oOptions.sObjName;
 	this._iInterval = oOptions.iInterval == undefined ? 3000 : oOptions.iInterval;
 	this._aSystemsActive = oOptions.aSystemsActive == undefined ? {} : oOptions.aSystemsActive;
+	this._aSystemsTransient = oOptions.aSystemsTransient == undefined ? {} : oOptions.aSystemsTransient;
 	this._bServerRequesting = oOptions.bServerRequesting == undefined ? false : oOptions.bServerRequesting;
+	this._sHash = oOptions.sHash == undefined ? '' : oOptions.sHash;
 
 	this._iIndex = 0;
 	this._iHandler = 0;
@@ -34,6 +36,22 @@ BxDolLiveUpdates.prototype.init = function() {
     });
 };
 
+BxDolLiveUpdates.prototype.add = function(oData) {
+	if(!oData)
+		return;
+
+	if(oData.name != undefined && oData.value != undefined) {
+		if(!this._aSystemsActive[oData.name])
+			this._aSystemsActive[oData.name] = oData.value;
+	
+		if(!this._aSystemsTransient[oData.name])
+			this._aSystemsTransient[oData.name] = 1;
+	}
+
+	if(oData.hash != undefined)
+		this._sHash = oData.hash;
+};
+
 BxDolLiveUpdates.prototype.destroy = function() {
 	if(this._iHandler)
 		clearInterval(this._iHandler);
@@ -51,8 +69,10 @@ BxDolLiveUpdates.prototype.perform = function() {
     $.post(
     	this._sActionsUrl,
         {
-    		systems_active: this._aSystemsActive,
     		index: this._iIndex,
+    		systems_active: this._aSystemsActive,
+    		systems_transient: this._aSystemsTransient,
+    		hash: this._sHash,
     		_t: oDate.getTime()
         },
         function(aData) {

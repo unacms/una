@@ -10,15 +10,30 @@
 class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 {
 	protected $_oQuery;
+
+	/*
+	 * List of all systems (active and inactive) with full description.
+	 */
     protected $_aSystems;
+
+    /*
+     * List of active systems without any additional info.
+     */
     protected $_aSystemsActive;
+
+    /*
+     * List of dynamically added transient systems without any additional info. 
+     * It depends on the page where a user is.  
+     */
+    protected $_aSystemsTransient;  
 
     protected $_iProfileId;
 
     protected $_iInterval;
 
-	protected $_iCacheTTL;  
+	protected $_oCacheObject;
 	protected $_sCacheKey;
+	protected $_iCacheTTL;
 
     protected $_sJsClass;
     protected $_sJsObject;
@@ -39,15 +54,17 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         $this->_oQuery = new BxDolLiveUpdatesQuery();
 
         $this->_iInterval = (int)$this->_oQuery->getParam('sys_live_updates_interval');
-
-        $this->_iCacheTTL = 86400;
+        
+        $this->_oCacheObject = $this->_oQuery->getDbCacheObject();
         $this->_sCacheKey = 'sys_live_updates_' . $this->_iProfileId;
+        $this->_iCacheTTL = 86400;
 
         $this->_sJsClass = 'BxDolLiveUpdates';
     	$this->_sJsObject = 'oLiveUpdates';
 
     	$this->_aSystems = $this->_getCachedSystems();
     	$this->_aSystemsActive = array_keys($this->_aSystems);
+    	$this->_aSystemsTransient = array();
     }
 
     /**
@@ -70,9 +87,17 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     {
 		$iIndex = (int)bx_get('index');
 
+		$mixedCacheKey = bx_get('hash');
+		if($mixedCacheKey !== false)
+		    $this->_sCacheKey = base64_decode(bx_process_input($mixedCacheKey));
+
 		$mixedSystemsActive = bx_get('systems_active');
 		if($mixedSystemsActive !== false)
 			$this->_aSystemsActive = array_keys($mixedSystemsActive);
+
+        $mixedSystemsTransient = bx_get('systems_transient');
+		if($mixedSystemsTransient !== false)
+			$this->_aSystemsTransient = array_keys($mixedSystemsTransient);
 
 		$this->_aSystems = $this->_getCachedSystems();
     	if(empty($this->_aSystems) || !is_array($this->_aSystems))
@@ -125,6 +150,12 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         if(!$this->_iProfileId)
             return false;
 
+        if(empty($this->_aSystemsTransient))
+            $this->_sCacheKey .= $this->_getPageId();
+
+        if(!in_array($sName, $this->_aSystemsTransient))
+    		$this->_aSystemsTransient[] = $sName;
+
     	if(!in_array($sName, $this->_aSystemsActive))
     		$this->_aSystemsActive[] = $sName;
 
@@ -140,19 +171,22 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     	}
 
     	$mixedResponce = $this->_getRequestedDataBySystem($this->_aSystems[$sName]);
-    	if($mixedResponce !== false) {
-    		$aCachedData = $this->_getCachedData();
-    		$aCachedData[$sName] = $mixedResponce['count'];
-    		$this->_updateCached('data', $aCachedData);
-    	}
 
-    	return true;
+    	$iCount = 0;
+    	if($mixedResponce !== false && isset($mixedResponce['count']))
+    	    $iCount = (int)$mixedResponce['count'];
+
+    	$aCachedData = $this->_getCachedData();
+		$aCachedData[$sName] = $iCount;
+		$this->_updateCached('data', $aCachedData);
+
+    	return $iCount;
     }
 
     protected function _getCacheInfo()
     {
     	return array(
-    		$this->_oQuery->getDbCacheObject(),
+    		$this->_oCacheObject,
     		$this->_oQuery->genDbCacheKey($this->_sCacheKey),
     		$this->_iCacheTTL
     	);
@@ -200,6 +234,13 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     	return $this->_getCached('data');
     }
 
+    protected function _clearCached()
+    {
+        list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
+
+        $oCache->delData($sCacheKey);
+    }
+
 	protected function _updateCached($sKey, $aData)
     {
     	list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
@@ -241,6 +282,15 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 			return false;
 
 		return $aResponce;
+    }
+
+    protected function _getPageId()
+    {
+        $aPageParams = array();
+        parse_str($_SERVER['QUERY_STRING'], $aPageParams);
+        $aPageParams = array_diff_assoc($aPageParams, array('start', 'per_page', 'order', 'filter'));
+
+        return '_' . md5(bx_append_url_params($_SERVER['PHP_SELF'], $aPageParams));
     }
 }
 

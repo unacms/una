@@ -255,6 +255,7 @@ function bx_loading_animate (e, aOptions) {
 
 function bx_loading_btn (oElement, bEnable) {
     var oButton = $(oElement);
+    var sClassHeight = oButton.hasClass('bx-btn-small') ? 'bx-btn-small-height' : 'bx-btn-height';
 
     if (oButton.children('div').size())
         oButton = oButton.children('div').first();
@@ -262,7 +263,7 @@ function bx_loading_btn (oElement, bEnable) {
     if(!bEnable)
     	oButton.find('.bx-loading-ajax-btn').remove();
     else if (!oButton.find('.bx-loading-ajax-btn').length)
-    	oButton.append('<b class="bx-loading-ajax-btn bx-btn-height">' + (bUseSvgLoading ? bx_loading_svg('colored', 'bx-btn-height') : '') + '</b>');
+    	oButton.append('<b class="bx-loading-ajax-btn ' + sClassHeight + '">' + (bUseSvgLoading ? bx_loading_svg('colored', sClassHeight) : '') + '</b>');
 
     if(!bUseSvgLoading)
     	bx_loading_animate(oButton.find('.bx-loading-ajax-btn'), aSpinnerSmallOpts);    

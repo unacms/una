@@ -22,6 +22,16 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
         if(!$this->_iProfileId)
             return '';
 
+		/*
+		 * Clear cache for current user.
+		 * It's needed to reset Transient live updates.
+		 */
+        //$this->_clearCached();
+
+        /*
+         * Load and cache(if it's needed) default(system) 
+         * live updates for current user.
+         */ 
         $aCached = $this->_getCachedData();
 
         $aParams = array_merge(array(
@@ -29,7 +39,9 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
         	'sObjName' => $this->_sJsObject,
         	'iInterval' => $this->_iInterval,
         	'aSystemsActive' => array_intersect_key($aCached, array_flip($this->_aSystemsActive)),
-        	'bServerRequesting' => !empty($this->_aSystems)
+            'aSystemsTransient' => array_flip($this->_aSystemsTransient),
+        	'bServerRequesting' => !empty($this->_aSystems),
+        	'sHash' => base64_encode($this->_sCacheKey),
         ), $aParams);
 
 		$sContent = "var " . $this->_sJsObject . " = new " . $this->_sJsClass . "(" . json_encode($aParams) . ");";
@@ -38,6 +50,22 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
 
 		$oTemplate->addJs(array('BxDolLiveUpdates.js'));
         return $oTemplate->_wrapInTagJsCode($sContent);
+    }
+
+    public function add($sName, $iFrequency, $sServiceCall, $bActive = true)
+    {
+        $sCacheKey = $this->_sCacheKey;
+
+        $mixedResult = parent::add($sName, $iFrequency, $sServiceCall, $bActive);
+        if($mixedResult === false)
+            return '';
+
+        $aParams = array('name' => $sName, 'value' => $mixedResult);
+        if($sCacheKey != $this->_sCacheKey)
+            $aParams['hash'] = base64_encode($this->_sCacheKey);
+
+        $sContent = "if(" . $this->_sJsObject . " != undefined) " . $this->_sJsObject . ".add(" . json_encode($aParams) . ");";
+        return BxDolTemplate::getInstance()->_wrapInTagJsCode($sContent);
     }
 }
 
