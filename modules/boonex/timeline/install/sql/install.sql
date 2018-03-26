@@ -278,7 +278,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_timeline_photos_preview', 'Resize', 'a:3:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_timeline_photos_view', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"300";s:13:"square_resize";s:1:"1";}', '0'),
 ('bx_timeline_photos_medium', 'Resize', 'a:3:{s:1:"w";s:3:"600";s:1:"h";s:3:"600";s:13:"square_resize";s:1:"1";}', '0'),
-('bx_timeline_photos_big', 'Resize', 'a:3:{s:1:"w";s:4:"1200";s:1:"h";s:4:"1200";s:13:"square_resize";s:1:"1";}', '0'),
+('bx_timeline_photos_big', 'Resize', 'a:2:{s:1:"w";s:4:"1200";s:1:"h";s:4:"1200";}', '0'),
 
 ('bx_timeline_videos_poster', 'Poster', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_timeline_videos_mp4', 'Mp4', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"mp4";}', 0),
