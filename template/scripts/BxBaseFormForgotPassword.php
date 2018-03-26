@@ -12,14 +12,51 @@ bx_import('BxTemplFormView');
 class BxFormForgotPasswordCheckerHelper extends BxDolFormCheckerHelper
 {
     /**
-     * Check if email is uniq.
+     * Check if email is exists.
      */
     function checkEmailExist ($s)
-    {
+    {        
         if (!$this->checkEmail($s))
             return false;
 
         return BxDolAccountQuery::getInstance()->getIdByEmail($s) ? true : _t('_sys_form_forgot_password_email_not_recognized');
+    }
+    
+    function checkEmailExistOrEmpty ($s)
+    {
+        if (trim($s) == '')
+            return true;
+        
+        if (!$this->checkEmail($s))
+            return false;
+
+        return BxDolAccountQuery::getInstance()->getIdByEmail($s) ? true : _t('_sys_form_forgot_password_email_not_recognized');
+    }
+	
+	/**
+     * Check if phone is exists.
+     */
+    function checkPhoneExist ($s)
+    {
+        $s = trim($s);
+        if(!preg_match("/^\+[0-9\s]*$/", $s)) {
+            return _t('_sys_form_forgot_password_phone_error_format');
+        }
+
+        return BxDolAccountQuery::getInstance()->getIdByPhone($s) ? true : _t('_sys_form_forgot_password_phone_not_recognized');
+    }
+    
+    function checkPhoneExistOrEmpty ($s)
+    {
+        if (trim($s) == '')
+            return true;
+        
+        $s = trim($s);
+        if(!preg_match("/^\+[0-9\s]*$/", $s)) {
+            return _t('_sys_form_forgot_password_phone_error_format');
+        }
+
+        return BxDolAccountQuery::getInstance()->getIdByPhone($s) ? true : _t('_sys_form_forgot_password_phone_not_recognized');
     }
 
 }

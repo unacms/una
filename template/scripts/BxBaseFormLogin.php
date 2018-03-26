@@ -7,6 +7,40 @@
  * @{
  */
 
+class BxFormLoginCheckerHelper extends BxDolFormCheckerHelper
+{
+    /**
+     * Check if key exists or wrong format
+     */
+    function checkPhoneExist($s)
+    {
+        $s = trim($s);
+        if(!preg_match("/^\+[0-9\s]*$/", $s)) {
+            return _t('_sys_form_login_input_phone_error_format');
+        }
+        $oSession = BxDolSession::getInstance();
+        $oAccount = BxDolAccount::getInstance($oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID));
+        if ($oAccount) { // user is logged in
+            $aAccountInfo = $oAccount->getInfo();
+            if ($s == $aAccountInfo['phone']) // don't check phone for uniq, if it wasn't changed
+                return true;
+        }
+        
+        return BxDolAccountQuery::getInstance()->getIdByPhone($s) ? _t('_sys_form_login_input_phone_error_not_unique') : true;       
+    }
+
+    function checkCodeExist($s)
+    {
+        $s = trim($s);
+        if($s == '') {
+            return _t('_sys_form_login_input_code_error_empty');
+        }
+       
+        $oSession = BxDolSession::getInstance();
+        return $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE) != $s ? _t('_sys_form_login_input_code_error_invalid', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2')) : true;          
+    }   
+}
+
 /**
  * Login Form.
  */
@@ -41,15 +75,20 @@ class BxBaseFormLogin extends BxTemplFormView
 
     function isValid ()
     {
-        if (!parent::isValid ())
+        $bIsValid = parent::isValid ();
+        if (! $bIsValid)
             return false;
-
+        
 		$sId = trim($this->getCleanValue('ID'));
 		$sPassword = $this->getCleanValue('Password');
-
-        $sErrorString = bx_check_password($sId, $sPassword, $this->getRole());
-        $this->_setCustomError ($sErrorString);
-        return $sErrorString ? false : true;
+        if ($sId != ''){
+            $sErrorString = bx_check_password($sId, $sPassword, $this->getRole());
+            $this->_setCustomError ($sErrorString);
+            return $sErrorString ? false : true;
+        }
+        else{
+            return $bIsValid;
+        }
     }
 
     protected function genCustomInputSubmitText ($aInput)
@@ -77,5 +116,4 @@ class BxBaseFormLogin extends BxTemplFormView
         $this->aInputs['ID']['error'] = $s;
     }
 }
-
 /** @} */

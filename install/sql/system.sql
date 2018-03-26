@@ -280,7 +280,6 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_template_cache_image_enable', '_adm_stg_cpt_option_sys_template_cache_image_enable', '', 'checkbox', '', '', '', 20),
 (@iCategoryId, 'sys_template_cache_image_max_size', '_adm_stg_cpt_option_sys_template_cache_image_max_size', '5', 'digit', '', '', '', 21),
 
-(@iCategoryId, 'sys_email_confirmation', '_adm_stg_cpt_option_sys_email_confirmation', 'on', 'checkbox', '', '', '', 30),
 (@iCategoryId, 'sys_email_attachable_email_templates', '_adm_stg_cpt_option_sys_email_attachable_email_templates', '', 'digit', '', '', '', 31),
 
 (@iCategoryId, 'sys_redirect_after_account_added', '_adm_stg_cpt_option_sys_redirect_after_account_added', 'page.php?i=account-profile-switcher&register=1', 'digit', '', '', '', 40),
@@ -465,6 +464,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_account_online_time', '_adm_stg_cpt_option_sys_account_online_time', '5', 'digit', '', 'Avail', '_adm_stg_err_option_sys_account_online_time', 1),
 (@iCategoryId, 'sys_account_autoapproval', '_adm_stg_cpt_option_sys_account_autoapproval', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_account_activation_letter', '_adm_stg_cpt_option_sys_account_activation_letter', '', 'checkbox', '', '', '', 11),
+(@iCategoryId, 'sys_account_confirmation_type', '_adm_stg_cpt_option_sys_account_confirmation_type', 'email', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:22:"get_confirmation_types";s:5:"class";s:18:"BaseServiceAccount";}', '', '', 12),
+(@iCategoryId, 'sys_account_activation_2fa_enable', '_adm_stg_cpt_option_sys_account_2fa_enable', '', 'checkbox', '', '', '', 13),
 (@iCategoryId, 'sys_account_auto_profile_creation', '_adm_stg_cpt_option_sys_account_auto_profile_creation', 'on', 'checkbox', '', '', '', 15),
 (@iCategoryId, 'sys_account_default_profile_type', '_adm_stg_cpt_option_sys_account_default_profile_type', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_profile_types";s:5:"class";s:20:"TemplServiceProfiles";}', '', '', 20),
 (@iCategoryId, 'sys_account_limit_profiles_number', '_adm_stg_cpt_option_sys_account_limit_profiles_number', '0', 'digit', '', '', '', 21);
@@ -504,6 +505,18 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_push_safari_id', '_adm_stg_cpt_option_sys_push_safari_id', '', 'digit', '', '', '', 4),
 
 (@iCategoryId, 'sys_push_queue_send_per_start', '_adm_stg_cpt_option_sys_push_queue_send_per_start', '500',  'digit', '', '', '', 10);
+
+
+--
+-- CATEGORY: Twilio gate settings
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'twilio_gate', '_adm_stg_cpt_category_twilio_gate', 0, 18);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_twilio_gate_sid', '_adm_stg_cpt_option_sys_twilio_gate_sid', '', 'digit', '', '', '', 1),
+(@iCategoryId, 'sys_twilio_gate_token', '_adm_stg_cpt_option_sys_twilio_gate_token', '', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_twilio_gate_from_number', '_adm_stg_cpt_option_sys_twilio_gate_from_number', '', 'digit', '', '', '', 3);
 
 --
 -- Table structure for table `sys_options_mixes`
@@ -877,6 +890,8 @@ CREATE TABLE `sys_accounts` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `email_confirmed` tinyint(4) NOT NULL DEFAULT '0',
+  `phone` varchar(255) NOT NULL,
+  `phone_confirmed` tinyint(4) NOT NULL DEFAULT '0',
   `receive_updates` tinyint(4) NOT NULL DEFAULT '1',
   `receive_news` tinyint(4) NOT NULL DEFAULT '1',
   `password` varchar(40) NOT NULL,
@@ -2721,10 +2736,11 @@ CREATE TABLE IF NOT EXISTS `sys_objects_form` (
 );
 
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('sys_login', 'system', '_sys_form_login', 'member.php', 'a:3:{s:2:"id";s:14:"sys-form-login";s:6:"action";s:10:"member.php";s:8:"onsubmit";s:31:"return validateLoginForm(this);";}', 'role', '', '', '', '', '', 0, 1, 'BxTemplFormLogin', ''),
+('sys_login', 'system', '_sys_form_login', 'member.php', 'a:3:{s:2:"id";s:14:"sys-form-login";s:6:"action";s:10:"member.php";s:8:"onsubmit";s:31:"return validateLoginForm(this);";}', 'a:3:{i:0;s:4:"role";i:1;s:10:"do_sendsms";i:2;s:12:"do_checkcode";}', '', '', '', '', 'a:1:{s:14:"checker_helper";s:24:"BxFormLoginCheckerHelper";}', 0, 1, 'BxTemplFormLogin', ''),
 ('sys_account', 'system', '_sys_form_account', '', '', 'do_submit', 'sys_accounts', 'id', '', '', 'a:1:{s:14:"checker_helper";s:26:"BxFormAccountCheckerHelper";}', 0, 1, 'BxTemplFormAccount', ''),
 ('sys_forgot_password', 'system', '_sys_form_forgot_password', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:33:"BxFormForgotPasswordCheckerHelper";}', 0, 1, 'BxTemplFormForgotPassword', ''),
 ('sys_confirm_email', 'system', '_sys_form_confirm_email', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxFormConfirmEmailCheckerHelper";}', 0, 1, 'BxTemplFormConfirmEmail', ''),
+('sys_confirm_phone', 'system', '_sys_form_confirm_phone', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_sendsms";}', '', '', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxFormConfirmPhoneCheckerHelper";}', 0, 1, 'BxTemplFormConfirmPhone', ''),
 ('sys_unsubscribe', 'system', '_sys_form_unsubscribe', '', '', 'do_submit', 'sys_accounts', 'id', '', '', '', 0, 1, 'BxTemplFormAccount', ''),
 ('sys_comment', 'system', '_sys_form_comment', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsForm', ''),
 ('sys_report', 'system', '_sys_form_report', 'report.php', 'a:3:{s:2:"id";s:0:"";s:4:"name";s:0:"";s:5:"class";s:17:"bx-report-do-form";}', 'submit', '', 'id', '', '', '', 0, 1, '', '');
@@ -2742,12 +2758,16 @@ CREATE TABLE IF NOT EXISTS `sys_form_displays` (
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('sys_login', 'system', 'sys_login', '_sys_form_display_login', 0),
+('sys_login_step2', 'system', 'sys_login', '_sys_form_display_login_step2', 0),
+('sys_login_step3', 'system', 'sys_login', '_sys_form_display_login_step3', 0),
 ('sys_account_create', 'system', 'sys_account', '_sys_form_display_account_create', 0),
 ('sys_account_settings_email', 'system', 'sys_account', '_sys_form_display_account_settings_email', 0),
 ('sys_account_settings_pwd', 'system', 'sys_account', '_sys_form_display_account_settings_password', 0),
 ('sys_account_settings_info', 'system', 'sys_account', '_sys_form_display_account_settings_info', 0),
 ('sys_account_settings_del_account', 'system', 'sys_account', '_sys_form_display_account_settings_delete', 0),
 ('sys_forgot_password', 'system', 'sys_forgot_password', '_sys_form_display_forgot_password', 0),
+('sys_confirm_phone_set_phone', 'system', 'sys_confirm_phone', '_sys_form_display_confirm_phone_set_phone', 0),
+('sys_confirm_phone_confirmation', 'system', 'sys_confirm_phone', '_sys_form_display_confirm_phone_confirmation', 0),
 ('sys_confirm_email', 'system', 'sys_confirm_email', '_sys_form_display_confirm_email', 0),
 ('sys_unsubscribe_updates', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_updates', 0),
 ('sys_unsubscribe_news', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_news', 0),
@@ -2794,6 +2814,10 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_login', 'system', 'rememberMe', '1', '', 0, 'switcher', '_sys_form_login_input_caption_system_remember_me', '_sys_form_login_input_remember_me', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_login', 'system', 'login', '_sys_form_login_input_submit', '', 0, 'submit', '_sys_form_login_input_caption_system_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_login', 'system', 'submit_text', '', '', 0, 'custom', '_sys_form_login_input_caption_system_submit_text', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_login', 'system', 'phone', '', '', 0, 'text', '_sys_form_login_input_caption_system_phone', '_sys_form_login_input_phone', '', 1, 0, 0, '', '', '', 'PhoneExist', '', '_sys_form_login_input_phone_error_format', 'Xss', '', 1, 0),
+('sys_login', 'system', 'code', '', '', 0, 'text', '_sys_form_login_input_caption_system_code', '_sys_form_login_input_code', '', 1, 0, 0, '', '', '', 'CodeExist', '', '_sys_form_login_input_code_error_empty', 'Xss', '', 0, 0),
+('sys_login', 'system', 'do_checkcode', '_sys_form_login_input_checkcode', '', 0, 'submit', '_sys_form_login_input_caption_system_checkcode', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_login', 'system', 'do_sendsms', '_sys_form_login_input_sendsms', '', 0, 'submit', '_sys_form_login_input_caption_system_sendsms', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_account', 'system', 'email', '', '', 0, 'text', '_sys_form_login_input_caption_system_email', '_sys_form_account_input_email', '', 1, 0, 0, '', '', '', 'EmailUniq', '', '_sys_form_account_input_email_error', 'Xss', '', 0, 0),
 ('sys_account', 'system', 'password', '', '', 0, 'password', '_sys_form_login_input_caption_system_password', '_sys_form_account_input_password', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:1024;}', '_sys_form_account_input_password_error', '', '', 0, 0),
@@ -2808,12 +2832,18 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_account', 'system', 'receive_news', '1', '', 1, 'switcher', '_sys_form_login_input_caption_system_receive_news', '_sys_form_account_input_receive_news', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('sys_account', 'system', 'agreement', '', '', 0, 'custom', '_sys_form_login_input_caption_system_agreement', '_sys_form_account_input_agreement', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 
-('sys_forgot_password', 'system', 'email', '', '', 0, 'text', '_sys_form_forgot_password_input_caption_system_email', '_sys_form_forgot_password_input_email', '', 1, 0, 0, '', '', '', 'EmailExist', '', '_sys_form_account_input_email_error', 'Xss', '', 0, 0),
+('sys_forgot_password', 'system', 'email', '', '', 0, 'text', '_sys_form_forgot_password_input_caption_system_email', '_sys_form_forgot_password_input_email', '', 1, 0, 0, '', '', '', 'EmailExistOrEmpty', '', '_sys_form_account_input_email_error', 'Xss', '', 0, 0),
+('sys_forgot_password', 'system', 'phone', '', '', 0, 'text', '_sys_form_forgot_password_input_caption_system_phone', '_sys_form_forgot_password_input_phone', '', 1, 0, 0, '', '', '', 'PhoneExistOrEmpty', '', '_sys_form_account_input_phone_error', 'Xss', '', 0, 0),
 ('sys_forgot_password', 'system', 'captcha', '', '', 0, 'captcha', '_sys_form_login_input_caption_system_captcha', '_sys_form_account_input_captcha', '', 1, 0, 0, '', '', '', 'Captcha', '', '_sys_form_account_input_captcha_error', '', '', 0, 0),
 ('sys_forgot_password', 'system', 'do_submit', '_sys_form_forgot_password_input_submit', '', 0, 'submit', '_sys_form_forgot_password_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_confirm_email', 'system', 'code', '', '', 0, 'text', '_sys_form_confirm_email_input_caption_system_code', '_sys_form_confirm_email_input_code', '', 1, 0, 0, '', '', '', 'CodeExist', '', '_sys_form_confirm_email_input_code_error', 'Xss', '', 0, 0),
 ('sys_confirm_email', 'system', 'do_submit', '_sys_form_confirm_email_input_submit', '', 0, 'submit', '_sys_form_confirm_email_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+
+('sys_confirm_phone', 'system', 'phone', '', '', 0, 'text', '_sys_form_confirm_phone_input_caption_system_phone', '_sys_form_confirm_phone_input_phone', '', 1, 0, 0, '', '', '', 'PhoneUniq', '', '_sys_form_confirm_phone_input_phone_error_format', 'Xss', '', 1, 0),
+('sys_confirm_phone', 'system', 'code', '', '', 0, 'text', '_sys_form_confirm_phone_input_caption_system_code', '_sys_form_confirm_phone_confirmation_input_code', '', 1, 0, 0, '', '', '', 'CodeExist', '', '_sys_form_confirm_phone_input_code_error_empty', 'Xss', '', 0, 0),
+('sys_confirm_phone', 'system', 'do_submit', '_sys_form_confirm_phone_input_submit', '', 0, 'submit', '_sys_form_confirm_phone_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_confirm_phone', 'system', 'do_sendsms', '_sys_form_confirm_phone_input_sendsms', '', 0, 'submit', '_sys_form_confirm_phone_input_caption_system_do_sendsms', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_unsubscribe', 'system', 'id', '', '', 0, 'hidden', '_sys_form_unsubscribe_input_caption_system_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_unsubscribe', 'system', 'code', '', '', 0, 'hidden', '_sys_form_unsubscribe_input_caption_system_code', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -2851,7 +2881,6 @@ CREATE TABLE IF NOT EXISTS `sys_form_display_inputs` (
 );
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-
 ('sys_login', 'role', 2147483647, 1, 1),
 ('sys_login', 'relocate', 2147483647, 1, 2),
 ('sys_login', 'ID', 2147483647, 1, 3),
@@ -2860,11 +2889,20 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_login', 'login', 2147483647, 1, 6),
 ('sys_login', 'submit_text', 2147483647, 1, 7),
 
+('sys_login_step2', 'phone', 2147483647, 1, 1),
+('sys_login_step2', 'do_sendsms', 2147483647, 1, 2),
+('sys_login_step2', 'relocate', 2147483647, 1, 3),
+
+('sys_login_step3', 'code', 2147483647, 1, 1),
+('sys_login_step3', 'do_checkcode', 2147483647, 1, 2),
+('sys_login_step3', 'relocate', 2147483647, 1, 3),
+
 ('sys_account_create', 'name', 2147483647, 1, 1),
 ('sys_account_create', 'email', 2147483647, 1, 2),
 ('sys_account_create', 'password', 2147483647, 1, 3),
-('sys_account_create', 'receive_news', 2147483647, 1, 4),
-('sys_account_create', 'do_submit', 2147483647, 1, 5),
+('sys_account_create', 'phone', 2147483647, 1, 4),
+('sys_account_create', 'receive_news', 2147483647, 1, 5),
+('sys_account_create', 'do_submit', 2147483647, 1, 6),
 ('sys_account_create', 'agreement', 2147483647, 1, 7),
 
 ('sys_account_settings_email', 'email', 2147483647, 1, 1),
@@ -2887,11 +2925,18 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_account_settings_info', 'do_submit', 2147483647, 1, 2),
 
 ('sys_forgot_password', 'email', 2147483647, 1, 1),
-('sys_forgot_password', 'captcha', 2147483647, 1, 2),
-('sys_forgot_password', 'do_submit', 2147483647, 1, 3),
+('sys_forgot_password', 'phone', 2147483647, 1, 2),
+('sys_forgot_password', 'captcha', 2147483647, 1, 3),
+('sys_forgot_password', 'do_submit', 2147483647, 1, 4),
 
 ('sys_confirm_email', 'code', 2147483647, 1, 1),
 ('sys_confirm_email', 'do_submit', 2147483647, 1, 2),
+
+('sys_confirm_phone_set_phone', 'phone', 2147483647, 1, 1),
+('sys_confirm_phone_set_phone', 'do_sendsms', 2147483647, 1, 2),
+
+('sys_confirm_phone_confirmation', 'code', 2147483647, 1, 1),
+('sys_confirm_phone_confirmation', 'do_submit', 2147483647, 1, 2),
 
 ('sys_unsubscribe_updates', 'id', 2147483647, 1, 1),
 ('sys_unsubscribe_updates', 'code', 2147483647, 1, 2),
@@ -3970,8 +4015,11 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_dashboard', 'dashboard', '_sys_page_title_system_dashboard', '_sys_page_title_dashboard', 'system', 12, 2147483646, 1, 'page.php?i=dashboard', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', ''),
 ('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 5, 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', ''),
 ('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 5, 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', ''),
+('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 5, 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', ''),
+('sys_login_step3', 'login-step3', '_sys_page_title_system_login_step3', '_sys_page_title_login_step3', 'system', 5, 2147483647, 1, 'page.php?i=login-step3', '', '', '', 0, 1, 0, '', ''),
 ('sys_forgot_password', 'forgot-password', '_sys_page_title_system_forgot_password', '_sys_page_title_forgot_password', 'system', 5, 2147483647, 1, 'page.php?i=forgot-password', '', '', '', 0, 1, 0, '', ''),
 ('sys_confirm_email', 'confirm-email', '_sys_page_title_system_confirm_email', '_sys_page_title_confirm_email', 'system', 5, 2147483647, 1, 'page.php?i=confirm-email', '', '', '', 0, 1, 0, '', ''),
+('sys_confirm_phone', 'confirm-phone', '_sys_page_title_system_confirm_phone', '_sys_page_title_confirm_phone', 'system', 5, 2147483647, 1, 'page.php?i=confirm-phone', '', '', '', 0, 1, 0, '', ''),
 ('sys_account_settings_email', 'account-settings-email', '_sys_page_title_system_account_settings_email', '_sys_page_title_account_settings_email', 'system', 5, 2147483647, 1, 'member.php', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
 ('sys_account_settings_pwd', 'account-settings-password', '_sys_page_title_system_account_settings_pwd', '_sys_page_title_account_settings_pwd', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-pwd', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
 ('sys_account_settings_info', 'account-settings-info', '_sys_page_title_system_account_settings_info', '_sys_page_title_account_settings_info', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-info', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
@@ -4088,9 +4136,15 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 ('sys_login', 0, 'system', '_sys_page_block_system_title_login_only', '_sys_page_block_title_login', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:15:\"login_form_only\";s:5:\"class\";s:17:\"TemplServiceLogin\";}', 0, 1, 1, 0),
 
+('sys_login_step2', 1, 'system', '_sys_page_block_system_title_login_step2', '_sys_page_block_title_login_step2', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:16:\"login_form_step2\";s:5:\"class\";s:17:\"TemplServiceLogin\";}', 0, 1, 1, 1),
+
+('sys_login_step3', 1, 'system', '_sys_page_block_system_title_login_step3', '_sys_page_block_title_login_step3', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:16:\"login_form_step3\";s:5:\"class\";s:17:\"TemplServiceLogin\";}', 0, 1, 1, 1),
+
 ('sys_forgot_password', 1, 'system', '', '_sys_page_block_title_forgot_password', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"forgot_password";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1, 1),
 
 ('sys_confirm_email', 1, 'system', '', '_sys_page_block_title_confirm_email', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"email_confirmation";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1, 1),
+
+('sys_confirm_phone', 1, 'system', '', '_sys_page_block_title_confirm_phone', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"phone_confirmation";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1, 1),
 
 ('sys_account_settings_email', 1, 'system', '', '_sys_page_block_title_account_settings_email', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:22:"account_settings_email";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1, 1),
 

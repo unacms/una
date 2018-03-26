@@ -254,6 +254,15 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     protected function _getCellLogged($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+    }    
+    
+    protected function _getCellIsConfirmed($mixedValue, $sKey, $aField, $aRow)
+    {
+        $oAccount = BxDolAccount::getInstance($aRow['id']);
+        $s = "";
+        if ($oAccount)
+            $s = $oAccount->ConfirmationStatus();
+        return parent::_getCellDefault(_t('_bx_accnt_grid_confirmation_status_' . $s), $sKey, $aField, $aRow);
     }
 
     protected function _isCheckboxDisabled($aRow)

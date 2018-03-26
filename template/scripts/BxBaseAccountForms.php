@@ -126,7 +126,7 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         // if email_confirmation procedure is enabled - send email confirmation letter
         $oAccount = BxDolAccount::getInstance($iAccountId);
-        if (getParam('sys_email_confirmation') && $oAccount && !$oAccount->isConfirmed())
+        if (BxDolAccount::isNeedConfirmEmail() && $oAccount && !$oAccount->isConfirmedEmail())
             $oAccount->sendConfirmationEmail($iAccountId);
 
         // add account and content association

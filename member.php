@@ -29,23 +29,32 @@ if (isset($_POST['ID'])) { // login form is submitted
         echo $bLoginSuccess ? 'OK' : $oForm->getLoginError();
         exit;
 
-    } elseif ($bLoginSuccess) {
-    	$sId = trim($oForm->getCleanValue('ID'));
+    } 
+    elseif ($bLoginSuccess) {
+        if (getParam('sys_account_activation_2fa_enable') == 'on'){
+            $oSession = BxDolSession::getInstance();
+            $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID, trim($oForm->getCleanValue('ID')));
+            $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_IS_REMEMBER, ($oForm->getCleanValue('rememberMe') ? true : false));
+            header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2'));
+        }
+        else{
+    	    $sId = trim($oForm->getCleanValue('ID'));
 
-        $oAccount = BxDolAccount::getInstance($sId);
-        $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
+            $oAccount = BxDolAccount::getInstance($sId);
+            $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
 
-        $sUrlRelocate = $oForm->getCleanValue('relocate');
-        if (!$sUrlRelocate || 0 !== strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
-            $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';
+            $sUrlRelocate = $oForm->getCleanValue('relocate');
+            if (!$sUrlRelocate || 0 !== strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
+                $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';
 
-        BxDolTemplate::getInstance()->setPageNameIndex (BX_PAGE_TRANSITION);
-        BxDolTemplate::getInstance()->setPageHeader (_t('_Please Wait'));
-        BxDolTemplate::getInstance()->setPageContent ('page_main_code', MsgBox(_t('_Please Wait')));
-        BxDolTemplate::getInstance()->setPageContent ('url_relocate', bx_html_attribute($sUrlRelocate, BX_ESCAPE_STR_QUOTE));
+            BxDolTemplate::getInstance()->setPageNameIndex (BX_PAGE_TRANSITION);
+            BxDolTemplate::getInstance()->setPageHeader (_t('_Please Wait'));
+            BxDolTemplate::getInstance()->setPageContent ('page_main_code', MsgBox(_t('_Please Wait')));
+            BxDolTemplate::getInstance()->setPageContent ('url_relocate', bx_html_attribute($sUrlRelocate, BX_ESCAPE_STR_QUOTE));
 
-        BxDolTemplate::getInstance()->getPageCode();
+            BxDolTemplate::getInstance()->getPageCode();
         exit;
+        }
     }
 
 }

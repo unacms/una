@@ -86,11 +86,75 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function isConfirmed($iAccountId = false)
     {
-        if (!getParam('sys_email_confirmation')) // if email_confirmation procedure is disabled, always return true
+        $sConfirmationType = getParam('sys_account_confirmation_type');
+        if ($sConfirmationType == BX_ACCOUNT_CONFIRMATION_NONE) 
+            return true;
+        
+        $a = $this->getInfo((int)$iAccountId);
+        
+        switch ($sConfirmationType) {
+            case BX_ACCOUNT_CONFIRMATION_EMAIL:
+                if ($a['email_confirmed'])
+                    return true;
+                break;
+            case BX_ACCOUNT_CONFIRMATION_PHONE:
+                if ($a['phone_confirmed'])
+                    return true;
+                break;
+            case BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE:
+                if ($a['email_confirmed'] && $a['phone_confirmed'])
+                    return true;
+                break;
+        }
+        return false;
+    }
+    
+    public function ConfirmationStatus($iAccountId = false)
+    {
+        $a = $this->getInfo((int)$iAccountId);
+        $sTmp = $a['email_confirmed'] . $a['phone_confirmed'];
+        switch ($sTmp) {
+            case '01':
+                return BX_ACCOUNT_CONFIRMATION_PHONE;
+            case '10':
+                return BX_ACCOUNT_CONFIRMATION_EMAIL;
+            case '11':
+                return BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE;
+        }
+        return BX_ACCOUNT_CONFIRMATION_NONE;
+    }
+    
+    public function isConfirmedEmail($iAccountId = false)
+    {
+        if (!self::isNeedConfirmEmail())
             return true;
         $a = $this->getInfo((int)$iAccountId);
         return $a['email_confirmed'] ? true : false;
     }
+    
+    public function isConfirmedPhone($iAccountId = false)
+    {
+        if (!self::isNeedConfirmPhone())
+            return true;
+        $a = $this->getInfo((int)$iAccountId);
+        return $a['phone_confirmed'] ? true : false;
+    }
+    
+    static public function isNeedConfirmEmail()
+    {
+        if (getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL || getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE) 
+            return true;
+        return false;
+    }
+    
+    static public function isNeedConfirmPhone()
+    {
+        if (getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_PHONE || getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE) 
+            return true;
+        return false;
+    }
+    
+    //
 
     /**
      * Set account email to confirmed or unconfirmed
@@ -102,17 +166,50 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     {
         $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
 
-        if (!$isConfirmed && $isAutoSendConfrmationEmail && getParam('sys_email_confirmation')) // if email_confirmation procedure is enabled - send email confirmation letter
+        if (!$isConfirmed && $isAutoSendConfrmationEmail && self::isNeedConfirmEmail()) // if email_confirmation procedure is enabled - send email confirmation letter
             $this->sendConfirmationEmail($iId);
 
         if ($this->_oQuery->updateEmailConfirmed($isConfirmed, $iId)) {
             $this->_aInfo = false;
-            bx_alert('account', $isConfirmed ? 'confirm' : 'unconfirm', $iId);
+            bx_alert('account', $this->isConfirmed() ? 'confirm' : 'unconfirm', $iId);
             return true;
         }
         return false;
     }
-
+    
+    /**
+     * Set account phone to confirmed or unconfirmed
+     * @param  int  $isConfirmed - false: mark phone as unconfirmed, true: as confirmed
+     * @param  int  $iAccountId  - optional account id
+     * @return true on success or false on error
+     */
+    public function updatePhoneConfirmed($isConfirmed, $iAccountId = false)
+    {
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        
+        if ($this->_oQuery->updatePhoneConfirmed($isConfirmed, $iId)) {
+            $this->_aInfo = false;
+            bx_alert('account', $this->isConfirmed() ? 'confirm' : 'unconfirm', $iId);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Set account phone
+     * @param  string  $sPhone - phone number
+     * @param  int  $iAccountId  - optional account id
+     * @return true on success or false on error
+     */
+    public function updatePhone($sPhone, $iAccountId = false)
+    {
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        if ($this->_oQuery->updatePhone($sPhone, $iId)) {
+            bx_alert('account', 'set_phone', $iId);
+            return true;
+        }
+        return false;
+    }
     /**
      * Switch context automatically to the first available profile
      * @param $iProfileIdFilterOut profile ID to exclude from the list of possible profiles
@@ -399,10 +496,15 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function addInformerPermanentMessages ($oInformer)
     {
-        if (!$this->isConfirmed()) {
+        if (!$this->isConfirmedEmail()) {
             $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&resend=1';
             $aAccountInfo = $this->getInfo();
-            $oInformer->add('sys-account-unconfirmed', _t('_sys_txt_account_unconfirmed', $sUrl, $aAccountInfo['email']), BX_INFORMER_ALERT);
+            $oInformer->add('sys-account-unconfirmed-email', _t('_sys_txt_account_unconfirmed_email', $sUrl, $aAccountInfo['email']), BX_INFORMER_ALERT);
+        }
+		if (!$this->isConfirmedPhone()) {
+            $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone') . '';
+            $aAccountInfo = $this->getInfo();
+            $oInformer->add('sys-account-unconfirmed-phone', _t('_sys_txt_account_unconfirmed_phone', $sUrl), BX_INFORMER_ALERT);
         }
     }
 
