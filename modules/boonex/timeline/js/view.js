@@ -245,8 +245,12 @@ BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams) {
 	$(".bx-popup-full-screen.bx-popup-applied:visible").dolPopupHide();
 
 	$(window).dolPopupAjax({
-		id: {value: this._aHtmlIds['item_popup_' + sView] + iId, force: true},
+		id: {
+			value: this._aHtmlIds['item_popup_' + sView] + iId, 
+			force: true
+		},
 		url: bx_append_url_params(this._sActionsUrl + 'get_item_brief', oData),
+		closeOnOuterClick: false,
 		removeOnClose: true,
 		fullScreen: true
 	});
