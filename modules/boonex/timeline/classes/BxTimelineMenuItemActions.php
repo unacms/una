@@ -19,6 +19,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected $_iEvent;
     protected $_aEvent;
 
+    protected $_sView;
     protected $_bShowTitles;
 
     public function __construct($aObject, $oTemplate = false)
@@ -36,10 +37,12 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
     public function setView($sView)
     {
+        $this->_sView = $sView;
+
         $this->addMarkers(array(
-            'view' => $sView
+            'view' => $this->_sView
         ));
-    }   
+    }
 
     public function setEvent($aEvent)
     {
@@ -96,6 +99,18 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             $aViewsParams['show_do_view_label'] = true;
 
     	return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline($aViewsParams);
+    }
+
+    protected function _getMenuItemItemComment($aItem)
+    {
+        if($this->_sView == BX_TIMELINE_VIEW_ITEM)
+            return false;
+
+        $aItem = BxTemplMenu::_getMenuItem($aItem);
+		if($aItem === false)
+			return false;
+
+        return $this->_getMenuItemDefault($aItem);
     }
 
     protected function _getMenuItemItemVote($aItem)

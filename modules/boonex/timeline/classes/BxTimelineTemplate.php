@@ -891,10 +891,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $sClassOwner = $bTmplVarsOwnerActions ? $sStylePrefix . '-io-with-actions' : '';
-        $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
+        $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
-        $sClass = $bBrowseItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer';
+        $sClass = $bViewItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer';
         if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
 			$sClass .= ' ' . $sStylePrefix . '-blink';
 			
@@ -907,7 +907,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
             'class' => $sClass,
             'class_owner' => $sClassOwner,
-        	'class_content' => $bBrowseItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
+        	'class_content' => $bViewItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
             'id' => $aEvent['id'],
             'bx_if:show_note' => array(
                 'condition' => !empty($aTmplVarsNote),
@@ -957,7 +957,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($aTmplVarsMenuItemActions),
                 'content' => $aTmplVarsMenuItemActions
             ),
-            'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
+            'comments' => '',
         );
 
         $sVariable = '_sTmplContentItem' . bx_gen_method_name($aBrowseParams['view']);
@@ -1056,7 +1056,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('view');
 
-        $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
+        $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
 
         //--- Process Raw ---//
         $sRaw = isset($aContent['raw']) ? $aContent['raw'] : '';
@@ -1151,7 +1151,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sImageSrcKeyDefault = 'src';
             if(count($aContent['images']) == 1) {
                 $sImagesDisplay = 'single';
-                $sImageSrcKey = $bBrowseItem ? 'src_orig' : 'src_medium';
+                $sImageSrcKey = $bViewItem ? 'src_orig' : 'src_medium';
             }
             else {
                 $sImagesDisplay = 'gallery';
@@ -1170,7 +1170,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aAttrs = array();
                 if(isset($aImage['onclick']))
                     $aAttrs['onclick'] = $aImage['onclick'];
-                else if(!$bBrowseItem && !empty($aImage['src_orig']))
+                else if(!$bViewItem && !empty($aImage['src_orig']))
                     $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aImage['src_orig']))) . ')'; 
 
                 $sImage = $this->parseLink(isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
@@ -1182,7 +1182,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
 
             //--- Add Meta Image when Item is viewed on a separate page ---//
-            if($bBrowseItem && !empty($aContent['images'][0]['src']))
+            if($bViewItem && !empty($aContent['images'][0]['src']))
                 BxDolTemplate::getInstance()->addPageMetaImage($aContent['images'][0]['src']);
         }
 
