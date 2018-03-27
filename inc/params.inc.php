@@ -76,6 +76,15 @@ define('BX_PROFILE_STATUS_SUSPENDED', 'suspended'); ///< profile status - suspen
 define('BX_PROFILE_STATUS_ACTIVE', 'active'); ///< profile status - active, profile is active on the site
 define('BX_PROFILE_STATUS_PENDING', 'pending'); ///< profile status - pending, default method of approving is manual approving
 
+//--- Account settings ---//
+define('BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID', '2FA_LOGIN_ACCOUNT_ID');
+define('BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_IS_REMEMBER', '2FA_LOGIN_IS_REMEMBER');
+define('BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE', 'PHONE_ACTIVATEION_CODE');
+define('BX_ACCOUNT_CONFIRMATION_NONE', 'none');
+define('BX_ACCOUNT_CONFIRMATION_EMAIL', 'email');
+define('BX_ACCOUNT_CONFIRMATION_PHONE', 'phone');
+define('BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE', 'email_and_phone');
+
 //--- Include files needed for basic functionality ---//
 require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDol.php');
 require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');

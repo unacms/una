@@ -104,7 +104,75 @@ class BxBaseServiceLogin extends BxDol
         return $sCustomHtmlBefore . $sAuth . $sFormCode . $sCustomHtmlAfter . $sJoinText;
 
     }
+    
+    public function serviceLoginFormStep2 ()
+    {
+        if(isLogged())
+            return false;
 
+        $oSession = BxDolSession::getInstance();
+        $iAccountId = $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID);
+        if ($iAccountId == '')
+            return false;
+
+        $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login_step2');
+        $oForm->aFormAttrs['action'] = '';
+        
+        $oAccount = BxDolAccount::getInstance($iAccountId);
+        $a = $oAccount->getInfo($iAccountId);
+        $sPhoneNumber = trim($a['phone']);
+            
+        $oForm->initChecker(array('phone' => $sPhoneNumber));
+        if ($oForm->isSubmittedAndValid()) {
+            $sNewPhoneNumber = trim($oForm->getCleanValue('phone'));
+            if ($sPhoneNumber != $sNewPhoneNumber)
+                $oAccount->updatePhone($sNewPhoneNumber);
+            $sActivationCode = rand(1000, 9999);
+            $sActivationText =_t('_sys_txt_login_2fa_sms_text', $sActivationCode);
+            $ret = null;
+            bx_alert('account', 'before_2fa_send_sms', $oAccount->id(), false, array('phone_number' => $sPhoneNumber, 'sms_text' => $sActivationText, 'override_result' => &$ret));
+            if ($ret === null) 
+            {
+                $oTwilio = BxDolTwilio::getInstance();
+                if(!$oTwilio->SendSms($sPhoneNumber,  $sActivationText)){
+                    return MsgBox(_t('_sys_txt_login_2fa_sms_error_occured'));
+                }
+            }
+            $oSession = BxDolSession::getInstance();
+            $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE, $sActivationCode);
+            header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step3'));
+        }
+        return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_login_2fa_description") . '</div>' .$oForm->getCode();
+    }
+    
+    public function serviceLoginFormStep3 ()
+    {
+        if(isLogged())
+            return false;
+        $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login_step3');
+        $oForm->aFormAttrs['action'] = '';
+        $oForm->initChecker();
+        
+        if ($oForm->isSubmittedAndValid()) {
+            $oSession = BxDolSession::getInstance();
+            $oSession->unsetValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE);
+            $iAccountId = $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID);
+            $oAccount = BxDolAccount::getInstance($iAccountId);
+            $aAccount = bx_login($oAccount->id(), $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_IS_REMEMBER));
+           
+            $sUrlRelocate = $oForm->getCleanValue('relocate');
+            if (!$sUrlRelocate || 0 !== strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
+                $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';
+            
+            BxDolTemplate::getInstance()->setPageNameIndex (BX_PAGE_TRANSITION);
+            BxDolTemplate::getInstance()->setPageHeader (_t('_Please Wait'));
+            BxDolTemplate::getInstance()->setPageContent ('page_main_code', MsgBox(_t('_Please Wait')));
+            BxDolTemplate::getInstance()->setPageContent ('url_relocate', bx_html_attribute($sUrlRelocate, BX_ESCAPE_STR_QUOTE));
+            
+            header('Location: ' . $sUrlRelocate);
+        } 
+        return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_login_2fa_description2") . '</div>' .$oForm->getCode();
+    }
 }
 
 /** @} */

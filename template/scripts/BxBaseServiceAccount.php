@@ -10,6 +10,7 @@
 /**
  * System service for creating system profile functionality.
  */
+
 class BxBaseServiceAccount extends BxDol
 {
     protected $_oAccountForms;
@@ -96,6 +97,19 @@ class BxBaseServiceAccount extends BxDol
     {
         return $this->_unsubscribeForm('sys_unsubscribe_updates');
     }
+    
+    /**
+     * Display confirmation statuses list
+     */
+    public function serviceGetConfirmationTypes()
+    {
+        $aResult = array();
+        $aChoices = array(BX_ACCOUNT_CONFIRMATION_NONE, BX_ACCOUNT_CONFIRMATION_EMAIL, BX_ACCOUNT_CONFIRMATION_PHONE, BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE);
+        foreach($aChoices as $sChoice)
+            $aResult[$sChoice] = _t('_sys_acc_confirmation_type_' . $sChoice);
+        
+        return $aResult;
+    }
 
     protected function _unsubscribeForm($sDisplay)
     {
@@ -140,13 +154,13 @@ class BxBaseServiceAccount extends BxDol
         // if user is logged in and email is confirmed then just display a message
         if (isLogged()) {
             $oAccount = BxDolAccount::getInstance();
-            if ($oAccount->isConfirmed())
+            if ($oAccount->isConfirmedEmail())
                 return MsgBox(_t("_sys_txt_confirm_email_already_confirmed"));
         }
 
         // if confirmation code is provided in the URL - perform email confirmation right away
-        if (!empty($_GET['code']))
-            return $this->confirmEmail(bx_process_input($_GET['code']));
+        if (bx_get('code') !== false)
+            return $this->confirmEmail(bx_process_input(bx_get('code')));
 
         // if user requested to resend verification letter then send letter and display message
         if (bx_process_input(bx_get('resend')) && isLogged()) {
@@ -177,6 +191,73 @@ class BxBaseServiceAccount extends BxDol
         }
 
         return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_confirm_email_desc") . '</div>' . $oForm->getCode();
+    }
+    
+    /**
+     * Display phone confirmation forms, if confirmation code is provided then try to confirm profile
+     */
+    public function servicePhoneConfirmation($sMsg = false)
+    {
+        // if user is logged in and phone is confirmed then just display a message
+        if (isLogged()) {
+            $oAccount = BxDolAccount::getInstance();
+            if ($oAccount->isConfirmedPhone())
+                return MsgBox(_t("_sys_txt_confirm_phone_already_confirmed"));
+            
+            $iStep = 1;
+            $a = $oAccount->getInfo();
+            $sPhoneNumber = $a['phone'];
+            
+            $oSession = BxDolSession::getInstance();           
+            if ($sPhoneNumber != "" && $oSession->isValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE)){
+                 $iStep = 2;
+            }
+        
+            if (bx_get('step'))
+                $iStep = (int)bx_get('step');
+        
+            // show and process phone set form
+            if ($iStep == 1){
+                $oForm = BxDolForm::getObjectInstance('sys_confirm_phone', 'sys_confirm_phone_set_phone');
+                if (!$oForm)
+                    return MsgBox(_t("_sys_txt_confirm_phone_set_phone_error_occured"));
+            
+                $oForm->initChecker(array('phone' => $sPhoneNumber));
+                if ($oForm->isSubmittedAndValid()) {
+                    $oAccount->updatePhone(trim($oForm->getCleanValue('phone')));
+                    $sActivationCode = rand(1000, 9999);
+                    $sActivationText =_t('_sys_txt_confirm_phone_sms_text', $sActivationCode);
+                    $ret = null;
+                    bx_alert('account', 'before_confirm_phone_send_sms', $oAccount->id(), bx_get_logged_profile_id(), array('phone_number' => $sPhoneNumber, 'sms_text' => $sActivationText, 'override_result' => &$ret));
+                    if ($ret === null) 
+                    {
+                        $oTwilio = BxDolTwilio::getInstance();
+                        if(!$oTwilio->SendSms($sPhoneNumber,  $sActivationText)){
+                            return MsgBox(_t("_sys_txt_confirm_phone_send_sms_error_occured"));
+                        }
+                    }
+
+                    $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE, $sActivationCode);
+                    header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-phone'));
+                } 
+                return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_confirm_phone_set_phone_desc_set_phone") . '</div>' .$oForm->getCode();
+            }
+        
+            if ($iStep == 2){
+                $oForm = BxDolForm::getObjectInstance('sys_confirm_phone', 'sys_confirm_phone_confirmation');
+                if (!$oForm)
+                    return MsgBox(_t("_sys_txt_confirm_phone_set_phone_confirmation_occured"));
+            
+                $oForm->initChecker();
+            
+                if ($oForm->isSubmittedAndValid()) {
+                    $oAccount->updatePhoneConfirmed(true);
+                    $oSession->unsetValue(BX_ACCOUNT_SESSION_KEY_FOR_PHONE_ACTIVATEION_CODE);
+                    return MsgBox(_t("_sys_txt_confirm_phone_confirm_success"));
+                } 
+                return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_confirm_phone_set_phone_desc_phone_confirmation") . '</div>' .$oForm->getCode();
+            }
+        }
     }
 
     /**
@@ -236,42 +317,87 @@ class BxBaseServiceAccount extends BxDol
         if (!$oForm)
             return '';
 
+        $bNeedCheckEmailAndPhone = true;
+        $sCaptionKey = "_sys_txt_forgot_pasword_by_both_desc";
+        if (BxDolAccount::isNeedConfirmPhone()){
+            if (!BxDolAccount::isNeedConfirmEmail()){
+                unset($oForm->aInputs['email']);
+                $sCaptionKey = "_sys_txt_forgot_pasword_by_phone_desc";
+                $oForm->aInputs['phone']['checker']['func'] = 'PhoneExist';
+                $bNeedCheckEmailAndPhone = false;
+            }
+        }
+        else{
+            if (BxDolAccount::isNeedConfirmEmail()){
+                unset($oForm->aInputs['phone']);
+                $sCaptionKey = "_sys_txt_forgot_pasword_desc";
+                $oForm->aInputs['email']['checker']['func'] = 'EmailExist';
+                $bNeedCheckEmailAndPhone = false;
+            }
+        }
+        
         $oForm->initChecker();
 
-        if ( $oForm->isSubmittedAndValid() ) {
-
+        $bShowErrorEmptyBoth = false;
+        if ($oForm->isSubmitted() && $bNeedCheckEmailAndPhone && $oForm->getCleanValue('phone') == '' && $oForm->getCleanValue('email') == ''){
+            $bShowErrorEmptyBoth = true;
+            $oForm->setValid(false);
+        }
+        
+        if ($oForm->isSubmittedAndValid()) {
             $oKey = BxDolKey::getInstance();
             if (!$oKey) {
-
                 $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_error_occured"));
-
-            } else {
-
+            } 
+            else {
                 $sEmail = $oForm->getCleanValue('email');
-                $iAccountId = $this->_oAccountQuery->getIdByEmail($sEmail);
+                $sPhone = $oForm->getCleanValue('phone');
+                
+                if (isset($oForm->aInputs['email']) &&  $sEmail != '')
+                {
+                    $iAccountId = $this->_oAccountQuery->getIdByEmail($sEmail);
 
-                $aPlus['key'] = $oKey->getNewKey(array('email' => $sEmail));
-                $aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password') . '&key=' . $aPlus['key'];
+                    $aPlus['key'] = $oKey->getNewKey(array('email' => $sEmail));
+                    $aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $aPlus['key']));
 
-                $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_Forgot', $aPlus, $iAccountId);
+                    $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_Forgot', $aPlus, $iAccountId);
 
-                if ($aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
-                    $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_email"));
-                else
-                    $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_email_send_failed"));
+                    if ($aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
+                        $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_email"));
+                    else
+                        $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_email_send_failed"));
 
-                $sForm = '';
+                    $sForm = '';
+                }
+                
+                if (isset($oForm->aInputs['phone']) &&  $sPhone != ''){   
+                    $iAccountId = $this->_oAccountQuery->getIdByPhone($sPhone);
+                    $aAccountInfo = $this->_oAccountQuery->getInfoById($iAccountId);
+                    
+                    $aPlus['key'] = $oKey->getNewKey(array('email' => $aAccountInfo['email']));
+                    $aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $aPlus['key']));
 
+                    $sSmsText = _t('_sys_txt_forgot_pasword_sms_text', $aPlus['forgot_password_url']);
+                    
+                    $ret = null;
+                    bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => $sPhone, 'sms_text' => $sSmsText, 'override_result' => &$ret));
+                    if ($ret === null) 
+                    {
+                        $oTwilio = BxDolTwilio::getInstance();
+                        if($oTwilio->SendSms($sPhone,  $sSmsText))
+                            $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_phone"));
+                        else
+                            $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_error_occured"));
+                    }
+                    $sForm = '';
+                }
             }
-
-        } else {
-
-            $sResultMsg = _t("_sys_txt_forgot_pasword_desc");
+        } 
+        else {
+            $sResultMsg = _t($sCaptionKey);
             $sForm = $oForm->getCode();
-
         }
-
-        return '<div class="bx-def-padding-sec-bottom">' . $sResultMsg . '</div>' . $sForm;
+        return '<div class="bx-def-padding-sec-bottom">' . $sResultMsg . '</div>' . $sForm . ($bShowErrorEmptyBoth ? '<div class="bx-form-warn">' . _t("_sys_form_forgot_password_phone_and_email_empty_error") . '</div>' : '');
     }
 
     /**

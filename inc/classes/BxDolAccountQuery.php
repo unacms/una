@@ -77,6 +77,14 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     {
         return (int)$this->_getFieldByField('id', 'email', $sEmail);
     }
+    
+    /**
+     * get account id by phone
+     */
+    public function getIdByPhone($sPhone)
+    {
+        return (int)$this->_getFieldByField('id', 'phone', $sPhone);
+    }
 
     /**
      * get account id by id
@@ -197,6 +205,29 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     public function updateEmailConfirmed($isConfirmed, $iID)
     {
         return $this->_updateField ($iID, 'email_confirmed', $isConfirmed ? 1 : 0);
+    }
+    
+    /**
+     * Update 'phone_confirmed' field.
+     * @param  int    $isConfirmed - 0: mark phone as unconfirmed, 1: as confirmed
+     * @param  int    $iID         - account id
+     * @return number of affected rows
+     */
+    public function updatePhoneConfirmed($isConfirmed, $iID)
+    {
+        return $this->_updateField ($iID, 'phone_confirmed', $isConfirmed ? 1 : 0);
+    }
+    
+    /**
+     * Update 'phone' field.
+     * @param  int    $sPhone - phone number
+     * @param  int    $iID         - account id
+     * @return number of affected rows
+     */
+    public function updatePhone($sPhone, $iID)
+    {
+        $sSql = $this->prepare("UPDATE `sys_accounts` SET `phone` = ?, `phone_confirmed` = 0 WHERE `id` = ? LIMIT 1", $sPhone, $iID);
+        return $this->query($sSql);
     }
 
     /**
