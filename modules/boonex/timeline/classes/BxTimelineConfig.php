@@ -59,6 +59,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'FIELD_LOCATION_PREFIX' => 'location',
 
             // page URIs
+            'URI_VIEW_LIST' => 'timeline-view',
+            'URI_VIEW_ENTRY' => 'item',
+
         	'URL_HOME' => 'page.php?i=timeline-view-home',
 
         	// objects
@@ -297,17 +300,23 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getViewUrl($iOwnerId)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view&id=' . $iOwnerId);
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+        	'i' => $this->CNF['URI_VIEW_LIST'], 
+        	'id' => $iOwnerId
+        ));
     }
 
     public function getHomeViewUrl()
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view-home');
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
     }
 
     public function getItemViewUrl(&$aEvent)
     {
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-item&id=' . $aEvent['id']);
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+        	'i' => $this->CNF['URI_VIEW_ENTRY'], 
+        	'id' => $aEvent['id']
+        ));
     }
 
     public function getLiveUpdateKey($sType, $iOwnerId)
