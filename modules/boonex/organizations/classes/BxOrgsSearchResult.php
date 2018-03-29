@@ -62,7 +62,7 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                     'Title' => 'org_name',
                     'DateTimeUTS' => 'added',
                     'Desc' => 'org_name',
-                    'Picture' => 'picture',
+                    'Image' => 'picture',
                 ),
             ),
             'ident' => 'id'

@@ -33,6 +33,28 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
             $this->bRecommendedView=true;
     }
 
+    function getRssUnitImage (&$a, $sField)
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        if(empty($sField) || empty($a[$sField]))
+            return '';
+
+        $sTranscoder = '';
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']))
+            $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_PICTURE'];
+        else if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
+            $sTranscoder = $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'];
+        else 
+            return '';
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
+        if(!$oTranscoder)
+            return '';
+
+        return $oTranscoder->getFileUrl($a[$sField]);      
+    }
+
     protected function _setConnectionsConditions ($aParams)
     {
         $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;

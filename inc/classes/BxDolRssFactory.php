@@ -55,6 +55,8 @@ class BxDolRssFactory extends BxDol
         $iUnitLimitChars = 2000;//(int)getParam('max_blog_preview');
         $sUnitRSSFeed = '';
         if ($aRssData) {
+            $sTxtReadMore = _t('_Read more');
+
             foreach ($aRssData as $aUnitInfo) {
                 $sUnitUrl = $aUnitInfo[$aFields['Link']];
                 $sUnitGuid = $aUnitInfo[$aFields['Guid']];
@@ -62,12 +64,17 @@ class BxDolRssFactory extends BxDol
                 $sUnitTitle = strip_tags($aUnitInfo[$aFields['Title']]);
                 $sUnitDate = bx_time_utc($aUnitInfo[$aFields['DateTimeUTS']]);
 
-                $sLinkMore = '';
-                if ( strlen( $aUnitInfo[$aFields['Desc']]) > $iUnitLimitChars ) {
-                    $sLinkMore = "... <a href=\"".$sUnitUrl."\">"._t('_Read more')."</a>";
+                $sUnitDesc = '';
+                if(isset($aFields['Desc']) && !empty($aUnitInfo[$aFields['Desc']])) {
+                    $sLinkMore = '';
+                    if(strlen($aUnitInfo[$aFields['Desc']]) > $iUnitLimitChars)
+                        $sLinkMore = "... <a href=\"" . $sUnitUrl . "\">" . $sTxtReadMore . "</a>";
+    
+                    $sUnitDesc = "<p>" . mb_substr(strip_tags($aUnitInfo[$aFields['Desc']]), 0, $iUnitLimitChars) . $sLinkMore . "</p>";
                 }
-                $sUnitDescVal = mb_substr(strip_tags($aUnitInfo[$aFields['Desc']]), 0, $iUnitLimitChars) . $sLinkMore;
-                $sUnitDesc = $sUnitDescVal;
+
+                if(isset($aFields['Image']) && !empty($aUnitInfo[$aFields['Image']]))
+                    $sUnitDesc .= "<img src=\"" . $aUnitInfo[$aFields['Image']] . "\" />";
 
                 $sUnitRSSFeed .= "<item><title><![CDATA[{$sUnitTitle}]]></title><link><![CDATA[{$sUnitUrl}]]></link><guid><![CDATA[{$sUnitGuid}]]></guid><description><![CDATA[{$sUnitDesc}]]></description><pubDate>{$sUnitDate}</pubDate></item>";
             }

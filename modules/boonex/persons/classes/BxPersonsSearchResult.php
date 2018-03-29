@@ -61,7 +61,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                     'Title' => 'fullname',
                     'DateTimeUTS' => 'added',
                     'Desc' => 'fullname',
-                    'Picture' => 'picture',
+                    'Image' => 'picture',
                 ),
             ),
             'ident' => 'id'

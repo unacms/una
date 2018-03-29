@@ -42,6 +42,7 @@ class BxVideosSearchResult extends BxBaseModTextSearchResult
                     'Title' => 'title',
                     'DateTimeUTS' => 'added',
                     'Desc' => 'text',
+            		'Image' => 'thumb'
                 ),
             ),
             'ident' => 'id',

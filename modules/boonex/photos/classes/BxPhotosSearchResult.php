@@ -45,6 +45,7 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
                     'Title' => 'title',
                     'DateTimeUTS' => 'added',
                     'Desc' => 'text',
+            		'Image' => 'thumb'
                 ),
             ),
             'ident' => 'id',

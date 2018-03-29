@@ -44,6 +44,7 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
                     'Title' => 'text',
                     'DateTimeUTS' => 'added',
                     'Desc' => '',
+            		'Image' => 'thumb'
                 ),
             ),
             'ident' => 'id',

@@ -42,6 +42,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                     'Title' => 'title',
                     'DateTimeUTS' => 'added',
                     'Desc' => 'desc',
+            		'Image' => 'thumb'
                 ),
             ),
             'ident' => 'id',

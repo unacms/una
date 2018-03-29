@@ -60,7 +60,7 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
                     'Title' => 'group_name',
                     'DateTimeUTS' => 'added',
                     'Desc' => 'group_name',
-                    'Picture' => 'picture',
+                    'Image' => 'picture',
                 ),
             ),
             'ident' => 'id'

@@ -35,6 +35,20 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 		}
     }
 
+    function getRssUnitImage (&$a, $sField)
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        if(empty($sField) || empty($a[$sField]) || empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
+            return '';
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+        if(!$oTranscoder)
+            return '';
+
+        return $oTranscoder->getFileUrl($a[$sField]);      
+    }
+
     protected function processReplaceableMarkers($oProfileAuthor) 
     {
         if ($oProfileAuthor) {

@@ -60,7 +60,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                     'Title' => 'event_name',
                     'DateTimeUTS' => 'added',
                     'Desc' => 'event_name',
-                    'Picture' => 'picture',
+                    'Image' => 'picture',
                 ),
             ),
             'ident' => 'id'
