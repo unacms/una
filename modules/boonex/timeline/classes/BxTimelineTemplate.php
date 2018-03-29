@@ -68,7 +68,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'js_object' => $this->_oConfig->getJsObject('post'),
             'js_content' => $this->getJsCode('post', array(
         		'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
-            	'oRequestParams' => array('owner_id' => $iOwnerId)
+            	'oRequestParams' => array(
+            		'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
+            		'owner_id' => $iOwnerId
+                )
         	)),
             'form' => $aForm['form']
         ));

@@ -23,8 +23,13 @@
 	<string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>
 	<string name="_bx_timeline_form_post_display_add_public"><![CDATA[Написать публичное сообщение]]></string>
+	<string name="_bx_timeline_form_post_display_add_profile"><![CDATA[Написать сообщение в профиль]]></string>
 	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Изменить сообщение]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[ID владельца]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id"><![CDATA[Контекст]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id_err"><![CDATA[Поле Контекст является обязательным. Пожалуйста, выберите значение.]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id_own"><![CDATA[Собственный профиль]]></string>
+    <string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[Отслеживаемые {0}]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Действие]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Тип]]></string>
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Содержимое]]></string>
@@ -170,6 +175,7 @@
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Пусто]]></string>
 	<string name="_bx_timeline_txt_msg_performed_action"><![CDATA[Действие было успешно выполнено.]]></string>
+	<string name="_bx_timeline_txt_msg_posted"><![CDATA[Успешно опубликовано.]]></string>
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 	<string name="_bx_timeline_txt_err_empty_post"><![CDATA[Сообщение пусто.]]></string>
 

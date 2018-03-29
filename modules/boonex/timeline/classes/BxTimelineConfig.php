@@ -116,6 +116,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'form_attach_link' => $this->_sName . '_attach_link',
         	'form_display_post_add' => $this->_sName . '_post_add',
         	'form_display_post_add_public' => $this->_sName . '_post_add_public',
+        	'form_display_post_add_profile' => $this->_sName . '_post_add_profile',
             'form_display_post_edit' => $this->_sName . '_post_edit',
         	'form_display_attach_link_add' => $this->_sName . '_attach_link_add'
         ));

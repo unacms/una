@@ -23,8 +23,13 @@
 	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
 	<string name="_bx_timeline_form_post_display_add_public"><![CDATA[Write Public Post]]></string>
+	<string name="_bx_timeline_form_post_display_add_profile"><![CDATA[Write Profile Post]]></string>
 	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Edit Post]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id"><![CDATA[Context]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id_err"><![CDATA[The Context field is essential. Please select some value.]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id_own"><![CDATA[Your profile]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[Following {0}]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Action]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Type]]></string>
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Content]]></string>
@@ -170,6 +175,7 @@
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Empty]]></string>
 	<string name="_bx_timeline_txt_msg_performed_action"><![CDATA[The action was successfully performed.]]></string>
+	<string name="_bx_timeline_txt_msg_posted"><![CDATA[Posted successfully.]]></string>
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 	<string name="_bx_timeline_txt_err_empty_post"><![CDATA[The post is empty.]]></string>
 

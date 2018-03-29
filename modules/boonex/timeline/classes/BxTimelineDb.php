@@ -454,7 +454,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				$sJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
 
 				//--- Exclude Own (Direct) posts on timelines of following members.
-                $sWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
+				//--- Note. Disabled for now.
+                //$sWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
 
                 //--- Select Promoted posts.
 		        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
@@ -482,8 +483,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				//--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
 				$sWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
-				//--- Exclude Own (Direct) posts on timelines of following members. 
-				$sWhereSubclause .= $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
+				//--- Exclude Own (Direct) posts on timelines of following members.
+				//--- Note. Disabled for now and next check is used instead. 
+				//$sWhereSubclause .= $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
+
+				//--- All posts on timelines of following members.
+                $sWhereSubclause .= " OR NOT ISNULL(`c`.`content`)";				
 
 				//--- Select Promoted posts.
 		        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";

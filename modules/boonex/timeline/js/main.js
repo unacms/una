@@ -237,12 +237,14 @@ BxTimelineMain.prototype._getDefaultData = function(oElement) {
 };
 
 
-BxTimelineMain.prototype._getPost = function(oElement, iId, sView) {
+BxTimelineMain.prototype._getPost = function(oElement, iId, sView, aParams) {
     var $this = this;
     var oData = this._getDefaultData();
     oData['js_object'] = this._sObjName;
     oData['view'] = sView;
     oData['id'] = iId;
+    if(aParams != undefined)
+    	oData = jQuery.extend({}, oData, aParams);
 
     var oElementView = $('#' + this._aHtmlIds['main_' + sView]);
     this.loadingInBlock(oElementView, true);

@@ -232,18 +232,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $sJsObject = $this->_oConfig->getJsObject('post');
 
         $sView = bx_process_input(bx_get('view'));
+        $sType = bx_process_input(bx_get('type'));
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        $bAfpsLoading = (int)bx_get('afps_loading') === 1;
 
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent) || !is_array($aEvent))
             return echoJson(array());
 
+        /**
+         * Note. Disabled for now, because Own posts on Timelines of Following members 
+         * became visible on posts' author Dashboard Timeline.
+         */
+        //if($bAfpsLoading && $this->_iOwnerId != $aEvent['owner_id'])
+        //    return echoJson(array('message' => _t('_bx_timeline_txt_msg_posted')));
+            
         echoJson(array(
             'id' => $aEvent['id'],
             'view' => $sView,
         	'item' => $this->_oTemplate->getPost($aEvent, array(
         		'view' => $sView, 
-        		'type' => 'owner', 
+        		'type' => !empty($sType) ? $sType : BX_TIMELINE_TYPE_DEFAULT,
         		'owner_id' => $this->_iOwnerId, 
         		'dynamic_mode' => true
             )),
@@ -607,7 +617,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$iProfileId)
             return array();
 
-        return $this->_getBlockPost($iProfileId);
+        return $this->_getBlockPost($iProfileId, array(
+        	'form_display' => 'form_display_post_add_profile'
+        ));
     }
 
     /**
@@ -641,7 +653,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		if(empty($oProfile))
 			return array();
 
-		return $this->_getBlockPost($oProfile->id());
+		return $this->_getBlockPost($oProfile->id(), array(
+		    'type' => BX_BASE_MOD_NTFS_TYPE_OWNER,
+			'form_display' => 'form_display_post_add_profile'
+		));
     }
 
     /**
@@ -665,6 +680,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $iProfileId = 0;
         return $this->_getBlockPost($iProfileId, array(
+        	'type' => BX_BASE_MOD_NTFS_TYPE_PUBLIC,
             'form_display' => 'form_display_post_add_public'
         ));
     }
@@ -692,7 +708,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return '';
 
         $iProfileId = $this->getProfileId();
-		return $this->_getBlockPost($iProfileId);
+		return $this->_getBlockPost($iProfileId, array(
+		    'type' => BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS,
+			'form_display' => 'form_display_post_add'
+		));
     }
 
     /**

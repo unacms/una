@@ -15,6 +15,7 @@
 class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 {
     protected $_bPublicMode;
+    protected $_bProfileMode;
 
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -26,9 +27,40 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $iOwnerId = $this->_oModule->getOwnerId();
 
         $this->_bPublicMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_public');
+        $this->_bProfileMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_profile');
 
 		$this->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'post/';
-        $this->aInputs['owner_id']['value'] = $iOwnerId;
+        
+		$this->aInputs['owner_id']['value'] = $iOwnerId;
+        if(!$this->_bPublicMode && !$this->_bProfileMode) {
+            $this->aInputs['owner_id']['values'] = array(
+                array ('key' => $iUserId, 'value' => _t('_bx_timeline_form_post_input_owner_id_own')),
+            );
+            
+            $oProfileQuery = BxDolProfileQuery::getInstance();
+
+            $sConnections = $this->_oModule->_oConfig->getObject('conn_subscriptions');
+            $aConnections = BxDolConnection::getObjectInstance($sConnections)->getConnectedContent($iUserId);
+
+            $aCnnGroups = array();
+            foreach($aConnections as $iId) {
+                $aProfileInfo = $oProfileQuery->getInfoById($iId);
+                if(empty($aProfileInfo) || !is_array($aProfileInfo))
+                    continue;
+
+                $aCnnGroups[$aProfileInfo['type']][] = $aProfileInfo['id'];
+            }
+
+            $oProfile = BxDolProfile::getInstance();
+            foreach($aCnnGroups as $sCnnGroup => $aCnnGroup) {
+                $this->aInputs['owner_id']['values'][] = array('type' => 'group_header', 'value' => _t('_bx_timeline_form_post_input_owner_id_following_group', _t('_' . $sCnnGroup)));
+                foreach($aCnnGroup as $iId)
+                    $this->aInputs['owner_id']['values'][] = array('key' => $iId, 'value' => $oProfile->getDisplayName($iId));
+                $this->aInputs['owner_id']['values'][] = array('type' => 'group_end');
+            }
+        }
+        else
+            $this->aInputs['owner_id']['type'] = 'hidden';
 
         if(isset($this->aInputs['text'])) {
             if(empty($this->aInputs['text']['attrs']) || !is_array($this->aInputs['text']['attrs']))
@@ -42,7 +74,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
             )));
 
-            if($this->_bPublicMode || ($iOwnerId != 0 && $iOwnerId != $iUserId))
+            if($this->_bPublicMode || ($this->_bProfileMode && $iOwnerId != $iUserId))
                 foreach($this->aInputs['object_privacy_view']['values'] as $iKey => $aValue)
                     if($aValue['key'] !== BX_DOL_PG_ALL)
                         unset($this->aInputs['object_privacy_view']['values'][$iKey]);

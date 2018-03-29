@@ -292,13 +292,14 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_timeline_post_add', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_add', 0),
 ('bx_timeline_post_add_public', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_add_public', 0),
+('bx_timeline_post_add_profile', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_add_profile', 0),
 
 ('bx_timeline_post_edit', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_edit', 0);
--- TODO: Continue from here. Check Pass type for the 'published' field.
+
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_timeline_post', @sName, 'type', 'post', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_timeline_post', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('bx_timeline_post', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_timeline_post', @sName, 'owner_id', '0', '', 0, 'select', '_bx_timeline_form_post_input_sys_owner_id', '_bx_timeline_form_post_input_owner_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_timeline_post', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_post_input_sys_text', '_bx_timeline_form_post_input_text', '', 0, 0, 3, 'a:1:{s:12:"autocomplete";s:3:"off";}', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_timeline_post', @sName, 'date', '', '', 0, 'datetime', '_bx_timeline_form_post_input_sys_date', '_bx_timeline_form_post_input_date', '_bx_timeline_form_post_input_date_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
 ('bx_timeline_post', @sName, 'object_privacy_view', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_object_privacy_view', '_bx_timeline_form_post_input_object_privacy_view', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -314,8 +315,8 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_timeline_post_add', 'type', 2147483647, 1, 1),
 ('bx_timeline_post_add', 'action', 2147483647, 1, 2),
-('bx_timeline_post_add', 'owner_id', 2147483647, 1, 3),
-('bx_timeline_post_add', 'text', 2147483647, 1, 4),
+('bx_timeline_post_add', 'text', 2147483647, 1, 3),
+('bx_timeline_post_add', 'owner_id', 2147483647, 1, 4),
 ('bx_timeline_post_add', 'object_privacy_view', 2147483647, 1, 5),
 ('bx_timeline_post_add', 'date', 192, 1, 6),
 ('bx_timeline_post_add', 'location', 2147483647, 1, 7),
@@ -337,6 +338,19 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add_public', 'video', 2147483647, 1, 10),
 ('bx_timeline_post_add_public', 'attachments', 2147483647, 1, 11),
 ('bx_timeline_post_add_public', 'do_submit', 2147483647, 1, 12),
+
+('bx_timeline_post_add_profile', 'type', 2147483647, 1, 1),
+('bx_timeline_post_add_profile', 'action', 2147483647, 1, 2),
+('bx_timeline_post_add_profile', 'owner_id', 2147483647, 1, 3),
+('bx_timeline_post_add_profile', 'text', 2147483647, 1, 4),
+('bx_timeline_post_add_profile', 'object_privacy_view', 2147483647, 1, 5),
+('bx_timeline_post_add_profile', 'date', 192, 1, 6),
+('bx_timeline_post_add_profile', 'location', 2147483647, 1, 7),
+('bx_timeline_post_add_profile', 'link', 2147483647, 1, 8),
+('bx_timeline_post_add_profile', 'photo', 2147483647, 1, 9),
+('bx_timeline_post_add_profile', 'video', 2147483647, 1, 10),
+('bx_timeline_post_add_profile', 'attachments', 2147483647, 1, 11),
+('bx_timeline_post_add_profile', 'do_submit', 2147483647, 1, 12),
 
 ('bx_timeline_post_edit', 'type', 2147483647, 1, 1),
 ('bx_timeline_post_edit', 'action', 2147483647, 1, 2),

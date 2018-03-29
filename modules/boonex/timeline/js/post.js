@@ -114,10 +114,10 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
 	        	return;
 
 	        if($('#' + $this._aHtmlIds['main_timeline']).length)
-	        	$this._getPost(oForm, iId, 'timeline');
+	        	$this._getPost(oForm, iId, 'timeline', {afps_loading: 1});
 
 	        if($('#' + $this._aHtmlIds['main_outline']).length)
-	        	$this._getPost(oForm, iId, 'outline');
+	        	$this._getPost(oForm, iId, 'outline', {afps_loading: 1});
 
 	        $this._getForm(oForm);
 
@@ -292,54 +292,63 @@ BxTimelinePost.prototype._getForm = function(oElement) {
 };
 
 BxTimelinePost.prototype._onGetPost = function(oData) {
-	if(!$.trim(oData.item).length) 
-		return;
-
 	var $this = this;
-	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
+	var fContinue = function(oData) {
+		if(!$.trim(oData.item).length) 
+			return;
 
-	var oLoadMore = oView.find('.' + this.sSP + '-load-more');
-	if(!oLoadMore.is(':visible'))
-		oLoadMore.show();
+		var oView = $('#' + $this._aHtmlIds['main_' + oData.view]);
 
-	var oEmpty = oView.find('.' + this.sSP + '-empty');
-	if(oEmpty.is(':visible'))
-		oEmpty.hide();
+		var oLoadMore = oView.find('.' + $this.sSP + '-load-more');
+		if(!oLoadMore.is(':visible'))
+			oLoadMore.show();
 
-	var oContent = $(oData.item).bxTime();
-	switch(oData.view) {
-		case 'timeline':
-			var oTimeline = $('#' + this._aHtmlIds['main_timeline']);
-			var oItems = oTimeline.find('.' + this.sClassItems);
-			var oDivider  = oItems.find('.' + this.sClassDividerToday);
-			var bDivider = oDivider.length > 0;
+		var oEmpty = oView.find('.' + $this.sSP + '-empty');
+		if(oEmpty.is(':visible'))
+			oEmpty.hide();
 
-			if(bDivider && !oDivider.is(':visible'))
-				oDivider.show();
+		var oContent = $(oData.item).bxTime();
+		switch(oData.view) {
+			case 'timeline':
+				var oTimeline = $('#' + $this._aHtmlIds['main_timeline']);
+				var oItems = oTimeline.find('.' + $this.sClassItems);
+				var oDivider  = oItems.find('.' + $this.sClassDividerToday);
+				var bDivider = oDivider.length > 0;
 
-			oContent.hide();
+				if(bDivider && !oDivider.is(':visible'))
+					oDivider.show();
 
-			var oItem = bDivider ? oDivider.after(oContent).next('.' + this.sClassItem + ':hidden') : oContent.prependTo(oItems);
-			oItem.bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed, function() {
-				$(this).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-					$this.onFindOverflow(oElement);
+				oContent.hide();
+
+				var oItem = bDivider ? oDivider.after(oContent).next('.' + $this.sClassItem + ':hidden') : oContent.prependTo(oItems);
+				oItem.bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+					$(this).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+						$this.onFindOverflow(oElement);
+					});
+
+					$this.initFlickity();
 				});
 
-				$this.initFlickity();
-			});
+				if($this._sVideosAutoplay != 'off')
+					$this.initVideos(oTimeline);
+				break;
 
-			if(this._sVideosAutoplay != 'off')
-				this.initVideos(oTimeline);
-			break;
+			case 'outline':
+				$this.prependMasonry(oContent, function(oItems) {
+					$(oItems).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+						$this.onFindOverflow(oElement);
+					});
 
-		case 'outline':
-			this.prependMasonry(oContent, function(oItems) {
-				$(oItems).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-					$this.onFindOverflow(oElement);
+					$this.initFlickity();
 				});
+				break;
+		}
+	};
 
-				$this.initFlickity();
-			});
-			break;
-	}
+	if(oData && oData.message != undefined && oData.message.length != 0)
+		bx_alert(oData.message, function() {
+			fContinue(oData);
+		});
+	else
+		fContinue(oData);	
 };
