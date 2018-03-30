@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_bx_attendant"><![CDATA[Attendant]]></string>
+  <string name="_bx_attendant_adm_stg_cpt_type"><![CDATA[Attendant]]></string>
+  <string name="_bx_attendant_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+  <string name="_bx_attendant_adm_stg_cpt_category_on_profile_creation"><![CDATA[Popup with recomended profiles on profile add]]></string>
+  <string name="_bx_attendant_adm_stg_on_profile_creation_modules_list"><![CDATA[Modules list]]></string>
+  
+</resources>
