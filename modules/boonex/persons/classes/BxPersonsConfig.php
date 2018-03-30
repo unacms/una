@@ -169,6 +169,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             	'txt_sample_pi_action_user' => '_bx_persons_txt_sample_pi_action_user',
                 'txt_N_fans' => '_bx_persons_txt_N_friends',
             	'txt_ntfs_timeline_post_common' => '_bx_persons_txt_ntfs_timeline_post_common',
+            	'form_field_picture' => '_bx_persons_form_profile_input_picture_search',
+                'form_field_online' => '_bx_persons_form_profile_input_online_search',
                 'menu_item_title_befriend_sent' => '_bx_persons_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_persons_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_persons_menu_item_title_befriend_confirm',

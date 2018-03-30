@@ -32,6 +32,14 @@ class BxOrgsModule extends BxBaseModGroupsModule
         return true;
     }
 
+    public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
+    {
+        if(empty($sUnitTemplate))
+            $sUnitTemplate = 'unit_with_cover.html';
+
+        return parent::serviceGetSearchResultUnit($iContentId, $sUnitTemplate);
+    }
+
     public function servicePrepareFields ($aFieldsProfile)
     {
         return parent::_servicePrepareFields($aFieldsProfile, array('org_cat' => 35), array(

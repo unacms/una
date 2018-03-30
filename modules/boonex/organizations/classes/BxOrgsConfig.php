@@ -191,6 +191,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
                 'txt_ntfs_fan_added' => '_bx_orgs_txt_ntfs_fan_added',
             	'txt_ntfs_timeline_post_common' => '_bx_orgs_txt_ntfs_timeline_post_common',
             	'txt_all_entries_by_author' => '_bx_orgs_page_title_browse_by_author',
+            	'form_field_picture' => '_bx_orgs_form_profile_input_picture_search',
+                'form_field_online' => '_bx_orgs_form_profile_input_online_search',
                 'menu_item_title_befriend_sent' => '_bx_orgs_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_orgs_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_orgs_menu_item_title_befriend_confirm',
