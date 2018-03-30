@@ -38,6 +38,7 @@ BxAttendantPopupWithRecommendedOnProfileAdd.prototype.ReInitFlickity = function 
         pageDots: false,
         imagesLoaded: true
     });
+    $('#' + $this._sContainerId)._dolPopupSetPosition();
 }
 
 BxAttendantPopupWithRecommendedOnProfileAdd.prototype.Show = function () {
