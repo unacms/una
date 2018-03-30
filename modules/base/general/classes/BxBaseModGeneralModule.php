@@ -135,11 +135,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetSearchableFieldsExtended()
     {
         $CNF = &$this->_oConfig->CNF;
-        if(empty($CNF['OBJECT_FORM_ENTRY']) || empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']))
-            return array();
-
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
-        if(!$oForm)
+        if(empty($CNF['OBJECT_FORM_ENTRY']))
             return array();
 
         $aResult = array();
@@ -153,8 +149,20 @@ class BxBaseModGeneralModule extends BxDolModule
                 'pass' => ''
             );
 
-        foreach ($oForm->aInputs as $aInput)
-            if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept))
+        $aInputs = array();
+        if(!empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'])) {
+            $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
+
+            $aInputs = array_merge($aInputs, $oForm->aInputs);
+        }
+        if(!empty($CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'])) {
+            $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'], $this->_oTemplate);
+
+            $aInputs = array_merge($aInputs, $oForm->aInputs);
+        }
+
+        foreach($aInputs as $aInput)
+            if(in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept))
                 $aResult[$aInput['name']] = array(
                     'type' => $aInput['type'], 
                     'caption' => $aInput['caption_src'],

@@ -58,80 +58,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 break;
 
             case 'search_ids':
-                $aMethod['name'] = 'getColumn';
-
-                $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`";
-
-                if (!empty($aParams['start']) && !empty($aParams['per_page']))
-                    $sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);
-                elseif (!empty($aParams['per_page']))
-                    $sLimitClause = $this->prepareAsString("?", $aParams['per_page']);
-        
-                $sWhereConditions = "1";
-                foreach($aParams['search_params'] as $sSearchParam => $aSearchParam) {
-                    $sSearchValue = "";
-                    switch ($aSearchParam['operator']) {
-                        case 'like':
-                            $sSearchValue = " LIKE " . $this->escape("%" . $aSearchParam['value'] . "%");
-                            break;
-
-                        case 'in':
-                            $sSearchValue = " IN (" . $this->implode_escape($aSearchParam['value']) . ")";
-                            break;
-
-                        case 'and':
-                            $iResult = 0;
-                            if (is_array($aSearchParam['value']))
-                                foreach ($aSearchParam['value'] as $iValue)
-                                    $iResult |= pow (2, $iValue - 1);
-                            else 
-                                $iResult = (int)$aSearchParam['value'];
-
-                            $sSearchValue = " & " . $iResult . "";
-                            break;
-
-                        case 'locate':
-                            if(!isset($CNF['OBJECT_METATAGS']))
-                                break;
-
-                            list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value'];
-
-                            $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
-
-                            if(!empty($aSql['where'])) {
-                                $sWhereConditions .= $aSql['where'];
-
-                                if(!empty($aSql['join']))
-                                    $sJoinClause .= $aSql['join'];
-                            }
-                            break;
-
-                        case 'between':
-                            if(!is_array($aSearchParam['value']) || count($aSearchParam['value']) != 2) 
-                                break;
-
-                            $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` >= :" . $sSearchParam . "_from";
-                            $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` <= :" . $sSearchParam . "_to";
-
-                            $aMethod['params'][1][$sSearchParam . "_from"] = $aSearchParam['value'][0]; 
-                            $aMethod['params'][1][$sSearchParam . "_to"] = $aSearchParam['value'][1]; 
-                            break;
-
-                        default:
-                            if(empty($aSearchParam['operator']))
-                                break;
-
-                            $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
-                            $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];                             
-                    }
-
-                    if(!empty($sSearchValue))
-                        $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "`" . $sSearchValue;
-                }
-
-                $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
-
-                $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+                $this->_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
                 break;
 
             case 'all_ids':
@@ -196,6 +123,85 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         return $this->query("ALTER TABLE `" . $CNF['TABLE_ENTRIES'] . "` ADD FULLTEXT `" . $CNF['TABLE_ENTRIES_FULLTEXT'] . "` (" . trim($sFields, ', ') . ")");
     }
 
+    protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aMethod['name'] = 'getColumn';
+
+        $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`";
+
+        if (!empty($aParams['start']) && !empty($aParams['per_page']))
+            $sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);
+        elseif (!empty($aParams['per_page']))
+            $sLimitClause = $this->prepareAsString("?", $aParams['per_page']);
+
+        $sWhereConditions = "1";
+        foreach($aParams['search_params'] as $sSearchParam => $aSearchParam) {
+            $sSearchValue = "";
+            switch ($aSearchParam['operator']) {
+                case 'like':
+                    $sSearchValue = " LIKE " . $this->escape("%" . $aSearchParam['value'] . "%");
+                    break;
+
+                case 'in':
+                    $sSearchValue = " IN (" . $this->implode_escape($aSearchParam['value']) . ")";
+                    break;
+
+                case 'and':
+                    $iResult = 0;
+                    if (is_array($aSearchParam['value']))
+                        foreach ($aSearchParam['value'] as $iValue)
+                            $iResult |= pow (2, $iValue - 1);
+                    else 
+                        $iResult = (int)$aSearchParam['value'];
+
+                    $sSearchValue = " & " . $iResult . "";
+                    break;
+
+                case 'locate':
+                    if(!isset($CNF['OBJECT_METATAGS']))
+                        break;
+
+                    list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value'];
+
+                    $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
+
+                    if(!empty($aSql['where'])) {
+                        $sWhereConditions .= $aSql['where'];
+
+                        if(!empty($aSql['join']))
+                            $sJoinClause .= $aSql['join'];
+                    }
+                    break;
+
+                case 'between':
+                    if(!is_array($aSearchParam['value']) || count($aSearchParam['value']) != 2) 
+                        break;
+
+                    $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` >= :" . $sSearchParam . "_from";
+                    $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` <= :" . $sSearchParam . "_to";
+
+                    $aMethod['params'][1][$sSearchParam . "_from"] = $aSearchParam['value'][0]; 
+                    $aMethod['params'][1][$sSearchParam . "_to"] = $aSearchParam['value'][1]; 
+                    break;
+
+                default:
+                    if(empty($aSearchParam['operator']))
+                        break;
+
+                    $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
+                    $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];
+            }
+
+            if(!empty($sSearchValue))
+                $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "`" . $sSearchValue;
+        }
+
+        $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
+
+        $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+    }
 }
 
 /** @} */

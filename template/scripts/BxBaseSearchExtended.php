@@ -110,7 +110,9 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     	foreach($aResults as $iId)
     	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate);   	
 
-        return $sResults;
+        return $this->_oTemplate->parseHtmlByName('search_extended_results.html', array(
+            'code' => $sResults
+        ));
     }
 
     protected function &prepareForm()

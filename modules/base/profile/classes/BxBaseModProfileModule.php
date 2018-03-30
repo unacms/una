@@ -85,6 +85,38 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return parent::serviceGetSearchResultUnit($iContentId, $sUnitTemplate);
     }
 
+    public function serviceGetSearchableFieldsExtended()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetSearchableFieldsExtended();
+        if(!$this->serviceActAsProfile())
+            return $aResult;
+
+        if(!in_array('online', $this->_aSearchableNamesExcept))
+            $aResult['online'] = array(
+                'type' => 'checkbox', 
+                'caption' => $CNF['T']['form_field_online'],
+                'info' => '',
+            	'value' => '1',
+                'values' => '',
+                'pass' => ''
+            );
+
+        if(!empty($CNF['FIELD_PICTURE']) && !in_array($CNF['FIELD_PICTURE'], $this->_aSearchableNamesExcept))
+            $aResult[$CNF['FIELD_PICTURE']] = array(
+                'type' => 'checkbox', 
+                'caption' => $CNF['T']['form_field_picture'],
+                'info' => '',
+            	'value' => '1',
+                'values' => '',
+                'pass' => '',
+                'search_operator' => '>=' 
+            );
+
+        return $aResult;
+    }
+
 	public function servicePrivateProfileMsg()
     {
         return MsgBox(_t('_sys_access_denied_to_private_content'));

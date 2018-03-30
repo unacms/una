@@ -72,6 +72,30 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
         $sQuery = "SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) WHERE `p`.`status` = :status AND (0 $sWhere)" . $sOrderBy;
         return $this->getAll($sQuery, $aBindings);
     }
+
+    protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(isset($aParams['search_params']['online'])) {
+            $aMethod['params'][1] = array_merge($aMethod['params'][1], array(
+            	'online_type' => $this->_oConfig->getName(),
+                'online_time' => (int)getParam('sys_account_online_time')
+            ));
+
+            $sJoinClause .= "
+            	LEFT JOIN `sys_profiles` AS `tp` ON `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`=`tp`.`content_id` AND `tp`.`type`=:online_type 
+            	INNER JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` 
+            	INNER JOIN `sys_sessions` AS `ts` ON `tp`.`account_id`=`ts`.`user_id` 
+            	";
+
+            $sWhereClause .= " AND `ta`.`profile_id`=`tp`.`id` AND `ts`.`date` > (UNIX_TIMESTAMP() - 60 * :online_time)";
+
+            unset($aParams['search_params']['online']);
+        }
+
+        parent::_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);        
+    }
 }
 
 /** @} */

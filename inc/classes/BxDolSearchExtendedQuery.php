@@ -59,9 +59,9 @@ class BxDolSearchExtendedQuery extends BxDolDb
                 	'info' => $sInfoKey,
                     'values' => $aField['values'],
                     'pass' => $aField['pass'],
-                    'search_type' => reset(BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']]),
-                    'search_value' => in_array($aField['type'], array('checkbox', 'switcher')) ? $aField['value'] : '', 
-                    'search_operator' => reset(BxDolSearchExtended::$TYPE_TO_OPERATOR[$aField['type']]),
+                    'search_type' => isset($aField['search_type']) ? $aField['search_type'] : reset(BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']]),
+                    'search_value' => isset($aField['search_value']) ? $aField['search_value'] : (in_array($aField['type'], array('checkbox', 'switcher')) ? $aField['value'] : ''), 
+                    'search_operator' => isset($aField['search_operator']) ? $aField['search_operator'] : reset(BxDolSearchExtended::$TYPE_TO_OPERATOR[$aField['type']]),
                     'order' => $iOrder++
                 )) > 0;
 
