@@ -18,25 +18,16 @@ function BxAttendantPopupWithRecommendedOnProfileAdd(oOptions) {
 
 BxAttendantPopupWithRecommendedOnProfileAdd.prototype.init = function () {
     var $this = this;
-
     $('.bx-pwropa-item-container').hide().first().show();
-    $('#' + $this._sContainerId).dolPopup({ onShow: $this.Show() });
+    $('#' + $this._sContainerId).dolPopup({ position: 'centered', closeOnOuterClick: false, onShow: $this.Show });
     $('.bx-pwropa-button').click(function () {
         $oCurr = $('.bx-pwropa-item-container:visible').hide();
         $oNext = $oCurr.next(); $oNext.show();
         $this.ReInitFlickity();
         if (!$oNext.length) {
-            $('.bx-pwropa-container').hide();
+            $('#' + $this._sContainerId).dolPopupHide();
         }
-        
     });
-}
-
-BxAttendantPopupWithRecommendedOnProfileAdd.prototype.Show = function () {
-    var $this = this;
-    $('#' + $this._sContainerId + ' .bx-base-pofile-unit-cnt').css('height', 'auto');
-    $('#' + $this._sContainerId + ' .bx-pwropa-item-container:visible .bx-base-unit-showcase-wrapper').flickity();
-    $this.ReInitFlickity();
 }
 
 BxAttendantPopupWithRecommendedOnProfileAdd.prototype.ReInitFlickity = function () {
@@ -47,4 +38,9 @@ BxAttendantPopupWithRecommendedOnProfileAdd.prototype.ReInitFlickity = function 
         pageDots: false,
         imagesLoaded: true
     });
+}
+
+BxAttendantPopupWithRecommendedOnProfileAdd.prototype.Show = function () {
+    var $this = oBxAttendantPopupWithRecommendedOnProfileAdd;
+    $this.ReInitFlickity();
 }

@@ -104,7 +104,8 @@ class BxAttendantModule extends BxDolModule
         foreach($aModules as $sModuleName){
             if(BxDolRequest::serviceExists($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD)){
                 $aTmp = BxDolService::call($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD, array('unit_view' => 'showcase', 'empty_message' => false, "ajax_paginate" => false));
-                array_push($aModulteData, $aTmp['content']);
+                if (isset($aTmp['content']))
+                    array_push($aModulteData, $aTmp['content']);
             }
         }
         $sRv = $this->_oTemplate->popupWithRecommendedOnProfileAdd($aModulteData);
