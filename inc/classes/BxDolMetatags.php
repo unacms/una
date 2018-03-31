@@ -75,7 +75,7 @@ define('BX_METATAGS_MENTIONS_MAX', 9);
  *
  * @section metatags_keywords \#keyword
  *
- * Upon content 'add' and 'edit' form submit, call BxDolMetatags::locationsAddFromForm
+ * Upon content 'add' and 'edit' form submit, call BxDolMetatags::keywordsAdd
  * @code
  *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
  *   $oMetatags->keywordsAdd($iContentId, $aContentInfo['text_field_with_hash_tags']);
@@ -94,10 +94,48 @@ define('BX_METATAGS_MENTIONS_MAX', 9);
  *
  *
  * @section metatags_mention \@mention
- * TODO:
+ * 
+ * Upon content 'add' and 'edit' form submit, call BxDolMetatags::mentionsAdd
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $oMetatags->mentionsAdd($iContentId, $aContentInfo['text_field_with_mentions']);
+ * @endcode
+ *
+ * Before displaying the text with mentions call BxDolMetatags::mentionsParse:
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $sText = $oMetatags->mentionsParse($iContentId, $sText);
+ * @endcode
+ *
+ * Upon page display call BxDolMetatags::addPageMetaInfo to add all available meta info to the page meta into where possible, however it doesn't adding anyting for mentions for now.
+ *
+ * To be able to search by mentions object must be specified in *SearchResult class as 'object_metatags' in 'aCurrent' array.
  *
  *
  *
+ * @section metatags_auto Add \@mention, \#keyword using one call
+ * 
+ * Upon content 'add' and 'edit' form submit, call BxDolMetatags::metaAdd
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $oMetatags->metaAdd($iContentId, $aContentInfo['text_field']);
+ * @endcode
+ * or call BxDolMetatags::metaAddAuto, it autodetects fields with metainfo:
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $oMetatags->metaAddAuto($iContentId, $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
+ * @endcode
+ *
+ * Before displaying the text with different metainfo call BxDolMetatags::metaParse:
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $sText = $oMetatags->metaParse($iContentId, $sText);
+ * @endcode
+ *
+ * Upon page display call BxDolMetatags::addPageMetaInfo to add all available meta info to the page meta into where possible.
+ *
+ *
+ * 
  * @section metatags_delete_content Content deletion
  * 
  * When content is deleted associated meta data can be deleted by calling BxDolMetatags::onDeleteContent:
