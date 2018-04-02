@@ -108,6 +108,10 @@ BxTimelineView.prototype.init = function() {
     		$this.reloadMasonry();
     	});
 
+    	//--- Init Video Layout
+    	if(this._sVideosAutoplay != 'off')
+    		this.initVideos(this.oViewOutline);
+
     	//--- Blink (highlight) necessary items
 	    this.blink(this.oViewOutline);
 	}
@@ -200,6 +204,10 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
     			oView = $this.oViewOutline;
     			$this.appendMasonry($(sItems).bxTime(), function() {
     				$this.initFlickity();
+
+    				//--- Init Video Layout
+    		    	if($this._sVideosAutoplay != 'off') 
+    		    		$this.initVideos(oView);
     			});
     			break;
     	}
