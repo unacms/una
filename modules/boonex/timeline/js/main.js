@@ -139,7 +139,7 @@ BxTimelineMain.prototype.initFlickity = function() {
 	var $this = this;
 
 	$('.' + this.sClassItem + ' .' + this.sClassItemImages).each(function() {
-		if($(this).find('.' + $this.sClassItemImage).length <= 1)
+		if($(this).find('div.' + $this.sClassItemImage).length <= 1)
 			return;
 
 		$(this).flickity({

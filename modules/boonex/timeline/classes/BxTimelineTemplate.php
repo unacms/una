@@ -1167,7 +1167,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     continue;
 
                 $sImage = $this->parseImage($sImageSrc, array(
-                	'class' => $sStylePrefix . '-item-img'
+                	'class' => $sStylePrefix . '-item-image'
                 ));
 
                 $aAttrs = array();
