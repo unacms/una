@@ -29,7 +29,7 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
             array_push($aVars, array ('html' => $sModuleData, 'title' => $this->getStringValueByModuleOrDefault('_bx_attendant_popup_with_recommended_title_', $sModuleName) , 'description' => $this->getStringValueByModuleOrDefault('_bx_attendant_popup_with_recommended_description_', $sModuleName)));
         }
         $oBxBaseFunctions = BxBaseFunctions::getInstance();
-        return  $this->getJsCode('main') . $oBxBaseFunctions->transBox($this->sContainerId, $this->parseHtmlByName('popup_recommended.html', array ('bx_repeat:items' => $aVars)), true, true);
+        return  $this->getJsCode('main') . $oBxBaseFunctions->transBox($this->sContainerId, $this->parseHtmlByName('popup_recommended.html', array ('bx_repeat:items' => $aVars, 'button_text' => _t('_bx_attendant_popup_with_recommended_button_text'))), true, true);
     }
     
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
