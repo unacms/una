@@ -108,7 +108,7 @@ class BxAttendantModule extends BxDolModule
             $oRv = call_user_func_array(array($this, $aEvent['method']), array($aEvent['object_id']));
             if ($oRv !== false){
                 $sRv .= $oRv;
-                //$this->_oDb->setEventProcessed($aEvent['id']);
+                $this->_oDb->setEventProcessed($aEvent['id']);
             }
         }
         return $sRv;
