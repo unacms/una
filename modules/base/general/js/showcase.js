@@ -3,10 +3,12 @@ $(document).ready(function () {
 });
 
 function bx_showcase_view_init() {
-    $('.bx-base-unit-showcase-wrapper').flickity({
-        cellSelector: '.bx-base-unit-showcase',
-        cellAlign: 'left',
-        pageDots: false,
-        imagesLoaded: true
-    });
+	if($('.bx-base-unit-showcase-wrapper').closest('.bx-popup-wrapper').length == 0){
+		$('.bx-base-unit-showcase-wrapper').flickity({
+			cellSelector: '.bx-base-unit-showcase',
+			cellAlign: 'left',
+			pageDots: false,
+			imagesLoaded: true
+		});
+	}
 }
