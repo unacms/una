@@ -26,7 +26,9 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         if ($oTemplate)
             $this->_oTemplate = $oTemplate;
-        else
+        else if(!empty($this->_aObject['module']))
+            $this->_oTemplate = BxDolModule::getInstance($this->_aObject['module'])->_oTemplate;
+        else 
             $this->_oTemplate = BxDolTemplate::getInstance();
 
         $this->_sFormClassName = '';
