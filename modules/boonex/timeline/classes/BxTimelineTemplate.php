@@ -52,7 +52,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'modernizr.min.js',
         	'flickity/flickity.pkgd.min.js',
 			'emoji/js/jquery.emojiarea.js',
-            'player.min.js',
+            'embedly-player.min.js',
             'BxDolCmts.js',            
             'post.js',
             'repost.js',

@@ -72,18 +72,11 @@ BxTimelineView.prototype.init = function() {
 					$this.showEvents(oItems, $this._fOutsideOffset);
 				});
 		});
-		
-		//--- Init Video Autoplay
-		if(this._sVideosAutoplay != 'off') {
-			this.initVideos(this.oViewTimeline);
 
-			this.oViewTimeline.find('iframe').each(function() {
-				var oPlayer = new playerjs.Player(this);
-				if($this._sVideosAutoplay == 'on_mute')
-					oPlayer.mute();
-				
-				$this._oVapPlayers[$(this).attr('id')] = oPlayer;
-			});
+		//--- Init Video Autoplay
+		if(this._sVideosAutoplay != 'off') { 
+
+			this.initVideosAutoplay(this.oViewTimeline);
 
 			$(window).on('scroll', function() {
 				var oItems = $this.oViewTimeline.find('.' + $this.sClassItem);
@@ -120,6 +113,27 @@ BxTimelineView.prototype.init = function() {
 	}
 
 	this.initFlickity();
+};
+
+BxTimelineView.prototype.initVideosAutoplay = function(oParent) {
+	var $this = this;
+
+	if(this._sVideosAutoplay == 'off')
+		return;
+
+	this.initVideos(oParent);
+
+	oParent.find('iframe').each(function() {
+		var sPlayer = $(this).attr('id');
+		if($this._oVapPlayers[sPlayer])
+			return;
+
+		var oPlayer = new playerjs.Player(this);
+		if($this._sVideosAutoplay == 'on_mute')
+			oPlayer.mute();
+
+		$this._oVapPlayers[sPlayer] = oPlayer;
+	});
 };
 
 BxTimelineView.prototype.hideEvents = function(oEvents, fOffset) {
@@ -176,6 +190,9 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
 					$(this).bxTime();
 
 					$this.initFlickity();
+
+					//--- Init Video Autoplay
+    				$this.initVideosAutoplay(oView);
 			    });
     			break;
 
