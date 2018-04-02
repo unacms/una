@@ -22,12 +22,6 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
         if(!$this->_iProfileId)
             return '';
 
-		/*
-		 * Clear cache for current user.
-		 * It's needed to reset Transient live updates.
-		 */
-        //$this->_clearCached();
-
         /*
          * Load and cache(if it's needed) default(system) 
          * live updates for current user.
