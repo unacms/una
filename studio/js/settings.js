@@ -117,20 +117,22 @@ BxDolStudioSettings.prototype.mixDelete = function(oButton, iId) {
 	var $this = this;
 	var oDate = new Date();
 
-	$.post(
-    	sUrlStudio + 'settings.php',
-    	{
-    		page: this.sType,
-    		category: this.sCategory,
-    		stg_action: 'delete-mix',
-    		stg_value: iId,
-    		_t:oDate.getTime()
-    	},
-    	function (oData) {
-    		$this.processResult(oData);
-    	},
-    	'json'
-    );
+	bx_confirm('', function() {
+		$.post(
+	    	sUrlStudio + 'settings.php',
+	    	{
+	    		page: $this.sType,
+	    		category: $this.sCategory,
+	    		stg_action: 'delete-mix',
+	    		stg_value: iId,
+	    		_t:oDate.getTime()
+	    	},
+	    	function (oData) {
+	    		$this.processResult(oData);
+	    	},
+	    	'json'
+	    );
+	});	
 };
 
 BxDolStudioSettings.prototype.onMixDelete = function(oData) {
