@@ -2900,10 +2900,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_account_create', 'name', 2147483647, 1, 1),
 ('sys_account_create', 'email', 2147483647, 1, 2),
 ('sys_account_create', 'password', 2147483647, 1, 3),
-('sys_account_create', 'phone', 2147483647, 1, 4),
-('sys_account_create', 'receive_news', 2147483647, 1, 5),
-('sys_account_create', 'do_submit', 2147483647, 1, 6),
-('sys_account_create', 'agreement', 2147483647, 1, 7),
+('sys_account_create', 'receive_news', 2147483647, 1, 4),
+('sys_account_create', 'do_submit', 2147483647, 1, 5),
+('sys_account_create', 'agreement', 2147483647, 1, 6),
 
 ('sys_account_settings_email', 'email', 2147483647, 1, 1),
 ('sys_account_settings_email', 'password_current', 2147483647, 1, 2),

@@ -1230,7 +1230,7 @@
 	<string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
 	<string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
-	<string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio gate]]></string>
+	<string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
 	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
 	<string name="_adm_stg_err_option_currency_code"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
@@ -1303,7 +1303,7 @@
     <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_token"><![CDATA[Auth token]]></string>
-	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Default 'From' number fror SMS]]></string>
+	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Default 'From' number for SMS]]></string>
     <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Short name (required only for http sites. It must match the Subdomain you entered on the Web Push settings on the OneSignal dashboard)]]></string>
     <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID on the Web Push settings]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Number of messages to send from Push queue per run]]></string>
@@ -1916,10 +1916,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_confirm_phone_confirmation_input_code"><![CDATA[Code]]></string>
 	<string name="_sys_form_confirm_phone_input_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_form_confirm_phone_input_caption_system_do_submit"><![CDATA[Submit]]></string>
-	<string name="_sys_form_confirm_phone_input_sendsms"><![CDATA[Send Sms]]></string>
-	<string name="_sys_form_confirm_phone_input_caption_system_do_sendsms"><![CDATA[Send Sms]]></string>
+	<string name="_sys_form_confirm_phone_input_sendsms"><![CDATA[Send SMS]]></string>
+	<string name="_sys_form_confirm_phone_input_caption_system_do_sendsms"><![CDATA[Send SMS]]></string>
 	<string name="_sys_form_confirm_phone_input_code_error_empty"><![CDATA[Cannot be empty.]]></string>
-	<string name="_sys_form_confirm_phone_input_code_error_invalid"><![CDATA[Wrong verification code. Please, repeat code or <a href="{0}">change phone number and repeat from the beginning</a>.]]></string>
+	<string name="_sys_form_confirm_phone_input_code_error_invalid"><![CDATA[Wrong verification code. Please, repeat code or <a href="{0}">change the phone number and repeat from the beginning</a>.]]></string>
 	<string name="_sys_form_account_input_phone_error"><![CDATA[Phone is not valid]]></string>
 	<string name="_sys_form_display_account_create"><![CDATA[Create Account]]></string>
 	<string name="_sys_form_display_account_settings_delete"><![CDATA[Delete Account]]></string>
@@ -1956,7 +1956,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_agreement"><![CDATA[Agreement]]></string>
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Captcha]]></string>
 	<string name="_sys_form_login_input_caption_system_checkcode"><![CDATA[Submit]]></string>
-	<string name="_sys_form_login_input_caption_system_code"><![CDATA[de from SMS]]></string>
+	<string name="_sys_form_login_input_caption_system_code"><![CDATA[Code from SMS]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Confirm Delete]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Delete with Content]]></string>
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Sign up]]></string>
@@ -1986,7 +1986,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_code_error_empty"><![CDATA[Cannot be empty.]]></string>
 	<string name="_sys_form_login_input_phone_error_format"><![CDATA[Wrong phone number, allowed digits only and start from '+']]></string>
 	<string name="_sys_form_login_input_phone_error_not_unique"><![CDATA[This phone is already used by someone.]]></string>
-	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Wrong verification code. Please, repeat code or <a href="{0}">change phone number and repeat from the beginning</a>.]]></string>
+	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Wrong verification code. Please, repeat code or <a href="{0}">change the phone number and repeat from the beginning</a>.]]></string>
 	
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Type name here...]]></string>
 	<string name="_sys_form_report"><![CDATA[Report]]></string>
@@ -2529,9 +2529,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_confirm_phone_set_phone_error_occured"><![CDATA[Error occurred, please try to login to your account and repeat verification.]]></string>
 	<string name="_sys_txt_confirm_phone_send_sms_error_occured"><![CDATA[Error occurred, please report error to site administrator.]]></string>
 	<string name="_sys_txt_confirm_phone_sms_text"><![CDATA[Your phone's verification code is {0}.]]></string>
-	<string name="_sys_txt_confirm_phone_confirm_success"><![CDATA[Your phone is confirmed successfully.]]></string>
-	<string name="_sys_txt_confirm_phone_set_phone_desc_set_phone"><![CDATA[Please enter phone number for seinding verification SMS.]]></string>
-	<string name="_sys_txt_confirm_phone_set_phone_desc_phone_confirmation"><![CDATA[Please enter verification code from SMS.]]></string>
+	<string name="_sys_txt_confirm_phone_confirm_success"><![CDATA[Your phone is confirmed successes.]]></string>
+	<string name="_sys_txt_confirm_phone_set_phone_desc_set_phone"><![CDATA[Please enter a phone number for sending verification SMS.]]></string>
+	<string name="_sys_txt_confirm_phone_set_phone_desc_phone_confirmation"><![CDATA[Please enter verification code from the SMS.]]></string>
 	
     <string name="_sys_txt_current_picture"><![CDATA[Current Picture]]></string>
 	<string name="_sys_txt_data_successfully_submitted"><![CDATA[Done]]></string>
@@ -2551,7 +2551,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_field_updated"><![CDATA[Updated:]]></string>
 	<string name="_sys_txt_forgot_pasword"><![CDATA[Forgot password?]]></string>
 	<string name="_sys_txt_forgot_pasword_check_email"><![CDATA[Email was sent, please follow instructions in the email message.]]></string>
-	<string name="_sys_txt_forgot_pasword_check_phone"><![CDATA[Sms was sent, please follow instructions in the sms.]]></string>
+	<string name="_sys_txt_forgot_pasword_check_phone"><![CDATA[SMS was sent, please follow instructions in the SMS.]]></string>
 	<string name="_sys_txt_forgot_pasword_desc"><![CDATA[Enter your account email address to get a password-reset link.]]></string>
 	<string name="_sys_txt_forgot_pasword_by_both_desc"><![CDATA[Enter your account email address or phone to get a password-reset link.]]></string>
 	<string name="_sys_txt_forgot_pasword_by_phone_desc"><![CDATA[Enter your account phone to get a password-reset link.]]></string>
@@ -2568,9 +2568,9 @@ If it is not enabled then please consider implement this optimization, since it 
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Unity is strength... when there is teamwork and collaboration, wonderful things can be achieved.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Join Now!</button>]]></string>
 	<string name="_sys_txt_login_2fa_description"><![CDATA[Two-Factor Authentication is Enabled In addition to your username and password, you'll need to enter a verification code that we'll send you.]]></string>
-	<string name="_sys_txt_login_2fa_description2"><![CDATA[Please enter verification code from SMS.]]></string>
+	<string name="_sys_txt_login_2fa_description2"><![CDATA[Please enter verification code from the SMS.]></string>
 	<string name="_sys_txt_login_2fa_sms_text"><![CDATA[Your verification code is {0}.]]></string>
-	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Error occurred, please report error to site administrator.]]></string>
+	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[An error occurred, please report error to the site administrator.]]></string>
     <string name="_sys_txt_join_description"><![CDATA[Already a member? <a href="{0}">Log in.</a>]]></string>
 	<string name="_sys_txt_login_description"><![CDATA[Not a member yet? <a href="{0}">Sign up.</a>]]></string>
 	<string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>

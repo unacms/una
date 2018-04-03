@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolTwilio extends BxDolDb implements iBxDolSingleton
+class BxDolTwilio extends BxDolFactory implements iBxDolSingleton
 {
     protected $_sSid;
     protected $_sToken;
@@ -45,7 +45,7 @@ class BxDolTwilio extends BxDolDb implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
     
-    public function SendSms($sTo, $sMessage, $sFrom = '')
+    public function sendSms($sTo, $sMessage, $sFrom = '')
     {
         try{
             require_once BX_DIRECTORY_PATH_PLUGINS . 'Twilio/autoload.php'; // Loads the library
@@ -55,9 +55,17 @@ class BxDolTwilio extends BxDolDb implements iBxDolSingleton
             return true;
         }
         catch (Exception $oException) {
+            $this->writeLog($oException);
             return false;
         }
     }
+    
+    private function writeLog($oContents)
+	{
+		$file = dirname(__FILE__) . '/bx_twilio.log';   
+		file_put_contents($file, date('m-d H:i:s').": ", FILE_APPEND);            
+		file_put_contents($file, serialize($oContents)."\n", FILE_APPEND);
+	}
 }
 
 /** @} */

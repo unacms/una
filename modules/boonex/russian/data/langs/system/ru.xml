@@ -1916,10 +1916,10 @@
 	<string name="_sys_form_confirm_phone_confirmation_input_code"><![CDATA[Код]]></string>
 	<string name="_sys_form_confirm_phone_input_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_confirm_phone_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_sys_form_confirm_phone_input_sendsms"><![CDATA[Отправить Sms]]></string>
-	<string name="_sys_form_confirm_phone_input_caption_system_do_sendsms"><![CDATA[Отправить Sms]]></string>
+	<string name="_sys_form_confirm_phone_input_sendsms"><![CDATA[Отправить SMS]]></string>
+	<string name="_sys_form_confirm_phone_input_caption_system_do_sendsms"><![CDATA[Отправить SMS]]></string>
 	<string name="_sys_form_confirm_phone_input_code_error_empty"><![CDATA[Обязательное поле.]]></string>
-	<string name="_sys_form_confirm_phone_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.</a>]]></string>
+	<string name="_sys_form_confirm_phone_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.]]></string>
 	<string name="_sys_form_display_account_create"><![CDATA[Создать аккаунт]]></string>
 	<string name="_sys_form_display_account_settings_delete"><![CDATA[Удалить аккаунт]]></string>
 	<string name="_sys_form_display_account_settings_email"><![CDATA[Настройки имейла]]></string>
@@ -1928,7 +1928,7 @@
 	<string name="_sys_form_display_comment_edit"><![CDATA[Редактировать форму комментария]]></string>
 	<string name="_sys_form_display_comment_post"><![CDATA[Разместить форму комментария]]></string>
 	<string name="_sys_form_display_confirm_email"><![CDATA[Подтверждение имейла]]></string>
-	<string name="_sys_form_display_confirm_phone_set_phone"><![CDATA[Задание телефона]]></string>
+	<string name="_sys_form_display_confirm_phone_set_phone"><![CDATA[Сохраниение телефона]]></string>
 	<string name="_sys_form_display_confirm_phone_confirmation"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_form_display_forgot_password"><![CDATA[Забыли пароль?]]></string>
 	<string name="_sys_form_display_login"><![CDATA[Войти]]></string>
@@ -1941,7 +1941,7 @@
 	<string name="_sys_form_forgot_password_email_not_recognized"><![CDATA[Этот эл. адрес не принадлежит ни одному аккаунту. Удостоверьтесь, что он введён правильно.]]></string>
 	<string name="_sys_form_forgot_password_phone_not_recognized"><![CDATA[Этот телефон не принадлежит ни одному аккаунту. Удостоверьтесь, что он введён правильно.]]></string>
 	<string name="_sys_form_forgot_password_phone_error_format"><![CDATA[Телефон должен содержать только цифры и начинаться с '+']]></string>
-	<string name="_sys_form_forgot_password_phone_and_email_empty_error"><![CDATA[Нужно ввести либо телефон, либо емайл]]></string>
+	<string name="_sys_form_forgot_password_phone_and_email_empty_error"><![CDATA[Нужно ввести либо телефон, либо имейл]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_forgot_password_input_email"><![CDATA[Имейл]]></string>
@@ -1971,7 +1971,7 @@
 	<string name="_sys_form_login_input_caption_system_relocate"><![CDATA[Переместить]]></string>
 	<string name="_sys_form_login_input_caption_system_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_caption_system_role"><![CDATA[Роль]]></string>
-	<string name="_sys_form_login_input_caption_system_sendsms"><![CDATA[Отправить Sms]]></string>
+	<string name="_sys_form_login_input_caption_system_sendsms"><![CDATA[Отправить SMS]]></string>
 	<string name="_sys_form_login_input_caption_system_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Текст отправки]]></string>
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Выполнить]]></string>
@@ -1980,12 +1980,12 @@
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Запомнить меня]]></string>
-	<string name="_sys_form_login_input_sendsms"><![CDATA[Отправить Sms]]></string>
+	<string name="_sys_form_login_input_sendsms"><![CDATA[Отправить SMS]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Вход]]></string>
 	<string name="_sys_form_login_input_code_error_empty"><![CDATA[Обязательное поле.]]></string>
 	<string name="_sys_form_login_input_phone_error_format"><![CDATA[Телефон должен содержать только цифры и начинаться с '+']]></string>
 	<string name="_sys_form_login_input_phone_error_not_unique"><![CDATA[Этот телефон уже кем-то используется]]></string>
-	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.</a>]]></string>
+	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.]]></string>
 	
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string>
 	<string name="_sys_form_report"><![CDATA[Пожаловаться]]></string>
@@ -2513,7 +2513,7 @@
 	<string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Текущий профиль удачно изменён на: <b>{0}</b>]]></string>
 	<string name="_sys_txt_account_suspended"><![CDATA[Ваш аккаунт заблокирован.]]></string>
 	<string name="_sys_txt_account_unconfirmed_email"><![CDATA[Ваш имейл не подтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. <br />Не можете найти письмо? Проверьте папку "спам" или <a href="{0}">снова запросите письмо верификации</a>.]]></string>
-	<string name="_sys_txt_account_unconfirmed_phone"><![CDATA[Ваш телефон не подтверждён. Пожалуйста, подвердите его на  <a href="{0}">странице верификации</a>.]]></string>
+	<string name="_sys_txt_account_unconfirmed_phone"><![CDATA[Ваш телефон не подтверждён. Пожалуйста, подтвердите его на  <a href="{0}">странице верификации</a>.]]></string>
 	<string name="_sys_txt_account_profile_system"><![CDATA[Пожалуйста, <a href="{0}">создайте профиль</a>, чтобы начать пользоваться сайтом.]]></string>
 	<string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA недоступна]]></string>
     <string name="_sys_txt_change_image"><![CDATA[Изменить картинку]]></string>
@@ -2550,7 +2550,7 @@
 	<string name="_sys_txt_error_occured"><![CDATA[Произошла ошибка]]></string>
 	<string name="_sys_txt_forgot_pasword"><![CDATA[Забыли пароль?]]></string>
 	<string name="_sys_txt_forgot_pasword_check_email"><![CDATA[Имейл отослан, пожалуйста, следуйте инструкциям в нём.]]></string>
-	<string name="_sys_txt_forgot_pasword_check_phone"><![CDATA[Sms отослан, подалуйста, следуйте инструкциям в нём.]]></string>
+	<string name="_sys_txt_forgot_pasword_check_phone"><![CDATA[SMS отослано, пожалуйста, следуйте инструкциям в нём.]]></string>
 	<string name="_sys_txt_forgot_pasword_desc"><![CDATA[Введите эл. адрес своего аккаунта, чтобы запросить ссылку на изменение пароля.]]></string>
 	<string name="_sys_txt_forgot_pasword_by_both_desc"><![CDATA[Введите эл. адрес или телефон своего аккаунта, чтобы запросить ссылку на изменение пароля.]]></string>
 	<string name="_sys_txt_forgot_pasword_by_phone_desc"><![CDATA[Введите телефон своего аккаунта, чтобы запросить ссылку на изменение пароля.]]></string>
@@ -2566,7 +2566,7 @@
 	<string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Маркер устарел. Пожалуйста попробуйте снова.]]></string>
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
-    <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к имайлу и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
+    <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к имейлу и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
 	<string name="_sys_txt_login_2fa_description2"><![CDATA[Пожалуйста, введите код проверки из SMS.]]></string>
 	<string name="_sys_txt_login_2fa_sms_text"><![CDATA[Ваш код проверки {0}.]]></string>
 	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>

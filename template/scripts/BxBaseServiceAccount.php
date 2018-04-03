@@ -232,7 +232,7 @@ class BxBaseServiceAccount extends BxDol
                     if ($ret === null) 
                     {
                         $oTwilio = BxDolTwilio::getInstance();
-                        if(!$oTwilio->SendSms($sPhoneNumber,  $sActivationText)){
+                        if(!$oTwilio->sendSms($sPhoneNumber,  $sActivationText)){
                             return MsgBox(_t("_sys_txt_confirm_phone_send_sms_error_occured"));
                         }
                     }
@@ -384,7 +384,7 @@ class BxBaseServiceAccount extends BxDol
                     if ($ret === null) 
                     {
                         $oTwilio = BxDolTwilio::getInstance();
-                        if($oTwilio->SendSms($sPhone,  $sSmsText))
+                        if($oTwilio->sendSms($sPhone,  $sSmsText))
                             $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_phone"));
                         else
                             $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_error_occured"));

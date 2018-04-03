@@ -134,7 +134,7 @@ class BxBaseServiceLogin extends BxDol
             if ($ret === null) 
             {
                 $oTwilio = BxDolTwilio::getInstance();
-                if(!$oTwilio->SendSms($sPhoneNumber,  $sActivationText)){
+                if(!$oTwilio->sendSms($sPhoneNumber,  $sActivationText)){
                     return MsgBox(_t('_sys_txt_login_2fa_sms_error_occured'));
                 }
             }
