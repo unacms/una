@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolPush extends BxDolDb implements iBxDolSingleton
+class BxDolPush extends BxDolFactory implements iBxDolSingleton
 {
     protected $_sAppId;
     protected $_sRestApi;
