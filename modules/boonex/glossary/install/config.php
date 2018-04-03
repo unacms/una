@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_glossary',
     'title' => 'Glossary',
     'note' => 'Glossary module.',
-    'version' => '9.0.8.DEV',
+    'version' => '9.0.0.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

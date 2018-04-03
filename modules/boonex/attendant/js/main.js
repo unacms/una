@@ -45,3 +45,14 @@ BxAttendantPopupWithRecommendedOnProfileAdd.prototype.Show = function () {
     var $this = oBxAttendantPopupWithRecommendedOnProfileAdd;
     $this.ReInitFlickity();
 }
+
+BxAttendantPopupWithRecommendedOnProfileAdd.prototype.OnActionComplete = function (data, e) {
+    if (data.err == false) {
+        var $e = $(e);
+        $e.hide();
+    }
+}
+
+function bx_attendant_conn_action(e, sObj, sAction, iContentId, bConfirm, fOnComplete) {
+    return bx_conn_action(e, sObj, sAction, iContentId, bConfirm, oBxAttendantPopupWithRecommendedOnProfileAdd.OnActionComplete)
+}
