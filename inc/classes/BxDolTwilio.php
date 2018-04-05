@@ -55,16 +55,16 @@ class BxDolTwilio extends BxDolFactory implements iBxDolSingleton
             return true;
         }
         catch (Exception $oException) {
-            $this->writeLog($oException);
+            $this->writeLog($oException->getFile() . ':' . $oException->getLine() . ' ' . $oException->getMessage());
             return false;
         }
     }
     
-    private function writeLog($oContents)
+    private function writeLog($sString)
 	{
-		$file = dirname(__FILE__) . '/bx_twilio.log';   
-		file_put_contents($file, date('m-d H:i:s').": ", FILE_APPEND);            
-		file_put_contents($file, serialize($oContents)."\n", FILE_APPEND);
+		$sFile = dirname(__FILE__) . '/bx_twilio.log';   
+		file_put_contents($sFile, date('m-d-Y H:i:s').": ", FILE_APPEND);            
+		file_put_contents($sFile, $sString."\n", FILE_APPEND);
 	}
 }
 
