@@ -691,7 +691,7 @@
 	<string name="_adm_form_dsc_field_caption_block_header"><![CDATA[Title for the group of fields]]></string>
 	<string name="_adm_form_dsc_field_caption_system"><![CDATA[Field title, displayed in Studio only.]]></string>
 	<string name="_adm_form_dsc_field_checker_error_captcha"><![CDATA[Error message to display if text doesn't match with text on the image]]></string>
-	<string name="_adm_form_dsc_field_checker_params_preg"><![CDATA[Use standard <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>. Example: ^[A-Za-z0-9]{3,16}$]]></string>
+	<string name="_adm_form_dsc_field_checker_params_preg"><![CDATA[Use standard <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>. Example: #^[A-Za-z0-9]{3,16}$#]]></string>
 	<string name="_adm_form_dsc_field_collapsed"><![CDATA[Pack down the group of this field by default]]></string>
 	<string name="_adm_form_dsc_field_html"><![CDATA[Select type of HTML editor]]></string>
 	<string name="_adm_form_dsc_field_info"><![CDATA[Enter field description (optional)]]></string>
