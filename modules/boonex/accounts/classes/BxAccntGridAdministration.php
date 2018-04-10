@@ -261,7 +261,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         $oAccount = BxDolAccount::getInstance($aRow['id']);
         $s = "";
         if ($oAccount)
-            $s = $oAccount->ConfirmationStatus();
+            $s = $oAccount->getCurrentConfirmationStatusValue();
         return parent::_getCellDefault(_t('_bx_accnt_grid_confirmation_status_' . $s), $sKey, $aField, $aRow);
     }
 

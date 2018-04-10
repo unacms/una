@@ -109,7 +109,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         return false;
     }
     
-    public function ConfirmationStatus($iAccountId = false)
+    public function getCurrentConfirmationStatusValue($iAccountId = false)
     {
         $a = $this->getInfo((int)$iAccountId);
         $sTmp = $a['email_confirmed'] . $a['phone_confirmed'];
