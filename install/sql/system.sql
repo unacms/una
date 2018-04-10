@@ -677,7 +677,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionChartView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'post links', NULL, '_sys_acl_action_post_links', '_sys_acl_action_post_links_desc', 0, 3);
+('system', 'post links', NULL, '_sys_acl_action_post_links', '_sys_acl_action_post_links_desc', 0, 0);
 SET @iIdActionPostLinks = LAST_INSERT_ID();
 
 CREATE TABLE `sys_acl_actions_track` (
