@@ -133,6 +133,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'clear_db_cache' => array(
                 'title' => _t('_adm_txt_modules_clear_db_cache'),
             ),
+            'clear_template_cache' => array(
+                'title' => _t('_adm_txt_modules_clear_template_cache'),
+            ),
             'show_conclusion' => array(
                 'title' => _t('_adm_txt_modules_show_conclusion'),
             ),
@@ -870,6 +873,23 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                     unset($GLOBALS[$sKey]);
 
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+    }
+
+    protected function actionClearTemplateCache($sOperation)
+    {
+        $aCaches = array('template', 'css', 'js');
+        $oCacheUtilities = BxDolCacheUtilities::getInstance();
+
+        foreach($aCaches as $sCache) {
+            $aResult = $oCacheUtilities->clear($sCache);
+            if($aResult === false)
+            	continue;
+
+            if(isset($aResult['code']) && $aResult['code'] != 0)
+				return BX_DOL_STUDIO_INSTALLER_FAILED;
+        }
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
     protected function _onInstallBefore()

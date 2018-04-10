@@ -1444,6 +1444,7 @@
 	<string name="_adm_txt_modules_check_module_version"><![CDATA[Check module version:]]></string>
 	<string name="_adm_txt_modules_check_script_version"><![CDATA[Check the script version for compatibility:]]></string>
 	<string name="_adm_txt_modules_clear_db_cache"><![CDATA[Clear database cache:]]></string>
+	<string name="_adm_txt_modules_clear_template_cache"><![CDATA[Clear template cache:]]></string>
 	<string name="_adm_txt_modules_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_txt_modules_disable"><![CDATA[Disable]]></string>
 	<string name="_adm_txt_modules_enable"><![CDATA[Enable]]></string>
