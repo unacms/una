@@ -289,6 +289,60 @@ class BxAclModule extends BxDolModule
      * @page service Service Calls
      * @section bx_acl Paid Levels
      * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-reregister_cart_item reregister_cart_item
+     * 
+     * @code bx_srv('bx_acl', 'reregister_cart_item', [...]); @endcode
+     * 
+     * Reregister a single time payment inside the Paid Levels module. Is called with payment processing module after the payment was reregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemIdOld old item ID.
+     * @param $iItemIdNew new item ID.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return an array with purchased prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxAclModule::serviceReregisterCartItem
+     */
+    /** 
+     * @ref bx_acl-reregister_cart_item "reregister_cart_item"
+     */
+    public function serviceReregisterCartItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
+    {
+        return $this->_serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder, BX_ACL_LICENSE_TYPE_SINGLE);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
+     * @subsubsection bx_acl-reregister_subscription_item reregister_subscription_item
+     * 
+     * @code bx_srv('bx_acl', 'reregister_subscription_item', [...]); @endcode
+     * 
+     * Reregister a subscription (recurring payment) inside the Paid Levels module. Is called with payment processing module after the subscription was reregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemIdOld old item ID.
+     * @param $iItemIdNew new item ID.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return an array with subscribed prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxAclModule::serviceReregisterSubscriptionItem
+     */
+    /** 
+     * @ref bx_acl-reregister_subscription_item "reregister_subscription_item"
+     */
+    public function serviceReregisterSubscriptionItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
+    {
+		return $this->_serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder, BX_ACL_LICENSE_TYPE_RECURRING);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-payments Payments
      * @subsubsection bx_acl-unregister_cart_item unregister_cart_item
      * 
      * @code bx_srv('bx_acl', 'unregister_cart_item', [...]); @endcode
@@ -420,6 +474,19 @@ class BxAclModule extends BxDolModule
             return array();
 
         return $aItem;
+    }
+
+    protected function _serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder, $sType)
+    {
+        $aItemNew = $this->serviceGetCartItem($iItemIdNew);
+        if(empty($aItemNew) || !is_array($aItemNew))
+			return array();
+
+        /*
+         * Note. Membership level cannot be reregistered immediately.
+         * it will be automatically changed in the end of current period.
+         */
+    	return $aItemNew;
     }
 
     protected function _serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)

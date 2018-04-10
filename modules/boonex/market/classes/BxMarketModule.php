@@ -807,6 +807,60 @@ class BxMarketModule extends BxBaseModTextModule
 		return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_RECURRING);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_market Market
+     * @subsection bx_market-payments Payments
+     * @subsubsection bx_market-reregister_cart_item reregister_cart_item
+     * 
+     * @code bx_srv('bx_market', 'reregister_cart_item', [...]); @endcode
+     * 
+     * Reregister a single time payment inside the Market module. Is called with payment processing module after the payment was reregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemIdOld old item ID.
+     * @param $iItemIdNew new item ID.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return an array with purchased prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxMarketModule::serviceReregisterCartItem
+     */
+    /** 
+     * @ref bx_market-reregister_cart_item "reregister_cart_item"
+     */
+    public function serviceReregisterCartItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
+    {
+        return $this->_serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder, BX_MARKET_LICENSE_TYPE_SINGLE);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_market Market
+     * @subsection bx_market-payments Payments
+     * @subsubsection bx_market-reregister_subscription_item reregister_subscription_item
+     * 
+     * @code bx_srv('bx_market', 'reregister_subscription_item', [...]); @endcode
+     * 
+     * Reregister a subscription (recurring payment) inside the Market module. Is called with payment processing module after the subscription was reregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemIdOld old item ID.
+     * @param $iItemIdNew new item ID.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @return an array with subscribed prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxMarketModule::serviceReregisterSubscriptionItem
+     */
+    /** 
+     * @ref bx_market-reregister_subscription_item "reregister_subscription_item"
+     */
+    public function serviceReregisterSubscriptionItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
+    {
+		return $this->_serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder, BX_MARKET_LICENSE_TYPE_RECURRING);
+    }
+
 	/**
      * @page service Service Calls
      * @section bx_market Market
@@ -922,6 +976,29 @@ class BxMarketModule extends BxBaseModTextModule
 		));
 
         return $aItem;
+    }
+
+    protected function _serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder, $sType)
+    {
+        $aItemNew = $this->serviceGetCartItem($iItemIdNew);
+        if(empty($aItemNew) || !is_array($aItemNew))
+			return array();
+
+        if(!$this->_oDb->hasLicenseByOrder($iClientId, $iItemIdOld, $sOrder))
+            return array();
+        
+        if(!$this->_oDb->updateLicense(array('product_id' => $iItemIdNew), array('profile_id' => $iClientId, 'product_id' => $iItemIdOld, 'order' => $sOrder)))
+            return array();
+
+        bx_alert($this->getName(), 'license_reregister', 0, false, array(
+			'product_id_old' => $iItemIdOld,
+        	'product_id_new' => $iItemIdNew,
+			'profile_id' => $iClientId,
+			'order' => $sOrder,
+			'type' => $sType
+		));
+
+        return $aItemNew;
     }
 
     protected function _serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
