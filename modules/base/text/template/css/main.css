@@ -195,10 +195,19 @@ div.bx-base-text-breadcrumb i {
         flex: 0 0 33.25%;
     }
 	
-	.bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase
-	{
+    .bx-layout-column-thin .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
+	   width:calc(100%);
+    }
+
+    .bx-layout-column-half .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase,
+	.bx-layout-column-wide .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
 	   width:calc(50%);
 	}
+
+	#sys_search_results  .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase,
+    .bx-layout-column-fullwidth  .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
+	   width:calc(33%);
+    }
 }
 
 /* view page */
