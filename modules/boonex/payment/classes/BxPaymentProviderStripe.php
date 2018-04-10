@@ -302,9 +302,11 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
             if(strcmp($oSubscription->plan->id, $aItem['name']) !== 0)
                 return $aResultError;
 
-            $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
-                'items' => $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $aItem['id'], $iItemCount)),
-            ));
+            $sItems = $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $aItem['id'], $iItemCount));
+            if(!$this->_oModule->_oDb->updateOrderPending($iPendingId, array('items' => $sItems)))
+                return $aResultError;
+
+            $this->_oModule->callReregisterSubscriptionItem($iModuleId, array($aPending['client_id'], $aPending['seller_id'], $iItemId, $aItem['id'], $aPending['order']));
 
             return array('code' => 0, 'message' => _t('_bx_payment_strp_msg_details_changed'));
         }

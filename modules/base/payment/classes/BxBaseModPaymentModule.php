@@ -245,9 +245,19 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     	return BxDolService::call($mixedModule, 'register_cart_item', $aParams);
     }
 
+    public function callReregisterCartItem($mixedModule, $aParams)
+    {
+    	return BxDolService::call($mixedModule, 'reregister_cart_item', $aParams);
+    }
+
 	public function callRegisterSubscriptionItem($mixedModule, $aParams)
     {
     	return BxDolService::call($mixedModule, 'register_subscription_item', $aParams);
+    }
+    
+    public function callReregisterSubscriptionItem($mixedModule, $aParams)
+    {
+    	return BxDolService::call($mixedModule, 'reregister_subscription_item', $aParams);
     }
 
     public function callUnregisterCartItem($mixedModule, $aParams)
