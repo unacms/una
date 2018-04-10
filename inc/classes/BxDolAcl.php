@@ -622,10 +622,9 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
     /**
      * clear expired membership levels
      */
-    public function maintenance ()
+    public function maintenance()
     {
-        $iDaysToCleanMemLevels = (int) getParam("db_clean_mem_levels");
-        return $this->oDb->maintenance ($iDaysToCleanMemLevels);
+        return $this->oDb->maintenance();
     }
 
     protected function getMemberMembershipInfoCurrent($iProfileId, $iTime = 0)

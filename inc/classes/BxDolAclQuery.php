@@ -366,7 +366,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
         return (int)$this->query($sQuery) > 0;
     }
 
-    function maintenance($iDaysToCleanMemLevels)
+    function maintenance($iDaysToCleanMemLevels = 0)
     {
         $sQuery = $this->prepare("DELETE FROM `sys_acl_levels_members` WHERE `DateExpires` < NOW() - INTERVAL ? DAY", $iDaysToCleanMemLevels);
         if ($iDeleteMemLevels = $this->query($sQuery))
