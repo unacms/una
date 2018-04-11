@@ -1521,6 +1521,7 @@ CREATE TABLE `sys_objects_privacy` (
   `action` varchar(255) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
   `default_group` varchar(255) NOT NULL default '1',
+  `spaces` varchar(255) NOT NULL DEFAULT 'all',
   `table` varchar(255) NOT NULL default '',
   `table_field_id` varchar(255) NOT NULL default '',
   `table_field_author` varchar(255) NOT NULL default '',

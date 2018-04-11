@@ -69,7 +69,7 @@ class BxDolPrivacyQuery extends BxDolDb
         if(empty($this->_sTable) || empty($this->_sFieldId) || empty($this->_sFieldOwnerId))
             return array();
 
-        $sQuery = $this->prepare("SELECT `" . $this->_sFieldOwnerId . "` AS `owner_id`, `" . $sAction . "` AS `group_id` FROM `" . $this->_sTable . "` WHERE `" . $this->_sFieldId . "`=? LIMIT 1", $iObjectId);
+        $sQuery = $this->prepare("SELECT `" . $this->_sFieldId . "` AS `id`, `" . $this->_sFieldOwnerId . "` AS `owner_id`, `" . $sAction . "` AS `group_id` FROM `" . $this->_sTable . "` WHERE `" . $this->_sFieldId . "`=? LIMIT 1", $iObjectId);
 
         $sCacheKey = $this->_sCacheTestedObject . $this->_sTable . '_' . $this->_aObject['action'] . '_' . $iObjectId;
         return $this->fromMemory($sCacheKey, 'getRow', $sQuery);

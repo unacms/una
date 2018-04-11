@@ -78,6 +78,30 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return _t('_Access denied');
     }
 
+    /**
+     * @see iBxDolProfileService::serviceGetSpaceTitle
+     */ 
+    public function serviceGetSpaceTitle()
+    {
+        return '';
+    }
+
+    /**
+     * @see iBxDolProfileService::serviceGetParticipatingProfiles
+     */ 
+    public function serviceGetParticipatingProfiles($iProfileId)
+    {
+        return array();
+    }
+
+    /**
+     * @see iBxDolProfileService::serviceCheckSpacePrivacy
+     */ 
+    public function serviceCheckSpacePrivacy($iContentId)
+    {
+        return _t('_Access denied');
+    }
+    
     public function serviceFormsHelper ()
     {
         return new BxTemplAccountForms();

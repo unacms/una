@@ -2428,6 +2428,8 @@
 	<string name="_sys_ps_group_title_closed"><![CDATA[Закрытая]]></string>
     <string name="_sys_ps_group_title_secret"><![CDATA[Секретная]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[Вам нужно выбрать значение]]></string>
+    <string name="_sys_ps_space_title_friend"><![CDATA[друг]]></string>
+    <string name="_sys_ps_space_title_mask"><![CDATA[{0} ({1})]]></string>
 	<string name="_sys_push_notification_request"><![CDATA[Хотите получать уведомления с сайта {0}?]]></string>   
     <string name="_sys_push_notification_request_yes"><![CDATA[Да]]></string>   
     <string name="_sys_push_notification_request_no"><![CDATA[Нет, спасибо]]></string>

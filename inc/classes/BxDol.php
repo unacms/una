@@ -218,7 +218,26 @@ interface iBxDolProfileService
      * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
      */    
     public function serviceCheckAllowedPostInProfile($iContentId);
-    
+
+    /**
+     * Get profiles, current profile have relation with, like friends, joined groups and events
+     * @return array
+     */
+    public function serviceGetParticipatingProfiles($iProfileId);
+
+    /**
+     * Get space title
+     * @return string
+     */ 
+    public function serviceGetSpaceTitle();
+
+    /**
+     * Check space privacy, when some profile is used for privacy checking of some content
+     * @param $iContentId content ID
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */ 
+    public function serviceCheckSpacePrivacy($iContentId);
+        
     public function serviceProfilesSearch ($sTerm, $iLimit);
     public function serviceFormsHelper ();
     public function serviceActAsProfile ();

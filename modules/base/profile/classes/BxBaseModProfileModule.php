@@ -288,6 +288,33 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $CNF = $this->_oConfig->CNF;
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
+
+    /**
+     * @see iBxDolProfileService::serviceGetSpaceTitle
+     */ 
+    public function serviceGetSpaceTitle()
+    {
+        return _t('_sys_ps_space_title_friend');
+    }
+
+    /**
+     * @see iBxDolProfileService::serviceGetParticipatingProfiles
+     */ 
+    public function serviceGetParticipatingProfiles($iProfileId, $sConnectionObject = 'sys_profiles_friends')
+    {
+        if (!($o = BxDolConnection::getObjectInstance($sConnectionObject)))
+            return array();
+
+        return $o->getConnectedContent($iProfileId, true);
+    }
+    
+    /**
+     * @see iBxDolProfileService::serviceCheckSpacePrivacy
+     */ 
+    public function serviceCheckSpacePrivacy($iContentId)
+    {
+        return $this->serviceCheckAllowedProfileView($iContentId);
+    }
     
     /**
      * @see iBxDolProfileService::serviceCheckAllowedProfileView

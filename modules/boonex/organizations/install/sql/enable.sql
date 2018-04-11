@@ -562,9 +562,9 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 
 -- PRIVACY 
-INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_organizations_allow_view_to', 'bx_organizations', 'view', '_bx_orgs_form_profile_input_allow_view_to', '3', 'bx_organizations_data', 'id', 'author', 'BxOrgsPrivacy', 'modules/boonex/organizations/classes/BxOrgsPrivacy.php'),
-('bx_organizations_allow_view_notification_to', 'bx_organizations', 'view_event', '_bx_orgs_form_profile_input_allow_view_notification_to', '3', 'bx_notifications_events', 'id', 'object_owner_id', 'BxOrgsPrivacyNotifications', 'modules/boonex/organizations/classes/BxOrgsPrivacyNotifications.php');
+INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
+('bx_organizations_allow_view_to', 'bx_organizations', 'view', '_bx_orgs_form_profile_input_allow_view_to', '3', '', 'bx_organizations_data', 'id', 'author', 'BxOrgsPrivacy', 'modules/boonex/organizations/classes/BxOrgsPrivacy.php'),
+('bx_organizations_allow_view_notification_to', 'bx_organizations', 'view_event', '_bx_orgs_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxOrgsPrivacyNotifications', 'modules/boonex/organizations/classes/BxOrgsPrivacyNotifications.php');
 
 
 -- EMAIL TEMPLATES
