@@ -6,7 +6,9 @@ div.bx-tl-view {
 	position: relative;
 }
 .bx-tl-grid-sizer,
-.bx-tl-grid-sizer-dbl {
+.bx-tl-grid-sizer-pnd,
+.bx-tl-grid-sizer-pmd,
+.bx-tl-grid-sizer-pnd-pmd {
 	width: 100%;
 }
 .bx-tl-view-sizer {

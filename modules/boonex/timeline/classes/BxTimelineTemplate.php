@@ -896,10 +896,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
+        $bPinned = (int)$aEvent['pinned'] > 0;
         $bPromoted = (int)$aEvent['promoted'] > 0;
-        $sClass = $bViewItem || !$bViewOutline ? 'bx-tl-view-sizer' : ($bPromoted ? 'bx-tl-grid-sizer-dbl' : 'bx-tl-grid-sizer');
+
+        $sClass = 'bx-tl-view-sizer';
+        if($bViewOutline) {
+            $sClass = 'bx-tl-grid-sizer';
+            if($bPinned)
+            	$sClass .= '-pnd';
+            if($bPromoted)
+            	$sClass .= '-pmd';
+        }
         if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
 			$sClass .= ' ' . $sStylePrefix . '-blink';
+        if($bPinned)
+            $sClass .= ' ' . $sStylePrefix . '-pinned';
         if($bPromoted)
             $sClass .= ' ' . $sStylePrefix . '-promoted';
 
