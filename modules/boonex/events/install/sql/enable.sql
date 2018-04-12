@@ -499,9 +499,9 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_events', 'timeline_repost', @iHandler);
 
 -- PRIVACY 
-INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_events_allow_view_to', 'bx_events', 'view', '_bx_events_form_profile_input_allow_view_to', '3', 'bx_events_data', 'id', 'author', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php'),
-('bx_events_allow_view_notification_to', 'bx_events', 'view_event', '_bx_events_form_profile_input_allow_view_notification_to', '3', 'bx_notifications_events', 'id', 'object_owner_id', 'BxEventsPrivacyNotifications', 'modules/boonex/events/classes/BxEventsPrivacyNotifications.php');
+INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
+('bx_events_allow_view_to', 'bx_events', 'view', '_bx_events_form_profile_input_allow_view_to', '3', '', 'bx_events_data', 'id', 'author', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php'),
+('bx_events_allow_view_notification_to', 'bx_events', 'view_event', '_bx_events_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxEventsPrivacyNotifications', 'modules/boonex/events/classes/BxEventsPrivacyNotifications.php');
 
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES

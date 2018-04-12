@@ -40,6 +40,22 @@ class BxOrgsModule extends BxBaseModGroupsModule
         return parent::serviceGetSearchResultUnit($iContentId, $sUnitTemplate);
     }
 
+    /**
+     * @see BxBaseModProfileModule::serviceGetSpaceTitle
+     */ 
+    public function serviceGetSpaceTitle()
+    {
+        return BxBaseModProfileModule::serviceGetSpaceTitle();
+    }
+    
+    /**
+     * @see iBxDolProfileService::serviceGetParticipatingProfiles
+     */ 
+    public function serviceGetParticipatingProfiles($iProfileId, $sConnectionObject = 'sys_profiles_friends')
+    {
+        return BxBaseModProfileModule::serviceGetParticipatingProfiles($iProfileId, $sConnectionObject);
+    }
+    
     public function servicePrepareFields ($aFieldsProfile)
     {
         return parent::_servicePrepareFields($aFieldsProfile, array('org_cat' => 35), array(

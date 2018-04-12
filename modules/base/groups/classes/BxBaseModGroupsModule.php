@@ -41,6 +41,23 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     }
 
     /**
+     * @see BxBaseModProfileModule::serviceGetSpaceTitle
+     */ 
+    public function serviceGetSpaceTitle()
+    {
+        return _t($this->_oConfig->CNF['T']['txt_sample_single']);
+    }
+    
+    /**
+     * @see iBxDolProfileService::serviceGetParticipatingProfiles
+     */ 
+    public function serviceGetParticipatingProfiles($iProfileId, $sConnectionObject = '')
+    {
+        $sConnectionObject = $this->_oConfig->CNF['OBJECT_CONNECTIONS'];
+        return parent::serviceGetParticipatingProfiles($iProfileId, $sConnectionObject);
+    }
+    
+    /**
      * Check if this module entry can be used as profile
      */
     public function serviceActAsProfile ()

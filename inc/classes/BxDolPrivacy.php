@@ -21,6 +21,10 @@ define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
  * Integration of the content with privacy engine allows site member
  * to organize the access to his content.
  *
+ * In addition to regular privacy groups (Public, Friends), spaces are supported. 
+ * When some space (usually some another profile) is specified as privacy, 
+ * then another profile visibility is used to check the privacy.
+ *
  * Related classes:
  *  BxDolPrivacyQuery - database queries.
  *
@@ -125,8 +129,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
         $aValues = $oPrivacy->getGroups();
 
-        if(isset($aParams['dynamic_groups']) && is_array($aParams['dynamic_groups']))
-            $aValues = array_merge($aValues, $aParams['dynamic_groups']);
+        $aValues = $oPrivacy->addDynamicGroups($aValues, $iOwnerId, $aParams);
+        
+        $aValues = $oPrivacy->addSpaces($aValues, $iOwnerId, $aParams);
 
         $sName = $oPrivacy->convertActionToField($sAction);
 
@@ -152,6 +157,60 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         );
     }
 
+    public function addDynamicGroups($aValues, $iOwnerId, $aParams)
+    {
+        if (isset($aParams['dynamic_groups']) && is_array($aParams['dynamic_groups']))
+            $aValues = array_merge($aValues, $aParams['dynamic_groups']);
+
+        return $aValues;
+    }
+
+    public function addSpaces($aValues, $iOwnerId, $aParams)
+    {
+        if (!$this->_aObject['spaces'])
+            return $aValues;
+
+        if (!($oProfile = BxDolProfile::getInstance($iOwnerId)))
+            return $aValues;
+
+        if (!($aModules = BxDolModuleQuery::getInstance()->getModules()))
+            return $aValues;
+
+        $bProfileProcessed = false;
+        foreach ($aModules as $aModule) {
+            if (!$aModule['enabled'])
+                continue;
+
+            if ('all' != $this->_aObject['spaces'] && false === stripos($this->_aObject['spaces'], $aModule['name']))
+                continue;
+
+            if (!BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+                continue;
+
+            $bActAsProfile = BxDolService::call($aModule['name'], 'act_as_profile');
+            if ($bActAsProfile && $bProfileProcessed)
+                continue;
+            if ($bActAsProfile)
+                $bProfileProcessed = true;
+
+            $a = BxDolService::call($aModule['name'], 'get_participating_profiles', array($oProfile->id()));
+            $aSpaces = array();
+            foreach ($a as $iProfileId) {
+                if (!($o = BxDolProfile::getInstance($iProfileId)))
+                    continue;
+                $sTitle = BxDolService::call($aModule['name'], 'get_space_title');
+                $aSpaces[-$iProfileId] = array('key' => -$iProfileId, 'value' => _t('_sys_ps_space_title_mask', $o->getDisplayName(), $sTitle));
+            }
+
+            if ($aSpaces) {
+                $aItem = array(array('key' => '', 'value' => '----'));
+                $aValues = array_merge($aValues, $aItem, array_values($aSpaces));
+            }
+        }
+        
+        return $aValues;
+    }
+    
     /**
      * Get database field name for action.
      *
@@ -251,6 +310,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if(isAdmin() || $iViewerId == $aObject['owner_id'])
             return true;
 
+        if ($aObject['group_id'] < 0)
+            return $this->checkSpace($aObject, $iViewerId);
+
         $aGroup = $this->_oDb->getGroupsBy(array('type' => 'id', 'id' => $aObject['group_id']));
         if(!empty($aGroup) && is_array($aGroup) && (int)$aGroup['active'] == 1 && !empty($aGroup['check'])) {
             $sCheckMethod = $this->getCheckMethod($aGroup['check']);
@@ -259,6 +321,15 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         }
 
         return $this->isDynamicGroupMember($aObject['group_id'], $aObject['owner_id'], $iViewerId, $iObjectId);
+    }
+
+    public function checkSpace($aObject, $iViewerId)
+    {
+        $oProfile = BxDolProfile::getInstance(-$aObject['group_id']);
+        if (!$oProfile)
+            return false;
+
+        return CHECK_ACTION_RESULT_ALLOWED === BxDolService::call($oProfile->getModule(), 'check_space_privacy', array($oProfile->getContentId()));
     }
 
     public function checkMeOnly($iOwnerId, $iViewerId)
