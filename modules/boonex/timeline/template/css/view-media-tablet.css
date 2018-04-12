@@ -1,10 +1,13 @@
 @media (min-width:720px) and (max-width:1024px) {
 	/*--- View Block Style ---*/
-	.bx-tl-grid-sizer { 
+	.bx-tl-grid-sizer,
+	.bx-tl-grid-sizer-dbl { 
 		width: 50%;
 	}
 	.bx-layout-column-half .bx-tl-grid-sizer, 
-	.bx-layout-column-thin .bx-tl-grid-sizer {
+	.bx-layout-column-thin .bx-tl-grid-sizer,
+	.bx-layout-column-half .bx-tl-grid-sizer-dbl, 
+    .bx-layout-column-thin .bx-tl-grid-sizer-dbl {
 		width: 100%;
 	}
 

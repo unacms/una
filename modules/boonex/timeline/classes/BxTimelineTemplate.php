@@ -893,14 +893,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(isset($aBrowseParams['type']) && in_array($aBrowseParams['type'], array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
             $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
-        $sClassOwner = $bTmplVarsOwnerActions ? $sStylePrefix . '-io-with-actions' : '';
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
-        $sClass = $bViewItem || !$bViewOutline ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer';
+        $bPromoted = (int)$aEvent['promoted'] > 0;
+        $sClass = $bViewItem || !$bViewOutline ? 'bx-tl-view-sizer' : ($bPromoted ? 'bx-tl-grid-sizer-dbl' : 'bx-tl-grid-sizer');
         if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
 			$sClass .= ' ' . $sStylePrefix . '-blink';
-			
+        if($bPromoted)
+            $sClass .= ' ' . $sStylePrefix . '-promoted';
+
+        $sClassOwner = $bTmplVarsOwnerActions ? $sStylePrefix . '-io-with-actions' : '';
+
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  		$sLocation = $oMetatags->locationsString($aEvent['id']);
  

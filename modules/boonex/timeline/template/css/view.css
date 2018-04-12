@@ -5,7 +5,8 @@
 div.bx-tl-view {
 	position: relative;
 }
-.bx-tl-grid-sizer {
+.bx-tl-grid-sizer,
+.bx-tl-grid-sizer-dbl {
 	width: 100%;
 }
 .bx-tl-view-sizer {
@@ -177,6 +178,11 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
 	margin-right: 1.25rem;
 } 
 
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span img {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
 
 /*--- Item Style: Timeline ---*/
 div.bx-tl-view-timeline div.bx-tl-items:before {
