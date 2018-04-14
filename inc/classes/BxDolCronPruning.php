@@ -62,17 +62,22 @@ class BxDolCronPruning extends BxDolCron
      */
     protected function cleanTmpFolders()
     {
-        $iTmpFileLife = 2592000;  // one month
         $aDirsToClean = array(
-            BX_DIRECTORY_PATH_TMP,
-            BX_DIRECTORY_PATH_CACHE,
-            BX_DIRECTORY_PATH_CACHE_PUBLIC,
+            array('dir' => BX_DIRECTORY_PATH_TMP, 'prefix' => '', 'file_life_time' => 2592000),
+            array('dir' => BX_DIRECTORY_PATH_CACHE, 'prefix' => '', 'file_life_time' => 2592000),
+            array('dir' => BX_DIRECTORY_PATH_CACHE_PUBLIC, 'prefix' => '', 'file_life_time' => 3600),
+            array('dir' => BX_DIRECTORY_PATH_CACHE_PUBLIC, 'prefix' => parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST) . '_', 'file_life_time' => 86400),
         );
 
         $iNumTmp = 0;
         $iNumDel = 0;
 
-        foreach ($aDirsToClean as $sDir) {
+        foreach ($aDirsToClean as $a) {
+
+            $sDir = $a['dir'];
+            $iTmpFileLife = $a['file_life_time'];
+            $sPrefix = $a['prefix'];
+            $sPrefixLen = strlen($a['prefix']);
 
             if (!($h = opendir($sDir)))
                 continue;
@@ -80,6 +85,9 @@ class BxDolCronPruning extends BxDolCron
             while ($sFile = readdir($h)) {
 
                 if ('.' == $sFile || '..' == $sFile || '.' == $sFile[0])
+                    continue;
+
+                if ($sPrefix && 0 !== strncmp($sFile, $sPrefix, $sPrefixLen))
                     continue;
 
                 ++$iNumTmp;
