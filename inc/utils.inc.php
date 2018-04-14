@@ -497,6 +497,14 @@ function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
     fclose($rFile);
 }
 
+function dbgTiming($sStartMicrotime)
+{
+    $i1 = explode(' ', microtime ());
+    $i2 = explode(' ', $sStartMicrotime);
+    $iTime = ($i1[0]+$i1[1]) - ($i2[0]+$i2[1]);
+    return round($iTime, 3) . ' sec';
+}
+
 function echoJson($a)
 {
 	header('Content-type: text/html; charset=utf-8');
