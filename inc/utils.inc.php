@@ -918,8 +918,10 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
         if (isset($aMatch[1]))
             $sCharset = $aMatch[1];
 
-        if (preg_match("/<title[^>]*>(.*)<\/title>/i", $sContent, $aMatch))
-            $aResult['title'] = $aMatch[1];
+        $sContent = preg_replace("/<script[^>]*>(.*?)<\/script>/i", '', $sContent);
+        $sContent = preg_replace("/<style[^>]*>(.*?)<\/style>/i", '', $sContent);
+        if (preg_match("/<title[^>]*>(.*?)<\/title>/i", $sContent, $aMatch))
+            $aResult['title'] = strip_tags($aMatch[1]);
         else
             $aResult['title'] = parse_url($sSourceUrl, PHP_URL_HOST);
 
