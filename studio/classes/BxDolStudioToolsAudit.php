@@ -239,8 +239,9 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function requirementsPHP($bEcho = true, &$aOutputMessages = null)
     {
-        $a = unserialize(file_get_contents("http://www.php.net/releases/index.php?serialize=1"));
-        $sLatestPhpVersion = $a[5]['version'];
+        $sHttpCode = null; 
+        $s = bx_file_get_contents('http://php.net/releases/index.php?serialize=1', array(), 'get', array(), $sHttpCode, array(), 20, array(CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4));
+        $sLatestPhpVersion = $s && ($a = unserialize($s)) ? $a[5]['version'] : '';
 
         if (version_compare(phpversion(), "5.4", ">=") == 1)
             unset($this->aPhpSettings['short_open_tag']);
