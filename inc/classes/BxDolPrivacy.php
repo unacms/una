@@ -176,7 +176,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if (!($aModules = BxDolModuleQuery::getInstance()->getModules()))
             return $aValues;
 
-        $bProfileProcessed = false;
+        $bProfileProcessed = true; // don't allow to post to profiles for now
         foreach ($aModules as $aModule) {
             if (!$aModule['enabled'])
                 continue;
@@ -194,17 +194,17 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 $bProfileProcessed = true;
 
             $a = BxDolService::call($aModule['name'], 'get_participating_profiles', array($oProfile->id()));
-            $aSpaces = array();
+            $aSpaces = array();            
             foreach ($a as $iProfileId) {
                 if (!($o = BxDolProfile::getInstance($iProfileId)))
                     continue;
-                $sTitle = BxDolService::call($aModule['name'], 'get_space_title');
-                $aSpaces[-$iProfileId] = array('key' => -$iProfileId, 'value' => _t('_sys_ps_space_title_mask', $o->getDisplayName(), $sTitle));
+                $aSpaces[-$iProfileId] = array('key' => -$iProfileId, 'value' => $o->getDisplayName());
             }
 
             if ($aSpaces) {
-                $aItem = array(array('key' => '', 'value' => '----'));
-                $aValues = array_merge($aValues, $aItem, array_values($aSpaces));
+                $aItemStart = array(array('type' => 'group_header', 'value' => mb_strtoupper(BxDolService::call($aModule['name'], 'get_space_title'))));
+                $aItemEnd = array(array('type' => 'group_end'));
+                $aValues = array_merge($aValues, $aItemStart, array_values($aSpaces), $aItemEnd);
             }
         }
         
