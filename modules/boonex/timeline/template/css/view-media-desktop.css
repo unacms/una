@@ -1,29 +1,26 @@
 @media (min-width: 1024px) {
 	/*--- View Block Style ---*/
-	.bx-tl-grid-sizer,
-	.bx-tl-grid-sizer-pnd,
-    .bx-tl-grid-sizer-pmd,
-    .bx-tl-grid-sizer-pnd-pmd {
+	.bx-tl-grid-sizer {
 		width: 33.3%;
 	}
+    .bx-layout-column-wide .bx-tl-grid-sizer,
+    .bx-layout-column-half .bx-tl-grid-sizer {
+       width: 50%;
+    }
+    .bx-layout-column-thin .bx-tl-grid-sizer {
+       width: 100%;
+    }
 
-	.bx-layout-column-wide .bx-tl-grid-sizer,
-	.bx-layout-column-wide .bx-tl-grid-sizer-pnd,
-	.bx-layout-column-wide .bx-tl-grid-sizer-pmd,
-	.bx-layout-column-wide .bx-tl-grid-sizer-pnd-pmd,
-	.bx-layout-column-half .bx-tl-grid-sizer,
-    .bx-layout-column-half .bx-tl-grid-sizer-pnd,
-    .bx-layout-column-half .bx-tl-grid-sizer-pmd,
-    .bx-layout-column-half .bx-tl-grid-sizer-pnd-pmd {
-		width: 50%;
-	}
-
-	.bx-layout-column-thin .bx-tl-grid-sizer,
-	.bx-layout-column-thin .bx-tl-grid-sizer-pnd,
-	.bx-layout-column-thin .bx-tl-grid-sizer-pmd,
-	.bx-layout-column-thin .bx-tl-grid-sizer-pnd-pmd {
-		width: 100%;
-	}
+    .bx-tl-grid-item-sizer {
+       width: 33.3%;
+    }
+    .bx-layout-column-wide .bx-tl-grid-item-sizer,
+    .bx-layout-column-half .bx-tl-grid-item-sizer {
+        width: 50%;
+    }
+    .bx-layout-column-thin .bx-tl-item-grid-sizer {
+        width: 100%;
+    }
 
 	/*--- Timeline Item Style ---*/
 	div.bx-tl-view-timeline div.bx-tl-item-cnt {

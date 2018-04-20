@@ -5,12 +5,14 @@
 div.bx-tl-view {
 	position: relative;
 }
-.bx-tl-grid-sizer,
-.bx-tl-grid-sizer-pnd,
-.bx-tl-grid-sizer-pmd,
-.bx-tl-grid-sizer-pnd-pmd {
+
+.bx-tl-grid-sizer {
 	width: 100%;
 }
+.bx-tl-grid-item-sizer {
+    width: 100%;
+}
+
 .bx-tl-view-sizer {
 	width: 100%;
 }
