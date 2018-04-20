@@ -26,8 +26,6 @@
 	<string name="_bx_timeline_form_post_display_add_profile"><![CDATA[Write Profile Post]]></string>
 	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Edit Post]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
-	<string name="_bx_timeline_form_post_input_owner_id"><![CDATA[Context]]></string>
-	<string name="_bx_timeline_form_post_input_owner_id_err"><![CDATA[The Context field is essential. Please select some value.]]></string>
 	<string name="_bx_timeline_form_post_input_owner_id_own"><![CDATA[Your profile]]></string>
 	<string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[Following {0}]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Action]]></string>

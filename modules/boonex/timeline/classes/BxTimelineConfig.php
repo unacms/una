@@ -13,6 +13,8 @@ bx_import('BxDolPrivacy');
 
 class BxTimelineConfig extends BxBaseModNotificationsConfig
 {
+    protected $_aTypeToFormDisplay;
+
     protected $_bAllowEdit;
     protected $_bAllowDelete;
     protected $_bShowAll;
@@ -80,6 +82,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',
         		'txt_sample_vote_single' => '_bx_timeline_txt_sample_vote_single',
             ),
+        );
+
+        $this->_aTypeToFormDisplay = array(
+            BX_BASE_MOD_NTFS_TYPE_OWNER => 'form_display_post_add_profile',
+            BX_BASE_MOD_NTFS_TYPE_PUBLIC => 'form_display_post_add_public',
+            BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS => 'form_display_post_add'
         );
 
         $this->_aPrefixes = array(
@@ -243,6 +251,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isShowAll()
     {
         return $this->_bShowAll;
+    }
+
+    public function getPostFormDisplay($sType)
+    {
+        if(empty($sType) || !array_key_exists($sType, $this->_aTypeToFormDisplay))
+            $sType = BX_TIMELINE_TYPE_DEFAULT;
+
+        return $this->_aTypeToFormDisplay[$sType];
     }
 
     public function getUploaders($sType)

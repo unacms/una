@@ -343,8 +343,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $bNext = true;
         }
 
-        $iEvents = count($aEvents);
         $sContent = '';
+        $sContent .= $this->getSizer($aParams);
+
+        $iEvents = count($aEvents);
         if($bViewTimeline && $iEvents <= 0)
         	$sContent .= $this->getDividerToday();
 
@@ -415,6 +417,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => array()
             ),
             'content' => _t('_bx_timeline_txt_today')
+        ));
+    }
+
+    public function getSizer($aParams)
+    {
+        if($aParams['view'] != BX_TIMELINE_VIEW_OUTLINE)
+            return '';
+
+        return $this->parseHtmlByName('sizer_' . $aParams['view'] . '.html', array(
+        	'style_prefix' => $this->_oConfig->getPrefix('style')
         ));
     }
 
@@ -899,13 +911,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bPinned = (int)$aEvent['pinned'] > 0;
         $bPromoted = (int)$aEvent['promoted'] > 0;
 
-        $sClass = 'bx-tl-view-sizer';
+        $sClass = $sStylePrefix . '-view-sizer';
         if($bViewOutline) {
-            $sClass = 'bx-tl-grid-sizer';
-            if($bPinned)
-            	$sClass .= '-pnd';
-            if($bPromoted)
-            	$sClass .= '-pmd';
+            $sClass = $sStylePrefix . '-grid-item-sizer';
+            if($bPinned || $bPromoted) {
+                $sClass .= ' ' . $sStylePrefix . '-gis';
+
+                if($bPinned)
+            	    $sClass .= '-pnd';
+                if($bPromoted)
+                	$sClass .= '-pmd';
+            }
         }
         if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
 			$sClass .= ' ' . $sStylePrefix . '-blink';

@@ -32,10 +32,16 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
+                $iOwnerId = $oAlert->iSender;
+                if($iObjectPrivacyView < 0) {
+                    $iOwnerId = abs($iObjectPrivacyView);
+                    $iObjectPrivacyView = $this->_oModule->_oConfig->getPrivacyViewDefault('object');
+                }
+
                 $sContent = !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : '';
 
                 $iId = $this->_oModule->_oDb->insertEvent(array(
-                    'owner_id' => $oAlert->iSender,
+                    'owner_id' => $iOwnerId,
                     'type' => $oAlert->sUnit,
                     'action' => $oAlert->sAction,
                     'object_id' => $oAlert->iObject,

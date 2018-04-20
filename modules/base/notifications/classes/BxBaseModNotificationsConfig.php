@@ -149,7 +149,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 
     public function getPrivacyViewDefault($sType)
     {
-        return isset($this->_aPrivacyViewDefault[$sType]) ? $this->_aPrivacyViewDefault[$sType] : BX_DOL_PG_ALL;
+        return isset($this->_aPrivacyViewDefault[$sType]) ? (int)$this->_aPrivacyViewDefault[$sType] : (int)BX_DOL_PG_ALL;
     }
 }
 

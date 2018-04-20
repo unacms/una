@@ -32,35 +32,6 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 		$this->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'post/';
         
 		$this->aInputs['owner_id']['value'] = $iOwnerId;
-        if(!$this->_bPublicMode && !$this->_bProfileMode) {
-            $this->aInputs['owner_id']['values'] = array(
-                array ('key' => $iUserId, 'value' => _t('_bx_timeline_form_post_input_owner_id_own')),
-            );
-            
-            $oProfileQuery = BxDolProfileQuery::getInstance();
-
-            $sConnections = $this->_oModule->_oConfig->getObject('conn_subscriptions');
-            $aConnections = BxDolConnection::getObjectInstance($sConnections)->getConnectedContent($iUserId);
-
-            $aCnnGroups = array();
-            foreach($aConnections as $iId) {
-                $aProfileInfo = $oProfileQuery->getInfoById($iId);
-                if(empty($aProfileInfo) || !is_array($aProfileInfo))
-                    continue;
-
-                $aCnnGroups[$aProfileInfo['type']][] = $aProfileInfo['id'];
-            }
-
-            $oProfile = BxDolProfile::getInstance();
-            foreach($aCnnGroups as $sCnnGroup => $aCnnGroup) {
-                $this->aInputs['owner_id']['values'][] = array('type' => 'group_header', 'value' => _t('_bx_timeline_form_post_input_owner_id_following_group', _t('_' . $sCnnGroup)));
-                foreach($aCnnGroup as $iId)
-                    $this->aInputs['owner_id']['values'][] = array('key' => $iId, 'value' => $oProfile->getDisplayName($iId));
-                $this->aInputs['owner_id']['values'][] = array('type' => 'group_end');
-            }
-        }
-        else
-            $this->aInputs['owner_id']['type'] = 'hidden';
 
         if(isset($this->aInputs['text'])) {
             if(empty($this->aInputs['text']['attrs']) || !is_array($this->aInputs['text']['attrs']))
@@ -74,10 +45,18 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
             )));
 
-            if($this->_bPublicMode || ($this->_bProfileMode && $iOwnerId != $iUserId))
-                foreach($this->aInputs['object_privacy_view']['values'] as $iKey => $aValue)
-                    if($aValue['key'] !== BX_DOL_PG_ALL)
-                        unset($this->aInputs['object_privacy_view']['values'][$iKey]);
+            if($this->_bPublicMode || $this->_bProfileMode)
+                foreach($this->aInputs['object_privacy_view']['values'] as $iKey => $aValue) {
+                    //--- Show 'Public' privacy group only in Public and Profile (for Not Owner) post forms. 
+                    if(($this->_bPublicMode || ($this->_bProfileMode && $iOwnerId != $iUserId)) && isset($aValue['key']) && $aValue['key'] == BX_DOL_PG_ALL)
+                        continue;
+
+                    //--- Show a default privacy groups Profile (for Owner) post form. 
+                    if($this->_bProfileMode && $iOwnerId == $iUserId && isset($aValue['key']) && (int)$aValue['key'] >= 0)
+                        continue;
+
+                    unset($this->aInputs['object_privacy_view']['values'][$iKey]);
+                }
         }
 
         if(isset($this->aInputs['link']))

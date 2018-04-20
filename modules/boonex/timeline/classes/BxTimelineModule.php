@@ -279,8 +279,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function actionGetPostForm()
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+        $sType = bx_process_input(bx_get('type'));
 
-        echoJson($this->getFormPost());
+        echoJson($this->getFormPost(array(
+            'type' => $sType,
+            'form_display' => $this->_oConfig->getPostFormDisplay($sType)
+        )));
     }
 
     public function actionGetEditForm($iId)
@@ -617,8 +621,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$iProfileId)
             return array();
 
+        $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
         return $this->_getBlockPost($iProfileId, array(
-        	'form_display' => 'form_display_post_add_profile'
+        	'type' => $sType,
+        	'form_display' => $this->_oConfig->getPostFormDisplay($sType)
         ));
     }
 
@@ -653,9 +659,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		if(empty($oProfile))
 			return array();
 
-		return $this->_getBlockPost($oProfile->id(), array(
-		    'type' => BX_BASE_MOD_NTFS_TYPE_OWNER,
-			'form_display' => 'form_display_post_add_profile'
+        $iProfileId = $oProfile->id();
+        $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
+		return $this->_getBlockPost($iProfileId, array(
+		    'type' => $sType,
+			'form_display' => $this->_oConfig->getPostFormDisplay($sType)
 		));
     }
 
@@ -679,9 +687,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetBlockPostHome()
     {
         $iProfileId = 0;
+        $sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC;
         return $this->_getBlockPost($iProfileId, array(
-        	'type' => BX_BASE_MOD_NTFS_TYPE_PUBLIC,
-            'form_display' => 'form_display_post_add_public'
+        	'type' => $sType,
+            'form_display' => $this->_oConfig->getPostFormDisplay($sType)
         ));
     }
 
@@ -708,9 +717,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return '';
 
         $iProfileId = $this->getProfileId();
+        $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
 		return $this->_getBlockPost($iProfileId, array(
-		    'type' => BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS,
-			'form_display' => 'form_display_post_add'
+		    'type' => $sType,
+			'form_display' => $this->_oConfig->getPostFormDisplay($sType)
 		));
     }
 
@@ -1524,10 +1534,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if($bText)
             	$aContent['text'] = $sText;
 
-            //--- Process Privacy ---//
+            //--- Process Context and Privacy ---//
+            $iOwnerId = (int)$oForm->getCleanValue('owner_id');
             $iObjectPrivacyView = (int)$oForm->getCleanValue('object_privacy_view');
+            $iObjectPrivacyViewDefault = $this->_oConfig->getPrivacyViewDefault('object');
             if(empty($iObjectPrivacyView))
-                $iObjectPrivacyView = $this->_oConfig->getPrivacyViewDefault('object');
+                $iObjectPrivacyView = $iObjectPrivacyViewDefault;
+            else if($iObjectPrivacyView < 0) {
+                $iOwnerId = abs($iObjectPrivacyView);
+                $iObjectPrivacyView = $iObjectPrivacyViewDefault;
+            }
 
             //--- Process Link ---//
             $aLinkIds = $oForm->getCleanValue('link');
@@ -1554,6 +1570,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $iDate = time();
 
             $iId = $oForm->insert(array(
+                'owner_id' => $iOwnerId,
                 'object_id' => $iUserId,
                 'object_privacy_view' => $iObjectPrivacyView,
                 'content' => serialize($aContent),
