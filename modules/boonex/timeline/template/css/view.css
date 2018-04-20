@@ -138,6 +138,10 @@ div.bx-tl-item-content {
 	position: relative;
     text-align: left;
 }
+div.bx-tl-item-content form {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
 div.bx-tl-item-content div.bx-tl-title {
 	text-overflow: ellipsis;
     overflow: hidden;

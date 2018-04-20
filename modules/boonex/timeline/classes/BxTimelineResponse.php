@@ -59,9 +59,17 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
-                $sContent = !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : '';
+                $aParamsSet = array(
+                	'content' => !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : ''
+                );
 
-                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iObjectPrivacyView, 'content' => $sContent), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                if($iObjectPrivacyView < 0)
+                    $aParamsSet = array_merge($aParamsSet, array(
+                        'owner_id' => abs($iObjectPrivacyView),
+                        'object_privacy_view' => $this->_oModule->_oConfig->getPrivacyViewDefault('object'), 
+                    ));
+                
+                $this->_oModule->_oDb->updateEvent($aParamsSet, array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:

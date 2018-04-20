@@ -1649,15 +1649,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if($bText)
             	$aContent['text'] = $sText;
 
-            //--- Process Privacy ---//
-            $iObjectPrivacyView = (int)$oForm->getCleanValue('object_privacy_view');
-            if(empty($iObjectPrivacyView))
-                $iObjectPrivacyView = $this->_oConfig->getPrivacyViewDefault('object');
-
             $aValsToAdd = array(
-            	'object_privacy_view' => $iObjectPrivacyView,
             	'content' => serialize($aContent)
             );
+
+            //--- Process Privacy ---//
+            $iObjectPrivacyView = (int)$oForm->getCleanValue('object_privacy_view');
+            $iObjectPrivacyViewDefault = $this->_oConfig->getPrivacyViewDefault('object');
+            if(empty($iObjectPrivacyView))
+                $aValsToAdd = array_merge($aValsToAdd, array(
+                    'object_privacy_view' => $iObjectPrivacyViewDefault
+                ));
+            else if($iObjectPrivacyView < 0) 
+                $aValsToAdd = array_merge($aValsToAdd, array(
+                    'owner_id' => abs($iObjectPrivacyView),
+                    'object_privacy_view' => $iObjectPrivacyViewDefault
+                ));
 
             //--- Process Date ---//
             if(isset($oForm->aInputs['date'])) {

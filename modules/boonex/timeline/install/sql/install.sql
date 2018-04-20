@@ -356,12 +356,11 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_edit', 'action', 2147483647, 1, 2),
 ('bx_timeline_post_edit', 'owner_id', 2147483647, 1, 3),
 ('bx_timeline_post_edit', 'text', 2147483647, 1, 4),
-('bx_timeline_post_edit', 'object_privacy_view', 2147483647, 1, 5),
-('bx_timeline_post_edit', 'date', 192, 1, 6),
-('bx_timeline_post_edit', 'location', 2147483647, 1, 7),
-('bx_timeline_post_edit', 'controls', 2147483647, 1, 8),
-('bx_timeline_post_edit', 'do_submit', 2147483647, 1, 9),
-('bx_timeline_post_edit', 'do_cancel', 2147483647, 1, 10);
+('bx_timeline_post_edit', 'date', 192, 1, 5),
+('bx_timeline_post_edit', 'location', 2147483647, 1, 6),
+('bx_timeline_post_edit', 'controls', 2147483647, 1, 7),
+('bx_timeline_post_edit', 'do_submit', 2147483647, 1, 8),
+('bx_timeline_post_edit', 'do_cancel', 2147483647, 1, 9);
 
 -- Forms -> Attach link
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
