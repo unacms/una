@@ -146,6 +146,15 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['sorting'] = 'featured';
                 break;
 
+            case 'recommended':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->aCurrent['title'] = _t('_bx_events_page_title_browse_recommended');
+                $this->aCurrent['restriction']['featured']['value'] = '0';
+                $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'recommended';
+                $this->_setConditionsForRecommended();
+                break;    
+                
             case 'top':
                 $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_events_page_title_browse_top');
@@ -174,6 +183,8 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
         switch ($this->aCurrent['sorting']) {
         case 'featured':
             return array('order' => ' ORDER BY `bx_events_data`.`featured` DESC ');
+        case 'recommended':
+            return array('order' => ' ORDER BY RAND() ');
         case 'none':
             return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
         case 'top':

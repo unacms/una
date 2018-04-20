@@ -74,6 +74,8 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_events_num_connections_quick',
             
             'PARAM_SEARCHABLE_FIELDS' => 'bx_events_searchable_fields',
+            'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_events_per_page_browse_showcase',
+            'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_events_per_page_browse_recommended',
 
             // objects
             'OBJECT_STORAGE' => 'bx_events_pics',
