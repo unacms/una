@@ -63,12 +63,17 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 	'content' => !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : ''
                 );
 
-                if($iObjectPrivacyView < 0)
+                if($iObjectPrivacyView > 0)
+                    $aParamsSet = array_merge($aParamsSet, array(
+                        'owner_id' => $oAlert->iSender,
+                        'object_privacy_view' => $iObjectPrivacyView
+                    ));
+                else if($iObjectPrivacyView < 0)
                     $aParamsSet = array_merge($aParamsSet, array(
                         'owner_id' => abs($iObjectPrivacyView),
-                        'object_privacy_view' => $this->_oModule->_oConfig->getPrivacyViewDefault('object'), 
+                        'object_privacy_view' => $this->_oModule->_oConfig->getPrivacyViewDefault('object') 
                     ));
-                
+
                 $this->_oModule->_oDb->updateEvent($aParamsSet, array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
                 break;
 
