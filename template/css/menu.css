@@ -31,7 +31,10 @@ ul.bx-menu-hor {
 }
 .bx-menu-hor li img {
     height:1.6rem;
-    width:auto;    
+    width:auto;
+
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 /* --------------- horizontal inline menu with 'special' buttons */
