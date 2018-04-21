@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_posts';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_posts' OR `object` IN('bx_posts_create_entry', 'bx_posts_edit_entry', 'bx_posts_delete_entry', 'bx_posts_view_entry', 'bx_posts_view_entry_comments', 'bx_posts_home', 'bx_posts_popular', 'bx_posts_updated', 'bx_posts_author', 'bx_posts_search', 'bx_posts_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_posts' OR `object` IN('bx_posts_create_entry', 'bx_posts_edit_entry', 'bx_posts_delete_entry', 'bx_posts_view_entry', 'bx_posts_view_entry_comments', 'bx_posts_home', 'bx_posts_popular', 'bx_posts_updated', 'bx_posts_author', 'bx_posts_context', 'bx_posts_search', 'bx_posts_manage');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_posts';

@@ -68,6 +68,7 @@
 	<string name="_bx_posts_page_title_browse"><![CDATA[Posts]]></string>
 	<string name="_bx_posts_page_title_search_results"><![CDATA[Posts matching "{0}"]]></string>
 	<string name="_bx_posts_page_title_browse_by_author"><![CDATA[Posts of {display_name}]]></string>
+	<string name="_bx_posts_page_title_browse_by_context"><![CDATA[Posts in {display_name}]]></string>
 	<string name="_bx_posts_page_title_browse_featured"><![CDATA[Featured Posts]]></string>
     <string name="_bx_posts_page_title_browse_recent"><![CDATA[Latest Posts]]></string>
     <string name="_bx_posts_page_title_browse_popular"><![CDATA[Popular Posts]]></string>
@@ -104,10 +105,14 @@
     <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>
     <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts by {display_name}]]></string>
+    <string name="_bx_posts_page_title_sys_entries_in_context"><![CDATA[Posts in context]]></string>
+    <string name="_bx_posts_page_title_entries_in_context"><![CDATA[Posts in {display_name}]]></string>
     <string name="_bx_posts_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_posts_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts by <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>   
+    <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>
+    <string name="_bx_posts_page_block_title_entries_in_context"><![CDATA[Posts in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_posts_page_block_title_sys_entries_in_context"><![CDATA[Posts in context]]></string>
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Posts actions]]></string>
     <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Posts' Comments]]></string>
 	<string name="_bx_posts_page_title_sys_manage"><![CDATA[Manage Own]]></string>
@@ -155,6 +160,8 @@
     <string name="_bx_posts_menu_item_title_system_view_entry_comments"><![CDATA[Post Comments]]></string>
     <string name="_bx_posts_menu_item_title_system_view_entries_author"><![CDATA[Posts]]></string>
     <string name="_bx_posts_menu_item_title_view_entries_author"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_menu_item_title_system_view_entries_in_context"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_menu_item_title_view_entries_in_context"><![CDATA[Posts]]></string>
     <string name="_bx_posts_menu_title_entries_my"><![CDATA[My Posts Action Menu]]></string>
     <string name="_bx_posts_menu_set_title_entries_my"><![CDATA[My Posts Menu]]></string>
 	<string name="_bx_posts_menu_item_title_system_manage_my_posts"><![CDATA[My posts]]></string>

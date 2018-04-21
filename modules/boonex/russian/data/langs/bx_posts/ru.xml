@@ -68,6 +68,7 @@
 	<string name="_bx_posts_page_title_browse"><![CDATA[Публикации]]></string>
 	<string name="_bx_posts_page_title_search_results"><![CDATA[Публикации, соответствующие "{0}"]]></string>
 	<string name="_bx_posts_page_title_browse_by_author"><![CDATA[Публикации {display_name}]]></string>
+	<string name="_bx_posts_page_title_browse_by_context"><![CDATA[Публикации в контексте: {display_name}]]></string>
 	<string name="_bx_posts_page_title_browse_featured"><![CDATA[Продвинутые публикации]]></string>
     <string name="_bx_posts_page_title_browse_recent"><![CDATA[Недавние публикации]]></string>
     <string name="_bx_posts_page_title_browse_popular"><![CDATA[Популярные публикации]]></string>
@@ -104,10 +105,14 @@
     <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Публикации автора]]></string>
     <string name="_bx_posts_page_title_entries_of_author"><![CDATA[{display_name} - Публикации]]></string>
+    <string name="_bx_posts_page_title_sys_entries_in_context"><![CDATA[Публикации в контексте]]></string>
+    <string name="_bx_posts_page_title_entries_in_context"><![CDATA[Публикации в контексте - {display_name}]]></string>
     <string name="_bx_posts_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_posts_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Публикации]]></string>   
-    <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Публикации автора]]></string>   
+    <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Публикации автора]]></string>
+    <string name="_bx_posts_page_block_title_entries_in_context"><![CDATA[Публикации в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_posts_page_block_title_sys_entries_in_context"><![CDATA[Публикации в контексте]]></string>
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Публикации - Действия]]></string>
     <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Публикации - Комментарии]]></string>
 	<string name="_bx_posts_page_title_sys_manage"><![CDATA[Управление собственными публикациями]]></string>
@@ -155,6 +160,8 @@
     <string name="_bx_posts_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к публикации]]></string>
     <string name="_bx_posts_menu_item_title_system_view_entries_author"><![CDATA[Публикации]]></string>
     <string name="_bx_posts_menu_item_title_view_entries_author"><![CDATA[Публикации]]></string>
+    <string name="_bx_posts_menu_item_title_system_view_entries_in_context"><![CDATA[Публикации]]></string>
+    <string name="_bx_posts_menu_item_title_view_entries_in_context"><![CDATA[Публикации]]></string>    
     <string name="_bx_posts_menu_title_entries_my"><![CDATA[Мои Публикации - Меню действий]]></string>
     <string name="_bx_posts_menu_set_title_entries_my"><![CDATA[Мои Публикации - Меню]]></string>
 	<string name="_bx_posts_menu_item_title_system_manage_my_posts"><![CDATA[Мои публикации]]></string>

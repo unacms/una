@@ -52,6 +52,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-post',
             'URI_AUTHOR_ENTRIES' => 'posts-author',
+            'URI_ENTRIES_BY_CONTEXT' => 'posts-context',
             'URI_ADD_ENTRY' => 'create-post',
         	'URI_EDIT_ENTRY' => 'edit-post',
         	'URI_MANAGE_COMMON' => 'posts-manage',
@@ -125,6 +126,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             	'menu_item_manage_all' => '_bx_posts_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_posts_txt_all_entries_by',
                 'txt_all_entries_by_author' => '_bx_posts_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_posts_page_title_browse_by_context',
             	'txt_pict_use_as_thumb' => '_bx_posts_form_entry_input_picture_use_as_thumb'
             ),
         );
