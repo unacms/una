@@ -37,9 +37,11 @@ class BxAccntConfig extends BxBaseModGeneralConfig
         		'grid_action_err_delete' => '_bx_accnt_grid_action_err_delete',
         		'grid_action_err_perform' => '_bx_accnt_grid_action_err_perform',
             	'filter_item_active' => '_bx_accnt_grid_filter_item_title_adm_active',
+                'filter_item_operators' => '_bx_accnt_grid_filter_item_title_adm_operators',
             	'filter_item_pending' => '_bx_accnt_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_accnt_grid_filter_item_title_adm_suspended',
             	'filter_item_select_one_filter1' => '_bx_accnt_grid_filter_item_title_adm_select_one_filter1',
+                'filter_item_select_one_filter2' => '_bx_accnt_grid_filter_item_title_adm_select_one_filter2',
         	)
         );
 
