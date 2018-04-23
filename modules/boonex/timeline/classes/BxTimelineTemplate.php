@@ -901,9 +901,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsOwnerActions = $this->_getTmplVarsOwnerActions($aEvent);
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
 
-        $aTmplVarsTimelineOwner = array();
-        if(isset($aBrowseParams['type']) && in_array($aBrowseParams['type'], array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
-            $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
+        $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
@@ -1356,10 +1354,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
 
         $aTmplVarsActions = array();
-        if(!empty($aEvent['promoted']) && !empty($iUser) && !empty($iOwner) && $iUser != $iOwner) {
+        if(!empty($iUser) && !empty($iOwner) && $iUser != $iOwner) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
-            $oConnection = BxDolConnection::getObjectInstance($sConnection);
-            if(!$oConnection->isConnected($iUser, $iOwner)) {
+            if(BxDolConnection::getObjectInstance($sConnection)->checkAllowedConnect($iUser, $iOwner) === CHECK_ACTION_RESULT_ALLOWED) {
                 $sContent = _t('_sys_menu_item_title_sm_subscribe');
                 $aTmplVarsActions[] = array(
                     'href' => "javascript:void(0)",

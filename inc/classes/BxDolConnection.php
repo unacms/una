@@ -153,6 +153,35 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Check whether connection between Initiator and Content can be established.
+     */
+    public function checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false)
+    {
+        if(!$iInitiator || !$iContent || $iInitiator == $iContent)
+            return _t('_sys_txt_access_denied');
+
+        $oInitiator = BxDolProfile::getInstance($iInitiator);
+        $oContent = BxDolProfile::getInstance($iContent);
+        if(!$oInitiator || !$oContent)
+            return _t('_sys_txt_access_denied');
+
+        // check ACL
+        $aCheck = checkActionModule($iInitiator, 'connect', 'system', $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        if($isSwap)
+            $isConnected = $this->isConnected($iContent, $iInitiator, $isMutual);
+        else
+            $isConnected = $this->isConnected($iInitiator, $iContent, $isMutual);
+
+        if($isInvertResult)
+            $isConnected = !$isConnected;
+
+        return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    /**
      * Add new connection.
      * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
      * @return array

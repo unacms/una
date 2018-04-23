@@ -948,21 +948,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if (!$oProfile || $oProfile->id() == $this->_iProfileId)
             return _t('_sys_txt_access_denied');
 
-        // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'connect', 'system', $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
-
-        $oConn = BxDolConnection::getObjectInstance($sObjConnection);
-        if ($isSwap)
-            $isConnected = $oConn->isConnected($oProfile->id(), $this->_iProfileId, $isMutual);
-        else
-            $isConnected = $oConn->isConnected($this->_iProfileId, $oProfile->id(), $isMutual);
-
-        if ($isInvertResult)
-            $isConnected = !$isConnected;
-
-        return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
+        return BxDolConnection::getObjectInstance($sObjConnection)->checkAllowedConnect ($this->_iProfileId, $oProfile->id(), $isPerformAction, $isMutual, $isInvertResult, $isSwap);
     }
 
     protected function _buildRssParams($sMode, $aArgs)
