@@ -95,6 +95,31 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         return true;
     }
 
+    protected function _updateCurrentForContext($sMode, $aParams, &$oProfileContext)
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+            
+        $oProfileContext = BxDolProfile::getInstance((int)$aParams['context']);
+        if (!$oProfileContext) 
+            return false;
+
+        $iProfileIdContext = $oProfileContext->id();
+        $this->aCurrent['restriction']['context'] = array(
+            'value' => -$iProfileIdContext,
+            'field' => $CNF['FIELD_ALLOW_VIEW_TO'],
+            'operator' => '=',
+        );
+
+        if(!empty($aParams['per_page']))
+        	$this->aCurrent['paginate']['perPage'] = is_numeric($aParams['per_page']) ? (int)$aParams['per_page'] : (int)getParam($aParams['per_page']);
+
+        $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_ENTRIES_BY_CONTEXT'] . '&profile_id={profile_id}';
+        $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_context']);
+        $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileIdContext;
+
+        return true;
+    }
+    
     protected function _updateCurrentForFavorite($sMode, $aParams, &$oProfileAuthor)
     {
         $CNF = &$this->oModule->_oConfig->CNF;

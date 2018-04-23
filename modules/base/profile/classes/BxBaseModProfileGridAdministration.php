@@ -124,6 +124,11 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	if(!empty($this->_sFilter1Value))
         	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
 
+        return $this->_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+    
+    protected function _getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 

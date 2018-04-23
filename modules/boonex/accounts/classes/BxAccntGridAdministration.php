@@ -11,14 +11,49 @@
 
 class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 {
+    protected $_sFilter2Name;
+	protected $_sFilter2Value;
+	protected $_aFilter2Values;
+    
     public function __construct ($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_accounts';
         parent::__construct ($aOptions, $oTemplate);
 
-        $this->_aQueryReset = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $this->_sFilter2Name = 'filter2';
+        $this->_aFilter2Values = array(
+            'operators' => $CNF['T']['filter_item_operators']
+        );
+
+        $sFilter2 = bx_get($this->_sFilter2Name);
+        if(!empty($sFilter2)) {
+            $this->_sFilter2Value = bx_process_input($sFilter2);
+            $this->_aQueryAppend[$this->_sFilter2Name] = $this->_sFilter2Value;
+        }
     }
 
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        if(strpos($sFilter, $this->_sParamsDivider) !== false)
+            list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+
+    	if(!empty($this->_sFilter1Value))
+        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
+        
+        if(!empty($this->_sFilter2Value))
+        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `ta`.`role` & " . BX_DOL_ROLE_ADMIN ." = " . BX_DOL_ROLE_ADMIN);
+
+        return parent::_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+    
+    protected function _getFilterControls()
+    {
+        parent::_getFilterControls();
+
+        return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getFilterSelectOne($this->_sFilter2Name, $this->_sFilter2Value, $this->_aFilter2Values) . $this->_getSearchInput();
+    }
+    
     public function getCode($isDisplayHeader = true)
     {
         return $this->_oModule->_oTemplate->getJsCode('main', array(

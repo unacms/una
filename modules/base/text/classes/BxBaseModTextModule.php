@@ -90,9 +90,23 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
      */
     public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
     {
-        if (!$iProfileId)
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId)
+        return $this->_serviceBrowseWithParam ('author', 'profile_id', $iProfileId, $aParams);
+    }
+
+    /**
+     * Display entries posted into particular context
+     * @return HTML string
+     */
+    public function serviceBrowseContext ($iProfileId = 0, $aParams = array())
+    {
+        return $this->_serviceBrowseWithParam ('context', 'profile_id', $iProfileId, $aParams);
+    }
+    
+    public function _serviceBrowseWithParam ($sParamName, $sParamGet, $sParamVal, $aParams = array())
+    {
+        if (!$sParamVal)
+            $sParamVal = bx_process_input(bx_get($sParamGet), BX_DATA_INT);
+        if (!$sParamVal)
             return '';
 
         $bEmptyMessage = true;
@@ -101,9 +115,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             unset($aParams['empty_message']);
         }
 
-        return $this->_serviceBrowse ('author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
+        return $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $sParamVal), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
     }
-
+    
     /**
      * Entry author block
      */

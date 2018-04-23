@@ -32,7 +32,9 @@
 	<string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Редактировать мой аккаунт]]></string>
 
 	<string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+  <string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter2"><![CDATA[Все]]></string>
 	<string name="_bx_accnt_grid_filter_item_title_adm_active"><![CDATA[Активный]]></string>
+  <string name="_bx_accnt_grid_filter_item_title_adm_operators"><![CDATA[Операторы]]></string>
 	<string name="_bx_accnt_grid_filter_item_title_adm_pending"><![CDATA[Неактивный]]></string>
 	<string name="_bx_accnt_grid_filter_item_title_adm_suspended"><![CDATA[Заблокированный]]></string>
 	<string name="_bx_accnt_grid_column_title_adm_active"><![CDATA[Активный]]></string>

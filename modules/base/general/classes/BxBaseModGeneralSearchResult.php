@@ -66,6 +66,11 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         if(!$oPrivacy)
             return;
 
+        if (isset($this->aCurrent['restriction']['context'])) {
+            $this->setProcessPrivateContent(true);
+            return;
+        }
+        
         $aCondition = $oPrivacy->getContentPublicAsCondition($oProfile ? $oProfile->id() : 0, $aCustomGroup);
         if(empty($aCondition) || !is_array($aCondition))
             return;
