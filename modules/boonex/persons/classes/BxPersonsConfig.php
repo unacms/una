@@ -183,6 +183,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             	'filter_item_pending' => '_bx_persons_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_persons_grid_filter_item_title_adm_suspended',
             	'filter_item_select_one_filter1' => '_bx_persons_grid_filter_item_title_adm_select_one_filter1',
+                'filter_item_select_one_filter2' => '_bx_persons_grid_filter_item_title_adm_select_one_filter2',
             	'menu_item_manage_my' => '_bx_persons_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_persons_menu_item_title_manage_all',
             	'txt_browse_favorites' => '_bx_persons_page_title_browse_favorites',
