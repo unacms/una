@@ -57,6 +57,7 @@ class BxFroalaEditor extends BxDolEditor
                 pastePlain: true,
                 imageUpload: true,
                 imageUploadURL: '{bx_var_image_upload_url}',
+                videoUpload: false,
                 language: '{bx_var_lang}',
                 theme: '{bx_var_skin}'
             });
