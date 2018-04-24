@@ -230,7 +230,8 @@ BxDolGrid.prototype.processJson = function (oData, sAction, isDisableLoading) {
     var fContinue = function() {
     	if (oData && undefined != oData.grid) {        
             $('#' + $this._sIdContainer).html($(oData.grid).find('#' + $this._sIdContainer).html());
-            $('#' + $this._sIdWrapper).find('.bx-grid-footer').html($(oData.grid).find('.bx-grid-footer').html());
+            var sFooter = $(oData.grid).find('.bx-grid-footer').size() ? $(oData.grid).find('.bx-grid-footer').html() : '';
+            $('#' + $this._sIdWrapper).find('.bx-grid-footer').html(sFooter);
             $this._onDataReloaded(true);
         }
     	if (oData && undefined != oData.blink) {
