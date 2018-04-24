@@ -72,6 +72,7 @@
 	<string name="_bx_polls_page_title_browse"><![CDATA[Голосования]]></string>
 	<string name="_bx_polls_page_title_search_results"><![CDATA[Голосования, соответствующие "{0}"]]></string>
 	<string name="_bx_polls_page_title_browse_by_author"><![CDATA[Голосования {display_name}]]></string>
+  <string name="_bx_polls_page_title_browse_by_context"><![CDATA[Голосования в контексте: {display_name}]]></string>
 	<string name="_bx_polls_page_title_browse_featured"><![CDATA[Продвинутые голосования]]></string>
     <string name="_bx_polls_page_title_browse_recent"><![CDATA[Недавние голосования]]></string>
     <string name="_bx_polls_page_title_browse_popular"><![CDATA[Популярные голосования]]></string>
@@ -100,10 +101,14 @@
     <string name="_bx_polls_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_polls_page_title_sys_entries_of_author"><![CDATA[Голосования автора]]></string>
     <string name="_bx_polls_page_title_entries_of_author"><![CDATA[{display_name} - Голосования]]></string>
+    <string name="_bx_polls_page_title_sys_entries_in_context"><![CDATA[Голосования в контексте]]></string>
+    <string name="_bx_polls_page_title_entries_in_context"><![CDATA[Голосования в контексте - {display_name}]]></string>
     <string name="_bx_polls_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_polls_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_polls_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Голосования]]></string>   
-    <string name="_bx_polls_page_block_title_sys_entries_of_author"><![CDATA[Голосования автора]]></string>   
+    <string name="_bx_polls_page_block_title_sys_entries_of_author"><![CDATA[Голосования автора]]></string>
+    <string name="_bx_polls_page_block_title_entries_in_context"><![CDATA[Голосования в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_polls_page_block_title_sys_entries_in_context"><![CDATA[Голосования в контексте]]></string>
     <string name="_bx_polls_page_block_title_entries_actions"><![CDATA[Голосования - Действия]]></string>
     <string name="_bx_polls_page_block_title_browse_cmts"><![CDATA[Голосования - Комментарии]]></string>
 	<string name="_bx_polls_page_title_sys_manage"><![CDATA[Управление собственными голосованиями]]></string>
@@ -157,7 +162,9 @@
     <string name="_bx_polls_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к голосованию]]></string>
     <string name="_bx_polls_menu_item_title_system_view_entries_author"><![CDATA[Голосования]]></string>
     <string name="_bx_polls_menu_item_title_view_entries_author"><![CDATA[Голосования]]></string>
-    <string name="_bx_polls_menu_title_entries_my"><![CDATA[Мои Голосования - Меню действий]]></string>
+    <string name="_bx_polls_menu_item_title_system_view_entries_in_context"><![CDATA[Голосования]]></string>
+    <string name="_bx_polls_menu_item_title_view_entries_in_context"><![CDATA[Голосования]]></string>
+  <string name="_bx_polls_menu_title_entries_my"><![CDATA[Мои Голосования - Меню действий]]></string>
     <string name="_bx_polls_menu_set_title_entries_my"><![CDATA[Мои Голосования - Меню]]></string>
 	<string name="_bx_polls_menu_item_title_system_manage_my_polls"><![CDATA[Мои голосования]]></string>
     <string name="_bx_polls_menu_item_title_manage_my_polls"><![CDATA[{addon} голосования]]></string>

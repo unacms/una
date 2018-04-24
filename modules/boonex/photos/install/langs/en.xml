@@ -108,10 +108,14 @@
     <string name="_bx_photos_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_photos_page_title_sys_entries_of_author"><![CDATA[Photos of author]]></string>
     <string name="_bx_photos_page_title_entries_of_author"><![CDATA[Photos by {display_name}]]></string>
+    <string name="_bx_photos_page_title_sys_entries_in_context"><![CDATA[Photos in context]]></string>
+    <string name="_bx_photos_page_title_entries_in_context"><![CDATA[Photos in {display_name}]]></string>
     <string name="_bx_photos_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_photos_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_photos_page_block_title_entries_of_author"><![CDATA[Photos by <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_photos_page_block_title_sys_entries_of_author"><![CDATA[Photos of author]]></string>   
+    <string name="_bx_photos_page_block_title_sys_entries_of_author"><![CDATA[Photos of author]]></string>
+    <string name="_bx_photos_page_block_title_entries_in_context"><![CDATA[Photos in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_photos_page_block_title_sys_entries_in_context"><![CDATA[Photos in context]]></string>
     <string name="_bx_photos_page_block_title_entries_actions"><![CDATA[Photos actions]]></string>
     <string name="_bx_photos_page_block_title_browse_cmts"><![CDATA[Photos' Comments]]></string>
 	<string name="_bx_photos_page_title_sys_manage"><![CDATA[Manage Own]]></string>
@@ -159,6 +163,8 @@
     <string name="_bx_photos_menu_item_title_system_view_entry_comments"><![CDATA[Photo Comments]]></string>
     <string name="_bx_photos_menu_item_title_system_view_entries_author"><![CDATA[Photos]]></string>
     <string name="_bx_photos_menu_item_title_view_entries_author"><![CDATA[Photos]]></string>
+    <string name="_bx_photos_menu_item_title_system_view_entries_in_context"><![CDATA[Photos]]></string>
+    <string name="_bx_photos_menu_item_title_view_entries_in_context"><![CDATA[Photos]]></string>
     <string name="_bx_photos_menu_title_entries_my"><![CDATA[My Photos Action Menu]]></string>
     <string name="_bx_photos_menu_set_title_entries_my"><![CDATA[My Photos Menu]]></string>
 	<string name="_bx_photos_menu_item_title_system_manage_my_photos"><![CDATA[My photos]]></string>

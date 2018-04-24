@@ -82,6 +82,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-product',
             'URI_AUTHOR_ENTRIES' => 'products-author',
+            'URI_ENTRIES_BY_CONTEXT' => 'products-context',
 			'URI_CATEGORY_ENTRIES' => 'products-category',
             'URI_ADD_ENTRY' => 'create-product',
         	'URI_EDIT_ENTRY' => 'edit-product',
@@ -177,6 +178,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             	'menu_item_manage_all' => '_bx_market_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_market_txt_all_entries_by',
                 'txt_all_entries_by_author' => '_bx_market_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_market_page_title_browse_by_context',
                 'txt_per_day' => '_bx_market_txt_per_day',
                 'txt_per_day_short' => '_bx_market_txt_per_day_short',
                 'txt_per_week' => '_bx_market_txt_per_week',

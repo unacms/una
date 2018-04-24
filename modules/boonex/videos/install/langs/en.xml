@@ -71,6 +71,7 @@
 	<string name="_bx_videos_page_title_browse"><![CDATA[Videos]]></string>
 	<string name="_bx_videos_page_title_search_results"><![CDATA[Videos matching "{0}"]]></string>
 	<string name="_bx_videos_page_title_browse_by_author"><![CDATA[Videos of {display_name}]]></string>
+  <string name="_bx_videos_page_title_browse_by_context"><![CDATA[Videos in {display_name}]]></string>
 	<string name="_bx_videos_page_title_browse_featured"><![CDATA[Featured Videos]]></string>
     <string name="_bx_videos_page_title_browse_recent"><![CDATA[Latest Videos]]></string>
     <string name="_bx_videos_page_title_browse_popular"><![CDATA[Popular Videos]]></string>
@@ -110,10 +111,14 @@
     <string name="_bx_videos_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_videos_page_title_sys_entries_of_author"><![CDATA[Videos of author]]></string>
     <string name="_bx_videos_page_title_entries_of_author"><![CDATA[Videos by {display_name}]]></string>
+    <string name="_bx_videos_page_title_sys_entries_in_context"><![CDATA[Videos in context]]></string>
+    <string name="_bx_videos_page_title_entries_in_context"><![CDATA[Videos in {display_name}]]></string>
     <string name="_bx_videos_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_videos_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_videos_page_block_title_entries_of_author"><![CDATA[Videos by <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_videos_page_block_title_sys_entries_of_author"><![CDATA[Videos of author]]></string>   
+    <string name="_bx_videos_page_block_title_sys_entries_of_author"><![CDATA[Videos of author]]></string>
+    <string name="_bx_videos_page_block_title_entries_in_context"><![CDATA[Videos in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_videos_page_block_title_sys_entries_in_context"><![CDATA[Videos in context]]></string>
     <string name="_bx_videos_page_block_title_entries_actions"><![CDATA[Videos actions]]></string>
     <string name="_bx_videos_page_block_title_browse_cmts"><![CDATA[Videos' Comments]]></string>
 	<string name="_bx_videos_page_title_sys_manage"><![CDATA[Manage Own]]></string>
@@ -161,6 +166,8 @@
     <string name="_bx_videos_menu_item_title_system_view_entry_comments"><![CDATA[Video Comments]]></string>
     <string name="_bx_videos_menu_item_title_system_view_entries_author"><![CDATA[Videos]]></string>
     <string name="_bx_videos_menu_item_title_view_entries_author"><![CDATA[Videos]]></string>
+    <string name="_bx_videos_menu_item_title_system_view_entries_in_context"><![CDATA[Videos]]></string>
+    <string name="_bx_videos_menu_item_title_view_entries_in_context"><![CDATA[Videos]]></string>
     <string name="_bx_videos_menu_title_entries_my"><![CDATA[My Videos Action Menu]]></string>
     <string name="_bx_videos_menu_set_title_entries_my"><![CDATA[My Videos Menu]]></string>
 	<string name="_bx_videos_menu_item_title_system_manage_my_videos"><![CDATA[My videos]]></string>

@@ -62,17 +62,18 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
         switch ($sMode) {
 
             case 'author':
-                if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor)) {
+                if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor))
                     $this->isError = true;
-                    break;
-                }
+                break;
+                
+            case 'context':
+                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor))
+                    $this->isError = true;
                 break;
 
             case 'favorite':
-                if(!$this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor)) {
+                if(!$this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor))
                     $this->isError = true;
-                    break;
-                }
                 break;
 
             case 'public':

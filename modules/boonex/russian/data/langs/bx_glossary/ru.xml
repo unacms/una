@@ -65,6 +65,7 @@
 	<string name="_bx_glossary_page_title_browse"><![CDATA[Глоссарий]]></string>
 	<string name="_bx_glossary_page_title_search_results"><![CDATA[Глоссарий, соответствующие "{0}"]]></string>
 	<string name="_bx_glossary_page_title_browse_by_author"><![CDATA[Глоссарий {display_name}]]></string>
+  <string name="_bx_glossary_page_title_browse_by_context"><![CDATA[Глоссарий в контексте: {display_name}]]></string>
 	<string name="_bx_glossary_page_title_browse_featured"><![CDATA[Продвинутые Глоссарий]]></string>
     <string name="_bx_glossary_page_title_browse_recent"><![CDATA[Недавние Глоссарий]]></string>
     <string name="_bx_glossary_page_title_browse_popular"><![CDATA[Популярные Глоссарий]]></string>
@@ -103,10 +104,14 @@
     <string name="_bx_glossary_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_glossary_page_title_sys_entries_of_author"><![CDATA[Глоссарий автора]]></string>
     <string name="_bx_glossary_page_title_entries_of_author"><![CDATA[{display_name} - Глоссарий]]></string>
+    <string name="_bx_glossary_page_title_sys_entries_in_context"><![CDATA[Глоссарий в контексте]]></string>
+    <string name="_bx_glossary_page_title_entries_in_context"><![CDATA[Глоссарий в контексте - {display_name}]]></string>
     <string name="_bx_glossary_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_glossary_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_glossary_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Глоссарий]]></string>   
-    <string name="_bx_glossary_page_block_title_sys_entries_of_author"><![CDATA[Глоссарий автора]]></string>   
+    <string name="_bx_glossary_page_block_title_sys_entries_of_author"><![CDATA[Глоссарий автора]]></string>
+    <string name="_bx_glossary_page_block_title_entries_in_context"><![CDATA[Глоссарий в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_glossary_page_block_title_sys_entries_in_context"><![CDATA[Глоссарий в контексте]]></string>
     <string name="_bx_glossary_page_block_title_entries_actions"><![CDATA[Глоссарий - Действия]]></string>
     <string name="_bx_glossary_page_block_title_browse_cmts"><![CDATA[Глоссарий - Комментарии]]></string>
 	<string name="_bx_glossary_page_title_sys_manage"><![CDATA[Управление собственными публикациями]]></string>
@@ -156,7 +161,9 @@
     <string name="_bx_glossary_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к Глоссарий]]></string>
     <string name="_bx_glossary_menu_item_title_system_view_entries_author"><![CDATA[Глоссарий]]></string>
     <string name="_bx_glossary_menu_item_title_view_entries_author"><![CDATA[Глоссарий]]></string>
-    <string name="_bx_glossary_menu_title_entries_my"><![CDATA[Мои Глоссарий - Меню действий]]></string>
+    <string name="_bx_glossary_menu_item_title_system_view_entries_in_context"><![CDATA[Глоссарий]]></string>
+    <string name="_bx_glossary_menu_item_title_view_entries_in_context"><![CDATA[Глоссарий]]></string>
+  <string name="_bx_glossary_menu_title_entries_my"><![CDATA[Мои Глоссарий - Меню действий]]></string>
     <string name="_bx_glossary_menu_set_title_entries_my"><![CDATA[Мои Глоссарий - Меню]]></string>
 	<string name="_bx_glossary_menu_item_title_system_manage_my_posts"><![CDATA[Мои Глоссарий]]></string>
     <string name="_bx_glossary_menu_item_title_manage_my_posts"><![CDATA[{addon} Глоссарий]]></string>

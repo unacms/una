@@ -72,6 +72,7 @@
 	<string name="_bx_polls_page_title_browse"><![CDATA[Polls]]></string>
 	<string name="_bx_polls_page_title_search_results"><![CDATA[Polls matching "{0}"]]></string>
 	<string name="_bx_polls_page_title_browse_by_author"><![CDATA[Polls of {display_name}]]></string>
+	<string name="_bx_polls_page_title_browse_by_context"><![CDATA[Polls in {display_name}]]></string>
 	<string name="_bx_polls_page_title_browse_featured"><![CDATA[Featured Polls]]></string>
     <string name="_bx_polls_page_title_browse_recent"><![CDATA[Latest Polls]]></string>
     <string name="_bx_polls_page_title_browse_popular"><![CDATA[Popular Polls]]></string>
@@ -100,10 +101,14 @@
     <string name="_bx_polls_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_polls_page_title_sys_entries_of_author"><![CDATA[Polls of author]]></string>
     <string name="_bx_polls_page_title_entries_of_author"><![CDATA[Polls by {display_name}]]></string>
+    <string name="_bx_polls_page_title_sys_entries_in_context"><![CDATA[Polls in context]]></string>
+    <string name="_bx_polls_page_title_entries_in_context"><![CDATA[Polls in {display_name}]]></string>
     <string name="_bx_polls_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_polls_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_polls_page_block_title_entries_of_author"><![CDATA[Polls by <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_polls_page_block_title_sys_entries_of_author"><![CDATA[Polls of author]]></string>   
+    <string name="_bx_polls_page_block_title_sys_entries_of_author"><![CDATA[Polls of author]]></string>
+    <string name="_bx_polls_page_block_title_entries_in_context"><![CDATA[Polls in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_polls_page_block_title_sys_entries_in_context"><![CDATA[Polls in context]]></string>
     <string name="_bx_polls_page_block_title_entries_actions"><![CDATA[Polls actions]]></string>
     <string name="_bx_polls_page_block_title_browse_cmts"><![CDATA[Polls' Comments]]></string>
 	<string name="_bx_polls_page_title_sys_manage"><![CDATA[Manage Own]]></string>
@@ -157,6 +162,8 @@
     <string name="_bx_polls_menu_item_title_system_view_entry_comments"><![CDATA[Poll Comments]]></string>
     <string name="_bx_polls_menu_item_title_system_view_entries_author"><![CDATA[Polls]]></string>
     <string name="_bx_polls_menu_item_title_view_entries_author"><![CDATA[Polls]]></string>
+    <string name="_bx_polls_menu_item_title_system_view_entries_in_context"><![CDATA[Polls]]></string>
+    <string name="_bx_polls_menu_item_title_view_entries_in_context"><![CDATA[Polls]]></string>
     <string name="_bx_polls_menu_title_entries_my"><![CDATA[My Polls Action Menu]]></string>
     <string name="_bx_polls_menu_set_title_entries_my"><![CDATA[My Polls Menu]]></string>
 	<string name="_bx_polls_menu_item_title_system_manage_my_polls"><![CDATA[My polls]]></string>

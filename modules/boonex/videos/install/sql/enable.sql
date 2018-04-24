@@ -88,6 +88,14 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_videos_author', 1, 'bx_videos', '_bx_videos_page_block_title_sys_favorites_of_author', '_bx_videos_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
 ('bx_videos_author', 1, 'bx_videos', '_bx_videos_page_block_title_sys_entries_of_author', '_bx_videos_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3);
 
+-- PAGE: entries in context
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_videos_context', 'videos-context', '_bx_videos_page_title_sys_entries_in_context', '_bx_videos_page_title_entries_in_context', 'bx_videos', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxVideosPageAuthor', 'modules/boonex/videos/classes/BxVideosPageAuthor.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_videos_context', 1, 'bx_videos', '_bx_videos_page_block_title_sys_entries_in_context', '_bx_videos_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1);
+
+
 -- PAGE: module home
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_videos_home', 'videos-home', '_bx_videos_page_title_sys_home', '_bx_videos_page_title_home', 'bx_videos', 2, 2147483647, 1, 'page.php?i=videos-home', '', '', '', 0, 1, 0, 'BxVideosPageBrowse', 'modules/boonex/videos/classes/BxVideosPageBrowse.php');
@@ -244,8 +252,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_videos', 'videos-author', '_bx_videos_menu_item_title_system_view_entries_author', '_bx_videos_menu_item_title_view_entries_author', 'page.php?i=videos-author&profile_id={profile_id}', '', '', 'film col-gray', '', 2147483647, 1, 0, 0);
-
+('trigger_profile_view_submenu', 'bx_videos', 'videos-author', '_bx_videos_menu_item_title_system_view_entries_author', '_bx_videos_menu_item_title_view_entries_author', 'page.php?i=videos-author&profile_id={profile_id}', '', '', 'film col-gray', '', 2147483647, 1, 0, 0),
+('trigger_group_view_submenu', 'bx_videos', 'videos-context', '_bx_videos_menu_item_title_system_view_entries_in_context', '_bx_videos_menu_item_title_view_entries_in_context', 'page.php?i=videos-context&profile_id={profile_id}', '', '', 'film col-gray', '', 2147483647, 1, 0, 0);
 
 -- PRIVACY 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES

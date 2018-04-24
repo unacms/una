@@ -147,6 +147,14 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses_note', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:19:"block_licenses_note";}', 0, 0, 1, 0),
 ('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"block_licenses";}', 0, 0, 1, 1);
 
+-- PAGE: entries in context
+
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_context', 'products-context', '_bx_market_page_title_sys_entries_in_context', '_bx_market_page_title_entries_in_context', 'bx_market', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxMarketPageAuthor', 'modules/boonex/market/classes/BxMarketPageAuthor.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_market_context', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_in_context', '_bx_market_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1);
+
 -- PAGE: module home
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_home', 'products-home', '_bx_market_page_title_sys_home', '_bx_market_page_title_home', 'bx_market', 1, 2147483647, 1, 'page.php?i=products-home', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
@@ -349,7 +357,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_market', 'products-author', '_bx_market_menu_item_title_system_view_entries_author', '_bx_market_menu_item_title_view_entries_author', 'page.php?i=products-author&profile_id={profile_id}', '', '', 'shopping-cart col-green3', '', 2147483647, 1, 0, 0);
+('trigger_profile_view_submenu', 'bx_market', 'products-author', '_bx_market_menu_item_title_system_view_entries_author', '_bx_market_menu_item_title_view_entries_author', 'page.php?i=products-author&profile_id={profile_id}', '', '', 'shopping-cart col-green3', '', 2147483647, 1, 0, 0),
+('trigger_group_view_submenu', 'bx_market', 'products-context', '_bx__market_menu_item_title_system_view_entries_in_context', '_bx_market_menu_item_title_view_entries_in_context', 'page.php?i=products-context&profile_id={profile_id}', '', '', 'shopping-cart col-green3', '', 2147483647, 1, 0, 0);
 
 -- MENU: account dashboard
 SET @iMoAccountDashboard = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);

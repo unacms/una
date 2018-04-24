@@ -126,6 +126,7 @@
 	<string name="_bx_market_page_title_browse"><![CDATA[Products]]></string>
 	<string name="_bx_market_page_title_search_results"><![CDATA[Products matching "{0}"]]></string>
 	<string name="_bx_market_page_title_browse_by_author"><![CDATA[Products of {display_name}]]></string>
+  <string name="_bx_market_page_title_browse_by_context"><![CDATA[Products in {display_name}]]></string>
 	<string name="_bx_market_page_title_browse_featured"><![CDATA[Featured Products]]></string>
     <string name="_bx_market_page_title_browse_latest"><![CDATA[Latest Products]]></string>
     <string name="_bx_market_page_title_browse_popular"><![CDATA[Popular Products]]></string>
@@ -174,10 +175,14 @@
     <string name="_bx_market_page_title_view_entry_info"><![CDATA[{title} Info]]></string>
     <string name="_bx_market_page_title_sys_entries_of_author"><![CDATA[Products of author]]></string>
     <string name="_bx_market_page_title_entries_of_author"><![CDATA[Products by {display_name}]]></string>
+    <string name="_bx_market_page_title_sys_entries_in_context"><![CDATA[Products in context]]></string>
+    <string name="_bx_market_page_title_entries_in_context"><![CDATA[Products in {display_name}]]></string>
     <string name="_bx_market_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_market_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_market_page_block_title_entries_of_author"><![CDATA[Products by <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_market_page_block_title_sys_entries_of_author"><![CDATA[Products of author]]></string>   
+    <string name="_bx_market_page_block_title_sys_entries_of_author"><![CDATA[Products of author]]></string>
+    <string name="_bx_market_page_block_title_entries_in_context"><![CDATA[Products in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_market_page_block_title_sys_entries_in_context"><![CDATA[Products in context]]></string>
     <string name="_bx_market_page_block_title_entries_actions"><![CDATA[Products actions]]></string>
     <string name="_bx_market_page_block_title_browse_cmts"><![CDATA[Products' Reviews]]></string>
 	<string name="_bx_market_page_title_sys_manage"><![CDATA[Manage Own Products]]></string>
@@ -262,6 +267,8 @@
     <string name="_bx_market_menu_item_title_view_entry_submenu_info"><![CDATA[Info]]></string>
     <string name="_bx_market_menu_item_title_system_view_entries_author"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_item_title_view_entries_author"><![CDATA[Products]]></string>
+    <string name="_bx_market_menu_item_title_system_view_entries_in_context"><![CDATA[Products]]></string>
+    <string name="_bx_market_menu_item_title_view_entries_in_context"><![CDATA[Products]]></string>
     <string name="_bx_market_menu_title_entries_my"><![CDATA[My Products Action Menu]]></string>
     <string name="_bx_market_menu_set_title_entries_my"><![CDATA[My Products Menu]]></string>
 	<string name="_bx_market_menu_item_title_system_manage_my_products"><![CDATA[My products]]></string>

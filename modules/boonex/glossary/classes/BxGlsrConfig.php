@@ -50,6 +50,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-glossary',
             'URI_AUTHOR_ENTRIES' => 'glossary-author',
+            'URI_ENTRIES_BY_CONTEXT' => 'glossary-context',
             'URI_ADD_ENTRY' => 'create-glossary',
             'URI_EDIT_ENTRY' => 'edit-glossary',
             'URI_MANAGE_COMMON' => 'glossary-manage',
@@ -123,6 +124,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
                 'menu_item_manage_all' => '_bx_glossary_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_glossary_txt_all_entries_by',
                 'txt_all_entries_by_author' => '_bx_glossary_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_glossary_page_title_browse_by_context',
                 'txt_pict_use_as_thumb' => '_bx_glossary_form_entry_input_picture_use_as_thumb'
             ),
         );

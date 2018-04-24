@@ -90,6 +90,7 @@
 	<string name="_bx_snipcart_page_title_browse"><![CDATA[Товары]]></string>
 	<string name="_bx_snipcart_page_title_search_results"><![CDATA[Товары, соответствующие "{0}"]]></string>
 	<string name="_bx_snipcart_page_title_browse_by_author"><![CDATA[Товары {display_name}]]></string>
+  <string name="_bx_snipcart_page_title_browse_by_context"><![CDATA[Товары в контексте: {display_name}]]></string>
 	<string name="_bx_snipcart_page_title_browse_featured"><![CDATA[Продвинутые товары]]></string>
     <string name="_bx_snipcart_page_title_browse_recent"><![CDATA[Недавние товары]]></string>
     <string name="_bx_snipcart_page_title_browse_popular"><![CDATA[Популярные товары]]></string>
@@ -120,10 +121,14 @@
     <string name="_bx_snipcart_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_snipcart_page_title_sys_entries_of_author"><![CDATA[Товары автора]]></string>
     <string name="_bx_snipcart_page_title_entries_of_author"><![CDATA[{display_name} - Товары]]></string>
+    <string name="_bx_snipcart_page_title_sys_entries_in_context"><![CDATA[Товары в контексте]]></string>
+    <string name="_bx_snipcart_page_title_entries_in_context"><![CDATA[Товары в контексте - {display_name}]]></string>
     <string name="_bx_snipcart_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_snipcart_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_snipcart_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Товары]]></string>   
-    <string name="_bx_snipcart_page_block_title_sys_entries_of_author"><![CDATA[Товары автора]]></string>   
+    <string name="_bx_snipcart_page_block_title_sys_entries_of_author"><![CDATA[Товары автора]]></string>
+    <string name="_bx_snipcart_page_block_title_entries_in_context"><![CDATA[Товары в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_snipcart_page_block_title_sys_entries_in_context"><![CDATA[Товары в контексте]]></string>
     <string name="_bx_snipcart_page_block_title_entries_actions"><![CDATA[Товары - Действия]]></string>
     <string name="_bx_snipcart_page_block_title_browse_cmts"><![CDATA[Товары - Комментарии]]></string>
 	<string name="_bx_snipcart_page_title_sys_manage"><![CDATA[Управление собственными товарами]]></string>
@@ -185,7 +190,9 @@
     <string name="_bx_snipcart_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к товару]]></string>
     <string name="_bx_snipcart_menu_item_title_system_view_entries_author"><![CDATA[Товары]]></string>
     <string name="_bx_snipcart_menu_item_title_view_entries_author"><![CDATA[Товары]]></string>
-    <string name="_bx_snipcart_menu_title_entries_my"><![CDATA[Мои Товары - Меню действий]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_view_entries_in_context"><![CDATA[Товары]]></string>
+    <string name="_bx_snipcart_menu_item_title_view_entries_in_context"><![CDATA[Товары]]></string>
+  <string name="_bx_snipcart_menu_title_entries_my"><![CDATA[Мои Товары - Меню действий]]></string>
     <string name="_bx_snipcart_menu_set_title_entries_my"><![CDATA[Мои Товары - Меню]]></string>
 	<string name="_bx_snipcart_menu_item_title_system_manage_my_entries"><![CDATA[Мои товары]]></string>
     <string name="_bx_snipcart_menu_item_title_manage_my_entries"><![CDATA[{addon} товаров]]></string>

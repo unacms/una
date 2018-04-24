@@ -60,6 +60,7 @@ class BxForumConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-discussion',
             'URI_AUTHOR_ENTRIES' => 'discussions-author',
+            'URI_ENTRIES_BY_CONTEXT' => 'discussions-context',
         	'URI_CATEGORY_ENTRIES' => 'discussions-category',
         	'URI_KEYWORD_ENTRIES' => 'discussions-keyword',
             'URI_ADD_ENTRY' => 'create-discussion',
@@ -142,6 +143,7 @@ class BxForumConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_forum_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_forum_menu_item_title_manage_all',
             	'txt_all_entries_by_author' => '_bx_forum_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_forum_page_title_browse_by_context',
             	'txt_pict_use_as_thumb' => '_bx_forum_form_entry_input_picture_use_as_thumb'
             ),
         );
