@@ -526,6 +526,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		$sStylePrefix = $this->_oConfig->getPrefix('style');
         $sStylePrefixRepost = $sStylePrefix . '-repost-';
 
+        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
+
         $bShowDoRepostAsButtonSmall = isset($aParams['show_do_repost_as_button_small']) && $aParams['show_do_repost_as_button_small'] == true;
         $bShowDoRepostAsButton = !$bShowDoRepostAsButtonSmall && isset($aParams['show_do_repost_as_button']) && $aParams['show_do_repost_as_button'] == true;
 
@@ -586,7 +588,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'counter' => $this->getRepostCounter($aReposted, $aParams)
                 )
             ),
-            'script' => $this->getRepostJsScript()
+            'script' => $this->getRepostJsScript($bDynamicMode)
         ));
     }
 
@@ -636,12 +638,29 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getRepostJsScript()
+    public function getRepostJsScript($bDynamicMode = false)
     {
-        $this->addCss(array('repost.css'));
-        $this->addJs(array('main.js', 'repost.js'));
+        $sCode = $this->getJsCode('repost', array(), array('mask' => '{object} = new {class}({params});', 'wrap' => false));
 
-        return $this->getJsCode('repost');
+        if($bDynamicMode) {
+            $sJsObject = $this->_oConfig->getJsObject('repost');
+
+			$sCode = "var " . $sJsObject . " = null; 
+			$.getScript('" . bx_js_string($this->getJsUrl('main.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+				$.getScript('" . bx_js_string($this->getJsUrl('repost.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+    				bx_get_style('" . bx_js_string($this->getCssUrl('repost.css'), BX_ESCAPE_STR_APOS) . "');
+    				" . $sCode . "
+				});
+        	}); ";
+        }
+        else {
+        	$sCode = "var " . $sCode;
+
+        	$this->addCss(array('repost.css'));
+            $this->addJs(array('main.js', 'repost.js'));
+        }
+
+        return $this->_wrapInTagJsCode($sCode);
     }
 
     public function getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId)

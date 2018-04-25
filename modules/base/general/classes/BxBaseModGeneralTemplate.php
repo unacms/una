@@ -32,8 +32,12 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $this->_oModule;
     }
 
-	public function getJsCode($sType, $aParams = array(), $bWrap = true)
+	public function getJsCode($sType, $aParams = array(), $mixedWrap = true)
     {
+        $sMask = "{var} {object} = new {class}({params});";
+        if(is_array($mixedWrap) && !empty($mixedWrap['mask']))
+            $sMask = $mixedWrap['mask'];
+
         $sBaseUri = $this->_oConfig->getBaseUri();
         $sJsClass = $this->_oConfig->getJsClass($sType);
         $sJsObject = $this->_oConfig->getJsObject($sType);
@@ -45,9 +49,15 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         	'aHtmlIds' => array(),
             'oRequestParams' => array()
         ), $aParams);
-        $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aParams) . ");";
 
-        return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
+        $sContent = bx_replace_markers($sMask, array(
+            'var' => 'var',
+            'object' => $sJsObject, 
+            'class' => $sJsClass,
+            'params' => json_encode($aParams)
+        ));
+
+        return ($mixedWrap === true || (is_array($mixedWrap) && isset($mixedWrap['wrap']) && $mixedWrap['wrap'] === true)) ? $this->_wrapInTagJsCode($sContent) : $sContent;
     }
 
     public function getUnitMetaItemLink($sContent, $aAttrs = array())

@@ -171,6 +171,9 @@ div.bx-tl-item-text div.bx-tl-content p {
 	margin-bottom: 10px;
 	margin-bottom: 0.625rem;
 }
+div.bx-tl-item-text div.bx-tl-content img {
+	max-width: 100%;
+}
 
 /*--- Item Images Style ---*/
 div.bx-tl-item div.bx-tl-item-images {
