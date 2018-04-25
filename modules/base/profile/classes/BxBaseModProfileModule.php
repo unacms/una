@@ -300,12 +300,35 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /**
      * @see iBxDolProfileService::serviceGetParticipatingProfiles
      */ 
-    public function serviceGetParticipatingProfiles($iProfileId, $sConnectionObject = 'sys_profiles_friends')
+    public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects = false)
     {
-        if (!($o = BxDolConnection::getObjectInstance($sConnectionObject)))
-            return array();
+        if (false === $aConnectionObjects)
+            $aConnectionObjects = array('sys_profiles_friends');
 
-        return $o->getConnectedContent($iProfileId, true);
+        $a = array();
+        foreach ($aConnectionObjects as $sConnectionObject) {
+            if (!($o = BxDolConnection::getObjectInstance($sConnectionObject)))
+                continue;
+
+            if (BX_CONNECTIONS_TYPE_MUTUAL == $o->getType())
+                $a = array_merge($a, $o->getConnectedContent($iProfileId, true));
+            else
+                $a = array_merge($a, $o->getConnectedContent($iProfileId));
+        }
+
+        $a = array_unique($a);
+        $aRet = array();
+        foreach ($a as $iConnectedProfileId) {
+            if (!($oConnectedProfile = BxDolProfile::getInstance($iConnectedProfileId)))
+                continue;
+            if ($oConnectedProfile->getModule() != $this->getName())
+                continue;
+
+            if (CHECK_ACTION_RESULT_ALLOWED === bx_srv($oConnectedProfile->getModule(), 'check_allowed_post_in_profile', array($oConnectedProfile->getContentId(), $iProfileId)))
+                $aRet[] = $iConnectedProfileId;
+        }
+
+        return $aRet;
     }
     
     /**
@@ -327,9 +350,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /**
      * @see iBxDolProfileService::serviceCheckAllowedPostInProfile
      */ 
-    public function serviceCheckAllowedPostInProfile($iContentId)
+    public function serviceCheckAllowedPostInProfile($iContentId, $iProfileIdPoster = false)
     {
-        return $this->serviceCheckAllowedProfileView($iContentId);
+        if (!$iContentId || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)))
+            return _t('_sys_request_page_not_found_cpt');
+        
+        return $this->serviceCheckAllowedViewForProfile($aContentInfo, false, $iProfileIdPoster);
     }
 
     /**
@@ -748,10 +774,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
+        return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
+    }
+
+    public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        if (!$iProfileId)
+            $iProfileId = $this->_iProfileId;
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($oProfile && $oProfile->id() == $this->_iProfileId)
+        if ($oProfile && $oProfile->id() == $iProfileId)
             return CHECK_ACTION_RESULT_ALLOWED;
-        return parent::checkAllowedView ($aDataEntry, $isPerformAction);
+        return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
     }
     
     /**

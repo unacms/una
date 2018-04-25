@@ -221,9 +221,11 @@ interface iBxDolProfileService
 
     /**
      * Get profiles, current profile have relation with, like friends, joined groups and events
+     * @param $iProfileId profile to get relations for
+     * @param $aConnectionObject look for relations in these connection objects
      * @return array
      */
-    public function serviceGetParticipatingProfiles($iProfileId);
+    public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObject = false);
 
     /**
      * Get space title

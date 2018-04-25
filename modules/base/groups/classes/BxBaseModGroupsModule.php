@@ -51,10 +51,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     /**
      * @see iBxDolProfileService::serviceGetParticipatingProfiles
      */ 
-    public function serviceGetParticipatingProfiles($iProfileId, $sConnectionObject = '')
+    public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects = false)
     {
-        $sConnectionObject = $this->_oConfig->CNF['OBJECT_CONNECTIONS'];
-        return parent::serviceGetParticipatingProfiles($iProfileId, $sConnectionObject);
+        $aConnectionObjects = array($this->_oConfig->CNF['OBJECT_CONNECTIONS'], 'sys_profiles_subscriptions');
+        return parent::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);
     }
     
     /**
@@ -477,10 +477,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
-        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]))
-            return CHECK_ACTION_RESULT_ALLOWED;
+        return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
+    }
 
-        return parent::checkAllowedView ($aDataEntry, $isPerformAction);
+    public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $iProfileId))
+            return CHECK_ACTION_RESULT_ALLOWED;
+        return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
     }
 
     /**

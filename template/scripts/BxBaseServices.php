@@ -89,7 +89,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     /**
      * @see iBxDolProfileService::serviceGetParticipatingProfiles
      */ 
-    public function serviceGetParticipatingProfiles($iProfileId)
+    public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObject = false)
     {
         return array();
     }
