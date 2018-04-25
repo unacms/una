@@ -53,12 +53,12 @@ class Facebook
     /**
      * @const string Version number of the Facebook PHP SDK.
      */
-    const VERSION = '5.4.4';
+    const VERSION = '5.6.2';
 
     /**
      * @const string Default Graph API version for requests.
      */
-    const DEFAULT_GRAPH_VERSION = 'v2.8';
+    const DEFAULT_GRAPH_VERSION = 'v2.10';
 
     /**
      * @const string The name of the environment variable that contains the app ID.
@@ -492,6 +492,27 @@ class Facebook
         );
 
         return $this->lastResponse = $this->client->sendBatchRequest($batchRequest);
+    }
+
+    /**
+     * Instantiates an empty FacebookBatchRequest entity.
+     *
+     * @param  AccessToken|string|null $accessToken  The top-level access token. Requests with no access token
+     *                                               will fallback to this.
+     * @param  string|null             $graphVersion The Graph API version to use.
+     * @return FacebookBatchRequest
+     */
+    public function newBatchRequest($accessToken = null, $graphVersion = null)
+    {
+        $accessToken = $accessToken ?: $this->defaultAccessToken;
+        $graphVersion = $graphVersion ?: $this->defaultGraphVersion;
+
+        return new FacebookBatchRequest(
+            $this->app,
+            [],
+            $accessToken,
+            $graphVersion
+        );
     }
 
     /**

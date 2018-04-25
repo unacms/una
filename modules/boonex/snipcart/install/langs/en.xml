@@ -90,6 +90,7 @@
 	<string name="_bx_snipcart_page_title_browse"><![CDATA[Goods]]></string>
 	<string name="_bx_snipcart_page_title_search_results"><![CDATA[Goods matching "{0}"]]></string>
 	<string name="_bx_snipcart_page_title_browse_by_author"><![CDATA[Goods of {display_name}]]></string>
+  <string name="_bx_snipcart_page_title_browse_by_context"><![CDATA[Goods in {display_name}]]></string>
 	<string name="_bx_snipcart_page_title_browse_featured"><![CDATA[Featured Goods]]></string>
     <string name="_bx_snipcart_page_title_browse_recent"><![CDATA[Latest Goods]]></string>
     <string name="_bx_snipcart_page_title_browse_popular"><![CDATA[Popular Goods]]></string>
@@ -120,10 +121,14 @@
     <string name="_bx_snipcart_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_snipcart_page_title_sys_entries_of_author"><![CDATA[Goods of author]]></string>
     <string name="_bx_snipcart_page_title_entries_of_author"><![CDATA[Goods by {display_name}]]></string>
+    <string name="_bx_snipcart_page_title_sys_entries_in_context"><![CDATA[Goods in context]]></string>
+    <string name="_bx_snipcart_page_title_entries_in_context"><![CDATA[Goods in {display_name}]]></string>
     <string name="_bx_snipcart_page_block_title_favorites_of_author"><![CDATA[Favorites by <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_snipcart_page_block_title_sys_favorites_of_author"><![CDATA[Favorites of author]]></string>
     <string name="_bx_snipcart_page_block_title_entries_of_author"><![CDATA[Goods by <a href="{profile_link}">{display_name}</a>]]></string>
-    <string name="_bx_snipcart_page_block_title_sys_entries_of_author"><![CDATA[Goods of author]]></string>   
+    <string name="_bx_snipcart_page_block_title_sys_entries_of_author"><![CDATA[Goods of author]]></string>
+    <string name="_bx_snipcart_page_block_title_entries_in_context"><![CDATA[Goods in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_snipcart_page_block_title_sys_entries_in_context"><![CDATA[Goods in context]]></string>
     <string name="_bx_snipcart_page_block_title_entries_actions"><![CDATA[Goods actions]]></string>
     <string name="_bx_snipcart_page_block_title_browse_cmts"><![CDATA[Goods' Comments]]></string>
 	<string name="_bx_snipcart_page_title_sys_manage"><![CDATA[Manage Own]]></string>
@@ -185,6 +190,8 @@
     <string name="_bx_snipcart_menu_item_title_system_view_entry_comments"><![CDATA[Goods Comments]]></string>
     <string name="_bx_snipcart_menu_item_title_system_view_entries_author"><![CDATA[Goods]]></string>
     <string name="_bx_snipcart_menu_item_title_view_entries_author"><![CDATA[Goods]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_view_entries_in_context"><![CDATA[Goods]]></string>
+    <string name="_bx_snipcart_menu_item_title_view_entries_in_context"><![CDATA[Goods]]></string>
     <string name="_bx_snipcart_menu_title_entries_my"><![CDATA[My Goods Action Menu]]></string>
     <string name="_bx_snipcart_menu_set_title_entries_my"><![CDATA[My Goods Menu]]></string>
 	<string name="_bx_snipcart_menu_item_title_system_manage_my_entries"><![CDATA[My goods]]></string>

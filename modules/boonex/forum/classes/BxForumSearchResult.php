@@ -75,11 +75,14 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode . '/' . $oProfileAuthor->id();
                 break;
 
-            case 'favorite':
-                if(!$this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor)) {
+            case 'context':
+                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor))
                     $this->isError = true;
-                    break;
-                }
+                break;
+                
+            case 'favorite':
+                if(!$this->_updateCurrentForFavorite($sMode, $aParams, $oProfileAuthor))
+                    $this->isError = true;
                 break;
 
 			case 'category':

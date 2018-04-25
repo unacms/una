@@ -126,6 +126,7 @@
 	<string name="_bx_market_page_title_browse"><![CDATA[Продукты]]></string>
 	<string name="_bx_market_page_title_search_results"><![CDATA[Продукты, соответствующие "{0}"]]></string>
 	<string name="_bx_market_page_title_browse_by_author"><![CDATA[Продукты {display_name}]]></string>
+  <string name="_bx_market_page_title_browse_by_context"><![CDATA[Продукты в контексте: {display_name}]]></string>
 	<string name="_bx_market_page_title_browse_featured"><![CDATA[Продвинутые продукты]]></string>
     <string name="_bx_market_page_title_browse_latest"><![CDATA[Новые продукты]]></string>
     <string name="_bx_market_page_title_browse_popular"><![CDATA[Популярные продукты]]></string>
@@ -174,10 +175,14 @@
     <string name="_bx_market_page_title_view_entry_info"><![CDATA[Информация к {title}]]></string>
     <string name="_bx_market_page_title_sys_entries_of_author"><![CDATA[Продукты автора]]></string>
     <string name="_bx_market_page_title_entries_of_author"><![CDATA[{display_name} - Продукты]]></string>
+    <string name="_bx_market_page_title_sys_entries_in_context"><![CDATA[Продукты в контексте]]></string>
+    <string name="_bx_market_page_title_entries_in_context"><![CDATA[Продукты в контексте - {display_name}]]></string>
     <string name="_bx_market_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_market_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_market_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Продукты]]></string>   
-    <string name="_bx_market_page_block_title_sys_entries_of_author"><![CDATA[Продукты автора]]></string>   
+    <string name="_bx_market_page_block_title_sys_entries_of_author"><![CDATA[Продукты автора]]></string>
+    <string name="_bx_market_page_block_title_entries_in_context"><![CDATA[Продукты в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_market_page_block_title_sys_entries_in_context"><![CDATA[Продукты в контексте]]></string>
     <string name="_bx_market_page_block_title_entries_actions"><![CDATA[Продукты - Действия]]></string>
     <string name="_bx_market_page_block_title_browse_cmts"><![CDATA[Продукты - Обзоры]]></string>
 	<string name="_bx_market_page_title_sys_manage"><![CDATA[Управление собственными продуктами]]></string>
@@ -262,7 +267,9 @@
     <string name="_bx_market_menu_item_title_view_entry_submenu_info"><![CDATA[Информация]]></string>
     <string name="_bx_market_menu_item_title_system_view_entries_author"><![CDATA[Продукты]]></string>
     <string name="_bx_market_menu_item_title_view_entries_author"><![CDATA[Продукты]]></string>
-    <string name="_bx_market_menu_title_entries_my"><![CDATA[Мои продукты - Меню действий]]></string>
+    <string name="_bx_market_menu_item_title_system_view_entries_in_context"><![CDATA[Продукты]]></string>
+    <string name="_bx_market_menu_item_title_view_entries_in_context"><![CDATA[Продукты]]></string>
+  <string name="_bx_market_menu_title_entries_my"><![CDATA[Мои продукты - Меню действий]]></string>
     <string name="_bx_market_menu_set_title_entries_my"><![CDATA[Мои продукты - Меню]]></string>
 	<string name="_bx_market_menu_item_title_system_manage_my_products"><![CDATA[Мои продукты]]></string>
     <string name="_bx_market_menu_item_title_manage_my_products"><![CDATA[{addon} продукты]]></string>

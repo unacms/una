@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_glossary';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_glossary' OR `object` IN('bx_glossary_create_entry', 'bx_glossary_edit_entry', 'bx_glossary_delete_entry', 'bx_glossary_view_entry', 'bx_glossary_view_entry_comments', 'bx_glossary_home', 'bx_glossary_popular', 'bx_glossary_updated', 'bx_glossary_author', 'bx_glossary_search', 'bx_glossary_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_glossary' OR `object` IN('bx_glossary_create_entry', 'bx_glossary_edit_entry', 'bx_glossary_delete_entry', 'bx_glossary_view_entry', 'bx_glossary_view_entry_comments', 'bx_glossary_home', 'bx_glossary_popular', 'bx_glossary_updated', 'bx_glossary_author', 'bx_glossary_search', 'bx_glossary_context', 'bx_glossary_manage');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_glossary';

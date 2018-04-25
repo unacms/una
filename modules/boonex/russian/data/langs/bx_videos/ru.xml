@@ -71,6 +71,7 @@
 	<string name="_bx_videos_page_title_browse"><![CDATA[Видео]]></string>
 	<string name="_bx_videos_page_title_search_results"><![CDATA[Видео, соответствующие "{0}"]]></string>
 	<string name="_bx_videos_page_title_browse_by_author"><![CDATA[Видео {display_name}]]></string>
+  <string name="_bx_videos_page_title_browse_by_context"><![CDATA[Видео в контексте: {display_name}]]></string>
 	<string name="_bx_videos_page_title_browse_featured"><![CDATA[Продвинутые видео]]></string>
     <string name="_bx_videos_page_title_browse_recent"><![CDATA[Недавние видео]]></string>
     <string name="_bx_videos_page_title_browse_popular"><![CDATA[Популярные видео]]></string>
@@ -110,10 +111,14 @@
     <string name="_bx_videos_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_videos_page_title_sys_entries_of_author"><![CDATA[Видео автора]]></string>
     <string name="_bx_videos_page_title_entries_of_author"><![CDATA[{display_name} - Видео]]></string>
+    <string name="_bx_videos_page_title_sys_entries_in_context"><![CDATA[Видео в контексте]]></string>
+    <string name="_bx_videos_page_title_entries_in_context"><![CDATA[Видео в контексте - {display_name}]]></string>
     <string name="_bx_videos_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_videos_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_videos_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Видео]]></string>   
-    <string name="_bx_videos_page_block_title_sys_entries_of_author"><![CDATA[Видео автора]]></string>   
+    <string name="_bx_videos_page_block_title_sys_entries_of_author"><![CDATA[Видео автора]]></string>
+    <string name="_bx_videos_page_block_title_entries_in_context"><![CDATA[Видео в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_videos_page_block_title_sys_entries_in_context"><![CDATA[Видео в контексте]]></string>
     <string name="_bx_videos_page_block_title_entries_actions"><![CDATA[Видео - Действия]]></string>
     <string name="_bx_videos_page_block_title_browse_cmts"><![CDATA[Видео - Комментарии]]></string>
 	<string name="_bx_videos_page_title_sys_manage"><![CDATA[Управление собственными видео]]></string>
@@ -161,7 +166,9 @@
     <string name="_bx_videos_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к видео]]></string>
     <string name="_bx_videos_menu_item_title_system_view_entries_author"><![CDATA[Видео]]></string>
     <string name="_bx_videos_menu_item_title_view_entries_author"><![CDATA[Видео]]></string>
-    <string name="_bx_videos_menu_title_entries_my"><![CDATA[Мои видео - Меню действий]]></string>
+    <string name="_bx_videos_menu_item_title_system_view_entries_in_context"><![CDATA[Видео]]></string>
+    <string name="_bx_videos_menu_item_title_view_entries_in_context"><![CDATA[Видео]]></string>
+  <string name="_bx_videos_menu_title_entries_my"><![CDATA[Мои видео - Меню действий]]></string>
     <string name="_bx_videos_menu_set_title_entries_my"><![CDATA[Мои видео - Меню]]></string>
 	<string name="_bx_videos_menu_item_title_system_manage_my_videos"><![CDATA[Мои видео]]></string>
     <string name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[{addon} видео]]></string>

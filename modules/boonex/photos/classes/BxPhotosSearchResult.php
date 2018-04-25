@@ -66,20 +66,21 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
                 if(empty($this->aParams['author']) && bx_get('author') !== false)
                     $this->aParams['author'] = bx_process_input(bx_get('author'));
 
-                if(!$this->_updateCurrentForAuthor($sMode, $this->aParams, $oProfileAuthor)) {
+                if(!$this->_updateCurrentForAuthor($sMode, $this->aParams, $oProfileAuthor))
                     $this->isError = true;
-                    break;
-                }
                 break;
 
+            case 'context':
+                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor))
+                    $this->isError = true;
+                break;
+                
             case 'favorite':
                 if(empty($this->aParams['author']) && bx_get('author') !== false)
                     $this->aParams['author'] = bx_process_input(bx_get('author'));
 
-                if(!$this->_updateCurrentForFavorite($sMode, $this->aParams, $oProfileAuthor)) {
+                if(!$this->_updateCurrentForFavorite($sMode, $this->aParams, $oProfileAuthor))
                     $this->isError = true;
-                    break;
-                }
                 break;
 
             case 'public':

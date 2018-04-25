@@ -55,6 +55,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-shopify-entry',
             'URI_AUTHOR_ENTRIES' => 'shopify-author',
+            'URI_ENTRIES_BY_CONTEXT' => 'shopify-context',
             'URI_ADD_ENTRY' => 'create-shopify-entry',
         	'URI_EDIT_ENTRY' => 'edit-shopify-entry',
         	'URI_MANAGE_COMMON' => 'shopify-manage',
@@ -128,6 +129,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             	'menu_item_manage_all' => '_bx_shopify_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_shopify_txt_all_entries_by',
                 'txt_all_entries_by_author' => '_bx_shopify_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_shopify_page_title_browse_by_context',
             	'txt_pict_use_as_thumb' => '_bx_shopify_form_entry_input_picture_use_as_thumb'
             ),
         );

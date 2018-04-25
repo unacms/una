@@ -68,6 +68,7 @@
 	<string name="_bx_photos_page_title_browse"><![CDATA[Фото]]></string>
 	<string name="_bx_photos_page_title_search_results"><![CDATA[Фото, соответствующие "{0}"]]></string>
 	<string name="_bx_photos_page_title_browse_by_author"><![CDATA[Фото {display_name}]]></string>
+  <string name="_bx_photos_page_title_browse_by_context"><![CDATA[Фото в контексте: {display_name}]]></string>
 	<string name="_bx_photos_page_title_browse_featured"><![CDATA[Продвинутые фото]]></string>
     <string name="_bx_photos_page_title_browse_recent"><![CDATA[Недавние фото]]></string>
     <string name="_bx_photos_page_title_browse_popular"><![CDATA[Популярные фото]]></string>
@@ -107,10 +108,14 @@
     <string name="_bx_photos_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_photos_page_title_sys_entries_of_author"><![CDATA[Фото автора]]></string>
     <string name="_bx_photos_page_title_entries_of_author"><![CDATA[{display_name} - Фото]]></string>
+    <string name="_bx_photos_page_title_sys_entries_in_context"><![CDATA[Фото в контексте]]></string>
+    <string name="_bx_photos_page_title_entries_in_context"><![CDATA[Фото в контексте - {display_name}]]></string>
     <string name="_bx_photos_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_photos_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
     <string name="_bx_photos_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Фото]]></string>   
-    <string name="_bx_photos_page_block_title_sys_entries_of_author"><![CDATA[Фото автора]]></string>   
+    <string name="_bx_photos_page_block_title_sys_entries_of_author"><![CDATA[Фото автора]]></string>
+    <string name="_bx_photos_page_block_title_entries_in_context"><![CDATA[Фото в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_photos_page_block_title_sys_entries_in_context"><![CDATA[Фото в контексте]]></string>
     <string name="_bx_photos_page_block_title_entries_actions"><![CDATA[Фото - Действия]]></string>
     <string name="_bx_photos_page_block_title_browse_cmts"><![CDATA[Фото - Комментарии]]></string>
 	<string name="_bx_photos_page_title_sys_manage"><![CDATA[Управление собственными фото]]></string>
@@ -158,7 +163,9 @@
     <string name="_bx_photos_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к фото]]></string>
     <string name="_bx_photos_menu_item_title_system_view_entries_author"><![CDATA[Фото]]></string>
     <string name="_bx_photos_menu_item_title_view_entries_author"><![CDATA[Фото]]></string>
-    <string name="_bx_photos_menu_title_entries_my"><![CDATA[Мои фото - Меню действий]]></string>
+    <string name="_bx_photos_menu_item_title_system_view_entries_in_context"><![CDATA[Фото]]></string>
+    <string name="_bx_photos_menu_item_title_view_entries_in_context"><![CDATA[Фото]]></string>
+  <string name="_bx_photos_menu_title_entries_my"><![CDATA[Мои фото - Меню действий]]></string>
     <string name="_bx_photos_menu_set_title_entries_my"><![CDATA[Мои фото - Меню]]></string>
 	<string name="_bx_photos_menu_item_title_system_manage_my_photos"><![CDATA[Мои фото]]></string>
     <string name="_bx_photos_menu_item_title_manage_my_photos"><![CDATA[{addon} фото]]></string>
