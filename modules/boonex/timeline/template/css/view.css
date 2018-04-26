@@ -113,10 +113,12 @@ div.bx-tl-item div.bx-tl-owner-name a.bx-tl-timeline-owner-name {
     font-weight: 700;
 }
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-date,
-div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
+div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon,
+div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot .sys-icon {
     color: rgba(40, 60, 80, 0.5);
 }
-div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon {
+div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon,
+div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot .sys-icon {
     cursor: default;
 }
 div.bx-tl-item div.bx-tl-owner-actions {

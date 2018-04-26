@@ -2516,6 +2516,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($iPerPage !== false)
             $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage();
 
+        if($this->_oConfig->isHot())
+            $aParams['hot'] = $this->_oDb->getHot();
+
         return $aParams;
     }
 
@@ -2555,6 +2558,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams['active'] = 1;
         $aParams['hidden'] = 0;
+
+        if($this->_oConfig->isHot())
+            $aParams['hot'] = $this->_oDb->getHot();
 
         return $aParams;
     }

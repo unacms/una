@@ -277,6 +277,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getAll($sQuery);
     }
 
+    public function getHot()
+    {
+        return $this->getColumn("SELECT `event_id` FROM `" . $this->_sTableHotTrack . "`");
+    }
+
     public function getHotTrack($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 

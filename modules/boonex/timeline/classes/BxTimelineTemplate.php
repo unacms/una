@@ -991,7 +991,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_view_url' => $this->_oConfig->getItemViewUrl($aEvent),
             'item_date' => bx_time_js($aEvent['date']),
             'bx_if:show_pinned' => array(
-            	'condition' => (int)$aEvent['pinned'] != 0,
+            	'condition' => $bPinned,
+            	'content' => array(
+            		'style_prefix' => $sStylePrefix,
+            	)
+            ),
+            'bx_if:show_hot' => array(
+            	'condition' => isset($aBrowseParams['hot']) && is_array($aBrowseParams['hot']) && in_array($aEvent['id'], $aBrowseParams['hot']),
             	'content' => array(
             		'style_prefix' => $sStylePrefix,
             	)
