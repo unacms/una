@@ -715,6 +715,10 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
             
             // process animating icons
         	bx_activate_anim_icons();
+
+            // process syntax hightlighing
+            if ('undefined' !== typeof(Prism) && eElement.size())
+                Prism.highlightAllUnder(eElement[0]);
         }
         if ('undefined' !== typeof(oCallback)) {
             oCallback(eElement);
