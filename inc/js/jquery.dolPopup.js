@@ -471,7 +471,7 @@
                 var fOnLoad = function() {
                 	bx_loading_content(oLoading, false);
 
-                	$('#' + sPopupId + ' ' + options.container).bxTime().show();
+                	$('#' + sPopupId + ' ' + options.container).bxProcessHtml().show();
 
 					$('#' + sPopupId)._dolPopupSetPosition({
 						pointer: oPointerOptions

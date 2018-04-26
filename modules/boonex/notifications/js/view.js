@@ -44,7 +44,7 @@ BxNtfsView.prototype._getPosts = function(oElement) {
         		$this.loadingInBlock(oElement, false);
 
     			$('#' + $this._aHtmlIds['events']).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-	                $(this).html(sEvents).show().bxTime();
+	                $(this).html(sEvents).show().bxProcessHtml();
 	            });
         	}
         },

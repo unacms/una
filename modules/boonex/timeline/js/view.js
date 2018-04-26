@@ -191,7 +191,7 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
     		case 'timeline':
     			oView = $this.oViewTimeline;
     			oView.find('.' + $this.sClassItems).append($(sItems).hide()).find('.' + $this.sClassItem + ':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-					$(this).bxTime();
+					$(this).bxProcessHtml();
 
 					$this.initFlickity();
 
@@ -202,7 +202,7 @@ BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
 
     		case 'outline':
     			oView = $this.oViewOutline;
-    			$this.appendMasonry($(sItems).bxTime(), function() {
+    			$this.appendMasonry($(sItems).bxProcessHtml(), function() {
     				$this.initFlickity();
 
     				//--- Init Video Layout
@@ -308,7 +308,7 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
         	if(!oData.content)
         		return;
 
-        	oComments.html($(oData.content).hide()).children(':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        	oComments.html($(oData.content).hide()).children(':hidden').bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
         },
         'json'
     );
@@ -770,7 +770,7 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 		switch(oData.view) {
 			case 'timeline':
 				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-					$(this).html(sItems).show().bxTime();
+					$(this).html(sItems).show().bxProcessHtml();
 
 					$this.blink($(this));
 					$this.initFlickity();
@@ -781,7 +781,7 @@ BxTimelineView.prototype._onGetPosts = function(oData) {
 
 			case 'outline':
 				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-			        $(this).html(sItems).show().bxTime();
+			        $(this).html(sItems).show().bxProcessHtml();
 
 			        if($this.isMasonry())
 			        	$this.destroyMasonry();
@@ -804,7 +804,7 @@ BxTimelineView.prototype._onGetPost = function(oData) {
 	if(!$.trim(oData.item).length) 
 		return;
 
-	var oItem = $(oData.item).bxTime();
+	var oItem = $(oData.item).bxProcessHtml();
 	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
 
 	switch(oData.view) {

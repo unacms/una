@@ -19,7 +19,7 @@ function BxDolGrid (sObject, oOptions) {
     this._sSearchInputText = undefined == oOptions.text_search_input ? '' : oOptions.text_search_input;
     this._oPopupOptions = $.extend({
     	onBeforeShow: function(oElement) {
-    		jQuery(oElement).bxTime();
+    		jQuery(oElement).bxProcessHtml();
     	}
     }, oOptions.popup_options);
     this._oQueryAppend = oOptions.query_append;
@@ -435,7 +435,7 @@ BxDolGrid.prototype._onDataReloaded = function (isSkipSearchInput) {
 
     jQuery('#' + this._sIdTable + ' tbody tr:odd').addClass('bx-def-color-bg-hl');
     
-    jQuery('#' + this._sIdTable).bxTime();
+    jQuery('#' + this._sIdTable).bxProcessHtml();
 
     if (this._oOptions.sorting)
         this.orderable();
