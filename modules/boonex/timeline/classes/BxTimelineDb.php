@@ -13,6 +13,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 {
     protected $_sTableEvent2User;
     protected $_sTablesRepostTrack;
+    protected $_sTableHotTrack;
 
     protected $_aTablesMedia;
     protected $_aTablesMedia2Events;
@@ -25,6 +26,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         parent::__construct($oConfig);
         $this->_sTableEvent2User = $this->_sPrefix . 'events2users';
         $this->_sTableRepostsTrack = $this->_sPrefix . 'reposts_track';
+        $this->_sTableHotTrack = $this->_sPrefix . 'hot_track';
 
         $this->_aTablesMedia = array(
         	BX_TIMELINE_MEDIA_PHOTO => $this->_sPrefix . 'photos',
@@ -275,6 +277,37 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getAll($sQuery);
     }
 
+    public function getHotTrack($sModule, $sTableTrack, $iInterval = 24)
+    {
+        $sQuery = "SELECT 
+    			`te`.`id` as `event_id`,
+    			SUM(`tt`.`value`) AS `value`
+    		FROM `" . $this->_sTable . "` AS `te`
+    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`type`=:module 
+    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+    		GROUP BY `te`.`id`";
+
+        return $this->getAll($sQuery, array('module' => $sModule, 'interval' => $iInterval));
+    }
+
+    public function getHotTrackModule($sModule, $sTableTrack, $iInterval = 24)
+    {
+        $sQuery = "SELECT 
+    			`te`.`id` as `event_id`,
+    			SUM(`tt`.`value`) AS `value`
+    		FROM `" . $this->_sTable . "` AS `te`
+    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`type`=:module 
+    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+    		GROUP BY `te`.`object_id`";
+
+        return $this->getAll($sQuery, array('module' => $sModule, 'interval' => $iInterval));
+    }
+
+    public function updateHotTrack($aTrack)
+    {
+        return (int)$this->query("REPLACE INTO `" . $this->_sTableHotTrack . "` SET " . $this->arrayToSQL($aTrack)) > 0;
+    }
+
     protected function _getFilterAddon($iOwnerId, $sFilter)
     {
         switch($sFilter) {
@@ -402,8 +435,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 		//--- Check type
 		$sWhereSubclause = "";
 		switch($aParams['type']) {
-		    //--- Site (Public) Feed.
-		    case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+		    case BX_TIMELINE_TYPE_HOT: //--- Hot (Public) Feed.
+		        $sJoinClause .= " INNER JOIN `{$this->_sTableHotTrack}` ON `{$this->_sTable}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
+		        
+		    case BX_BASE_MOD_NTFS_TYPE_PUBLIC: //--- Site (Public) Feed.
 		        //--- Apply privacy filter
 		        $aPrivacyGroups = array(BX_DOL_PG_ALL);
 		        if(isLogged())

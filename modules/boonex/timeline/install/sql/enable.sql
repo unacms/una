@@ -2,6 +2,7 @@
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_timeline_view', '_bx_timeline_page_title_sys_view', '_bx_timeline_page_title_view', 'bx_timeline', 5, 2147483647, 1, 'timeline-view', 'page.php?i=timeline-view', '', '', '', 0, 1, 0, 'BxTimelinePageView', 'modules/boonex/timeline/classes/BxTimelinePageView.php'),
 ('bx_timeline_view_home', '_bx_timeline_page_title_sys_view_home', '_bx_timeline_page_title_view_home', 'bx_timeline', 5, 2147483647, 1, 'timeline-view-home', 'page.php?i=timeline-view-home', '', '', '', 0, 1, 0, '', ''),
+('bx_timeline_view_hot', '_bx_timeline_page_title_sys_view_hot', '_bx_timeline_page_title_view_hot', 'bx_timeline', 5, 2147483647, 1, 'timeline-view-hot', 'page.php?i=timeline-view-hot', '', '', '', 0, 1, 0, '', ''),
 
 ('bx_timeline_item', '_bx_timeline_page_title_sys_item', '_bx_timeline_page_title_item', 'bx_timeline', 5, 2147483647, 1, 'item', 'page.php?i=item', '', '', '', 0, 1, 0, '', ''),
 ('bx_timeline_item_brief', '_bx_timeline_page_title_sys_item_brief', '_bx_timeline_page_title_item_brief', 'bx_timeline', 2, 2147483647, 1, 'item-quick', 'page.php?i=item-quick', '', '', '', 0, 1, 0, '', '');
@@ -14,6 +15,9 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('bx_timeline_view_home', 1, 'bx_timeline', '_bx_timeline_page_block_title_system_post_home', '_bx_timeline_page_block_title_post_home', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_post_home";}', 0, 0, 1, 1),
 ('bx_timeline_view_home', 1, 'bx_timeline', '_bx_timeline_page_block_title_system_view_home', '_bx_timeline_page_block_title_view_home', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_view_home";}', 0, 0, 0, 2),
 ('bx_timeline_view_home', 1, 'bx_timeline', '_bx_timeline_page_block_title_system_view_home_outline', '_bx_timeline_page_block_title_view_home_outline', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_block_view_home_outline";}', 0, 0, 1, 3),
+
+('bx_timeline_view_hot', 1, 'bx_timeline', '_bx_timeline_page_block_title_system_view_hot', '_bx_timeline_page_block_title_view_hot', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:18:"get_block_view_hot";}', 0, 1, 0, 1),
+('bx_timeline_view_hot', 1, 'bx_timeline', '_bx_timeline_page_block_title_system_view_hot_outline', '_bx_timeline_page_block_title_view_hot_outline', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:26:"get_block_view_hot_outline";}', 0, 1, 1, 2),
 
 ('bx_timeline_item', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_item', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:14:"get_block_item";}', 0, 0, 1, 1),
 ('bx_timeline_item', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_item_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_item_comments";}', 0, 0, 1, 2),
@@ -138,7 +142,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_rss_length', '5', @iCategId, '_bx_timeline_option_rss_length', 'digit', '', '', '', '', 20),
 ('bx_timeline_events_hide', '', @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 30),
 ('bx_timeline_chars_display_max', '300', @iCategId, '_bx_timeline_option_chars_display_max', 'digit', 'GreaterThan', 'a:1:{s:3:"min";i:150;}', '_bx_timeline_option_err_chars_display_max', '', 40),
-('bx_timeline_videos_autoplay', 'off', @iCategId, '_bx_timeline_option_videos_autoplay', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_options_videos_autoplay";}', 50);
+('bx_timeline_videos_autoplay', 'off', @iCategId, '_bx_timeline_option_videos_autoplay', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_options_videos_autoplay";}', 50),
+('bx_timeline_enable_hot', '', @iCategId, '_bx_timeline_option_enable_hot', 'checkbox', '', '', '', '', 60),
+('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 61);
 
 
 -- PRIVACY 
@@ -282,3 +288,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
 ('bx_timeline', '_bx_timeline', 'bx_timeline', 'post_common', '', 'delete', '', ''),
 ('bx_timeline_cmts', '_bx_timeline_cmts', 'bx_timeline', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
+
+
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_timeline_hot', '0 * * * *', 'BxTimelineCronHot', 'modules/boonex/timeline/classes/BxTimelineCronHot.php', '');

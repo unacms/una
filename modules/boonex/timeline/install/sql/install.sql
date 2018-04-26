@@ -249,6 +249,14 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_reports_track` (
   KEY `report` (`object_id`, `author_nip`)
 );
 
+-- TABLE: hot track
+CREATE TABLE IF NOT EXISTS `bx_timeline_hot_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `event_id` (`event_id`)
+);
 
 -- STORAGES, TRANSCODERS, UPLOADERS
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');

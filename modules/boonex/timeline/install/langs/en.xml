@@ -19,6 +19,8 @@
 	<string name="_bx_timeline_option_videos_autoplay_off"><![CDATA[Disabled]]></string>
 	<string name="_bx_timeline_option_videos_autoplay_on_mute"><![CDATA[Enabled without sound]]></string>
 	<string name="_bx_timeline_option_videos_autoplay_on"><![CDATA[Enabled with sound]]></string>
+	<string name="_bx_timeline_option_enable_hot"><![CDATA[Enable Hot list aggregation]]></string>
+	<string name="_bx_timeline_option_hot_interval"><![CDATA[Interval of time (in hours) to get Hot events]]></string>	
 
 	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
@@ -76,6 +78,8 @@
 	<string name="_bx_timeline_page_title_view"><![CDATA[Profile Feed]]></string>
 	<string name="_bx_timeline_page_title_sys_view_home"><![CDATA[Public Feed]]></string>
     <string name="_bx_timeline_page_title_view_home"><![CDATA[Public Feed]]></string>
+    <string name="_bx_timeline_page_title_sys_view_hot"><![CDATA[Hot Feed]]></string>
+    <string name="_bx_timeline_page_title_view_hot"><![CDATA[Hot Feed]]></string>
 	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Feed Item]]></string>
 	<string name="_bx_timeline_page_title_item"><![CDATA[Feed Item]]></string>
 	<string name="_bx_timeline_page_title_sys_item_brief"><![CDATA[Feed Item Preview]]></string>
@@ -104,6 +108,10 @@
 	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Public Feed]]></string>
 	<string name="_bx_timeline_page_block_title_system_view_home_outline"><![CDATA[Public Feed (Outline)]]></string>
 	<string name="_bx_timeline_page_block_title_view_home_outline"><![CDATA[Public Feed]]></string>
+	<string name="_bx_timeline_page_block_title_system_view_hot"><![CDATA[Hot Feed (Timeline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_hot"><![CDATA[Hot Feed]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_hot_outline"><![CDATA[Hot Feed (Outline)]]></string>
+    <string name="_bx_timeline_page_block_title_view_hot_outline"><![CDATA[Hot Feed]]></string>
 	<string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Feeds' Comments]]></string>
 
     <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>

@@ -31,6 +31,8 @@ DROP TABLE IF EXISTS `bx_timeline_meta_mentions`;
 DROP TABLE IF EXISTS `bx_timeline_reports`;
 DROP TABLE IF EXISTS `bx_timeline_reports_track`;
 
+DROP TABLE IF EXISTS `bx_timeline_hot_track`;
+
 
 -- STORAGES, TRANSCODERS, UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_timeline%';

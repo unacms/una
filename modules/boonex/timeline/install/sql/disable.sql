@@ -62,3 +62,7 @@ DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_timeline';
 
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_timeline', 'bx_timeline_cmts');
+
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_timeline%';

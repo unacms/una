@@ -24,6 +24,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iCharsDisplayMaxTitle;
     protected $_sVideosAutoplay;
 
+    protected $_bHot;
+    protected $_iHotInterval;
+
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
     protected $_sTranscoderObjectView;
@@ -236,6 +239,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iCharsDisplayMax = (int)getParam($sOptionPrefix . 'chars_display_max');
         $this->_iCharsDisplayMaxTitle = 20;
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
+
+        $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
+        $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
     }
 
     public function isAllowEdit()
@@ -251,6 +257,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isShowAll()
     {
         return $this->_bShowAll;
+    }
+
+    public function isHot()
+    {
+        return $this->_bHot;
     }
 
     public function getPostFormDisplay($sType)
@@ -295,6 +306,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getVideosAutoplay()
     {
         return $this->_sVideosAutoplay;
+    }
+
+    public function getHotInterval()
+    {
+        return $this->_iHotInterval;
     }
 
     public function getRepostDefaults()

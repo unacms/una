@@ -14,6 +14,7 @@ bx_import('BxBaseModNotificationsModule');
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
+define('BX_TIMELINE_TYPE_HOT', 'hot');
 define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
 
 define('BX_TIMELINE_VIEW_ITEM', 'item');
@@ -886,6 +887,62 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 	public function serviceGetBlockViewHomeOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         return $this->_serviceGetBlockViewHome($iProfileId, BX_TIMELINE_VIEW_OUTLINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+    }
+
+	/**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_hot get_block_view_hot
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_hot', [...]); @endcode
+     * 
+     * Get Timeline View block with Hot public events.
+     * 
+     * @param $iProfileId (optional) profile ID. 0 should be used here.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewHot
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_hot "get_block_view_hot"
+     */
+    public function serviceGetBlockViewHot($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
+    {
+        return $this->_serviceGetBlockViewHot($iProfileId, BX_TIMELINE_VIEW_TIMELINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_hot_outline get_block_view_hot_outline
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_hot_outline', [...]); @endcode
+     * 
+     * Get Outline View block with Hot public events.
+     * 
+     * @param $iProfileId (optional) profile ID. 0 should be used here.
+     * @param $iStart (optional) integer value with a page number. Is used in pagination.
+     * @param $iPerPage (optional) integer value with a number of items per page. Is used in pagination.
+     * @param $iTimeline (optional) integer value determining whether the timeline should be displayed or not. 
+     * @param $sFilter (optional) string value with filter name.
+     * @param $aModules (optional) an array of modules from which the events should be displayed. All available modules are used by default.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewHotOutline
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_hot_outline "get_block_view_hot_outline"
+     */
+	public function serviceGetBlockViewHotOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
+    {
+        return $this->_serviceGetBlockViewHot($iProfileId, BX_TIMELINE_VIEW_OUTLINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
     }
 
     /**
@@ -2239,8 +2296,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_PUBLIC . '/';
         BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view_home'), $sRssUrl);
 
-        return $this->_serviceGetBlockViewByType($iProfileId, $sView, BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
-    } 
+        return $this->_serviceGetBlockViewByType($iProfileId, $sView, BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iStart, $iPerPage, $iPerPageDefault, $iTimeline, $sFilter, $aModules);
+    }
+
+    protected function _serviceGetBlockViewHot($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
+    {
+        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_TIMELINE_TYPE_HOT . '/';
+        BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view_hot'), $sRssUrl);
+
+        return $this->_serviceGetBlockViewByType($iProfileId, $sView, BX_TIMELINE_TYPE_HOT, $iStart, $iPerPage, $iPerPageDefault, $iTimeline, $sFilter, $aModules);
+    }
 
     protected function _serviceGetBlockViewByType($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $sType = BX_TIMELINE_TYPE_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
     {

@@ -19,6 +19,8 @@
     <string name="_bx_timeline_option_videos_autoplay_off"><![CDATA[Отключено]]></string>
     <string name="_bx_timeline_option_videos_autoplay_on_mute"><![CDATA[Включено (без звука)]]></string>
     <string name="_bx_timeline_option_videos_autoplay_on"><![CDATA[Включено (cо звуком)]]></string>
+    <string name="_bx_timeline_option_enable_hot"><![CDATA[Включить сбор данных для листа 'горячих' сообщений]]></string>
+    <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' сообщений]]></string>
 
 	<string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>
@@ -76,6 +78,8 @@
 	<string name="_bx_timeline_page_title_view"><![CDATA[Хроника новостей профайла]]></string>
 	<string name="_bx_timeline_page_title_sys_view_home"><![CDATA[Общая хроника новостей]]></string>
     <string name="_bx_timeline_page_title_view_home"><![CDATA[Общая хроника новостей]]></string>
+    <string name="_bx_timeline_page_title_sys_view_hot"><![CDATA[Хроника 'горячих' новостей]]></string>
+    <string name="_bx_timeline_page_title_view_hot"><![CDATA[Хроника 'горячих' новостей]]></string>
 	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Элемент хроники]]></string>
 	<string name="_bx_timeline_page_title_item"><![CDATA[Элемент хроники]]></string>
 	<string name="_bx_timeline_page_title_sys_item_brief"><![CDATA[Предпросмотр элемента хроники]]></string>
@@ -104,6 +108,10 @@
 	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Общая хроника новостей]]></string>
 	<string name="_bx_timeline_page_block_title_system_view_home_outline"><![CDATA[Общая хроника новостей (сводка)]]></string>
 	<string name="_bx_timeline_page_block_title_view_home_outline"><![CDATA[Общая хроника новостей]]></string>
+	<string name="_bx_timeline_page_block_title_system_view_hot"><![CDATA[Хроника 'горячих' новостей (лента)]]></string>
+    <string name="_bx_timeline_page_block_title_view_hot"><![CDATA[Хроника 'горячих' новостей]]></string>
+    <string name="_bx_timeline_page_block_title_system_view_hot_outline"><![CDATA[Хроника 'горячих' новостей (сводка)]]></string>
+    <string name="_bx_timeline_page_block_title_view_hot_outline"><![CDATA[Хроника 'горячих' новостей]]></string>
 	<string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Хроника новостей - Комментарии]]></string>
 
     <string name="_bx_timeline_menu_item_view_all"><![CDATA[Все сообщения]]></string>
