@@ -369,12 +369,19 @@ class BxCnvModule extends BxBaseModTextModule
      */
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = parent::checkAllowedView ($aDataEntry, $isPerformAction)))
-            return $sMsg;
-
-        return $this->isCollaborator($aDataEntry, bx_get_logged_profile_id()) ? CHECK_ACTION_RESULT_ALLOWED : _t('_sys_txt_access_denied');
+        return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
     }
 
+    public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId)))
+            return $sMsg;
+
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        return $this->isCollaborator($aDataEntry, $iProfileId) ? CHECK_ACTION_RESULT_ALLOWED : _t('_sys_txt_access_denied');
+    }
 
     protected function isCollaborator($aDataEntry, $iProfileId)
     {

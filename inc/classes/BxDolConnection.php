@@ -153,6 +153,15 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get connection type.
+     * return BX_CONNECTIONS_TYPE_ONE_WAY or BX_CONNECTIONS_TYPE_MUTUAL
+     */ 
+    public function getType()
+    {
+        return $this->_sType;
+    }
+
+    /**
      * Check whether connection between Initiator and Content can be established.
      */
     public function checkAllowedConnect ($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false)

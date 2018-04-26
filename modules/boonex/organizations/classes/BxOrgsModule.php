@@ -51,9 +51,11 @@ class BxOrgsModule extends BxBaseModGroupsModule
     /**
      * @see iBxDolProfileService::serviceGetParticipatingProfiles
      */ 
-    public function serviceGetParticipatingProfiles($iProfileId, $sConnectionObject = 'sys_profiles_friends')
+    public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects = false)
     {
-        return BxBaseModProfileModule::serviceGetParticipatingProfiles($iProfileId, $sConnectionObject);
+        if (false === $aConnectionObjects)
+            $aConnectionObjects = array('sys_profiles_friends');
+        return BxBaseModProfileModule::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);
     }
     
     public function servicePrepareFields ($aFieldsProfile)

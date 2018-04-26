@@ -821,21 +821,29 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
+        return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
+    }
+
+    public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        if (!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
         $CNF = &$this->_oConfig->CNF;
 
         // moderator and owner always have access
-        if (!empty($this->_iProfileId) && ((int)$aDataEntry[$CNF['FIELD_AUTHOR']] == (int)$this->_iProfileId || $this->_isModerator($isPerformAction)))
+        if (!empty($iProfileId) && ((int)$aDataEntry[$CNF['FIELD_AUTHOR']] == (int)$iProfileId || $this->_isModerator($isPerformAction)))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'view entry', $this->getName(), $isPerformAction);
+        $aCheck = checkActionModule($iProfileId, 'view entry', $this->getName(), $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 
         // check privacy
         if (!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
             $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-            if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']]))
+            if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
                 return _t('_sys_access_denied_to_private_content');
         }
 
