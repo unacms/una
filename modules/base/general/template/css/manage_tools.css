@@ -6,10 +6,13 @@ div.bx-grid-header div.bx-form-element-wrapper {
 }
 
 /*--- Administration tools ---*/
-div.bx-grid-header div#bx-form-element-filter1 {
+div.bx-grid-header div#bx-form-element-filter1,
+div.bx-grid-header div#bx-form-element-filter2
+{
     margin-right: 20px;
 }
 div.bx-grid-header div#bx-form-element-filter1,
+div.bx-grid-header div#bx-form-element-filter2,
 div.bx-grid-header div#bx-form-element-search {
     margin-top: 0px;
 }
