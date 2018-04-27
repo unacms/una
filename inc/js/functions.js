@@ -1014,11 +1014,22 @@ function bx_get_scripts (aFiles, fCallback)
                 fCallback && fCallback();
             } 
             else {
-                $.getScript(aFiles[iCounter]).done(fHandler);
+                $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
             }
         };
 
-    $.getScript(aFiles[iCounter]).done(fHandler);
+    $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
 }
+
+jQuery.bxGetCachedScript = function(sUrl, oOptions) 
+{ 
+    oOptions = $.extend(oOptions || {}, {
+        dataType: "script",
+        cache: true,
+        url: sUrl
+    });
+
+    return jQuery.ajax(oOptions);
+};
 
 /** @} */
