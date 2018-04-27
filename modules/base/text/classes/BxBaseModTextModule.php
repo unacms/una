@@ -125,6 +125,14 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         return $this->_serviceTemplateFunc ('entryAuthor', $iContentId);
     }
+    
+    /**
+     * Entry context block
+     */
+    public function serviceEntityContext ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryContext', $iContentId);
+    }
 
     public function serviceEntityBreadcrumb ($iContentId = 0)
     {
