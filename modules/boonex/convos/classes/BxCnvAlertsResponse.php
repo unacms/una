@@ -22,6 +22,9 @@ class BxCnvAlertsResponse extends BxBaseModTextAlertsResponse
         if ($this->MODULE == $oAlert->sUnit && 'commentPost' == $oAlert->sAction)
             BxDolService::call($this->MODULE, 'trigger_comment_post', array($oAlert->iObject, $oAlert->aExtras['comment_author_id'], $oAlert->aExtras['comment_id'], 0, $oAlert->aExtras['comment_text']));
 
+        if ('profile' == $oAlert->sUnit && 'delete' == $oAlert->sAction && (!isset($oAlert->aExtras['delete_with_content']) || !$oAlert->aExtras['delete_with_content']))
+            BxDolService::call($this->MODULE, 'remove_collaborator_from_all_conversations', array($oAlert->iObject));
+        
         parent::response($oAlert);
     }
 }

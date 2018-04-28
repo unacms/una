@@ -43,6 +43,24 @@ class BxCnvDb extends BxBaseModTextDb
         return $this->query($sQuery);
     }
 
+    /**
+     * Remove collaborator from all conversations (when profile is deleted)
+     * @param $iProfileId profile id to remove
+     * @return number of deletions
+     */
+    public function removeCollaboratorFromAllConversations($iProfileId)
+    {
+        $aConvos = $this->getColumn("SELECT `conv_id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `collaborator` = ?", array($iProfileId));
+        if (!($iRet = $this->query("DELETE FROM `" . $this->getPrefix() . "conv2folder` WHERE `collaborator` = ?", array($iProfileId))))
+            return 0;
+
+        foreach ($aConvos as $iConversationId) {
+            if (!$this->getCollaborators($iConversationId))
+                $this->deleteConvo($iConversationId);
+        }
+        return $iRet;
+    }
+    
     public function getCollaborators($iConversationId)
     {
         $sQuery = $this->prepare("SELECT `collaborator`, `read_comments` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ?", $iConversationId);
@@ -91,10 +109,12 @@ class BxCnvDb extends BxBaseModTextDb
         }
 
         $sQuery = "DELETE FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = :conv_id" . $sWhere;
-        if (!$this->query($sQuery, $aBindings))
-            return false;
+        $this->query($sQuery, $aBindings);
 
         // delete whole conversation if there is no refencences to the conversation in conv2folder table
+        if ($this->getCollaborators($iConversationId))
+            return false;
+            
         $sQuery = $this->prepare("SELECT `id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ?", $iConversationId);
         if (!$this->getOne($sQuery)) {
             $CNF = &$this->_oConfig->CNF;
