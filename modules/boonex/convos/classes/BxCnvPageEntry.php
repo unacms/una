@@ -19,6 +19,9 @@ class BxCnvPageEntry extends BxBaseModTextPageEntry
         $this->MODULE = 'bx_convos';
         parent::__construct($aObject, $oTemplate);
 
+        if (!$this->_aContentInfo)
+            return;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $this->_oModule->_oDb->updateReadComments(bx_get_logged_profile_id(), $this->_aContentInfo[$CNF['FIELD_ID']], $this->_aContentInfo[$CNF['FIELD_COMMENTS']]);
