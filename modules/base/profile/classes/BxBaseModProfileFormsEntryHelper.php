@@ -144,7 +144,12 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, true);
 
         // alert
-        bx_alert($this->_oModule->getName(), 'added', $iContentId);
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        $aParams = array();        
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+        
+        bx_alert($this->_oModule->getName(), 'added', $iContentId, false, $aParams);
 
         // switch context to the created profile
         if ($this->_oModule->serviceActAsProfile()) {
