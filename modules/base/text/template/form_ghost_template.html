@@ -29,4 +29,8 @@
     $(".bx-base-general-icon-{file_id}").bind('dragstart', function(){
         return false; 
     });
+
+    // select first image as a thumb by default
+    if (1 == $('input[name="__name_thumb__[]"]').length)
+        $('input[name="__name_thumb__[]"]').attr('checked', true);
 </script>
