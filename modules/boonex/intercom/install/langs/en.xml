@@ -8,6 +8,7 @@
     <string name="_bx_intercom_adm_stg_cpt_category_general"><![CDATA[General]]></string>
     <string name="_bx_intercom_option_app_id"><![CDATA[Intercom App ID]]></string>
     <string name="_bx_intercom_option_api_key"><![CDATA[Intercom Access Token]]></string>
+    <string name="_bx_intercom_option_hide_launcher"><![CDATA[Hide Launcher]]></string>
     <string name="_bx_intercom_option_alignment"><![CDATA[Widget Alignment]]></string>
     <string name="_bx_intercom_option_horizontal_padding"><![CDATA[Widget Horizontal Padding]]></string>
     <string name="_bx_intercom_option_vertical_padding"><![CDATA[Widget Vertical Padding]]></string>
