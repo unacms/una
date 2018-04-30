@@ -137,7 +137,10 @@
     <string name="_bx_forum_page_block_title_sys_entries_in_context"><![CDATA[Обсуждения в контексте]]></string>
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Обсуждения - Действия]]></string>
     <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Форум - Комментарии]]></string>
-    <string name="_bx_forum_page_title_sys_manage"><![CDATA[Управление собственными обсуждениями]]></string>
+    <string name="_bx_forum_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_forum_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
+
+  <string name="_bx_forum_page_title_sys_manage"><![CDATA[Управление собственными обсуждениями]]></string>
 	<string name="_bx_forum_page_title_sys_manage_administration"><![CDATA[Управление всеми обсуждениями]]></string>
 	<string name="_bx_forum_page_title_manage"><![CDATA[Управление]]></string>
 	<string name="_bx_forum_page_block_title_system_manage"><![CDATA[Управление собственными обсуждениями]]></string>
@@ -262,6 +265,7 @@
 	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Закрепленное обсуждение]]></string>
 	<string name="_bx_forum_txt_sample_comment_single"><![CDATA[комментарий к обсуждению]]></string>
 	<string name="_bx_forum_txt_sample_vote_single"><![CDATA[голос за обсуждение]]></string>
+  <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">Все обсуждения в {1} ({2})</a>]]></string>
 	<string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
 	<string name="_bx_forum_txt_sample_single_with_article"><![CDATA[обсуждение]]></string>
     <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} {1}]]></string>

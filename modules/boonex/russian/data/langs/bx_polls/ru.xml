@@ -133,6 +133,8 @@
     <string name="_bx_polls_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные голосования]]></string>
     <string name="_bx_polls_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые голосования (Витринный просмотр)]]></string>
     <string name="_bx_polls_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые голосования]]></string>
+    <string name="_bx_polls_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_polls_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
 
     <string name="_bx_polls_menu_set_title_view_entry"><![CDATA[Голосование - Действия]]></string>
     <string name="_bx_polls_menu_title_view_entry"><![CDATA[Голосование - Действия]]></string>
@@ -221,6 +223,7 @@
     <string name="_bx_polls_cat_yes_or_no"><![CDATA[Да или нет]]></string>
 
     <string name="_bx_polls_txt_all_entries_by"><![CDATA[<a href="{0}">Все голосования от {1} ({2})</a>]]></string>
+    <string name="_bx_polls_txt_all_entries_in"><![CDATA[<a href="{0}">Все голосования в {1} ({2})</a>]]></string>
     <string name="_bx_polls_txt_sample_single"><![CDATA[голосование]]></string>
     <string name="_bx_polls_txt_sample_single_with_article"><![CDATA[голосование]]></string>
     <string name="_bx_polls_txt_sample_comment_single"><![CDATA[комментарий к голосованию]]></string>

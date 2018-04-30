@@ -169,6 +169,9 @@
     <string name="_bx_market_page_block_title_updated_entries"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_page_block_title_updated_entries_view_extended"><![CDATA[Updated Products (Extended View)]]></string>
     <string name="_bx_market_page_block_title_updated_entries_view_full"><![CDATA[Updated Products (Full View)]]></string>
+	<string name="_bx_market_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
+    <string name="_bx_market_page_block_title_entry_context"><![CDATA[Posted in]]></string>
+	
     <string name="_bx_market_page_title_sys_view_entry_comments"><![CDATA[Product Reviews]]></string>
     <string name="_bx_market_page_title_view_entry_comments"><![CDATA[Reviews to {title}]]></string>
     <string name="_bx_market_page_title_sys_view_entry_info"><![CDATA[Product Info]]></string>
@@ -386,6 +389,7 @@
 	<string name="_bx_market_err_not_accept_payments_recurring"><![CDATA[You need to activate at least one payment provider, which is working with Subscriptions. You may do it via My Account menu -> Settings page -> <a href="{0}">Payments</a> tab.]]></string>
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">All Products by {1} ({2})</a>]]></string>
+    <string name="_bx_market_txt_all_entries_in"><![CDATA[<a href="{0}">All Products in {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category"><![CDATA[Category:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[The most current version]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[product]]></string>

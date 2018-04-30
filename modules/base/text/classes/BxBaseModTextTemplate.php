@@ -126,7 +126,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
         $sUrl = 'page.php?i=' . $CNF['URI_ENTRIES_BY_CONTEXT'] . '&profile_id=' . $oProfile->id();
         $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
-        return _t($CNF['T']['txt_all_entries_in'], $sUrl, $oProfile->getDisplayName(), $this->getModule()->_oDb->getEntriesNumByAuthor($oProfile->id()));
+        return _t($CNF['T']['txt_all_entries_in'], $sUrl, $oProfile->getDisplayName(), $this->getModule()->_oDb->getEntriesNumByContext($oProfile->id()));
     }
 
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())

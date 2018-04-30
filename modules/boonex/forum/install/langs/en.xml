@@ -136,7 +136,10 @@
     <string name="_bx_forum_page_block_title_entries_in_context"><![CDATA[Discussions in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_forum_page_block_title_sys_entries_in_context"><![CDATA[Discussions in context]]></string>
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Discussions actions]]></string>
-    <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Forum's Comments]]></string>
+	<string name="_bx_forum_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
+  	<string name="_bx_forum_page_block_title_entry_context"><![CDATA[Posted in]]></string>
+    
+	<string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Forum's Comments]]></string>
     <string name="_bx_forum_page_title_sys_manage"><![CDATA[Manage Own]]></string>
 	<string name="_bx_forum_page_title_sys_manage_administration"><![CDATA[Manage All]]></string>
 	<string name="_bx_forum_page_title_manage"><![CDATA[Manage]]></string>
@@ -154,7 +157,6 @@
     <string name="_bx_forum_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_forum_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
     <string name="_bx_forum_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
-
     <string name="_bx_forum_menu_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_item_title_system_create_entry"><![CDATA[New Discussion]]></string>
@@ -266,8 +268,8 @@
     <string name="_bx_forum_txt_sample_single_with_article"><![CDATA[a discussion]]></string>
     <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>
     <string name="_bx_forum_you_are_last_replier"><![CDATA[You are last replier]]></string>
-    
-    
+
+    <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">All Discussions in {1} ({2})</a>]]></string>
     <string name="_bx_forum_email_new_reply"><![CDATA[New reply]]></string>
     <string name="_bx_forum_email_new_reply_subject"><![CDATA[New reply in "{PageTitle}" discussion]]></string>
     <string name="_bx_forum_email_new_reply_body"><![CDATA[{email_header}

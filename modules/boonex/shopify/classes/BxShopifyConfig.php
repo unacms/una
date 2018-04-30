@@ -128,6 +128,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_shopify_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_shopify_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_shopify_txt_all_entries_by',
+                'txt_all_entries_in' => '_bx_shopify_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_shopify_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_shopify_page_title_browse_by_context',
             	'txt_pict_use_as_thumb' => '_bx_shopify_form_entry_input_picture_use_as_thumb'

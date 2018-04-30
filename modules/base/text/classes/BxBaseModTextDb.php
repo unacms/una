@@ -42,6 +42,12 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
         $sQuery = "SELECT `c`.* FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` WHERE `c`.`" . $CNF['FIELD_AUTHOR'] . "`=:author AND (0 $sWhere)" . $sOrderBy;
         return $this->getAll($sQuery, $aBindings);
     }
+    
+    public function getEntriesNumByContext ($iProfileId)
+    {
+        $sQuery = $this->prepare ("SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'] . "` = ?", - $iProfileId);
+        return $this->getOne($sQuery);
+    }
 }
 
 /** @} */

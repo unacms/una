@@ -129,6 +129,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_polls_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_polls_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_polls_txt_all_entries_by',
+                'txt_all_entries_in' => '_bx_polls_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_polls_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_polls_page_title_browse_by_context',
             	'txt_pict_use_as_thumb' => '_bx_polls_form_entry_input_picture_use_as_thumb'
