@@ -270,6 +270,26 @@ class BxDolScore extends BxDolObject
         ));
     }
 
+    /**
+     * Note. By default image based controls aren't used.
+     * Therefore it can be overwritten in custom template.
+     */
+    protected function _getImageDo($sType)
+    {
+        $sResult = '';
+
+        switch($sType) {
+            case BX_DOL_SCORE_DO_UP:
+                $sResult = '';
+                break;
+            case BX_DOL_SCORE_DO_DOWN:
+                $sResult = '';
+                break;
+        }
+
+    	return $sResult;
+    }
+
     protected function _getIconDo($sType)
     {
         $sResult = '';

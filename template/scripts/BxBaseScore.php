@@ -48,6 +48,7 @@ class BxBaseScore extends BxDolScore
         $this->_aElementDefaults = array(
             'show_do_vote_as_button' => false,
             'show_do_vote_as_button_small' => false,
+            'show_do_vote_image' => false,
             'show_do_vote_icon' => true,
             'show_do_vote_label' => false,
             'show_counter' => true,
@@ -300,6 +301,12 @@ class BxBaseScore extends BxDolScore
     protected function _getLabelDo($sType, $aParams = array())
     {
         return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoVoteLabel, array(
+        	'bx_if:show_image' => array(
+        		'condition' => isset($aParams['show_do_vote_image']) && $aParams['show_do_vote_image'] == true,
+        		'content' => array(
+        			'src' => $this->_getImageDo($sType)
+        		)
+        	),
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true,
         		'content' => array(
