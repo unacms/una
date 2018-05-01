@@ -26,6 +26,9 @@ BxOrgsManageTools.prototype.onChangeFilter = function(oFilter) {
 	var $this = this;
 	var oFilter1 = $('#bx-grid-filter1-' + this._sObjNameGrid);
 	var sValueFilter1 = oFilter1.length > 0 ? oFilter1.val() : '';
+	
+	var oFilter2 = $('#bx-grid-filter2-' + this._sObjNameGrid);
+	var sValueFilter2 = oFilter2.length > 0 ? oFilter2.val() : '';
 
 	var oSearch = $('#bx-grid-search-' + this._sObjNameGrid);
 	var sValueSearch = oSearch.length > 0 ? oSearch.val() : '';
@@ -34,7 +37,7 @@ BxOrgsManageTools.prototype.onChangeFilter = function(oFilter) {
 
 	clearTimeout($this._iSearchTimeoutId);
     $this._iSearchTimeoutId = setTimeout(function () {
-        glGrids[$this._sObjNameGrid].setFilter(sValueFilter1 + $this._sParamsDivider + sValueSearch, true);
+        glGrids[$this._sObjNameGrid].setFilter(sValueFilter1 + $this._sParamsDivider  + sValueFilter2 + $this._sParamsDivider + sValueSearch, true);
     }, 500);
 };
 
