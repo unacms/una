@@ -28,6 +28,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         entity_encoding: 'raw',
                         browser_spellcheck: true,
                         branding: false,
+                        link_assume_external_targets: true,
                         body_class: 'bx-def-color-bg-block',
                         codesample_languages: [
                             {text: 'HTML/XML', value: 'markup'},

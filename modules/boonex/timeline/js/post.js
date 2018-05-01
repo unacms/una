@@ -307,7 +307,7 @@ BxTimelinePost.prototype._onGetPost = function(oData) {
 		if(oEmpty.is(':visible'))
 			oEmpty.hide();
 
-		var oContent = $(oData.item).bxTime();
+		var oContent = $(oData.item).bxProcessHtml();
 		switch(oData.view) {
 			case 'timeline':
 				var oTimeline = $('#' + $this._aHtmlIds['main_timeline']);

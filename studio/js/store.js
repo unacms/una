@@ -235,7 +235,7 @@ BxDolStudioStore.prototype.info = function(sModuleName, oLink) {
 			var sId = $this.sIdPopupProduct;
 			if(oData.code == 0 && oData.popup.length > 0) {
 		        $('#' + sId).remove();
-				$(oData.popup).appendTo('body').bxTime();
+				$(oData.popup).appendTo('body').bxProcessHtml();
 				$('#' + sId).dolPopup({
 					onShow: function() {
 						$this.initScreenshots(oData.screenshots);

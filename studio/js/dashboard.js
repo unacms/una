@@ -15,7 +15,7 @@ function BxDolStudioDashboard(oOptions) {
 
     var $this = this;
     $(document).ready(function() {
-    	$('.bx-dbd-block-content').bxTime();
+    	$('.bx-dbd-block-content').bxProcessHtml();
     });
 }
 
@@ -192,7 +192,7 @@ BxDolStudioDashboard.prototype.hostTools = function(sAction) {
 			    return;
 
 			$('#' + sDivId).hide().html(sData).bx_anim('show', 'fade', 'slow', function() {
-				$(this).bxTime();
+				$(this).bxProcessHtml();
 			});
 		},
 		'html'

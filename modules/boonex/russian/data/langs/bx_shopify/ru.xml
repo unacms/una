@@ -143,8 +143,11 @@
     <string name="_bx_shopify_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные товары]]></string>
     <string name="_bx_shopify_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые товары (Витринный просмотр)]]></string>
     <string name="_bx_shopify_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые товары]]></string>
+    <string name="_bx_shopify_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_shopify_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
 
-    <string name="_bx_shopify_menu_set_title_view_entry"><![CDATA[Товар - Действия]]></string>
+
+  <string name="_bx_shopify_menu_set_title_view_entry"><![CDATA[Товар - Действия]]></string>
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Товар - Действия]]></string>
     <string name="_bx_shopify_menu_title_submenu"><![CDATA[Товары - Подменю]]></string>
     <string name="_bx_shopify_menu_set_title_submenu"><![CDATA[Товары - Подменю]]></string>
@@ -230,6 +233,7 @@
     <string name="_bx_shopify_err_load_collection"><![CDATA[Невозможно загрузить коллекцию. Пожалуйста, проверьте настройки вашего магазина.]]></string>
 
     <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">Все товары от {1} ({2})</a>]]></string>
+    <string name="_bx_shopify_txt_all_entries_in"><![CDATA[<a href="{0}">Все альбомы в {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_sample_single"><![CDATA[товар]]></string>
     <string name="_bx_shopify_txt_sample_single_with_article"><![CDATA[товар]]></string>
     <string name="_bx_shopify_txt_sample_comment_single"><![CDATA[комментарии к товару]]></string>

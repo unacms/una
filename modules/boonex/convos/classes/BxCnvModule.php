@@ -326,6 +326,44 @@ class BxCnvModule extends BxBaseModTextModule
     }
 
     /**
+     * Delete content entry
+     * @param $iContentId content id 
+     * @return error message or empty string on success
+     */
+    public function serviceDeleteEntity ($iContentId, $sFuncDelete = 'deleteData')
+    {
+        return $this->_oDb->deleteConvo($iContentId);
+    }
+    
+    /**
+     * Delete profile from all conversation (when profile is delete without content)
+     * @param $iProfileId profile id 
+     * @return number of deleted items
+     */    
+    public function serviceRemoveCollaboratorFromAllConversations ($iProfileId)
+    {
+        return $this->_oDb->removeCollaboratorFromAllConversations((int)$iProfileId);
+    }
+    
+    /**
+     * Delete all content by profile (when profile is delete with content)
+     * @param $iProfileId profile id 
+     * @return number of deleted items
+     */
+    public function serviceDeleteEntitiesByAuthor ($iProfileId)
+    {
+        $a = $this->_oDb->getEntriesByAuthor((int)$iProfileId);
+        if (!$a)
+            return 0;
+
+        $iCount = 0;
+        foreach ($a as $aContentInfo)
+            $iCount += ('' == $this->serviceDeleteEntity($aContentInfo[$this->_oConfig->CNF['FIELD_ID']]) ? 1 : 0);
+
+        return $iCount;
+    }
+    
+    /**
      * No moderators for personal convos
      */
     public function _isModerator ($isPerformAction = false)

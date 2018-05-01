@@ -143,6 +143,8 @@
     <string name="_bx_shopify_page_block_title_popular_entries_view_showcase"><![CDATA[Popular Goods]]></string>
     <string name="_bx_shopify_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Goods (Showcase View)]]></string>
     <string name="_bx_shopify_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Goods]]></string>
+    <string name="_bx_shopify_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
+    <string name="_bx_shopify_page_block_title_entry_context"><![CDATA[Posted in]]></string>
 
     <string name="_bx_shopify_menu_set_title_view_entry"><![CDATA[Goods Actions]]></string>
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Goods Actions]]></string>
@@ -230,6 +232,7 @@
     <string name="_bx_shopify_err_load_collection"><![CDATA[Cannot load collection. Please check your shop settings.]]></string>
 
     <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">All Goods by {1} ({2})</a>]]></string>
+    <string name="_bx_shopify_txt_all_entries_in"><![CDATA[<a href="{0}">All Goods in {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_sample_single"><![CDATA[shop item]]></string>
     <string name="_bx_shopify_txt_sample_single_with_article"><![CDATA[a shop item]]></string>
     <string name="_bx_shopify_txt_sample_comment_single"><![CDATA[comment to shop item]]></string>

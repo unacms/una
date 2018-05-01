@@ -142,6 +142,7 @@ class BxForumConfig extends BxBaseModTextConfig
             	'filter_item_select_one_filter1' => '_bx_forum_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_forum_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_forum_menu_item_title_manage_all',
+                'txt_all_entries_in' => '_bx_forum_txt_all_entries_in',
             	'txt_all_entries_by_author' => '_bx_forum_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_forum_page_title_browse_by_context',
             	'txt_pict_use_as_thumb' => '_bx_forum_form_entry_input_picture_use_as_thumb'

@@ -130,6 +130,8 @@
     <string name="_bx_glossary_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные Глоссарий]]></string>
     <string name="_bx_glossary_page_block_title_sys_featured_entries_view_showcase"><![CDATA[[Продвинутые Глоссарий (Витринный просмотр)]]></string>
     <string name="_bx_glossary_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые Глоссарий]]></string>
+    <string name="_bx_glossary_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_glossary_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
 
     <string name="_bx_glossary_menu_set_title_view_entry"><![CDATA[Публикация - Действия]]></string>
     <string name="_bx_glossary_menu_title_view_entry"><![CDATA[Публикация - Действия]]></string>
@@ -229,7 +231,8 @@
     <string name="_bx_glossary_cat_Weddings"><![CDATA[Свадьба]]></string>
     <string name="_bx_glossary_cat_Womens_Fashion"><![CDATA[Женская мода]]></string>
 
-    <string name="_bx_glossary_txt_all_entries_by"><![CDATA[<a href="{0}">Все Глоссарий от {1} ({2})</a>]]></string>
+    <string name="_bx_glossary_txt_all_entries_by"><![CDATA[<a href="{0}">Все термины от {1} ({2})</a>]]></string>
+    <string name="_bx_glossary_txt_all_entries_in"><![CDATA[<a href="{0}">Все термины в {1} ({2})</a>]]></string>
     <string name="_bx_glossary_txt_sample_single"><![CDATA[публикация]]></string>
     <string name="_bx_glossary_txt_sample_single_with_article"><![CDATA[публикация]]></string>
     <string name="_bx_glossary_txt_sample_comment_single"><![CDATA[комментарий к Глоссарий]]></string>

@@ -32,7 +32,7 @@ function processJsonData(oData) {
 	    		oPopup = $(oData.popup);
 
 	    	$('#' + oPopup.attr('id')).remove();
-	        oPopup.hide().prependTo('body').bxTime().dolPopup(oOptions);
+	        oPopup.hide().prependTo('body').bxProcessHtml().dolPopup(oOptions);
 	    }
 
 	    if (oData && oData.eval != undefined)
@@ -84,11 +84,7 @@ function getHtmlData( elem, url, callback, method , confirmation)
 		if (undefined != method && (method == 'post' || method == 'POST')) {
 		    $.post(url, function(data) {
 		        $block.html(data);
-		        $block.css('position', blockPos).bxTime();
-		        if ($.isFunction($.fn.addWebForms))
-		            $block.addWebForms();
-
-		        bx_activate_anim_icons();
+		        $block.css('position', blockPos).bxProcessHtml();
 
 		        if (typeof callback == 'function')
 		            callback.apply($block);
@@ -96,11 +92,7 @@ function getHtmlData( elem, url, callback, method , confirmation)
 		} 
 		else {
 		    $block.load(url + '&_r=' + Math.random(), function() {
-		        $(this).css('position', blockPos).bxTime();
-		        if ($.isFunction($.fn.addWebForms))
-		            $(this).addWebForms();
-
-		        bx_activate_anim_icons();
+		        $(this).css('position', blockPos).bxProcessHtml();
 
 		        if (typeof callback == 'function')
 		            callback.apply(this);
@@ -453,7 +445,7 @@ function bx_menu_slide (sObject, oElement, sPosition, oOptions, oVars) {
         var fOnLoad = function() {
         	bx_loading_content(oLoading, false);
 
-        	$(sIdSel).bxTime().show();
+        	$(sIdSel).bxProcessHtml().show();
         };
 
         $(sIdSel).find(oOptions.container).load(bx_append_url_params('menu.php', $.extend({o:sObject}, oVars)), function () {
@@ -702,10 +694,45 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
 }
 
 (function($) {
+
     $.fn.bxTime = function() {
         bx_time(undefined, undefined, this);
         return this;
-    }; 
+    };
+
+    /**
+     * process HTML which was added dynamicly on the page
+     */ 
+    $.fn.bxProcessHtml = function (oCallback) {
+        var eElement = $(this);
+        if ('undefined' !== typeof(eElement)) {
+            // process js time
+            eElement.bxTime();
+
+            // process web forms
+            if ($.isFunction($.fn.addWebForms))
+	            eElement.addWebForms();
+            
+            // process animating icons
+        	bx_activate_anim_icons();
+
+            // process syntax hightlighing
+            if ('undefined' !== typeof(Prism) && eElement.size())
+                Prism.highlightAllUnder(eElement[0]);
+        }
+        if ('undefined' !== typeof(oCallback)) {
+            oCallback(eElement);
+        }
+
+        if (typeof glOnProcessHtml !== 'undefined' && glOnProcessHtml instanceof Array) {
+            for (var i = 0; i < glOnProcessHtml.length; i++)
+                if (typeof glOnProcessHtml[i] === "function")
+                    glOnProcessHtml[i](this);
+        }
+        
+        return this;
+    }
+
 } (jQuery));
 
 
@@ -816,7 +843,7 @@ function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults)
                 data += e.outerHTML;
             });
         } 
-        $(sResultsContSel).html(data).bxTime();
+        $(sResultsContSel).html(data).bxProcessHtml();
     });
 
     return false;
@@ -987,11 +1014,22 @@ function bx_get_scripts (aFiles, fCallback)
                 fCallback && fCallback();
             } 
             else {
-                $.getScript(aFiles[iCounter]).done(fHandler);
+                $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
             }
         };
 
-    $.getScript(aFiles[iCounter]).done(fHandler);
+    $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
 }
+
+jQuery.bxGetCachedScript = function(sUrl, oOptions) 
+{ 
+    oOptions = $.extend(oOptions || {}, {
+        dataType: "script",
+        cache: true,
+        url: sUrl
+    });
+
+    return jQuery.ajax(oOptions);
+};
 
 /** @} */
