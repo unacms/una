@@ -346,11 +346,20 @@ class BxBaseModGeneralModule extends BxDolModule
      * Create entry form
      * @return HTML string
      */
-    public function serviceEntityCreate ($sDisplay = false)
+    public function serviceEntityCreate ($sParams = false)
     {
+        $bParamsArray = is_array($sParams);
+
+        $sDisplay = is_string($sParams) ? $sParams : false;
+        if($bParamsArray && !empty($sParams['display']))
+            $sDisplay = $sParams['display'];
+
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
+        if($bParamsArray && isset($sParams['dynamic_mode']))
+            $oFormsHelper->setDynamicMode($sParams['dynamic_mode']);
+
         return $oFormsHelper->addDataForm($sDisplay);
     }
 
@@ -473,6 +482,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'object_transcoder' => false,
         	'object_view' => !empty($CNF['OBJECT_VIEWS']) ? $CNF['OBJECT_VIEWS'] : '',
         	'object_vote' => !empty($CNF['OBJECT_VOTES']) ? $CNF['OBJECT_VOTES'] : '',
+        	'object_score' => !empty($CNF['OBJECT_SCORES']) ? $CNF['OBJECT_SCORES'] : '',
         	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
             'object_feature' => !empty($CNF['OBJECT_FEATURED']) ? $CNF['OBJECT_FEATURED'] : '',
         	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
@@ -1240,6 +1250,12 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oVotes)
             $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
 
+        //--- Scores
+        $sScores = '';
+        $oScores = !empty($aParams['object_score']) ? BxDolScore::getObjectInstance($aParams['object_score'], $iId) : false;
+        if ($oScores)
+            $sScores = $oScores->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
+
         //--- Favorite
         $sFavorites = '';
         $oFavorites = !empty($aParams['object_favorite']) ? BxDolFavorite::getObjectInstance($aParams['object_favorite'], $iId) : false;
@@ -1276,13 +1292,14 @@ class BxBaseModGeneralModule extends BxDolModule
             $sSocial = $oSocial->getCode();
         }
 
-        if(empty($sComments)  && empty($sViews) && empty($sVotes) && empty($sFavorites)  && empty($sFeatured) && empty($sRepost) && empty($sReport) && empty($sSocial))
+        if(empty($sComments)  && empty($sViews) && empty($sVotes) && empty($sScores) && empty($sFavorites)  && empty($sFeatured) && empty($sRepost) && empty($sReport) && empty($sSocial))
             return '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'comments' => $sComments,
         	'view' => $sViews,
             'vote' => $sVotes,
+        	'score' => $sScores,
             'favorite' => $sFavorites,
             'feature' => $sFeatured,
             'repost' => $sRepost,

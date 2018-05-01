@@ -15,11 +15,18 @@
 class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 {
     protected $_oModule;
+    protected $_bDynamicMode;
 
     public function __construct($oModule)
     {
         parent::__construct();
         $this->_oModule = $oModule;
+        $this->_bDynamicMode = false;
+    }
+
+    public function setDynamicMode($bDynamicMode)
+    {
+        $this->_bDynamicMode = (bool)$bDynamicMode;
     }
 
     public function getObjectStorage()
@@ -148,14 +155,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $oForm->initChecker();
 
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+            return $oForm->getCode($this->_bDynamicMode);
 
         // insert data into database
         $aValsToAdd = array ();
         $iContentId = $oForm->insert ($aValsToAdd);
         if (!$iContentId) {
             if (!$oForm->isValid())
-                return $oForm->getCode();
+                return $oForm->getCode($this->_bDynamicMode);
             else
                 return MsgBox(_t('_sys_txt_error_entry_creation'));
         }
