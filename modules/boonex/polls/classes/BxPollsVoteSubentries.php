@@ -81,7 +81,7 @@ class BxPollsVoteSubentries extends BxTemplVote
         return $aContentInfo[$this->_aSystem['trigger_field_author']];
     }
 
-    public function isPerformed($iObjectId, $iAuthorId)
+    public function isPerformed($iObjectId, $iAuthorId, $iAuthorIp = 0)
     {
         $CNF = $this->_oModule->_oConfig->CNF;
 
