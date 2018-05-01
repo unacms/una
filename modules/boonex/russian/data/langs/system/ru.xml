@@ -2439,6 +2439,12 @@
 	<string name="_sys_request_page_not_found_cnt"><![CDATA[Страница({0}) не найдена в модуле ({1})]]></string>
 	<string name="_sys_request_method_not_found_cpt"><![CDATA[Метод не найден]]></string>
 	<string name="_sys_request_method_not_found_cnt"><![CDATA[Метод ({0}) не найден в модуле ({1})]]></string>
+	<string name="_sys_score_counter"><![CDATA[{0}]]></string>
+    <string name="_sys_score_do_up"><![CDATA[Проголосовать за]]></string>
+    <string name="_sys_score_do_down"><![CDATA[Проголосовать против]]></string>
+    <string name="_sys_score_do_by"><![CDATA[Проголосовали]]></string>
+    <string name="_sys_score_err_not_enabled"><![CDATA[Ваш голос не может быть принят в данный момент. Пожалуйста, попробуйте позднее.]]></string>
+    <string name="_sys_score_err_duplicate_vote"><![CDATA[Повторный голос]]></string>
 	<string name="_sys_search_main_title"><![CDATA[Поиск - Домой]]></string>
 	<string name="_sys_select"><![CDATA[Выбрать]]></string>
 	<string name="_sys_send"><![CDATA[Послать]]></string>
@@ -2645,7 +2651,7 @@
 	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
-	<string name="_vote_do_by"><![CDATA[Поблагодарил]]></string>
+	<string name="_vote_do_by"><![CDATA[Поблагодарили]]></string>
 	<string name="_vote_err_not_enabled"><![CDATA[Ваш голос не может быть принят в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Повторный голос]]></string>
 	<string name="_week_fri"><![CDATA[Пятница]]></string>
