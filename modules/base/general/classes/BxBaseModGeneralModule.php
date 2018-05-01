@@ -1254,7 +1254,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $sScores = '';
         $oScores = !empty($aParams['object_score']) ? BxDolScore::getObjectInstance($aParams['object_score'], $iId) : false;
         if ($oScores)
-            $sScores = $oScores->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton, 'show_legend' => true));
+            $sScores = $oScores->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
 
         //--- Favorite
         $sFavorites = '';
