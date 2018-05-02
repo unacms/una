@@ -23,8 +23,6 @@ class BxBaseScore extends BxDolScore
 
     protected $_aHtmlIds;
 
-    protected $_aElementDefaults;
-
     protected $_sTmplNameLegend;
     protected $_sTmplNameByList;
 
@@ -85,18 +83,21 @@ class BxBaseScore extends BxDolScore
         return $this->_sJsObjName;
     }
 
-    public function getJsScript($bDynamicMode = false)
+    public function getJsScript($aParams = array())
     {
-        $aParams = array(
+        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
+
+        $aParamsJs = array(
             'sObjName' => $this->_sJsObjName,
             'sSystem' => $this->getSystemName(),
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
+            'sElementParams' => $this->_encodeElementParams($aParams),
             'sRootUrl' => BX_DOL_URL_ROOT,
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = $this->_sJsObjName . " = new BxDolScore(" . json_encode($aParams) . ");";
+        $sCode = $this->_sJsObjName . " = new BxDolScore(" . json_encode($aParamsJs) . ");";
 
         if($bDynamicMode) {
 			$sCode = "var " . $this->_sJsObjName . " = null; 
@@ -188,7 +189,6 @@ class BxBaseScore extends BxDolScore
     public function getElement($aParams = array())
     {
     	$aParams = array_merge($this->_aElementDefaults, $aParams);
-    	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
 
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
@@ -266,7 +266,7 @@ class BxBaseScore extends BxDolScore
             	'condition' => $bTmplVarsLegend,
             	'content' => $aTmplVarsLegend
             ),
-            'script' => $this->getJsScript($bDynamicMode)
+            'script' => $this->getJsScript($aParams)
         ));
     }
 
@@ -322,16 +322,20 @@ class BxBaseScore extends BxDolScore
         ));
     }
 
-    protected function _getVotedBy()
+    protected function _getVotedBy($aParams)
     {
         $aTmplUsers = array();
 
-        $aUserIds = $this->_oQuery->getPerformedBy($this->getId());
-        foreach($aUserIds as $iUserId) {
-            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($iUserId);
+        $aUsers = $this->_oQuery->getPerformedBy($this->getId());
+        foreach($aUsers as $aUser) {
+            list($sUserName, $sUserLink, $sUserIcon, $sUserUnit, $sUserUnitWoInfo) = $this->_getAuthorInfo($aUser['id']);
             $aTmplUsers[] = array(
                 'style_prefix' => $this->_sStylePrefix,
-                'user_unit' => $sUserUnit
+            	'user_name' => $sUserName,
+            	'user_link' => $sUserLink,
+                'user_unit' => $sUserUnitWoInfo,
+                'vote' => $this->_getLabelDo($aUser['vote_type'], $aParams),
+                'date' => bx_time_js($aUser['vote_date']),
             );
         }
 

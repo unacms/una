@@ -9,9 +9,10 @@
 function BxDolScore(options)
 {
 	this._sObjName = undefined == options.sObjName ? 'oScore' : options.sObjName; // javascript object name, to run current object instance from onTimer
-	this._sSystem = options.sSystem; // current comment system
-	this._iAuthorId = options.iAuthorId; // this comment's author ID.
-    this._iObjId = options.iObjId; // this object id comments
+	this._sSystem = options.sSystem; // current score system
+	this._iAuthorId = options.iAuthorId; // score's author ID.
+	this._iObjId = options.iObjId; // object id the scores are collected for
+    this._sElementParams = options.sElementParams;
 
     this._sActionsUri = 'score.php';
     this._sActionsUrl = options.sRootUrl + this._sActionsUri; // actions url address
@@ -118,6 +119,7 @@ BxDolScore.prototype._getDefaultParams = function() {
     return {
         sys: this._sSystem,
         id: this._iObjId,
+        element_params: this._sElementParams,
         _t: oDate.getTime()
     };
 };

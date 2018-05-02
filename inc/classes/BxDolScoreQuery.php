@@ -32,6 +32,20 @@ class BxDolScoreQuery extends BxDolObjectQuery
         $this->_sMethodGetEntry = 'getScore';
     }
 
+    public function getPerformedBy($iObjectId)
+    {
+        $sQuery = "SELECT 
+            	`author_id` AS `id`, 
+            	`type` AS `vote_type`, 
+            	`date` AS `vote_date` 
+			FROM `{$this->_sTableTrack}` 
+			WHERE `object_id`=:object_id";
+
+        return $this->getAll($sQuery, array(
+        	'object_id' => $iObjectId
+        ));
+    }
+
     public function isPostTimeoutEnded($iObjectId, $sAuthorIp)
     {
         if($this->_iPostTimeout == 0)

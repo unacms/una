@@ -78,6 +78,8 @@ define('BX_DOL_SCORE_DO_DOWN', 'down');
 
 class BxDolScore extends BxDolObject
 {
+    protected $_aElementDefaults;
+
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
@@ -203,7 +205,9 @@ class BxDolScore extends BxDolObject
         if (!$this->isEnabled())
            return '';
 
-        return $this->_getVotedBy();
+        $aParams = $this->_decodeElementParams(bx_process_input(bx_get('element_params')));
+
+        return $this->_getVotedBy($aParams);
     }
 
 
@@ -325,6 +329,29 @@ class BxDolScore extends BxDolObject
     protected function _getTitleDoBy()
     {
     	return '_sys_score_do_by';
+    }
+
+    protected function _encodeElementParams($aParams)
+    {
+        if(empty($aParams) || !is_array($aParams))
+            return '';
+
+        return urlencode(base64_encode(serialize($aParams)));
+    }
+
+    protected function _decodeElementParams($sParams, $bMergeWithDefaults = true)
+    {
+        $aParams = array();
+        if(!empty($sParams))
+            $aParams = unserialize(base64_decode(urldecode($sParams)));
+
+        if(empty($aParams) || !is_array($aParams))
+            $aParams = array();
+
+        if($bMergeWithDefaults)
+            $aParams = array_merge($this->_aElementDefaults, $aParams);
+
+        return $aParams;
     }
 }
 
