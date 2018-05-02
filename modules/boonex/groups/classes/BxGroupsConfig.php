@@ -86,6 +86,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_groups_gallery',
             'OBJECT_VIEWS' => 'bx_groups',
             'OBJECT_VOTES' => 'bx_groups',
+        	'OBJECT_SCORES' => 'bx_groups',
         	'OBJECT_FAVORITES' => 'bx_groups',
         	'OBJECT_FEATURED' => 'bx_groups',
         	'OBJECT_COMMENTS' => 'bx_groups',

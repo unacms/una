@@ -352,6 +352,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'object_storage' => false,
             'object_transcoder' => false,
             'object_vote' => $CNF['OBJECT_VOTES'],
+        	'object_score' => !empty($CNF['OBJECT_SCORES']) ? $CNF['OBJECT_SCORES'] : '',
         	'object_favorite' => $CNF['OBJECT_FAVORITES'],
         	'object_feature' => $CNF['OBJECT_FEATURED'],
         	'object_report' => $CNF['OBJECT_REPORTS'],

@@ -378,6 +378,10 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_groups', 'bx_groups_votes', 'bx_groups_votes_track', '604800', '1', '1', '0', '1', 'bx_groups_data', 'id', 'author', 'rate', 'votes', '', '');
 
+-- SCORES
+INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
+('bx_groups', 'bx_groups', 'bx_groups_scores', 'bx_groups_scores_track', '604800', '0', 'bx_groups_data', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
+
 -- REPORTS
 INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_groups', 'bx_groups_reports', 'bx_groups_reports_track', '1', 'page.php?i=view-group-profile&id={object_id}', 'bx_groups_data', 'id', 'author', 'reports', '', '');

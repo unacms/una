@@ -28,6 +28,9 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_groups';
 -- VOTES
 DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_groups';
 
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_groups';
+
 -- REPORTS
 DELETE FROM `sys_objects_report` WHERE `name` = 'bx_groups';
 
