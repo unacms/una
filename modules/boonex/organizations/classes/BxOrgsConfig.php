@@ -211,6 +211,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             	'filter_item_pending' => '_bx_orgs_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_orgs_grid_filter_item_title_adm_suspended',
             	'filter_item_select_one_filter1' => '_bx_orgs_grid_filter_item_title_adm_select_one_filter1',
+				'filter_item_select_one_filter2' => '_bx_orgs_grid_filter_item_title_adm_select_one_filter2',
             	'txt_browse_favorites' => '_bx_orgs_page_title_browse_favorites',
             	'option_redirect_aadd_profile' => '_bx_orgs_option_redirect_aadd_profile',
             	'option_redirect_aadd_last' => '_bx_orgs_option_redirect_aadd_last',
