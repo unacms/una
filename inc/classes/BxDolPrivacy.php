@@ -237,7 +237,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
      */
     public function getContentByGroupAsCondition($mixedGroupId)
     {
-        return array(
+        $aResult = array(
             'restriction' => array (
                 'privacy_' . $this->_sObject => array(
                     'value' => $mixedGroupId,
@@ -246,7 +246,15 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                     'table' => $this->_aObject['table'],
                 ),
             ),
+        );      
+        bx_alert('system', 'check_privacy', 0, false, array(
+            'group_id' => $mixedGroupId,
+            'field' => $this->convertActionToField($this->_aObject['action']),
+            'object' => $this->_aObject,
+            'result' => &$aResult
+            )
         );
+        return $aResult;
     }
 
     /**
