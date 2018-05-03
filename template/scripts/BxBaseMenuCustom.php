@@ -44,7 +44,8 @@ class BxBaseMenuCustom extends BxTemplMenu
     		return false;
 
 		return array(
-			'class' => $this->_isSelected($aItem) ? 'bx-menu-tab-active' : '',
+		    'name' => $aItem['name'],
+			'class' => $this->_isSelected($aItem) ? ' bx-menu-tab-active' : '',
 			'item' => $sItem
 		);
     }
