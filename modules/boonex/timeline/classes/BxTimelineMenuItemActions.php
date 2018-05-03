@@ -81,6 +81,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
     	$aEvent['views'] = $aEventData['views'];
         $aEvent['votes'] = $aEventData['votes'];
+        $aEvent['scores'] = $aEventData['scores'];
         $aEvent['reports'] = $aEventData['reports'];
         $aEvent['comments'] = $aEventData['comments'];
 
@@ -127,6 +128,20 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline($aVotesParams);
     }
 
+    protected function _getMenuItemItemScore($aItem)
+    {
+        if(!isset($this->_aEvent['scores']) || !is_array($this->_aEvent['scores']) || !isset($this->_aEvent['scores']['system'])) 
+        	return false;
+
+		$sScoresSystem = $this->_aEvent['scores']['system'];
+		$iScoresObject = $this->_aEvent['scores']['object_id'];
+		$aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
+		if($this->_bShowTitles)
+		    $aScoresParams['show_do_vote_label'] = true;
+
+    	return $this->_oModule->getScoreObject($sScoresSystem, $iScoresObject)->getElementInline($aScoresParams);
+    }
+
 	protected function _getMenuItemItemReport($aItem)
     {
         if(!isset($this->_aEvent['reports']) || !is_array($this->_aEvent['reports']) || !isset($this->_aEvent['reports']['system'])) 
@@ -150,7 +165,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     {
         if(!parent::_isVisible($a) || empty($this->_aEvent) || !is_array($this->_aEvent))
             return false;
-			
+
         $sCheckFuncName = '';
         $aCheckFuncParams = array($this->_aEvent);
         switch ($a['name']) {
@@ -166,6 +181,10 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 $sCheckFuncName = 'isAllowedVote';
                 break;
 
+            case 'item-score':
+                $sCheckFuncName = 'isAllowedScore';
+                break;
+
 			case 'item-report':
                 $sCheckFuncName = 'isAllowedReport';
                 break;
@@ -173,6 +192,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             case 'item-more':
             	$sCheckFuncName = 'isAllowedMore';
             	break;
+
             case 'item-pin':
                 $sCheckFuncName = 'isAllowedPin';
                 break;
@@ -191,7 +211,6 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
             case 'item-edit':
                 $sCheckFuncName = 'isAllowedEdit';
-				$aCheckFuncParams = array($this->_aEvent);
                 break;
 
             case 'item-delete':

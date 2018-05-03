@@ -301,6 +301,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['content'] = $aResult['content'];
         $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
+        $aEvent['scores'] = $aResult['scores'];
         $aEvent['reports'] = $aResult['reports'];
         $aEvent['comments'] = $aResult['comments'];
 
@@ -1439,6 +1440,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ), //a string to display or array to parse default template before displaying.
             'views' => '',
             'votes' => '',
+            'scores' => '',
             'reports' => '',
             'comments' => '',
             'title' => $aEvent['title'], //may be empty.
@@ -1559,6 +1561,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'system' => $sSystem,
                 'object_id' => $aEvent['id'],
                 'count' => $aEvent['votes']
+            );
+
+        $sSystem = $this->_oConfig->getObject('score');
+        if(empty($aResult['scores']) && $oModule->getScoreObject($sSystem, $aEvent['id']) !== false)
+            $aResult['scores'] = array(
+                'system' => $sSystem,
+                'object_id' => $aEvent['id'],
+                'score' => $aEvent['score']
             );
 
 		$sSystem = $this->_oConfig->getObject('report');

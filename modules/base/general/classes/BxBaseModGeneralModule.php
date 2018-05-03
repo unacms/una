@@ -701,6 +701,17 @@ class BxBaseModGeneralModule extends BxDolModule
                 'count' => $aContentInfo['votes']
             );
 
+        //--- Scores
+        $oScores = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aEvent['object_id']) : null;
+
+        $aScores = array();
+        if ($oScores && $oScores->isEnabled())
+            $aScores = array(
+                'system' => $CNF['OBJECT_SCORES'],
+                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                'score' => $aContentInfo['score']
+            );
+
 		//--- Reports
         $oReports = isset($CNF['OBJECT_REPORTS']) ? BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aEvent['object_id']) : null;
 
@@ -739,6 +750,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
+        	'scores' => $aScores,
             'reports' => $aReports,
             'comments' => $aComments,
             'title' => $sTitle, //may be empty.

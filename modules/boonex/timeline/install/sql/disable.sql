@@ -44,6 +44,10 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_timeline' LIMIT 1;
 DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_timeline' LIMIT 1;
 
 
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_timeline';
+
+
 -- REPORTS
 DELETE FROM `sys_objects_report` WHERE `Name` = 'bx_timeline' LIMIT 1;
 

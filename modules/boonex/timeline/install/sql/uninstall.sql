@@ -33,6 +33,9 @@ DROP TABLE IF EXISTS `bx_timeline_reports_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_hot_track`;
 
+DROP TABLE IF EXISTS `bx_timeline_scores`;
+DROP TABLE IF EXISTS `bx_timeline_scores_track`;
+
 
 -- STORAGES, TRANSCODERS, UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_timeline%';

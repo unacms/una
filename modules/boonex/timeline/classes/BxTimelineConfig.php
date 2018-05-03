@@ -76,6 +76,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_COMMENTS' => $this->_sName,
         	'OBJECT_VIEWS' => $this->_sName,
         	'OBJECT_VOTES' => $this->_sName,
+        	'OBJECT_SCORES' => $this->_sName,
         	'OBJECT_REPORTS' => $this->_sName,
 
         	// some language keys
@@ -104,6 +105,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'comment' => $this->CNF['OBJECT_COMMENTS'],
         	'view' => $this->CNF['OBJECT_VIEWS'],
         	'vote' => $this->CNF['OBJECT_VOTES'],
+        	'score' => $this->CNF['OBJECT_SCORES'],
         	'report' => $this->CNF['OBJECT_REPORTS'],
         	'metatags' => $this->_sName,
 

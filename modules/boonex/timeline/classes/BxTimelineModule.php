@@ -1790,6 +1790,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oVote;
     }
 
+    public function getScoreObject($sSystem, $iId)
+    {
+        if(empty($sSystem) || (int)$iId == 0)
+            return false;
+
+        $oScore = BxDolScore::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
+        if(!$oScore || !$oScore->isEnabled())
+            return false;
+
+        return $oScore;
+    }
+
 	public function getReportObject($sSystem, $iId)
     {
         if(empty($sSystem) || (int)$iId == 0)
@@ -1951,6 +1963,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
         if($oProfileOwner !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
+    }
+
+    public function isAllowedScore($aEvent, $bPerform = false)
+    {
+        $mixedScores = $this->getScoresData($aEvent['scores']);
+        if($mixedScores === false)
+            return false;
+
+        list($sSystem, $iObjectId) = $mixedScores;
+        $oScore = $this->getScoreObject($sSystem, $iObjectId);
+        $oScore->addCssJs();
+
+        $bResult = true;
+
+        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+        if($oProfileOwner !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_score', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
@@ -2228,6 +2259,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         return array($sSystem, $iObjectId, $iCount);
+    }
+
+    public function getScoresData(&$aScores)
+    {
+        if(empty($aScores) || !is_array($aScores))
+            return false;
+
+        $sSystem = isset($aScores['system']) ? $aScores['system'] : '';
+        $iObjectId = isset($aScores['object_id']) ? (int)$aScores['object_id'] : 0;
+        $iScore = isset($aScores['score']) ? (int)$aScores['score'] : 0;
+        if($sSystem == '' || $iObjectId == 0)
+            return false;
+
+        return array($sSystem, $iObjectId, $iScore);
     }
 
     public function getReportsData(&$aReports)
