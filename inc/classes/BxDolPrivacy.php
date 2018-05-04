@@ -247,10 +247,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 ),
             ),
         );      
-        bx_alert('system', 'check_privacy', 0, false, array(
+        bx_alert('system', 'privacy_condition', 0, false, array(
             'group_id' => $mixedGroupId,
             'field' => $this->convertActionToField($this->_aObject['action']),
             'object' => $this->_aObject,
+            'privacy_object' => $this,
             'result' => &$aResult
             )
         );
