@@ -56,6 +56,19 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     	return $oVote->getElementInline($aVotesParams);
     }
 
+    protected function _getMenuItemItemScore($aItem)
+    {
+        $oScore = $this->_oCmts->getScoreObject($this->_aCmt['cmt_unique_id']);
+        if(!$oScore)
+        	return false;
+
+        $aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+		    $aScoresParams['show_do_vote_label'] = true;
+
+    	return $oScore->getElementInline($aScoresParams);
+    }
+
 	protected function _getMenuItemItemReport($aItem)
     {
         $oReport = $this->_oCmts->getReportObject($this->_aCmt['cmt_unique_id']);
@@ -88,6 +101,12 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
 
             case 'item-vote':
                 $sCheckFuncName = 'isVoteAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
+
+            case 'item-score':
+                $sCheckFuncName = 'isScoreAllowed';
                 if(!empty($this->_aCmt))
                     $aCheckFuncParams = array($this->_aCmt);
                 break;

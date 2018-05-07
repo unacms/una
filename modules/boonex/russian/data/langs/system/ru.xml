@@ -2136,6 +2136,7 @@
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
+	<string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_menu_item_title_home"><![CDATA[Домой]]></string>
@@ -2195,7 +2196,8 @@
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_report"><![CDATA[Пожаловаться]]></string>
-	<string name="_sys_menu_item_title_system_cmts_item_vote"><![CDATA[Плюс]]></string>
+	<string name="_sys_menu_item_title_system_cmts_item_score"><![CDATA[Голосовать (За/Против)]]></string>
+	<string name="_sys_menu_item_title_system_cmts_item_vote"><![CDATA[Голосовать (Нравится)]]></string>
 	<string name="_sys_menu_item_title_system_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_menu_item_title_system_home"><![CDATA[Домой]]></string>
 	<string name="_sys_menu_item_title_system_login"><![CDATA[Вход]]></string>

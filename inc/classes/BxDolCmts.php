@@ -297,6 +297,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     `RootStylePrefix` AS `root_style_prefix`,
                     `BaseUrl` AS `base_url`,
                     `ObjectVote` AS `object_vote`,
+                    `ObjectScore` AS `object_score`,
                     `ObjectReport` AS `object_report`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
@@ -442,6 +443,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return false;
 
         return $oVote;
+    }
+
+    public function getScoreObject($iId)
+    {
+        if(empty($this->_aSystem['object_score']))
+        	$this->_aSystem['object_score'] = 'sys_cmts';
+
+        $oScore = BxDolScore::getObjectInstance($this->_aSystem['object_score'], $iId, true, $this->_oTemplate);
+        if(!$oScore || !$oScore->isEnabled())
+            return false;
+
+        return $oScore;
     }
 
     public function getReportObject($iId)
@@ -714,6 +727,25 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return true;
 
         return $oVote->isAllowedVote($isPerformAction);
+    }
+
+    public function isScoreAllowed ($aCmt, $isPerformAction = false)
+    {
+        if(!$this->isRatable())
+            return false;
+
+        $oScore = $this->getScoreObject($aCmt['cmt_id']);
+        if($oScore === false)
+            return false;
+
+        $iUserId = (int)$this->_getAuthorId();
+        if($iUserId == 0)
+            return false;
+
+        if(isAdmin())
+            return true;
+
+        return $oScore->isAllowedVote($isPerformAction);
     }
 
     public function isReportAllowed ($aCmt, $isPerformAction = false)
