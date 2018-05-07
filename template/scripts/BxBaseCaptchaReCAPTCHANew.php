@@ -63,9 +63,9 @@ class BxBaseCaptchaReCAPTCHANew extends BxTemplCaptchaReCAPTCHA
         }
 
         $aApiParams['hl'] = BxDolLanguages::getInstance()->getCurrentLanguage();
-        $sCodeJs = $this->_oTemplate->addJs(bx_append_url_params($this->sApiUrl, $aApiParams), $bDynamicMode);
+        $sCodeJs = $this->_oTemplate->addJs(bx_append_url_params($this->sApiUrl, $aApiParams), true);
 
-        return ($bDynamicMode ? $sCodeJs : '') . $sCode;
+        return $sCodeJs . $sCode;
     }
 
     /**
