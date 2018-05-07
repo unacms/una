@@ -153,4 +153,10 @@ html .bx-grid-table-wrapper2:after {
     display:block;
 }
 
+
+/* score.css */
+div.bx-score-by-list div.bx-score-by-list-cnt {
+	max-height: none;
+}
+
 } /* @media end */
