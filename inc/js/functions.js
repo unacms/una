@@ -1013,11 +1013,15 @@ function bx_get_scripts (aFiles, fCallback)
             if (iCounter++ >= (iLength-1)) {
                 fCallback && fCallback();
             } 
-            else {
+            else if ('undefined' === typeof(glBxLoadedScripts[aFiles[iCounter]])) {
+                glBxLoadedScripts[aFiles[iCounter]] = aFiles[iCounter];
                 $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
             }
         };
 
+    if ('undefined' === typeof(glBxLoadedScripts))
+        glBxLoadedScripts = {}; 
+    
     $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
 }
 

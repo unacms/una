@@ -12,7 +12,6 @@ class BxBaseFormView extends BxDolForm
     protected static $_isToggleJsAdded = false;
 
     protected static $_isCssJsAdded = false;
-    protected static $_isJQueryUIAdded = false;
     protected static $_isCssJsAddedViewMode = false;
 
     /**
@@ -986,8 +985,6 @@ BLAH;
 
     protected function genCustomInputUsernamesSuggestions ($aInput)
     {
-        $this->addJsJQueryUI();
-
         $this->_addJs(array(
             'jquery.form.min.js',
         ));
@@ -1390,8 +1387,6 @@ BLAH;
             self::$_isCssJsAddedViewMode = true;
 
         } else {
-
-            $this->addJsJQueryUI();
                 
             if (self::$_isCssJsAdded)
                 return;
@@ -1414,6 +1409,8 @@ BLAH;
             $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
 
             $aJs = array(
+                'jquery-ui/jquery-ui.custom.min.js',
+
                 'jquery.webForms.js',
 
                 'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.js',
@@ -1444,20 +1441,12 @@ BLAH;
         }
     }
 
-    function addJsJQueryUI ()
-    {
-        if (self::$_isJQueryUIAdded)
-            return;
-        $this->_addJs('jquery-ui/jquery-ui.custom.min.js');
-        self::$_isJQueryUIAdded = true;
-    }
-
     protected function _processCssJs()
     {
         $sRet = '';
         if ($this->_bDynamicMode) {
             $sRet .= $this->oTemplate->addCss($this->_aCss, true);
-            $sJs .= $this->oTemplate->addJs($this->_aJs, true);
+            $sJs = $this->oTemplate->addJs($this->_aJs, true);
             if (preg_match_all("/src=\"(.*?)\"/", $sJs, $aMatches))
                 $sRet .= "<script>
                     bx_get_scripts(" . json_encode($aMatches[1]) . ");
