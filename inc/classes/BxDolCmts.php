@@ -297,6 +297,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     `RootStylePrefix` AS `root_style_prefix`,
                     `BaseUrl` AS `base_url`,
                     `ObjectVote` AS `object_vote`,
+                    `ObjectReport` AS `object_report`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
                     `TriggerFieldAuthor` AS `trigger_field_author`,
@@ -441,6 +442,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return false;
 
         return $oVote;
+    }
+
+    public function getReportObject($iId)
+    {
+        if(empty($this->_aSystem['object_report']))
+        	$this->_aSystem['object_report'] = 'sys_cmts';
+
+        $oReport = BxDolReport::getObjectInstance($this->_aSystem['object_report'], $iId, true, $this->_oTemplate);
+        if(!$oReport || !$oReport->isEnabled())
+            return false;
+
+        return $oReport;
     }
 
 	public function getNotificationId()
@@ -701,6 +714,22 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return true;
 
         return $oVote->isAllowedVote($isPerformAction);
+    }
+
+    public function isReportAllowed ($aCmt, $isPerformAction = false)
+    {
+        $oReport = $this->getReportObject($aCmt['cmt_id']);
+        if($oReport === false)
+            return false;
+
+        $iUserId = (int)$this->_getAuthorId();
+        if($iUserId == 0)
+            return false;
+
+        if(isAdmin())
+            return true;
+
+        return $oReport->isAllowedReport($isPerformAction);
     }
 
     public function isPostReplyAllowed ($isPerformAction = false)

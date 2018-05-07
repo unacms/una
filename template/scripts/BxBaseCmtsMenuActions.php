@@ -16,9 +16,13 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     protected $_oCmts;
     protected $_aCmt;
 
+    protected $_bShowTitles;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_bShowTitles = false;
     }
 
     public function setCmtsData($oCmts, $iCmtId)
@@ -45,7 +49,24 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!$oVote)
         	return false;
 
-    	return $oVote->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
+        $aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+		    $aVotesParams['show_do_vote_label'] = true;
+
+    	return $oVote->getElementInline($aVotesParams);
+    }
+
+	protected function _getMenuItemItemReport($aItem)
+    {
+        $oReport = $this->_oCmts->getReportObject($this->_aCmt['cmt_unique_id']);
+        if(!$oReport)
+        	return false;
+
+        $aReportParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+		    $aReportParams['show_do_report_label'] = true;
+
+    	return $oReport->getElementInline($aReportParams);
     }
 
     /**
@@ -61,14 +82,32 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {
+            case 'item-reply':
+                $sCheckFuncName = 'isPostReplyAllowed';
+                break;
+
             case 'item-vote':
                 $sCheckFuncName = 'isVoteAllowed';
                 if(!empty($this->_aCmt))
                     $aCheckFuncParams = array($this->_aCmt);
                 break;
 
-            case 'item-reply':
-                $sCheckFuncName = 'isPostReplyAllowed';
+            case 'item-report':
+                $sCheckFuncName = 'isReportAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
+
+            case 'item-edit':
+                $sCheckFuncName = 'isEditAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
+
+            case 'item-delete':
+                $sCheckFuncName = 'isRemoveAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
                 break;
         }
 
