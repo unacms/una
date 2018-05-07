@@ -61,4 +61,12 @@ BxDolPush.prototype.init = function() {
 				OneSignal.showHttpPermissionRequest();													
 		});
 	});
+
+    if (navigator.userAgent.indexOf('gonative') > -1) {
+        var data = {user: $this._iProfileId};
+        var json = JSON.stringify(data);
+        $(document).ready(function () {
+            window.location.href='gonative://registration/send?customData=' + encodeURIComponent(json);        
+        });
+    }
 };

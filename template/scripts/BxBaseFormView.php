@@ -12,7 +12,6 @@ class BxBaseFormView extends BxDolForm
     protected static $_isToggleJsAdded = false;
 
     protected static $_isCssJsAdded = false;
-    protected static $_isJQueryUIAdded = false;
     protected static $_isCssJsAddedViewMode = false;
 
     /**
@@ -66,6 +65,16 @@ class BxBaseFormView extends BxDolForm
      * Function name for generation open form section HTML.
      */
     protected $_sSectionOpen = 'getOpenSection';
+
+    /**
+     * JS files list for form
+     */
+    protected $_aJs = array();
+
+    /**
+     * CSS files list for form
+     */
+    protected $_aCss = array();
     
     /**
      * Constructor
@@ -100,7 +109,8 @@ class BxBaseFormView extends BxDolForm
         $this->_bDynamicMode = $bDynamicMode;
         $this->addCssJs ();
         $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
-        return ($this->sCode = $this->genForm());
+        $sDynamicCssJs = $this->_processCssJs();
+        return $sDynamicCssJs . ($this->sCode = $this->genForm());
     }
 
     /**
@@ -975,9 +985,7 @@ BLAH;
 
     protected function genCustomInputUsernamesSuggestions ($aInput)
     {
-        $this->addJsJQueryUI();
-
-        $this->oTemplate->addJs(array(
+        $this->_addJs(array(
             'jquery.form.min.js',
         ));
 
@@ -1185,7 +1193,7 @@ BLAH;
         $sIdStatus = $this->getInputId($aInput) . '_status';
         $sIdInput = $this->getInputId($aInput) . '_location';
         $sProto = (0 === strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
-        $this->oTemplate->addJs($sProto . '://maps.google.com/maps/api/js?libraries=places&language=' . bx_lang_name() . '&key=' . trim(getParam('sys_maps_api_key')));
+        $this->_addJs($sProto . '://maps.google.com/maps/api/js?libraries=places&language=' . bx_lang_name() . '&key=' . trim(getParam('sys_maps_api_key')));
 
         $aVars = array (
             'name' => $aInput['name'],
@@ -1374,13 +1382,11 @@ BLAH;
             if (self::$_isCssJsAddedViewMode)
                 return;
 
-            $this->oTemplate->addCss('forms.css');
+            $this->_addCss('forms.css');
 
             self::$_isCssJsAddedViewMode = true;
 
         } else {
-
-            $this->addJsJQueryUI();
                 
             if (self::$_isCssJsAdded)
                 return;
@@ -1403,6 +1409,8 @@ BLAH;
             $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
 
             $aJs = array(
+                'jquery-ui/jquery-ui.custom.min.js',
+
                 'jquery.webForms.js',
 
                 'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.js',
@@ -1425,21 +1433,47 @@ BLAH;
                 }
             }
 
-            $this->oTemplate->addJs($aJs);
-            $this->oTemplate->addCss($aCss);
+            $this->_addJs($aJs);
+            $this->_addCss($aCss);            
 
             self::$_isCssJsAdded = true;
 
         }
     }
 
-    function addJsJQueryUI ()
+    protected function _processCssJs()
     {
-        if (self::$_isJQueryUIAdded)
-            return;
-        $this->oTemplate->addJs('jquery-ui/jquery-ui.custom.min.js');
-        self::$_isJQueryUIAdded = true;
-    }    
+        $sRet = '';
+        if ($this->_bDynamicMode) {
+            $sRet .= $this->oTemplate->addCss($this->_aCss, true);
+            $sJs = $this->oTemplate->addJs($this->_aJs, true);
+            if (preg_match_all("/src=\"(.*?)\"/", $sJs, $aMatches))
+                $sRet .= "<script>
+                    bx_get_scripts(" . json_encode($aMatches[1]) . ");
+                </script>";
+        }
+        else {
+            $this->oTemplate->addCss($this->_aCss);
+            $this->oTemplate->addJs($this->_aJs);
+        }
+        return $sRet;
+    }
+
+    protected function _addJs($mixed)
+    {
+        if (!is_array($mixed))
+            $mixed = array($mixed);
+        foreach ($mixed as $s)
+            $this->_aJs[$s] = $s;
+    }
+
+    protected function _addCss($mixed)
+    {
+        if (!is_array($mixed))
+            $mixed = array($mixed);
+        foreach ($mixed as $s)
+            $this->_aCss[$s] = $s;
+    }
 }
 
 /** @} */
