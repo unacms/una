@@ -27,12 +27,25 @@ class BxVideosPageEntry extends BxBaseModTextPageEntry
     	)));
     }
 
-    protected function _getThumbForMetaObject ()
+    protected function _getImageForPageCover ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(!empty($CNF['FIELD_THUMB']) && !empty($this->_aContentInfo[$CNF['FIELD_THUMB']]))
             return array('id' => $this->_aContentInfo[$CNF['FIELD_THUMB']], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+
+        if(!empty($CNF['FIELD_VIDEO']) && !empty($this->_aContentInfo[$CNF['FIELD_VIDEO']]))
+            return array('id' => $this->_aContentInfo[$CNF['FIELD_VIDEO']], 'transcoder' => $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
+
+        return false;
+    }
+
+    protected function _getThumbForMetaObject ()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!empty($CNF['FIELD_POSTER']) && !empty($this->_aContentInfo[$CNF['FIELD_POSTER']]))
+            return array('id' => $this->_aContentInfo[$CNF['FIELD_POSTER']], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_POSTER']);
 
         if(!empty($CNF['FIELD_VIDEO']) && !empty($this->_aContentInfo[$CNF['FIELD_VIDEO']]))
             return array('id' => $this->_aContentInfo[$CNF['FIELD_VIDEO']], 'transcoder' => $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);

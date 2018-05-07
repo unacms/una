@@ -58,23 +58,24 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         $oCover->setCoverClass($this->_sCoverClass);
 
         // set cover image
-        $mixedThumb = $this->_getThumbForMetaObject();
-        if($mixedThumb !== false) {
+        $mixedCover = method_exists($this, '_getImageForPageCover') ? $this->_getImageForPageCover() : $this->_getThumbForMetaObject();
+        if($mixedCover !== false) {
             $aCover = array(
-                'id' => $mixedThumb['id']
+                'id' => $mixedCover['id']
             );
 
-            if(!empty($mixedThumb['transcoder']))
-                $aCover['transcoder'] = $mixedThumb['transcoder'];
+            if(!empty($mixedCover['transcoder']))
+                $aCover['transcoder'] = $mixedCover['transcoder'];
             else if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER'])) 
                 $aCover['transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_COVER'];
-            else if(!empty($mixedThumb['object']))
-                $aCover['object'] = $mixedThumb['object'];
+            else if(!empty($mixedCover['object']))
+                $aCover['object'] = $mixedCover['object'];
 
             $oCover->setCoverImageUrl($aCover);
         }
 
         // add content metatags
+        $mixedThumb = $this->_getThumbForMetaObject();
         if (!empty($CNF['OBJECT_METATAGS']) && $mixedThumb) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($o)
