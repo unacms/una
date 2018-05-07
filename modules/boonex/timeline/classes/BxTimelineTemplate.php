@@ -27,21 +27,27 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $this->_bShowTimelineDividers = false;
     }
 
-    public function getCssJs($bDynamic = false)
+    public function getCss($bDynamic = false)
     {
-    	parent::getCssJs($bDynamic);
-
-        $this->addCss(array(
-        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
+        $mixedResult = parent::getCss($bDynamic);
+        $mixedResult .= $this->addCss(array(
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
         	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css',
             'jquery-ui/jquery-ui.css',
 			'cmts.css',
             'post.css',
             'repost.css',
-        ));
+        ), $bDynamic);
 
-        $this->addJs(array(
-            'jquery-ui/jquery-ui.custom.min.js',
+        if($bDynamic)
+            return $mixedResult; 
+    }
+    
+    public function getJs($bDynamic = false)
+    {
+        $mixedResult = parent::getJs($bDynamic);
+        $mixedResult .= $this->addJs(array(
+        	'jquery-ui/jquery-ui.custom.min.js',
             'jquery.form.min.js',
             'jquery.ba-resize.min.js',
         	'emoji/js/util.js',
@@ -56,7 +62,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'BxDolCmts.js',            
             'post.js',
             'repost.js',
-        ));
+        ), $bDynamic);
+
+        if($bDynamic)
+            return $mixedResult; 
     }
 
     public function getPostBlock($iOwnerId, $aParams = array())
@@ -1099,12 +1108,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($iOwnerId == 0 || $iOwnerId == (int)$aEvent['object_owner_id'])
             return array();
 
-        list($sTimelineAuthorName, $sTimelineAuthorUrl) = $this->getModule()->getUserInfo($aEvent['owner_id']);
+        list($sTaName, $sTaUrl, $sTaThumb, $sTaUnit, $sTaUnitWoInfo) = $this->getModule()->getUserInfo($aEvent['owner_id']);
 
         return array(
         	'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'owner_url' => $sTimelineAuthorUrl,
-            'owner_username' => $sTimelineAuthorName,
+            'owner_url' => $sTaUrl,
+            'owner_username' => $sTaName,
+            'owner_thumb' => $sTaThumb,
+            'owner_unit' => $sTaUnit,
+            'owner_unit_wo_info' => $sTaUnitWoInfo,
         );
     }
 
