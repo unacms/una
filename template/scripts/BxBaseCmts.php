@@ -449,17 +449,11 @@ class BxBaseCmts extends BxDolCmts
 	        $oMenuActions->setDynamicMode($bDynamicMode);
 	        $sMenuActions = $oMenuActions->getCode();
 
-	        /*
-	        TODO: Remove before commit.
-	        $oVote = $this->getVoteObject($aCmt['cmt_id']);
-	        if($oVote !== false)
-	            $sMenuActions .= $oVote->getJsScript();
-			*/
-
 	        //--- Manage Menu
 	        $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
 	        $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
-	
+	        $oMenuManage->setDynamicMode($bDynamicMode);
+
 	        $sMenuManage = $oMenuManage->getCode();
 	        $bMenuManage = !empty($sMenuManage);
 	        if($bMenuManage) {
