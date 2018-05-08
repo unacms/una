@@ -119,6 +119,10 @@
 		padding: 0px 5px;
 		padding: 0px 0.3rem;
     }
+    div.cmt-cont .cmt-body img {
+        max-width: 100%;
+    	height: auto;
+    }
     div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
 		margin-top: 10px;
     	margin-top: 0.5rem;
