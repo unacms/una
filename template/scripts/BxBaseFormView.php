@@ -990,13 +990,11 @@ BLAH;
         ));
 
         $sVals = '';
-        $iValsCount = 0;
         if (!empty($aInput['value']) && is_array($aInput['value'])) {
             foreach ($aInput['value'] as $sVal) {
                 if (!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
                     continue;
                $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getUnit(0, array('template' => 'unit_wo_info')) . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
-               $iValsCount ++;
             }
             $sVals = trim($sVals, ',');
         }
@@ -1010,7 +1008,6 @@ BLAH;
 			'on_select' => isset($aInput['custom']['on_select']) ? $aInput['custom']['on_select']: 'null',
             'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
             'vals' => $sVals,
-            'vals_count' => $iValsCount,
         ));
     }
 

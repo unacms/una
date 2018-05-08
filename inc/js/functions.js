@@ -906,7 +906,7 @@ function bx_get_param(s) {
     return aDolOptions[s];
 }
 
-function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect, iValsCount){
+function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect){
 	if (!$('#' + iId).hasClass('bx-form-input-autotoken'))
 			$('#' + iId).addClass('bx-form-input-autotoken');
 	
@@ -922,7 +922,7 @@ function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect,
 			e.preventDefault();			
 		}
 	});
-	if (iValsCount > 0 && bOnlyOnce)
+	if ($('#' + iId + ' .val').length > 0 && bOnlyOnce)
 		$('#' + iId + ' input[type=text]').hide();
 	$('#' + iId + ' input[type=text]').on('superselect', function(e, item) {
 		$(this).hide();
