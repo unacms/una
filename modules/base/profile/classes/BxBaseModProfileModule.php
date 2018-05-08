@@ -1069,6 +1069,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => '',
             'votes' => '',
+        	'scores' => '',
             'reports' => '',
             'comments' => '',
             'title' => $sTitle, //may be empty.
