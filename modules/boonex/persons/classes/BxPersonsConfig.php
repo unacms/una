@@ -15,23 +15,16 @@ class BxPersonsConfig extends BxBaseModProfileConfig
     {
         parent::__construct($aModule);
 
-        $aMenuItems2MethodsSubmenu = array (
+        $this->_aMenuItems2MethodsSubmenu = array_merge($this->_aMenuItems2MethodsSubmenu, array(
         	'persons-profile-subscriptions' => 'checkAllowedSubscriptionsView'
-        );
+        ));
 
-        $aMenuItems2MethodsActions = array (
+        $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-persons-profile' => 'checkAllowedView',
             'edit-persons-profile' => 'checkAllowedEdit',
             'edit-persons-cover' => 'checkAllowedChangeCover',
             'delete-persons-profile' => 'checkAllowedDelete',
-            'profile-friend-add' => 'checkAllowedFriendAdd',
-            'profile-friend-remove' => 'checkAllowedFriendRemove',
-            'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
-            'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
-            'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'profile-set-acl-level' => 'checkAllowedSetMembership',
-            'convos-compose' => 'checkAllowedCompose',
-        );
+        ));
 
         $this->CNF = array (
 
@@ -134,9 +127,9 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-                'bx_persons_view_submenu' => $aMenuItems2MethodsSubmenu,
-                'bx_persons_view_actions' => $aMenuItems2MethodsActions,
-                'bx_persons_view_actions_more' => $aMenuItems2MethodsActions,
+                'bx_persons_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
+                'bx_persons_view_actions' => $this->_aMenuItems2MethodsActions,
+                'bx_persons_view_actions_more' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages
