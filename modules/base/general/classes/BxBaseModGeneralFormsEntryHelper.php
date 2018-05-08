@@ -189,7 +189,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    public function editDataForm ($iContentId, $sDisplay = false, $sCheckFunction = false)
+    public function editDataForm ($iContentId, $sDisplay = false, $sCheckFunction = false, $bErrorMsg = true)
     {
         if (!$sCheckFunction)
             $sCheckFunction = 'checkAllowedEdit';
@@ -199,16 +199,16 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
+            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_entry_is_not_defined')) : '';
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction($aContentInfo)))
-            return MsgBox($sMsg);
+            return $bErrorMsg ? MsgBox($sMsg) : '';
 
         // check and display form
         $oForm = $this->getObjectFormEdit($sDisplay);
         if (!$oForm)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return $bErrorMsg ? MsgBox(_t('_sys_txt_error_occured')) : '';
 
         $aSpecificValues = array();        
         if (!empty($CNF['OBJECT_METATAGS'])) {

@@ -322,10 +322,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $this->_serviceBrowse ('created_entries', array('author' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
+
     
-    public function serviceEntityInvite ($iContentId = 0)
+    public function serviceEntityInvite ($iContentId = 0, $bErrorMsg = true)
     {
-        return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']);
+        return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
     }
     
     /**
