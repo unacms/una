@@ -737,6 +737,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'path' => $sLocationPath,
             'url' => $sLocationUrl
         );
+
+        return $sKey;
     }
     /**
      * Add dynamic JS location.
