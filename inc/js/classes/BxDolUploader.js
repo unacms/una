@@ -165,7 +165,7 @@ BxDolUploaderSimple.prototype.deleteGhost = function (iFileId) {
     var sFileContainerId = $this._getFileContainerId(iFileId);
     bx_loading(sFileContainerId, true);
 
-    $.post(sUrl, function (sMsg) {
+    $.post(sUrl, {_t: new Date()}, function (sMsg) {
         bx_loading(sFileContainerId, false);
         if ('ok' == sMsg) {
             $('#' + sFileContainerId).slideUp('slow', function () {
