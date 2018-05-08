@@ -149,7 +149,7 @@
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote (Like)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_score"><![CDATA[Vote (Up/Down)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Share]]></string>
-    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Share]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Report]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[More Actions]]></string>
     <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[]]></string>

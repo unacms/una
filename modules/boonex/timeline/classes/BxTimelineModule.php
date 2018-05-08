@@ -1862,8 +1862,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function isAllowedEdit($aEvent, $bPerform = false)
     {
-        //--- System posts cannot be edited at all.
-        if(!isLogged() || !$this->_oConfig->isCommon($aEvent['type'], $aEvent['action']))
+        if(!isLogged())
+            return false;
+            
+        //--- System posts and Reposts cannot be edited at all.
+        if(!$this->_oConfig->isCommon($aEvent['type'], $aEvent['action']) || $aEvent['type'] == $this->_oConfig->getPrefix('common_post') . 'repost')
             return false;
 
         if(isAdmin())
