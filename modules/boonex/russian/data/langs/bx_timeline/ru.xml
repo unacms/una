@@ -149,7 +149,7 @@
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Голосовать (Нравится)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_score"><![CDATA[Голосовать (За/Против)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Поделиться]]></string>
-    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Поделиться]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Пожаловаться]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[]]></string>
