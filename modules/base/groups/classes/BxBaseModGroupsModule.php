@@ -568,6 +568,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if (!$this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]))
             return _t('_sys_txt_access_denied');
 
+        return $this->_checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
+    }
+    
+    public function _checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
+    {
         return parent::checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
     }
 
