@@ -1170,11 +1170,14 @@ function bx_rtrim_str ($sString, $sPrefix, $sReplace = '')
     return $sString;
 }
 
+/**
+ * Strip all lines with no information for example: <p></p>, <br /><br />
+ */ 
 function bx_trim_nl_duplicates($s)
 {
     $sStrip = implode('', array_keys(get_html_translation_table(HTML_ENTITIES)));
-    return implode('', array_filter(explode("\r\n", $s), function($s) use ($sStrip) {
-        return trim(strip_tags($s), $sStrip) !== '';
+    return implode('', array_filter(mb_split("[\n\r]", $s), function($s) use ($sStrip) {
+        return trim(strip_tags($s, '<button><canvas><embed><hr><iframe><img><input><object><select><svg><video>'), $sStrip) !== '';
     }));
 }
 

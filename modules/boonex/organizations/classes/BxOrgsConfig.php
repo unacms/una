@@ -15,11 +15,11 @@ class BxOrgsConfig extends BxBaseModProfileConfig
     {
         parent::__construct($aModule);
 
-        $aMenuItems2MethodsSubmenu = array (
+        $this->_aMenuItems2MethodsSubmenu = array_merge($this->_aMenuItems2MethodsSubmenu, array(
         	'organization-profile-subscriptions' => 'checkAllowedSubscriptionsView'
-        );
+        ));
 
-        $aMenuItems2MethodsActions = array (
+        $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-organization-profile' => 'checkAllowedView',
             'edit-organization-profile' => 'checkAllowedEdit',
             'edit-organization-cover' => 'checkAllowedChangeCover',
@@ -27,14 +27,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'delete-organization-profile' => 'checkAllowedDelete',
         	'profile-fan-add' => 'checkAllowedFanAdd',
             'profile-fan-remove' => 'checkAllowedFanRemove',
-            'profile-friend-add' => 'checkAllowedFriendAdd',
-            'profile-friend-remove' => 'checkAllowedFriendRemove',
-            'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
-            'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
-            'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'profile-set-acl-level' => 'checkAllowedSetMembership',
-            'convos-compose' => 'checkAllowedCompose',
-        );
+        ));
 
         $this->CNF = array (
 
@@ -152,9 +145,9 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-        		'bx_organizations_view_submenu' => $aMenuItems2MethodsSubmenu,
-                'bx_organizations_view_actions' => $aMenuItems2MethodsActions,
-                'bx_organizations_view_actions_more' => $aMenuItems2MethodsActions,
+        		'bx_organizations_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
+                'bx_organizations_view_actions' => $this->_aMenuItems2MethodsActions,
+                'bx_organizations_view_actions_more' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages

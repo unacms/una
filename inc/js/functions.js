@@ -922,7 +922,8 @@ function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect)
 			e.preventDefault();			
 		}
 	});
-
+	if ($('#' + iId + ' .val').length > 0 && bOnlyOnce)
+		$('#' + iId + ' input[type=text]').hide();
 	$('#' + iId + ' input[type=text]').on('superselect', function(e, item) {
 		$(this).hide();
 		if ('undefined' != typeof(item)) {

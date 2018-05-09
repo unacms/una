@@ -11,9 +11,22 @@
 
 class BxBaseModProfileConfig extends BxBaseModGeneralConfig
 {
+    protected $_aMenuItems2MethodsActions = array();
+    protected $_aMenuItems2MethodsSubmenu = array();
+    
     function __construct($aModule)
     {
         parent::__construct($aModule);
+
+        $this->_aMenuItems2MethodsActions = array (
+            'profile-friend-add' => 'checkAllowedFriendAdd',
+            'profile-friend-remove' => 'checkAllowedFriendRemove',
+            'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
+            'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
+            'profile-actions-more' => 'checkAllowedViewMoreMenu',
+            'profile-set-acl-level' => 'checkAllowedSetMembership',
+            'convos-compose' => 'checkAllowedCompose',
+        );        
     }
 }
 
