@@ -436,50 +436,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             'injections' => array()
         );
 
-        //--- Load default CSS ---//
-        $this->addCssSystem(array(
-            'common.css',
-            'default.less',
-            'general.css',
-            'icons.css',
-            'colors.css',
-            'forms.css',
-            'media-desktop.css',
-            'media-tablet.css',
-            'media-phone.css',
-            'media-print.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'marka/|marka.min.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'at.js/css/|jquery.atwho.min.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'prism/|prism.css',
-        ));
-
-        //--- Load default JS ---//
-        $this->addJsSystem(array(
-            'jquery/jquery.min.js',
-            'jquery/jquery-migrate.min.js',
-            'jquery-ui/jquery.ui.position.min.js',
-            'spin.min.js',
-            'jquery.easing.js',
-            'jquery.cookie.min.js',
-            'moment-with-locales.min.js',
-            'functions.js',
-            'jquery.webForms.js',
-            'jquery.dolPopup.js',
-        	'jquery.dolConverLinks.js',
-            'marka/marka.min.js',
-            'headroom.min.js',
-            'at.js/js/jquery.atwho.min.js',
-            'prism/prism.js',
-        ));
-
-        //--- Load translations in JS ---//
-        bx_import('BxDolLanguages');
-        $this->addJsTranslation(array(
-            '_Are_you_sure',
-            '_error occured',
-            '_sys_loading',
-            '_copyright'
-        ));
+        //--- Load default CSS, JS, etc ---//
+        BxDolPreloader::getInstance()->perform();
 
         //--- Load injection's cache ---//
         if (getParam('sys_db_cache_enable')) {
