@@ -67,6 +67,9 @@ class BxBaseScore extends BxDolScore
             self::$_sTmplContentDoVoteLabel = $this->_oTemplate->getHtml('score_do_vote_label.html');
     }
 
+    /*
+     * TODO: Remove after testing (Ticket #1249)
+     */
     public function addCssJs($bDynamicMode = false)
     {
     	if($bDynamicMode || $this->_bCssJsAdded)
@@ -99,6 +102,9 @@ class BxBaseScore extends BxDolScore
         );
         $sCode = $this->_sJsObjName . " = new BxDolScore(" . json_encode($aParamsJs) . ");";
 
+        /*
+         * TODO: Remove after testing (Ticket #1249)
+         *
         if($bDynamicMode) {
 			$sCode = "var " . $this->_sJsObjName . " = null; 
 			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolScore.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
@@ -110,6 +116,7 @@ class BxBaseScore extends BxDolScore
         	$sCode = "var " . $sCode;
 
         $this->addCssJs($bDynamicMode);
+        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 

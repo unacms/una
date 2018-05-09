@@ -59,6 +59,9 @@ class BxBaseFeature extends BxDolFeature
             self::$_sTmplContentDoFeatureLabel = $this->_oTemplate->getHtml('feature_do_feature_label.html');
     }
 
+    /*
+     * TODO: Remove after testing (Ticket #1249)
+     */
     public function addCssJs($bDynamicMode = false)
     {
     	if($bDynamicMode || $this->_bCssJsAdded)
@@ -88,6 +91,9 @@ class BxBaseFeature extends BxDolFeature
         );
         $sCode = $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . ");";
 
+        /*
+         * TODO: Remove after testing (Ticket #1249)
+         *
         if($bDynamicMode) {
 			$sCode = "var " . $this->_sJsObjName . " = null; 
 			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolFeature.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
@@ -99,6 +105,7 @@ class BxBaseFeature extends BxDolFeature
         	$sCode = "var " . $sCode;
 
         $this->addCssJs($bDynamicMode);
+        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 

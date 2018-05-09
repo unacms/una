@@ -62,6 +62,9 @@ class BxBaseFavorite extends BxDolFavorite
             self::$_sTmplContentDoFavoriteLabel = $this->_oTemplate->getHtml('favorite_do_favorite_label.html');
     }
 
+    /*
+     * TODO: Remove after testing (Ticket #1249)
+     */
     public function addCssJs($bDynamicMode = false)
     {
     	if($bDynamicMode || $this->_bCssJsAdded)
@@ -91,6 +94,9 @@ class BxBaseFavorite extends BxDolFavorite
         );
         $sCode = $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . ");";
 
+        /*
+         * TODO: Remove after testing (Ticket #1249)
+         * 
         if($bDynamicMode) {
 			$sCode = "var " . $this->_sJsObjName . " = null; 
 			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolFavorite.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
@@ -102,6 +108,7 @@ class BxBaseFavorite extends BxDolFavorite
         	$sCode = "var " . $sCode;
 
         $this->addCssJs($bDynamicMode);
+        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 

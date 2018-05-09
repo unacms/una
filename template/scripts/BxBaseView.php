@@ -65,6 +65,9 @@ class BxBaseView extends BxDolView
         $this->_sTmplNameByList = 'view_by_list.html';
     }
 
+    /*
+     * TODO: Remove after testing (Ticket #1249)
+     */
     public function addCssJs($bDynamicMode = false)
     {
     	if($bDynamicMode || $this->_bCssJsAdded)
@@ -94,6 +97,9 @@ class BxBaseView extends BxDolView
         );
         $sCode = $this->_sJsObjName . " = new BxDolView(" . json_encode($aParams) . ");";
 
+        /*
+         * TODO: Remove after testing (Ticket #1249)
+         *
         if($bDynamicMode) {
 			$sCode = "var " . $this->_sJsObjName . " = null; 
 			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolView.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
@@ -105,6 +111,7 @@ class BxBaseView extends BxDolView
         	$sCode = "var " . $sCode;
 
         $this->addCssJs($bDynamicMode);
+        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 

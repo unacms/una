@@ -79,6 +79,9 @@ class BxBaseVote extends BxDolVote
             self::$_sTmplContentDoVoteLikesLabel = $this->_oTemplate->getHtml('vote_do_vote_likes_label.html');
     }
 
+    /*
+     * TODO: Remove after testing (Ticket #1249)
+     */
     public function addCssJs($bDynamicMode = false)
     {
     	if($bDynamicMode || $this->_bCssJsAdded)
@@ -109,6 +112,9 @@ class BxBaseVote extends BxDolVote
         );
         $sCode = $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");";
 
+        /*
+         * TODO: Remove after testing (Ticket #1249)
+         *
         if($bDynamicMode) {
 			$sCode = "var " . $this->_sJsObjName . " = null; 
 			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolVote.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
@@ -120,6 +126,7 @@ class BxBaseVote extends BxDolVote
         	$sCode = "var " . $sCode;
 
         $this->addCssJs($bDynamicMode);
+        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 
