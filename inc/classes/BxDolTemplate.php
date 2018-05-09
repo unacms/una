@@ -723,6 +723,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(isset($this->_aLocations[$sKey]))
            unset($this->_aLocations[$sKey]);
     }
+	/**
+     * Check whether JS location exists or not.
+     * @param string $sKey - JS location's unique key.
+     */
+    function isLocationJs($sKey)
+    {
+        return isset($this->_aLocationsJs[$sKey]);
+    }
     /**
      * Add JS location in array of JS locations.
      * Note. Location is the path/url to folder where JS files are stored.
