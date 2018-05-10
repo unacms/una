@@ -17,15 +17,16 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_glossary_per_page_profile', '6', @iCategId, '_bx_glossary_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_glossary_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_glossary_rss_num', '10', @iCategId, '_bx_glossary_option_rss_num', 'digit', '', '', '', 20),
-('bx_glossary_searchable_fields', 'title,text', @iCategId, '_bx_glossary_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:11:"bx_glossary";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_glossary_searchable_fields', 'title,text', @iCategId, '_bx_glossary_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:11:"bx_glossary";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_glossary_activate_terms_after_creation', 'on', @iCategId, '_bx_glossary_option_activate_terms_after_creation', 'checkbox', '', '', '', 40);
 
 -- PAGE: create entry
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_glossary_create_entry', '_bx_glossary_page_title_sys_create_entry', '_bx_glossary_page_title_create_entry', 'bx_glossary', 5, @iAdministratorModeratorAccess, 1, 'create-glossary', 'page.php?i=create-glossary', '', '', '', 0, 1, 0, 'BxGlsrPageBrowse', 'modules/boonex/glossary/classes/BxGlsrPageBrowse.php');
+('bx_glossary_create_entry', '_bx_glossary_page_title_sys_create_entry', '_bx_glossary_page_title_create_entry', 'bx_glossary', 5, 2147483647, 1, 'create-glossary', 'page.php?i=create-glossary', '', '', '', 0, 1, 0, 'BxGlsrPageBrowse', 'modules/boonex/glossary/classes/BxGlsrPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('bx_glossary_create_entry', 1, 'bx_glossary', '_bx_glossary_page_block_title_create_entry', 11, @iAdministratorModeratorAccess, 'service', 'a:2:{s:6:"module";s:11:"bx_glossary";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
+('bx_glossary_create_entry', 1, 'bx_glossary', '_bx_glossary_page_block_title_create_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_glossary";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
 
 
 -- PAGE: edit entry
@@ -185,7 +186,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_glossary', 'create-glossary', '_bx_glossary_menu_item_title_system_create_entry', '_bx_glossary_menu_item_title_create_entry', 'page.php?i=create-glossary', '', '', 'fa-book col-red3', '', @iAdministratorModeratorAccess, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', 'bx_glossary', 'create-glossary', '_bx_glossary_menu_item_title_system_create_entry', '_bx_glossary_menu_item_title_create_entry', 'page.php?i=create-glossary', '', '', 'fa-book col-red3', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 
 -- MENU: actions menu for view entry 
@@ -210,7 +211,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_glossary_my', 'bx_glossary', '_bx_glossary_menu_set_title_entries_my', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_glossary_my', 'bx_glossary', 'create-glossary', '_bx_glossary_menu_item_title_system_create_entry', '_bx_glossary_menu_item_title_create_entry', 'page.php?i=create-glossary', '', '', 'plus', '', @iAdministratorModeratorAccess, 1, 0, 0);
+('bx_glossary_my', 'bx_glossary', 'create-glossary', '_bx_glossary_menu_item_title_system_create_entry', '_bx_glossary_menu_item_title_create_entry', 'page.php?i=create-glossary', '', '', 'plus', '', 2147483647, 1, 0, 0);
 
 
 -- MENU: module sub-menu
@@ -225,7 +226,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_glossary_submenu', 'bx_glossary', 'glossary-home', '_bx_glossary_menu_item_title_system_entries_public', '_bx_glossary_menu_item_title_entries_public', 'page.php?i=glossary-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_glossary_submenu', 'bx_glossary', 'glossary-popular', '_bx_glossary_menu_item_title_system_entries_popular', '_bx_glossary_menu_item_title_entries_popular', 'page.php?i=glossary-popular', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_glossary_submenu', 'bx_glossary', 'glossary-search', '_bx_glossary_menu_item_title_system_entries_search', '_bx_glossary_menu_item_title_entries_search', 'page.php?i=glossary-search', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_glossary_submenu', 'bx_glossary', 'glossary-manage', '_bx_glossary_menu_item_title_system_entries_manage', '_bx_glossary_menu_item_title_entries_manage', 'page.php?i=glossary-manage', '', '', '', '', @iAdministratorModeratorAccess, 1, 1, 4);
+('bx_glossary_submenu', 'bx_glossary', 'glossary-manage', '_bx_glossary_menu_item_title_system_entries_manage', '_bx_glossary_menu_item_title_entries_manage', 'page.php?i=glossary-manage', '', '', '', '', 2147483646, 1, 1, 4);
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -320,6 +321,7 @@ SET @iPremium = 9;
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- entry create
+(@iStandard, @iIdActionEntryCreate),
 (@iModerator, @iIdActionEntryCreate),
 (@iAdministrator, @iIdActionEntryCreate),
 
