@@ -265,6 +265,15 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_avatar', array($aInfo['content_id']));
     }
+	
+	/**
+     * Get cover url
+     */
+    public function getCover($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_cover', array($aInfo['content_id']));
+    }
 
     /**
      * Get thumbnail url
