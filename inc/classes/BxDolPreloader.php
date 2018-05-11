@@ -61,9 +61,8 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
 		return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    public function perform()
+    public function perform($oTemplateSystem)
     {
-        $oTemplate = BxDolTemplate::getInstance();
         $aTypesAvail = array_keys($this->_aTypes);
 
         $aLoader = array();
@@ -86,32 +85,14 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
             if($bModule && !$oModule)
                 continue;
 
-            if($bModule) {
-                $sLocKey = $oModule->_oConfig->getName();
-                $sHomePath = $oModule->_oConfig->getHomePath();
-                $sHomeUrl = $oModule->_oConfig->getHomeUrl();
-
-                if(!$oTemplate->isLocation($sLocKey)) {
-                    $sLocKey = $oTemplate->addLocation($sLocKey, $sHomePath, $sHomeUrl);
-                    $bLocRemove = true;
-                }
-
-                if(!$oTemplate->isLocationJs($sLocKey)) {
-                    $sLocKey = $oTemplate->addLocationJs($sLocKey, $sHomePath . 'js/', $sHomeUrl . 'js/');
-                    $bLocRemoveJs = true;
-                }
-            }
+            $oTemplate = null;
+            if($bModule)
+                $oTemplate = &$oModule->_oTemplate;
+            else 
+                $oTemplate = &$oTemplateSystem;
 
             foreach($aTypes as $sType => $aEntries)
                  $oTemplate->{$this->_aTypes[$sType]}($aEntries);
-
-            if($bModule && $sLocKey != '') {
-                if($bLocRemove)
-                    $oTemplate->removeLocation($sLocKey);
-                
-                if($bLocRemoveJs)
-                    $oTemplate->removeLocationJs($sLocKey);
-            }
         }
     }
 }

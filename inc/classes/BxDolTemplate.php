@@ -437,7 +437,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         );
 
         //--- Load default CSS, JS, etc ---//
-        BxDolPreloader::getInstance()->perform();
+        BxDolPreloader::getInstance()->perform($this);
 
         //--- Load injection's cache ---//
         if (getParam('sys_db_cache_enable')) {

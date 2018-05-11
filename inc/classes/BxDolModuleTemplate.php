@@ -43,9 +43,19 @@ class BxDolModuleTemplate extends BxDolTemplate
         $this->_oTemplateFunctions = BxTemplFunctions::getInstance($this);
     }
 
+    function addCssSystem($mixedFiles, $bDynamic = false)
+    {
+        return $this->_addFiles(BxDolTemplate::getInstance(), 'addCssSystem', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true);
+    }
+
     function addCss($mixedFiles, $bDynamic = false)
     {
         return $this->_addFiles(BxDolTemplate::getInstance(), 'addCss', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true);
+    }
+
+    function addJsSystem($mixedFiles, $bDynamic = false)
+    {
+        return $this->_addFiles(BxDolTemplate::getInstance(), 'addJsSystem', 'isLocationJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, true);
     }
 
     function addJs($mixedFiles, $bDynamic = false)

@@ -67,15 +67,6 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         	'menu.css',
         ));
 
-        //--- Add default JS in output
-        $this->addJsSystem(array(
-            'jquery/jquery.min.js',
-            'jquery/jquery-migrate.min.js',
-            'jquery-ui/jquery.ui.position.min.js',
-            'spin.min.js',
-            'jquery.dolPopup.js',
-        ));
-
         bx_import('BxTemplStudioConfig');
         $this->_oTemplateConfig = BxTemplStudioConfig::getInstance();
 
