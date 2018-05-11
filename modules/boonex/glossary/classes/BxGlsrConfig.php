@@ -119,6 +119,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
                 'grid_txt_account_manager' => '_bx_glossary_grid_txt_account_manager',
                 'filter_item_active' => '_bx_glossary_grid_filter_item_title_adm_active',
                 'filter_item_hidden' => '_bx_glossary_grid_filter_item_title_adm_hidden',
+                'filter_item_pending' => '_bx_glossary_grid_filter_item_title_adm_pending',
                 'filter_item_select_one_filter1' => '_bx_glossary_grid_filter_item_title_adm_select_one_filter1',
                 'menu_item_manage_my' => '_bx_glossary_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_glossary_menu_item_title_manage_all',

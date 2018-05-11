@@ -94,6 +94,7 @@
 	<string name="_Read more"><![CDATA[Читать ещё]]></string>
 	<string name="_Reset"><![CDATA[Сбросить]]></string>
 	<string name="_Search"><![CDATA[Поиск]]></string>
+  <string name="_search_in_all_section"><![CDATA[Искать во всех отделах]]></string>
 	<string name="_Section"><![CDATA[Отдел]]></string>
 	<string name="_Select_one"><![CDATA[Выберите один...]]></string>
 	<string name="_Select_all"><![CDATA[Выбрать всё]]></string>

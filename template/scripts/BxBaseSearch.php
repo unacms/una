@@ -18,6 +18,8 @@ class BxBaseSearch extends BxDolSearch
 
     public function __construct($aChoice, $oTemplate)
     {
+        if (!is_array($aChoice) && $aChoice != '')
+            $aChoice = array($aChoice);
         parent::__construct($aChoice);
 
         $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
@@ -31,13 +33,13 @@ class BxBaseSearch extends BxDolSearch
         if (false === $sTitle)
             $sTitle = _t( "_Search");
 
-        $aValues = $this->getKeyTitlesPairs ();
+        $aValues = array_merge(array('' => _t('_search_in_all_section')), $this->getKeyTitlesPairs());
         if (bx_get('type'))
             $aValue = bx_process_input(bx_get('type'));
         elseif (bx_get('section'))
             $aValue = bx_process_input(bx_get('section'));
         else
-            $aValue = array_keys($aValues);
+            $aValue = '';
 
         $sIdForm = $this->_sIdForm . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
         $sIdResults = $this->_sIdResults . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
@@ -60,7 +62,7 @@ class BxBaseSearch extends BxDolSearch
                     'value' => $this->_bLiveSearch ? 1 : 0,
                 ),
                 'section' => array(
-                    'type' => 'checkbox_set',
+                    'type' => 'select',
                     'name' => 'section',
                     'caption' => _t('_Section'),
                     'values' => $aValues,
@@ -104,6 +106,15 @@ class BxBaseSearch extends BxDolSearch
     {
         $sIdResults = $this->_sIdResults . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
         return '<div id="' . $sIdResults . '">' . $sCode . '</div>';
+    }
+    
+    protected function getKeyTitlesPairs ()
+    {
+        $a = array();
+        foreach ($this->aClasses as $sKey => $r)
+            if ($this->_sMetaType || $r['GlobalSearch'])
+                $a[$sKey] = _t($r['title']);
+        return $a;
     }
 }
 

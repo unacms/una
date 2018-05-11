@@ -15,6 +15,9 @@ class BxGlsrGridAdministration extends BxBaseModTextGridAdministration
     {
         $this->MODULE = 'bx_glossary';
         parent::__construct ($aOptions, $oTemplate);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $this->_aFilter1Values['pending'] = $CNF['T']['filter_item_pending'];
+        
     }
 }
 

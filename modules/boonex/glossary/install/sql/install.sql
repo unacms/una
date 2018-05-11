@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `bx_glossary_terms` (
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
-  `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `status_admin` enum('active','hidden','pending') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
 );
@@ -183,8 +183,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_glossary', 'bx_glossary', 'title', '', '', 0, 'text', '_bx_glossary_form_entry_input_sys_title', '_bx_glossary_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_glossary_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_glossary', 'bx_glossary', 'cat', '', '#!bx_glossary_cats', 0, 'select', '_bx_glossary_form_entry_input_sys_cat', '_bx_glossary_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_glossary_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_glossary', 'bx_glossary', 'added', '', '', 0, 'datetime', '_bx_glossary_form_entry_input_sys_date_added', '_bx_glossary_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_glossary', 'bx_glossary', 'changed', '', '', 0, 'datetime', '_bx_glossary_form_entry_input_sys_date_changed', '_bx_glossary_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
-
+('bx_glossary', 'bx_glossary', 'changed', '', '', 0, 'datetime', '_bx_glossary_form_entry_input_sys_date_changed', '_bx_glossary_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_glossary', 'bx_glossary', 'status_admin', '', '#!bx_glossary_statuses', 0, 'select', '_bx_glossary_form_entry_input_sys_status_admin', '_bx_glossary_form_entry_input_status_admin', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_glossary_form_entry_input_status_admin_error', 'Xss', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_glossary_entry_add', 'delete_confirm', 2147483647, 0, 1),
@@ -193,6 +193,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_glossary_entry_add', 'text', 2147483647, 1, 4),
 ('bx_glossary_entry_add', 'pictures', 2147483647, 1, 5),
 ('bx_glossary_entry_add', 'allow_view_to', 2147483647, 1, 6),
+('bx_glossary_entry_add', 'status_admin', 192, 1, 7),
 ('bx_glossary_entry_add', 'do_submit', 2147483647, 0, 8),
 ('bx_glossary_entry_add', 'do_publish', 2147483647, 1, 9),
 ('bx_glossary_entry_delete', 'cat', 2147483647, 0, 0),
@@ -210,6 +211,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_glossary_entry_edit', 'text', 2147483647, 1, 5),
 ('bx_glossary_entry_edit', 'pictures', 2147483647, 1, 6),
 ('bx_glossary_entry_edit', 'allow_view_to', 2147483647, 1, 7),
+('bx_glossary_entry_edit', 'status_admin', 192, 1, 8),
 ('bx_glossary_entry_edit', 'do_submit', 2147483647, 1, 9),
 ('bx_glossary_entry_view', 'pictures', 2147483647, 0, 0),
 ('bx_glossary_entry_view', 'delete_confirm', 2147483647, 0, 0),
@@ -224,7 +226,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
-('bx_glossary_cats', '_bx_glossary_pre_lists_cats', 'bx_glossary', '0');
+('bx_glossary_cats', '_bx_glossary_pre_lists_cats', 'bx_glossary', '0'),
+('bx_glossary_statuses', '_bx_glossary_pre_lists_statuses', 'bx_glossary', '0');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_glossary_cats', '', 0, '_sys_please_select', ''),
@@ -235,7 +238,10 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_glossary_cats', '5', 5, '_bx_glossary_cat_Adjectives', ''),
 ('bx_glossary_cats', '6', 6, '_bx_glossary_cat_Interjections', ''),
 ('bx_glossary_cats', '7', 7, '_bx_glossary_cat_Prepositions', ''),
-('bx_glossary_cats', '8', 8, '_bx_glossary_cat_Infinitives', '');
+('bx_glossary_cats', '8', 8, '_bx_glossary_cat_Infinitives', ''),
+('bx_glossary_statuses', 'active', 0, '_bx_glossary_item_admin_status_active', ''),
+('bx_glossary_statuses', 'hidden', 1, '_bx_glossary_item_admin_status_hidden', ''),
+('bx_glossary_statuses', 'pending', 2, '_bx_glossary_item_admin_status_pending', '');
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
