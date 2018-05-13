@@ -36,7 +36,7 @@ if (bx_get('keyword') !== false) {
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader (_t("_Search"));
-$oTemplate->setPageContent ('page_main_code', $oSearch->getForm() . $oSearch->getResultsContainer($sCode));
+$oTemplate->setPageContent ('page_main_code', $oSearch->getForm() . ($sCode ? $oSearch->getResultsContainer($sCode) : ''));
 $oTemplate->getPageCode();
 
 /** @} */
