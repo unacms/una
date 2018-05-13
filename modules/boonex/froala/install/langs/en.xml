@@ -12,5 +12,7 @@
     <string name="_bx_froala_option_toolbar_full"><![CDATA[Toolbar buttons for full editor]]></string>
 
 	<string name="_bx_froala_information"><![CDATA[Information]]></string>
-    <string name="_bx_froala_information_block"><![CDATA[Info here]]></string>
+    <string name="_bx_froala_information_block"><![CDATA[This is <a target="_blank" href="https://www.froala.com/wysiwyg-editor">Froala editor</a> integration.<br />
+        <a target="_blank" href="https://www.froala.com/wysiwyg-editor/docs/plugins">List of plugins</a><br />
+        <a target="_blank" href="https://www.froala.com/wysiwyg-editor/docs/options#toolbarButtons">List of buttons</a>]]></string>
 </resources>
