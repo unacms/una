@@ -201,7 +201,7 @@ EOS;
     protected function _getPlugins($b3rdParty = false)
     {
         $a3rdParty = array('embedly', 'image_aviary', 'spell_checker');
-        $a = explode(',', getParam('bx_froala_option_plugins'));
+        $a = explode(',', $this->_sPluginsCustom !== false ? $this->_sPluginsCustom : getParam('bx_froala_option_plugins'));
         return array_filter($a, function ($s) use ($a3rdParty, $b3rdParty) {
             return !($b3rdParty ^ in_array($s, $a3rdParty));
         });

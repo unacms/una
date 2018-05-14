@@ -171,6 +171,7 @@ interface iBxDolProfile
     public function hasImage();
     public function getPicture();
     public function getAvatar();
+	public function getCover();
     public function getThumb();
     public function getIcon();
     public function getIconModule();
@@ -199,6 +200,7 @@ interface iBxDolProfileService
     public function serviceProfileUnit ($iContentId);
     public function serviceProfilePicture ($iContentId);
     public function serviceProfileAvatar ($iContentId);
+	public function serviceProfileCover ($iContentId); 
     public function serviceProfileThumb ($iContentId);
     public function serviceProfileIcon ($iContentId);
     public function serviceProfileName ($iContentId);

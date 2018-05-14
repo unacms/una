@@ -36,6 +36,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         return $this->_serviceProfileFunc('getAvatar', $iContentId);
     }
+	
+	public function serviceProfileCover ($iContentId)
+    {
+        return $this->_serviceTemplateFunc('urlCover', $iContentId);
+    }
 
     public function serviceProfileEditUrl ($iContentId)
     {

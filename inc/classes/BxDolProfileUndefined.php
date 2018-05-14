@@ -110,6 +110,14 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
     {
         return BxDolTemplate::getInstance()->getImageUrl('account-avatar.png');
     }
+	
+	/**
+     * Get profile cover
+     */
+    public function getCover()
+    {
+       return BxDolTemplate::getInstance()->getImageUrl('cover.jpg');
+    }
 
     /**
      * Get profile thumb
