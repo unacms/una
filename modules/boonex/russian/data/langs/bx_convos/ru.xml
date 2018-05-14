@@ -62,8 +62,8 @@
     <string name="_bx_cnv_menu_title_folders_more"><![CDATA[Переписка - Папки]]></string>
     <string name="_bx_cnv_menu_set_title_submenu"><![CDATA[Переписка - Папки]]></string>
     <string name="_bx_cnv_menu_set_title_folders_more"><![CDATA[Папки - Дополнительно]]></string>
-    <string name="_bx_cnv_menu_item_title_system_message"><![CDATA[Сообщение]]></string>
-    <string name="_bx_cnv_menu_item_title_message"><![CDATA[Сообщение]]></string>
+    <string name="_bx_cnv_menu_item_title_system_message"><![CDATA[Начать переписку]]></string>
+    <string name="_bx_cnv_menu_item_title_message"><![CDATA[Начать переписку]]></string>
     <string name="_bx_cnv_menu_item_title_system_message_group"><![CDATA[Групповое сообщение]]></string>
     <string name="_bx_cnv_menu_item_title_message_group"><![CDATA[Групповое сообщение]]></string>
     <string name="_bx_cnv_menu_item_title_system_mark_unread_entry"><![CDATA[Отметить как непрочитанное]]></string>
