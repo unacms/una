@@ -87,8 +87,6 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         list($sImageThumb, $sImageGallery) = $this->getUnitThumbAndGallery ($aData);
-        if(empty($sImageThumb) && empty($sImageGallery))
-            return array($sImageThumb, $sImageGallery);
 
         $sImageCover = $this->_getUnitImage($CNF['FIELD_THUMB'], $CNF['OBJECT_IMAGES_TRANSCODER_COVER'], $aData);
         if(!empty($sImageCover))
