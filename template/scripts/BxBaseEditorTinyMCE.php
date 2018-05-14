@@ -68,23 +68,10 @@ EOS;
      * Standard view initialization params
      */
     protected static $CONF_STANDARD = "
-                        external_plugins: {
-                            advlist: '{bx_url_tinymce}plugins/advlist/plugin.min.js',
-                            autolink: '{bx_url_tinymce}plugins/autolink/plugin.min.js',
-                            autosave: '{bx_url_tinymce}plugins/autosave/plugin.min.js',
-                            code: '{bx_url_tinymce}plugins/code/plugin.min.js',
-                            hr: '{bx_url_tinymce}plugins/hr/plugin.min.js', 
-                            image: '{bx_url_tinymce}plugins/image/plugin.min.js',
-                            link: '{bx_url_tinymce}plugins/link/plugin.min.js',
-                            lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
-                            media: '{bx_url_tinymce}plugins/media/plugin.min.js',
-                            paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
-                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
-                            codesample: '{bx_url_tinymce}plugins/codesample/plugin.min.js',
-                        },
+                        external_plugins: {plugins},
                         width: '100%',
                         height: '270',
-                        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fullscreen codesample',
+                        toolbar: {toolbar},
                         statusbar: true,
                         resize: true,
     ";
@@ -94,18 +81,10 @@ EOS;
      */
     protected static $CONF_MINI = "
                         menubar: false,
-                        external_plugins: {
-                            autolink: '{bx_url_tinymce}plugins/autolink/plugin.min.js',
-                            image: '{bx_url_tinymce}plugins/image/plugin.min.js',
-                            link: '{bx_url_tinymce}plugins/link/plugin.min.js',
-                            lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
-                            paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
-                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
-                            codesample: '{bx_url_tinymce}plugins/codesample/plugin.min.js',
-                        },
+                        external_plugins: {plugins},
                         width: '100%',
                         height: '150',                        
-                        toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image | fullscreen codesample',
+                        toolbar: {toolbar},
                         statusbar: true,
                         resize: true,
     ";
@@ -114,39 +93,10 @@ EOS;
      * Full view initialization params
      */
     protected static $CONF_FULL = "
-                        external_plugins: {
-                            advlist: '{bx_url_tinymce}plugins/advlist/plugin.min.js',
-                            anchor: '{bx_url_tinymce}plugins/anchor/plugin.min.js',
-                            autolink: '{bx_url_tinymce}plugins/autolink/plugin.min.js',
-                            autoresize: '{bx_url_tinymce}plugins/autoresize/plugin.min.js',
-                            autosave: '{bx_url_tinymce}plugins/autosave/plugin.min.js',
-                            charmap: '{bx_url_tinymce}plugins/charmap/plugin.min.js',
-                            code: '{bx_url_tinymce}plugins/code/plugin.min.js',
-                            emoticons: '{bx_url_tinymce}plugins/emoticons/plugin.min.js',
-                            hr: '{bx_url_tinymce}plugins/hr/plugin.min.js',
-                            image: '{bx_url_tinymce}plugins/image/plugin.min.js',
-                            link: '{bx_url_tinymce}plugins/link/plugin.min.js',
-                            lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
-                            media: '{bx_url_tinymce}plugins/media/plugin.min.js',
-                            nonbreaking: '{bx_url_tinymce}plugins/nonbreaking/plugin.min.js',
-                            pagebreak: '{bx_url_tinymce}plugins/pagebreak/plugin.min.js',
-                            preview: '{bx_url_tinymce}plugins/preview/plugin.min.js',
-                            print: '{bx_url_tinymce}plugins/print/plugin.min.js',
-                            paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
-                            save: '{bx_url_tinymce}plugins/save/plugin.min.js',
-                            searchreplace: '{bx_url_tinymce}plugins/searchreplace/plugin.min.js',
-                            table: '{bx_url_tinymce}plugins/table/plugin.min.js',
-                            textcolor: '{bx_url_tinymce}plugins/textcolor/plugin.min.js',
-                            visualblocks: '{bx_url_tinymce}plugins/visualblocks/plugin.min.js',
-                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
-                            codesample: '{bx_url_tinymce}plugins/codesample/plugin.min.js',
-                        },
+                        external_plugins: {plugins},
                         width: '100%',
                         height: '320',
-                        toolbar: [
-                            'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                            'print preview media | forecolor emoticons | fullscreen codesample'
-                        ],
+                        toolbar: {toolbar},
                         statusbar: true,
                         resize: true,
                         image_advtab: true,
@@ -180,17 +130,43 @@ EOS;
     {
         // set visual mode
         switch ($iViewMode) {
-            case BX_EDITOR_MINI:
-                 $sToolsItems = self::$CONF_MINI;
+        case BX_EDITOR_MINI:
+                $sToolbarItems = getParam('sys_tinymce_toolbar_mini');
+                $sPlugins = getParam('sys_tinymce_plugins_mini');
+                $sCustomInit = self::$CONF_MINI;
                 break;
             case BX_EDITOR_FULL:
-                $sToolsItems = self::$CONF_FULL;
+                $sToolbarItems = getParam('sys_tinymce_toolbar_full');
+                $sPlugins = getParam('sys_tinymce_plugins_full');
+                $sCustomInit = self::$CONF_FULL;
             break;
             case BX_EDITOR_STANDARD:
             default:
-                 $sToolsItems = self::$CONF_STANDARD;
+                $sToolbarItems = getParam('sys_tinymce_toolbar_standard');
+                $sPlugins = getParam('sys_tinymce_plugins_standard');
+                $sCustomInit = self::$CONF_STANDARD;
         }
 
+        if ($this->_sButtonsCustom !== false) {
+            $sToolbarItems = $this->_sButtonsCustom;
+        }
+        else {
+            $sToolbarItems = json_encode(explode(',', $sToolbarItems));
+        }
+        
+        if ($this->_sPluginsCustom !== false) {
+            $sPlugins = $this->_sPluginsCustom;
+        }
+        else {
+            $a = explode(',', $sPlugins);            
+            foreach ($a as $sPlugin)
+                $aPlugins[$sPlugin] = "{bx_url_tinymce}plugins/$sPlugin/plugin.min.js";
+            $sPlugins = json_encode($aPlugins);
+        }
+        
+        $sCustomInit = str_replace('{toolbar}', $sToolbarItems, $sCustomInit);
+        $sCustomInit = str_replace('{plugins}', $sPlugins, $sCustomInit);
+        
         // detect language
         $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
 
@@ -202,7 +178,7 @@ EOS;
 
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
-            'bx_var_custom_init' => $sToolsItems,
+            'bx_var_custom_init' => $sCustomInit,
             'bx_var_custom_conf' => $this->_sConfCustom,
             'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($aCss['url'], BX_ESCAPE_STR_APOS),
