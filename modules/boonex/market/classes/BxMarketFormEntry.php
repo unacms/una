@@ -266,8 +266,6 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         $sGetSubentriesUrl = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'get_subentries';
         $sPlaceholder = bx_html_attribute(_t('_bx_market_form_entry_input_subentries_placeholder'), BX_ESCAPE_STR_QUOTE);
 
-        $this->addJsJQueryUI();
-
         $this->oTemplate->addJs(array(
             'jquery.form.min.js',
         ));
