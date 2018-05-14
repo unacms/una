@@ -30,13 +30,11 @@ class BxGlsrPageEntry extends BxBaseModTextPageEntry
     
     public function getCode ()
     {
-        if(BxDolAcl::getInstance()->isMemberLevelInSet(192)){
-            $CNF = &$this->_oModule->_oConfig->CNF;
-            if ($this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == 'pending'){
-                $oInformer = BxDolInformer::getInstance($this->_oModule->_oTemplate);
-                if ($oInformer)
-                    $oInformer->add('bx-glossary-pending-term', _t('_bx_glossary_txt_term_in_pending_status'), BX_INFORMER_ALERT);
-            }
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if ($this->_aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == 'pending'){
+            $oInformer = BxDolInformer::getInstance($this->_oModule->_oTemplate);
+            if ($oInformer)
+                $oInformer->add('bx-glossary-pending-term', _t('_bx_glossary_txt_term_in_pending_status'), BX_INFORMER_ALERT);
         }
         return parent::getCode();
     }
