@@ -25,6 +25,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
+        $iObjectAuthorId = $this->_getObjectOwnerId($oAlert->aExtras);
     	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
         if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
             return;
@@ -63,7 +64,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 	'content' => !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : ''
                 );
 
-                if($iObjectPrivacyView > 0)
+                if($iObjectPrivacyView > 0 && !empty($iObjectAuthorId) && $iObjectAuthorId == $oAlert->iSender)
                     $aParamsSet = array_merge($aParamsSet, array(
                         'owner_id' => $oAlert->iSender,
                         'object_privacy_view' => $iObjectPrivacyView
