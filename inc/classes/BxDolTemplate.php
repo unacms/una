@@ -873,15 +873,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
-        if (!empty($this->aPage['image'])) {
+        $bPageImage = !empty($this->aPage['image']);
+        if ($bPageImage)
             $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
 
-            $sRet .= '
-            	<meta name="twitter:card" content="summary_large_image" />
-				<meta name="twitter:title" content="' . (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . '" />
-				<meta name="twitter:description" content="' . ($bDescription ? bx_html_attribute($this->aPage['description']) : '') . '" />
-				<meta name="twitter:image" content="' . $this->aPage['image'] . '" />';
-        }
+        $sRet .= '<meta name="twitter:card" content="' . $bPageImage ? 'summary_large_image' : 'summary' . '" />';
+        if ($bPageImage)
+            $sRet .= '<meta name="twitter:image" content="' . $this->aPage['image'] . '" />';
+        $sRet .= '
+			<meta name="twitter:title" content="' . (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . '" />
+			<meta name="twitter:description" content="' . ($bDescription ? bx_html_attribute($this->aPage['description']) : '') . '" />';
 
         $oFunctions = BxTemplFunctions::getInstance();
         $sRet .= $oFunctions->getManifests();
