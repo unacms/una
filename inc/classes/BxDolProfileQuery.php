@@ -86,6 +86,36 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         return $mixedResult;
     }
 
+    public function getConnectedProfilesByType ($aSqlParts, $sType, $iStart, $iLimit)
+    {
+        if(empty($aSqlParts['join']))
+            return array();
+
+        $aBindings = array();
+
+        $sSelectClause = '';
+        if(!empty($aSqlParts['fields']))
+            foreach($aSqlParts['fields'] as $sName => $sField)
+                $sSelectClause .= ', ' . $sField;
+
+        $sWhereClause = '';
+        if(!empty($sType)) {
+            $sWhereClause = ' AND `sys_profiles`.`type`=:type';
+
+            $aBindings['type'] = $sType;
+        }
+
+        $sOrderClause = '';
+        if(!empty($aSqlParts['fields']['added']))
+            $sOrderClause = ' ORDER BY ' . $aSqlParts['fields']['added'] . ' DESC';
+
+        $sLimitClause = '';
+        if(!empty($iLimit))
+            $sLimitClause = $this->prepareAsString(' LIMIT ?, ?', $iStart, $iLimit);
+
+        return $this->getAllWithKey("SELECT `sys_profiles`.*" . $sSelectClause . " FROM `sys_profiles` " . $aSqlParts['join'] . " WHERE 1" . $sWhereClause . $sOrderClause . $sLimitClause, 'id', $aBindings);
+    }
+
     /**
      * Insert account and content id association. Also if currect profile id is not defined - it updates current profile id in account.
      * @param $iAccountId account id

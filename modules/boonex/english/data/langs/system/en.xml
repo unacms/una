@@ -8,6 +8,7 @@
 	<string name="_ATT_UNCONFIRMED_E"><![CDATA[You will need to follow the link supplied in the e-mail to get your account submitted for approval. <br />Send me <a target=_blank href="activation_email.php">confirmation e-mail</a>.]]></string>
 	<string name="_Access denied"><![CDATA[Access denied]]></string>
 	<string name="_Action"><![CDATA[Action]]></string>
+	<string name="_all"><![CDATA[All]]></string>
 	<string name="_Allowed Since"><![CDATA[Allowed Since]]></string>
 	<string name="_Allowed Until"><![CDATA[Allowed Until]]></string>
 	<string name="_Allowed actions"><![CDATA[Allowed actions]]></string>

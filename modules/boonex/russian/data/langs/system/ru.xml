@@ -8,6 +8,7 @@
 	<string name="_ATT_UNCONFIRMED_E"><![CDATA[Вам нужно нажать на ссылку, присланную в эл. сообщении, чтобы запросить активацию своего аккаунта. <br />Прислать мне <a target=_blank href="activation_email.php">письмо с подтверждением</a>.]]></string>
 	<string name="_Access denied"><![CDATA[Доступ запрещён]]></string>
 	<string name="_Action"><![CDATA[Действие]]></string>
+	<string name="_all"><![CDATA[Все]]></string>
 	<string name="_Allowed Since"><![CDATA[Разрешено с]]></string>
 	<string name="_Allowed Until"><![CDATA[Разрешено до]]></string>
 	<string name="_Allowed actions"><![CDATA[Разрешённые действия]]></string>

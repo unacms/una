@@ -474,6 +474,69 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceBrowseQuick($a, $iStart, $iLimit);
     }
 
+    public function serviceBrowseConnectionsByType ($aParamsCnn, $aParamsBrs = array())
+    {
+        $sAll = 'all';
+
+        $aParamsCnn['object'] = !empty($aParamsCnn['object']) ? $aParamsCnn['object'] : 'sys_profiles_friends';
+        $aParamsCnn['type'] = !empty($aParamsCnn['type']) ? $aParamsCnn['type'] : 'content';
+        $aParamsCnn['profile_id2'] = !empty($aParamsCnn['profile_id2']) ? (int)$aParamsCnn['profile_id2'] : 0;
+        $aParamsCnn['mutual'] = isset($aParamsCnn['mutual']) ? $aParamsCnn['mutual'] : false;
+
+        $oConnection = BxDolConnection::getObjectInstance($aParamsCnn['object']);
+        if(!$oConnection)
+            return '';
+
+        $aSQLParts = $oConnection->getConnectionsAsSQLParts ($aParamsCnn['type'], 'sys_profiles', 'id', $aParamsCnn['profile_id'], $aParamsCnn['profile_id2'], $aParamsCnn['mutual']);
+
+        $sType = !empty($aParamsBrs['type']) ? $aParamsBrs['type'] : $sAll;
+        if(bx_get('type') !== false)
+            $sType = bx_process_input(bx_get('type'));
+
+        $iStart = (int)bx_get('start');
+
+        $iLimitDefault = 4;
+        $iLimit = !empty($this->_oConfig->CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? getParam($this->_oConfig->CNF['PARAM_NUM_CONNECTIONS_QUICK']) : $iLimitDefault;
+        if(!empty($aParamsBrs['per_page']))
+            $iLimit = (int)$aParamsBrs['per_page'];
+        if(!$iLimit)
+            $iLimit = $iLimitDefault;
+
+        $aProfiles = BxDolProfileQuery::getInstance()->getConnectedProfilesByType($aSQLParts, ($sType != $sAll ? $sType : ''), $iStart, $iLimit + 1);
+
+        $mixedMenu = '';
+        if(!isset($aParamsBrs['filter_menu']) || $aParamsBrs['filter_menu'] === true) {
+            $aModules = array(
+                array('name' => $sAll)
+            );
+            $aModules = array_merge($aModules, BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1)));
+
+            $aMenuItems = array();
+            foreach($aModules as $aModule)
+                if($aModule['name'] == $sAll || BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+                    $aMenuItems[] = array(
+                    	'id' => $aModule['name'], 
+                    	'name' => $aModule['name'], 
+                    	'class' => '', 
+                    	'link' => 'javascript:void(0)', 
+                    	'onclick' => "return !loadDynamicBlockAutoPaginate(this, " . $iStart . ", " . $iLimit . ", " . bx_js_string(json_encode(array('type' => $aModule['name']))) . ");", 
+                    	'target' => '_self', 
+                    	'title' => _t('_' . $aModule['name']), 
+                    	'active' => 1
+                    );
+    
+            if(!empty($aMenuItems)) {
+                $mixedMenu = new BxTemplMenu(array('template' => 'menu_vertical.html', 'menu_id'=> $this->_oConfig->getName() . '-connections-by-type', 'menu_items' => $aMenuItems));
+                $mixedMenu->setSelected('', $sType);
+            }
+        }
+
+        return array(
+            'menu' => $mixedMenu,
+            'content' => $this->_serviceBrowseQuick(array_keys($aProfiles), $iStart, $iLimit, array('type' => $sType))
+        );
+    }
+
 	public function serviceBrowseByAcl ($mixedLevelId, $iDesignBox = BX_DB_PADDING_DEF)
     {
         return $this->_serviceBrowse (
@@ -560,7 +623,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $s;
     }
 
-    public function serviceProfileSubscriptions ($iContentId = 0)
+    public function serviceProfileSubscriptions ($iContentId = 0, $aParams = array())
     {
         $mixedContent = $this->_getContent($iContentId);
         if($mixedContent === false)
@@ -569,11 +632,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         list($iContentId, $aContentInfo) = $mixedContent;
 
         bx_import('BxDolConnection');
-        $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_subscriptions', BX_CONNECTIONS_CONTENT_TYPE_CONTENT);
-        if (!$s)
-            return MsgBox(_t('_sys_txt_empty'));
+        $aResult = $this->serviceBrowseConnectionsByType(array(
+        	'profile_id' => $aContentInfo['profile_id'],  
+        	'object' => 'sys_profiles_subscriptions', 
+            'type' => BX_CONNECTIONS_CONTENT_TYPE_CONTENT
+        ), array(
+            'type' => isset($aParams['type']) ? $aParams['type'] : '',
+            'filter_menu' => isset($aParams['filter_menu']) ? $aParams['filter_menu'] : true,
+        ));
+        if(empty($aResult['content']))
+            $aResult['content'] = MsgBox(_t('_sys_txt_empty'));
 
-        return $s;
+        return $aResult;
     }
 
     public function serviceProfileSubscribedMe ($iContentId = 0)
@@ -1003,11 +1073,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $aParams;
     }
 
-    protected function _serviceBrowseQuick($aProfiles, $iStart = 0, $iLimit = 4)
+    protected function _serviceBrowseQuick($aProfiles, $iStart = 0, $iLimit = 4, $aAdditionalParams = array())
     {
         // get paginate object
         $oPaginate = new BxTemplPaginate(array(
-            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}');",
+            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . bx_js_string(json_encode($aAdditionalParams)) . ");",
             'num' => count($aProfiles),
             'per_page' => $iLimit,
             'start' => $iStart,
