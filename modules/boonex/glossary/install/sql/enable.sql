@@ -131,17 +131,17 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_glossary_manage', '_bx_glossary_page_title_sys_manage', '_bx_glossary_page_title_manage', 'bx_glossary', 5, @iAdministratorModeratorAccess, 1, 'glossary-manage', 'page.php?i=glossary-manage', '', '', '', 0, 1, 0, 'BxGlsrPageBrowse', 'modules/boonex/glossary/classes/BxGlsrPageBrowse.php');
+('bx_glossary_manage', '_bx_glossary_page_title_sys_manage', '_bx_glossary_page_title_manage', 'bx_glossary', 5, 2147483647, 1, 'glossary-manage', 'page.php?i=glossary-manage', '', '', '', 0, 1, 0, 'BxGlsrPageBrowse', 'modules/boonex/glossary/classes/BxGlsrPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_glossary_manage', 1, 'bx_glossary', '_bx_glossary_page_block_title_system_manage', '_bx_glossary_page_block_title_manage', 11, @iAdministratorModeratorAccess, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:12:\"manage_tools\";}}', 0, 1, 0);
+('bx_glossary_manage', 1, 'bx_glossary', '_bx_glossary_page_block_title_system_manage', '_bx_glossary_page_block_title_manage', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:12:\"manage_tools\";}}', 0, 1, 0);
 
 -- PAGE: module manage all
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_glossary_administration', '_bx_glossary_page_title_sys_manage_administration', '_bx_glossary_page_title_manage', 'bx_glossary', 5, 192, 1, 'glossary-administration', 'page.php?i=glossary-administration', '', '', '', 0, 1, 0, 'BxGlsrPageBrowse', 'modules/boonex/glossary/classes/BxGlsrPageBrowse.php');
+('bx_glossary_administration', '_bx_glossary_page_title_sys_manage_administration', '_bx_glossary_page_title_manage', 'bx_glossary', 5, @iAdministratorModeratorAccess, 1, 'glossary-administration', 'page.php?i=glossary-administration', '', '', '', 0, 1, 0, 'BxGlsrPageBrowse', 'modules/boonex/glossary/classes/BxGlsrPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_glossary_administration', 1, 'bx_glossary', '_bx_glossary_page_block_title_system_manage_administration', '_bx_glossary_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
+('bx_glossary_administration', 1, 'bx_glossary', '_bx_glossary_page_block_title_system_manage_administration', '_bx_glossary_page_block_title_manage', 11, @iAdministratorModeratorAccess, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_glossary\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
 
 -- PAGE: add block to homepage
 
@@ -272,7 +272,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_glossary', 'glossary-administration', '_bx_glossary_menu_item_title_system_admt_glossary', '_bx_glossary_menu_item_title_admt_glossary', 'page.php?i=glossary-administration', '', '_self', '', 'a:2:{s:6:"module";s:11:"bx_glossary";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_glossary', 'glossary-administration', '_bx_glossary_menu_item_title_system_admt_glossary', '_bx_glossary_menu_item_title_admt_glossary', 'page.php?i=glossary-administration', '', '_self', '', 'a:2:{s:6:"module";s:11:"bx_glossary";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', @iAdministratorModeratorAccess, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 
@@ -376,7 +376,7 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_glossary_administration', 'Sql', 'SELECT * FROM `bx_glossary_terms` WHERE 1 ', 'bx_glossary_terms', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 192, 'BxGlsrGridAdministration', 'modules/boonex/glossary/classes/BxGlsrGridAdministration.php'),
+('bx_glossary_administration', 'Sql', 'SELECT * FROM `bx_glossary_terms` WHERE 1 ', 'bx_glossary_terms', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', @iAdministratorModeratorAccess, 'BxGlsrGridAdministration', 'modules/boonex/glossary/classes/BxGlsrGridAdministration.php'),
 ('bx_glossary_common', 'Sql', 'SELECT * FROM `bx_glossary_terms` WHERE 1 ', 'bx_glossary_terms', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxGlsrGridCommon', 'modules/boonex/glossary/classes/BxGlsrGridCommon.php');
 
 

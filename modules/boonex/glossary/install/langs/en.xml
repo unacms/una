@@ -220,5 +220,5 @@
     <string name="_bx_glossary_txt_sample_single_with_article"><![CDATA[a term]]></string>
     <string name="_bx_glossary_txt_sample_comment_single"><![CDATA[comment to term]]></string>
     <string name="_bx_glossary_txt_sample_vote_single"><![CDATA[vote to term]]></string>
-    <string name="_bx_glossary_txt_term_in_pending_status"><![CDATA[This term in pending status. To make it available to everyone, you need to set status to active.]]></string>
+    <string name="_bx_glossary_txt_term_in_pending_status"><![CDATA[This term is pending approval.]]></string>
 </resources>

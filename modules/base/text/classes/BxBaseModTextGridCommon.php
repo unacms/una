@@ -30,6 +30,11 @@ class BxBaseModTextGridCommon extends BxBaseModTextGridAdministration
 		if(!empty($CNF['FIELD_STATUS_ADMIN']))
 			$this->_aOptions['source'] .= " AND `" . $CNF['FIELD_STATUS_ADMIN'] . "`='active'";
 
+        return $this->__getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+    
+    protected function __getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }
