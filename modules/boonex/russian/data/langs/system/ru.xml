@@ -1300,12 +1300,12 @@
     <string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Число элементов на странице в результатах поиска по сайту]]></string>
     <string name="_adm_stg_cpt_option_sys_push_app_id"><![CDATA[OneSignal App ID]]></string>
     <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID в натройках Web Push]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Количество сообщенией, отправляемое из Push очереди при каждом запуске]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_token"><![CDATA[Auth token]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Номер для отправки SMS по умолчанию]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID в натройках Web Push]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Количество сообщенией, отправляемое из Push очереди при каждом запуске]]></string>    
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>

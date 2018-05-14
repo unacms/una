@@ -1302,12 +1302,12 @@
 	<string name="_adm_stg_cpt_option_sys_per_page_search_keyword_plural"><![CDATA[Number of items in Site Search results]]></string>
 	<string name="_adm_stg_cpt_option_sys_push_app_id"><![CDATA[OneSignal App ID]]></string>
     <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
-	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
-	<string name="_adm_stg_cpt_option_sys_twilio_gate_token"><![CDATA[Auth token]]></string>
-	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Default 'From' number for SMS]]></string>
     <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Short name (required only for http sites. It must match the Subdomain you entered on the Web Push settings on the OneSignal dashboard)]]></string>
     <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID on the Web Push settings]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Number of messages to send from Push queue per run]]></string>
+	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
+	<string name="_adm_stg_cpt_option_sys_twilio_gate_token"><![CDATA[Auth token]]></string>
+	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Default 'From' number for SMS]]></string>    
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string>
