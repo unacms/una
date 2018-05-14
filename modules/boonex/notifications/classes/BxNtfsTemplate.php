@@ -16,6 +16,21 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function getInclude($bIncludeCss = true, $mixedIncludeJs = false)
+    {
+        if($bIncludeCss)
+            $this->getCss();
+
+        $sResult = '';
+        if(is_string($mixedIncludeJs) && !empty($mixedIncludeJs)) {
+            $this->getJs();
+            
+            $sResult = $this->getJsCode($mixedIncludeJs);
+        }
+            
+        return $sResult;
+    }
+
     public function getViewBlock($aParams)
     {
         return $this->parseHtmlByName('block_view.html', array(

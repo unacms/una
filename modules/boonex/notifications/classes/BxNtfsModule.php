@@ -54,6 +54,28 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
     /**
      * @page service Service Calls
+     * @section bx_notifications Invitations
+     * @subsection bx_notifications-other Other
+     * @subsubsection bx_notifications-get_include get_include
+     * 
+     * @code bx_srv('bx_notifications', 'get_include', [...]); @endcode
+     * 
+     * Get all necessary CSS and JS files to include in a page.
+     *
+     * @return string with all necessary CSS and JS files.
+     * 
+     * @see BxInvModule::serviceGetInclude
+     */
+    /** 
+     * @ref bx_notifications-get_include "get_include"
+     */
+    public function serviceGetInclude($bIncludeCss = true, $mixedIncludeJs = false)
+    {
+        return $this->_oTemplate->getInclude($bIncludeCss, $mixedIncludeJs);
+    }
+
+    /**
+     * @page service Service Calls
      * @section bx_notifications Notifications
      * @subsection bx_notifications-page_blocks Page Blocks
      * @subsubsection bx_notifications-get_block_view get_block_view
