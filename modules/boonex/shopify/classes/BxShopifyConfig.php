@@ -81,6 +81,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
         	'OBJECT_REPORTS' => 'bx_shopify',
             'OBJECT_VIEWS' => 'bx_shopify',
             'OBJECT_VOTES' => 'bx_shopify',
+        	'OBJECT_SCORES' => 'bx_shopify',
         	'OBJECT_FAVORITES' => 'bx_shopify',
             'OBJECT_FEATURED' => 'bx_shopify',
             'OBJECT_METATAGS' => 'bx_shopify',

@@ -63,6 +63,10 @@ DELETE FROM `sys_objects_view` WHERE `Name` = @sName;
 DELETE FROM `sys_objects_vote` WHERE `Name` = @sName;
 
 
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = @sName;
+
+
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `Name` = @sName;
 

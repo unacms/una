@@ -99,6 +99,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => 'bx_forum',
+        	'OBJECT_SCORES' => 'bx_forum',
         	'OBJECT_FAVORITES' => 'bx_forum',
         	'OBJECT_FEATURED' => 'bx_forum',
         	'OBJECT_CATEGORY' => 'bx_forum_cats',

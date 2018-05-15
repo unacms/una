@@ -82,6 +82,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_VIEWS' => 'bx_photos',
             'OBJECT_VOTES' => 'bx_photos',
             'OBJECT_VOTES_STARS' => 'bx_photos_stars',
+        	'OBJECT_SCORES' => 'bx_photos',
         	'OBJECT_FAVORITES' => 'bx_photos',
             'OBJECT_FEATURED' => 'bx_photos',
             'OBJECT_METATAGS' => 'bx_photos',

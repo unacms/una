@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS `bx_videos_entries` (
   `votes` int(11) NOT NULL default '0',
   `srate` float NOT NULL default '0',
   `svotes` int(11) NOT NULL default '0',
+  `score` int(11) NOT NULL default '0',
+  `sc_up` int(11) NOT NULL default '0',
+  `sc_down` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
@@ -197,6 +200,25 @@ CREATE TABLE `bx_videos_favorites_track` (
   KEY `id` (`object_id`,`author_id`)
 );
 
+-- TABLE: scores
+CREATE TABLE IF NOT EXISTS `bx_videos_scores` (
+  `object_id` int(11) NOT NULL default '0',
+  `count_up` int(11) NOT NULL default '0',
+  `count_down` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_videos_scores_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `type` varchar(8) NOT NULL default '',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
 
 -- STORAGES & TRANSCODERS
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
@@ -311,6 +333,11 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_videos', 'bx_videos_votes', 'bx_videos_votes_track', '604800', '1', '1', '0', '1', 'bx_videos_entries', 'id', 'author', 'rate', 'votes', '', ''),
 ('bx_videos_stars', 'bx_videos_svotes', 'bx_videos_svotes_track', '604800', '1', '5', '0', '1', 'bx_videos_entries', 'id', 'author', 'srate', 'svotes', '', '');
+
+
+-- SCORES
+INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
+('bx_videos', 'bx_videos', 'bx_videos_scores', 'bx_videos_scores_track', '604800', '0', 'bx_videos_entries', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 
 -- REPORTS

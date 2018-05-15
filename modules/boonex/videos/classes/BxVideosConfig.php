@@ -91,6 +91,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_VIEWS' => 'bx_videos',
             'OBJECT_VOTES' => 'bx_videos',
             'OBJECT_VOTES_STARS' => 'bx_videos_stars',
+            'OBJECT_SCORES' => 'bx_videos',
         	'OBJECT_FAVORITES' => 'bx_videos',
             'OBJECT_FEATURED' => 'bx_videos',
             'OBJECT_METATAGS' => 'bx_videos',

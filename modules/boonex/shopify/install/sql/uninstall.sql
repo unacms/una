@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_shopify_entries`, `bx_shopify_settings`, `bx_shopify_cmts`, `bx_shopify_votes`, `bx_shopify_votes_track`, `bx_shopify_views_track`, `bx_shopify_meta_keywords`, `bx_shopify_meta_locations`, `bx_shopify_meta_mentions`, `bx_shopify_reports`, `bx_shopify_reports_track`, `bx_shopify_favorites_track`;
+DROP TABLE IF EXISTS `bx_shopify_entries`, `bx_shopify_settings`, `bx_shopify_cmts`, `bx_shopify_votes`, `bx_shopify_votes_track`, `bx_shopify_views_track`, `bx_shopify_meta_keywords`, `bx_shopify_meta_locations`, `bx_shopify_meta_mentions`, `bx_shopify_reports`, `bx_shopify_reports_track`, `bx_shopify_favorites_track`, `bx_shopify_scores`, `bx_shopify_scores_track`;
 
 
 -- FORMS
@@ -21,6 +21,10 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_shopify';
 
 -- VOTES
 DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_shopify';
+
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_shopify';
 
 
 -- REPORTS

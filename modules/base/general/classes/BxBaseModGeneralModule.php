@@ -1253,31 +1253,31 @@ class BxBaseModGeneralModule extends BxDolModule
         //--- Views
         $sViews = '';
         $oViews = !empty($aParams['object_view']) ? BxDolView::getObjectInstance($aParams['object_view'], $iId) : false;
-        if ($oViews)
+        if ($oViews && $oViews->isEnabled())
             $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => $bShowAsButton));
 
         //--- Votes
         $sVotes = '';
         $oVotes = !empty($aParams['object_vote']) ? BxDolVote::getObjectInstance($aParams['object_vote'], $iId) : false;
-        if ($oVotes)
+        if ($oVotes && $oVotes->isEnabled())
             $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
 
         //--- Scores
         $sScores = '';
         $oScores = !empty($aParams['object_score']) ? BxDolScore::getObjectInstance($aParams['object_score'], $iId) : false;
-        if ($oScores)
+        if ($oScores && $oScores->isEnabled())
             $sScores = $oScores->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
 
         //--- Favorite
         $sFavorites = '';
         $oFavorites = !empty($aParams['object_favorite']) ? BxDolFavorite::getObjectInstance($aParams['object_favorite'], $iId) : false;
-        if ($oFavorites)
+        if ($oFavorites && $oFavorites->isEnabled())
             $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => $bShowAsButton));
 
         //--- Featured
         $sFeatured = '';
         $oFeatured = !empty($aParams['object_feature']) ? BxDolFeature::getObjectInstance($aParams['object_feature'], $iId) : false;
-        if ($oFeatured)
+        if ($oFeatured && $oFeatured->isEnabled())
             $sFeatured = $oFeatured->getElementBlock(array('show_do_feature_as_button' => $bShowAsButton));
 
         //--- Timeline Repost

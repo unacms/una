@@ -79,6 +79,7 @@ class BxFilesConfig extends BxBaseModTextConfig
         	'OBJECT_REPORTS' => 'bx_files',
             'OBJECT_VIEWS' => 'bx_files',
             'OBJECT_VOTES' => 'bx_files',
+        	'OBJECT_SCORES' => 'bx_files',
         	'OBJECT_FAVORITES' => 'bx_files',
         	'OBJECT_FEATURED' => 'bx_files',
             'OBJECT_METATAGS' => 'bx_files',

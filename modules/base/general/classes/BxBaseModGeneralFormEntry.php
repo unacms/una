@@ -174,6 +174,11 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             if ($o) $o->onObjectDelete();
         }
 
+        if (!empty($CNF['OBJECT_SCORES'])) {
+            $o = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $iContentId);
+            if ($o) $o->onObjectDelete();
+        }
+
         if (!empty($CNF['OBJECT_COMMENTS'])) {
             $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
             if ($o) $o->onObjectDelete();

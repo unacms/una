@@ -87,6 +87,8 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_VIEWS_MEDIA' => 'bx_albums_media',
             'OBJECT_VOTES' => 'bx_albums',
             'OBJECT_VOTES_MEDIA' => 'bx_albums_media',
+        	'OBJECT_SCORES' => 'bx_albums',
+        	'OBJECT_SCORES_MEDIA' => 'bx_albums_media',
         	'OBJECT_FAVORITES' => 'bx_albums',
             'OBJECT_FAVORITES_MEDIA' => 'bx_albums_media',
         	'OBJECT_FEATURED' => 'bx_albums',

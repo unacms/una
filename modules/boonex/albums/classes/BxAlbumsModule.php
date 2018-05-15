@@ -58,6 +58,11 @@ class BxAlbumsModule extends BxBaseModTextModule
             if ($o) $o->onObjectDelete();
         }
 
+        if (!empty($CNF['OBJECT_SCORES_MEDIA'])) {
+            $o = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES_MEDIA'], $aMediaInfo['id']);
+            if ($o) $o->onObjectDelete();
+        }
+
         if (!empty($CNF['OBJECT_COMMENTS_MEDIA'])) {
             $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $aMediaInfo['id']);
             if ($o) $o->onObjectDelete();
@@ -130,6 +135,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         	'object_storage' => false,
             'object_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG'],
         	'object_vote' => $CNF['OBJECT_VOTES_MEDIA'],
+        	'object_score' => $CNF['OBJECT_SCORES_MEDIA'],
         	'object_favorite' => $CNF['OBJECT_FAVORITES_MEDIA'],
         	'object_report' => '',
         	'object_comments' => $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '',
