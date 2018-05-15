@@ -67,10 +67,15 @@ class BxDolStudioPolyglotKeys extends BxTemplStudioGrid
         if(strpos($sFilter, $this->sParamsDivider) !== false)
             list($iModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
-        $aLanguage = array();
-        $iLanguage = $this->oDb->getLanguagesBy(array('type' => 'default'), $aLanguage);
+        $iLanguage = BxDolLanguages::getInstance()->getCurrentLangId();
 
-        if($iLanguage <= 0 || empty($aLanguage)) {
+        $aLanguage = array();
+        $this->oDb->getLanguagesBy(array('type' => 'by_id', 'value' => $iLanguage), $aLanguage, false);
+
+        if(empty($aLanguage) || !is_array($aLanguage))
+            $this->oDb->getLanguagesBy(array('type' => 'default'), $aLanguage, false);
+
+        if(empty($aLanguage) || !is_array($aLanguage)) {
             $aLanguages = array();
             $iLanguages = $this->oDb->getLanguagesBy(array('type' => 'active'), $aLanguages);
             if($iLanguages <= 0 || empty($aLanguages))
