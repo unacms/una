@@ -239,6 +239,8 @@ class BxDolScore extends BxDolObject
         if(!$this->isAllowedVote(true))
             return echoJson(array('code' => 2, 'message' => $this->msgErrAllowedVote()));
 
+        $aParams = $this->_decodeElementParams(bx_process_input(bx_get('element_params')));
+
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
         $iAuthorId = $this->_getAuthorId();
@@ -268,6 +270,7 @@ class BxDolScore extends BxDolObject
         	'scoref' => $iCup > 0 || $iCdown > 0 ? $this->_getLabelCounter($aScore['score']) : '',
             'cup' => $iCup,
         	'cdown' => $iCdown,
+            'counter' => $this->getCounter($aParams),
         	'label_icon' => $this->_getIconDo($sType),
         	'label_title' => _t($this->_getTitleDo($sType)),
         	'disabled' => !$bVoted,

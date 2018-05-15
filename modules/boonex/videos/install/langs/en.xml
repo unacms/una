@@ -39,6 +39,7 @@
 	<string name="_bx_videos_form_entry_input_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_videos_form_entry_input_sys_videos"><![CDATA[Video]]></string>
     <string name="_bx_videos_form_entry_input_videos"><![CDATA[Video]]></string>
+    <string name="_bx_videos_form_entry_input_videos_error"><![CDATA[Video is essential. Please upload a video file.]]></string>
     <string name="_bx_videos_form_entry_input_videos_upload"><![CDATA[Upload]]></string>
     <string name="_bx_videos_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_videos_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>

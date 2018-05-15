@@ -171,7 +171,6 @@ CREATE TABLE `sys_queue_email` (
   `email` varchar(64) NOT NULL default '',
   `subject` varchar(255) NOT NULL default '',
   `body` text NOT NULL default '',
-  `headers` text NOT NULL default '',
   `params` text NOT NULL default '',
   PRIMARY KEY (`id`)
 );

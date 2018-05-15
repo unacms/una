@@ -39,6 +39,7 @@
 	<string name="_bx_videos_form_entry_input_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_videos_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
     <string name="_bx_videos_form_entry_input_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_videos_form_entry_input_videos_error"><![CDATA[Видео обязателено. Пожалуйста, загрузите видео файл.]]></string>
     <string name="_bx_videos_form_entry_input_videos_upload"><![CDATA[Загрузить]]></string>
     <string name="_bx_videos_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_videos_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>

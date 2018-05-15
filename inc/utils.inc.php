@@ -346,6 +346,9 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     if ($aAccountInfo && BX_EMAIL_NOTIFY == $iEmailType && (!$aAccountInfo['email_confirmed'] || !$aAccountInfo['receive_updates']))
         return false;
 
+    if($bAddToQueue && BxDolQueueEmail::getInstance()->add($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders))
+        return true;
+
     // if profile id is provided - get profile's info
     $aRecipientInfo = false;
     if ($iRecipientID) {
@@ -404,7 +407,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     );
 
     // system alert
-    if (!$bAddToQueue && !$isDisableAlert) {
+    if (!$isDisableAlert) {
         bx_alert('system', 'before_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
         if ($bResult !== null)
             return $bResult;
@@ -420,12 +423,10 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     }
 
     // send mail or put it into queue
-    $bResult = false;
-    if(!$bAddToQueue || !($bResult = BxDolQueueEmail::getInstance()->add($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters)))
-        $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);     
+    $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);
 
     // system alert
-    if (!$bAddToQueue && !$isDisableAlert)
+    if (!$isDisableAlert)
         bx_alert('system', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
 
     return $bResult;

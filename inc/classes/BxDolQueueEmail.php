@@ -35,23 +35,26 @@ class BxDolQueueEmail extends BxDolQueue implements iBxDolSingleton
      * @param string $sBody - message body
      * @return true on success, false on error
      */
-    public function add($sEmail, $sSubject, $sBody, $sHeaders = '', $sParams = '')
+    public function add($sEmail, $sSubject, $sBody, $iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders)
     {
         return (int)$this->_oQuery->insertItem(array(
         	'email' => $sEmail,
             'subject' => $sSubject,
             'body' => $sBody,
-            'headers' => $sHeaders,
-        	'params' => $sParams
+        	'params' => serialize(array($iRecipientID, $aPlus, $iEmailType, $sEmailFlag, $isDisableAlert, $aCustomHeaders))
         )) > 0;
     }
 
     /**
      * Internal method which performs sending using predefined list of params.
      */
-    protected function _send($sEmail, $sSubject, $sBody, $sHeaders = '', $sParams = '')
+    protected function _send($sEmail, $sSubject, $sBody, $sParams = '')
     {
-        return mail($sEmail, $sSubject, $sBody, $sHeaders, $sParams);
+        $aParams = array();
+        if(!empty($sParams))
+            $aParams = unserialize($sParams);
+
+        return call_user_func_array('sendMail', array_merge(array($sEmail, $sSubject, $sBody), $aParams));
     }
 }
 

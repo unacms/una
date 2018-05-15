@@ -50,7 +50,7 @@ class BxBaseScore extends BxDolScore
             'show_do_vote_icon' => true,
             'show_do_vote_label' => false,
             'show_counter' => true,
-        	'show_counter_empty' => false,
+        	'show_counter_empty' => true,
         	'show_legend' => false
         );
 
@@ -139,20 +139,35 @@ class BxBaseScore extends BxDolScore
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
 
         $aScore = $this->_oQuery->getScore($this->getId());
+
+        $iCup = (int)$aScore['count_up'];
+        $iCdown = (int)(int)$aScore['count_down'];
+        $bEmpty = $iCup == 0 && $iCdown == 0;
+
         $sClass = $this->_sStylePrefix . '-counter';
         if($bShowDoVoteAsButtonSmall)
             $sClass .= ' bx-btn-small-height';
         if($bShowDoVoteAsButton)
             $sClass .= ' bx-btn-height';
 
-        $iCup = (int)$aScore['count_up'];
-        $iCdown = (int)(int)$aScore['count_down'];
-        $sCounter = $bShowEmpty || $iCup > 0 || $iCdown > 0 ? $this->_getLabelCounter($iCup - $iCdown) : '';
-        return $this->_oTemplate->parseLink('javascript:void(0)', $sCounter, array(
+        $sCounter = !$bEmpty || $bShowEmpty ? $this->_getLabelCounter($iCup - $iCdown) : '';
+        $aTmplVars = array(
             'id' => $this->_aHtmlIds['counter'],
             'class' => $sClass,
             'title' => _t($this->_getTitleDoBy()),
-            'onclick' => 'javascript:' . $this->getJsClickCounter() 
+            'onclick' => 'javascript:' . $this->getJsClickCounter(),
+            'content' => $sCounter
+        );
+
+        return $this->_oTemplate->parseHtmlByName('score_counter.html', array(
+            'bx_if:show_link' => array(
+                'condition' => !$bEmpty,
+                'content' => $aTmplVars
+            ),
+            'bx_if:show_text' => array(
+                'condition' => $bEmpty,
+                'content' => $aTmplVars
+            ),
         ));
     }
 
@@ -302,7 +317,7 @@ class BxBaseScore extends BxDolScore
 
     protected function _getLabelCounter($iCount)
     {
-        return _t('_sys_score_counter', $iCount);
+        return (int)$iCount != 0 ? _t('_sys_score_counter', $iCount) : _t('_sys_score_counter_empty');
     }
 
     protected function _getLabelDo($sType, $aParams = array())

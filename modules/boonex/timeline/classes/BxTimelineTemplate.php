@@ -1108,15 +1108,43 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($iOwnerId == 0 || $iOwnerId == (int)$aEvent['object_owner_id'])
             return array();
 
-        list($sTaName, $sTaUrl, $sTaThumb, $sTaUnit, $sTaUnitWoInfo) = $this->getModule()->getUserInfo($aEvent['owner_id']);
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $iUser = bx_get_logged_profile_id();
+
+        $oModule = $this->getModule();
+        list($sTaName, $sTaUrl, $sTaThumb, $sTaUnit, $sTaUnitWoInfo) = $oModule->getUserInfo($aEvent['owner_id']);
+        $sTaType = $oModule->getObjectUser($aEvent['owner_id'])->getModule();
+
+        $aTmplVarsActions = array();
+        if(!empty($iUser) && !empty($aEvent['owner_id']) && $iUser != $aEvent['owner_id']) {
+            $sConnection = $this->_oConfig->getObject('conn_subscriptions');
+            if(BxDolConnection::getObjectInstance($sConnection)->checkAllowedConnect($iUser, $aEvent['owner_id']) === CHECK_ACTION_RESULT_ALLOWED) {
+                $sContent = _t('_sys_menu_item_title_sm_subscribe');
+                $aTmplVarsActions[] = array(
+                    'href' => "javascript:void(0)",
+                    'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $aEvent['owner_id'] . "')",
+                	'title' => bx_html_attribute($sContent),
+                    'content' => $sContent,
+                    'icon' => 'check'
+                );
+            }
+        }
 
         return array(
-        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'style_prefix' => $sStylePrefix,
+			'owner_type' => _t('_' . $sTaType),
             'owner_url' => $sTaUrl,
             'owner_username' => $sTaName,
             'owner_thumb' => $sTaThumb,
             'owner_unit' => $sTaUnit,
             'owner_unit_wo_info' => $sTaUnitWoInfo,
+            'bx_if:show_timeline_owner_actions' => array(
+                'condition' => !empty($aTmplVarsActions),
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'bx_repeat:actions' => $aTmplVarsActions
+                )
+            )
         );
     }
 

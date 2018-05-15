@@ -692,16 +692,12 @@ class BxDolSearchResult implements iBxDolReplaceable
     {
         // keyword
         $sKeyword = bx_process_input(isset($this->_aCustomSearchCondition['keyword']) ? $this->_aCustomSearchCondition['keyword'] : bx_get('keyword'));
-        if ($sKeyword) {
+        if ($sKeyword !== false) {
             $this->aCurrent['restriction']['keyword'] = array(
                 'value' => $sKeyword,
                 'field' => '',
                 'operator' => 'against'
             );
-        }
-        else {
-            $this->aCurrent['paginate']['num'] = 0;
-            return;
         }
 
         // owner
