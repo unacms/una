@@ -89,6 +89,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
         	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_events_gallery',
             'OBJECT_VIEWS' => 'bx_events',
             'OBJECT_VOTES' => 'bx_events',
+        	'OBJECT_SCORES' => 'bx_events',
         	'OBJECT_FAVORITES' => 'bx_events',
         	'OBJECT_FEATURED' => 'bx_events',
         	'OBJECT_COMMENTS' => 'bx_events',

@@ -25,6 +25,9 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_organizations';
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_organizations';
 
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_organizations';
+
 -- REPORTS
 DELETE FROM `sys_objects_report` WHERE `name` = 'bx_organizations';
 

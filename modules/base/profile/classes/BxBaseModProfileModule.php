@@ -594,6 +594,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         	'object_storage' => !empty($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
             'object_transcoder' => false,
         	'object_vote' => '',
+        	'object_score' => !empty($CNF['OBJECT_SCORES']) ? $CNF['OBJECT_SCORES'] : '',
         	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
         	'object_feature' => !empty($CNF['OBJECT_FEATURED']) ? $CNF['OBJECT_FEATURED'] : '',
         	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',

@@ -28,6 +28,9 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_events';
 -- VOTES
 DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_events';
 
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_events';
+
 -- REPORTS
 DELETE FROM `sys_objects_report` WHERE `name` = 'bx_events';
 

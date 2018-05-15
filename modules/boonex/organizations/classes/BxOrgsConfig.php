@@ -97,6 +97,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_organizations_gallery',
             'OBJECT_VIEWS' => 'bx_organizations',
         	'OBJECT_VOTES' => '',
+        	'OBJECT_SCORES' => 'bx_organizations',
         	'OBJECT_FAVORITES' => 'bx_organizations',
         	'OBJECT_FEATURED' => 'bx_organizations',
             'OBJECT_COMMENTS' => 'bx_organizations',

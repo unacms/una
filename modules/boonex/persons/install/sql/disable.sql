@@ -28,6 +28,9 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_persons';
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_persons';
 
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_persons';
+
 -- FAFORITES
 DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_persons';
 

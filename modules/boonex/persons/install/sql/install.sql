@@ -14,6 +14,9 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `gender` varchar(255) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
   `views` int(11) NOT NULL default '0',
+  `score` int(11) NOT NULL default '0',
+  `sc_up` int(11) NOT NULL default '0',
+  `sc_down` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
@@ -139,6 +142,26 @@ CREATE TABLE `bx_persons_meta_mentions` (
   KEY `object_id` (`object_id`),
   KEY `profile_id` (`profile_id`)
 );
+
+-- TABLE: scores
+CREATE TABLE IF NOT EXISTS `bx_persons_scores` (
+  `object_id` int(11) NOT NULL default '0',
+  `count_up` int(11) NOT NULL default '0',
+  `count_down` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_persons_scores_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `type` varchar(8) NOT NULL default '',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
 
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
