@@ -29,6 +29,9 @@ html {
 .bx-def-constraint-pre pre {
     overflow:scroll !important;
 }
-
+.bx-def-constraint-img img  {
+    max-width:100% !important;
+    height: auto !important;
+}
 
 } /* @media end */
