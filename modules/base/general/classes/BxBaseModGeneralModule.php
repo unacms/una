@@ -946,7 +946,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function checkAllowedCommentsView ($aContentInfo, $isPerformAction = false)
     {
-        return CHECK_ACTION_RESULT_ALLOWED;
+        return $this->checkAllowedView ($aContentInfo, $isPerformAction);
     }
 
 	/**
@@ -954,7 +954,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
     {
-        return CHECK_ACTION_RESULT_ALLOWED;
+        return $this->checkAllowedView ($aContentInfo, $isPerformAction);
     }
 
     public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
