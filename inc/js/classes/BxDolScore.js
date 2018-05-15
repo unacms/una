@@ -73,9 +73,10 @@ BxDolScore.prototype._vote = function (oLink, sType, onComplete)
 
                 var oCounter = $this._getCounter(oLink);
                 if(oCounter && oCounter.length > 0) {
-                	oCounter.html(oData.scoref);
-
-                	oCounter.parents('.' + $this._sSP + '-counter-holder:first:hidden').bx_anim('show');
+                	if(oData && oData.counter)
+                		oCounter.replaceWith(oData.counter);
+                	else
+	                	oCounter.html(oData.scoref).parents('.' + $this._sSP + '-counter-holder:first:hidden').bx_anim('show');
                 }
 
                 if(typeof onComplete == 'function')
