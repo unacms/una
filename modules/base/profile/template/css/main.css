@@ -230,6 +230,10 @@ a.bx-base-pofile-cover-image:hover,
 .bx-base-unit-showcase-wrapper {
     display:block
 }
+.bx-base-unit-showcase-wrapper .bx-base-pofile-unit-showcase
+{
+    width:calc(100%);
+}
 
 @media (min-width:533px) and (max-width:720px) {
         .bx-layout-column-half .bx-base-pofile-units-wrapper .bx-base-pofile-unit-with-cover,
