@@ -66,8 +66,8 @@ class BxDolSearchExtendedQuery extends BxDolDb
                 )) > 0;
 
                 if($bResult) {
-                    $aCaptionValues = $oLanguage->getLanguageString($aField['caption']);
-                    $aInfoValues = $oLanguage->getLanguageString($aField['info']);
+                    $aCaptionValues = !empty($aField['caption']) ? $oLanguage->getLanguageString($aField['caption']) : array();
+                    $aInfoValues = !empty($aField['info']) ? $oLanguage->getLanguageString($aField['info']) : array();
 
                     foreach($aLangIds as $iLangId) {
                         $sCaptionValue = '';

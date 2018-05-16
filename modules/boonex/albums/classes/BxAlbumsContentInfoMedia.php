@@ -119,12 +119,16 @@ class BxAlbumsContentInfoMedia extends BxDolContentInfo
             'author' => array(
             	'type' => 'text_auto', 
             	'caption' => '_bx_albums_form_entry_input_author',
+        		'info' => '',
+        		'value' => '',
             	'values' => '',
         		'pass' => ''
             ),
             'title' => array(
             	'type' => 'text', 
             	'caption' => '_bx_albums_form_entry_file_title',
+            	'info' => '',
+        		'value' => '',
             	'values' => '',
             	'pass' => 'Xss'
             )
