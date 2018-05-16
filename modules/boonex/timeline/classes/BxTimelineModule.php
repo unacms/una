@@ -1959,7 +1959,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         list($sSystem, $iObjectId) = $mixedVotes;
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
-        $oVote->addCssJs();
 
         $bResult = true;
 
