@@ -3,7 +3,7 @@
 /**
  * Test util functions
  */
-class UtilTest extends PHPUnit_Framework_TestCase
+class UtilTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @see clear_xss
@@ -27,7 +27,7 @@ class UtilTest extends PHPUnit_Framework_TestCase
     {
         // create mock object instance of HTMLPurifier class
         require_once(BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php');
-        $GLOBALS['oHtmlPurifier'] = $this->getMock('HTMLPurifier');
+        $GLOBALS['oHtmlPurifier'] = $this->createMock('HTMLPurifier');
 
         // set admin or not admin user
         $GLOBALS['logged']['admin'] = $isAdmin;

@@ -9,7 +9,7 @@ if (!file_exists($sHeaderPath))
 
 require_once($sHeaderPath);
 
-class BxDolTestCase extends PHPUnit_Framework_TestCase
+class BxDolTestCase extends \PHPUnit\Framework\TestCase
 {
 
     function bxMockGet ($sClass, $aModule = array(), $bDisableContructor = false)
@@ -24,7 +24,7 @@ class BxDolTestCase extends PHPUnit_Framework_TestCase
                 ->disableOriginalConstructor()
                 ->getMock();
         } else {
-            $GLOBALS['bxDolClasses'][$sClass] = $this->getMock($sClass);
+            $GLOBALS['bxDolClasses'][$sClass] = $this->createMock($sClass);
         }
 
         return $GLOBALS['bxDolClasses'][$sClass];

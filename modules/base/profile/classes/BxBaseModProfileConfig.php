@@ -26,6 +26,7 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
             'profile-set-acl-level' => 'checkAllowedSetMembership',
             'convos-compose' => 'checkAllowedCompose',
+			'messenger' => 'checkAllowedCompose',
         );        
     }
 }
