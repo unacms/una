@@ -65,20 +65,6 @@ class BxBaseView extends BxDolView
         $this->_sTmplNameByList = 'view_by_list.html';
     }
 
-    /*
-     * TODO: Remove after testing (Ticket #1249)
-     */
-    public function addCssJs($bDynamicMode = false)
-    {
-    	if($bDynamicMode || $this->_bCssJsAdded)
-    		return;
-
-    	$this->_oTemplate->addJs(array('jquery.anim.js', 'BxDolView.js'));
-        $this->_oTemplate->addCss(array('view.css'));
-
-        $this->_bCssJsAdded = true;
-    }
-
     public function getJsObjectName()
     {
         return $this->_sJsObjName;
@@ -95,23 +81,8 @@ class BxBaseView extends BxDolView
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = $this->_sJsObjName . " = new BxDolView(" . json_encode($aParams) . ");";
+        $sCode = "var " . $this->_sJsObjName . " = new BxDolView(" . json_encode($aParams) . ");";
 
-        /*
-         * TODO: Remove after testing (Ticket #1249)
-         *
-        if($bDynamicMode) {
-			$sCode = "var " . $this->_sJsObjName . " = null; 
-			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolView.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-				bx_get_style('" . bx_js_string($this->_oTemplate->getCssUrl('view.css'), BX_ESCAPE_STR_APOS) . "');
-				" . $sCode . "
-        	}); ";
-        }
-        else
-        	$sCode = "var " . $sCode;
-
-        $this->addCssJs($bDynamicMode);
-        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 

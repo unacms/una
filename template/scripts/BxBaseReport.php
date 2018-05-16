@@ -68,20 +68,6 @@ class BxBaseReport extends BxDolReport
             self::$_sTmplContentDoReportLabel = $this->_oTemplate->getHtml('report_do_report_label.html');
     }
 
-    /**
-     * TODO: Remove after testing (Ticket #1249)
-     */
-    public function addCssJs($bDynamicMode = false)
-    {
-    	if($bDynamicMode || $this->_bCssJsAdded)
-    		return;
-
-    	$this->_oTemplate->addJs(array('jquery.form.min.js', 'jquery.anim.js', 'BxDolReport.js'));
-        $this->_oTemplate->addCss(array('report.css'));
-
-        $this->_bCssJsAdded = true;
-    }
-
     public function getJsObjectName()
     {
         return $this->_sJsObjName;
@@ -98,23 +84,8 @@ class BxBaseReport extends BxDolReport
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . ");";
+        $sCode = "var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . ");";
 
-        /*
-         * TODO: Remove after testing (Ticket #1249)
-         * 
-        if($bDynamicMode) {
-			$sCode = "var " . $this->_sJsObjName . " = null; 
-			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolReport.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-				bx_get_style('" . bx_js_string($this->_oTemplate->getCssUrl('report.css'), BX_ESCAPE_STR_APOS) . "');
-				" . $sCode . "
-        	}); ";
-        }
-        else
-        	$sCode = "var " . $sCode;
-
-        $this->addCssJs($bDynamicMode);
-        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 

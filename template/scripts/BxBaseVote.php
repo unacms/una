@@ -79,20 +79,6 @@ class BxBaseVote extends BxDolVote
             self::$_sTmplContentDoVoteLikesLabel = $this->_oTemplate->getHtml('vote_do_vote_likes_label.html');
     }
 
-    /*
-     * TODO: Remove after testing (Ticket #1249)
-     */
-    public function addCssJs($bDynamicMode = false)
-    {
-    	if($bDynamicMode || $this->_bCssJsAdded)
-    		return;
-
-    	$this->_oTemplate->addJs(array('jquery.anim.js', 'BxDolVote.js'));
-        $this->_oTemplate->addCss(array('vote.css'));
-
-        $this->_bCssJsAdded = true;
-    }
-
     public function getJsObjectName()
     {
         return $this->_sJsObjName;
@@ -110,23 +96,8 @@ class BxBaseVote extends BxDolVote
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");";
+        $sCode = "var " . $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");";
 
-        /*
-         * TODO: Remove after testing (Ticket #1249)
-         *
-        if($bDynamicMode) {
-			$sCode = "var " . $this->_sJsObjName . " = null; 
-			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolVote.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-				bx_get_style('" . bx_js_string($this->_oTemplate->getCssUrl('vote.css'), BX_ESCAPE_STR_APOS) . "');
-				" . $sCode . "
-        	}); ";
-        }
-        else
-        	$sCode = "var " . $sCode;
-
-        $this->addCssJs($bDynamicMode);
-        */
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 

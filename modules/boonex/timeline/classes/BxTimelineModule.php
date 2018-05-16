@@ -1978,7 +1978,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         list($sSystem, $iObjectId) = $mixedScores;
         $oScore = $this->getScoreObject($sSystem, $iObjectId);
-        $oScore->addCssJs();
 
         $bResult = true;
 
@@ -1997,7 +1996,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         list($sSystem, $iObjectId) = $mixedReports;
         $oReport = $this->getReportObject($sSystem, $iObjectId);
-        $oReport->addCssJs();
 
         $bResult = true;
 

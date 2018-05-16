@@ -32,13 +32,6 @@ class BxBaseCmts extends BxDolCmts
      */
     public function addCssJs ()
     {
-        /*
-         * TODO: Remove after testing (Ticket #1249)
-         * 
-        $this->_oTemplate->addCss(array('cmts.css'));
-        $this->_oTemplate->addJs(array('jquery.anim.js', 'jquery.form.min.js', 'BxDolCmts.js'));
-        */
-
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
         $oForm->addCssJs();
     }
