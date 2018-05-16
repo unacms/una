@@ -1142,7 +1142,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($aTmplVarsActions),
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'bx_repeat:actions' => $aTmplVarsActions
+                    'bx_repeat:timeline_owner_actions' => $aTmplVarsActions
                 )
             )
         );
@@ -1417,7 +1417,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
         $iUser = bx_get_logged_profile_id();
-        $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
+        $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['object_owner_id'] : $aEvent['object_id'];
 
         $aTmplVarsActions = array();
         if(!empty($iUser) && !empty($iOwner) && $iUser != $iOwner) {
@@ -1436,7 +1436,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return array(
             'style_prefix' => $sStylePrefix,
-            'bx_repeat:actions' => $aTmplVarsActions
+            'bx_repeat:owner_actions' => $aTmplVarsActions
         );
     }
 

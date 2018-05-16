@@ -8,9 +8,9 @@
     <div class="__style_prefix__-item-cnt bx-def-box bx-def-padding-topbottom bx-def-round-corners __class_content__">
         <div class="__style_prefix__-blink-plate"></div>
         <bx_if:show_note>
-            <div class="__style_prefix__-item-note bx-def-margin-leftright">
-                <div class="__style_prefix__-in-text bx-def-font-grayed<bx_if:show_note_color> col-__item_note_color__</bx_if:show_note_color>">__item_note__</div>
-                <div class="__style_prefix__-in-divider bx-def-hr bx-def-margin-sec-topbottom"></div>
+            <div class="__style_prefix__-item-note">
+                <div class="__style_prefix__-in-text bx-def-margin-leftright bx-def-font-grayed<bx_if:show_note_color> col-__item_note_color__</bx_if:show_note_color>">__item_note__</div>
+                <div class="__style_prefix__-in-divider bx-def-hr bx-def-margin-topbottom"></div>
             </div>
         </bx_if:show_note>
         <div class="__style_prefix__-item-owner bx-def-margin-leftright __class_owner__"> 
@@ -38,9 +38,9 @@
             </div>
             <bx_if:show_owner_actions>
                 <div class="__style_prefix__-owner-actions bx-def-thumb-size-min-height">
-                    <bx_repeat:actions>
+                    <bx_repeat:owner_actions>
                         <a class="bx-btn bx-btn-small" href="__href__" onclick="__onclick__">__content__</a>
-                    </bx_repeat:actions>
+                    </bx_repeat:owner_actions>
                 </div>
             </bx_if:show_owner_actions>
         </div>
