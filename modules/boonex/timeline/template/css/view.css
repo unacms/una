@@ -175,6 +175,7 @@ div.bx-tl-item-text div.bx-tl-content p {
 }
 div.bx-tl-item-text div.bx-tl-content img {
 	max-width: 100%;
+	height: auto;
 }
 
 /*--- Item Images Style ---*/
