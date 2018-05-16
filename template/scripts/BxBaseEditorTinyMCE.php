@@ -164,7 +164,7 @@ EOS;
             $sPlugins = json_encode($aPlugins);
         }
         
-        $sCustomInit = str_replace('{toolbar}', $sToolbarItems, $sCustomInit);
+        $sCustomInit = str_replace('{toolbar}', $sToolbarItems ? $sToolbarItems : "[]", $sCustomInit);
         $sCustomInit = str_replace('{plugins}', $sPlugins, $sCustomInit);
         
         // detect language
