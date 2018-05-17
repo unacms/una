@@ -81,6 +81,8 @@
     <string name="_bx_files_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_files_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_files_page_block_title_entry_actions"><![CDATA[Actions]]></string>
+    <string name="_bx_files_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
+    <string name="_bx_files_page_block_title_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_files_page_block_title_entry_comments"><![CDATA[Comments]]></string>
     <string name="_bx_files_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_files_page_block_title_entry_location"><![CDATA[Location]]></string>
@@ -204,6 +206,7 @@
     <string name="_bx_files_cat_backup"><![CDATA[Backup]]></string>
 
     <string name="_bx_files_txt_all_entries_by"><![CDATA[<a href="{0}">All Files by {1} ({2})</a>]]></string>
+    <string name="_bx_files_txt_all_entries_in"><![CDATA[<a href="{0}">All Files in {1} ({2})</a>]]></string>
     <string name="_bx_files_txt_preview_not_available"><![CDATA[Preview isn't available]]></string>
     <string name="_bx_files_txt_sample_single"><![CDATA[file]]></string>
     <string name="_bx_files_txt_sample_single_with_article"><![CDATA[a file]]></string>

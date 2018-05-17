@@ -54,6 +54,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-file',
             'URI_AUTHOR_ENTRIES' => 'files-author',
+            'URI_ENTRIES_BY_CONTEXT' => 'group-files',
             'URI_GROUP_ENTRIES' => 'group-files',
             'URI_ADD_ENTRY' => 'create-file',
         	'URI_EDIT_ENTRY' => 'edit-file',
@@ -126,6 +127,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             	'menu_item_manage_my' => '_bx_files_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_files_menu_item_title_manage_all',
                 'txt_all_entries_by' => '_bx_files_txt_all_entries_by',
+                'txt_all_entries_in' => '_bx_files_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_files_page_title_browse_by_author'
             ),
         );
