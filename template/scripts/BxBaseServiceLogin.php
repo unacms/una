@@ -171,7 +171,7 @@ class BxBaseServiceLogin extends BxDol
             
             header('Location: ' . $sUrlRelocate);
         } 
-        return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_login_2fa_description2") . '</div>' .$oForm->getCode();
+        return $oForm->getCode();
     }
 }
 

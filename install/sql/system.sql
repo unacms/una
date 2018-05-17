@@ -2895,6 +2895,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_login', 'system', 'submit_text', '', '', 0, 'custom', '_sys_form_login_input_caption_system_submit_text', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_login', 'system', 'phone', '', '', 0, 'text', '_sys_form_login_input_caption_system_phone', '_sys_form_login_input_phone', '', 1, 0, 0, '', '', '', 'PhoneExist', '', '_sys_form_login_input_phone_error_format', 'Xss', '', 1, 0),
 ('sys_login', 'system', 'code', '', '', 0, 'text', '_sys_form_login_input_caption_system_code', '_sys_form_login_input_code', '', 1, 0, 0, '', '', '', 'CodeExist', '', '_sys_form_login_input_code_error_empty', 'Xss', '', 0, 0),
+('sys_login', 'system', 'back', '', '', '', 'value', '_sys_form_login_input_caption_system_back', '_sys_form_login_input_back', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('sys_login', 'system', 'do_checkcode', '_sys_form_login_input_checkcode', '', 0, 'submit', '_sys_form_login_input_caption_system_checkcode', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_login', 'system', 'do_sendsms', '_sys_form_login_input_sendsms', '', 0, 'submit', '_sys_form_login_input_caption_system_sendsms', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
@@ -2973,8 +2974,9 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_login_step2', 'relocate', 2147483647, 1, 3),
 
 ('sys_login_step3', 'code', 2147483647, 1, 1),
-('sys_login_step3', 'do_checkcode', 2147483647, 1, 2),
-('sys_login_step3', 'relocate', 2147483647, 1, 3),
+('sys_login_step3', 'back', 2147483647, 1, 2),
+('sys_login_step3', 'do_checkcode', 2147483647, 1, 3),
+('sys_login_step3', 'relocate', 2147483647, 1, 4),
 
 ('sys_account_create', 'name', 2147483647, 1, 1),
 ('sys_account_create', 'email', 2147483647, 1, 2),

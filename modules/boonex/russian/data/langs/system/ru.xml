@@ -1965,6 +1965,7 @@
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_login_input_caption_system_checkcode"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_caption_system_code"><![CDATA[Код из SMS]]></string>
+	<string name="_sys_form_login_input_caption_system_back"><![CDATA[<a href="javascript:history.back()">Отправить новый код</a>]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Подтвердить удаление]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Удалить с контентом]]></string>
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string>
@@ -1985,6 +1986,7 @@
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Текст отправки]]></string>
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_code"><![CDATA[Код из SMS]]></string>
+	<string name="_sys_form_login_input_back"><![CDATA[<a href="javascript:history.back()">Отправить новый код</a>]]></string>
 	<string name="_sys_form_login_input_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_phone"><![CDATA[Телефон]]></string>
@@ -2587,7 +2589,6 @@
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
     <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к имейлу и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
-	<string name="_sys_txt_login_2fa_description2"><![CDATA[Пожалуйста, введите код проверки из SMS.]]></string>
 	<string name="_sys_txt_login_2fa_sms_text"><![CDATA[Ваш код проверки {0}.]]></string>
 	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
 	<string name="_sys_txt_join_description"><![CDATA[Уже зарегистрировались? <a href="{0}">Заходите.</a>]]></string>
