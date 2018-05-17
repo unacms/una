@@ -68,6 +68,7 @@
 	<string name="_bx_files_page_title_browse"><![CDATA[Файлы]]></string>
 	<string name="_bx_files_page_title_search_results"><![CDATA[Поиск по "{0}"]]></string>
 	<string name="_bx_files_page_title_browse_by_author"><![CDATA[{display_name} - файлы]]></string>
+  <string name="_bx_files_page_title_browse_by_context"><![CDATA[Файлы в контексте: {display_name}]]></string>
 	<string name="_bx_files_page_title_browse_featured"><![CDATA[Продвинутые файлы]]></string>
     <string name="_bx_files_page_title_browse_recent"><![CDATA[Последние файлы]]></string>
     <string name="_bx_files_page_title_browse_popular"><![CDATA[Популярные файлы]]></string>
@@ -80,8 +81,8 @@
     <string name="_bx_files_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_files_page_block_title_entry_author"><![CDATA[Автор]]></string>
     <string name="_bx_files_page_block_title_entry_actions"><![CDATA[Действия]]></string>
-    <string name="_bx_files_page_block_title_sys_entry_context"><![CDATA[Продукты в контексте]]></string>
-    <string name="_bx_files_page_block_title_entry_context"><![CDATA[Продукты в контексте - {display_name}]]></string>
+    <string name="_bx_files_page_block_title_sys_entry_context"><![CDATA[Файлы в контексте]]></string>
+    <string name="_bx_files_page_block_title_entry_context"><![CDATA[Файлы в контексте - {display_name}]]></string>
     <string name="_bx_files_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_files_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_files_page_block_title_entry_location"><![CDATA[Местоположение]]></string>
@@ -98,10 +99,14 @@
     <string name="_bx_files_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_files_page_title_sys_entries_of_author"><![CDATA[Файлы от одного автора]]></string>
     <string name="_bx_files_page_title_entries_of_author"><![CDATA[{display_name} - файлы]]></string>
+    <string name="_bx_files_page_title_sys_entries_in_context"><![CDATA[Файлы в контексте]]></string>
+    <string name="_bx_files_page_title_entries_in_context"><![CDATA[Файлы в контексте - {display_name}]]></string>
     <string name="_bx_files_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - избранные файлы]]></string>
     <string name="_bx_files_page_block_title_sys_favorites_of_author"><![CDATA[Избранные файлы от одного автора]]></string>
     <string name="_bx_files_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - файлы]]></string>
-    <string name="_bx_files_page_block_title_sys_entries_of_author"><![CDATA[Файлы от одного автора]]></string>   
+    <string name="_bx_files_page_block_title_sys_entries_of_author"><![CDATA[Файлы от одного автора]]></string>
+    <string name="_bx_files_page_block_title_entries_in_context"><![CDATA[Файлы в контексте <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_files_page_block_title_sys_entries_in_context"><![CDATA[Файлы в контексте]]></string>
     <string name="_bx_files_page_block_title_entries_actions"><![CDATA[Действия с файлом]]></string>
     <string name="_bx_files_page_block_title_browse_cmts"><![CDATA[Комментарии к файлам]]></string>
 	<string name="_bx_files_page_title_sys_manage"><![CDATA[Управление своими файлами]]></string>
@@ -157,6 +162,8 @@
     <string name="_bx_files_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к файлу]]></string>
     <string name="_bx_files_menu_item_title_system_view_entries_author"><![CDATA[Файлы]]></string>
     <string name="_bx_files_menu_item_title_view_entries_author"><![CDATA[Файлы]]></string>
+    <string name="_bx_files_menu_item_title_system_view_entries_in_context"><![CDATA[Файлы]]></string>
+    <string name="_bx_files_menu_item_title_view_entries_in_context"><![CDATA[Файлы]]></string>
     <string name="_bx_files_menu_title_entries_my"><![CDATA[Меню для своих файлов]]></string>
     <string name="_bx_files_menu_set_title_entries_my"><![CDATA[Меню для своих файлов]]></string>
 	<string name="_bx_files_menu_item_title_system_manage_my_files"><![CDATA[Мои файлы]]></string>
