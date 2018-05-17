@@ -26,8 +26,15 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
         	$sJsObject = $this->_oModule->_oConfig->getJsObject('entry');
 
-        	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = "javascript:" . $sJsObject . ".checkName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
-        	$this->aInputs[$CNF['FIELD_NAME']]['attrs']['onblur'] = "javascript:" . $sJsObject . ".checkName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
+        	$aMask = array('mask' => "javascript:%s.checkName('%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
+            if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'] && bx_get('id') !== false) {
+                $aMask['mask'] = "javascript:%s.checkName('%s', '%s', %d);";
+                $aMask[] = (int)bx_get('id');
+            }
+
+            $sOnBlur = call_user_func_array('sprintf', array_values($aMask)); 
+        	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = $sOnBlur;
+        	$this->aInputs[$CNF['FIELD_NAME']]['attrs']['onblur'] = $sOnBlur;
         }
 
 	    if(isset($this->aInputs[$CNF['FIELD_FILE']])) {

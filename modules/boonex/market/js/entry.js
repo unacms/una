@@ -44,7 +44,7 @@ BxMarketEntry.prototype.perform = function(oLink, sAction, iId) {
     );
 };
 
-BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
+BxMarketEntry.prototype.checkName = function(sTitleId, sNameId, iId) {
 	var oDate = new Date();
 
 	var oName = jQuery("[name='" + sNameId + "']");
@@ -73,6 +73,7 @@ BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
 		this._sActionsUrl + 'check_name',
 		{
 			title: sTitleCheck,
+			id: iId && parseInt(iId) > 0 ? iId : 0,
     		_t: oDate.getTime()
     	},
     	function(oData) {
