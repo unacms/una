@@ -172,7 +172,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
                 'grid_action_err_delete' => '_bx_spaces_grid_action_err_delete',
                 'grid_txt_account_manager' => '_bx_spaces_grid_txt_account_manager',
                 'filter_item_active' => '_bx_spaces_grid_filter_item_title_adm_active',
-                'filter_item_pending' => '_bx_spacess_grid_filter_item_title_adm_pending',
+                'filter_item_pending' => '_bx_spaces_grid_filter_item_title_adm_pending',
                 'filter_item_suspended' => '_bx_spaces_grid_filter_item_title_adm_suspended',
                 'filter_item_select_one_filter1' => '_bx_spaces_grid_filter_item_title_adm_select_one_filter1',
                 'menu_item_manage_my' => '_bx_spaces_menu_item_title_manage_my',
