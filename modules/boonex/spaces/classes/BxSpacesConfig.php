@@ -130,8 +130,8 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'EMAIL_FAN_REMOVE' => 'bx_spaces_fan_remove',
             'EMAIL_JOIN_REJECT' => 'bx_spaces_join_reject',
 
-            'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_space_view_submenu',
-            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_space_view_actions',
+            'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
+            'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
             'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_group_view_entry',
 
             // menu items which visibility depends on custom visibility checking
