@@ -75,14 +75,29 @@ class BxTimelineMenuItemShare extends BxTemplMenu
     {
         $aItems = parent::getMenuItems();
 
-        $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
-        $oSocial->addMarkers(array(
+        $aMarkers = array(
             'id' => $this->_iEvent,
         	'module' => $this->_oModule->_oConfig->getName(),
         	'url' => $this->_aEvent['url'],
         	'title' => $this->_aEvent['title'],
-        ));
+        	'img_url' => '',
+        	'img_url_encoded' => ''
+        );
 
+        $aEventData = $this->_oModule->_oTemplate->getData($this->_aEvent);
+        if(!empty($aEventData['content']['images']) && is_array($aEventData['content']['images'])) {
+            $aImage = array_shift($aEventData['content']['images']);
+
+            $sImgUrl = isset($aImage['src_medium']) ? $aImage['src_medium'] : $aImage['src'];;
+            if(!empty($sImgUrl))
+                $aMarkers = array_merge($aMarkers, array(
+                	'img_url' => $sImgUrl,
+    				'img_url_encoded' => rawurlencode($sImgUrl),
+                ));
+        }
+
+        $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
+        $oSocial->addMarkers($aMarkers);
         return array_merge($aItems, $oSocial->getMenuItems());
     }
 
