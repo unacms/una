@@ -81,7 +81,9 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     text-overflow: ellipsis;
     text-align: left;
 }
-
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li > span {
+	margin-right: 0;
+}
 .bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
     display: none;
 }
