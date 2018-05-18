@@ -256,6 +256,9 @@
     <string name="_bx_persons_search_extended"><![CDATA[Поиск персональных профилей]]></string>
     <string name="_bx_persons_search_extended_cmts"><![CDATA[Поиск комментариев к персональным профилям]]></string>
 
+    <string name="_bx_persons_alert_action_profile_cover_changed"><![CDATA[обложка изменена]]></string>
+    <string name="_bx_persons_alert_action_profile_picture_changed"><![CDATA[картинка изменена]]></string>
+
     <string name="_bx_persons_txt_account_pending"><![CDATA[Этот профиль ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_persons_txt_account_pending_moderation"><![CDATA[Этот <a href="{0}">профиль</a> ожидает одобрения.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[Этот профиль заблокирован.]]></string>
