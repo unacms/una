@@ -67,7 +67,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function actionVideo($iEventId, $iVideoId)
     {
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEventId));
-        if(empty($aEvent) || !is_array($aEvent) || !$this->_oConfig->isCommon($aEvent['type'], $aEvent['action']))
+        if(empty($aEvent) || !is_array($aEvent))
             return;
 
         $aData = $this->_oTemplate->getData($aEvent);

@@ -119,7 +119,12 @@ class BxVideosModule extends BxBaseModTextModule
             $sPoster = $oTcvPoster->getFileUrl($iFile);
 
         return array(
-            array('src_poster' => $sPoster, 'src_mp4' => $oTcvMp4->getFileUrl($iFile), 'src_webm' => $oTcvWebm->getFileUrl($iFile))
+            $iFile => array(
+            	'id' => $iFile,
+            	'src_poster' => $sPoster, 
+            	'src_mp4' => $oTcvMp4->getFileUrl($iFile), 
+            	'src_webm' => $oTcvWebm->getFileUrl($iFile)
+            )
         );
     }
 }
