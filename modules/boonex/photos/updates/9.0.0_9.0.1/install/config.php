@@ -8,26 +8,26 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Albums',
-    'version_from' => '9.0.7',
-	'version_to' => '9.0.8',
+    'title' => 'Photos',
+    'version_from' => '9.0.0',
+	'version_to' => '9.0.1',
     'vendor' => 'BoonEx',
 
-	'compatible_with' => array(
+    'compatible_with' => array(
         '9.0.0-RC7'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/albums/updates/update_9.0.7_9.0.8/',
-	'home_uri' => 'albums_update_907_908',
+    'home_dir' => 'boonex/photos/updates/update_9.0.0_9.0.1/',
+	'home_uri' => 'photos_update_900_901',
 
-	'module_dir' => 'boonex/albums/',
-	'module_uri' => 'albums',
+	'module_dir' => 'boonex/photos/',
+	'module_uri' => 'photos',
 
-    'db_prefix' => 'bx_albums_',
-    'class_prefix' => 'BxAlbums',
+    'db_prefix' => 'bx_photos_',
+    'class_prefix' => 'BxPhotos',
 
 	/**
      * List of menu triggers.
@@ -50,7 +50,7 @@ $aConfig = array(
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Albums',
+    'language_category' => 'Photos',
 
 	/**
      * Files Section

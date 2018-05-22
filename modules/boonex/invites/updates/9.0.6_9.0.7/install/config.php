@@ -8,9 +8,9 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Albums',
-    'version_from' => '9.0.7',
-	'version_to' => '9.0.8',
+    'title' => 'Invitations',
+    'version_from' => '9.0.6',
+	'version_to' => '9.0.7',
     'vendor' => 'BoonEx',
 
 	'compatible_with' => array(
@@ -20,21 +20,14 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/albums/updates/update_9.0.7_9.0.8/',
-	'home_uri' => 'albums_update_907_908',
+    'home_dir' => 'boonex/invites/updates/update_9.0.6_9.0.7/',
+	'home_uri' => 'invites_update_906_907',
 
-	'module_dir' => 'boonex/albums/',
-	'module_uri' => 'albums',
+	'module_dir' => 'boonex/invites/',
+	'module_uri' => 'invites',
 
-    'db_prefix' => 'bx_albums_',
-    'class_prefix' => 'BxAlbums',
-
-	/**
-     * List of menu triggers.
-     */
-    'menu_triggers' => array (
-    	'trigger_group_view_submenu'
-    ),
+    'db_prefix' => 'bx_inv_',
+    'class_prefix' => 'BxInv',
 
     /**
      * Installation/Uninstallation Section.
@@ -43,14 +36,13 @@ $aConfig = array(
 		'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
-		'process_menu_triggers' => 1,
 		'clear_db_cache' => 1,
     ),
 
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Albums',
+    'language_category' => 'Invitations',
 
 	/**
      * Files Section

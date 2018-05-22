@@ -8,32 +8,32 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Albums',
+    'title' => 'Timeline',
     'version_from' => '9.0.7',
 	'version_to' => '9.0.8',
     'vendor' => 'BoonEx',
 
-	'compatible_with' => array(
+    'compatible_with' => array(
         '9.0.0-RC7'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/albums/updates/update_9.0.7_9.0.8/',
-	'home_uri' => 'albums_update_907_908',
+    'home_dir' => 'boonex/timeline/updates/update_9.0.7_9.0.8/',
+	'home_uri' => 'timeline_update_907_908',
 
-	'module_dir' => 'boonex/albums/',
-	'module_uri' => 'albums',
+	'module_dir' => 'boonex/timeline/',
+	'module_uri' => 'timeline',
 
-    'db_prefix' => 'bx_albums_',
-    'class_prefix' => 'BxAlbums',
+    'db_prefix' => 'bx_timeline_',
+    'class_prefix' => 'BxTimeline',
 
 	/**
-     * List of menu triggers.
+     * Transcoders.
      */
-    'menu_triggers' => array (
-    	'trigger_group_view_submenu'
+    'transcoders' => array(
+    	'bx_timeline_photos_medium'
     ),
 
     /**
@@ -43,14 +43,15 @@ $aConfig = array(
 		'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
-		'process_menu_triggers' => 1,
+		'register_transcoders' => 1,
+		'update_relations_for_all' => 1,
 		'clear_db_cache' => 1,
     ),
 
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Albums',
+    'language_category' => 'Timeline',
 
 	/**
      * Files Section

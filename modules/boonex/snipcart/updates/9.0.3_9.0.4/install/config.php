@@ -8,26 +8,26 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Albums',
-    'version_from' => '9.0.7',
-	'version_to' => '9.0.8',
+    'title' => 'Snipcart',
+    'version_from' => '9.0.3',
+	'version_to' => '9.0.4',
     'vendor' => 'BoonEx',
 
-	'compatible_with' => array(
+    'compatible_with' => array(
         '9.0.0-RC7'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/albums/updates/update_9.0.7_9.0.8/',
-	'home_uri' => 'albums_update_907_908',
+    'home_dir' => 'boonex/snipcart/updates/update_9.0.3_9.0.4/',
+	'home_uri' => 'snipcart_update_903_904',
 
-	'module_dir' => 'boonex/albums/',
-	'module_uri' => 'albums',
+	'module_dir' => 'boonex/snipcart/',
+	'module_uri' => 'snipcart',
 
-    'db_prefix' => 'bx_albums_',
-    'class_prefix' => 'BxAlbums',
+    'db_prefix' => 'bx_snipcart_',
+    'class_prefix' => 'BxSnipcart',
 
 	/**
      * List of menu triggers.
@@ -50,7 +50,7 @@ $aConfig = array(
 	/**
      * Category for language keys.
      */
-    'language_category' => 'Albums',
+    'language_category' => 'Snipcart',
 
 	/**
      * Files Section
