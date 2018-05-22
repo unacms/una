@@ -25,7 +25,14 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 
         // get profile info
         $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $iContentId = 0;
+        if ('mine' == bx_get('id')) {
+            $o = BxDolProfile::getInstance();
+            if ($o && $iContentId = $o->getContentId())
+                $_GET['id'] = $_REQUEST['id'] = $iContentId;
+        } else {
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        }
 
         if ($iProfileId)
             $this->_oProfile = BxDolProfile::getInstance($iProfileId);
