@@ -109,10 +109,20 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
     protected function _getThumbForMetaObject ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        if (empty($CNF['FIELD_THUMB']) || empty($this->_aContentInfo[$CNF['FIELD_THUMB']]) || empty($CNF['OBJECT_STORAGE']))
+        if(empty($CNF['FIELD_THUMB']) || empty($this->_aContentInfo[$CNF['FIELD_THUMB']]) || empty($CNF['OBJECT_STORAGE']))
             return false;
 
-        return array('id' => $this->_aContentInfo[$CNF['FIELD_THUMB']], 'object' => $CNF['OBJECT_STORAGE']);
+        $iId = (int)$this->_aContentInfo[$CNF['FIELD_THUMB']];
+        if(!empty($CNF['OBJECT_TRANSCODER_COVER']))
+            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_TRANSCODER_COVER']);
+
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER']))
+            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
+            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+
+        return array('id' => $iId, 'object' => $CNF['OBJECT_STORAGE']);
     }
 
     protected function _getPageCacheParams ()
