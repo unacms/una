@@ -217,8 +217,10 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
      */
     public function pdoExceptionHandler($oException)
     {
-    	if(!($oException instanceof PDOException))
-    		return;
+        if(!($oException instanceof PDOException)) {
+            throw $oException;
+            return;
+        }
 
 		if(!isset($oException->errorInfo[self::$_sErrorKey]))
 			$oException->errorInfo[self::$_sErrorKey] = array(
