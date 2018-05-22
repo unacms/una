@@ -29,7 +29,7 @@ DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_albums' OR `Name` = 'bx_albums
 
 
 -- SCORES
-DELETE FROM `sys_objects_score` WHERE `Name` = 'bx_albums' OR `Name` = 'bx_albums_media';
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_albums' OR `name` = 'bx_albums_media';
 
 
 -- REPORTS
