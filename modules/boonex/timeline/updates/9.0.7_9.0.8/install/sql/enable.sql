@@ -90,7 +90,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionPromote);
 
 -- COMMENTS
-UPDATE `sys_objects_cmts` SET `Html`='3', `BaseUrl`='page.php?i=timeline-item&id={object_id}' WHERE `Name`='bx_timeline';
+UPDATE `sys_objects_cmts` SET `Html`='3', `BaseUrl`='page.php?i=item&id={object_id}' WHERE `Name`='bx_timeline';
 
 
 -- SCORES

@@ -18,6 +18,10 @@ CREATE TABLE IF NOT EXISTS `bx_market_scores_track` (
 );
 
 
+-- FORMS
+UPDATE `sys_objects_form` SET `submit_name`='a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}' WHERE `object`='bx_market';
+
+
 -- COMMENTS
 UPDATE `sys_objects_cmts` SET `Html`='3' WHERE `Name`='bx_market';
 
