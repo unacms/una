@@ -1,0 +1,141 @@
+span.emoji {
+    display: -moz-inline-box;
+    -moz-box-orient: vertical;
+    display: inline-block;
+    vertical-align: baseline;
+    *vertical-align: auto;
+    *zoom: 1;
+    *display: inline;
+    width: 1em;
+    height: 1em;
+    background-size: 1em;
+    background-repeat: no-repeat;
+    text-indent: -9999px;
+}
+
+span.emoji-sizer {
+    line-height: 0.81em;
+    font-size: 1em;
+    margin: -2px 0;
+}
+
+span.emoji-outer {
+    display: -moz-inline-box;
+    display: inline-block;
+    *display: inline;
+    height: 1em;
+    width: 1em;
+}
+
+span.emoji-inner {
+    display: -moz-inline-box;
+    display: inline-block;
+    text-indent: -9999px;
+    width: 100%;
+    height: 100%;
+    vertical-align: baseline;
+    *vertical-align: auto;
+    *zoom: 1;
+}
+
+img.emoji {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji-menu {
+    position: absolute;
+	max-width: 16rem !important;    
+    z-index: 999;
+    width: 16rem;
+    overflow: hidden;
+    border: 1px #dfdfdf solid;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.emoji-items-wrap1 {
+    background: #ffffff;
+    padding: 5px 2px 5px 5px;
+}
+
+.emoji-items-wrap1 .emoji-menu-tabs {
+    width: 100%;
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+.emoji-items-wrap1 .emoji-menu-tabs td {
+    text-align: center;
+    color: white;
+}
+
+.emoji-menu-tabs .emoji-menu-tab i{
+	color:lightgray;
+    border: 0;
+	font-size:1.3rem;	
+}
+
+.emoji-menu-tabs .emoji-menu-tab.selected i{
+    color:inherit;
+}
+
+.emoji-menu .emoji-items-wrap {
+    position: relative;
+    height: 174px;
+    overflow-y: scroll;
+}
+
+.emoji-menu .emoji-items {
+    padding-right: 8px;
+    outline: 0 !important;
+}
+
+.emoji-menu .emoji-items div {
+    height:1.5rem;
+	width:1.5rem;
+	font-size:1.3rem;	
+	vertical-align: middle;
+    border: 0 none;
+	padding:0;
+	text-align:center;
+	padding:0.25rem;
+}
+
+.emoji-menu .emoji-items a {
+    padding: 0.1rem;
+    display: block;
+    float: left;
+    border-radius: 2px;
+    border: 0;
+}
+
+.emoji-menu .emoji-items a:hover {
+    background-color: #edf2f5;
+}
+
+.emoji-menu:after {
+    content: ' ';
+    display: block;
+    clear: left;
+}
+
+.emoji-menu a .label {
+    display: none;
+}
+
+.emoji-wysiwyg-editor:empty:before {
+    content: attr(placeholder);
+    color: #9aa2ab;
+}
+
+@media (max-width:720px){
+	.emoji-picker-icon{
+		display:none;
+	}
+}
