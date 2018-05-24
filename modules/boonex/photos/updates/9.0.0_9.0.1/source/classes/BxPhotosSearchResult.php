@@ -133,7 +133,9 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
         if(empty($aResult) || !is_array($aResult))
             return $aResult;
 
-        $this->aUnitParams = array_merge($this->aUnitParams, $this->aParams);
+		if(!empty($this->aParams) && is_array($this->aParams))
+        	$this->aUnitParams = array_merge($this->aUnitParams, $this->aParams);
+
         $this->aUnitParams['start'] = $this->aCurrent['paginate']['start'];
         $this->aUnitParams['per_page'] = $this->aCurrent['paginate']['perPage'];
 
