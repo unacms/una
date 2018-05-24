@@ -139,7 +139,7 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 DELETE FROM `sys_form_displays` WHERE `display_name` IN('sys_login_step2', 'sys_login_step3', 'sys_confirm_phone_set_phone', 'sys_confirm_phone_confirmation');
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('sys_login_step2', 'system', 'sys_login', '_sys_form_display_login_step2', 0),
-('sys_login_step3', 'system', 'sys_login', '_sys_form_display_login_step3', 0);
+('sys_login_step3', 'system', 'sys_login', '_sys_form_display_login_step3', 0),
 ('sys_confirm_phone_set_phone', 'system', 'sys_confirm_phone', '_sys_form_display_confirm_phone_set_phone', 0),
 ('sys_confirm_phone_confirmation', 'system', 'sys_confirm_phone', '_sys_form_display_confirm_phone_confirmation', 0);
 
@@ -167,7 +167,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_confirm_phone', 'system', 'phone', '', '', 0, 'text', '_sys_form_confirm_phone_input_caption_system_phone', '_sys_form_confirm_phone_input_phone', '', 1, 0, 0, '', '', '', 'PhoneUniq', '', '_sys_form_confirm_phone_input_phone_error_format', 'Xss', '', 1, 0),
 ('sys_confirm_phone', 'system', 'code', '', '', 0, 'text', '_sys_form_confirm_phone_input_caption_system_code', '_sys_form_confirm_phone_confirmation_input_code', '', 1, 0, 0, '', '', '', 'CodeExist', '', '_sys_form_confirm_phone_input_code_error_empty', 'Xss', '', 0, 0),
 ('sys_confirm_phone', 'system', 'do_submit', '_sys_form_confirm_phone_input_submit', '', 0, 'submit', '_sys_form_confirm_phone_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('sys_confirm_phone', 'system', 'do_sendsms', '_sys_form_confirm_phone_input_sendsms', '', 0, 'submit', '_sys_form_confirm_phone_input_caption_system_do_sendsms', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_confirm_phone', 'system', 'do_sendsms', '_sys_form_confirm_phone_input_sendsms', '', 0, 'submit', '_sys_form_confirm_phone_input_caption_system_do_sendsms', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 -- Forms: display inputs
 
@@ -235,7 +235,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- Pages: pages
 
-DELETE FORM `sys_objects_page` WHERE `object` IN('sys_login_step2', 'sys_login_step3', 'sys_confirm_phone');
+DELETE FROM `sys_objects_page` WHERE `object` IN('sys_login_step2', 'sys_login_step3', 'sys_confirm_phone');
 INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
 ('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 5, 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', ''),
 ('sys_login_step3', 'login-step3', '_sys_page_title_system_login_step3', '_sys_page_title_login_step3', 'system', 5, 2147483647, 1, 'page.php?i=login-step3', '', '', '', 0, 1, 0, '', ''),
