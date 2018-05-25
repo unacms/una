@@ -104,6 +104,14 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
         return strtoupper($this->oDb->getLanguageDirection($sLang));
     }
 
+    function getLangCountryCode($sLang = '')
+    {
+        if (!$sLang)
+            $sLang = $this->getCurrentLanguage();
+
+        return $this->oDb->getLangCountryCode($sLang);
+    }
+    
     function getDefaultLangName()
     {
         return getParam('lang_default');
@@ -130,7 +138,18 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
      */
     function detectLanguageFromArray($aLangs, $sFallbackLanguage = 'en')
     {
-        return isset($aLangs[$GLOBALS['sCurrentLanguage']]) ? $GLOBALS['sCurrentLanguage'] : $sFallbackLanguage;
+        if (isset($aLangs[$GLOBALS['sCurrentLanguage']])) {
+            return $GLOBALS['sCurrentLanguage'];
+        } 
+        elseif ($sLangCountry = $this->getLangCountryCode()) {
+            if (isset($aLangs[$sLangCountry]))
+                return $sLangCountry;
+            $sLangCountry = str_replace('_', '-', $sLangCountry);
+            if (isset($aLangs[$sLangCountry]))
+                return $sLangCountry;            
+        }
+
+        return $sFallbackLanguage;
     }
 
     /**
