@@ -1478,7 +1478,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_live_updates "get_live_updates"
      */
-    public function serviceGetLiveUpdates($sType, $iOwnerId, $iProfileId, $iCount = 0)
+    public function serviceGetLiveUpdates($sType, $iOwnerId, $iProfileId, $iCount = 0, $iInit = 0)
     {
 		$sKey = $this->_oConfig->getLiveUpdateKey($sType, $iOwnerId);
 
@@ -1493,13 +1493,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		if($iCountNew == $iCount)
 			return false;
 
+		if((int)$iInit != 0)
+			return array('count' => $iCountNew);
+
     	return array(
-    		'count' => $iCountNew, // required
-    		'method' => $this->_oConfig->getJsObject('view') . '.showLiveUpdate(oData)', // required
-    		'data' => array(
-    			'code' => $this->_oTemplate->getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCount, $iCountNew)
-    		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
-    	);
+			'count' => $iCountNew, // required (for initialization and visualization)
+			'method' => $this->_oConfig->getJsObject('view') . '.showLiveUpdate(oData)', // required (for visualization)
+			'data' => array(
+				'code' => $this->_oTemplate->getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCount, $iCountNew)
+			),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+		);
     }
 
     /*

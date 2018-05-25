@@ -93,7 +93,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         //--- Add live update
 		$oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
 
-		$sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), 'get_live_updates', array($aParams['type'], $aParams['owner_id'], $oModule->getUserId(), '{count}'));
+		$sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), 'get_live_updates', array($aParams['type'], $aParams['owner_id'], $oModule->getUserId(), '{count}', '{init}'));
 		$sLiveUpdatesCode = BxDolLiveUpdates::getInstance()->add($this->_oConfig->getLiveUpdateKey($aParams['type'], $aParams['owner_id']), 1, $sServiceCall);
 		//--- Add live update
 

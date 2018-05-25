@@ -262,7 +262,8 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 			if($bIndexCheck && $iIndex % (int)$aSystem['frequency'] != 0)
 				continue;
 
-			$mixedResponce = $this->_getRequestedDataBySystem($aSystem, (!empty($aCachedData) && isset($aCachedData[$sName]) ? (int)$aCachedData[$sName] : 0));
+			$bCachedDataBySystem = !empty($aCachedData) && isset($aCachedData[$sName]);
+			$mixedResponce = $this->_getRequestedDataBySystem($aSystem, ($bCachedDataBySystem ? (int)$aCachedData[$sName] : 0), !$bCachedDataBySystem);
 			if($mixedResponce === false)
 				continue;
 
@@ -272,13 +273,13 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     	return $aResult;
     }
 
-    protected function _getRequestedDataBySystem($aSystem, $iCachedData = 0)
+    protected function _getRequestedDataBySystem($aSystem, $iCachedData = 0, $bInit = true)
     {
 		if(!BxDolService::isSerializedService($aSystem['service_call']))
 			return false;
 
-		$aResponce = BxDolService::callSerialized($aSystem['service_call'], array('count' => (int)$iCachedData));
-		if(empty($aResponce) || !is_array($aResponce) || !isset($aResponce['count'], $aResponce['method']))
+		$aResponce = BxDolService::callSerialized($aSystem['service_call'], array('count' => (int)$iCachedData, 'init' => ($bInit ? 1 : 0)));
+		if(empty($aResponce) || !is_array($aResponce) || !isset($aResponce['count']) || (!$bInit && !isset($aResponce['method'])))
 			return false;
 
 		return $aResponce;
