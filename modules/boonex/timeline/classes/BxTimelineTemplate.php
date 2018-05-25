@@ -849,6 +849,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     	if($iCount < 0)
     	    return '';
 
+		$iCountMax = $this->_oConfig->getLiveUpdateLength();
+		if($iCount > $iCountMax)
+			$iCount = $iCountMax;
+
         $aParams = $oModule->getParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, 0, $iCount, BX_TIMELINE_FILTER_OTHER_VIEWER);
         $aEvents = $this->_oDb->getEvents($aParams);
         if(empty($aEvents) || !is_array($aEvents))
