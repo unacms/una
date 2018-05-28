@@ -56,6 +56,11 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
     {
         return $this->getLanguageField($sName, 'Direction', $bFromCache);
     }
+
+    function getLangCountryCode($sName, $bFromCache = true)
+    {
+        return $this->getLanguageField($sName, 'LanguageCountry', $bFromCache);
+    }
     
     protected function getLanguageField($sName, $sField, $bFromCache = true)
     {
