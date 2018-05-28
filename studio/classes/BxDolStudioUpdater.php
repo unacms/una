@@ -99,14 +99,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         if($aResult['result']) {
             $this->oDb->updateModule(array('version' => $this->_aConfig['version_to']), array('id' => $aModuleInfo['id']));
 
-            $this->oDb->deleteModuleTrackFiles($aModuleInfo['id']);
-
-            $aFiles = array();
-            $this->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
-            foreach($aFiles as $aFile)
-                $this->oDb->insertModuleTrack($aModuleInfo['id'], $aFile);
-
-            //--- Remove update pckage ---//
+            //--- Remove update pàckage ---//
             $this->delete($aParams);
         }
 
@@ -131,6 +124,16 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 			foreach($this->_aConfig['delete_files'] as $sFile)
 				if(!$oFile->delete('modules/' . $this->_aConfig['module_dir'] . $sFile))
 					return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+		//--- Update files' tracks
+		$aModuleInfo = $this->oDb->getModulesBy(array('type' => 'path_and_uri', 'path' => $this->_aConfig['module_dir'], 'uri' => $this->_aConfig['module_uri']));
+
+		$this->oDb->deleteModuleTrackFiles($aModuleInfo['id']);
+		
+		$aFiles = array();
+		$this->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
+		foreach($aFiles as $aFile)
+			$this->oDb->insertModuleTrack($aModuleInfo['id'], $aFile);
 
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
