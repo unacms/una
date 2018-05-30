@@ -599,13 +599,17 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!isset($CNF['FIELD_PICTURE']) || empty($aContentInfo[$CNF['FIELD_PICTURE']]))
-            return array();
-
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
 
-        return array(
-		    array('url' => $sUrl, 'src' => $oGroupProfile->getPicture()),
+        $sSrc = '';
+        if(isset($CNF['FIELD_COVER']) && !empty($aContentInfo[$CNF['FIELD_COVER']]))
+            $sSrc = $oGroupProfile->getCover();
+
+        if(empty($sSrc) && isset($CNF['FIELD_PICTURE']) && !empty($aContentInfo[$CNF['FIELD_PICTURE']]))
+             $sSrc = $oGroupProfile->getPicture();
+
+        return empty($sSrc) ? array() : array(
+		    array('url' => $sUrl, 'src' => $sSrc, 'src_orig' => $sSrc),
 		);
     }
 
