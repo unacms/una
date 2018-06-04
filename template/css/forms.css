@@ -532,6 +532,7 @@
     padding:0 0 0 5px;
     width:auto;
 	float:left;
+	box-shadow: none;
 }
 .bx-form-value .bx-form-input-autotoken .bx-def-thumb-size {
     width: 2.5rem;
