@@ -16,7 +16,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
-        $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
+        $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html', 'showcase_wo_info' => 'unit_wo_info_showcase.html');
         if (!empty($aParams['unit_views']))
             $this->aUnitViews = $aParams['unit_views'];
         if (!empty($aParams['unit_view']))
@@ -25,7 +25,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
         $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper', 'bx-def-margin-sec-bottom-neg'));
-		if ('unit_with_cover_showcase.html' == $this->sUnitTemplate){
+		if (in_array($this->sUnitTemplate, array('unit_with_cover_showcase.html', 'unit_wo_info_showcase.html'))){
 			$this->bShowcaseView = true;
 			$this->removeContainerClass ('bx-def-margin-bottom-neg');			
         }

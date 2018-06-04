@@ -26,6 +26,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $this->_sUnitClass = 'bx-base-pofile-unit';
         $this->_sUnitClassWithCover = 'bx-base-pofile-unit-with-cover';
         $this->_sUnitClassWoInfo = 'bx-base-pofile-unit-wo-info';
+        $this->_sUnitClassWoInfoShowCase = 'bx-base-pofile-unit-wo-info bx-base-unit-showcase bx-base-pofile-unit-wo-info-showcase';
         $this->_sUnitClassShowCase = 'bx-base-pofile-unit-with-cover bx-base-unit-showcase bx-base-pofile-unit-showcase';
     }
 
@@ -119,6 +120,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                     'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 0.5)),
                     'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
                 )
+            ),
+            'bx_if:show_online' => array(
+            	'condition' => $oProfile->isOnline(),
+            	'content' => array()
             ),
             'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
             'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
@@ -340,6 +345,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 
             case 'unit_with_cover_showcase.html':
                 $sResult = $this->_sUnitClassShowCase;
+                break;
+
+			case 'unit_wo_info_showcase.html':
+                $sResult = $this->_sUnitClassWoInfoShowCase;
                 break;
         }
 

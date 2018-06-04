@@ -428,9 +428,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
 
-    public function serviceBrowseActiveProfiles ($bDisplayEmptyMsg = false)
+    public function serviceBrowseActiveProfiles ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
     {
-        return $this->_serviceBrowse ('active', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+        return $this->_serviceBrowse ('active', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
     public function serviceBrowseTopProfiles ($bDisplayEmptyMsg = false)
