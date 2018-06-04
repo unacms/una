@@ -447,7 +447,7 @@ class BxTemplConfig extends BxBaseConfig
     	if(empty($sDefault))
     		$sDefault = '0px 1px 3px 0px rgba(0, 0, 0, 0.25)';
 
-    	$sPattern = "/(-?[0-9]+\s*px\s*){4}\s*rgba\s*\(\s*([0-9]{1,3}\s*,\s*){3}\s*[0-9\.]+\s*\)/";
+    	$sPattern = "/((-?[0-9]+\s*px\s*){4}\s*rgba\s*\(\s*([0-9]{1,3}\s*,\s*){3}\s*[0-9\.]+\s*\)\s*,?\s*)+/";
 
     	$sValue = trim(getParam($sKey));
     	if(!$this->_isModule || empty($sValue) || $sValue == 'none')
