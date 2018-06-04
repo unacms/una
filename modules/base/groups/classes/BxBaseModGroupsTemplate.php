@@ -14,10 +14,14 @@
  */
 class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
 {
+	protected $_iUnitCharsSummary;
+
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
-        
+
+        $this->_iUnitCharsSummary = 50;
+
         $this->_sUnitClassWithCover .= ' bx-base-groups-unit-with-cover';
         $this->_sUnitClass = $this->_sUnitClassWithCover;
         $this->_sUnitClassWoInfo .= ' bx-base-groups-unit-wo-info'; 
@@ -34,6 +38,10 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
             $oProfile = BxDolProfileUndefined::getInstance();
 
         $aVars['title'] = (boolean)$aVars['public'] ? bx_process_output($aData[$CNF['FIELD_NAME']]) : _t($CNF['T']['txt_private_group']);
+        $aVars['description'] = '';
+        if(!empty($CNF['FIELD_TEXT']) && !empty($aData[$CNF['FIELD_TEXT']]) && (boolean)$aVars['public'])
+        	$aVars['description'] = strmaxtextlen(strip_tags($aData[$CNF['FIELD_TEXT']]), $this->_iUnitCharsSummary);
+
         $aVars['author'] = $oProfile->getDisplayName();
         $aVars['author_url'] = $oProfile->getUrl();
         $aVars['author_icon'] = $oProfile->getIcon();
