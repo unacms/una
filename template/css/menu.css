@@ -110,6 +110,7 @@ ul.bx-menu-custom-ver {
     margin-right:2px;
     margin-right:0.125rem;
     text-align:center;
+    vertical-align: top;
 }
 
 .bx-menu-notif li img,

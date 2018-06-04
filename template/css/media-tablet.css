@@ -38,4 +38,14 @@ html {
 }
 
 
+/* page layouts */
+.bx-layout-wrapper.bx-layout-top-area-bcb .bx-layout-col {
+    float:none !important;
+    width:auto !important;
+}
+.bx-layout-wrapper.bx-layout-top-area-bcb .bx-layout-col .bx-layout-cell {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
 } /* @media end */
