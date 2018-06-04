@@ -133,11 +133,11 @@ class BxDolMModule extends BxBaseModGeneralModule
             	'pwd'     => $this -> _oDb -> getExtraParam('passwd'),
                 'name' 	  => $this -> _oDb -> getExtraParam('db'),
 				'port'    => $this -> _oDb -> getExtraParam('port'),
-				'sock'	  => ''	
+				'sock'	  => $this -> _oDb -> getExtraParam('sock'),
 			);
 					
 		$this -> _oMDb = new BxMDb($aConfig);		
-		return $this -> _oMDb	-> connect(); 
+		return $this -> _oMDb -> connect(); 
 	}	
 }
 

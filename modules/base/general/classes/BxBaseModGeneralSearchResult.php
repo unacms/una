@@ -66,7 +66,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         if(!$oPrivacy)
             return;
 
-        if (isset($this->aCurrent['restriction']['context'])) {
+        if (!empty($this->aCurrent['restriction']['context']['value']) || !empty($this->aCurrent['restriction']['author']['value'])) {
             $this->setProcessPrivateContent(true);
             return;
         }

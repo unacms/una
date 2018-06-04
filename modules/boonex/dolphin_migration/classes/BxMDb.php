@@ -56,6 +56,15 @@ class BxMDb
        @set_exception_handler(array($this, 'pdoExceptionHandler'));
     }
 	
+	/**
+	 * get mysql version
+	 */
+    public function getVersion()
+    {
+        $s = $this->getOne("SELECT VERSION()");
+        return preg_match("/([0-9\.]+)/", $s, $m) ? $m[1] : false;
+    }
+	
 	public function connect()
     {
     	if(self::$_rLink)
@@ -75,7 +84,10 @@ class BxMDb
 
 	    	$this->pdoExec("SET NAMES 'utf8'");
 	        $this->pdoExec("SET sql_mode = ''");
-			$this->pdoExec("SET storage_engine=" . $this->_sStorageEngine);
+			
+			$sVer = $this->getVersion();
+            $sStorageEngine = !$sVer || version_compare($sVer, '5.7.5', '>=') ? 'default_storage_engine' : 'storage_engine';
+            $this->pdoExec("SET $sStorageEngine=" . $this->_sStorageEngine);
 
 			self::$_aDbCacheData = array();
     	}
