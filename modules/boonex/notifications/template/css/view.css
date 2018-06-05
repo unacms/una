@@ -3,6 +3,11 @@ div.bx-ntfs-view {
 	position: relative;
 }
 
+/*--- Preview Menu Style ---*/
+.bx-sliding-menu .bx-ntfs-preview .bx-def-font-h2 {
+	padding-right: 2.5rem;
+}
+
 /*--- Event Style ---*/
 div.bx-ntfs-event {
 	position: relative;
