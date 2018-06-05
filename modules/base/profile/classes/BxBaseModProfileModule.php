@@ -249,6 +249,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceTemplateFunc('urlCover', $iContentId);
     }
 
+    public function serviceProfileUnitCover ($iContentId)
+    {
+        return $this->_serviceTemplateFunc('urlCoverUnit', $iContentId);
+    }
+
     public function serviceProfileEditUrl ($iContentId)
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_EDIT_ENTRY'] . '&id=' . $iContentId);

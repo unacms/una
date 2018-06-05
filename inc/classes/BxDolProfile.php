@@ -275,6 +275,15 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         return BxDolService::call($aInfo['type'], 'profile_cover', array($aInfo['content_id']));
     }
 
+	/**
+     * Get unit cover url
+     */
+    public function getUnitCover($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_unit_cover', array($aInfo['content_id']));
+    }
+
     /**
      * Get thumbnail url
      */
