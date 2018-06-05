@@ -256,7 +256,7 @@ a.bx-base-pofile-cover-image:hover,
 	display: inline-block;
 	vertical-align: top;
 
-    width:calc(25.0%);
+    width:calc(16.6%);
 }
 
 @media (min-width:533px) and (max-width:1024px) {
@@ -283,7 +283,7 @@ a.bx-base-pofile-cover-image:hover,
 	}
     .bx-layout-column-thin .bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase
 	{
-		width:calc(25.0%);
+		width:calc(16.6%);
 	}
 }
 
