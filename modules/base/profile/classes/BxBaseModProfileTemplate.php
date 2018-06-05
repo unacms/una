@@ -299,7 +299,19 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     function urlCover ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
-        return $this->_image ($CNF['FIELD_COVER'], $CNF['OBJECT_IMAGES_TRANSCODER_COVER'], 'cover.jpg', $aData, $bSubstituteNoImage);
+
+        $sImageUrl = $this->_image($CNF['FIELD_COVER'], $CNF['OBJECT_IMAGES_TRANSCODER_COVER'], '', $aData, false);
+        if($sImageUrl === false) {
+        	$iImageId = (int)getParam('sys_site_cover_common');
+        	$oImageTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER);
+        	if($oImageTranscoder && $iImageId != 0)
+        		$sImageUrl = $oImageTranscoder->getFileUrl($iImageId);
+        }
+
+        if($bSubstituteNoImage && !$sImageUrl)
+        	$sImageUrl = $this->getImageUrl('cover.jpg');
+
+		return $sImageUrl;
     }
 
 	/**
