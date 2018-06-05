@@ -11,6 +11,8 @@
 
 class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
 {
+	protected $_bShowZeros;
+
     protected $_sModule;
     protected $_oModule;
 
@@ -20,6 +22,8 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
+
+        $this->_bShowZeros = false;
 
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
@@ -95,7 +99,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($CNF['FIELD_VIEWS']) || empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]))
+        if(empty($CNF['FIELD_VIEWS']) || (empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]) && !$this->_bShowZeros))
             return false;
 
         return $this->_oTemplate->getUnitMetaItemText(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]));
@@ -119,7 +123,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(empty($CNF['OBJECT_COMMENTS']) || empty($CNF['FIELD_COMMENTS']) || empty($this->_aContentInfo[$CNF['FIELD_COMMENTS']]))
+        if(empty($CNF['OBJECT_COMMENTS']) || empty($CNF['FIELD_COMMENTS']) || (empty($this->_aContentInfo[$CNF['FIELD_COMMENTS']]) && !$this->_bShowZeros))
             return false;
 
         $oComments = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_aContentInfo[$CNF['FIELD_ID']]);

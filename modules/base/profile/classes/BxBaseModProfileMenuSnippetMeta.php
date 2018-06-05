@@ -22,6 +22,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
     {
         parent::__construct($aObject, $oTemplate);
 
+        $this->_bShowZeros = true;
         $this->_bContentPublic = false;
 
         $this->_aConnectionToFunctionCheck = array(
@@ -86,7 +87,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         $iFriends = $oConnection->getConnectedInitiatorsCount($this->_oContentProfile->id(), true);
-        if(!$iFriends)
+        if(!$iFriends && !$this->_bShowZeros)
             return false;
 
         return $this->_oTemplate->getUnitMetaItemText(_t('_sys_menu_item_title_sm_friends', $iFriends));
@@ -104,7 +105,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
             
         $iSubscribers = $oConnection->getConnectedInitiatorsCount($this->_oContentProfile->id());
-        if(!$iSubscribers)
+        if(!$iSubscribers && !$this->_bShowZeros)
             return false;
 
         return $this->_oTemplate->getUnitMetaItemText(_t('_sys_menu_item_title_sm_subscribers', $iSubscribers));
