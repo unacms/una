@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+  
+  <string name="_bx_charts"><![CDATA[Charts]]></string>
+  <string name="_bx_charts_adm_stg_cpt_type"><![CDATA[Charts]]></string>
+	<string name="_bx_charts_adm_stg_cpt_category_chart_top_contents_by_likes"><![CDATA[Top contents by likes]]></string>
+	<string name="_bx_charts_adm_stg_cpt_category_chart_most_active_profiles"><![CDATA[Most active profiles]]></string>
+  <string name="_bx_charts_adm_stg_cpt_chart_top_contents_by_likes_modules_enabled"><![CDATA[Enabled for modules]]></string>
+  <string name="_bx_charts_adm_stg_cpt_chart_top_contents_by_likes_count"><![CDATA[Count]]></string>
+  <string name="_bx_charts_adm_stg_cpt_chart_most_active_profiles_modules_enabled"><![CDATA[Enabled for modules]]></string>
+  <string name="_bx_charts_adm_stg_cpt_chart_most_active_profiles_count"><![CDATA[Count]]></string>
+  <string name="_bx_charts_adm_stg_cpt_chart_most_active_profiles_posts_for_module"><![CDATA[For module]]></string>
+  <string name="_bx_charts_page_block_title_system_chart_top_contents_by_likes"><![CDATA[Top contents by likes]]></string>
+  <string name="_bx_charts_page_block_title_chart_top_contents_by_likes"><![CDATA[Top contents by likes]]></string>
+  <string name="_bx_charts_page_block_title_system_chart_most_active_profiles"><![CDATA[Most active profiles]]></string>
+  <string name="_bx_charts_page_block_title_chart_most_active_profiles"><![CDATA[Most active profiles]]></string>
+  <string name="_bx_charts_most_active_profiles_legend_posts"><![CDATA[Posted items]]></string>
+  <string name="_bx_charts_most_active_profiles_legend_views"><![CDATA[Profile views]]></string>
+  
+</resources>
