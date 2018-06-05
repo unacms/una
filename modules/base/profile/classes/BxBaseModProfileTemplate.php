@@ -131,6 +131,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'content_url' => $bPublic ? $sUrl : 'javascript:void(0);',
             'content_click' => !$bPublic ? 'javascript:bx_alert(' . bx_js_string('"' . _t('_sys_access_denied_to_private_content') . '"') . ');' : '',
             'title' => $sTitle,
+            'title_attr' => bx_html_attribute($sTitle),
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
             'bx_if:meta' => array(
