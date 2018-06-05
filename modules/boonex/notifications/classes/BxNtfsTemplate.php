@@ -112,8 +112,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent))) !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
-        list($sOwnerName, $sOwnerUrl, $sOwnerIcon) = $oModule->getUserInfo($aEvent['owner_id']);
-        $bAuthorIcon = !empty($sOwnerIcon);
+        list($sOwnerName, $sOwnerUrl, $sOwnerIcon, $sOwnerUnit, $sOwnerUnitWoInfo) = $oModule->getUserInfo($aEvent['owner_id']);
 
         $aEvent['content']['owner_name'] = $sOwnerName;
         $aEvent['content']['owner_link'] = $sOwnerUrl;
@@ -134,16 +133,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             'js_object' => $this->_oConfig->getJsObject('view'),
             'class' => !empty($aBrowseParams['last_read']) && $aEvent['id'] > $aBrowseParams['last_read'] ? ' bx-def-color-bg-box-active' : '', 
             'id' => $aEvent['id'],
-            'bx_if:show_icon' => array(
-                'condition' => $bAuthorIcon,
-                'content' => array(
-                    'author_icon' => $sOwnerIcon
-                )
-            ),
-            'bx_if:show_icon_empty' => array(
-                'condition' => !$bAuthorIcon,
-                'content' => array()
-            ),
+            'author_unit' => $sOwnerUnitWoInfo,
             'link' => $this->_getContentLink($aEvent),
             'content' => $aEvent['content_parsed'],
             'date' => bx_time_js($aEvent['date']),
