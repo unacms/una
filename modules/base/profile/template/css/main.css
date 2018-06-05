@@ -244,7 +244,8 @@ a.bx-base-pofile-cover-image:hover,
 
 /* showcase view */
 .bx-base-unit-showcase-wrapper {
-    display:block
+    display: block;
+    white-space: nowrap;
 }
 .bx-base-unit-showcase-wrapper .bx-base-pofile-unit-showcase
 {
@@ -252,7 +253,10 @@ a.bx-base-pofile-cover-image:hover,
 }
 .bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase
 {
-    width:calc(33.3%);
+	display: inline-block;
+	vertical-align: top;
+
+    width:calc(25.0%);
 }
 
 @media (min-width:533px) and (max-width:1024px) {
@@ -275,11 +279,11 @@ a.bx-base-pofile-cover-image:hover,
 
 	.bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase
 	{
-		width:calc(16.6%);
+		width:calc(10.0%);
 	}
     .bx-layout-column-thin .bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase
 	{
-		width:calc(33.3%);
+		width:calc(25.0%);
 	}
 }
 
@@ -311,15 +315,15 @@ a.bx-base-pofile-cover-image:hover,
 
 	.bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase
 	{
-		width:calc(8.3%);
+		width:calc(6.66%);
 	}
     .bx-layout-column-thin .bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase
 	{
-		width:calc(33.3%);
+		width:calc(25.0%);
 	}
     .bx-layout-column-half .bx-base-unit-showcase-wrapper .bx-base-pofile-unit-wo-info-showcase
 	{
-		width:calc(16.6%);
+		width:calc(10.0%);
 	}
 }
 

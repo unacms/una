@@ -26,6 +26,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     protected $sCenterContentUnitSelector = false;
 
+    protected $aContainerAttrs = array();
     protected $aContainerClasses = array('bx-search-result-block', 'bx-clearfix');
 
     protected $aUnitParams = array(); ///< additional params array to pass to unit display function
@@ -58,7 +59,13 @@ class BxBaseSearchResult extends BxDolSearchResult
 
             $sSearchResultBlockId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
             $sClasses = implode(' ', $this->aContainerClasses);
-            $sCode = '<div id="' . $sSearchResultBlockId . '" class="' . $sClasses . '">' . $sCode . '</div>';
+
+            $sAttributes = '';
+            if(is_array($this->aContainerAttrs) && !empty($this->aContainerAttrs))
+            	foreach ($this->aContainerAttrs as $sName => $sValue)
+            		$sAttributes .= ' ' . $sName . '="' . $sValue . '"';
+
+            $sCode = '<div id="' . $sSearchResultBlockId . '" class="' . $sClasses . '"' . $sAttributes . '>' . $sCode . '</div>';
 
             if (!$this->_bLiveSearch && $this->sCenterContentUnitSelector) {
                 $sCode .= "
@@ -342,6 +349,30 @@ class BxBaseSearchResult extends BxDolSearchResult
         foreach ($mixed as $s)
             if (false !== ($i = array_search($s, $this->aContainerClasses)))
                 unset($this->aContainerClasses[$i]);
+    }
+
+    /**
+     * Add attribute(s) to search result container 
+     * @param $aAttributes an array of Key -> Value pair(s).
+     */
+    function addContainerAttribute ($aAttributes)
+    {
+    	if(empty($aAttributes) || !is_array($aAttributes))
+    		return;
+
+    	$this->aContainerAttrs = array_merge($this->aContainerAttrs, $aAttributes);
+    }
+
+	/**
+     * Remove attribute(s) from search result container 
+     * @param $mixedName attribute name or an array of names
+     */
+    function removeContainerAttribute ($mixedName)
+    {
+        if(!is_array($mixedName))
+            $mixedName = array($mixedName);
+
+		$this->aContainerAttrs = array_diff_assoc($this->aContainerAttrs, array_flip($mixedName));
     }
 
     public function setUnitParams ($aParamsAdd = array(), $aParamsRemove = array())

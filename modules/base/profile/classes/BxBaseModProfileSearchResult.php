@@ -27,7 +27,10 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper', 'bx-def-margin-sec-bottom-neg'));
 		if (in_array($this->sUnitTemplate, array('unit_with_cover_showcase.html', 'unit_wo_info_showcase.html'))){
 			$this->bShowcaseView = true;
-			$this->removeContainerClass ('bx-def-margin-bottom-neg');			
+
+			$this->removeContainerClass ('bx-def-margin-bottom-neg');
+			if($this->sUnitTemplate == 'unit_wo_info_showcase.html')
+				$this->addContainerAttribute(array('bx-sc-group-cells' => 3));
         }
         if ($sMode == 'recommended')
             $this->bRecommendedView=true;
