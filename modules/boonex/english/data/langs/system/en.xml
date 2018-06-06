@@ -1892,7 +1892,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_password_confirm_error"><![CDATA[Password confirmation failed]]></string>
 	<string name="_sys_form_account_input_password_current"><![CDATA[Current Password]]></string>
 	<string name="_sys_form_account_input_password_current_error"><![CDATA[Current password isn't correct, please enter password you are using to login to this site.]]></string>
-	<string name="_sys_form_account_input_password_error"><![CDATA[Password must at least 6 characters long.]]></string>
+	<string name="_sys_form_account_input_password_error"><![CDATA[The password must at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter and 1 digit.]]></string>
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Receive Newsletters]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Receive Site Updates]]></string>
 	<string name="_sys_form_account_input_submit"><![CDATA[Submit]]></string>
