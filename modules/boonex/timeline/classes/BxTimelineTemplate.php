@@ -541,8 +541,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bShowDoRepostAsButtonSmall = isset($aParams['show_do_repost_as_button_small']) && $aParams['show_do_repost_as_button_small'] == true;
         $bShowDoRepostAsButton = !$bShowDoRepostAsButtonSmall && isset($aParams['show_do_repost_as_button']) && $aParams['show_do_repost_as_button'] == true;
 
-        $bShowDoRepostIcon = isset($aParams['show_do_repost_icon']) && $aParams['show_do_repost_icon'] == true;
-        $bShowDoRepostLabel = isset($aParams['show_do_repost_label']) && $aParams['show_do_repost_label'] == true;
+        $bShowDoRepostImage = isset($aParams['show_do_repost_image']) && $aParams['show_do_repost_image'] == true && !empty($aParams['image_do_repost']);
+        $bShowDoRepostIcon = isset($aParams['show_do_repost_icon']) && $aParams['show_do_repost_icon'] == true && !empty($aParams['icon_do_repost']);
+        $bShowDoRepostText = isset($aParams['show_do_repost_text']) && $aParams['show_do_repost_text'] == true && !empty($aParams['text_do_repost']);
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
 
         //--- Do repost link ---//
@@ -574,12 +575,38 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		if(!empty($sOnClick))
 			$aOnClickAttrs['onclick'] = $sOnClick;
 
-		$sDoRepost = '';
-        if($bShowDoRepostIcon)
-            $sDoRepost .= $this->parseIcon('repeat');
+		//--- Do repost label ---//
+		$sMethodDoRepostLabel = ''; 
+		$sTemplateDoRepostLabel = '';
+		if(!empty($aParams['template_do_repost_label'])) {
+			$sMethodDoRepostLabel = 'parseHtmlByContent';
+			$sTemplateDoRepostLabel = $aParams['template_do_repost_label'];
+		}
+		else {
+			$sMethodDoRepostLabel = 'parseHtmlByName';
+			$sTemplateDoRepostLabel = $aParams['template_do_repost_label_name'];
+		}
 
-        if($bShowDoRepostLabel)
-            $sDoRepost .= ($sDoRepost != '' ? ' ' : '') . _t('_bx_timeline_txt_do_repost');
+		$sDoRepost = $this->$sMethodDoRepostLabel($sTemplateDoRepostLabel, array(
+        	'bx_if:show_image' => array(
+        		'condition' => $bShowDoRepostImage,
+        		'content' => array(
+        			'src' => $this->getIconUrl($aParams['image_do_repost'])
+        		)
+        	),
+        	'bx_if:show_icon' => array(
+        		'condition' => $bShowDoRepostIcon,
+        		'content' => array(
+        			'name' => $aParams['icon_do_repost']
+        		)
+        	),
+        	'bx_if:show_text' => array(
+        		'condition' => $bShowDoRepostText,
+        		'content' => array(
+        			'text' => _t($aParams['text_do_repost'])
+        		)
+        	)
+        ));
 
         return $this->parseHtmlByName('repost_element_block.html', array(
             'style_prefix' => $sStylePrefix,

@@ -208,9 +208,23 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aRepostDefaults = array(
             'show_do_repost_as_button' => false,
             'show_do_repost_as_button_small' => false,
+        	'show_do_repost_image' => false,
             'show_do_repost_icon' => true,
-            'show_do_repost_label' => false,
-            'show_counter' => true
+            'show_do_repost_text' => false,
+            'show_counter' => true,
+
+        	//--- Images
+        	'image_do_repost' => '',
+        	
+        	//--- Icons
+        	'icon_do_repost' => 'repeat',
+
+        	//--- Texts
+        	'text_do_repost' => '_bx_timeline_txt_do_repost',
+
+        	//--- Templates
+        	'template_do_repost_label' => '',
+        	'template_do_repost_label_name' => 'repost_do_repost_label.html',
         );
 
         $this->_iTimelineVisibilityThreshold = 0;
