@@ -47,6 +47,9 @@ class BxAccntMenuManageTools extends BxBaseModGeneralMenuManageTools
             case 'unmake-operator':
             	$sCheckFuncName = 'checkAllowedUnmakeOperator';
             	break;
+            case 'unlock-account':
+            	$sCheckFuncName = 'checkAllowedUnlockAccount';
+            	break;
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))

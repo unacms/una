@@ -154,6 +154,12 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         return false;
     }
     
+    public function isLocked($iAccountId = false)
+    {
+        $a = $this->getInfo((int)$iAccountId);
+        return $a['locked'] ? true : false;
+    }
+    
     //
 
     /**

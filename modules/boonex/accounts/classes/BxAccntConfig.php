@@ -40,6 +40,7 @@ class BxAccntConfig extends BxBaseModGeneralConfig
                 'filter_item_operators' => '_bx_accnt_grid_filter_item_title_adm_operators',
             	'filter_item_pending' => '_bx_accnt_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_accnt_grid_filter_item_title_adm_suspended',
+                'filter_item_locked' => '_bx_accnt_grid_filter_item_title_adm_locked',
             	'filter_item_select_one_filter1' => '_bx_accnt_grid_filter_item_title_adm_select_one_filter1',
                 'filter_item_select_one_filter2' => '_bx_accnt_grid_filter_item_title_adm_select_one_filter2',
         	)

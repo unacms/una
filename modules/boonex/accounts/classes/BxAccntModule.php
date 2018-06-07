@@ -81,6 +81,14 @@ class BxAccntModule extends BxBaseModGeneralModule
 
     	return CHECK_ACTION_RESULT_ALLOWED;
     }
+    
+    public function checkAllowedUnlockAccount(&$aDataEntry, $isPerformAction = false)
+    {
+    	if((int)$aDataEntry['locked'] != 1)
+    		return _t('_sys_txt_access_denied');
+
+    	return CHECK_ACTION_RESULT_ALLOWED;
+    }
 }
 
 /** @} */

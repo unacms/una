@@ -168,7 +168,40 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      */
     public function updateLoggedIn($iID)
     {
-        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `logged` = ?, `ip` = ? WHERE `id`= ?", time(), getVisitorIP(), $iID);
+        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `logged` = ?, `ip` = ?, `login_attempts` = 0 WHERE `id`= ?", time(), getVisitorIP(), $iID);
+        return $this->query($sQuery);
+    }
+    
+    /**
+     * Update login attempts counter
+     * @param  int    $iID account id
+     * @return number of affected rows
+     */
+    public function updateAttemptsCounter($iID)
+    {
+        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `login_attempts` = `login_attempts` + 1 WHERE `id`= ?", $iID);
+        return $this->query($sQuery);
+    }
+    
+    /**
+     * Lock account
+     * @param  int    $iID account id
+     * @return number of affected rows
+     */
+    public function lockAccount($iID)
+    {
+        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `locked` = 1 WHERE `id`= ?", $iID);
+        return $this->query($sQuery);
+    }
+    
+    /**
+     * Unlock account
+     * @param  int    $iID account id
+     * @return number of affected rows
+     */
+    public function unlockAccount($iID)
+    {
+        $sQuery = $this->prepare("UPDATE `sys_accounts` SET `locked` = 0, `login_attempts` = 0 WHERE `id`= ?", $iID);
         return $this->query($sQuery);
     }
 

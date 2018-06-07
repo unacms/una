@@ -184,8 +184,21 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
             'info' => $aAccountInfo,
 			'pwd' => $sPassword,
             'password' => &$sPassCheck,
-        ));		
-	
+        ));
+    
+	$iMaxLoginAttempts = getParam('sys_account_limit_incorrect_login_attempts');
+    if ($iMaxLoginAttempts >0){
+        $oAccountQuery = BxDolAccountQuery::getInstance();
+        if ($aAccountInfo['login_attempts'] >= $iMaxLoginAttempts){
+            $oAccountQuery->lockAccount($aAccountInfo['id'], 1);
+            bx_import('BxDolLanguages');
+            return _t("_sys_txt_login_locked", BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'));
+        }
+        else{
+            $oAccountQuery->updateAttemptsCounter($aAccountInfo['id']);
+        }
+    }
+    
     if ($sErrorMsg = bx_check_login($aAccountInfo['id'], $sPassCheck, $iRole))
         return $sErrorMsg;
 
@@ -195,6 +208,7 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
 
     $sErrorMsg = '';
     bx_alert('account', 'check_login',  $aAccountInfo['id'], false, array('error_msg' => &$sErrorMsg));
+    
     return $sErrorMsg;
 }
 
