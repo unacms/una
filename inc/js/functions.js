@@ -220,6 +220,9 @@ function showPopupAnyHtml(sUrl, sId) {
 function bx_loading_svg(sType, sClass) {
 	sClass = sClass != undefined && sClass.length > 0 ? sClass : '';
 
+	if(sUseSvgLoading != undefined && sUseSvgLoading.length > 0)
+		return sUseSvgLoading.replace(new RegExp('__type__','g'), sType).replace(new RegExp('__class__','g'), sClass);
+
 	var s = '';
 	s += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 520 520" class="' + sClass + '" style="enable-background:new 0 0 520 520;" xml:space="preserve">';
 	s += '<g class="' + sType + '">';

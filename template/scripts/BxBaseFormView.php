@@ -448,9 +448,14 @@ EOS;
 
         $sErrorIcon = $this->genErrorIcon(empty($aInput['error']) ? '' : $aInput['error']);
 
+        $sClassWrapper = 'bx-form-element-wrapper';
+        if($isOneLine)
+        	$sClassWrapper .= ' ' . $sClassWrapper . '-oneline';
+		$sClassWrapper .= ' bx-def-margin-top';
+
         if (isset($aInput['name']))
             $aInput['tr_attrs']['id'] = "bx-form-element-" . $aInput['name'];
-        $sTrAttrs = bx_convert_array2attrs(isset($aInput['tr_attrs']) && is_array($aInput['tr_attrs']) ? $aInput['tr_attrs'] : array(), "bx-form-element-wrapper bx-def-margin-top");
+        $sTrAttrs = bx_convert_array2attrs(isset($aInput['tr_attrs']) && is_array($aInput['tr_attrs']) ? $aInput['tr_attrs'] : array(), $sClassWrapper);
 
         $sClassOneLineCaption = '';
         $sClassOneLineValue = '';
