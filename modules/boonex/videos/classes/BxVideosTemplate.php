@@ -47,8 +47,9 @@ class BxVideosTemplate extends BxBaseModTextTemplate
 
         $this->_checkDuration($aContentInfo);
 
-        if(isset($CNF['FIELD_POSTER']) && !empty($aContentInfo[$CNF['FIELD_POSTER']]))
-            $sPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER'])->getFileUrl($aContentInfo[$CNF['FIELD_POSTER']]);
+		$sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
+        if(!empty($sPosterSrc) && !empty($aContentInfo[$sPosterSrc]))
+            $sPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER'])->getFileUrl($aContentInfo[$sPosterSrc]);
         else 
             $sPoster = $aTranscodersVideo['poster']->getFileUrl($iFile);
 
