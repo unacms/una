@@ -197,20 +197,16 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             echoJson(array());
             return;
         }
-
-        $iId = $aIds[0];
-        $oAccount = BxDolAccount::getInstance($iId);
-        if(!$oAccount)
-            return echoJson(array());
-        $aRes = array();
-        if ($oAccount->isLocked()){
-            $oAccountQuery = BxDolAccountQuery::getInstance();
-            $oAccountQuery->unlockAccount($iId);
-            $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
-        }
-        else{
-            $aRes = array('msg' => _t('_bx_accnt_grid_action_unlock_error'));
-        }
+		$oAccountQuery = BxDolAccountQuery::getInstance();
+		foreach($aIds as $iId){
+			$oAccount = BxDolAccount::getInstance($iId);
+			if(!$oAccount)
+				continue;
+			if ($oAccount->isLocked()){
+				$oAccountQuery->unlockAccount($iId);
+			}
+		}
+		$aRes = array('grid' => $this->getCode(false), 'blink' => $aIds);
         return echoJson($aRes);
     }
 
