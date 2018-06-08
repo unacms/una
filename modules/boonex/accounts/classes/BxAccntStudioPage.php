@@ -39,8 +39,8 @@ class BxAccntStudioPage extends BxTemplStudioModule
         if(!$oGrid)
             return '';
 
-        $this->_oModule->_oTemplate->addStudioCss(array('manage_tools.css'));
-        $this->_oModule->_oTemplate->addStudioJs(array('manage_tools.js'));
+        $this->_oModule->_oTemplate->addStudioCss(array('manage_tools.css', 'main.css'));
+        $this->_oModule->_oTemplate->addStudioJs(array('manage_tools.js', 'main.js'));
         $this->_oModule->_oTemplate->addStudioJsTranslation(array('_sys_grid_search'));
         return $this->_oModule->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode();
     }

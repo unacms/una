@@ -436,6 +436,9 @@ class BxBaseServiceAccount extends BxDol
 
         $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_PasswordReset', $aPlus, $iAccountId);
 
+		$oAccountQuery = BxDolAccountQuery::getInstance();
+		$oAccountQuery->unlockAccount($iAccountId);
+		
         if ($aTemplate && sendMail($aData['email'], $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
             return _t("_sys_txt_reset_pasword_email_sent", $sPassword);
         else

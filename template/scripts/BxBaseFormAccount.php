@@ -59,7 +59,6 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
 
         return BxDolAccountQuery::getInstance()->getIdByEmail($s) ? _t('_sys_form_account_input_email_uniq_error', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password')) : true;
     }
-
 }
 
 /**

@@ -19,8 +19,10 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
     	$this->MODULE = 'bx_accounts';
         parent::__construct ($aOptions, $oTemplate);
-
+        
         $CNF = &$this->_oModule->_oConfig->CNF;
+        $this->_aFilter1Values['locked'] = $CNF['T']['filter_item_locked'];
+       
         $this->_sFilter2Name = 'filter2';
         $this->_aFilter2Values = array(
             'operators' => $CNF['T']['filter_item_operators']
@@ -38,8 +40,12 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
-    	if(!empty($this->_sFilter1Value))
-        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
+    	if(!empty($this->_sFilter1Value)){
+            if ($this->_sFilter1Value != 'locked')
+        	    $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
+            else
+                $this->_aOptions['source'] .= " AND `ta`.`locked` = 1";
+        }
         
         if(!empty($this->_sFilter2Value))
         	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `ta`.`role` & " . BX_DOL_ROLE_ADMIN ." = " . BX_DOL_ROLE_ADMIN);
@@ -183,6 +189,26 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
         return echoJson($aRes);
     }
+    
+    public function performActionUnlockAccount()
+    {
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            echoJson(array());
+            return;
+        }
+		$oAccountQuery = BxDolAccountQuery::getInstance();
+		foreach($aIds as $iId){
+			$oAccount = BxDolAccount::getInstance($iId);
+			if(!$oAccount)
+				continue;
+			if ($oAccount->isLocked()){
+				$oAccountQuery->unlockAccount($iId);
+			}
+		}
+		$aRes = array('grid' => $this->getCode(false), 'blink' => $aIds);
+        return echoJson($aRes);
+    }
 
 	public function performActionMakeOperator()
     {
@@ -259,7 +285,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
         return '';
     }
-
+    
     protected function _getCellEmailConfirmed($mixedValue, $sKey, $aField, $aRow)
     {
     	$mixedValue = (int)$mixedValue == 1 ? '_Yes' : '_No';
@@ -270,12 +296,17 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
         return '';
     }
+    
+    protected function _getActionUnlockAccount($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        return '';
+    }
 
     protected function _getCellName($mixedValue, $sKey, $aField, $aRow)
     {
         $oAccount = BxDolAccount::getInstance($aRow['id']);
         if ($oAccount)
-            $s = $oAccount->getDisplayName();
+            $s = ($aRow['locked'] == 1 ? $this->_oTemplate->parseIcon("lock col-red1") . ' ' : '') . $oAccount->getDisplayName();
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
     }
     

@@ -20,10 +20,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_accounts_menu_manage_tools', @sName, 'edit-email', '_bx_accnt_menu_item_title_system_edit_email', '_bx_accnt_menu_item_title_edit_email', 'javascript:void(0)', 'javascript:{js_object}.onClickEditEmail({content_id}, this);', '_self', 'at', '', 192, 1, 0, 1),
 ('bx_accounts_menu_manage_tools', @sName, 'resend-cemail', '_bx_accnt_menu_item_title_system_resend_cemail', '_bx_accnt_menu_item_title_resend_cemail', 'javascript:void(0)', 'javascript:{js_object}.onClickResendCemail({content_id}, this);', '_self', 'envelope-o', '', 192, 1, 0, 2),
 ('bx_accounts_menu_manage_tools', @sName, 'reset-password', '_bx_accnt_menu_item_title_system_reset_password', '_bx_accnt_menu_item_title_reset_password', 'javascript:void(0)', 'javascript:{js_object}.onClickResetPassword({content_id}, this);', '_self', 'eraser', '', 192, 1, 0, 3),
-('bx_accounts_menu_manage_tools', @sName, 'delete', '_bx_accnt_menu_item_title_system_delete', '_bx_accnt_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id}, this);', '_self', 'trash-o', '', 192, 1, 0, 4),
-('bx_accounts_menu_manage_tools', @sName, 'delete-with-content', '_bx_accnt_menu_item_title_system_delete_with_content', '_bx_accnt_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id}, this);', '_self', 'trash-o', '', 192, 1, 0, 5),
-('bx_accounts_menu_manage_tools', @sName, 'make-operator', '_bx_accnt_menu_item_title_system_make_operator', '_bx_accnt_menu_item_title_make_operator', 'javascript:void(0)', 'javascript:{js_object}.onClickMakeOperator({content_id}, this);', '_self', 'wrench', '', 192, 1, 0, 6),
-('bx_accounts_menu_manage_tools', @sName, 'unmake-operator', '_bx_accnt_menu_item_title_system_unmake_operator', '_bx_accnt_menu_item_title_unmake_operator', 'javascript:void(0)', 'javascript:{js_object}.onClickUnmakeOperator({content_id}, this);', '_self', 'wrench', '', 192, 1, 0, 7);
+('bx_accounts_menu_manage_tools', @sName, 'unlock-account', '_bx_accnt_menu_item_title_system_unlock_account', '_bx_accnt_menu_item_title_unlock_account', 'javascript:void(0)', 'javascript:{js_object}.onClickUnlockAccount({content_id}, this);', '_self', 'unlock', '', 192, 1, 0, 4),
+('bx_accounts_menu_manage_tools', @sName, 'delete', '_bx_accnt_menu_item_title_system_delete', '_bx_accnt_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id}, this);', '_self', 'trash-o', '', 192, 1, 0, 5),
+('bx_accounts_menu_manage_tools', @sName, 'delete-with-content', '_bx_accnt_menu_item_title_system_delete_with_content', '_bx_accnt_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id}, this);', '_self', 'trash-o', '', 192, 1, 0, 6),
+('bx_accounts_menu_manage_tools', @sName, 'make-operator', '_bx_accnt_menu_item_title_system_make_operator', '_bx_accnt_menu_item_title_make_operator', 'javascript:void(0)', 'javascript:{js_object}.onClickMakeOperator({content_id}, this);', '_self', 'wrench', '', 192, 1, 0, 7),
+('bx_accounts_menu_manage_tools', @sName, 'unmake-operator', '_bx_accnt_menu_item_title_system_unmake_operator', '_bx_accnt_menu_item_title_unmake_operator', 'javascript:void(0)', 'javascript:{js_object}.onClickUnmakeOperator({content_id}, this);', '_self', 'wrench', '', 192, 1, 0, 8);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -75,4 +76,5 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_accounts_administration', 'bulk', 'delete_with_content', '_bx_accnt_grid_action_title_adm_delete_with_content', '', 0, 1, 5),
 ('bx_accounts_administration', 'single', 'edit_email', '_bx_accnt_grid_action_title_adm_edit_email', '', 0, 0, 0),
 ('bx_accounts_administration', 'single', 'reset_password', '_bx_accnt_grid_action_title_adm_reset_password', '', 0, 0, 0),
-('bx_accounts_administration', 'single', 'settings', '_bx_accnt_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);
+('bx_accounts_administration', 'single', 'unlock_account', '_bx_accnt_grid_action_title_adm_unlock_account', '', 0, 0, 0),
+('bx_accounts_administration', 'single', 'settings', '_bx_accnt_grid_action_title_adm_more_actions', 'cog', 1, 0, 2);
