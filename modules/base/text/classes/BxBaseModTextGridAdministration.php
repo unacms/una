@@ -81,6 +81,28 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
+    
+    protected function _getCellHeaderReports ($sKey, $aField)
+    {
+        $s = parent::_getCellHeaderDefault($sKey, $aField);
+        return preg_replace ('/<a(.*?)>(.*?)<\/a>/', '<a$1><i class="sys-icon exclamation-triangle"></i></a>', $s);
+    }
+    
+    protected function _getCellReports($mixedValue, $sKey, $aField, $aRow)
+    {
+     
+        if ($mixedValue == 0){
+            $mixedValue = '';
+        }
+        else{
+            $CNF = &$this->_oModule->_oConfig->CNF;
+            $oReports = isset($CNF['OBJECT_REPORTS']) ? BxBaseReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aRow[$CNF['FIELD_ID']]) : null;
+            if ($oReports){
+                $mixedValue = $oReports->getCounter().$oReports->getJsScript();
+            }
+        }
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
 
     protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
     {
