@@ -90,7 +90,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     
     protected function _getCellReports($mixedValue, $sKey, $aField, $aRow)
     {
-     
         if ($mixedValue == 0){
             $mixedValue = '';
         }
