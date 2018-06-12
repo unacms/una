@@ -85,7 +85,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     protected function _getCellHeaderReports ($sKey, $aField)
     {
         $s = parent::_getCellHeaderDefault($sKey, $aField);
-        return preg_replace ('/<a(.*?)>(.*?)<\/a>/', '<a$1 title="' . _t('_sys_txt_reports_title') . '"><i class="sys-icon exclamation-triangle"></i></a>', $s);
+        return preg_replace ('/<a(.*?)>(.*?)<\/a>/', '<a$1 title="' . bx_html_attribute(_t('_sys_txt_reports_title')) . '"><i class="sys-icon exclamation-triangle"></i></a>', $s);
     }
     
     protected function _getCellReports($mixedValue, $sKey, $aField, $aRow)
