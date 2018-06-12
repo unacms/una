@@ -373,17 +373,18 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_polls_administration', 'Sql', 'SELECT * FROM `bx_polls_entries` WHERE 1 ', 'bx_polls_entries', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 192, 'BxPollsGridAdministration', 'modules/boonex/polls/classes/BxPollsGridAdministration.php'),
+('bx_polls_administration', 'Sql', 'SELECT * FROM `bx_polls_entries` WHERE 1 ', 'bx_polls_entries', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'text', '', 'like', 'reports', '', 192, 'BxPollsGridAdministration', 'modules/boonex/polls/classes/BxPollsGridAdministration.php'),
 ('bx_polls_common', 'Sql', 'SELECT * FROM `bx_polls_entries` WHERE 1 ', 'bx_polls_entries', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 2147483647, 'BxPollsGridCommon', 'modules/boonex/polls/classes/BxPollsGridCommon.php');
 
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_polls_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_polls_administration', 'switcher', '_bx_polls_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_polls_administration', 'text', '_bx_polls_grid_column_title_adm_title', '25%', 0, '25', '', 3),
-('bx_polls_administration', 'added', '_bx_polls_grid_column_title_adm_added', '20%', 1, '25', '', 4),
-('bx_polls_administration', 'author', '_bx_polls_grid_column_title_adm_author', '25%', 0, '25', '', 5),
-('bx_polls_administration', 'actions', '', '20%', 0, '', '', 6),
+('bx_polls_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '', '', 3),
+('bx_polls_administration', 'text', '_bx_polls_grid_column_title_adm_title', '25%', 0, '25', '', 4),
+('bx_polls_administration', 'added', '_bx_polls_grid_column_title_adm_added', '20%', 1, '25', '', 5),
+('bx_polls_administration', 'author', '_bx_polls_grid_column_title_adm_author', '20%', 0, '25', '', 6),
+('bx_polls_administration', 'actions', '', '20%', 0, '', '', 7),
 ('bx_polls_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_polls_common', 'switcher', '_bx_polls_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_polls_common', 'text', '_bx_polls_grid_column_title_adm_title', '40%', 0, '35', '', 3),
