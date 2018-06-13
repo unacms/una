@@ -71,7 +71,7 @@ class BxDolMProfiles extends BxDolMData
 			else 
 				$this -> addPreValues('Sex', true, 2); // transfer all sex values more then 2 value
 
-			$aResult = $this -> _mDb -> getAll("SELECT * FROM `"  . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `ID` ASC LIMIT 2");			
+			$aResult = $this -> _mDb -> getAll("SELECT * FROM `"  . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `ID` ASC");			
 
 			$aAdditionalProfileFields = $this -> getAssocFields();
 			$aSex = $this -> getPreValuesBy('Sex', 'Value', 'Order');

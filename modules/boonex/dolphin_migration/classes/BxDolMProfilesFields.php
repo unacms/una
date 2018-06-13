@@ -147,7 +147,7 @@ class BxDolMProfilesFields extends BxDolMData
 		{
 			if (!$this -> _oDb -> isFieldExists('bx_persons_data', $sKey))
 			{
-				   if (!$this -> _oDb -> query("ALTER TABLE `bx_persons_data` ADD $sKey {$aItem['type']['sql']}")){
+			if (!$this -> _oDb -> query("ALTER TABLE `bx_persons_data` ADD `{$sKey}` {$aItem['type']['sql']}")){
 						 $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_profile_field_can_not_be_transferred'));
 						 return BX_MIG_FAILED;
 				   }			   
