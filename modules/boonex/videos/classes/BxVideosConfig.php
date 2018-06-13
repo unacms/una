@@ -11,6 +11,8 @@
 
 class BxVideosConfig extends BxBaseModTextConfig
 {
+	protected $_bViewPageCover;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -42,7 +44,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
-        	'FIELD_POSTER' => 'poster',
+        	'FIELD_POSTER' => '', //'poster',
         	'FIELD_VIDEOS' => 'videos',
             'FIELD_VIDEO' => 'video',
 			'FIELD_VIEWS' => 'views',
@@ -157,7 +159,14 @@ class BxVideosConfig extends BxBaseModTextConfig
         	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
+
+        $this->_bViewPageCover = false;
     }
+
+    public function isViewPageCover()
+    {
+    	return $this->_bViewPageCover;
+    } 
 }
 
 /** @} */

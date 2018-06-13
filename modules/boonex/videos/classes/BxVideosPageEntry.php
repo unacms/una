@@ -29,6 +29,9 @@ class BxVideosPageEntry extends BxBaseModTextPageEntry
 
     protected function _getImageForPageCover ()
     {
+    	if(!$this->_oModule->_oConfig->isViewPageCover())
+    		return false;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(!empty($CNF['FIELD_THUMB']) && !empty($this->_aContentInfo[$CNF['FIELD_THUMB']]))
@@ -44,8 +47,9 @@ class BxVideosPageEntry extends BxBaseModTextPageEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!empty($CNF['FIELD_POSTER']) && !empty($this->_aContentInfo[$CNF['FIELD_POSTER']]))
-            return array('id' => $this->_aContentInfo[$CNF['FIELD_POSTER']], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_POSTER']);
+		$sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
+        if(!empty($sPosterSrc) && !empty($this->_aContentInfo[$sPosterSrc]))
+            return array('id' => $this->_aContentInfo[$sPosterSrc], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_POSTER']);
 
         if(!empty($CNF['FIELD_VIDEO']) && !empty($this->_aContentInfo[$CNF['FIELD_VIDEO']]))
             return array('id' => $this->_aContentInfo[$CNF['FIELD_VIDEO']], 'transcoder' => $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);

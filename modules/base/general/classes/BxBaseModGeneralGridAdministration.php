@@ -141,6 +141,15 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
     	return $this->_oModule->_oDb->getContentInfoById($iId);
     }
+    
+    protected function _getProfileObject($iId)
+    {
+        $oProfile = BxDolProfile::getInstance($iId);
+        if (!$oProfile) 
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+        return $oProfile;
+    }
 
 	protected function _getManageAccountUrl($sFilter = '')
     {
@@ -171,6 +180,27 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     protected function _onDelete($iId, $aParams = array())
     {
     	return true;
+    }
+    
+    protected function _getCellHeaderReports ($sKey, $aField)
+    {
+        $s = parent::_getCellHeaderDefault($sKey, $aField);
+        return preg_replace ('/<a(.*?)>(.*?)<\/a>/', '<a$1 title="' . bx_html_attribute(_t('_sys_txt_reports_title')) . '"><i class="sys-icon exclamation-triangle"></i></a>', $s);
+    }
+    
+    protected function _getCellReports($mixedValue, $sKey, $aField, $aRow)
+    {
+        if ($mixedValue == 0){
+            $mixedValue = '';
+        }
+        else{
+            $CNF = &$this->_oModule->_oConfig->CNF;
+            $oReports = isset($CNF['OBJECT_REPORTS']) ? BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aRow[$CNF['FIELD_ID']]) : null;
+            if ($oReports){
+                $mixedValue = $oReports->getCounter().$oReports->getJsScript();
+            }
+        }
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 }
 

@@ -343,6 +343,25 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
+     * Get form object for add, edit, view or delete the content 
+     * @param $sType 'add', 'edit', 'view' or 'delete'
+     * @param $sDisplay optional display name
+     * @return form object or false on error
+     */
+    public function serviceGetObjectForm ($sType, $sDisplay = false)
+    {
+        if (!in_array($sType, array('add', 'edit', 'view', 'delete')))
+            return false;
+
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
+        $oFormsHelper = new $sClass($this);
+
+        $sFunc = 'getObjectForm' . ucfirst($sType);
+        return $oFormsHelper->$sFunc($sDisplay);
+    }
+
+    /**
      * Create entry form
      * @return HTML string
      */

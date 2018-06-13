@@ -113,8 +113,9 @@ class BxVideosModule extends BxBaseModTextModule
         if(!($oTcvPoster || $oTciPoster) || !$oTcvMp4 || !$oTcvWebm)
             return array();
 
-        if(isset($CNF['FIELD_POSTER']) && !empty($aContentInfo[$CNF['FIELD_POSTER']]) && $oTciPoster)
-            $sPoster = $oTciPoster->getFileUrl($aContentInfo[$CNF['FIELD_POSTER']]);
+		$sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
+        if(!empty($sPosterSrc) && !empty($aContentInfo[$sPosterSrc]) && $oTciPoster)
+            $sPoster = $oTciPoster->getFileUrl($aContentInfo[$sPosterSrc]);
         else 
             $sPoster = $oTcvPoster->getFileUrl($iFile);
 

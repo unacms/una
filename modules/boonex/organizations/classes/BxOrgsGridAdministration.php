@@ -42,14 +42,13 @@ class BxOrgsGridAdministration extends BxBaseModGroupsGridAdministration
 
     	if(!empty($this->_sFilter1Value))
         	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
-        
-        if(!empty($this->_sFilter2Value))
+        if(!empty($this->_sFilter2Value)){
         	$iLevel = intval(str_replace("level", "", $this->_sFilter2Value));
 			if ($iLevel <> 3)
         		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`id` IN (SELECT `IDMember` FROM `sys_acl_levels_members` WHERE IDLevel = ?) ", $iLevel);
 			else
 				$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`id` NOT IN (SELECT `IDMember` FROM `sys_acl_levels_members`) ");
-
+        }
         return parent::_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
     

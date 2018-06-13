@@ -1419,7 +1419,7 @@ BLAH;
 
                 'jquery.webForms.js',
 
-                'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.js',
+                'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
 
             	'jquery-minicolors/jquery.minicolors.min.js',
 

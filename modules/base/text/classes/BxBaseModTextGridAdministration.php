@@ -81,7 +81,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
-
+    
     protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
     {
     	$oProfile = $this->_getProfileObject($aRow['author']);
@@ -127,15 +127,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     	));
 
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
-    }
-
-    protected function _getProfileObject($iId)
-    {
-        $oProfile = BxDolProfile::getInstance($iId);
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return $oProfile;
     }
 
     protected function _getEntryLink($mixedValue, $aRow)
