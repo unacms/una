@@ -129,15 +129,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getProfileObject($iId)
-    {
-        $oProfile = BxDolProfile::getInstance($iId);
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return $oProfile;
-    }
-
     protected function _getEntryLink($mixedValue, $aRow)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
