@@ -301,7 +301,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_timeline_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '', '', 2),
 ('bx_timeline_administration', 'description', '_bx_timeline_grid_column_title_adm_description', '25%', 0, '25', '', 3),
 ('bx_timeline_administration', 'date', '_bx_timeline_grid_column_title_adm_added', '20%', 1, '25', '', 5),
-('bx_timeline_administration', 'owner_id', '_bx_posts_grid_column_title_adm_author', '20%', 0, '25', '', 6),
+('bx_timeline_administration', 'owner_id', '_bx_timeline_grid_column_title_adm_author', '20%', 0, '25', '', 6),
 ('bx_timeline_administration', 'actions', '', '20%', 0, '', '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
