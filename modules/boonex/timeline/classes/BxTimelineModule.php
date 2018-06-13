@@ -1504,6 +1504,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 			),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
 		);
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Accounts
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_menu_addon_manage_tools get_menu_addon_manage_tools
+     * 
+     * @code bx_srv('bx_timeline', 'get_menu_addon_manage_tools', [...]); @endcode
+     * 
+     * Get number of 'hidden' events for User End -> Dasboard page -> Manage block.
+     *
+     * @return integer number of 'hidden' events
+     * 
+     * @see BxTimelineModule::serviceGetMenuAddonManageTools
+     */
+    /** 
+     * @ref bx_timeline-get_menu_addon_manage_tools "get_menu_addon_manage_tools"
+     */
+	public function serviceGetMenuAddonManageTools()
+	{
+		bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass();
+        $o->fillFilters(array(
+			'active' => 0
+        ));
+        $o->unsetPaginate();
+
+        return $o->getNum();
+	}
 
     /*
      * COMMON METHODS
@@ -1516,6 +1546,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->onDelete($aEvent);
         return true;
     }
+    
 
     public function addAttachLink($aValues, $sDisplay = false)
     {

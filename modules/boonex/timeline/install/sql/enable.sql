@@ -55,6 +55,14 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('trigger_page_group_view_entry', @iPBCellGroup, 'bx_timeline', '_bx_timeline_page_block_title_system_view_profile', '_bx_timeline_page_block_title_view_profile', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_view_profile";s:6:"params";a:1:{i:0;s:6:"{type}";}}', 0, 0, 1, 0),
 ('trigger_page_group_view_entry', @iPBCellGroup, 'bx_timeline', '_bx_timeline_page_block_title_system_view_profile_outline', '_bx_timeline_page_block_title_view_profile_outline', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_block_view_profile_outline";s:6:"params";a:1:{i:0;s:6:"{type}";}}', 0, 0, 0, 0);
 
+-- PAGE: module manage all
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_timeline_administration', '_bx_timeline_page_title_sys_manage_administration', '_bx_timeline_page_title_manage', 'bx_timeline', 5, 192, 1, 'timeline-administration', 'page.php?i=timeline-administration', '', '', '', 0, 1, 0, 'BxTimelinePageBrowse', 'modules/boonex/timeline/classes/BxTimelinePageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_timeline_administration', 1, 'bx_timeline', '_bx_timeline_page_block_title_system_manage_administration', '_bx_timeline_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_timeline\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
+
+
 -- MENU: Item Share (Repost, Send to Friend, etc)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_timeline_menu_item_share', '_bx_timeline_menu_title_item_share', 'bx_timeline_menu_item_share', 'bx_timeline', 6, 0, 1, 'BxTimelineMenuItemShare', 'modules/boonex/timeline/classes/BxTimelineMenuItemShare.php');
@@ -120,6 +128,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('trigger_profile_view_submenu', 'bx_timeline', 'timeline-view', '_bx_timeline_menu_item_title_system_view_timeline_view', '_bx_timeline_menu_item_title_view_timeline_view', 'page.php?i=timeline-view&profile_id={profile_id}', '', '', 'clock-o col-green1', '', 2147483647, 1, 0, 0),
 ('trigger_group_view_submenu', 'bx_timeline', 'timeline-view', '_bx_timeline_menu_item_title_system_view_timeline_view', '_bx_timeline_menu_item_title_view_timeline_view', 'page.php?i=timeline-view&profile_id={profile_id}', '', '', 'clock-o col-green1', '', 2147483647, 1, 0, 0);
 
+-- MENU: dashboard manage tools
+SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_account_dashboard_manage_tools', 'bx_timeline', 'timeline-administration', '_bx_timeline_menu_item_title_system_admt_timeline', '_bx_timeline_menu_item_title_admt_timeline', 'page.php?i=timeline-administration', '', '_self', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- SETTINGS
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
@@ -277,6 +289,24 @@ SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_timeline', '_bx_timeline', @iSearchOrder + 1, 'BxTimelineSearchResult', 'modules/boonex/timeline/classes/BxTimelineSearchResult.php'),
 ('bx_timeline_cmts', '_bx_timeline_cmts', @iSearchOrder + 2, 'BxTimelineCmtsSearchResult', 'modules/boonex/timeline/classes/BxTimelineCmtsSearchResult.php');
+
+
+-- GRIDS: moderation tools
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline_administration', 'Sql', 'SELECT * FROM `bx_timeline_events` WHERE 1 ', 'bx_timeline_events', 'id', 'date', 'active', '', 20, NULL, 'start', '', 'title,description', '', 'like', 'reports', '', 192, 'BxTimelineGridAdministration', 'modules/boonex/timeline/classes/BxTimelineGridAdministration.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_timeline_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
+('bx_timeline_administration', 'switcher', '_bx_timeline_grid_column_title_adm_active', '8%', 0, '', '', 2),
+('bx_timeline_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '', '', 2),
+('bx_timeline_administration', 'description', '_bx_timeline_grid_column_title_adm_description', '25%', 0, '25', '', 3),
+('bx_timeline_administration', 'date', '_bx_timeline_grid_column_title_adm_added', '20%', 1, '25', '', 5),
+('bx_timeline_administration', 'owner_id', '_bx_posts_grid_column_title_adm_author', '20%', 0, '25', '', 6),
+('bx_timeline_administration', 'actions', '', '20%', 0, '', '', 7);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_timeline_administration', 'bulk', 'delete', '_bx_timeline_grid_action_title_adm_delete', '', 0, 1, 1),
+('bx_timeline_administration', 'single', 'delete', '_bx_timeline_grid_action_title_adm_delete', 'remove', 1, 1, 2);
 
 
 -- METATAGS

@@ -72,6 +72,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         	// objects
         	'OBJECT_STORAGE' => $this->_sName . '_photos',
+            'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
         	'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
@@ -86,6 +87,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         		'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
             	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',
         		'txt_sample_vote_single' => '_bx_timeline_txt_sample_vote_single',
+                'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
+                'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',
             ),
         );
 
@@ -146,12 +149,19 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',
             'post' => 'BxTimelinePost',
-            'repost' => 'BxTimelineRepost'
+            'repost' => 'BxTimelineRepost',
+            'manage_tools' => 'BxTimelineManageTools'
         );
         $this->_aJsObjects = array(
             'view' => 'oTimelineView',
             'post' => 'oTimelinePost',
-            'repost' => 'oTimelineRepost'
+            'repost' => 'oTimelineRepost',
+            'manage_tools' => 'oBxTimelineManageTools'
+        );
+        
+        $this->_aGridObjects = array(
+        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
+        	
         );
 
         $sHp = str_replace('_', '-', $this->_sName);

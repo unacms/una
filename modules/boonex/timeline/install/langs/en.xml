@@ -86,6 +86,8 @@
     <string name="_bx_timeline_page_title_item_brief"><![CDATA[Feed Item Preview]]></string>
 	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Feed]]></string>
 	<string name="_bx_timeline_page_title_account"><![CDATA[Feed]]></string>
+  <string name="_bx_timeline_page_title_sys_manage_administration"><![CDATA[Manage All]]></string>
+  <string name="_bx_timeline_page_title_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_timeline_page_block_title_system_post_profile"><![CDATA[Post to Feed]]></string>
 	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Post to Feed]]></string>
 	<string name="_bx_timeline_page_block_title_system_view_profile"><![CDATA[Profile Feed (Timeline)]]></string>
@@ -113,8 +115,10 @@
     <string name="_bx_timeline_page_block_title_system_view_hot_outline"><![CDATA[Hot Feed (Outline)]]></string>
     <string name="_bx_timeline_page_block_title_view_hot_outline"><![CDATA[Hot Feed]]></string>
 	<string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Feeds' Comments]]></string>
+  <string name="_bx_timeline_page_block_title_system_manage_administration"><![CDATA[Manage All]]></string>
+  <string name="_bx_timeline_page_block_title_manage"><![CDATA[Manage]]></string>
 
-    <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>
+  <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>
     <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Posts by {0}]]></string>
     <string name="_bx_timeline_menu_item_view_other"><![CDATA[Posts by others]]></string>
     <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
@@ -125,6 +129,8 @@
     <string name="_bx_timeline_menu_item_title_item_repost"><![CDATA[Repost]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Send]]></string>
     <string name="_bx_timeline_menu_item_title_item_send"><![CDATA[Send to Friend]]></string>
+    <string name="_bx_timeline_menu_item_title_system_admt_timeline"><![CDATA[Timeline]]></string>
+    <string name="_bx_timeline_menu_item_title_admt_timeline"><![CDATA[Timeline - {addon} hidden]]></string>
     
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
@@ -174,6 +180,13 @@
 	<string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Timeline]]></string>
 
+  <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Active]]></string>
+  <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Event]]></string>
+  <string name="_bx_timeline_grid_column_title_adm_added"><![CDATA[Added]]></string>
+  <string name="_bx_timeline_grid_column_title_adm_author"><![CDATA[Author]]></string>
+  <string name="_bx_timeline_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+  <string name="_bx_timeline_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+  
 	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Timeline (post)]]></string>
 	<string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Timeline (repost)]]></string>
 	<string name="_bx_timeline_alert_action_added"><![CDATA[add]]></string>
@@ -183,6 +196,7 @@
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Empty]]></string>
 	<string name="_bx_timeline_txt_msg_performed_action"><![CDATA[The action was successfully performed.]]></string>
 	<string name="_bx_timeline_txt_msg_posted"><![CDATA[Posted successfully.]]></string>
+  <string name="_bx_timeline_grid_action_err_delete"><![CDATA[Cannot delete the selected timeline events(s).]]></string>
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 	<string name="_bx_timeline_txt_err_empty_post"><![CDATA[The post is empty.]]></string>
 

@@ -141,6 +141,15 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
     	return $this->_oModule->_oDb->getContentInfoById($iId);
     }
+    
+    protected function _getProfileObject($iId)
+    {
+        $oProfile = BxDolProfile::getInstance($iId);
+        if (!$oProfile) 
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+        return $oProfile;
+    }
 
 	protected function _getManageAccountUrl($sFilter = '')
     {
