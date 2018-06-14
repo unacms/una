@@ -910,28 +910,33 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return;
         };
 
-        $iObjId = $this->getId();
-        $iObjAthrId = $this->getObjectAuthorId($iObjId);
-
         $iCmtId = 0;
         if(bx_get('Cmt') !== false)
             $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
-
-        $aCmt = $this->_oQuery->getCommentSimple ($iObjId, $iCmtId);
+        echoJson($this->remove($iCmtId));
+    }
+    
+    public function remove($iCmtId)
+    {
+        $aCmt = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iCmtId));
         if(!$aCmt) {
-            echoJson(array('msg' => _t('_No such comment')));
-            return;
+            return array('msg' => _t('_No such comment'));
         }
-
+        
+        $iObjId = $this->getId();
+        if (!$iObjId){
+            $this->setId($aCmt['cmt_object_id']);
+            $iObjId = $aCmt['cmt_object_id'];
+        }
+        $iObjAthrId = $this->getObjectAuthorId($iObjId);
+        
         if ($aCmt['cmt_replies'] > 0) {
-            echoJson(array('msg' => _t('_Can not delete comments with replies')));
-            return;
+            return array('msg' => _t('_Can not delete comments with replies'));
         }
 
         $iPerformerId = $this->_getAuthorId();
         if(!$this->isRemoveAllowed($aCmt)) {
-            echoJson(array('msg' => $aCmt['cmt_author_id'] == $iPerformerId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
-            return;
+            return array('msg' => $aCmt['cmt_author_id'] == $iPerformerId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied'));
         }
 
         if($this->_oQuery->removeComment($iObjId, $iCmtId, $aCmt['cmt_parent_id'])) {
@@ -990,12 +995,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     ));
                 }
             }
-
-            echoJson(array('id' => $iCmtId));
-            return;
+            return array('id' => $iCmtId);
         }
-
-        echoJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
+        return array('msg' => _t('_cmt_err_cannot_perform_action'));
     }
 
     public function actionResumeLiveUpdate()

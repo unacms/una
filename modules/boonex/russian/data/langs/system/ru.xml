@@ -1671,7 +1671,13 @@
 	<string name="_sys_block_types_custom"><![CDATA[Индивидуальный]]></string>
 	<string name="_sys_block_types_skeletons"><![CDATA[Скелеты]]></string>
 	<string name="_sys_block_types_system"><![CDATA[Система]]></string>
-	<string name="_sys_chart_growth_object"><![CDATA[Вывести]]></string>
+  
+  <string name="_sys_cmts_administration_grid_column_title_adm_cmt_text"><![CDATA[Текст]]></string>
+  <string name="_sys_cmts_administration_grid_column_title_adm_cmt_time"><![CDATA[Добавлено]]></string>
+  <string name="_sys_cmts_administration_grid_column_title_adm_cmt_author_id"><![CDATA[Автор]]></string>
+  <string name="_sys_cmts_administration_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+	
+    <string name="_sys_chart_growth_object"><![CDATA[Вывести]]></string>
     <string name="_sys_chart_growth_date_from"><![CDATA[С]]></string>
     <string name="_sys_chart_growth_date_to"><![CDATA[По]]></string>
     <string name="_sys_chart_accounts_growth"><![CDATA[Аккаунты: Развитие]]></string>
@@ -2030,6 +2036,7 @@
 	<string name="_sys_grid_confirmation"><![CDATA[Вы уверены?]]></string>
 	<string name="_sys_grid_delete_failed"><![CDATA[Удалить ошибочные]]></string>
 	<string name="_sys_grid_search"><![CDATA[Поиск...]]></string>
+  <string name="_sys_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 	<string name="_sys_inst_conf_desc"><![CDATA[{0}{1}<br />Пример: {2}]]></string>
 	<string name="_sys_inst_conf_desc_admin_email"><![CDATA[Администратор - имейл.]]></string>
 	<string name="_sys_inst_conf_desc_admin_pwd"><![CDATA[Администратор - пароль.]]></string>
@@ -2144,6 +2151,7 @@
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Добавить...]]></string>
 	<string name="_sys_menu_item_title_cart"><![CDATA[Корзина]]></string>
+  <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
@@ -2203,6 +2211,7 @@
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
 	<string name="_sys_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
+  <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>
@@ -2337,6 +2346,7 @@
     <string name="_sys_page_block_title_add_content"><![CDATA[Добавить содержимое]]></string>
     <string name="_sys_page_block_title_chart_growth"><![CDATA[Диаграммы развития]]></string>
     <string name="_sys_page_block_title_chart_stats"><![CDATA[Содержимое]]></string>    
+  <string name="_sys_page_block_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
@@ -2347,6 +2357,7 @@
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string>
+  <string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_block_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
@@ -2371,6 +2382,7 @@
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Добавить содержимое]]></string>
+  <string name="_sys_page_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
 	<string name="_sys_page_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string>
@@ -2389,6 +2401,7 @@
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Добавить содержимое]]></string>
+  <string name="_sys_page_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_title_system_confirm_email"><![CDATA[Имейл подтверждение]]></string>
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string>
