@@ -52,6 +52,20 @@ class BxBaseCmtsServices extends BxDol
     		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
     	);
     }
+    
+    public function serviceManageTools($sType = 'common')
+    {
+        $oGrid = BxDolGrid::getObjectInstance('sys_cmts_administration');
+        if(!$oGrid)
+            return '';
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addJs(array('BxDolCmtsManageTools.js'));
+        $oTemplate->addCss(array('cmts_manage_tools.css'));
+        $oTemplate->addJsTranslation(array('_sys_grid_search'));
+        return array(
+        	'content' =>  $oGrid->getCode()
+        );
+    }
 }
 
 /** @} */
