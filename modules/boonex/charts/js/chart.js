@@ -29,7 +29,7 @@ BxCharts.prototype.loadData = function () {
     bx_loading(oGraphWrp, true);
 
     $.get(
-    	this._sActionsUri + 'GetChartData/' + $this._sChartName + '/',
+    	this._sActionsUri + 'get_chart_data/' + $this._sChartName + '/',
     	{
     	},
     	function (oData) {

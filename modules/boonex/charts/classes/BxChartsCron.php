@@ -37,34 +37,51 @@ class BxChartsCron extends BxDolCron
         $this->_oModule->_oDb->clearTopByLikes();
         foreach($aModules as $sModule){
             $oModule = BxDolModule::getInstance($sModule);
-            $sSystem = $oModule->_oConfig->CNF['OBJECT_VOTES'];
-            if(empty($sSystem))
-                continue;
-            $this->_oModule->_oDb->saveTopByLikes($sModule, $aSystems[$sSystem]['table_main']);
+            if(isset($oModule->_oConfig->CNF['OBJECT_VOTES'])){
+                $sSystem = $oModule->_oConfig->CNF['OBJECT_VOTES'];
+                if(empty($sSystem))
+                    continue;
+                $this->_oModule->_oDb->saveTopByLikes($sModule, $aSystems[$sSystem]['table_main']);
+            }
         }
     }
     
     function processingMostActiveProfiles()
     {
         $this->_oModule->_oDb->clearMostActiveProfiles();
-        $sContentModule = getParam('bx_charts_chart_most_active_profiles_posts_for_module');
-        $oContentModule = BxDolModule::getInstance($sContentModule);
-        if ($oContentModule){
-            $sContentTable = $oContentModule->_oConfig->CNF['TABLE_ENTRIES'];
-            $sColumnAuthor = $oContentModule->_oConfig->CNF['FIELD_AUTHOR'];
-            if (!empty($sContentTable) && !empty($sColumnAuthor)){
-                $aSystems = BxDolView::getSystems();
-                $aModules = array_keys($this->_oModule->serviceGetProfileModules());
-                $sModulesDisabled = explode(',', getParam('bx_charts_chart_most_active_profiles_modules_disabled'));
-                $aModules = array_diff($aModules, $sModulesDisabled);
-                foreach($aModules as $sModule){
-                    $oModule = BxDolModule::getInstance($sModule);
-                    $sSystem = $oModule->_oConfig->CNF['OBJECT_VIEWS'];
-                    if(empty($sSystem))
-                        continue;
-                    $this->_oModule->_oDb->saveMostActiveProfiles_View($sModule, $aSystems[$sSystem]['table_track']);
-                    $this->_oModule->_oDb->saveMostActiveProfiles_Create($sModule, $sContentTable, $sColumnAuthor);
+        $aContentModules = array_keys($this->_oModule->serviceGetTextModules());
+        $sContentModulesDisabled = explode(',', getParam('bx_charts_chart_most_active_profiles_posts_for_module_disabled'));
+        $aContentModules = array_diff($aContentModules, $sContentModulesDisabled);
+        foreach($aContentModules as $sContentModule){
+            $oContentModule = BxDolModule::getInstance($sContentModule);
+            if ($oContentModule && isset($oContentModule->_oConfig->CNF['TABLE_ENTRIES']) && isset($oContentModule->_oConfig->CNF['FIELD_AUTHOR'])){
+                $sContentTable = $oContentModule->_oConfig->CNF['TABLE_ENTRIES'];
+                $sColumnAuthor = $oContentModule->_oConfig->CNF['FIELD_AUTHOR'];
+                if (!empty($sContentTable) && !empty($sColumnAuthor)){
+                    $aSystems = BxDolView::getSystems();
+                    $aModules = array_keys($this->_oModule->serviceGetProfileModules());
+                    $sModulesDisabled = explode(',', getParam('bx_charts_chart_most_active_profiles_modules_disabled'));
+                    $aModules = array_diff($aModules, $sModulesDisabled);
+                    foreach($aModules as $sProfileModule){
+                        $oModule = BxDolModule::getInstance($sProfileModule);
+                        if(isset($oModule->_oConfig->CNF['OBJECT_VIEWS'])){
+                            $sSystem = $oModule->_oConfig->CNF['OBJECT_VIEWS'];
+                            if(empty($sSystem))
+                                continue;
+                            $this->_oModule->_oDb->saveMostActiveProfiles_Create($sProfileModule, $sContentModule, $sContentTable, $sColumnAuthor);
+                        }
+                    }
                 }
+            }
+        }
+        
+        foreach($aModules as $sProfileModule){
+            $oModule = BxDolModule::getInstance($sProfileModule);
+            if(isset($oModule->_oConfig->CNF['OBJECT_VIEWS'])){
+                $sSystem = $oModule->_oConfig->CNF['OBJECT_VIEWS'];
+                if(empty($sSystem))
+                    continue;
+                $this->_oModule->_oDb->saveMostActiveProfiles_View($sProfileModule, $aSystems[$sSystem]['table_track']);
             }
         }
     }

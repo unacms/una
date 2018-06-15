@@ -136,7 +136,7 @@ class BxChartsModule extends BxDolModule
             $aData = $this->_oDb->getTopByLikes();
             foreach ($aData as $aValue) {
                 $oModule = BxDolModule::getInstance($aValue['module']);
-                array_push($aValues['labels'], $oModule->serviceGetTitle($aValue['object_id']) . ' ' . $oModule->_aModule['title']);
+                array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])) . ' (' . $oModule->_aModule['title'].')');
                 array_push($aValues['values'], $aValue['value']);
                 array_push($aValues['links'], $oModule->serviceGetLink($aValue['object_id']));
               
@@ -150,7 +150,7 @@ class BxChartsModule extends BxDolModule
             $aData = $this->_oDb->getMostActiveProfiles();
             foreach ($aData as $aValue) {
                 $oModule = BxDolModule::getInstance($aValue['module']);
-                array_push($aValues['labels'], $oModule->serviceGetTitle($aValue['object_id']) . ' ' . $oModule->_aModule['title']);
+                array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])) . ' (' . $oModule->_aModule['title'].')');
                 array_push($aValues['values1'], $aValue['create_count']);
                 array_push($aValues['values2'], $aValue['views_count']);
                 array_push($aValues['links'], $oModule->serviceGetLink($aValue['object_id']));
@@ -158,6 +158,18 @@ class BxChartsModule extends BxDolModule
             }
             echo  '{"type":"bar",  "data": {"labels":' . json_encode($aValues['labels']) . ',"datasets": [{"label": "' . _t('_bx_charts_most_active_profiles_legend_posts') . '","backgroundColor": "' . $this->aColors[0] . '","borderColor": "' . $this->aColors[0] . '","borderWidth": 1,"data": ' . json_encode($aValues['values1']) . '}, {"label": "' . _t('_bx_charts_most_active_profiles_legend_views') . '","backgroundColor": "' . $this->aColors[1] . '","borderColor":"' . $this->aColors[1] . '","borderWidth": 1,"data": ' . json_encode($aValues['values2']) . '}]},"links": ' . json_encode($aValues['links']) . '}';
         }
+    }
+    
+    private function getItemName($sString)
+    {
+        $sString = strip_tags($sString);
+        if ($sString == ''){
+            $sString = _t('_bx_charts_txt_empty_title_item');
+        }
+        else{
+            $sString = strmaxtextlen($sString, 10, '...');
+        }
+        return $sString;
     }
 }
 
