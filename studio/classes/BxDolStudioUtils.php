@@ -132,7 +132,7 @@ class BxDolStudioUtils extends BxDol
         if($bShowCustom)
             $aResult[BX_DOL_STUDIO_MODULE_CUSTOM] = self::getModuleTitle(BX_DOL_STUDIO_MODULE_CUSTOM);
 
-        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'type', 'value' => array(BX_DOL_MODULE_TYPE_MODULE, BX_DOL_MODULE_TYPE_TEMPLATE), 'active' => 1));
         foreach($aModules as $aModule)
             $aResult[$aModule['name']] = $aModule['title'];
 
