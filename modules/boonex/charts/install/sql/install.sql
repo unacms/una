@@ -4,16 +4,22 @@ CREATE TABLE IF NOT EXISTS `bx_charts_top_by_likes` (
   `object_id` int(11) NOT NULL default '0',
   `module` varchar(255) NOT NULL,
   `value` int(11) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX `value` (`value`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_charts_most_active_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
-  `module` varchar(255) NOT NULL,
+  `profile_module` varchar(255) NOT NULL,
+  `content_module` varchar(255) NOT NULL,
   `views_count` int(11) NOT NULL default '0',
   `create_count` int(11) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX `views_count` (`views_count`),
+  INDEX `create_count` (`create_count`),
+  INDEX `object_id` (`object_id`),
+  INDEX `profile_module` (`profile_module`)
 );
 
 -- STUDIO: page & widget

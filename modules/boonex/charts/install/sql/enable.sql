@@ -20,7 +20,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
 (@iCategoryId, 'bx_charts_chart_most_active_profiles_modules_disabled', '_bx_charts_adm_stg_cpt_chart_most_active_profiles_modules_enabled', '', 'rlist', 'a:2:{s:6:"module";s:9:"bx_charts";s:6:"method";s:19:"get_profile_modules";}', '', '', '', 1),
-(@iCategoryId, 'bx_charts_chart_most_active_profiles_posts_for_module', '_bx_charts_adm_stg_cpt_chart_most_active_profiles_posts_for_module', 'bx_posts', 'select', 'a:2:{s:6:"module";s:9:"bx_charts";s:6:"method";s:16:"get_text_modules";}', '', '', '', 2),
+(@iCategoryId, 'bx_charts_chart_most_active_profiles_posts_for_module_disabled', '_bx_charts_adm_stg_cpt_chart_most_active_profiles_posts_for_module', '', 'rlist', 'a:2:{s:6:"module";s:9:"bx_charts";s:6:"method";s:16:"get_text_modules";}', '', '', '', 2),
 (@iCategoryId, 'bx_charts_chart_most_active_profiles_count', '_bx_charts_adm_stg_cpt_chart_most_active_profiles_count', '5', 'digit', '', '', '', '', 3);
 
 -- PAGES: add page block on dashboard
@@ -33,4 +33,4 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
-('bx_charts_cron', '0 * * * *', 'BxChartsCron', 'modules/boonex/charts/classes/BxChartsCron.php', '');
+('bx_charts_cron', '0 1 * * *', 'BxChartsCron', 'modules/boonex/charts/classes/BxChartsCron.php', '');

@@ -25,7 +25,7 @@ class BxChartsDb extends BxBaseModGeneralDb
     
     public function saveTopByLikes($sModuleName, $sTableName)
     {
-        $sQuery = "INSERT INTO `" . $this->_sTableTopByLikes . "` (`object_id`, `module`, `value`) SELECT `object_id`,'" . $sModuleName . "',`sum` FROM `" . $sTableName . "`";
+        $sQuery = "INSERT INTO `" . $this->_sTableTopByLikes . "` (`object_id`, `module`, `value`) SELECT `object_id`,'" . $sModuleName . "',`count` FROM `" . $sTableName . "` ORDER BY `count` DESC LIMIT 0, " . intval(getParam('bx_charts_chart_top_contents_by_likes_count')) . "";
         $this->query($sQuery);
     }
     
@@ -40,17 +40,17 @@ class BxChartsDb extends BxBaseModGeneralDb
         return $this->getAll("SELECT * FROM  `" . $this->_sTableTopByLikes . "` ORDER BY `value` DESC LIMIT 0," . intval(getParam('bx_charts_chart_top_contents_by_likes_count')));
     }
     
-    public function saveMostActiveProfiles_View($sModuleName, $sTableName)
+    public function saveMostActiveProfiles_View($sProfileModuleName, $sTableName)
     {
-        $sQuery = "INSERT INTO `" . $this->_sTableMostActiveProfiles . "` (`object_id`, `module`, `views_count`) SELECT `object_id`,'" . $sModuleName . "', COUNT(`date`) AS views FROM `" . $sTableName . "` 
-GROUP BY `object_id`";
+        $sQuery = "INSERT INTO `" . $this->_sTableMostActiveProfiles . "` (`object_id`, `profile_module`, `views_count`) SELECT `object_id`,'" . $sProfileModuleName . "', COUNT(`date`) AS views FROM `" . $sTableName . "` 
+ WHERE `object_id` IN (SELECT `object_id` FROM `" . $this->_sTableMostActiveProfiles . "` WHERE `profile_module` = '" . $sProfileModuleName . "' ) GROUP BY `object_id`";
         $this->query($sQuery);
     }
     
-    public function saveMostActiveProfiles_Create($sModuleName, $sTableName, $sColumnAuthor)
+    public function saveMostActiveProfiles_Create($sProfileModuleName, $sContentModuleName, $sTableName, $sColumnAuthor)
     {
-        $sQuery = "INSERT INTO `" . $this->_sTableMostActiveProfiles . "` (`object_id`, `module`, `create_count`)  SELECT `sys_profiles`.`content_id`, `sys_profiles`.`type`, COUNT(`" . $sTableName . "`.`id`) FROM `" . $sTableName . "`
-  INNER JOIN `sys_profiles`  ON `sys_profiles`.`id` = `" . $sTableName . "`.`" . $sColumnAuthor . "` WHERE sys_profiles.type='" . $sModuleName . "' GROUP BY `sys_profiles`.`content_id`, `sys_profiles`.`type`";
+        $sQuery = "INSERT INTO `" . $this->_sTableMostActiveProfiles . "` (`object_id`, `profile_module`, `content_module`, `create_count`)  SELECT `sys_profiles`.`content_id`, `sys_profiles`.`type`, '" . $sContentModuleName . "' , COUNT(`" . $sTableName . "`.`id`) FROM `" . $sTableName . "`
+  INNER JOIN `sys_profiles`  ON `sys_profiles`.`id` = `" . $sTableName . "`.`" . $sColumnAuthor . "` WHERE sys_profiles.type='" . $sProfileModuleName . "' GROUP BY `sys_profiles`.`content_id`, `sys_profiles`.`type` ORDER BY COUNT(`" . $sTableName . "`.`id`) DESC LIMIT 0," . intval(getParam('bx_charts_chart_most_active_profiles_count'));
         $this->query($sQuery);
     }
     
@@ -62,7 +62,7 @@ GROUP BY `object_id`";
     
     public function getMostActiveProfiles()
     {
-        return $this->getAll("SELECT SUM(`views_count`) AS views_count, SUM(`create_count`) AS create_count, `object_id`, `module` FROM `bx_charts_most_active_profiles` GROUP BY `object_id`, `module` ORDER BY SUM(`create_count`) DESC, SUM(`views_count`) DESC LIMIT 0," . intval(getParam('bx_charts_chart_most_active_profiles_count')));
+        return $this->getAll("SELECT SUM(`views_count`) AS views_count, SUM(`create_count`) AS create_count, `object_id`, `profile_module` as `module` FROM `bx_charts_most_active_profiles` GROUP BY `object_id`, `module` ORDER BY SUM(`create_count`) DESC, SUM(`views_count`) DESC LIMIT 0," . intval(getParam('bx_charts_chart_most_active_profiles_count')));
     }
 }
 

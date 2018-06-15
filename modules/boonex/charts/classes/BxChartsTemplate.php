@@ -30,7 +30,6 @@ class BxChartsTemplate extends BxBaseModGeneralTemplate
         $aParams = array_merge(array(
             'sChartName' => $aParams['chartName'],
         ), $aParams);
-        
         return parent::getJsCode($sType, $aParams, $bWrap);
     }
 }
