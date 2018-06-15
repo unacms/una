@@ -103,6 +103,14 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
         $sPostfix = $sWhereClause = $sOrderByClause = "";
 
         switch($aParams['type']) {
+        	case 'type':
+        		if(!is_array($aParams['value']))
+        			$aParams['value'] = array($aParams['value']);
+
+                $sPostfix .= '_type_' . implode('_', $aParams['value']);
+                $sWhereClause .= " AND `type` IN (" . $this->implode_escape($aParams['value']) . ")";
+                break;
+
             case 'modules':
                 $sPostfix .= '_modules';
                 $aMethod['params'][1] = array(

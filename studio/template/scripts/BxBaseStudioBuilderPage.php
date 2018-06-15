@@ -123,7 +123,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             )
         );
 
-        $aModulesDb = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
+        $aModulesDb = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'type', 'value' => array(BX_DOL_MODULE_TYPE_MODULE, BX_DOL_MODULE_TYPE_TEMPLATE)));
         foreach($aModulesDb as $aModuleDb) {
         	$sName = $aModuleDb['name'];
 
