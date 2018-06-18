@@ -22,7 +22,8 @@ class BxGlsrDb extends BxBaseModTextDb
     public function getAlphabeticalIndex()
     {
         $CNF = &$this->_oConfig->CNF;
-        return  $this->getAll("SELECT MIN(`id`) AS `row_number`, `letter`, '' AS `url` FROM ( SELECT `a`.`id`, UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`) ,1)) as `letter`, COUNT(*) AS `row_number` FROM `" . $CNF['TABLE_ENTRIES'] . "` `a` JOIN `" . $CNF['TABLE_ENTRIES'] . "` `b` ON `a`.`id` >= `b`.`id` AND UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`), 1)) = UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`), 1)) WHERE `a`.`status_admin`='active' GROUP BY `a`.`id`, UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`), 1))) AS `t` GROUP BY `letter` ");
+        $this->pdoExec("SET @row_number = 0;");
+        return  $this->getAll("SELECT MIN(`rn`) AS `row_number`, `letter`, '' AS `url` FROM (SELECT @row_number := @row_number + 1 AS rn, `a`.`id`, UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`) ,1)) as `letter` FROM `bx_glossary_terms` `a` WHERE `a`.`status_admin`='active' ORDER BY UPPER(LEFT(TRIM(`a`.`" . $CNF['FIELD_TITLE'] . "`), 1))) AS `t` GROUP BY `letter`");
     }
 }
 
