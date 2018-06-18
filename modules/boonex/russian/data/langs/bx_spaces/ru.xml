@@ -140,10 +140,10 @@
 
   <string name="_bx_spaces_menu_title_submenu"><![CDATA[Пространства - Подменю]]></string>
     <string name="_bx_spaces_menu_set_title_submenu"><![CDATA[Пространства - Подменю]]></string>
-    <string name="_bx_spaces_menu_set_title_view_profile_actions"><![CDATA[Группа - Действия]]></string>
-    <string name="_bx_spaces_menu_title_view_profile_actions"><![CDATA[Группа - Действия]]></string>
-    <string name="_bx_spaces_menu_set_title_view_profile_actions_more"><![CDATA[Группа - Дополнительные действия]]></string>
-    <string name="_bx_spaces_menu_title_view_profile_actions_more"><![CDATA[Группа - Дополнительные действия]]></string>
+    <string name="_bx_spaces_menu_set_title_view_profile_actions"><![CDATA[Пространство - Действия]]></string>
+    <string name="_bx_spaces_menu_title_view_profile_actions"><![CDATA[Пространство - Действия]]></string>
+    <string name="_bx_spaces_menu_set_title_view_profile_actions_more"><![CDATA[Пространство - Дополнительные действия]]></string>
+    <string name="_bx_spaces_menu_title_view_profile_actions_more"><![CDATA[Пространство - Дополнительные действия]]></string>
     <string name="_bx_spaces_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра пространства]]></string>
     <string name="_bx_spaces_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра пространства]]></string>
     <string name="_bx_spaces_menu_title_view_profile_submenu_cover"><![CDATA[Подменю пространства на обложке]]></string>
@@ -163,8 +163,8 @@
     <string name="_bx_spaces_menu_item_title_delete_profile"><![CDATA[Удалить пространство]]></string>
     <string name="_bx_spaces_menu_item_title_system_delete_account"><![CDATA[Удалить аккаунт]]></string>
     <string name="_bx_spaces_menu_item_title_delete_account"><![CDATA[Удалить аккаунт]]></string>
-    <string name="_bx_spaces_menu_item_title_system_profile_type"><![CDATA[Группа]]></string>
-    <string name="_bx_spaces_menu_item_title_profile_type"><![CDATA[Группа]]></string>
+    <string name="_bx_spaces_menu_item_title_system_profile_type"><![CDATA[Пространство]]></string>
+    <string name="_bx_spaces_menu_item_title_profile_type"><![CDATA[Пространство]]></string>
     <string name="_bx_spaces_menu_item_title_system_create_profile"><![CDATA[Создать пространство]]></string>
     <string name="_bx_spaces_menu_item_title_create_profile"><![CDATA[Создать пространство]]></string>
     <string name="_bx_spaces_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
@@ -177,8 +177,8 @@
     <string name="_bx_spaces_menu_item_title_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_spaces_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_spaces_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
-    <string name="_bx_spaces_menu_item_title_system_view_profile_view"><![CDATA[Группа]]></string>
-    <string name="_bx_spaces_menu_item_title_view_profile_view"><![CDATA[Группа]]></string>
+    <string name="_bx_spaces_menu_item_title_system_view_profile_view"><![CDATA[Пространство]]></string>
+    <string name="_bx_spaces_menu_item_title_view_profile_view"><![CDATA[Пространство]]></string>
     <string name="_bx_spaces_menu_item_title_system_invite"><![CDATA[Пригласить]]></string>
     <string name="_bx_spaces_menu_item_title_invite"><![CDATA[Пригласить]]></string>
     
