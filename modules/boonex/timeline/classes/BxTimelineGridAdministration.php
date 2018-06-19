@@ -62,7 +62,16 @@ class BxTimelineGridAdministration extends BxBaseModGeneralGridAdministration
 
     	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
-    
+
+    protected function _getCellDescription($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = $this->_oTemplate->parseHtmlByName('grid_link.html', array(
+            'href' => $this->_oModule->serviceGetLink($aRow['id']),
+            'title' => $aRow['description']
+        ));
+        
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
 
     protected function _getCellOwnerId($mixedValue, $sKey, $aField, $aRow)
     {

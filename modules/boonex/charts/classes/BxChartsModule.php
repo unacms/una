@@ -45,8 +45,7 @@ class BxChartsModule extends BxDolModule
         $BxDolModuleQuery = BxDolModuleQuery::getInstance();
         $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
         foreach($aModules as $aModule){
-            $oModule = BxDolModule::getInstance($aModule['name']);
-            if($oModule instanceof iBxDolProfileService){
+            if(BxDolRequest::serviceExists($aModule['name'], 'act_as_profile') && BxDolService::call($aModule['name'], 'act_as_profile') == true){
                 $aResult[$aModule['name']] = $aModule['title'];
             }
         }
