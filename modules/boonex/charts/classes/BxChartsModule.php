@@ -102,7 +102,7 @@ class BxChartsModule extends BxDolModule
      */
     public function serviceGetChartTopContentsByLikes()
     {
-        return $this->_oTemplate->getChart('TopContentsByLikes');
+        return $this->_oTemplate->getChart('TopContentsByLikes', 400);
     }
     
     /**
@@ -124,7 +124,7 @@ class BxChartsModule extends BxDolModule
      */
     public function serviceGetChartMostActiveProfiles()
     {
-        return $this->_oTemplate->getChart('MostActiveProfiles');
+        return $this->_oTemplate->getChart('MostActiveProfiles', 500);
     }
     
     public function actionGetChartData($Id = 0)
@@ -141,7 +141,7 @@ class BxChartsModule extends BxDolModule
               
             }
             $aValues['colors'] = array_slice($this->aColors, 0, count($aValues['values']));
-            echo  '{"type": "doughnut", "data":{"labels":' . json_encode($aValues['labels']) . ',"datasets":[{"data":' . json_encode($aValues['values']) . ',"backgroundColor":' . json_encode($aValues['colors']) . '}]}, "links": ' . json_encode($aValues['links']) . '}';
+            echo  '{"type": "doughnut", "data":{"labels":' . json_encode($aValues['labels']) . ',"datasets":[{"data":' . json_encode($aValues['values']) . ',"backgroundColor":' . json_encode($aValues['colors']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
         }
         
         if ($Id == 'MostActiveProfiles'){
@@ -149,13 +149,13 @@ class BxChartsModule extends BxDolModule
             $aData = $this->_oDb->getMostActiveProfiles();
             foreach ($aData as $aValue) {
                 $oModule = BxDolModule::getInstance($aValue['module']);
-                array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])) . ' (' . $oModule->_aModule['title'].')');
+                array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])));
                 array_push($aValues['values1'], $aValue['create_count']);
                 array_push($aValues['values2'], $aValue['views_count']);
                 array_push($aValues['links'], $oModule->serviceGetLink($aValue['object_id']));
               
             }
-            echo  '{"type":"bar",  "data": {"labels":' . json_encode($aValues['labels']) . ',"datasets": [{"label": "' . _t('_bx_charts_most_active_profiles_legend_posts') . '","backgroundColor": "' . $this->aColors[0] . '","borderColor": "' . $this->aColors[0] . '","borderWidth": 1,"data": ' . json_encode($aValues['values1']) . '}, {"label": "' . _t('_bx_charts_most_active_profiles_legend_views') . '","backgroundColor": "' . $this->aColors[1] . '","borderColor":"' . $this->aColors[1] . '","borderWidth": 1,"data": ' . json_encode($aValues['values2']) . '}]},"links": ' . json_encode($aValues['links']) . '}';
+            echo  '{"type":"horizontalBar",  "data": {"labels":' . json_encode($aValues['labels']) . ',"datasets": [{"label": "' . _t('_bx_charts_most_active_profiles_legend_posts') . '","backgroundColor": "' . $this->aColors[0] . '","borderColor": "' . $this->aColors[0] . '","borderWidth": 1,"data": ' . json_encode($aValues['values1']) . '}, {"label": "' . _t('_bx_charts_most_active_profiles_legend_views') . '","backgroundColor": "' . $this->aColors[1] . '","borderColor":"' . $this->aColors[1] . '","borderWidth": 1,"data": ' . json_encode($aValues['values2']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
         }
     }
     
@@ -166,7 +166,7 @@ class BxChartsModule extends BxDolModule
             $sString = _t('_bx_charts_txt_empty_title_item');
         }
         else{
-            $sString = strmaxtextlen($sString, 10, '...');
+            $sString = strmaxtextlen($sString, 50, '...');
         }
         return $sString;
     }
