@@ -13,6 +13,7 @@ bx_import('BxDolPrivacy');
 
 class BxNtfsConfig extends BxBaseModNotificationsConfig
 {
+	protected $_iOwnerNameMaxLen;
     protected $_iPushMaxLen;
 
     protected $_aHandlersHiddenEmail;
@@ -37,6 +38,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         	'option' => 'bx_notifications_'
         );
 
+        $this->_iOwnerNameMaxLen = 21;
         $this->_iPushMaxLen = 190;
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '');
@@ -83,6 +85,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             if(!empty($sHideTimeline))
                 $this->{'_aHandlersHidden' . $sVariable} = explode(',', $sHideTimeline);
     	}
+    }
+
+	public function getOwnerNameMaxLen()
+    {
+        return $this->_iOwnerNameMaxLen;
     }
 
     public function getPushMaxLen()

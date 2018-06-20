@@ -114,7 +114,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         list($sOwnerName, $sOwnerUrl, $sOwnerIcon, $sOwnerUnit, $sOwnerUnitWoInfo) = $oModule->getUserInfo($aEvent['owner_id']);
 
-        $aEvent['content']['owner_name'] = $sOwnerName;
+        $aEvent['content']['owner_name'] = strmaxtextlen($sOwnerName, $this->_oConfig->getOwnerNameMaxLen());
         $aEvent['content']['owner_link'] = $sOwnerUrl;
         $aEvent['content']['owner_icon'] = $sOwnerIcon;
         if(!empty($aEvent['content']['entry_caption']))
