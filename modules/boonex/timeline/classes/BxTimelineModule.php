@@ -1631,10 +1631,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iObjectPrivacyViewDefault = $this->_oConfig->getPrivacyViewDefault('object');
             if(empty($iObjectPrivacyView))
                 $iObjectPrivacyView = $iObjectPrivacyViewDefault;
-            else if($iObjectPrivacyView < 0) {
+            else if($iObjectPrivacyView < 0)
                 $iOwnerId = abs($iObjectPrivacyView);
-                $iObjectPrivacyView = $iObjectPrivacyViewDefault;
-            }
 
             //--- Process Link ---//
             $aLinkIds = $oForm->getCleanValue('link');
