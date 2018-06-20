@@ -113,6 +113,7 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                     'member_id' => $oProfile->id(),
                     'member_display_name' => $oProfile->getDisplayName(),
                     'member_url' => $oProfile->getUrl(),
+                	'content_id' => $oProfile->getContentId()
                 ));
             }
         }

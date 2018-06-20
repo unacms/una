@@ -274,7 +274,7 @@
   <string name="_bx_market_menu_title_entries_my"><![CDATA[Мои продукты - Меню действий]]></string>
     <string name="_bx_market_menu_set_title_entries_my"><![CDATA[Мои продукты - Меню]]></string>
 	<string name="_bx_market_menu_item_title_system_manage_my_products"><![CDATA[Мои продукты]]></string>
-    <string name="_bx_market_menu_item_title_manage_my_products"><![CDATA[{addon} продукты]]></string>
+    <string name="_bx_market_menu_item_title_manage_my_products"><![CDATA[Продукты]]></string>
     <string name="_bx_market_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_market_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_market_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>

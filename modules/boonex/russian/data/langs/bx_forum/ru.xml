@@ -217,7 +217,7 @@
 	<string name="_bx_forum_menu_item_title_manage_my"><![CDATA[Мои обсуждения]]></string>
 	<string name="_bx_forum_menu_item_title_manage_all"><![CDATA[Все обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_system_discussions"><![CDATA[Количество дискуссий]]></string>
-    <string name="_bx_forum_menu_item_title_discussions"><![CDATA[{addon} дискуссий]]></string>
+    <string name="_bx_forum_menu_item_title_discussions"><![CDATA[Дискуссий]]></string>
     <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Категории]]></string>
 
 	<string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>

@@ -183,7 +183,7 @@
     <string name="_bx_shopify_menu_title_entries_my"><![CDATA[My Goods Action Menu]]></string>
     <string name="_bx_shopify_menu_set_title_entries_my"><![CDATA[My Goods Menu]]></string>
 	<string name="_bx_shopify_menu_item_title_system_manage_my_entries"><![CDATA[My goods]]></string>
-    <string name="_bx_shopify_menu_item_title_manage_my_entries"><![CDATA[{addon} goods]]></string>
+    <string name="_bx_shopify_menu_item_title_manage_my_entries"><![CDATA[Goods]]></string>
     <string name="_bx_shopify_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_shopify_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_shopify_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>

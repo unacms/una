@@ -169,7 +169,7 @@
     <string name="_bx_polls_menu_title_entries_my"><![CDATA[My Polls Action Menu]]></string>
     <string name="_bx_polls_menu_set_title_entries_my"><![CDATA[My Polls Menu]]></string>
 	<string name="_bx_polls_menu_item_title_system_manage_my_polls"><![CDATA[My polls]]></string>
-    <string name="_bx_polls_menu_item_title_manage_my_polls"><![CDATA[{addon} polls]]></string>
+    <string name="_bx_polls_menu_item_title_manage_my_polls"><![CDATA[Polls]]></string>
     <string name="_bx_polls_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_polls_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_polls_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>

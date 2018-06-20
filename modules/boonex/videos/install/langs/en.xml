@@ -174,7 +174,7 @@
     <string name="_bx_videos_menu_title_entries_my"><![CDATA[My Videos Action Menu]]></string>
     <string name="_bx_videos_menu_set_title_entries_my"><![CDATA[My Videos Menu]]></string>
 	<string name="_bx_videos_menu_item_title_system_manage_my_videos"><![CDATA[My videos]]></string>
-    <string name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[{addon} videos]]></string>
+    <string name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[Videos]]></string>
     <string name="_bx_videos_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_videos_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_videos_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>

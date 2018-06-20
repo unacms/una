@@ -42,10 +42,14 @@ class BxBaseServiceProfiles extends BxDol
         if (!$iProfileId && !($iProfileId = bx_get_logged_profile_id()))
             return '';
 
-        $oMenu = BxDolMenu::getObjectInstance('sys_profile_stats');
-
         $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+        	return '';
 
+        $oAcl = BxDolAcl::getInstance();
+		$aAcl = $oAcl->getMemberMembershipInfo($iProfileId);
+		$aAclInfo = $oAcl->getMembershipInfo($aAcl['id']);
+		
         $aVars = array(
             'profile_id' => $oProfile->id(),
             'profile_url' => $oProfile->getUrl(),
@@ -53,11 +57,30 @@ class BxBaseServiceProfiles extends BxDol
             'profile_title' => $oProfile->getDisplayName(),
             'profile_title_attr' => bx_html_attribute($oProfile->getDisplayName()),
             'profile_ava_url' => $oProfile->getAvatar(),
-            'menu' => $oMenu->getCode(),
+        	'profile_acl_title' => _t($aAclInfo['name']),
+        	'profile_acl_icon' => $aAclInfo['icon'],
+            'menu' => BxDolMenu::getObjectInstance('sys_profile_stats')->getCode(),
         );
 
         $oTemplate = BxDolTemplate::getInstance();
         return $oTemplate->parseHtmlByName('profile_stats.html', $aVars);
+    }
+
+    public function serviceGetMenuAddonProfileEdit($iProfileId = 0, $sCaption = '')
+    {
+    	if(empty($sCaption))
+    		$sCaption = _t('_Edit');
+
+		$oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+        	return '';
+
+		$sModule = $oProfile->getModule();
+		$sMethod = 'profile_edit_url';
+		if(!BxDolRequest::serviceExists($sModule, $sMethod))
+			return '';
+
+		return BxDolTemplate::getInstance()->parseLink(BxDolService::call($sModule, $sMethod, array($oProfile->getContentId())), $sCaption);
     }
 
     public function serviceProfileMembership ($iProfileId = 0)

@@ -216,7 +216,7 @@
 	<string name="_bx_forum_menu_item_title_manage_my"><![CDATA[My Discussions]]></string>
 	<string name="_bx_forum_menu_item_title_manage_all"><![CDATA[All Discussions]]></string>
     <string name="_bx_forum_menu_item_title_system_discussions"><![CDATA[Discussions number]]></string>
-    <string name="_bx_forum_menu_item_title_discussions"><![CDATA[{addon} discussions]]></string>
+    <string name="_bx_forum_menu_item_title_discussions"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Categories]]></string>
 
 	<string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
