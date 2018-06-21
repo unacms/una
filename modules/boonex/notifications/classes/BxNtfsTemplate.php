@@ -118,7 +118,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aEvent['content']['owner_link'] = $sOwnerUrl;
         $aEvent['content']['owner_icon'] = $sOwnerIcon;
         if(!empty($aEvent['content']['entry_caption']))
-            $aEvent['content']['entry_caption'] = bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT_MULTILINE);
+            $aEvent['content']['entry_caption'] = strmaxtextlen(bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT), $this->_oConfig->getContentMaxLen());
 
         foreach($aEvent['content'] as $sKey => $sValue)
         	if(substr($sValue, 0, 1) == '_')
