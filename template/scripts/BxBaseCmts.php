@@ -525,8 +525,6 @@ class BxBaseCmts extends BxDolCmts
             $iCmtAuthorId = $this->_getAuthorId();
             $iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
             $sCmtText = $oForm->getCleanValue('cmt_text');
-            $sCmtText = $this->_prepareTextForSave ($sCmtText);
-            $oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
             $iLevel = 0;
             $iCmtVisualParentId = 0;
@@ -590,13 +588,10 @@ class BxBaseCmts extends BxDolCmts
             return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
         $oForm = $this->_getForm(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
-        $aCmt['cmt_text'] = $this->_prepareTextForEdit($aCmt['cmt_text']);
 
         $oForm->initChecker($aCmt);
         if($oForm->isSubmittedAndValid()) {
             $sCmtText = $oForm->getCleanValue('cmt_text');
-            $sCmtText = $this->_prepareTextForSave ($sCmtText);
-            $oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
             if($oForm->update($iCmtId) !== false) {
 
