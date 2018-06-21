@@ -122,13 +122,18 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 	            BxDolForm::setSubmittedValue('name', $sInputName, $oForm->aFormAttrs['method']);
             }
 
+            $sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
+            if(strcmp($sInputName, $sFieldName) !== 0)
+            	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);
+
             $this->onSubmitField($oForm);
             if(($iId = $oForm->insert()) === false)
                 return false;
 
-            $this->alterAdd($sInputName);
+            $this->alterAdd($sFieldName);
             return true;
-        } else
+        } 
+        else
             return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-add-' . $this->aParams['display'] . '-popup', _t('_adm_form_txt_field_add_popup'), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -148,18 +153,23 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-        	$sInputNameOld = $this->aField['name'];
-            $sInputNameNew = $oForm->getCleanValue('name');
+            $sInputName = $oForm->getCleanValue('name');
+
+			$sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
+            if(strcmp($sInputName, $sFieldName) !== 0)
+            	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);
 
             $this->onSubmitField($oForm);
             if($oForm->update((int)$this->aField['id']) === false)
                 return false;
 
-			if($bAlter || strcmp($sInputNameOld, $sInputNameNew) !== 0)
-				$this->alterChange($sInputNameOld, $sInputNameNew);
+			$sFieldNameOld = $this->aField['name'];
+			if($bAlter || strcmp($sFieldNameOld, $sFieldName) !== 0)
+				$this->alterChange($sFieldNameOld, $sFieldName);
 
             return true;
-        } else
+        } 
+        else
             return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-edit-' . $this->aField['type'] . '-popup', _t('_adm_form_txt_field_edit_popup', _t($this->aField['caption_system'])), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
