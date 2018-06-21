@@ -164,7 +164,7 @@ class BxDolMTimeline extends BxDolMData
 			case 'wall_common_photos':				
 			case 'wall_common_videos':
 				$sType = 'timeline_common_post';
-				$sTitle = $aInfo['type'] == 'wall_common_photos' ? '<i class="sys-icon picture-o"></i>' : '<i class="sys-icon film"></i>';
+				$sTitle = $aInfo['type'] == 'wall_common_photos' ? '<i class="sys-icon far image"></i>' : '<i class="sys-icon film"></i>';
 				$aItemInfo = @unserialize($aInfo['content']);
 				if (!empty($aItemInfo))
 				{
