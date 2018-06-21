@@ -7,7 +7,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 -- Auth objects
 
 INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_dolcon', '_bx_dolcon_auth_title', 'modules/?r=dolcon/start', 'sign-in');
+('bx_dolcon', '_bx_dolcon_auth_title', 'modules/?r=dolcon/start', 'sign-in-alt');
 
 -- Alerts
 

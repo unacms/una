@@ -78,29 +78,29 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_developer_forms', 'independent', 'add', '_bx_dev_frm_btn_forms_gl_create', '', 0, 1),
 ('bx_developer_forms', 'single', 'export', '', 'download', 0, 1),
-('bx_developer_forms', 'single', 'edit', '', 'pencil', 0, 2),
+('bx_developer_forms', 'single', 'edit', '', 'pencil-alt', 0, 2),
 
 ('bx_developer_forms_displays', 'independent', 'add', '_bx_dev_frm_btn_displays_gl_create', '', 0, 1),
-('bx_developer_forms_displays', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_developer_forms_displays', 'single', 'edit', '', 'pencil-alt', 0, 1),
 
-('bx_developer_forms_fields', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_developer_forms_fields', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('bx_developer_forms_fields', 'single', 'delete', '', 'remove', 1, 2),
 ('bx_developer_forms_fields', 'single', 'show_to', '_bx_dev_frm_btn_fields_visible', '', 0, 3),
 ('bx_developer_forms_fields', 'independent', 'add', '_bx_dev_frm_btn_fields_create', '', 0, 1),
 
 ('bx_developer_forms_pre_lists', 'independent', 'add', '_bx_dev_frm_btn_pre_lists_create', '', 0, 1),
 ('bx_developer_forms_pre_lists', 'single', 'export', '', 'download', 0, 1),
-('bx_developer_forms_pre_lists', 'single', 'edit', '', 'pencil', 0, 2),
+('bx_developer_forms_pre_lists', 'single', 'edit', '', 'pencil-alt', 0, 2),
 ('bx_developer_forms_pre_lists', 'single', 'delete', '', 'remove', 1, 3),
 
 ('bx_developer_forms_pre_values', 'independent', 'add', '_bx_dev_frm_btn_pre_values_create', '', 0, 1),
-('bx_developer_forms_pre_values', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_developer_forms_pre_values', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('bx_developer_forms_pre_values', 'single', 'delete', '', 'remove', 1, 2),
 
 ('bx_developer_search_forms', 'independent', 'add', '_bx_dev_frm_btn_search_forms_create', '', 0, 1),
-('bx_developer_search_forms', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_developer_search_forms', 'single', 'edit', '', 'pencil-alt', 0, 1),
 
-('bx_developer_search_forms_fields', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_developer_search_forms_fields', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('bx_developer_search_forms_fields', 'independent', 'reset', '_bx_dev_frm_btn_search_forms_fields_reset', '', 0, 1);
 
 
@@ -398,14 +398,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_developer_nav_menus', 'independent', 'add', '_bx_dev_nav_btn_menus_gl_create', '', 0, 1),
 ('bx_developer_nav_menus', 'single', 'export', '', 'download', 0, 1),
-('bx_developer_nav_menus', 'single', 'edit', '', 'pencil', 0, 2),
+('bx_developer_nav_menus', 'single', 'edit', '', 'pencil-alt', 0, 2),
 ('bx_developer_nav_menus', 'single', 'delete', '', 'remove', 1, 3),
 ('bx_developer_nav_sets', 'independent', 'add', '_bx_dev_nav_btn_sets_gl_create', '', 0, 1),
-('bx_developer_nav_sets', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_developer_nav_sets', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('bx_developer_nav_sets', 'single', 'delete', '', 'remove', 1, 2),
 ('bx_developer_nav_items', 'independent', 'import', '_bx_dev_nav_btn_items_gl_import', '', 0, 1),
 ('bx_developer_nav_items', 'independent', 'add', '_bx_dev_nav_btn_items_gl_create', '', 0, 2),
-('bx_developer_nav_items', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_developer_nav_items', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('bx_developer_nav_items', 'single', 'delete', '', 'remove', 1, 2),
 ('bx_developer_nav_items', 'single', 'show_to', '_bx_dev_nav_btn_items_gl_visible', '', 0, 3);
 

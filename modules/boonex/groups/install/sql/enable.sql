@@ -214,8 +214,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_groups_view_actions_more', 'bx_groups', 'profile-fan-remove', '_bx_groups_menu_item_title_system_leave_group', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_groups_fans\', \'remove\', \'{profile_id}\')', '', 'user-times', '', 2147483647, 1, 0, 10),
 ('bx_groups_view_actions_more', 'bx_groups', 'profile-subscribe-remove', '_bx_groups_menu_item_title_system_unsubscribe', '_bx_groups_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
-('bx_groups_view_actions_more', 'bx_groups', 'edit-group-cover', '_bx_groups_menu_item_title_system_edit_cover', '_bx_groups_menu_item_title_edit_cover', 'page.php?i=edit-group-cover&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 30),
-('bx_groups_view_actions_more', 'bx_groups', 'edit-group-profile', '_bx_groups_menu_item_title_system_edit_profile', '_bx_groups_menu_item_title_edit_profile', 'page.php?i=edit-group-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 40),
+('bx_groups_view_actions_more', 'bx_groups', 'edit-group-cover', '_bx_groups_menu_item_title_system_edit_cover', '_bx_groups_menu_item_title_edit_cover', 'page.php?i=edit-group-cover&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 30),
+('bx_groups_view_actions_more', 'bx_groups', 'edit-group-profile', '_bx_groups_menu_item_title_system_edit_profile', '_bx_groups_menu_item_title_edit_profile', 'page.php?i=edit-group-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 40),
 ('bx_groups_view_actions_more', 'bx_groups', 'invite-to-group', '_bx_groups_menu_item_title_system_invite', '_bx_groups_menu_item_title_invite', 'page.php?i=invite-to-group&id={content_id}', '', '', 'user-plus', '', 2147483647, 1, 0, 42),
 ('bx_groups_view_actions_more', 'bx_groups', 'delete-group-profile', '_bx_groups_menu_item_title_system_delete_profile', '_bx_groups_menu_item_title_delete_profile', 'page.php?i=delete-group-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
@@ -291,8 +291,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_groups_menu_manage_tools', 'bx_groups', '_bx_groups_menu_set_title_manage_tools', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_groups_menu_manage_tools', 'bx_groups', 'delete', '_bx_groups_menu_item_title_system_delete', '_bx_groups_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'trash-o', '', 2147483647, 1, 0, 1),
-('bx_groups_menu_manage_tools', 'bx_groups', 'delete-with-content', '_bx_groups_menu_item_title_system_delete_with_content', '_bx_groups_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'trash-o', '', 2147483647, 1, 0, 2);
+('bx_groups_menu_manage_tools', 'bx_groups', 'delete', '_bx_groups_menu_item_title_system_delete', '_bx_groups_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 1),
+('bx_groups_menu_manage_tools', 'bx_groups', 'delete-with-content', '_bx_groups_menu_item_title_system_delete_with_content', '_bx_groups_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 2);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);

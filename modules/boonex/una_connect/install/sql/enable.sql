@@ -7,7 +7,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 -- Auth objects
 
 INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_unacon', '_bx_unacon_auth_title', 'modules/?r=unacon/start', 'sign-in');
+('bx_unacon', '_bx_unacon_auth_title', 'modules/?r=unacon/start', 'sign-in-alt');
 
 -- Alerts
 

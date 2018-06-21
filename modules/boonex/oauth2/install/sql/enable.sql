@@ -14,7 +14,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `or
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_oauth', 'bulk', 'delete', '_Delete', '', 0, 1, 1),
-('bx_oauth', 'single', 'edit', '_Edit', 'pencil', 1, 0, 1),
+('bx_oauth', 'single', 'edit', '_Edit', 'pencil-alt', 1, 0, 1),
 ('bx_oauth', 'independent', 'add', '_bx_oauth_add', '', 0, 0, 1);
 
 -- SETTINGS
