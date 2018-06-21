@@ -14,7 +14,7 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
     private $sAllUri = 'all';
     private $aActions = array(
         'restore' => 'eraser',
-        'recompile' => 'refresh'
+        'recompile' => 'sync'
     );
 
     protected $oModule;
