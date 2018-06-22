@@ -176,19 +176,19 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_site', 'bx_groups', 'groups-home', '_bx_groups_menu_item_title_system_entries_home', '_bx_groups_menu_item_title_entries_home', 'page.php?i=groups-home', '', '', 'group col-red2', 'bx_groups_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+('sys_site', 'bx_groups', 'groups-home', '_bx_groups_menu_item_title_system_entries_home', '_bx_groups_menu_item_title_entries_home', 'page.php?i=groups-home', '', '', 'users col-red2', 'bx_groups_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to homepage menu
 
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_homepage', 'bx_groups', 'groups-home', '_bx_groups_menu_item_title_system_entries_home', '_bx_groups_menu_item_title_entries_home', 'page.php?i=groups-home', '', '', 'group col-red2', 'bx_groups_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+('sys_homepage', 'bx_groups', 'groups-home', '_bx_groups_menu_item_title_system_entries_home', '_bx_groups_menu_item_title_entries_home', 'page.php?i=groups-home', '', '', 'users col-red2', 'bx_groups_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
 -- MENU: add to "add content" menu
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_groups', 'create-group-profile', '_bx_groups_menu_item_title_system_create_profile', '_bx_groups_menu_item_title_create_profile', 'page.php?i=create-group-profile', '', '', 'group col-red2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', 'bx_groups', 'create-group-profile', '_bx_groups_menu_item_title_system_create_profile', '_bx_groups_menu_item_title_create_profile', 'page.php?i=create-group-profile', '', '', 'users col-red2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 -- MENU: view actions
 
@@ -254,10 +254,10 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_groups_view_submenu', 'bx_groups', '_bx_groups_menu_set_title_view_profile_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_groups_view_submenu', 'bx_groups', 'view-group-profile', '_bx_groups_menu_item_title_system_view_profile_view', '_bx_groups_menu_item_title_view_profile_view', 'page.php?i=view-group-profile&id={content_id}', '', '', 'group col-red2', '', 2147483647, 1, 0, 1),
+('bx_groups_view_submenu', 'bx_groups', 'view-group-profile', '_bx_groups_menu_item_title_system_view_profile_view', '_bx_groups_menu_item_title_view_profile_view', 'page.php?i=view-group-profile&id={content_id}', '', '', 'users col-red2', '', 2147483647, 1, 0, 1),
 ('bx_groups_view_submenu', 'bx_groups', 'group-profile-info', '_bx_groups_menu_item_title_system_view_profile_info', '_bx_groups_menu_item_title_view_profile_info', 'page.php?i=group-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', 2147483647, 1, 0, 2),
 ('bx_groups_view_submenu', 'bx_groups', 'group-profile-comments', '_bx_groups_menu_item_title_system_view_profile_comments', '_bx_groups_menu_item_title_view_profile_comments', 'page.php?i=group-profile-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 3),
-('bx_groups_view_submenu', 'bx_groups', 'group-fans', '_bx_groups_menu_item_title_system_view_fans', '_bx_groups_menu_item_title_view_fans', 'page.php?i=group-fans&profile_id={profile_id}', '', '', 'group col-blue3', '', 2147483647, 1, 0, 4);
+('bx_groups_view_submenu', 'bx_groups', 'group-fans', '_bx_groups_menu_item_title_system_view_fans', '_bx_groups_menu_item_title_view_fans', 'page.php?i=group-fans&profile_id={profile_id}', '', '', 'users col-blue3', '', 2147483647, 1, 0, 4);
 
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -281,7 +281,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', 'bx_groups', 'profile-stats-manage-groups', '_bx_groups_menu_item_title_system_manage_my_groups', '_bx_groups_menu_item_title_manage_my_groups', 'page.php?i=groups-manage', '', '_self', 'group col-red2', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 2);
+('sys_profile_stats', 'bx_groups', 'profile-stats-manage-groups', '_bx_groups_menu_item_title_system_manage_my_groups', '_bx_groups_menu_item_title_manage_my_groups', 'page.php?i=groups-manage', '', '_self', 'users col-red2', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 2);
 
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -302,7 +302,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_groups', 'joined-groups', '_bx_groups_menu_item_title_system_view_joined_groups', '_bx_groups_menu_item_title_view_joined_groups', 'page.php?i=joined-groups&profile_id={profile_id}', '', '', 'group col-red2', '', 2147483647, 1, 0, 0);
+('trigger_profile_view_submenu', 'bx_groups', 'joined-groups', '_bx_groups_menu_item_title_system_view_joined_groups', '_bx_groups_menu_item_title_view_joined_groups', 'page.php?i=joined-groups&profile_id={profile_id}', '', '', 'users col-red2', '', 2147483647, 1, 0, 0);
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -414,7 +414,7 @@ INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
 INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
-('bx_groups', 'bx_groups', '_bx_groups', 'page.php?i=groups-home', 'group col-red2', 'SELECT COUNT(*) FROM `bx_groups_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id` = `tp`.`content_id` AND `tp`.`type`=''bx_groups'' WHERE 1 AND `tp`.`status`=''active''', @iMaxOrderStats + 1);
+('bx_groups', 'bx_groups', '_bx_groups', 'page.php?i=groups-home', 'users col-red2', 'SELECT COUNT(*) FROM `bx_groups_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id` = `tp`.`content_id` AND `tp`.`type`=''bx_groups'' WHERE 1 AND `tp`.`status`=''active''', @iMaxOrderStats + 1);
 
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
