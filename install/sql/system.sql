@@ -3434,7 +3434,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (18, 'menu_icon_buttons_hor.html', '_sys_menu_template_title_icon_buttons_hor', 1),
 (19, 'menu_floating_blocks_wide.html', '_sys_menu_template_title_floating_blocks_wide', 0),
 (20, 'menu_custom_ver.html', '_sys_menu_template_title_custom_ver', 0),
-(21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0);
+(21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),
+(22, 'menu_interactive.html', '_sys_menu_template_title_interactive', 1);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3475,7 +3476,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_switch_language_inline', '_sys_menu_title_switch_language_inline', 'sys_switch_language', 'system', 3, 0, 1, 'BxTemplMenuSwitchLanguage', ''),
 ('sys_switch_template', '_sys_menu_title_switch_template', 'sys_switch_template', 'system', 6, 0, 1, 'BxTemplMenuSwitchTemplate', ''),
 ('sys_set_acl_level', '_sys_menu_title_set_acl_level', '', 'system', 6, 0, 1, 'BxTemplMenuSetAclLevel', ''),
-('sys_social_sharing', '_sys_menu_title_social_sharing', 'sys_social_sharing', 'system', 18, 0, 1, 'BxTemplMenuSocialSharing', '');
+('sys_social_sharing', '_sys_menu_title_social_sharing', 'sys_social_sharing', 'system', 18, 0, 1, 'BxTemplMenuSocialSharing', ''),
+('sys_create_post', '_sys_menu_title_create_post', 'sys_add_content_links', 'system', 22, 0, 1, 'BxTemplMenuCreatePost', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(64) NOT NULL,
@@ -4219,6 +4221,11 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('', 0, 'skeletons', '_sys_block_type_lang', 11, 2147483647, 'lang', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_menu', 11, 2147483647, 'menu', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_service', 11, 2147483647, 'service', '', 0, 0, 1, 0);
+
+-- service blocks
+SET @iBlockOrder = IFNULL((SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1), 0);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('', 0, 'system', '_sys_page_block_title_sys_create_post', '_sys_page_block_title_create_post', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:20:"get_create_post_form";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, @iBlockOrder + 1);
 
 -- content blocks
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
