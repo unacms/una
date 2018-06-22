@@ -13,10 +13,7 @@ class BxAclDb extends BxDolModuleDb
 {
     protected $_oConfig;
 
-    /*
-     * Constructor.
-     */
-    function __construct(&$oConfig)
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
 
