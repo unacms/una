@@ -23,8 +23,8 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 		$this->aMenuItems = array(
 	        BX_DOL_STUDIO_PGT_TYPE_SETTINGS => array('icon' => 'cogs'),
 	        BX_DOL_STUDIO_PGT_TYPE_KEYS => array('icon' => 'key'),
-	        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES => array('icon' => 'envelope-o'),
-	        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF => array('icon' => 'sticky-note-o')
+	        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES => array('icon' => 'far envelope'),
+	        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF => array('icon' => 'far sticky-note')
 	    );
 
 		$this->aGridObjects = array(

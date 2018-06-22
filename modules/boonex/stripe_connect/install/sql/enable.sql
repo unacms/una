@@ -56,7 +56,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_stripe_connect_accounts', 'actions', '', '18%', 0, '', '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_stripe_connect_accounts', 'single', 'delete', '_bx_stripe_connect_action_title_delete', 'chain-broken', 1, 1, 1),
+('bx_stripe_connect_accounts', 'single', 'delete', '_bx_stripe_connect_action_title_delete', 'unlink', 1, 1, 1),
 ('bx_stripe_connect_accounts', 'bulk', 'delete', '_bx_stripe_connect_action_title_delete', '', 0, 1, 1);
 
 

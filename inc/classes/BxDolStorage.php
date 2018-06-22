@@ -54,7 +54,7 @@ define('BX_DOL_STORAGE_ERR_ENGINE_GET', 5004); ///< some other error during file
 define('BX_DOL_STORAGE_DEFAULT_MIME_TYPE', 'octet/stream'); ///< default mime type if it is not find by extension
 
 define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.png'); ///< default icon if no other icon can be determined by file extension
-define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'file-o'); ///< default font icon if no other icon can be determined by file extension
+define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'far file'); ///< default font icon if no other icon can be determined by file extension
 
 define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
 
@@ -854,16 +854,16 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
         */
 
         $aIconsFont = array (
-            'file-pdf-o' => array('pdf'),
-            'file-word-o' => array('doc', 'docx'),
-            'file-excel-o' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
-            'file-powerpoint-o' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
-            'file-code-o' => array('1st', 'aspx', 'asp', 'json', 'js', 'jsp', 'java', 'php', 'xml', 'html', 'xhtml', 'htm', 'rdf', 'xsd', 'xsl', 'xslt', 'sax', 'rss', 'dtd', 'cfm', 'js', 'asm', 'pl', 'prl', 'bas', 'b', 'fs', 'src', 'cs', 'ws', 'cgi', 'bat', 'py', 'c', 'cpp', 'cc', 'cp', 'h', 'hh', 'cxx', 'hxx', 'c++', 'm', 'lua', 'swift', 'sh', 'as', 'cob', 'tpl', 'lsp', 'x', 'cmd', 'rb', 'cbl', 'pas', 'pp', 'vb', 'vbs', 'f', 'perl', 'jl', 'lol', 'bal', 'pli', 'css', 'less', 'sass', 'saas', 'scss', 'bcc', 'coffee', 'jade', 'j', 'tea', 'c#', 'sas', 'diff', 'pro', 'for', 'sh', 'bsh', 'bash', 'twig', 'csh', 'lisp', 'lsp', 'cobol', 'pl', 'd', 'git', 'rb', 'hrl', 'cr', 'inp', 'a', 'go', 'as3', 'm', 'sql', 'md', 'mbox', 'nginx', 'pgp', 'asc', 'sig', 'ps1', 'rq', 'ttl', 'vue', 'xquery', 'xq'),
-            'file-image-o' => 'image/', 
-            'file-video-o' => 'video/',
-            'file-audio-o' => 'audio/',
-            'file-text-o' => 'text/',
-            'file-archive-o' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'),
+            'far file-pdf' => array('pdf'),
+            'far file-word' => array('doc', 'docx'),
+            'far file-excel' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
+            'far file-powerpoint' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
+            'far file-code' => array('1st', 'aspx', 'asp', 'json', 'js', 'jsp', 'java', 'php', 'xml', 'html', 'xhtml', 'htm', 'rdf', 'xsd', 'xsl', 'xslt', 'sax', 'rss', 'dtd', 'cfm', 'js', 'asm', 'pl', 'prl', 'bas', 'b', 'fs', 'src', 'cs', 'ws', 'cgi', 'bat', 'py', 'c', 'cpp', 'cc', 'cp', 'h', 'hh', 'cxx', 'hxx', 'c++', 'm', 'lua', 'swift', 'sh', 'as', 'cob', 'tpl', 'lsp', 'x', 'cmd', 'rb', 'cbl', 'pas', 'pp', 'vb', 'vbs', 'f', 'perl', 'jl', 'lol', 'bal', 'pli', 'css', 'less', 'sass', 'saas', 'scss', 'bcc', 'coffee', 'jade', 'j', 'tea', 'c#', 'sas', 'diff', 'pro', 'for', 'sh', 'bsh', 'bash', 'twig', 'csh', 'lisp', 'lsp', 'cobol', 'pl', 'd', 'git', 'rb', 'hrl', 'cr', 'inp', 'a', 'go', 'as3', 'm', 'sql', 'md', 'mbox', 'nginx', 'pgp', 'asc', 'sig', 'ps1', 'rq', 'ttl', 'vue', 'xquery', 'xq'),
+            'far file-image' => 'image/', 
+            'far file-video' => 'video/',
+            'far file-audio' => 'audio/',
+            'far file-alt' => 'text/',
+            'far file-archive' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'),
         );
         
         $aIcons = array (

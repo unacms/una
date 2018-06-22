@@ -36,8 +36,8 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_PRM_TYPE_LEVELS => array('icon' => 'sliders'),
-            BX_DOL_STUDIO_PRM_TYPE_ACTIONS => array('icon' => 'exchange')
+            BX_DOL_STUDIO_PRM_TYPE_LEVELS => array('icon' => 'sliders-h'),
+            BX_DOL_STUDIO_PRM_TYPE_ACTIONS => array('icon' => 'exchange-alt')
         );
 
         foreach($aMenuItems as $sMenuItem => $aItem)

@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'sys-user-fal';
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/fa-light-300.eot");
+    src: url("../fonts/fa-light-300.eot?#iefix") format("embedded-opentype"), url("../fonts/fa-light-300.woff2") format("woff2"), url("../fonts/fa-light-300.woff") format("woff"), url("../fonts/fa-light-300.ttf") format("truetype"), url("../fonts/fa-light-300.svg#fontawesome") format("svg");
+}
+
+.fa, .fas, .sys-icon,
+.fab, .sys-icon.fab,
+.far, .sys-icon.far,
+.fal, .sys-icon.fal {
+    font-family:'sys-user-fal';
+    font-weight:300;
+    font-style:normal;
+}

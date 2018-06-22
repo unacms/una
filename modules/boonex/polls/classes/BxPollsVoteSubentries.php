@@ -101,7 +101,7 @@ class BxPollsVoteSubentries extends BxTemplVote
      */
     protected function _getIconDoLike($bVoted)
     {
-    	return $bVoted ?  'dot-circle-o' : 'circle-o';
+    	return $bVoted ?  'far dot-circle' : 'far circle';
     }
 
     protected function _getTitleDoLike($bVoted)

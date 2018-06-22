@@ -12,7 +12,7 @@ class BxBaseStudioDesign extends BxDolStudioDesign
 {
     protected $aMenuItems = array(
         BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS => array('caption' => '_adm_lmi_cpt_settings', 'icon' => 'cogs'),
-        BX_DOL_STUDIO_TEMPL_TYPE_LOGO => array('caption' => '_adm_lmi_cpt_logo', 'icon' => 'pencil')
+        BX_DOL_STUDIO_TEMPL_TYPE_LOGO => array('caption' => '_adm_lmi_cpt_logo', 'icon' => 'pencil-alt')
     );
 
     function __construct($sTemplate = "", $sPage = "")

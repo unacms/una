@@ -181,19 +181,19 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_site', 'bx_files', 'files-home', '_bx_files_menu_item_title_system_entries_home', '_bx_files_menu_item_title_entries_home', 'page.php?i=files-home', '', '', 'file-o col-red3', 'bx_files_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+('sys_site', 'bx_files', 'files-home', '_bx_files_menu_item_title_system_entries_home', '_bx_files_menu_item_title_entries_home', 'page.php?i=files-home', '', '', 'far file col-red3', 'bx_files_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to homepage menu
 
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_homepage', 'bx_files', 'files-home', '_bx_files_menu_item_title_system_entries_home', '_bx_files_menu_item_title_entries_home', 'page.php?i=files-home', '', '', 'file-o col-red3', 'bx_files_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+('sys_homepage', 'bx_files', 'files-home', '_bx_files_menu_item_title_system_entries_home', '_bx_files_menu_item_title_entries_home', 'page.php?i=files-home', '', '', 'far file col-red3', 'bx_files_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
 -- MENU: add to "add content" menu
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_files', 'create-file', '_bx_files_menu_item_title_system_create_entry', '_bx_files_menu_item_title_create_entry', 'page.php?i=create-file', '', '', 'file-o col-red3', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', 'bx_files', 'create-file', '_bx_files_menu_item_title_system_create_entry', '_bx_files_menu_item_title_create_entry', 'page.php?i=create-file', '', '', 'far file col-red3', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 
 -- MENU: actions menu for view entry 
@@ -206,7 +206,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_files_view', 'bx_files', 'download-file', '_bx_files_menu_item_title_system_download_file', '_bx_files_menu_item_title_download_file', 'modules/?r=files/download/{file_download_token}/{content_id}.{file_ext}', '', '_blank', 'download', '', 2147483647, 1, 0, 1),
-('bx_files_view', 'bx_files', 'edit-file', '_bx_files_menu_item_title_system_edit_entry', '_bx_files_menu_item_title_edit_entry', 'page.php?i=edit-file&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 2),
+('bx_files_view', 'bx_files', 'edit-file', '_bx_files_menu_item_title_system_edit_entry', '_bx_files_menu_item_title_edit_entry', 'page.php?i=edit-file&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 2),
 ('bx_files_view', 'bx_files', 'delete-file', '_bx_files_menu_item_title_system_delete_entry', '_bx_files_menu_item_title_delete_entry', 'page.php?i=delete-file&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 3);
 
 
@@ -266,7 +266,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', 'bx_files', 'profile-stats-manage-files', '_bx_files_menu_item_title_system_manage_my_files', '_bx_files_menu_item_title_manage_my_files', 'page.php?i=files-manage', '', '_self', 'file-o col-red3', 'a:2:{s:6:"module";s:8:"bx_files";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 1);
+('sys_profile_stats', 'bx_files', 'profile-stats-manage-files', '_bx_files_menu_item_title_system_manage_my_files', '_bx_files_menu_item_title_manage_my_files', 'page.php?i=files-manage', '', '_self', 'far file col-red3', 'a:2:{s:6:"module";s:8:"bx_files";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 1);
 
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -276,7 +276,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_files_menu_manage_tools', 'bx_files', '_bx_files_menu_set_title_manage_tools', 0);
 
 --INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
---('bx_files_menu_manage_tools', 'bx_files', 'delete-with-content', '_bx_files_menu_item_title_system_delete_with_content', '_bx_files_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'trash-o', '', 128, 1, 0, 0);
+--('bx_files_menu_manage_tools', 'bx_files', 'delete-with-content', '_bx_files_menu_item_title_system_delete_with_content', '_bx_files_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 128, 1, 0, 0);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -286,8 +286,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: add menu item to profile & group based modules (trigger* menu sets are processed separately upon modules enable/disable)
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_files', 'files-author', '_bx_files_menu_item_title_system_view_entries_author', '_bx_files_menu_item_title_view_entries_author', 'page.php?i=files-author&profile_id={profile_id}', '', '', 'file-o col-red3', '', 2147483647, 1, 0, 0),
-('trigger_group_view_submenu', 'bx_files', 'files-context', '_bx_files_menu_item_title_system_view_entries_in_context', '_bx_files_menu_item_title_view_entries_in_context', 'page.php?i=files-context&profile_id={profile_id}', '', '', 'file-o col-red3', '', 2147483647, 1, 0, 0);
+('trigger_profile_view_submenu', 'bx_files', 'files-author', '_bx_files_menu_item_title_system_view_entries_author', '_bx_files_menu_item_title_view_entries_author', 'page.php?i=files-author&profile_id={profile_id}', '', '', 'far file col-red3', '', 2147483647, 1, 0, 0),
+('trigger_group_view_submenu', 'bx_files', 'files-context', '_bx_files_menu_item_title_system_view_entries_in_context', '_bx_files_menu_item_title_view_entries_in_context', 'page.php?i=files-context&profile_id={profile_id}', '', '', 'far file col-red3', '', 2147483647, 1, 0, 0);
 
 -- PRIVACY 
 
@@ -369,7 +369,7 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
 INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
-('bx_files', 'bx_files', '_bx_files', 'page.php?i=files-home', 'file-o col-red3', 'SELECT COUNT(*) FROM `bx_files_main` WHERE 1 AND `status` = ''active'' AND `status_admin` = ''active''', @iMaxOrderStats + 1);
+('bx_files', 'bx_files', '_bx_files', 'page.php?i=files-home', 'far file col-red3', 'SELECT COUNT(*) FROM `bx_files_main` WHERE 1 AND `status` = ''active'' AND `status_admin` = ''active''', @iMaxOrderStats + 1);
 
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
@@ -399,11 +399,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_files_administration', 'bulk', 'delete', '_bx_files_grid_action_title_adm_delete', '', 0, 1, 1),
-('bx_files_administration', 'single', 'edit', '_bx_files_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
+('bx_files_administration', 'single', 'edit', '_bx_files_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_files_administration', 'single', 'delete', '_bx_files_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_files_administration', 'single', 'settings', '_bx_files_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_files_common', 'bulk', 'delete', '_bx_files_grid_action_title_adm_delete', '', 0, 1, 1),
-('bx_files_common', 'single', 'edit', '_bx_files_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
+('bx_files_common', 'single', 'edit', '_bx_files_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_files_common', 'single', 'delete', '_bx_files_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_files_common', 'single', 'settings', '_bx_files_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 

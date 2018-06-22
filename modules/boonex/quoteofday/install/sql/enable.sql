@@ -28,7 +28,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_quoteofday_internal', 'actions', '', '20%', 0, 0, '', 5);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_quoteofday_internal', 'single', 'edit', '_bx_quoteofday_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
+('bx_quoteofday_internal', 'single', 'edit', '_bx_quoteofday_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_quoteofday_internal', 'single', 'publish', '_bx_quoteofday_grid_action_title_adm_publish', 'quote-right', 1, 0, 3),
 ('bx_quoteofday_internal', 'single', 'delete', '_bx_quoteofday_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_quoteofday_internal', 'bulk', 'delete', '_bx_quoteofday_grid_action_title_adm_delete', '', 0, 1, 1),

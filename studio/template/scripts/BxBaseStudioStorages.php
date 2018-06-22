@@ -18,8 +18,8 @@ class BxBaseStudioStorages extends BxDolStudioStorages
         parent::__construct($sPage);
 
         $this->aStorages = array(
-        	BX_DOL_STUDIO_STRG_TYPE_FILES => array('icon' => 'file-o'),
-        	BX_DOL_STUDIO_STRG_TYPE_IMAGES => array('icon' => 'file-image-o')
+        	BX_DOL_STUDIO_STRG_TYPE_FILES => array('icon' => 'far file'),
+        	BX_DOL_STUDIO_STRG_TYPE_IMAGES => array('icon' => 'far file-image')
         );
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'storages.php?page=';

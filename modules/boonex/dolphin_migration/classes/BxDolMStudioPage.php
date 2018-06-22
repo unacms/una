@@ -27,7 +27,7 @@ class BxDolMStudioPage extends BxTemplStudioModule
 		
 		$this->aMenuItems = array(
             array('name' => 'settings', 'icon' => 'cogs', 'title' => '_bx_dolphin_migration_cpt_settings'),
-            array('name' => 'config', 'icon' => 'exchange', 'title' => '_bx_dolphin_migration_cpt_transfer_data'),
+            array('name' => 'config', 'icon' => 'exchange-alt', 'title' => '_bx_dolphin_migration_cpt_transfer_data'),
         );	
 		
 		$this -> _oModule -> _oTemplate -> addStudioJs(array('transfer.js', 'BxDolGrid.js'));
