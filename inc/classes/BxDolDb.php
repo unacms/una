@@ -230,7 +230,6 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 			);
 
     	$this->error($oException->errorInfo[self::$_sErrorKey]);
-    	return;
     }
 
     /**
