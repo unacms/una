@@ -180,7 +180,7 @@ class BxDolFeature extends BxDolObject
 
     protected function _getIconDoFeature($bPerformed)
     {
-    	return $bPerformed && $this->isUndo() ? 'star-o' : 'star';
+    	return $bPerformed && $this->isUndo() ? 'far star' : 'star';
     }
 
     protected function _getTitleDoFeature($bPerformed)

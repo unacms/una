@@ -192,7 +192,7 @@ class BxFilesModule extends BxBaseModTextModule
         $aFile = $this->getContentFile($aContentInfo);
         if (!$aFile['is_image']) {
             $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->CNF['OBJECT_STORAGE']);
-            $sIcon = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'file-o';
+            $sIcon = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'far file';
 
             $aResult['raw'] = $this->_oTemplate->parseHtmlByName('timeline_post.html', array(
                 'title' => $aResult['title'],

@@ -77,7 +77,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs['video']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_videos');
             $this->aInputs['video']['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_poster');
             $this->aInputs['video']['uploaders'] = !empty($this->aInputs['video']['value']) ? unserialize($this->aInputs['video']['value']) : $this->_oModule->_oConfig->getUploaders('video');
-            $this->aInputs['video']['upload_buttons_titles'] = array('Simple' => 'video-camera');
+            $this->aInputs['video']['upload_buttons_titles'] = array('Simple' => 'video');
             $this->aInputs['video']['multiple'] = true;
             $this->aInputs['video']['ghost_template'] = $oFormNested;
         }

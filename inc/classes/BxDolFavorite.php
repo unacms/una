@@ -233,7 +233,7 @@ class BxDolFavorite extends BxDolObject
 
     protected function _getIconDoFavorite($bPerformed)
     {
-    	return $bPerformed && $this->isUndo() ?  'heart-o' : 'heart';
+    	return $bPerformed && $this->isUndo() ?  'far heart' : 'heart';
     }
 
     protected function _getTitleDoFavorite($bPerformed)
