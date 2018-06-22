@@ -169,7 +169,7 @@
   <string name="_bx_polls_menu_title_entries_my"><![CDATA[Мои Голосования - Меню действий]]></string>
     <string name="_bx_polls_menu_set_title_entries_my"><![CDATA[Мои Голосования - Меню]]></string>
 	<string name="_bx_polls_menu_item_title_system_manage_my_polls"><![CDATA[Мои голосования]]></string>
-    <string name="_bx_polls_menu_item_title_manage_my_polls"><![CDATA[{addon} голосования]]></string>
+    <string name="_bx_polls_menu_item_title_manage_my_polls"><![CDATA[Голосования]]></string>
     <string name="_bx_polls_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_polls_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_polls_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>

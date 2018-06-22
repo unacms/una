@@ -168,7 +168,7 @@
     <string name="_bx_files_menu_title_entries_my"><![CDATA[My Files Action Menu]]></string>
     <string name="_bx_files_menu_set_title_entries_my"><![CDATA[My Files Menu]]></string>
 	<string name="_bx_files_menu_item_title_system_manage_my_files"><![CDATA[My files]]></string>
-    <string name="_bx_files_menu_item_title_manage_my_files"><![CDATA[{addon} files]]></string>
+    <string name="_bx_files_menu_item_title_manage_my_files"><![CDATA[Files]]></string>
     <string name="_bx_files_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_files_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_files_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>

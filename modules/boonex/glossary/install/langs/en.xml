@@ -169,7 +169,7 @@
     <string name="_bx_glossary_menu_title_entries_my"><![CDATA[My Glossary Action Menu]]></string>
     <string name="_bx_glossary_menu_set_title_entries_my"><![CDATA[My Glossary Menu]]></string>
 	<string name="_bx_glossary_menu_item_title_system_manage_my_glossary"><![CDATA[My terms]]></string>
-    <string name="_bx_glossary_menu_item_title_manage_my_glossary"><![CDATA[{addon} terms]]></string>
+    <string name="_bx_glossary_menu_item_title_manage_my_glossary"><![CDATA[Terms]]></string>
     <string name="_bx_glossary_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_glossary_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_glossary_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>

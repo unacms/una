@@ -7,7 +7,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 -- Auth objects
 
 INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_twitter', '_bx_twitter_auth_title', 'modules/?r=twitter/start', 'twitter');
+('bx_twitter', '_bx_twitter_auth_title', 'modules/?r=twitter/start', 'fab twitter');
 
 -- Alerts
 

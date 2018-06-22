@@ -171,7 +171,7 @@
   <string name="_bx_photos_menu_title_entries_my"><![CDATA[Мои фото - Меню действий]]></string>
     <string name="_bx_photos_menu_set_title_entries_my"><![CDATA[Мои фото - Меню]]></string>
 	<string name="_bx_photos_menu_item_title_system_manage_my_photos"><![CDATA[Мои фото]]></string>
-    <string name="_bx_photos_menu_item_title_manage_my_photos"><![CDATA[{addon} фото]]></string>
+    <string name="_bx_photos_menu_item_title_manage_my_photos"><![CDATA[Фото]]></string>
     <string name="_bx_photos_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_photos_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_photos_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>

@@ -22,6 +22,7 @@ class BxDolStudioFormsField extends BxDol
 
     protected $aParams = array();
     protected $aField = array();
+    protected $iFieldNameMaxLen;
 
     public function __construct($aParams = array(), $aField = array())
     {
@@ -75,6 +76,7 @@ class BxDolStudioFormsField extends BxDol
 
         $this->aParams = $aParams;
         $this->aField = $aField;
+        $this->iFieldNameMaxLen = 32;
     }
 
     public function init()
@@ -100,12 +102,12 @@ class BxDolStudioFormsField extends BxDol
         return $this->oDb->alterAdd($this->aParams['table'], $sName, $this->aParams['table_field_type']);
     }
 
-	public function alterChange($sNameOld, $sNameNews)
+	public function alterChange($sNameOld, $sNameNew)
     {
         if(!isset($this->aParams['table'], $this->aParams['table_alter'], $this->aParams['table_field_type']) || $this->aParams['table_alter'] !== true)
             return '';
 
-        return $this->oDb->alterChange($this->aParams['table'], $sNameOld, $sNameNews, $this->aParams['table_field_type']);
+        return $this->oDb->alterChange($this->aParams['table'], $sNameOld, $sNameNew, $this->aParams['table_field_type']);
     }
 
     public function alterRemove($sName)

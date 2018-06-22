@@ -174,7 +174,7 @@
   <string name="_bx_videos_menu_title_entries_my"><![CDATA[Мои видео - Меню действий]]></string>
     <string name="_bx_videos_menu_set_title_entries_my"><![CDATA[Мои видео - Меню]]></string>
 	<string name="_bx_videos_menu_item_title_system_manage_my_videos"><![CDATA[Мои видео]]></string>
-    <string name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[{addon} видео]]></string>
+    <string name="_bx_videos_menu_item_title_manage_my_videos"><![CDATA[Видео]]></string>
     <string name="_bx_videos_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_videos_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_videos_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>

@@ -197,7 +197,7 @@
   <string name="_bx_snipcart_menu_title_entries_my"><![CDATA[Мои Товары - Меню действий]]></string>
     <string name="_bx_snipcart_menu_set_title_entries_my"><![CDATA[Мои Товары - Меню]]></string>
 	<string name="_bx_snipcart_menu_item_title_system_manage_my_entries"><![CDATA[Мои товары]]></string>
-    <string name="_bx_snipcart_menu_item_title_manage_my_entries"><![CDATA[{addon} товаров]]></string>
+    <string name="_bx_snipcart_menu_item_title_manage_my_entries"><![CDATA[Товаров]]></string>
     <string name="_bx_snipcart_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_snipcart_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_snipcart_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>

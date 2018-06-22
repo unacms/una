@@ -855,15 +855,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sResult = '';
 
         if($bT && !$bL && !$bP && !$bV)
-            $sResult = 'file-text-o';
+            $sResult = 'far file-alt';
         else if(!$bT && $bL && !$bP && !$bV)
             $sResult = 'link';
         else if(!$bT && !$bL && $bP && !$bV)
-            $sResult = 'picture-o';
+            $sResult = 'far image';
         else if(!$bT && !$bL && !$bP && $bV)
             $sResult = 'film';
         else 
-            $sResult = 'file-o';
+            $sResult = 'far file';
 
         return '<i class="sys-icon ' . $sResult . '"></i>';
     }

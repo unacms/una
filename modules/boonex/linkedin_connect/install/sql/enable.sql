@@ -7,7 +7,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 -- Auth objects
 
 INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_linkedin', '_bx_linkedin_auth_title', 'modules/?r=linkedin/start', 'linkedin');
+('bx_linkedin', '_bx_linkedin_auth_title', 'modules/?r=linkedin/start', 'fab linkedin-in');
 
 -- Alerts
 

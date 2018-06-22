@@ -1327,20 +1327,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             
     }
 
-    protected function _prepareTextForEdit ($s)
-    {
-        if (!$this->isHtml())
-            return htmlspecialchars_decode(str_replace('<br />', "", $s));
-
-        return $s;
-    }
-
-    protected function _prepareTextForSave ($s)
-    {
-        $iDataAction = !$this->isHtml() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
-        return bx_process_input($s, $iDataAction);
-    }
-
     protected function _prepareTextForOutput ($s, $iCmtId = 0)
     {
     	$iDataAction = !$this->isHtml() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;

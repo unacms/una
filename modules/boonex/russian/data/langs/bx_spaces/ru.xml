@@ -208,10 +208,8 @@
     <string name="_bx_spaces_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_spaces_menu_item_title_system_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_spaces_menu_item_title_friends"><![CDATA[Друзья]]></string>
-    <string name="_bx_spaces_menu_item_title_system_friend_requests"><![CDATA[Число запросов дружбы]]></string>
-    <string name="_bx_spaces_menu_item_title_friend_requests"><![CDATA[{addon} запросов дружбы]]></string>
     <string name="_bx_spaces_menu_item_title_system_manage_my_groups"><![CDATA[Мои пространства]]></string>
-    <string name="_bx_spaces_menu_item_title_manage_my_groups"><![CDATA[{addon} пространств]]></string>
+    <string name="_bx_spaces_menu_item_title_manage_my_groups"><![CDATA[Пространств]]></string>
     <string name="_bx_spaces_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_spaces_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_spaces_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>

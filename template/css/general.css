@@ -172,3 +172,9 @@
     vertical-align:middle;
 }
 
+
+/* --------------- Profile Stats */
+
+.bx-profile-stats .bx-ps-acl span {
+	text-transform: uppercase;
+}
