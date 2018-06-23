@@ -40,7 +40,7 @@ class BxAclDb extends BxDolModuleDb
         $sWhereClause = '';
 
         if(!isset($aParams['order']) || empty($aParams['order']))
-           $sOrderClause = "ORDER BY `tal`.`Order` ASC";
+            $sOrderClause = "ORDER BY `tal`.`Order` ASC";
 
         switch($aParams['type']) {
         	case 'by_id':
