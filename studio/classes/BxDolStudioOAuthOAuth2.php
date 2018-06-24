@@ -72,8 +72,6 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
 
     protected function getRequestToken()
     {
-        
-
     	$sUrl = bx_append_url_params($this->sApiUrl . 'auth', array(
 			'response_type' => 'code',
 			'client_id' => $this->sKey,

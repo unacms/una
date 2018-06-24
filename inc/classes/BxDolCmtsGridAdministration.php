@@ -20,7 +20,6 @@ class BxDolCmtsGridAdministration extends BxTemplGrid
     
     public function __construct ($aOptions, $oTemplate = false)
     {
-        
         $this->_sFilter1Name = 'filter1';
 
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));

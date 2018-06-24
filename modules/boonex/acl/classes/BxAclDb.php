@@ -13,10 +13,7 @@ class BxAclDb extends BxDolModuleDb
 {
     protected $_oConfig;
 
-    /*
-     * Constructor.
-     */
-    function __construct(&$oConfig)
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
 
@@ -26,7 +23,6 @@ class BxAclDb extends BxDolModuleDb
 	public function getLevels($aParams, $bReturnCount = false)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "
 			`tal`.`ID` AS `id`,
@@ -41,8 +37,10 @@ class BxAclDb extends BxDolModuleDb
 			`tal`.`QuotaMaxFileSize` AS `quota_max_file_size`,
 			`tal`.`Order` AS `order`";
 
+        $sWhereClause = '';
+
         if(!isset($aParams['order']) || empty($aParams['order']))
-           $sOrderClause = "ORDER BY `tal`.`Order` ASC";
+            $sOrderClause = "ORDER BY `tal`.`Order` ASC";
 
         switch($aParams['type']) {
         	case 'by_id':
@@ -88,7 +86,6 @@ class BxAclDb extends BxDolModuleDb
 	public function getPrices($aParams, $bReturnCount = false)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "
 			`tap`.`id` AS `id`,
@@ -100,8 +97,10 @@ class BxAclDb extends BxDolModuleDb
 			`tap`.`trial` AS `trial`,
 			`tap`.`order` AS `order`";
 
+        $sWhereClause = $sJoinClause = '';
+
         if(!isset($aParams['order']) || empty($aParams['order']))
-           $sOrderClause = "ORDER BY `tap`.`Order` ASC";
+            $sOrderClause = "ORDER BY `tap`.`Order` ASC";
 
         switch($aParams['type']) {
             case 'by_id':
