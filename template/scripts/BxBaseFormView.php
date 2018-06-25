@@ -106,6 +106,9 @@ class BxBaseFormView extends BxDolForm
      */
     function getCode($bDynamicMode = false)
     {
+        if (!$bDynamicMode && bx_is_dynamic_request())
+            $bDynamicMode = true;
+
         $this->_bDynamicMode = $bDynamicMode;
         $this->addCssJs ();
         $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
