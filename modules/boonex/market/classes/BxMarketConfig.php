@@ -194,12 +194,14 @@ class BxMarketConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+        	'form' => 'BxMarketForm',
         	'entry' => 'BxMarketEntry',
         	'manage_tools' => 'BxMarketManageTools',
         	'licenses' => 'BxMarketLicenses'
         );
 
         $this->_aJsObjects = array(
+        	'form' => 'oBxMarketForm',
         	'entry' => 'oBxMarketEntry',
         	'manage_tools' => 'oBxMarketManageTools',
         	'licenses' => 'oBxMarketLicenses'

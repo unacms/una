@@ -24,7 +24,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         $iProfileId = bx_get_logged_profile_id();
 
         if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
-        	$sJsObject = $this->_oModule->_oConfig->getJsObject('entry');
+        	$sJsObject = $this->_oModule->_oConfig->getJsObject('form');
 
         	$aMask = array('mask' => "javascript:%s.checkName('%s', '%s');", $sJsObject, $CNF['FIELD_TITLE'], $CNF['FIELD_NAME']);
             if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'] && bx_get('id') !== false) {
@@ -96,9 +96,18 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
     function getCode($bDynamicMode = false)
     {
-        return $this->_oModule->_oTemplate->parseHtmlByName('form.html', array(
+    	$sJs = $this->_oModule->_oTemplate->addJs(array('form.js'), $bDynamicMode);
+
+        $sCode = '';
+        if($bDynamicMode)
+        	$sCode .= $sJs;
+
+		$sCode .= $this->_oModule->_oTemplate->getJsCode('form');
+		$sCode .= $this->_oModule->_oTemplate->parseHtmlByName('form.html', array(
             'content' => parent::getCode($bDynamicMode)
         ));
+
+        return $sCode;
     }
 
 	function initChecker ($aValues = array (), $aSpecificValues = array())
