@@ -35,6 +35,9 @@ function processJsonData(oData) {
 	        oPopup.hide().prependTo('body').bxProcessHtml().dolPopup(oOptions);
 	    }
 
+	    if(oData && oData.form != undefined && oData.form_id != undefined)
+	    	$('form#' + oData.form_id).replaceWith(oData.form).bxProcessHtml();
+
 	    if (oData && oData.eval != undefined)
 	        eval(oData.eval);
 	};

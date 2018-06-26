@@ -101,6 +101,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sPostfix = $sWhereClause = $sOrderByClause = "";
+        $aBindings = array();
 
         switch($aParams['type']) {
         	case 'type':
@@ -113,39 +114,39 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
             case 'modules':
                 $sPostfix .= '_modules';
-                $aMethod['params'][1] = array(
-                	'type' => BX_DOL_MODULE_TYPE_MODULE
-                );
+                $aBindings['type'] = BX_DOL_MODULE_TYPE_MODULE;
 
                 $sWhereClause .= " AND `type`=:type";
                 break;
 
             case 'languages':
                 $sPostfix .= '_languages';
-                $aMethod['params'][1] = array(
-                	'type' => BX_DOL_MODULE_TYPE_LANGUAGE
-                );
+                $aBindings['type'] = BX_DOL_MODULE_TYPE_LANGUAGE;
 
                 $sWhereClause .= " AND `type`=:type";
                 break;
 
             case 'templates':
                 $sPostfix .= '_templates';
-                $aMethod['params'][1] = array(
-                	'type' => BX_DOL_MODULE_TYPE_TEMPLATE
-                );
+                $aBindings['type'] = BX_DOL_MODULE_TYPE_TEMPLATE;
 
                 $sWhereClause .= " AND `type`=?";
                 break;
 
             case 'path_and_uri':
             	$aMethod['name'] = 'getRow';
-            	$aMethod['params'][1] = array(
+            	$aBindings = array_merge($aBindings, array(
                 	'path' => $aParams['path'],
             		'uri' => $aParams['uri']
-                );
+                ));
 
             	$sWhereClause .= " AND `path`=:path AND `uri`=:uri";
+            	break;
+
+			case 'all_pairs_name_uri':
+            	$aMethod['name'] = 'getPairs';
+            	$aMethod['params'][1] = 'name';
+            	$aMethod['params'][2] = 'uri';
             	break;
 
             case 'all':
@@ -154,7 +155,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
         if(isset($aParams['active'])) {
             $sPostfix .= "_active";
-            $aMethod['params'][1]['enabled'] = (int)$aParams['active'];
+            $aBindings['enabled'] = (int)$aParams['active'];
 
             $sWhereClause .= " AND `enabled`=:enabled";
         }
@@ -178,6 +179,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 `enabled`
             FROM `sys_modules`
             WHERE 1 " . $sWhereClause . $sOrderByClause;
+        $aMethod['params'][] = $aBindings;
 
         if(!$bFromCache || empty($sPostfix))
         	return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);

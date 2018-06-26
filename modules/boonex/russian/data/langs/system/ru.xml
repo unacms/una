@@ -2284,6 +2284,7 @@
 	<string name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Горизонтальные кнопки с иконками]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[В тексте]]></string>
 	<string name="_sys_menu_template_title_inline_sbtn"><![CDATA[В тексте ('спец' кнопки)]]></string>
+	<string name="_sys_menu_template_title_interactive"><![CDATA[Интерактивные горизонтальные ссылки]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные вертикальные ссылки]]></string>
 	<string name="_sys_menu_template_title_empty"><![CDATA[Пустое меню]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Навигация по сайту - Подменю]]></string>
@@ -2351,6 +2352,8 @@
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
+	<string name="_sys_page_block_title_sys_create_post"><![CDATA[Создать публикацию]]></string>
+	<string name="_sys_page_block_title_create_post"><![CDATA[Добавить...]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли пароль]]></string>
@@ -2569,7 +2572,9 @@
 	<string name="_sys_txt_confirm_phone_confirm_success"><![CDATA[Ваш телефон успешно подтверждён.]]></string>
 	<string name="_sys_txt_confirm_phone_set_phone_desc_set_phone"><![CDATA[Пожалуйста, введите телефонный номер на который будет отправлено SMS с кодом подтверждения.]]></string>
 	<string name="_sys_txt_confirm_phone_set_phone_desc_phone_confirmation"><![CDATA[Пожалуйста, введите код проверки из SMS]]></string>
-	
+
+	<string name="_sys_txt_create_post_placeholder"><![CDATA[Написать статью, поделиться линкой, фото или видео.]]></string>
+
     <string name="_sys_txt_current_picture"><![CDATA[Текущая картинка]]></string>
 	<string name="_sys_txt_data_successfully_submitted"><![CDATA[Выполнено]]></string>
     <string name="_sys_txt_delete"><![CDATA[Удалить]]></string>

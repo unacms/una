@@ -14,6 +14,7 @@
 class BxBaseMenuInteractive extends BxTemplMenu
 {
     protected $_oTemplate;
+    protected $_bShowDivider;
 
     public function __construct ($aObject, $oTemplate)
     {
@@ -23,6 +24,8 @@ class BxBaseMenuInteractive extends BxTemplMenu
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+		$this->_bShowDivider = true;
     }
 
     /**
@@ -48,7 +51,7 @@ class BxBaseMenuInteractive extends BxTemplMenu
     {
         $aRet = array();
         if (!isset($this->_aObject['menu_items']))
-            $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
+            $this->_aObject['menu_items'] = $this->getMenuItemsRaw();
 
         foreach ($this->_aObject['menu_items'] as $a) {
             if (isset($a['active']) && !$a['active'])
@@ -61,6 +64,7 @@ class BxBaseMenuInteractive extends BxTemplMenu
 
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
+			$a['class'] = 'bx-menu-item-inter';
             $a['class_wrp_act'] = 'bx-menu-inter-hidden';
             $a['class_wrp_pas'] = '';
             if($this->_isSelected($a)) {
@@ -70,6 +74,10 @@ class BxBaseMenuInteractive extends BxTemplMenu
 
             $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
             $a['title'] = _t($a['title']);
+            $a['bx_if:show_divider'] = array (
+            	'condition' => $this->_bShowDivider,
+                'content' => array(),
+            );
             $a['bx_if:image'] = array (
                 'condition' => (bool)$sIconUrl,
                 'content' => array('icon_url' => $sIconUrl),

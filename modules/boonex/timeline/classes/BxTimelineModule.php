@@ -427,9 +427,86 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echo $oRss->GenRssByData($aRssData, $sRssCaption, $sRssLink);
     }
 
+
     /**
      * SERVICE METHODS
      */
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_create_post_form get_create_post_form
+     * 
+     * @code bx_srv('bx_timeline', 'get_create_post_form', [...]); @endcode
+     * 
+     * Get form code for add content. Is needed for United Post Form.
+     * 
+     * @param $aParams optional array with parameters(display name, etc)
+     * @return form code or error
+     * 
+     * @see BxTimelineModule::serviceGetCreatePostForm
+     */
+    /** 
+     * @ref bx_timeline-get_create_post_form "get_create_post_form"
+     */
+    public function serviceGetCreatePostForm($aParams = array())
+    {
+    	$aParams = array_merge($this->_aFormParams, $aParams);
+
+    	$oForm = $this->serviceGetObjectForm('add', $aParams);
+    	if(!$oForm)
+    		return ''; 	
+
+		if(!empty($aParams['display']))
+			$aParams['form_display'] = $aParams['display'];
+
+    	$aResult = $this->getFormPost($aParams);
+    	if(!empty($aResult['form']))
+			return $aResult['form'];
+
+		if(!empty($aResult['message']))
+			return $aResult['message'];
+
+		return '';
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_object_form get_object_form
+     * 
+     * @code bx_srv('bx_timeline', 'get_object_form', [...]); @endcode
+     * 
+     * Get form object for add, edit, view or delete the content.
+     * 
+     * @param $sType 'add' is supported only 
+     * @param $aParams optional array with parameters(display name, etc)
+     * @return form object or false on error
+     * 
+     * @see BxTimelineModule::serviceGetObjectForm
+     */
+    /** 
+     * @ref bx_timeline-get_object_form "get_object_form"
+     */
+    public function serviceGetObjectForm ($sType, $aParams = array())
+    {
+    	if (!in_array($sType, array('add')))
+            return false;
+
+		if(!empty($aParams['display']))
+			$aParams['form_display'] = $aParams['display'];
+
+		$oForm = $this->getFormPostObject($aParams);
+			
+		$sParamsKey = 'ajax_mode';
+        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
+        	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
+
+    	return $oForm;
+    }
+
     /**
      * @page service Service Calls
      * @section bx_timeline Timeline
@@ -1602,11 +1679,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $iUserId = $this->getUserId();
 
-        $sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
-        $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_add';
-        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
-
+        $oForm = $this->getFormPostObject($aParams);
         $oForm->initChecker();
+
+        $bAjaxMode = $oForm->isAjaxMode();
+        $bDynamicMode = $bAjaxMode;
+
         if($oForm->isSubmittedAndValid()) {
             list($sUserName) = $this->getUserInfo($iUserId);
 
@@ -1688,13 +1766,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
                 $this->onPost($iId);
 
-                return array('id' => $iId);
+                return $this->_prepareResponse(array('message' => _t('_bx_timeline_txt_msg_performed_action'), 'id' => $iId), $bAjaxMode, array(
+                	'message' => '',
+                	'redirect' => $this->_oConfig->getItemViewUrl(array('id' => $iId))
+                ));
             }
 
-            return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
+            return $this->_prepareResponse(array('message' => _t('_bx_timeline_txt_err_cannot_perform_action')), $bAjaxMode);
         }
 
-        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+        return $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode && $oForm->isSubmitted());
     }
 
     public function getFormEdit($iId, $aParams = array())
@@ -1784,6 +1865,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         	'form_id' => $oForm->id,
         	'eval' => $this->_oConfig->getJsObject('view') . '.onEditPost(oData)'
         );
+    }
+
+    public function getFormPostObject($aParams)
+    {
+    	$sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
+        $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_add';
+        return BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
     }
 
     public function getCmtsObject($sSystem, $iId)

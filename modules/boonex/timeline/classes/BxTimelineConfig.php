@@ -377,7 +377,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
     }
 
-    public function getItemViewUrl(&$aEvent)
+    public function getItemViewUrl($aEvent)
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
         	'i' => $this->CNF['URI_VIEW_ENTRY'], 

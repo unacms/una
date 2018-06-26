@@ -98,6 +98,43 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         return array();
     }
+    
+    public function serviceGetCreatePostForm($sDefault = 'bx_posts')
+    {
+    	if(!isLogged())
+    		return '';
+
+    	$oMenu = BxDolMenu::getObjectInstance('sys_create_post');
+
+    	$aMenuItems = $oMenu->getMenuItems();
+    	if(empty($aMenuItems) || !is_array($aMenuItems))
+    		return '';
+
+    	if(empty($sDefault)) {
+    		$aDefault = array_shift($aMenuItems);
+    		$sDefault = $aDefault['module'];
+    	}
+    	$oMenu->setSelected($sDefault, $sDefault);
+
+    	$oTemplate = BxDolTemplate::getInstance();
+    	$oTemplate->addJs(array('BxDolCreatePost.js'));
+
+    	$sJsObject = 'oBxDolCreatePost';
+        $sJsContent = $oTemplate->_wrapInTagJsCode("var " . $sJsObject . " = new BxDolCreatePost(" . json_encode(array(
+            'sObjName' => $sJsObject,
+            'sRootUrl' => BX_DOL_URL_ROOT,
+        	'sDefault' => $sDefault
+        )) . ");");
+
+    	return array('content' => BxDolTemplate::getInstance()->parseHtmlByName('create_post_form.html', array(
+    		'default' => $sDefault,
+            'user_thumb' => BxDolProfile::getInstance()->getUnit(0, array('template' => 'unit_wo_info')),
+    		'menu' => $oMenu->getCode(),
+            'form' => BxDolService::call($sDefault, 'get_create_post_form', array(array('ajax_mode' => true, 'absolute_action_url' => true))),
+    		'js_object' => $sJsObject,
+    		'js_content' => $sJsContent
+    	)));
+    }
 
     /**
      * @see iBxDolProfileService::serviceCheckSpacePrivacy
