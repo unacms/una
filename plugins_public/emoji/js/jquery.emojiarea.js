@@ -416,7 +416,9 @@
 		$(this.$editor).after(oMenuWrapper);
 		
 	this.setup();
-	this.$editor.trigger('focus');
+	
+	if (typeof options.set_focus !== 'undefined' && options.set_focus === true)
+		this.$editor.trigger('focus');
 
     /*
      * MODIFICATION: Following line was modified by Igor Zhukov, in order to
