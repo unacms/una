@@ -65,4 +65,8 @@ function bx_editor_get_htmleditable (sEditorSelector)
     return $(sEditorSelector).data('froala.editor').el;
 }
 
+function bx_editor_remove_all (oElement) 
+{
+}
+
 /** @} */

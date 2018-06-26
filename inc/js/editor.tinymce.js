@@ -72,4 +72,18 @@ function bx_editor_get_htmleditable (sEditorSelector)
     return $(eEditor.dom.doc).find('body').get(0);
 }
 
+function bx_editor_remove_all (oElement) 
+{
+    if ('undefined' == typeof(oElement))
+        oElement = window;
+    oElement = $(oElement);
+
+    if ('undefined' == typeof(tinymce) || !tinymce.editors.length)
+        return;
+    $.each(tinymce.editors, function () {
+        if ($(this.getElement()).parents().filter(oElement).length)
+            this.remove();
+    });
+}
+
 /** @} */

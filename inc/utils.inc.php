@@ -1646,4 +1646,9 @@ function bx_is_url_in_content ($sContent)
     return false;
 }
 
+function bx_is_dynamic_request ()
+{
+    return bx_get('dynamic') || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']);
+}
+
 /** @} */

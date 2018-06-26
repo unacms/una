@@ -197,10 +197,9 @@ BxDolStudioBuilderPage.prototype.onEditBlock = function(oData) {
 };
 
 BxDolStudioBuilderPage.prototype.onEditBlockCancel = function(oButton) {
-	var oTextarea = $(oButton).parents('form:first').find('textarea.bx-form-input-html');
-	if(oTextarea.length > 0 && typeof tinymce == 'object') {
-		oTextarea.tinymce().remove();
-	}
+
+    if ('undefined' !== typeof(bx_editor_remove_all))
+        bx_editor_remove_all($(oButton).parents('form:first'));
 
 	$('.bx-popup-applied:visible').dolPopupHide();
 };
