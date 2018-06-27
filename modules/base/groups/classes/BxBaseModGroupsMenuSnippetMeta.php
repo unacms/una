@@ -16,18 +16,20 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         parent::__construct($aObject, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+        if (isset($CNF['OBJECT_CONNECTIONS'])){
+            $this->_aConnectionToFunctionCheck[$CNF['OBJECT_CONNECTIONS']] = array(
+			    'add' => 'checkAllowedFanAdd', 
+			    'remove' => 'checkAllowedFanRemove'
+            );
 
-        $this->_aConnectionToFunctionCheck[$CNF['OBJECT_CONNECTIONS']] = array(
-			'add' => 'checkAllowedFanAdd', 
-			'remove' => 'checkAllowedFanRemove'
-        );
-
-        $this->_aConnectionToFunctionTitle[$CNF['OBJECT_CONNECTIONS']] = '_getMenuItemConnectionsTitle';
+            $this->_aConnectionToFunctionTitle[$CNF['OBJECT_CONNECTIONS']] = '_getMenuItemConnectionsTitle';
+        }
     }
 
     protected function _getMenuItemJoin($aItem)
     {
-        return $this->_getMenuItemConnection($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
+        if (isset($CNF['OBJECT_CONNECTIONS']))
+            return $this->_getMenuItemConnection($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
     }
 
     protected function _getMenuItemLeave($aItem)

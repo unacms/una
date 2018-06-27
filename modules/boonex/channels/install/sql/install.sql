@@ -19,11 +19,20 @@ CREATE TABLE IF NOT EXISTS `bx_cnl_data` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
-  `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(255) DEFAULT '3',
   PRIMARY KEY (`id`),
   UNIQUE INDEX channel_name (`channel_name`),
   FULLTEXT KEY `search_fields` (`channel_name`)
+);
+
+-- TABLE: items
+CREATE TABLE IF NOT EXISTS `bx_cnl_content` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) NOT NULL,
+  `cnl_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `module_name` varchar(19) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 -- TABLE: STORAGES & TRANSCODERS
@@ -140,26 +149,6 @@ CREATE TABLE `bx_cnl_meta_mentions` (
   KEY `profile_id` (`profile_id`)
 );
 
--- TABLE: fans
-CREATE TABLE IF NOT EXISTS `bx_cnl_fans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `initiator` int(11) NOT NULL,
-  `content` int(11) NOT NULL,
-  `mutual` tinyint(4) NOT NULL,
-  `added` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `initiator` (`initiator`,`content`),
-  KEY `content` (`content`)
-);
-
--- TABLE: admins
-CREATE TABLE IF NOT EXISTS `bx_cnl_admins` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_profile_id` int(10) unsigned NOT NULL,
-  `fan_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
-);
 
 -- TABLE: favorites
 CREATE TABLE `bx_cnl_favorites_track` (
@@ -230,7 +219,6 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_channel', 'bx_channels', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_channels_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'channel_name', '', '', 0, 'text', '_bx_channels_form_profile_input_sys_channel_name', '_bx_channels_form_profile_input_channel_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_channel_name_err', 'Xss', '', 1, 0),
 ('bx_channel', 'bx_channels', 'initial_members', '', '', 0, 'custom', '_bx_channels_form_profile_input_sys_initial_members', '_bx_channels_form_profile_input_initial_members', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
-('bx_channel', 'bx_channels', 'join_confirmation', 1, '', 1, 'switcher', '_bx_channels_form_profile_input_sys_join_confirm', '_bx_channels_form_profile_input_join_confirm', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_channel', 'bx_channels', 'cover', 'a:1:{i:0;s:22:"bx_channels_cover_crop";}', 'a:1:{s:22:"bx_channels_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_cover', '_bx_channels_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'picture', 'a:1:{i:0;s:24:"bx_channels_picture_crop";}', 'a:1:{s:24:"bx_channels_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_picture', '_bx_channels_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_channels_form_profile_input_picture_err', '', '', 1, 0);
 
@@ -240,7 +228,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_channel_add', 'initial_members', 2147483647, 1, 5),
 ('bx_channel_add', 'picture', 2147483647, 1, 6),
 ('bx_channel_add', 'channel_name', 2147483647, 1, 7),
-('bx_channel_add', 'join_confirmation', 2147483647, 1, 8),
 ('bx_channel_add', 'do_submit', 2147483647, 1, 9),
 
 ('bx_channel_invite', 'initial_members', 2147483647, 1, 1),
@@ -256,10 +243,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_channel_edit', 'cover', 2147483647, 0, 3),
 ('bx_channel_edit', 'picture', 2147483647, 1, 4),
 ('bx_channel_edit', 'channel_name', 2147483647, 1, 5),
-('bx_channel_edit', 'join_confirmation', 2147483647, 1, 6),
 ('bx_channel_edit', 'do_submit', 2147483647, 1, 7),
 
-('bx_channel_edit_cover', 'join_confirmation', 2147483647, 0, 0),
 ('bx_channel_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_channel_edit_cover', 'channel_name', 2147483647, 0, 2),
 ('bx_channel_edit_cover', 'picture', 2147483647, 0, 3),
@@ -281,8 +266,7 @@ INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_ac
 ('bx_channels_cmts', '_bx_channels_cmts', 'bx_channels', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
 INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-('bx_channels', 'bx_channels_administration', 'td`.`id', '', ''),
-('bx_channels', 'bx_channels_common', 'td`.`id', '', '');
+('bx_channels', 'bx_channels_administration', 'td`.`id', '', '');
 
 -- SEARCH EXTENDED
 INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES

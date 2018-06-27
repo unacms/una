@@ -42,7 +42,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_CHANGED']]['date_format'] = BX_FORMAT_DATE;
         }
 
-        if (isset($this->aInputs[$CNF['FIELD_TEXT']]) && isset($CNF['FIELD_TEXT_ID'])) {
+        if (isset($CNF['FIELD_TEXT']) && isset($this->aInputs[$CNF['FIELD_TEXT']]) && isset($CNF['FIELD_TEXT_ID'])) {
             $this->aInputs[$CNF['FIELD_TEXT']]['attrs'] = array_merge (
                 array ('id' => $CNF['FIELD_TEXT_ID']),
                 is_array($this->aInputs[$CNF['FIELD_TEXT']]['attrs']) ? $this->aInputs[$CNF['FIELD_TEXT']]['attrs'] : array ()

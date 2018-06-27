@@ -21,8 +21,6 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'edit-channel-cover' => 'checkAllowedChangeCover',
             'invite-to-channel' => 'checkAllowedInvite',
             'delete-channel-profile' => 'checkAllowedDelete',
-            'profile-fan-add' => 'checkAllowedFanAdd',
-            'profile-fan-remove' => 'checkAllowedFanRemove',
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
@@ -37,7 +35,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
-            'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_CONTENT' => $aModule['db_prefix'] . 'content',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -48,7 +46,6 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'FIELD_TITLE' => 'channel_name',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
-            'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
@@ -59,8 +56,6 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'URI_VIEW_ENTRY' => 'view-channel-profile',
             'URI_EDIT_ENTRY' => 'edit-channel-profile',
             'URI_EDIT_COVER' => 'edit-channel-cover',
-            'URI_JOINED_ENTRIES' => 'joined-channels',
-            'URI_MANAGE_COMMON' => 'channels-manage',
 
             'URL_HOME' => 'page.php?i=channels-home',
             'URL_MANAGE_COMMON' => 'page.php?i=channels-manage',
@@ -113,19 +108,9 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'OBJECT_PRIVACY_VIEW' => 'bx_channels_allow_view_to',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_channels_allow_view_notification_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_channels_administration',
-            'OBJECT_GRID_COMMON' => 'bx_channels_common',
-            'OBJECT_GRID_CONNECTIONS' => 'bx_channels_fans',
-            'OBJECT_CONNECTIONS' => 'bx_channels_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_channels_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_channels_picture_crop'),
-
-            'EMAIL_INVITATION' => 'bx_channels_invitation',
-            'EMAIL_JOIN_REQUEST' => 'bx_channels_join_request',
-            'EMAIL_JOIN_CONFIRM' => 'bx_channels_join_confirm',
-            'EMAIL_FAN_BECOME_ADMIN' => 'bx_channels_fan_become_admin',
-            'EMAIL_ADMIN_BECOME_FAN' => 'bx_channels_admin_become_fan',
-            'EMAIL_FAN_REMOVE' => 'bx_channels_fan_remove',
-            'EMAIL_JOIN_REJECT' => 'bx_channels_join_reject',
+      
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
@@ -155,9 +140,6 @@ class BxCnlConfig extends BxBaseModProfileConfig
                 'txt_sample_comment_single' => '_bx_channels_txt_sample_comment_single',
                 'txt_sample_vote_single' => '_bx_channels_txt_sample_vote_single',
                 'txt_private_group' => '_bx_channels_txt_private_channel',
-                'txt_N_fans' => '_bx_channels_txt_N_fans',
-                'txt_ntfs_join_request' => '_bx_channels_txt_ntfs_join_request',
-                'txt_ntfs_fan_added' => '_bx_channels_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_channels_txt_ntfs_timeline_post_common',
                 'form_field_author' => '_bx_channels_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_channels_menu_item_title_befriend_sent',
@@ -174,10 +156,6 @@ class BxCnlConfig extends BxBaseModProfileConfig
                 'filter_item_select_one_filter1' => '_bx_channels_grid_filter_item_title_adm_select_one_filter1',
                 'menu_item_manage_my' => '_bx_channels_menu_item_title_manage_my',
                 'menu_item_manage_all' => '_bx_channels_menu_item_title_manage_all',
-                'menu_item_title_become_fan_sent' => '_bx_channels_menu_item_title_become_fan_sent',
-                'menu_item_title_leave_group_cancel_request' => '_bx_channels_menu_item_title_leave_channel_cancel_request',
-                'menu_item_title_become_fan' => '_bx_channels_menu_item_title_become_fan',
-                'menu_item_title_leave_group' => '_bx_channels_menu_item_title_leave_channel',
                 'txt_all_entries_by_author' => '_bx_channels_page_title_browse_by_author'
             ),
 
@@ -192,9 +170,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
         );
 
         $this->_aGridObjects = array(
-            'common' => $this->CNF['OBJECT_GRID_COMMON'],
-            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-            
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
     }
 

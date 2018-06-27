@@ -18,8 +18,6 @@
 	<string name="_bx_channels_form_profile_display_invite"><![CDATA[Invite to Channel]]></string>
 	<string name="_bx_channels_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_channels_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_channels_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
-	<string name="_bx_channels_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
 	<string name="_bx_channels_form_profile_input_sys_allow_view_to"><![CDATA[Privacy]]></string>
 	<string name="_bx_channels_form_profile_input_allow_view_to"><![CDATA[Privacy]]></string>
 	<string name="_bx_channels_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the channel and see who's in it, only members can see posts. Secret - only members can find the channel and see posts.]]></string>
@@ -43,8 +41,6 @@
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[View Channel]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Edit Any Channel]]></string>
 	
-	<string name="_bx_channels_page_title_sys_joined_entries"><![CDATA[Profile Channels]]></string>
-	<string name="_bx_channels_page_title_joined_entries"><![CDATA[Profile Channels]]></string>
 	<string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_title_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Edit Channel]]></string>
@@ -65,8 +61,6 @@
 	<string name="_bx_channels_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
 	<string name="_bx_channels_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_page_title_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_channels_page_title_sys_channel_fans"><![CDATA[Members]]></string>
-	<string name="_bx_channels_page_title_channel_fans"><![CDATA[Members]]></string>
 	<string name="_bx_channels_page_title_sys_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_channels_page_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_channels_page_title_sys_profile_info"><![CDATA[Channel Info]]></string>
@@ -89,8 +83,6 @@
 	<string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Channels by {display_name}]]></string>
 	<string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Favorite Channels]]></string>
 	<string name="_bx_channels_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Channels]]></string>
-	<string name="_bx_channels_page_block_title_sys_joined_entries"><![CDATA[Joined Channels]]></string>
-	<string name="_bx_channels_page_block_title_joined_entries"><![CDATA[Joined Channels]]></string>
   <string name="_bx_channels_page_block_title_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_block_title_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
@@ -103,9 +95,6 @@
 	<string name="_bx_channels_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_page_block_title_admins"><![CDATA[Administrators]]></string>
-	<string name="_bx_channels_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
-	<string name="_bx_channels_page_block_title_fans"><![CDATA[Members]]></string>
-	<string name="_bx_channels_page_block_title_system_fans"><![CDATA[Members]]></string>
 	<string name="_bx_channels_page_block_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_channels_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_channels_page_block_title_profile_actions"><![CDATA[Actions]]></string>
@@ -120,6 +109,7 @@
 	<string name="_bx_channels_page_block_title_invite_to_channel"><![CDATA[Invite Members to the Channel]]></string>
 	<string name="_bx_channels_page_block_title_search_form"><![CDATA[Search Form]]></string>
 	<string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
+  <string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Search Results By Hashtag]]></string>
 	<string name="_bx_channels_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
 	<string name="_bx_channels_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
 	<string name="_bx_channels_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Channels (Showcase View)]]></string>
@@ -158,10 +148,6 @@
 	<string name="_bx_channels_menu_item_title_create_profile"><![CDATA[New Channel]]></string>
 	<string name="_bx_channels_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_channels_menu_item_title_system_view_joined_channels"><![CDATA[Channels]]></string>
-	<string name="_bx_channels_menu_item_title_view_joined_channels"><![CDATA[Channels]]></string>
-	<string name="_bx_channels_menu_item_title_system_view_fans"><![CDATA[Members]]></string>
-	<string name="_bx_channels_menu_item_title_view_fans"><![CDATA[Members]]></string>
 	<string name="_bx_channels_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_channels_menu_item_title_view_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_channels_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
@@ -179,15 +165,6 @@
 	<string name="_bx_channels_menu_item_title_unfriend"><![CDATA[Unfriend]]></string>
 	<string name="_bx_channels_menu_item_title_unfriend_cancel_request"><![CDATA[Cancel friend request]]></string>
 	<string name="_bx_channels_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
-	
-	<string name="_bx_channels_menu_item_title_system_become_fan"><![CDATA[Join Channel]]></string>
-	<string name="_bx_channels_menu_item_title_become_fan"><![CDATA[Join Channel]]></string>
-	<string name="_bx_channels_menu_item_title_become_fan_sent"><![CDATA[Join Channel (requested)]]></string>
-	<string name="_bx_channels_menu_item_title_become_fan_confirm"><![CDATA[Accept Request]]></string>
-	<string name="_bx_channels_menu_item_title_system_leave_channel"><![CDATA[Leave Channel]]></string>
-	<string name="_bx_channels_menu_item_title_leave_channel"><![CDATA[Leave Channel]]></string>
-	<string name="_bx_channels_menu_item_title_leave_channel_cancel_request"><![CDATA[Cancel Request]]></string>
-	<string name="_bx_channels_menu_item_title_leave_channel_reject_request"><![CDATA[Reject Request]]></string>
 	
 	<string name="_bx_channels_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
 	<string name="_bx_channels_menu_item_title_subscribe"><![CDATA[Follow]]></string>
@@ -239,68 +216,13 @@
   <string name="_bx_channels_err_delete_child_presend"><![CDATA[Cannot delete this channel because there are child elements.]]></string>
 	<string name="_bx_channels_txt_account_pending"><![CDATA[This channel is pending approval, please wait until it is activated.]]></string>
 	<string name="_bx_channels_txt_account_suspended"><![CDATA[This channel is suspended.]]></string>
-	<string name="_bx_channels_txt_N_fans"><![CDATA[{0} members]]></string>
 	<string name="_bx_channels_txt_sample_single"><![CDATA[channel]]></string>
 	<string name="_bx_channels_txt_sample_single_with_article"><![CDATA[a channel]]></string>
 	<string name="_bx_channels_txt_sample_comment_single"><![CDATA[comment to channel]]></string>
 	<string name="_bx_channels_txt_sample_vote_single"><![CDATA[vote to channel]]></string>
 	<string name="_bx_channels_txt_to_admins"><![CDATA[To Admins]]></string>
 	<string name="_bx_channels_txt_from_admins"><![CDATA[From Admins]]></string>
-	<string name="_bx_channels_txt_private_channel"><![CDATA[Private channel]]></string>
-	
-	<string name="_bx_channels_alert_action_fan_added"><![CDATA[member joined]]></string>
-	<string name="_bx_channels_txt_ntfs_fan_added"><![CDATA[Channel <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
-	<string name="_bx_channels_alert_action_join_request"><![CDATA[join request]]></string>
-	<string name="_bx_channels_txt_ntfs_join_request"><![CDATA[Channel <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+
 	<string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel timeline]]></string>
-	
-	<string name="_bx_channels_pre_lists_cats"><![CDATA[Channel categories]]></string>
-	<string name="_bx_channels_cat_General"><![CDATA[General]]></string>
-	<string name="_bx_channels_cat_Business"><![CDATA[Business]]></string>
-	<string name="_bx_channels_cat_Interests"><![CDATA[Interests]]></string>
-	<string name="_bx_channels_cat_Causes"><![CDATA[Causes]]></string>
-	<string name="_bx_channels_cat_Fun"><![CDATA[Fun]]></string>
-	<string name="_bx_channels_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
-	
-	<string name="_bx_channels_email_join_request"><![CDATA[Channel join request]]></string>
-	<string name="_bx_channels_email_join_request_subject"><![CDATA[Request to join your channel]]></string>
-	<string name="_bx_channels_email_join_request_body"><![CDATA[{email_header}
-	<p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> channel from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_channels_email_join_reject"><![CDATA[Channel join request was rejected]]></string>
-	<string name="_bx_channels_email_join_reject_subject"><![CDATA[Request to join a channel was rejected]]></string>
-	<string name="_bx_channels_email_join_reject_body"><![CDATA[{email_header}
-	<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> channel was rejected by channel admin.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_channels_email_join_confirm"><![CDATA[Channel join request was confirmed]]></string>
-	<string name="_bx_channels_email_join_confirm_subject"><![CDATA[Your request to join a channel was confirmed]]></string>
-	<string name="_bx_channels_email_join_confirm_body"><![CDATA[{email_header}
-	<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> channel was confirmed by the channel admin.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_channels_email_fan_remove"><![CDATA[Profile was removed from channel fans]]></string>
-	<string name="_bx_channels_email_fan_remove_subject"><![CDATA[Your profile was removed from the channel]]></string>
-	<string name="_bx_channels_email_fan_remove_body"><![CDATA[{email_header}
-	<p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> channel by the channel admin.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_channels_email_fan_become_admin"><![CDATA[Channel admin status was granted]]></string>
-	<string name="_bx_channels_email_fan_become_admin_subject"><![CDATA[You are a channel admin now]]></string>
-	<string name="_bx_channels_email_fan_become_admin_body"><![CDATA[{email_header}
-	<p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> channel now.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_channels_email_admin_become_fan"><![CDATA[Channel admin status was revoked]]></string>
-	<string name="_bx_channels_email_admin_become_fan_subject"><![CDATA[Your channel admin status was revoked]]></string>
-	<string name="_bx_channels_email_admin_become_fan_body"><![CDATA[{email_header}
-	<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> channel.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_channels_email_invitation"><![CDATA[Invitation to channel]]></string>
-	<string name="_bx_channels_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" channel]]></string>
-	<string name="_bx_channels_email_invitation_body"><![CDATA[{email_header}
-	<p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} channel</a>.</p>
-	{email_footer}]]></string>
+  <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[New content <a href="{entry_url}">{entry_caption}</a> added to channel <a href="{channel_url}">{owner_name}</a>]]></string>
 </resources>
