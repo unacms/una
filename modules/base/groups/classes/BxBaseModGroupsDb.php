@@ -54,7 +54,7 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
     {
         if (is_array($mixedFansIds)) {
             foreach ($mixedFansIds as $iFanId)
-                $this->fromAdmins ($iFanId);
+                $this->fromAdmins ($iGroupProfileId, $iFanId);
             return true;
         }
 
