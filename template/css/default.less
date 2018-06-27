@@ -554,20 +554,32 @@ h3,
     text-overflow:ellipsis;
     overflow:hidden;
 }
-.bx-def-unit-alert-middle,
-.bx-def-unit-alert {
+
+.bx-def-unit-alert,
+.bx-def-unit-alert-small,
+.bx-def-unit-alert-middle {
     display:block;
     position:absolute;
     right:0;
     bottom:0;
-    .min-width(@bx-font-size-small + 5);
+    text-align:center;
+    color:white;
+}
+.bx-def-unit-alert {
+	.min-width(@bx-font-size-default + 2);
+    .height(@bx-font-size-default + 2);
+    .line-height(@bx-font-size-default + 2);
+    .radius(@bx-font-size-default);
+    .font-size(@bx-font-size-default);
+    .padding(3px);
+}
+.bx-def-unit-alert-small {
+	.min-width(@bx-font-size-small + 5);
     .height(@bx-font-size-small + 5);
     .line-height(@bx-font-size-small + 5);
     .radius(@bx-font-size-small);
     .border (1px, solid, #fff);
     .font-size(@bx-font-size-small);
-    text-align:center;
-    color:white;
 }
 .bx-def-unit-alert-middle {
     .min-width(@bx-font-size-middle + 2);
