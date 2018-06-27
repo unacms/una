@@ -68,9 +68,9 @@ class BxBaseModPaymentCart extends BxDol
     /** 
      * @ref bx_base_payment-get_cart_url "get_cart_url"
      */
-    public function serviceGetCartJs($sType = '')
+    public function serviceGetCartJs($sType = '', $iVendorId = 0)
     {
-        return $this->_oModule->_oTemplate->displayCartJs($sType);
+        return $this->_oModule->_oTemplate->displayCartJs($sType, $iVendorId);
     }
 
     /**

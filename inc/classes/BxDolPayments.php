@@ -192,12 +192,12 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     /**
      * Returns cart JavaScript code which should be included in the page to make "Add To Cart" and "Subscribe" buttons work properly.
      */
-    public function getCartJs($sType = '')
+    public function getCartJs($sType = '', $iVendorId = 0)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_js', 'Cart'))
 			return '';
 
-		$aSrvParams = array($sType);
+		$aSrvParams = array($sType, $iVendorId);
 		return BxDolService::call($this->_sActive, 'get_cart_js', $aSrvParams, 'Cart');
     }
 
