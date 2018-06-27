@@ -495,6 +495,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	if (!in_array($sType, array('add')))
             return false;
 
+		$CNF = &$this->_oConfig->CNF;
+
 		if(!empty($aParams['display']))
 			$aParams['form_display'] = $aParams['display'];
 
@@ -503,6 +505,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		$sParamsKey = 'ajax_mode';
         if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
         	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
+
+		$sKey = 'FIELD_OBJECT_PRIVACY_VIEW';
+    	if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
+			foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $aValue)
+				if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$aParams['context_id']) {
+					$oForm->aInputs[$CNF[$sKey]]['value'] = -(int)$aParams['context_id'];
+					$oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
+					break;
+				}
+		}
 
     	return $oForm;
     }

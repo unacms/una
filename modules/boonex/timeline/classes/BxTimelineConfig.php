@@ -58,6 +58,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 	        // database fields
         	'FIELD_ID' => 'id',
             'FIELD_OWNER_ID' => 'owner_id',
+        	'FIELD_OBJECT_ID' => 'object_id',
+        	'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
         	'FIELD_ADDED' => 'date',
         	'FIELD_TITLE' => 'title',
         	'FIELD_TEXT' => 'description',

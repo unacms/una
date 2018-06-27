@@ -33,7 +33,8 @@ class BxBaseModGeneralModule extends BxDolModule
         	'display' => false, 
         	'dynamic_mode' => false, 
         	'ajax_mode' => false, 
-        	'absolute_action_url' => false
+        	'absolute_action_url' => false,
+        	'context_id' => 0
         );
     }
 
@@ -387,6 +388,8 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!in_array($sType, array('add', 'edit', 'view', 'delete')))
             return false;
 
+		$CNF = &$this->_oConfig->CNF;
+
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
@@ -406,6 +409,16 @@ class BxBaseModGeneralModule extends BxDolModule
         $sParamsKey = 'ajax_mode';
         if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
         	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
+
+		$sKey = 'FIELD_ALLOW_VIEW_TO';
+		if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
+			foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $aValue)
+				if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$aParams['context_id']) {
+					$oForm->aInputs[$CNF[$sKey]]['value'] = -(int)$aParams['context_id'];
+					$oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
+					break;
+				}
+		}
 
         return $oForm;
     }
