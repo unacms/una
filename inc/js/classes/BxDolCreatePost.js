@@ -10,6 +10,7 @@ function BxDolCreatePost(oOptions) {
     this._sObjName = oOptions.sObjName == undefined ? 'oBxDolCreatePost' : oOptions.sObjName;
     this._sRootUrl = oOptions.sRootUrl == undefined ? sUrlRoot : oOptions.sRootUrl;
     this._sDefault = oOptions.sDefault == undefined ? '' : oOptions.sDefault;
+    this._iContextId = oOptions.iContextId == undefined ? 0 : oOptions.iContextId;
 
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
@@ -36,6 +37,7 @@ BxDolCreatePost.prototype.getForm = function (sModuleName, sModuleUri,  oElement
 			ajax_mode: true,
 			dynamic_mode: true,
 			absolute_action_url: true,
+			context_id: this._iContextId,
 	    	_t:oDate.getTime()
 		},
 		function(oData) {

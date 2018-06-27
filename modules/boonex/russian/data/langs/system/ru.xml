@@ -2348,12 +2348,14 @@
     <string name="_sys_page_block_title_add_content"><![CDATA[Добавить содержимое]]></string>
     <string name="_sys_page_block_title_chart_growth"><![CDATA[Диаграммы развития]]></string>
     <string name="_sys_page_block_title_chart_stats"><![CDATA[Содержимое]]></string>    
-  <string name="_sys_page_block_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
+	<string name="_sys_page_block_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
-	<string name="_sys_page_block_title_sys_create_post"><![CDATA[Создать публикацию]]></string>
-	<string name="_sys_page_block_title_create_post"><![CDATA[Добавить...]]></string>
+	<string name="_sys_page_block_title_sys_create_post_context"><![CDATA[Создать публикацию (в контекст)]]></string>
+	<string name="_sys_page_block_title_create_post_context"><![CDATA[Добавить...]]></string>
+	<string name="_sys_page_block_title_sys_create_post_public"><![CDATA[Создать публикацию (публично)]]></string>
+	<string name="_sys_page_block_title_create_post_public"><![CDATA[Добавить...]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли пароль]]></string>
@@ -2361,7 +2363,7 @@
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string>
-  <string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
+	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_block_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
