@@ -73,9 +73,19 @@ class BxDolModuleTemplate extends BxDolTemplate
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addCss', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
-    function addStudioJs($mixedFiles, $bDynamic = false, $bSearchInModule = true)
+	function addStudioCssSystem($mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    {
+        return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addCssSystem', 'isLocation', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, $bSearchInModule);
+    }
+
+	function addStudioJs($mixedFiles, $bDynamic = false, $bSearchInModule = true)
     {
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addJs', 'isLocationJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, $bSearchInModule);
+    }
+
+    function addStudioJsSystem($mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    {
+        return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addJsSystem', 'isLocationJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
     function addStudioJsTranslation($mixedKey)

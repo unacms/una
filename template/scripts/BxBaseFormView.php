@@ -52,6 +52,11 @@ class BxBaseFormView extends BxDolForm
     protected $_bDynamicMode = false;
 
     /**
+     * Form is submitted dynamically (using Ajax Submit).
+     */
+    protected $_bAjaxMode = false;
+
+    /**
      * Form is displayed in view mode.
      */
     protected $_bViewMode = false;
@@ -91,12 +96,29 @@ class BxBaseFormView extends BxDolForm
     {
         parent::__construct($aInfo, $oTemplate);
 
+        if(isset($this->aParams['ajax_mode']))
+        	$this->setAjaxMode($this->aParams['ajax_mode']);
+
+        $mixedAjaxMode = bx_get('ajax_mode');
+        if($mixedAjaxMode !== false)
+        	$this->setAjaxMode($mixedAjaxMode);
+
         $this->_bViewMode = isset($this->aParams['view_mode']) && $this->aParams['view_mode'];
 
         if ($this->_bViewMode) {
             $this->_sSectionClose = 'getCloseSectionViewMode';
             $this->_sSectionOpen = 'getOpenSectionViewMode';
         }
+    }
+
+	function setAjaxMode($bAjaxMode)
+    {
+		$this->_bAjaxMode = (bool)$bAjaxMode;
+    }
+
+    function isAjaxMode()
+    {
+    	return $this->_bAjaxMode;
     }
 
     /**
@@ -106,6 +128,9 @@ class BxBaseFormView extends BxDolForm
      */
     function getCode($bDynamicMode = false)
     {
+        if (!$bDynamicMode && bx_is_dynamic_request())
+            $bDynamicMode = true;
+
         $this->_bDynamicMode = $bDynamicMode;
         $this->addCssJs ();
         $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
@@ -139,6 +164,22 @@ BLAH;
         } else {
             $sFormAttrs = bx_convert_array2attrs($this->aFormAttrs, 'bx-form-advanced');
 
+            $sAjaxFormJs = '';
+            if($this->_bAjaxMode)
+            	$sAjaxFormJs = <<<BLAH
+	            	$("form#{$this->id}").ajaxForm({ 
+			            dataType: "json",
+			            beforeSubmit: function (formData, jqForm, options) {
+			                bx_loading($("form#{$this->id}"), true);
+			            },
+			            success: function (oData) {
+			            	bx_loading($("form#{$this->id}"), false);
+			
+			                processJsonData(oData);
+			            }
+			        });
+BLAH;
+
             $sForm = <<<BLAH
                 $sHtmlBefore
                 <form $sFormAttrs>
@@ -151,6 +192,7 @@ BLAH;
                     $(document).ready(function() {
                         $(this).addWebForms();
                     });
+                    $sAjaxFormJs
                 </script>
                 $sHtmlAfter
 BLAH;
@@ -176,6 +218,16 @@ BLAH;
                 'visible_for_levels' => PHP_INT_MAX,
             );
         }
+
+        // add 'Ajax Mode' flag
+        if($this->_bAjaxMode)
+        	$this->aInputs['ajax_mode'] = array(
+                'type' => 'hidden',
+                'name' => 'ajax_mode',
+                'value' => 1,
+                'db' => array ('pass' => 'Int'),
+                'visible_for_levels' => PHP_INT_MAX,
+            );
 
         // check if we need to generate open section clause
         $sOpenSection = '';

@@ -31,9 +31,15 @@ function processJsonData(oData) {
 	    	else 
 	    		oPopup = $(oData.popup);
 
+            if ('undefined' !== typeof(bx_editor_remove_all))
+                bx_editor_remove_all($('#' + oPopup.attr('id')));
+            
 	    	$('#' + oPopup.attr('id')).remove();
 	        oPopup.hide().prependTo('body').bxProcessHtml().dolPopup(oOptions);
 	    }
+
+	    if(oData && oData.form != undefined && oData.form_id != undefined)
+	    	$('form#' + oData.form_id).replaceWith(oData.form).bxProcessHtml();
 
 	    if (oData && oData.eval != undefined)
 	        eval(oData.eval);

@@ -18,6 +18,7 @@ class BxBaseModGeneralModule extends BxDolModule
 {
     protected $_iProfileId;
     protected $_aSearchableNamesExcept;
+    protected $_aFormParams;
 
     function __construct(&$aModule)
     {
@@ -26,6 +27,14 @@ class BxBaseModGeneralModule extends BxDolModule
         $this->_iProfileId = bx_get_logged_profile_id();
         $this->_aSearchableNamesExcept = array(
             'allow_view_to'
+        );
+        
+        $this->_aFormParams = array(
+        	'display' => false, 
+        	'dynamic_mode' => false, 
+        	'ajax_mode' => false, 
+        	'absolute_action_url' => false,
+        	'context_id' => 0
         );
     }
 
@@ -36,8 +45,34 @@ class BxBaseModGeneralModule extends BxDolModule
         $aArgs = func_get_args();
         $this->_rss($aArgs);
     }
+    
+    public function actionGetCreatePostForm()
+    {
+    	$aParams = bx_process_input(array_intersect_key($_GET, $this->_aFormParams));
+    	$aParams = array_merge($this->_aFormParams, $aParams);
 
-    // ====== SERVICE METHODS    
+    	$sForm = $this->serviceGetCreatePostForm($aParams);
+    	if(empty($sForm))
+    		return echoJson(array());
+
+	   	return echoJson(array(
+    		'module' => $this->_oConfig->getName(),
+    		'content' => $sForm
+    	));
+    }
+
+    // ====== SERVICE METHODS
+    public function serviceGetCreatePostForm($aParams = array())
+    {
+    	$aParams = array_merge($this->_aFormParams, $aParams);
+
+    	$oForm = $this->serviceGetObjectForm('add', $aParams);
+    	if(!$oForm)
+    		return ''; 	
+
+    	return $this->serviceEntityCreate($aParams);
+    }
+
     public function serviceGetAuthor ($iContentId)
     {
         $mixedResult = $this->_getFieldValue('FIELD_AUTHOR', $iContentId);
@@ -345,20 +380,47 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * Get form object for add, edit, view or delete the content 
      * @param $sType 'add', 'edit', 'view' or 'delete'
-     * @param $sDisplay optional display name
+     * @param $aParams optional array with parameters(display name, etc)
      * @return form object or false on error
      */
-    public function serviceGetObjectForm ($sType, $sDisplay = false)
+    public function serviceGetObjectForm ($sType, $aParams = array())
     {
         if (!in_array($sType, array('add', 'edit', 'view', 'delete')))
             return false;
+
+		$CNF = &$this->_oConfig->CNF;
 
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
 
+        $sDisplay = !empty($aParams['display']) ? $aParams['display'] : false;
+
         $sFunc = 'getObjectForm' . ucfirst($sType);
-        return $oFormsHelper->$sFunc($sDisplay);
+        $oForm = $oFormsHelper->$sFunc($sDisplay);
+
+        $sParamsKey = 'absolute_action_url';
+        if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true) {
+        	$sKeyUri = 'URI_' . strtoupper($sType) . '_ENTRY';
+        	if(!empty($this->_oConfig->CNF[$sKeyUri]))
+        		$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF[$sKeyUri]);
+        }
+
+        $sParamsKey = 'ajax_mode';
+        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
+        	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
+
+		$sKey = 'FIELD_ALLOW_VIEW_TO';
+		if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
+			foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $aValue)
+				if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$aParams['context_id']) {
+					$oForm->aInputs[$CNF[$sKey]]['value'] = -(int)$aParams['context_id'];
+					$oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
+					break;
+				}
+		}
+
+        return $oForm;
     }
 
     /**
@@ -1378,6 +1440,18 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         return $oImagesTranscoder->getFileUrl($aContentInfo[$CNF[$sField]]);
+    }
+
+	protected function _prepareResponse($aResponse, $bAsJson = false, $aAdditional = array())
+    {
+    	if(!$bAsJson)
+    		return $aResponse;
+
+		if(!empty($aAdditional) && is_array($aAdditional))
+			$aResponse = array_merge($aResponse, $aAdditional);
+
+		echoJson($aResponse);
+		exit;
     }
 }
 

@@ -156,8 +156,7 @@ class BxMarketModule extends BxBaseModTextModule
     	if(!$oPayments->isAcceptingPayments($this->_iProfileId))
     		return MsgBox(_t('_bx_market_err_not_accept_payments', $oPayments->getDetailsUrl()));
 
-    	$this->_oTemplate->addJs(array('entry.js'));
-    	return $this->_oTemplate->getJsCode('entry') . parent::serviceEntityCreate($sDisplay);
+    	return parent::serviceEntityCreate($sDisplay);
     }
 
     /**

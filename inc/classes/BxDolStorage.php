@@ -54,7 +54,7 @@ define('BX_DOL_STORAGE_ERR_ENGINE_GET', 5004); ///< some other error during file
 define('BX_DOL_STORAGE_DEFAULT_MIME_TYPE', 'octet/stream'); ///< default mime type if it is not find by extension
 
 define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.png'); ///< default icon if no other icon can be determined by file extension
-define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'file-o'); ///< default font icon if no other icon can be determined by file extension
+define('BX_DOL_STORAGE_DEFAULT_ICON_FONT', 'far file'); ///< default font icon if no other icon can be determined by file extension
 
 define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
 

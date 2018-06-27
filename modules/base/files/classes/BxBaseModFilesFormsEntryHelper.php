@@ -36,26 +36,29 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedAdd()))
-            return MsgBox($sMsg);
+            return $this->prepareResponse(MsgBox($sMsg), $this->_bAjaxMode, 'msg');
 
         // check and display form
         $oForm = $this->getObjectFormAdd();
         if (!$oForm)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return $this->prepareResponse(MsgBox(_t('_sys_txt_error_occured')), $this->_bAjaxMode, 'msg');
 
         $oForm->initChecker();
-
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+            return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $this->_bAjaxMode && $oForm->isSubmitted(), 'form', array(
+            	'form_id' => $oForm->getId()
+            ));
 
         // insert data into database
         $aValsToAdd = array ();
         $aContentIds = $oForm->insert ($aValsToAdd);
         if (false === $aContentIds || !is_array($aContentIds)) {
             if (!$oForm->isValid() || !is_array($aContentIds))
-                return $oForm->getCode();
+                return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $this->_bAjaxMode, 'form', array(
+                	'form_id' => $oForm->getId()
+                ));
             else
-                return MsgBox(_t('_sys_txt_error_entry_creation'));
+                return $this->prepareResponse(MsgBox(_t('_sys_txt_error_entry_creation')), $this->_bAjaxMode, 'msg');
         }
 
         foreach ($aContentIds as $iContentId) {

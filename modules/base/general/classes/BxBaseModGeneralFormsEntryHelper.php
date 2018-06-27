@@ -15,13 +15,27 @@
 class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 {
     protected $_oModule;
+    protected $_bAjaxMode;
     protected $_bDynamicMode;
 
     public function __construct($oModule)
     {
         parent::__construct();
         $this->_oModule = $oModule;
+
         $this->_bDynamicMode = false;
+
+        $this->_bAjaxMode = false;
+        $mixedAjaxMode = bx_get('ajax_mode');
+        if($mixedAjaxMode !== false)
+        	$this->setAjaxMode($mixedAjaxMode);
+    }
+
+	public function setAjaxMode($bAjaxMode)
+    {
+        $this->_bAjaxMode = (bool)$bAjaxMode;
+        if($this->_bAjaxMode)
+        	$this->setDynamicMode(true);
     }
 
     public function setDynamicMode($bDynamicMode)
@@ -142,39 +156,42 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->$sCheckFunction())) {
             $oProfile = BxDolProfile::getInstance();
             if ($oProfile && ($aProfileInfo = $oProfile->getInfo()) && $aProfileInfo['type'] == 'system' && is_subclass_of($this->_oModule, 'BxBaseModProfileModule') && $this->_oModule->serviceActAsProfile()) // special check for system profile is needed, because of incorrect error message
-                return MsgBox(_t('_sys_txt_access_denied'));
+                return $this->prepareResponse(MsgBox(_t('_sys_txt_access_denied')), $this->_bAjaxMode, 'msg');
             else
-                return MsgBox($sMsg);
+                return $this->prepareResponse(MsgBox($sMsg), $this->_bAjaxMode, 'msg');
         }
 
         // check and display form
         $oForm = $this->getObjectFormAdd($sDisplay);
         if (!$oForm)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return $this->prepareResponse(MsgBox(_t('_sys_txt_error_occured')), $this->_bAjaxMode, 'msg');
 
         $oForm->initChecker();
-
         if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode($this->_bDynamicMode);
+            return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $this->_bAjaxMode && $oForm->isSubmitted(), 'form', array(
+            	'form_id' => $oForm->getId()
+            ));
 
         // insert data into database
         $aValsToAdd = array ();
         $iContentId = $oForm->insert ($aValsToAdd);
         if (!$iContentId) {
             if (!$oForm->isValid())
-                return $oForm->getCode($this->_bDynamicMode);
+                return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $this->_bAjaxMode, 'form', array(
+                	'form_id' => $oForm->getId()
+                ));
             else
-                return MsgBox(_t('_sys_txt_error_entry_creation'));
+                return $this->prepareResponse(MsgBox(_t('_sys_txt_error_entry_creation')), $this->_bAjaxMode, 'msg');
         }
 
         $sResult = $this->onDataAddAfter (getLoggedId(), $iContentId);
         if ($sResult)
-            return $sResult;
+            return $this->prepareResponse($sResult, $this->_bAjaxMode, 'msg');
 
         // process uploaded files
         if (isset($CNF['FIELD_PHOTO']))
             $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
-        
+
         // perform action
         $this->_oModule->checkAllowedAdd(true);
 
@@ -185,8 +202,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     
     public function redirectAfterAdd($aContentInfo)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	$sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
+        if($this->_bAjaxMode)
+        	$this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect');
+		else
+        	$this->_redirectAndExit($sUrl);
     }
 
     public function editDataForm ($iContentId, $sDisplay = false, $sCheckFunction = false, $bErrorMsg = true)
@@ -440,6 +462,22 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $s = BX_DOL_URL_ROOT . $s;
         
         return $s;
+    }
+
+    protected function prepareResponse($mixedResponse, $bAsJson = false, $sKey = 'msg', $aAdditional = array())
+    {
+    	if(!$bAsJson)
+    		return $mixedResponse;
+
+		$aResponse = array(
+			$sKey => $mixedResponse
+		);
+
+		if(!empty($aAdditional) && is_array($aAdditional))
+			$aResponse = array_merge($aResponse, $aAdditional);
+
+		echoJson($aResponse);
+		exit;
     }
 }
 

@@ -59,7 +59,9 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
 			'contents' => !empty($aMessage['contents']) && is_array($aMessage['contents']) ? $aMessage['contents'] : array(),
 			'headings' => !empty($aMessage['headings']) && is_array($aMessage['headings']) ? $aMessage['headings'] : array(),
 			'url' => !empty($aMessage['url']) ? $aMessage['url'] : '',
-			'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : ''
+            'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : '',
+            'ios_badgeType' => 'Increase',
+            'ios_badgeCount' => 1,
 		);
 
 		$oChannel = curl_init();

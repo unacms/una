@@ -2285,6 +2285,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Horizontal Icon Buttons]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[Inline]]></string>
 	<string name="_sys_menu_template_title_inline_sbtn"><![CDATA[Inline ('special' buttons)]]></string>
+	<string name="_sys_menu_template_title_interactive"><![CDATA[Interactive Horizontal Links]]></string>
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Interactive Vertical Links]]></string>
 	<string name="_sys_menu_template_title_empty"><![CDATA[Empty Menu]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Site Navigation Submenu]]></string>
@@ -2348,10 +2349,14 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_page_block_title_chart_growth"><![CDATA[Growth Charts]]></string>
 	<string name="_sys_page_block_title_chart_stats"><![CDATA[Content]]></string>
-  <string name="_sys_page_block_title_cmts_administration"><![CDATA[Manage Сomments]]></string>
-  <string name="_sys_page_block_title_confirm_email"><![CDATA[Email Confirmation]]></string>
+	<string name="_sys_page_block_title_cmts_administration"><![CDATA[Manage Сomments]]></string>
+	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Sign up]]></string>
+	<string name="_sys_page_block_title_sys_create_post_context"><![CDATA[Create Post (Context)]]></string>
+	<string name="_sys_page_block_title_create_post_context"><![CDATA[Add new...]]></string>
+	<string name="_sys_page_block_title_sys_create_post_public"><![CDATA[Create Post (Public)]]></string>
+	<string name="_sys_page_block_title_create_post_public"><![CDATA[Add new...]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Dashboard]]></string>
 	<string name="_sys_page_block_title_homepage_menu"><![CDATA[Content modules menu]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Forgot Password]]></string>
@@ -2359,7 +2364,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Log in - step2]]></string>
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Log in - step3]]></string>
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Log in]]></string>
-  <string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Manage Сomments]]></string>
+	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Manage Сomments]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Log in]]></string>
 	<string name="_sys_page_block_title_login_step2"><![CDATA[Log in - step 2]]></string>
 	<string name="_sys_page_block_title_login_step3"><![CDATA[Log in - step 3]]></string>
@@ -2569,7 +2574,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_confirm_phone_confirm_success"><![CDATA[Your phone number has been confirmed.]]></string>
 	<string name="_sys_txt_confirm_phone_set_phone_desc_set_phone"><![CDATA[Please enter a phone number for sending verification SMS.]]></string>
 	<string name="_sys_txt_confirm_phone_set_phone_desc_phone_confirmation"><![CDATA[Please enter verification code from the SMS.]]></string>
-	
+
+	<string name="_sys_txt_create_post_placeholder"><![CDATA[Write an article, share a link, photo or video.]]></string>
+
     <string name="_sys_txt_current_picture"><![CDATA[Current Picture]]></string>
 	<string name="_sys_txt_data_successfully_submitted"><![CDATA[Done]]></string>
     <string name="_sys_txt_delete"><![CDATA[Delete]]></string>

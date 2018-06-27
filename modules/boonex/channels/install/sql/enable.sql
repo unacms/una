@@ -234,8 +234,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_channels_menu_manage_tools', 'bx_channels', '_bx_channels_menu_set_title_manage_tools', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_channels_menu_manage_tools', 'bx_channels', 'delete', '_bx_channels_menu_item_title_system_delete', '_bx_channels_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'trash-o', '', 2147483647, 1, 0, 1),
-('bx_channels_menu_manage_tools', 'bx_channels', 'delete-with-content', '_bx_channels_menu_item_title_system_delete_with_content', '_bx_channels_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'trash-o', '', 2147483647, 1, 0, 2);
+('bx_channels_menu_manage_tools', 'bx_channels', 'delete', '_bx_channels_menu_item_title_system_delete', '_bx_channels_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 1),
+('bx_channels_menu_manage_tools', 'bx_channels', 'delete-with-content', '_bx_channels_menu_item_title_system_delete_with_content', '_bx_channels_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 2);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);

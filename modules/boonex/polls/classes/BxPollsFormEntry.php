@@ -32,8 +32,16 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
 
     public function getCode($bDynamicMode = false)
     {
-        $this->_oModule->_oTemplate->addJs(array('form.js'));
-        return $this->_oModule->_oTemplate->getJsCode('form') . parent::getCode($bDynamicMode);
+        $sJs = $this->_oModule->_oTemplate->addJs(array('form.js'), $bDynamicMode);
+
+        $sCode = '';
+        if($bDynamicMode)
+        	$sCode .= $sJs;
+
+		$sCode .= $this->_oModule->_oTemplate->getJsCode('form');
+		$sCode .= parent::getCode($bDynamicMode);
+
+        return $sCode;
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())

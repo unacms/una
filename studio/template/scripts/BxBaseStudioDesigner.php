@@ -70,10 +70,10 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         $aMenu = array();
         $aMenuItems = array(
             BX_DOL_STUDIO_DSG_TYPE_GENERAL => array('icon' => 'globe'),
-            BX_DOL_STUDIO_DSG_TYPE_LOGO => array('icon' => 'pencil'),
-            BX_DOL_STUDIO_DSG_TYPE_ICON => array('icon' => 'picture-o'),
-            BX_DOL_STUDIO_DSG_TYPE_COVER => array('icon' => 'file-image-o'),
-            BX_DOL_STUDIO_DSG_TYPE_SPLASH => array('icon' => 'file-image-o'),
+            BX_DOL_STUDIO_DSG_TYPE_LOGO => array('icon' => 'pencil-alt'),
+            BX_DOL_STUDIO_DSG_TYPE_ICON => array('icon' => 'far image'),
+            BX_DOL_STUDIO_DSG_TYPE_COVER => array('icon' => 'far file-image'),
+            BX_DOL_STUDIO_DSG_TYPE_SPLASH => array('icon' => 'far file-image'),
             BX_DOL_STUDIO_DSG_TYPE_INJECTIONS => array('icon' => 'object-group'),
             BX_DOL_STUDIO_DSG_TYPE_SETTINGS => array('icon' => 'cogs'),
         );

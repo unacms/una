@@ -10,7 +10,7 @@
 define('BX_DOL_STUDIO_MODULE_SYSTEM', 'system');
 define('BX_DOL_STUDIO_MODULE_CUSTOM', 'custom');
 
-define('BX_DOL_STUDIO_MODULE_ICON_DEFAULT', 'lightbulb-o');
+define('BX_DOL_STUDIO_MODULE_ICON_DEFAULT', 'far lightbulb');
 
 define('BX_DOL_STUDIO_VISIBLE_ALL', 'all');
 define('BX_DOL_STUDIO_VISIBLE_SELECTED', 'selected');

@@ -49,7 +49,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
         
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
 
-        $aVars['icon'] = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'file-o';
+        $aVars['icon'] = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'far file';
         if ($sTemplateName == 'unit_gallery.html') 
             $aVars['bx_if:no_thumb']['content']['icon'] = $aVars['icon'];
 
