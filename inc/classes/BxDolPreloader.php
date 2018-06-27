@@ -10,7 +10,9 @@
 bx_import('BxDolLanguages');
 
 define('BX_PRELOADER_TYPE_CSS', 'css_system');
+define('BX_PRELOADER_TYPE_STUDIO_CSS', 'studio_css_system');
 define('BX_PRELOADER_TYPE_JS', 'js_system');
+define('BX_PRELOADER_TYPE_STUDIO_JS', 'studio_js_system');
 define('BX_PRELOADER_TYPE_JS_OPTION', 'js_option');
 define('BX_PRELOADER_TYPE_JS_TRANSLATION', 'js_translation');
 define('BX_PRELOADER_TYPE_JS_IMAGE', 'js_image');
@@ -33,8 +35,10 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
         $this->_aEntries = $this->_oDb->getEntries();
 
         $this->_aTypes = array(
-            BX_PRELOADER_TYPE_CSS => '', 
+            BX_PRELOADER_TYPE_CSS => '',
+            BX_PRELOADER_TYPE_STUDIO_CSS => '',  
             BX_PRELOADER_TYPE_JS => '', 
+            BX_PRELOADER_TYPE_STUDIO_JS => '',
             BX_PRELOADER_TYPE_JS_OPTION => '',
             BX_PRELOADER_TYPE_JS_TRANSLATION => '',
             BX_PRELOADER_TYPE_JS_IMAGE => ''
@@ -63,7 +67,8 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
 
     public function perform($oTemplateSystem)
     {
-        $aTypesAvail = array_keys($this->_aTypes);
+    	$bStudio = $oTemplateSystem instanceof BxDolStudioTemplate;
+    	$aTypesAvail = array_keys($this->_aTypes);
 
         $aLoader = array();
         foreach($this->_aEntries as $aEntry) {
@@ -92,7 +97,7 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
                 $oTemplate = &$oTemplateSystem;
 
             foreach($aTypes as $sType => $aEntries)
-                 $oTemplate->{$this->_aTypes[$sType]}($aEntries);
+				$oTemplate->{$this->_aTypes[($bStudio && $bModule ? 'studio_' : '') . $sType]}($aEntries);
         }
     }
 }
