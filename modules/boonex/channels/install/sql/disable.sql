@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_channels';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_channels' OR `object` IN('bx_channels_create_profile', 'bx_channels_delete_profile', 'bx_channels_edit_profile', 'bx_channels_edit_profile_cover', 'bx_channels_invite', 'bx_channels_view_profile', 'bx_channels_view_profile_closed', 'bx_channels_profile_info', 'bx_channels_profile_comments', 'bx_channels_home', 'bx_channels_fans', 'bx_channels_joined', 'bx_channels_top', 'bx_channels_search', 'bx_channels_manage', 'bx_channels_administration');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_channels' OR `object` IN('bx_channels_create_profile', 'bx_channels_delete_profile', 'bx_channels_edit_profile', 'bx_channels_edit_profile_cover', 'bx_channels_invite', 'bx_channels_view_profile', 'bx_channels_view_profile_closed', 'bx_channels_profile_info', 'bx_channels_profile_comments', 'bx_channels_home', 'bx_channels_top', 'bx_channels_search', 'bx_channels_manage', 'bx_channels_administration');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_channels';
@@ -49,9 +49,6 @@ DELETE FROM `sys_objects_category` WHERE `object` = 'bx_channels_cats';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_channels';
 
--- CONNECTIONS
-DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_channels_fans';
-
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_channels%';
 
@@ -59,9 +56,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_channels%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_channels%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_channels_administration', 'bx_channels_moderation', 'bx_channels_common', 'bx_channels_fans');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_channels_administration', 'bx_channels_moderation', 'bx_channels_common', 'bx_channels_fans');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_channels_administration', 'bx_channels_moderation', 'bx_channels_common', 'bx_channels_fans');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_channels_administration', 'bx_channels_moderation');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_channels_administration', 'bx_channels_moderation');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_channels_administration', 'bx_channels_moderation');
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_channels' LIMIT 1);

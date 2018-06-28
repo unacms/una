@@ -61,7 +61,7 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         $CNF = &$this->_oModule->_oConfig->CNF;
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oModule->_oConfig->getName());
 
-        if ($oGroupProfile)
+        if ($oGroupProfile && isset($CNF['TABLE_ADMINS']))
             $this->_oModule->_oDb->deleteAdminsByGroupId($oGroupProfile->id());
 
         if (isset($CNF['OBJECT_CONNECTIONS']) && $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))

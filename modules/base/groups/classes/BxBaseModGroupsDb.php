@@ -54,7 +54,7 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
     {
         if (is_array($mixedFansIds)) {
             foreach ($mixedFansIds as $iFanId)
-                $this->fromAdmins ($iFanId);
+                $this->fromAdmins ($iGroupProfileId, $iFanId);
             return true;
         }
 
@@ -86,7 +86,8 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
     {
         if (isset($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']]) && $iFanId == $aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']])
             return true;
-
+        if (!isset($this->_oConfig->CNF['TABLE_ADMINS']))
+            return false;
         $sQuery = $this->prepare("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? AND `fan_id` = ?", $iGroupProfileId, $iFanId);
         return $this->getOne($sQuery) ? true : false;
     }

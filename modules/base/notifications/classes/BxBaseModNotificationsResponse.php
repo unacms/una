@@ -63,7 +63,9 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
 
         if(isset($aExtras['performer_id']))
             return (int)$aExtras['performer_id'];
-
+        
+        if(isset($aExtras['subobject_id']))
+            return (int)$aExtras['subobject_id'];
         return 0;
     }
 }

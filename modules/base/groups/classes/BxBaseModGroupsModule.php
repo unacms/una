@@ -53,8 +53,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */ 
     public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects = false)
     {
-        $aConnectionObjects = array($this->_oConfig->CNF['OBJECT_CONNECTIONS'], 'sys_profiles_subscriptions');
-        return parent::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);
+        if (isset($this->_oConfig->CNF['OBJECT_CONNECTIONS'])){
+            $aConnectionObjects = array($this->_oConfig->CNF['OBJECT_CONNECTIONS'], 'sys_profiles_subscriptions');
+            return parent::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);
+        }
+        return parent::serviceGetParticipatingProfiles($iProfileId);
     }
     
     /**
@@ -591,8 +594,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     public function isFan ($iContentId, $iProfileId = false) 
     {
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
-
-        return $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
+        if (isset($this->_oConfig->CNF['OBJECT_CONNECTIONS']))
+            return $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
+        return false;
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())

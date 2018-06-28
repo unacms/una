@@ -268,7 +268,7 @@ class BxBaseModGeneralModule extends BxDolModule
 			}
 		}
 
-		if(!empty($CNF['OBJECT_MENU_SUBMENU'])) {
+		if(!empty($CNF['OBJECT_MENU_SUBMENU']) && isset($CNF['URI_MANAGE_COMMON'])) {
 			BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU'])->setSelected($this->_aModule['name'], $CNF['URI_MANAGE_COMMON']);
 		}
 

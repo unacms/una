@@ -21,15 +21,6 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 
 -- PAGES
 
--- PAGE: create profile
-
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_create_profile', 'create-channel-profile', '_bx_channels_page_title_sys_create_profile', '_bx_channels_page_title_create_profile', 'bx_channels', 5, 2147483647, 1, 'page.php?i=create-channel-profile', '', '', '', 0, 1, 0, '', '');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_channels_create_profile', 1, 'bx_channels', '_bx_channels_page_block_title_create_profile', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:13:\"entity_create\";}', 0, 1, 1);
-
-
 -- PAGE: view profile
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -37,11 +28,8 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_channels_view_profile', 1, 'bx_channels', '', '_bx_channels_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
-('bx_channels_view_profile', 2, 'bx_channels', '', '_bx_channels_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
-('bx_channels_view_profile', 3, 'bx_channels', '', '_bx_channels_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 0),
-('bx_channels_view_profile', 3, 'bx_channels', '', '_bx_channels_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:6:\"admins\";}', 0, 0, 1, 1),
-('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
-('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 0);
+('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_search_results_by_hashtag', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:24:\"search_result_by_hashtag\";}', 0, 0, 0, 0),
+('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 1);
 
 -- PAGE: view closed profile 
 
@@ -49,8 +37,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_channels_view_profile_closed', 'view-channel-profile-closed', '_bx_channels_page_title_sys_view_profile_closed', '_bx_channels_page_title_view_profile', 'bx_channels', 10, 2147483647, 1, 'page.php?i=view-channel-profile', '', '', '', 0, 1, 0, 'BxCnlPageEntry', 'modules/boonex/channels/classes/BxCnlPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_channels_view_profile_closed', 2, 'bx_channels', '', '_bx_channels_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
-('bx_channels_view_profile_closed', 3, 'bx_channels', '', '_bx_channels_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 0);
+('bx_channels_view_profile_closed', 2, 'bx_channels', '', '_bx_channels_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0);
 
 -- PAGE: edit profile
 
@@ -93,14 +80,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_channels_profile_info', 1, 'bx_channels', '_bx_channels_page_block_title_system_profile_info', '_bx_channels_page_block_title_profile_info_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:16:\"entity_info_full\";}', 0, 0, 1, 1),
 ('bx_channels_profile_info', 1, 'bx_channels', '', '_bx_channels_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2);
 
--- PAGE: channel fans
-
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_fans', 'channel-fans', '_bx_channels_page_title_sys_channel_fans', '_bx_channels_page_title_channel_fans', 'bx_channels', 5, 2147483647, 1, 'page.php?i=channel-fans', '', '', '', 0, 1, 0, 'BxCnlPageEntry', 'modules/boonex/channels/classes/BxCnlPageEntry.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_channels_fans', 1, 'bx_channels', '_bx_channels_page_block_title_system_fans', '_bx_channels_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1);
-
 -- PAGE: view entry comments
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_channels_profile_comments', '_bx_channels_page_title_sys_profile_comments', '_bx_channels_page_title_profile_comments', 'bx_channels', 5, 2147483647, 1, 'channel-profile-comments', '', '', '', '', 0, 1, 0, 'BxCnlPageEntry', 'modules/boonex/channels/classes/BxCnlPageEntry.php');
@@ -137,20 +116,11 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 -- PAGE: module manage all
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_administration', '_bx_channels_page_title_sys_manage_administration', '_bx_channels_page_title_manage', 'bx_channels', 5, 192, 1, 'channels-administration', 'page.php?i=channels-administration', '', '', '', 0, 1, 0, 'BxCnlPageBrowse', 'modules/boonex/channels/classes/BxCnlPageBrowse.php');
+('bx_channels_administration', '_bx_channels_page_title_sys_manage_administration', '_bx_channels_page_title_manage', 'bx_channels', 5, 128, 1, 'channels-administration', 'page.php?i=channels-administration', '', '', '', 0, 1, 0, 'BxCnlPageBrowse', 'modules/boonex/channels/classes/BxCnlPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_channels_administration', 1, 'bx_channels', '_bx_channels_page_block_title_system_manage_administration', '_bx_channels_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
 
--- PAGE: user's channels
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_joined', 'joined-channels', '_bx_channels_page_title_sys_joined_entries', '_bx_channels_page_title_joined_entries', 'bx_channels', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxCnlPageJoinedEntries', 'modules/boonex/channels/classes/BxCnlPageJoinedEntries.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('bx_channels_joined', 1, 'bx_channels', '_bx_channels_page_block_title_sys_entries_actions', '_bx_channels_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
-('bx_channels_joined', 1, 'bx_channels', '_bx_channels_page_block_title_sys_entries_of_author', '_bx_channels_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:22:"browse_created_entries";}', 0, 0, 0, 2),
-('bx_channels_joined', 1, 'bx_channels', '_bx_channels_page_block_title_sys_favorites_of_author', '_bx_channels_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:11:"bx_channels";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 3),
-('bx_channels_joined', 1, 'bx_channels', '_bx_channels_page_block_title_sys_joined_entries', '_bx_channels_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:11:"bx_channels";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;i:0;i:1;b:1;}}', 0, 0, 1, 4);
 
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
@@ -178,12 +148,6 @@ SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name`
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_homepage', 'bx_channels', 'channels-home', '_bx_channels_menu_item_title_system_entries_home', '_bx_channels_menu_item_title_entries_home', 'page.php?i=channels-home', '', '', 'hashtag col-red2', 'bx_channels_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
--- MENU: add to "add content" menu
-
-SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_channels', 'create-channel-profile', '_bx_channels_menu_item_title_system_create_profile', '_bx_channels_menu_item_title_create_profile', 'page.php?i=create-channel-profile', '', '', 'hashtag col-red2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
-
 -- MENU: view actions
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -193,7 +157,6 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_channels_view_actions', 'bx_channels', '_bx_channels_menu_set_title_view_profile_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_channels_view_actions', 'bx_channels', 'profile-fan-add', '_bx_channels_menu_item_title_system_become_fan', '{title_add_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_channels_fans\', \'add\', \'{profile_id}\')', '', 'user-plus', '', 0, 2147483647, 1, 0, 0, 5),
 ('bx_channels_view_actions', 'bx_channels', 'profile-subscribe-add', '_bx_channels_menu_item_title_system_subscribe', '_bx_channels_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, 1, 0, 1, 20),
 ('bx_channels_view_actions', 'bx_channels', 'profile-actions-more', '_bx_channels_menu_item_title_system_more_actions', '_bx_channels_menu_item_title_more_actions', 'javascript:void(0)', 'bx_menu_popup(''bx_channels_view_actions_more'', this, {}, {profile_id:{profile_id}});', '', 'cog', 'bx_channels_view_actions_more', 1, 2147483647, 1, 0, 1, 9999);
 
@@ -206,7 +169,6 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_channels_view_actions_more', 'bx_channels', '_bx_channels_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_channels_view_actions_more', 'bx_channels', 'profile-fan-remove', '_bx_channels_menu_item_title_system_leave_channel', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_channels_fans\', \'remove\', \'{profile_id}\')', '', 'user-times', '', 2147483647, 1, 0, 10),
 ('bx_channels_view_actions_more', 'bx_channels', 'profile-subscribe-remove', '_bx_channels_menu_item_title_system_unsubscribe', '_bx_channels_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
 ('bx_channels_view_actions_more', 'bx_channels', 'edit-channel-cover', '_bx_channels_menu_item_title_system_edit_cover', '_bx_channels_menu_item_title_edit_cover', 'page.php?i=edit-channel-cover&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 30),
 ('bx_channels_view_actions_more', 'bx_channels', 'edit-channel-profile', '_bx_channels_menu_item_title_system_edit_profile', '_bx_channels_menu_item_title_edit_profile', 'page.php?i=edit-channel-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 0, 0, 40),
@@ -220,9 +182,6 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_channels_my', 'bx_channels', '_bx_channels_menu_set_title_entries_my', 0);
-
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_channels_my', 'bx_channels', 'create-channel-profile', '_bx_channels_menu_item_title_system_create_profile', '_bx_channels_menu_item_title_create_profile', 'page.php?i=create-channel-profile', '', '', 'plus', '', 2147483647, 1, 0, 0);
 
 -- MENU: module sub-menu
 
@@ -249,9 +208,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_channels_view_submenu', 'bx_channels', 'view-channel-profile', '_bx_channels_menu_item_title_system_view_profile_view', '_bx_channels_menu_item_title_view_profile_view', 'page.php?i=view-channel-profile&id={content_id}', '', '', 'hashtag col-red2', '', 2147483647, 1, 0, 1),
 ('bx_channels_view_submenu', 'bx_channels', 'channel-profile-info', '_bx_channels_menu_item_title_system_view_profile_info', '_bx_channels_menu_item_title_view_profile_info', 'page.php?i=channel-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', 2147483647, 1, 0, 2),
-('bx_channels_view_submenu', 'bx_channels', 'channel-profile-comments', '_bx_channels_menu_item_title_system_view_profile_comments', '_bx_channels_menu_item_title_view_profile_comments', 'page.php?i=channel-profile-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 3),
-('bx_channels_view_submenu', 'bx_channels', 'channel-fans', '_bx_channels_menu_item_title_system_view_fans', '_bx_channels_menu_item_title_view_fans', 'page.php?i=channel-fans&profile_id={profile_id}', '', '', 'hashtag col-blue3', '', 2147483647, 1, 0, 4);
-
+('bx_channels_view_submenu', 'bx_channels', 'channel-profile-comments', '_bx_channels_menu_item_title_system_view_profile_comments', '_bx_channels_menu_item_title_view_profile_comments', 'page.php?i=channel-profile-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 3);
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_channels_snippet_meta', '_sys_menu_title_snippet_meta', 'bx_channels_snippet_meta', 'bx_channels', 15, 0, 1, 'BxCnlMenuSnippetMeta', 'modules/boonex/channels/classes/BxCnlMenuSnippetMeta.php');
@@ -260,16 +217,14 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_channels_snippet_meta', 'bx_channels', '_sys_menu_set_title_snippet_meta', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('bx_channels_snippet_meta', 'bx_channels', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
-('bx_channels_snippet_meta', 'bx_channels', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
-('bx_channels_snippet_meta', 'bx_channels', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
-('bx_channels_snippet_meta', 'bx_channels', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
-('bx_channels_snippet_meta', 'bx_channels', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
-('bx_channels_snippet_meta', 'bx_channels', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
-('bx_channels_snippet_meta', 'bx_channels', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 7),
-('bx_channels_snippet_meta', 'bx_channels', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 8),
-('bx_channels_snippet_meta', 'bx_channels', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, 1, 0, 1, 9),
-('bx_channels_snippet_meta', 'bx_channels', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, 0, 0, 1, 10);
+('bx_channels_snippet_meta', 'bx_channels', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 1),
+('bx_channels_snippet_meta', 'bx_channels', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
+('bx_channels_snippet_meta', 'bx_channels', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
+('bx_channels_snippet_meta', 'bx_channels', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
+('bx_channels_snippet_meta', 'bx_channels', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
+('bx_channels_snippet_meta', 'bx_channels', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
+('bx_channels_snippet_meta', 'bx_channels', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, 1, 0, 1, 7),
+('bx_channels_snippet_meta', 'bx_channels', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, 0, 0, 1, 8);
 
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -285,12 +240,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_channels', 'channels-administration', '_bx_channels_menu_item_title_system_admt_channels', '_bx_channels_menu_item_title_admt_channels', 'page.php?i=channels-administration', '', '_self', '', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_channels', 'channels-administration', '_bx_channels_menu_item_title_system_admt_channels', '_bx_channels_menu_item_title_admt_channels', 'page.php?i=channels-administration', '', '_self', '', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 128, 1, 0, @iManageMenuOrder + 1);
 
--- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
-
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_channels', 'joined-channels', '_bx_channels_menu_item_title_system_view_joined_channels', '_bx_channels_menu_item_title_view_joined_channels', 'page.php?i=joined-channels&profile_id={profile_id}', '', '', 'hashtag col-red2', '', 2147483647, 1, 0, 0);
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -391,9 +342,6 @@ SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_channels', '_bx_channels', @iSearchOrder + 1, 'BxCnlSearchResult', 'modules/boonex/channels/classes/BxCnlSearchResult.php');
 
--- CONNECTIONS
-INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
-('bx_channels_fans', 'bx_cnl_fans', 'mutual', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
@@ -406,47 +354,23 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 ('bx_channels_growth', '_bx_channels_chart_growth', 'bx_cnl_data', 'added', '', '', 'SELECT {field_date_formatted} AS `period`, COUNT(*) AS {object} FROM {table} LEFT JOIN `sys_profiles` AS `tp` ON {table}.`id` = `tp`.`content_id` AND `tp`.`type`=''bx_channels'' WHERE 1 AND `tp`.`status`=''active'' {where_inteval} GROUP BY `period` ORDER BY {table}.{field_date} ASC', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
 ('bx_channels_growth_speed', '_bx_channels_chart_growth_speed', 'bx_cnl_data', 'added', '', '', 'SELECT {field_date_formatted} AS `period`, COUNT(*) AS {object} FROM {table} LEFT JOIN `sys_profiles` AS `tp` ON {table}.`id` = `tp`.`content_id` AND `tp`.`type`=''bx_channels'' WHERE 1 AND `tp`.`status`=''active'' {where_inteval} GROUP BY `period` ORDER BY {table}.{field_date} ASC', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
 
--- GRID: connections
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_channels_fans', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxCnlGridConnections', 'modules/boonex/channels/classes/BxCnlGridConnections.php');
-
-INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_channels_fans', 'name', '_sys_name', '50%', '', 10),
-('bx_channels_fans', 'actions', '', '50%', '', 20);
-
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_channels_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
-('bx_channels_fans', 'single', 'to_admins', '_bx_channels_txt_to_admins', '', 0, 20),
-('bx_channels_fans', 'single', 'from_admins', '_bx_channels_txt_from_admins', '', 0, 30),
-('bx_channels_fans', 'single', 'delete', '', 'remove', 1, 40);
-
 -- GRIDS: administration
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_channels_administration', 'Sql', 'SELECT `td`.*, `td`.`channel_name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_cnl_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_channels'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_cnl_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'channel_name', '', 'like', 'reports', '', 192, 'BxCnlGridAdministration', 'modules/boonex/channels/classes/BxCnlGridAdministration.php'),
-('bx_channels_common', 'Sql', 'SELECT `td`.*, `td`.`channel_name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_cnl_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_channels'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_cnl_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'channel_name', '', 'like', '', '', 2147483647, 'BxCnlGridCommon', 'modules/boonex/channels/classes/BxCnlGridCommon.php');
+('bx_channels_administration', 'Sql', 'SELECT `td`.*, `td`.`channel_name` AS `name`, `ta`.`email` AS `account`, `td`.`added` AS `added_ts`, `tp`.`status` AS `status` FROM `bx_cnl_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_channels'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_cnl_data', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'channel_name', '', 'like', 'reports', '', 192, 'BxCnlGridAdministration', 'modules/boonex/channels/classes/BxCnlGridAdministration.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_channels_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_channels_administration', 'switcher', '_bx_channels_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_channels_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '', '', 3),
-('bx_channels_administration', 'name', '_bx_channels_grid_column_title_adm_name', '25%', 0, '', '', 4),
+('bx_channels_administration', 'name', '_bx_channels_grid_column_title_adm_name', '45%', 0, '', '', 4),
 ('bx_channels_administration', 'added_ts', '_bx_channels_grid_column_title_adm_added', '20%', 1, '25', '', 5),
-('bx_channels_administration', 'account', '_bx_channels_grid_column_title_adm_account', '20%', 0, '25', '', 6),
-('bx_channels_administration', 'actions', '', '20%', 0, '', '', 7),
-('bx_channels_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_channels_common', 'name', '_bx_channels_grid_column_title_adm_name', '48%', 0, '', '', 2),
-('bx_channels_common', 'added_ts', '_bx_channels_grid_column_title_adm_added', '30%', 1, '25', '', 3),
-('bx_channels_common', 'actions', '', '20%', 0, '', '', 4);
+('bx_channels_administration', 'actions', '', '20%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_channels_administration', 'bulk', 'delete', '_bx_channels_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_channels_administration', 'bulk', 'delete_with_content', '_bx_channels_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
-('bx_channels_administration', 'single', 'settings', '_bx_channels_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
-('bx_channels_common', 'bulk', 'delete', '_bx_channels_grid_action_title_adm_delete', '', 0, 1, 1),
-('bx_channels_common', 'bulk', 'delete_with_content', '_bx_channels_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
-('bx_channels_common', 'single', 'settings', '_bx_channels_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);
-
+('bx_channels_administration', 'single', 'settings', '_bx_channels_grid_action_title_adm_more_actions', 'cog', 1, 0, 2);
 
 -- ALERTS
 
@@ -458,13 +382,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
 ('bx_timeline', 'post_common', @iHandler),
 ('bx_channels_pics', 'file_deleted', @iHandler),
-('bx_channels_fans', 'connection_added', @iHandler),
-('bx_channels_fans', 'connection_removed', @iHandler),
 ('profile', 'delete', @iHandler),
-('bx_channels', 'fan_added', @iHandler),
-('bx_channels', 'join_invitation', @iHandler),
-('bx_channels', 'join_request', @iHandler),
-('bx_channels', 'join_request_accepted', @iHandler),
 ('bx_channels', 'timeline_view', @iHandler),
 ('bx_channels', 'timeline_post', @iHandler),
 ('bx_channels', 'timeline_delete', @iHandler),
@@ -472,7 +390,9 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_channels', 'timeline_vote', @iHandler),
 ('bx_channels', 'timeline_report', @iHandler),
 ('bx_channels', 'timeline_repost', @iHandler),
-('meta_keyword', 'added', @iHandler);
+('meta_keyword', 'added', @iHandler),
+('meta_keyword', 'add_url', @iHandler),
+('meta_keyword', 'deleted', @iHandler);
 
 
 -- PRIVACY 
@@ -481,16 +401,6 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_channels_allow_view_to', 'bx_channels', 'view', '_bx_channels_form_profile_input_allow_view_to', '3', '', 'bx_cnl_data', 'id', 'author', 'BxCnlPrivacy', 'modules/boonex/channels/classes/BxCnlPrivacy.php'),
 ('bx_channels_allow_view_notification_to', 'bx_channels', 'view_event', '_bx_channels_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxCnlPrivacyNotifications', 'modules/boonex/channels/classes/BxCnlPrivacyNotifications.php');
 
--- EMAIL TEMPLATES
-
-INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
-('bx_channels', '_bx_channels_email_join_request', 'bx_channels_join_request', '_bx_channels_email_join_request_subject', '_bx_channels_email_join_request_body'),
-('bx_channels', '_bx_channels_email_join_reject', 'bx_channels_join_reject', '_bx_channels_email_join_reject_subject', '_bx_channels_email_join_reject_body'),
-('bx_channels', '_bx_channels_email_join_confirm', 'bx_channels_join_confirm', '_bx_channels_email_join_confirm_subject', '_bx_channels_email_join_confirm_body'),
-('bx_channels', '_bx_channels_email_fan_remove', 'bx_channels_fan_remove', '_bx_channels_email_fan_remove_subject', '_bx_channels_email_fan_remove_body'),
-('bx_channels', '_bx_channels_email_fan_become_admin', 'bx_channels_fan_become_admin', '_bx_channels_email_fan_become_admin_subject', '_bx_channels_email_fan_become_admin_body'),
-('bx_channels', '_bx_channels_email_admin_become_fan', 'bx_channels_admin_become_fan', '_bx_channels_email_admin_become_fan_subject', '_bx_channels_email_admin_become_fan_body'),
-('bx_channels', '_bx_channels_email_invitation', 'bx_channels_invitation', '_bx_channels_email_invitation_subject', '_bx_channels_email_invitation_body');
 
 -- UPLOADERS
 

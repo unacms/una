@@ -31,7 +31,7 @@ class BxDolMetatagsQuery extends BxDolDb
 
         return $aObject;
     }
-
+    
     public function mentionsAdd($mixedContentId, $aMentions, $bDeletePrevious = true)
     {
         return $this->metaAdd($mixedContentId, $aMentions, $bDeletePrevious, 'mentionsDelete', $this->_aObject['table_mentions'], 'profile_id');
@@ -49,6 +49,7 @@ class BxDolMetatagsQuery extends BxDolDb
 
     public function keywordsDelete($mixedContentId)
     {
+        bx_alert('meta_keyword', 'deleted', $mixedContentId, bx_get_logged_profile_id(), array('object' => $this->_aObject['object']));
         return $this->metaDelete($this->_aObject['table_keywords'], $mixedContentId);
     }
 

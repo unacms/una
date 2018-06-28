@@ -390,7 +390,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             return $s;
 
         foreach ($a as $sKeyword)
-            $s = str_ireplace('#' . $sKeyword, '<a class="bx-tag" rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
+            $s = str_ireplace('#' . $sKeyword, '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
 
         return $s;
     }
@@ -409,10 +409,20 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     
         foreach ($a as $sKeyword)
             if (0 === strcasecmp(mb_strtolower($s), mb_strtolower($sKeyword)))
-                $s = '<a class="bx-tag" rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '">' . $sKeyword . '</a>';
+                $s = '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword) . '">' . $sKeyword . '</a>';
 
         return $s;
     }
+	
+	public function keywordsGetHashTagUrl($sKeyword) 
+    {   
+        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword);
+        bx_alert('meta_keyword', 'add_url', 0, false, array(
+           'url' => &$sUrl,
+           'keyword' => $sKeyword
+        ));
+	    return $sUrl;
+	}
 
     /**
      * Add keywords meta info to the head section
@@ -902,7 +912,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $i;
     }
 
-    protected function _metaAdd($iId, $s, $sPreg, $sFuncDelete, $sFuncAdd, $iMaxItems, $sAlertName)
+    protected function _metaAdd($iId, $s, $sPreg, $sFuncDelete, $sFuncAdd, $iMaxItems, $sAlertName) 
     {
         $a = array();
         if (!preg_match_all($sPreg, $s, $a)) {
