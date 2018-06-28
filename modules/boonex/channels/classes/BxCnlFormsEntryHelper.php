@@ -10,7 +10,7 @@
  */
 
 /**
- * Spaces profile forms functions
+ * Channels profile forms functions
  */
 class BxCnlFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
 {

@@ -329,7 +329,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     
     public function serviceEntityInvite ($iContentId = 0, $bErrorMsg = true)
     {
-        return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
+		if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
+        	return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
+        return false;
     }
     
     /**

@@ -10,7 +10,7 @@
  */
 
 /**
- * Create/Edit Space Form.
+ * Create/Edit Channel Form.
  */
 class BxCnlFormEntry extends BxBaseModGroupsFormEntry
 {

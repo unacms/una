@@ -82,7 +82,6 @@ class BxCnlModule extends BxBaseModGroupsModule
         $oSearch->setMetaType('keyword');
         $aContentInfo = $this->_oDb->getContentInfoById(bx_get('id'));
         $_GET['keyword'] = $aContentInfo[$CNF['FIELD_NAME']];
-        $sCode = '';
         $sCode = $oSearch->response();
         if (!$sCode)
             $sCode = $oSearch->getEmptyResult();

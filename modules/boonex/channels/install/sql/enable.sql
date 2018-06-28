@@ -244,9 +244,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 
 -- ACL
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_channels', 'create entry', NULL, '_bx_channels_acl_action_create_profile', '', 1, 1);
-SET @iIdActionProfileCreate = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_channels', 'delete entry', NULL, '_bx_channels_acl_action_delete_profile', '', 1, 1);

@@ -10,7 +10,7 @@
  */
 
 /**
- * 'Spaces manage tools' menu.
+ * 'Channels manage tools' menu.
  */
 class BxCnlMenuManageTools extends BxBaseModGroupsMenuManageTools
 {
