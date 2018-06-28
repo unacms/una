@@ -99,7 +99,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedAllowed !== true)
             return echoJson(array('message' => strip_tags($mixedAllowed)));
 
-        echoJson($this->getFormEdit($iId));
+        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true)));
     }
 
 	function actionPin()
@@ -292,7 +292,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
-        echoJson($this->getFormEdit($iId));
+        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true)));
     }
 
     public function actionGetComments()
@@ -1802,6 +1802,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(is_array($aContent) && !empty($aContent['text']))
             $aEvent['text'] = $aContent['text'];
 
+		$bDynamicMode = isset($aParams['dynamic_mode']) ? (bool)$aParams['dynamic_mode'] : false;
         $sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
         $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_edit';
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
@@ -1873,7 +1874,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'id' => $iId, 
-        	'form' => $oForm->getCode(), 
+        	'form' => $oForm->getCode($bDynamicMode), 
         	'form_id' => $oForm->id,
         	'eval' => $this->_oConfig->getJsObject('view') . '.onEditPost(oData)'
         );

@@ -48,7 +48,10 @@ BxTimelineView.prototype.init = function() {
 	this.bViewTimeline = this.oViewTimeline.length > 0;
 
 	this.oViewOutline = $('#' + this._aHtmlIds['main_outline']);
-	this.bViewOutline = this.oViewOutline.length > 0;	
+	this.bViewOutline = this.oViewOutline.length > 0;
+
+	this.oViewItem = $('#' + this._aHtmlIds['main_item']);
+	this.bViewItem = this.oViewItem.length > 0;	
 
 	if(this.bViewTimeline) {
 		this._oRequestParams['timeline'] = jQuery.extend({}, this._oRequestParams['general']);
@@ -468,9 +471,10 @@ BxTimelineView.prototype.editPost = function(oLink, iId) {
     var oItem = null;
     if(this.bViewTimeline)
     	oItem = $(this.sIdItemTimeline + iId);
-
     if(this.bViewOutline)
     	oItem = $(this.sIdItemOutline + iId);
+    if(this.bViewItem)
+    	oItem = $(this.sIdItemItem + iId);
 
     var oContent = oItem.find('.' + this.sClassItemContent);
     if(oContent.find('form').length) {
@@ -505,10 +509,13 @@ BxTimelineView.prototype.onEditPost = function(oData) {
 		oItem = $(this.sIdItemTimeline + oData.id);
     if(this.bViewOutline)
     	oItem = $(this.sIdItemOutline + oData.id);
+    if(this.bViewItem)
+    	oItem = $(this.sIdItemItem + oData.id);
 
     this.loadingInItem(oItem, false);
 
 	if(oData && oData.form != undefined && oData.form_id != undefined) {
+		console.log(oItem, oItem.find('.' + this.sClassItemContent));
 		oItem.find('.' + this.sClassItemContent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
             $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
             	$this.initFormEdit(oData.form_id);

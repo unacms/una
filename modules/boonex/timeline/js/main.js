@@ -17,6 +17,7 @@ function BxTimelineMain() {
 	this.sIdItem = '#bx-timeline-item-';
 	this.sIdItemTimeline = '#bx-timeline-item-timeline-';
 	this.sIdItemOutline = '#bx-timeline-item-outline-';
+	this.sIdItemItem = '#bx-timeline-item-item-';
 
 	this.sSP = 'bx-tl';
 	this.sClassView = this.sSP + '-view';
@@ -35,6 +36,9 @@ function BxTimelineMain() {
 
 	this.oViewOutline = null;
 	this.bViewOutline = false;
+
+	this.oViewItem = null;
+	this.bViewItem = false;
 }
 
 BxTimelineMain.prototype.initVideos = function(oParent) {
