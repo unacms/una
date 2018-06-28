@@ -21,7 +21,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_chann
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_channels';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_channels';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_channels';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_channel_add', 'bx_channel_delete', 'bx_channel_edit', 'bx_channel_edit_cover', 'bx_channel_view', 'bx_channel_view_full', 'bx_channel_invite');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_channel_add', 'bx_channel_delete', 'bx_channel_edit', 'bx_channel_edit_cover', 'bx_channel_view', 'bx_channel_view_full');
 
 -- PRE-VALUES
 

@@ -390,7 +390,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             return $s;
 
         foreach ($a as $sKeyword)
-            $s = str_ireplace('#' . $sKeyword, '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
+            $s = str_ireplace('#' . $sKeyword, '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword, $iId) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
 
         return $s;
     }
@@ -409,17 +409,19 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     
         foreach ($a as $sKeyword)
             if (0 === strcasecmp(mb_strtolower($s), mb_strtolower($sKeyword)))
-                $s = '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword) . '">' . $sKeyword . '</a>';
+                $s = '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword, $iId) . '">' . $sKeyword . '</a>';
 
         return $s;
     }
 	
-	public function keywordsGetHashTagUrl($sKeyword) 
+	public function keywordsGetHashTagUrl($sKeyword, $iId) 
     {   
         $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword);
-        bx_alert('meta_keyword', 'add_url', 0, false, array(
+        bx_alert('meta_keyword', 'url', 0, false, array(
            'url' => &$sUrl,
-           'keyword' => $sKeyword
+           'keyword' => $sKeyword,
+		   'id' => $iId,
+		   'sObject' => $this->_sObject
         ));
 	    return $sUrl;
 	}

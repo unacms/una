@@ -10,7 +10,7 @@
  */
 
 /**
- * Spaces module database queries
+ * Channels module database queries
  */
 class BxCnlDb extends BxBaseModGroupsDb
 {

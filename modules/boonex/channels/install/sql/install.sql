@@ -211,8 +211,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_channel', 'bx_channel_edit', 'bx_channels', 0, '_bx_channels_form_profile_display_edit'),
 ('bx_channel', 'bx_channel_edit_cover', 'bx_channels', 0, '_bx_channels_form_profile_display_edit_cover'),
 ('bx_channel', 'bx_channel_view', 'bx_channels', 1, '_bx_channels_form_profile_display_view'),
-('bx_channel', 'bx_channel_view_full', 'bx_channels', 1, '_bx_channels_form_profile_display_view_full'),
-('bx_channel', 'bx_channel_invite', 'bx_channels', 0, '_bx_channels_form_profile_display_invite');
+('bx_channel', 'bx_channel_view_full', 'bx_channels', 1, '_bx_channels_form_profile_display_view_full');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_channel', 'bx_channels', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_channels_form_profile_input_sys_delete_confirm', '_bx_channels_form_profile_input_delete_confirm', '_bx_channels_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_delete_confirm_error', '', '', 1, 0),
@@ -229,9 +228,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_channel_add', 'picture', 2147483647, 1, 6),
 ('bx_channel_add', 'channel_name', 2147483647, 1, 7),
 ('bx_channel_add', 'do_submit', 2147483647, 1, 9),
-
-('bx_channel_invite', 'initial_members', 2147483647, 1, 1),
-('bx_channel_invite', 'do_submit', 2147483647, 1, 2),
 
 ('bx_channel_delete', 'delete_confirm', 2147483647, 1, 0),
 ('bx_channel_delete', 'cover', 2147483647, 0, 0),

@@ -27,12 +27,12 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
             }
         }
         
-        if ($oAlert->sUnit == 'meta_keyword' && $oAlert->sAction == 'add_url'){
+        if ($oAlert->sUnit == 'meta_keyword' && $oAlert->sAction == 'url'){
             if (isset($oAlert->aExtras['keyword'])){
                 $sName = $oAlert->aExtras['keyword'];
-                $id = $this->_oModule->_oDb->getChannelIdByName($sName);
-                if ($id > 0){
-                    $oAlert->aExtras['url'] = $this->_oModule->serviceProfileUrl($id);
+                $iCnlId = $this->_oModule->_oDb->getChannelIdByName($sName);
+                if ($iCnlId > 0){
+                    $oAlert->aExtras['url'] = $this->_oModule->serviceProfileUrl($iCnlId);
                 }
             }
         }

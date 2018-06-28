@@ -18,11 +18,11 @@ class BxChartsTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
     
-    function getChart($chartName, $height)
+    function getChart($sChartName, $iHeight)
     {
         $this->addJs(array('chart.min.js', 'chart.js'));
         $this->addCss(array('chart.css'));
-        return $this->getJsCode('chart', array('chartName' => $chartName, 'height' => $height)) . $this->parseHtmlByName('chart.html', array('chart_name' => $chartName));
+        return $this->getJsCode('chart', array('chartName' => $sChartName, 'height' => $iHeight)) . $this->parseHtmlByName('chart.html', array('chart_name' => $sChartName));
     }
     
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
