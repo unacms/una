@@ -1778,8 +1778,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
                 $this->onPost($iId);
 
-                return $this->_prepareResponse(array('message' => _t('_bx_timeline_txt_msg_performed_action'), 'id' => $iId), $bAjaxMode, array(
-                	'message' => '',
+                return $this->_prepareResponse(array('id' => $iId), $bAjaxMode, array(
                 	'redirect' => $this->_oConfig->getItemViewUrl(array('id' => $iId))
                 ));
             }
