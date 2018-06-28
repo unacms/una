@@ -391,7 +391,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_channels', 'timeline_report', @iHandler),
 ('bx_channels', 'timeline_repost', @iHandler),
 ('meta_keyword', 'added', @iHandler),
-('meta_keyword', 'add_url', @iHandler),
+('meta_keyword', 'url', @iHandler),
 ('meta_keyword', 'deleted', @iHandler);
 
 

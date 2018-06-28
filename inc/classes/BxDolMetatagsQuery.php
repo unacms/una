@@ -49,8 +49,10 @@ class BxDolMetatagsQuery extends BxDolDb
 
     public function keywordsDelete($mixedContentId)
     {
-        bx_alert('meta_keyword', 'deleted', $mixedContentId, bx_get_logged_profile_id(), array('object' => $this->_aObject['object']));
-        return $this->metaDelete($this->_aObject['table_keywords'], $mixedContentId);
+        $mixedResult = $this->metaDelete($this->_aObject['table_keywords'], $mixedContentId);
+        if ($mixedResult != false)
+            bx_alert('meta_keyword', 'deleted', $mixedContentId, bx_get_logged_profile_id(), array('object' => $this->_aObject['object']));
+        return $mixedResult;
     }
 
     public function keywordsGet($mixedContentId)

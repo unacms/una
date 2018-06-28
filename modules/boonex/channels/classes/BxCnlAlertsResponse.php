@@ -27,7 +27,7 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
             }
         }
         
-        if ($oAlert->sUnit == 'meta_keyword' && $oAlert->sAction == 'add_url'){
+        if ($oAlert->sUnit == 'meta_keyword' && $oAlert->sAction == 'url'){
             if (isset($oAlert->aExtras['keyword'])){
                 $sName = $oAlert->aExtras['keyword'];
                 $id = $this->_oModule->_oDb->getChannelIdByName($sName);
