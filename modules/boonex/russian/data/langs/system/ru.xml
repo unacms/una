@@ -542,6 +542,8 @@
 	<string name="_adm_bp_txt_page_meta_robots"><![CDATA[Мета-роботы]]></string>
 	<string name="_adm_bp_txt_page_title"><![CDATA[Заголовок]]></string>
 	<string name="_adm_bp_txt_page_title_system"><![CDATA[Системное имя]]></string>
+	<string name="_adm_bp_txt_page_type_id"><![CDATA[Тип]]></string>
+	<string name="_adm_bp_dsc_page_type_id"><![CDATA[Способ отображения страницы]]></string>
 	<string name="_adm_bp_txt_page_uri"><![CDATA[URL]]></string>
 	<string name="_adm_bp_txt_page_url"><![CDATA[Ссылка]]></string>
 	<string name="_adm_bp_txt_page_visible_for_levels"><![CDATA[Выбрать уровни]]></string>
@@ -2425,6 +2427,8 @@
 	<string name="_sys_page_title_unsubscribe_news"><![CDATA[Отписаться от новостей сайта]]></string>
 	<string name="_sys_page_title_unsubscribe_notifications"><![CDATA[Отписаться от уведомлений сайта]]></string>
 	<string name="_sys_page_title_studio_dashboard"><![CDATA[Студия - Панель]]></string>
+	<string name="_sys_page_type_default"><![CDATA[Стандартная]]></string>
+	<string name="_sys_page_type_default_wo_hf"><![CDATA[Без заголовка и основания]]></string>
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[Просмотреть все]]></string>
 	<string name="_sys_please_select"><![CDATA[Пожалуйста, выберите...]]></string>

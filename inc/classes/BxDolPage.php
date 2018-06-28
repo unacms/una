@@ -215,6 +215,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return true;
     }
 
+    public function getType ()
+    {
+    	return (int)$this->_aObject['type_id'];
+    }
+
     /**
      * Add replace markers. Markers are replaced in raw, html, lang blocks and page title, description, keywords and block titles.
      * @param $a array of markers as key => value

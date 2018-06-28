@@ -542,6 +542,8 @@
 	<string name="_adm_bp_txt_page_meta_robots"><![CDATA[Meta Robots]]></string>
 	<string name="_adm_bp_txt_page_title"><![CDATA[Title]]></string>
 	<string name="_adm_bp_txt_page_title_system"><![CDATA[System Name]]></string>
+	<string name="_adm_bp_txt_page_type_id"><![CDATA[Type]]></string>
+	<string name="_adm_bp_dsc_page_type_id"><![CDATA[Page display type]]></string>
 	<string name="_adm_bp_txt_page_uri"><![CDATA[URL]]></string>
 	<string name="_adm_bp_txt_page_url"><![CDATA[Link]]></string>
 	<string name="_adm_bp_txt_page_visible_for_levels"><![CDATA[Select Levels]]></string>
@@ -2426,6 +2428,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_unsubscribe_news"><![CDATA[Unsubscribe From Site Newsletters]]></string>
 	<string name="_sys_page_title_unsubscribe_notifications"><![CDATA[Unsubscribe From Site Notifications]]></string>
 	<string name="_sys_page_title_studio_dashboard"><![CDATA[Studio Dashboard]]></string>
+	<string name="_sys_page_type_default"><![CDATA[Default]]></string>
+	<string name="_sys_page_type_default_wo_hf"><![CDATA[Without header/footer]]></string>
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
 	<string name="_sys_please_select"><![CDATA[Please select...]]></string>

@@ -66,6 +66,13 @@ class BxDolPageQuery extends BxDolDb
         return $oDb->query("INSERT INTO `sys_pages_blocks` SET " . $oDb->arrayToSQL($aPageBlock));
     }
 
+    static public function getPageType($iId)
+    {
+        return BxDolDb::getInstance()->getRow("SELECT * FROM `sys_pages_types` WHERE `id`=:id LIMIT 1", array(
+        	'id' => $iId
+        ));
+    }
+
     public function getPageBlocks()
     {
         $aRet = array ();
