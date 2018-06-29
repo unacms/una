@@ -4146,17 +4146,15 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 
 CREATE TABLE IF NOT EXISTS `sys_pages_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
   `title` varchar(255) NOT NULL,
   `template` varchar(255) NOT NULL,
   `order` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  PRIMARY KEY (`id`)
 );
 
-INSERT INTO `sys_pages_types` (`id`, `name`, `title`, `template`, `order`) VALUES
-(1, 'default', '_sys_page_type_default', 'default.html', 1),
-(2, 'default_wo_hf', '_sys_page_type_default_wo_hf', 'page_2.html', 2);
+INSERT INTO `sys_pages_types` (`id`, `title`, `template`, `order`) VALUES
+(1, '_sys_page_type_default', 'default.html', 1),
+(2, '_sys_page_type_default_wo_hf', 'page_2.html', 2);
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_layouts` (
