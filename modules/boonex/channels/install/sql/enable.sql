@@ -269,15 +269,6 @@ SET @iPremium = 9;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
--- profile create
-(@iAccount, @iIdActionProfileCreate),
-(@iStandard, @iIdActionProfileCreate),
-(@iUnconfirmed, @iIdActionProfileCreate),
-(@iPending, @iIdActionProfileCreate),
-(@iModerator, @iIdActionProfileCreate),
-(@iAdministrator, @iIdActionProfileCreate),
-(@iPremium, @iIdActionProfileCreate),
-
 -- profile delete
 (@iAccount, @iIdActionProfileDelete),
 (@iStandard, @iIdActionProfileDelete),

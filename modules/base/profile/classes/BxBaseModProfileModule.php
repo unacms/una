@@ -672,7 +672,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         return $s;
     }
-
+    
+    /**
+     * check enabled profile activation letter
+     */
+    public function  serviceIsEnableProfileActivationLetter()
+    {
+        $CNF = &$this->_oConfig->CNF;
+        return (bool)getParam($CNF['PARAM_ENABLE_ACTIVATION_LETTER']).$CNF['PARAM_ENABLE_ACTIVATION_LETTER'];//isset($CNF['PARAM_ENABLE_ACTIVATION_LETTER']) ? (bool)getParam($CNF['PARAM_ENABLE_ACTIVATION_LETTER']) : true;
+    }
+    
     /**
      * For internal usage only.
      */

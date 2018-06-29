@@ -68,6 +68,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
             // some params
             'PARAM_AUTOAPPROVAL' => 'bx_persons_autoapproval',
+            'PARAM_ENABLE_ACTIVATION_LETTER' => 'bx_persons_enable_profile_activation_letter',
             'PARAM_DEFAULT_ACL_LEVEL' => 'bx_persons_default_acl_level',
             'PARAM_NUM_RSS' => 'bx_persons_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_persons_num_connections_quick',
