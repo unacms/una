@@ -40,6 +40,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_TEXT_ID' => 'post-text',
         	'FIELD_CATEGORY' => 'cat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+        	'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
         	'FIELD_VIEWS' => 'views',
@@ -73,9 +74,12 @@ class BxPostsConfig extends BxBaseModTextConfig
 
             // objects
             'OBJECT_STORAGE' => 'bx_posts_files',
-            'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_posts_preview',
-            'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_posts_gallery',
-        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_posts_cover',
+			'OBJECT_STORAGE_PHOTOS' => 'bx_posts_photos',
+        	'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_posts_preview',
+			'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_posts_gallery',
+			'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_posts_cover',
+			'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_posts_preview_photos',
+			'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_posts_gallery_photos',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
         	'OBJECT_REPORTS' => 'bx_posts',
             'OBJECT_VIEWS' => 'bx_posts',

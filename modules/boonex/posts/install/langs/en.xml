@@ -34,6 +34,10 @@
 	<string name="_bx_posts_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this post]]></string>
 	<string name="_bx_posts_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
 	<string name="_bx_posts_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the post]]></string>
+	<string name="_bx_posts_form_entry_input_sys_covers"><![CDATA[Cover]]></string>
+	<string name="_bx_posts_form_entry_input_covers"><![CDATA[Cover]]></string>
+	<string name="_bx_posts_form_entry_input_covers_uploader_simple_title"><![CDATA[Upload]]></string>
+	<string name="_bx_posts_form_entry_input_covers_uploader_html5_title"><![CDATA[Upload]]></string>
 	<string name="_bx_posts_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_posts_form_entry_input_pictures"><![CDATA[Pictures]]></string>
     <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>

@@ -60,7 +60,8 @@ $aConfig = array(
      * Note. Don't add storage objects used in transcoder objects.
      */
     'storages' => array(
-    	'bx_posts_files'
+    	'bx_posts_files',
+    	'bx_posts_photos'
     ),
 
     /**
@@ -69,7 +70,10 @@ $aConfig = array(
     'transcoders' => array(
 		'bx_posts_preview',
         'bx_posts_gallery',
-        'bx_posts_cover'
+        'bx_posts_cover',
+
+        'bx_posts_preview_photos',
+        'bx_posts_gallery_photos'
     ),
 
     /**

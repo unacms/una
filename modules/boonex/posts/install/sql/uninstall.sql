@@ -1,14 +1,14 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_posts_posts`, `bx_posts_files`, `bx_posts_photos_resized`, `bx_posts_cmts`, `bx_posts_votes`, `bx_posts_votes_track`, `bx_posts_views_track`, `bx_posts_meta_keywords`, `bx_posts_meta_locations`, `bx_posts_meta_mentions`, `bx_posts_reports`, `bx_posts_reports_track`, `bx_posts_favorites_track`, `bx_posts_scores`, `bx_posts_scores_track`;
+DROP TABLE IF EXISTS `bx_posts_posts`, `bx_posts_files`, `bx_posts_photos`, `bx_posts_photos_resized`, `bx_posts_cmts`, `bx_posts_votes`, `bx_posts_votes_track`, `bx_posts_views_track`, `bx_posts_meta_keywords`, `bx_posts_meta_locations`, `bx_posts_meta_mentions`, `bx_posts_reports`, `bx_posts_reports_track`, `bx_posts_favorites_track`, `bx_posts_scores`, `bx_posts_scores_track`;
 
 -- STORAGES & TRANSCODERS
-DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_posts_files' OR `object` = 'bx_posts_photos_resized';
-DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_posts_files' OR `object` = 'bx_posts_photos_resized';
+DELETE FROM `sys_objects_storage` WHERE `object` IN ('bx_posts_files', 'bx_posts_photos', 'bx_posts_photos_resized');
+DELETE FROM `sys_storage_tokens` WHERE `object` IN ('bx_posts_files', 'bx_posts_photos', 'bx_posts_photos_resized');
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_posts_preview', 'bx_posts_gallery', 'bx_posts_cover');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_posts_preview', 'bx_posts_gallery', 'bx_posts_cover');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_posts_preview', 'bx_posts_gallery', 'bx_posts_cover');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_posts_preview', 'bx_posts_gallery', 'bx_posts_cover', 'bx_posts_preview_photos', 'bx_posts_gallery_photos');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_posts_preview', 'bx_posts_gallery', 'bx_posts_cover', 'bx_posts_preview_photos', 'bx_posts_gallery_photos');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_posts_preview', 'bx_posts_gallery', 'bx_posts_cover', 'bx_posts_preview_photos', 'bx_posts_gallery_photos');
 
 -- FORMS
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_posts';
