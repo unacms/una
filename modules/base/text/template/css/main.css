@@ -206,7 +206,7 @@ div.bx-base-text-breadcrumb i {
 
 	#sys_search_results  .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase,
     .bx-layout-column-fullwidth  .bx-base-unit-showcase-wrapper .bx-base-text-unit-showcase {
-	   width:calc(33%);
+	   width:calc(33.3%);
     }
 }
 
