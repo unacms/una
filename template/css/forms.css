@@ -528,7 +528,7 @@
     opacity:0.7;
 }
 .bx-form-value .bx-form-input-autotoken b:after {
-	font-family: 'sys-user';
+	font-family: 'sys-user', 'sys-user-fal';
     content: "\f00d";    
     position:absolute;    
     padding:0 0.5em;
