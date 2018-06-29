@@ -74,6 +74,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
             // some params
             'PARAM_AUTOAPPROVAL' => 'bx_organizations_autoapproval',
+            'PARAM_ENABLE_ACTIVATION_LETTER' => 'bx_organizations_enable_profile_activation_letter',
             'PARAM_DEFAULT_ACL_LEVEL' => 'bx_organizations_default_acl_level',
             'PARAM_NUM_RSS' => 'bx_organizations_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_organizations_num_connections_quick',

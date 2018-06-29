@@ -6,7 +6,8 @@
 
 	<string name="_bx_persons_option_autoapproval"><![CDATA[Activate all persons after creation automatically]]></string>
 	<string name="_bx_persons_option_default_acl_level"><![CDATA[Default member's level to assign after person's profile creation]]></string>
-	<string name="_bx_persons_option_redirect_aadd"><![CDATA[Redirect after person's profile creation to]]></string>
+  <string name="_bx_persons_option_enable_profile_activation_letter"><![CDATA[Enable profile activation letter]]></string>
+  <string name="_bx_persons_option_redirect_aadd"><![CDATA[Redirect after person's profile creation to]]></string>
 	<string name="_bx_persons_option_redirect_aadd_profile"><![CDATA[Profile Page]]></string>
 	<string name="_bx_persons_option_redirect_aadd_last"><![CDATA[Last Page]]></string>
 	<string name="_bx_persons_option_redirect_aadd_custom"><![CDATA[Custom Page]]></string>
