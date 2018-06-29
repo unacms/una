@@ -119,6 +119,12 @@ BxTimelineView.prototype.init = function() {
 	    this.blink(this.oViewOutline);
 	}
 
+	if(this.bViewItem) {
+		//--- Init Video Layout
+    	if(this._sVideosAutoplay != 'off')
+    		this.initVideos(this.oViewItem);
+	}
+
 	this.initFlickity();
 };
 

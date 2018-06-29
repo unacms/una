@@ -208,6 +208,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         	'content' => $sContent,
         	'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
+				'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
                 'sReferrer' => $sReferrer
             )) . $this->getJsCode('repost')
         )));
