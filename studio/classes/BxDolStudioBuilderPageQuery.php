@@ -171,7 +171,6 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tpt`.`id` AS `id`,
-                `tpt`.`name` AS `name`,
                 `tpt`.`title` AS `title`,
                 `tpt`.`template` AS `template`,
                 `tpt`.`order` AS `order`" . $sSelectClause . "
