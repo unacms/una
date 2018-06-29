@@ -935,8 +935,24 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 						'disabled' => 'disabled'
 					),
 				),
+				'type_id' => array(
+					'type' => 'select',
+					'name' => 'type_id',
+					'caption' => _t('_adm_bp_txt_page_type_id'),
+					'info' => _t('_adm_bp_dsc_page_type_id'),
+					'value' => isset($aPage['type_id']) ? $aPage['type_id'] : '',
+					'required' => '1',
+					'db' => array (
+                        'pass' => 'Int',
+                    ),
+				),
             )
         );
+
+        $aTypes = array();
+        $this->oDb->getTypes(array('type' => 'all'), $aTypes, false);
+        foreach($aTypes as $aType)
+        	$aForm['inputs']['type_id']['values'][] = array('key' => $aType['id'], 'value' => _t($aType['title']));
 
         if($bCreate) {
         	$sJsObject = $this->getPageJsObject();

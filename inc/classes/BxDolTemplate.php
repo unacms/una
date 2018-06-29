@@ -22,11 +22,28 @@ define('BX_DOL_TEMPLATE_CHECK_IN_TMPL', 'tmpl');
 define('BX_DOL_COLOR_BG', 'bg');
 define('BX_DOL_COLOR_FT', 'ft');
 
+/**
+ * Page display levels.
+ * Note. Both levels may refer to the same HTML templates. 
+ * 
+ * 'System' level. It uses page's NameIndex and
+ * is mainly used for pages which aren't registered 
+ * in 'sys_objects_page' table. Also it's used 
+ * in 'Injections' engine.  
+ */
 define('BX_PAGE_DEFAULT', 0); ///< default, regular page
 define('BX_PAGE_CLEAR', 2); ///< clear page, without any headers and footers
 define('BX_PAGE_POPUP', 44); ///< popup page, without any headers and footers
 define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display some msg, like 'please wait', without headers footers
 
+/**
+ * 'Builder based' level. It uses page's Type 
+ * from BxDolPage class and is used for pages 
+ * which are registered in 'sys_objects_page' table.
+ * Changeable in Studio -> Pages Builder -> Settings. 
+ */
+define('BX_PAGE_TYPE_DEFAULT', 1); ///< default, regular page
+define('BX_PAGE_TYPE_DEFAULT_WO_HF', 2); ///< clear page, without any headers and footers
 
 /**
  * Template engine.
@@ -417,6 +434,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         //--- Load page elements related static variables ---//
         $this->aPage = array(
             'name_index' => BX_PAGE_DEFAULT,
+        	'type' => BX_PAGE_TYPE_DEFAULT,
             'header' => '',
             'header_text' => '',
             'keywords' => array(),
@@ -493,6 +511,24 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function getPageNameIndex()
     {
         return isset($this->aPage['name_index']) ? (int)$this->aPage['name_index'] : 0;
+    }
+
+	/**
+     * Set page type
+     * @param int $i page type
+     */
+    function setPageType($a)
+    {
+        $this->aPage['type'] = $a;
+    }
+
+    /**
+     * Get page type
+     * @return int $i page type
+     */
+    function getPageType()
+    {
+        return isset($this->aPage['type']) ? (int)$this->aPage['type'] : BX_PAGE_TYPE_DEFAULT;
     }
 
     /**
@@ -1180,6 +1216,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPage($sName);
 
         $sContent = $this->parseHtmlByName($sName, $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
+        if(empty($sContent)) {
+        	$aType = BxDolPageQuery::getPageType($this->getPageType());
+        	if(!empty($aType) && is_array($aType))
+        		$sContent = $this->parseHtmlByName($aType['template'], $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
+        }
         if(empty($sContent))
             $sContent = $this->parseHtmlByName('default.html', $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
 
