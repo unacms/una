@@ -256,10 +256,10 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         if (null != this._uploader)
             this._uploader = null;
 
-        var _options = {            
-            element: $('#' + this._sDivId).get(0),
-            action: sUrlRoot + 'storage_uploader.php',
-            multiple: $this.isMultiple(),
+        var _options = {
+            url: sUrlRoot + 'storage_uploader.php',
+            uploadMultiple: false,
+            maxFiles: $this.isMultiple() ? 50 : 1,
             params: {
                 uo: this._sUploaderObject,
                 so: this._sStorageObject,
@@ -269,36 +269,24 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 p: this._isPrivate,
                 a: "upload"
             },
-            onSubmit: function(id, fileName){
-                $this.onBeforeUpload('');
-            },
-            onProgress: function(id, fileName, loaded, total){
-                $this.onProgress({
-                    id: id, 
-                    fileName: fileName, 
-                    loaded: loaded, 
-                    total: total
-                });
-            },
-            onComplete: function(id, fileName, responseJSON){
-                $this.onUploadCompleted('');
-            },
-
-            onCancel: function(id, fileName){
-                $this.onUploadCompleted(_t('_sys_uploader_upload_canceled'));
-            },
-
-            messages: {
-                onLeave: _t('_sys_uploader_confirm_leaving_page')
-            },
-
-            showMessage: function(message){ 
-                $this._showError(message, true); 
-            }
-
         };
-        qq.extend(_options, o);
-        this._uploader = new qq.FileUploader(_options);
+
+        this._uploader = new Dropzone('#' + this._sDivId, $.extend({}, _options, o));
+        
+        this._uploader.on('queuecomplete', function (file) {
+            $this.onUploadCompleted('');
+        });
+        this._uploader.on('addedfile', function (file) {
+            $this.onBeforeUpload('');
+        });        
+        this._uploader.on('totaluploadprogress', function (uploadProgress) {
+            $this.onProgress({
+                total: uploadProgress
+            });
+        });
+        this._uploader.on('error', function (oFile, sErrorMsg) {
+            $this._showError(sErrorMsg, true); 
+        });
     }
 
     this.onUploadCompleted = function (sErrorMsg) {        
@@ -306,17 +294,18 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         if (sErrorMsg.length)
             this._showError(sErrorMsg);        
         
-        if (0 == this._uploader.getInProgress()) {
+        if (0 == this._uploader.getQueuedFiles().length && 0 == this._uploader.getUploadingFiles().length) {
             this._isUploadsInProgress = false;
             this.restoreGhosts();
-            if (!this._isErrorShown)
+            if (!this._isErrorShown) {
                 $('#' + this._sPopupContainerId).dolPopupHide({});
+                this._uploader.removeAllFiles();
+            }
         }
     }
 
     this.cancelAll = function () {
-        this._uploader._handler.cancelAll();
-        $('#' + this._sFormContainerId + ' .' + this._uploader._options.classes.list).html('');        
+        this._uploader.removeAllFiles(true);
     }
 
     this.onBeforeUpload = function (params) {
