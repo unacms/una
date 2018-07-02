@@ -31,7 +31,10 @@ class BxBaseUploaderHTML5 extends BxDolUploader
     public function addCssJs ()
     {
         parent::addCssJs ();
-        $this->_oTemplate->addJs('fileuploader.js');
+        $this->_oTemplate->addJs('dropzone/dropzone.min.js');
+        $this->_oTemplate->addCss(array(
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'dropzone/|dropzone.min.css',
+        ));
     }
 
     /**
@@ -61,6 +64,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             'div_id' => $this->_sDivId,
             'content_id' => $iContentId,
             'storage_private' => $isPrivate,
+            'max_file_size' => $this->getMaxUploadFileSize(),
         ));
     }
 
@@ -76,15 +80,17 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         if (!$isMultiple)
             $this->deleteGhostsForProfile($iProfileId, $iContentId);
 
-        if (bx_get('qqfile'))
-            $iId = $oStorage->storeFileFromXhr(bx_get('qqfile'), $bPrivate, $iProfileId, $iContentId);
-        else
-            $iId = $oStorage->storeFileFromForm($_FILES['qqfile'], $bPrivate, $iProfileId, $iContentId);
+        if (bx_get('file')) {
+            $iId = $oStorage->storeFileFromXhr(bx_get('file'), $bPrivate, $iProfileId, $iContentId);
+        } 
+        else {
+            $iId = $oStorage->storeFileFromForm($_FILES['file'], $bPrivate, $iProfileId, $iContentId);
+        }
 
         if ($iId) {
             $aResponse = array ('success' => 1);
         } else {
-            $this->appendUploadErrorMessage(_t('_sys_uploader_err_msg', isset($_FILES['qqfile']['name']) ? $_FILES['qqfile']['name'] : bx_get('qqfile'), $oStorage->getErrorString()));
+            $this->appendUploadErrorMessage(_t('_sys_uploader_err_msg', isset($_FILES['file']['name']) ? $_FILES['file']['name'] : bx_get('file'), $oStorage->getErrorString()));
             $aResponse = array ('error' => $this->getUploadErrorMessages());
         }
 
