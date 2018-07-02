@@ -150,8 +150,8 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent) {
 };
 
 BxTimelineView.prototype.hideEvents = function(oEvents, fOffset) {
-	oEvents.each(function() {
-		( $(this).offset().top > $(window).scrollTop() + $(window).height() * fOffset ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').addClass('is-hidden');
+	oEvents.each(function(iIndex, oElement) {
+		(iIndex >=3 && $(this).offset().top > $(window).scrollTop() + $(window).height() * fOffset ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').addClass('is-hidden');
 	});
 };
 
