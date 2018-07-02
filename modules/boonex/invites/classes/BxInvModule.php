@@ -321,7 +321,7 @@ class BxInvModule extends BxDolModule
      */
     public function serviceGetNotificationsRequest($aEvent)
     {  
-        if (getParam('bx_invites_requests_notifictaions') != 'on')
+        if (getParam('bx_invites_requests_notifications') != 'on')
              return array();
         
         $aRequest = $this->_oDb->getRequests(array('type' => 'by_id', 'value' => $aEvent['object_id']));
