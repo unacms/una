@@ -1,0 +1,20 @@
+﻿__form__
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#__form_id__").ajaxForm({
+            dataType: "json",
+            beforeSubmit: function (formData, jqForm, options) {
+                bx_loading($("#__form_id__"), true);
+            },
+            success: function (data) {
+				if (!data.error){
+				    $(".bx-popup-applied:visible").dolPopupHide();
+				    location.reload();
+				}
+				else{
+				    oBxVideosListTools.reloadForm(data.form, "__form_id__")
+				}
+            }
+        });
+    });
+</script>
