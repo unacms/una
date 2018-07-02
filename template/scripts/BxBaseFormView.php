@@ -555,7 +555,7 @@ EOS;
     {
         $sAttr = isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper']) ? bx_convert_array2attrs($aInput['attrs_wrapper']) : '';
 
-        return "<div class=\"bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}\" $sAttr>$sContent</div>";
+        return "<div class=\"bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}" . ((isset($aInput['html']) && $aInput['html'] && $this->isHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-wrapper-html' : '') . "\" $sAttr>$sContent</div>";
     }
 
     /**
@@ -909,6 +909,11 @@ BLAH;
         $sValue = isset($aInput['value']) ? bx_process_output((isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : strip_tags($aInput['value'])) : '';
 
         return "<textarea $sAttrs>$sValue</textarea>";
+    }
+
+    function isHtmlEditor($iViewMode, &$aInput)
+    {
+		return BxDolEditor::getObjectInstance(false, $this->oTemplate) !== false;
     }
 
     function addHtmlEditor($iViewMode, &$aInput)
