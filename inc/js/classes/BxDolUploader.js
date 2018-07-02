@@ -284,8 +284,21 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 total: uploadProgress
             });
         });
+        this._uploader.on('success', function (oFile, sJSON) {
+            var o = null;
+            try {
+                o = JSON.parse(sJSON);
+            } 
+            catch (e) {}
+
+            if (o && 'undefined' !== typeof(o.error)) {
+                $this._uploader.removeFile(oFile);
+                $this._showError(o.error, true);
+            }
+        });
         this._uploader.on('error', function (oFile, sErrorMsg) {
-            $this._showError(sErrorMsg, true); 
+            $this._uploader.removeFile(oFile);
+            $this._showError(sErrorMsg, true);
         });
     }
 
@@ -316,6 +329,11 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
 
     }
 
+    this.onClickCancel = function () {
+        this._uploader.removeAllFiles(true);
+        BxDolUploaderSimple.prototype._clearErrors.call(this);
+        BxDolUploaderSimple.prototype.onClickCancel.call(this);
+    }
 }
 
 BxDolUploaderHTML5.prototype = BxDolUploaderSimple.prototype;

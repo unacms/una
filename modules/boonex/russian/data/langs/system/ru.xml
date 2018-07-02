@@ -2670,7 +2670,11 @@
 	<string name="_sys_uploader_html5_button_name"><![CDATA[Множественная загрузка]]></string>
 	<string name="_sys_uploader_html5_drop_area"><![CDATA[Перетащите файлы сюда для загрузки]]></string>
 	<string name="_sys_uploader_html5_shoose_file"><![CDATA[Выбрать файл]]></string>
-	<string name="_sys_uploader_html5_title"><![CDATA[Множественная загрузка]]></string>
+    <string name="_sys_uploader_html5_title"><![CDATA[Множественная загрузка]]></string>
+    <string name="_sys_uploader_html5_default_message"><![CDATA[Перетащите сюда файлы для загрузки]]></string>
+    <string name="_sys_uploader_html5_file_is_too_big"><![CDATA[Файл слишком большой - {{filesize}} МБ, максимальный размер - {{maxFilesize}} МБ.]]></string>
+    <string name="_sys_uploader_html5_number_of_files_exceeded"><![CDATA[Количество загружаемых файлов ограничено.]]></string>
+    <string name="_sys_uploader_html5_invalid_file_type"><![CDATA[Неправильный тип файла.]]></string>
 	<string name="_sys_uploader_simple_attach_one_more_file"><![CDATA[+ Добавить ещё файлы]]></string>
 	<string name="_sys_uploader_simple_button_name"><![CDATA[Обычная загрузка]]></string>
 	<string name="_sys_uploader_simple_submit_button"><![CDATA[Загрузить]]></string>

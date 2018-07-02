@@ -56,6 +56,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
      */
     public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
+        $sAcceptedFiles = $this->getAcceptedFilesExtensions();
         return $this->_oTemplate->parseHtmlByName($this->_sUploaderFormTemplate, array(
             'form_container_id' => $this->_sFormContainerId,
             'errors_container_id' => $this->_sErrorsContainerId,
@@ -65,6 +66,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             'content_id' => $iContentId,
             'storage_private' => $isPrivate,
             'max_file_size' => $this->getMaxUploadFileSize(),
+            'accepted_files' => null === $sAcceptedFiles ? 'null' : "'" . bx_js_string($sAcceptedFiles) . "'",
         ));
     }
 
