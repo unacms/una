@@ -125,17 +125,19 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     	$iUserId = $this->_oModule->getUserId();
         $iOwnerId = $this->_oModule->getOwnerId();
 
-        //--- Preselect Context and hide privacy selector when posting in some context. 
-        if($this->_bProfileMode && $iOwnerId != $iUserId) {
-        	$aInput['type'] = 'hidden';
-        	$aInput['value'] = -$iOwnerId;
+        $aInput = array_merge($aInput, BxDolPrivacy::getGroupChooser($this->_oModule->_oConfig->getObject('privacy_view'), 0, array(
+        		'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
+        )));
 
-        	return $aInput;
-        }
-
-		$aInput = array_merge($aInput, BxDolPrivacy::getGroupChooser($this->_oModule->_oConfig->getObject('privacy_view'), 0, array(
-			'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
-		)));
+        //--- Preselect Context and hide privacy selector when posting in some context.
+        if($this->_bProfileMode && $iOwnerId != $iUserId)
+        	foreach($aInput['values'] as $aValue)
+	        	if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$iOwnerId) {
+	        		$aInput['type'] = 'hidden';
+	        		$aInput['value'] = -$iOwnerId;
+	
+	        		return $aInput;
+	        	}
 
 		if($this->_bPublicMode || $this->_bProfileMode)
 			foreach($aInput['values'] as $iKey => $aValue) {
