@@ -482,8 +482,6 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
         // alert about status changing
         bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction));
-
-        $bSendEmailNotification = $bSendEmailNotification & BxDolService::call($this->getModule(), 'is_enable_profile_activation_letter');
         
         // send email to member about status change
         if ($bSendEmailNotification)
