@@ -124,15 +124,20 @@ EOS;
 
     /**
      * Add members in bulk from local database to Intercom
-     */      
+     */
     public function actionBulkAdd($iLimit = 5000)
     {
         if (!isAdmin())
             die('{}');
 
+        $this->serviceBulkAdd($iLimit);
+    }
+
+    public function serviceBulkAdd($iLimit = 5000)
+    {
         set_time_limit(3600);
         $aIds = $this->_oDb->getInitialUsers($iLimit);
-        $aChunks = array_chunk($aIds, 50);
+        $aChunks = array_chunk($aIds, 10);
         $iTotal = count($aIds);
         $iCounter = 0;
         foreach ($aChunks as $aIds) {
