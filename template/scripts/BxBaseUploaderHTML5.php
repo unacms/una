@@ -22,6 +22,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['object'];
+        $this->_sFocusDivId = 'bx-form-input-files-' . $sUniqId . '-focus-' . $this->_aObject['object'];
         $this->_sButtonTemplate = 'uploader_button_html5.html';
     }
 
@@ -65,6 +66,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
             'restrictions_text' => $this->getRestrictionsText(),
             'div_id' => $this->_sDivId,
+            'focus_div_id' => $this->_sFocusDivId,
             'content_id' => $iContentId,
             'storage_private' => $isPrivate,
             'max_file_size' => $this->getMaxUploadFileSize(),
