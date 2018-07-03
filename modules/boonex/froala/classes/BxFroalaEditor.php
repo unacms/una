@@ -124,7 +124,7 @@ EOS;
         $sCustomInit .= "\ntoolbarButtonsXS: " . json_encode($aToolbarItems) . ",";
 
         // detect language
-        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
+        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS, 'en', true);
 
         $sCss = 'editor.less';
         $aCss = BxDolTemplate::getInstance()->_lessCss(array(
@@ -209,7 +209,7 @@ EOS;
 
     protected function _getJsCss($bUseUrlsForJs = false)
     {
-        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
+        $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS, 'en', true);
         $sJsPrefix = $bUseUrlsForJs ? BX_DOL_URL_MODULES : BX_DIRECTORY_PATH_MODULES;
         $sJsSuffix = $bUseUrlsForJs ? '' : '|';
         
