@@ -113,7 +113,16 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetText ($iContentId)
     {
         $mixedResult = $this->_getFieldValue('FIELD_TEXT', $iContentId);
-        return $mixedResult !== false ? $mixedResult : '';
+        if (false === $mixedResult)
+            return '';
+
+        $CNF = &$this->_oConfig->CNF;
+        if (!empty($CNF['OBJECT_METATAGS']) && is_string($mixedResult)) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $mixedResult = $oMetatags->metaParse($iContentId, $mixedResult);
+        }
+
+        return $mixedResult;
     }
 
     public function serviceGetInfo ($iContentId, $bSearchableFieldsOnly = true)
