@@ -30,7 +30,7 @@ class BxChartsModule extends BxDolModule
      * 
      * @code bx_srv('bx_charts', 'get_profile_modules', [...]); @endcode
      * 
-     * Get list of avaliable prifile modules
+     * Get list of avaliable profile modules
      * 
      * @return an array with avaliable modules. 
      * 
@@ -87,22 +87,71 @@ class BxChartsModule extends BxDolModule
      * @page service Service Calls
      * @section bx_charts Charts
      * @subsection bx_charts-other Other
+     * @subsubsection bx_charts get_modules
+     * 
+     * @code bx_srv('bx_charts', 'get_modules', [...]); @endcode
+     * 
+     * Get list of avaliable modules
+     * 
+     * @return an array with avaliable modules. 
+     * 
+     * @see BxChartsModule::serviceGeModules
+     */
+    /** 
+     * @ref bx_charts-get_modules "get_modules"
+     */
+    public function serviceGetModules()
+    {
+        $aResult = array();
+        $aItems = $this->_oDb->getStatistic();
+        foreach($aItems as $aItem) {
+            $aResult[$aItem['name']] = _t($aItem['title']);
+        }
+        return $aResult;
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_charts Charts
+     * @subsection bx_charts-other Other
+     * @subsubsection bx_charts get_growth_group_by
+     * 
+     * @code bx_srv('bx_charts', 'get_growth_group_by', [...]); @endcode
+     * 
+     * Get list of avaliable grouping mode(day/week/month)
+     * 
+     * @return an array with avaliable grouping mode(day/week/month). 
+     * 
+     * @see BxChartsModule::serviceGetGrowthGroupBy
+     */
+    /** 
+     * @ref bx_charts-get_growth_group_by "get_growth_group_by"
+     */
+    public function serviceGetGrowthGroupBy()
+    {
+        return array('date' => _t('_bx_charts_txt_growth_group_by_day'),'week' => _t('_bx_charts_txt_growth_group_by_week'),'month' => _t('_bx_charts_txt_growth_group_by_month'));
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_charts Charts
+     * @subsection bx_charts-other Other
      * @subsubsection bx_charts-on-profile get_chart_top_contents_by_likes
      * 
      * @code bx_srv('bx_charts', 'get_chart_top_contents_by_likes', [...]); @endcode
      * 
      * Get Chart Top Contents By Likes
      * 
-     * @return an html for chart1. 
+     * @return an html for chart. 
      * 
      * @see BxChartsModule::serviceGetChartTopContentsByLikes
      */
     /** 
-     * @ref bx_charts-get_text_modules "get_chart_top_contents_by_likes"
+     * @ref bx_charts-get_chart_top_contents_by_likes "get_chart_top_contents_by_likes"
      */
     public function serviceGetChartTopContentsByLikes()
     {
-        return $this->_oTemplate->getChart('TopContentsByLikes', 400);
+        return $this->_oTemplate->getChart('TopContentsByLikes', 100);
     }
     
     /**
@@ -115,16 +164,84 @@ class BxChartsModule extends BxDolModule
      * 
      * Get Chart Most Active Profiles
      * 
-     * @return an html for chart1. 
+     * @return an html for chart. 
      * 
      * @see BxChartsModule::serviceGetChartMostActiveProfiles
      */
     /** 
-     * @ref bx_charts-get_text_modules "get_chart_most_active_profiles"
+     * @ref bx_charts-get_chart_most_active_profiles "get_chart_most_active_profiles"
      */
     public function serviceGetChartMostActiveProfiles()
     {
-        return $this->_oTemplate->getChart('MostActiveProfiles', 500);
+        return $this->_oTemplate->getChart('MostActiveProfiles', 80);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_charts Charts
+     * @subsection bx_charts-other Other
+     * @subsubsection bx_charts-on-profile get_chart_most_followed_profiles
+     * 
+     * @code bx_srv('bx_charts', 'get_chart_most_followed_profiles', [...]); @endcode
+     * 
+     * Get Chart Most Followed Profiles
+     * 
+     * @return an html for chart. 
+     * 
+     * @see BxChartsModule::serviceGetChartMostFollowedProfiles
+     */
+    /** 
+     * @ref bx_charts-get_chart_most_followed_profiles "get_chart_most_followed_profiles"
+     */
+    public function serviceGetChartMostFollowedProfiles()
+    {
+        return $this->_oTemplate->getChart('MostFollowedProfiles', 40);
+    }
+    
+     /**
+     * @page service Service Calls
+     * @section bx_charts Charts
+     * @subsection bx_charts-other Other
+     * @subsubsection bx_charts-on-profile get_chart_content_by_modules
+     * 
+     * @code bx_srv('bx_charts', 'get_chart_content_by_modules', [...]); @endcode
+     * 
+     * Get Chart Content By Modules
+     * 
+     * @return an html for chart. 
+     * 
+     * @see BxChartsModule::serviceGetChartContentByModules
+     */
+    /** 
+     * @ref bx_charts-get_chart_content_by_modules "get_chart_content_by_modules"
+     */
+
+    public function serviceGetChartContentByModules()
+    {
+        return $this->_oTemplate->getChart('ContentByModules', 100);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_charts Charts
+     * @subsection bx_charts-other Other
+     * @subsubsection bx_charts-on-profile get_chart_growth_by_modules
+     * 
+     * @code bx_srv('bx_charts', 'get_chart_growth_by_modules', [...]); @endcode
+     * 
+     * Get Chart Growth By Modules
+     * 
+     * @return an html for chart. 
+     * 
+     * @see BxChartsModule::serviceGetChartGrowthByModules
+     */
+    /** 
+     * @ref bx_charts-get_chart_growth_by_modules "get_chart_growth_by_modules"
+     */
+
+    public function serviceGetChartGrowthByModules()
+    {
+        return $this->_oTemplate->getChartGrowth('GrowthByModules', 75);
     }
     
     public function actionGetChartData($Id = 0)
@@ -135,10 +252,9 @@ class BxChartsModule extends BxDolModule
             $aData = $this->_oDb->getTopByLikes();
             foreach ($aData as $aValue) {
                 $oModule = BxDolModule::getInstance($aValue['module']);
-                array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])) . ' (' . $oModule->_aModule['title'].')');
+                array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])) . ' (' . $oModule->_aModule['title'].')'. ' - ' . $aValue['value']);
                 array_push($aValues['values'], $aValue['value']);
                 array_push($aValues['links'], $oModule->serviceGetLink($aValue['object_id']));
-              
             }
             $aValues['colors'] = array_slice($this->aColors, 0, count($aValues['values']));
             echo  '{"type": "doughnut", "data":{"labels":' . json_encode($aValues['labels']) . ',"datasets":[{"data":' . json_encode($aValues['values']) . ',"backgroundColor":' . json_encode($aValues['colors']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
@@ -153,10 +269,82 @@ class BxChartsModule extends BxDolModule
                 array_push($aValues['values1'], $aValue['create_count']);
                 array_push($aValues['values2'], $aValue['views_count']);
                 array_push($aValues['links'], $oModule->serviceGetLink($aValue['object_id']));
-              
             }
             echo  '{"type":"horizontalBar",  "data": {"labels":' . json_encode($aValues['labels']) . ',"datasets": [{"label": "' . _t('_bx_charts_most_active_profiles_legend_posts') . '","backgroundColor": "' . $this->aColors[0] . '","borderColor": "' . $this->aColors[0] . '","borderWidth": 1,"data": ' . json_encode($aValues['values1']) . '}, {"label": "' . _t('_bx_charts_most_active_profiles_legend_views') . '","backgroundColor": "' . $this->aColors[1] . '","borderColor":"' . $this->aColors[1] . '","borderWidth": 1,"data": ' . json_encode($aValues['values2']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
         }
+        
+        if ($Id == 'MostFollowedProfiles'){
+            $aValues = array('labels' => array(), 'values' => array(), 'links' => array());
+            $aData = $this->_oDb->getMostFollowedProfiles();
+            foreach ($aData as $aValue) {
+                $oModule = BxDolModule::getInstance($aValue['module']);
+                array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])));
+                array_push($aValues['values'], $aValue['followers_count']);
+                array_push($aValues['links'], $oModule->serviceGetLink($aValue['object_id']));
+            }
+            echo  '{"type":"horizontalBar",  "data": {"labels":' . json_encode($aValues['labels']) . ',"datasets": [{"label": "' . _t('_bx_charts_most_followed_profiles_legend') . '","backgroundColor": "' . $this->aColors[0] . '","borderColor": "' . $this->aColors[0] . '","borderWidth": 1,"data": ' . json_encode($aValues['values']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
+        }
+        
+        if ($Id == 'ContentByModules'){
+            $aValues = array('labels' => array(), 'values' => array(), 'colors' => array(), 'links' => array());
+            $aItems = $this->_oDb->getStatistic();
+            foreach($aItems as $aItem) {
+                
+                $iValue = 0;
+                if(!empty($aItem['query']))
+                    $iValue = (int)$this->_oDb->getOne($aItem['query']);
+                else if(BxDolRequest::serviceExists($aItem['module'], 'get_query_statistics'))
+                    $iValue = (int)BxDolService::call($aItem['module'], 'get_query_statistics', array($aItem));
+                
+                $sLink = '';
+                if(!empty($aItem['link']))
+                    $sLink = BxDolPermalinks::getInstance()->permalink($aItem['link']);
+                
+                array_push($aValues['labels'], _t($aItem['title']) . ' - ' . $iValue);
+                array_push($aValues['values'], $iValue);
+                array_push($aValues['links'], $sLink);
+            }
+            $aValues['colors'] = array_slice($this->aColors, 0, count($aValues['values']));
+            echo  '{"type": "doughnut", "data":{"labels":' . json_encode($aValues['labels']) . ',"datasets":[{"data":' . json_encode($aValues['values']) . ',"backgroundColor":' . json_encode($aValues['colors']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
+        }
+        
+        if ($Id == 'GrowthByModules'){
+            $aValues = array('labels' => array(), 'values1' => array(), 'values2' => array(), 'links' => array());
+            $sModuleName = $sTableName = bx_get('m');
+            $sModuleTitle = "";
+            $aTmp = $this->getSelectedModulesGrowth();
+            if (empty($sModuleName)){
+                $sModuleName = $sTableName = $aTmp[0][0];
+            }
+            $sModuleTitle = $aTmp[1][$sModuleName];
+            $oModule = BxDolModule::getInstance($sModuleName);
+            if (isset($oModule->_oConfig->CNF['TABLE_ENTRIES']))
+                $sTableName = $oModule->_oConfig->CNF['TABLE_ENTRIES'];
+            
+            $aData = $this->_oDb->getGrowth($sTableName);
+            $aTmp2 = $this->_oDb->getGrowthInitValue($sTableName); 
+            $iValuePrev = $aTmp2[0]; 
+            $iMinTime = $aTmp2[1] * 1000; 
+            $iMaxTime = time() * 1000; 
+            $sGroupBy = getParam('bx_charts_chart_growth_group_by');
+            foreach ($aData as $aValue) {
+                $aValue['count1'] = $iValuePrev + $aValue['count'];
+                $iX = $this->getXValueByParams($aValue, getParam('bx_charts_chart_growth_group_by'));
+                array_push($aValues['values1'], array('x' => $iX , 'y' => $aValue['count1']));
+                array_push($aValues['values2'], array('x' => $iX, 'y' => $aValue['count']));
+                $iValuePrev = $aValue['count1'];
+            }
+            
+            echo  '{"type":"line",  "data": {"datasets": [{"label": "' . $sModuleTitle . ':' . _t('_bx_charts_growth_speed_legend') . '","fill": "false","backgroundColor": "' . $this->aColors[2] . '","borderColor":"' . $this->aColors[2] . '","borderWidth": 1,"data": ' . json_encode($aValues['values2']) . '}, {"label": "' . $sModuleTitle . ':' . _t('_bx_charts_growth_legend') . '","fill": "false","backgroundColor": "' . $this->aColors[3] . '","borderColor": "' . $this->aColors[3] . '","borderWidth": 1,"data": ' . json_encode($aValues['values1']) . '}]}, "options": {"legend": {"position": "bottom"},"scales": {"xAxes": [{"type": "time", "time": {"tooltipFormat": "DD.MM.YYYY", "unit" : "' . ($sGroupBy == 'month' ? 'month' : 'day') . '"}, "ticks": {"min": "' . $iMinTime . '", "max": "' . $iMaxTime . '", "autoSkip": "true"}, "display": "true", "distribution": "linear"}]}}}';
+        }
+    }
+    
+    public function getSelectedModulesGrowth()
+    {
+        $aModulesList = $this->serviceGetModules();
+        $aModules = array_keys($aModulesList);
+        $sModulesDisabled = explode(',', getParam('bx_charts_chart_growth_modules'));
+        return array(array_diff($aModules, $sModulesDisabled), $aModulesList);
     }
     
     private function getItemName($sString)
@@ -169,6 +357,21 @@ class BxChartsModule extends BxDolModule
             $sString = strmaxtextlen($sString, 50, '...');
         }
         return $sString;
+    }
+    
+    private function getXValueByParams($aValue, $sMode)
+    {
+        switch ($sMode) {
+            case 'date':
+                return strtotime($aValue['period']) * 1000;
+            case 'week':
+                $mixedTime = strtotime("01.01." . $aValue['year'], time());
+                $iDay = date('w', $mixedTime);
+                $mixedTime += ((7 * $aValue['period']) + 1 - $iDay) * 24 * 3600;
+                return $mixedTime * 1000;
+            case 'month':
+                return strtotime('01.' . $aValue['period'] . '.' . $aValue['year']) * 1000;
+        }
     }
 }
 

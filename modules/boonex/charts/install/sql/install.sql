@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS `bx_charts_top_by_likes` (
 CREATE TABLE IF NOT EXISTS `bx_charts_most_active_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
-  `profile_module` varchar(255) NOT NULL,
-  `content_module` varchar(255) NOT NULL,
+  `profile_module` varchar(19) NOT NULL,
+  `content_module` varchar(19) NOT NULL,
   `views_count` int(11) NOT NULL default '0',
   `create_count` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
@@ -21,6 +21,19 @@ CREATE TABLE IF NOT EXISTS `bx_charts_most_active_profiles` (
   INDEX `object_id` (`object_id`),
   INDEX `profile_module` (`profile_module`)
 );
+
+CREATE TABLE IF NOT EXISTS `bx_charts_most_followed_profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `profile_module` varchar(19) NOT NULL,
+  `followers_count` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  INDEX `followers_count` (`followers_count`),
+  INDEX `object_id` (`object_id`),
+  INDEX `profile_module` (`profile_module`)
+);
+
+
 
 -- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
