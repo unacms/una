@@ -92,6 +92,12 @@ class BxChartsDb extends BxBaseModGeneralDb
     }
     
     /* Growth part */
+    public function getStatistic()
+    {
+        return $this->getAll("SELECT * FROM `sys_statistics` WHERE 1 ORDER BY `order`");
+    }
+
+    /* Growth part */
     public function getGrowth($sTableName)
     {
         $iInterval = intval(getParam('bx_charts_chart_growth_interval_day'));
