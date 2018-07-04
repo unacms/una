@@ -27,7 +27,7 @@ class BxChartsDb extends BxBaseModGeneralDb
     public function saveTopByLikes($sModuleName, $sTableName)
     {
         $iInterval = intval(getParam('bx_charts_chart_top_contents_by_likes_interval_day'));
-        $sQuery = "INSERT INTO `" . $this->_sTableTopByLikes . "` (`object_id`, `module`, `value`) SELECT `object_id`,'" . $sModuleName . "', COUNT(`id`) FROM `" . $sTableName . "` WHERE `date` > " . ($iInterval > 0 ? $this->getTimeFromDaysBefore($iInterval) : 0) . " GROUP BY `object_id` ORDER BY  COUNT(`id`) DESC LIMIT 0, " . intval(getParam('bx_charts_chart_top_contents_by_likes_count')) . "";
+        $sQuery = "INSERT INTO `" . $this->_sTableTopByLikes . "` (`object_id`, `module`, `value`) SELECT `object_id`,'" . $sModuleName . "', COUNT(`id`) FROM `" . $sTableName . "` WHERE `date` > " . ($iInterval > 0 ? $this->getTimeFromDaysBefore($iInterval) : 0) . " GROUP BY `object_id` ORDER BY  COUNT(`id`) DESC LIMIT 0, " . intval(getParam('bx_charts_chart_top_contents_by_likes_count'));
         $this->query($sQuery);
     }
     
@@ -77,7 +77,6 @@ class BxChartsDb extends BxBaseModGeneralDb
         $iInterval = intval(getParam('bx_charts_chart_most_followed_profiles_interval_day'));
         $sQuery = "INSERT INTO `" . $this->_sTableMostFollowedProfiles . "` (`object_id`, `profile_module`, `followers_count`)  SELECT `sys_profiles`.`content_id`, `sys_profiles`.`type` , COUNT(`sys_profiles_conn_subscriptions`.`id`) FROM `sys_profiles_conn_subscriptions`
   INNER JOIN `sys_profiles`  ON `sys_profiles`.`id` = `sys_profiles_conn_subscriptions`.`content` WHERE sys_profiles.type='" . $sProfileModuleName . "' AND  `sys_profiles_conn_subscriptions`.`added` > " . ($iInterval > 0 ? $this->getTimeFromDaysBefore($iInterval) : 0) . " GROUP BY `sys_profiles`.`content_id`, `sys_profiles`.`type` ORDER BY COUNT(`sys_profiles_conn_subscriptions`.`id`) DESC LIMIT 0," . intval(getParam('bx_charts_chart_most_followed_profiles_count'));
-        echo  $sQuery.'<hr>';
         $this->query($sQuery);
     }
     
@@ -92,17 +91,11 @@ class BxChartsDb extends BxBaseModGeneralDb
         return $this->getAll("SELECT SUM(`followers_count`) AS followers_count, `object_id`, `profile_module` as `module` FROM `" . $this->_sTableMostFollowedProfiles . "` GROUP BY `object_id`, `module` ORDER BY SUM(`followers_count`) DESC LIMIT 0," . intval(getParam('bx_charts_chart_most_followed_profiles_count')));
     }
     
-    /* Content part */
-    public function getStatistic()
-    {
-        return $this->getAll("SELECT * FROM `sys_statistics` WHERE 1 ORDER BY `order`");
-    }
-
     /* Growth part */
     public function getGrowth($sTableName)
     {
         $iInterval = intval(getParam('bx_charts_chart_growth_interval_day'));
-        $sQuery =  "SELECT " . getParam('bx_charts_chart_growth_group_by') . "(FROM_UNIXTIME(`added`))  AS `period`, YEAR(FROM_UNIXTIME(`added`))  AS `year`,  COUNT(*) AS `count` FROM " . $sTableName . " WHERE `added` > " . ($iInterval > 0 ? $this->getTimeFromDaysBefore($iInterval) : 0) . " GROUP BY `period` ORDER BY `period` ASC";
+        $sQuery =  "SELECT " . getParam('bx_charts_chart_growth_group_by') . "(FROM_UNIXTIME(`added`))  AS `period`, YEAR(FROM_UNIXTIME(`added`))  AS `year`,  COUNT(*) AS `count` FROM " . $sTableName . " WHERE `added` > " . ($iInterval > 0 ? $this->getTimeFromDaysBefore($iInterval) : 0) . " GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
         return $this->getAll($sQuery);
     }
     
@@ -111,11 +104,11 @@ class BxChartsDb extends BxBaseModGeneralDb
         $iInterval = intval(getParam('bx_charts_chart_growth_interval_day'));
         $mixedStartDate = $this->getTimeFromDaysBefore($iInterval);
         
-        $sQuery =  "SELECT  COUNT(*) AS `count` FROM " . $sTableName . " WHERE `added` < " . ($iInterval > 0 ? $mixedStartDate : 0) . "";
+        $sQuery =  "SELECT  COUNT(*) AS `count` FROM " . $sTableName . " WHERE `added` < " . ($iInterval > 0 ? $mixedStartDate : 0);
         $mixedStartValue = $this->getOne($sQuery);
       
         if ($iInterval == 0){
-            $sQuery =  "SELECT  MIN(`added`) as `mindata` FROM " . $sTableName;
+            $sQuery =  "SELECT  MIN(`added`) AS `mindata` FROM " . $sTableName;
             $mixedStartDate = $this->getOne($sQuery);
         }
         return array($mixedStartValue,$mixedStartDate);

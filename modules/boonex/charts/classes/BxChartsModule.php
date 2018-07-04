@@ -198,29 +198,6 @@ class BxChartsModule extends BxDolModule
         return $this->_oTemplate->getChart('MostFollowedProfiles', 40);
     }
     
-     /**
-     * @page service Service Calls
-     * @section bx_charts Charts
-     * @subsection bx_charts-other Other
-     * @subsubsection bx_charts-on-profile get_chart_content_by_modules
-     * 
-     * @code bx_srv('bx_charts', 'get_chart_content_by_modules', [...]); @endcode
-     * 
-     * Get Chart Content By Modules
-     * 
-     * @return an html for chart. 
-     * 
-     * @see BxChartsModule::serviceGetChartContentByModules
-     */
-    /** 
-     * @ref bx_charts-get_chart_content_by_modules "get_chart_content_by_modules"
-     */
-
-    public function serviceGetChartContentByModules()
-    {
-        return $this->_oTemplate->getChart('ContentByModules', 100);
-    }
-    
     /**
      * @page service Service Calls
      * @section bx_charts Charts
@@ -283,29 +260,6 @@ class BxChartsModule extends BxDolModule
                 array_push($aValues['links'], $oModule->serviceGetLink($aValue['object_id']));
             }
             echo  '{"type":"horizontalBar",  "data": {"labels":' . json_encode($aValues['labels']) . ',"datasets": [{"label": "' . _t('_bx_charts_most_followed_profiles_legend') . '","backgroundColor": "' . $this->aColors[0] . '","borderColor": "' . $this->aColors[0] . '","borderWidth": 1,"data": ' . json_encode($aValues['values']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
-        }
-        
-        if ($Id == 'ContentByModules'){
-            $aValues = array('labels' => array(), 'values' => array(), 'colors' => array(), 'links' => array());
-            $aItems = $this->_oDb->getStatistic();
-            foreach($aItems as $aItem) {
-                
-                $iValue = 0;
-                if(!empty($aItem['query']))
-                    $iValue = (int)$this->_oDb->getOne($aItem['query']);
-                else if(BxDolRequest::serviceExists($aItem['module'], 'get_query_statistics'))
-                    $iValue = (int)BxDolService::call($aItem['module'], 'get_query_statistics', array($aItem));
-                
-                $sLink = '';
-                if(!empty($aItem['link']))
-                    $sLink = BxDolPermalinks::getInstance()->permalink($aItem['link']);
-                
-                array_push($aValues['labels'], _t($aItem['title']) . ' - ' . $iValue);
-                array_push($aValues['values'], $iValue);
-                array_push($aValues['links'], $sLink);
-            }
-            $aValues['colors'] = array_slice($this->aColors, 0, count($aValues['values']));
-            echo  '{"type": "doughnut", "data":{"labels":' . json_encode($aValues['labels']) . ',"datasets":[{"data":' . json_encode($aValues['values']) . ',"backgroundColor":' . json_encode($aValues['colors']) . '}]}, "options": {"legend": {"position": "bottom"}}, "links": ' . json_encode($aValues['links']) . '}';
         }
         
         if ($Id == 'GrowthByModules'){
