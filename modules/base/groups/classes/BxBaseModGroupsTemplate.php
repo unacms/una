@@ -25,6 +25,8 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $this->_sUnitClassWithCover .= ' bx-base-groups-unit-with-cover';
         $this->_sUnitClass = $this->_sUnitClassWithCover;
         $this->_sUnitClassWoInfo .= ' bx-base-groups-unit-wo-info'; 
+        $this->_sUnitClassWoInfoShowCase .= ' bx-base-groups-unit-wo-info bx-base-groups-unit-wo-info-showcase';
+        $this->_sUnitClassShowCase .= ' bx-base-groups-unit-with-cover bx-base-groups-unit-showcase';
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
