@@ -104,7 +104,10 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     	if(!isLogged())
     		return '';
 
+    	$oProfile = BxDolProfile::getInstance();
+
 		$sTitle = _t('_sys_page_block_title_create_post_' . (empty($iContextId) ? 'public' : 'context'));
+		$sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
 
     	$oMenu = BxDolMenu::getObjectInstance('sys_create_post');
 
@@ -132,6 +135,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     	return array('content' => BxDolTemplate::getInstance()->parseHtmlByName('create_post_form.html', array(
     		'default' => $sDefault,
     		'title' => $sTitle,
+			'placeholder' => $sPlaceholder,
             'user_thumb' => BxDolProfile::getInstance()->getUnit(0, array('template' => 'unit_wo_info')),
     		'menu' => $oMenu->getCode(),
             'form' => BxDolService::call($sDefault, 'get_create_post_form', array(array('context_id' => $iContextId, 'ajax_mode' => true, 'absolute_action_url' => true))),
