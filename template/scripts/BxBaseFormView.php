@@ -1483,6 +1483,7 @@ BLAH;
                 'timepicker-addon/jquery-ui-timepicker-addon.min.js',
                 'timepicker-addon/jquery-ui-sliderAccess.js',
                 'timepicker-addon/i18n/jquery-ui-timepicker-' . $sCalendarLang . '.js',
+                'jquery.ui.touch-punch.min.js',
             );
 
             foreach ($this->aInputs as $aInput) {
