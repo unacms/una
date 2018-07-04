@@ -75,6 +75,10 @@ BxDolUploaderSimple.prototype.showUploaderForm = function () {
             if ('undefined' !== typeof($this.onBeforeShowPopup))
                 $this.onBeforeShowPopup();
         },
+        onShow: function () {
+            if ('undefined' !== typeof($this.onShowPopup))
+                $this.onShowPopup();
+        },
         closeElement: false,
         closeOnOuterClick: false
     });
@@ -341,19 +345,15 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         BxDolUploaderSimple.prototype.onClickCancel.call(this);
     }
 
-    this.onBeforeShowPopup = function () {
-        this.focusPasteEditor();
+    this.onShowPopup = function () {
+        var $this = this;
+        setTimeout(function () {
+            $this.focusPasteEditor();
+        }, 200);
     }
 
     this.focusPasteEditor = function () {
-        var p = document.getElementById(this._sFocusDivId),
-            s = window.getSelection(),
-            r = document.createRange();
-        p.innerHTML = '\u00a0';
-        r.selectNodeContents(p);
-        s.removeAllRanges();
-        s.addRange(r);
-        document.execCommand('delete', false, null);
+        $('#' + this._sFocusDivId).focus();
     }
 
     this.initPasteEditor = function () {
