@@ -17,6 +17,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     protected $_sUnitClass;
     protected $_sUnitClassWithCover;
     protected $_sUnitClassWoInfo;
+	protected $_sUnitClassWoInfoShowCase;
     protected $_sUnitClassShowCase;
     
     function __construct(&$oConfig, &$oDb)
