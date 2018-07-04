@@ -7,10 +7,22 @@
 }
 
 .fa, .fas, .sys-icon,
-.fab, .sys-icon.fab,
 .far, .sys-icon.far,
 .fal, .sys-icon.fal {
     font-family:'sys-user-fal';
     font-weight:300;
+    font-style:normal;
+}
+
+@font-face {
+    font-family: 'sys-user-fab';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/fa-brands-400.eot");
+    src: url("../fonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../fonts/fa-brands-400.woff2") format("woff2"), url("../fonts/fa-brands-400.woff") format("woff"), url("../fonts/fa-brands-400.ttf") format("truetype"), url("../fonts/fa-brands-400.svg#fontawesome") format("svg"); 
+}
+
+.fab, .sys-icon.fab {
+    font-family:'sys-user-fab';
     font-style:normal;
 }

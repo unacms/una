@@ -423,6 +423,14 @@ abstract class BxDolUploader extends BxDolFactory
         return $oStorage->getMaxUploadFileSize(bx_get_logged_profile_id());
     }
 
+    protected function getAcceptedFilesExtensions ()
+    {
+        $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+        if (!$oStorage)
+            return null;
+        return $oStorage->getAllowedExtensions();
+    }
+    
     protected function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
     {
         return array();

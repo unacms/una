@@ -1234,7 +1234,9 @@
 	<string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
 	<string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
-	<string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
+    <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
+    <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Image width to resize before upload (0 - disable)]]></string>
+    <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Image height to resize before upload (0 - disable)]]></string>
 	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
 	<string name="_adm_stg_err_option_currency_code"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
@@ -2673,7 +2675,11 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_uploader_html5_button_name"><![CDATA[Multiple Upload]]></string>
 	<string name="_sys_uploader_html5_drop_area"><![CDATA[Drag and Drop files here to upload]]></string>
 	<string name="_sys_uploader_html5_shoose_file"><![CDATA[Select a file]]></string>
-	<string name="_sys_uploader_html5_title"><![CDATA[Multiple Upload]]></string>
+    <string name="_sys_uploader_html5_title"><![CDATA[Multiple Upload]]></string>
+    <string name="_sys_uploader_html5_default_message"><![CDATA[Drop files here to upload or click here to select files]]></string>
+    <string name="_sys_uploader_html5_file_is_too_big"><![CDATA[File is too big - {{filesize}} MB, max filesize is {{maxFilesize}} MB.]]></string>
+    <string name="_sys_uploader_html5_number_of_files_exceeded"><![CDATA[You can not upload any more files.]]></string>
+    <string name="_sys_uploader_html5_invalid_file_type"><![CDATA[You can't upload files of this type.]]></string>
 	<string name="_sys_uploader_simple_attach_one_more_file"><![CDATA[+ Add more files]]></string>
 	<string name="_sys_uploader_simple_button_name"><![CDATA[Simple Upload]]></string>
 	<string name="_sys_uploader_simple_submit_button"><![CDATA[Upload]]></string>

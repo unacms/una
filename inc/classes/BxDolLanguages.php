@@ -136,14 +136,18 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
      * @param $sFallbackLanguage - language to return of nothis is found
      * @return language code string
      */
-    function detectLanguageFromArray($aLangs, $sFallbackLanguage = 'en')
+    function detectLanguageFromArray($aLangs, $sFallbackLanguage = 'en', $bLowercase = false)
     {
         if (isset($aLangs[$GLOBALS['sCurrentLanguage']])) {
             return $GLOBALS['sCurrentLanguage'];
         } 
         elseif ($sLangCountry = $this->getLangCountryCode()) {
+            if ($bLowercase)
+                $sLangCountry = strtolower($sLangCountry);
+
             if (isset($aLangs[$sLangCountry]))
                 return $sLangCountry;
+            
             $sLangCountry = str_replace('_', '-', $sLangCountry);
             if (isset($aLangs[$sLangCountry]))
                 return $sLangCountry;            

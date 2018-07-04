@@ -7,7 +7,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 -- OBJECTS: AUTH
 
 INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_facebook', '_bx_facebook_auth_title', 'modules/?r=facebook_connect/login_form', 'facebook-square');
+('bx_facebook', '_bx_facebook_auth_title', 'modules/?r=facebook_connect/login_form', 'fab facebook-square');
 
 -- ALERTS
 

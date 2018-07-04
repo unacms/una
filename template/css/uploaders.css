@@ -37,35 +37,17 @@
 
 /* html5 uploader */
 
-.bx-uploader-html5 { }
-
 .bx-uploader-html5-drop-area { 
     width:auto;
-    height:200px;
-    
-    line-height:200px; 
-    text-align:center;
-
-    border:5px dashed #ccc;
+    height:12rem;
+    overflow-y:scroll;
 }
-
-.bx-uploader-html5-drop-area-active { border-color:#999; }
-
-.bx-uploader-html5-list { padding:0; list-style:none; }
-.bx-uploader-html5-list li { margin:0; padding:0; line-height:15px; }
-.bx-uploader-html5-file, .bx-uploader-html5-spinner, .bx-uploader-html5-size, .bx-uploader-html5-cancel, .bx-uploader-html5-failed-text {
-    margin-right: 7px;
+.bx-uploader-html5-drop-area.dropzone .dz-message {
+    margin:3.5em 0;
 }
-
-.bx-uploader-html5-file {}
-.bx-uploader-html5-spinner { display:inline-block; background: url("../images/loading-spinner.gif"); width:15px; height:15px; vertical-align:text-bottom; }
-.bx-uploader-html5-size, .bx-uploader-html5-cancel {}
-
-.bx-uploader-html5-failed-text { display:none; }
-.bx-uploader-html5-fail .bx-uploader-html5-failed-text { display:inline; }
-
-.bx-uploader-html5-button input {
-    height:38px;
+.bx-uploader-html5-errors-area {
+    max-height:2.75rem;
+    overflow-y:scroll;
 }
 
 /* crop uploader */

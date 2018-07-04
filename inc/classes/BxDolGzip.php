@@ -24,7 +24,7 @@ class BxDolGzip extends BxDol
     {
         parent::__construct();
 
-        $this->_iExpirationOffset = 3600 * 24 * 10;
+        $this->_iExpirationOffset = 3600 * 24 * 30;
 
         $this->_sInFile = BX_DIRECTORY_PATH_CACHE_PUBLIC . $sFile;
         $this->_sOutFile = BX_DIRECTORY_PATH_CACHE_PUBLIC . $sFile . '.gz';
@@ -59,7 +59,7 @@ class BxDolGzip extends BxDol
     {
         header("Content-type: text/" . $this->_sType);
         header("Vary: Accept-Encoding");
-        header("Expires: " . gmdate("D, d M Y H:i:s", time() + $this->_iExpirationOffset) . " GMT");
+        header("Cache-control: max-age=" . $this->_iExpirationOffset . ", public");
 
         $encodings = array ();
         if (isset($_SERVER['HTTP_ACCEPT_ENCODING']))

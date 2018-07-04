@@ -782,6 +782,16 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * @return list of allowed extensions, if ext_mode = 'allow-deny', returns false otherwise.
+     */
+    public function getAllowedExtensions ()
+    {
+        if ('allow-deny' == $this->_aObject['ext_mode'])
+            return _t_format_extensions($this->_aObject['ext_allow']);
+        return null;
+    }
+    
+    /**
      * Get readable representation of restrictions by file size.
      * @param $iProfileId profile id
      * @return string

@@ -57,7 +57,7 @@ BxDolUploaderSimple.prototype.getCurrentFilesCount = function () {
     return $('#' + $this._sResultContainerId + ' .bx-uploader-ghost').length;
 }
 
-BxDolUploaderSimple.prototype.showUploaderForm = function () {    
+BxDolUploaderSimple.prototype.showUploaderForm = function () {
     var $this = this;
     var sUrl = this._getUrlWithStandardParams() + '&a=show_uploader_form&m=' + (this._isMultiple ? 1 : 0) + '&c=' + this._iContentId + '&p=' + this._isPrivate + '&_t=' + escape(new Date());
 
@@ -72,6 +72,8 @@ BxDolUploaderSimple.prototype.showUploaderForm = function () {
             $('#' + $this._sPopupContainerId + ' .bx-popup-element-close').click(function() {
                 $this.onClickCancel();
             });
+            if ('undefined' !== typeof($this.onBeforeShowPopup))
+                $this.onBeforeShowPopup();
         },
         closeElement: false,
         closeOnOuterClick: false
@@ -245,7 +247,9 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
     this._sIframeId = 'bx-form-input-files-' + sUniqId + '-iframe';
     this._eForm = null;    
 
-    this._sDivId = 'bx-form-input-files-' + sUniqId + '-div-' + this._sUploaderObject;    
+    this._sDivId = 'bx-form-input-files-' + sUniqId + '-div-' + this._sUploaderObject;
+
+    this._sFocusDivId = 'bx-form-input-files-' + sUniqId + '-focus-' + this._sUploaderObject;
 
     this._uploader = null;
 
@@ -284,9 +288,24 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 total: uploadProgress
             });
         });
-        this._uploader.on('error', function (oFile, sErrorMsg) {
-            $this._showError(sErrorMsg, true); 
+        this._uploader.on('success', function (oFile, sJSON) {
+            var o = null;
+            try {
+                o = JSON.parse(sJSON);
+            } 
+            catch (e) {}
+
+            if (o && 'undefined' !== typeof(o.error)) {
+                $this._uploader.removeFile(oFile);
+                $this._showError(o.error, true);
+            }
         });
+        this._uploader.on('error', function (oFile, sErrorMsg) {
+            $this._uploader.removeFile(oFile);
+            $this._showError(sErrorMsg, true);
+        });
+
+        this.initPasteEditor();
     }
 
     this.onUploadCompleted = function (sErrorMsg) {        
@@ -316,6 +335,43 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
 
     }
 
+    this.onClickCancel = function () {
+        this._uploader.removeAllFiles(true);
+        BxDolUploaderSimple.prototype._clearErrors.call(this);
+        BxDolUploaderSimple.prototype.onClickCancel.call(this);
+    }
+
+    this.onBeforeShowPopup = function () {
+        this.focusPasteEditor();
+    }
+
+    this.focusPasteEditor = function () {
+        var p = document.getElementById(this._sFocusDivId),
+            s = window.getSelection(),
+            r = document.createRange();
+        p.innerHTML = '\u00a0';
+        r.selectNodeContents(p);
+        s.removeAllRanges();
+        s.addRange(r);
+        document.execCommand('delete', false, null);
+    }
+
+    this.initPasteEditor = function () {
+        var $this = this;
+        $('#' + this._sFocusDivId).on('paste', function (e) {
+            var aFiles = [];
+            if (e.type == 'paste') {
+                var aItems = (e.clipboardData || e.originalEvent.clipboardData).items;
+                
+                for (var i in aItems) {
+                    var oItem = aItems[i];
+                    if (oItem.kind === 'file')
+                        aFiles.push(oItem.getAsFile());
+                }
+                $this._uploader.handleFiles(aFiles);
+            }
+        });
+    }
 }
 
 BxDolUploaderHTML5.prototype = BxDolUploaderSimple.prototype;

@@ -22,6 +22,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
         $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['object'];
+        $this->_sFocusDivId = 'bx-form-input-files-' . $sUniqId . '-focus-' . $this->_aObject['object'];
         $this->_sButtonTemplate = 'uploader_button_html5.html';
     }
 
@@ -56,15 +57,23 @@ class BxBaseUploaderHTML5 extends BxDolUploader
      */
     public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
+        $iResizeWidth = (int)getParam('client_image_resize_width');
+        $iResizeHeight = (int)getParam('client_image_resize_height');
+        $sAcceptedFiles = $this->getAcceptedFilesExtensions();
         return $this->_oTemplate->parseHtmlByName($this->_sUploaderFormTemplate, array(
             'form_container_id' => $this->_sFormContainerId,
             'errors_container_id' => $this->_sErrorsContainerId,
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
             'restrictions_text' => $this->getRestrictionsText(),
             'div_id' => $this->_sDivId,
+            'focus_div_id' => $this->_sFocusDivId,
             'content_id' => $iContentId,
             'storage_private' => $isPrivate,
             'max_file_size' => $this->getMaxUploadFileSize(),
+            'accepted_files' => null === $sAcceptedFiles ? 'null' : "'" . bx_js_string($sAcceptedFiles) . "'",
+            'resize_width' => $iResizeWidth ? $iResizeWidth : 'null',
+            'resize_height' => $iResizeHeight ? $iResizeHeight : 'null',
+            'resize_method' => $iResizeWidth && $iResizeHeight ? "'contain'" : 'null',
         ));
     }
 
