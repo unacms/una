@@ -49,6 +49,13 @@
     max-height:2.75rem;
     overflow-y:scroll;
 }
+.bx-uploader-html5-paste-catcher {
+    width:0; 
+    height:0;
+    border:none;
+    margin:0;
+    padding:0;
+}
 
 /* crop uploader */
 

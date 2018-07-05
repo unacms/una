@@ -662,7 +662,7 @@
     };
 
     $.fn._dolPopupSetPosition = function(options) {
-
+        
         var o = $.extend({}, $.fn.dolPopupDefaultOptions, options);
 
         if (undefined != o.pointer && false != o.pointer)
@@ -689,7 +689,7 @@
                     of: ePointAt,
                     my: o.pointer.align + '+' + parseInt(aOffset[0]) + ' top+' + yOffset + '+' + parseInt(aOffset[1] - 0),
                     at: o.pointer.align + ' bottom',
-                    collision: 'flip none'
+                    collision: 'fit none'
                 });
 
                 $el.find('.bx-popup-box-pointer').css('display', 'block').position({
