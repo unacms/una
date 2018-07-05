@@ -25,11 +25,18 @@ BxCharts.prototype.loadData = function () {
     var oGraph = $('.' + this._sKeyGraph);
     var oGraphWrp = oGraph.parents('div:first');
     var oGraphErr = oGraphWrp.find('.bx-chart-growth-graph-error').hide();
+    var sAdditionalParameters = "";
+    if ($('.bx_chart_growth_selector_' + this._sChartName).length > 0) {
+        sAdditionalParameters = '?m=' + $('.bx_chart_growth_selector_' + this._sChartName).val();
+        $('.bx_chart_growth_selector_' + this._sChartName).change(function () {
+            $this.loadData();
+        });
+    }
 
     bx_loading(oGraphWrp, true);
 
     $.get(
-    	this._sActionsUri + 'get_chart_data/' + $this._sChartName + '/',
+    	this._sActionsUri + 'get_chart_data/' + $this._sChartName + '/' + sAdditionalParameters +'',
     	{
     	},
     	function (oData) {
@@ -46,10 +53,23 @@ BxCharts.prototype.loadData = function () {
     	    if (oData.links) {
     	        Chart.defaults.doughnut.legend.onClick = function (e, legendItem) {
     	            var iIndex = $this._oChart.data.datasets[0].backgroundColor.indexOf(legendItem.fillStyle);
-    	            if (iIndex && oData.links[iIndex]) {
+    	            if (iIndex && oData.links[iIndex] && oData.links[iIndex] != "") {
     	                location.href = oData.links[iIndex];
     	            }
     	        };
+    	    }
+
+    	    Chart.defaults.doughnut.tooltips.callbacks.label = function (tooltipItem, data) {
+    	        return data.labels[tooltipItem.index];
+    	    };
+
+    	    Chart.defaults.global.layout  = {
+    	        padding: {
+    	                left: 40,
+    	                right: 40,
+    	                top: 40,
+    	                bottom: 20
+    	        }
     	    }
 
     	    var oDataForChart = oData.data || false;
@@ -67,15 +87,16 @@ BxCharts.prototype.loadData = function () {
     	        oGraph.click(function (evt) {
     	            var activePoint = $this._oChart.getElementAtEvent(evt)[0];
     	            if (activePoint) {
-    	                var data = activePoint._chart.data;
-    	                var datasetIndex = activePoint._datasetIndex;
-    	                var label = data.datasets[datasetIndex].label;
-    	                var value = data.datasets[datasetIndex].data[activePoint._index];
-    	                location.href = oData.links[activePoint._index];
+    	                var oDataChart = activePoint._chart.data;
+    	                var iDatasetIndex = activePoint._datasetIndex;
+    	                var sLabel = oDataChart.datasets[iDatasetIndex].label;
+    	                var sValue = oDataChart.datasets[iDatasetIndex].data[activePoint._index];
+    	                var sLink = oData.links[activePoint._index];
+    	                if (sLink != "")
+    	                    location.href = sLink;
     	            }
     	        });
     	    }
-
     	},
     	'json'
     );

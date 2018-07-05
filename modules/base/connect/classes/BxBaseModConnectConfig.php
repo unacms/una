@@ -28,7 +28,7 @@ class BxBaseModConnectConfig extends BxBaseModGeneralConfig
     {
         parent::__construct($aModule);
 
-        $this->sDefaultRedirectUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=dashboard');
+        $this->sDefaultRedirectUrl = BX_DOL_URL_ROOT;
     }
 }
 

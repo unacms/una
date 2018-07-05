@@ -26,6 +26,7 @@ class BxChartsCron extends BxDolCron
     {
         $this->processingTopByLikes();
         $this->processingMostActiveProfiles();
+        $this->processingMostFollowedProfiles();
     }
     
     function processingTopByLikes()
@@ -41,7 +42,7 @@ class BxChartsCron extends BxDolCron
                 $sSystem = $oModule->_oConfig->CNF['OBJECT_VOTES'];
                 if(empty($sSystem))
                     continue;
-                $this->_oModule->_oDb->saveTopByLikes($sModule, $aSystems[$sSystem]['table_main']);
+                $this->_oModule->_oDb->saveTopByLikes($sModule, $aSystems[$sSystem]['table_track']);
             }
         }
     }
@@ -83,6 +84,15 @@ class BxChartsCron extends BxDolCron
                     continue;
                 $this->_oModule->_oDb->saveMostActiveProfiles_View($sProfileModule, $aSystems[$sSystem]['table_track']);
             }
+        }
+    }
+    
+    function processingMostFollowedProfiles()
+    {
+        $this->_oModule->_oDb->clearMostFollowedProfiles();
+        $aModules = array_keys($this->_oModule->serviceGetProfileModules());
+        foreach($aModules as $sProfileModule){
+            $this->_oModule->_oDb->saveMostFollowedProfiles($sProfileModule);
         }
     }
 }
