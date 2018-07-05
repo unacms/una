@@ -10,6 +10,7 @@
 
 function BxAttendantPopupWithRecommendedOnProfileAdd(oOptions) {
     this._sContainerId = oOptions.sContainerId == undefined ? 'oBxAttendantPopupWithRecommendedOnProfileAdd' : oOptions.sContainerId;
+    this._sUrlAfterShow = oOptions.sUrlAfterShow == undefined ? '' : oOptions.sUrlAfterShow;
     var $this = this;
     $(document).ready(function () {
         $this.init();
@@ -26,6 +27,9 @@ BxAttendantPopupWithRecommendedOnProfileAdd.prototype.init = function () {
         $this.ReInitFlickity();
         if (!$oNext.length) {
             $('#' + $this._sContainerId).dolPopupHide();
+            if ($this._sUrlAfterShow != '') {
+                location.href = $this._sUrlAfterShow;
+            }
         }
     });
 }

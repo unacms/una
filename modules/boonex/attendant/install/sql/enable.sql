@@ -13,7 +13,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
 (@iCategoryId, 'bx_attendant_on_profile_creation_modules', '_bx_attendant_adm_stg_on_profile_creation_modules_list', '', 'list', 'a:2:{s:6:"module";s:12:"bx_attendant";s:6:"method";s:19:"get_profile_modules";}', '', '', '', 1),
-(@iCategoryId, 'bx_attendant_on_profile_event_list', '_bx_attendant_adm_stg_on_profile_creation_event_list', 'confirmation', 'select', 'a:2:{s:6:"module";s:12:"bx_attendant";s:6:"method";s:40:"get_popup_with_recommended_on_event_show";}', '', '', '', 2);
+(@iCategoryId, 'bx_attendant_on_profile_event_list', '_bx_attendant_adm_stg_on_profile_creation_event_list', 'confirmation', 'select', 'a:2:{s:6:"module";s:12:"bx_attendant";s:6:"method";s:40:"get_popup_with_recommended_on_event_show";}', '', '', '', 2),
+(@iCategoryId, 'bx_attendant_on_profile_after_action_url', '_bx_attendant_adm_stg_on_profile_after_action_url', '', 'digit', '', '', '', '', 3);
 
 -- INJECTION
 INSERT INTO `sys_injections`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES

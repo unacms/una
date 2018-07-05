@@ -143,7 +143,7 @@ class BxAttendantModule extends BxDolModule
                     $aTmp = BxDolService::call($sModuleName, BX_ATTENDANT_ON_PROFILE_CREATION_METHOD, array('unit_view' => 'showcase', 'empty_message' => false, "ajax_paginate" => false));
                     if (isset($aTmp['content'])){
                         $sTmp = $aTmp['content'];
-                        $sTmp = str_replace("bx_conn_action", 'bx_attendant_conn_action', $sTmp);
+                        $sTmp = str_replace('bx_conn_action', 'bx_attendant_conn_action', $sTmp);
                         $aModulteData[$sModuleName] = $sTmp;
                     }
                 }

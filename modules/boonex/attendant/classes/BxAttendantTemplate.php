@@ -35,7 +35,8 @@ class BxAttendantTemplate extends BxBaseModGeneralTemplate
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
         $aParams = array_merge(array(
-            'sContainerId' => $this->sContainerId
+            'sContainerId' => $this->sContainerId,
+            'sUrlAfterShow' => getParam('bx_attendant_on_profile_after_action_url')
         ), $aParams);
         
         return parent::getJsCode($sType, $aParams, $bWrap);
