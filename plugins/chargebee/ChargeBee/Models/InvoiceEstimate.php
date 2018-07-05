@@ -4,7 +4,7 @@ class ChargeBee_InvoiceEstimate extends ChargeBee_Model
 {
 
   protected $allowed = array('recurring', 'priceType', 'currencyCode', 'subTotal', 'total', 'creditsApplied',
-'amountPaid', 'amountDue', 'lineItems', 'discounts', 'taxes', 'lineItemTaxes');
+'amountPaid', 'amountDue', 'lineItems', 'discounts', 'taxes', 'lineItemTaxes', 'lineItemDiscounts','roundOffAmount');
 
 
 

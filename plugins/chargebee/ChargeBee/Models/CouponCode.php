@@ -3,7 +3,7 @@
 class ChargeBee_CouponCode extends ChargeBee_Model
 {
 
-  protected $allowed = array('code', 'status', 'couponId', 'couponSetName'
+  protected $allowed = array('code', 'status', 'couponId', 'couponSetId', 'couponSetName'
 );
 
 

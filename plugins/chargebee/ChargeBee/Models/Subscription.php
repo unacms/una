@@ -4,7 +4,7 @@ class ChargeBee_Subscription extends ChargeBee_Model
 {
 
   protected $allowed = array('id', 'customerId', 'currencyCode', 'planId', 'planQuantity', 'planUnitPrice',
-'setupFee', 'billingPeriod', 'billingPeriodUnit', 'planFreeQuantity', 'status', 'startDate','trialStart', 'trialEnd', 'currentTermStart', 'currentTermEnd', 'nextBillingAt', 'remainingBillingCycles','poNumber', 'createdAt', 'startedAt', 'activatedAt', 'cancelledAt', 'cancelReason', 'affiliateToken','createdFromIp', 'resourceVersion', 'updatedAt', 'hasScheduledChanges', 'dueInvoicesCount','dueSince', 'totalDues', 'mrr', 'exchangeRate', 'baseCurrencyCode', 'addons', 'coupon', 'coupons','shippingAddress', 'invoiceNotes', 'metaData', 'deleted');
+'setupFee', 'billingPeriod', 'billingPeriodUnit', 'planFreeQuantity', 'status', 'startDate','trialStart', 'trialEnd', 'currentTermStart', 'currentTermEnd', 'nextBillingAt', 'remainingBillingCycles','poNumber', 'createdAt', 'startedAt', 'activatedAt', 'pauseDate', 'resumeDate', 'cancelledAt','cancelReason', 'affiliateToken', 'createdFromIp', 'resourceVersion', 'updatedAt', 'hasScheduledChanges','paymentSourceId', 'autoCollection', 'dueInvoicesCount', 'dueSince', 'totalDues', 'mrr', 'exchangeRate','baseCurrencyCode', 'addons', 'coupon', 'coupons', 'shippingAddress', 'referralInfo', 'invoiceNotes','metaData', 'deleted');
 
 
 
@@ -101,9 +101,34 @@ class ChargeBee_Subscription extends ChargeBee_Model
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"import_subscription"), $params, $env, $headers);
   }
 
+  public static function overrideBillingProfile($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"override_billing_profile"), $params, $env, $headers);
+  }
+
   public static function delete($id, $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"delete"), array(), $env, $headers);
+  }
+
+  public static function pause($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"pause"), $params, $env, $headers);
+  }
+
+  public static function resume($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"resume"), $params, $env, $headers);
+  }
+
+  public static function removeScheduledPause($id, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"remove_scheduled_pause"), array(), $env, $headers);
+  }
+
+  public static function removeScheduledResumption($id, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"remove_scheduled_resumption"), array(), $env, $headers);
   }
 
  }

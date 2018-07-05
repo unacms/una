@@ -1472,9 +1472,7 @@ BLAH;
             $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
 
             $aJs = array(
-                'jquery-ui/jquery-ui.custom.min.js',
-
-                'jquery.webForms.js',
+                'jquery-ui/jquery-ui.custom.min.js',                
 
                 'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
 
@@ -1484,6 +1482,8 @@ BLAH;
                 'timepicker-addon/jquery-ui-sliderAccess.js',
                 'timepicker-addon/i18n/jquery-ui-timepicker-' . $sCalendarLang . '.js',
                 'jquery.ui.touch-punch.min.js',
+
+                'jquery.webForms.js',
             );
 
             foreach ($this->aInputs as $aInput) {

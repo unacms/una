@@ -88,6 +88,10 @@ class ChargeBee_ListResult implements Countable, ArrayAccess, Iterator
       }
   }
 
+  public function toJson() {
+       return json_encode($this->response);
+  }
+
 
 }
 

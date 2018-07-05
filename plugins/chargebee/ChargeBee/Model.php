@@ -103,7 +103,7 @@ class ChargeBee_Model
     return true;
   }
 
-	private function _load()
+	public function _load()
 	{
 		foreach($this->_values as $k => $v) 
 		{

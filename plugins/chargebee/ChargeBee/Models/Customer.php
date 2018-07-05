@@ -4,7 +4,7 @@ class ChargeBee_Customer extends ChargeBee_Model
 {
 
   protected $allowed = array('id', 'firstName', 'lastName', 'email', 'phone', 'company', 'vatNumber', 'autoCollection',
-'netTermDays', 'allowDirectDebit', 'createdAt', 'createdFromIp', 'taxability', 'entityCode','exemptNumber', 'resourceVersion', 'updatedAt', 'locale', 'cardStatus', 'fraudFlag', 'billingAddress','contacts', 'paymentMethod', 'invoiceNotes', 'preferredCurrencyCode', 'promotionalCredits','refundableCredits', 'excessPayments', 'metaData', 'deleted');
+'netTermDays', 'allowDirectDebit', 'createdAt', 'createdFromIp', 'taxability', 'entityCode','exemptNumber', 'resourceVersion', 'updatedAt', 'locale', 'consolidatedInvoicing', 'billingDate','billingDateMode', 'billingDayOfWeek', 'billingDayOfWeekMode', 'cardStatus', 'fraudFlag', 'primaryPaymentSourceId','backupPaymentSourceId', 'billingAddress', 'referralUrls', 'contacts', 'paymentMethod', 'invoiceNotes','preferredCurrencyCode', 'promotionalCredits', 'unbilledCharges', 'refundableCredits', 'excessPayments','balances', 'metaData', 'deleted', 'registeredForGst');
 
 
 
@@ -39,6 +39,16 @@ class ChargeBee_Customer extends ChargeBee_Model
   public static function updateBillingInfo($id, $params = array(), $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"update_billing_info"), $params, $env, $headers);
+  }
+
+  public static function contactsForCustomer($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("customers",$id,"contacts"), $params, $env, $headers);
+  }
+
+  public static function assignPaymentRole($id, $params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"assign_payment_role"), $params, $env, $headers);
   }
 
   public static function addContact($id, $params, $env = null, $headers = array())
@@ -76,9 +86,24 @@ class ChargeBee_Customer extends ChargeBee_Model
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"record_excess_payment"), $params, $env, $headers);
   }
 
+  public static function collectPayment($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"collect_payment"), $params, $env, $headers);
+  }
+
   public static function delete($id, $params = array(), $env = null, $headers = array())
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"delete"), $params, $env, $headers);
+  }
+
+  public static function move($params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers","move"), $params, $env, $headers);
+  }
+
+  public static function changeBillingDate($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("customers",$id,"change_billing_date"), $params, $env, $headers);
   }
 
  }
