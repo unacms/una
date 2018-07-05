@@ -35,7 +35,12 @@ class BxEventsTemplate extends BxBaseModGroupsTemplate
             $aVars['bx_if:info']['content']['members'] = $oDateStart->format(getParam('bx_events_short_date_format'));
         }
 
-        return $aVars;
+        return array_merge($aVars, array(
+			'date_start' => $aData['date_start'],
+			'date_start_f' => date('j M', $aData['date_start']),
+			'date_end' => $aData['date_end'],
+			'date_end_f' => date('j M', $aData['date_end']),
+        ));
     }
 }
 
