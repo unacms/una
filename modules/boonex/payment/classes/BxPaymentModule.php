@@ -651,11 +651,15 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 		$aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
 		$bTypeRecurring = $aPending['type'] == BX_PAYMENT_TYPE_RECURRING;
-		if($bTypeRecurring)
-		    $this->registerSubscription($aPending, array(
+		if($bTypeRecurring) {
+			$aSubscription = array(
 		        'customer_id' => $aResult['customer_id'], 
 		    	'subscription_id' => $aResult['subscription_id']
-		    ));
+		    );
+
+		    if(!$this->registerSubscription($aPending, $aSubscription))
+		    	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_already_registered');
+		}
 
 		$this->onPaymentRegisterBefore($aPending);
 
@@ -909,13 +913,20 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 	public function registerSubscription($aPending, $aParams = array())
 	{
-	    $this->_oDb->insertSubscription(array(
+		if($this->_oDb->isSubscriptionByPending($aPending['id']))
+			return false;
+
+		$aSubscription = array(
 	        'pending_id' => $aPending['id'],
 	        'customer_id' => $aParams['customer_id'],
 	        'subscription_id' => $aParams['subscription_id']
-	    ));
+	    );
+	    if(!$this->_oDb->insertSubscription($aSubscription))
+	    	return false;
 
 	    $this->onSubscriptionCreate($aPending);
+
+	    return true;
 	}
 
 	public function updateSubscription($aPending, $aParams = array())

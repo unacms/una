@@ -426,12 +426,22 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
+    public function isSubscriptionByPending($iPending)
+    {
+    	$aSubscription = $this->getSubscription(array(
+    		'type' => 'pending_id', 
+    		'pending_id' => $iPending
+    	));
+
+    	return !empty($aSubscription) && is_array($aSubscription);
+    }
+
     public function insertSubscription($aValues)
     {
         if(empty($aValues) || !is_array($aValues))
             return false;
 
-        return $this->query("INSERT INTO `" . $this->_sPrefix . "subscriptions` SET " . $this->arrayToSQL($aValues) . ", `date`=UNIX_TIMESTAMP()");
+        return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "subscriptions` SET " . $this->arrayToSQL($aValues) . ", `date`=UNIX_TIMESTAMP()") > 0;
     }
 
 	public function updateSubscription($aValues, $aWhere)

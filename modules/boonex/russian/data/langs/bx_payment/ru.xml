@@ -221,6 +221,7 @@
 	<string name="_bx_payment_err_cannot_perform"><![CDATA[Действие не может быть выполнено. Свяжитесь с нами.]]></string>
 	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Указано неправильное количество.]]></string>
 	<string name="_bx_payment_err_already_processed"><![CDATA[Этот платеж уже обработан.]]></string>
+	<string name="_bx_payment_err_already_registered"><![CDATA[Подписка с аналогичными данными уже была зарегистрирована.]]></string>
 
 	<!-- Other -->
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[В корзину]]></string>

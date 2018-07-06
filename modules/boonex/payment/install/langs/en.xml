@@ -221,6 +221,7 @@
 	<string name="_bx_payment_err_cannot_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
 	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Incorrect quantity specified.]]></string>
 	<string name="_bx_payment_err_already_processed"><![CDATA[This payment has already processed.]]></string>
+	<string name="_bx_payment_err_already_registered"><![CDATA[Subscription with the same data was already registered.]]></string>
 
 	<!-- Other -->
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[Add to Cart]]></string>
