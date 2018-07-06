@@ -22,7 +22,7 @@ class BxDolPreloaderQuery extends BxDolDb
         $sKey = 'bx_dol_cache_memory_preloader_entries';
 
         if(!isset($GLOBALS[$sKey]))
-            $GLOBALS[$sKey] = $this->fromCache('sys_preloader_entries', 'getAll', "SELECT * FROM `sys_preloader` WHERE `active`='1'");
+            $GLOBALS[$sKey] = $this->fromCache('sys_preloader_entries', 'getAll', "SELECT * FROM `sys_preloader` WHERE `active`='1' ORDER BY `type`, `order`");
 
         return $GLOBALS[$sKey];
     }

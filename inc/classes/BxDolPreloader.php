@@ -44,7 +44,7 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
             BX_PRELOADER_TYPE_JS_IMAGE => ''
         );
         foreach($this->_aTypes as $sType => $sValue)
-            $this->_aTypes[$sType] = bx_gen_method_name('add_' . $sType);
+            $this->_aTypes[$sType] = 'add' . bx_gen_method_name($sType);
 
         $this->_aMarkers = array(
             'dir_plugins_public' => BX_DIRECTORY_PATH_PLUGINS_PUBLIC
@@ -70,34 +70,27 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
     	$bStudio = $oTemplateSystem instanceof BxDolStudioTemplate;
     	$aTypesAvail = array_keys($this->_aTypes);
 
-        $aLoader = array();
         foreach($this->_aEntries as $aEntry) {
             $sType = $aEntry['type'];
             if(!in_array($sType, $aTypesAvail))
                 continue;
 
-            $sModule = $aEntry['module'];
-            $aLoader[$sModule][$sType][] = bx_replace_markers($aEntry['content'], $this->_aMarkers);
-        }
-
-        foreach($aLoader as $sModule => $aTypes) {
             $sLocKey = '';
             $bLocRemove = false;
             $bLocRemoveJs = false;
 
-            $bModule = $sModule != 'system';
-            $oModule = $bModule ? BxDolModule::getInstance($sModule) : null;
+            $bModule = $aEntry['module'] != 'system';
+            $oModule = $bModule ? BxDolModule::getInstance($aEntry['module']) : null;
             if($bModule && !$oModule)
-                continue;
+            	continue;
 
-            $oTemplate = null;
+            $sMethod = $this->_aTypes[($bStudio && $bModule ? 'studio_' : '') . $sType];
+            $sContent = bx_replace_markers($aEntry['content'], $this->_aMarkers);
+
             if($bModule)
-                $oTemplate = &$oModule->_oTemplate;
-            else 
-                $oTemplate = &$oTemplateSystem;
-
-            foreach($aTypes as $sType => $aEntries)
-				$oTemplate->{$this->_aTypes[($bStudio && $bModule ? 'studio_' : '') . $sType]}($aEntries);
+            	$oModule->_oTemplate->$sMethod($sContent);
+            else
+            	$oTemplateSystem->$sMethod($sContent);
         }
     }
 }
