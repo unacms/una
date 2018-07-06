@@ -104,7 +104,7 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
             }
 
             $sIcon = $this->getIcon($aWidget);
-            $bIcon = strpos($sIcon, '.') === false;
+            $bIcon = strpos($sIcon, '.') === false && strcmp(substr($sIcon, 0, 10), 'data:image') != 0;
 
             $sNotices = !empty($this->aWidgetsNotices[$aWidget['id']]) ? $this->aWidgetsNotices[$aWidget['id']] : '';
 

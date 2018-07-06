@@ -110,7 +110,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         $aTmplVarsTemplates = array ();
         foreach($aTemplates as $sUri => $aTemplate) {
         	$sIcon = $this->getModuleIcon($aTemplate, 'store');
-	        $bIcon = strpos($sIcon, '.') === false;
+	        $bIcon = strpos($sIcon, '.') === false && strcmp(substr($sIcon, 0, 10), 'data:image') != 0;
 
             $aTmplVarsTemplates[] = array(
                 'uri' => $sUri,

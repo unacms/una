@@ -951,6 +951,29 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get image MIME type.
+     * 
+     * @param string $sExtension - image file's extension.
+     * @return string with MIME type. 
+     */
+    function getImageMimeType($sExtension)
+    {
+    	$sExtension = strtolower($sExtension);
+    
+    	$sResult = '';
+    	switch($sExtension) {
+    		case 'svg':
+    			$sResult = 'svg+xml';
+    			break;
+    
+    		default:
+    			$sResult = $sExtension;
+    	}
+    
+    	return 'data:image/' . $sResult;
+    }
+
+    /**
      * Get icon template in dependence of a value, provided in $mixedId.
      * 
      * @param  mixed $mixedId numeric id from Storage, string with template's file name or string with font icon.
@@ -2475,11 +2498,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $iFileSize = 0;
         if($this->_bImagesInline && ($iFileSize = filesize($sPath)) !== false && $iFileSize < $this->_iImagesMaxSize) {
             $aFileInfo = pathinfo($sPath);
-            return "data:image/" . strtolower($aFileInfo['extension']) . ";base64," . base64_encode(file_get_contents($sPath));
+            return $this->getImageMimeType($aFileInfo['extension']) . ";base64," . base64_encode(file_get_contents($sPath));
         }
 
         return false;
     }
+
     /**
      * Get file name where the template would be cached.
      *
