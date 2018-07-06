@@ -23,14 +23,16 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
     {
     	$this->MODULE = 'bx_payment';
 
-        parent::__construct($aConfig);
+        parent::__construct($aConfig);        
+    }
 
-        $this->_bRedirectOnResult = false;
+    public function setOptions($aOptions)
+    {
+    	parent::setOptions($aOptions);
+
+    	$this->_iMode = (int)$this->getOption('mode');
+        $this->_bCheckAmount = $this->getOption('check_amount') == 'on';
         $this->_bUseSsl = $this->getOption('ssl') == 'on';
-        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';        
-
-        $this->_iMode = (int)$this->getOption('mode');
-        $this->_bCheckAmount = false; // Disabled for easier processing of discounted subscriptions.
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo)

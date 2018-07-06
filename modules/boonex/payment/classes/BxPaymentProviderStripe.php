@@ -1,4 +1,5 @@
-<?php defined('BX_DOL') or die('hack attempt');
+<?php use Twilio\Rest\Accounts\V1\Credential\PublicKeyContext;
+defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
@@ -44,12 +45,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         $this->_sFormCard = 'bx_payment_form_strp_card';
         $this->_sFormDisplayCardAdd = 'bx_payment_form_strp_card_add';
 
-        $this->_bRedirectOnResult = false;
-        $this->_iMode = (int)$this->getOption('mode');
-        $this->_bCheckAmount = $this->getOption('check_amount') == 'on'; 
-        $this->_bUseSsl = $this->getOption('ssl') == 'on';
         $this->_bProrate = false;
-        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
 
         $this->_aIncludeJs = array(
         	'https://checkout.stripe.com/checkout.js',
@@ -63,6 +59,15 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         $this->_oCustomer = null;
 
         \Stripe\Stripe::setApiKey($this->_getSecretKey());
+    }
+
+    public function setOptions($aOptions)
+    {
+    	parent::setOptions($aOptions);
+
+    	$this->_iMode = (int)$this->getOption('mode');
+    	$this->_bCheckAmount = $this->getOption('check_amount') == 'on';
+    	$this->_bUseSsl = $this->getOption('ssl') == 'on';
     }
 
 	public function addJsCss()

@@ -164,9 +164,10 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 4),
 (@iProviderId, 'cbee_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 5),
 (@iProviderId, 'cbee_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 6),
-(@iProviderId, 'cbee_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 7),
-(@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 8),
-(@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 9);
+(@iProviderId, 'cbee_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 7),
+(@iProviderId, 'cbee_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 8),
+(@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 9),
+(@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 10);
 
 -- Chargebee V3 payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
@@ -180,9 +181,10 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_v3_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 4),
 (@iProviderId, 'cbee_v3_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 5),
 (@iProviderId, 'cbee_v3_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 6),
-(@iProviderId, 'cbee_v3_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 7),
-(@iProviderId, 'cbee_v3_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 8),
-(@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 9);
+(@iProviderId, 'cbee_v3_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 7),
+(@iProviderId, 'cbee_v3_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 8),
+(@iProviderId, 'cbee_v3_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 9),
+(@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 10);
 
 -- Recurly payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES

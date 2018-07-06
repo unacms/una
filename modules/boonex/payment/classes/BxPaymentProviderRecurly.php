@@ -41,12 +41,15 @@ class BxPaymentProviderRecurly extends BxBaseModPaymentProvider implements iBxBa
         $this->_sFormCard = 'bx_payment_form_rcrl_card';
         $this->_sFormDisplayCardAdd = 'bx_payment_form_rcrl_card_add';
 
-        $this->_bRedirectOnResult = false;
         $this->_bUseSsl = true;
-        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';        
-
-        $this->_iMode = (int)$this->getOption('mode');
         $this->_bCheckAmount = false; // Disabled for easier processing of discounted subscriptions.
+    }
+
+    public function setOptions($aOptions)
+    {
+    	parent::setOptions($aOptions);
+
+    	$this->_iMode = (int)$this->getOption('mode');
     }
 
 	public function addJsCss()

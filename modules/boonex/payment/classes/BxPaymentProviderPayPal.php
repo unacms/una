@@ -34,9 +34,6 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
     	$this->MODULE = 'bx_payment';
 
         parent::__construct($aConfig);
-
-        $this->_bRedirectOnResult = false;
-        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)

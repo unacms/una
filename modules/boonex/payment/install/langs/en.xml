@@ -349,6 +349,8 @@
 	<string name="_bx_payment_cbee_test_site_dsc"><![CDATA[Your site name registered in Chargebee for 'test' mode]]></string>
 	<string name="_bx_payment_cbee_test_api_key_cpt"><![CDATA[API Key (test)]]></string>
 	<string name="_bx_payment_cbee_test_api_key_dsc"><![CDATA[Your Chargebee API Access key for 'test' mode]]></string>
+	<string name="_bx_payment_cbee_check_amount_cpt"><![CDATA[Enable amount checking]]></string>
+	<string name="_bx_payment_cbee_check_amount_dsc"><![CDATA[Enable amount checking for Chargebee Webhooks (recomended). However checking should be disabled when discounts and coupons are used.]]></string>
 	<string name="_bx_payment_cbee_ssl_cpt"><![CDATA[Enable SSL]]></string>
 	<string name="_bx_payment_cbee_ssl_dsc"><![CDATA[Enable SSL connection to communicate with Chargebee. Note. URLs below will be updated after saving.]]></string>
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[Data return URL]]></string>

@@ -349,6 +349,8 @@
 	<string name="_bx_payment_cbee_test_site_dsc"><![CDATA[Имя вашего сайта зарегистрированного в Chargebee для "тестового" режима.]]></string>
 	<string name="_bx_payment_cbee_test_api_key_cpt"><![CDATA[API ключ (тестовый)]]></string>
 	<string name="_bx_payment_cbee_test_api_key_dsc"><![CDATA[Ваш API ключ доступа, предоставленный Chargebee, для "тестового" режима.]]></string>
+	<string name="_bx_payment_cbee_check_amount_cpt"><![CDATA[Активировать проверку суммы]]></string>
+	<string name="_bx_payment_cbee_check_amount_dsc"><![CDATA[Активировать проверку суммы для Chargebee Webhooks (рекомендуется). Однако проверка должна быть отключена когда используются скидки и купоны.]]></string>
 	<string name="_bx_payment_cbee_ssl_cpt"><![CDATA[Активировать SSL]]></string>
 	<string name="_bx_payment_cbee_ssl_dsc"><![CDATA[Активировать SSL соединение для связи с Chargebee. Внимание. Нижеприведенные ссылки будут обновлены после сохранения.]]></string>
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>

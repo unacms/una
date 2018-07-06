@@ -40,18 +40,36 @@ class BxBaseModPaymentProvider extends BxDol
 
         $this->_sLangsPrefix = $this->_oModule->_oConfig->getPrefix('langs');
 
+        $this->_bRedirectOnResult = false;
+        $this->_bUseSsl = false;
+
         $this->_iId = (int)$aConfig['id'];
         $this->_sName = $aConfig['name'];
         $this->_sCaption = _t($aConfig['caption']);
         $this->_sPrefix = $aConfig['option_prefix'];
-        $this->_aOptions = !empty($aConfig['options']) ? $aConfig['options'] : array();
-        $this->_bUseSsl = false;
-        $this->_bRedirectOnResult = false;
+
+        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
+
+        $this->_aOptions = array();
+        if(!empty($aConfig['options']) && is_array($aConfig['options']))
+        	$this->setOptions($aConfig['options']);
+    }
+
+    public function setOptions($aOptions)
+    {
+    	$this->_aOptions = $aOptions;
+
+    	/*
+    	 * Note: Any settings related to Vendor Options
+    	 * should be initialized here.
+    	 */
     }
 
     public function setOptionsByVendor($iVendorId)
     {
-        $this->_aOptions = $this->_oModule->_oDb->getOptions((int)$iVendorId, $this->_iId);
+        $aOptions = $this->_oModule->_oDb->getOptions((int)$iVendorId, $this->_iId);
+        if(!empty($aOptions) && is_array($aOptions))
+	        $this->setOptions($aOptions);
     }
 
     public function isActive()
