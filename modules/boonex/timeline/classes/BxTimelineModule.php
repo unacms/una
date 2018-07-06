@@ -2074,6 +2074,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         list($sSystem, $iObjectId) = $mixedViews;
         $oView = $this->getViewObject($sSystem, $iObjectId);
 
+        if(!$oView->isAllowedViewView($bPerform))
+        	return false;
+
         $bResult = true;
 
         $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
@@ -2091,6 +2094,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         list($sSystem, $iObjectId) = $mixedVotes;
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
+
+        if(!$oVote->isAllowedVote($bPerform))
+        	return false;
 
         $bResult = true;
 
@@ -2110,6 +2116,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         list($sSystem, $iObjectId) = $mixedScores;
         $oScore = $this->getScoreObject($sSystem, $iObjectId);
 
+        if(!$oScore->isAllowedVote($bPerform))
+        	return false;
+
         $bResult = true;
 
         $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
@@ -2127,6 +2136,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         list($sSystem, $iObjectId) = $mixedReports;
         $oReport = $this->getReportObject($sSystem, $iObjectId);
+
+        if(!$oReport->isAllowedReport($bPerform))
+        	return false;
 
         $bResult = true;
 
