@@ -25,6 +25,9 @@ class BxForumPageEntry extends BxBaseModTextPageEntry
 
     public function getCode()
     {
+    	if(empty($this->_aContentInfo) || !is_array($this->_aContentInfo))
+    		return parent::getCode();
+
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	$aCategory = $this->_oModule->_oDb->getCategories(array('type' => 'by_category', 'category' => $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
