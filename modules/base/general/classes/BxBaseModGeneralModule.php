@@ -321,6 +321,29 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oMenu ? $oMenu->getCode() : false;
     }
 
+    /**
+     * Universal browse method
+     * @param $aParams custom browse params, possible params are the following:
+     *  - mode - browse mode, such as 'recent', 'featured', etc
+     *  - params - custom params to browse method, for example 'unit_view' can be passed here
+     *  - design_box - design box style, @see BxBaseFunctions::DesignBoxContent 
+     *  - empty_message - display or not "empty" message when there is no content
+     *  - ajax_paginate - use AJAX paginate or not
+     *  @return HTML string
+     */
+    public function serviceBrowse ($aParams = array())
+    {
+        $aDefaults = array (
+            'mode' => 'recent',
+            'params' => false,
+            'design_box' => BX_DB_PADDING_DEF,
+            'empty_message' => false,
+            'ajax_paginate' => true,
+        );
+        $aParams = array_merge($aDefaults, $aParams);
+        return $this->_serviceBrowse ($aParams['mode'], $aParams['params'], $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+    }
+    
 	/**
      * Display featured entries
      * @return HTML string
