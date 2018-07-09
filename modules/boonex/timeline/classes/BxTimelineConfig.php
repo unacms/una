@@ -21,7 +21,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
-    protected $_iCharsDisplayMax;
     protected $_iCharsDisplayMaxTitle;
     protected $_sVideosAutoplay;
 
@@ -266,7 +265,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iLiveUpdateLength = 10;
-        $this->_iCharsDisplayMax = (int)getParam($sOptionPrefix . 'chars_display_max');
         $this->_iCharsDisplayMaxTitle = 20;
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
 
@@ -326,11 +324,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 	public function getLiveUpdateLength()
     {
         return $this->_iLiveUpdateLength;
-    }
-
-    public function getCharsDisplayMax()
-    {
-        return $this->_iCharsDisplayMax;
     }
 
     public function getCharsDisplayMaxTitle()

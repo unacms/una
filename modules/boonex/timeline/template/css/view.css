@@ -153,7 +153,7 @@ div.bx-tl-item-content div.bx-tl-content iframe {
 }
 div.bx-tl-item-text div.bx-tl-content {
 	position: relative;
-    max-height: 1000px;
+    max-height: 250px;
 
 	text-overflow: ellipsis;
     overflow: hidden;
