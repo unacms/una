@@ -90,7 +90,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
             ));
 		else if($fChangedPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) 
 			return array_merge($aResult, array(
-                'message' => $this->_displayResult('check_module_hash', false, _t('_sys_upgrade_files_checksum_failed_too_many', round($fChangedPercent * 100)), $bHtmlResponce),
+                'message' => $this->_displayResult('check_module_hash', false, _t('_sys_upgrade_files_checksum_failed_too_many_module', round($fChangedPercent * 100), $aModuleInfo['title']), $bHtmlResponce),
                 'result' => false
             ));
 
