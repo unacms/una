@@ -14,6 +14,8 @@
  */
 class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 {
+    protected static $_isCssJsEventsAdded = false;
+    
     protected $_iContentId = 0;
 
     public function __construct($aInfo, $oTemplate = false)
@@ -245,10 +247,11 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
     
     function addCssJs ()
     {
-        if (!self::$_isCssJsAdded) {
+        if ((!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) && !self::$_isCssJsEventsAdded) {
             $this->oTemplate->addJs('intervals.js');
             $this->oTemplate->addCss('informer.css');
-        }
+            self::$_isCssJsEventsAdded = true;
+        }   
 
         parent::addCssJs ();
     }

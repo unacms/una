@@ -9,7 +9,20 @@
 (function($) {
 
     $.fn.addWebForms = function() {
+        if ('undefined' === typeof(glJsLoadOnaddWebForms) || !glJsLoadOnaddWebForms.length) {
+            $.fn.processWebForms.apply(this);
+        }
+        else {
+            var $this = this;
+            bx_get_scripts(glJsLoadOnaddWebForms, function () {
+                $.fn.processWebForms.apply($this);
+            });
+        }
 
+        return this;
+    }
+    
+    $.fn.processWebForms = function() {
         // switchers
         $('.bx-switcher-cont', this).each(function() {
             var eSwitcher = $(this);
