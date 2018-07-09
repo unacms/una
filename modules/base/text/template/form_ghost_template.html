@@ -31,6 +31,6 @@
     });
 
     // select first image as a thumb by default
-    if (1 == $('input[name="__name_thumb__[]"]').length)
+    if (!__content_id__ && 1 == $('input[name="__name_thumb__[]"]').length)
         $('input[name="__name_thumb__[]"]').attr('checked', true);
 </script>

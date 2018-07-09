@@ -138,7 +138,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     	return array (
 			'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
-			'content_id' => $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
+			'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
 			'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
             'thumb_id' => isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
             'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
