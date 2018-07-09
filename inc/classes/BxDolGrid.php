@@ -556,7 +556,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     protected function _isVisibleGrid ($a)
     {
-        if (!isset($a['visible_for_levels']))
+        if (isAdmin() || !isset($a['visible_for_levels']))
             return true;
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }

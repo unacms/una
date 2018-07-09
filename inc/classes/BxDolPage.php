@@ -256,7 +256,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     protected function _isVisiblePage ($a)
     {
-        return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
+        return isAdmin() || BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
 
 }
