@@ -45,7 +45,7 @@ function bx_editor_remove_img (aEditorIds, aMarkers) {
 
     for (var j = 0; j < aEditors.length; j++) {
         var eEditor = aEditors[j];
-        if (typeof(eEditor) != 'object' || !eEditor.dom || !eEditor.dom.doc) 
+        if (typeof(eEditor) != 'object' || null === eEditor || typeof(eEditor.dom) != 'object' || typeof(eEditor.dom.doc) != 'object') 
         	continue;
 
         // delete images in html editor
