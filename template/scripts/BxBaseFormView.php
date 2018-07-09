@@ -12,6 +12,9 @@ class BxBaseFormView extends BxDolForm
     protected static $_isToggleJsAdded = false;
 
     protected static $_isCssJsAdded = false;
+    protected static $_isCssJsUiAdded = false;
+    protected static $_isCssJsMinicolorsAdded = false;
+    protected static $_isCssJsTimepickerAdded = false;
     protected static $_isCssJsAddedViewMode = false;
 
     /**
@@ -132,10 +135,12 @@ class BxBaseFormView extends BxDolForm
             $bDynamicMode = true;
 
         $this->_bDynamicMode = $bDynamicMode;
-        $this->addCssJs ();
         $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
+        $this->sCode = $this->genForm();
+
+        $this->addCssJs ();
         $sDynamicCssJs = $this->_processCssJs();
-        return $sDynamicCssJs . ($this->sCode = $this->genForm());
+        return $sDynamicCssJs . $this->sCode;
     }
 
     /**
@@ -821,6 +826,23 @@ BLAH;
         if ('datetime' == $aAttrs['type'])
             $aAttrs['type'] = 'date_time';
 
+        switch($aAttrs['type']) {
+            case 'date_time':
+                $this->addCssJsUi ();
+                $this->addCssJsTimepicker ();
+                break;
+            case 'slider':
+            case 'doublerange':
+            case 'datepicker':
+                $this->addCssJsUi ();
+                break;
+            case 'rgba':
+            case 'rgb':
+                $this->addCssJsMinicolors ();
+                break;
+        }
+
+
         if (isset($aInput['name'])) $aAttrs['name'] = $aInput['name'];
         if (isset($aInput['value'])) $aAttrs['value'] = $aInput['value'];
         if (isset($aInput['db']['pass']) && ('DateUtc' == $aInput['db']['pass'] || 'DateTimeUtc' == $aInput['db']['pass'])) $aAttrs['data-utc'] = 1;
@@ -1047,9 +1069,7 @@ BLAH;
 
     protected function genCustomInputUsernamesSuggestions ($aInput)
     {
-        $this->_addJs(array(
-            'jquery.form.min.js',
-        ));
+        $this->addCssJsUi();
 
         $sVals = '';
         if (!empty($aInput['value']) && is_array($aInput['value'])) {
@@ -1438,54 +1458,86 @@ BLAH;
         }
     }
 
+    function addCssJsTimepicker ()
+    {
+        if (self::$_isCssJsTimepickerAdded)
+            return; 
+
+        $aCalendarLangs = array ('af' => 1, 'am' => 1, 'bg' => 1, 'ca' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sr-RS' => 1, 'sr-YU' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-TW' => 1);
+
+        $sCalendarLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aCalendarLangs);            
+        $this->_addCss('timepicker-addon/jquery-ui-timepicker-addon.css');
+        
+        $this->_addJs(array(
+            'timepicker-addon/jquery-ui-timepicker-addon.min.js',
+            'timepicker-addon/jquery-ui-sliderAccess.js',
+            'timepicker-addon/i18n/jquery-ui-timepicker-' . $sCalendarLang . '.js',
+            'jquery.ui.touch-punch.min.js',
+        ), "'undefined' === typeof($.fn.datetimepicker)");
+
+        self::$_isCssJsTimepickerAdded = true;
+    }
+    
+    function addCssJsUi ()
+    {
+        if (self::$_isCssJsUiAdded)
+            return;
+
+        $aUiLangs = array ('af' => 1, 'ar-DZ' => 1, 'ar' => 1, 'az' => 1, 'be' => 1, 'bg' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cy-GB' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en-AU' => 1, 'en-GB' => 1, 'en-NZ' => 1, 'en' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr-CA' => 1, 'fr-CH' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hi' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'ka' => 1, 'kk' => 1, 'km' => 1, 'ko' => 1, 'ky' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'ml' => 1, 'ms' => 1, 'nb' => 1, 'nl-BE' => 1, 'nl' => 1, 'nn' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'rm' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-SR' => 1, 'sr' => 1, 'sv' => 1, 'ta' => 1, 'th' => 1, 'tj' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-HK' => 1, 'zh-TW' => 1);
+
+        $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
+        
+        $this->_addCss('jquery-ui/jquery-ui.css');
+        $this->_addJs(array(
+            'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
+            'jquery-ui/jquery-ui.custom.min.js',
+        ), "'undefined' === typeof($.widget)");
+
+        self::$_isCssJsUiAdded = true;
+    }
+
+    function addCssJsMinicolors ()
+    {
+        if (self::$_isCssJsMinicolorsAdded)
+            return;       
+
+        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'jquery-minicolors/|jquery.minicolors.css');
+        $this->_addJs('jquery-minicolors/jquery.minicolors.min.js', "'undefined' === typeof($.minicolors)");
+
+        self::$_isCssJsMinicolorsAdded = true;
+    }
+
+    function addCssJsViewMode ()
+    {
+        if (self::$_isCssJsAddedViewMode)
+            return;
+
+        $this->_addCss('forms.css');
+
+        self::$_isCssJsAddedViewMode = true;
+    }
+
+    function addCssJsCore ()
+    {
+        if (self::$_isCssJsAdded)
+            return;
+
+        $this->_addCss('forms.css');
+        $this->_addJs('jquery.webForms.js', "'undefined' === typeof($.fn.addWebForms)");
+
+        self::$_isCssJsAdded = true;
+    }
+
     function addCssJs ()
     {
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode']) {
 
-            if (self::$_isCssJsAddedViewMode)
-                return;
-
-            $this->_addCss('forms.css');
-
-            self::$_isCssJsAddedViewMode = true;
+            $this->addCssJsViewMode ();
 
         } else {
+
+            $this->addCssJsCore();
                 
-            if (self::$_isCssJsAdded)
-                return;
-
-            $aCss = array(
-                'forms.css',
-
-                'jquery-ui/jquery-ui.css',
-
-                'timepicker-addon/jquery-ui-timepicker-addon.css',
-
-            	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'jquery-minicolors/|jquery.minicolors.css',
-            );
-
-            $aUiLangs = array ('af' => 1, 'ar-DZ' => 1, 'ar' => 1, 'az' => 1, 'be' => 1, 'bg' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cy-GB' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en-AU' => 1, 'en-GB' => 1, 'en-NZ' => 1, 'en' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr-CA' => 1, 'fr-CH' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hi' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'ka' => 1, 'kk' => 1, 'km' => 1, 'ko' => 1, 'ky' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'ml' => 1, 'ms' => 1, 'nb' => 1, 'nl-BE' => 1, 'nl' => 1, 'nn' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'rm' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-SR' => 1, 'sr' => 1, 'sv' => 1, 'ta' => 1, 'th' => 1, 'tj' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-HK' => 1, 'zh-TW' => 1);
-
-            $aCalendarLangs = array ('af' => 1, 'am' => 1, 'bg' => 1, 'ca' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sr-RS' => 1, 'sr-YU' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-TW' => 1);
-
-            $sCalendarLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aCalendarLangs);
-            $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
-
-            $aJs = array(
-                'jquery-ui/jquery-ui.custom.min.js',                
-
-                'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
-
-            	'jquery-minicolors/jquery.minicolors.min.js',
-
-                'timepicker-addon/jquery-ui-timepicker-addon.min.js',
-                'timepicker-addon/jquery-ui-sliderAccess.js',
-                'timepicker-addon/i18n/jquery-ui-timepicker-' . $sCalendarLang . '.js',
-                'jquery.ui.touch-punch.min.js',
-
-                'jquery.webForms.js',
-            );
-
             foreach ($this->aInputs as $aInput) {
                 if (!isset($aInput['type']) || 'files' != $aInput['type'] || !isset($aInput['uploaders']))
                     continue;
@@ -1496,12 +1548,6 @@ BLAH;
                         $oUploader->addCssJs();
                 }
             }
-
-            $this->_addJs($aJs);
-            $this->_addCss($aCss);            
-
-            self::$_isCssJsAdded = true;
-
         }
     }
 
@@ -1510,25 +1556,37 @@ BLAH;
         $sRet = '';
         if ($this->_bDynamicMode) {
             $sRet .= $this->oTemplate->addCss($this->_aCss, true);
-            $sJs = $this->oTemplate->addJs($this->_aJs, true);
-            if (preg_match_all("/src=\"(.*?)\"/", $sJs, $aMatches))
-                $sRet .= "<script>
-                    bx_get_scripts(" . json_encode($aMatches[1]) . ");
-                </script>";
+
+
+            $sRet .= "\n<script>\n";
+            $sRet .= "\nglJsLoadOnaddWebForms = []\n";
+            foreach ($this->_aJs as $sCondition => $aJs) {
+                $sJs = $this->oTemplate->addJs($aJs, true);
+                if (!$sJs)
+                    continue;
+                
+                $sRet .= "if ($sCondition)\n";
+                if (preg_match_all("/src=\"(.*?)\"/", $sJs, $aMatches))
+                    $sRet .= "\tglJsLoadOnaddWebForms = glJsLoadOnaddWebForms.concat(" . json_encode($aMatches[1]) . ");\n";
+            }
+            $sRet .= "\n</script>\n";
         }
         else {
             $this->oTemplate->addCss($this->_aCss);
-            $this->oTemplate->addJs($this->_aJs);
+            
+            $aJs = array();
+            foreach ($this->_aJs as $sCondition => $a)
+                $aJs = array_merge($aJs, $a);
+            $this->oTemplate->addJs($aJs);
         }
         return $sRet;
     }
 
-    protected function _addJs($mixed)
+    protected function _addJs($mixed, $sJsCondition)
     {
         if (!is_array($mixed))
             $mixed = array($mixed);
-        foreach ($mixed as $s)
-            $this->_aJs[$s] = $s;
+        $this->_aJs[$sJsCondition] = $mixed;
     }
 
     protected function _addCss($mixed)

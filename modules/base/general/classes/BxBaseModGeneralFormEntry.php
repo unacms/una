@@ -14,6 +14,8 @@
  */
 class BxBaseModGeneralFormEntry extends BxTemplFormView
 {
+    protected static $_isCssJsGeneralModuleAdded = false;
+        
     protected $MODULE;
 
     protected $_oModule;
@@ -255,11 +257,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     function addCssJs ()
     {
-        if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
-            if (self::$_isCssJsAdded)
-                return;
+        if ((!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) && !self::$_isCssJsGeneralModuleAdded) {
             $this->_oModule->_oTemplate->addCss('forms.css');
             $this->_oModule->_oTemplate->addJs('modules/base/general/js/|forms.js');
+            self::$_isCssJsGeneralModuleAdded = true;
         }
 
         return parent::addCssJs ();
