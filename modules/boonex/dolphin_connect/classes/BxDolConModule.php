@@ -182,6 +182,7 @@ class BxDolConModule extends BxBaseModConnectModule
         $aProfileFields['birthday'] = isset($aProfileInfo['DateOfBirth']) ? $aProfileInfo['DateOfBirth'] : '';
         $aProfileFields['fullname'] = $sFullname;
         $aProfileFields['picture'] = $aProfileInfo['picture'];
+        $aProfileFields['description'] = $aProfileInfo['DescriptionMe'];
         $aProfileFields['allow_view_to'] = getParam('bx_dolcon_privacy');
             
         return $aProfileFields;
