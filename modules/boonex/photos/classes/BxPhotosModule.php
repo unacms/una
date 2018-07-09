@@ -25,6 +25,24 @@ class BxPhotosModule extends BxBaseModTextModule
     }
 
     /**
+     * Display entries of the author
+     * @return HTML string
+     */
+    public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
+    {
+    	$sJsCode = $this->_oTemplate->getJsCode('main');
+
+    	$mixedResult = parent::serviceBrowseAuthor ($iProfileId, $aParams);
+    	if(is_string($mixedResult))
+    		$mixedResult .= $sJsCode;
+    	else if(is_array($mixedResult) && isset($mixedResult['content']))
+    		$mixedResult['content'] .= $sJsCode;
+
+    	$this->_oTemplate->addJs(array('main.js'));
+    	return $mixedResult; 
+    }
+
+    /**
      * @page service Service Calls
      * @section bx_photos Photos
      * @subsection bx_photos-page_blocks Page Blocks
