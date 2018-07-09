@@ -23,7 +23,7 @@ class BxChatPlusStudioPage extends BxTemplStudioModule
     
     function getHelp ()
     {
-        return _t('_bx_chat_plus_information_block');
+        return _t('_bx_chat_plus_information_block',  BX_DOL_URL_ROOT);
     }
 }
 
