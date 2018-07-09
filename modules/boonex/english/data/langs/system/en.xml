@@ -1294,6 +1294,7 @@
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
 	<string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Google Maps API key]]></string>
+	<string name="_adm_stg_cpt_option_sys_embed_default"><![CDATA[Embeds provider]]></string>
 	<string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Embed.ly API key (fill in to use instead of Iframely)]]></string>
 	<string name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Embed.ly API pattern (fill in to use instead of Iframely)]]></string>
 	<string name="_adm_stg_cpt_option_sys_iframely_api_key"><![CDATA[Iframely API key]]></string>
