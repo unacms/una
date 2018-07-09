@@ -27,6 +27,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bHot;
     protected $_iHotInterval;
 
+    protected $_bEditorToolbar;
+
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
     protected $_sTranscoderObjectView;
@@ -270,6 +272,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
+
+        $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
+        
     }
 
     public function isAllowEdit()
@@ -290,6 +295,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isHot()
     {
         return $this->_bHot;
+    }
+
+    public function isEditorToolbar()
+    {
+    	return $this->_bEditorToolbar;
     }
 
     public function getPostFormDisplay($sType)

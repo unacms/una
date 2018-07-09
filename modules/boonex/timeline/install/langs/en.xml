@@ -18,7 +18,8 @@
 	<string name="_bx_timeline_option_videos_autoplay_on_mute"><![CDATA[Enabled without sound]]></string>
 	<string name="_bx_timeline_option_videos_autoplay_on"><![CDATA[Enabled with sound]]></string>
 	<string name="_bx_timeline_option_enable_hot"><![CDATA[Enable Hot list aggregation]]></string>
-	<string name="_bx_timeline_option_hot_interval"><![CDATA[Interval of time (in hours) to get Hot events]]></string>	
+	<string name="_bx_timeline_option_hot_interval"><![CDATA[Interval of time (in hours) to get Hot events]]></string>
+	<string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Enable post form editor toolbar]]></string>
 
 	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>

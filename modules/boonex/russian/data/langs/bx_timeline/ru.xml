@@ -19,6 +19,7 @@
     <string name="_bx_timeline_option_videos_autoplay_on"><![CDATA[Включено (cо звуком)]]></string>
     <string name="_bx_timeline_option_enable_hot"><![CDATA[Включить сбор данных для листа 'горячих' сообщений]]></string>
     <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' сообщений]]></string>
+    <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Включить панель инструментов в форме создания сообщения]]></string>
 
 	<string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Написать сообщение]]></string>

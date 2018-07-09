@@ -113,7 +113,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 initOnClick: false,
             ");
 
-        $oEditor->setCustomToolbarButtons('');
+        if(!$this->_oModule->_oConfig->isEditorToolbar())
+        	$oEditor->setCustomToolbarButtons('');
 
         $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode);
 
