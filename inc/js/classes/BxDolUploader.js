@@ -391,7 +391,7 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
 
         var aExt = ['jpg', 'jpeg', 'png', 'gif'];
 
-        var eCroppie = $("#" + this._sFormContainerId + " .bx-croppie-container").croppie(oOptions);
+        var eCroppie = $("#" + this._sFormContainerId + " .bx-croppie-element").croppie(oOptions);
 
 		$("#" + this._sFormContainerId + ' .bx-crop-rotate').on('click', function(ev) {
 			eCroppie.croppie('rotate', parseInt($(this).data('deg')));
@@ -418,9 +418,9 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
                     eCroppie.croppie('bind', {
                         url: e.target.result
                     });
-                    $("#" + $this._sFormContainerId + " .bx-croppie-container").addClass('ready');
+                    $("#" + $this._sFormContainerId + " .bx-croppie-element").addClass('ready');
                     $("#" + $this._sFormContainerId + " .bx-crop-action").removeClass('bx-btn-disabled');
-                    $("#" + $this._sFormContainerId + " .bx-croppie-container").data('bx-filename', input.files[0].name.replace(/(\.[A-Za-z0-9]+)$/, '.png'));
+                    $("#" + $this._sFormContainerId + " .bx-croppie-element").data('bx-filename', input.files[0].name.replace(/(\.[A-Za-z0-9]+)$/, '.png'));
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -433,7 +433,7 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
             }).then(function(resp) {
                 var fd = new FormData();
 
-                fd.append("f", dataURItoBlob(resp), $("#" + $this._sFormContainerId + " .bx-croppie-container").data('bx-filename'));
+                fd.append("f", dataURItoBlob(resp), $("#" + $this._sFormContainerId + " .bx-croppie-element").data('bx-filename'));
                 $.each(oOptions.bx_form, function (sName) {
                     fd.append(sName, this);
                 });

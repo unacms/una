@@ -59,7 +59,7 @@
 
 /* crop uploader */
 
-.bx-popup-content-wrapped .bx-croppie-container {
+.bx-popup-content-wrapped .bx-croppie-element {
     padding:0;
     min-height:340px;
 }
