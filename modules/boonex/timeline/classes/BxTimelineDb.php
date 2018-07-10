@@ -282,7 +282,78 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getColumn("SELECT `event_id` FROM `" . $this->_sTableHotTrack . "`");
     }
 
-    public function getHotTrack($sModule, $sTableTrack, $iInterval = 24)
+    public function clearHot()
+    {
+        return $this->query("TRUNCATE TABLE `" . $this->_sTableHotTrack . "`");
+    }
+
+    public function getHotTrackByDate($iInterval = 24)
+    {
+        $sQuery = "SELECT 
+                `te`.`id` AS `event_id`,
+    			`te`.`date` AS `value`
+    		FROM `" . $this->_sTable . "` AS `te`
+    		WHERE `te`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+
+        return $this->getPairs($sQuery, 'event_id', 'value', array('interval' => $iInterval));
+    }
+
+    public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 24)
+    {
+        $sQuery = "SELECT 
+    			`te`.`id` as `event_id`,
+    			MAX(`tt`.`cmt_time`) AS `value`
+    		FROM `" . $this->_sTable . "` AS `te`
+    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`cmt_object_id` AND `te`.`type`=:module 
+    		WHERE `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+    		GROUP BY `te`.`id`";
+
+        return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
+    }
+
+    public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 24)
+    {
+        $sQuery = "SELECT 
+    			`te`.`id` as `event_id`,
+    			MAX(`tt`.`cmt_time`) AS `value`
+    		FROM `" . $this->_sTable . "` AS `te`
+    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`cmt_object_id` AND `te`.`type`=:module 
+    		WHERE `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+    		GROUP BY `te`.`object_id`";
+
+        return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
+    }
+
+    public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 24)
+    {
+        $sQuery = "SELECT 
+    			`te`.`id` as `event_id`,
+    			MAX(`tt`.`date`) AS `value`
+    		FROM `" . $this->_sTable . "` AS `te`
+    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`type`=:module 
+    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+    		GROUP BY `te`.`id`";
+
+        return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
+    }
+
+    public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 24)
+    {
+        $sQuery = "SELECT 
+    			`te`.`id` as `event_id`,
+    			MAX(`tt`.`date`) AS `value`
+    		FROM `" . $this->_sTable . "` AS `te`
+    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`type`=:module 
+    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+    		GROUP BY `te`.`object_id`";
+
+        return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
+    }
+
+    /**
+     * Hot Track by Sum of Votes during specified Period is currently disabled.
+     */
+    public function getHotTrackByVotesSum($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
     			`te`.`id` as `event_id`,
@@ -295,7 +366,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getAll($sQuery, array('module' => $sModule, 'interval' => $iInterval));
     }
 
-    public function getHotTrackModule($sModule, $sTableTrack, $iInterval = 24)
+    /**
+     * Hot Track by Sum of Votes during specified Period is currently disabled.
+     */
+    public function getHotTrackByVotesSumModule($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
     			`te`.`id` as `event_id`,
@@ -395,19 +469,21 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 			switch($aParams['type']) {
 				case BX_TIMELINE_TYPE_HOT:
+                    $sOrderClause = "`{$this->_sTableHotTrack}`.`value` DESC, ";
+                    break;
+
 				case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
 				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
 				case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
-					$sOrderClause = "`{$this->_sTable}`.`sticked` DESC";
+					$sOrderClause = "`{$this->_sTable}`.`sticked` DESC, ";
 					break;
 
 				case BX_BASE_MOD_NTFS_TYPE_OWNER:
-					$sOrderClause = "`{$this->_sTable}`.`pinned` DESC";
+					$sOrderClause = "`{$this->_sTable}`.`pinned` DESC, ";
 					break;
 			}
 
-			if(!empty($sOrderClause))
-				$sOrderClause = "ORDER BY " . $sOrderClause . ", `{$this->_sTable}`.`date` DESC";
+            $sOrderClause = "ORDER BY " . $sOrderClause . "`{$this->_sTable}`.`date` DESC";
 		}
 
         if(isset($aParams['count']) && $aParams['count'] === true) {
