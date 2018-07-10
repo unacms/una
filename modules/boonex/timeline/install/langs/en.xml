@@ -70,8 +70,9 @@
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>
 	<string name="_bx_timeline_acl_action_repost"><![CDATA[Repost]]></string>
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Send]]></string>
-	<string name="_bx_timeline_acl_action_pin"><![CDATA[Pin]]></string>
-	<string name="_bx_timeline_acl_action_promote"><![CDATA[Promote]]></string>
+	<string name="_bx_timeline_acl_action_pin"><![CDATA[Pin Any Post]]></string>
+	<string name="_bx_timeline_acl_action_stick"><![CDATA[Stick Any Post]]></string>
+	<string name="_bx_timeline_acl_action_promote"><![CDATA[Promote Any Post]]></string>
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Profile Feed]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Profile Feed]]></string>
@@ -137,6 +138,10 @@
     <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Pin]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Unpin]]></string>
     <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Unpin]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_stick"><![CDATA[Stick]]></string>
+    <string name="_bx_timeline_menu_item_title_item_stick"><![CDATA[Stick]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unstick"><![CDATA[Unstick]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unstick"><![CDATA[Unstick]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_promote"><![CDATA[Promote]]></string>
     <string name="_bx_timeline_menu_item_title_item_promote"><![CDATA[Promote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpromote"><![CDATA[Unpromote]]></string>

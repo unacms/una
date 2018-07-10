@@ -390,8 +390,25 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
 		$sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
-		if($aParams['browse'] == 'list')
-			$sOrderClause = "ORDER BY `{$this->_sTable}`.`pinned` DESC, `{$this->_sTable}`.`date` DESC";
+		if($aParams['browse'] == 'list') {
+			$sOrderClause = "";
+
+			switch($aParams['type']) {
+				case BX_TIMELINE_TYPE_HOT:
+				case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
+				case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
+					$sOrderClause = "`{$this->_sTable}`.`sticked` DESC";
+					break;
+
+				case BX_BASE_MOD_NTFS_TYPE_OWNER:
+					$sOrderClause = "`{$this->_sTable}`.`pinned` DESC";
+					break;
+			}
+
+			if(!empty($sOrderClause))
+				$sOrderClause = "ORDER BY " . $sOrderClause . ", `{$this->_sTable}`.`date` DESC";
+		}
 
         if(isset($aParams['count']) && $aParams['count'] === true) {
             $sMethod = 'getOne';

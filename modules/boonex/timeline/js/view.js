@@ -324,60 +324,19 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
 };
 
 BxTimelineView.prototype.pinPost = function(oLink, iId, iWay) {
-	var $this = this;
-    var oData = this._getDefaultData();
-    oData['id'] = iId;
-
-    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({
-		onHide: function(oPopup) {
-			$(oPopup).remove();
-		}
-	});
-
-    if(this.bViewTimeline)
-    	this.loadingInItem($(this.sIdItemTimeline + iId), true);
-
-    if(this.bViewOutline)
-    	this.loadingInItem($(this.sIdItemOutline + iId), true);
-
-    $.post(
-        this._sActionsUrl + 'pin/',
-        oData,
-        function(oData) {
-        	processJsonData(oData);
-        },
-        'json'
-    );
+	this._markPost(oLink, iId, iWay, 'pin');
 };
 
 BxTimelineView.prototype.onPinPost = function(oData) {
-	var $this = this;
+	this._onMarkPost(oData, 'pin');
+};
 
-	//--- Pin on Timeline (if available)
-	if(this.bViewTimeline) {
-		var sItemTimeline = this.sIdItemTimeline + oData.id;
+BxTimelineView.prototype.stickPost = function(oLink, iId, iWay) {
+	this._markPost(oLink, iId, iWay, 'stick');
+};
 
-		this._oRequestParams['timeline'].start = 0;
-        this._getPosts(this.oViewTimeline, function(oData) {
-        	$(sItemTimeline).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-    	        $(this).remove();
-
-    	        processJsonData(oData);
-        	});
-        });
-	}
-
-	//--- Pin on Outline (if available)
-	if(this.bViewOutline) {
-		var sItemOutline = this.sIdItemOutline + oData.id;
-
-		this._oRequestParams['outline'].start = 0;
-        this._getPosts(this.oViewOutline, function(oData) {
-        	$this.removeMasonry(sItemOutline, function() {
-        		processJsonData(oData);
-    		});
-        });
-	}
+BxTimelineView.prototype.onStickPost = function(oData) {
+	this._onMarkPost(oData, 'stick');
 };
 
 BxTimelineView.prototype.promotePost = function(oLink, iId, iWay) {
@@ -830,5 +789,62 @@ BxTimelineView.prototype._onGetPost = function(oData) {
 
 			this.reloadMasonry();
 			break;
+	}
+};
+
+BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction) {
+	var $this = this;
+    var oData = this._getDefaultData();
+    oData['id'] = iId;
+
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({
+		onHide: function(oPopup) {
+			$(oPopup).remove();
+		}
+	});
+
+    if(this.bViewTimeline)
+    	this.loadingInItem($(this.sIdItemTimeline + iId), true);
+
+    if(this.bViewOutline)
+    	this.loadingInItem($(this.sIdItemOutline + iId), true);
+
+    $.post(
+        this._sActionsUrl + sAction + '/',
+        oData,
+        function(oData) {
+        	processJsonData(oData);
+        },
+        'json'
+    );
+};
+
+BxTimelineView.prototype._onMarkPost = function(oData, sAction) {
+	var $this = this;
+
+	//--- Mark on Timeline (if available)
+	if(this.bViewTimeline) {
+		var sItemTimeline = this.sIdItemTimeline + oData.id;
+
+		this._oRequestParams['timeline'].start = 0;
+        this._getPosts(this.oViewTimeline, function(oData) {
+        	$(sItemTimeline).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+    	        $(this).remove();
+
+    	        processJsonData(oData);
+        	});
+        });
+	}
+
+	//--- Mark on Outline (if available)
+	if(this.bViewOutline) {
+		var sItemOutline = this.sIdItemOutline + oData.id;
+
+		this._oRequestParams['outline'].start = 0;
+        this._getPosts(this.oViewOutline, function(oData) {
+        	$this.removeMasonry(sItemOutline, function() {
+        		processJsonData(oData);
+    		});
+        });
 	}
 };

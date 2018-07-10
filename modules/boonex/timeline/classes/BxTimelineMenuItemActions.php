@@ -201,6 +201,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 $sCheckFuncName = 'isAllowedUnpin';
                 break;
 
+			case 'item-stick':
+				$sCheckFuncName = 'isAllowedStick';
+				break;
+
+			case 'item-unstick':
+				$sCheckFuncName = 'isAllowedUnstick';
+				break;
+
             case 'item-promote':
                 $sCheckFuncName = 'isAllowedPromote';
                 break;

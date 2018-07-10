@@ -84,11 +84,13 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_timeline_menu_item_manage', 'bx_timeline', 'item-pin', '_bx_timeline_menu_item_title_system_item_pin', '_bx_timeline_menu_item_title_item_pin', 'javascript:void(0)', 'javascript:{js_object_view}.pinPost(this, {content_id}, 1)', '_self', 'thumbtack', '', 2147483647, 1, 0, 0),
 ('bx_timeline_menu_item_manage', 'bx_timeline', 'item-unpin', '_bx_timeline_menu_item_title_system_item_unpin', '_bx_timeline_menu_item_title_item_unpin', 'javascript:void(0)', 'javascript:{js_object_view}.pinPost(this, {content_id}, 0)', '_self', 'thumbtack', '', 2147483647, 1, 0, 1),
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-promote', '_bx_timeline_menu_item_title_system_item_promote', '_bx_timeline_menu_item_title_item_promote', 'javascript:void(0)', 'javascript:{js_object_view}.promotePost(this, {content_id}, 1)', '_self', 'certificate ', '', 2147483647, 1, 0, 2),
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-unpromote', '_bx_timeline_menu_item_title_system_item_unpromote', '_bx_timeline_menu_item_title_item_unpromote', 'javascript:void(0)', 'javascript:{js_object_view}.promotePost(this, {content_id}, 0)', '_self', 'certificate', '', 2147483647, 1, 0, 3),
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-report', '_bx_timeline_menu_item_title_system_item_report', '', 'javascript:void(0)', '', '', '', '', 2147483647, 1, 0, 4),
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-edit', '_bx_timeline_menu_item_title_system_item_edit', '_bx_timeline_menu_item_title_item_edit', 'javascript:void(0)', 'javascript:{js_object_view}.editPost(this, {content_id})', '_self', 'pencil-alt', '', 2147483647, 1, 0, 5),
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '_bx_timeline_menu_item_title_item_delete', 'javascript:void(0)', 'javascript:{js_object_view}.deletePost(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 6);
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-stick', '_bx_timeline_menu_item_title_system_item_stick', '_bx_timeline_menu_item_title_item_stick', 'javascript:void(0)', 'javascript:{js_object_view}.stickPost(this, {content_id}, 1)', '_self', 'thumbtack', '', 2147483647, 1, 0, 2),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-unstick', '_bx_timeline_menu_item_title_system_item_unstick', '_bx_timeline_menu_item_title_item_unstick', 'javascript:void(0)', 'javascript:{js_object_view}.stickPost(this, {content_id}, 0)', '_self', 'thumbtack', '', 2147483647, 1, 0, 3),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-promote', '_bx_timeline_menu_item_title_system_item_promote', '_bx_timeline_menu_item_title_item_promote', 'javascript:void(0)', 'javascript:{js_object_view}.promotePost(this, {content_id}, 1)', '_self', 'certificate ', '', 2147483647, 1, 0, 4),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-unpromote', '_bx_timeline_menu_item_title_system_item_unpromote', '_bx_timeline_menu_item_title_item_unpromote', 'javascript:void(0)', 'javascript:{js_object_view}.promotePost(this, {content_id}, 0)', '_self', 'certificate', '', 2147483647, 1, 0, 5),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-report', '_bx_timeline_menu_item_title_system_item_report', '', 'javascript:void(0)', '', '', '', '', 2147483647, 1, 0, 6),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-edit', '_bx_timeline_menu_item_title_system_item_edit', '_bx_timeline_menu_item_title_item_edit', 'javascript:void(0)', 'javascript:{js_object_view}.editPost(this, {content_id})', '_self', 'pencil-alt', '', 2147483647, 1, 0, 7),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '_bx_timeline_menu_item_title_item_delete', 'javascript:void(0)', 'javascript:{js_object_view}.deletePost(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 8);
 
 -- MENU: Item Actions (Comment, Vote, Share, Report, etc)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -197,6 +199,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionPin = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_timeline', 'stick', NULL, '_bx_timeline_acl_action_stick', '', 1, 3);
+SET @iIdActionStick = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_timeline', 'promote', NULL, '_bx_timeline_acl_action_promote', '', 1, 3);
 SET @iIdActionPromote = LAST_INSERT_ID();
 
@@ -244,11 +250,15 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionSend),
 (@iPremium, @iIdActionSend),
 
--- pin
+-- pin any post
 (@iModerator, @iIdActionPin),
 (@iAdministrator, @iIdActionPin),
 
--- promote
+-- stick any post
+(@iModerator, @iIdActionStick),
+(@iAdministrator, @iIdActionStick),
+
+-- promote any post
 (@iModerator, @iIdActionPromote),
 (@iAdministrator, @iIdActionPromote);
 

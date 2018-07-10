@@ -70,8 +70,9 @@
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Голосовать]]></string>
 	<string name="_bx_timeline_acl_action_repost"><![CDATA[Делать репост]]></string>
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Послать]]></string>
-	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять]]></string>
-	<string name="_bx_timeline_acl_action_promote"><![CDATA[Рекламировать]]></string>
+	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять любое сообщение]]></string>
+	<string name="_bx_timeline_acl_action_stick"><![CDATA[Приклеивать любое сообщение]]></string>
+	<string name="_bx_timeline_acl_action_promote"><![CDATA[Рекламировать любое сообщение]]></string>
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Хроника новостей профайла]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Хроника новостей профайла]]></string>
@@ -137,6 +138,10 @@
     <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Прикалывать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Откалывать]]></string>
     <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Откалывать]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_stick"><![CDATA[Приклеить]]></string>
+    <string name="_bx_timeline_menu_item_title_item_stick"><![CDATA[Приклеить]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unstick"><![CDATA[Отклеить]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unstick"><![CDATA[Отклеить]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_promote"><![CDATA[Рекламировать]]></string>
     <string name="_bx_timeline_menu_item_title_item_promote"><![CDATA[Рекламировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpromote"><![CDATA[Не рекламировать]]></string>
