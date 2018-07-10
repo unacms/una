@@ -946,6 +946,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'pass' => 'Int',
                     ),
 				),
+                'submenu' => array(
+                    'type' => 'select',
+                    'name' => 'submenu',
+                    'caption' => _t('_adm_bp_txt_page_submenu'),
+                    'info' => _t('_adm_bp_dsc_page_submenu'),
+                    'value' => isset($aPage['submenu']) ? $aPage['submenu'] : '',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
             )
         );
 
@@ -953,6 +964,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $this->oDb->getTypes(array('type' => 'all'), $aTypes, false);
         foreach($aTypes as $aType)
         	$aForm['inputs']['type_id']['values'][] = array('key' => $aType['id'], 'value' => _t($aType['title']));
+
+        $aSubmenus = $this->oDb->getSubmenus();
+        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_please_select'));
+        foreach ($aSubmenus as $sObject => $sTitle)
+            $aForm['inputs']['submenu']['values'][] = array('key' => $sObject, 'value' => _t($sTitle));
 
         if($bCreate) {
         	$sJsObject = $this->getPageJsObject();

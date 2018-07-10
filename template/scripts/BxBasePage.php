@@ -66,6 +66,8 @@ class BxBasePage extends BxDolPage
 
         $this->_selectMenu();
 
+        $this->_setSubmenu();
+
         if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'])
             return $this->_getPageCode();
 
@@ -273,6 +275,17 @@ class BxBasePage extends BxDolPage
     protected function _selectMenu ()
     {
         BxDolMenu::setSelectedGlobal ($this->_aObject['module'], $this->_aObject['uri']);
+    }
+
+    /**
+     * Set page submenu if it's specified
+     */
+    protected function _setSubmenu ()
+    {
+        if(empty($this->_aObject['submenu']))
+            return;
+
+        BxDolMenu::getObjectInstance('sys_site_submenu')->setObjectSubmenu($this->_aObject['submenu']);
     }
 
     /**

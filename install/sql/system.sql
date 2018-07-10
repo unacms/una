@@ -4108,6 +4108,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `cover_image` int(11) NOT NULL DEFAULT '0',
   `type_id` int(11) NOT NULL DEFAULT '1',
   `layout_id` int(11) NOT NULL,
+  `submenu` varchar(64) NOT NULL DEFAULT '',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `visible_for_levels_editable` tinyint(4) NOT NULL DEFAULT '1',
   `url` varchar(255) NOT NULL,

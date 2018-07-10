@@ -83,6 +83,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tp`.`cover_image` AS `cover_image`,
                 `tp`.`type_id` AS `type_id`,
                 `tp`.`layout_id` AS `layout_id`,
+                `tp`.`submenu` AS `submenu`,
                 `tp`.`visible_for_levels` AS `visible_for_levels`,
                 `tp`.`visible_for_levels_editable` AS `visible_for_levels_editable`,
                 `tp`.`url` AS `url`,
@@ -182,6 +183,11 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
             return !empty($aItems);
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
+    }
+
+    function getSubmenus()
+    {
+        return BxDolDb::getInstance()->getPairs('SELECT `object`, `title` FROM `sys_objects_menu` WHERE `template_id` = 8', 'object', 'title');
     }
 
     function getLayouts($aParams, &$aItems, $bReturnCount = true)
