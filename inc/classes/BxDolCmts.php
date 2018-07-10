@@ -814,6 +814,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->checkActionErrorMsg('comments remove own');
     }
 
+    public function isMoreAllowed ($aCmt, $isPerformAction = false)
+    {
+        $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
+	    $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
+    	return $oMenuManage->isVisible();
+    }
+
     /**
      * Actions functions
      */

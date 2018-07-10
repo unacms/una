@@ -17,6 +17,13 @@ class BxBaseCmtsMenuManage extends BxTemplCmtsMenuActions
     {
         parent::__construct ($aObject, $oTemplate);
 
+        if(bx_get('cmt_system') !== false && bx_get('cmt_object_id') !== false && bx_get('cmt_id') !== false) {
+            $oCmts = BxTemplCmts::getObjectInstance(bx_process_input(bx_get('cmt_system')), (int)bx_get('cmt_object_id'));
+            if($oCmts)
+                $this->setCmtsData($oCmts, (int)bx_get('cmt_id'));
+        }
+
+        $this->_bDynamicMode = true;
         $this->_bShowTitles = true;
     }
 }

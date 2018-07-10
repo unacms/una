@@ -37,7 +37,8 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         $this->addMarkers(array(
             'js_object' => $sJsObject,
             'cmt_system' => $this->_oCmts->getSystemName(),
-            'cmt_id' => $this->_oCmts->getId(),
+            'cmt_object_id' => $this->_oCmts->getId(),
+        	'cmt_id' => $iCmtId,
             'content_id' => $iCmtId,
             'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')'
         ));
@@ -125,6 +126,12 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
 
             case 'item-delete':
                 $sCheckFuncName = 'isRemoveAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
+
+            case 'item-more':
+                $sCheckFuncName = 'isMoreAllowed';
                 if(!empty($this->_aCmt))
                     $aCheckFuncParams = array($this->_aCmt);
                 break;

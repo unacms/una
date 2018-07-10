@@ -436,31 +436,12 @@ class BxBaseCmts extends BxDolCmts
     	$bViewOnly = isset($aDp['view_only']) && $aDp['view_only'] === true;
     	$bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
 
-        $bMenuManage = false;
-        $sMenuActions = $sMenuManage = '';
-
+        $sMenuActions = '';
 		if(!$bViewOnly) {
-	        //--- Actions Menu
 	        $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
 	        $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
 	        $oMenuActions->setDynamicMode($bDynamicMode);
 	        $sMenuActions = $oMenuActions->getCode();
-
-	        //--- Manage Menu
-	        $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
-	        $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
-	        $oMenuManage->setDynamicMode($bDynamicMode);
-
-	        $sMenuManage = $oMenuManage->getCode();
-	        $bMenuManage = !empty($sMenuManage);
-	        if($bMenuManage) {
-	            $sMenuManage = $this->_oTemplate->parseHtmlByName('comment_manage.html', array(
-	                'style_prefix' => $this->_sStylePrefix,
-	                'content' => $sMenuManage
-	            ));
-	
-	            $sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
-	        }
 		}
 
         return $this->_oTemplate->parseHtmlByName('comment_actions.html', array(
@@ -468,22 +449,6 @@ class BxBaseCmts extends BxDolCmts
             'js_object' => $this->_sJsObjName,
             'style_prefix' => $this->_sStylePrefix,
             'menu_actions' => $sMenuActions,
-/*
-            'bx_if:hide_rate_count' => array(
-                'condition' => (int)$aCmt['cmt_rate'] <= 0,
-                'content' => array()
-            ),
-            'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
-*/
-            'bx_if:show_menu_manage' => array(
-                'condition' => $bMenuManage,
-                'content' => array(
-                    'js_object' => $this->_sJsObjName,
-                    'style_prefix' => $this->_sStylePrefix,
-                    'id' => $aCmt['cmt_id'],
-                    'popup_text' => $sMenuManage
-                )
-            )
         ));
     }
 
