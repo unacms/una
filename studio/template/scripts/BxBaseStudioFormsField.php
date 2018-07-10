@@ -608,7 +608,6 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 $oForm->aInputs['checker_params_length_max']['value'] = '';
                 break;
 
-
             case 'preg':
                 $oForm->aInputs['checker_params_preg']['value'] = '';
                 break;
@@ -633,7 +632,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     {
         switch($sCheckerFunc) {
             case 'length':
-            case 'date_range':
+                 case 'date_range':
                 unset(
                     $oForm->aInputs['checker_params_length_min'],
                     $oForm->aInputs['checker_params_length_max']

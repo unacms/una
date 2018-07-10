@@ -112,7 +112,7 @@ BxDolStudioFormsFields.prototype.onChangeType = function(iDiId) {
 BxDolStudioFormsFields.prototype.onSelectChecker = function(oSelect) {
 	var sChecker = $(oSelect).val();
 
-	$('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_params_date_range_min, #bx-form-element-checker_params_date_range_max').hide().find('input').val('');
+	$('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg').hide().find('input').val('');
 
 	switch(sChecker) {
 	    case 'length':
