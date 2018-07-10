@@ -1,4 +1,5 @@
 <?php
+
 /**
  * class Recurly_Adjustment
  * @property string $type The type of adjustment to return: charge or credit.
@@ -23,6 +24,10 @@
  * @property boolean $tax_exempt true exempts tax on the charge, false applies tax on the charge. If not defined, then defaults to the Plan and Site settings. This attribute does not work for credits (negative adjustments). Credits are always post-tax. Pre-tax discounts should use the Coupons feature.
  * @property mixed[] $tax_details The nested address information of the adjustment: name, type, tax_rate, tax_in_cents.
  * @property string $tax_code Optional field for EU VAT merchants and Avalara AvaTax Pro merchants. If you are using Recurly's EU VAT feature, you can use values of unknown, physical, or digital. If you have your own AvaTax account configured, you can use Avalara tax codes to assign custom tax rules.
+ * @property string $product_code Merchant defined product code
+ * @property string $credit_reason_code Can be set if adjustment is a credit (unit_amount_in_cents < 0). Allowed values: [general, service, promotional, refund, gift_card, write_off]. Defaults to "general".
+ * @property Recurly_ShippingAddress $shipping_address The Recurly_ShippingAddress object associated with this adjustment.
+ * @property string $shipping_address_id The id of Recurly_ShippingAddress object associated with this adjustment.
  * @property DateTime $start_date A timestamp associated with when the adjustment began.
  * @property DateTime $end_date A timestamp associated with when the adjustment ended.
  * @property DateTime $created_at A timestamp associated with when the adjustment was created.
@@ -36,6 +41,7 @@ class Recurly_Adjustment extends Recurly_Resource
   public function create() {
     $this->_save(Recurly_Client::POST, $this->createUriForAccount());
   }
+
   public function delete() {
     return Recurly_Base::_delete($this->getHref(), $this->_client);
   }
@@ -77,17 +83,28 @@ class Recurly_Adjustment extends Recurly_Resource
       throw new Recurly_Error("'account_code' is not specified");
 
     return (Recurly_Client::PATH_ACCOUNTS . '/' . rawurlencode($this->account_code) .
-            Recurly_Client::PATH_ADJUSTMENTS);
+        Recurly_Client::PATH_ADJUSTMENTS);
+  }
+
+  protected function populateXmlDoc(&$doc, &$node, &$obj, $nested = false) {
+    if ($this->isEmbedded($node, 'adjustments')) {
+      $adjustmentNode = $node->appendChild($doc->createElement($this->getNodeName()));
+      parent::populateXmlDoc($doc, $adjustmentNode, $obj, $nested);
+    } else {
+      parent::populateXmlDoc($doc, $node, $obj, $nested);
+    }
   }
 
   protected function getNodeName() {
     return 'adjustment';
   }
+
   protected function getWriteableAttributes() {
     return array(
       'currency', 'unit_amount_in_cents', 'quantity', 'description',
       'accounting_code', 'tax_exempt', 'tax_code', 'start_date', 'end_date',
-      'revenue_schedule_type', 'origin'
+      'revenue_schedule_type', 'origin', 'product_code', 'credit_reason_code',
+      'shipping_address', 'shipping_address_id'
     );
   }
 }

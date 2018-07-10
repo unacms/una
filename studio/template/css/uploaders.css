@@ -2,7 +2,7 @@
 
 
 /*--- Cover crop style ---*/
-.bx-popup-content-wrapped .bx-croppie-container.bx-croppie-container-cover {
+.bx-popup-content-wrapped .bx-croppie-element.bx-croppie-element-cover {
     min-height: 190px;
 }
 

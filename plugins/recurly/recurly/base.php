@@ -3,6 +3,7 @@
 abstract class Recurly_Base
 {
   protected $_href;
+  protected $_type;
   protected $_client;
   protected $_links;
 
@@ -15,7 +16,7 @@ abstract class Recurly_Base
 
   /**
    * Request the URI, validate the response and return the object.
-   * @param string Resource URI, if not fully qualified, the base URL will be appended
+   * @param string Resource URI, if not fully qualified, the base URL will be prepended
    * @param string Optional client for the request, useful for mocking the client
    */
   public static function _get($uri, $client = null)
@@ -29,8 +30,23 @@ abstract class Recurly_Base
   }
 
   /**
+   * Send a HEAD request to the URI, validate the response and return the headers.
+   * @param string Resource URI, if not fully qualified, the base URL will be prepended
+   * @param string Optional client for the request, useful for mocking the client
+   */
+  public static function _head($uri, $client = null)
+  {
+    if (is_null($client)) {
+      $client = new Recurly_Client();
+    }
+    $response = $client->request(Recurly_Client::HEAD, $uri);
+    $response->assertValidResponse();
+    return $response->headers;
+  }
+
+  /**
    * Post to the URI, validate the response and return the object.
-   * @param string Resource URI, if not fully qualified, the base URL will be appended
+   * @param string Resource URI, if not fully qualified, the base URL will be prepended
    * @param string Data to post to the URI
    * @param string Optional client for the request, useful for mocking the client
    */
@@ -48,7 +64,7 @@ abstract class Recurly_Base
 
   /**
    * Put to the URI, validate the response and return the object.
-   * @param string Resource URI, if not fully qualified, the base URL will be appended
+   * @param string Resource URI, if not fully qualified, the base URL will be prepended
    * @param string Optional client for the request, useful for mocking the client
    */
   protected static function _put($uri, $client = null)
@@ -149,6 +165,11 @@ abstract class Recurly_Base
     $this->_href = $href;
   }
 
+  /** Refers to the `type` root xml attribute **/
+  public function getType() {
+    return $this->_type;
+  }
+
   private function addLink($name, $href, $method){
     $this->_links[$name] = new Recurly_Link($name, $href, $method);
   }
@@ -177,7 +198,14 @@ abstract class Recurly_Base
     'billing_info' => 'Recurly_BillingInfo',
     'coupon' => 'Recurly_Coupon',
     'unique_coupon_codes' => 'Recurly_UniqueCouponCodeList',
+    'charge_invoice' => 'Recurly_Invoice',
+    'credit_invoice' => 'Recurly_Invoice',
     'currency' => 'Recurly_Currency',
+    'custom_fields' => 'Recurly_CustomFieldList',
+    'custom_field' => 'Recurly_CustomField',
+    'credit_invoices' => 'array',
+    'credit_payment' => 'Recurly_CreditPayment',
+    'credit_payments' => 'Recurly_CreditPaymentList',
     'details' => 'array',
     'discount_in_cents' => 'Recurly_CurrencyList',
     'delivery' => 'Recurly_Delivery',
@@ -193,6 +221,7 @@ abstract class Recurly_Base
     'gifter_account' => 'Recurly_Account',
     'invoice' => 'Recurly_Invoice',
     'invoices' => 'Recurly_InvoiceList',
+    'invoice_collection' => 'Recurly_InvoiceCollection',
     'line_items' => 'array',
     'measured_unit' => 'Recurly_MeasuredUnit',
     'measured_units' => 'Recurly_MeasuredUnitList',
@@ -291,7 +320,9 @@ abstract class Recurly_Base
             $node = $node->nextSibling;
             continue;
           }
-        } else if (is_array($object)) {
+        // Would prefer to do `$object instanceof ArrayAccess` but Recurly_CurrencyList
+        // implements that and expects to have its children assigned like `$list->USD = 123`.
+        } else if (is_array($object) || $object instanceof Recurly_CustomFieldList) {
           if ($nodeName == 'error') {
             $object[] = Recurly_Resource::parseErrorNode($node);
             $node = $node->nextSibling;
@@ -400,8 +431,15 @@ abstract class Recurly_Base
     else {
       if ($node_class == 'Recurly_CurrencyList') {
         $new_obj = new $node_class($nodeName);
-      } else
+      } else {
         $new_obj = new $node_class();
+      }
+
+      // It may have a type attribute we wish to capture
+      $typeAttribute = $node->getAttribute('type');
+      if (!empty($typeAttribute)) {
+        $new_obj->_type = $typeAttribute;
+      }
 
       $href = $node->getAttribute('href');
       if (!empty($href)) {

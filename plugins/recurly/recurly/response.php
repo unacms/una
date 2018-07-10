@@ -26,8 +26,16 @@ class Recurly_ClientResponse
         if ($trans_error instanceof Recurly_TransactionError && $transaction instanceof Recurly_Transaction)
           throw new Recurly_ValidationError($trans_error->customer_message, $transaction, array($trans_error));
       }
-      else
+      else {
+        // Here we are making sure that this isn't a ValidationError in the shape of a FieldError
+        // If it is, we will reshape it into a ValidationError
+        $error = @$this->parseErrorXml($this->body);
+        if (isset($error)) {
+          throw new Recurly_ValidationError('Validation error', $object, array($error));
+        }
         throw new Recurly_ValidationError('Validation error', $object, $object->getErrors());
+      }
+
     }
   }
 
