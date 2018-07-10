@@ -13,19 +13,37 @@ require_once('BxPaymentGridSbsAdministration.php');
 
 class BxPaymentGridSbsList extends BxPaymentGridSbsAdministration
 {
+	protected $_aProvidersAttached;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
+
+        $this->_aProvidersAttached = array();
     }
 
     protected function _getActionActions ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+    	$sJsCode = '';
+    	if(!empty($aRow['seller_id']) && !empty($aRow['provider']) && !in_array($aRow['provider'], $this->_aProvidersAttached)) {
+    		$oProvider = $this->_oModule->getObjectProvider($aRow['provider'], $aRow['seller_id']);
+    		if($oProvider) {
+    			$oProvider->addJsCss();
+    			 
+    			$sMethodName = 'getJsCode';
+    			if(method_exists($oProvider, $sMethodName))
+    				$sJsCode = $oProvider->$sMethodName();
+
+    			$this->_aProvidersAttached[] = $aRow['provider'];
+    		}
+    	}
+
     	unset($a['attr']['bx_grid_action_single']);
     	$a['attr'] = array_merge($a['attr'], array(
     		"onclick" => "bx_menu_popup('" . $this->_oModule->_oConfig->getObject('menu_sbs_actions') . "', this, {id: 'bx-payment-subscription-" . $aRow['id'] . "'}, {id: " . $aRow['id'] . ", grid: '" . $this->_sObject . "'});"
     	));
 
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
+        return $sJsCode . parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
 	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

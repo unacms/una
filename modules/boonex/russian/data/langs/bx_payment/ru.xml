@@ -359,6 +359,7 @@
 	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
 	<string name="_bx_payment_cbee_txt_checkout_with_single"><![CDATA[Оплатить через {0}]]></string>
     <string name="_bx_payment_cbee_txt_checkout_with_recurring"><![CDATA[Оплатить через {0}]]></string>
+    <string name="_bx_payment_cbee_menu_item_title_manager"><![CDATA[Портал самообслуживания]]></string>
 	<string name="_bx_payment_txt_name_chargebee"><![CDATA[Chargebee]]></string>
 	<string name="_bx_payment_txt_name_chargebee_v3"><![CDATA[Chargebee]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Chargebee]]></string>

@@ -43,6 +43,29 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         echo $oPage->toJson();
     }
 
+    public function actionGetPortal($iPendingId)
+    {
+    	if(!isLogged())
+    		return echoJson(array());
+
+    	$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+    	if(empty($aPending) || !is_array($aPending))
+    		return echoJson(array());
+
+    	$this->setOptionsByVendor((int)$aPending['seller_id']);
+
+    	$aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iPendingId));
+    	if(empty($aSubscription) || !is_array($aSubscription))
+    		return echoJson(array());
+
+    	$oPortal = $this->getPortal($aSubscription['customer_id'], $aSubscription['subscription_id']);
+    	if($oPortal === false)
+    		return echoJson(array());
+
+    	header('Content-type: text/html; charset=utf-8');
+    	echo $oPortal->toJson();
+    }
+
     public function addJsCss()
     {
     	if(!$this->isActive())
@@ -136,8 +159,47 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         return $aResult;
     }
 
+    public function getPortal($sCustomerId, $sSubscriptionId)
+    {
+    	$oPortal = false;
+
+    	try {
+    		ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+    		$oResult = ChargeBee_PortalSession::create(array(
+				'customer' => array(
+					'id' => $sCustomerId
+				)));
+
+    		$oPortal = $oResult->portalSession();
+    	}
+    	catch (Exception $oException) {
+    		$iError = $oException->getCode();
+    		$sError = $oException->getMessage();
+
+    		$this->log('Get Portal Error: ' . $sError . '(' . $iError . ')');
+
+    		return false;
+    	}
+
+    	return $oPortal;
+    }
+
+    public function getJsCode($aParams = array())
+    {
+    	$sSite = '';
+    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_js_code', 0, 0, array(
+	    	'site' => &$sSite,
+	    	'params' => &$aParams
+    	));
+
+    	return $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
+			'sProvider' => $this->_sName,
+			'sSite' => !empty($sSite) ? $sSite : $this->_getSite()
+    	), $aParams));
+    }
+
     /**
-     * Single tome payments aren't available with Chargebee
+     * Single time payments aren't available with Chargebee
      */
     public function getButtonSingle($iClientId, $iVendorId, $aParams = array())
     {
@@ -169,6 +231,19 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     	        'iClientId' => $iClientId
 	    	), $aParams))
     	));
+    }
+
+    public function getMenuItemsActionsRecurring($iClientId, $iVendorId, $aParams = array())
+    {
+    	if(empty($aParams['id']))
+    		return array();
+
+    	$sPrefix = 'bx-payment-strp-';
+    	$sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
+
+    	return array(
+   			array('id' => $sPrefix . 'manager', 'name' => $sPrefix . 'manager', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:return " . $sJsObject . ".manage(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_cbee_menu_item_title_manager'))
+    	);
     }
 }
 

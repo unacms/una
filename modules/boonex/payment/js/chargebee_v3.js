@@ -21,15 +21,15 @@ BxPaymentProviderChargebeeV3.prototype.init = function(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 
-    this._sObjNameCart = oOptions.sObjNameCart;
-    this._iClientId = oOptions.iClientId;
-    this._iSellerId  = oOptions.iSellerId;
-    this._iModuleId  = oOptions.iModuleId;
-    this._iItemId  = oOptions.iItemId;
-    this._sItemName = oOptions.sItemName;
-    this._iItemCount  = oOptions.iItemCount;
-    this._sRedirect  = oOptions.sRedirect;
-    this._sCustom  = oOptions.sCustom;
+    this._sObjNameCart = oOptions.sObjNameCart == undefined ? '' : oOptions.sObjNameCart;
+    this._iClientId = oOptions.iClientId == undefined ? 0 : oOptions.iClientId;
+    this._iSellerId = oOptions.iSellerId == undefined ? 0 : oOptions.iSellerId;
+    this._iModuleId  = oOptions.iModuleId == undefined ? 0 : oOptions.iModuleId;
+    this._iItemId  = oOptions.iItemId == undefined ? 0 : oOptions.iItemId;
+    this._sItemName = oOptions.sItemName == undefined ? '' : oOptions.sItemName;
+    this._iItemCount  = oOptions.iItemCount == undefined ? 0 : oOptions.iItemCount;
+    this._sRedirect  = oOptions.sRedirect == undefined ? '' : oOptions.sRedirect;
+    this._sCustom  = oOptions.sCustom == undefined ? '' : oOptions.sCustom;
 
 	this._rHandler = Chargebee.init({
         site: oOptions.sSite
@@ -84,6 +84,25 @@ BxPaymentProviderChargebeeV3.prototype.subscribe = function(oLink) {
 	    	oLink.removeClass('bx-btn-disabled');
 	    }
 	});
+
+	return false;
+};
+
+BxPaymentProviderChargebeeV3.prototype.manage = function(oLink, iPendingId) {
+	var $this = this;
+    var oDate = new Date();
+
+    $(".bx-popup-applied:visible").dolPopupHide();
+
+	this._rHandler.setPortalSession(function() {
+    	return $.post({
+    		url: $this._sActionsUrl + 'call/' + $this._sProvider + '/get_portal/' + iPendingId + '/',
+    		dataType: 'json'
+    	});
+    });
+
+	var cbPortal = this._rHandler.createChargebeePortal();
+	cbPortal.open({});
 
 	return false;
 };
