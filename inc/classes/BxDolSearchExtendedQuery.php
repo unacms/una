@@ -50,7 +50,11 @@ class BxDolSearchExtendedQuery extends BxDolDb
                 $iNow = time();
                 $sCaptionKey = (!empty($aField['caption']) ? $aField['caption'] : '_sys_form_input_' . $sField) . '_' . $iNow;
                 $sInfoKey = (!empty($aField['info']) ? $aField['info'] : '_sys_form_input_' . $sField . '_info') . '_' . $iNow;
-
+                $sSearchType = isset($aField['search_type']) ? $aField['search_type'] : reset(BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']]);
+                $sSearchValue =  isset($aField['search_value']) ? $aField['search_value'] : (in_array($aField['type'], array('checkbox', 'switcher')) ? $aField['value'] : '');
+                if ($sSearchType == 'datepicker_range_age' || $sSearchType == 'datepicker_range'){
+                    $sSearchValue =  BxDolService::getSerializedService($aObject['module'], 'get_search_options', array($sField, $aField['type'], $sSearchType));
+                }
                 $bResult = (int)$oDb->query("INSERT INTO `sys_search_extended_fields`(`object`, `name`, `type`, `caption`, `info`, `values`, `pass`, `search_type`, `search_value`, `search_operator`, `active`, `order`) VALUES(:object, :name, :type, :caption, :info, :values, :pass, :search_type, :search_value, :search_operator, '1', :order)", array(
                     'object' => $aObject['object'], 
                     'name' => $sField,
@@ -59,8 +63,8 @@ class BxDolSearchExtendedQuery extends BxDolDb
                 	'info' => $sInfoKey,
                     'values' => $aField['values'],
                     'pass' => $aField['pass'],
-                    'search_type' => isset($aField['search_type']) ? $aField['search_type'] : reset(BxDolSearchExtended::$TYPE_TO_TYPE_SEARCH[$aField['type']]),
-                    'search_value' => isset($aField['search_value']) ? $aField['search_value'] : (in_array($aField['type'], array('checkbox', 'switcher')) ? $aField['value'] : ''), 
+                    'search_type' => $sSearchType,
+                    'search_value' => $sSearchValue, 
                     'search_operator' => isset($aField['search_operator']) ? $aField['search_operator'] : reset(BxDolSearchExtended::$TYPE_TO_OPERATOR[$aField['type']]),
                     'order' => $iOrder++
                 )) > 0;

@@ -764,6 +764,7 @@
 	<string name="_adm_form_txt_field_checker_avail"><![CDATA[Доступность данных (нужно ввести значение) ]]></string>
 	<string name="_adm_form_txt_field_checker_captcha"><![CDATA[Капча (проверка корректного текста для картинки безопасности)]]></string>
 	<string name="_adm_form_txt_field_checker_date"><![CDATA[Дата (проверка правильного формата даты)]]></string>
+  <string name="_adm_form_txt_field_checker_date_range"><![CDATA[Возрастной диапазон]]></string>
 	<string name="_adm_form_txt_field_checker_date_time"><![CDATA[Дата и время (проверка правильного формата даты и времени)]]></string>
 	<string name="_adm_form_txt_field_checker_email"><![CDATA[Имейл (формат правильного эл. адреса)]]></string>
 	<string name="_adm_form_txt_field_checker_empty"><![CDATA[Выбрать...]]></string>
