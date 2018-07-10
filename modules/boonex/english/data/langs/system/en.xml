@@ -766,6 +766,7 @@
 	<string name="_adm_form_txt_field_checker_avail"><![CDATA[Data Availability (something must be entered) ]]></string>
 	<string name="_adm_form_txt_field_checker_captcha"><![CDATA[Captcha (check for correct security image text input)]]></string>
 	<string name="_adm_form_txt_field_checker_date"><![CDATA[Date (check for correct date format)]]></string>
+  <string name="_adm_form_txt_field_checker_date_range"><![CDATA[Age's range]]></string>
 	<string name="_adm_form_txt_field_checker_date_time"><![CDATA[Date and Time (check for correct date and time format)]]></string>
 	<string name="_adm_form_txt_field_checker_email"><![CDATA[E-mail (correct email address format)]]></string>
 	<string name="_adm_form_txt_field_checker_empty"><![CDATA[Select...]]></string>
@@ -1294,7 +1295,6 @@
 	<string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Installation date]]></string>
 	<string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Live updates interval (in milliseconds)]]></string>
 	<string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Google Maps API key]]></string>
-	<string name="_adm_stg_cpt_option_sys_embed_default"><![CDATA[Embeds provider]]></string>
 	<string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Embed.ly API key (fill in to use instead of Iframely)]]></string>
 	<string name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Embed.ly API pattern (fill in to use instead of Iframely)]]></string>
 	<string name="_adm_stg_cpt_option_sys_iframely_api_key"><![CDATA[Iframely API key]]></string>
@@ -2157,13 +2157,12 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
 	<string name="_sys_menu_item_title_cart"><![CDATA[Shopping Cart]]></string>
-	<string name="_sys_menu_item_title_cmts_administration"><![CDATA[Manage Сomments]]></string>
+  <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Manage Сomments]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
-	<string name="_sys_menu_item_title_cmts_item_more"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_dashboard"><![CDATA[Dash]]></string>
 	<string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
 	<string name="_sys_menu_item_title_logout"><![CDATA[Sign out]]></string>
@@ -2225,7 +2224,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_cmts_item_report"><![CDATA[Report]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_score"><![CDATA[Score]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_vote"><![CDATA[Plus]]></string>
-	<string name="_sys_menu_item_title_system_cmts_item_more"><![CDATA[More]]></string>
 	<string name="_sys_menu_item_title_system_dashboard"><![CDATA[Dashboard]]></string>
 	<string name="_sys_menu_item_title_system_home"><![CDATA[Home]]></string>
 	<string name="_sys_menu_item_title_system_login"><![CDATA[Log in]]></string>
@@ -2658,7 +2656,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[Database and files versions are different, probably previous patch wasn't applied correctly.]]></string>
 	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply upgrade because the following files were modified: {0}]]></string>
 	<string name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Can't apply upgrade because too many files({0}%) were modified]]></string>
-	<string name="_sys_upgrade_files_checksum_failed_too_many_module"><![CDATA[Can't apply upgrade because too many files({0}%) were modified in {1} module]]></string>
 	<string name="_sys_upgrade_get_version_info_failed"><![CDATA[Get version info failed, please check internet connection on the web-server or web-server firewall]]></string>
 	<string name="_sys_upgrade_patch_checksum_failed"><![CDATA[Downloaded patch file checksum is invalid]]></string>
 	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Patch download failed, or downloaded file can't be saved]]></string>

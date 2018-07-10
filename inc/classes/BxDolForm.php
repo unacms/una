@@ -1417,6 +1417,18 @@ class BxDolFormCheckerHelper
     {
         return self::checkPreg ($s, '#^\d+\-\d+\-\d+$#');
     }
+    static public function checkDateRange ($s, $iMin, $iMax)
+    {
+        if (self::checkPreg ($s, '#^\d+\-\d+\-\d+$#')){
+            $dDate = new DateTime($s);
+            $dDateMax = new DateTime("-" . $iMin . " years");
+            $dDateMin = new DateTime("-" . $iMax . " years");
+            if ($dDate > $dDateMin && $dDate < $dDateMax){
+                return true;
+            }
+        }
+        return false;
+    }
     static public function checkDateTime ($s)
     {
         // remove unnecessary opera's input value;

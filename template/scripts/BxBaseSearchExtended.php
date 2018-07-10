@@ -150,7 +150,21 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
             if(in_array($aField['search_type'], array('checkbox_set', 'select_multiple')) && isset($aField['values']['']))
                 unset($aField['values']['']);
-
+            
+            $aAttrs = array();
+            
+            if(in_array($aField['search_type'], array('datepicker_range_age')) && isset($aField['search_value']) && $aField['search_value'] != ''){
+                $aTmp = BxDolService::callSerialized($aField['search_value']);
+                if (isset($aTmp['min']) && isset($aTmp['max'])){
+                    $aField['search_value'] = $aTmp['min'] . '-' . $aTmp['max'];
+                    $aAttrs = array('min' => $aTmp['min'], 'max' => $aTmp['max'], 'step' => 1);
+                }
+            }
+            
+            if(in_array($aField['search_type'], array('datepicker_range')) && isset($aField['search_value']) && $aField['search_value'] != ''){
+                $aField['search_value'] = '';
+            }
+           
             $aForm['inputs'][$aField['name']] = array(
                 'type' => $aField['search_type'],
                 'name' => $aField['name'],
@@ -158,6 +172,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             	'info' => _t($aField['info']),
                 'values' => $aField['values'],
                 'value' => $aField['search_value'],
+                'attrs' => $aAttrs,
                 'db' => array(
                     'pass' => !empty($aField['pass']) ? $aField['pass'] : 'Xss'
                 )

@@ -96,14 +96,17 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
                 $iMax = $this->_iAgeMax;
 
                 $aInput['type'] = 'doublerange';
+				
                 if(empty($aInput['value']))
                     $aInput['value'] = $iMin . '-' . $iMax;
 
-                $aAttrs= array('min' => $iMin, 'max' => $iMax, 'step' => 1);
-                if(!empty($aInput['attrs']) && is_array($aInput['attrs']))
-                    $aInput['attrs'] = array_merge($aInput['attrs'], $aAttrs);
-                else 
-                    $aInput['attrs'] = $aAttrs;
+				if (!isset($aInput['attrs']['min']) && !isset($aInput['attrs']['max'])){
+					$aAttrs = array('min' => $iMin, 'max' => $iMax, 'step' => 1);
+					if(!empty($aInput['attrs']) && is_array($aInput['attrs']))
+						$aInput['attrs'] = array_merge($aInput['attrs'], $aAttrs);
+					else 
+						$aInput['attrs'] = $aAttrs;
+				}
 
                 return $this->genInputStandard($aInput);
         }

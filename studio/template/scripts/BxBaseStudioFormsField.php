@@ -274,6 +274,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         $aForm['inputs'][$sKey]['value'] = strtolower($this->aField[$sKey]);
                         switch($aForm['inputs'][$sKey]['value']) {
                             case 'length':
+                            case 'date_range':
                                 unset($aForm['inputs']['checker_params_length_min']['tr_attrs']['style'], $aForm['inputs']['checker_params_length_max']['tr_attrs']['style']);
                                 break;
                             case 'preg':
@@ -584,6 +585,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 unset($oForm->aInputs['checker_func']['tr_attrs']['style'], $oForm->aInputs['checker_error']['tr_attrs']['style']);
                 switch($oForm->getCleanValue('checker_func')) {
                     case 'length':
+                    case 'date_range':
                         unset($oForm->aInputs['checker_params_length_min']['tr_attrs']['style'], $oForm->aInputs['checker_params_length_max']['tr_attrs']['style']);
                         $this->unsetCheckerFields($oForm, 'preg');
                         break;
@@ -601,9 +603,11 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     {
         switch($sCheckerFunc) {
             case 'length':
+            case 'date_range':
                 $oForm->aInputs['checker_params_length_min']['value'] = '';
                 $oForm->aInputs['checker_params_length_max']['value'] = '';
                 break;
+
 
             case 'preg':
                 $oForm->aInputs['checker_params_preg']['value'] = '';
@@ -629,6 +633,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     {
         switch($sCheckerFunc) {
             case 'length':
+            case 'date_range':
                 unset(
                     $oForm->aInputs['checker_params_length_min'],
                     $oForm->aInputs['checker_params_length_max']
@@ -1035,7 +1040,7 @@ class BxBaseStudioFormsFieldTextarea extends BxBaseStudioFormsFieldText
 class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
 {
     protected $sType = 'datepicker';
-    protected $aCheckFunctions = array('date');
+    protected $aCheckFunctions = array('date','date_range');
     protected $sDbPass = 'DateTs';
     protected $aDbPassDependency = array(
         'Date' => array('alter' => 'date'),
