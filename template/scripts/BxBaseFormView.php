@@ -836,9 +836,9 @@ BLAH;
             case 'datepicker':
                 $this->addCssJsUi ();
                 break;
-            case 'rgba':
-            case 'rgb':
-                $this->addCssJsMinicolors ();
+            case 'text':
+                if (isset($aAttrs['class']) && false !== strpos($aAttrs['class'], 'bx-form-input-rgb'))
+                    $this->addCssJsMinicolors ();
                 break;
         }
 
