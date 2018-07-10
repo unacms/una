@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Class Recurly_AccountAcquisition
+ * @property Recurly_Stub $account The associated Recurly_Account for this account acquisition.
+ * @property int $cost_in_cents Total cost of marketing activities to acquire the customer.
+ * @property string $currency_code Currency, 3-letter ISO code.
+ * @property string $channel The method by which the customer was acquired. Allowed values: [referral, social_media, email, paid_search, organic_search, direct_traffic, marketing_content, blog, events, outbound_sales, advertising, public_relations, other].
+ * @property string $subchannel A free-form field to provide additional detail on the acquisition channel.
+ * @property string $campaign Identifier for the marketing campaign used to convert this account.
+ * @property DateTime $created_at The date and time the account acquisition was created.
+ * @property DateTime $updated_at The date and time the account acquisition was last updated.
+ */
 class Recurly_AccountAcquisition extends Recurly_Resource
 {
   public static function get($accountCode, $client = null) {

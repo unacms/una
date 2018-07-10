@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class Recurly_MeasuredUnit
+ * @property int $id The unique identifier of the account.
+ * @property string $name Unique internal name of the measured unit on your site.
+ * @property string $display_name Display name for the measured unit. We recommend the singular version. (e.g. - GB, API Call, Email).
+ * @property string $description Optional internal description.
+ */
 class Recurly_MeasuredUnit extends Recurly_Resource
 {
   public function create() {

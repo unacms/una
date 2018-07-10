@@ -2,12 +2,12 @@
 
 class Recurly_InvoiceList extends Recurly_Pager
 {
-  public static function getOpen($params = null, $client = null) {
-    return Recurly_InvoiceList::get(Recurly_Pager::_setState($params, 'open'), $client);
+  public static function getPending($params = null, $client = null) {
+    return Recurly_InvoiceList::get(Recurly_Pager::_setState($params, 'pending'), $client);
   }
 
-  public static function getCollected($params = null, $client = null) {
-    return Recurly_InvoiceList::get(Recurly_Pager::_setState($params, 'collected'), $client);
+  public static function getPaid($params = null, $client = null) {
+    return Recurly_InvoiceList::get(Recurly_Pager::_setState($params, 'paid'), $client);
   }
 
   public static function getFailed($params = null, $client = null) {

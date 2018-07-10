@@ -6,28 +6,28 @@
  *
  * The pager moves forward only and can rewind to the first item.
  */
-abstract class Recurly_Pager extends Recurly_Base implements Iterator
+abstract class Recurly_Pager extends Recurly_Base implements Iterator, Countable
 {
   private $_position = 0;    // position within the current page
-  protected $_count = null;  // total number of records
   protected $_objects;       // current page of records
 
   /**
-   * Number of records in this list.
+   * If the pager has a URL this will send a HEAD request to get the count of
+   * all records. Otherwise it'll return the count of the cached _objects.
+   *
    * @return integer number of records in list
    */
   public function count() {
-    if (!isset($this->_count)) {
-      if (isset($this->_objects)) {
-        $this->_count = count($this->_objects);
-      } elseif (isset($this->_href)) {
-        // Don't bother with the HEAD request the server takes the same amount
-        // of time to generate them so, might as well just get the results at
-        // the same time.
-        $this->_loadFrom($this->_href);
+    if (isset($this->_href)) {
+      $headers = Recurly_Base::_head($this->_href, $this->_client);
+      if (isset($headers['X-Records'])) {
+        return intval($headers['X-Records']);
       }
+    } elseif (isset($this->_objects) && is_array($this->_objects)) {
+      return count($this->_objects);
     }
-    return $this->_count;
+
+    return null;
   }
 
   /**
@@ -45,8 +45,8 @@ abstract class Recurly_Pager extends Recurly_Base implements Iterator
   public function current()
   {
     // Work around pre-PHP 5.5 issue that prevents `empty($this->count())`:
-    if ($this->count() == 0) {
-      return null;
+    if (!isset($this->_objects)) {
+      $this->_loadFrom($this->_href);
     }
 
     if ($this->_position >= sizeof($this->_objects)) {
@@ -100,7 +100,6 @@ abstract class Recurly_Pager extends Recurly_Base implements Iterator
   }
 
   protected function _afterParseResponse($response, $uri) {
-    $this->_loadRecordCount($response);
     $this->_loadLinks($response);
     $this->_href = isset($this->_links['start']) ? $this->_links['start'] : $uri;
   }
@@ -131,24 +130,11 @@ abstract class Recurly_Pager extends Recurly_Base implements Iterator
     }
   }
 
-  /**
-   * Find the total number of results in the collection from the 'X-Records' header.
-   */
-  private function _loadRecordCount($response)
-  {
-    if (isset($response->headers['X-Records'])) {
-      $this->_count = intval($response->headers['X-Records']);
-    }
-  }
-
   protected function updateErrorAttributes() {}
-
 
   public function __toString()
   {
     $class = get_class($this);
-    $count = (!empty($this->_count) ? "count={$this->_count}" : '');
-
-    return "<{$class}[href={$this->getHref()}] $count>";
+    return "<{$class}[href={$this->getHref()}]>";
   }
 }

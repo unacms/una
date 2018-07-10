@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Recurly_Account
  * @property Recurly_Stub $adjustments The URL of adjustments for the specified account.
@@ -21,6 +22,13 @@
  * @property Recurly_Address $address The nested address information of the account: address1, address2, city, state, zip, country, phone.
  * @property string $accept_language The ISO 639-1 language code from the user's browser, indicating their preferred language and locale.
  * @property string $hosted_login_token The unique token for automatically logging the account in to the hosted management pages. You may automatically log the user into their hosted management pages by directing the user to: https://:subdomain.recurly.com/account/:hosted_login_token.
+ * @property string $preferred_locale The locale for the emails
+ * @property string $has_live_subscription True if the account has at least one live subscription.
+ * @property string $has_active_subscription True if the account has at least one active subscription.
+ * @property string $has_future_subscription True if the account has at least one future subscription.
+ * @property string $has_canceled_subscription True if the account has at least one canceled subscription.
+ * @property string $has_paused_subscription True if the account has at least one paised subscription.
+ * @property string $has_past_due_invoice True if the account has at least one past due invoice.
  * @property DateTime $created_at The date and time the account was created in Recurly.
  * @property DateTime $updated_at The date and time the account or its billing info was last updated.
  * @property DateTime $closed_at For closed accounts, the date and time it was closed.
@@ -32,6 +40,7 @@ class Recurly_Account extends Recurly_Resource
     if (!is_null($accountCode))
       $this->account_code = $accountCode;
     $this->address = new Recurly_Address();
+    $this->custom_fields = new Recurly_CustomFieldList();
   }
 
   public function &__get($key)
@@ -94,7 +103,8 @@ class Recurly_Account extends Recurly_Resource
     return array(
       'account_code', 'username', 'first_name', 'last_name', 'vat_number',
       'email', 'company_name', 'accept_language', 'billing_info', 'address',
-      'tax_exempt', 'entity_use_code', 'cc_emails', 'shipping_addresses'
+      'tax_exempt', 'entity_use_code', 'cc_emails', 'shipping_addresses',
+      'preferred_locale', 'custom_fields'
     );
   }
   protected function getRequiredAttributes() {

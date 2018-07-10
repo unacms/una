@@ -4,7 +4,7 @@
  * @property string $uuid Transaction's unique identifier.
  * @property Recurly_Stub $account The URL of the account associated with the transaction.  Run get() to pull back a Recurly_Account
  * @property Recurly_Stub $invoice The URL of the invoice associated with the transaction.  Run get() to pull back a Recurly_Invoice
- * @property Recurly_Stub $subscription The URL of the subscription associated with the transaction.  Run get() to pull back a Recurly_Subscription
+ * @property Recurly_Stub $subscriptions The URL of the subscriptions associated with the transaction.
  * @property string $original_transaction For refund transactions, the URL of the original transaction.  Run get() to pull back a Recurly_Transaction
  * @property string $action purchase, verify or refund.
  * @property integer $amount_in_cents Total transaction amount in cents.
@@ -31,6 +31,9 @@
  * @property string $merchant_message For declined transactions, the message displayed to the merchant (if applicable).
  * @property string $customer_message For declined transactions, the message displayed to the customer (if applicable).
  * @property string $gateway_error_code For declined transactions, this field lists the gateway error code sent to us from the gateway (if applicable).
+ * @property string $payment_method The method of payment: The method of payment: (credit_card, paypal, eft, wire_transfer, money_order, check, or other).
+ * @property DateTime $collected_at Date payment was collected
+ * @property string $product_code Merchant defined product code
  */
 class Recurly_Transaction extends Recurly_Resource
 {
@@ -86,7 +89,7 @@ class Recurly_Transaction extends Recurly_Resource
   protected function getWriteableAttributes() {
     return array(
       'account', 'amount_in_cents', 'currency', 'description', 'accounting_code',
-      'tax_exempt', 'tax_code'
+      'tax_exempt', 'tax_code', 'product_code', 'payment_method', 'collected_at'
     );
   }
 }
