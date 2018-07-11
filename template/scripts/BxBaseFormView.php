@@ -535,24 +535,18 @@ EOS;
         $sInputCode = $this->genWrapperInput($aInput, $sInput);
 
 
-        if (empty($sInputCodeExtra)) $sInputCodeExtra = '';
         if (empty($sInfoIcon)) $sInfoIcon = '';
         if (empty($sInputCode)) $sInputCode = '';
         if (empty($sErrorIcon)) $sErrorIcon = '';
 
-        $sValueCode = '
-                    <div class="bx-form-value bx-clearfix' . $sClassAdd . $sClassOneLineValue . '">
-                        ' . $sInputCode . '
-                        ' . ($isOneLine ? '' : $sInfoIcon . $sErrorIcon) . '
-                        ' . $sInputCodeExtra . '
-                    </div>';
+        $sValueCode = '<div class="bx-form-value bx-clearfix' . $sClassAdd . $sClassOneLineValue . '">' . $sInputCode . '</div>';
 
         if ($isOneLine)
-            $sCode = $sValueCode . $sCaptionCode . '<div class="bx-clear"></div>' . $sInfoIcon . $sErrorIcon;
+            $sCode = $sValueCode . $sCaptionCode;
         else
             $sCode = $sCaptionCode . $sValueCode;
 
-        return "<div $sTrAttrs>" . $sCode . "</div>";
+        return '<div ' . $sTrAttrs . '><div class="bx-form-element">' . $sCode . '</div>' . $sInfoIcon . $sErrorIcon . '</div>';
     }
 
 
