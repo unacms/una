@@ -51,7 +51,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         parent::__construct($aModule);
 
         $this->CNF = array (
-            'ICON' => 'clock-o col-green1',
+            'ICON' => 'far clock col-green1',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'events',
