@@ -1491,7 +1491,7 @@ BLAH;
         $this->_addJs(array(
             'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
             'jquery-ui/jquery-ui.custom.min.js',
-        ), "'undefined' === typeof($.widget)");
+        ), "'undefined' === typeof($.datepicker)");
 
         self::$_isCssJsUiAdded = true;
     }
@@ -1559,7 +1559,7 @@ BLAH;
 
 
             $sRet .= "\n<script>\n";
-            $sRet .= "\nglJsLoadOnaddWebForms = []\n";
+            $sRet .= "\nglJsLoadOnaddWebForms = [];\n";
             foreach ($this->_aJs as $sCondition => $aJs) {
                 $sJs = $this->oTemplate->addJs($aJs, true);
                 if (!$sJs)

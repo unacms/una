@@ -32,7 +32,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'hubspot col-red2',
+            'ICON' => 'object-group col-red2',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
