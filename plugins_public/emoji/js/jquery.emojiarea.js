@@ -402,7 +402,7 @@
 
 	var 
 		oMenuWrapper = typeof this.options.menu_wrapper !== 'undefined' ? $(this.options.menu_wrapper) : $('<a class="smiles"></a>'),		
-		oMenuIcon = typeof this.options.menu_icon !== 'undefined' ? $(this.options.menu_icon) : $('<i class="sys-icon smile-o"></i>');
+		oMenuIcon = typeof this.options.menu_icon !== 'undefined' ? $(this.options.menu_icon) : $('<i class="sys-icon far smile"></i>');
 	
 	oMenuIcon
 		.attr('data-id', id)
@@ -591,9 +591,9 @@
         .appendTo(this.$menu);
     this.$categoryTabs = $(
         '<table class="emoji-menu-tabs"><tr>'
-            + '<td><a class="emoji-menu-tab"><i class="sys-icon clock-o"></i></a></td>'
-            + '<td><a class="emoji-menu-tab"><i class="sys-icon smile-o"></i></a></td>'
-            + '<td><a class="emoji-menu-tab"><i class="sys-icon qq"></i></a></td>'
+            + '<td><a class="emoji-menu-tab"><i class="sys-icon far clock"></i></a></td>'
+            + '<td><a class="emoji-menu-tab"><i class="sys-icon far smile"></i></a></td>'
+            + '<td><a class="emoji-menu-tab"><i class="sys-icon dove"></i></a></td>'
             + '<td><a class="emoji-menu-tab"><i class="sys-icon bell"></i></a></td>'
             + '<td><a class="emoji-menu-tab"><i class="sys-icon car"></i></a></td>'
             + '<td><a class="emoji-menu-tab"><i class="sys-icon hashtag"></i></a></td>'
