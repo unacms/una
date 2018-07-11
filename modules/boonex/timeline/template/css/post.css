@@ -7,22 +7,19 @@ div.bx-tl-post-cnt {
 }
 
 /*--- Post Form Styles ---*/
-div#bx-timeline-post textarea.bx-form-input-textarea {
+#bx_timeline_post textarea.bx-form-input-textarea {
 	height: 36px;
     height: 2.2rem;
 }
 
-div#bx-timeline-post div#bx-form-element-link,
-div#bx-timeline-post div#bx-form-element-photo,
-div#bx-timeline-post div#bx-form-element-video,
-div#bx-timeline-post .bx-form-input-files-uploaders {
+#bx_timeline_post div#bx-form-element-link,
+#bx_timeline_post div#bx-form-element-photo,
+#bx_timeline_post div#bx-form-element-video,
+#bx_timeline_post .bx-form-input-files-uploaders {
 	margin-top: 0px;
 }
-div#bx-timeline-post div#bx-form-element-attachments {
-	position: absolute;
-	z-index: 1;
-
-	right: 0px;
+#bx_timeline_post div#bx-form-element-attachments ul.bx-menu-btns-hor {
+	text-align: left;
 }
 div.bx-tl-uploader-file {
 	position: relative;
