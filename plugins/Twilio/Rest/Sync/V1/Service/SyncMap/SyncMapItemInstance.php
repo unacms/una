@@ -37,8 +37,10 @@ class SyncMapItemInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $serviceSid The service_sid
-     * @param string $mapSid The map_sid
+     * @param string $serviceSid The unique SID identifier of the Service Instance
+     *                           that hosts this Map object.
+     * @param string $mapSid The unique 34-character SID identifier of the Map
+     *                       containing this Item.
      * @param string $key The key
      * @return \Twilio\Rest\Sync\V1\Service\SyncMap\SyncMapItemInstance 
      */
@@ -92,6 +94,7 @@ class SyncMapItemInstance extends InstanceResource {
      * Fetch a SyncMapItemInstance
      * 
      * @return SyncMapItemInstance Fetched SyncMapItemInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -101,6 +104,7 @@ class SyncMapItemInstance extends InstanceResource {
      * Deletes the SyncMapItemInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();
@@ -111,6 +115,7 @@ class SyncMapItemInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return SyncMapItemInstance Updated SyncMapItemInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);

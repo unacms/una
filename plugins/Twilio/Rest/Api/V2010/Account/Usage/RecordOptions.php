@@ -17,10 +17,11 @@ abstract class RecordOptions {
      * @param string $category Only include usage of a given category
      * @param \DateTime $startDate Filter by start date
      * @param \DateTime $endDate Filter by end date
+     * @param boolean $includeSubaccounts The include_subaccounts
      * @return ReadRecordOptions Options builder
      */
-    public static function read($category = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
-        return new ReadRecordOptions($category, $startDate, $endDate);
+    public static function read($category = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE, $includeSubaccounts = Values::NONE) {
+        return new ReadRecordOptions($category, $startDate, $endDate, $includeSubaccounts);
     }
 }
 
@@ -29,15 +30,17 @@ class ReadRecordOptions extends Options {
      * @param string $category Only include usage of a given category
      * @param \DateTime $startDate Filter by start date
      * @param \DateTime $endDate Filter by end date
+     * @param boolean $includeSubaccounts The include_subaccounts
      */
-    public function __construct($category = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
+    public function __construct($category = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE, $includeSubaccounts = Values::NONE) {
         $this->options['category'] = $category;
         $this->options['startDate'] = $startDate;
         $this->options['endDate'] = $endDate;
+        $this->options['includeSubaccounts'] = $includeSubaccounts;
     }
 
     /**
-     * Only include usage of a given category
+     * Only include usage of this [usage category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
      * 
      * @param string $category Only include usage of a given category
      * @return $this Fluent Builder
@@ -48,7 +51,7 @@ class ReadRecordOptions extends Options {
     }
 
     /**
-     * Only include usage that has occurred on or after this date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify offsets to today, for example, StartDate=-30days, which will make StartDate 30 days before today
+     * Only include usage that has occurred on or after this date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can also specify offsets to today.  For example, `StartDate=-30days` will make `StartDate` be 30 days before today.
      * 
      * @param \DateTime $startDate Filter by start date
      * @return $this Fluent Builder
@@ -59,13 +62,24 @@ class ReadRecordOptions extends Options {
     }
 
     /**
-     * Only include usage that has occurred on or after this date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify offsets to today, for example, EndDate=+30days, which will make EndDate 30 days from today
+     * Only include usage that has occurred on or before this date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can also specify offsets to today.  For example, `EndDate=+30days` will make `EndDate` be 30 days from today.
      * 
      * @param \DateTime $endDate Filter by end date
      * @return $this Fluent Builder
      */
     public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
+        return $this;
+    }
+
+    /**
+     * The include_subaccounts
+     * 
+     * @param boolean $includeSubaccounts The include_subaccounts
+     * @return $this Fluent Builder
+     */
+    public function setIncludeSubaccounts($includeSubaccounts) {
+        $this->options['includeSubaccounts'] = $includeSubaccounts;
         return $this;
     }
 

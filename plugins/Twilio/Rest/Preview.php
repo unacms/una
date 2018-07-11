@@ -38,10 +38,11 @@ use Twilio\Rest\Preview\Wireless as PreviewWireless;
  * @property \Twilio\Rest\Preview\DeployedDevices\FleetList fleets
  * @property \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentList authorizationDocuments
  * @property \Twilio\Rest\Preview\HostedNumbers\HostedNumberOrderList hostedNumberOrders
- * @property \Twilio\Rest\Preview\Marketplace\AvailableAddOnList availableAddOns
  * @property \Twilio\Rest\Preview\Marketplace\InstalledAddOnList installedAddOns
- * @property \Twilio\Rest\Preview\Understand\ServiceList services
+ * @property \Twilio\Rest\Preview\Marketplace\AvailableAddOnList availableAddOns
+ * @property \Twilio\Rest\Preview\Sync\ServiceList services
  * @property \Twilio\Rest\Preview\Studio\FlowList flows
+ * @property \Twilio\Rest\Preview\Understand\AssistantList assistants
  * @property \Twilio\Rest\Preview\Wireless\CommandList commands
  * @property \Twilio\Rest\Preview\Wireless\RatePlanList ratePlans
  * @property \Twilio\Rest\Preview\Wireless\SimList sims
@@ -50,10 +51,11 @@ use Twilio\Rest\Preview\Wireless as PreviewWireless;
  * @method \Twilio\Rest\Preview\DeployedDevices\FleetContext fleets(string $sid)
  * @method \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentContext authorizationDocuments(string $sid)
  * @method \Twilio\Rest\Preview\HostedNumbers\HostedNumberOrderContext hostedNumberOrders(string $sid)
- * @method \Twilio\Rest\Preview\Marketplace\AvailableAddOnContext availableAddOns(string $sid)
  * @method \Twilio\Rest\Preview\Marketplace\InstalledAddOnContext installedAddOns(string $sid)
- * @method \Twilio\Rest\Preview\Understand\ServiceContext services(string $sid)
+ * @method \Twilio\Rest\Preview\Marketplace\AvailableAddOnContext availableAddOns(string $sid)
+ * @method \Twilio\Rest\Preview\Sync\ServiceContext services(string $sid)
  * @method \Twilio\Rest\Preview\Studio\FlowContext flows(string $sid)
+ * @method \Twilio\Rest\Preview\Understand\AssistantContext assistants(string $sid)
  * @method \Twilio\Rest\Preview\Wireless\CommandContext commands(string $sid)
  * @method \Twilio\Rest\Preview\Wireless\RatePlanContext ratePlans(string $sid)
  * @method \Twilio\Rest\Preview\Wireless\SimContext sims(string $sid)
@@ -293,21 +295,6 @@ class Preview extends Domain {
     }
 
     /**
-     * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOnList 
-     */
-    protected function getAvailableAddOns() {
-        return $this->marketplace->availableAddOns;
-    }
-
-    /**
-     * @param string $sid The unique Available Add-on Sid
-     * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOnContext 
-     */
-    protected function contextAvailableAddOns($sid) {
-        return $this->marketplace->availableAddOns($sid);
-    }
-
-    /**
      * @return \Twilio\Rest\Preview\Marketplace\InstalledAddOnList 
      */
     protected function getInstalledAddOns() {
@@ -323,18 +310,33 @@ class Preview extends Domain {
     }
 
     /**
-     * @return \Twilio\Rest\Preview\Understand\ServiceList 
+     * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOnList 
+     */
+    protected function getAvailableAddOns() {
+        return $this->marketplace->availableAddOns;
+    }
+
+    /**
+     * @param string $sid The unique Available Add-on Sid
+     * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOnContext 
+     */
+    protected function contextAvailableAddOns($sid) {
+        return $this->marketplace->availableAddOns($sid);
+    }
+
+    /**
+     * @return \Twilio\Rest\Preview\Sync\ServiceList 
      */
     protected function getServices() {
-        return $this->understand->services;
+        return $this->sync->services;
     }
 
     /**
      * @param string $sid The sid
-     * @return \Twilio\Rest\Preview\Understand\ServiceContext 
+     * @return \Twilio\Rest\Preview\Sync\ServiceContext 
      */
     protected function contextServices($sid) {
-        return $this->understand->services($sid);
+        return $this->sync->services($sid);
     }
 
     /**
@@ -350,6 +352,21 @@ class Preview extends Domain {
      */
     protected function contextFlows($sid) {
         return $this->studio->flows($sid);
+    }
+
+    /**
+     * @return \Twilio\Rest\Preview\Understand\AssistantList 
+     */
+    protected function getAssistants() {
+        return $this->understand->assistants;
+    }
+
+    /**
+     * @param string $sid The sid
+     * @return \Twilio\Rest\Preview\Understand\AssistantContext 
+     */
+    protected function contextAssistants($sid) {
+        return $this->understand->assistants($sid);
     }
 
     /**

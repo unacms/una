@@ -11,6 +11,7 @@ namespace Twilio\Rest\Studio\V1\Flow;
 
 use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
+use Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextList;
 use Twilio\Rest\Studio\V1\Flow\Engagement\StepList;
 use Twilio\Values;
 use Twilio\Version;
@@ -19,10 +20,13 @@ use Twilio\Version;
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  * 
  * @property \Twilio\Rest\Studio\V1\Flow\Engagement\StepList steps
+ * @property \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextList engagementContext
  * @method \Twilio\Rest\Studio\V1\Flow\Engagement\StepContext steps(string $sid)
+ * @method \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextContext engagementContext()
  */
 class EngagementContext extends InstanceContext {
     protected $_steps = null;
+    protected $_engagementContext = null;
 
     /**
      * Initialize the EngagementContext
@@ -45,6 +49,7 @@ class EngagementContext extends InstanceContext {
      * Fetch a EngagementInstance
      * 
      * @return EngagementInstance Fetched EngagementInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         $params = Values::of(array());
@@ -64,6 +69,16 @@ class EngagementContext extends InstanceContext {
     }
 
     /**
+     * Deletes the EngagementInstance
+     * 
+     * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
+     */
+    public function delete() {
+        return $this->version->delete('delete', $this->uri);
+    }
+
+    /**
      * Access the steps
      * 
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\StepList 
@@ -74,6 +89,23 @@ class EngagementContext extends InstanceContext {
         }
 
         return $this->_steps;
+    }
+
+    /**
+     * Access the engagementContext
+     * 
+     * @return \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextList 
+     */
+    protected function getEngagementContext() {
+        if (!$this->_engagementContext) {
+            $this->_engagementContext = new EngagementContextList(
+                $this->version,
+                $this->solution['flowSid'],
+                $this->solution['sid']
+            );
+        }
+
+        return $this->_engagementContext;
     }
 
     /**

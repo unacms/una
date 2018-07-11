@@ -13,15 +13,19 @@ use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
 use Twilio\Options;
 use Twilio\Rest\Api\V2010\Account\Conference\ParticipantList;
+use Twilio\Rest\Api\V2010\Account\Conference\RecordingList;
 use Twilio\Values;
 use Twilio\Version;
 
 /**
  * @property \Twilio\Rest\Api\V2010\Account\Conference\ParticipantList participants
+ * @property \Twilio\Rest\Api\V2010\Account\Conference\RecordingList recordings
  * @method \Twilio\Rest\Api\V2010\Account\Conference\ParticipantContext participants(string $callSid)
+ * @method \Twilio\Rest\Api\V2010\Account\Conference\RecordingContext recordings(string $sid)
  */
 class ConferenceContext extends InstanceContext {
     protected $_participants = null;
+    protected $_recordings = null;
 
     /**
      * Initialize the ConferenceContext
@@ -44,6 +48,7 @@ class ConferenceContext extends InstanceContext {
      * Fetch a ConferenceInstance
      * 
      * @return ConferenceInstance Fetched ConferenceInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         $params = Values::of(array());
@@ -67,6 +72,7 @@ class ConferenceContext extends InstanceContext {
      * 
      * @param array|Options $options Optional Arguments
      * @return ConferenceInstance Updated ConferenceInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         $options = new Values($options);
@@ -107,6 +113,23 @@ class ConferenceContext extends InstanceContext {
         }
 
         return $this->_participants;
+    }
+
+    /**
+     * Access the recordings
+     * 
+     * @return \Twilio\Rest\Api\V2010\Account\Conference\RecordingList 
+     */
+    protected function getRecordings() {
+        if (!$this->_recordings) {
+            $this->_recordings = new RecordingList(
+                $this->version,
+                $this->solution['accountSid'],
+                $this->solution['sid']
+            );
+        }
+
+        return $this->_recordings;
     }
 
     /**

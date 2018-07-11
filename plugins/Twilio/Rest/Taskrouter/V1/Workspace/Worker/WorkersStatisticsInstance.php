@@ -28,7 +28,8 @@ class WorkersStatisticsInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $workspaceSid The workspace_sid
+     * @param string $workspaceSid The ID of the Workflow this worker is associated
+     *                             with
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersStatisticsInstance 
      */
     public function __construct(Version $version, array $payload, $workspaceSid) {
@@ -65,6 +66,7 @@ class WorkersStatisticsInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return WorkersStatisticsInstance Fetched WorkersStatisticsInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch($options = array()) {
         return $this->proxy()->fetch($options);

@@ -37,8 +37,10 @@ class WorkerChannelInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $workspaceSid The workspace_sid
-     * @param string $workerSid The worker_sid
+     * @param string $workspaceSid The unique ID of the Workspace that this
+     *                             WorkerChannel belongs to.
+     * @param string $workerSid The unique ID of the Worker that this WorkerChannel
+     *                          belongs to.
      * @param string $sid The sid
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerChannelInstance 
      */
@@ -92,6 +94,7 @@ class WorkerChannelInstance extends InstanceResource {
      * Fetch a WorkerChannelInstance
      * 
      * @return WorkerChannelInstance Fetched WorkerChannelInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -102,6 +105,7 @@ class WorkerChannelInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return WorkerChannelInstance Updated WorkerChannelInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);

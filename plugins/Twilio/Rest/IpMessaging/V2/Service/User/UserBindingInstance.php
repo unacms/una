@@ -35,8 +35,9 @@ class UserBindingInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $serviceSid The service_sid
-     * @param string $userSid The user_sid
+     * @param string $serviceSid The unique id of the Service this binding belongs
+     *                           to.
+     * @param string $userSid The unique id of the User for this binding.
      * @param string $sid The sid
      * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserBindingInstance 
      */
@@ -91,6 +92,7 @@ class UserBindingInstance extends InstanceResource {
      * Fetch a UserBindingInstance
      * 
      * @return UserBindingInstance Fetched UserBindingInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -100,6 +102,7 @@ class UserBindingInstance extends InstanceResource {
      * Deletes the UserBindingInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();

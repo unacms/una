@@ -34,7 +34,7 @@ class PhoneNumberInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $serviceSid The service_sid
+     * @param string $serviceSid The 34 character unique sid of the Service.
      * @param string $sid The sid
      * @return \Twilio\Rest\Messaging\V1\Service\PhoneNumberInstance 
      */
@@ -81,6 +81,7 @@ class PhoneNumberInstance extends InstanceResource {
      * Deletes the PhoneNumberInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();
@@ -90,6 +91,7 @@ class PhoneNumberInstance extends InstanceResource {
      * Fetch a PhoneNumberInstance
      * 
      * @return PhoneNumberInstance Fetched PhoneNumberInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();

@@ -35,7 +35,8 @@ class OriginationUrlInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $trunkSid The trunk_sid
+     * @param string $trunkSid The unique ID of the Trunk that owns this
+     *                         Origination URL.
      * @param string $sid The sid
      * @return \Twilio\Rest\Trunking\V1\Trunk\OriginationUrlInstance 
      */
@@ -84,6 +85,7 @@ class OriginationUrlInstance extends InstanceResource {
      * Fetch a OriginationUrlInstance
      * 
      * @return OriginationUrlInstance Fetched OriginationUrlInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -93,6 +95,7 @@ class OriginationUrlInstance extends InstanceResource {
      * Deletes the OriginationUrlInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();
@@ -103,6 +106,7 @@ class OriginationUrlInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return OriginationUrlInstance Updated OriginationUrlInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);

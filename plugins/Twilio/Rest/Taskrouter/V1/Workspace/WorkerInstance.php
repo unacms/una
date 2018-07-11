@@ -43,7 +43,8 @@ class WorkerInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $workspaceSid The workspace_sid
+     * @param string $workspaceSid The ID of the Workflow this worker is associated
+     *                             with
      * @param string $sid The sid
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkerInstance 
      */
@@ -93,6 +94,7 @@ class WorkerInstance extends InstanceResource {
      * Fetch a WorkerInstance
      * 
      * @return WorkerInstance Fetched WorkerInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -103,6 +105,7 @@ class WorkerInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return WorkerInstance Updated WorkerInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);
@@ -112,6 +115,7 @@ class WorkerInstance extends InstanceResource {
      * Deletes the WorkerInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();

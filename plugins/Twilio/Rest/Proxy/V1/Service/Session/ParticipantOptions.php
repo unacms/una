@@ -25,24 +25,14 @@ abstract class ParticipantOptions {
     }
 
     /**
-     * @param string $friendlyName A human readable description of this resource.
-     * @param string $proxyIdentifier The proxy phone number for this Participant.
-     * @param string $proxyIdentifierSid Proxy Identifier Sid.
+     * @param string $friendlyName A human-readable description of this resource.
+     * @param string $proxyIdentifier The proxy phone number to use for this
+     *                                Participant.
+     * @param string $proxyIdentifierSid The proxy_identifier_sid
      * @return CreateParticipantOptions Options builder
      */
     public static function create($friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
         return new CreateParticipantOptions($friendlyName, $proxyIdentifier, $proxyIdentifierSid);
-    }
-
-    /**
-     * @param string $identifier The phone number of this Participant.
-     * @param string $friendlyName A human readable description of this resource.
-     * @param string $proxyIdentifier The proxy phone number for this Participant.
-     * @param string $proxyIdentifierSid Proxy Identifier Sid.
-     * @return UpdateParticipantOptions Options builder
-     */
-    public static function update($identifier = Values::NONE, $friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
-        return new UpdateParticipantOptions($identifier, $friendlyName, $proxyIdentifier, $proxyIdentifierSid);
     }
 }
 
@@ -83,9 +73,10 @@ class ReadParticipantOptions extends Options {
 
 class CreateParticipantOptions extends Options {
     /**
-     * @param string $friendlyName A human readable description of this resource.
-     * @param string $proxyIdentifier The proxy phone number for this Participant.
-     * @param string $proxyIdentifierSid Proxy Identifier Sid.
+     * @param string $friendlyName A human-readable description of this resource.
+     * @param string $proxyIdentifier The proxy phone number to use for this
+     *                                Participant.
+     * @param string $proxyIdentifierSid The proxy_identifier_sid
      */
     public function __construct($friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
@@ -94,9 +85,9 @@ class CreateParticipantOptions extends Options {
     }
 
     /**
-     * A human readable description of this resource, up to 64 characters.
+     * A human-readable description of this resource, up to 64 characters. Should not include PII.
      * 
-     * @param string $friendlyName A human readable description of this resource.
+     * @param string $friendlyName A human-readable description of this resource.
      * @return $this Fluent Builder
      */
     public function setFriendlyName($friendlyName) {
@@ -105,9 +96,10 @@ class CreateParticipantOptions extends Options {
     }
 
     /**
-     * The proxy phone number for this Participant.
+     * The proxy phone number to use for this Participant. If not specified, Proxy will select a number from the pool.
      * 
-     * @param string $proxyIdentifier The proxy phone number for this Participant.
+     * @param string $proxyIdentifier The proxy phone number to use for this
+     *                                Participant.
      * @return $this Fluent Builder
      */
     public function setProxyIdentifier($proxyIdentifier) {
@@ -116,9 +108,9 @@ class CreateParticipantOptions extends Options {
     }
 
     /**
-     * The unique SID identifier of the Proxy Identifier.
+     * The proxy_identifier_sid
      * 
-     * @param string $proxyIdentifierSid Proxy Identifier Sid.
+     * @param string $proxyIdentifierSid The proxy_identifier_sid
      * @return $this Fluent Builder
      */
     public function setProxyIdentifierSid($proxyIdentifierSid) {
@@ -139,79 +131,5 @@ class CreateParticipantOptions extends Options {
             }
         }
         return '[Twilio.Proxy.V1.CreateParticipantOptions ' . implode(' ', $options) . ']';
-    }
-}
-
-class UpdateParticipantOptions extends Options {
-    /**
-     * @param string $identifier The phone number of this Participant.
-     * @param string $friendlyName A human readable description of this resource.
-     * @param string $proxyIdentifier The proxy phone number for this Participant.
-     * @param string $proxyIdentifierSid Proxy Identifier Sid.
-     */
-    public function __construct($identifier = Values::NONE, $friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
-        $this->options['identifier'] = $identifier;
-        $this->options['friendlyName'] = $friendlyName;
-        $this->options['proxyIdentifier'] = $proxyIdentifier;
-        $this->options['proxyIdentifierSid'] = $proxyIdentifierSid;
-    }
-
-    /**
-     * The phone number of this Participant.
-     * 
-     * @param string $identifier The phone number of this Participant.
-     * @return $this Fluent Builder
-     */
-    public function setIdentifier($identifier) {
-        $this->options['identifier'] = $identifier;
-        return $this;
-    }
-
-    /**
-     * A human readable description of this resource, up to 64 characters.
-     * 
-     * @param string $friendlyName A human readable description of this resource.
-     * @return $this Fluent Builder
-     */
-    public function setFriendlyName($friendlyName) {
-        $this->options['friendlyName'] = $friendlyName;
-        return $this;
-    }
-
-    /**
-     * The proxy phone number for this Participant.
-     * 
-     * @param string $proxyIdentifier The proxy phone number for this Participant.
-     * @return $this Fluent Builder
-     */
-    public function setProxyIdentifier($proxyIdentifier) {
-        $this->options['proxyIdentifier'] = $proxyIdentifier;
-        return $this;
-    }
-
-    /**
-     * The unique SID identifier of the Proxy Identifier.
-     * 
-     * @param string $proxyIdentifierSid Proxy Identifier Sid.
-     * @return $this Fluent Builder
-     */
-    public function setProxyIdentifierSid($proxyIdentifierSid) {
-        $this->options['proxyIdentifierSid'] = $proxyIdentifierSid;
-        return $this;
-    }
-
-    /**
-     * Provide a friendly representation
-     * 
-     * @return string Machine friendly representation
-     */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Proxy.V1.UpdateParticipantOptions ' . implode(' ', $options) . ']';
     }
 }

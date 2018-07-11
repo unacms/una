@@ -35,8 +35,9 @@ class ReservationInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $workspaceSid The workspace_sid
-     * @param string $taskSid The task_sid
+     * @param string $workspaceSid The ID of the Workspace that this task is
+     *                             contained within.
+     * @param string $taskSid The ID of the reserved Task
      * @param string $sid The sid
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Task\ReservationInstance 
      */
@@ -91,6 +92,7 @@ class ReservationInstance extends InstanceResource {
      * Fetch a ReservationInstance
      * 
      * @return ReservationInstance Fetched ReservationInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -101,6 +103,7 @@ class ReservationInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return ReservationInstance Updated ReservationInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);

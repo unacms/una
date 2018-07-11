@@ -17,10 +17,10 @@ use Twilio\Values;
  */
 abstract class ServiceOptions {
     /**
-     * @param integer $defaultTtl Default TTL for a Session, in seconds.
+     * @param integer $defaultTtl Default TTL for Sessions in Service, in seconds.
      * @param string $callbackUrl URL Twilio will send callbacks to
-     * @param string $geoMatchLevel Whether to find proxy numbers in the same
-     *                              areacode.
+     * @param string $geoMatchLevel Whether proxy number selected must be in the
+     *                              same area code as the participant identifier.
      * @param string $numberSelectionBehavior What behavior to use when choosing a
      *                                        proxy number.
      * @param string $interceptCallbackUrl A URL for Twilio call before each
@@ -34,11 +34,11 @@ abstract class ServiceOptions {
     }
 
     /**
-     * @param string $uniqueName A human readable description of this resource.
-     * @param integer $defaultTtl Default TTL for a Session, in seconds.
+     * @param string $uniqueName A human-readable description of this resource.
+     * @param integer $defaultTtl Default TTL for Sessions in Service, in seconds.
      * @param string $callbackUrl URL Twilio will send callbacks to
-     * @param string $geoMatchLevel Whether to find proxy numbers in the same
-     *                              areacode.
+     * @param string $geoMatchLevel Whether proxy number selected must be in the
+     *                              same area code as the participant identifier.
      * @param string $numberSelectionBehavior What behavior to use when choosing a
      *                                        proxy number.
      * @param string $interceptCallbackUrl A URL for Twilio call before each
@@ -54,10 +54,10 @@ abstract class ServiceOptions {
 
 class CreateServiceOptions extends Options {
     /**
-     * @param integer $defaultTtl Default TTL for a Session, in seconds.
+     * @param integer $defaultTtl Default TTL for Sessions in Service, in seconds.
      * @param string $callbackUrl URL Twilio will send callbacks to
-     * @param string $geoMatchLevel Whether to find proxy numbers in the same
-     *                              areacode.
+     * @param string $geoMatchLevel Whether proxy number selected must be in the
+     *                              same area code as the participant identifier.
      * @param string $numberSelectionBehavior What behavior to use when choosing a
      *                                        proxy number.
      * @param string $interceptCallbackUrl A URL for Twilio call before each
@@ -75,9 +75,9 @@ class CreateServiceOptions extends Options {
     }
 
     /**
-     * The default Time to Live for a Session, in seconds.
+     * The default time delay in seconds after the latest of Session create time or the Session's last Interaction time, after which a session will expire.  Used for sessions where TTL is not specified.
      * 
-     * @param integer $defaultTtl Default TTL for a Session, in seconds.
+     * @param integer $defaultTtl Default TTL for Sessions in Service, in seconds.
      * @return $this Fluent Builder
      */
     public function setDefaultTtl($defaultTtl) {
@@ -86,7 +86,7 @@ class CreateServiceOptions extends Options {
     }
 
     /**
-     * The URL Twilio will send callbacks to.
+     * The URL to which Twilio will make callbacks on interaction status changes.
      * 
      * @param string $callbackUrl URL Twilio will send callbacks to
      * @return $this Fluent Builder
@@ -97,10 +97,10 @@ class CreateServiceOptions extends Options {
     }
 
     /**
-     * Whether to find proxy numbers in the same areacode.
+     * Whether proxy number selected must be in the same area code as the participant identifier. Options: `country`, `area-code`, `extended-area-code`. Default: `country`. Levels lower than country are only available in North America.
      * 
-     * @param string $geoMatchLevel Whether to find proxy numbers in the same
-     *                              areacode.
+     * @param string $geoMatchLevel Whether proxy number selected must be in the
+     *                              same area code as the participant identifier.
      * @return $this Fluent Builder
      */
     public function setGeoMatchLevel($geoMatchLevel) {
@@ -109,7 +109,7 @@ class CreateServiceOptions extends Options {
     }
 
     /**
-     * What behavior to use when choosing a proxy number.
+     * Options: `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
      * 
      * @param string $numberSelectionBehavior What behavior to use when choosing a
      *                                        proxy number.
@@ -121,7 +121,7 @@ class CreateServiceOptions extends Options {
     }
 
     /**
-     * A URL for Twilio call before each Interaction. An error status code will prevent the interaction from continuing.
+     * A URL for Twilio call before each Interaction. Returning a 403 status code will prevent the interaction from continuing.
      * 
      * @param string $interceptCallbackUrl A URL for Twilio call before each
      *                                     Interaction.
@@ -133,7 +133,7 @@ class CreateServiceOptions extends Options {
     }
 
     /**
-     * A URL for Twilio call when a new Interaction has no Session.
+     * A URL for Twilio call when a new Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
      * 
      * @param string $outOfSessionCallbackUrl A URL for Twilio call when a new
      *                                        Interaction has no Session.
@@ -162,11 +162,11 @@ class CreateServiceOptions extends Options {
 
 class UpdateServiceOptions extends Options {
     /**
-     * @param string $uniqueName A human readable description of this resource.
-     * @param integer $defaultTtl Default TTL for a Session, in seconds.
+     * @param string $uniqueName A human-readable description of this resource.
+     * @param integer $defaultTtl Default TTL for Sessions in Service, in seconds.
      * @param string $callbackUrl URL Twilio will send callbacks to
-     * @param string $geoMatchLevel Whether to find proxy numbers in the same
-     *                              areacode.
+     * @param string $geoMatchLevel Whether proxy number selected must be in the
+     *                              same area code as the participant identifier.
      * @param string $numberSelectionBehavior What behavior to use when choosing a
      *                                        proxy number.
      * @param string $interceptCallbackUrl A URL for Twilio call before each
@@ -185,9 +185,9 @@ class UpdateServiceOptions extends Options {
     }
 
     /**
-     * A human readable description of this resource, up to 64 characters.
+     * A human-readable description of this resource, up to 64 characters. *Should not contain PII.*
      * 
-     * @param string $uniqueName A human readable description of this resource.
+     * @param string $uniqueName A human-readable description of this resource.
      * @return $this Fluent Builder
      */
     public function setUniqueName($uniqueName) {
@@ -196,9 +196,9 @@ class UpdateServiceOptions extends Options {
     }
 
     /**
-     * The default Time to Live for a Session, in seconds.
+     * The default time delay in seconds after the latest of Session create time or the Session's last Interaction time, after which a session will expire.  Used for sessions where TTL is not specified.
      * 
-     * @param integer $defaultTtl Default TTL for a Session, in seconds.
+     * @param integer $defaultTtl Default TTL for Sessions in Service, in seconds.
      * @return $this Fluent Builder
      */
     public function setDefaultTtl($defaultTtl) {
@@ -207,7 +207,7 @@ class UpdateServiceOptions extends Options {
     }
 
     /**
-     * The URL Twilio will send callbacks to.
+     * The URL to which Twilio will make callbacks on interaction status changes.
      * 
      * @param string $callbackUrl URL Twilio will send callbacks to
      * @return $this Fluent Builder
@@ -218,10 +218,10 @@ class UpdateServiceOptions extends Options {
     }
 
     /**
-     * Whether to find proxy numbers in the same areacode.
+     * Whether proxy number selected must be in the same area code as the participant identifier. Options: `country`, `area-code`, `extended-area-code`. Default: `country`. Levels lower than country are only available in North America.
      * 
-     * @param string $geoMatchLevel Whether to find proxy numbers in the same
-     *                              areacode.
+     * @param string $geoMatchLevel Whether proxy number selected must be in the
+     *                              same area code as the participant identifier.
      * @return $this Fluent Builder
      */
     public function setGeoMatchLevel($geoMatchLevel) {
@@ -230,7 +230,7 @@ class UpdateServiceOptions extends Options {
     }
 
     /**
-     * What behavior to use when choosing a proxy number.
+     * Options: `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
      * 
      * @param string $numberSelectionBehavior What behavior to use when choosing a
      *                                        proxy number.
@@ -242,7 +242,7 @@ class UpdateServiceOptions extends Options {
     }
 
     /**
-     * A URL for Twilio call before each Interaction. An error status code will prevent the interaction from continuing.
+     * A URL for Twilio call before each Interaction. Returning a 403 status code will prevent the interaction from continuing.
      * 
      * @param string $interceptCallbackUrl A URL for Twilio call before each
      *                                     Interaction.
@@ -254,7 +254,7 @@ class UpdateServiceOptions extends Options {
     }
 
     /**
-     * A URL for Twilio call when a new Interaction has no Session.
+     * A URL for Twilio call when a new Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
      * 
      * @param string $outOfSessionCallbackUrl A URL for Twilio call when a new
      *                                        Interaction has no Session.

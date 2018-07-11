@@ -31,8 +31,8 @@ class FeedbackInstance extends InstanceResource {
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The account_sid
-     * @param string $callSid A 34 character string that uniquely identifies this
-     *                        resource.
+     * @param string $callSid A 34-character string that uniquely identifies the
+     *                        Call resource.
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackInstance 
      */
     public function __construct(Version $version, array $payload, $accountSid, $callSid) {
@@ -73,9 +73,10 @@ class FeedbackInstance extends InstanceResource {
     /**
      * Create a new FeedbackInstance
      * 
-     * @param integer $qualityScore The quality_score
+     * @param integer $qualityScore An integer from 1 to 5
      * @param array|Options $options Optional Arguments
      * @return FeedbackInstance Newly created FeedbackInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function create($qualityScore, $options = array()) {
         return $this->proxy()->create($qualityScore, $options);
@@ -85,6 +86,7 @@ class FeedbackInstance extends InstanceResource {
      * Fetch a FeedbackInstance
      * 
      * @return FeedbackInstance Fetched FeedbackInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -96,6 +98,7 @@ class FeedbackInstance extends InstanceResource {
      * @param integer $qualityScore An integer from 1 to 5
      * @param array|Options $options Optional Arguments
      * @return FeedbackInstance Updated FeedbackInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($qualityScore, $options = array()) {
         return $this->proxy()->update($qualityScore, $options);

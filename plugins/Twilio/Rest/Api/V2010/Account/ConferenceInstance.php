@@ -30,6 +30,7 @@ use Twilio\Version;
  */
 class ConferenceInstance extends InstanceResource {
     protected $_participants = null;
+    protected $_recordings = null;
 
     /**
      * Initialize the ConferenceInstance
@@ -83,6 +84,7 @@ class ConferenceInstance extends InstanceResource {
      * Fetch a ConferenceInstance
      * 
      * @return ConferenceInstance Fetched ConferenceInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -93,6 +95,7 @@ class ConferenceInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return ConferenceInstance Updated ConferenceInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);
@@ -105,6 +108,15 @@ class ConferenceInstance extends InstanceResource {
      */
     protected function getParticipants() {
         return $this->proxy()->participants;
+    }
+
+    /**
+     * Access the recordings
+     * 
+     * @return \Twilio\Rest\Api\V2010\Account\Conference\RecordingList 
+     */
+    protected function getRecordings() {
+        return $this->proxy()->recordings;
     }
 
     /**

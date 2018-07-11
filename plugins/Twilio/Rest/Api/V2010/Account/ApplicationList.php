@@ -35,9 +35,10 @@ class ApplicationList extends ListResource {
     /**
      * Create a new ApplicationInstance
      * 
-     * @param string $friendlyName The friendly_name
+     * @param string $friendlyName A human readable description of the application
      * @param array|Options $options Optional Arguments
      * @return ApplicationInstance Newly created ApplicationInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function create($friendlyName, $options = array()) {
         $options = new Values($options);
