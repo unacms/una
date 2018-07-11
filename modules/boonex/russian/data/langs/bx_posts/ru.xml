@@ -138,8 +138,8 @@
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Публикация - Действия]]></string>
     <string name="_bx_posts_menu_title_submenu"><![CDATA[Публикации - Подменю]]></string>
     <string name="_bx_posts_menu_set_title_submenu"><![CDATA[Публикации - Подменю]]></string>
-    <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[Новая публикация]]></string>
-    <string name="_bx_posts_menu_item_title_create_entry"><![CDATA[Новая публикация]]></string>
+    <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[Публикация]]></string>
+    <string name="_bx_posts_menu_item_title_create_entry"><![CDATA[Публикация]]></string>
     <string name="_bx_posts_menu_item_title_system_edit_entry"><![CDATA[Редактировать публикацию]]></string>
     <string name="_bx_posts_menu_item_title_edit_entry"><![CDATA[Редактировать публикацию]]></string>
     <string name="_bx_posts_menu_item_title_system_delete_entry"><![CDATA[Удалить публикацию]]></string>

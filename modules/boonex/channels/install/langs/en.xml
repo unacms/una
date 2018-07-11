@@ -144,8 +144,8 @@
 	<string name="_bx_channels_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
 	<string name="_bx_channels_menu_item_title_system_profile_type"><![CDATA[Channel]]></string>
 	<string name="_bx_channels_menu_item_title_profile_type"><![CDATA[Channel]]></string>
-	<string name="_bx_channels_menu_item_title_system_create_profile"><![CDATA[New Channel]]></string>
-	<string name="_bx_channels_menu_item_title_create_profile"><![CDATA[New Channel]]></string>
+	<string name="_bx_channels_menu_item_title_system_create_profile"><![CDATA[Channel]]></string>
+	<string name="_bx_channels_menu_item_title_create_profile"><![CDATA[Channel]]></string>
 	<string name="_bx_channels_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>

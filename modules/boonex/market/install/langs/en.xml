@@ -224,8 +224,8 @@
     <string name="_bx_market_menu_title_view_entry_more"><![CDATA[Product More Actions]]></string>
     <string name="_bx_market_menu_title_submenu"><![CDATA[Market Submenu]]></string>
     <string name="_bx_market_menu_set_title_submenu"><![CDATA[Market Submenu]]></string>
-    <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[New Product]]></string>
-    <string name="_bx_market_menu_item_title_create_entry"><![CDATA[New Product]]></string>
+    <string name="_bx_market_menu_item_title_system_create_entry"><![CDATA[Product]]></string>
+    <string name="_bx_market_menu_item_title_create_entry"><![CDATA[Product]]></string>
     <string name="_bx_market_menu_item_title_system_edit_entry"><![CDATA[Edit Product]]></string>
     <string name="_bx_market_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_market_menu_item_title_system_delete_entry"><![CDATA[Delete Product]]></string>

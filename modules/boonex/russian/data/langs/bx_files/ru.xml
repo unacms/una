@@ -138,8 +138,8 @@
     <string name="_bx_files_menu_title_view_entry"><![CDATA[Действия с файлом]]></string>
     <string name="_bx_files_menu_title_submenu"><![CDATA[Под-меню файлов]]></string>
     <string name="_bx_files_menu_set_title_submenu"><![CDATA[Под-меню файлов]]></string>
-    <string name="_bx_files_menu_item_title_system_create_entry"><![CDATA[Загрузить файлы]]></string>
-    <string name="_bx_files_menu_item_title_create_entry"><![CDATA[Загрузить файлы]]></string>
+    <string name="_bx_files_menu_item_title_system_create_entry"><![CDATA[Файл]]></string>
+    <string name="_bx_files_menu_item_title_create_entry"><![CDATA[Файл]]></string>
     <string name="_bx_files_menu_item_title_system_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_files_menu_item_title_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_files_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>

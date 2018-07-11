@@ -141,8 +141,8 @@
     <string name="_bx_photos_menu_title_view_entry"><![CDATA[Photo Actions]]></string>
     <string name="_bx_photos_menu_title_submenu"><![CDATA[Photos Submenu]]></string>
     <string name="_bx_photos_menu_set_title_submenu"><![CDATA[Photos Submenu]]></string>
-    <string name="_bx_photos_menu_item_title_system_create_entry"><![CDATA[New Photo]]></string>
-    <string name="_bx_photos_menu_item_title_create_entry"><![CDATA[New Photo]]></string>
+    <string name="_bx_photos_menu_item_title_system_create_entry"><![CDATA[Photo]]></string>
+    <string name="_bx_photos_menu_item_title_create_entry"><![CDATA[Photo]]></string>
     <string name="_bx_photos_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_photos_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_photos_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>

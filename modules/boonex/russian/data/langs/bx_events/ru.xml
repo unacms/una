@@ -190,8 +190,8 @@
     <string name="_bx_events_menu_item_title_delete_account"><![CDATA[Удалить аккаунт]]></string>
     <string name="_bx_events_menu_item_title_system_profile_type"><![CDATA[Событие]]></string>
     <string name="_bx_events_menu_item_title_profile_type"><![CDATA[Событие]]></string>
-    <string name="_bx_events_menu_item_title_system_create_profile"><![CDATA[Создать событие]]></string>
-    <string name="_bx_events_menu_item_title_create_profile"><![CDATA[Создать событие]]></string>
+    <string name="_bx_events_menu_item_title_system_create_profile"><![CDATA[Событие]]></string>
+    <string name="_bx_events_menu_item_title_create_profile"><![CDATA[Событие]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_events_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_events_menu_item_title_system_view_joined_groups"><![CDATA[События]]></string>
