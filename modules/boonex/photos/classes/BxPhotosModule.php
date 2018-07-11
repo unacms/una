@@ -30,16 +30,19 @@ class BxPhotosModule extends BxBaseModTextModule
      */
     public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
     {
-    	$sJsCode = $this->_oTemplate->getJsCode('main');
+        $mixedResult = parent::serviceBrowseAuthor ($iProfileId, $aParams);
+        if(empty($mixedResult))
+            return;
 
-    	$mixedResult = parent::serviceBrowseAuthor ($iProfileId, $aParams);
-    	if(is_string($mixedResult))
-    		$mixedResult .= $sJsCode;
-    	else if(is_array($mixedResult) && isset($mixedResult['content']))
-    		$mixedResult['content'] .= $sJsCode;
+        $sJsCode = $this->_oTemplate->getJsCode('main');
 
-    	$this->_oTemplate->addJs(array('main.js'));
-    	return $mixedResult; 
+        if(is_string($mixedResult))
+            $mixedResult .= $sJsCode;
+        else if(is_array($mixedResult) && isset($mixedResult['content']))
+            $mixedResult['content'] .= $sJsCode;
+
+        $this->_oTemplate->addJs(array('main.js'));
+        return $mixedResult;
     }
 
     /**
