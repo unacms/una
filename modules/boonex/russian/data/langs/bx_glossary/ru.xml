@@ -141,8 +141,8 @@
     <string name="_bx_glossary_menu_title_view_entry"><![CDATA[Термин - Действия]]></string>
     <string name="_bx_glossary_menu_title_submenu"><![CDATA[Глоссарий - Подменю]]></string>
     <string name="_bx_glossary_menu_set_title_submenu"><![CDATA[Глоссарий - Подменю]]></string>
-    <string name="_bx_glossary_menu_item_title_system_create_entry"><![CDATA[Новый термин]]></string>
-    <string name="_bx_glossary_menu_item_title_create_entry"><![CDATA[Новый термин]]></string>
+    <string name="_bx_glossary_menu_item_title_system_create_entry"><![CDATA[Термин]]></string>
+    <string name="_bx_glossary_menu_item_title_create_entry"><![CDATA[Термин]]></string>
     <string name="_bx_glossary_menu_item_title_system_edit_entry"><![CDATA[Редактировать термин]]></string>
     <string name="_bx_glossary_menu_item_title_edit_entry"><![CDATA[Редактировать термин]]></string>
     <string name="_bx_glossary_menu_item_title_system_delete_entry"><![CDATA[Удалить термин]]></string>

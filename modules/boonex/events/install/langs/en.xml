@@ -189,8 +189,8 @@
     <string name="_bx_events_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_events_menu_item_title_system_profile_type"><![CDATA[Event]]></string>
     <string name="_bx_events_menu_item_title_profile_type"><![CDATA[Event]]></string>
-    <string name="_bx_events_menu_item_title_system_create_profile"><![CDATA[New Event]]></string>
-    <string name="_bx_events_menu_item_title_create_profile"><![CDATA[New Event]]></string>
+    <string name="_bx_events_menu_item_title_system_create_profile"><![CDATA[Event]]></string>
+    <string name="_bx_events_menu_item_title_create_profile"><![CDATA[Event]]></string>
     <string name="_bx_events_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_events_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_events_menu_item_title_system_view_joined_groups"><![CDATA[Events]]></string>

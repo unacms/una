@@ -140,8 +140,8 @@
     <string name="_bx_polls_menu_title_view_entry"><![CDATA[Голосование - Действия]]></string>
     <string name="_bx_polls_menu_title_submenu"><![CDATA[Голосования - Подменю]]></string>
     <string name="_bx_polls_menu_set_title_submenu"><![CDATA[Голосования - Подменю]]></string>
-    <string name="_bx_polls_menu_item_title_system_create_entry"><![CDATA[Новое голосование]]></string>
-    <string name="_bx_polls_menu_item_title_create_entry"><![CDATA[Новое голосование]]></string>
+    <string name="_bx_polls_menu_item_title_system_create_entry"><![CDATA[Голосование]]></string>
+    <string name="_bx_polls_menu_item_title_create_entry"><![CDATA[Голосование]]></string>
     <string name="_bx_polls_menu_item_title_system_edit_entry"><![CDATA[Редактировать голосование]]></string>
     <string name="_bx_polls_menu_item_title_edit_entry"><![CDATA[Редактировать голосование]]></string>
     <string name="_bx_polls_menu_item_title_system_delete_entry"><![CDATA[Удалить голосование]]></string>

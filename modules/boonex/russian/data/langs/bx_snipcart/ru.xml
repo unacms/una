@@ -164,8 +164,8 @@
     <string name="_bx_snipcart_menu_title_view_entry"><![CDATA[Товар - Действия]]></string>
     <string name="_bx_snipcart_menu_title_submenu"><![CDATA[Товары - Подменю]]></string>
     <string name="_bx_snipcart_menu_set_title_submenu"><![CDATA[Товары - Подменю]]></string>
-    <string name="_bx_snipcart_menu_item_title_system_create_entry"><![CDATA[Новый товар]]></string>
-    <string name="_bx_snipcart_menu_item_title_create_entry"><![CDATA[Новый товар]]></string>
+    <string name="_bx_snipcart_menu_item_title_system_create_entry"><![CDATA[Товар]]></string>
+    <string name="_bx_snipcart_menu_item_title_create_entry"><![CDATA[Товар]]></string>
     <string name="_bx_snipcart_menu_item_title_system_edit_entry"><![CDATA[Редактировать товар]]></string>
     <string name="_bx_snipcart_menu_item_title_edit_entry"><![CDATA[Редактировать товар]]></string>
     <string name="_bx_snipcart_menu_item_title_system_delete_entry"><![CDATA[Удалить товар]]></string>

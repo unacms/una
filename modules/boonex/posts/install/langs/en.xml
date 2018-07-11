@@ -142,8 +142,8 @@
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string>
     <string name="_bx_posts_menu_title_submenu"><![CDATA[Posts Submenu]]></string>
     <string name="_bx_posts_menu_set_title_submenu"><![CDATA[Posts Submenu]]></string>
-    <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[New Post]]></string>
-    <string name="_bx_posts_menu_item_title_create_entry"><![CDATA[New Post]]></string>
+    <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[Post]]></string>
+    <string name="_bx_posts_menu_item_title_create_entry"><![CDATA[Post]]></string>
     <string name="_bx_posts_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_posts_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_posts_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
