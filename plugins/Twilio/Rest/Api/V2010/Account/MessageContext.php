@@ -46,6 +46,7 @@ class MessageContext extends InstanceContext {
      * Deletes the MessageInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->version->delete('delete', $this->uri);
@@ -55,6 +56,7 @@ class MessageContext extends InstanceContext {
      * Fetch a MessageInstance
      * 
      * @return MessageInstance Fetched MessageInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         $params = Values::of(array());
@@ -76,8 +78,10 @@ class MessageContext extends InstanceContext {
     /**
      * Update the MessageInstance
      * 
-     * @param string $body The body
+     * @param string $body The text of the message you want to send, limited to
+     *                     1600 characters.
      * @return MessageInstance Updated MessageInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($body) {
         $data = Values::of(array('Body' => $body, ));

@@ -44,10 +44,11 @@ class CallList extends ListResource {
     /**
      * Create a new CallInstance
      * 
-     * @param string $to Phone number, SIP address or client identifier to call
+     * @param string $to Phone number, SIP address, or client identifier to call
      * @param string $from Twilio number from which to originate the call
      * @param array|Options $options Optional Arguments
      * @return CallInstance Newly created CallInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function create($to, $from, $options = array()) {
         $options = new Values($options);

@@ -23,8 +23,8 @@ use Twilio\Version;
  * @property string flowSid
  * @property string contactSid
  * @property string contactChannelAddress
- * @property string status
  * @property array context
+ * @property string status
  * @property \DateTime dateCreated
  * @property \DateTime dateUpdated
  * @property string url
@@ -32,6 +32,7 @@ use Twilio\Version;
  */
 class EngagementInstance extends InstanceResource {
     protected $_steps = null;
+    protected $_engagementContext = null;
 
     /**
      * Initialize the EngagementInstance
@@ -52,8 +53,8 @@ class EngagementInstance extends InstanceResource {
             'flowSid' => Values::array_get($payload, 'flow_sid'),
             'contactSid' => Values::array_get($payload, 'contact_sid'),
             'contactChannelAddress' => Values::array_get($payload, 'contact_channel_address'),
-            'status' => Values::array_get($payload, 'status'),
             'context' => Values::array_get($payload, 'context'),
+            'status' => Values::array_get($payload, 'status'),
             'dateCreated' => Deserialize::dateTime(Values::array_get($payload, 'date_created')),
             'dateUpdated' => Deserialize::dateTime(Values::array_get($payload, 'date_updated')),
             'url' => Values::array_get($payload, 'url'),
@@ -86,9 +87,20 @@ class EngagementInstance extends InstanceResource {
      * Fetch a EngagementInstance
      * 
      * @return EngagementInstance Fetched EngagementInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
+    }
+
+    /**
+     * Deletes the EngagementInstance
+     * 
+     * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
+     */
+    public function delete() {
+        return $this->proxy()->delete();
     }
 
     /**
@@ -98,6 +110,15 @@ class EngagementInstance extends InstanceResource {
      */
     protected function getSteps() {
         return $this->proxy()->steps;
+    }
+
+    /**
+     * Access the engagementContext
+     * 
+     * @return \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextList 
+     */
+    protected function getEngagementContext() {
+        return $this->proxy()->engagementContext;
     }
 
     /**

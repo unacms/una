@@ -37,7 +37,7 @@ class TranscriptionInstance extends InstanceResource {
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The unique sid that identifies this account
-     * @param string $sid Fetch by unique transcription Sid
+     * @param string $sid Fetch by unique transcription SID
      * @return \Twilio\Rest\Api\V2010\Account\TranscriptionInstance 
      */
     public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
@@ -86,6 +86,7 @@ class TranscriptionInstance extends InstanceResource {
      * Fetch a TranscriptionInstance
      * 
      * @return TranscriptionInstance Fetched TranscriptionInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -95,6 +96,7 @@ class TranscriptionInstance extends InstanceResource {
      * Deletes the TranscriptionInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();

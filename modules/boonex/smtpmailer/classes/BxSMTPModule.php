@@ -9,8 +9,9 @@
  * @{
  */
 
-require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/class.phpmailer.php");
-require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/class.smtp.php");
+require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/Exception.php");
+require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/PHPMailer.php");
+require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/SMTP.php");
 
 class BxSMTPModule extends BxDolModule
 {
@@ -25,7 +26,7 @@ class BxSMTPModule extends BxDolModule
 
         if ($sRecipientEmail) {
 
-            $mail = new PHPMailer(true);
+            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 
             if ('on' == getParam('bx_smtp_on'))
                 $mail->IsSMTP();
@@ -110,7 +111,7 @@ class BxSMTPModule extends BxDolModule
 
             try {
                 $mail->Send();
-            } catch (phpmailerException $e) {
+            } catch (PHPMailer\PHPMailer\Exception $e) {
                 $iRet = false;
                 $this->log("Mailer Error ($sRecipientEmail): " . $e->getMessage());
             }

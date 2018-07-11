@@ -1,5 +1,5 @@
 /*!
- * froala_editor v2.7.5 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v2.8.4 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2018 Froala Labs
  */
@@ -121,7 +121,7 @@ $.FE.LANGUAGE['id'] = {
     "Display": "Pameran",
     "Inline": "Di barisan",
     "Break Text": "Memecah teks",
-    "Alternate Text": "Teks alternatif",
+    "Alternative Text": "Teks alternatif",
     "Change Size": "Ukuran perubahan",
     "Width": "Lebar",
     "Height": "Tinggi",

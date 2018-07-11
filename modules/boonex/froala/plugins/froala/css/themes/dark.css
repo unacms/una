@@ -1,5 +1,5 @@
 /*!
- * froala_editor v2.7.5 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v2.8.4 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2018 Froala Labs
  */
@@ -35,7 +35,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 1px 1px rgba(0, 0, 0, 0.16);
   height: 32px;
   width: 32px;
-  background: #ffffff;
+  background: #353535;
   color: #42a5f5;
   -webkit-transition: background 0.2s ease 0s, color 0.2s ease 0s, transform 0.2s ease 0s;
   -moz-transition: background 0.2s ease 0s, color 0.2s ease 0s, transform 0.2s ease 0s;
@@ -981,7 +981,7 @@
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   margin: 20px auto;
-  background: #ffffff;
+  background: #353535;
   -webkit-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.19), 0 4px 3px 1px rgba(0, 0, 0, 0.14);
   -moz-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.19), 0 4px 3px 1px rgba(0, 0, 0, 0.14);
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.19), 0 4px 3px 1px rgba(0, 0, 0, 0.14);

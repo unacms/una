@@ -17,8 +17,8 @@ use Twilio\Values;
  */
 abstract class MessageInteractionOptions {
     /**
-     * @param string $body The body
-     * @param string $mediaUrl The media_url
+     * @param string $body Message body
+     * @param string $mediaUrl Not supported in beta
      * @return CreateMessageInteractionOptions Options builder
      */
     public static function create($body = Values::NONE, $mediaUrl = Values::NONE) {
@@ -28,8 +28,8 @@ abstract class MessageInteractionOptions {
 
 class CreateMessageInteractionOptions extends Options {
     /**
-     * @param string $body The body
-     * @param string $mediaUrl The media_url
+     * @param string $body Message body
+     * @param string $mediaUrl Not supported in beta
      */
     public function __construct($body = Values::NONE, $mediaUrl = Values::NONE) {
         $this->options['body'] = $body;
@@ -37,9 +37,9 @@ class CreateMessageInteractionOptions extends Options {
     }
 
     /**
-     * The body
+     * The message to send to the participant
      * 
-     * @param string $body The body
+     * @param string $body Message body
      * @return $this Fluent Builder
      */
     public function setBody($body) {
@@ -48,9 +48,9 @@ class CreateMessageInteractionOptions extends Options {
     }
 
     /**
-     * The media_url
+     * Not currently supported during beta.
      * 
-     * @param string $mediaUrl The media_url
+     * @param string $mediaUrl Not supported in beta
      * @return $this Fluent Builder
      */
     public function setMediaUrl($mediaUrl) {

@@ -1,5 +1,5 @@
 /*!
- * froala_editor v2.7.5 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v2.8.4 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2018 Froala Labs
  */
@@ -121,7 +121,7 @@ $.FE.LANGUAGE['tr'] = {
     "Display": "G\u00f6stermek",
     "Inline": "\u00c7izgide",
     "Break Text": "K\u0131r\u0131lma metni",
-    "Alternate Text": "Alternatif metin",
+    "Alternative Text": "Alternatif metin",
     "Change Size": "De\u011fi\u015fim boyutu",
     "Width": "Geni\u015flik",
     "Height": "Y\u00fckseklik",

@@ -1,5 +1,5 @@
 /*!
- * froala_editor v2.7.5 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v2.8.4 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2018 Froala Labs
  */
@@ -121,7 +121,7 @@ $.FE.LANGUAGE['uk'] = {
     "Display": "\u0434\u0438\u0441\u043f\u043b\u0435\u0439",
     "Inline": "\u0412 \u043b\u0456\u043d\u0456\u044e",
     "Break Text": "\u043f\u0435\u0440\u0435\u0440\u0432\u0430 \u0442\u0435\u043a\u0441\u0442",
-    "Alternate Text": "\u0430\u043b\u044c\u0442\u0435\u0440\u043d\u0430\u0442\u0438\u0432\u043d\u0438\u0439 \u0442\u0435\u043a\u0441\u0442",
+    "Alternative Text": "\u0430\u043b\u044c\u0442\u0435\u0440\u043d\u0430\u0442\u0438\u0432\u043d\u0438\u0439 \u0442\u0435\u043a\u0441\u0442",
     "Change Size": "\u0437\u043c\u0456\u043d\u0438\u0442\u0438 \u0440\u043e\u0437\u043c\u0456\u0440",
     "Width": "\u0428\u0438\u0440\u0438\u043d\u0430",
     "Height": "\u0412\u0438\u0441\u043e\u0442\u0430",
@@ -133,7 +133,7 @@ $.FE.LANGUAGE['uk'] = {
     "Insert Video": "\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u0438 \u0432\u0456\u0434\u0435\u043e",
     "Embedded Code": "\u0432\u0431\u0443\u0434\u043e\u0432\u0430\u043d\u0438\u0439 \u043a\u043e\u0434",
     "Paste in a video URL": "Вставте в відео-URL",
-    "Drop video": "Падіння відео",
+    "Drop video": "Перетягніть відео",
     "Your browser does not support HTML5 video.": "Ваш браузер не підтримує відео html5.",
     "Upload Video": "Завантажити відео",
 

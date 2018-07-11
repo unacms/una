@@ -133,22 +133,21 @@ class CompositionList extends ListResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return CompositionInstance Newly created CompositionInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
+            'RoomSid' => $options['roomSid'],
+            'VideoLayout' => Serialize::jsonObject($options['videoLayout']),
             'AudioSources' => Serialize::map($options['audioSources'], function($e) { return $e; }),
-            'VideoSources' => Serialize::map($options['videoSources'], function($e) { return $e; }),
-            'VideoLayout' => $options['videoLayout'],
+            'AudioSourcesExcluded' => Serialize::map($options['audioSourcesExcluded'], function($e) { return $e; }),
             'Resolution' => $options['resolution'],
             'Format' => $options['format'],
-            'DesiredBitrate' => $options['desiredBitrate'],
-            'DesiredMaxDuration' => $options['desiredMaxDuration'],
             'StatusCallback' => $options['statusCallback'],
             'StatusCallbackMethod' => $options['statusCallbackMethod'],
             'Trim' => Serialize::booleanToString($options['trim']),
-            'Reuse' => Serialize::booleanToString($options['reuse']),
         ));
 
         $payload = $this->version->create(
@@ -164,7 +163,8 @@ class CompositionList extends ListResource {
     /**
      * Constructs a CompositionContext
      * 
-     * @param string $sid The sid
+     * @param string $sid The Composition Sid that uniquely identifies the
+     *                    Composition to fetch.
      * @return \Twilio\Rest\Video\V1\CompositionContext 
      */
     public function getContext($sid) {

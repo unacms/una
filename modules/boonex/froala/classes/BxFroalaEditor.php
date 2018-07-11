@@ -48,7 +48,7 @@ class BxFroalaEditor extends BxDolEditor
             .froalaEditor({
                 {bx_var_custom_init}
                 {bx_var_custom_conf}
-                key:'jLAHYKAJOEh1HQDUH==',
+                key:'TB14A7D6A6kF4A3F3J4C6B7D6A3D3F3C-8LAHYKAJOEh1HQDUH==',
                 embedlyKey: '{bx_var_embedly_key}',
                 emoticonsUseImage: false,
                 charCounterCount: false,
@@ -59,7 +59,8 @@ class BxFroalaEditor extends BxDolEditor
                 imageUploadURL: '{bx_var_image_upload_url}',
                 videoUpload: false,
                 language: '{bx_var_lang}',
-                theme: '{bx_var_skin}'
+                theme: '{bx_var_skin}',
+                iconsTemplate: 'font_awesome_5r'
             });
 EOS;
 
@@ -81,7 +82,7 @@ EOS;
     /**
      * Available editor languages
      */
-    protected static $CONF_LANGS = array('ar' => 1, 'bs' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'en_ca' => 1, 'en_gb' => 1, 'es' => 1, 'et' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'me' => 1, 'nb' => 1, 'nl' => 1, 'pl' => 1, 'pt_br' => 1, 'pt_pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sr' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh_cn' => 1, 'zh_tw' => 1);
+    protected static $CONF_LANGS = array('ar' => 1, 'bs' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en_ca' => 1, 'en_gb' => 1, 'es' => 1, 'et' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'ku' => 1, 'me' => 1, 'nb' => 1, 'nl' => 1, 'pl' => 1, 'pt_br' => 1, 'pt_pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sr' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh_cn' => 1, 'zh_tw' => 1);
 
     protected $_oTemplate;
     protected $_bJsCssAdded = false;

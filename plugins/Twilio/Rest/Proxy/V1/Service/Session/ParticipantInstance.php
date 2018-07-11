@@ -12,7 +12,6 @@ namespace Twilio\Rest\Proxy\V1\Service\Session;
 use Twilio\Deserialize;
 use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceResource;
-use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
@@ -98,6 +97,7 @@ class ParticipantInstance extends InstanceResource {
      * Fetch a ParticipantInstance
      * 
      * @return ParticipantInstance Fetched ParticipantInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -107,19 +107,10 @@ class ParticipantInstance extends InstanceResource {
      * Deletes the ParticipantInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();
-    }
-
-    /**
-     * Update the ParticipantInstance
-     * 
-     * @param array|Options $options Optional Arguments
-     * @return ParticipantInstance Updated ParticipantInstance
-     */
-    public function update($options = array()) {
-        return $this->proxy()->update($options);
     }
 
     /**

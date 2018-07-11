@@ -20,7 +20,7 @@ class TaskList extends ListResource {
      * Construct the TaskList
      * 
      * @param Version $version Version that contains the resource
-     * @param string $workspaceSid The workspace_sid
+     * @param string $workspaceSid The ID of the Workspace that holds this Task
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskList 
      */
     public function __construct(Version $version, $workspaceSid) {
@@ -136,6 +136,7 @@ class TaskList extends ListResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return TaskInstance Newly created TaskInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function create($options = array()) {
         $options = new Values($options);

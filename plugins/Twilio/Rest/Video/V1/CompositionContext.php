@@ -21,7 +21,8 @@ class CompositionContext extends InstanceContext {
      * Initialize the CompositionContext
      * 
      * @param \Twilio\Version $version Version that contains the resource
-     * @param string $sid The sid
+     * @param string $sid The Composition Sid that uniquely identifies the
+     *                    Composition to fetch.
      * @return \Twilio\Rest\Video\V1\CompositionContext 
      */
     public function __construct(Version $version, $sid) {
@@ -37,6 +38,7 @@ class CompositionContext extends InstanceContext {
      * Fetch a CompositionInstance
      * 
      * @return CompositionInstance Fetched CompositionInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         $params = Values::of(array());
@@ -54,6 +56,7 @@ class CompositionContext extends InstanceContext {
      * Deletes the CompositionInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->version->delete('delete', $this->uri);

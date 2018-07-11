@@ -55,8 +55,8 @@ abstract class Domain {
      * @return \Twilio\Http\Response the response for the request
      */
     public function request($method, $uri, $params = array(), $data = array(),
-                            $headers = array(), $user = null, $password = null,
-                            $timeout = null) {
+                            $headers = array(), $user = null, $password=null,
+                            $timeout=null) {
         $url = $this->absoluteUrl($uri);
         return $this->client->request(
             $method,

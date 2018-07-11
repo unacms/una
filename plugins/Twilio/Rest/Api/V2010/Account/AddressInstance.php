@@ -40,7 +40,8 @@ class AddressInstance extends InstanceResource {
      * 
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
-     * @param string $accountSid The account_sid
+     * @param string $accountSid The unique id of the Account responsible for this
+     *                           address.
      * @param string $sid The sid
      * @return \Twilio\Rest\Api\V2010\Account\AddressInstance 
      */
@@ -91,6 +92,7 @@ class AddressInstance extends InstanceResource {
      * Deletes the AddressInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();
@@ -100,6 +102,7 @@ class AddressInstance extends InstanceResource {
      * Fetch a AddressInstance
      * 
      * @return AddressInstance Fetched AddressInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -110,6 +113,7 @@ class AddressInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return AddressInstance Updated AddressInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);

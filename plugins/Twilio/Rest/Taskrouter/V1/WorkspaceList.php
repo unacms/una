@@ -125,9 +125,10 @@ class WorkspaceList extends ListResource {
     /**
      * Create a new WorkspaceInstance
      * 
-     * @param string $friendlyName The friendly_name
+     * @param string $friendlyName Human readable description of this workspace
      * @param array|Options $options Optional Arguments
      * @return WorkspaceInstance Newly created WorkspaceInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function create($friendlyName, $options = array()) {
         $options = new Values($options);

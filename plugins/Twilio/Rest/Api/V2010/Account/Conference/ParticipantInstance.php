@@ -38,7 +38,7 @@ class ParticipantInstance extends InstanceResource {
      * @param string $accountSid The unique sid that identifies this account
      * @param string $conferenceSid A string that uniquely identifies this
      *                              conference
-     * @param string $callSid The call_sid
+     * @param string $callSid Fetch by unique participant Call SID
      * @return \Twilio\Rest\Api\V2010\Account\Conference\ParticipantInstance 
      */
     public function __construct(Version $version, array $payload, $accountSid, $conferenceSid, $callSid = null) {
@@ -92,6 +92,7 @@ class ParticipantInstance extends InstanceResource {
      * Fetch a ParticipantInstance
      * 
      * @return ParticipantInstance Fetched ParticipantInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function fetch() {
         return $this->proxy()->fetch();
@@ -102,6 +103,7 @@ class ParticipantInstance extends InstanceResource {
      * 
      * @param array|Options $options Optional Arguments
      * @return ParticipantInstance Updated ParticipantInstance
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function update($options = array()) {
         return $this->proxy()->update($options);
@@ -111,6 +113,7 @@ class ParticipantInstance extends InstanceResource {
      * Deletes the ParticipantInstance
      * 
      * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
      */
     public function delete() {
         return $this->proxy()->delete();
