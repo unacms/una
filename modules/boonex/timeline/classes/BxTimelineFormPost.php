@@ -14,6 +14,7 @@
  */
 class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 {
+    protected $_bAccountMode;
     protected $_bPublicMode;
     protected $_bProfileMode;
 
@@ -26,6 +27,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $iUserId = $this->_oModule->getUserId();
         $iOwnerId = $this->_oModule->getOwnerId();
 
+        $this->_bAccountMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add');
         $this->_bPublicMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_public');
         $this->_bProfileMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_profile');
 
@@ -127,34 +129,36 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $iOwnerId = $this->_oModule->getOwnerId();
 
         $aInput = array_merge($aInput, BxDolPrivacy::getGroupChooser($this->_oModule->_oConfig->getObject('privacy_view'), 0, array(
-        		'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
+            'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
         )));
 
-        //--- Preselect Context and hide privacy selector when posting in some context.
-        if($this->_bProfileMode && $iOwnerId != $iUserId)
-        	foreach($aInput['values'] as $aValue)
-	        	if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$iOwnerId) {
-	        		$aInput['type'] = 'hidden';
-	        		$aInput['value'] = -$iOwnerId;
-	
-	        		return $aInput;
-	        	}
+        //--- Show default privacy groups and followed contexts on Account (Profile + Connections) post form.
+        if($this->_bAccountMode)
+            return $aInput;
 
-		if($this->_bPublicMode || $this->_bProfileMode)
-			foreach($aInput['values'] as $iKey => $aValue) {
-				//--- Show 'Public' privacy group only in Public post form. 
-				if($this->_bPublicMode && isset($aValue['key']) && $aValue['key'] == BX_DOL_PG_ALL)
-					continue;
+        //--- Preselect Context and hide privacy selector when posting in some context (profile, group, space, etc).
+        if($this->_bProfileMode && $iOwnerId != $iUserId) {
+            $aInput['type'] = 'hidden';
+	    $aInput['value'] = -$iOwnerId;
 
-				//--- Show a default privacy groups in Profile (for Owner) post form.
-				if($this->_bProfileMode && $iOwnerId == $iUserId && isset($aValue['key']) && (int)$aValue['key'] >= 0)
-					continue;
+            return $aInput;
+        }
 
-				unset($aInput['values'][$iKey]);
-			}
+        if($this->_bPublicMode || $this->_bProfileMode)
+            foreach($aInput['values'] as $iKey => $aValue) {
+                    //--- Show 'Public' privacy group only in Public post form. 
+                    if($this->_bPublicMode && isset($aValue['key']) && $aValue['key'] == BX_DOL_PG_ALL)
+                            continue;
 
-		return $aInput;
-	}
+                    //--- Show a default privacy groups in Profile (for Owner) post form.
+                    if($this->_bProfileMode && $iOwnerId == $iUserId && isset($aValue['key']) && (int)$aValue['key'] >= 0)
+                            continue;
+
+                    unset($aInput['values'][$iKey]);
+            }
+
+        return $aInput;
+    }
 }
 
 /** @} */
