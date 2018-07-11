@@ -23,7 +23,7 @@ class BxPostsConfig extends BxBaseModTextConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'file-text col-red3',
+            'ICON' => 'file-alt col-red3',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'posts',

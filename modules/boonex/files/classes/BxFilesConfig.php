@@ -24,7 +24,7 @@ class BxFilesConfig extends BxBaseModTextConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'file-o col-red3',
+            'ICON' => 'far file col-red3',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'main',
