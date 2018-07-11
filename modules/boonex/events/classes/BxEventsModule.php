@@ -79,8 +79,8 @@ class BxEventsModule extends BxBaseModGroupsModule
 
         $o = new BxTemplCalendar(array(
             'eventSources' => array (
-                'url' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data',
-                'data' => $aData,
+                BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data',
+                $aData,
             ),
         ), $this->_oTemplate);
         return $o->display($sTemplate);

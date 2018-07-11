@@ -2166,6 +2166,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
+	<string name="_sys_menu_item_title_cmts_item_more"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_dashboard"><![CDATA[Dash]]></string>
 	<string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
 	<string name="_sys_menu_item_title_logout"><![CDATA[Sign out]]></string>

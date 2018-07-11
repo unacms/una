@@ -1417,8 +1417,10 @@ class BxDolFormCheckerHelper
     {
         return self::checkPreg ($s, '#^\d+\-\d+\-\d+$#');
     }
-    static public function checkDateRange ($s, $iMin, $iMax)
+    static public function checkDateRange ($s, $iMin, $iMax, $bRequired = false)
     {
+        if (!$bRequired && (empty($s) || '0000-00-00' == $s))
+            return true;   
         if (self::checkPreg ($s, '#^\d+\-\d+\-\d+$#')){
             $dDate = new DateTime($s);
             $dDateMax = new DateTime("-" . $iMin . " years");
