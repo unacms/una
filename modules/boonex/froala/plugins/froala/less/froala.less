@@ -1,0 +1,60 @@
+@import 'variables.less';
+@import 'mixins.less';
+
+@import 'core/element.less';
+@import 'core/iframe.less';
+@import 'core/wrapper.less';
+
+@import 'tooltip.less';
+
+@import 'ui/buttons.less';
+@import 'ui/dropdown.less';
+@import 'ui/modal.less';
+@import 'ui/popup.less';
+@import 'ui/text_edit.less';
+@import 'ui/toolbar.less';
+
+@import 'helpers.less';
+
+.fr-box {
+  position: relative;
+}
+
+/**
+ * Postion sticky hacks.
+ */
+.fr-sticky {
+  position: -webkit-sticky;
+	position: -moz-sticky;
+	position: -ms-sticky;
+	position: -o-sticky;
+	position: sticky;
+}
+
+.fr-sticky-off {
+	position: relative;
+}
+
+.fr-sticky-on {
+	position: fixed;
+
+  &.fr-sticky-ios {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: auto !important;
+  }
+}
+
+.fr-sticky-dummy {
+	display: none;
+}
+
+.fr-sticky-on + .fr-sticky-dummy, .fr-sticky-box > .fr-sticky-dummy {
+	display: block;
+}
+
+// Used for accessibility instead of aria-label.
+span.fr-sr-only {
+  .hide-by-clipping();
+}

@@ -1,0 +1,166 @@
+@import '../mixins.less';
+@import '../variables.less';
+
+body.prevent-scroll {
+  overflow: hidden;
+
+  &.fr-mobile {
+    position: fixed;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.fr-modal {
+  color: @ui-text;
+  font-family: @font-family;
+  position: fixed;
+  overflow-x: auto;
+  overflow-y: scroll;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2147483640;
+  text-rendering: optimizelegibility;
+  .font-smoothing();
+  text-align: center;
+  line-height: 1.2;
+
+  &.fr-middle {
+    .fr-modal-wrapper {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: auto;
+      margin-right: auto;
+      top: 50%;
+      left: 50%;
+      .transform(translate(-50%, -50%));
+      position: absolute;
+    }
+  }
+
+  .fr-modal-wrapper {
+    .border-radius(@border-radius);
+    margin: 20px auto;
+    display: inline-block;
+    background: @modal-bg;
+    min-width: 300px;
+    .material-box-shadow(((@editor-shadow-level + 2) * min(@editor-shadow-level, 1)));
+    border: @editor-border;
+    border-top: @ui-border-top;
+    overflow: hidden;
+    width: 90%;
+    position: relative;
+
+    @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+      margin: 30px auto;
+      width: 70%;
+    }
+
+    @media (min-width: @screen-md) {
+      margin: 50px auto;
+      width: 600px;
+    }
+
+    .fr-modal-head {
+      background: @ui-bg;
+      .material-box-shadow(((@editor-shadow-level + 1) * min(@editor-shadow-level, 1)));
+      border-bottom: @editor-border;
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
+      min-height: 42px;
+      z-index: 3;
+      .transition(height @transition-timing);
+
+      .fr-modal-close {
+        padding: 12px;
+        width: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        line-height: 18px;
+        color: @ui-text;
+        .box-sizing(content-box);
+        position: absolute;
+        top: 0;
+        right: 0;
+        .transition(color @transition-timing);
+      }
+
+      h4 {
+        font-size: 18px;
+        padding: 12px 10px;
+        margin: 0;
+        font-weight: 400;
+        line-height: 18px;
+        display: inline-block;
+        float: left;
+      }
+    }
+
+    div.fr-modal-body {
+      height: 100%;
+      min-height: 150px;
+      overflow-y: scroll;
+      padding-bottom: 10px;
+
+      &:focus {
+        outline: 0;
+      }
+
+      button.fr-command {
+        height: 36px;
+        line-height: 1;
+        color: @ui-color;
+        padding: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+        background: none;
+        font-size: 16px;
+        outline: none;
+        .transition(background @transition-timing);
+        .border-radius(@border-radius);
+
+        + button {
+          margin-left: 24px;
+        }
+
+        &:hover, &:focus {
+          background: @ui-hover-color;
+          color: @ui-color;
+        }
+
+        &:active {
+          background: @ui-focused-color;
+          color: @ui-color;
+        }
+      }
+
+      button::-moz-focus-inner {
+        border: 0;
+      }
+    }
+  }
+}
+
+&.fr-desktop .fr-modal-wrapper {
+  .fr-modal-head {
+    i:hover {
+      background: @ui-hover-color;
+    }
+  }
+}
+
+// Overlay that appears with modal.
+.fr-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: @modal-overlay-color;
+  .opacity(0.5);
+  z-index: 2147483639;
+}

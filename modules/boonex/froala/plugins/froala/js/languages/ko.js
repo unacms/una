@@ -1,5 +1,5 @@
 /*!
- * froala_editor v2.7.5 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v2.8.4 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2018 Froala Labs
  */
@@ -88,7 +88,7 @@ $.FE.LANGUAGE['ko'] = {
     "None": "\uc5c6\uc74c",
 
     // Lists
-    "Ordered List": "\uc22b\uc790\ub9ac\uc2a4\ud2b8",
+    "Ordered List": "\uc22b\uc790 \ub9ac\uc2a4\ud2b8",
     "Unordered List": "\uc810 \ub9ac\uc2a4\ud2b8",
 
     // Indent
@@ -121,7 +121,7 @@ $.FE.LANGUAGE['ko'] = {
     "Display": "\ub514\uc2a4\ud50c\ub808\uc774",
     "Inline": "\uc778\ub77c\uc778",
     "Break Text": "\uad6c\ubd84 \ud14d\uc2a4\ud2b8",
-    "Alternate Text": "\ub300\uccb4 \ud14d\uc2a4\ud2b8",
+    "Alternative Text": "\ub300\uccb4 \ud14d\uc2a4\ud2b8",
     "Change Size": "\ud06c\uae30 \ubcc0\uacbd",
     "Width": "\ud3ed",
     "Height": "\ub192\uc774",

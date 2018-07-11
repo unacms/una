@@ -1,5 +1,5 @@
 /*!
- * froala_editor v2.7.5 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v2.8.4 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2018 Froala Labs
  */
@@ -64,7 +64,7 @@ $.FE.LANGUAGE['ru'] = {
     "Colors": "\u0426\u0432\u0435\u0442\u0430",
     "Background": "\u0424\u043e\u043d",
     "Text": "\u0422\u0435\u043a\u0441\u0442",
-    "HEX Color": "Шестигранный цвет",
+    "HEX Color": "Шестнадцатеричный код цвета",
 
     // Paragraphs
     "Paragraph Format": "\u0424\u043e\u0440\u043c\u0430\u0442 \u0430\u0431\u0437\u0430\u0446\u0430",
@@ -121,7 +121,7 @@ $.FE.LANGUAGE['ru'] = {
     "Display": "\u041f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u0435",
     "Inline": "\u041e\u0431\u0442\u0435\u043a\u0430\u043d\u0438\u0435 \u0442\u0435\u043a\u0441\u0442\u043e\u043c",
     "Break Text": "\u0412\u0441\u0442\u0440\u043e\u0435\u043d\u043d\u043e\u0435 \u0432 \u0442\u0435\u043a\u0441\u0442",
-    "Alternate Text": "\u0410\u043b\u044c\u0442\u0435\u0440\u043d\u0430\u0442\u0438\u0432\u043d\u044b\u0439 \u0442\u0435\u043a\u0441\u0442",
+    "Alternative Text": "\u0410\u043b\u044c\u0442\u0435\u0440\u043d\u0430\u0442\u0438\u0432\u043d\u044b\u0439 \u0442\u0435\u043a\u0441\u0442",
     "Change Size": "\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c \u0440\u0430\u0437\u043c\u0435\u0440",
     "Width": "\u0428\u0438\u0440\u0438\u043d\u0430",
     "Height": "\u0412\u044b\u0441\u043e\u0442\u0430",
@@ -133,7 +133,7 @@ $.FE.LANGUAGE['ru'] = {
     "Insert Video": "\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0432\u0438\u0434\u0435\u043e",
     "Embedded Code": "\u0048\u0054\u004d\u004c\u002d\u043a\u043e\u0434 \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438",
     "Paste in a video URL": "Вставить URL-адрес видео",
-    "Drop video": "Падение видео",
+    "Drop video": "Перетащите видефайл",
     "Your browser does not support HTML5 video.": "Ваш браузер не поддерживает видео html5.",
     "Upload Video": "Загрузить видео",
 
