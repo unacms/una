@@ -150,8 +150,8 @@
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Goods Actions]]></string>
     <string name="_bx_shopify_menu_title_submenu"><![CDATA[Goods Submenu]]></string>
     <string name="_bx_shopify_menu_set_title_submenu"><![CDATA[Goods Submenu]]></string>
-    <string name="_bx_shopify_menu_item_title_system_create_entry"><![CDATA[Good]]></string>
-    <string name="_bx_shopify_menu_item_title_create_entry"><![CDATA[Good]]></string>
+    <string name="_bx_shopify_menu_item_title_system_create_entry"><![CDATA[Goods]]></string>
+    <string name="_bx_shopify_menu_item_title_create_entry"><![CDATA[Goods]]></string>
     <string name="_bx_shopify_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_shopify_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_shopify_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>

@@ -1528,20 +1528,9 @@ BLAH;
 
             $this->addCssJsViewMode ();
 
-        } else {
+        } else { 
 
-            $this->addCssJsCore();
-                
-            foreach ($this->aInputs as $aInput) {
-                if (!isset($aInput['type']) || 'files' != $aInput['type'] || !isset($aInput['uploaders']))
-                    continue;
-
-                foreach ($aInput['uploaders'] as $sUploaderObject) {
-                    $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], '', $this->oTemplate);
-                    if ($oUploader)
-                        $oUploader->addCssJs();
-                }
-            }
+            $this->addCssJsCore();            
         }
     }
 
