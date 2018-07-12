@@ -476,21 +476,33 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$aParams = array_merge($this->_aFormParams, $aParams);
 
+        $this->_iOwnerId = $aParams['context_id'];
+
     	$oForm = $this->serviceGetObjectForm('add', $aParams);
     	if(!$oForm)
-    		return ''; 	
+            return '';
 
-		if(!empty($aParams['display']))
-			$aParams['form_display'] = $aParams['display'];
+        if(!empty($aParams['display']))
+            $aParams['form_display'] = $aParams['display'];
+        else if(isset($aParams['context_id'])) {
+            if((int)$aParams['context_id'] == 0)
+                $aParams['form_display'] = 'form_display_post_add_public';
+            else
+                $aParams['form_display'] = 'form_display_post_add_profile';
+        }
 
     	$aResult = $this->getFormPost($aParams);
-    	if(!empty($aResult['form']))
-			return $aResult['form'];
+    	if(!empty($aResult['form'])) {
+            $sCode = '';
+            $sCode .= $this->_oTemplate->getJsCodePost($this->_iOwnerId);
+            $sCode .= $aResult['form'];
+            return $sCode;
+        }
 
-		if(!empty($aResult['message']))
-			return $aResult['message'];
+        if(!empty($aResult['message']))
+                return $aResult['message'];
 
-		return '';
+        return '';
     }
 
     /**
@@ -517,26 +529,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	if (!in_array($sType, array('add')))
             return false;
 
-		$CNF = &$this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
-		if(!empty($aParams['display']))
-			$aParams['form_display'] = $aParams['display'];
+        if(!empty($aParams['display']))
+            $aParams['form_display'] = $aParams['display'];
+        else if(isset($aParams['context_id'])) {
+            if((int)$aParams['context_id'] == 0)
+                $aParams['form_display'] = 'form_display_post_add_public';
+            else
+                $aParams['form_display'] = 'form_display_post_add_profile';
+        }
 
-		$oForm = $this->getFormPostObject($aParams);
-			
-		$sParamsKey = 'ajax_mode';
+        $oForm = $this->getFormPostObject($aParams);
+	
+        $sParamsKey = 'ajax_mode';
         if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
         	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
-
-		$sKey = 'FIELD_OBJECT_PRIVACY_VIEW';
-    	if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
-			foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $aValue)
-				if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$aParams['context_id']) {
-					$oForm->aInputs[$CNF[$sKey]]['value'] = -(int)$aParams['context_id'];
-					$oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
-					break;
-				}
-		}
 
     	return $oForm;
     }

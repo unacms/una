@@ -68,6 +68,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $mixedResult; 
     }
 
+    public function getJsCodePost($iOwnerId, $aParams = array())
+    {
+        return $this->getJsCode('post', array(
+            'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
+            'oRequestParams' => array_merge(array(
+                    'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
+                    'owner_id' => $iOwnerId
+            ), $aParams)
+        ));
+    }
+
     public function getPostBlock($iOwnerId, $aParams = array())
     {
         $aForm = $this->getModule()->getFormPost($aParams);
@@ -75,13 +86,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByName('block_post.html', array (
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('post'),
-            'js_content' => $this->getJsCode('post', array(
-        		'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
-            	'oRequestParams' => array(
-            		'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
-            		'owner_id' => $iOwnerId
-                )
-        	)),
+            'js_content' => $this->getJsCodePost($iOwnerId, $aParams),
             'form' => $aForm['form']
         ));
     }
