@@ -112,11 +112,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent))) !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
-        list($sOwnerName, $sOwnerUrl, $sOwnerIcon, $sOwnerUnit, $sOwnerUnitWoInfo) = $oModule->getUserInfo($aEvent['owner_id']);
+        $oOwner = $oModule->getObjectUser($aEvent['owner_id']);
 
-        $aEvent['content']['owner_name'] = strmaxtextlen($sOwnerName, $this->_oConfig->getOwnerNameMaxLen());
-        $aEvent['content']['owner_link'] = $sOwnerUrl;
-        $aEvent['content']['owner_icon'] = $sOwnerIcon;
+        $aEvent['content']['owner_name'] = strmaxtextlen($oOwner->getDisplayName(), $this->_oConfig->getOwnerNameMaxLen());
+        $aEvent['content']['owner_link'] = $oOwner->getUrl();
+        $aEvent['content']['owner_icon'] = $oOwner->getThumb();
         if(!empty($aEvent['content']['entry_caption']))
             $aEvent['content']['entry_caption'] = strmaxtextlen(bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT), $this->_oConfig->getContentMaxLen());
 
@@ -133,7 +133,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             'js_object' => $this->_oConfig->getJsObject('view'),
             'class' => !empty($aBrowseParams['last_read']) && $aEvent['id'] > $aBrowseParams['last_read'] ? ' bx-def-color-bg-box-active' : '', 
             'id' => $aEvent['id'],
-            'author_unit' => $sOwnerUnitWoInfo,
+            'author_unit' => $oOwner->getUnit(0, array('template' => 'unit_wo_info_links')),
             'link' => $this->_getContentLink($aEvent),
             'content' => $aEvent['content_parsed'],
             'date' => bx_time_js($aEvent['date']),
