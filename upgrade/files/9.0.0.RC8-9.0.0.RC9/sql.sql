@@ -1159,7 +1159,36 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 -- ICONS
 
+UPDATE `sys_menu_items` SET `icon` = 'file-alt col-red3' WHERE `icon` = 'file-text col-red3';
+UPDATE `sys_menu_items` SET `icon` = 'far clock col-green1' WHERE `icon` = 'clock-o col-green1';
+UPDATE `sys_menu_items` SET `icon` = 'users col-red2' WHERE `icon` = 'group col-red2';
+UPDATE `sys_menu_items` SET `icon` = 'users col-blue3' WHERE `icon` = 'group col-blue3';
+UPDATE `sys_menu_items` SET `icon` = 'far comments col-blue2' WHERE `icon` = 'comments-o col-blue2';
+UPDATE `sys_menu_items` SET `icon` = 'far file col-red3' WHERE `icon` = 'file-o col-red3';
+UPDATE `sys_menu_items` SET `icon` = 'far envelope' WHERE `icon` = 'envelope-o';
+UPDATE `sys_menu_items` SET `icon` = 'far trash-alt' WHERE `icon` = 'trash-o';
+UPDATE `sys_menu_items` SET `icon` = 'pencil-alt' WHERE `icon` = 'pencil';
+UPDATE `sys_menu_items` SET `icon` = 'thumbtack' WHERE `icon` = 'thumb-tack';
+UPDATE `sys_menu_items` SET `icon` = 'far smile' WHERE `icon` = 'smile-o';
+UPDATE `sys_menu_items` SET `icon` = 'video' WHERE `icon` = 'video-camera';
+
+
 UPDATE `sys_grid_actions` SET `icon` = 'pencil-alt' WHERE `icon` = 'pencil';
+UPDATE `sys_grid_actions` SET `icon` = 'far check-square' WHERE `icon` = 'check-square-o';
+UPDATE `sys_grid_actions` SET `icon` = 'unlink' WHERE `icon` = 'chain-broken';
+
+
+UPDATE `sys_statistics` SET `icon` = 'file-alt col-red3' WHERE `icon` = 'file-text col-red3';
+UPDATE `sys_statistics` SET `icon` = 'users col-red2' WHERE `icon` = 'group col-red2';
+UPDATE `sys_statistics` SET `icon` = 'far comments col-blue2' WHERE `icon` = 'comments-o col-blue2';
+UPDATE `sys_statistics` SET `icon` = 'far file col-red3' WHERE `icon` = 'file-o col-red3';
+
+
+UPDATE `sys_objects_auths` SET `Icon` = 'sign-in-alt' WHERE `Icon` = 'sign-in';
+UPDATE `sys_objects_auths` SET `Icon` = 'fab facebook-square' WHERE `Icon` = 'facebook-square';
+UPDATE `sys_objects_auths` SET `Icon` = 'fab google-plus-square' WHERE `Icon` = 'google-plus-square';
+UPDATE `sys_objects_auths` SET `Icon` = 'fab linkedin-in' WHERE `Icon` = 'linkedin';
+UPDATE `sys_objects_auths` SET `Icon` = 'fab twitter' WHERE `Icon` = 'twitter';
 
 
 -- Last step is to update current version
