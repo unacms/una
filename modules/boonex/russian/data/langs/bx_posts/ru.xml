@@ -34,6 +34,10 @@
 	<string name="_bx_posts_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить эту публикацию]]></string>
 	<string name="_bx_posts_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
 	<string name="_bx_posts_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить публикацию]]></string>
+        <string name="_bx_posts_form_entry_input_sys_covers"><![CDATA[Обложка]]></string>
+	<string name="_bx_posts_form_entry_input_covers"><![CDATA[Обложка]]></string>
+	<string name="_bx_posts_form_entry_input_covers_uploader_simple_title"><![CDATA[Загрузить]]></string>
+	<string name="_bx_posts_form_entry_input_covers_uploader_html5_title"><![CDATA[Загрузить]]></string>
 	<string name="_bx_posts_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_posts_form_entry_input_pictures"><![CDATA[Картинки]]></string>
     <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>

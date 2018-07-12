@@ -1,0 +1,39 @@
+@import '../variables.less';
+@import '../mixins.less';
+
+.fr-element {
+  .fr-embedly {
+    .user-select(none);
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: '';
+      z-index: 1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      cursor: pointer;
+      display: block;
+      background: rgba(0,0,0,0);
+    }
+
+    > * {
+      .box-sizing(content-box);
+      max-width: 100%;
+      border: none;
+    }
+  }
+}
+
+.fr-box .fr-embedly-resizer {
+  position: absolute;
+  border: solid 1px @ui-color;
+  display: none;
+  .user-select(none);
+
+  &.fr-active {
+    display: block;
+  }
+}

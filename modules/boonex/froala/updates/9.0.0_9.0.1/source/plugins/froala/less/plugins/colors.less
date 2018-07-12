@@ -1,0 +1,145 @@
+@import '../mixins.less';
+@import '../variables.less';
+
+.fr-popup {
+  .fr-colors-tabs {
+    .material-box-shadow(@editor-shadow-level);
+    margin-bottom: 5px;
+    line-height: 16px;
+    margin-left: -2px;
+    margin-right: -2px;
+
+    .fr-colors-tab {
+      display: inline-block;
+      width: 50%;
+      cursor: pointer;
+      text-align: center;
+      color: @ui-text;
+      font-size: 13px;
+      padding: 8px 0;
+      position: relative;
+
+      &:hover, &:focus {
+        color: @ui-color;
+      }
+
+      &[data-param1="background"]::after {
+      	position: absolute;
+      	bottom: 0;
+      	left: 0;
+      	width: 100%;
+      	height: 2px;
+      	background: @ui-color;
+      	content: '';
+        .transition(transform @transition-timing);
+      }
+
+      &.fr-selected-tab {
+        color: @ui-color;
+
+        &[data-param1="text"] ~ [data-param1="background"]::after {
+          .transform(translate3d(-100%,0,0));
+        }
+      }
+    }
+  }
+
+  .fr-color-hex-layer {
+    width: 100%;
+    margin: 0px;
+    padding: 10px;
+
+    .fr-input-line {
+      float: left;
+      width: calc(100% - 50px);
+      padding: 8px 0 0;
+    }
+
+    .fr-action-buttons {
+      float: right;
+      width: 50px;
+    }
+
+    .fr-action-buttons {
+      button {
+        background-color: @ui-color;
+        color: #FFF;
+        .border-radius(@border-radius);
+        font-size: 13px;
+        height: 32px;
+
+        &:hover {
+          background-color: darken(@ui-color, 10%);
+          color: #FFF;
+        }
+      }
+    }
+  }
+
+  .fr-separator + .fr-colors-tabs {
+    .material-box-shadow(0, 0);
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .fr-color-set {
+    line-height: 0;
+    display: none;
+
+    &.fr-selected-set {
+      display: block;
+    }
+
+    > span {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      position: relative;
+      z-index: 1;
+
+      > i, > svg {
+        text-align: center;
+        line-height: 32px;
+        height: 32px;
+        width: 32px;
+        font-size: 13px;
+        position: absolute;
+        bottom: 0;
+        cursor: default;
+        left: 0;
+      }
+
+      .fr-selected-color {
+        color: @white;
+        font-family: FontAwesome;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 32px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        text-align: center;
+        cursor: default;
+      }
+
+      &:hover, &:focus {
+        outline: 1px solid @ui-text;
+        z-index: 2;
+      }
+    }
+  }
+}
+
+.fr-rtl .fr-popup {
+  .fr-colors-tabs {
+    .fr-colors-tab {
+      &.fr-selected-tab {
+        &[data-param1="text"] ~ [data-param1="background"]::after {
+          .transform(translate3d(100%,0,0));
+        }
+      }
+    }
+  }
+}
