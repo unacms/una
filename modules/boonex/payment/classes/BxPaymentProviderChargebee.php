@@ -107,13 +107,14 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 
 		try {
 			$aPage = array(
-				'subscription' => array(
-					'planId' => $aItem['name']
-				), 
-				'customer' => array(
-					'email' => $aClient['email'],
-					'firstName' => $aClient['name']
-				), 
+                            'embed' => false, //--- Note. 'embed' should be disabled to allow payments via PayPal
+                            'subscription' => array(
+                                    'planId' => $aItem['name']
+                            ), 
+                            'customer' => array(
+                                    'email' => $aClient['email'],
+                                    'firstName' => $aClient['name']
+                            ), 
 			);
 
 			if(!empty($aVendor) && is_array($aVendor) && !empty($aVendor))
