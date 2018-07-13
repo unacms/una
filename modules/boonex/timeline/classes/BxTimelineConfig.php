@@ -230,7 +230,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'image_do_repost' => '',
         	
         	//--- Icons
-        	'icon_do_repost' => 'repeat',
+        	'icon_do_repost' => 'sync-alt',
 
         	//--- Texts
         	'text_do_repost' => '_bx_timeline_txt_do_repost',
