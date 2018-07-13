@@ -2160,7 +2160,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
 	<string name="_sys_menu_item_title_cart"><![CDATA[Shopping Cart]]></string>
-  <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Manage Сomments]]></string>
+  <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Manage Comments]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
@@ -2221,7 +2221,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_menu_item_title_system_cart"><![CDATA[Shopping Cart]]></string>
-  <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Manage Сomments]]></string>
+  <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>
@@ -2359,7 +2359,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_page_block_title_chart_growth"><![CDATA[Growth Charts]]></string>
 	<string name="_sys_page_block_title_chart_stats"><![CDATA[Content]]></string>
-	<string name="_sys_page_block_title_cmts_administration"><![CDATA[Manage Сomments]]></string>
+	<string name="_sys_page_block_title_cmts_administration"><![CDATA[Manage Comments]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Sign up]]></string>
@@ -2374,7 +2374,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Log in - step2]]></string>
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Log in - step3]]></string>
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Log in]]></string>
-	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Manage Сomments]]></string>
+	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Log in]]></string>
 	<string name="_sys_page_block_title_login_step2"><![CDATA[Log in - step 2]]></string>
 	<string name="_sys_page_block_title_login_step3"><![CDATA[Log in - step 3]]></string>
@@ -2399,7 +2399,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Change Password]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Add Content]]></string>
-  <string name="_sys_page_title_cmts_administration"><![CDATA[Manage Сomments]]></string>
+  <string name="_sys_page_title_cmts_administration"><![CDATA[Manage Comments]]></string>
 	<string name="_sys_page_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_title_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_title_create_account"><![CDATA[Sign up]]></string>
@@ -2418,7 +2418,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Add Content]]></string>
-  <string name="_sys_page_title_system_cmts_administration"><![CDATA[Manage Сomments]]></string>
+  <string name="_sys_page_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
   <string name="_sys_page_title_system_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Sign up]]></string>
