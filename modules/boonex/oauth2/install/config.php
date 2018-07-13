@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_oauth',
     'title' => 'OAuth2 Server',
     'note' => 'Allow to use site user credentials and basic API',
-    'version' => '9.0.7.DEV',
+    'version' => '9.0.8.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

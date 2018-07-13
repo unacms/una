@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_accounts',
     'title' => 'Accounts Manager',
     'note' => 'Accounts Manager module.',
-    'version' => '9.0.9.DEV',
+    'version' => '9.0.10.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
     
