@@ -277,6 +277,8 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomInputSubentries($aInput)
     {
+        $this->addCssJsUi();
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sGetSubentriesUrl = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'get_subentries';
