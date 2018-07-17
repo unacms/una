@@ -28,7 +28,7 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
 
     protected function _getMenuItemJoin($aItem)
     {
-        if (isset($CNF['OBJECT_CONNECTIONS']))
+        if (isset($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS']))
             return $this->_getMenuItemConnection($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'], 'add', $aItem);
         return false;
     }
