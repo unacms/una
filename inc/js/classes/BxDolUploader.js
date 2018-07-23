@@ -267,6 +267,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
         var _options = {
             url: sUrlRoot + 'storage_uploader.php',
             uploadMultiple: false,
+            timeout: 0,
             maxFiles: $this.isMultiple() ? 50 : 1,
             params: {
                 uo: this._sUploaderObject,
