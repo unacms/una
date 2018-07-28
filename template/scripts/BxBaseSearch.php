@@ -52,8 +52,10 @@ class BxBaseSearch extends BxDolSearch
                'action' => BX_DOL_URL_ROOT . 'searchKeyword.php',
                'method' => 'post',
             ),
-            'csrf' => array(
-                'disable' => true,
+            'params' => array(
+                'csrf' => array(
+                    'disable' => true,
+                ),
             ),
             'inputs' => array(
                 'live_search' => array(

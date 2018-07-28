@@ -749,8 +749,6 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             $this->aFormAttrs['action'] = '';
 
         $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : '';
-
-        BxDolForm::genCsrfToken();
     }
 
     /**
@@ -988,31 +986,31 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     // Static Methods related to CSRF Tocken
     public static function genCsrfToken($bReturn = false)
     {
-        if (getParam('sys_security_form_token_enable') != 'on')
-            return false;
-
-        $oSession = BxDolSession::getInstance();
-
-        $iCsrfTokenLifetime = (int)getParam('sys_security_form_token_lifetime');
-        if($oSession->getValue('csrf_token') === false || ($iCsrfTokenLifetime != 0 && time() - (int)$oSession->getValue('csrf_token_time') > $iCsrfTokenLifetime)) {
-            $sToken = genRndPwd(20, true);
-            $oSession->setValue('csrf_token', $sToken);
-            $oSession->setValue('csrf_token_time', time());
-        } else
-            $sToken = $oSession->getValue('csrf_token');
-
-        if($bReturn)
-            return $sToken;
+        // TODO: remove
     }
     public static function getCsrfToken()
     {
-        $oSession = BxDolSession::getInstance();
-        return $oSession->getValue('csrf_token');
+        if (getParam('sys_security_form_token_enable') != 'on')
+            return false;
+
+        if (!($oKeys = BxDolKey::getInstance()))
+            return false;
+
+        return $oKeys->getNewKey (false, (int)getParam('sys_security_form_token_lifetime'));
     }
-    public static function getCsrfTokenTime()
+    public static function isCsrfTokenValid($s)
     {
-        $oSession = BxDolSession::getInstance();
-        return $oSession->getValue('csrf_token_time');
+        if (getParam('sys_security_form_token_enable') != 'on')
+            return true;
+
+        if (!($oKeys = BxDolKey::getInstance()))
+            return true;
+
+        if ($oKeys->isKeyExists($s)) {
+            $oKeys->removeKey($s);
+            return true;
+        }
+        return false;
     }
 
     function _initCheckerNestedForms ()
@@ -1246,11 +1244,11 @@ class BxDolFormChecker
         }
 
         // check CSRF token if it's needed.
-        if (getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true && ($mixedCsrfTokenSys = BxDolForm::getCsrfToken()) !== false) {
+        if (getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true) {
             $mixedCsrfTokenUsr = BxDolForm::getSubmittedValue('csrf_token', $this->_sFormMethod, $this->_aSpecificValues);
             unset($aInputs['csrf_token']);
 
-            if($mixedCsrfTokenUsr === false || $mixedCsrfTokenSys != $mixedCsrfTokenUsr) {
+            if ($mixedCsrfTokenUsr === false || !BxDolForm::isCsrfTokenValid($mixedCsrfTokenUsr)) {
                 $aInputs[$sSubmitName]['error'] = _t('_sys_txt_form_submission_error_csrf_expired');
                 return false;
             }
