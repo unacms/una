@@ -1234,7 +1234,8 @@ class BxDolFormChecker
                 $aInputs[$k]['error'] = $bool;
             } elseif (!$bool) {
                 ++$iErrors;
-                $aInputs[$k]['error'] = $a['checker']['error'];
+				if (isset($a['checker']['error']))
+                	$aInputs[$k]['error'] = $a['checker']['error'];
             }
 
             if (isset(BxDolForm::$TYPES_CHECKBOX[$a['type']]))
@@ -1417,6 +1418,7 @@ class BxDolFormCheckerHelper
     }
     static public function checkDateRange ($s, $iMin, $iMax, $bRequired = false)
     {
+        echo $iMin.'-'.$iMax.'-'.$bRequired;
         if (!$bRequired && (empty($s) || '0000-00-00' == $s))
             return true;   
         if (self::checkPreg ($s, '#^\d+\-\d+\-\d+$#')){

@@ -274,8 +274,10 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         $aForm['inputs'][$sKey]['value'] = strtolower($this->aField[$sKey]);
                         switch($aForm['inputs'][$sKey]['value']) {
                             case 'length':
-                            case 'date_range':
                                 unset($aForm['inputs']['checker_params_length_min']['tr_attrs']['style'], $aForm['inputs']['checker_params_length_max']['tr_attrs']['style']);
+                                break;
+                            case 'date_range':
+                                unset($aForm['inputs']['checker_params_length_min']['tr_attrs']['style'], $aForm['inputs']['checker_params_length_max']['tr_attrs']['style'], $aForm['inputs']['checker_params_required']['tr_attrs']['style']);
                                 break;
                             case 'preg':
                                 unset($aForm['inputs']['checker_params_preg']['tr_attrs']['style']);
@@ -291,6 +293,11 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                     case 'checker_params_length_max':
                         $aParams = unserialize($this->aField['checker_params']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['max']) ? (int)$aParams['max'] : 0;
+                        break;
+                    
+                    case 'checker_params_required':
+                        $aParams = unserialize($this->aField['checker_params']);
+                        $aForm['inputs'][$sKey]['checked'] = (int)$aParams['required'];
                         break;
 
                     case 'checker_params_preg':
@@ -493,6 +500,20 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                     'pass' => 'Int',
                 )
             ),
+            'checker_params_required' => array(
+                'type' => 'checkbox',
+                'name' => 'checker_params_required',
+                'caption' => _t('_adm_form_txt_field_checker_params_required'),
+                'info' => '',
+                'value' => '1',
+                'required' => $bMandatory ? '1' : '0',
+                'tr_attrs' => array(
+                    'style' => 'display:none'
+                ),
+                'db' => array (
+                    'pass' => 'Int',
+                )
+            ),
             'checker_params_preg' => array(
                 'type' => 'text',
                 'name' => 'checker_params_preg',
@@ -585,8 +606,11 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 unset($oForm->aInputs['checker_func']['tr_attrs']['style'], $oForm->aInputs['checker_error']['tr_attrs']['style']);
                 switch($oForm->getCleanValue('checker_func')) {
                     case 'length':
-                    case 'date_range':
                         unset($oForm->aInputs['checker_params_length_min']['tr_attrs']['style'], $oForm->aInputs['checker_params_length_max']['tr_attrs']['style']);
+                        $this->unsetCheckerFields($oForm, 'preg');
+                        break;
+                    case 'date_range':
+                        unset($oForm->aInputs['checker_params_length_min']['tr_attrs']['style'], $oForm->aInputs['checker_params_length_max']['tr_attrs']['style'], $oForm->aInputs['checker_params_required']['tr_attrs']['style']);
                         $this->unsetCheckerFields($oForm, 'preg');
                         break;
                     case 'preg':
@@ -603,9 +627,14 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     {
         switch($sCheckerFunc) {
             case 'length':
+                $oForm->aInputs['checker_params_length_min']['value'] = '';
+                $oForm->aInputs['checker_params_length_max']['value'] = '';
+                break;
+                
             case 'date_range':
                 $oForm->aInputs['checker_params_length_min']['value'] = '';
                 $oForm->aInputs['checker_params_length_max']['value'] = '';
+                $oForm->aInputs['checker_params_required']['value'] = '';
                 break;
 
             case 'preg':
@@ -632,10 +661,17 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
     {
         switch($sCheckerFunc) {
             case 'length':
-                 case 'date_range':
+                unset(
+                $oForm->aInputs['checker_params_length_min'],
+                $oForm->aInputs['checker_params_length_max']
+                );
+                break;
+                
+            case 'date_range':
                 unset(
                     $oForm->aInputs['checker_params_length_min'],
-                    $oForm->aInputs['checker_params_length_max']
+                    $oForm->aInputs['checker_params_length_max'],
+                    $oForm->aInputs['checker_params_required']
                 );
                 break;
             case 'preg':
@@ -719,9 +755,12 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
             if(isset($oForm->aInputs['checker_params_preg']))
                 $aCheckerParams['preg'] = $oForm->getCleanValue('checker_params_preg');
+            
+            if(isset($oForm->aInputs['checker_params_required']))
+                $aCheckerParams['required'] = $oForm->getCleanValue('checker_params_required');
         }
 
-        unset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'], $oForm->aInputs['checker_params_preg']);
+        unset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'], $oForm->aInputs['checker_params_preg'], $oForm->aInputs['checker_params_required']);
         BxDolForm::setSubmittedValue('checker_params', !empty($aCheckerParams) ? serialize($aCheckerParams) : '', $oForm->aFormAttrs['method']);
 
         //--- Process field attrs.
@@ -1358,6 +1397,7 @@ class BxBaseStudioFormsFieldHidden extends BxBaseStudioFormsFieldText
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],
             $this->aForm['inputs']['checker_params_length_max'],
+            $this->aForm['inputs']['checker_params_required'],
             $this->aForm['inputs']['checker_params_preg'],
             $this->aForm['inputs']['checker_error']
         );
@@ -1389,6 +1429,7 @@ class BxBaseStudioFormsFieldButton extends BxBaseStudioFormsFieldText
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],
             $this->aForm['inputs']['checker_params_length_max'],
+            $this->aForm['inputs']['checker_params_required'],
             $this->aForm['inputs']['checker_params_preg'],
             $this->aForm['inputs']['checker_error']
         );
@@ -1563,6 +1604,7 @@ class BxBaseStudioFormsFieldCustom extends BxBaseStudioFormsFieldText
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],
             $this->aForm['inputs']['checker_params_length_max'],
+            $this->aForm['inputs']['checker_params_required'], 
             $this->aForm['inputs']['checker_params_preg'],
             $this->aForm['inputs']['checker_error']
         );
@@ -1648,6 +1690,7 @@ class BxBaseStudioFormsFieldLocation extends BxBaseStudioFormsFieldText
             $this->aForm['inputs']['checker_params'],
             $this->aForm['inputs']['checker_params_length_min'],
             $this->aForm['inputs']['checker_params_length_max'],
+            $this->aForm['inputs']['checker_params_required'],
             $this->aForm['inputs']['checker_params_preg'],
             $this->aForm['inputs']['checker_error']
         );

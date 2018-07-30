@@ -778,6 +778,7 @@
 	<string name="_adm_form_txt_field_checker_no_spam"><![CDATA[Spam-Free (check if input is SPAM-free)]]></string>
 	<string name="_adm_form_txt_field_checker_params_length_max"><![CDATA[Max Value]]></string>
 	<string name="_adm_form_txt_field_checker_params_length_min"><![CDATA[Min Value]]></string>
+	<string name="_adm_form_txt_field_checker_params_required"><![CDATA[Required]]></string>
 	<string name="_adm_form_txt_field_checker_params_preg"><![CDATA[Expression]]></string>
 	<string name="_adm_form_txt_field_checker_preg"><![CDATA[Regular Expression (something specific must be entered)]]></string>
 	<string name="_adm_form_txt_field_collapsed"><![CDATA[Collapsed]]></string>
