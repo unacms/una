@@ -35,6 +35,8 @@ DELETE FROM `sys_content_info_grids` WHERE `object` IN (@sName);
 -- SEARCH EXTENDED
 DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_forum';
 
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_forum';
 
 -- STUDIO: page & widget
 DELETE FROM `tp`, `tw`, `tpw`

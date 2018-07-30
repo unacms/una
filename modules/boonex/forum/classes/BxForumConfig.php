@@ -97,6 +97,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_forum_gallery',
         	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_forum_cover',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
+            'OBJECT_REPORTS' => 'bx_forum',
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => 'bx_forum',
         	'OBJECT_SCORES' => 'bx_forum',

@@ -294,6 +294,11 @@ INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `mod
 ('bx_forum_cmts', 'bx_forum_cmts', 'bx_forum', '_bx_forum_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
 
 
+-- REPORTS
+INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_forum', 'bx_forum_reports', 'bx_forum_reports_track', '1', 'page.php?i=view-discussion&id={object_id}', 'bx_forum_discussions', 'id', 'author', 'reports', '', '');
+
+
 -- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, @sName, '_bx_forum', '_bx_forum', 'bx_forum@modules/boonex/forum/|std-icon.svg');
