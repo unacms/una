@@ -493,7 +493,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     	$aResult = $this->getFormPost($aParams);
     	if(!empty($aResult['form'])) {
+            $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'];
+
             $sCode = '';
+            $sCode .= $this->_oTemplate->getCssJs($bDynamicMode);
             $sCode .= $this->_oTemplate->getJsCodePost($this->_iOwnerId);
             $sCode .= $aResult['form'];
             return $sCode;
