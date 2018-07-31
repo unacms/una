@@ -60,7 +60,7 @@ class BxFroalaEditor extends BxDolEditor
                 videoUpload: false,
                 language: '{bx_var_lang}',
                 theme: '{bx_var_skin}',
-                iconsTemplate: 'font_awesome_5r'
+                iconsTemplate: 'font_awesome_5'
             });
 EOS;
 

@@ -83,7 +83,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
         $sResult = `$sCommand`;
 
         $aMatch = array();
-        if(!preg_match("/duration:\s([0-9]{2}):([0-9]{2}):([0-9]{2})\.([0-9]{2})/i", $sResult, $aMatch))
+        if(!preg_match("/[Dd]uration:\s([0-9]{2}):([0-9]{2}):([0-9]{2})\.([0-9]{2})/i", $sResult, $aMatch))
             return false;
 
         $aDuration = array_slice($aMatch, 1, -1);

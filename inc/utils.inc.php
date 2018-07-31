@@ -940,12 +940,35 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
                     isset($a['content_attr']) ? $a['content_attr'] : 'content', 
                     $sCharset,
                     isset($a['specialchars_decode']) ? $a['specialchars_decode'] : true); 
+
+                if ((isset($a['name']) && 'og:image' == $a['name']) || (isset($a['tag']) && 'link' == $a['tag'])) {
+                    $aResult[$k] = bx_get_site_info_fix_relative_url ($sSourceUrl, $aResult[$k]);
+                }
             }
 
         }
     }
 
     return $aResult;
+}
+
+/**
+ * Fix relative URL to make it absolute
+ * @param $sSourceUrl main URL
+ * @param $s URL to fix
+ * @return absolute URL or URL wothout changes
+ */ 
+function bx_get_site_info_fix_relative_url ($sSourceUrl, $s)
+{
+    if (0 === stripos($s, 'http://') || 0 === stripos($s, 'https://') || 0 === stripos($s, 'ftp://') || !$s)
+        return $s;
+
+    if ('/' == $s[0]) {
+        $a = parse_url($sSourceUrl);
+        return $a['scheme'] . '://' . $a['host'] . (empty($a['port']) || 80 == $a['port'] || 443 == $a['port'] ? '' : ':' . $a['port']) . $s;
+    }
+
+    return $sSourceUrl . ('/' === substr($sSourceUrl, -1) ? $s : '/' . $s);
 }
 
 function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $sAttrContentName, $sCharset = false, $bSpecialCharsDecode = true)

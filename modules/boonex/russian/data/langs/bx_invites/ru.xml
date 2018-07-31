@@ -126,4 +126,18 @@
 	<string name="_bx_invites_err_invite"><![CDATA[Невозможно послать приглашение по запросу.]]></string>
 	<string name="_bx_invites_err_delete_request"><![CDATA[Невозможно удалить запрос.]]></string>
 	<string name="_bx_invites_err_used"><![CDATA[Приглашение не доступно или уже использовано.]]></string>
+	<string name="_bx_invites_err_already_send"><![CDATA[Приглашение уже было отправлено на этот эл. адрес]]></string>
+	<string name="_bx_invites_err_already_registed"><![CDATA[Пользователь с таким  эл. адресом уже зарегистрирован. Пожалуйста, воспользуйтесь <a href="{forgot_password_url}">восстановлением пароля</a> чтобы получить доступ к аккаунту.]]></string>
+	<string name="_bx_invites_request_status_new"><![CDATA[Новый]]></string>
+	<string name="_bx_invites_request_status_invited"><![CDATA[Приглашен]]></string>
+	<string name="_bx_invites_request_status_seen"><![CDATA[Просмотрено]]></string>
+	<string name="_bx_invites_request_status_joined"><![CDATA[Присоединился]]></string>
+	<string name="_bx_invites_request_status_for_filter_all"><![CDATA[Все запросы]]></string>
+	<string name="_bx_invites_request_status_for_filter_new"><![CDATA[Новые запросы]]></string>
+	<string name="_bx_invites_request_status_for_filter_invited"><![CDATA[Запросы с приглашениями]]></string>
+	<string name="_bx_invites_request_status_for_filter_seen"><![CDATA[Приглашение просмотрено]]></string>
+	<string name="_bx_invites_request_status_for_filter_joined"><![CDATA[Присоединился]]></string>
+	<string name="_bx_invites_title_date_invite_sent"><![CDATA[Дата отправки]]></string>
+	<string name="_bx_invites_title_date_invite_seen"><![CDATA[Дата просмотра]]></string>
+	<string name="_bx_invites_alert_action_request"><![CDATA[<b class="bx-ntfs-content-profile">{entry_sample}</b> запросил приглашение - <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 </resources>

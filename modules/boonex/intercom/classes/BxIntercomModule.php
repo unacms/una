@@ -33,14 +33,40 @@ class BxIntercomModule extends BxDolModule
         );
 
         if (isLogged() && ($oProfile = BxDolProfile::getInstance()) && ($oAccountObject = $oProfile->getAccountObject())) {
-            $aInfo = $oAccountObject->getInfo();
-	        $aSettings['user_id'] = $oAccountObject->id();
-	        $aSettings['name'] = $oProfile->getDisplayName();
-	        $aSettings['email'] = $oAccountObject->getEmail();
-	        $aSettings['created_at'] = $aInfo['added'];
+            $aInfoProfile = $oProfile->getInfo();
+            $aInfoAccount = $oAccountObject->getInfo();
+            $aProfilesIds = $oAccountObject->getProfilesIds();
+
+            // membership
+            $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($oProfile->id());
+
+            // profiles
+            $sProfiles = '';
+            foreach ($aProfilesIds as $iId) {
+                if (!($o = BxDolProfile::getInstance($iId)))
+                    continue;
+                $sProfiles .= $o->getDisplayName() . ', ';
+            }
+            $sProfiles = trim($sProfiles, ', ');
+
+            $aSettings['user_id'] = $oAccountObject->id();
+            $aSettings['name'] = $oProfile->getDisplayName();
+            $aSettings['email'] = $oAccountObject->getEmail();
+            $aSettings['created_at'] = $aInfoAccount['added'];
+
+            $aSettings['link'] = $oProfile->getUrl();
+            $aSettings['email_confirmed'] = $aInfoAccount['email_confirmed'] ? 'yes' : 'no';
+            $aSettings['email_receive_news'] = $aInfoAccount['receive_news'] ? 'yes' : 'no';
+            $aSettings['email_receive_updates'] = $aInfoAccount['receive_updates'] ? 'yes' : 'no';
+
+            $aSettings['membership'] = _t($aMembership['name']) . (isset($aMembership['date_expires']) && $aMembership['date_expires'] ? ' (expires:' . bx_time_utc($aMembership['date_expires']) . ')' : '');
+            $aSettings['status'] = $aInfoProfile['status'];
+            $aSettings['type'] = $aInfoProfile['type'];
+
+            $aSettings['all profiles'] = $sProfiles;
         }
 
-        bx_alert('bx_intercom', 'integration', 0, 0, array('settings' => &$aSettings));
+        bx_alert('bx_intercom', 'integration', $oProfile ? $oProfile->id() : 0, $oProfile ? $oProfile->id() : 0, array('settings' => &$aSettings));
         
         $sSettings = json_encode($aSettings);
 
@@ -203,7 +229,7 @@ EOS;
         }
         $sProfiles = trim($sProfiles, ', ');
 
-        return array (
+        $aSettings = array (
             'user_id' => $oAccount->id(),
             'name' => $oProfile->getDisplayName(),
             'email' => $oAccount->getEmail(),
@@ -217,7 +243,7 @@ EOS;
                 'email_confirmed' => $aInfoAccount['email_confirmed'] ? 'yes' : 'no',
                 'email_receive_news' => $aInfoAccount['receive_news'] ? 'yes' : 'no',
                 'email_receive_updates' => $aInfoAccount['receive_updates'] ? 'yes' : 'no',
-                
+
                 'membership' => _t($aMembership['name']) . (isset($aMembership['date_expires']) && $aMembership['date_expires'] ? ' (expires:' . bx_time_utc($aMembership['date_expires']) . ')' : ''),
                 'status' => $aInfoProfile['status'],
                 'type' => $aInfoProfile['type'],
@@ -225,6 +251,10 @@ EOS;
                 'all profiles' => $sProfiles,
             ),
         );
+
+        bx_alert('bx_intercom', 'user_info', $oProfile->id(), $oProfile->id(), array('settings' => &$aSettings));
+
+        return $aSettings;
     }
 
     /**

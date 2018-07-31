@@ -776,6 +776,7 @@
 	<string name="_adm_form_txt_field_checker_no_spam"><![CDATA[Свобода от спама (проверить, чтобы ввод был свободен от спама)]]></string>
 	<string name="_adm_form_txt_field_checker_params_length_max"><![CDATA[Макс. значение]]></string>
 	<string name="_adm_form_txt_field_checker_params_length_min"><![CDATA[Мин. значение]]></string>
+	<string name="_adm_form_txt_field_checker_params_required"><![CDATA[Значение обязательно]]></string>
 	<string name="_adm_form_txt_field_checker_params_preg"><![CDATA[Выражение]]></string>
 	<string name="_adm_form_txt_field_checker_preg"><![CDATA[Регулярное выражение (нужно ввести что-то специфичное)]]></string>
 	<string name="_adm_form_txt_field_collapsed"><![CDATA[Свёрнуто]]></string>
