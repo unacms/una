@@ -36,13 +36,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
 
     	$aTmplVarsItems = array(array(
-        	'url' => bx_append_url_params($oPermalink->permalink('page.php?i=' . $CNF['URI_CATEGORY_ENTRIES']), array(
-        		'category' => $aContentInfo[$CNF['FIELD_CATEGORY']]
-        	)),
-        	'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
+            'url' => $oCategory->getCategoryUrl($aContentInfo[$CNF['FIELD_CATEGORY']]),
+            'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
         ), array(
-        	'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
-        	'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
+            'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
         ));
 
     	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);

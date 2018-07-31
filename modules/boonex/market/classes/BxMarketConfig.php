@@ -83,7 +83,6 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URI_VIEW_ENTRY' => 'view-product',
             'URI_AUTHOR_ENTRIES' => 'products-author',
             'URI_ENTRIES_BY_CONTEXT' => 'products-context',
-			'URI_CATEGORY_ENTRIES' => 'products-category',
             'URI_ADD_ENTRY' => 'create-product',
         	'URI_EDIT_ENTRY' => 'edit-product',
         	'URI_DOWNLOAD_ENTRY' => 'download-product',
