@@ -95,6 +95,7 @@
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_client_id"><![CDATA[Покупатель]]></string>
+        <string name="_bx_payment_grid_column_title_sbs_client_email"><![CDATA[Email]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_customer_id"><![CDATA[ID Покупателя]]></string>
     <string name="_bx_payment_grid_column_title_sbs_subscription_id"><![CDATA[Подписка]]></string>
     <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Транзакция]]></string>
@@ -102,6 +103,7 @@
     <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Сумма]]></string>
     <string name="_bx_payment_grid_column_title_sbs_provider"><![CDATA[Поставщик]]></string>
     <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Дата]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date_created"><![CDATA[Дата создания]]></string>
     <string name="_bx_payment_grid_column_title_sbs_paid"><![CDATA[Оплачено]]></string>
 	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Количество]]></string>

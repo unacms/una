@@ -95,6 +95,7 @@
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Seller]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_client_id"><![CDATA[Client]]></string>
+        <string name="_bx_payment_grid_column_title_sbs_client_email"><![CDATA[Email]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_customer_id"><![CDATA[Customer ID]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_subscription_id"><![CDATA[Subscription]]></string>
     <string name="_bx_payment_grid_column_title_sbs_transaction"><![CDATA[Transaction]]></string>
@@ -103,6 +104,7 @@
     <string name="_bx_payment_grid_column_title_sbs_provider"><![CDATA[Provider]]></string>
     <string name="_bx_payment_grid_column_title_sbs_paid"><![CDATA[Paid]]></string>
     <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Date]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date_created"><![CDATA[Created]]></string>
 	<string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Vendor]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Count]]></string>
 	<string name="_bx_payment_grid_column_title_crts_items_price"><![CDATA[Price]]></string>
