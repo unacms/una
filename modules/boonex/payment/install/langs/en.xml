@@ -338,6 +338,8 @@
     <string name="_bx_payment_cbee_v3_dsc"><![CDATA[If enabled, users can checkout using Chargebee's drop-in script.]]></string>
 	<string name="_bx_payment_cbee_active_cpt"><![CDATA[Active]]></string>
 	<string name="_bx_payment_cbee_active_dsc"><![CDATA[Activate(Deactivate) provider. Note. It's recommended to use SSL for better payment processing.]]></string>
+        <string name="_bx_payment_cbee_hidden_cpt"><![CDATA[Hidden]]></string>
+	<string name="_bx_payment_cbee_hidden_dsc"><![CDATA[Hide provider if you don't want to accept new payments but already have active subscriptions.]]></string>
 	<string name="_bx_payment_cbee_mode_cpt"><![CDATA[Mode]]></string>
 	<string name="_bx_payment_cbee_mode_dsc"><![CDATA[Mode to process payments]]></string>
 	<string name="_bx_payment_cbee_mode_live"><![CDATA[live]]></string>
@@ -371,6 +373,8 @@
 	<string name="_bx_payment_rcrl_active_cpt"><![CDATA[Active]]></string>
 	<string name="_bx_payment_rcrl_active_dsc"><![CDATA[Activate(Deactivate) provider.]]></string>
 	<string name="_bx_payment_rcrl_active_err"><![CDATA[You should have SSL certificate (HTTPS connection) to activate and use Recurly on your site.]]></string>
+        <string name="_bx_payment_rcrl_hidden_cpt"><![CDATA[Hidden]]></string>
+	<string name="_bx_payment_rcrl_hidden_dsc"><![CDATA[Hide provider if you don't want to accept new payments but already have active subscriptions.]]></string>
 	<string name="_bx_payment_rcrl_mode_cpt"><![CDATA[Mode]]></string>
 	<string name="_bx_payment_rcrl_mode_dsc"><![CDATA[Mode to process payments]]></string>
 	<string name="_bx_payment_rcrl_mode_live"><![CDATA[live]]></string>
@@ -424,6 +428,8 @@
 	<string name="_bx_payment_strp_dsc"><![CDATA[Stripe payment provider]]></string>
 	<string name="_bx_payment_strp_active_cpt"><![CDATA[Active]]></string>
 	<string name="_bx_payment_strp_active_dsc"><![CDATA[Activate(Deactivate) provider. Note. It's recommended to use SSL for better payment processing.]]></string>
+        <string name="_bx_payment_strp_hidden_cpt"><![CDATA[Hidden]]></string>
+	<string name="_bx_payment_strp_hidden_dsc"><![CDATA[Hide provider if you don't want to accept new payments but already have active subscriptions.]]></string>
 	<string name="_bx_payment_strp_mode_cpt"><![CDATA[Mode]]></string>
 	<string name="_bx_payment_strp_mode_dsc"><![CDATA[Mode to process payments]]></string>
 	<string name="_bx_payment_strp_mode_live"><![CDATA[live]]></string>

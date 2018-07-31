@@ -184,13 +184,18 @@ class BxPaymentDb extends BxBaseModPaymentDb
 		$aOptions = $this->getOptions($iVendorId);
 
 		$aResult = array();
-		foreach($aProviders as $sProvider => $aProvider)
-			if(isset($aOptions[$aProvider['option_prefix'] . 'active']) && $aOptions[$aProvider['option_prefix'] . 'active']['value'] == 'on') {
-				foreach($aOptions as $sName => $aOption)
-					if(strpos($sName, $aProvider['option_prefix']) !== false)
-						$aProvider['options'][$sName] = $aOption;
-				$aResult[$sProvider] = $aProvider;
-			}
+		foreach($aProviders as $sProvider => $aProvider) {
+			if(!isset($aOptions[$aProvider['option_prefix'] . 'active']) || $aOptions[$aProvider['option_prefix'] . 'active']['value'] != 'on') 
+                            continue;
+
+                        if(isset($aOptions[$aProvider['option_prefix'] . 'hidden']) && $aOptions[$aProvider['option_prefix'] . 'hidden']['value'] == 'on') 
+                            continue;
+
+                        foreach($aOptions as $sName => $aOption)
+                                if(strpos($sName, $aProvider['option_prefix']) !== false)
+                                        $aProvider['options'][$sName] = $aOption;
+                        $aResult[$sProvider] = $aProvider;
+                }
 
 		return $aResult;
 	}

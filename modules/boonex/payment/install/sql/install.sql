@@ -159,15 +159,16 @@ SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
 (@iProviderId, 'cbee_active', 'checkbox', '_bx_payment_cbee_active_cpt', '_bx_payment_cbee_active_dsc', '', '', '', '', 1),
-(@iProviderId, 'cbee_mode', 'select', '_bx_payment_cbee_mode_cpt', '_bx_payment_cbee_mode_dsc', '1|_bx_payment_cbee_mode_live,2|_bx_payment_cbee_mode_test', '', '', '', 2),
-(@iProviderId, 'cbee_live_site', 'text', '_bx_payment_cbee_live_site_cpt', '_bx_payment_cbee_live_site_dsc', '', '', '', '', 3),
-(@iProviderId, 'cbee_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 4),
-(@iProviderId, 'cbee_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 5),
-(@iProviderId, 'cbee_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 6),
-(@iProviderId, 'cbee_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 7),
-(@iProviderId, 'cbee_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 8),
-(@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 9),
-(@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 10);
+(@iProviderId, 'cbee_hidden', 'checkbox', '_bx_payment_cbee_hidden_cpt', '_bx_payment_cbee_hidden_dsc', '', '', '', '', 2),
+(@iProviderId, 'cbee_mode', 'select', '_bx_payment_cbee_mode_cpt', '_bx_payment_cbee_mode_dsc', '1|_bx_payment_cbee_mode_live,2|_bx_payment_cbee_mode_test', '', '', '', 3),
+(@iProviderId, 'cbee_live_site', 'text', '_bx_payment_cbee_live_site_cpt', '_bx_payment_cbee_live_site_dsc', '', '', '', '', 4),
+(@iProviderId, 'cbee_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 5),
+(@iProviderId, 'cbee_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 6),
+(@iProviderId, 'cbee_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 7),
+(@iProviderId, 'cbee_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 8),
+(@iProviderId, 'cbee_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 9),
+(@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 10),
+(@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 11);
 
 -- Chargebee V3 payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
@@ -176,15 +177,16 @@ SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
 (@iProviderId, 'cbee_v3_active', 'checkbox', '_bx_payment_cbee_active_cpt', '_bx_payment_cbee_active_dsc', '', '', '', '', 1),
-(@iProviderId, 'cbee_v3_mode', 'select', '_bx_payment_cbee_mode_cpt', '_bx_payment_cbee_mode_dsc', '1|_bx_payment_cbee_mode_live,2|_bx_payment_cbee_mode_test', '', '', '', 2),
-(@iProviderId, 'cbee_v3_live_site', 'text', '_bx_payment_cbee_live_site_cpt', '_bx_payment_cbee_live_site_dsc', '', '', '', '', 3),
-(@iProviderId, 'cbee_v3_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 4),
-(@iProviderId, 'cbee_v3_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 5),
-(@iProviderId, 'cbee_v3_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 6),
-(@iProviderId, 'cbee_v3_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 7),
-(@iProviderId, 'cbee_v3_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 8),
-(@iProviderId, 'cbee_v3_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 9),
-(@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 10);
+(@iProviderId, 'cbee_v3_hidden', 'checkbox', '_bx_payment_cbee_hidden_cpt', '_bx_payment_cbee_hidden_dsc', '', '', '', '', 2),
+(@iProviderId, 'cbee_v3_mode', 'select', '_bx_payment_cbee_mode_cpt', '_bx_payment_cbee_mode_dsc', '1|_bx_payment_cbee_mode_live,2|_bx_payment_cbee_mode_test', '', '', '', 3),
+(@iProviderId, 'cbee_v3_live_site', 'text', '_bx_payment_cbee_live_site_cpt', '_bx_payment_cbee_live_site_dsc', '', '', '', '', 4),
+(@iProviderId, 'cbee_v3_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 5),
+(@iProviderId, 'cbee_v3_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 6),
+(@iProviderId, 'cbee_v3_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 7),
+(@iProviderId, 'cbee_v3_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 8),
+(@iProviderId, 'cbee_v3_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 9),
+(@iProviderId, 'cbee_v3_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 10),
+(@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 11);
 
 -- Recurly payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
@@ -193,12 +195,13 @@ SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
 (@iProviderId, 'rcrl_active', 'checkbox', '_bx_payment_rcrl_active_cpt', '_bx_payment_rcrl_active_dsc', '', 'https', '', '_bx_payment_rcrl_active_err', 1),
-(@iProviderId, 'rcrl_mode', 'select', '_bx_payment_rcrl_mode_cpt', '_bx_payment_rcrl_mode_dsc', '1|_bx_payment_rcrl_mode_live,2|_bx_payment_rcrl_mode_test', '', '', '', 2),
-(@iProviderId, 'rcrl_site', 'text', '_bx_payment_rcrl_site_cpt', '_bx_payment_rcrl_site_dsc', '', '', '', '', 3),
-(@iProviderId, 'rcrl_api_key_private', 'text', '_bx_payment_rcrl_api_key_private_cpt', '_bx_payment_rcrl_api_key_private_dsc', '', '', '', '', 4),
-(@iProviderId, 'rcrl_api_key_public', 'text', '_bx_payment_rcrl_api_key_public_cpt', '_bx_payment_rcrl_api_key_public_dsc', '', '', '', '', 5),
-(@iProviderId, 'rcrl_return_data_url', 'value', '_bx_payment_rcrl_return_data_url_cpt', '', '', '', '', '', 6),
-(@iProviderId, 'rcrl_notify_url', 'value', '_bx_payment_rcrl_notify_url_cpt', '', '', '', '', '', 7);
+(@iProviderId, 'rcrl_hidden', 'checkbox', '_bx_payment_rcrl_hidden_cpt', '_bx_payment_rcrl_hidden_dsc', '', '', '', '', 2),
+(@iProviderId, 'rcrl_mode', 'select', '_bx_payment_rcrl_mode_cpt', '_bx_payment_rcrl_mode_dsc', '1|_bx_payment_rcrl_mode_live,2|_bx_payment_rcrl_mode_test', '', '', '', 3),
+(@iProviderId, 'rcrl_site', 'text', '_bx_payment_rcrl_site_cpt', '_bx_payment_rcrl_site_dsc', '', '', '', '', 4),
+(@iProviderId, 'rcrl_api_key_private', 'text', '_bx_payment_rcrl_api_key_private_cpt', '_bx_payment_rcrl_api_key_private_dsc', '', '', '', '', 5),
+(@iProviderId, 'rcrl_api_key_public', 'text', '_bx_payment_rcrl_api_key_public_cpt', '_bx_payment_rcrl_api_key_public_dsc', '', '', '', '', 6),
+(@iProviderId, 'rcrl_return_data_url', 'value', '_bx_payment_rcrl_return_data_url_cpt', '', '', '', '', '', 7),
+(@iProviderId, 'rcrl_notify_url', 'value', '_bx_payment_rcrl_notify_url_cpt', '', '', '', '', '', 8);
 
 -- Stripe payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
@@ -207,15 +210,16 @@ SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
 (@iProviderId, 'strp_active', 'checkbox', '_bx_payment_strp_active_cpt', '_bx_payment_strp_active_dsc', '', '', '', '', 1),
-(@iProviderId, 'strp_mode', 'select', '_bx_payment_strp_mode_cpt', '_bx_payment_strp_mode_dsc', '1|_bx_payment_strp_mode_live,2|_bx_payment_strp_mode_test', '', '', '', 2),
-(@iProviderId, 'strp_live_pub_key', 'text', '_bx_payment_strp_live_pub_key_cpt', '_bx_payment_strp_live_pub_key_dsc', '', '', '', '', 3),
-(@iProviderId, 'strp_live_sec_key', 'text', '_bx_payment_strp_live_sec_key_cpt', '_bx_payment_strp_live_sec_key_dsc', '', '', '', '', 4),
-(@iProviderId, 'strp_test_pub_key', 'text', '_bx_payment_strp_test_pub_key_cpt', '_bx_payment_strp_test_pub_key_dsc', '', '', '', '', 5),
-(@iProviderId, 'strp_test_sec_key', 'text', '_bx_payment_strp_test_sec_key_cpt', '_bx_payment_strp_test_sec_key_dsc', '', '', '', '', 6),
-(@iProviderId, 'strp_check_amount', 'checkbox', '_bx_payment_strp_check_amount_cpt', '_bx_payment_strp_check_amount_dsc', '', '', '', '', 7),
-(@iProviderId, 'strp_ssl', 'checkbox', '_bx_payment_strp_ssl_cpt', '_bx_payment_strp_ssl_dsc', '', '', '', '', 8),
-(@iProviderId, 'strp_cancellation_email', 'text', '_bx_payment_strp_cancellation_email_cpt', '', '', '', '', '', 9),
-(@iProviderId, 'strp_notify_url', 'value', '_bx_payment_strp_notify_url_cpt', '', '', '', '', '', 10);
+(@iProviderId, 'strp_hidden', 'checkbox', '_bx_payment_strp_hidden_cpt', '_bx_payment_strp_hidden_dsc', '', '', '', '', 2),
+(@iProviderId, 'strp_mode', 'select', '_bx_payment_strp_mode_cpt', '_bx_payment_strp_mode_dsc', '1|_bx_payment_strp_mode_live,2|_bx_payment_strp_mode_test', '', '', '', 3),
+(@iProviderId, 'strp_live_pub_key', 'text', '_bx_payment_strp_live_pub_key_cpt', '_bx_payment_strp_live_pub_key_dsc', '', '', '', '', 4),
+(@iProviderId, 'strp_live_sec_key', 'text', '_bx_payment_strp_live_sec_key_cpt', '_bx_payment_strp_live_sec_key_dsc', '', '', '', '', 5),
+(@iProviderId, 'strp_test_pub_key', 'text', '_bx_payment_strp_test_pub_key_cpt', '_bx_payment_strp_test_pub_key_dsc', '', '', '', '', 6),
+(@iProviderId, 'strp_test_sec_key', 'text', '_bx_payment_strp_test_sec_key_cpt', '_bx_payment_strp_test_sec_key_dsc', '', '', '', '', 7),
+(@iProviderId, 'strp_check_amount', 'checkbox', '_bx_payment_strp_check_amount_cpt', '_bx_payment_strp_check_amount_dsc', '', '', '', '', 8),
+(@iProviderId, 'strp_ssl', 'checkbox', '_bx_payment_strp_ssl_cpt', '_bx_payment_strp_ssl_dsc', '', '', '', '', 9),
+(@iProviderId, 'strp_cancellation_email', 'text', '_bx_payment_strp_cancellation_email_cpt', '', '', '', '', '', 10),
+(@iProviderId, 'strp_notify_url', 'value', '_bx_payment_strp_notify_url_cpt', '', '', '', '', '', 11);
 
 
 -- GRIDS

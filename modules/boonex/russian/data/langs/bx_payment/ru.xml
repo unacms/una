@@ -338,6 +338,8 @@
     <string name="_bx_payment_cbee_v3_dsc"><![CDATA[Пользователи могут оплачивать, используя вставляемый скрипт от Chargebee.]]></string>
 	<string name="_bx_payment_cbee_active_cpt"><![CDATA[Активировать]]></string>
 	<string name="_bx_payment_cbee_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему. Внимание. Рекомендуется использовать SSL сертификат для улучшения обработки платежей.]]></string>
+        <string name="_bx_payment_cbee_hidden_cpt"><![CDATA[Скрыть]]></string>
+	<string name="_bx_payment_cbee_hidden_dsc"><![CDATA[Платежную систему можно Скрыть, если Вы не хотите принимать новые платежи, но у вас уже есть активные подписки.]]></string>
 	<string name="_bx_payment_cbee_mode_cpt"><![CDATA[Режим]]></string>
 	<string name="_bx_payment_cbee_mode_dsc"><![CDATA[Режим обработки платежей]]></string>
 	<string name="_bx_payment_cbee_mode_live"><![CDATA[рабочий]]></string>
@@ -371,6 +373,8 @@
 	<string name="_bx_payment_rcrl_active_cpt"><![CDATA[Активировать]]></string>
 	<string name="_bx_payment_rcrl_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему.]]></string>
 	<string name="_bx_payment_rcrl_active_err"><![CDATA[Нужен SSL сертификат (для HTTPS соединения), чтобы активировать и использовать Recurly.]]></string>
+        <string name="_bx_payment_rcrl_hidden_cpt"><![CDATA[Скрыть]]></string>
+	<string name="_bx_payment_rcrl_hidden_dsc"><![CDATA[Платежную систему можно Скрыть, если Вы не хотите принимать новые платежи, но у вас уже есть активные подписки.]]></string>
 	<string name="_bx_payment_rcrl_mode_cpt"><![CDATA[Режим]]></string>
 	<string name="_bx_payment_rcrl_mode_dsc"><![CDATA[Режим обработки платежей]]></string>
 	<string name="_bx_payment_rcrl_mode_live"><![CDATA[рабочий]]></string>
@@ -424,6 +428,8 @@
 	<string name="_bx_payment_strp_dsc"><![CDATA[Платежная система Stripe]]></string>
 	<string name="_bx_payment_strp_active_cpt"><![CDATA[Активировать]]></string>
 	<string name="_bx_payment_strp_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему. Внимание. Рекомендуется использовать SSL сертификат для улучшения обработки платежей.]]></string>
+        <string name="_bx_payment_strp_hidden_cpt"><![CDATA[Скрыть]]></string>
+	<string name="_bx_payment_strp_hidden_dsc"><![CDATA[Платежную систему можно Скрыть, если Вы не хотите принимать новые платежи, но у вас уже есть активные подписки.]]></string>
 	<string name="_bx_payment_strp_mode_cpt"><![CDATA[Режим]]></string>
 	<string name="_bx_payment_strp_mode_dsc"><![CDATA[Режим обработки платежей]]></string>
 	<string name="_bx_payment_strp_mode_live"><![CDATA[рабочий]]></string>
