@@ -259,7 +259,23 @@ class BxBaseCmts extends BxDolCmts
         ), $this->_getTmplVarsAuthor($aCmt), $this->_getTmplVarsText($aCmt)));
     }
 
-	/**
+    function getCommentSearch($iCmtId, &$sAddon)
+    {
+        if(empty($sAddon))
+            $sAddon = $this->getJsScript();
+
+        $sComment = $this->getComment($iCmtId, array(), array(
+            'type' => BX_CMT_DISPLAY_FLAT, 
+            'view_only' => true
+        ));
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('comment_search.html', array(
+            'comment' => $sComment,
+            'view_image_popup' => $this->_getViewImagePopup(), 
+        )); 
+    }
+
+    /**
      * get one comment for "Live Search"
      *
      * @param  int    $iCmtId - comment id

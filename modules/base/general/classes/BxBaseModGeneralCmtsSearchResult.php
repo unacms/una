@@ -11,8 +11,9 @@
 
 class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 {
-	protected $sModule;
-	protected $sModuleObjectComments;
+    protected $sModule;
+    protected $sModuleObjectComments;
+    protected $aCommentsAddons;
 
     function __construct($sMode = '', $aParams = array())
     {
@@ -20,12 +21,13 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 
         $this->oModule = $this->getMain();
         $this->sModuleObjectComments = $this->oModule->_oConfig->CNF['OBJECT_COMMENTS'];
+        $this->aCommentsAddons = array();
 
         $this->aCurrent = array(
-        	'name' => $this->oModule->_oConfig->getName() . '_cmts',
+            'name' => $this->oModule->_oConfig->getName() . '_cmts',
             'module_name' => $this->oModule->_oConfig->getName(),
             'object_metatags' => 'sys_cmts',
-        	'title' => '',
+            'title' => '',
             'table' => $this->oModule->_oConfig->getDbPrefix() . 'cmts',
             'ownFields' => array('cmt_id', 'cmt_object_id', 'cmt_author_id', 'cmt_text', 'cmt_time'),
             'searchFields' => array('cmt_text'),
@@ -34,7 +36,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
             ),
             'paginate' => array('start' => 0),
             'sorting' => 'last',
-			'ident' => 'cmt_id'
+            'ident' => 'cmt_id'
         );
 
         $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
@@ -47,25 +49,33 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 
     function displaySearchUnit($aData)
     {
-		$oCmts = BxDolCmts::getObjectInstance($this->sModuleObjectComments, $aData['object_id']);
-		$oCmts->addCssJs();
+        $oCmts = BxDolCmts::getObjectInstance($this->sModuleObjectComments, $aData['object_id']);
+        $oCmts->addCssJs();
 
-		if($this->_bLiveSearch) {
-			$aCnf = &$this->oModule->_oConfig->CNF;
+        if($this->_bLiveSearch) {
+            $CNF = &$this->oModule->_oConfig->CNF;
 
-			return $oCmts->getCommentLiveSearch($aData['id'], array(
-				'txt_sample_single' => isset($aCnf['T']['txt_sample_comment_single']) ? $aCnf['T']['txt_sample_comment_single'] : ''
-			));
-		}
-		else
-			return $oCmts->getComment(isset($aData['cmt_id']) ? $aData['cmt_id'] : $aData['id'], array(), array('type' => BX_CMT_DISPLAY_FLAT, 'view_only' => true));
+            return $oCmts->getCommentLiveSearch($aData['id'], array(
+                'txt_sample_single' => isset($CNF['T']['txt_sample_comment_single']) ? $CNF['T']['txt_sample_comment_single'] : ''
+            ));
+        }
+        else {
+            if(!isset($this->aCommentsAddons[$aData['object_id']]))
+                $this->aCommentsAddons[$aData['object_id']] = '';
+
+            return $oCmts->getCommentSearch(isset($aData['cmt_id']) ? $aData['cmt_id'] : $aData['id'], $this->aCommentsAddons[$aData['object_id']]);
+        }
     }
 
     function displayResultBlock ()
     {
-        $s = parent::displayResultBlock ();
-        $s = '<ul class="cmts">' . $s . '</ul>';
-        return $s;
+        $sCode = '<ul class="cmts">' . parent::displayResultBlock() . '</ul>';
+
+        if(!empty($this->aCommentsAddons) && is_array($this->aCommentsAddons))
+            foreach($this->aCommentsAddons as $sCommentsAddon)
+                $sCode .= $sCommentsAddon;
+
+        return $sCode;
     }
 
     function getAlterOrder()
