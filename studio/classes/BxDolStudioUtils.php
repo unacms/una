@@ -161,23 +161,30 @@ class BxDolStudioUtils extends BxDol
         return $sResult;
     }
 
-    public static function getVisibilityCount($iValue)
+    public static function getVisibilityCount(&$iValue)
     {
-        $iResult = 0;
-
         $iValue = (int)$iValue;
-        if($iValue == 0)
+
+        $iResult = 0;
+        $iCheck = $iValue;
+        if($iCheck == 0)
             return $iResult;
-        else if($iValue == BX_DOL_INT_MAX)
+        else if($iCheck == BX_DOL_INT_MAX)
             return -1;
 
         $aLevels = BxDolAcl::getInstance()->getMemberships(false, true);
 
         $iIndex = 1;
         do {
-            if(array_key_exists($iIndex++, $aLevels))
-                $iResult += $iValue & 1;
-        } while(($iValue = $iValue >> 1) != 0);
+            if($iCheck & 1) {
+                if(array_key_exists($iIndex, $aLevels))
+                    $iResult += 1;
+                else 
+                    $iValue = $iValue ^ (1 << ($iIndex - 1));
+            }
+
+            $iIndex += 1;
+        } while(($iCheck = $iCheck >> 1) != 0);
 
         return $iResult;
     }
