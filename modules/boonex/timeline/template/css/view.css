@@ -273,9 +273,6 @@ div.bx-tl-view-outline div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions
 div.bx-tl-view-outline div.bx-tl-item-ind {
 	position: relative;
 }
-div.bx-tl-view-outline div.bx-tl-item-cnt {
-	overflow: hidden;
-}
 
 /*+++ Item Text +++*/
 div.bx-tl-view-outline div.bx-tl-item-text div.bx-tl-title {
