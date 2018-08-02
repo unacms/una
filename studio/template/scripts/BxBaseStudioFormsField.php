@@ -297,7 +297,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                     
                     case 'checker_params_required':
                         $aParams = unserialize($this->aField['checker_params']);
-                        $aForm['inputs'][$sKey]['checked'] = (int)$aParams['required'];
+                        $aForm['inputs'][$sKey]['checked'] = isset($aParams['required']) ? (int)$aParams['required'] : 0;
                         break;
 
                     case 'checker_params_preg':

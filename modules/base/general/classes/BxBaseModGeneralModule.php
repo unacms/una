@@ -209,9 +209,10 @@ class BxBaseModGeneralModule extends BxDolModule
             if(in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept))
                 $aResult[$aInput['name']] = array(
                     'type' => $aInput['type'], 
+                    'caption_system' => $aInput['caption_system_src'],
                     'caption' => $aInput['caption_src'],
-                	'info' => $aInput['info_src'],
-                	'value' => !empty($aInput['value']) ? $aInput['value'] : '',
+                    'info' => $aInput['info_src'],
+                    'value' => !empty($aInput['value']) ? $aInput['value'] : '',
                     'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
                     'pass' => !empty($aInput['db']['pass']) ? $aInput['db']['pass'] : '',
                 );

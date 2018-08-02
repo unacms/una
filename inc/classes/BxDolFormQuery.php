@@ -101,6 +101,7 @@ class BxDolFormQuery extends BxDolDb
             $aInput = array (
                 'type' => $a['type'],
                 'name' => $a['name'],
+                'caption_system_src' => $a['caption_system'],
             	'caption_src' => $a['caption'],
                 'caption' => _t($a['caption']),
             	'info_src' => $a['info'] ? $a['info'] : '',

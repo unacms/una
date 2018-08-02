@@ -1192,6 +1192,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return array();
 
         $aSrchNamesExcept = array();
+        $aSrchCaptionsSystem = array(
+            'cmt_author_id' => '_sys_form_comment_input_caption_system_cmt_author_id',
+            'cmt_text' => '_sys_form_comment_input_caption_system_cmt_text'
+        );
         $aSrchCaptions = array(
             'cmt_author_id' => '_sys_form_comment_input_caption_cmt_author_id',
             'cmt_text' => '_sys_form_comment_input_caption_cmt_text'
@@ -1199,12 +1203,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $aResult = array(
             'cmt_author_id' => array(
-            	'type' => 'text_auto', 
-            	'caption' => $aSrchCaptions['cmt_author_id'],
-        		'info' => '',
-        		'value' => '',
-            	'values' => '',
-        		'pass' => ''
+                'type' => 'text_auto', 
+                'caption_system' => $aSrchCaptionsSystem['cmt_author_id'],
+                'caption' => $aSrchCaptions['cmt_author_id'],
+                'info' => '',
+                'value' => '',
+                'values' => '',
+                'pass' => ''
             )
         );
 
@@ -1212,6 +1217,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $aSrchNamesExcept))
                 $aResult[$aInput['name']] = array(
                 	'type' => $aInput['type'], 
+                        'caption_system' => !empty($aInput['caption_system_src']) ? $aInput['caption_system_src'] : '',
                 	'caption' => !empty($aInput['caption_src']) ? $aInput['caption_src'] : (!empty($aSrchCaptions[$aInput['name']]) ? $aSrchCaptions[$aInput['name']] : ''),
                 	'info' => !empty($aInput['info_src']) ? $aInput['info_src'] : '',
                 	'value' => !empty($aInput['value']) ? $aInput['value'] : '',
