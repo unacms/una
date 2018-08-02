@@ -551,6 +551,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     	return $oForm;
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection get_timeline_post
+     * @see BxTimelineModule::serviceGetTimelinePost
+     *
+     * Get Timeline post. It's needed for Timeline module.
+     * 
+     * @param $aEvent timeline event array from Timeline module
+     * @return array in special format which is needed specifically for Timeline module to display the data.
+     */
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $CNF['FIELD_AUTHOR'] = $CNF['FIELD_OWNER_ID'];
+        return parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+    }
 
     /**
      * @page service Service Calls
@@ -2608,6 +2626,38 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view'), $sRssUrl);
 
         return array('content' => $sContent, 'menu' => $oMenu);
+    }
+    
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+
+    	//--- Text
+        $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
+        if(!empty($CNF['OBJECT_METATAGS']) && is_string($sText)) {
+        	$oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        	$sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);
+        }
+        
+        $sTextForTimeline = ""; 
+        if (isset($aContentInfo['content'])){
+            $aTmp = unserialize($aContentInfo['content']);
+            if (isset($aTmp['text']))
+                $sTextForTimeline = $aTmp['text'];
+        }
+        
+    	return array(
+    		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+    		'sample_wo_article' => $CNF['T']['txt_sample_single'],
+    	    'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+			'url' => $sUrl,
+			'title' => $sText,
+			'text' => $sTextForTimeline,
+			'images' => array(),
+            'videos' => array()
+		);
     }
 
 	protected function _isAllowedPin($aEvent, $bPerform = false)
