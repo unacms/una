@@ -321,7 +321,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 ('bx_payment_grid_orders_pending', 'bulk', 'cancel', '_bx_payment_grid_action_title_ods_cancel', '', 0, 1, 1),
 ('bx_payment_grid_orders_pending', 'single', 'view_order', '_bx_payment_grid_action_title_ods_view_order', 'ellipsis-h', 1, 0, 1),
-('bx_payment_grid_orders_pending', 'single', 'process', '_bx_payment_grid_action_title_ods_process', 'refresh', 1, 0, 2),
+('bx_payment_grid_orders_pending', 'single', 'process', '_bx_payment_grid_action_title_ods_process', 'sync', 1, 0, 2),
 ('bx_payment_grid_orders_pending', 'single', 'cancel', '_bx_payment_grid_action_title_ods_cancel', 'times', 1, 1, 3);
 
 
