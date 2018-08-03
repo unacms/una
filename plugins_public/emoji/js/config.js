@@ -12,7 +12,7 @@
  */ 
  
 'use strict';
-var Config = {};
+window.Config = {};
 Config.Emoji = {
     "00a9": ["\u00A9", ["copyright"]],
     "00ae": ["\u00AE", ["registered"]],

@@ -50,6 +50,13 @@
     options = $.extend({}, options);
     return this
       .each(function () {
+        var getGuid = function() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            });
+        };
+
         var originalInput = $(this);
         if ('contentEditable' in document.body && options.wysiwyg !== false)
 		{
@@ -765,7 +772,7 @@
   };
 
   EmojiMenu.prototype.show = function(emojiarea) {
-	var position = typeof emojiarea.options.popup_position == 'function' ? emojiarea.options.popup_position() : emojiarea.options.popup_position || {right:'0'};	
+	var position = typeof emojiarea.options.popup_position == 'function' ? emojiarea.options.popup_position() : emojiarea.options.popup_position || {left:'0'};	
 	if (this.visible)
       return this.hide();
     
@@ -773,7 +780,7 @@
 	
 	this.$menu
 		.css(position)
-		.css({top:-this.$menu.height() - 10})
+		.css({top:this.$menu.parent().height() + 10})
 		.fadeIn();
 
     if (!this.currentCategory) {

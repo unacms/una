@@ -42,22 +42,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bDynamic)
             return $mixedResult; 
     }
-    
+
     public function getJs($bDynamic = false)
     {
         $mixedResult = parent::getJs($bDynamic);
         $mixedResult .= $this->addJs(array(
-        	'jquery-ui/jquery-ui.custom.min.js',
+            'jquery-ui/jquery-ui.custom.min.js',
             'jquery.form.min.js',
             'jquery.ba-resize.min.js',
-        	'emoji/js/util.js',
-        	'emoji/js/config.js',
-            'emoji/js/emoji-picker.js',
-        	'autosize.min.js',
+            'autosize.min.js',
             'masonry.pkgd.min.js',
             'modernizr.min.js',
-        	'flickity/flickity.pkgd.min.js',
-			'emoji/js/jquery.emojiarea.js',
+            'flickity/flickity.pkgd.min.js',
             'embedly-player.min.js',
             'BxDolCmts.js',            
             'post.js',

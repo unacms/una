@@ -28,29 +28,46 @@ function BxTimelinePost(oOptions) {
     this._sPregUrl = "\\b((https?://)|(www\\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\\@)?(([0-9]{1,3}\\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\\.[a-zA-Z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\\@&=+$,%#-]+)*/?)";
     this._oAttachedLinks = {};
 
-    if (typeof window.glOnInitEditor === 'undefined')
-	    window.glOnInitEditor = [];
-
-	window.glOnInitEditor.push(function (sEditorSelector) {
-		var oLink = $(sEditorSelector).parents('form:first').find('a.add-emoji');
-
-		var oEmojiConf = {
-		    emojiable_selector: bx_editor_get_htmleditable(sEditorSelector), 
-			menu_icon: oLink  /* emoji popup menu icon */
-		};
-		new EmojiPicker(oEmojiConf ).discover();  /* call init emoji function */
-	});
-
     var $this = this;
+    if (typeof window.glOnInitEditor === 'undefined')
+        window.glOnInitEditor = [];
+
+    window.glOnInitEditor.push(function (sEditorSelector) {
+        var sBaseUrl = sUrlRoot + 'plugins_public/emoji/js/';
+        if ('undefined' === typeof(EmojiPicker)) {
+                bx_get_scripts([
+                    sBaseUrl + 'util.js', 
+                    sBaseUrl + 'config.js',
+                    sBaseUrl + 'emoji-picker.js', 
+                    sBaseUrl + 'jquery.emojiarea.js'
+                ], function() {
+                    $this.initEmoji(sEditorSelector)
+                });
+            }
+        else
+            $this.initEmoji(sEditorSelector);
+    });
+
     $(document).ready(function () {
     	$($this.sIdPost + ' form').each(function() {
     		var sId = $(this).attr('id');
     		$this.initFormPost(sId);
     	});
-	});
+    });
 }
 
 BxTimelinePost.prototype = new BxTimelineMain();
+
+BxTimelinePost.prototype.initEmoji = function(sEditorSelector)
+{
+    var oLink = $(sEditorSelector).parents('form:first').find('a.add-emoji');
+
+    var oEmojiConf = {
+        emojiable_selector: bx_editor_get_htmleditable(sEditorSelector), 
+            menu_icon: oLink  /* emoji popup menu icon */
+    };
+    new EmojiPicker(oEmojiConf ).discover();  /* call init emoji function */
+};
 
 BxTimelinePost.prototype.initFormPost = function(sFormId)
 {
