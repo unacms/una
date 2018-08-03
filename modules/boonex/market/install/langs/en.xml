@@ -199,6 +199,10 @@
 	<string name="_bx_market_page_title_sys_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_market_page_title_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_market_page_block_title_categories_entries"><![CDATA[Products]]></string>
+    
+    <string name="_bx_market_page_title_sys_licenses_administration"><![CDATA[Licenses]]></string>
+    <string name="_bx_market_page_title_licenses_administration"><![CDATA[Licenses]]></string>
+    <string name="_bx_market_page_block_title_licenses_administration"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_title_sys_licenses"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_title_licenses"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_block_title_licenses"><![CDATA[Licenses]]></string>
@@ -293,6 +297,13 @@
     <string name="_bx_market_menu_title_snippet_more"><![CDATA[Snippet More Actions]]></string>
     <string name="_bx_market_menu_set_title_snippet_more"><![CDATA[Snippet More Actions]]></string>
     <string name="_bx_market_menu_item_title_downloads_more"><![CDATA[Show More]]></string>
+    <string name="_bx_market_menu_title_licenses_submenu"><![CDATA[Licenses Submenu]]></string>
+    <string name="_bx_market_menu_set_title_licenses_submenu"><![CDATA[Licenses Submenu]]></string>
+    <string name="_bx_market_menu_item_title_system_products_licenses_administration"><![CDATA[All Licenses]]></string>
+    <string name="_bx_market_menu_item_title_products_licenses_administration"><![CDATA[All Licenses]]></string>
+    <string name="_bx_market_menu_item_title_system_products_licenses"><![CDATA[My Licenses]]></string>
+    <string name="_bx_market_menu_item_title_products_licenses"><![CDATA[My Licenses]]></string>
+    
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -307,17 +318,20 @@
     <string name="_bx_market_grid_action_err_delete"><![CDATA[Cannot delete the selected product(s).]]></string>
     <string name="_bx_market_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
-	<string name="_bx_market_grid_column_title_lcs_product"><![CDATA[Product]]></string>
-	<string name="_bx_market_grid_column_title_lcs_license"><![CDATA[License]]></string>
-	<string name="_bx_market_grid_column_title_lcs_type"><![CDATA[Type]]></string>
-	<string name="_bx_market_grid_column_title_lcs_domain"><![CDATA[Domain]]></string>
-	<string name="_bx_market_grid_column_title_lcs_added"><![CDATA[Begin]]></string>
-	<string name="_bx_market_grid_column_title_lcs_expired"><![CDATA[Expire]]></string>
-	<string name="_bx_market_grid_action_title_lcs_reset"><![CDATA[Reset]]></string>
-	<string name="_bx_market_grid_action_err_cannot_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
-	<string name="_bx_market_grid_txt_lcs_type_single"><![CDATA[one-time]]></string>
-	<string name="_bx_market_grid_txt_lcs_type_recurring"><![CDATA[recurring]]></string>
-	<string name="_bx_market_grid_txt_lcs_never"><![CDATA[never]]></string>
+
+    <string name="_bx_market_grid_column_title_lcs_profile_id"><![CDATA[Owner]]></string>
+    <string name="_bx_market_grid_column_title_lcs_transaction"><![CDATA[Order]]></string>
+    <string name="_bx_market_grid_column_title_lcs_product"><![CDATA[Product]]></string>
+    <string name="_bx_market_grid_column_title_lcs_license"><![CDATA[License]]></string>
+    <string name="_bx_market_grid_column_title_lcs_type"><![CDATA[Type]]></string>
+    <string name="_bx_market_grid_column_title_lcs_domain"><![CDATA[Domain]]></string>
+    <string name="_bx_market_grid_column_title_lcs_added"><![CDATA[Begin]]></string>
+    <string name="_bx_market_grid_column_title_lcs_expired"><![CDATA[Expire]]></string>
+    <string name="_bx_market_grid_action_title_lcs_reset"><![CDATA[Reset]]></string>
+    <string name="_bx_market_grid_action_err_cannot_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
+    <string name="_bx_market_grid_txt_lcs_type_single"><![CDATA[one-time]]></string>
+    <string name="_bx_market_grid_txt_lcs_type_recurring"><![CDATA[recurring]]></string>
+    <string name="_bx_market_grid_txt_lcs_never"><![CDATA[never]]></string>
 
     <string name="_bx_market_chart_growth"><![CDATA[Market: Growth]]></string>
     <string name="_bx_market_chart_growth_speed"><![CDATA[Market: Growth Speed]]></string>

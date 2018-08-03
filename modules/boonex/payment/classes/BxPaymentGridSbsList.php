@@ -19,6 +19,7 @@ class BxPaymentGridSbsList extends BxPaymentGridSbsAdministration
     {
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_sManageType = 'common';
         $this->_aProvidersAttached = array();
     }
 

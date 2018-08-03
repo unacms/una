@@ -85,6 +85,27 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $this->getUnitMetaItem('custom', $sContent);
     }
 
+    public function getProfileLink($mixedProfile)
+    {
+    	if(!is_array($mixedProfile))
+            $mixedProfile = $this->getModule()->getProfileInfo((int)$mixedProfile);
+
+    	return $this->getLink('link', array(
+            'href' => $mixedProfile['link'],
+            'title' => bx_html_attribute(!empty($mixedProfile['title']) ? $mixedProfile['title'] : $mixedProfile['name']),
+            'content' => $mixedProfile['name']
+    	));
+    }
+
+    public function getLink($sTemplate, $aParams)
+    {
+    	return $this->parseHtmlByName($sTemplate . '.html', array(
+            'href' => $aParams['href'],
+            'title' => $aParams['title'],
+            'content' => $aParams['content']
+        ));
+    }
+
 	function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

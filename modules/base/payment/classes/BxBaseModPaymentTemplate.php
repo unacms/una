@@ -92,25 +92,14 @@ class BxBaseModPaymentTemplate extends BxBaseModGeneralTemplate
     	$this->displayPageCode($aParams);
     }
 
-	public function displayProfileLink($mixedProfile)
+    public function displayProfileLink($mixedProfile)
     {
-    	if(!is_array($mixedProfile))
-    		$mixedProfile = BxDolModule::getInstance($this->MODULE)->getProfileInfo((int)$mixedProfile);
-
-    	return $this->displayLink('link', array(
-    		'href' => $mixedProfile['link'],
-            'title' => bx_html_attribute(!empty($mixedProfile['title']) ? $mixedProfile['title'] : $mixedProfile['name']),
-            'content' => $mixedProfile['name']
-    	));
+        return $this->getProfileLink($mixedProfile);
     }
 
     public function displayLink($sTemplate, $aParams)
     {
-    	return $this->parseHtmlByName($sTemplate . '.html', array(
-            'href' => $aParams['href'],
-            'title' => $aParams['title'],
-            'content' => $aParams['content']
-        ));
+        return $this->getLink($sTemplate, $aParams);
     }
 
     protected function displayPageCodeText($sTitle, $sText, $bWrap = true, $bCenter = false)

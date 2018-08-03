@@ -283,22 +283,34 @@ class BxMarketModule extends BxBaseModTextModule
     /** 
      * @ref bx_market-block_licenses "block_licenses"
      */
-	public function serviceBlockLicenses() 
-	{
-		$sGrid = $this->_oConfig->getGridObject('licenses');
-		$oGrid = BxDolGrid::getObjectInstance($sGrid);
-        if(!$oGrid)
-			return '';
+    public function serviceBlockLicenses() 
+    {
+        return $this->_getBlockLicenses();
+    }
 
-        $this->_oDb->updateLicense(array('new' => 0), array('profile_id' => bx_get_logged_profile_id(), 'new' => 1));
+    /**
+     * @page service Service Calls
+     * @section bx_market Market
+     * @subsection bx_market-page_blocks Page Blocks
+     * @subsubsection bx_market-block_licenses_administration block_licenses_administration
+     * 
+     * @code bx_srv('bx_market', 'block_licenses_administration', [...]); @endcode
+     * 
+     * Get page block with a list of all licenses. It's needed for moderators/administrators.
+     *
+     * @return an array describing a block to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxMarketModule::serviceBlockLicensesAdministration
+     */
+    /** 
+     * @ref bx_market-block_licenses "block_licenses"
+     */
+    public function serviceBlockLicensesAdministration() 
+    {
+        return $this->_getBlockLicenses('administration');
+    }
 
-		$this->_oTemplate->addJs(array('licenses.js'));
-		return array(
-        	'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
-        );
-	}
-
-	/**
+    /**
      * @page service Service Calls
      * @section bx_market Market
      * @subsection bx_market-page_blocks Page Blocks
@@ -665,9 +677,17 @@ class BxMarketModule extends BxBaseModTextModule
     /** 
      * @ref bx_market-get_payment_data "get_payment_data"
      */
-	public function serviceGetPaymentData()
+    public function serviceGetPaymentData()
     {
-        return $this->_aModule;
+        $CNF = &$this->_oConfig->CNF;
+
+        $oPermalink = BxDolPermalinks::getInstance();
+
+        $aResult = $this->_aModule;
+        $aResult['url_browse_order_common'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LICENSES_COMMON'], array('filter' => '{order}'));
+        $aResult['url_browse_order_administration'] = BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_LICENSES_ADMINISTRATION'], array('filter' => '{order}'));
+
+        return $aResult;
     }
 
     /**
@@ -1172,6 +1192,24 @@ class BxMarketModule extends BxBaseModTextModule
             return CHECK_ACTION_RESULT_NOT_ALLOWED;
 
         return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    protected function _getBlockLicenses($sType = '') 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sGrid = $this->_oConfig->getGridObject('licenses' . (!empty($sType) ? '_' . $sType : ''));
+        $oGrid = BxDolGrid::getObjectInstance($sGrid);
+        if(!$oGrid)
+            return '';
+
+        $this->_oDb->updateLicense(array('new' => 0), array('profile_id' => bx_get_logged_profile_id(), 'new' => 1));
+
+        $this->_oTemplate->addJs(array('licenses.js'));
+        return array(
+            'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
+            'menu' => $CNF['OBJECT_MENU_LICENSES']
+        );
     }
 
     protected function _getContentInfo($iContentId = 0)

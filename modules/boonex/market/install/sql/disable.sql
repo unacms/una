@@ -8,12 +8,12 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_market';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_market' OR `object` IN('bx_market_create_entry', 'bx_market_edit_entry', 'bx_market_delete_entry', 'bx_market_download_entry', 'bx_market_view_entry', 'bx_market_view_entry_comments', 'bx_market_home', 'bx_market_categories', 'bx_market_popular', 'bx_market_updated', 'bx_market_author', 'bx_market_context', 'bx_market_search', 'bx_market_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_market' OR `object` IN('bx_market_create_entry', 'bx_market_edit_entry', 'bx_market_delete_entry', 'bx_market_download_entry', 'bx_market_view_entry', 'bx_market_view_entry_comments', 'bx_market_home', 'bx_market_categories', 'bx_market_popular', 'bx_market_updated', 'bx_market_author', 'bx_market_context', 'bx_market_search', 'bx_market_manage', 'bx_market_administration', 'bx_market_licenses_administration', 'bx_market_licenses');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_market';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_market';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_market' OR `set_name` IN('bx_market_view', 'bx_market_view_more', 'bx_market_submenu', 'bx_market_view_submenu', 'bx_market_my', 'bx_market_snippet', 'bx_market_snippet_more', 'bx_market_snippet_meta', 'bx_market_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_market' OR `set_name` IN('bx_market_view', 'bx_market_view_more', 'bx_market_submenu', 'bx_market_view_submenu', 'bx_market_my', 'bx_market_snippet', 'bx_market_snippet_more', 'bx_market_snippet_meta', 'bx_market_menu_manage_tools', 'bx_market_licenses_submenu');
 
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_market_allow_view_to', 'bx_market_allow_purchase_to', 'bx_market_allow_comment_to', 'bx_market_allow_vote_to');
@@ -41,9 +41,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_market%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_market%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
+DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_market_%';
+DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_market_%';
+DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_market_%';
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_market_simple', 'bx_market_html5');

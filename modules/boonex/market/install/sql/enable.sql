@@ -140,6 +140,13 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_favorites_of_author', '_bx_market_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
 ('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_of_author', '_bx_market_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3);
 
+-- PAGE: licenses administration
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_licenses_administration', '_bx_market_page_title_sys_licenses_administration', '_bx_market_page_title_licenses_administration', 'bx_market', 5, 192, 1, 'products-licenses-administration', '', '', '', '', 0, 1, 0, 'BxMarketPageLicenses', 'modules/boonex/market/classes/BxMarketPageLicenses.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_market_licenses_administration', 1, 'bx_market', '', '_bx_market_page_block_title_licenses_administration', 11, 192, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:29:"block_licenses_administration";}', 0, 0, 1, 0);
+
 -- PAGE: profile's licenses
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_licenses', '_bx_market_page_title_sys_licenses', '_bx_market_page_title_licenses', 'bx_market', 5, 2147483647, 1, 'products-licenses', '', '', '', '', 0, 1, 0, 'BxMarketPageLicenses', 'modules/boonex/market/classes/BxMarketPageLicenses.php');
@@ -336,6 +343,17 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_view_submenu', 'bx_market', 'view-product-info', '_bx_market_menu_item_title_system_view_entry_submenu_info', '_bx_market_menu_item_title_view_entry_submenu_info', 'page.php?i=view-product-info&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2),
 ('bx_market_view_submenu', 'bx_market', 'view-product-comments', '_bx_market_menu_item_title_system_view_entry_submenu_comments', '_bx_market_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-product-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 3);
 
+-- MENU: licenses submenu
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_licenses_submenu', '_bx_market_menu_title_licenses_submenu', 'bx_market_licenses_submenu', 'bx_market', 6, 0, 1, '', '');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_market_licenses_submenu', 'bx_market', '_bx_market_menu_set_title_licenses_submenu', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_market_licenses_submenu', 'bx_market', 'products-licenses-administration', '_bx_market_menu_item_title_system_products_licenses_administration', '_bx_market_menu_item_title_products_licenses_administration', 'page.php?i=products-licenses-administration', '', '_self', '', '', '', 192, 1, 0, 1, 1),
+('bx_market_licenses_submenu', 'bx_market', 'products-licenses', '_bx_market_menu_item_title_system_products_licenses', '_bx_market_menu_item_title_products_licenses', 'page.php?i=products-licenses', '', '_self', '', '', '', 2147483646, 1, 0, 1, 2);
+
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -511,7 +529,8 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_market_common', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxMarketGridCommon', 'modules/boonex/market/classes/BxMarketGridCommon.php'),
 
 -- GRIDS: Licenses
-('bx_market_licenses', 'Sql', 'SELECT `tl`.`id` AS `id`, `tl`.`profile_id` AS `profile_id`, `tl`.`product_id` AS `product_id`, `tp`.`title` AS `product`, `tl`.`license` AS `license`, `tl`.`type` AS `type`, `tl`.`domain` AS `domain`, `tl`.`added` AS `added`, `tl`.`expired` AS `expired` FROM `bx_market_licenses` AS `tl` LEFT JOIN `bx_market_products` AS `tp` ON `tl`.`product_id`=`tp`.`id` WHERE 1 ', 'bx_market_licenses', 'id', 'added', '', '', 20, NULL, 'start', '', 'tp`.`title,tl`.`license,tl`.`type,tl`.`domain', '', 'like', '', '', 2147483647, 'BxMarketGridLicenses', 'modules/boonex/market/classes/BxMarketGridLicenses.php');
+('bx_market_licenses_administration', 'Sql', 'SELECT `tl`.`id` AS `id`, `tl`.`profile_id` AS `profile_id`, `tl`.`product_id` AS `product_id`, `tp`.`title` AS `product`, `tl`.`order` AS `transaction`, `tl`.`license` AS `license`, `tl`.`type` AS `type`, `tl`.`domain` AS `domain`, `tl`.`added` AS `added`, `tl`.`expired` AS `expired` FROM `bx_market_licenses` AS `tl` LEFT JOIN `bx_market_products` AS `tp` ON `tl`.`product_id`=`tp`.`id` WHERE 1 ', 'bx_market_licenses', 'id', 'added', '', '', 20, NULL, 'start', '', 'tp`.`title,tl`.`order,tl`.`license,tl`.`type,tl`.`domain', '', 'like', '', '', 192, 'BxMarketGridLicensesAdministration', 'modules/boonex/market/classes/BxMarketGridLicensesAdministration.php'),
+('bx_market_licenses', 'Sql', 'SELECT `tl`.`id` AS `id`, `tl`.`profile_id` AS `profile_id`, `tl`.`product_id` AS `product_id`, `tp`.`title` AS `product`, `tl`.`order` AS `transaction`, `tl`.`license` AS `license`, `tl`.`type` AS `type`, `tl`.`domain` AS `domain`, `tl`.`added` AS `added`, `tl`.`expired` AS `expired` FROM `bx_market_licenses` AS `tl` LEFT JOIN `bx_market_products` AS `tp` ON `tl`.`product_id`=`tp`.`id` WHERE 1 ', 'bx_market_licenses', 'id', 'added', '', '', 20, NULL, 'start', '', 'tp`.`title,tl`.`order,tl`.`license,tl`.`type,tl`.`domain', '', 'like', '', '', 2147483647, 'BxMarketGridLicenses', 'modules/boonex/market/classes/BxMarketGridLicenses.php');
 
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
@@ -522,13 +541,25 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_market_administration', 'added', '_bx_market_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_market_administration', 'author', '_bx_market_grid_column_title_adm_author', '20%', 0, '25', '', 6),
 ('bx_market_administration', 'actions', '', '20%', 0, '', '', 7),
+
 ('bx_market_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_market_common', 'switcher', '_bx_market_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_market_common', 'title', '_bx_market_grid_column_title_adm_title', '40%', 0, '', '', 3),
 ('bx_market_common', 'added', '_bx_market_grid_column_title_adm_added', '30%', 1, '25', '', 4),
 ('bx_market_common', 'actions', '', '20%', 0, '', '', 5),
 
-('bx_market_licenses', 'product', '_bx_market_grid_column_title_lcs_product', '30%', 0, '28', '', 1),
+('bx_market_licenses_administration', 'profile_id', '_bx_market_grid_column_title_lcs_profile_id', '10%', 0, '28', '', 1),
+('bx_market_licenses_administration', 'product', '_bx_market_grid_column_title_lcs_product', '20%', 0, '28', '', 2),
+('bx_market_licenses_administration', 'transaction', '_bx_market_grid_column_title_lcs_transaction', '10%', 0, '32', '', 3),
+('bx_market_licenses_administration', 'license', '_bx_market_grid_column_title_lcs_license', '10%', 0, '8', '', 4),
+('bx_market_licenses_administration', 'type', '_bx_market_grid_column_title_lcs_type', '5%', 1, '12', '', 5),
+('bx_market_licenses_administration', 'domain', '_bx_market_grid_column_title_lcs_domain', '15%', 0, '18', '', 6),
+('bx_market_licenses_administration', 'added', '_bx_market_grid_column_title_lcs_added', '10%', 1, '25', '', 7),
+('bx_market_licenses_administration', 'expired', '_bx_market_grid_column_title_lcs_expired', '10%', 1, '25', '', 8),
+('bx_market_licenses_administration', 'actions', '', '10%', 0, '', '', 9),
+
+('bx_market_licenses', 'product', '_bx_market_grid_column_title_lcs_product', '20%', 0, '28', '', 1),
+('bx_market_licenses', 'transaction', '_bx_market_grid_column_title_lcs_transaction', '10%', 0, '32', '', 2),
 ('bx_market_licenses', 'license', '_bx_market_grid_column_title_lcs_license', '10%', 0, '8', '', 3),
 ('bx_market_licenses', 'type', '_bx_market_grid_column_title_lcs_type', '10%', 1, '12', '', 4),
 ('bx_market_licenses', 'domain', '_bx_market_grid_column_title_lcs_domain', '20%', 0, '18', '', 5),
@@ -546,6 +577,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_market_common', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_market_common', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 
+('bx_market_licenses_administration', 'single', 'reset', '_bx_market_grid_action_title_lcs_reset', 'eraser', 1, 1, 1),
 ('bx_market_licenses', 'single', 'reset', '_bx_market_grid_action_title_lcs_reset', 'eraser', 1, 1, 1);
 
 

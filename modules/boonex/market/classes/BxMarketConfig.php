@@ -93,9 +93,11 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URL_FEATURED' => 'page.php?i=products-featured',
             'URL_POPULAR' => 'page.php?i=products-popular',
             'URL_UPDATED' => 'page.php?i=products-updated',
-        	'URL_MANAGE_COMMON' => 'page.php?i=products-manage',
-        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=products-administration',
-        	'URL_VIEW_ENTRY' => 'page.php?i=view-product&id=',
+            'URL_MANAGE_COMMON' => 'page.php?i=products-manage',
+            'URL_MANAGE_ADMINISTRATION' => 'page.php?i=products-administration',
+            'URL_LICENSES_COMMON' => 'page.php?i=products-licenses',
+            'URL_LICENSES_ADMINISTRATION' => 'page.php?i=products-licenses-administration',
+            'URL_VIEW_ENTRY' => 'page.php?i=view-product&id=',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_market_summary_chars',
@@ -142,9 +144,11 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'products-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_SNIPPET_META' => 'bx_market_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_market_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_MENU_LICENSES' => 'bx_market_licenses_submenu',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_market_administration',
-        	'OBJECT_GRID_COMMON' => 'bx_market_common',
-        	'OBJECT_GRID_LICENSES' => 'bx_market_licenses',
+            'OBJECT_GRID_COMMON' => 'bx_market_common',
+            'OBJECT_GRID_LICENSES_ADMINISTRATION' => 'bx_market_licenses_administration',
+            'OBJECT_GRID_LICENSES' => 'bx_market_licenses',
             'OBJECT_UPLOADERS' => array('bx_market_simple', 'bx_market_html5'),
         	'OBJECT_CONNECTION_SUBENTRIES' => 'bx_market_subentries',
 
@@ -209,6 +213,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         $this->_aGridObjects = array(
         	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+                'licenses_administration' => $this->CNF['OBJECT_GRID_LICENSES_ADMINISTRATION'],
         	'licenses' => $this->CNF['OBJECT_GRID_LICENSES'],
         );
 
