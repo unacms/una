@@ -69,7 +69,6 @@
 
     #sys_search_results .bx-albums-medias-wrapper .bx-albums-media-wrapper .bx-albums-unit-size,
     .bx-layout-column-fullwidth .bx-albums-medias-wrapper .bx-albums-media-wrapper .bx-albums-unit-size {
-        width: 18.0rem;
         height: 18.0rem;
     }
     
@@ -97,8 +96,7 @@
     #sys_search_results .bx-albums-medias-wrapper .bx-albums-media-wrapper .bx-albums-unit-size,
     .bx-layout-column-half .bx-albums-medias-wrapper .bx-albums-media-wrapper .bx-albums-unit-size,
     .bx-layout-column-fullwidth .bx-albums-medias-wrapper .bx-albums-media-wrapper .bx-albums-unit-size {
-		width: 18.0rem;
-		height: 18.0rem;
+        height: 18.0rem;
     }
 }
 
@@ -117,7 +115,7 @@
     text-overflow:ellipsis;
 }
 .bx-albums-media-actions {
-	text-align: left;
+    text-align: center;
 }
 .bx-base-text-unit-ext .bx-albums-unit-text-cont {
 	text-align: left;
