@@ -21,6 +21,8 @@ class BxBaseSearchExtendedServices extends BxDol
 
     public function serviceGetForm($aParams)
     {
+        $this->prepareParams($aParams);
+        
         if(empty($aParams['object']))
             return '';
 
@@ -33,6 +35,8 @@ class BxBaseSearchExtendedServices extends BxDol
 
     public function serviceGetResults($aParams)
     {
+        $this->prepareParams($aParams);
+
         if(empty($aParams['object']))
             return '';
 
@@ -40,12 +44,30 @@ class BxBaseSearchExtendedServices extends BxDol
         if(!$oSearch || !$oSearch->isEnabled())
             return '';
 
-        $bShowEmpty = isset($aParams['show_empty']) && (bool)$aParams['show_empty'];
+        $sResults = $oSearch->getResults($aParams);
 
-        $a = isset($aParams['cond']) && $aParams['cond'] ? $aParams['cond'] : array();
-        $sResults = $oSearch->getResults($a, !empty($aParams['template']) ? $aParams['template'] : '', !empty($aParams['start']) ? $aParams['start'] : 0, !empty($aParams['per_page']) ? $aParams['per_page'] : 0);
+        return !empty($sResults) ? $sResults : (isset($aParams['show_empty']) && (bool)$aParams['show_empty'] ? MsgBox(_t('_Empty')) : ''); 
+    }
+    
+    public function prepareParams(&$aParams)
+    {
+        if(empty($aParams['object']) && bx_get('object') !== false)
+            $aParams['object'] = bx_process_input(bx_get('object'), BX_DATA_TEXT);
 
-        return !empty($sResults) ? $sResults : ($bShowEmpty ? MsgBox(_t('_Empty')) : ''); 
+        if(!isset($aParams['show_empty']) && bx_get('show_empty') !== false)
+            $aParams['show_empty'] = (bool)bx_get('show_empty');
+
+        if(empty($aParams['template']) && bx_get('template') !== false)
+            $aParams['template'] = bx_process_input(bx_get('template'), BX_DATA_TEXT);
+
+        if(empty($aParams['cond']) && bx_get('cond') !== false)
+            $aParams['cond'] = unserialize(urldecode(bx_process_input(bx_get('cond'), BX_DATA_TEXT)));
+
+        if(!isset($aParams['start']) && bx_get('start') !== false)
+            $aParams['start'] = (int)bx_get('start');
+
+        if(!isset($aParams['per_page']) && bx_get('per_page') !== false)
+            $aParams['per_page'] = (int)bx_get('per_page');
     }
 }
 

@@ -49,29 +49,40 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     /**
      * Get search results from search form or from custom condition
      *
-     * @param $aCondition custom condition to pass instead of form submission, 
+     * @param $aParams['cond'] custom condition to pass instead of form submission, 
      *        conditions are key&value pair, where 'key' is form input name and 
      *        'value' is the term to search for
-     * @param $sUnitTemplate custom unit templates to use
-     * @param $iStart position of first record to display 
-     * @param $iPerPage number of items per page
+     * @param $aParams['start'] position of first record to display 
+     * @param $aParams['per_page'] number of items per page
+     * @param $aParams['template'] custom unit templates to use
      * @return HTML string with search results
      */ 
-    public function getResults($aCondition = array(), $sUnitTemplate = '', $iStart = 0, $iPerPage = 0)
+    public function getResults($aParams = array())
     {
         if(!$this->isEnabled())
             return '';
 
+        $bCondition = !empty($aParams['cond']) && is_array($aParams['cond']);
+        $aCondition = $bCondition ? $aParams['cond'] : array();
+
+        $iStart = !empty($aParams['start']) ? $aParams['start'] : 0;
+        $iPerPage = !empty($aParams['per_page']) ? $aParams['per_page'] : 0;
+        unset($aParams['start'], $aParams['per_page']);
+
+        $sUnitTemplate = !empty($aParams['template']) ? $aParams['template'] : '';
+
         $oForm = $this->prepareForm();
-        if ($aCondition) {
+        if(!empty($aCondition) && is_array($aCondition)) {
             $mixedSubmitName = $oForm->aParams['db']['submit_name'];
-            if (is_array($mixedSubmitName))
+            if(is_array($mixedSubmitName))
                 $mixedSubmitName = array_pop($mixedSubmitName);
             $aCondition[$mixedSubmitName] = 1;
             $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
             $oForm->aParams['csrf']['disable'] = true;
+
+            $oForm->initChecker(array(), $aCondition);
         }
-        $oForm->initChecker(array(), $aCondition);
+
         if(!$oForm->isSubmittedAndValid()) 
             return '';
 
@@ -79,20 +90,23 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         if(!$oContentInfo)
             return '';
 
-        $aParams = array();
+        $aParamsSearch = array();
         foreach($this->_aObject['fields'] as $aField) {
             $sValue = $oForm->getCleanValue($aField['name']);
             if(empty($sValue) || (is_array($sValue) && bx_is_empty_array($sValue)))
                 continue;
 
-            $aParams[$aField['name']] = array(
+            $aParamsSearch[$aField['name']] = array(
                 'type' => $aField['search_type'],
                 'value' => $sValue,
                 'operator' => $aField['search_operator']
             );
+
+            if(!$bCondition)
+                $aParams['cond'][$aField['name']] = $sValue;
         }
 
-        if(empty($aParams) || !is_array($aParams))
+        if(empty($aParamsSearch) || !is_array($aParamsSearch))
             return '';
 
         if (!$iPerPage) {
@@ -101,19 +115,36 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         }
 
         $aResults = false;
-        bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => $aParams, 'search_results' => &$aResults));
+        bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => $aParamsSearch, 'search_results' => &$aResults));
     	if($aResults === false)
-    	    $aResults = $oContentInfo->getSearchResultExtended($aParams, $iStart, $iPerPage);
+    	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1);
 
     	if(empty($aResults) || !is_array($aResults))
     	    return '';
+
+        if(!empty($aParams['cond']) && is_array($aParams['cond']))
+            $aParams['cond'] = urlencode(serialize($aParams['cond']));
+
+        $oPaginate = new BxTemplPaginate(array(
+            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . bx_js_string(json_encode($aParams)) . ");",
+            'start' => $iStart,
+            'per_page' => $iPerPage
+        ));
+        $oPaginate->setNumFromDataArray($aResults);
+
+        $bTmplVarsPaginate = $iStart || $oPaginate->getNum() > $iPerPage;
+        $aTmplVarsPaginate = $bTmplVarsPaginate ? array('paginate' => $oPaginate->getSimplePaginate()) : array();
 
     	$sResults = '';
     	foreach($aResults as $iId)
     	    $sResults .= $oContentInfo->getContentSearchResultUnit($iId, $sUnitTemplate);   	
 
         return $this->_oTemplate->parseHtmlByName('search_extended_results.html', array(
-            'code' => $sResults
+            'code' => $sResults,
+            'bx_if:show_paginate' => array(
+                'condition' => $bTmplVarsPaginate,
+                'content' => $aTmplVarsPaginate
+            )
         ));
     }
 
