@@ -199,7 +199,7 @@ class BxBaseVote extends BxDolVote
     	$aParams = array_merge($this->_aElementDefaults[$this->_sType], $aParams);
     	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
 
-        
+        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
         $bShowDoVoteAsButtonSmall = $this->_bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = $this->_bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
 
@@ -231,7 +231,7 @@ class BxBaseVote extends BxDolVote
         	$aTmplVarsCounter = array(
 				'style_prefix' => $this->_sStylePrefix,
 				'bx_if:show_hidden' => array(
-					'condition' => !$bCount,
+					'condition' => !$bCount && !$bShowCounterEmpty,
 					'content' => array()
 				),
 				'counter' => $this->getCounter($aParams)
