@@ -325,10 +325,11 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAddOne($iId, $s, $bDeletePreviousKeywords = true)
     {
-        if ($bDeletePreviousKeywords)
-            $this->_oQuery->keywordsDelete($iId);
-
-        return $this->_oQuery->keywordsAdd($iId, array($s));
+        if ($iRet = $this->_oQuery->keywordsAdd($iId, array($s), $bDeletePreviousKeywords)) {
+            bx_alert($this->_sObject, 'keyword_added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId));
+            bx_alert('meta_keyword', 'added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'object' => $this->_sObject));
+        }
+        return $iRet;
     }
 
     /**

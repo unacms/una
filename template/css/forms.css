@@ -508,6 +508,7 @@
     padding:0px;
     height:auto;
 	box-shadow: none;
+    min-height: 2.8rem;
 }
 .bx-form-value .bx-form-input-autotoken b {
     cursor:pointer;
@@ -553,4 +554,14 @@
 
     margin-right: 8px;
     margin-right: 0.5rem;
+}
+.bx-form-value .bx-form-input-autotoken-labels b {
+    padding-left: 1em;
+}
+.bx-form-value .bx-form-input-autotoken-labels-sel b {
+    padding-right: 1em;
+    margin-top: 0.625rem;
+}
+.bx-form-value .bx-form-input-autotoken-labels-sel b:after {
+    display:none;
 }

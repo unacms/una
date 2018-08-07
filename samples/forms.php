@@ -40,7 +40,13 @@ function PageCompMainCode()
                 'type' => 'block_header',
                 'caption' => 'Contact details',
             ),
-
+            'labels' => array(
+                'type' => 'custom',
+                'name' => 'labels',
+                'caption' => _t('Labels'),
+                'value' => ['Hello World', 'Привет Мир'],
+                'values' => ['Hello World', 'Привет Мир', 'Guten Tag', 'Жакшы кун'],
+            ),
             'name' => array(
                 'type' => 'text',
                 'name' => 'name',

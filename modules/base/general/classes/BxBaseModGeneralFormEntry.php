@@ -64,6 +64,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = 0;
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';
         }
+
+        if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']])) {
+            $this->aInputs[$CNF['FIELD_LABELS']]['values'] = array_map('trim', explode(',', getParam($CNF['PARAM_LABELS'])));
+        }
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -82,6 +86,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             }
 
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getPhotoGhostTmplVars($aContentInfo));
+        }
+
+        if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']]) && !empty($aValues['id']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->keywordsIsEnabled() && ($aLabels = $oMetatags->keywordsGet($aValues['id']))) {
+            $this->aInputs[$CNF['FIELD_LABELS']]['content_id'] = $aValues['id'];
+            $this->aInputs[$CNF['FIELD_LABELS']]['meta_object'] = $CNF['OBJECT_METATAGS'];
+            $this->aInputs[$CNF['FIELD_LABELS']]['value'] = array_intersect($aLabels, $this->aInputs[$CNF['FIELD_LABELS']]['values']);
         }
         
         parent::initChecker ($aValues, $aSpecificValues);

@@ -1087,6 +1087,47 @@ BLAH;
         ));
     }
 
+    protected function genCustomViewRowValueLabels ($aInput)
+    {        
+        if (!$aInput['value'] || !is_array($aInput['value']) || !($oMetatags = BxDolMetatags::getObjectInstance($aInput['meta_object'])) || !$oMetatags->keywordsIsEnabled())
+            return '';
+
+        $s = ''; 
+        foreach ($aInput['value'] as $sLabel)
+            $s .= '<a href="' . $oMetatags->keywordsGetHashTagUrl($sLabel, $aInput['content_id']) . '"><b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sLabel) . '</b></a>';
+
+        return $this->oTemplate->parseHtmlByName('form_field_labels_view.html', array(
+            'values' => $s,
+        ));        
+    }
+    
+    protected function genCustomInputLabels ($aInput)
+    {
+        $sValue = '';
+        if (!empty($aInput['value']) && is_array($aInput['value'])) {
+            foreach ($aInput['value'] as $sVal) {
+               $sValue .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . trim($sVal) . '" /></b>';
+            }
+            $sValue = trim($sValue, ',');
+        }
+
+        $sValues = '';
+        if (!empty($aInput['values']) && is_array($aInput['values'])) {
+            $a = array_diff($aInput['values'], !empty($aInput['value']) && is_array($aInput['value']) ? $aInput['value'] : array());
+            foreach ($a as $sVal) {
+               $sValues .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '</b>';
+            }
+            $sValues = trim($sValues, ',');
+        }
+        
+        return $this->oTemplate->parseHtmlByName('form_field_labels.html', array(
+            'id' => $aInput['name'] . time() . mt_rand(0, 100),
+            'name' => $aInput['name'],
+            'value' => $sValue,
+            'values' => $sValues,
+        ));
+    }
+    
     /**
      * Generate Select Element	
      *
