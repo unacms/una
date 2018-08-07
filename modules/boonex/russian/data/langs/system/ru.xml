@@ -1976,7 +1976,9 @@
 	<string name="_sys_form_forgot_password_input_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_input_age"><![CDATA[Возраст]]></string>
 	<string name="_sys_form_input_sys_location"><![CDATA[Расположение]]></string>
-	<string name="_sys_form_input_location"><![CDATA[Расположение]]></string>
+    <string name="_sys_form_input_location"><![CDATA[Расположение]]></string>
+	<string name="_sys_form_input_sys_labels"><![CDATA[Метки]]></string>
+	<string name="_sys_form_input_labels"><![CDATA[Метки]]></string>
 	<string name="_sys_form_login"><![CDATA[Вход]]></string>
 	<string name="_sys_form_login_input_caption_system_agreement"><![CDATA[Соглашение]]></string>
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Капча]]></string>
@@ -2716,7 +2718,8 @@
 	<string name="_week_sun"><![CDATA[Воскресенье]]></string>
 	<string name="_week_thu"><![CDATA[Четверг]]></string>
 	<string name="_week_tue"><![CDATA[Вторник]]></string>
-	<string name="_week_wed"><![CDATA[Среда]]></string>
+    <string name="_week_wed"><![CDATA[Среда]]></string>
+    <string name="_sys_option_labels"><![CDATA[Метки]]></string>
 	<string name="_sys_option_per_page_browse_showcase"><![CDATA[Количество позиций при отображении витриной]]></string>
   <string name="_sys_option_per_page_browse_recommended"><![CDATA[Количество позиций при отображении рекомендованных]]></string>
   <string name="_sys_javascript_requred"><![CDATA[Для корректной работы нужен включенный JavaScript! Пожалуйста, включите его в барузере!]]></string>

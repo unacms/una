@@ -413,6 +413,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
             if (isset($CNF['FIELD_LOCATION_PREFIX']) && isset($oForm->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && $oMetatags->locationsIsEnabled())
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
+
+            if (!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled()) {
+                foreach ($aLabels as $sLabel)
+                    $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
+            }
         }
 
         return '';
@@ -436,6 +441,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
             if ($oMetatags->locationsIsEnabled() && $aContentInfo)
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
+
+            if (!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled()) {
+                foreach ($aLabels as $sLabel)
+                    $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
+            }
         }
     }
 
