@@ -35,7 +35,7 @@ class BxOAuthAPI extends BxDol
      * 
      * Provides information about current profile.  
      *
-     * **Grant types:** 
+     * **Scopes:** 
      * `basic`, `service`, `market`
      * 
      * **HTTP Method:** 
@@ -111,7 +111,7 @@ class BxOAuthAPI extends BxDol
      * 
      * Get list of friends.
      *
-     * **Grant types:** 
+     * **Scopes:** 
      * `basic`, `service`, `market`
      * 
      * **HTTP Method:** 
@@ -170,7 +170,7 @@ class BxOAuthAPI extends BxDol
      * 
      * Market service call.
      * 
-     * **Grant types:** 
+     * **Scopes:** 
      * `market`, `service`
      *
      * Everything is equivalent to @ref private_api_service, only module name parameter can be ommited
@@ -195,7 +195,7 @@ class BxOAuthAPI extends BxDol
      * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params=serialized_string_of_params
      * @endcode
      *
-     * **Grant types:** 
+     * **Scopes:** 
      * `service`
      * 
      * **HTTP Method:** 

@@ -132,8 +132,9 @@ class BxOAuthModule extends BxDolModule
             return;
         }
 
-        $sScope = $this->_oAPI->aAction2Scope[$sAction];
-        if (false === strpos($sScope, $aToken['scope'])) {
+        $aScope = explode(',', $this->_oAPI->aAction2Scope[$sAction]);
+        $aScopeToken = explode(',', $aToken['scope']);
+        if (!array_intersect($aScopeToken, $aScope)) {
             $this->_oAPI->errorOutput(403, 'insufficient_scope', 'The request requires higher privileges than provided by the access token');
             return;
         }
