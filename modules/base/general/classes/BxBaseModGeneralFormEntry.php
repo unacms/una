@@ -88,7 +88,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getPhotoGhostTmplVars($aContentInfo));
         }
 
-        if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']]) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->keywordsIsEnabled() && ($aLabels = $oMetatags->keywordsGet($aValues['id']))) {
+        if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']]) && !empty($aValues['id']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->keywordsIsEnabled() && ($aLabels = $oMetatags->keywordsGet($aValues['id']))) {
             $this->aInputs[$CNF['FIELD_LABELS']]['content_id'] = $aValues['id'];
             $this->aInputs[$CNF['FIELD_LABELS']]['meta_object'] = $CNF['OBJECT_METATAGS'];
             $this->aInputs[$CNF['FIELD_LABELS']]['value'] = array_intersect($aLabels, $this->aInputs[$CNF['FIELD_LABELS']]['values']);

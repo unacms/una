@@ -54,7 +54,8 @@ class BxForumConfig extends BxBaseModTextConfig
         	'FIELD_STICK' => 'stick',
         	'FIELD_LOCK' => 'lock',
         	'FIELD_STATUS' => 'status',
-        	'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_LABELS' => 'labels',            
 	        'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -81,7 +82,8 @@ class BxForumConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_forum_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_forum_searchable_fields',
         	'PARAM_AUTOSUBSCRIBE_CREATED' => 'bx_forum_autosubscribe_created',
-        	'PARAM_AUTOSUBSCRIBE_REPLIED' => 'bx_forum_autosubscribe_replied',
+            'PARAM_AUTOSUBSCRIBE_REPLIED' => 'bx_forum_autosubscribe_replied',
+            'PARAM_LABELS' => 'bx_forum_labels',            
 
             // objects
             'OBJECT_GRID' => 'bx_forum',
