@@ -63,15 +63,6 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_channels_delete_profile', 1, 'bx_channels', '_bx_channels_page_block_title_delete_profile', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:13:\"entity_delete\";}', 0, 0, 0);
 
--- PAGE: profile info
-
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_profile_info', 'channel-profile-info', '_bx_channels_page_title_sys_profile_info', '_bx_channels_page_title_profile_info', 'bx_channels', 5, 2147483647, 1, 'page.php?i=channel-profile-info', '', '', '', 0, 1, 0, 'BxCnlPageEntry', 'modules/boonex/channels/classes/BxCnlPageEntry.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_channels_profile_info', 1, 'bx_channels', '_bx_channels_page_block_title_system_profile_info', '_bx_channels_page_block_title_profile_info_link', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:16:\"entity_info_full\";}', 0, 0, 1, 1),
-('bx_channels_profile_info', 1, 'bx_channels', '', '_bx_channels_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2);
-
 -- PAGE: view entry comments
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_channels_profile_comments', '_bx_channels_page_title_sys_profile_comments', '_bx_channels_page_title_profile_comments', 'bx_channels', 5, 2147483647, 1, 'channel-profile-comments', '', '', '', '', 0, 1, 0, 'BxCnlPageEntry', 'modules/boonex/channels/classes/BxCnlPageEntry.php');
