@@ -353,7 +353,6 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_payment_form_pendings', @sName, 'do_submit', '_bx_payment_form_pendings_input_process', '', 0, 'submit', '_bx_payment_form_pendings_input_process_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_payment_form_pendings', @sName, 'do_cancel', '_bx_payment_form_pendings_input_cancel', '', 0, 'button', '_bx_payment_form_pendings_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
 
-('bx_payment_form_processed', @sName, 'id', '0', '', 0, 'hidden', '_bx_payment_form_processed_input_id_sys', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_payment_form_processed', @sName, 'seller_id', '0', '', 0, 'hidden', '_bx_payment_form_processed_input_seller_id_sys', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_payment_form_processed', @sName, 'client_id', '0', '', 0, 'hidden', '_bx_payment_form_processed_input_client_id_sys', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_payment_form_processed', @sName, 'client', '0', '', 0, 'custom', '_bx_payment_form_processed_input_client_sys', '_bx_payment_form_processed_input_client', '', 0, 0, 0, '', '', '', 'Avail', '', '_bx_payment_form_processed_input_client_err', 'Xss', '', 0, 0),
@@ -400,7 +399,6 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_payment_form_pendings_process', 'do_submit', 2147483647, 1, 5),
 ('bx_payment_form_pendings_process', 'do_cancel', 2147483647, 1, 6),
 
-('bx_payment_form_processed_add', 'id', 2147483647, 0, 1),
 ('bx_payment_form_processed_add', 'seller_id', 2147483647, 1, 2),
 ('bx_payment_form_processed_add', 'client_id', 2147483647, 1, 3),
 ('bx_payment_form_processed_add', 'client', 2147483647, 1, 4),

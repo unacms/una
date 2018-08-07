@@ -14,6 +14,7 @@ class BxBaseFormView extends BxDolForm
     protected static $_isCssJsAdded = false;
     protected static $_isCssJsUiAdded = false;
     protected static $_isCssJsMinicolorsAdded = false;
+    protected static $_isCssJsDatepickerAdded = false;
     protected static $_isCssJsTimepickerAdded = false;
     protected static $_isCssJsAddedViewMode = false;
 
@@ -823,12 +824,14 @@ BLAH;
         switch($aAttrs['type']) {
             case 'date_time':
                 $this->addCssJsUi ();
+                $this->addCssJsDatepicker ();
                 $this->addCssJsTimepicker ();
                 break;
             case 'slider':
             case 'doublerange':
             case 'datepicker':
                 $this->addCssJsUi ();
+                $this->addCssJsDatepicker ();
                 break;
             case 'text':
                 if (isset($aAttrs['class']) && false !== strpos($aAttrs['class'], 'bx-form-input-rgb'))
@@ -1493,6 +1496,19 @@ BLAH;
         }
     }
 
+    function addCssJsUi ()
+    {
+        if (self::$_isCssJsUiAdded)
+            return;
+
+        $this->_addCss('jquery-ui/jquery-ui.css');
+        $this->_addJs(array(
+            'jquery-ui/jquery-ui.custom.min.js'
+        ), "'undefined' === typeof($.ui)");
+
+        self::$_isCssJsUiAdded = true;
+    }
+
     function addCssJsTimepicker ()
     {
         if (self::$_isCssJsTimepickerAdded)
@@ -1513,22 +1529,20 @@ BLAH;
         self::$_isCssJsTimepickerAdded = true;
     }
     
-    function addCssJsUi ()
+    function addCssJsDatepicker ()
     {
-        if (self::$_isCssJsUiAdded)
+        if (self::$_isCssJsDatepickerAdded)
             return;
 
         $aUiLangs = array ('af' => 1, 'ar-DZ' => 1, 'ar' => 1, 'az' => 1, 'be' => 1, 'bg' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cy-GB' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en-AU' => 1, 'en-GB' => 1, 'en-NZ' => 1, 'en' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr-CA' => 1, 'fr-CH' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hi' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'ka' => 1, 'kk' => 1, 'km' => 1, 'ko' => 1, 'ky' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'ml' => 1, 'ms' => 1, 'nb' => 1, 'nl-BE' => 1, 'nl' => 1, 'nn' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'rm' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-SR' => 1, 'sr' => 1, 'sv' => 1, 'ta' => 1, 'th' => 1, 'tj' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-HK' => 1, 'zh-TW' => 1);
 
         $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
-        
-        $this->_addCss('jquery-ui/jquery-ui.css');
+
         $this->_addJs(array(
             'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
-            'jquery-ui/jquery-ui.custom.min.js',
         ), "'undefined' === typeof($.datepicker)");
 
-        self::$_isCssJsUiAdded = true;
+        self::$_isCssJsDatepickerAdded = true;
     }
 
     function addCssJsMinicolors ()
