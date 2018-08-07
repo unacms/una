@@ -61,6 +61,28 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
      * @page service Service Calls
      * @section bx_base_payment Base Payment
      * @subsection bx_base_payment-other Other
+     * @subsubsection bx_base_payment-generate_license generate_license
+     * 
+     * @code bx_srv('bx_payment', 'generate_license'); @endcode
+     * 
+     * Generate license. 
+     *
+     * @return a string with license.
+     * 
+     * @see BxBaseModPaymentModule::serviceGenerateLicense
+     */
+    /** 
+     * @ref bx_base_payment-generate_license "generate_license"
+     */
+    public function serviceGenerateLicense()
+    {
+        return $this->_oConfig->getLicense();
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-other Other
      * @subsubsection bx_base_payment-get_currency_info get_currency_info
      * 
      * @code bx_srv('bx_payment', 'get_currency_info', [...]); @endcode

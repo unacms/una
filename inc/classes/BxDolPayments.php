@@ -297,6 +297,15 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 		$aSrvParams = array($sOrderId);
 		return BxDolService::call($this->_sActive, 'prolong_subscription', $aSrvParams);
     }
+
+    public function generateLicense()
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'generate_license'))
+            return '';
+
+        $aSrvParams = array();
+        return BxDolService::call($this->_sActive, 'generate_license', $aSrvParams, 'Module', true);
+    }
 }
 
 /** @} */

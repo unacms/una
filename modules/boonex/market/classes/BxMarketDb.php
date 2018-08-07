@@ -470,27 +470,37 @@ class BxMarketDb extends BxBaseModTextDb
     	return false;
     }
 
-	public function registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '', $iTrial = 0)
+    public function registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '', $iTrial = 0)
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$aQueryParams = array(
-    		'profile_id' => $iProfileId,
-    		'product_id' => $iProductId,
-    		'count' => $iCount, 
-    		'order' => $sOrder, 
-    		'license' => $sLicense,
-    		'type' => $sType
-    	);
+        $oPayments = BxDolPayments::getInstance();
 
-		$sExpireParam = '';
-		if(!empty($iTrial))
-		    $sExpireParam = ', `expired`=UNIX_TIMESTAMP(DATE_ADD(DATE_ADD(NOW(), INTERVAL ' . (int)$iTrial . ' DAY), INTERVAL ' . (int)$this->getParam($CNF['OPTION_RECURRING_RESERVE']) . ' DAY))';
-		else if(!empty($sDuration) && isset($this->_aRecurringDurations[$sDuration]))
-			$sExpireParam = ', `expired`=UNIX_TIMESTAMP(DATE_ADD(DATE_ADD(NOW(), ' . $this->_aRecurringDurations[$sDuration] . '), INTERVAL ' . (int)$this->getParam($CNF['OPTION_RECURRING_RESERVE']) . ' DAY))';
+        $iProcessed = 0;
+        for($i = 0; $i < $iCount; $i++) {
+            $aQueryParams = array(
+                'profile_id' => $iProfileId,
+                'product_id' => $iProductId,
+                'count' => 1,
+                'order' => $sOrder,
+                'license' => $sLicense,
+                'type' => $sType
+            );
 
-    	$sQuery = $this->prepare("INSERT INTO `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()" . $sExpireParam);
-        return (int)$this->query($sQuery) > 0;
+            $sExpireParam = '';
+            if(!empty($iTrial))
+                $sExpireParam = ', `expired`=UNIX_TIMESTAMP(DATE_ADD(DATE_ADD(NOW(), INTERVAL ' . (int)$iTrial . ' DAY), INTERVAL ' . (int)$this->getParam($CNF['OPTION_RECURRING_RESERVE']) . ' DAY))';
+            else if(!empty($sDuration) && isset($this->_aRecurringDurations[$sDuration]))
+                $sExpireParam = ', `expired`=UNIX_TIMESTAMP(DATE_ADD(DATE_ADD(NOW(), ' . $this->_aRecurringDurations[$sDuration] . '), INTERVAL ' . (int)$this->getParam($CNF['OPTION_RECURRING_RESERVE']) . ' DAY))';
+
+            if((int)$this->query("INSERT INTO `" . $CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()" . $sExpireParam) == 0)
+                continue;
+
+            $sLicense = $oPayments->generateLicense();
+            $iProcessed += 1;
+        }
+
+        return $iCount == $iProcessed;
     }
 
     public function prolongLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '', $iTrial = 0)
@@ -511,7 +521,7 @@ class BxMarketDb extends BxBaseModTextDb
     			`profile_id` = ? AND 
     			`product_id` = ? AND 
     			`order` = ? 
-    		LIMIT 1", $iProfileId, $iProductId, $sOrder);
+    		LIMIT ?", $iProfileId, $iProductId, $sOrder, $iCount);
 
         return (int)$this->query($sQuery) > 0;
     }

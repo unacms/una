@@ -979,31 +979,34 @@ class BxMarketModule extends BxBaseModTextModule
     {
     	$aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
-			return array();
+            return array();
 
         $iTrial = 0;
-		$sDuration = '';
-		if($sType == BX_MARKET_LICENSE_TYPE_RECURRING) {
-			$aProduct = $this->_oDb->getContentInfoById($iItemId);
+        $sDuration = '';
+        $sAction = 'register';
+        if($sType == BX_MARKET_LICENSE_TYPE_RECURRING) {
+            $aProduct = $this->_oDb->getContentInfoById($iItemId);
 
-			$iTrial = $aProduct[$this->_oConfig->CNF['FIELD_TRIAL_RECURRING']];
-			$sDuration = $aProduct[$this->_oConfig->CNF['FIELD_DURATION_RECURRING']];
-		}
+            $iTrial = $aProduct[$this->_oConfig->CNF['FIELD_TRIAL_RECURRING']];
+            $sDuration = $aProduct[$this->_oConfig->CNF['FIELD_DURATION_RECURRING']];
+            
+            if($this->_oDb->hasLicenseByOrder($iClientId, $iItemId, $sOrder))
+                $sAction = 'prolong';
+        }
 
-    	$sAction = $this->_oDb->hasLicenseByOrder($iClientId, $iItemId, $sOrder) ? 'prolong' : 'register';
         if(!$this->_oDb->{$sAction . 'License'}($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType, $sDuration, $iTrial))
             return array();
 
-		bx_alert($this->getName(), 'license_' . $sAction, 0, false, array(
-			'product_id' => $iItemId,
-			'profile_id' => $iClientId,
-			'order' => $sOrder,
-			'license' => $sLicense,
-			'type' => $sType,
-			'count' => $iItemCount,
-			'duration' => $sDuration,
-		    'trial' => $iTrial
-		));
+        bx_alert($this->getName(), 'license_' . $sAction, 0, false, array(
+            'product_id' => $iItemId,
+            'profile_id' => $iClientId,
+            'order' => $sOrder,
+            'license' => $sLicense,
+            'type' => $sType,
+            'count' => $iItemCount,
+            'duration' => $sDuration,
+            'trial' => $iTrial
+        ));
 
         return $aItem;
     }
