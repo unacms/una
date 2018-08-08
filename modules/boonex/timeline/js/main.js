@@ -9,36 +9,37 @@
  */
 
 function BxTimelineMain() {
-	this.sIdPost = '#bx-timeline-post';
+    this.sIdPost = '#bx-timeline-post';
+    this.sIdPostForm = 'form#bx_timeline_post';
 
-	this.sIdView = '#bx-timeline-';
-	this.sIdViewTimeline = '#bx-timeline-timeline';
-	this.sIdViewOutline = '#bx-timeline-outline';
-	this.sIdItem = '#bx-timeline-item-';
-	this.sIdItemTimeline = '#bx-timeline-item-timeline-';
-	this.sIdItemOutline = '#bx-timeline-item-outline-';
-	this.sIdItemItem = '#bx-timeline-item-item-';
+    this.sIdView = '#bx-timeline-';
+    this.sIdViewTimeline = '#bx-timeline-timeline';
+    this.sIdViewOutline = '#bx-timeline-outline';
+    this.sIdItem = '#bx-timeline-item-';
+    this.sIdItemTimeline = '#bx-timeline-item-timeline-';
+    this.sIdItemOutline = '#bx-timeline-item-outline-';
+    this.sIdItemItem = '#bx-timeline-item-item-';
 
-	this.sSP = 'bx-tl';
-	this.sClassView = this.sSP + '-view';
-	this.sClassMasonry = this.sSP + '-masonry';
-	this.sClassItems = this.sSP + '-items';
-	this.sClassItem = this.sSP + '-item';
-	this.sClassDividerToday = this.sSP + '-divider-today';
-	this.sClassItemContent = this.sSP + '-item-content';
-	this.sClassItemComments = this.sSP + '-item-comments-holder';
-	this.sClassItemImages = this.sSP + '-item-images';
-	this.sClassItemImage = this.sSP + '-item-image';
-	this.sClassBlink = this.sSP + '-blink';
+    this.sSP = 'bx-tl';
+    this.sClassView = this.sSP + '-view';
+    this.sClassMasonry = this.sSP + '-masonry';
+    this.sClassItems = this.sSP + '-items';
+    this.sClassItem = this.sSP + '-item';
+    this.sClassDividerToday = this.sSP + '-divider-today';
+    this.sClassItemContent = this.sSP + '-item-content';
+    this.sClassItemComments = this.sSP + '-item-comments-holder';
+    this.sClassItemImages = this.sSP + '-item-images';
+    this.sClassItemImage = this.sSP + '-item-image';
+    this.sClassBlink = this.sSP + '-blink';
 
-	this.oViewTimeline = null;
-	this.bViewTimeline = false;
+    this.oViewTimeline = null;
+    this.bViewTimeline = false;
 
-	this.oViewOutline = null;
-	this.bViewOutline = false;
+    this.oViewOutline = null;
+    this.bViewOutline = false;
 
-	this.oViewItem = null;
-	this.bViewItem = false;
+    this.oViewItem = null;
+    this.bViewItem = false;
 }
 
 BxTimelineMain.prototype.initVideos = function(oParent) {

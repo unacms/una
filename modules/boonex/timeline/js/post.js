@@ -49,7 +49,11 @@ function BxTimelinePost(oOptions) {
     });
 
     $(document).ready(function () {
-    	$($this.sIdPost + ' form').each(function() {
+        var oPost = $($this.sIdPost + ' form');
+        if(!oPost || oPost.length == 0)
+            oPost = $($this.sIdPostForm);
+
+    	oPost.each(function() {
     		var sId = $(this).attr('id');
     		$this.initFormPost(sId);
     	});
