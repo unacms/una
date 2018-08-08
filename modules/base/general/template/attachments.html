@@ -1,5 +1,4 @@
 <div class="bx-base-general-attachments bx-clearfix">
-
     <bx_repeat:attachments>
         <div class="bx-base-general-attachment bx-def-box bx-def-color-bg-box bx-def-gal-img-size" style="float:left;">
             <bx_if:image>
@@ -19,10 +18,15 @@
         </div>
     </bx_repeat:attachments>
 
-    <script>
-        $(document).ready(function() {
-            bx_center_content('.bx-base-general-attachments', '.bx-base-general-attachment', true);
-        });
+    <script type="text/javascript" language="javascript">
+        var oAttachments = $('.bx-base-general-attachments');
+        if(oAttachments.find('.bx-base-general-attachment').length > 2) {
+            oAttachments.flickity({
+		cellSelector: '.bx-base-general-attachment',
+		cellAlign: 'left',
+		pageDots: false,
+		imagesLoaded: true
+            });
+        }
     </script>
-
 </div>

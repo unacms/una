@@ -201,16 +201,19 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $this->entryAttachmentsByStorage($this->getModule()->_oConfig->CNF['OBJECT_STORAGE'], $aData, $aParams);
     }
 
-	function entryAttachmentsByStorage ($sStorage, $aData, $aParams = array())
+    function entryAttachmentsByStorage ($sStorage, $aData, $aParams = array())
     {
         if (!($a = $this->getAttachments($sStorage, $aData, $aParams)))
             return '';
+
+        $this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css');
+    	$this->addJs('flickity/flickity.pkgd.min.js');
 
     	return $this->parseHtmlByName('attachments.html', array(
             'bx_repeat:attachments' => $a,
         ));
     }
-    
+
     protected function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
     {
         if(empty($sContent))

@@ -560,7 +560,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceEntityAllActions ($iContentId = 0)
     {
-        return $this->_oTemplate->entryAllActions('', $this->serviceEntitySocialSharing($iContentId));
+        return $this->_oTemplate->entryAllActions($this->serviceEntityActions($iContentId), $this->serviceEntitySocialSharing($iContentId));
     }
 
     /**
