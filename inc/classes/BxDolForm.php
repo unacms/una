@@ -1418,7 +1418,6 @@ class BxDolFormCheckerHelper
     }
     static public function checkDateRange ($s, $iMin, $iMax, $bRequired = false)
     {
-        echo $iMin.'-'.$iMax.'-'.$bRequired;
         if (!$bRequired && (empty($s) || '0000-00-00' == $s))
             return true;   
         if (self::checkPreg ($s, '#^\d+\-\d+\-\d+$#')){
