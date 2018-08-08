@@ -13,6 +13,12 @@
 define('BX_CONNECTIONS_LIST_LIMIT', 1000);
 
 /**
+ * No limit for connections lists. 
+ * Is needed for Total Number calculation.
+ */
+define('BX_CONNECTIONS_LIST_NO_LIMIT', -1);
+
+/**
  * Connections order: no order
  */
 define('BX_CONNECTIONS_ORDER_NONE', 0);

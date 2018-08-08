@@ -99,7 +99,7 @@ class BxBaseServiceConnections extends BxDol
      * @param $mixedId id to get connections for, if omitted then logged-in profile id is used
      * @return number
      */
-    public function serviceGetConnectedContentNum ($sConnectionsObject, $mixedId = 0)
+    public function serviceGetConnectedContentNum ($sConnectionsObject, $mixedId = 0, $isMutual = false)
     {
         $oConnection = BxDolConnection::getObjectInstance($sConnectionsObject);
         if (!$oConnection)
@@ -109,7 +109,7 @@ class BxBaseServiceConnections extends BxDol
             $mixedId = bx_get_logged_profile_id();
 
         $i = 0;
-        $a = $oConnection->getConnectedContent($mixedId); // get received friend requests
+        $a = $oConnection->getConnectedContent($mixedId, $isMutual, 0, BX_CONNECTIONS_LIST_NO_LIMIT); // get received friend requests
         foreach ($a as $iId)
             if (BxDolProfile::getInstance($iId))
                 ++$i;
@@ -123,7 +123,7 @@ class BxBaseServiceConnections extends BxDol
      * @param $mixedId id to get connections for, if omitted then logged-in profile id is used
      * @return number
      */
-    public function serviceGetConnectedInitiatorsNum ($sConnectionsObject, $mixedId = 0)
+    public function serviceGetConnectedInitiatorsNum ($sConnectionsObject, $mixedId = 0, $isMutual = false)
     {
         $oConnection = BxDolConnection::getObjectInstance($sConnectionsObject);
         if (!$oConnection)
@@ -133,7 +133,7 @@ class BxBaseServiceConnections extends BxDol
             $mixedId = bx_get_logged_profile_id();
 
         $i = 0;
-        $a = $oConnection->getConnectedInitiators($mixedId); // get received friend requests
+        $a = $oConnection->getConnectedInitiators($mixedId, $isMutual, 0, BX_CONNECTIONS_LIST_NO_LIMIT); // get received friend requests
         foreach ($a as $iId)
             if (BxDolProfile::getInstance($iId))
                 ++$i;

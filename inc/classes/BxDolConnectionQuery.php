@@ -166,7 +166,11 @@ class BxDolConnectionQuery extends BxDolDb
 
         $sWhere .= (false !== $isMutual) ? $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual) : '';
 
-        return $this->prepareAsString("SELECT $sFields FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere $sOrder LIMIT ?, ?", $iStart, $iLimit);
+        $sLimit = "";
+        if($iLimit != BX_CONNECTIONS_LIST_NO_LIMIT)
+            $sLimit = $this->prepareAsString("LIMIT ?, ?", $iStart, $iLimit);
+
+        return "SELECT $sFields FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere $sOrder $sLimit";
     }
 
     public function getConnectedContentCount ($iInitiator, $isMutual = false)
