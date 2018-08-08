@@ -47,7 +47,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         	'categories' => array('icon' => 'tag'),
         	'search' => array('icon' => 'search'),
 	        'purchases' => array('icon' => 'shopping-cart'), 
-	        'updates' => array('icon' => 'refresh'), 
+	        'updates' => array('icon' => 'sync'), 
 	        'checkout' => array('icon' => 'credit-card'), 
 	        'downloaded' => array('icon' => 'list')
         );
