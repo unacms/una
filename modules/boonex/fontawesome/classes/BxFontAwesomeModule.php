@@ -20,6 +20,7 @@ class BxFontAwesomeModule extends BxDolModule
     {
         $this->_oDb->switchLightFont($bEnable);
         BxDolCacheUtilities::getInstance()->clear('css');
+        BxDolCacheUtilities::getInstance()->clear('db');
     }
 }
 

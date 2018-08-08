@@ -1092,8 +1092,8 @@ BLAH;
 
     protected function genCustomViewRowValueLabels ($aInput)
     {        
-        if (!$aInput['value'] || !is_array($aInput['value']) || !($oMetatags = BxDolMetatags::getObjectInstance($aInput['meta_object'])) || !$oMetatags->keywordsIsEnabled())
-            return '';
+        if (empty($aInput['value']) || !is_array($aInput['value']) || !($oMetatags = BxDolMetatags::getObjectInstance($aInput['meta_object'])) || !$oMetatags->keywordsIsEnabled())
+            return null;
 
         $s = ''; 
         foreach ($aInput['value'] as $sLabel)
