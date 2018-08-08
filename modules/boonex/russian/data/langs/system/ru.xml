@@ -2499,8 +2499,8 @@
 	<string name="_sys_select"><![CDATA[Выбрать]]></string>
 	<string name="_sys_send"><![CDATA[Послать]]></string>
     <string name="_sys_search_placeholder"><![CDATA[Поиск...]]></string>
-	<string name="_sys_spam_detected"><![CDATA[Извините, кажется, Вы пытаетесь послать спам]]></string>
-	<string name="_sys_spam_detected_contact"><![CDATA[Извините, кажется, Вы пытаетесь послать спам. Если Вы уверены, что это не спам, пошлите нам уведомление: {0}]]></string>
+	<string name="_sys_spam_detected"><![CDATA[Ваше действие привело к блокировке]]></string>
+	<string name="_sys_spam_detected_contact"><![CDATA[Ваше действие привело к блокировке, сзяжитесь с нами для проверки происходящего: {0}]]></string>
 	<string name="_sys_splash_btn_start"><![CDATA[Начало]]></string>
 	<string name="_sys_splash_err_domain_incorrect"><![CDATA[Нужно указать домен. Пожалуйста, заполните это поле, например, my-first-site.]]></string>
 	<string name="_sys_splash_err_domain_is_used"><![CDATA[Имя домена уже используется. Выберите другое.]]></string>
