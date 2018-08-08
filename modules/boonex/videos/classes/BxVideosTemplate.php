@@ -23,47 +23,38 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+        $mixedResult = parent::entryText($aData, $sTemplateName);
+        if($mixedResult === false)
+            return $this->entryVideo($aData);
+
+        $mixedVideo = $this->getVideo($aData);
+        if($mixedVideo === false)
+            return $mixedResult;
+
+        return $this->parseHtmlByContent($mixedResult, array(
+            'entry_video' => $mixedVideo['player'] 
+        ));
+    }
+
     public function entryVideo ($aContentInfo, $mixedContext = false)
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $aTmplVars = array(
+            'video_title' => bx_process_output($aContentInfo['title']),
+            'video_title_attr' => bx_html_attribute($aContentInfo['title']),
+            'video_poster_url' => '',
+            'video' => ''
+        );
 
-        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
+        $mixedVideo = $this->getVideo($aContentInfo);
+        if($mixedVideo !== false)
+            $aTmplVars = array_merge($aTmplVars, array(
+                'video_poster_url' => $mixedVideo['poster_url'],
+                'video' => $mixedVideo['player']
+            ));
 
-        $aTranscodersVideo = false;
-        if($CNF['OBJECT_VIDEOS_TRANSCODERS'])
-            $aTranscodersVideo = array (
-                'poster' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
-                'mp4' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
-                'webm' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
-            );
-
-        $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
-        $aFile = $oStorage->getFile($iFile);
-        if(empty($aFile) || !is_array($aFile) || strncmp('video/', $aFile['mime_type'], 6) !== 0)
-            return '';
-
-        $sTitle = bx_process_output($aContentInfo['title']);
-        $sTitleAttr = bx_html_attribute($aContentInfo['title']);
-
-        $this->_checkDuration($aContentInfo);
-
-		$sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
-        if(!empty($sPosterSrc) && !empty($aContentInfo[$sPosterSrc]))
-            $sPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER'])->getFileUrl($aContentInfo[$sPosterSrc]);
-        else 
-            $sPoster = $aTranscodersVideo['poster']->getFileUrl($iFile);
-
-        return $this->parseHtmlByName('entry-video.html', array(
-            'img_title' => $sTitle,
-            'img_title_attr' => $sTitleAttr,
-            'img_src' => $aTranscodersVideo['poster']->getFileUrl($iFile),
-            'video' => BxTemplFunctions::getInstance()->videoPlayer(
-                $sPoster, 
-                $aTranscodersVideo['mp4']->getFileUrl($iFile), 
-                $aTranscodersVideo['webm']->getFileUrl($iFile),
-                false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
-            )
-        ));
+        return $this->parseHtmlByName('entry-video.html', $aTmplVars);
     }
 
     public function entryRating($aData)
@@ -81,6 +72,44 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         }
 
     	return $sVotes; 
+    }
+
+    public function getVideo($aContentInfo)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
+
+        $aTranscodersVideo = false;
+        if($CNF['OBJECT_VIDEOS_TRANSCODERS'])
+            $aTranscodersVideo = array (
+                'poster' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
+                'mp4' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
+                'webm' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+            );
+
+        $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
+        $aFile = $oStorage->getFile($iFile);
+        if(empty($aFile) || !is_array($aFile) || strncmp('video/', $aFile['mime_type'], 6) !== 0)
+            return false;
+
+        $this->_checkDuration($aContentInfo);
+
+        $sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
+        if(!empty($sPosterSrc) && !empty($aContentInfo[$sPosterSrc]))
+            $sPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER'])->getFileUrl($aContentInfo[$sPosterSrc]);
+        else 
+            $sPoster = $aTranscodersVideo['poster']->getFileUrl($iFile);
+
+        return array(
+            'poster_url' => $aTranscodersVideo['poster']->getFileUrl($iFile),
+            'player' => BxTemplFunctions::getInstance()->videoPlayer(
+                $sPoster, 
+                $aTranscodersVideo['mp4']->getFileUrl($iFile), 
+                $aTranscodersVideo['webm']->getFileUrl($iFile),
+                false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
+            )
+        );
     }
 
     public function getUnitImages ($aData)
