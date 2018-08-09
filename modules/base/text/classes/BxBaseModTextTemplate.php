@@ -103,6 +103,32 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
+    public function getTmplVarsText($aData)
+    {
+        $aVars = parent::getTmplVarsText($aData);
+        
+        $sImage = '';
+        $mixedImage = $this->getModule()->getEntryImageData($aData);
+        if($mixedImage !== false) {
+            if(!empty($mixedImage['object']))
+                $o = BxDolStorage::getObjectInstance($mixedImage['object']);
+            else if(!empty($mixedImage['transcoder']))
+                $o = BxDolTranscoder::getObjectInstance($mixedImage['transcoder']);
+
+            if($o)
+                $sImage = $o->getFileUrlById($mixedImage['id']);
+        }
+
+        $aVars['bx_if:show_image'] = array(
+            'condition' => !empty($sImage),
+            'content' => array(
+                'entry_image' => $sImage
+            )
+        );
+
+        return $aVars;
+    }
+
     function getAuthorDesc ($aData)
     {
         return '';

@@ -81,8 +81,12 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         if (false !== strpos($aBlock['content'], 'entity_comments') && substr_compare($this->_sObject, $sTest, strlen($this->_sObject) - strlen($sTest), strlen($sTest)) === 0)
             unset($a['title']);            
         return $a;
-    }    
+    }
 
+    protected function _getImageForPageCover ()
+    {
+        return false;
+    }
 }
 
 /** @} */

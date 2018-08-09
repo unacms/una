@@ -106,7 +106,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ));
     }
 
-	function entryText ($aData, $sTemplateName = 'entry-text.html')
+    public function getTmplVarsText($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
@@ -135,10 +135,17 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             $aVars['location'] = $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aData[$CNF['FIELD_ID']]) : '';
         }
 
+        unset($aVars['recipients']);
+
+        return $aVars;
+    }
+
+    function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+        $aVars = $this->getTmplVarsText($aData);
+
         if (empty($aVars['entry_text']))
             return false;
-
-        unset($aVars['recipients']);
         
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }

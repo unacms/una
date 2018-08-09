@@ -1096,6 +1096,25 @@ class BxBaseModGeneralModule extends BxDolModule
 
 	// ====== COMMON METHODS
 
+    public function getEntryImageData($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['FIELD_THUMB']) || empty($aContentInfo[$CNF['FIELD_THUMB']]) || empty($CNF['OBJECT_STORAGE']))
+            return false;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_THUMB']];
+        if(!empty($CNF['OBJECT_TRANSCODER_COVER']))
+            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_TRANSCODER_COVER']);
+
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER']))
+            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
+
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
+            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+
+        return array('id' => $iId, 'object' => $CNF['OBJECT_STORAGE']);
+    }
+
     public function getProfileId()
     {
     	return bx_get_logged_profile_id();

@@ -211,6 +211,10 @@ div.bx-base-text-breadcrumb i {
 }
 
 /* view page */
+.bx-base-text-entity-image img {
+    max-width: 100%;
+}
+
 .bx-base-text-entity-content,
 .bx-base-text-entity-content p,
 .bx-base-text-entity-content h1,

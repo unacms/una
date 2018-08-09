@@ -11,7 +11,6 @@
 
 class BxVideosConfig extends BxBaseModTextConfig
 {
-	protected $_bViewPageCover;
 
     function __construct($aModule)
     {
@@ -159,14 +158,7 @@ class BxVideosConfig extends BxBaseModTextConfig
         	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
-
-        $this->_bViewPageCover = false;
     }
-
-    public function isViewPageCover()
-    {
-    	return $this->_bViewPageCover;
-    } 
 }
 
 /** @} */

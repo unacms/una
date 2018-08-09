@@ -27,22 +27,6 @@ class BxVideosPageEntry extends BxBaseModTextPageEntry
     	)));
     }
 
-    protected function _getImageForPageCover ()
-    {
-    	if(!$this->_oModule->_oConfig->isViewPageCover())
-    		return false;
-
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(!empty($CNF['FIELD_THUMB']) && !empty($this->_aContentInfo[$CNF['FIELD_THUMB']]))
-            return array('id' => $this->_aContentInfo[$CNF['FIELD_THUMB']], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
-
-        if(!empty($CNF['FIELD_VIDEO']) && !empty($this->_aContentInfo[$CNF['FIELD_VIDEO']]))
-            return array('id' => $this->_aContentInfo[$CNF['FIELD_VIDEO']], 'transcoder' => $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
-
-        return false;
-    }
-
     protected function _getThumbForMetaObject ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
