@@ -56,7 +56,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
 		return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function entryFilePreview ($aData)
+    public function entryFilePreview ($aData)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = $oModule->_oConfig->CNF;
@@ -72,6 +72,28 @@ class BxFilesTemplate extends BxBaseModTextTemplate
             return $sNoPreview;
 
         return $oFileHandler->display($sFileUrl, $aFile);
+    }
+
+    public function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+        return $this->parseHtmlByName($sTemplateName, $this->getTmplVarsText($aData));
+    }
+
+    public function getTmplVarsText($aData)
+    {
+        $aVars = parent::getTmplVarsText($aData);
+        $aVars = array_merge($aVars, array(
+            'entry_preview' => $this->entryFilePreview($aData),
+            'bx_if:show_content' => array(
+                'condition' => !empty($aVars['entry_title']) || !empty($aVars['entry_text']),
+                'content' => array(
+                    'entry_title' => $aVars['entry_title'],
+                    'entry_text' => $aVars['entry_text']
+                )
+            )
+        ));
+
+        return $aVars;
     }
 }
 

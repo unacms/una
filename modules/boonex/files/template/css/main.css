@@ -35,3 +35,12 @@
 .bx-files-text-unit .bx-base-text-unit-text > div {
     margin-left:3.5rem;
 }
+
+/*--- View page ---*/
+.bx-files-entity-preview {
+    overflow: hidden;
+}
+.bx-files-entity-preview .bx-msg-box-container {
+    margin: 0;
+    padding: 0;
+}
