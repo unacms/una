@@ -1096,21 +1096,19 @@ class BxBaseModGeneralModule extends BxDolModule
 
 	// ====== COMMON METHODS
 
-    public function getEntryImageData($aContentInfo)
+    public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = array())
     {
+        if(empty($aTranscoders))
+            $aTranscoders = array('OBJECT_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_GALLERY');
+
         $CNF = &$this->_oConfig->CNF;
-        if(empty($CNF['FIELD_THUMB']) || empty($aContentInfo[$CNF['FIELD_THUMB']]) || empty($CNF['OBJECT_STORAGE']))
+        if(empty($CNF[$sField]) || empty($aContentInfo[$CNF[$sField]]) || empty($CNF['OBJECT_STORAGE']))
             return false;
 
-        $iId = (int)$aContentInfo[$CNF['FIELD_THUMB']];
-        if(!empty($CNF['OBJECT_TRANSCODER_COVER']))
-            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_TRANSCODER_COVER']);
-
-        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_COVER']))
-            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
-
-        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']))
-            return array('id' => $iId, 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+        $iId = (int)$aContentInfo[$CNF[$sField]];
+        foreach($aTranscoders as $sTranscoder)
+            if(!empty($CNF[$sTranscoder]))
+                return array('id' => $iId, 'transcoder' => $CNF[$sTranscoder]);
 
         return array('id' => $iId, 'object' => $CNF['OBJECT_STORAGE']);
     }

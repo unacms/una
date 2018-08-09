@@ -36,14 +36,12 @@ class BxMarketPageEntry extends BxBaseModTextPageEntry
 
     public function getCode ()
     {
-    	$sResult = parent::getCode();
-    	$sResult .= $this->_oModule->_oTemplate->getJsCode('entry');
+        $sResult = parent::getCode();
+        $sResult .= $this->_oModule->_oTemplate->getJsCode('entry');
 
-		$this->_oModule->_oTemplate->setCover($this->_aContentInfo);
-
-    	$this->_oModule->_oTemplate->addJs(array('fancybox/jquery.fancybox.pack.js', 'entry.js'));
-		$this->_oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'fancybox/|jquery.fancybox.css', 'entry.css'));
-    	return $sResult;
+        $this->_oModule->_oTemplate->addJs(array('fancybox/jquery.fancybox.pack.js', 'entry.js'));
+        $this->_oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'fancybox/|jquery.fancybox.css', 'entry.css'));
+        return $sResult;
     }
 }
 

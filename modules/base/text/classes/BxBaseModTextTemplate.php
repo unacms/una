@@ -106,9 +106,9 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     public function getTmplVarsText($aData)
     {
         $aVars = parent::getTmplVarsText($aData);
-        
+
         $sImage = '';
-        $mixedImage = $this->getModule()->getEntryImageData($aData);
+        $mixedImage = $this->_getHeaderImage($aData);
         if($mixedImage !== false) {
             if(!empty($mixedImage['object']))
                 $o = BxDolStorage::getObjectInstance($mixedImage['object']);
@@ -316,6 +316,11 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         }
 
         return $sResult;
+    }
+
+    protected function _getHeaderImage($aData)
+    {
+        return $this->getModule()->getEntryImageData($aData);
     }
 }
 

@@ -79,59 +79,6 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	));
     }
 
-    public function setCover($aData)
-    {
-		$CNF = &$this->getModule()->_oConfig->CNF;
-
-		if(empty($aData[$CNF['FIELD_COVER']]))
-			return;
-
-		$mixedOptions = BxDolPage::getObjectInstanceByURI()->getPageCoverParams();
-        if(empty($mixedOptions) || !is_array($mixedOptions))
-        	return;
-
-        //--- Get Cover image URL
-        $oTranscoderCover = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_COVER']);
-		if(empty($oTranscoderCover))
-			return;
-
-		$sCoverUrl = $oTranscoderCover->getFileUrl($aData[$CNF['FIELD_COVER']]);
-		if(empty($sCoverUrl))
-			return;
-
-		//--- Get Thumbnail image URL
-		$sThumbnailUrl = '';
-		$bThumbnailUrl = false;
-		if(!empty($aData[$CNF['FIELD_THUMB']])) {
-		    $oTranscoderThumbnail = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_THUMB']);
-    		if($oTranscoderThumbnail)
-    			$sThumbnailUrl = $oTranscoderThumbnail->getFileUrl($aData[$CNF['FIELD_THUMB']]);
-
-            $bThumbnailUrl = !empty($sThumbnailUrl);
-		}
-
-		$oCover = BxDolCover::getInstance($this);
-		$oCover->setCoverImageUrl($sCoverUrl);
-		$oCover->set(array_merge($mixedOptions, array(
-			'bx_if:image' => array (
-                'condition' => $bThumbnailUrl,
-                'content' => array(
-                	'icon_url' => $sThumbnailUrl
-		        ),
-            ),
-            'bx_if:icon' => array (
-                'condition' => !$bThumbnailUrl,
-                'content' => array(
-                    'icon' => $CNF['ICON']
-                ),
-            ),
-            'bx_if:bg' => array (
-                'condition' => true,
-                'content' => array('image_url' => $sCoverUrl),
-            ),
-		)));
-    }
-
     public function getScreenshots($aData)
     {
     	$oModule = $this->getModule();
@@ -451,6 +398,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	}
 
     	return array_intersect_key($aFiles, $aResults);
+    }
+
+    protected function _getHeaderImage($aData)
+    {
+        return $this->getModule()->getEntryImageData($aData, 'FIELD_COVER');
     }
 }
 
