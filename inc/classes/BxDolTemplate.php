@@ -785,13 +785,15 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      *
      * @param mixed $mixedKey language key or an array of keys.
      */
-    function addJsTranslation($mixedKey)
+    function addJsTranslation($mixedKey, $bDynamic = false)
     {
         if(is_string($mixedKey))
             $mixedKey = array($mixedKey);
 
         foreach($mixedKey as $sKey)
             $this->aPage['js_translations'][$sKey] = _t($sKey, '{0}', '{1}');
+
+        return $bDynamic ? $this->_processJsTranslations() : '';
     }
     /**
      * Add image in JS output.

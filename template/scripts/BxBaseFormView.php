@@ -1017,7 +1017,7 @@ BLAH;
             if (isset($aInput['images_transcoder']) && $aInput['images_transcoder'])
                 $aParams['images_transcoder'] = bx_js_string($aInput['images_transcoder']);
 
-            $sUploaders .= $oUploader->getUploaderButton($sGhostTemplate, isset($aInput['multiple']) ? $aInput['multiple'] : true, $aParams);
+            $sUploaders .= $oUploader->getUploaderButton($sGhostTemplate, isset($aInput['multiple']) ? $aInput['multiple'] : true, $aParams, $this->_bDynamicMode);
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_uploader.html', array(

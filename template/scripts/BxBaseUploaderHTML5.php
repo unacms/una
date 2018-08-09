@@ -29,13 +29,14 @@ class BxBaseUploaderHTML5 extends BxDolUploader
     /**
      * add necessary js, css files and js translations
      */ 
-    public function addCssJs ()
+    public function addCssJs ($bDynamic = false)
     {
-        parent::addCssJs ();
-        $this->_oTemplate->addJs('dropzone/dropzone.min.js');
-        $this->_oTemplate->addCss(array(
+        $s = parent::addCssJs ($bDynamic);
+        $s .= $this->_oTemplate->addJs('dropzone/dropzone.min.js', $bDynamic);
+        $s .= $this->_oTemplate->addCss(array(
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'dropzone/|dropzone.min.css',
-        ));
+        ), $bDynamic);
+        return $bDynamic ? $s : '';
     }
 
     /**
