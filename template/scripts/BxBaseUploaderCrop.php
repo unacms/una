@@ -37,12 +37,13 @@ class BxBaseUploaderCrop extends BxDolUploader
     /**
      * add necessary js, css files and js translations
      */ 
-    public function addCssJs ()
+    public function addCssJs ($bDynamic = false)
     {
-        parent::addCssJs ();
-        $this->_oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'croppie/|croppie.css');
-        $this->_oTemplate->addJs('croppie/croppie.min.js');
-        $this->_oTemplate->addJsTranslation(array('_sys_uploader_crop_err_upload', '_sys_uploader_crop_wrong_ext'));
+        $s = parent::addCssJs ($bDynamic);
+        $s .= $this->_oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'croppie/|croppie.css', $bDynamic);
+        $s .= $this->_oTemplate->addJs('croppie/croppie.min.js', $bDynamic);
+        $s .= $this->_oTemplate->addJsTranslation(array('_sys_uploader_crop_err_upload', '_sys_uploader_crop_wrong_ext'), $bDynamic);
+        return $bDynamic ? $s : '';
     }
     
     /**

@@ -239,10 +239,8 @@ abstract class BxDolUploader extends BxDolFactory
      * Show uploader button.
      * @return HTML string
      */
-    public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array())
+    public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false)
     {
-        $this->addCssJs ();
-
         $sJsValue = '';
         if (is_array($mixedGhostTemplate)) {
             $sJsValue = "{\n";
@@ -266,21 +264,23 @@ abstract class BxDolUploader extends BxDolFactory
             'storage_private' => isset($aParams['storage_private']) ? $aParams['storage_private'] : 1,
         );
         $aParams = array_merge($aParamsDefault, $aParams);
-        return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
+        return $this->addCssJs ($bDynamic) . $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
     }
 
     /**
      * add necessary js, css files and js translations
      */ 
-    public function addCssJs ()
+    public function addCssJs ($bDynamic = false)
     {
-        $this->_oTemplate->addCss('uploaders.css');
-        $this->_oTemplate->addJs('BxDolUploader.js');
-        $this->_oTemplate->addJsTranslation(array(
+        $s = '';
+        $s .= $this->_oTemplate->addCss('uploaders.css', $bDynamic);
+        $s .= $this->_oTemplate->addJs('BxDolUploader.js', $bDynamic);
+        $s .= $this->_oTemplate->addJsTranslation(array(
             '_sys_uploader_confirm_leaving_page',
             '_sys_uploader_confirm_close_popup',
             '_sys_uploader_upload_canceled',
-        ));
+        ), $bDynamic);
+        return $bDynamic ? $s : '';
     }
 
     /**
