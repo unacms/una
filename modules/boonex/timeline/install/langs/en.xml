@@ -148,8 +148,8 @@
     <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Unpromote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_edit"><![CDATA[Edit]]></string>
     <string name="_bx_timeline_menu_item_title_item_edit"><![CDATA[Edit]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Delete]]></string>
-    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Hide]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Hide from here]]></string>
 
 	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>

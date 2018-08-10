@@ -123,23 +123,23 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 			$mixedResult = $this->_oConfig->getSystemDataByDescriptor($sType, $sAction, $iObjectId);
 			if(is_array($mixedResult)) {
-				$iOwnerId = !empty($mixedResult['owner_id']) ? (int)$mixedResult['owner_id'] : 0;
-				$iDate = !empty($mixedResult['date']) ? (int)$mixedResult['date'] : 0;
-				if(!empty($iOwnerId) && !empty($iDate))
-					$iHidden = 0;
+                            $iOwnerId = !empty($mixedResult['owner_id']) ? (int)$mixedResult['owner_id'] : 0;
+                            $iDate = !empty($mixedResult['date']) ? (int)$mixedResult['date'] : 0;
+                            if($this->_oConfig->isUnhideRestored() && !empty($iOwnerId) && !empty($iDate))
+                                $iHidden = 0;
 			}
 
 			$iId = $this->insertEvent(array(
-				'owner_id' => $iOwnerId,
-				'type' => $sType,
-				'action' => $sAction,
-				'object_id' => $iObjectId,
-				'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
-				'content' => '',
-				'title' => '',
-				'description' => '',
-				'date' => $iDate,
-				'hidden' => $iHidden
+                            'owner_id' => $iOwnerId,
+                            'type' => $sType,
+                            'action' => $sAction,
+                            'object_id' => $iObjectId,
+                            'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
+                            'content' => '',
+                            'title' => '',
+                            'description' => '',
+                            'date' => $iDate,
+                            'hidden' => $iHidden
 			));
 
 			$aReposted = $this->getEvents(array('browse' => 'id', 'value' => $iId));

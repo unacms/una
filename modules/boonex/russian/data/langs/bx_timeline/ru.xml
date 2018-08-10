@@ -148,8 +148,8 @@
     <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Не рекламировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_edit"><![CDATA[Изменить]]></string>
     <string name="_bx_timeline_menu_item_title_item_edit"><![CDATA[Изменить]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Удалить]]></string>
-    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Скрыть]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Скрыть]]></string>
 
 	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Элемент - Действия]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Элемент - Действия]]></string>
