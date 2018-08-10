@@ -434,6 +434,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             	$this->_perform('enable_failed', $aParams);
         }
 
+        setParam('sys_revision', 1 + getParam('sys_revision'));
+
         bx_alert('system', 'enable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         return $aResult;
     }

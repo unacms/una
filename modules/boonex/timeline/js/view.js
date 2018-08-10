@@ -149,6 +149,12 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent) {
 		if($this._sVideosAutoplay == 'on_mute')
 			oPlayer.mute();
 
+        var fFixHeight = function () {
+            $('#' + sPlayer).height(($('#' + sPlayer).contents().find('video').height()) + 'px');
+        };
+        oPlayer.on('ready', fFixHeight);
+        oPlayer.on('play', fFixHeight);
+        
 		$this._oVapPlayers[sPlayer] = oPlayer;
 	});
 };
@@ -492,13 +498,13 @@ BxTimelineView.prototype.onEditPost = function(oData) {
 
     this.loadingInItem(oItem, false);
 
-	if(oData && oData.form != undefined && oData.form_id != undefined) {
-            oItem.find('.' + this.sClassItemContent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-                $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    $this.initFormEdit(oData.form_id);
-                });
+    if(oData && oData.form != undefined && oData.form_id != undefined) {
+        oItem.find('.' + this.sClassItemContent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+            $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                $this.initFormEdit(oData.form_id);
             });
-	}
+        });
+    }
 };
 
 BxTimelineView.prototype.editPostCancel = function(oButton, iId) {
