@@ -112,6 +112,27 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
 
     /**
+     * Entry actions and social sharing block
+     */
+    public function serviceMediaAllActions ($iContentId = 0)
+    {
+        return $this->_oTemplate->entryAllActions($this->serviceMediaActions($iContentId), $this->serviceMediaSocialSharing($iContentId));
+    }
+
+    /**
+     * Entry actions block
+     */
+    public function serviceMediaActions ($iContentId = 0)
+    {
+        $iContentId = $this->_getContent($iContentId, false);
+        if($iContentId === false)
+            return false;
+
+        $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']);
+        return $oMenu ? $oMenu->getCode() : false;
+    }
+
+    /**
      * Display media social sharing buttons block.
      * @param $iMediaId media ID, if it's omitted then it's taken from 'id' GET variable.
      * @return HTML string with block content. On error false or empty string is returned.

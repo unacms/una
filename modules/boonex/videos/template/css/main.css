@@ -1,12 +1,5 @@
 @import url(../../../../base/text/template/css/main.css);
 
-
-/*--- Cover Section ---*/
-.bx_videos_cover .bx-cover-title {
-    margin-top:9rem;
-}
-
-
 /*--- Video Block  ---*/
 .bx-videos-entity-video img,
 .bx-videos-entity-video video {

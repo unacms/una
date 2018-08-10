@@ -45,18 +45,11 @@ class BxAlbumsPageMedia extends BxTemplPage
             $sTitle = isset($this->_aAlbumInfo[$CNF['FIELD_TITLE']]) ? $this->_aAlbumInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aAlbumInfo[$CNF['FIELD_TEXT']], 20, '...');
             $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aAlbumInfo[$CNF['FIELD_ID']]);
 
-
-            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-
-            // add actions menu to submenu
-            if (isset($CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']))
-                $oMenuSubmenu->setObjectActionsMenu($CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']);
-        
             // select view entry submenu
-            $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
-                'title' => $sTitle,
-                'link' => $sUrl,
-                'icon' => $CNF['ICON'],
+            BxDolMenu::getObjectInstance('sys_site_submenu')->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
+                'title' => '',
+                'link' => '',
+                'icon' => '',
             ));
         }
     }
@@ -81,18 +74,11 @@ class BxAlbumsPageMedia extends BxTemplPage
         if (!empty($CNF['OBJECT_VIEWS_MEDIA']))
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $this->_aMediaInfo['id'])->doView();
 
-        // set cover image
-        if ($aThumb = $this->_getThumbForMetaObject()) {
-            $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);
-            $oCover->setCoverImageUrl($aThumb);
-        }
-
         // add content metatags
-        if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
-            $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
-            if ($o) {
-                $o->addPageMetaInfo($this->_aMediaInfo['id'], $aThumb);
-            }
+        if(!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
+            if($oMetatags)
+                $oMetatags->addPageMetaInfo($this->_aMediaInfo['id'], $this->_getThumbForMetaObject());
         }
 
         $aVars = array();

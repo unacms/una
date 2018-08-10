@@ -62,6 +62,18 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         return true;
     }
 
+    public function getCode ()
+    {
+        $mixedResult = parent::getCode();
+
+        /*
+         * Hide actions menu from View Page cover because 
+         * cover area should be decorative in Text Based modules.
+         */
+        BxDolMenu::getObjectInstance('sys_site_submenu')->setObjectActionsMenu(false);
+
+        return $mixedResult;
+    }
     protected function _setSubmenu($aParams)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
