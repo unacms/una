@@ -258,9 +258,9 @@ BxTimelineMain.prototype._getPost = function(oElement, iId, sView, aParams) {
         this._sActionsUrl + 'get_post/',
         oData,
         function(oData) {
-        	$this.loadingInBlock(oElementView, false);
+            $this.loadingInBlock(oElementView, false);
 
-        	processJsonData(oData);
+            processJsonData(oData);
         },
         'json'
     );

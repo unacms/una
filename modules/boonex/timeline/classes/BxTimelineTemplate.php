@@ -109,7 +109,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'content' => $sContent,
             'load_more' =>  $sLoadMore,
             'show_more' => $this->_getShowMore($aParams),
-        	'view_image_popup' => $this->_getImagePopup($aParams),
+            'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             	'oRequestParams' => array(
@@ -205,11 +205,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return array('content' => $this->parseHtmlByName('block_item.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
-        	'content' => $sContent,
-        	'view_image_popup' => $this->_getImagePopup($aParams),
+            'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
+            'content' => $sContent,
+            'show_more' => $this->_getShowMore($aParams),
+            'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
-				'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
+                'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
                 'sReferrer' => $sReferrer
             )) . $this->getJsCode('repost')
         )));
