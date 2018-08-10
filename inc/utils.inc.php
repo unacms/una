@@ -1321,7 +1321,7 @@ function bx_replace_markers($mixed, $aMarkers)
 
 function bx_site_hash($sSalt = '', $isSkipVersion = false)
 {
-    return md5($sSalt . ($isSkipVersion ? '' : bx_get_ver()) . BX_DOL_SECRET . BX_DOL_URL_ROOT);
+    return md5($sSalt . ($isSkipVersion ? '' : bx_get_ver() . getParam('sys_revision')) . BX_DOL_SECRET . BX_DOL_URL_ROOT);
 }
 
 /**
