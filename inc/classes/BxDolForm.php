@@ -1689,11 +1689,13 @@ class BxDolFormCheckerHelper
         $i = (int)$i;
 
         $bit = 1;
+        $bitpos = 1;
         $a = array();
         while ($bit < BX_DOL_INT_MAX && $bit > 0) {
             if ($bit & $i)
-                $a[] = (int)log($bit, 2) + 1;
+                $a[] = $bitpos;
             $bit <<= 1;
+            $bitpos++;
         }
         return $a;
     }
