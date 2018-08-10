@@ -23,6 +23,19 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+        $mixedResult = parent::entryText($aData, $sTemplateName);
+        if($mixedResult === false)
+            return $this->entryPhoto($aData);
+
+        $aPhoto = $this->entryPhoto($aData, true);
+        if(empty($aPhoto))
+            return $mixedResult;
+
+        return $this->parseHtmlByContent($mixedResult, $aPhoto);
+    }
+
     public function entryPhoto ($aContentInfo, $bAsArray = false)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -46,9 +59,10 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
             return $bAsArray ? array() : '';
 
         $aTmplVars = array(
-            'title' => bx_process_output($aContentInfo['title']),
-            'title_attr' => bx_html_attribute($aContentInfo['title']),
-            'src' => $sImage
+            'entry_photo' => $sImage,
+            'entry_title' => bx_process_output($aContentInfo['title']),
+            'entry_title_attr' => bx_html_attribute($aContentInfo['title']),
+            'entry_text' => ''
         );
 
         return $bAsArray ? $aTmplVars : $this->parseHtmlByName('entry-photo.html', $aTmplVars);
