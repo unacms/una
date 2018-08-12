@@ -18,7 +18,7 @@ class BxCnlDb extends BxBaseModGroupsDb
     {
         parent::__construct($oConfig);
     }
-     
+    
     public function getChannelIdByName($sName)
     {
         $CNF = &$this->_oConfig->CNF;

@@ -14,7 +14,6 @@ class BxCnlMenuSnippetMeta extends BxBaseModGroupsMenuSnippetMeta
     public function __construct($aObject, $oTemplate = false)
     {
         $this->_sModule = 'bx_channels';
-
         parent::__construct($aObject, $oTemplate);
 
         unset($this->_aConnectionToFunctionCheck['sys_profiles_friends']);
