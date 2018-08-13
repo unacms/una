@@ -134,14 +134,14 @@
     
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
-	<string name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Pin]]></string>
-    <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Pin]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Unpin]]></string>
-    <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Unpin]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_stick"><![CDATA[Stick]]></string>
-    <string name="_bx_timeline_menu_item_title_item_stick"><![CDATA[Stick]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_unstick"><![CDATA[Unstick]]></string>
-    <string name="_bx_timeline_menu_item_title_item_unstick"><![CDATA[Unstick]]></string>
+	<string name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Pin here]]></string>
+    <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Pin here]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Unpin here]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Unpin here]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_stick"><![CDATA[Pin for all]]></string>
+    <string name="_bx_timeline_menu_item_title_item_stick"><![CDATA[Pin for all]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_unstick"><![CDATA[Unpin for all]]></string>
+    <string name="_bx_timeline_menu_item_title_item_unstick"><![CDATA[Unpin for all]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_promote"><![CDATA[Promote]]></string>
     <string name="_bx_timeline_menu_item_title_item_promote"><![CDATA[Promote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpromote"><![CDATA[Unpromote]]></string>
@@ -210,6 +210,7 @@
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
 	<string name="_bx_timeline_txt_hot"><![CDATA[Hot post]]></string>
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string>
+        <string name="_bx_timeline_txt_sticked"><![CDATA[Pinned for all post]]></string>
 	<string name="_bx_timeline_txt_promoted"><![CDATA[Promoted]]></string>
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[added {0}]]></string>

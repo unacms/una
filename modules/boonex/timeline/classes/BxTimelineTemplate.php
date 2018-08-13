@@ -970,24 +970,29 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
         $bPinned = (int)$aEvent['pinned'] > 0;
+        $bSticked = (int)$aEvent['sticked'] > 0;
         $bPromoted = (int)$aEvent['promoted'] > 0;
 
         $sClass = $sStylePrefix . '-view-sizer';
         if($bViewOutline) {
             $sClass = $sStylePrefix . '-grid-item-sizer';
-            if($bPinned || $bPromoted) {
+            if($bPinned || $bSticked || $bPromoted) {
                 $sClass .= ' ' . $sStylePrefix . '-gis';
 
-                if($bPinned)
-            	    $sClass .= '-pnd';
-                if($bPromoted)
-                	$sClass .= '-pmd';
+            if($bPinned)
+                $sClass .= '-pnd';
+            if($bSticked)
+                $sClass .= '-psd';
+            if($bPromoted)
+                $sClass .= '-pmd';
             }
         }
         if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
 			$sClass .= ' ' . $sStylePrefix . '-blink';
         if($bPinned)
             $sClass .= ' ' . $sStylePrefix . '-pinned';
+        if($bSticked)
+            $sClass .= ' ' . $sStylePrefix . '-sticked';
         if($bPromoted)
             $sClass .= ' ' . $sStylePrefix . '-promoted';
 
@@ -1036,6 +1041,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_date' => bx_time_js($aEvent['date']),
             'bx_if:show_pinned' => array(
             	'condition' => $bPinned,
+            	'content' => array(
+            		'style_prefix' => $sStylePrefix,
+            	)
+            ),
+            'bx_if:show_sticked' => array(
+            	'condition' => $bSticked,
             	'content' => array(
             		'style_prefix' => $sStylePrefix,
             	)
@@ -1122,7 +1133,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
         $oMenu->setEvent($aEvent);
-        $oMenu->setView($aBrowseParams['view']);
+        $oMenu->setBrowseParams($aBrowseParams['type'], $aBrowseParams['view']);
         $oMenu->setDynamicMode(isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true);
 
         $sMenu = $oMenu->getCode();

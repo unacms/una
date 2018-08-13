@@ -23,8 +23,9 @@ class BxTimelineMenuItemManage extends BxTimelineMenuItemActions
         if(bx_get('content_id') !== false)
             $this->setEventById((int)bx_get('content_id'));
 
-        if(bx_get('view') !== false)
-            $this->setView(bx_process_input(bx_get('view')));
+        $sType = bx_get('type') !== false ? bx_process_input(bx_get('type')) : '';
+        $sView = bx_get('view') !== false ? bx_process_input(bx_get('view')) : '';
+        $this->setBrowseParams($sType, $sView);
 
         $this->setDynamicMode(true);
 

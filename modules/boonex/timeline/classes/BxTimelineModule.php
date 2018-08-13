@@ -2239,7 +2239,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
-	public function isAllowedPin($aEvent, $bPerform = false)
+    /**
+     * Pin - "Pin here" - pin the post on Profile Timeline for profile owner.
+     * Can be done by profile owner for himself or by admin for profile owner to see.
+     * @param type $aEvent
+     * @param type $bPerform
+     * @return boolean
+     */
+    public function isAllowedPin($aEvent, $bPerform = false)
     {
     	if((int)$aEvent['pinned'] != 0)
     		return false;
@@ -2247,7 +2254,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_isAllowedPin($aEvent, $bPerform);
     }
 
-	public function isAllowedUnpin($aEvent, $bPerform = false)
+    public function isAllowedUnpin($aEvent, $bPerform = false)
     {
     	if((int)$aEvent['pinned'] == 0)
     		return false;
@@ -2255,6 +2262,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_isAllowedPin($aEvent, $bPerform);
     }
 
+    /**
+     * Stick - "Pin for All" - pin the post on Public Timeline for everybody to see.
+     * Is available for Administrators/Moderators only.
+     * @param type $aEvent
+     * @param type $bPerform
+     * @return boolean
+     */
     public function isAllowedStick($aEvent, $bPerform = false)
     {
     	if((int)$aEvent['sticked'] != 0)

@@ -19,6 +19,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected $_iEvent;
     protected $_aEvent;
 
+    protected $_sType;
     protected $_sView;
     protected $_bShowTitles;
 
@@ -35,11 +36,13 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         ));
     }
 
-    public function setView($sView)
+    public function setBrowseParams($sType, $sView)
     {
-        $this->_sView = $sView;
+        $this->_sType = !empty($sType) ? $sType : BX_TIMELINE_TYPE_DEFAULT;
+        $this->_sView = !empty($sView) ? $sView : BX_TIMELINE_VIEW_DEFAULT;
 
         $this->addMarkers(array(
+            'type' => $this->_sType,
             'view' => $this->_sView
         ));
     }
@@ -185,7 +188,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 $sCheckFuncName = 'isAllowedScore';
                 break;
 
-			case 'item-report':
+            case 'item-report':
                 $sCheckFuncName = 'isAllowedReport';
                 break;
 
@@ -194,20 +197,26 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             	break;
 
             case 'item-pin':
+                if($this->_sType != BX_BASE_MOD_NTFS_TYPE_OWNER)
+                    return false;
+
                 $sCheckFuncName = 'isAllowedPin';
                 break;
 
-			case 'item-unpin':
+            case 'item-unpin':
+                if($this->_sType != BX_BASE_MOD_NTFS_TYPE_OWNER)
+                    return false;
+
                 $sCheckFuncName = 'isAllowedUnpin';
                 break;
 
-			case 'item-stick':
-				$sCheckFuncName = 'isAllowedStick';
-				break;
+            case 'item-stick':
+                $sCheckFuncName = 'isAllowedStick';
+                break;
 
-			case 'item-unstick':
-				$sCheckFuncName = 'isAllowedUnstick';
-				break;
+            case 'item-unstick':
+                $sCheckFuncName = 'isAllowedUnstick';
+                break;
 
             case 'item-promote':
                 $sCheckFuncName = 'isAllowedPromote';
