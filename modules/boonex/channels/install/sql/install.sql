@@ -217,14 +217,12 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_channel', 'bx_channels', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_channels_form_profile_input_sys_delete_confirm', '_bx_channels_form_profile_input_delete_confirm', '_bx_channels_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_channels_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'channel_name', '', '', 0, 'text', '_bx_channels_form_profile_input_sys_channel_name', '_bx_channels_form_profile_input_channel_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_channel_name_err', 'Xss', '', 1, 0),
-('bx_channel', 'bx_channels', 'initial_members', '', '', 0, 'custom', '_bx_channels_form_profile_input_sys_initial_members', '_bx_channels_form_profile_input_initial_members', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
 ('bx_channel', 'bx_channels', 'cover', 'a:1:{i:0;s:22:"bx_channels_cover_crop";}', 'a:1:{s:22:"bx_channels_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_cover', '_bx_channels_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'picture', 'a:1:{i:0;s:24:"bx_channels_picture_crop";}', 'a:1:{s:24:"bx_channels_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_picture', '_bx_channels_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_channels_form_profile_input_picture_err', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_channel_add', 'delete_confirm', 2147483647, 0, 3),
 ('bx_channel_add', 'cover', 2147483647, 0, 4),
-('bx_channel_add', 'initial_members', 2147483647, 1, 5),
 ('bx_channel_add', 'picture', 2147483647, 1, 6),
 ('bx_channel_add', 'channel_name', 2147483647, 1, 7),
 ('bx_channel_add', 'do_submit', 2147483647, 1, 9),
