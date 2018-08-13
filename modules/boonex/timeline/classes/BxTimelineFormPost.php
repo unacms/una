@@ -56,7 +56,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'inputs' => array(),
             );
 
-            $oFormNested = new BxDolFormNested('photo', $aFormNested, 'do_submit', $this->_oModule->_oTemplate);
+            $oFormNested = new BxDolFormNested('photo', $aFormNested, 'tlb_do_submit', $this->_oModule->_oTemplate);
 
             $this->aInputs['photo']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_photos');
             $this->aInputs['photo']['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_photos_preview');
@@ -74,7 +74,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'inputs' => array(),
             );
 
-            $oFormNested = new BxDolFormNested('video', $aFormNested, 'do_submit', $this->_oModule->_oTemplate);
+            $oFormNested = new BxDolFormNested('video', $aFormNested, 'tlb_do_submit', $this->_oModule->_oTemplate);
 
             $this->aInputs['video']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_videos');
             $this->aInputs['video']['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_poster');
