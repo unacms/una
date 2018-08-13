@@ -440,23 +440,29 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $sWhereClause = "";
 
                 if(isset($aParams['type']))
-                	$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`type`=? ", $aParams['type']);
-				if(isset($aParams['action']))
-					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`action`=? ", $aParams['action']);
-				if(isset($aParams['object_id']))
-					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
+                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`type`=? ", $aParams['type']);
+                        if(isset($aParams['action']))
+                                $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`action`=? ", $aParams['action']);
+                        if(isset($aParams['object_id']))
+                                $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
 
-				$sLimitClause = "LIMIT 1";
+                        $sLimitClause = "LIMIT 1";
                 break;
 
             case 'reposted_by_descriptor':
             	$sWhereClause = "";
 
             	if(isset($aParams['type']))
-                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE " . $this->escape('%' . $aParams['type'] . '%');
+                    $sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE " . $this->escape('%' . $aParams['type'] . '%');
 
                 if(isset($aParams['action']))
-                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE " . $this->escape('%' . $aParams['action'] . '%');
+                    $sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE " . $this->escape('%' . $aParams['action'] . '%');
+                break;
+
+            case 'list':
+                list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
+                if(in_array($aParams['type'], array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
+                    $sSelectClause  = "DISTINCT " . $sSelectClause;
                 break;
 
             default:
