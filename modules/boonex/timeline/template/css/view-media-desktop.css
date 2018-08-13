@@ -1,83 +1,82 @@
-@media (min-width: 1024px) {
-	/*--- View Block Style ---*/
-	.bx-tl-grid-sizer {
-		width: 33.3%;
-	}
-    .bx-layout-column-wide .bx-tl-grid-sizer,
-    .bx-layout-column-half .bx-tl-grid-sizer {
-       width: 50%;
-    }
-    .bx-layout-column-thin .bx-tl-grid-sizer {
-       width: 100%;
-    }
 
-    .bx-tl-grid-item-sizer {
-       width: 33.3%;
-    }
-    .bx-layout-column-wide .bx-tl-grid-item-sizer,
-    .bx-layout-column-half .bx-tl-grid-item-sizer {
-        width: 50%;
-    }
-    .bx-layout-column-thin .bx-tl-item-grid-sizer {
-        width: 100%;
-    }
+/*--- View Block Style ---*/
+.bx-media-desktop .bx-tl-grid-sizer {
+    width: 33.3%;
+}
+.bx-media-desktop .bx-layout-column-wide .bx-tl-grid-sizer,
+.bx-media-desktop .bx-layout-column-half .bx-tl-grid-sizer {
+   width: 50%;
+}
+.bx-media-desktop .bx-layout-column-thin .bx-tl-grid-sizer {
+   width: 100%;
+}
 
-	/*--- Timeline Item Style ---*/
-	div.bx-tl-view-timeline div.bx-tl-item-cnt {
-	    position: relative;
-	
-	    margin: 0px 0px 0px 56px;
-	    margin: 0px 0px 0px 3.5rem;
-	}
-	.bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-items::before {
-        left: 50%;
-        margin-left: -2px;
-        margin-left: -0.125rem;
-	} 
-	.bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-type {
-        left: 50%;
-        margin-left: -20px;
-        margin-left: -1.25rem;
-	} 
-	.bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-cnt {
-        width: 45%;
-	}
-    .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item:nth-child(2n + 1) div.bx-tl-item-cnt {
-        margin: 0px 56px 0px 0p;
-        margin: 0px 3.5rem 0px 0px;
-    }
-	.bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item:nth-child(2n) div.bx-tl-item-cnt {
-		float: right;
+.bx-media-desktop .bx-tl-grid-item-sizer {
+   width: 33.3%;
+}
+.bx-media-desktop .bx-layout-column-wide .bx-tl-grid-item-sizer,
+.bx-media-desktop .bx-layout-column-half .bx-tl-grid-item-sizer {
+    width: 50%;
+}
+.bx-media-desktop .bx-layout-column-thin .bx-tl-item-grid-sizer {
+    width: 100%;
+}
 
-        margin: 0px 0px 0px 56px;
-        margin: 0px 0px 0px 3.5rem;
-	}
+/*--- Timeline Item Style ---*/
+.bx-media-desktop div.bx-tl-view-timeline div.bx-tl-item-cnt {
+    position: relative;
 
-	/*--- Animation ---*/
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-type.is-hidden {
-	    visibility: hidden;
-	}
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-type.bounce-in {
-		visibility: visible;
-		-webkit-animation: cd-bounce-1 0.6s;
-		-moz-animation: cd-bounce-1 0.6s;
-		animation: cd-bounce-1 0.6s;
-	}
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.is-hidden {
-	    visibility: hidden;
-	}
-	.cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.bounce-in {
-		visibility: visible;
-		-webkit-animation: cd-bounce-2 0.6s;
-		-moz-animation: cd-bounce-2 0.6s;
-		animation: cd-bounce-2 0.6s;
-	}
-	/* inverse bounce effect on even content blocks */
-	.cssanimations .bx-layout-column-fullwidth div.bx-tl-view-timeline .bx-tl-item:nth-child(even) .bx-tl-item-cnt.bounce-in {
-		-webkit-animation: cd-bounce-2-inverse 0.6s;
-		-moz-animation: cd-bounce-2-inverse 0.6s;
-		animation: cd-bounce-2-inverse 0.6s;
-	}
+    margin: 0px 0px 0px 56px;
+    margin: 0px 0px 0px 3.5rem;
+}
+.bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-items::before {
+    left: 50%;
+    margin-left: -2px;
+    margin-left: -0.125rem;
+} 
+.bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-type {
+    left: 50%;
+    margin-left: -20px;
+    margin-left: -1.25rem;
+} 
+.bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-cnt {
+    width: 45%;
+}
+.bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item:nth-child(2n + 1) div.bx-tl-item-cnt {
+    margin: 0px 56px 0px 0p;
+    margin: 0px 3.5rem 0px 0px;
+}
+.bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item:nth-child(2n) div.bx-tl-item-cnt {
+    float: right;
+
+    margin: 0px 0px 0px 56px;
+    margin: 0px 0px 0px 3.5rem;
+}
+
+/*--- Animation ---*/
+.bx-media-desktop.cssanimations div.bx-tl-view-timeline .bx-tl-item-type.is-hidden {
+    visibility: hidden;
+}
+.bx-media-desktop.cssanimations div.bx-tl-view-timeline .bx-tl-item-type.bounce-in {
+    visibility: visible;
+    -webkit-animation: cd-bounce-1 0.6s;
+    -moz-animation: cd-bounce-1 0.6s;
+    animation: cd-bounce-1 0.6s;
+}
+.bx-media-desktop.cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.is-hidden {
+    visibility: hidden;
+}
+.bx-media-desktop.cssanimations div.bx-tl-view-timeline .bx-tl-item-cnt.bounce-in {
+    visibility: visible;
+    -webkit-animation: cd-bounce-2 0.6s;
+    -moz-animation: cd-bounce-2 0.6s;
+    animation: cd-bounce-2 0.6s;
+}
+/* inverse bounce effect on even content blocks */
+.bx-media-desktop.cssanimations .bx-layout-column-fullwidth div.bx-tl-view-timeline .bx-tl-item:nth-child(even) .bx-tl-item-cnt.bounce-in {
+    -webkit-animation: cd-bounce-2-inverse 0.6s;
+    -moz-animation: cd-bounce-2-inverse 0.6s;
+    animation: cd-bounce-2-inverse 0.6s;
 }
 
 /*--- Animation ---*/

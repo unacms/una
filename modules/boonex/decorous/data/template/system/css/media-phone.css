@@ -1,7 +1,6 @@
 @import url(../../../../../../../template/css/media-phone.css);
 
-@media (max-width:720px) {
-	#bx-logo-container {
-        text-align: center;
-    }
+.bx-media-phone #bx-logo-container {
+    text-align: center;
 }
+

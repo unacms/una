@@ -1,5 +1,5 @@
-@media (min-width:1024px) {
-	.bx-grid-header-participants span {
-	    display:inline;
-	}
-} /* @media end */
+
+.bx-media-desktop .bx-grid-header-participants span {
+	display:inline;
+}
+
