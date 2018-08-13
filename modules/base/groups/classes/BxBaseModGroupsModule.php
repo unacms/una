@@ -232,17 +232,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return false;
         }
 
-        // don't automatically add back connection (mutual) if group requires manual join confirmation
-        if (!$iIgnoreJoinConfirmation && $aContentInfo['join_confirmation'])
-            return false;
-
-        // check if connection already exists
-        if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true) || $oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId))
-            return false;
-
-        if (!$oConnection->addConnection($oGroupProfile->id(), (int)$iInitiatorId))
-            return false;
-
         return true;
     }
 
