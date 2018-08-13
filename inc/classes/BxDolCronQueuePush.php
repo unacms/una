@@ -11,7 +11,7 @@ class BxDolCronQueuePush extends BxDolCron
 {
     public function processing()
     {
-    	BxDolQueuePush::getInstance()->send((int)getParam('sys_push_queue_send_per_start'));
+    	BxDolQueuePush::getInstance()->send();
     }
 }
 

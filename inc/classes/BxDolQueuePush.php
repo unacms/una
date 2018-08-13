@@ -14,6 +14,9 @@ class BxDolQueuePush extends BxDolQueue implements iBxDolSingleton
         parent::__construct();
 
         $this->_oQuery = new BxDolQueuePushQuery();
+
+        $this->_iLimitSend = (int)getParam('sys_push_queue_send_per_start');
+        $this->_iLimitSendPerRecipient = (int)getParam('sys_push_queue_send_per_start_to_recipient');
     }
 
     /**
@@ -47,7 +50,17 @@ class BxDolQueuePush extends BxDolQueue implements iBxDolSingleton
      */
     protected function _send($iProfileId, $sMessage)
     {
-        return BxDolPush::getInstance()->send($iProfileId, unserialize($sMessage));
+        if(isset($this->_aSentTo[$iProfileId]) && (int)$this->_aSentTo[$iProfileId] >= $this->_iLimitSendPerRecipient)
+            return false;
+
+        if(!BxDolPush::getInstance()->send($iProfileId, unserialize($sMessage)))
+            return false;
+
+        if(!isset($this->_aSentTo[$iProfileId]))
+            $this->_aSentTo[$iProfileId] = 0;
+        $this->_aSentTo[$iProfileId] += 1;
+
+        return true;
     }
 }
 

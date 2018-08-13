@@ -11,6 +11,11 @@ class BxDolQueue extends BxDolFactory
 {
     protected $_oQuery;
 
+    protected $_iLimitSend;
+    protected $_iLimitSendPerRecipient;
+
+    protected $_aSentTo;
+
     protected function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
@@ -28,19 +33,22 @@ class BxDolQueue extends BxDolFactory
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-	/**
-	 * Send some number of email form mail queue
-	 *
-	 * @param int $iLimit - number of emails to send
-	 * @return real number of sent emails
-	 */
-    public function send($iLimit = 1)
+    /**
+     * Send some number of items (email/push) from queue
+     *
+     * @param int $iLimit - number of queue items to send
+     * @return real number of sent queue items
+     */
+    public function send($iLimit = 0)
     {
         $aSent = array();
 
-    	$aMails = $this->_oQuery->getItems(array('type' => 'to_send', 'start' => 0, 'per_page' => $iLimit));
-    	foreach($aMails as $iId => $aMail)
-    	    if(call_user_func_array(array($this, '_send'), array_slice($aMail, 1)))
+        if(empty($iLimit))
+            $iLimit = $this->_iLimitSend;
+
+    	$aItems = $this->_oQuery->getItems(array('type' => 'to_send', 'start' => 0, 'per_page' => $iLimit));
+    	foreach($aItems as $iId => $aItem)
+    	    if(call_user_func_array(array($this, '_send'), array_slice($aItem, 1)))
     	        $aSent[] = $iId;
 
         if(!empty($aSent) && is_array($aSent))

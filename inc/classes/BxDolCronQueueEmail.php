@@ -11,7 +11,7 @@ class BxDolCronQueueEmail extends BxDolCron
 {
     public function processing()
     {
-    	BxDolQueueEmail::getInstance()->send((int)getParam('sys_eq_send_per_start'));
+    	BxDolQueueEmail::getInstance()->send();
     }
 }
 
