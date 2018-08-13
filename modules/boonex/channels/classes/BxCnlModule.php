@@ -174,6 +174,30 @@ class BxCnlModule extends BxBaseModGroupsModule
          
          return '';
     }
+    
+    public function serviceBrowseMyChannels()
+    {   
+        $iMyProfileId = bx_get_logged_profile_id();
+        if ($iMyProfileId){
+            $CNF = &$this->_oConfig->CNF;
+            $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+            $aProfile = $oConnection->getConnectedContent($iMyProfileId);
+            $aVars = array();
+            foreach ($aProfile as $iProfileId) {
+                $oProfile = BxDolProfile::getInstance($iProfileId);
+                $iContentId = $oProfile->getContentId();
+                $aContentInfo = $this->_oDb->getContentInfoById($oProfile->getContentId());
+                if (isset($aContentInfo[$CNF['FIELD_NAME']]))
+                    array_push($aVars, array ('title' => $aContentInfo[$CNF['FIELD_NAME']] , 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
+            }
+            
+            return $this->_oTemplate->parseHtmlByName('followers_list.html', 
+                array('bx_if:show_list' => array (
+                'condition' => count($aVars) > 0,
+                'content' => array ('bx_repeat:items' => $aVars))
+            ));
+        }
+    }
 }
 
 /** @} */
