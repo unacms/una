@@ -620,15 +620,15 @@ CREATE TABLE `sys_acl_actions` (
 );
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'connect', NULL, '_sys_acl_action_connect', '', 0, 3);
+('system', 'connect', NULL, '_sys_acl_action_connect', '', 1, 3);
 SET @iIdActionConnect = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'vote', NULL, '_sys_acl_action_vote', '', 0, 0);
+('system', 'vote', NULL, '_sys_acl_action_vote', '', 1, 0);
 SET @iIdActionVote = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'report', NULL, '_sys_acl_action_report', '', 0, 0);
+('system', 'report', NULL, '_sys_acl_action_report', '', 1, 0);
 SET @iIdActionReport = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -636,7 +636,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionReportView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'favorite', NULL, '_sys_acl_action_favorite', '', 0, 0);
+('system', 'favorite', NULL, '_sys_acl_action_favorite', '', 1, 0);
 SET @iIdActionFavorite = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -656,7 +656,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionViewViewViewers = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 3);
+('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 1, 3);
 SET @iIdActionCmtPost = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -664,15 +664,15 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionCmtEditOwn = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 3);
+('system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 1, 3);
 SET @iIdActionCmtRemoveOwn = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 3);
+('system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 1, 3);
 SET @iIdActionCmtEditAll = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 3);
+('system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 1, 3);
 SET @iIdActionCmtRemoveAll = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES

@@ -576,7 +576,7 @@ class BxBaseCmts extends BxDolCmts
 
             if($oForm->update($iCmtId) !== false) {
 
-                $this->isEditAllowed(true);
+                $this->isEditAllowed($aCmt, true);
 
                 if ($this->_sMetatagsObj) {
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);

@@ -957,7 +957,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
             $this->_oQuery->deleteImages($this->_aSystem['system_id'], $iCmtId);
 
-            $this->isRemoveAllowed(true);
+            $this->isRemoveAllowed($aCmt, true);
 
             $this->deleteMetaInfo ($iCmtId);
 
