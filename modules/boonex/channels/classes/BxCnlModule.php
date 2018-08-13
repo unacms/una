@@ -185,16 +185,18 @@ class BxCnlModule extends BxBaseModGroupsModule
             $aVars = array();
             foreach ($aProfile as $iProfileId) {
                 $oProfile = BxDolProfile::getInstance($iProfileId);
-                $iContentId = $oProfile->getContentId();
-                $aContentInfo = $this->_oDb->getContentInfoById($oProfile->getContentId());
-                if (isset($aContentInfo[$CNF['FIELD_NAME']]))
-                    array_push($aVars, array ('title' => $aContentInfo[$CNF['FIELD_NAME']] , 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
+                if ($oProfile){
+                    $iContentId = $oProfile->getContentId();
+                    $aContentInfo = $this->_oDb->getContentInfoById($oProfile->getContentId());
+                    if (isset($aContentInfo[$CNF['FIELD_NAME']]))
+                        array_push($aVars, array('title' => $aContentInfo[$CNF['FIELD_NAME']], 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
+                }
             }
             
             return $this->_oTemplate->parseHtmlByName('followers_list.html', 
-                array('bx_if:show_list' => array (
+                array('bx_if:show_list' => array(
                 'condition' => count($aVars) > 0,
-                'content' => array ('bx_repeat:items' => $aVars))
+                'content' => array('bx_repeat:items' => $aVars))
             ));
         }
     }

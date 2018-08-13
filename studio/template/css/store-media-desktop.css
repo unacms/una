@@ -1,5 +1,4 @@
-@media (min-width: 1024px) {
-	div.bx-std-product {
-		width: 33.3%;
-	}
+
+.bx-media-desktop div.bx-std-product {
+	width: 33.3%;
 }
