@@ -200,6 +200,11 @@ class BxCnlModule extends BxBaseModGroupsModule
             ));
         }
     }
+    
+    public function serviceDeleteProfileFromFansAndAdmins ($iProfileId)
+    {
+        return true;
+    }
 }
 
 /** @} */
