@@ -404,7 +404,11 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             $iId = (int)$oQuery->getIdByEmail($s);
             return $iId ? $iId : false;
         }
-
+        if (preg_match("/^\+[0-9\s]+$/", $s)) {
+            $iId = (int)$oQuery->getIdByPhone($s);
+            return $iId ? $iId : false;
+        }
+        
         $iId = $oQuery->getIdById((int)$s);
         return $iId ? $iId : false;
     }
