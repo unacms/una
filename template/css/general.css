@@ -325,14 +325,3 @@
 	right: 1.25rem;
 	bottom: 1.25rem;
 }
-
-
-/*--- Phone ---*/
-@media (max-width:720px) {
-    /*--- Post Form ---*/
-    .sys-cpf-submenu .sys-cpf-submenu-item > div {
-        display: block;
-        text-align: center;
-    }
-}
-
