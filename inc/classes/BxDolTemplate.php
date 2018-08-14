@@ -22,6 +22,8 @@ define('BX_DOL_TEMPLATE_CHECK_IN_TMPL', 'tmpl');
 define('BX_DOL_COLOR_BG', 'bg');
 define('BX_DOL_COLOR_FT', 'ft');
 
+define('BX_DOL_PAGE_WIDTH', '1024px');
+
 /**
  * Page display levels.
  * Note. Both levels may refer to the same HTML templates. 
@@ -1316,6 +1318,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             case 'page_header_text':
                 if(isset($this->aPage['header_text']))
                     $sRet = bx_process_output($this->aPage['header_text']);
+                break;
+            case 'page_width':
+                if (false === strpos($this->_oTemplateConfig->aLessConfig['bx-page-width'], 'px'))
+                    $sRet = BX_DOL_PAGE_WIDTH;
+                else
+                    $sRet = $this->_oTemplateConfig->aLessConfig['bx-page-width'];
                 break;
             case 'system_injection_head':
                 $sRet = $this->_oTemplateFunctions->getInjectionHead();
