@@ -8,54 +8,30 @@ namespace Stripe;
  * @property string $id
  * @property string $object
  * @property int $created
+ * @property string $filename
  * @property string $purpose
  * @property int $size
  * @property string $type
+ * @property string $url
  *
  * @package Stripe
  */
 class FileUpload extends ApiResource
 {
+
+    const OBJECT_NAME = "file_upload";
+
+    use ApiOperations\All;
+    use ApiOperations\Create;
+    use ApiOperations\Retrieve;
+
     public static function baseUrl()
     {
         return Stripe::$apiUploadBase;
     }
 
-    public static function className()
+    public static function classUrl()
     {
-        return 'file';
-    }
-
-    /**
-     * @param string $id The ID of the file upload to retrieve.
-     * @param array|string|null $opts
-     *
-     * @return FileUpload
-     */
-    public static function retrieve($id, $opts = null)
-    {
-        return self::_retrieve($id, $opts);
-    }
-
-    /**
-     * @param array|null $params
-     * @param array|string|null $opts
-     *
-     * @return FileUpload The created file upload.
-     */
-    public static function create($params = null, $opts = null)
-    {
-        return self::_create($params, $opts);
-    }
-
-    /**
-     * @param array|null $params
-     * @param array|string|null $opts
-     *
-     * @return Collection of FileUploads
-     */
-    public static function all($params = null, $opts = null)
-    {
-        return self::_all($params, $opts);
+        return '/v1/files';
     }
 }
