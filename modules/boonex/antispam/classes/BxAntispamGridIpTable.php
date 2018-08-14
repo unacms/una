@@ -25,7 +25,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
     {
         parent::_addJsCss();
 
-        $this->_oTemplate->addJs('jquery.form.min.js');
+        $this->_oTemplate->addJs(array('jquery-ui/jquery-ui.custom.min.js', 'jquery.form.min.js'));
 
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
@@ -96,7 +96,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
                 $iRecentId = $oForm->insert ($aCustomValues, true); // insert new record
             }
 
-            if ($iRecentId)
+            if (isset($iRecentId) && $iRecentId)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iRecentId); // if record is successfully added, reload grid and highlight added row
             else
                 $aRes = array('msg' => _t('_sys_txt_error_occured')); // if record adding failed, display error message
