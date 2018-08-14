@@ -28,13 +28,14 @@ class BxBaseModGeneralModule extends BxDolModule
         $this->_aSearchableNamesExcept = array(
             'allow_view_to'
         );
-        
+
         $this->_aFormParams = array(
-        	'display' => false, 
-        	'dynamic_mode' => false, 
-        	'ajax_mode' => false, 
-        	'absolute_action_url' => false,
-        	'context_id' => 0
+            'display' => false, 
+            'dynamic_mode' => false, 
+            'ajax_mode' => false, 
+            'absolute_action_url' => false,
+            'visibility_autoselect' => false,
+            'context_id' => 0,
         );
     }
 

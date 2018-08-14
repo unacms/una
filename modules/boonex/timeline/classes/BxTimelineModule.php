@@ -543,13 +543,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $aParams['form_display'] = 'form_display_post_add_profile';
         }
 
-        $oForm = $this->getFormPostObject($aParams);
-	
-        $sParamsKey = 'ajax_mode';
-        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
-        	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
-
-    	return $oForm;
+    	return $this->getFormPostObject($aParams);
     }
     
     /**
@@ -1934,7 +1928,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
         $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_add';
-        return BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
+
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);        
+
+        $sParamsKey = 'ajax_mode';
+        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
+            $oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
+
+        $sParamsKey = 'visibility_autoselect';
+        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
+            $oForm->setVisibilityAutoselect((bool)$aParams[$sParamsKey]);
+
+        $oForm->init();
+        return $oForm;
     }
 
     public function getCmtsObject($sSystem, $iId)
