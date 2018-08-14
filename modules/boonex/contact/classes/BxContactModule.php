@@ -45,7 +45,7 @@ class BxContactModule extends BxDolModule
      */
     public function serviceGetBlockForm()
     {
-        $aDefaultFields = array('name', 'email', 'subject', 'body', 'do_submit');
+        $aDefaultFields = array('name', 'email', 'subject', 'body', 'cfc_do_submit');
 
         $mixedAllowed = $this->isAllowedContact();
         if($mixedAllowed !== true)
