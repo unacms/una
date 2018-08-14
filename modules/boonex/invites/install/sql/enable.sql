@@ -5,8 +5,8 @@ SET @sName = 'bx_invites';
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_invites_invite', '_bx_invites_page_title_sys_invite', '_bx_invites_page_title_invite', @sName, 5, 2147483647, 1, 'invites-invite', 'page.php?i=invites-invite', '', '', '', 0, 1, 0, '', '');
 
-INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('bx_invites_invite', 1, @sName, '_bx_invites_page_block_title_invite_form', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_invites";s:6:"method";s:21:"get_block_form_invite";}', 0, 1, 1);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_invites_invite', 1, @sName, '_bx_invites_page_block_title_system_invite_form', '_bx_invites_page_block_title_invite_form', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_invites";s:6:"method";s:21:"get_block_form_invite";}', 0, 1, 1);
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_invites_request', '_bx_invites_page_title_sys_request', '_bx_invites_page_title_request', @sName, 5, 2147483647, 1, 'invites-request', 'page.php?i=invites-request', '', '', '', 0, 1, 0, '', '');

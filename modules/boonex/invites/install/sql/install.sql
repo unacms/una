@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `bx_inv_requests` (
 
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_invites_invite', @sName, '_bx_invites_form_invite', '', '', 'do_submit', 'bx_inv_invites', 'id', '', '', 'a:1:{s:14:"checker_helper";s:22:"BxInvFormCheckerHelper";}', 0, 1, '', '');
+('bx_invites_invite', @sName, '_bx_invites_form_invite', '', '', 'ifi_do_submit', 'bx_inv_invites', 'id', '', '', 'a:1:{s:14:"checker_helper";s:22:"BxInvFormCheckerHelper";}', 0, 1, '', '');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_invites_invite_send', @sName, 'bx_invites_invite', '_bx_invites_form_invite_display_send', 0);
@@ -38,16 +38,16 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_invites_invite', @sName, 'emails', '', '', 0, 'textarea', '_bx_invites_form_invite_input_sys_emails', '_bx_invites_form_invite_input_emails', '_bx_invites_form_invite_input_emails_inf', 1, 0, 0, '', '', '', 'Emails', '', '_bx_invites_form_invite_input_emails_err', '', '', 0, 0),
 ('bx_invites_invite', @sName, 'text', '', '', 0, 'textarea', '_bx_invites_form_invite_input_sys_text', '_bx_invites_form_invite_input_text', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:10;s:3:"max";i:5000;}', '_bx_invites_form_invite_input_text_err', '', '', 0, 0),
-('bx_invites_invite', @sName, 'do_submit', '_bx_invites_form_invite_input_do_submit', '', 0, 'submit', '_bx_invites_form_invite_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('bx_invites_invite', @sName, 'ifi_do_submit', '_bx_invites_form_invite_input_do_submit', '', 0, 'submit', '_bx_invites_form_invite_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_invites_invite_send', 'emails', 2147483647, 1, 1),
 ('bx_invites_invite_send', 'text', 2147483647, 1, 2),
-('bx_invites_invite_send', 'do_submit', 2147483647, 1, 3);
+('bx_invites_invite_send', 'ifi_do_submit', 2147483647, 1, 3);
 
 
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_invites_request', @sName, '_bx_invites_form_request', '', '', 'do_submit', 'bx_inv_requests', 'id', '', '', '', 0, 1, '', '');
+('bx_invites_request', @sName, '_bx_invites_form_request', '', '', 'ifr_do_submit', 'bx_inv_requests', 'id', '', '', '', 0, 1, '', '');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_invites_request_send', @sName, 'bx_invites_request', '_bx_invites_form_request_display_send', 0);
@@ -56,13 +56,13 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_invites_request', @sName, 'name', '', '', 0, 'text', '_bx_invites_form_request_input_sys_name', '_bx_invites_form_request_input_name', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:150;}', '_bx_invites_form_request_input_name_err', 'Xss', '', 0, 0),
 ('bx_invites_request', @sName, 'email', '', '', 0, 'text', '_bx_invites_form_request_input_sys_email', '_bx_invites_form_request_input_email', '', 1, 0, 0, '', '', '', 'Email', '', '_bx_invites_form_request_input_email_err', 'Xss', '', 0, 0),
 ('bx_invites_request', @sName, 'text', '', '', 0, 'textarea', '_bx_invites_form_request_input_sys_text', '_bx_invites_form_request_input_text', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:10;s:3:"max";i:5000;}', '_bx_invites_form_request_input_text_err', 'Xss', '', 0, 0),
-('bx_invites_request', @sName, 'do_submit', '_bx_invites_form_request_input_do_submit', '', 0, 'submit', '_bx_invites_form_request_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('bx_invites_request', @sName, 'ifr_do_submit', '_bx_invites_form_request_input_do_submit', '', 0, 'submit', '_bx_invites_form_request_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_invites_request_send', 'name', 2147483647, 1, 1),
 ('bx_invites_request_send', 'email', 2147483647, 1, 2),
 ('bx_invites_request_send', 'text', 2147483647, 1, 3),
-('bx_invites_request_send', 'do_submit', 2147483647, 1, 4);
+('bx_invites_request_send', 'ifr_do_submit', 2147483647, 1, 4);
 
 
 -- GRIDS

@@ -45,6 +45,7 @@
 	<!-- Pages and Blocks -->
 	<string name="_bx_invites_page_title_sys_invite"><![CDATA[Пригласить]]></string>
 	<string name="_bx_invites_page_title_invite"><![CDATA[Пригласить]]></string>
+        <string name="_bx_invites_page_block_title_system_invite_form"><![CDATA[Пригласить - Форма]]></string>
 	<string name="_bx_invites_page_block_title_invite_form"><![CDATA[Пригласить]]></string>
 
 	<string name="_bx_invites_page_title_sys_request"><![CDATA[Запросить приглашение]]></string>
