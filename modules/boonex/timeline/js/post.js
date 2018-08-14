@@ -129,36 +129,34 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
 {
 	var $this = this;
 	var fContinue = function() {
-		if(oData && oData.id != undefined) {
-			var iId = parseInt(oData.id);
-	        if(iId <= 0) 
-	        	return;
+            if(oData && oData.form != undefined && oData.form_id != undefined) {
+                $('#' + oData.form_id).replaceWith(oData.form);
+                $this.initFormPost(oData.form_id);
 
-	        if($('#' + $this._aHtmlIds['main_timeline']).length)
-	        	$this._getPost(oForm, iId, 'timeline', {afps_loading: 1});
+                return;
+            }
 
-	        if($('#' + $this._aHtmlIds['main_outline']).length)
-	        	$this._getPost(oForm, iId, 'outline', {afps_loading: 1});
+            if(oData && oData.id != undefined) {
+                var iId = parseInt(oData.id);
+                if(iId <= 0) 
+                        return;
 
-	        $this._getForm(oForm);
+                if($('#' + $this._aHtmlIds['main_timeline']).length)
+                        $this._getPost(oForm, iId, 'timeline', {afps_loading: 1});
 
-	        return;
-		}
+                if($('#' + $this._aHtmlIds['main_outline']).length)
+                        $this._getPost(oForm, iId, 'outline', {afps_loading: 1});
+            }
 
-		if(oData && oData.form != undefined && oData.form_id != undefined) {
-			$('#' + oData.form_id).replaceWith(oData.form);
-			$this.initFormPost(oData.form_id);
-
-			return;
-		}
+            $this._getForm(oForm);
 	};
 
-	this.loadingInButton($(oForm).children().find(':submit'), false);
+    this.loadingInButton($(oForm).children().find(':submit'), false);
 
-	if(oData && oData.message != undefined)
+    if(oData && oData.message != undefined)
         bx_alert(oData.message, fContinue);
-	else
-		fContinue();
+    else
+        fContinue();
 };
 
 BxTimelinePost.prototype.initFormAttachLink = function(sFormId)

@@ -1755,7 +1755,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $sText = $oForm->getCleanValue('text');
             $sText = $this->_prepareTextForSave($sText);
             $bText = !empty($sText);
-            unset($oForm->aInputs['text']);
 
             if($bText)
             	$aContent['text'] = $sText;
@@ -1780,8 +1779,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aVideoIds = $oForm->getCleanValue(BX_TIMELINE_MEDIA_VIDEO);
             $bVideoIds = !empty($aVideoIds) && is_array($aVideoIds);
 
-            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds)
-            	return array('message' => _t('_bx_timeline_txt_err_empty_post'));
+            if(!$bText && !$bLinkIds && !$bPhotoIds && !$bVideoIds) {
+                $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
+                $oForm->setValid(false);
+
+            	return $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode);
+            }
 
             $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oConfig->getTitleDefault($bLinkIds, $bPhotoIds, $bVideoIds);
             $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample_with_article'));
@@ -1792,6 +1795,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $iDate = $oForm->getCleanValue('date');
             if(empty($iDate))
                 $iDate = time();
+
+            /**
+             * Unset 'text' input because its data was already processed 
+             * and will be saved via additional values which were passed 
+             * to BxDolForm::insert method.
+             */
+            unset($oForm->aInputs['text']);
 
             $iId = $oForm->insert(array(
                 'owner_id' => $iOwnerId,
@@ -1806,10 +1816,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(!empty($iId)) {
             	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
             	if($bText)
- 					$oMetatags->metaAdd($iId, $sText);
- 				$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+                    $oMetatags->metaAdd($iId, $sText);
+                $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
-				//--- Process Link ---//
+                //--- Process Link ---//
                 if($bLinkIds)
                     foreach($aLinkIds as $iLinkId)
                         $this->_oDb->saveLink($iId, $iLinkId);
