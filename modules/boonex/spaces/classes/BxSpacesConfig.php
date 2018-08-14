@@ -66,6 +66,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'URI_MANAGE_COMMON' => 'spaces-manage',
 
             'URL_HOME' => 'page.php?i=spaces-home',
+            'URL_ENTRY_FANS' => 'page.php?i=space-fans',
             'URL_MANAGE_COMMON' => 'page.php?i=spaces-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=spaces-administration',
 

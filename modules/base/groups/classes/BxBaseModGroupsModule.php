@@ -419,19 +419,24 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         /*
          * Note. Group Profile URL is used for both Entry and Subentry URLs, 
          * because Subentry URL has higher display priority and notification
-         * should be linked to Group Profile instead of Personal Profile of
-         * a member, who performed an action.
+         * should be linked to Group Profile (Group Profile -> Members tab) 
+         * instead of Personal Profile of a member, who performed an action.
          */
-        $sEntryUrl = $sSubentryUrl = $oGroupProfile->getUrl();
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single'],
-			'entry_url' => $sEntryUrl,
-			'entry_caption' => $oGroupProfile->getDisplayName(),
-			'entry_author' => $oGroupProfile->id(),
-			'subentry_sample' => $oProfile->getDisplayName(),
-			'subentry_url' => $sSubentryUrl,
-			'lang_key' => $sLangKey
-		);
+        $sEntryUrl = $oGroupProfile->getUrl();
+        if(!empty($CNF['URL_ENTRY_FANS']))
+            $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_ENTRY_FANS'], array(
+                'profile_id' => $oGroupProfile->id()
+            ));
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $oGroupProfile->getDisplayName(),
+            'entry_author' => $oGroupProfile->id(),
+            'subentry_sample' => $oProfile->getDisplayName(),
+            'subentry_url' => $sEntryUrl,
+            'lang_key' => $sLangKey
+        );
     }
 
     /**

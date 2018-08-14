@@ -64,8 +64,9 @@ class BxGroupsConfig extends BxBaseModProfileConfig
         	'URI_MANAGE_COMMON' => 'groups-manage',
 
             'URL_HOME' => 'page.php?i=groups-home',
-        	'URL_MANAGE_COMMON' => 'page.php?i=groups-manage',
-        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=groups-administration',
+            'URL_ENTRY_FANS' => 'page.php?i=group-fans',
+            'URL_MANAGE_COMMON' => 'page.php?i=groups-manage',
+            'URL_MANAGE_ADMINISTRATION' => 'page.php?i=groups-administration',
 
             'PARAM_NUM_RSS' => 'bx_groups_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_groups_num_connections_quick',
