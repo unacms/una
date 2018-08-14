@@ -88,9 +88,13 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	// some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_timeline_txt_sample',
-        		'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
+                'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
             	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',
-        		'txt_sample_vote_single' => '_bx_timeline_txt_sample_vote_single',
+                'txt_sample_vote_single' => '_bx_timeline_txt_sample_vote_single',
+                'txt_sample_with_link' => '_bx_timeline_txt_sample_with_link',
+                'txt_sample_with_image' => '_bx_timeline_txt_sample_with_image',
+                'txt_sample_with_video' => '_bx_timeline_txt_sample_with_video',
+                'txt_sample_with_media' => '_bx_timeline_txt_sample_with_media',
                 'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
                 'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',
             ),
@@ -374,6 +378,22 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getTitle($s)
     {
         return strmaxtextlen($s, $this->getCharsDisplayMaxTitle(), '...');
+    }
+
+    public function getTitleDefault($bL, $bP, $bV)
+    {
+        $sResult = '';
+
+        if($bL && !$bP && !$bV)
+            $sResult = 'link';
+        else if(!$bL && $bP && !$bV)
+            $sResult = 'image';
+        else if(!$bL && !$bP && $bV)
+            $sResult = 'video';
+        else 
+            $sResult = 'media';
+
+        return $this->CNF['T']['txt_sample_with_' . $sResult];
     }
 
     public function getViewUrl($iOwnerId)

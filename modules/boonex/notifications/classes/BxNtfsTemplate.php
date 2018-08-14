@@ -117,8 +117,13 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aEvent['content']['owner_name'] = strmaxtextlen($oOwner->getDisplayName(), $this->_oConfig->getOwnerNameMaxLen());
         $aEvent['content']['owner_link'] = $oOwner->getUrl();
         $aEvent['content']['owner_icon'] = $oOwner->getThumb();
-        if(!empty($aEvent['content']['entry_caption']))
-            $aEvent['content']['entry_caption'] = strmaxtextlen(bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT), $this->_oConfig->getContentMaxLen());
+        if(!empty($aEvent['content']['entry_caption'])) {
+            $sEntryCaption = bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT);
+            if(get_mb_substr($sEntryCaption, 0, 1) == '_')
+                $sEntryCaption = _t($sEntryCaption);
+
+            $aEvent['content']['entry_caption'] = strmaxtextlen($sEntryCaption, $this->_oConfig->getContentMaxLen());
+        }
 
         foreach($aEvent['content'] as $sKey => $sValue)
         	if(substr($sValue, 0, 1) == '_')

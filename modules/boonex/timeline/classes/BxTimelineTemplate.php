@@ -853,24 +853,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getItemIcon($bT, $bL, $bP, $bV)
-    {
-        $sResult = '';
-
-        if($bT && !$bL && !$bP && !$bV)
-            $sResult = 'far file-alt';
-        else if(!$bT && $bL && !$bP && !$bV)
-            $sResult = 'link';
-        else if(!$bT && !$bL && $bP && !$bV)
-            $sResult = 'far image';
-        else if(!$bT && !$bL && !$bP && $bV)
-            $sResult = 'film';
-        else 
-            $sResult = 'far file';
-
-        return '<i class="sys-icon ' . $sResult . '"></i>';
-    }
-
     function getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCountOld = 0, $iCountNew = 0)
     {
         $oModule = $this->getModule();

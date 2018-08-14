@@ -222,6 +222,10 @@
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[comment to timeline post]]></string>
     <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[vote to timeline post]]></string>
+    <string name="_bx_timeline_txt_sample_with_link"><![CDATA[with link]]></string>
+    <string name="_bx_timeline_txt_sample_with_image"><![CDATA[with image]]></string>
+    <string name="_bx_timeline_txt_sample_with_video"><![CDATA[with video]]></string>
+    <string name="_bx_timeline_txt_sample_with_media"><![CDATA[with media]]></string>    
     <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Today]]></string>
     <string name="_bx_timeline_txt_some_text_here"><![CDATA[Share your thoughts, location, photos or video]]></string>
