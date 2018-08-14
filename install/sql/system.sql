@@ -4421,6 +4421,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'css_system', 'score.css', 1, 34),
 ('system', 'css_system', 'view.css', 1, 35),
 ('system', 'css_system', 'vote.css', 1, 36),
+('system', 'css_system', '{dir_plugins_public}spin.js/|spin.css', 1, 37),
 
 ('system', 'js_system', 'jquery/jquery.min.js', 1, 1),
 ('system', 'js_system', 'jquery/jquery-migrate.min.js', 1, 2),
@@ -4428,7 +4429,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_system', 'jquery.easing.js', 1, 4),
 ('system', 'js_system', 'jquery.cookie.min.js', 1, 5),
 ('system', 'js_system', 'jquery.form.min.js', 1, 6),
-('system', 'js_system', 'spin.min.js', 1, 7),
+('system', 'js_system', 'spin.js/spin.js', 1, 7),
 ('system', 'js_system', 'moment-with-locales.min.js', 1, 8),
 ('system', 'js_system', 'marka/marka.min.js', 1, 9),
 ('system', 'js_system', 'headroom.min.js', 1, 10),
