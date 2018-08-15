@@ -42,6 +42,8 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
+        $CNF = $this->_oModule->_oConfig->CNF;
+
         $aValsToAdd['last_reply_timestamp'] = time();
         $aValsToAdd['last_reply_profile_id'] = bx_get_logged_profile_id();
 
@@ -68,8 +70,12 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             if (!$bDraft)
                 $this->_oModule->_oDb->conversationToFolder($iContentId, BX_CNV_FOLDER_DRAFTS, bx_get_logged_profile_id(), 0);
 
+            // process uploaded files
+            if (isset($CNF['FIELD_PHOTO']))
+                $this->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
+
             // draft is saved via ajax call only, upon successfull draft saving content id is returned
-            echo $iContentId;
+            echo $iContentId . ',' . $this->getCsrfToken();
             exit;
 
         } else {

@@ -12,8 +12,11 @@
             var $eSubmit = $eForm.find('[type=submit]');
             var aData = { draft_save: '1' }
             var fCallback = function (data) {
-                if ('undefined' != typeof(data) && parseInt(data) > 0 ) {
-                    $('input[name=draft_id]').val(parseInt(data));
+                var aData;
+                if ('undefined' != typeof(data) && (aData = data.split(',')) && aData.length) {
+                    $('input[name=draft_id]').val(parseInt(aData[0]));
+                    if (aData.length > 1 && aData[1])
+                        $('input[name=csrf_token]').val(aData[1]);
                     $e.html('<span>' + _t('_bx_cnv_draft_saved_success') + '</span>');
                     setTimeout(function () {
                         $e.find('span').fadeOut();
