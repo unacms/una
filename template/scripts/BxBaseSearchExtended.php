@@ -179,8 +179,10 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             if((int)$aField['active'] == 0)
                 continue;
 
-            if(in_array($aField['search_type'], array('checkbox_set', 'select_multiple')) && isset($aField['values']['']))
+            if (in_array($aField['search_type'], array('checkbox_set', 'select_multiple')) && (isset($aField['values']['']) || isset($aField['values'][0]))) {
                 unset($aField['values']['']);
+                unset($aField['values'][0]);
+            }
             
             $aAttrs = array();
             
