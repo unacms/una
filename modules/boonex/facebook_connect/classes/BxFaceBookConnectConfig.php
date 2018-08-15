@@ -46,13 +46,13 @@ class BxFaceBookConnectConfig extends BxBaseModConnectConfig
         $this -> aFaceBookReqParams = array(
             'scope' => getParam('bx_facebook_connect_extended_info') 
                 ? 'email,public_profile,user_friends,user_birthday,user_about_me,user_hometown,user_location'
-                : 'email,public_profile,user_friends',
+                : 'email,public_profile',
             'redirect_uri' => $this -> sPageReciver,
         );
 
         $this -> sFaceBookFields = getParam('bx_facebook_connect_extended_info') 
             ? 'name,email,first_name,last_name,gender,birthday,bio,hometown,location'
-            : 'name,email,first_name,last_name,gender';
+            : 'name,email,first_name,last_name';
     }
 }
 
