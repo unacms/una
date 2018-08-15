@@ -52,6 +52,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             return;
 
         $aMediaInfo = $this->_oModule->_oDb->getMediaInfoSimpleByFileId($iFileId);
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
         if ($aMediaInfo && !empty($CNF['OBJECT_METATAGS_MEDIA'])) {            
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
@@ -65,11 +66,27 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
                 $oMetatags->keywordsAddOne($aMediaInfo['id'], $oMetatags->keywordsCameraModel($aExif));
         }
 
-        bx_alert($this->_oModule->getName(), 'media_added', $aMediaInfo['id'], $iProfileId, array('media_info' => $aMediaInfo));
+        bx_alert($this->_oModule->getName(), 'media_added', $iContentId, $iProfileId, array(
+            'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+
+            'subobject_id' => $aMediaInfo['id'],
+
+            'media_id' => $aMediaInfo['id'], 
+            'media_info' => $aMediaInfo,
+        ));
+
+        bx_alert($this->_oModule->getName() . '_media', 'added', $aMediaInfo['id'], $iProfileId, array(
+            'object_id' => $iContentId, 
+            'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']], 
+
+            'media_info' => $aMediaInfo
+        ));
     }
 
     function _deleteFile ($iFileId, $sStorage = '')
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         if (!($bRet = parent::_deleteFile ($iFileId)))
             return false;
 
@@ -77,8 +94,26 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         
         $this->_oModule->serviceDeleteFileAssociations ($iFileId);
 
-        if ($aMediaInfo)
-            bx_alert($this->_oModule->getName(), 'media_deleted', $aMediaInfo['id'], $aMediaInfo['author'], array('media_info' => $aMediaInfo));
+        if ($aMediaInfo) {
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($aMediaInfo['content_id']);
+
+            $iSender = isLogged() ? bx_get_logged_profile_id() : $aMediaInfo['author'];
+            bx_alert($this->_oModule->getName(), 'media_deleted', $aContentInfo[$CNF['FIELD_ID']], $iSender, array(
+                'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+
+                'subobject_id' => $aMediaInfo['id'],
+
+                'media_id' => $aMediaInfo['id'], 
+                'media_info' => $aMediaInfo,
+            ));
+
+            bx_alert($this->_oModule->getName() . '_media', 'deleted', $aMediaInfo['id'], $iSender, array(
+                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+
+                'media_info' => $aMediaInfo,
+            ));
+        }
         
         return true;
     }

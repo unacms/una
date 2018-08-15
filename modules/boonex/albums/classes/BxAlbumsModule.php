@@ -249,6 +249,98 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, true, 'SearchResultMedia');
     }
 
+    public function serviceGetTimelineData()
+    {
+    	$sModule = $this->_aModule['name'];
+
+        $aResult = parent::serviceGetTimelineData();
+        $aResult['handlers'] = array_merge($aResult['handlers'], array(
+            array('group' => $sModule . '_object_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_timeline_media', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+            array('group' => $sModule . '_object_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'deleted')
+        ));
+        $aResult['alerts'] = array_merge($aResult['alerts'], array(
+            array('unit' => $sModule . '_media', 'action' => 'added'),
+            array('unit' => $sModule . '_media', 'action' => 'deleted'),
+        ));
+
+        return $aResult;
+    }
+
+    public function serviceGetTimelineMedia($aEvent, $aBrowseParams = array())
+    {
+        $iMediaId = (int)$aEvent['object_id'];
+        $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        if(empty($aMediaInfo) || !is_array($aMediaInfo))
+            return '';
+
+        $CNF = &$this->_oConfig->CNF;
+        
+        //--- Views
+        $oViews = isset($CNF['OBJECT_VIEWS_MEDIA']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $iMediaId) : null;
+
+        $aViews = array();
+        if ($oViews && $oViews->isEnabled())
+            $aViews = array(
+                'system' => $CNF['OBJECT_VIEWS_MEDIA'],
+                'object_id' => $iMediaId,
+                'count' => $aMediaInfo['views']
+            );
+
+        //--- Votes
+        $oVotes = isset($CNF['OBJECT_VOTES_MEDIA']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], $iMediaId) : null;
+
+        $aVotes = array();
+        if ($oVotes && $oVotes->isEnabled())
+            $aVotes = array(
+                'system' => $CNF['OBJECT_VOTES_MEDIA'],
+                'object_id' => $iMediaId,
+                'count' => $aMediaInfo['votes']
+            );
+
+        //--- Scores
+        $oScores = isset($CNF['OBJECT_SCORES_MEDIA']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES_MEDIA'], $iMediaId) : null;
+
+        $aScores = array();
+        if ($oScores && $oScores->isEnabled())
+            $aScores = array(
+                'system' => $CNF['OBJECT_SCORES_MEDIA'],
+                'object_id' => $iMediaId,
+                'score' => $aMediaInfo['score']
+            );
+
+        //--- Comments
+        $oCmts = isset($CNF['OBJECT_COMMENTS_MEDIA']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $iMediaId) : null;
+
+        $aComments = array();
+        if($oCmts && $oCmts->isEnabled())
+            $aComments = array(
+                'system' => $CNF['OBJECT_COMMENTS_MEDIA'],
+                'object_id' => $iMediaId,
+                'count' => $aMediaInfo['comments']
+            );
+
+        //--- Title & Description
+        $sTitle = !empty($aMediaInfo['title']) ? $aMediaInfo['title'] : '';
+
+        return array(
+            'owner_id' => $aMediaInfo['author'],
+            'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
+            'sample' => isset($CNF['T']['txt_media_single_with_article']) ? $CNF['T']['txt_media_single_with_article'] : $CNF['T']['txt_media_single'],
+            'sample_wo_article' => $CNF['T']['txt_media_single'],
+    	    'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId),
+            'content' => $this->_getContentForTimelineMedia($aEvent, $aMediaInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
+            'date' => $aMediaInfo['data'],
+            'views' => $aViews,
+            'votes' => $aVotes,
+            'scores' => $aScores,
+            'reports' => '',
+            'comments' => $aComments,
+            'title' => $sTitle, //may be empty.
+            'description' => '' //may be empty.
+        );
+    }
+
     public function serviceGetNotificationsData()
     {
         $sModule = $this->_aModule['name'];
@@ -259,6 +351,9 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         $aResult = parent::serviceGetNotificationsData();
         $aResult['handlers'] = array_merge($aResult['handlers'], array(
+            array('group' => $sModule . '_object_media', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'media_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_object_media', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'media_deleted'),
+
             array('group' => $sModule . '_comment_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             array('group' => $sModule . '_comment_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'commentRemoved'),
 
@@ -267,6 +362,9 @@ class BxAlbumsModule extends BxBaseModTextModule
         ));
 
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
+            array('unit' => $sModule, 'action' => 'media_added'),
+            array('unit' => $sModule, 'action' => 'media_deleted'),
+
             array('unit' => $sModule . '_media', 'action' => 'commentPost'),
             array('unit' => $sModule . '_media', 'action' => 'commentRemoved'),
 
@@ -275,6 +373,36 @@ class BxAlbumsModule extends BxBaseModTextModule
         ));
 
         return $aResult; 
+    }
+
+    public function serviceGetNotificationsMedia($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+    	$iMediaId = (int)$aEvent['subobject_id'];
+    	$aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        if(empty($aMediaInfo) || !is_array($aMediaInfo))
+            return array();
+
+        $oPermalinks = BxDolPermalinks::getInstance();
+        $sEntryUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+        $sSubentryUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId);
+        $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aMediaInfo['author'],
+            'subentry_sample' => $CNF['T']['txt_media_single'],
+            'subentry_url' => $sSubentryUrl,
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
     public function serviceGetNotificationsCommentMedia($aEvent)
@@ -286,22 +414,22 @@ class BxAlbumsModule extends BxBaseModTextModule
         if(empty($aMediaInfo) || !is_array($aMediaInfo))
             return array();
 
-		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $iMediaId);
+        $oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $iMediaId);
         if(!$oComment || !$oComment->isEnabled())
             return array();
 
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_media_single'],
-			'entry_url' => $sEntryUrl,
-			'entry_caption' => $sEntryCaption,
-			'entry_author' => $aMediaInfo['author'],
-			'subentry_sample' => $CNF['T']['txt_media_comment_single'],
-			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_media_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aMediaInfo['author'],
+            'subentry_sample' => $CNF['T']['txt_media_comment_single'],
+            'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
     public function serviceGetNotificationsVoteMedia($aEvent)
@@ -313,22 +441,22 @@ class BxAlbumsModule extends BxBaseModTextModule
         if(empty($aMediaInfo) || !is_array($aMediaInfo))
             return array();
 
-		$oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], $iMediaId);
+        $oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], $iMediaId);
         if(!$oVote || !$oVote->isEnabled())
             return array();
 
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
         $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_media_single'],
-			'entry_url' => $sEntryUrl,
-			'entry_caption' => $sEntryCaption,
-			'entry_author' => $aMediaInfo['author'],
-			'subentry_sample' => $CNF['T']['txt_media_vote_single'],
-			'subentry_url' => '',
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_media_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aMediaInfo['author'],
+            'subentry_sample' => $CNF['T']['txt_media_vote_single'],
+            'subentry_url' => '',
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
     public function actionGetSiblingMedia($iMediaId, $mixedContext)
@@ -398,6 +526,42 @@ class BxAlbumsModule extends BxBaseModTextModule
         }
 
         return $aOutput;
+    }
+
+    protected function _getContentForTimelineMedia($aEvent, $aMediaInfo, $aBrowseParams = array())
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+
+    	//--- Image(s)
+        $aImages = $this->_getImagesForTimelineMedia($aEvent, $aMediaInfo, $sUrl, $aBrowseParams);
+
+    	return array(
+            'sample' => isset($CNF['T']['txt_media_single_with_article']) ? $CNF['T']['txt_media_single_with_article'] : $CNF['T']['txt_media_single'],
+            'sample_wo_article' => $CNF['T']['txt_media_single'],
+            'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+            'url' => $sUrl,
+            'title' => isset($aMediaInfo['title']) ? $aMediaInfo['title'] : '',
+            'text' => '',
+            'images' => $aImages,
+            'videos' => array()
+        );
+    }
+
+    protected function _getImagesForTimelineMedia($aEvent, $aMediaInfo, $sUrl, $aBrowseParams = array())
+    {
+        $sImage = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_TRANSCODER_BROWSE'));
+        if(empty($sImage))
+            return array();
+
+        $sImageOrig = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_IMAGES_TRANSCODER_BIG'));
+        if(empty($sImageOrig))
+            $sImageOrig = $sImage;
+
+        return array(
+            array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
+        );
     }
 }
 
