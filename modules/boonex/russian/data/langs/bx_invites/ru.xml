@@ -128,7 +128,7 @@
 	<string name="_bx_invites_err_delete_request"><![CDATA[Невозможно удалить запрос.]]></string>
 	<string name="_bx_invites_err_used"><![CDATA[Приглашение не доступно или уже использовано.]]></string>
 	<string name="_bx_invites_err_already_send"><![CDATA[Приглашение уже было отправлено на этот эл. адрес]]></string>
-	<string name="_bx_invites_err_already_registed"><![CDATA[Пользователь с таким  эл. адресом уже зарегистрирован. Пожалуйста, воспользуйтесь <a href="{forgot_password_url}">восстановлением пароля</a> чтобы получить доступ к аккаунту.]]></string>
+	<string name="_bx_invites_err_already_registed"><![CDATA[Пользователь с таким  эл. адресом уже зарегистрирован. Пожалуйста, воспользуйтесь <a href="{0}">восстановлением пароля</a> чтобы получить доступ к аккаунту.]]></string>
 	<string name="_bx_invites_request_status_new"><![CDATA[Новый]]></string>
 	<string name="_bx_invites_request_status_invited"><![CDATA[Приглашен]]></string>
 	<string name="_bx_invites_request_status_seen"><![CDATA[Просмотрено]]></string>
