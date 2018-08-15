@@ -75,7 +75,7 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
                 $this->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
 
             // draft is saved via ajax call only, upon successfull draft saving content id is returned
-            echo $iContentId;
+            echo $iContentId . ',' . $this->getCsrfToken();
             exit;
 
         } else {
