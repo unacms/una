@@ -246,10 +246,27 @@ BLAH;
 
         // generate rows contents
         $sCont = '';
+        $sContHeader = '';
+        $sContFields = '';
         $sFuncGenRow = isset($this->aParams['view_mode']) && $this->aParams['view_mode'] ? 'genViewRow' : 'genRow';
-        foreach ($this->aInputs as $aInput)
-            if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput))
-                $sCont .= $this->$sFuncGenRow($aInput);
+        foreach ($this->aInputs as $aInput) {
+            if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput)) {
+                if ('block_header' == $aInput['type']) {
+                    // don't show section with no fields or with empty fields
+                    if ($sContHeader) {                        
+                        if ($sContFields)
+                            $sCont .= $sContHeader . $sContFields;
+                        else
+                            $this->_isSectionOpened = false;
+                        $sContFields = '';
+                    }
+                    $sContHeader = $this->$sFuncGenRow($aInput);
+                } else {
+                    $sContFields .= $this->$sFuncGenRow($aInput);
+                }
+            }
+        }
+        $sCont .= $sContHeader . $sContFields;
 
         $sCloseSection = $this->{$this->_sSectionClose}();
 
