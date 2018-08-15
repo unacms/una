@@ -288,6 +288,8 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
             'object' => $this,
         ));
 
+        $this->checkAllowedConnect ($iInitiator, $iContent, true, $iMutual, false);
+
         return true;
     }
 
