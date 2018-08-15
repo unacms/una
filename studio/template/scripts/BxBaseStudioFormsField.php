@@ -202,6 +202,10 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                     case 'value':
                         $aForm['inputs'][$sKey]['value'] = $this->aField[$sKey];
 
+                        //--- Date and DateTime
+                        if(in_array($aForm['inputs']['type']['value'], array('datepicker', 'datetime', 'date_time'))) 
+                            $aForm['inputs'][$sKey]['db']['pass'] = $this->aField['db_pass'];
+
                         //--- Select, Multi Select, Radio Set and Checkbox Set
                         if(in_array($aForm['inputs']['type']['value'], array('select', 'select_multiple', 'radio_set', 'checkbox_set'))) {
                             $sList = trim($this->getFieldValues($this->aField), BX_DATA_LISTS_KEY_PREFIX . ' ');
@@ -733,9 +737,13 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
     protected function onSubmitField(&$oForm)
     {
+        //--- Process field value.
+        if(isset($oForm->aInputs['value']['db']))
+            $oForm->aInputs['value']['db']['pass'] = $oForm->getCleanValue('db_pass');
+
         //--- Process field values.
         if(isset($oForm->aInputs['values']['db'])) 
-        	$this->onSubmitFieldValues($oForm);
+            $this->onSubmitFieldValues($oForm);
 
         //--- Process field 'html' flag.
         if(isset($oForm->aInputs['html'])) {
@@ -1093,7 +1101,7 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
         $this->aParams['table_field_type'] = 'int(11)';
 
         $this->aForm['inputs']['value']['type'] = $this->sType;
-        $this->aForm['inputs']['value']['db']['pass'] = 'DateTs';
+        $this->aForm['inputs']['value']['db']['pass'] = $this->sDbPass;
 
         $aFields = array(
             'db_pass' => array(
@@ -1134,7 +1142,7 @@ class BxBaseStudioFormsFieldDatetime extends BxBaseStudioFormsFieldDatepicker
 	{
 		parent::init();
 
-        $this->aForm['inputs']['value']['db']['pass'] = 'DateTimeTs';
+        $this->aForm['inputs']['value']['db']['pass'] = $this->sDbPass;
 
         $this->aForm['inputs']['db_pass']['values'] = array(
             array('key' => 'DateTime', 'value' => _t('_adm_form_txt_field_db_pass_date_time')),
