@@ -116,6 +116,7 @@
 	<string name="_bx_spaces_page_block_title_fans_link"><![CDATA[Участники пространства: <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_spaces_page_block_title_system_fans"><![CDATA[Участники]]></string>
+        <string name="_bx_spaces_page_block_title_profile_location"><![CDATA[Расположение]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_spaces_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_profile_actions"><![CDATA[Действия]]></string>

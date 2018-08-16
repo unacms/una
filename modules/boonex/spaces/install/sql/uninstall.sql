@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_spaces_data`, `bx_spaces_pics`, `bx_spaces_pics_resized`, `bx_spaces_cmts`, `bx_spaces_views_track`, `bx_spaces_meta_keywords`, `bx_spaces_meta_mentions`, `bx_spaces_fans`, `bx_spaces_admins`, `bx_spaces_votes`, `bx_spaces_votes_track`, `bx_spaces_reports`, `bx_spaces_reports_track`, `bx_spaces_favorites_track`, `bx_spaces_scores`, `bx_spaces_scores_track`;
+DROP TABLE IF EXISTS `bx_spaces_data`, `bx_spaces_pics`, `bx_spaces_pics_resized`, `bx_spaces_cmts`, `bx_spaces_views_track`, `bx_spaces_meta_keywords`, `bx_spaces_meta_locations`, `bx_spaces_meta_mentions`, `bx_spaces_fans`, `bx_spaces_admins`, `bx_spaces_votes`, `bx_spaces_votes_track`, `bx_spaces_reports`, `bx_spaces_reports_track`, `bx_spaces_favorites_track`, `bx_spaces_scores`, `bx_spaces_scores_track`;
 
 -- PROFILES
 

@@ -136,6 +136,20 @@ CREATE TABLE `bx_spaces_meta_keywords` (
   KEY `keyword` (`keyword`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_spaces_meta_locations` (
+  `object_id` int(10) unsigned NOT NULL,
+  `lat` double NOT NULL,
+  `lng` double NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `zip` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `street_number` varchar(255) NOT NULL,
+  PRIMARY KEY (`object_id`),
+  KEY `country_state_city` (`country`,`state`(8),`city`(8))
+);
+
 CREATE TABLE `bx_spaces_meta_mentions` (
   `object_id` int(10) unsigned NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
@@ -239,7 +253,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_space', 'bx_spaces', 'initial_members', '', '', 0, 'custom', '_bx_spaces_form_profile_input_sys_initial_members', '_bx_spaces_form_profile_input_initial_members', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
 ('bx_space', 'bx_spaces', 'join_confirmation', 1, '', 1, 'switcher', '_bx_spaces_form_profile_input_sys_join_confirm', '_bx_spaces_form_profile_input_join_confirm', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_space', 'bx_spaces', 'cover', 'a:1:{i:0;s:20:"bx_spaces_cover_crop";}', 'a:1:{s:20:"bx_spaces_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_spaces_form_profile_input_sys_cover', '_bx_spaces_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_space', 'bx_spaces', 'picture', 'a:1:{i:0;s:22:"bx_spaces_picture_crop";}', 'a:1:{s:22:"bx_spaces_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_spaces_form_profile_input_sys_picture', '_bx_spaces_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_spaces_form_profile_input_picture_err', '', '', 1, 0);
+('bx_space', 'bx_spaces', 'picture', 'a:1:{i:0;s:22:"bx_spaces_picture_crop";}', 'a:1:{s:22:"bx_spaces_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_spaces_form_profile_input_sys_picture', '_bx_spaces_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_spaces_form_profile_input_picture_err', '', '', 1, 0),
+('bx_space', 'bx_spaces', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_space_add', 'delete_confirm', 2147483647, 0, 3),
@@ -250,9 +265,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_space_add', 'parent_space', 2147483647, 1, 8),
 ('bx_space_add', 'space_cat', 2147483647, 1, 9),
 ('bx_space_add', 'space_desc', 2147483647, 1, 10),
-('bx_space_add', 'join_confirmation', 2147483647, 1, 11),
-('bx_space_add', 'allow_view_to', 2147483647, 1, 12),
-('bx_space_add', 'do_submit', 2147483647, 1, 13),
+('bx_space_add', 'location', 2147483647, 1, 11),
+('bx_space_add', 'join_confirmation', 2147483647, 1, 12),
+('bx_space_add', 'allow_view_to', 2147483647, 1, 13),
+('bx_space_add', 'do_submit', 2147483647, 1, 14),
 
 ('bx_space_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_space_invite', 'do_submit', 2147483647, 1, 2),
@@ -271,9 +287,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_space_edit', 'parent_space', 2147483647, 1, 7),
 ('bx_space_edit', 'space_cat', 2147483647, 1, 8),
 ('bx_space_edit', 'space_desc', 2147483647, 1, 9),
-('bx_space_edit', 'join_confirmation', 2147483647, 1, 10),
-('bx_space_edit', 'allow_view_to', 2147483647, 1, 11),
-('bx_space_edit', 'do_submit', 2147483647, 1, 12),
+('bx_space_edit', 'location', 2147483647, 1, 10),
+('bx_space_edit', 'join_confirmation', 2147483647, 1, 11),
+('bx_space_edit', 'allow_view_to', 2147483647, 1, 12),
+('bx_space_edit', 'do_submit', 2147483647, 1, 13),
 
 ('bx_space_edit_cover', 'join_confirmation', 2147483647, 0, 0),
 ('bx_space_edit_cover', 'space_desc', 2147483647, 0, 0),

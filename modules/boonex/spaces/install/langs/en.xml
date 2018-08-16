@@ -115,6 +115,7 @@
 	<string name="_bx_spaces_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_spaces_page_block_title_system_fans"><![CDATA[Members]]></string>
+        <string name="_bx_spaces_page_block_title_profile_location"><![CDATA[Location]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_profile_actions"><![CDATA[Actions]]></string>
