@@ -37,8 +37,10 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_groups_view_profile', 1, 'bx_groups', '', '_bx_groups_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 2, 'bx_groups', '', '_bx_groups_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
+('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_profile_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 0),
 ('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:6:\"admins\";}', 0, 0, 1, 1),
+('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:9:\"bx_groups\";i:1;s:12:\"{content_id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 1, 2),
 ('bx_groups_view_profile', 4, 'bx_groups', '', '_bx_groups_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 4, 'bx_groups', '', '_bx_groups_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 0);
 
@@ -396,7 +398,7 @@ INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trig
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_groups', 'bx_groups_meta_keywords', '', 'bx_groups_meta_mentions', '', '');
+('bx_groups', 'bx_groups_meta_keywords', 'bx_groups_meta_locations', 'bx_groups_meta_mentions', '', '');
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
