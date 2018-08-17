@@ -1124,7 +1124,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $oProfile = $this->getObjectUser($iUserId);
 
         $oAccount = null;
-        if($oProfile && !($oProfile instanceof BxDolProfileUndefined))
+        if($oProfile && !($oProfile instanceof BxDolProfileUndefined) && !($oProfile instanceof BxDolProfileAnonymous))
             $oAccount = $oProfile->getAccountObject();
         $bAccount = !empty($oAccount);
 
@@ -1144,12 +1144,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function getObjectUser($iUserId = 0)
     {
     	bx_import('BxDolProfile');
-        $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
-            $oProfile = BxDolProfileUndefined::getInstance();
-        }
-
+        $oProfile = BxDolProfile::getInstanceMagic($iUserId);
         return $oProfile;
     }
 
@@ -1181,9 +1176,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     public function getUserInfo($iUserId = 0)
     {
-        $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile)
-            $oProfile = BxDolProfileUndefined::getInstance();
+        $oProfile = BxDolProfile::getInstanceMagic($iUserId);
 
         return array(
             $oProfile->getDisplayName(),
