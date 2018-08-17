@@ -96,6 +96,20 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     }
 
     /**
+     * Get singleton instance of Profile by profile id, if profile isn't found it returns instance of BxDolProfileAnonymous or BxDolProfileUndefined
+     */
+    public static function getInstanceMagic($mixedProfileId = false, $bClearCache = false)
+    {
+        if ($mixedProfileId < 0)
+            return BxDolProfileAnonymous::getInstance();
+
+        if (0 == $mixedProfileId || !($oProfile = self::getInstance($mixedProfileId, $bClearCache)))
+            return BxDolProfileUndefined::getInstance();
+        
+        return $oProfile;
+    }
+
+    /**
      * Get singleton instance of Profile by profile id
      */
     public static function getInstance($mixedProfileId = false, $bClearCache = false)

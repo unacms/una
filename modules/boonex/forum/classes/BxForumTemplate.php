@@ -80,9 +80,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
         );
         $i = 0;
         foreach ($aParticipants as $iProfileId => $iComments) {
-            $oProfile = BxDolProfile::getInstance($iProfileId);
-            if (!$oProfile)
-                continue;
+            $oProfile = BxDolProfile::getInstanceMagic($iProfileId);
 
             $sInfo = '';
             if ($iAuthorId == $iProfileId)
@@ -137,9 +135,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
 	function getEntryAuthor($aRow)
     {
-    	$oProfileAuthor = BxDolProfile::getInstance($aRow['author']);
-		if(!$oProfileAuthor)
-			$oProfileAuthor = BxDolProfileUndefined::getInstance();
+    	$oProfileAuthor = BxDolProfile::getInstanceMagic($aRow['author']);
 
     	return $this->parseHtmlByName('entry-author.html', array(
 			'unit' => $oProfileAuthor->getUnit(0, array('template' => 'unit_wo_info')),
@@ -150,9 +146,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
     {
     	$bShowCount = isset($aParams['show_count']) ? (int)$aParams['show_count'] == 1 : false;
 
-		$oProfileLast = BxDolProfile::getInstance($aRow['lr_profile_id']);
-		if(!$oProfileLast)
-			$oProfileLast = BxDolProfileUndefined::getInstance();
+        $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
         return $this->parseHtmlByName('entry-label.html', array(
         	'bx_if:show_count' => array(
@@ -173,9 +167,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        $oProfileLast = BxDolProfile::getInstance($aRow['lr_profile_id']);
-        if(!$oProfileLast)
-            $oProfileLast = BxDolProfileUndefined::getInstance();
+        $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
 		$sTitle = strmaxtextlen($aRow['title'], 100);
         $sText = strmaxtextlen(!empty($aRow['cmt_text']) ? $aRow['cmt_text'] : $aRow['text'], 100);

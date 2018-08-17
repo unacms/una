@@ -4,7 +4,7 @@ SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_sto
 -- TABLE: entries
 CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `author` int(10) unsigned NOT NULL,
+  `author` int(11) NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `text` text NOT NULL,
   `text_comments` text NOT NULL,
   `lr_timestamp` int(11) NOT NULL,
-  `lr_profile_id` int(10) unsigned NOT NULL,
+  `lr_profile_id` int(11) NOT NULL,
   `lr_comment_id` int(11) NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
@@ -235,6 +235,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 (@sName, @sName, 'cat', '', '#!bx_forum_cats', 0, 'select', '_bx_forum_form_entry_input_sys_cat', '_bx_forum_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_forum_form_entry_input_cat_err', 'Xss', '', 1, 0),
 (@sName, @sName, 'attachments', 'a:1:{i:0;s:14:"bx_forum_html5";}', 'a:2:{s:15:"bx_forum_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_forum_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_forum_form_entry_input_sys_attachments', '_bx_forum_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 (@sName, @sName, 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+(@sName, @sName, 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 
 ('bx_forum_search', @sName, 'author', '', '', 0, 'custom', '_bx_forum_form_search_input_sys_author', '_bx_forum_form_search_input_author', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_forum_search', @sName, 'category', '', '#!bx_forum_cats', 0, 'select', '_bx_forum_form_search_input_sys_category', '_bx_forum_form_search_input_category', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),

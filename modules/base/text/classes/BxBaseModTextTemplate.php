@@ -214,9 +214,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         // get entry url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
-        $oProfile = $aData[$CNF['FIELD_AUTHOR']] < 0 ? BxDolProfileAnonymous::getInstance() : BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);        
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
+        $oProfile = BxDolProfile::getInstanceMagic($aData[$CNF['FIELD_AUTHOR']]);
         
         $sTitle = $this->getTitle($aData);
         $sText = $this->getText($aData);
