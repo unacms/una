@@ -49,7 +49,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oProfile = BxDolProfile::getInstance($this->_aContentInfo[$CNF['FIELD_AUTHOR']]);
+        $oProfile = $this->_aContentInfo[$CNF['FIELD_AUTHOR']] < 0 ? BxDolProfileAnonymous::getInstance() : BxDolProfile::getInstance($this->_aContentInfo[$CNF['FIELD_AUTHOR']]);
         if(!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
 

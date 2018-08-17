@@ -80,7 +80,14 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             return false;
 
         $iProfileAuthor = $oProfileAuthor->id();
-        $this->aCurrent['restriction']['author']['value'] = $iProfileAuthor;
+        if (bx_get_logged_profile_id() == $iProfileAuthor || $this->oModule->_isModerator()) {
+            // for real owner and for moderators show anonymous posts
+            $this->aCurrent['restriction']['author']['operator'] = 'in';
+            $this->aCurrent['restriction']['author']['value'] = array($iProfileAuthor, -$iProfileAuthor);
+        } 
+        else {
+           $this->aCurrent['restriction']['author']['value'] = $iProfileAuthor;
+        }
 
         if(!empty($aParams['except']))
         	$this->aCurrent['restriction']['except']['value'] = is_array($aParams['except']) ? $aParams['except'] : array($aParams['except']); 

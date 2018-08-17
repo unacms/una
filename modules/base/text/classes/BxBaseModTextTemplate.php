@@ -39,8 +39,12 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if (!$iProfileId)
             $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$oProfile) 
+        // if post is anonymous then don't show author block for regular members
+        if ($aData[$CNF['FIELD_AUTHOR']] < 0 && !$this->getModule()->_isModerator())
+            return '';
+        
+        $oProfile = BxDolProfile::getInstance($iProfileId >= 0 ? $iProfileId : -$iProfileId);
+        if (!$oProfile || !$iProfileId) 
             $oProfile = BxDolProfileUndefined::getInstance();
 
         if (!$oProfile)
@@ -210,10 +214,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         // get entry url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
-        $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
+        $oProfile = $aData[$CNF['FIELD_AUTHOR']] < 0 ? BxDolProfileAnonymous::getInstance() : BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);        
         if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-
+        
         $sTitle = $this->getTitle($aData);
         $sText = $this->getText($aData);
         $sSummary = $this->getSummary($aData, $sTitle, $sText, $sUrl);
