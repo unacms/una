@@ -20,6 +20,26 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
     }
 
+    public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
+    {
+        $aMediasOld = $this->_oModule->_oDb->getMediaListByContentId($iContentId);                
+        
+        if ($b = parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent)) {
+            $aMediasNew = $this->_oModule->_oDb->getMediaListByContentId($iContentId);
+            $aIdsOld = array_column($aMediasOld, 'id');
+            $aIdsNew = array_column($aMediasNew, 'id');
+            $aIdsAdded = array_diff($aIdsNew, $aIdsOld);
+
+            if (!empty($aIdsAdded))
+                bx_alert($this->_oModule->getName(), 'medias_added', $iContentId, $iProfileId, array(
+                    'object_author_id' => $this->getContentOwnerProfileId($iContentId),
+                    'medias_added' => $aIdsAdded,
+                ));
+        }
+
+        return $b;
+    }
+    
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
     {
         parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField);
