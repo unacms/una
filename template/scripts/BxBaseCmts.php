@@ -12,8 +12,17 @@
  */
 class BxBaseCmts extends BxDolCmts
 {
+    protected static $_sTmplContentElementBlock;
+    protected static $_sTmplContentElementInline;
+    protected static $_sTmplContentDoCommentLabel;
+    protected static $_sTmplContentCounter;
+
     protected $_sJsObjName;
     protected $_sStylePrefix;
+
+    protected $_aHtmlIds;
+
+    protected $_aElementDefaults;
 
     function __construct( $sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -23,6 +32,35 @@ class BxBaseCmts extends BxDolCmts
 
         $this->_sJsObjName = 'oCmts' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
         $this->_sStylePrefix = isset($this->_aSystem['root_style_prefix']) ? $this->_aSystem['root_style_prefix'] : 'cmt';
+
+        $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sSystem) . '-' . $iId;
+
+        $this->_aHtmlIds = array(
+            'main' => 'bx-cmt-' . $sHtmlId,
+            'counter' => 'bx-cmt-counter-' . $sHtmlId
+        );
+
+        $this->_aElementDefaults = array(
+            'show_do_comment_as_button' => false,
+            'show_do_comment_as_button_small' => false,
+            'show_do_comment_image' => false,
+            'show_do_comment_icon' => true,
+            'show_do_comment_label' => false,
+            'show_counter' => true,
+            'show_counter_empty' => false
+        );
+
+        if(empty(self::$_sTmplContentElementBlock))
+            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('comment_element_block.html');
+
+        if(empty(self::$_sTmplContentElementInline))
+            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('comment_element_inline.html');
+
+        if(empty(self::$_sTmplContentDoCommentLabel))
+            self::$_sTmplContentDoCommentLabel = $this->_oTemplate->getHtml('comment_do_comment_label.html');
+
+        if(empty(self::$_sTmplContentCounter))
+            self::$_sTmplContentCounter = $this->_oTemplate->getHtml('comment_counter.html');
 
         BxDolTemplate::getInstance()->addJsTranslation('_sys_txt_cmt_loading');
     }
@@ -381,6 +419,165 @@ class BxBaseCmts extends BxDolCmts
 			'bx_repeat:items' => $aTmplVarsNotifs
 		));
     }
+
+    public function getElementBlock($aParams = array())
+    {
+        $aParams['usage'] = BX_CMT_USAGE_BLOCK;
+
+        return $this->getElement($aParams);
+    }
+
+    public function getElementInline($aParams = array())
+    {
+        $aParams['usage'] = BX_CMT_USAGE_INLINE;
+
+        return $this->getElement($aParams);
+    }
+
+    public function getElement($aParams = array())
+    {
+    	$aParams = array_merge($this->_aElementDefaults, $aParams);
+
+        $bShowDoCommentAsButtonSmall = isset($aParams['show_do_comment_as_button_small']) && $aParams['show_do_comment_as_button_small'] == true;
+        $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
+        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
+
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+        $iAuthorIp = $this->_getAuthorIp();
+
+        $iCount = $this->getCommentsCountAll();
+        $bCount = (int)$iCount != 0;
+
+        $isAllowedComment = $this->isPostReplyAllowed();
+
+        //--- Do Comment
+        $bTmplVarsDoComment = $this->_isShowDoComment($aParams, $isAllowedComment, $bCount);
+        $aTmplVarsDoComment = array();
+        if($bTmplVarsDoComment) {
+            $sClass = '';
+            if($bShowDoCommentAsButton)
+                $sClass = 'bx-btn';
+            else if ($bShowDoCommentAsButtonSmall)
+                $sClass = 'bx-btn bx-btn-small';
+
+            if(!$isAllowedComment)
+                $sClass .= $bShowDoCommentAsButton || $bShowDoCommentAsButtonSmall ? ' bx-btn-disabled' : 'bx-cmts-disabled';
+
+            $aTmplVarsDoComment = array(
+                'style_prefix' => $this->_sStylePrefix,
+                'do_comment' => $this->_oTemplate->parseLink($this->getListUrl(), $this->_getLabelDo($aParams), array(
+                    'class' => $this->_sStylePrefix . '-do-comment ' . $this->_sStylePrefix . '-dc ' . $sClass,
+                    'title' => _t($this->_getTitleDo())
+                )),
+            );
+        }
+
+        //--- Counter
+        $bTmplVarsCounter = $this->_isShowCounter($aParams, $isAllowedComment, $bCount);
+
+        $aTmplVarsCounter = array();
+        if($bTmplVarsCounter)
+            $aTmplVarsCounter = array(
+                'style_prefix' => $this->_sStylePrefix,
+                'bx_if:show_hidden' => array(
+                    'condition' => !$bShowCounterEmpty && !$bCount,
+                    'content' => array()
+                ),
+                'counter' => $this->getCounter($aParams)
+            );
+
+        if(!$bTmplVarsDoComment && !$bTmplVarsCounter)
+            return '';
+
+        $sTmplName = $this->{'_getTmplElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_SCORE_USAGE_DEFAULT)}();
+        return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
+            'style_prefix' => $this->_sStylePrefix,
+            'html_id' => $this->_aHtmlIds['main'],
+            'class' => $this->_sStylePrefix . ($bShowDoCommentAsButton ? '-button' : '') . ($bShowDoCommentAsButtonSmall ? '-button-small' : ''),
+            'count' => $iCount,
+            'bx_if:show_do_comment' => array(
+                'condition' => $bTmplVarsDoComment,
+                'content' => $aTmplVarsDoComment
+            ),
+            'bx_if:show_counter' => array(
+                'condition' => $bTmplVarsCounter,
+                'content' => $aTmplVarsCounter
+            ),
+            'script' => ''
+        ));
+    }
+
+    public function getCounter($aParams = array())
+    {
+        $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
+        $bShowDoCommentAsButtonSmall = isset($aParams['show_do_comment_as_button_small']) && $aParams['show_do_comment_as_button_small'] == true;
+        $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
+
+        $iCount = (int)$this->getCommentsCountAll();
+
+        $sClass = $this->_sStylePrefix . '-counter';
+        if($bShowDoCommentAsButtonSmall)
+            $sClass .= ' bx-btn-small-height';
+        if($bShowDoCommentAsButton)
+            $sClass .= ' bx-btn-height';
+
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplCounter(), array(
+            'id' => $this->_aHtmlIds['counter'],
+            'class' => $sClass,
+            'content' => $iCount != 0 || $bShowEmpty ? $this->_getLabelCounter($iCount) : ''
+        ));
+    }
+
+    protected function _getLabelDo($aParams = array())
+    {
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplLabelDo(), array(
+            'bx_if:show_image' => array(
+                'condition' => isset($aParams['show_do_comment_image']) && $aParams['show_do_comment_image'] == true,
+                'content' => array(
+                    'src' => $this->_getImageDo()
+                )
+            ),
+            'bx_if:show_icon' => array(
+                'condition' => isset($aParams['show_do_comment_icon']) && $aParams['show_do_comment_icon'] == true,
+                'content' => array(
+                    'name' => $this->_getIconDo()
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => isset($aParams['show_do_comment_label']) && $aParams['show_do_comment_label'] == true,
+                'content' => array(
+                    'text' => _t($this->_getTitleDo())
+                )
+            )
+        ));
+    }
+
+    protected function _getLabelCounter($iCount)
+    {
+        return (int)$iCount != 0 ? _t('_cmt_txt_counter', $iCount) : _t('_cmt_txt_counter_empty');
+    }
+
+    protected function _getTmplElementBlock()
+    {
+        return self::$_sTmplContentElementBlock;
+    }
+
+    protected function _getTmplElementInline()
+    {
+        return self::$_sTmplContentElementInline;
+    }
+
+    protected function _getTmplLabelDo()
+    {
+        return self::$_sTmplContentDoCommentLabel;
+    }
+
+    protected function _getTmplCounter()
+    {
+        return self::$_sTmplContentCounter;
+    }
+
 
     /**
      * private functions

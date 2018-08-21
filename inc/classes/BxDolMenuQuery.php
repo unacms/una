@@ -69,7 +69,7 @@ class BxDolMenuQuery extends BxDolDb
     public function getMenuItemsFromSet($sSetName)
     {
         $sQuery = $this->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` ASC", $sSetName);
-        return $this->getAll($sQuery);
+        return $this->getAllWithKey($sQuery, 'name');
     }
 }
 

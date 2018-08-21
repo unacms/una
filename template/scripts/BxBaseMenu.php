@@ -46,6 +46,22 @@ class BxBaseMenu extends BxDolMenu
 
         return $s;
     }
+    
+    public function getCodeItem ($sName)
+    {
+        if(empty($sName))
+            return '';
+
+        $sCode = $this->_oTemplate->getHtml(str_replace('.html', '_item.html', $this->_aObject['template']));
+        if(empty($sCode))
+            return '';
+
+        $mixedTmplVars = $this->getMenuItem($sName);
+        if($mixedTmplVars === false)
+            return '';
+
+        return $this->_oTemplate->parseHtmlByContent($sCode, $mixedTmplVars);
+    }
 
     /**
      * Get template variables array
@@ -60,22 +76,37 @@ class BxBaseMenu extends BxDolMenu
     }
 
     /**
-     * Get menu items array, which are ready to pass to template.
-     * @return array
+     * Get menu items array, which is ready to pass to menu template. 
+     * @return array or false
      */
     public function getMenuItems ()
     {
         if (!isset($this->_aObject['menu_items']))
             $this->_aObject['menu_items'] = $this->getMenuItemsRaw ();
 
-		$aItems = array();
+        $aItems = array();
         foreach ($this->_aObject['menu_items'] as $aItem) {
-        	$aItem = $this->_getMenuItem ($aItem);
-        	if($aItem !== false)
-            	$aItems[] = $aItem;
+            $aItem = $this->_getMenuItem ($aItem);
+            if($aItem !== false)
+                $aItems[] = $aItem;
         }
 
         return $aItems;
+    }
+    
+    /**
+     * Get menu item array, which is ready to pass to whole menu or 
+     * single menu item template. May return false if single menu item 
+     * is requested but cannot be shown by circumstances.
+     * @return array or false
+     */
+    public function getMenuItem ($sName)
+    {
+        if (!isset($this->_aObject['menu_items']))
+            $this->_aObject['menu_items'] = $this->getMenuItemsRaw ();
+
+        if(!empty($sName))
+            return $this->_getMenuItem($this->_aObject['menu_items'][$sName]);
     }
 
     /**

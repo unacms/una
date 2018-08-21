@@ -241,3 +241,42 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
+        
+/*--- Comment Element Styles ---*/
+div.cmt div.cmt-element-holder,
+div.cmt div.cmt-counter-holder {
+	position: relative;
+	float: left;
+}
+
+.cmt .cmt-element-holder,
+.cmt .cmt-counter-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.cmt-button .cmt-element-holder,
+.cmt-button .cmt-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.cmt-button-small .cmt-element-holder,
+.cmt-button-small .cmt-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.cmt .cmt-element-holder .cmt-do-comment.cmt-disabled,
+.cmt .cmt-element-holder .cmt-do-comment.cmt-disabled .sys-icon {
+	color: #ddd;
+}
+
+.cmt-button .cmt-counter-holder,
+.cmt-button-small .cmt-counter-holder {
+	font-size: 1.5rem;
+}
+
+.cmt-link .cmt-counter-holder.bx-btn-border {
+	border-width: 0px;
+}

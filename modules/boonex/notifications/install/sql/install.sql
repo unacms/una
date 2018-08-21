@@ -4,11 +4,11 @@ SET @sName = 'bx_notifications';
 -- TABLES
 CREATE TABLE IF NOT EXISTS `bx_notifications_events` (
   `id` int(11) NOT NULL auto_increment,
-  `owner_id` int(11) unsigned NOT NULL default '0',
+  `owner_id` int(11) NOT NULL default '0',
   `type` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   `object_id` text NOT NULL,
-  `object_owner_id` int(11) unsigned NOT NULL default '0',
+  `object_owner_id` int(11) NOT NULL default '0',
   `object_privacy_view` varchar(32) NOT NULL default '3',
   `subobject_id` int(11) NOT NULL default '0',
   `content` text NOT NULL,

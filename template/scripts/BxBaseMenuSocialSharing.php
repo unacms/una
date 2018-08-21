@@ -14,7 +14,8 @@ class BxBaseMenuSocialSharing extends BxTemplMenu
 {
     protected $_aNeedEncode = array(
     	'url' => 'url_encoded',
-    	'title' => 'title_encoded'
+    	'title' => 'title_encoded',
+        'img_url' => 'img_url_encoded'
     );
 
     public function __construct ($aObject, $oTemplate)

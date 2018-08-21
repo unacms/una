@@ -34,7 +34,15 @@ class BxFroalaModule extends BxDolModule
 
         $oStorage->afterUploadCleanup($iId, $iProfileId);
 
-        $sUrl = $oStorage->getFileUrlById($iId);
+        $aFileInfo = $oStorage->getFile($iId);
+        if ($aFileInfo && in_array($aFileInfo['ext'], array('jpg', 'jpeg', 'jpe', 'png'))) {
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance('bx_froala_image');
+            $sUrl = $oTranscoder->getFileUrl($iId);
+        }
+        else {
+            $sUrl = $oStorage->getFileUrlById($iId);
+        }
+
         echo json_encode(array('link' => $sUrl));
     }
 }

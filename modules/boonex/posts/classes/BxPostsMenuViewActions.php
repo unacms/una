@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    BaseText Base classes for text modules
+ * @defgroup    Posts Posts
  * @ingroup     UnaModules
  *
  * @{
@@ -12,10 +12,12 @@
 /**
  * View entry social actions menu
  */
-class BxBaseModTextMenuViewActions extends BxBaseModGeneralMenuViewActions
+class BxPostsMenuViewActions extends BxBaseModTextMenuViewActions
 {
     public function __construct($aObject, $oTemplate = false)
     {
+        $this->_sModule = 'bx_posts';
+
         parent::__construct($aObject, $oTemplate);
     }
 }
