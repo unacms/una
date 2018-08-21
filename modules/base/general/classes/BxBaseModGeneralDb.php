@@ -129,7 +129,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
         $aMethod['name'] = 'getColumn';
 
-        $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`";
+        $sSelectClause = " DISTINCT `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`";
 
         if (!empty($aParams['start']) && !empty($aParams['per_page']))
             $sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);

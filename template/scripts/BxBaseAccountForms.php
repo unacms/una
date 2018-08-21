@@ -104,19 +104,22 @@ class BxBaseAccountForms extends BxDolProfileForms
             )));
             
             $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
-            if (0 != $a['code'])
-                return MsgBox(_t($a['message']));
 
-            BxDolService::call($sProfileModule, 'redirect_after_add', array($a['content']));
+            // in case of successful profile add redirect to the page after profile creation
+            if (0 == $a['code']) { 
+                BxDolService::call($sProfileModule, 'redirect_after_add', array($a['content']));
+                return;
+            }
+            // if creation failed, redirect to create profile form
         }
-        else {
-            $sRedirectUrl = !empty($sProfileModule) ? BxDolService::call($sProfileModule, 'profile_create_url', array(false)) : '';
-        
-            $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
-                'account_id' => $iAccountId,
-                'profile_id' => $iProfileId,
-            ));
-        }
+
+        $sRedirectUrl = !empty($sProfileModule) ? BxDolService::call($sProfileModule, 'profile_create_url', array(false)) : '';
+    
+        $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
+            'account_id' => $iAccountId,
+            'profile_id' => $iProfileId,
+        ));
+
     }
 
     public function onAccountCreated ($iAccountId, $isSetPendingApproval, $iAction = BX_PROFILE_ACTION_MANUAL)

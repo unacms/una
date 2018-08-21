@@ -1055,7 +1055,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
         // moderator and owner always have access
-        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || -$aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
         return _t('_sys_txt_access_denied');
     }
@@ -1071,7 +1071,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
-        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+        if (($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || -$aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId) && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
@@ -1174,7 +1174,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $oProfile = $this->getObjectUser($iUserId);
 
         $oAccount = null;
-        if($oProfile && !($oProfile instanceof BxDolProfileUndefined))
+        if($oProfile && !($oProfile instanceof BxDolProfileUndefined) && !($oProfile instanceof BxDolProfileAnonymous))
             $oAccount = $oProfile->getAccountObject();
         $bAccount = !empty($oAccount);
 
@@ -1194,12 +1194,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function getObjectUser($iUserId = 0)
     {
     	bx_import('BxDolProfile');
-        $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
-            $oProfile = BxDolProfileUndefined::getInstance();
-        }
-
+        $oProfile = BxDolProfile::getInstanceMagic($iUserId);
         return $oProfile;
     }
 
@@ -1231,9 +1226,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     public function getUserInfo($iUserId = 0)
     {
-        $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile)
-            $oProfile = BxDolProfileUndefined::getInstance();
+        $oProfile = BxDolProfile::getInstanceMagic($iUserId);
 
         return array(
             $oProfile->getDisplayName(),

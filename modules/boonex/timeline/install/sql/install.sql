@@ -3,7 +3,7 @@ SET @sName = 'bx_timeline';
 -- TABLES
 CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `id` int(11) NOT NULL auto_increment,
-  `owner_id` int(11) unsigned NOT NULL default '0',
+  `owner_id` int(11) NOT NULL default '0',
   `type` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   `object_id` text NOT NULL,
