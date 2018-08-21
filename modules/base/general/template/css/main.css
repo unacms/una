@@ -24,9 +24,6 @@
 .bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item {
     white-space: nowrap;
 }
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .sys-icon {
-    vertical-align: text-top;
-}
 .bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .cmt-element-holder,
 .bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .cmt-counter-holder,
 .bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-view-element-holder,
