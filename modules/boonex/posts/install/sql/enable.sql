@@ -207,7 +207,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_posts_view', 'bx_posts', 'delete-post', '_bx_posts_menu_item_title_system_delete_entry', '_bx_posts_menu_item_title_delete_entry', 'page.php?i=delete-post&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
 
 
--- MENU: social actions menu for view entry 
+-- MENU: all actions menu for view entry 
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_posts_view_actions', '_sys_menu_title_view_actions', 'bx_posts_view_actions', 'bx_posts', 15, 0, 1, 'BxPostsMenuViewActions', 'modules/boonex/posts/classes/BxPostsMenuViewActions.php');
@@ -218,7 +218,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_posts_view_actions', 'bx_posts', 'edit-post', '_bx_posts_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1),
 ('bx_posts_view_actions', 'bx_posts', 'delete-post', '_bx_posts_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 2),
-('bx_posts_view_actions', 'bx_posts', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_posts_view_actions', 'bx_posts', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 20),
 ('bx_posts_view_actions', 'bx_posts', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
 ('bx_posts_view_actions', 'bx_posts', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
 ('bx_posts_view_actions', 'bx_posts', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 23),

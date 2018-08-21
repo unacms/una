@@ -51,16 +51,6 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
     }
 
-    protected function _getMenuItemEditPost($aItem)
-    {
-        return $this->_getMenuItemByNameActions($aItem);
-    }
-
-    protected function _getMenuItemDeletePost($aItem)
-    {
-        return $this->_getMenuItemByNameActions($aItem);
-    }
-
     protected function _getMenuItemView($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
