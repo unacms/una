@@ -39,6 +39,10 @@ define('BX_CMT_PFP_BOTTOM', 'bottom');
 define('BX_CMT_RATE_VALUE_PLUS', 1);
 define('BX_CMT_RATE_VALUE_MINUS', -1);
 
+define('BX_CMT_USAGE_BLOCK', 'block');
+define('BX_CMT_USAGE_INLINE', 'inline');
+define('BX_CMT_USAGE_DEFAULT', BX_CMT_USAGE_BLOCK);
+
 /**
  * Comments for any content
  *
@@ -1497,6 +1501,39 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_CommentReplied', $aPlus);
         return $aTemplate && sendMail($aAccount['email'], $aTemplate['Subject'], $aTemplate['Body']);
+    }
+
+    protected function _isShowDoComment($aParams, $isAllowedComment, $bCount)
+    {
+        $bShowDoComment = !isset($aParams['show_do_comment']) || $aParams['show_do_comment'] == true;
+
+        return $bShowDoComment && ($isAllowedComment || $bCount);
+    }
+
+    protected function _isShowCounter($aParams, $isAllowedComment, $bCount)
+    {
+        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
+
+        return $bShowCounter && ($isAllowedComment || $bCount);
+    }
+
+    /**
+     * Note. By default image based controls aren't used.
+     * Therefore it can be overwritten in custom template.
+     */
+    protected function _getImageDo()
+    {
+    	return '';
+    }
+
+    protected function _getIconDo()
+    {
+    	return 'far comment';
+    }
+
+    protected function _getTitleDo()
+    {
+    	return '_cmt_txt_do';
     }
 }
 
