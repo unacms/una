@@ -10,13 +10,13 @@
  */
 
 /**
- * View entry actions menu in popup
+ * View entry social actions menu
  */
-class BxBaseModTextMenuViewActions extends BxBaseModTextMenuView
+class BxBaseModTextMenuViewActions extends BxBaseModGeneralMenuViewActions
 {
-    protected function getMenuItemsRaw ()
+    public function __construct($aObject, $oTemplate = false)
     {
-        return $this->_getMenuItemsCombined ();
+        parent::__construct($aObject, $oTemplate);
     }
 }
 

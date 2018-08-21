@@ -559,9 +559,58 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * Entry actions and social sharing block
      */
-    public function serviceEntityAllActions ($iContentId = 0)
+    public function serviceEntityAllActions ($iContentId = 0, $aParams = array())
     {
-        return $this->_oTemplate->entryAllActions($this->serviceEntityActions($iContentId), $this->serviceEntitySocialSharing($iContentId));
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContentId = $this->_getContent($iContentId, false);
+        if($iContentId === false)
+            return false;
+
+        if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) {
+            $sEntryTitle = !empty($aParams['entry_title']) ? $aParams['entry_title'] : '';
+            if(empty($sEntryTitle) && !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]))
+                $sEntryTitle = $aContentInfo[$CNF['FIELD_TITLE']];
+            
+            $sEntryUrl = !empty($aParams['entry_url']) ? $aParams['entry_url'] : '';
+            if(empty($sEntryUrl) && !empty($CNF['URI_VIEW_ENTRY']))
+                $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+
+            $iEntryThumb = !empty($aParams['entry_thumb']) ? (int)$aParams['entry_thumb'] : 0;
+            if(empty($iEntryThumb) && !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]))
+                $iEntryThumb = (int)$aContentInfo[$CNF['FIELD_THUMB']];
+
+            $sObjectStorage = !empty($aParams['object_storage']) ? $aParams['object_storage'] : false;
+            if(empty($sObjectStorage) && !empty($CNF['OBJECT_STORAGE']))
+                $sObjectStorage = $CNF['OBJECT_STORAGE'];
+            
+            $sObjectTranscoder = !empty($aParams['object_transcoder']) ? $aParams['object_transcoder'] : false;
+
+            $aMarkers = array();
+            if(!empty($sEntryTitle))
+                $aMarkers['title'] = $sEntryTitle;
+
+            if(!empty($sEntryUrl))
+                $aMarkers['url'] = $sEntryUrl;
+
+            if(!empty($iEntryThumb)) {
+                if(!empty($sObjectTranscoder))
+                    $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
+                else if(!empty($sObjectStorage))
+                    $o = BxDolStorage::getObjectInstance($sObjectStorage);
+
+                $sImageUrl = $o ? $o->getFileUrlById($iEntryThumb) : '';
+                if(!empty($sImageUrl))
+                    $aMarkers['img_url'] = $sImageUrl;
+            }
+
+            $oSocialActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
+            $oSocialActions->addMarkers($aMarkers);
+            return $this->_oTemplate->entryAllActions($oSocialActions->getCode());
+        }
+
+        //TODO: Remove this at the end.
+        return $this->serviceEntityActions($iContentId) . $this->serviceEntitySocialSharing($iContentId);
     }
 
     /**
@@ -580,6 +629,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * Entry social sharing block
      */
+    //TODO: Update to work with Social Sharing menu only.
     public function serviceEntitySocialSharing ($iContentId = 0)
     {
         $mixedContent = $this->_getContent($iContentId);
@@ -1347,10 +1397,42 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _entitySocialSharing ($iId, $aParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $bShowAsButton = !isset($aParams['show_as_button']) || $aParams['show_as_button'] === true;
 
         $sUrl = !empty($aParams['uri_view_entry']) ? BxDolPermalinks::getInstance()->permalink('page.php?i=' . $aParams['uri_view_entry'] . '&id=' . $iId) : '';
         $sTitle = !empty($aParams['title']) ? $aParams['title'] : '';
+
+        $aMarkers = array();
+        $bSocialSharing = isset($aParams['social_sharing']) ? (bool)$aParams['social_sharing'] : true;
+        if($bSocialSharing) {
+            $aMarkers = array(
+                'id' => $iId,                           //TODO: Can be removed later
+                'module' => $this->_aModule['name'],    //TODO: Can be removed later
+                'url' => BX_DOL_URL_ROOT . $sUrl,
+                'title' => $sTitle,
+            );
+
+            $iIdThumb = isset($aParams['id_thumb']) ? (int)$aParams['id_thumb'] : 0;
+            if ($iIdThumb) {
+                if(!empty($aParams['object_transcoder']))
+                    $o = BxDolTranscoder::getObjectInstance($aParams['object_transcoder']);
+                else if(!empty($aParams['object_storage']))
+                    $o = BxDolStorage::getObjectInstance($aParams['object_storage']);
+
+                $sImgUrl = $o ? $o->getFileUrlById($iIdThumb) : '';
+                if($sImgUrl)
+                    $aMarkers['img_url'] = $sImgUrl;
+            }
+        }
+
+        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        //--- Views
+        $sViews = '';
+        $oViews = !empty($aParams['object_view']) ? BxDolView::getObjectInstance($aParams['object_view'], $iId) : false;
+        if ($oViews && $oViews->isEnabled())
+            $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => $bShowAsButton));
 
         //--- Comments
         $sComments = '';
@@ -1370,30 +1452,6 @@ class BxBaseModGeneralModule extends BxDolModule
                 ),
             ));
         }
-
-        $aCustomParams = array();
-        $iIdThumb = isset($aParams['id_thumb']) ? (int)$aParams['id_thumb'] : 0;
-        $bSocialSharing = isset($aParams['social_sharing']) ? (bool)$aParams['social_sharing'] : true;
-        if ($iIdThumb && $bSocialSharing) {
-            if(!empty($aParams['object_transcoder']))
-                $o = BxDolTranscoder::getObjectInstance($aParams['object_transcoder']);
-            else if(!empty($aParams['object_storage']))
-                $o = BxDolStorage::getObjectInstance($aParams['object_storage']);
-
-            $sImgUrl = $o ? $o->getFileUrlById($iIdThumb) : '';
-            if($sImgUrl)
-                $aCustomParams = array (
-                    'img_url' => $sImgUrl,
-                    'img_url_encoded' => rawurlencode($sImgUrl),
-                );
-        }
-
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
-        //--- Views
-        $sViews = '';
-        $oViews = !empty($aParams['object_view']) ? BxDolView::getObjectInstance($aParams['object_view'], $iId) : false;
-        if ($oViews && $oViews->isEnabled())
-            $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => $bShowAsButton));
 
         //--- Votes
         $sVotes = '';
@@ -1431,16 +1489,11 @@ class BxBaseModGeneralModule extends BxDolModule
         if ($oReport)
             $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => $bShowAsButton));
 
-        $sSocial = '';
+        $sSocialSharing = '';
         if($bSocialSharing) {
             $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
-            $oSocial->addMarkers(array_merge(array(
-                'id' => $iId,
-            	'module' => $this->_aModule['name'],
-            	'url' => BX_DOL_URL_ROOT . $sUrl,
-            	'title' => $sTitle,
-            ), $aCustomParams));
-            $sSocial = $oSocial->getCode();
+            $oSocial->addMarkers($aMarkers);
+            $sSocialSharing = $oSocial->getCode();
         }
 
         if(empty($sComments)  && empty($sViews) && empty($sVotes) && empty($sScores) && empty($sFavorites)  && empty($sFeatured) && empty($sRepost) && empty($sReport) && empty($sSocial))
@@ -1448,14 +1501,14 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'comments' => $sComments,
-        	'view' => $sViews,
+            'view' => $sViews,
             'vote' => $sVotes,
-        	'score' => $sScores,
+            'score' => $sScores,
             'favorite' => $sFavorites,
             'feature' => $sFeatured,
             'repost' => $sRepost,
-        	'report' => $sReport,
-            'social' => $sSocial,
+            'report' => $sReport,
+            'social' => $sSocialSharing,
         ));
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Repost, etc.
     }

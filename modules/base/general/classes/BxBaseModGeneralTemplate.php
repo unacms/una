@@ -192,14 +192,13 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     	));
     }
 
-    function entryAllActions ($sActionsEntity, $sActionsSocial)
+    function entryAllActions($sActions)
     {
-        if(empty($sActionsEntity) && empty($sActionsSocial))
+        if(empty($sActions))
             return '';
 
         return $this->parseHtmlByName('entry-all-actions.html', array (
-            'actions_entity' => $sActionsEntity,
-            'actions_social' => $sActionsSocial,
+            'actions' => $sActions
         ));
     }
 
