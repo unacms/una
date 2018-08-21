@@ -210,6 +210,33 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_files_view', 'bx_files', 'delete-file', '_bx_files_menu_item_title_system_delete_entry', '_bx_files_menu_item_title_delete_entry', 'page.php?i=delete-file&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 3);
 
 
+-- MENU: all actions menu for view entry 
+
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_files_view_actions', '_sys_menu_title_view_actions', 'bx_files_view_actions', 'bx_files', 15, 0, 1, 'BxFilesMenuViewActions', 'modules/boonex/files/classes/BxFilesMenuViewActions.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_files_view_actions', 'bx_files', '_sys_menu_set_title_view_actions', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_files_view_actions', 'bx_files', 'download-file', '_bx_files_menu_item_title_system_download_file', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1),
+('bx_files_view_actions', 'bx_files', 'edit-file', '_bx_files_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 2),
+('bx_files_view_actions', 'bx_files', 'delete-file', '_bx_files_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 3), 
+('bx_files_view_actions', 'bx_files', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 20),
+('bx_files_view_actions', 'bx_files', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
+('bx_files_view_actions', 'bx_files', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
+('bx_files_view_actions', 'bx_files', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 23),
+('bx_files_view_actions', 'bx_files', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 24),
+('bx_files_view_actions', 'bx_files', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 25),
+('bx_files_view_actions', 'bx_files', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 26),
+('bx_files_view_actions', 'bx_files', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 27),
+('bx_files_view_actions', 'bx_files', 'social-sharing-facebook', '_sys_menu_item_title_system_social_haring_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 41),
+('bx_files_view_actions', 'bx_files', 'social-sharing-googleplus', '_sys_menu_item_title_system_social_sharing_googleplus', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 42),
+('bx_files_view_actions', 'bx_files', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 43),
+('bx_files_view_actions', 'bx_files', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 44),
+('bx_files_view_actions', 'bx_files', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
+
+
 -- MENU: actions menu for my entries
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
