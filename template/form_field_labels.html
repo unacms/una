@@ -18,7 +18,7 @@
         else if ($(this).parent('#__id__').length) {
             var e = $(this).remove().on('click', fCallack);
             e.find('input').remove();
-            $("#__id__wrapper .bx-form-input-autotoken-labels-sel").append(e);
+            $("#__id__wrapper .bx-form-input-autotoken-labels-sel").prepend(e);
         }
     };
     $("#__id__wrapper b").on('click', fCallack);

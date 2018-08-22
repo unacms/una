@@ -565,3 +565,7 @@
 .bx-form-value .bx-form-input-autotoken-labels-sel b:after {
     display:none;
 }
+.bx-form-value .bx-form-input-autotoken-labels-sel b {
+    line-height:1.5rem;
+    font-size:85%;
+}
