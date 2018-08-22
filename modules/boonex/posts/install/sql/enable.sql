@@ -226,7 +226,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_posts_view_actions', 'bx_posts', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 25),
 ('bx_posts_view_actions', 'bx_posts', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 26),
 ('bx_posts_view_actions', 'bx_posts', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 27),
-('bx_posts_view_actions', 'bx_posts', 'social-sharing-facebook', '_sys_menu_item_title_system_social_haring_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 41),
+('bx_posts_view_actions', 'bx_posts', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 41),
 ('bx_posts_view_actions', 'bx_posts', 'social-sharing-googleplus', '_sys_menu_item_title_system_social_sharing_googleplus', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 42),
 ('bx_posts_view_actions', 'bx_posts', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 43),
 ('bx_posts_view_actions', 'bx_posts', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 44),

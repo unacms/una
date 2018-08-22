@@ -119,6 +119,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_FORM_SEARCH_DISPLAY_FULL' => 'bx_forum_search_full',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_forum_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_forum_view_more', // more actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_forum_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_forum_my', // actions menu on my entries page
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_forum_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_MENU_SUBMENU' => 'bx_forum_submenu', // main module submenu
