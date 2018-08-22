@@ -20,7 +20,12 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
     public function response($oAlert)
     {
         parent::response($oAlert);
-        
+
+        $aProfileModulesAutofollowLabels = array('bx_persons', 'bx_organizations');
+        if (in_array($oAlert->sUnit, $aProfileModulesAutofollowLabels) && in_array($oAlert->sAction, array('added', 'edited'))) {
+            $this->_oModule->followLabels($oAlert->sUnit, $oAlert->iObject);
+        }
+
         if ($oAlert->sUnit == 'meta_keyword' && $oAlert->sAction == 'added'){
             if (isset($oAlert->aExtras['meta']) && isset($oAlert->aExtras['object']) && isset($oAlert->iObject) && isset($oAlert->iSender)){
                 $this->_oModule->processHashtag($oAlert->aExtras['meta'], $oAlert->aExtras['object'], $oAlert->iObject, $oAlert->iSender);

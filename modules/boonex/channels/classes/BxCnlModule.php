@@ -208,6 +208,40 @@ class BxCnlModule extends BxBaseModGroupsModule
     {
         return true;
     }
+
+    public function followLabels($sModule, $iContentId)
+    {
+        if (!getParam('bx_channels_labels_autofollow'))
+            return;
+        
+        if (!($oModuleProfiles = BxDolModule::getInstance($sModule)))
+            return;
+
+        if (!($aContentInfo = $oModuleProfiles->_oDb->getContentInfoById($iContentId)) || !($oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModule)))
+            return;
+
+        $CNF = &$oModuleProfiles->_oConfig->CNF;
+        
+        if (!$oModuleProfiles->serviceActAsProfile() || !isset($CNF['FIELD_LABELS']) || empty($aContentInfo[$CNF['FIELD_ID']]))
+            return;
+
+        if (!($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) || !$oMetatags->keywordsIsEnabled() || !($aLabels = $oMetatags->keywordsGet($aContentInfo[$CNF['FIELD_ID']])))
+            return;
+
+        if (!($oConn = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')))
+            return;
+
+        foreach ($aLabels as $sLabel) {
+
+            if (!($iContentIdChannel = $this->_oDb->getChannelIdByName($sLabel)))
+                continue;
+
+            if (!($oProfileChannel = BxDolProfile::getInstanceByContentAndType($iContentIdChannel, 'bx_channels')))
+                continue;
+
+            $oConn->addConnection($oProfile->id(), $oProfileChannel->id());
+        }
+    }
 }
 
 /** @} */
