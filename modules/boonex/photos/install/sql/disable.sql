@@ -15,7 +15,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_photos' OR `object` IN('bx_p
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_photos';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_photos';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_photos' OR `set_name` IN('bx_photos_view', 'bx_photos_submenu', 'bx_photos_view_submenu', 'bx_photos_snippet_meta', 'bx_photos_my', 'bx_photos_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_photos' OR `set_name` IN('bx_photos_view', 'bx_photos_view_actions', 'bx_photos_submenu', 'bx_photos_view_submenu', 'bx_photos_snippet_meta', 'bx_photos_my', 'bx_photos_menu_manage_tools');
 
 
 -- PRIVACY 
