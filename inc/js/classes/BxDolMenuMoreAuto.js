@@ -55,6 +55,18 @@ BxDolMenuMoreAuto.prototype.update = function()
         this._moveFromSubmenu();
 };
 
+BxDolMenuMoreAuto.prototype.more = function(oElement)
+{
+    var oElement = $(oElement);
+
+    oElement.parents('li:first').find('#' + this._aHtmlIds['more_auto_popup']).dolPopup({
+        pointer: {
+            el: oElement
+        }, 
+        moveToDocRoot: false
+    });
+}
+
 BxDolMenuMoreAuto.prototype._moveToSubmenu = function()
 {
     var $this = this;

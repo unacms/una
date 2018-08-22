@@ -39,7 +39,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_oMenuSocialSharing = null;
 
         $this->_bShowAsButton = true;
-        $this->_bShowTitles = false;
+        $this->_bShowTitle = false;
     }
 
     public function setContentId($iContentId)
@@ -49,6 +49,17 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
         if($this->_aContentInfo)
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
+    }
+
+    protected function _getMenuItemDefault ($aItem)
+    {
+        if($this->_bShowAsButton)
+            $aItem['class_link'] = 'bx-btn' . (!empty($aItem['class_link']) ? ' ' . $aItem['class_link'] : '');
+
+        if(!$this->_bShowTitle)
+            $aItem['bx_if:title']['condition'] = false;
+
+        return parent::_getMenuItemDefault ($aItem);
     }
 
     protected function _getMenuItemView($aItem)
@@ -169,13 +180,6 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
 
-    protected function _getMenuItemMoreAuto($aItem)
-    {
-        $aItem['class_link'] = (!empty($aItem['class_link']) ? $aItem['class_link'] . ' ' : '') . 'bx-btn';
-        
-        return parent::_getMenuItemMoreAuto($aItem);
-    }
-
     protected function _getMenuItemSocialSharingFacebook($aItem)
     {
         return $this->_getMenuItemByNameSocialSharing($aItem);
@@ -208,7 +212,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             $this->_oMenuActions->setContentId($this->_iContentId);
         }
 
-        return $this->_oMenuActions->getCodeItem($aItem['name']);
+        $aItem = $this->_oMenuActions->getMenuItem($aItem['name']);
+        if(empty($aItem) || !is_array($aItem))
+            return false;
+
+        return $this->_getMenuItemDefault($aItem);
     }
 
     protected function _getMenuItemByNameSocialSharing($aItem)
@@ -221,7 +229,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             )));
         }
 
-        return $this->_oMenuSocialSharing->getCodeItem($aItem['name']);
+        $aItem = $this->_oMenuSocialSharing->getMenuItem($aItem['name']);
+        if(empty($aItem) || !is_array($aItem))
+            return false;
+
+        return $this->_getMenuItemDefault($aItem);
     }
 }
 
