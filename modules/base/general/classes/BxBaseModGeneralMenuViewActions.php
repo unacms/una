@@ -55,6 +55,8 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
 
     protected function _getMenuItemDefault ($aItem)
     {
+        $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
+
         if($this->_bShowAsButton)
             $aItem['class_link'] = 'bx-btn' . (!empty($aItem['class_link']) ? ' ' . $aItem['class_link'] : '');
 

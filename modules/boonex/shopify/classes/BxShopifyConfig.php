@@ -96,6 +96,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
         	'OBJECT_FORM_SETTINGS' => 'bx_shopify_settings',
         	'OBJECT_FORM_SETTINGS_DISPLAY_EDIT' => 'bx_shopify_settings_edit',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_shopify_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_shopify_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_shopify_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_shopify_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_shopify_view_submenu', // view entry submenu

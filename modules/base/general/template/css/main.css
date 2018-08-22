@@ -59,7 +59,8 @@
 .bx-base-general-entity-actions .bx-feature,
 .bx-base-general-entity-actions .bx-report,
 .bx-base-general-entity-actions .bx-tl-repost,
-.bx-base-general-entity-actions .bx-menu-btns-hor.bx-menu-object-sys_social_sharing {
+.bx-base-general-entity-actions .bx-menu-btns-hor.bx-menu-object-sys_social_sharing,
+.bx-base-general-entity-actions .bx-base-general-entity-action {
     position: relative;
     float: none;
     display: inline-block;

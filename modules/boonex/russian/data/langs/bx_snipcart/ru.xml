@@ -206,6 +206,7 @@
 	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Товары - {addon} спрятано]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[Мои товары]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[Все товары]]></string>
+        <string name="_bx_snipcart_menu_item_title_system_buy_for"><![CDATA[Купить]]></string>
 	<string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Купить за {1}{0}]]></string>
 
 	<string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
