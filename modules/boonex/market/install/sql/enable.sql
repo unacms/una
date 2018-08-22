@@ -267,6 +267,35 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_view_more', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
 ('bx_market_view_more', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 
+-- MENU: all actions menu for view entry 
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_view_actions', '_sys_menu_title_view_actions', 'bx_market_view_actions', 'bx_market', 15, 0, 1, 'BxMarketMenuViewActions', 'modules/boonex/market/classes/BxMarketMenuViewActions.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_market_view_actions', 'bx_market', '_sys_menu_set_title_view_actions', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_market_view_actions', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1),
+('bx_market_view_actions', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 2),
+('bx_market_view_actions', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 3),
+('bx_market_view_actions', 'bx_market', 'unhide-product', '_bx_market_menu_item_title_system_unhide_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 4),
+('bx_market_view_actions', 'bx_market', 'hide-product', '_bx_market_menu_item_title_system_hide_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 5),
+('bx_market_view_actions', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 6),
+('bx_market_view_actions', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 7),
+('bx_market_view_actions', 'bx_market', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 20),
+('bx_market_view_actions', 'bx_market', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
+('bx_market_view_actions', 'bx_market', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 22),
+('bx_market_view_actions', 'bx_market', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 23),
+('bx_market_view_actions', 'bx_market', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 24),
+('bx_market_view_actions', 'bx_market', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 25),
+('bx_market_view_actions', 'bx_market', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 26),
+('bx_market_view_actions', 'bx_market', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 27),
+('bx_market_view_actions', 'bx_market', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 41),
+('bx_market_view_actions', 'bx_market', 'social-sharing-googleplus', '_sys_menu_item_title_system_social_sharing_googleplus', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 42),
+('bx_market_view_actions', 'bx_market', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 43),
+('bx_market_view_actions', 'bx_market', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 44),
+('bx_market_view_actions', 'bx_market', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
+
 -- MENU: actions menu for my entries
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_my', '_bx_market_menu_title_entries_my', 'bx_market_my', 'bx_market', 9, 0, 1, 'BxMarketMenu', 'modules/boonex/market/classes/BxMarketMenu.php');

@@ -18,6 +18,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     protected $_oModule;
 
     protected $_oMenuAction;
+    protected $_oMenuActionsMore;
     protected $_oMenuSocialSharing;
 
     protected $_iContentId;
@@ -36,6 +37,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->setContentId(bx_process_input(bx_get('id'), BX_DATA_INT));
 
         $this->_oMenuActions = null;
+        $this->_oMenuActionsMore = null;
         $this->_oMenuSocialSharing = null;
 
         $this->_bShowAsButton = true;
@@ -230,6 +232,25 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         }
 
         $aItem = $this->_oMenuSocialSharing->getMenuItem($aItem['name']);
+        if(empty($aItem) || !is_array($aItem))
+            return false;
+
+        return $this->_getMenuItemDefault($aItem);
+    }
+
+    protected function _getMenuItemByNameActionsMore($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($this->_oMenuActionsMore)) {
+            if(empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']))
+                return '';
+
+            $this->_oMenuActionsMore = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']);
+            $this->_oMenuActionsMore->setContentId($this->_iContentId);
+        }
+
+        $aItem = $this->_oMenuActionsMore->getMenuItem($aItem['name']);
         if(empty($aItem) || !is_array($aItem))
             return false;
 
