@@ -9,7 +9,7 @@
  */
 
 function BxAnalytics(oOptions) {
-    this._sContainerId = 'BxAnalyticsContainer';
+    this._sContainerId = 'bx_analytics_container';
     this._sModuleSelector = '#' + this._sContainerId + ' .bx_analytics_module_selector';
     this._sReportSelector = '#' + this._sContainerId + " .bx_analytics_report_selector";
     this._sContainerDataSelector = '#' + this._sContainerId + " .bx_analytics_data";
@@ -119,7 +119,7 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
         else{
             sTxt = oData.datasets[0].data[iDx].x;
         }
-        if (oDataIn.links) {
+        if (oDataIn.links && count(oDataIn.links) > 0) {
             sTxt = "<a href='" + oDataIn.links[iDx] + "'>" + sTxt + "</a>"
         }
         sHtml += '<tr><td>&nbsp;'+  sTxt + '</td>';

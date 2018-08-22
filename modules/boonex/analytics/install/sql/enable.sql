@@ -18,9 +18,8 @@ INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `e
 
 -- PAGES & BLOCKS
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
-('bx_analytics_page', '_bx_analytics_page_title_sys_page', '_bx_analytics_page_title_page', @sName, 5, 2147483647, 1, 'analytics', '', '', '', '', 0, 1, 0, 'BxAnalyticsPageLicenses', 'modules/boonex/analytics/classes/BxAnalyticsPageLicenses.php');
+('bx_analytics_page', '_bx_analytics_page_title_sys_page', '_bx_analytics_page_title_page', @sName, 5, 2147483647, 1, 'analytics', '', '', '', '', 0, 1, 0, 'BxAnalyticsPage', 'modules/boonex/analytics/classes/BxAnalyticsPage.php');
 
--- PAGES: add page block on dashboard
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_analytics_page', 1,  @sName, '_bx_analytics_page_block_title_system_canvas', '_bx_analytics_page_block_title_canvas', 11, 192, 'service', 'a:2:{s:6:"module";s:12:"bx_analytics";s:6:"method";s:10:"get_canvas";}', 0, 1, 1, 0);
 

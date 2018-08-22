@@ -32,9 +32,8 @@ class BxAnalyticsTemplate extends BxBaseModGeneralTemplate
         
         $iDaysBefore = getParam('bx_analytics_default_interval_day');
         $sDate = date('d/m/Y', time() - $iDaysBefore * 86400) . ' - ' . date('d/m/Y');
-        
-        $this->addJs(array('chart.min.js', 'analytics.js', 'moment-with-locales.min.js', 'daterangepicker.js', 'datatables.min.js'));
-        $this->addCss(array('daterangepicker.css', 'datatables.min.css'));
+        $this->addJs(array('chart.min.js', 'analytics.js', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/daterangepicker/|daterangepicker.js', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/datatables/|datatables.min.js'));
+        $this->addCss(array(BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/daterangepicker/|daterangepicker.css', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/datatables/|datatables.min.css'));
         return $this->getJsCode('analytics') . $this->parseHtmlByName('canvas.html', array(
              'bx_repeat:items' => $aModulesList2,
              'interval' => $sDate
