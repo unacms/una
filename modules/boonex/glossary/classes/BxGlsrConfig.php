@@ -91,6 +91,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_glossary_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_glossary_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_glossary_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_glossary_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_glossary_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_glossary_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_glossary_view_submenu', // view entry submenu
