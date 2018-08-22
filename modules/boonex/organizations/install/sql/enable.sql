@@ -23,7 +23,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_organizations_searchable_fields', 'org_name,org_desc', @iCategId, '_bx_orgs_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"get_searchable_fields";}', '', '', 20),
 ('bx_organizations_public_subscriptions', '', @iCategId, '_bx_orgs_option_public_subscriptions', 'checkbox', '', '', '', 30),
 ('bx_organizations_public_subscribed_me', '', @iCategId, '_bx_orgs_option_public_subscribed_me', 'checkbox', '', '', '', 31),
-('bx_organizations_enable_profile_activation_letter', 'on', @iCategId, '_bx_orgs_option_enable_profile_activation_letter', 'checkbox', '', '', '', 32);
+('bx_organizations_enable_profile_activation_letter', 'on', @iCategId, '_bx_orgs_option_enable_profile_activation_letter', 'checkbox', '', '', '', 32),
+('bx_organizations_labels', '', @iCategId, '_sys_option_labels', 'text', '', '', '', 40);
 
 -- PAGES
 
