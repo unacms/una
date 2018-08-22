@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Posts Posts
+ * @defgroup    Videos Videos
  * @ingroup     UnaModules
  *
  * @{
@@ -12,21 +12,21 @@
 /**
  * View entry social actions menu
  */
-class BxPostsMenuViewActions extends BxBaseModTextMenuViewActions
+class BxVideosMenuViewActions extends BxBaseModTextMenuViewActions
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_sModule = 'bx_posts';
+        $this->_sModule = 'bx_videos';
 
         parent::__construct($aObject, $oTemplate);
     }
 
-    protected function _getMenuItemEditPost($aItem)
+    protected function _getMenuItemEditVideo($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
 
-    protected function _getMenuItemDeletePost($aItem)
+    protected function _getMenuItemDeleteVideo($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
     }

@@ -96,6 +96,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_photos_entry_delete',
             'OBJECT_PAGE_VIEW_ENTRY_BRIEF' => 'bx_photos_view_entry_brief', // brief view page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_photos_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_photos_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_photos_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_photos_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_photos_view_submenu', // view entry submenu

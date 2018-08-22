@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Posts Posts
+ * @defgroup    Albums Albums
  * @ingroup     UnaModules
  *
  * @{
@@ -12,21 +12,26 @@
 /**
  * View entry social actions menu
  */
-class BxPostsMenuViewActions extends BxBaseModTextMenuViewActions
+class BxAlbumsMenuViewActions extends BxBaseModTextMenuViewActions
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_sModule = 'bx_posts';
+        $this->_sModule = 'bx_albums';
 
         parent::__construct($aObject, $oTemplate);
     }
 
-    protected function _getMenuItemEditPost($aItem)
+    protected function _getMenuItemAddImagesToAlbum($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
 
-    protected function _getMenuItemDeletePost($aItem)
+    protected function _getMenuItemEditAlbum($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
+    protected function _getMenuItemDeleteAlbum($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
     }

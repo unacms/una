@@ -205,6 +205,32 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_albums_view', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_entry', '_bx_albums_menu_item_title_edit_entry', 'page.php?i=edit-album&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
 ('bx_albums_view', 'bx_albums', 'delete-album', '_bx_albums_menu_item_title_system_delete_entry', '_bx_albums_menu_item_title_delete_entry', 'page.php?i=delete-album&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 
+-- MENU: all actions menu for view entry 
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_albums_view_actions', '_sys_menu_title_view_actions', 'bx_albums_view_actions', 'bx_albums', 15, 0, 1, 'BxAlbumsMenuViewActions', 'modules/boonex/albums/classes/BxAlbumsMenuViewActions.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_albums_view_actions', 'bx_albums', '_sys_menu_set_title_view_actions', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_albums_view_actions', 'bx_albums', 'add-images-to-album', '_bx_albums_menu_item_title_system_add_images', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1),
+('bx_albums_view_actions', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 2),
+('bx_albums_view_actions', 'bx_albums', 'delete-album', '_bx_albums_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 3),
+('bx_albums_view_actions', 'bx_albums', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 20),
+('bx_albums_view_actions', 'bx_albums', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
+('bx_albums_view_actions', 'bx_albums', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 22),
+('bx_albums_view_actions', 'bx_albums', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 23),
+('bx_albums_view_actions', 'bx_albums', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 24),
+('bx_albums_view_actions', 'bx_albums', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 25),
+('bx_albums_view_actions', 'bx_albums', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 26),
+('bx_albums_view_actions', 'bx_albums', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 27),
+('bx_albums_view_actions', 'bx_albums', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 41),
+('bx_albums_view_actions', 'bx_albums', 'social-sharing-googleplus', '_sys_menu_item_title_system_social_sharing_googleplus', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 42),
+('bx_albums_view_actions', 'bx_albums', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 43),
+('bx_albums_view_actions', 'bx_albums', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 44),
+('bx_albums_view_actions', 'bx_albums', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
+
+
 -- MENU: actions menu for view media
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_albums_view_media', '_bx_albums_menu_title_view_media', 'bx_albums_view_media', 'bx_albums', 9, 0, 1, 'BxAlbumsMenuView', 'modules/boonex/albums/classes/BxAlbumsMenuView.php');

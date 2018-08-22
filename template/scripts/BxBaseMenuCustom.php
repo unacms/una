@@ -12,26 +12,28 @@ define('BX_DEF_MENU_CUSTOM_ITEM_MORE_AUTO', 'more-auto');
 
 class BxBaseMenuCustom extends BxTemplMenu
 {
-    protected static $_sTmplContentCustomItem;
+    protected static $_sTmplContentItem;
 
     protected $_sTmplNameCustomItemMore;
     protected $_sTmplNameCustomItemMorePopup;
 
-    protected $_bAutoMore;
-    
+    protected $_bMoreAuto;
+    protected $_sJsObjectMoreAuto;
+
     protected $_aHtmlIds;
 
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
-        if(empty(self::$_sTmplContentCustomItem))
-            self::$_sTmplContentCustomItem = $this->_oTemplate->getHtml('menu_custom_item.html');
+        if(empty(self::$_sTmplContentItem))
+            self::$_sTmplContentItem = $this->_oTemplate->getHtml('menu_custom_item.html');
 
         $this->_sTmplNameCustomItemMore = 'menu_custom_item_more.html';
         $this->_sTmplNameCustomItemMorePopup = 'menu_custom_item_more_popup.html';
 
-        $this->_bAutoMore = false;
+        $this->_bMoreAuto = false;
+        $this->_sJsObjectMoreAuto = 'oMenuMoreAuto';
 
         $sPrefix = str_replace('_', '-', $this->_sObject);
         $this->_aHtmlIds = array(
@@ -43,7 +45,7 @@ class BxBaseMenuCustom extends BxTemplMenu
     {
         $sResult = parent::getCode();
 
-        if($this->_bAutoMore)
+        if($this->_bMoreAuto)
             $this->_oTemplate->addJs(array('BxDolMenuMoreAuto.js'));
 
         return $sResult;
@@ -55,7 +57,7 @@ class BxBaseMenuCustom extends BxTemplMenu
 
         $sItem = BX_DEF_MENU_CUSTOM_ITEM_MORE_AUTO;
         if(!empty($this->_aObject['menu_items'][$sItem]) && is_array($this->_aObject['menu_items'][$sItem]) && (int)$this->_aObject['menu_items'][$sItem]['active'] == 1)
-            $this->_bAutoMore = true;
+            $this->_bMoreAuto = true;
 
         return $aResult;
     }
@@ -64,10 +66,10 @@ class BxBaseMenuCustom extends BxTemplMenu
     {
         $aResult = array_merge(parent::_getTemplateVars(), array(
             'bx_if:show_more_auto_class' => array(
-                'condition' => $this->_bAutoMore,
+                'condition' => $this->_bMoreAuto,
                 'content' => array()
             ),
-            'js_code' => $this->_bAutoMore ? $this->_getJsCodeMoreAuto() : ''
+            'js_code' => $this->_bMoreAuto ? $this->_getJsCodeMoreAuto() : ''
         ));
 
         return $aResult;
@@ -76,9 +78,10 @@ class BxBaseMenuCustom extends BxTemplMenu
     protected function _getJsCodeMoreAuto()
     {
         $aParams = array(
-            'sObject' => $this->_sObject
+            'sObject' => $this->_sObject,
+            'aHtmlIds' => $this->_aHtmlIds
         );
-        return $this->_oTemplate->_wrapInTagJsCode("var oMenuMoreAuto = new BxDolMenuMoreAuto(" . json_encode($aParams) . ");");
+        return $this->_oTemplate->_wrapInTagJsCode("var " . $this->_sJsObjectMoreAuto . " = new BxDolMenuMoreAuto(" . json_encode($aParams) . ");");
     }
 
     protected function _getMenuItem ($aItem)
@@ -113,9 +116,7 @@ class BxBaseMenuCustom extends BxTemplMenu
 
     protected function _getMenuItemMoreAuto ($aItem)
     {
-        $sPopup = $this->_aHtmlIds['more_auto_popup'];
-
-        $aItem['onclick'] = "$(this).parents('li:first').find('#" . $sPopup . "').dolPopup({pointer: {el: $(this)}, moveToDocRoot: false});";
+        $aItem['onclick'] = $this->_sJsObjectMoreAuto . '.more(this);';
 
         $aItem = parent::_getMenuItem($aItem);
         if($aItem === false)
@@ -123,7 +124,7 @@ class BxBaseMenuCustom extends BxTemplMenu
 
         return $this->_oTemplate->parseHtmlByName($this->_getTmplNameItemMore(), array(
             'item' => $this->_getMenuItemDefault($aItem),
-            'popup' => BxTemplFunctions::getInstance()->transBox($sPopup, $this->_oTemplate->parseHtmlByName($this->_getTmplNameItemMorePopup(), array(
+            'popup' => BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['more_auto_popup'], $this->_oTemplate->parseHtmlByName($this->_getTmplNameItemMorePopup(), array(
                 'content' => ''
             )), true)
         ));
@@ -137,7 +138,7 @@ class BxBaseMenuCustom extends BxTemplMenu
         if(!isset($aItem['class_link']))
             $aItem['class_link'] = '';
 
-        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCustomItem(), $aItem);
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentItem(), $aItem);
     }
 
     protected function _getTmplNameItemMore()
@@ -150,9 +151,9 @@ class BxBaseMenuCustom extends BxTemplMenu
         return $this->_sTmplNameCustomItemMorePopup;
     }
 
-    protected function _getTmplContentCustomItem()
+    protected function _getTmplContentItem()
     {
-        return self::$_sTmplContentCustomItem;
+        return self::$_sTmplContentItem;
     }
 }
 

@@ -97,6 +97,7 @@ class BxSnipcartConfig extends BxBaseModTextConfig
         	'OBJECT_FORM_SETTINGS_DISPLAY_EDIT' => 'bx_snipcart_settings_edit',
             'OBJECT_FORM_PRELISTS_CURRENCIES' => 'bx_snipcart_currencies',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_snipcart_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_snipcart_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_snipcart_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_snipcart_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_snipcart_view_submenu', // view entry submenu

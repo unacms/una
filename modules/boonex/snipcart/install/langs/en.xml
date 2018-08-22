@@ -206,6 +206,7 @@
 	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Goods - {addon} hidden]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[My Goods]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[All Goods]]></string>
+        <string name="_bx_snipcart_menu_item_title_system_buy_for"><![CDATA[Buy]]></string>
 	<string name="_bx_snipcart_menu_item_title_buy_for"><![CDATA[Buy for {1}{0}]]></string>
 
 	<string name="_bx_snipcart_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>

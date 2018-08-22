@@ -18,6 +18,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     protected $_oModule;
 
     protected $_oMenuAction;
+    protected $_oMenuActionsMore;
     protected $_oMenuSocialSharing;
 
     protected $_iContentId;
@@ -36,10 +37,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->setContentId(bx_process_input(bx_get('id'), BX_DATA_INT));
 
         $this->_oMenuActions = null;
+        $this->_oMenuActionsMore = null;
         $this->_oMenuSocialSharing = null;
 
         $this->_bShowAsButton = true;
-        $this->_bShowTitles = false;
+        $this->_bShowTitle = false;
     }
 
     public function setContentId($iContentId)
@@ -51,14 +53,17 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
     }
 
-    protected function _getMenuItemEditPost($aItem)
+    protected function _getMenuItemDefault ($aItem)
     {
-        return $this->_getMenuItemByNameActions($aItem);
-    }
+        $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
 
-    protected function _getMenuItemDeletePost($aItem)
-    {
-        return $this->_getMenuItemByNameActions($aItem);
+        if($this->_bShowAsButton)
+            $aItem['class_link'] = 'bx-btn' . (!empty($aItem['class_link']) ? ' ' . $aItem['class_link'] : '');
+
+        if(!$this->_bShowTitle)
+            $aItem['bx_if:title']['condition'] = false;
+
+        return parent::_getMenuItemDefault ($aItem);
     }
 
     protected function _getMenuItemView($aItem)
@@ -179,13 +184,6 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
 
-    protected function _getMenuItemMoreAuto($aItem)
-    {
-        $aItem['class_link'] = (!empty($aItem['class_link']) ? $aItem['class_link'] . ' ' : '') . 'bx-btn';
-        
-        return parent::_getMenuItemMoreAuto($aItem);
-    }
-
     protected function _getMenuItemSocialSharingFacebook($aItem)
     {
         return $this->_getMenuItemByNameSocialSharing($aItem);
@@ -218,7 +216,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             $this->_oMenuActions->setContentId($this->_iContentId);
         }
 
-        return $this->_oMenuActions->getCodeItem($aItem['name']);
+        $aItem = $this->_oMenuActions->getMenuItem($aItem['name']);
+        if(empty($aItem) || !is_array($aItem))
+            return false;
+
+        return $this->_getMenuItemDefault($aItem);
     }
 
     protected function _getMenuItemByNameSocialSharing($aItem)
@@ -231,7 +233,30 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
             )));
         }
 
-        return $this->_oMenuSocialSharing->getCodeItem($aItem['name']);
+        $aItem = $this->_oMenuSocialSharing->getMenuItem($aItem['name']);
+        if(empty($aItem) || !is_array($aItem))
+            return false;
+
+        return $this->_getMenuItemDefault($aItem);
+    }
+
+    protected function _getMenuItemByNameActionsMore($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($this->_oMenuActionsMore)) {
+            if(empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']))
+                return '';
+
+            $this->_oMenuActionsMore = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']);
+            $this->_oMenuActionsMore->setContentId($this->_iContentId);
+        }
+
+        $aItem = $this->_oMenuActionsMore->getMenuItem($aItem['name']);
+        if(empty($aItem) || !is_array($aItem))
+            return false;
+
+        return $this->_getMenuItemDefault($aItem);
     }
 }
 

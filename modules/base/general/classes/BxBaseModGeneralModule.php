@@ -604,6 +604,7 @@ class BxBaseModGeneralModule extends BxDolModule
                     $aMarkers['img_url'] = $sImageUrl;
             }
 
+            //TODO: 'at the end': check $oSocialActions after creation.
             $oSocialActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
             $oSocialActions->addMarkers($aMarkers);
             return $this->_oTemplate->entryAllActions($oSocialActions->getCode());
