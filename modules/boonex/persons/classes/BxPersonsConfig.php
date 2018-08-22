@@ -49,7 +49,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         	'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
-        	'FIELD_LOCATION_PREFIX' => 'location',
+            'FIELD_LOCATION_PREFIX' => 'location',
+            'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -77,6 +78,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'PARAM_PUBLIC_SBSD' => 'bx_persons_public_subscribed_me',
             'PARAM_REDIRECT_AADD' => 'bx_persons_redirect_aadd',
             'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_persons_redirect_aadd_custom_url',
+            'PARAM_LABELS' => 'bx_persons_labels',
             
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_persons_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_persons_per_page_browse_recommended',

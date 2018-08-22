@@ -94,7 +94,7 @@ class BxChartsDb extends BxBaseModGeneralDb
     /* Growth part */
     public function getStatistic()
     {
-        return $this->getAll("SELECT * FROM `sys_statistics` WHERE 1 ORDER BY `order`");
+        return $this->getAll("SELECT * FROM `sys_statistics` WHERE name <> 'bx_albums_media' ORDER BY `order`");
     }
 
     /* Growth part */
